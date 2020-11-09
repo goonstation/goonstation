@@ -71,6 +71,12 @@
 	dir = 10
 	},
 /area/podmode/team2/CentralHallway)
+"an" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/blue/side{
+	dir = 10
+	},
+/area/podmode/spacejunk/fstation/command)
 "as" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
@@ -100,7 +106,7 @@
 	},
 /area/podmode/spacejunk/fstation)
 "ax" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/sci,
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/primary)
 "aA" = (
@@ -312,6 +318,12 @@
 	dir = 8
 	},
 /area/podmode/spacejunk/miningoutpost)
+"bG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/south,
+/area/podmode/team1/hangar)
 "bK" = (
 /obj/lattice,
 /obj/cable{
@@ -367,7 +379,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/team1/medbay)
 "bX" = (
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
 /area/podmode/team2/CentralHallway)
 "bY" = (
 /obj/grille/catwalk{
@@ -387,11 +401,11 @@
 /turf/simulated/floor,
 /area/podmode/spacejunk/miningoutpost/crewquarters)
 "cc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/podmode/team2/Bridge)
@@ -406,6 +420,12 @@
 	dir = 5
 	},
 /area/podmode/spacejunk/fstation/crewquarters)
+"cg" = (
+/obj/shrub,
+/turf/simulated/floor/blue/side{
+	dir = 6
+	},
+/area/podmode/team1/manufacturing)
 "ch" = (
 /turf/simulated/floor/green/corner{
 	dir = 4
@@ -456,16 +476,10 @@
 /turf/space,
 /area)
 "cs" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/black,
-/area/podmode/spacejunk/Reliant)
+/obj/landmark/start,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/blue,
+/area/podmode/team1/manufacturing)
 "cv" = (
 /obj/cable{
 	d1 = 1;
@@ -521,6 +535,12 @@
 	},
 /turf/simulated/floor,
 /area/podmode/team1/bar)
+"cG" = (
+/obj/shrub,
+/turf/simulated/floor/blue/side{
+	dir = 10
+	},
+/area/podmode/team1/manufacturing)
 "cI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -540,12 +560,12 @@
 	},
 /area/podmode/team1/hangar)
 "cU" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/yellow,
 /area/podmode/spacejunk/fstation/maintdock)
 "cV" = (
@@ -618,10 +638,9 @@
 	},
 /area/podmode/spacejunk/miningoutpost)
 "dn" = (
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/podmode/team2/CentralHallway)
+/obj/deployable_turret/pod_wars/sy/activated/south,
+/turf/simulated/floor/caution/corner/se,
+/area/podmode/team2/Mining)
 "dp" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
@@ -657,8 +676,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/shrub,
 /turf/simulated/floor/red/side{
-	dir = 1
+	dir = 5
 	},
 /area/podmode/team2/CentralHallway)
 "dz" = (
@@ -668,9 +688,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red/corner{
-	dir = 8
-	},
+/obj/machinery/r_door_control/podbay/t2condoor/new_walls/south,
+/turf/simulated/floor/caution/corner/nw,
 /area/podmode/team2/Hangar)
 "dD" = (
 /obj/machinery/neosmelter,
@@ -755,6 +774,10 @@
 "ed" = (
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
+"ef" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team2/CentralHallway)
 "eh" = (
 /obj/machinery/r_door_control/podbay/t1d3/new_walls/south{
 	pixel_x = 10
@@ -804,18 +827,24 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/podmode/team2/Storage)
+"et" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/east,
+/area/podmode/team1/manufacturing)
 "ev" = (
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
 /area/podmode/spacejunk/fstation)
 "ew" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team2/Medbay)
 "ex" = (
@@ -1021,16 +1050,9 @@
 /turf/simulated/floor,
 /area/podmode/team2/Storage)
 "fn" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/blue/corner{
-	dir = 1
-	},
-/area/podmode/team1/hangar)
+/obj/table/auto,
+/turf/simulated/floor,
+/area/podmode/team1/powergen)
 "fo" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -1089,10 +1111,10 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/fstation/landingpads)
 "fH" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow,
 /area/podmode/team1/mining)
 "fK" = (
 /obj/wingrille_spawn/auto,
@@ -1111,6 +1133,15 @@
 	icon_state = "engine_caution_west"
 	},
 /area/podmode/team2/Power)
+"fN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/podmode/team2/Bar)
 "fQ" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -1134,6 +1165,10 @@
 	dir = 8
 	},
 /area/podmode/spacejunk/fstation)
+"fU" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/delivery,
+/area/podmode/team2/CentralHallway)
 "fV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/Reliant)
@@ -1182,6 +1217,9 @@
 	},
 /turf/space,
 /area)
+"gh" = (
+/turf/simulated/floor/caution/corner/sw,
+/area/podmode/team1/hangar)
 "gi" = (
 /obj/lattice,
 /obj/cable{
@@ -1208,12 +1246,9 @@
 	dir = 5
 	},
 /area/podmode/team1/bridge)
-"gp" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor,
-/area/podmode/team2/Mining)
 "gu" = (
-/turf/simulated/floor/caution/south,
+/obj/deployable_turret/pod_wars/nt/activated/west,
+/turf/simulated/floor/caution/corner/sw,
 /area/podmode/team1/mining)
 "gw" = (
 /obj/storage/secure/closet/fridge,
@@ -1348,16 +1383,16 @@
 	},
 /area/podmode/spacejunk/Restaurant)
 "hf" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor,
 /area/podmode/team2/Storage)
 "hh" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -1367,6 +1402,16 @@
 	dir = 1
 	},
 /area/podmode/team1/bridge)
+"hk" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/podmode/spacejunk/fstation/command)
 "hl" = (
 /obj/machinery/light{
 	dir = 1
@@ -1502,10 +1547,10 @@
 	},
 /area/podmode/team2/Mining)
 "ib" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "id" = (
@@ -1519,6 +1564,15 @@
 	dir = 4
 	},
 /area/podmode/team1/bridge)
+"ig" = (
+/turf/simulated/floor/blue/side{
+	dir = 5
+	},
+/area/podmode/spacejunk/fstation/command)
+"ij" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/podmode/team2/Bar)
 "il" = (
 /obj/table/auto,
 /obj/cable{
@@ -1551,7 +1605,7 @@
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/powergen)
 "io" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
@@ -1589,11 +1643,9 @@
 /turf/simulated/floor/caution/west,
 /area/podmode/spacejunk/fstation/secdock)
 "iA" = (
-/obj/shrub,
-/turf/simulated/floor/red/side{
-	dir = 10
-	},
-/area/podmode/team2/CentralHallway)
+/obj/item/organ/eye,
+/turf/simulated/wall/asteroid/pod_wars,
+/area)
 "iE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -1775,6 +1827,14 @@
 	dir = 8
 	},
 /area/podmode/spacejunk/miningoutpost)
+"jH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/podmode/team2/CentralHallway)
 "jJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1815,13 +1875,21 @@
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/crewquarters)
 "jT" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/engine,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/podmode/team1/powergen)
 "jU" = (
 /obj/machinery/r_door_control/podbay/t1d2/new_walls/west,
 /turf/space,
 /area)
+"jW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/corner/sw,
+/area/podmode/team2/CentralHallway)
 "jY" = (
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -1833,9 +1901,9 @@
 	},
 /area/podmode/spacejunk/fstation)
 "ka" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/podmode/team2/CentralHallway)
+/obj/machinery/r_door_control/podbay/t1condoor/new_walls/south,
+/turf/simulated/floor/caution/east,
+/area/podmode/team1/manufacturing)
 "kb" = (
 /obj/rack,
 /obj/item/magnetizer{
@@ -1922,6 +1990,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/warehouse)
+"kz" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/podmode/spacejunk/fstation)
 "kA" = (
 /obj/cable{
 	d1 = 1;
@@ -1957,11 +2035,9 @@
 	},
 /area/podmode/team1/powergen)
 "kM" = (
-/obj/machinery/light,
-/turf/simulated/floor/blue/side{
-	dir = 6
-	},
-/area/podmode/team1/manufacturing)
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/podmode/team1/powergen)
 "kP" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/airless/plating,
@@ -1969,10 +2045,19 @@
 "kR" = (
 /turf/simulated/floor/caution/west,
 /area/podmode/team1/bridge)
+"kT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/podmode/spacejunk/fstation/command)
 "kU" = (
 /obj/table/glass/auto,
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/crewquarters)
+"kW" = (
+/turf/simulated/floor/caution/corner/nw,
+/area/podmode/team1/manufacturing)
 "kX" = (
 /obj/machinery/light{
 	dir = 8
@@ -2036,13 +2121,8 @@
 	},
 /area/podmode/spacejunk/fstation/secdock)
 "ln" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor/blue/corner{
-	dir = 4
-	},
-/area/podmode/team1/hangar)
+/turf/simulated/floor,
+/area/podmode/team1/powergen)
 "lo" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black,
@@ -2097,7 +2177,7 @@
 	},
 /area/podmode/spacejunk/fstation)
 "lH" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /turf/simulated/floor/yellow,
 /area/podmode/spacejunk/fstation/maintdock)
 "lK" = (
@@ -2276,12 +2356,12 @@
 /turf/simulated/floor,
 /area/podmode/team1/starboardhall)
 "mD" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/sci,
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/primary)
 "mE" = (
@@ -2313,7 +2393,7 @@
 /area/podmode/spacejunk/Dorgun)
 "mN" = (
 /obj/deployable_turret/pod_wars/nt/activated/west,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/corner/nw,
 /area/podmode/team1/mining)
 "mO" = (
 /obj/machinery/light,
@@ -2368,6 +2448,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red/side,
+/area/podmode/team2/CentralHallway)
+"ne" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
 /area/podmode/team2/CentralHallway)
 "nf" = (
 /obj/cable,
@@ -2492,6 +2580,15 @@
 	dir = 6
 	},
 /area/podmode/spacejunk/Restaurant)
+"nO" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/mining,
+/turf/simulated/floor/yellow,
+/area/podmode/team2/Mining)
 "nP" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -2499,19 +2596,18 @@
 /area/podmode/spacejunk/fstation)
 "nQ" = (
 /obj/deployable_turret/pod_wars/sy/activated/south,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/corner/sw,
 /area/podmode/team2/Mining)
 "nT" = (
 /turf/simulated/floor/yellow/side,
 /area/podmode/spacejunk/miningoutpost)
 "nW" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
 /area/podmode/team2/CentralHallway)
 "nZ" = (
 /obj/machinery/light{
@@ -2552,15 +2648,6 @@
 "oo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/team2/Power)
-"op" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/podmode/team2/Mining)
 "oq" = (
 /obj/item/storage/toilet{
 	dir = 4
@@ -2569,12 +2656,22 @@
 	dir = 9
 	},
 /area/podmode/spacejunk/fstation/secdock)
+"or" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/podmode/team2/CentralHallway)
 "os" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3_space"
 	},
 /area/podmode/spacejunk/Dorgun)
+"ov" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/space,
+/area/podmode/team2/CentralHallway)
 "oy" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -2635,15 +2732,15 @@
 	},
 /area/podmode/spacejunk/fstation/primary)
 "oF" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/podmode/spacejunk/fstation/secdock)
@@ -2806,6 +2903,10 @@
 	},
 /turf/simulated/floor,
 /area/podmode/spacejunk/fstation/maintdock)
+"pF" = (
+/obj/machinery/r_door_control/podbay/t2condoor/new_walls/north,
+/turf/simulated/floor/caution/west,
+/area/podmode/team2/CentralHallway)
 "pG" = (
 /obj/cable{
 	d2 = 8;
@@ -2844,11 +2945,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
 "pN" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blue,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t1condoor_horizontal,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
 "pO" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -2892,6 +2993,9 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/fstation/crewquarters)
+"pY" = (
+/turf/simulated/floor/airless/plating,
+/area/podmode/team2/Bar)
 "pZ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -2939,10 +3043,9 @@
 /turf/simulated/floor,
 /area/podmode/spacejunk/fstation/power)
 "qj" = (
-/turf/simulated/floor/caution/corner/misc{
-	dir = 10
-	},
-/area/podmode/team2/Bar)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/podmode/team1/powergen)
 "qo" = (
 /obj/table/reinforced/auto,
 /obj/cable{
@@ -2964,9 +3067,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation)
 "qs" = (
-/obj/machinery/manufacturer/hangar,
-/turf/simulated/floor/delivery,
-/area/podmode/team2/Mining)
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/turf/simulated/floor,
+/area/podmode/team1/powergen)
 "qu" = (
 /obj/machinery/light{
 	dir = 4
@@ -3011,11 +3114,11 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/fstation/landingpads)
 "qI" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
 	},
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/crewquarters)
@@ -3062,6 +3165,7 @@
 /area/podmode/team2/Cloning)
 "qZ" = (
 /obj/pod_base_critical_system{
+	dir = 1;
 	name = "Port Engines Critical System";
 	team_num = 1
 	},
@@ -3082,11 +3186,9 @@
 /area/podmode/team2/Cloning)
 "rg" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/cable,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 8;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
@@ -3123,8 +3225,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
 "ro" = (
-/turf/simulated/floor/caution/south,
-/area/podmode/team2/CentralHallway)
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/podmode/team1/manufacturing)
 "rs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -3177,11 +3281,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor,
 /area/podmode/team2/CentralHallway)
 "rN" = (
@@ -3191,6 +3290,7 @@
 /area/podmode/spacejunk/miningoutpost/crewquarters)
 "rP" = (
 /obj/pod_base_critical_system{
+	dir = 8;
 	name = "Primary Engines Critical System";
 	team_num = 2
 	},
@@ -3283,10 +3383,11 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/caution/west,
 /area/podmode/team1/manufacturing)
 "sr" = (
 /obj/pod_base_critical_system{
+	dir = 8;
 	name = "Secondary Engines Critical System";
 	team_num = 2
 	},
@@ -3355,7 +3456,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/CentralHallway)
 "sF" = (
 /obj/grille/catwalk{
@@ -3396,11 +3497,16 @@
 	},
 /area/podmode/spacejunk/fstation)
 "sU" = (
-/turf/simulated/floor/caution/east,
-/area/podmode/team2/CentralHallway)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/podmode/team1/manufacturing)
 "sW" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/red,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2condoor_horizontal,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
 "sZ" = (
 /obj/stool/chair/red{
@@ -3471,10 +3577,8 @@
 	},
 /area/podmode/spacejunk/miningoutpost)
 "tn" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/red/side,
-/area/podmode/team2/CentralHallway)
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team1/manufacturing)
 "tp" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2d3_horizontal,
@@ -3495,6 +3599,9 @@
 	dir = 5
 	},
 /area/podmode/spacejunk/fstation/mess)
+"tx" = (
+/turf/simulated/floor/blue/side,
+/area/podmode/spacejunk/fstation/command)
 "ty" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -3548,15 +3655,18 @@
 	},
 /area/podmode/spacejunk/Restaurant/landingpads)
 "tM" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/caution/south,
 /area/podmode/team2/Bar)
 "tN" = (
 /obj/machinery/light,
 /turf/simulated/floor/red/side,
 /area/podmode/team2/CentralHallway)
+"tQ" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/podmode/team2/Bar)
 "tR" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -3698,13 +3808,9 @@
 	},
 /area/podmode/team2/Mining)
 "uA" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/podmode/spacejunk/Brighwell)
+/obj/machinery/r_door_control/podbay/t1condoor/new_walls/south,
+/turf/simulated/floor/caution/west,
+/area/podmode/team1/manufacturing)
 "uB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3733,8 +3839,11 @@
 	},
 /area/podmode/spacejunk/fstation/crewquarters)
 "uJ" = (
-/turf/simulated/floor/caution/west,
-/area/podmode/team2/Bar)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team1/manufacturing)
 "uK" = (
 /obj/cable{
 	d1 = 4;
@@ -3794,16 +3903,17 @@
 	},
 /area/podmode/spacejunk/Relant/landingpads)
 "uZ" = (
-/turf/simulated/floor/caution/corner/misc{
-	dir = 6
+/obj/cable{
+	icon_state = "1-2"
 	},
-/area/podmode/team2/CentralHallway)
+/turf/simulated/floor/caution/west,
+/area/podmode/team1/manufacturing)
 "va" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_misc"
@@ -3852,7 +3962,7 @@
 	},
 /area/podmode/spacejunk/Relant/landingpads)
 "vv" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
 /turf/simulated/floor/engine{
@@ -3885,10 +3995,10 @@
 	},
 /area/podmode/team2/Bridge)
 "vG" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor/blue,
 /area/podmode/team1/bridge)
 "vH" = (
@@ -3910,9 +4020,15 @@
 	dir = 10
 	},
 /area/podmode/spacejunk/fstation)
+"vL" = (
+/obj/machinery/r_door_control/podbay/t2condoor/new_walls/north,
+/turf/simulated/floor/caution/east,
+/area/podmode/team2/CentralHallway)
 "vN" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/Dorgun)
 "vO" = (
@@ -4078,13 +4194,9 @@
 /turf/simulated/floor/red/side,
 /area/podmode/team2/Bridge)
 "wF" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/white,
-/area/podmode/spacejunk/Brighwell)
+/obj/machinery/r_door_control/podbay/t1condoor/new_walls/north,
+/turf/simulated/floor/caution/corner/se,
+/area/podmode/team1/hangar)
 "wG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4125,6 +4237,11 @@
 "wS" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/podmode/team2/CentralHallway)
@@ -4252,14 +4369,13 @@
 	},
 /area/podmode/team2/Power)
 "xF" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red,
-/area/podmode/team2/Bar)
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/podmode/team2/CentralHallway)
 "xL" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -4286,10 +4402,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/powergen)
 "xS" = (
@@ -4351,6 +4464,19 @@
 "yn" = (
 /turf/simulated/floor,
 /area/podmode/team2/Storage)
+"yo" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/blue/side{
+	dir = 9
+	},
+/area/podmode/spacejunk/fstation/command)
 "yp" = (
 /obj/machinery/light,
 /turf/simulated/floor/blue/side,
@@ -4386,7 +4512,7 @@
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "yI" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team2/Cloning)
 "yJ" = (
@@ -4417,8 +4543,9 @@
 	},
 /area/podmode/spacejunk/miningoutpost)
 "yN" = (
-/obj/machinery/light,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
+	},
 /area/podmode/team2/Hangar)
 "yR" = (
 /obj/cable{
@@ -4527,9 +4654,12 @@
 	},
 /turf/simulated/floor/blue,
 /area/podmode/team1/bar)
-"zw" = (
-/turf/simulated/floor,
-/area/podmode/team2/CentralHallway)
+"zx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/caution/south,
+/area/podmode/team1/manufacturing)
 "zy" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
@@ -4555,6 +4685,15 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
+"zD" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue,
+/area/podmode/spacejunk/fstation)
 "zH" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -4577,7 +4716,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/side{
-	dir = 4
+	dir = 8
 	},
 /area/podmode/team2/CentralHallway)
 "zM" = (
@@ -4636,6 +4775,9 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/podmode/team2/Cloning)
+"Af" = (
+/turf/simulated/floor/caution/west,
+/area/podmode/team1/manufacturing)
 "Ai" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -4651,6 +4793,14 @@
 	},
 /turf/space,
 /area)
+"Ak" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/podmode/team1/hangar)
 "An" = (
 /obj/machinery/light{
 	dir = 4
@@ -4696,6 +4846,9 @@
 	dir = 9
 	},
 /area/podmode/spacejunk/fstation/maintdock)
+"Aw" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/podmode/spacejunk/fstation/command)
 "Ax" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -4710,13 +4863,14 @@
 	},
 /area/podmode/spacejunk/fstation/medbay)
 "Az" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/power/terminal{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
 "AA" = (
 /turf/simulated/floor/engine,
@@ -4929,6 +5083,10 @@
 /obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/miningoutpost)
+"BI" = (
+/obj/machinery/door/airlock/pyro/glass/mining,
+/turf/simulated/floor/yellow,
+/area/podmode/team2/Mining)
 "BJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4994,12 +5152,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team1/manufacturing)
 "BW" = (
-/obj/deployable_turret/pod_wars/sy/activated/east,
-/turf/simulated/floor,
-/area/podmode/team2/Bar)
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/podmode/team2/CentralHallway)
 "BZ" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
@@ -5016,6 +5175,16 @@
 	dir = 5
 	},
 /area/podmode/spacejunk/fstation/secdock)
+"Cc" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 6
+	},
+/area/podmode/spacejunk/fstation/command)
 "Cd" = (
 /obj/lattice{
 	dir = 4;
@@ -5030,8 +5199,12 @@
 /turf/space,
 /area/podmode/spacejunk/uvb67/central)
 "Cg" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
 /area/podmode/team2/CentralHallway)
 "Ch" = (
 /obj/wingrille_spawn/auto,
@@ -5115,11 +5288,12 @@
 /turf/space,
 /area)
 "CG" = (
-/obj/shrub,
-/turf/simulated/floor/red/side{
-	dir = 5
+/obj/cable{
+	icon_state = "4-8"
 	},
-/area/podmode/team2/CentralHallway)
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team1/manufacturing)
 "CJ" = (
 /obj/lattice{
 	dir = 1;
@@ -5155,9 +5329,8 @@
 	},
 /area/podmode/spacejunk/Restaurant/solars)
 "CR" = (
-/obj/machinery/light,
-/turf/simulated/floor/blue/side{
-	dir = 10
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
 	},
 /area/podmode/team1/manufacturing)
 "CS" = (
@@ -5213,6 +5386,12 @@
 	},
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/Reliant)
+"Di" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/corner/se,
+/area/podmode/team2/CentralHallway)
 "Dj" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/west,
 /turf/space,
@@ -5265,10 +5444,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/powergen)
 "Dz" = (
@@ -5281,11 +5457,8 @@
 	},
 /area/podmode/spacejunk/Snackstand)
 "DB" = (
-/obj/shrub,
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/podmode/team2/CentralHallway)
+/turf/simulated/floor/caution/corner/ne,
+/area/podmode/team1/manufacturing)
 "DF" = (
 /obj/shrub,
 /turf/simulated/floor/blue/side,
@@ -5367,7 +5540,7 @@
 	},
 /area/podmode/spacejunk/miningoutpost)
 "Eb" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
 /turf/simulated/floor/purple,
@@ -5379,10 +5552,39 @@
 /obj/machinery/manufacturer,
 /turf/simulated/floor/delivery,
 /area/podmode/team1/manufacturing)
-"Ek" = (
-/obj/deployable_turret/pod_wars/sy/activated/west,
-/turf/simulated/floor,
+"Ef" = (
+/obj/pod_base_critical_system{
+	dir = 1;
+	name = "Starboard Engines Critical System";
+	team_num = 1
+	},
+/turf/space,
+/area)
+"Eg" = (
+/obj/machinery/light,
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
 /area/podmode/team2/CentralHallway)
+"Eh" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/blue/side{
+	dir = 5
+	},
+/area/podmode/spacejunk/fstation/command)
+"Ek" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
+/area/podmode/team1/manufacturing)
 "Em" = (
 /obj/machinery/light{
 	dir = 8;
@@ -5448,10 +5650,7 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/uvb67/central)
 "ED" = (
-/obj/shrub,
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/CentralHallway)
 "EE" = (
 /obj/machinery/light,
@@ -5529,7 +5728,7 @@
 	},
 /area/podmode/spacejunk/miningoutpost)
 "Fc" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
 /turf/simulated/floor/purple,
@@ -5564,6 +5763,11 @@
 "Fk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/team1/bar)
+"Fl" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/turf/simulated/floor/red/side,
+/area/podmode/team2/CentralHallway)
 "Fm" = (
 /obj/lattice{
 	dir = 8;
@@ -5607,8 +5811,13 @@
 "Fx" = (
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/greatwreck)
+"Fy" = (
+/obj/table/wood/auto,
+/turf/simulated/floor,
+/area/podmode/spacejunk/fstation/command)
 "Fz" = (
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/bot/white,
 /area/podmode/team1/medbay)
 "FA" = (
@@ -5628,8 +5837,8 @@
 	},
 /area/podmode/team1/bridge)
 "FF" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/blue,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t1condoor_horizontal,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
 "FI" = (
 /turf/simulated/floor/yellow/side{
@@ -5667,14 +5876,7 @@
 	},
 /area)
 "FS" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/machinery/power/smes/magical,
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
 "FT" = (
@@ -5696,12 +5898,6 @@
 	},
 /turf/simulated/floor,
 /area/podmode/spacejunk/fstation)
-"FX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/turf/simulated/floor/red,
-/area/podmode/team2/CentralHallway)
 "FY" = (
 /obj/machinery/light{
 	dir = 1
@@ -5733,8 +5929,10 @@
 	},
 /area/podmode/spacejunk/fstation/landingpads)
 "Gc" = (
-/turf/simulated/floor/caution/south,
-/area/podmode/team2/Bar)
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/podmode/team2/CentralHallway)
 "Gf" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -5782,6 +5980,10 @@
 "Gq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation/crewquarters)
+"Gr" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/turf/simulated/floor/blue,
+/area/podmode/spacejunk/fstation)
 "Gs" = (
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/west,
 /turf/space,
@@ -5870,6 +6072,9 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor/white,
 /area/podmode/team2/Medbay)
+"GU" = (
+/turf/simulated/floor,
+/area/podmode/spacejunk/fstation/command)
 "GV" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
@@ -5999,7 +6204,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
 "HN" = (
 /obj/storage/closet,
@@ -6039,16 +6244,15 @@
 /turf/simulated/floor/caution/westeast,
 /area/podmode/spacejunk/Restaurant)
 "HW" = (
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
-/area/podmode/team2/CentralHallway)
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/blue,
+/area/podmode/team1/hangar)
 "HX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
 	},
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/lounge)
@@ -6090,6 +6294,9 @@
 	tag = "icon-catwalk (WEST)"
 	},
 /area/podmode/spacejunk/fstation/landingpads)
+"Il" = (
+/turf/simulated/floor/caution/west,
+/area/podmode/team2/Bar)
 "Ip" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -6187,6 +6394,12 @@
 	dir = 8
 	},
 /area/podmode/spacejunk/Restaurant)
+"IK" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/blue/side,
+/area/podmode/spacejunk/fstation/command)
 "IL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6215,8 +6428,21 @@
 /turf/space,
 /area/podmode/team2/Power)
 "IQ" = (
-/turf/simulated/floor/caution/north,
-/area/podmode/team1/mining)
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/podmode/team1/hangar)
+"IT" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/turf/simulated/floor/blue/corner{
+	dir = 4
+	},
+/area/podmode/spacejunk/fstation/command)
+"IU" = (
+/turf/simulated/floor/caution/corner/nw,
+/area/podmode/team2/Hangar)
 "IV" = (
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -6279,11 +6505,6 @@
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "Ji" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6352,12 +6573,6 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/fstation/power)
-"JF" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blue,
-/area/podmode/team1/manufacturing)
 "JH" = (
 /obj/machinery/light{
 	dir = 1
@@ -6478,12 +6693,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
 "Ko" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor/blue,
 /area/podmode/team1/bridge)
 "Kq" = (
@@ -6610,9 +6823,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red/side{
-	dir = 8
-	},
+/turf/simulated/floor/caution/south,
 /area/podmode/team2/CentralHallway)
 "Ld" = (
 /obj/cable{
@@ -6628,11 +6839,13 @@
 	dir = 9
 	},
 /area/podmode/spacejunk/uvb67/crew)
-"Lk" = (
-/turf/simulated/floor/blue/side{
-	dir = 10
+"Lj" = (
+/obj/machinery/light{
+	dir = 1
 	},
-/area/podmode/team1/manufacturing)
+/obj/shrub,
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team2/Bar)
 "Ll" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -6651,12 +6864,12 @@
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/fstation/lounge)
 "Lu" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/fstation/medbay)
 "Lw" = (
@@ -6721,13 +6934,9 @@
 	},
 /area/podmode/team1/mining)
 "LU" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
+/obj/machinery/power/smes/magical,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/Dorgun)
@@ -6803,8 +7012,13 @@
 	},
 /turf/space,
 /area/podmode/team1/mining)
+"My" = (
+/turf/simulated/floor/caution/east,
+/area/podmode/team2/CentralHallway)
 "MB" = (
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
 /area/podmode/team2/Bar)
 "MD" = (
 /obj/grille/catwalk{
@@ -7075,6 +7289,10 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/yellow,
 /area/podmode/spacejunk/Restaurant)
+"Oc" = (
+/obj/shrub,
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team2/Bar)
 "Og" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -7136,6 +7354,13 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/Restaurant)
+"Os" = (
+/obj/table/wood/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/podmode/spacejunk/fstation/command)
 "Ot" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/caution/south,
@@ -7265,11 +7490,9 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/uvb67/power)
 "Pe" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/turf/simulated/floor/red,
-/area/podmode/team2/Bar)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/podmode/team1/hangar)
 "Pg" = (
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite{
@@ -7443,6 +7666,9 @@
 	dir = 9
 	},
 /area/podmode/team1/starboardhall)
+"PT" = (
+/turf/simulated/floor,
+/area/podmode/team2/CentralHallway)
 "PU" = (
 /turf/simulated/floor/caution/northsouth,
 /area/podmode/spacejunk/miningoutpost)
@@ -7461,8 +7687,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team1/manufacturing)
 "Qf" = (
 /obj/wingrille_spawn/auto,
@@ -7506,13 +7731,13 @@
 /turf/simulated/floor/caution/northsouth,
 /area/podmode/team2/Mining)
 "Qr" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t2condoor_horizontal,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
 "Qt" = (
 /obj/machinery/power/apc/autoname_east,
@@ -7539,7 +7764,7 @@
 /turf/simulated/floor,
 /area/podmode/team1/manufacturing)
 "QA" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -7577,10 +7802,11 @@
 /turf/space,
 /area)
 "QI" = (
-/obj/landmark/start/latejoin,
-/obj/landmark/start,
-/turf/simulated/floor/blue,
-/area/podmode/team1/manufacturing)
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/podmode/spacejunk/Reliant)
 "QO" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -7663,17 +7889,16 @@
 /area/podmode/spacejunk/fstation)
 "Rk" = (
 /obj/cable{
-	icon_state = "1-4"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/podmode/spacejunk/Reliant)
+/area/podmode/spacejunk/Dorgun)
 "Rm" = (
-/obj/machinery/manufacturer/hangar,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor/delivery,
-/area/podmode/team2/Mining)
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/red,
+/area/podmode/team2/Hangar)
 "Rn" = (
 /obj/machinery/light{
 	dir = 8;
@@ -7691,6 +7916,16 @@
 /obj/deployable_turret/pod_wars/sy/activated/south,
 /turf/space,
 /area)
+"Rr" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/podmode/team2/Mining)
 "Rs" = (
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/miningoutpost)
@@ -7727,6 +7962,9 @@
 "RD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/fstation/power)
+"RJ" = (
+/turf/simulated/floor/caution/east,
+/area/podmode/team1/manufacturing)
 "RL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7774,17 +8012,10 @@
 /area/podmode/team1/manufacturing)
 "RU" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/podmode/spacejunk/Reliant)
+/area/podmode/spacejunk/Dorgun)
 "RV" = (
 /obj/machinery/light,
 /turf/simulated/floor/black,
@@ -7819,10 +8050,9 @@
 /turf/simulated/floor,
 /area/podmode/team2/Hangar)
 "Sf" = (
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/podmode/team1/hangar)
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team2/Bar)
 "Sg" = (
 /obj/cable{
 	d2 = 4;
@@ -7861,10 +8091,7 @@
 	},
 /area/podmode/spacejunk/Restaurant)
 "Sk" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/caution/south,
 /area/podmode/team2/CentralHallway)
 "Sl" = (
 /obj/storage/closet,
@@ -7900,7 +8127,7 @@
 /area/podmode/spacejunk/Snackstand)
 "Sp" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
@@ -7926,6 +8153,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/shrub,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -7939,11 +8167,11 @@
 	},
 /area/podmode/team1/bridge)
 "Sx" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/botany{
+	dir = 4
 	},
 /turf/simulated/floor/green,
 /area/podmode/spacejunk/fstation/mess)
@@ -7966,6 +8194,10 @@
 /obj/deployable_turret/pod_wars/sy/activated/west,
 /turf/space,
 /area)
+"SH" = (
+/obj/deployable_turret/pod_wars/sy/activated/east,
+/turf/simulated/floor,
+/area/podmode/team2/Bar)
 "SJ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -7978,6 +8210,9 @@
 "SK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/podmode/spacejunk/Nancy)
+"SM" = (
+/turf/simulated/floor/caution/west,
+/area/podmode/team2/CentralHallway)
 "SO" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -8025,12 +8260,9 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/Restaurant/landingpads)
 "SX" = (
-/obj/machinery/manufacturer/hangar,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/delivery,
-/area/podmode/team2/Mining)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/podmode/team2/CentralHallway)
 "SY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8104,6 +8336,9 @@
 	},
 /turf/space,
 /area)
+"Ts" = (
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/CentralHallway)
 "Tt" = (
 /turf/simulated/floor/green/side,
 /area/podmode/spacejunk/fstation/mess)
@@ -8125,19 +8360,17 @@
 /turf/simulated/floor/engine,
 /area/podmode/team1/powergen)
 "TA" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
-/area/podmode/team2/Bar)
-"TD" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/terminal{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/black,
-/area/podmode/spacejunk/Reliant)
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/podmode/team2/CentralHallway)
+"TD" = (
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/Hangar)
 "TE" = (
 /obj/machinery/light{
 	dir = 4
@@ -8222,7 +8455,7 @@
 /turf/space,
 /area)
 "TX" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "TY" = (
@@ -8237,12 +8470,12 @@
 	},
 /area/podmode/team1/porthall)
 "Uf" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team2/Cloning)
 "Ug" = (
@@ -8305,13 +8538,19 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
+"Uu" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/podmode/spacejunk/fstation/command)
 "Uv" = (
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/uvb67/power)
 "Uw" = (
-/turf/simulated/floor/caution/west,
-/area/podmode/team2/Mining)
+/turf/simulated/floor/caution/corner/se,
+/area/podmode/team1/hangar)
 "Ux" = (
 /turf/simulated/floor,
 /area/podmode/team2/Mining)
@@ -8327,7 +8566,7 @@
 	},
 /area/podmode/spacejunk/fstation/crewquarters)
 "UE" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
 /turf/simulated/floor/engine{
@@ -8344,6 +8583,7 @@
 /area)
 "UK" = (
 /obj/pod_base_critical_system{
+	dir = 4;
 	name = "Bridge Critical System";
 	team_num = 2
 	},
@@ -8379,15 +8619,25 @@
 /turf/space,
 /area/podmode/spacejunk/uvb67/central)
 "UO" = (
-/turf/simulated/floor/blue/side{
-	dir = 6
-	},
+/turf/simulated/floor/caution/south,
 /area/podmode/team1/manufacturing)
+"UP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team2/CentralHallway)
 "UU" = (
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
 /area/podmode/team1/starboardhall)
+"UX" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/podmode/team2/Bar)
 "Vc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8428,8 +8678,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/podmode/team2/Mining)
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/CentralHallway)
 "Vt" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -8439,15 +8689,11 @@
 	},
 /area/podmode/team2/Power)
 "Vu" = (
-/obj/machinery/power/smes{
-	charge = 1e+006;
-	chargelevel = 10000;
-	output = 5000
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/smes/magical,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Nancy/powergen)
 "Vv" = (
@@ -8472,7 +8718,7 @@
 	},
 /area/podmode/team1/porthall)
 "VD" = (
-/turf/simulated/floor/red/corner,
+/turf/simulated/floor/caution/corner/ne,
 /area/podmode/team2/Hangar)
 "VE" = (
 /obj/storage/secure/closet/medical/medkit,
@@ -8498,6 +8744,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
+"VJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/podmode/team2/CentralHallway)
 "VK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8513,8 +8768,12 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/Hangar)
+"VO" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/podmode/spacejunk/fstation/command)
 "VP" = (
 /turf/simulated/floor,
 /area/podmode/spacejunk/miningoutpost/crewquarters)
@@ -8522,6 +8781,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/podmode/team1/hangar)
+"VV" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/podmode/team2/CentralHallway)
 "VW" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -8588,6 +8853,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/podmode/spacejunk/Nancy)
+"Wj" = (
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/podmode/spacejunk/fstation/command)
 "Wk" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/t1d4_horizontal,
@@ -8652,10 +8922,7 @@
 	},
 /area/podmode/spacejunk/fstation)
 "WM" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
+/obj/machinery/power/smes/magical,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -8739,7 +9006,7 @@
 /turf/simulated/floor/yellow/side,
 /area/podmode/spacejunk/fstation)
 "Xi" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/botany,
 /turf/simulated/floor/green,
 /area/podmode/spacejunk/fstation/mess)
 "Xj" = (
@@ -8977,6 +9244,11 @@
 	dir = 8
 	},
 /area/podmode/team1/mining)
+"Yr" = (
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/podmode/spacejunk/fstation/command)
 "Yu" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 4
@@ -9070,17 +9342,25 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team1/hangar)
+"YL" = (
+/turf/simulated/floor/airless/plating,
+/area/podmode/team2/CentralHallway)
 "YO" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
 /area/podmode/team2/Hangar)
 "YS" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/white,
-/area/podmode/team1/medbay)
+/obj/machinery/r_door_control/podbay/t2condoor/new_walls/south,
+/turf/simulated/floor/caution/corner/ne,
+/area/podmode/team2/Hangar)
+"YT" = (
+/obj/deployable_turret/pod_wars/sy/activated/west,
+/turf/simulated/floor,
+/area/podmode/team2/CentralHallway)
 "YU" = (
 /obj/machinery/light{
 	dir = 1
@@ -9129,6 +9409,13 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/fstation/landingpads)
+"Ze" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/Hangar)
 "Zg" = (
 /obj/window/cubicle{
 	dir = 1
@@ -9148,7 +9435,7 @@
 /turf/simulated/floor,
 /area/podmode/team2/Mining)
 "Zn" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/fstation/medbay)
 "Zo" = (
@@ -9174,7 +9461,7 @@
 	},
 /area/podmode/spacejunk/Snackstand)
 "Zv" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white,
 /area/podmode/team2/Medbay)
 "Zz" = (
@@ -9183,9 +9470,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
+/turf/simulated/floor/shuttlebay,
 /area/podmode/team2/CentralHallway)
 "ZD" = (
 /obj/grille/catwalk{
@@ -9207,12 +9492,17 @@
 /turf/simulated/floor/airless/plating,
 /area/podmode/spacejunk/uvb67/central)
 "ZJ" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor/specialroom/bar,
-/area/podmode/team2/Bar)
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/podmode/team2/CentralHallway)
 "ZK" = (
-/turf/simulated/floor/caution/east,
-/area/podmode/team2/Mining)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/r_door_control/podbay/t1condoor/new_walls/north,
+/turf/simulated/floor/caution/corner/sw,
+/area/podmode/team1/hangar)
 "ZL" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -9238,7 +9528,11 @@
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/crewquarters)
 "ZT" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/machinery/power/smes/magical,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/podmode/spacejunk/Reliant)
 "ZU" = (
@@ -35921,8 +36215,8 @@ FI
 Sr
 Yp
 VM
-Nr
-Nr
+VM
+VM
 VM
 rW
 Sr
@@ -36422,10 +36716,10 @@ Xb
 FV
 Sr
 Sr
+Sr
+mN
 gu
-mN
-mN
-IQ
+Sr
 Sr
 Sr
 Sr
@@ -41437,7 +41731,7 @@ oS
 bW
 bW
 VK
-YS
+ed
 ed
 ed
 Jh
@@ -41949,7 +42243,7 @@ Dx
 Ha
 Dx
 Dx
-Lk
+cG
 VT
 Vf
 wP
@@ -42452,9 +42746,9 @@ fd
 kZ
 kZ
 ce
-VT
-Vf
-wP
+HW
+IQ
+Uw
 uC
 uC
 uC
@@ -42948,14 +43242,14 @@ ed
 gE
 Ju
 kZ
-kZ
-kZ
-fd
-kZ
-kZ
+ro
+RJ
+et
+RJ
+CR
 ce
 VT
-Vf
+wP
 OG
 xb
 uC
@@ -43451,14 +43745,14 @@ gE
 Mj
 kZ
 FT
-kZ
+tn
 PZ
-kZ
+tn
 PE
 ce
-VT
-Vf
+Pe
 wP
+uC
 uC
 uC
 uC
@@ -43952,15 +44246,15 @@ FA
 fK
 gx
 Hv
-Hv
-Hv
-qp
-Hv
-Hv
-kM
+UO
+tn
+CG
+tn
+DB
+ka
 OG
-ln
-wP
+wF
+uC
 uC
 VH
 uC
@@ -44453,18 +44747,18 @@ vg
 vg
 gy
 QE
-QE
-QE
-QI
-JF
-QE
-QE
-QE
+cs
+UO
+tn
+PZ
+tn
+tn
+tn
 FF
-Sf
-wP
 uC
 uC
+uC
+OG
 uC
 uC
 uC
@@ -44956,17 +45250,17 @@ gA
 mK
 Rc
 Rc
-Rc
-Rc
+zx
+uJ
 BV
-Rc
-Rc
-Rc
+uJ
+uJ
+uJ
 pN
 Km
-wP
 uC
 uC
+OG
 uC
 uC
 uC
@@ -45458,15 +45752,15 @@ FD
 fK
 RT
 Dx
-Dx
-Dx
-Ha
-Dx
-Dx
-CR
+UO
+tn
+CG
+tn
+kW
+uA
 OG
-fn
-wP
+ZK
+uC
 uC
 VH
 uC
@@ -45961,14 +46255,14 @@ gE
 Mj
 kZ
 FT
-kZ
+tn
 PZ
-kZ
+tn
 PE
 ce
-VT
-pu
-wP
+Pe
+bG
+uC
 uC
 uC
 uC
@@ -46462,14 +46756,14 @@ yx
 gE
 yR
 Qz
-Qz
-Qz
+sU
+uZ
 so
-kZ
-kZ
+Af
+Ek
 ce
 VT
-pu
+bG
 OG
 xb
 uC
@@ -46970,9 +47264,9 @@ fd
 kZ
 kZ
 ce
-VT
-pu
-wP
+HW
+Ak
+gh
 uC
 uC
 uC
@@ -47471,7 +47765,7 @@ Hv
 qp
 Hv
 Hv
-UO
+cg
 VT
 pu
 wP
@@ -50485,7 +50779,7 @@ ca
 Ft
 uS
 JW
-qZ
+Ef
 JW
 JW
 JW
@@ -51978,13 +52272,13 @@ JW
 JW
 JW
 JW
-JW
-Fk
+KK
+KK
 KK
 KK
 KK
 XU
-jT
+nw
 nw
 Ty
 nw
@@ -52480,11 +52774,11 @@ JW
 JW
 JW
 JW
-JW
-JW
 KK
+fn
+kM
+qj
 Da
-nw
 ss
 Dw
 sA
@@ -52982,10 +53276,10 @@ JW
 JW
 JW
 JW
-JW
-JW
 KK
-nw
+jT
+ln
+qs
 nw
 kL
 eO
@@ -53484,10 +53778,10 @@ JW
 JW
 JW
 JW
-JW
-JW
 KK
-Da
+fn
+fn
+qj
 nw
 kn
 ma
@@ -53983,11 +54277,11 @@ JW
 JW
 JW
 JW
-JW
-JW
 fb
 Tr
 Tr
+KK
+KK
 KK
 KK
 XU
@@ -54492,7 +54786,7 @@ JW
 JW
 JW
 KK
-nw
+Da
 XD
 FP
 TO
@@ -85711,7 +86005,7 @@ ad
 zC
 aD
 aD
-aD
+Az
 Sp
 aD
 aD
@@ -86214,7 +86508,7 @@ mT
 Dk
 aD
 aD
-Sp
+aD
 aD
 Fj
 mT
@@ -86716,7 +87010,7 @@ mT
 aD
 aD
 aD
-Sp
+aD
 aD
 aD
 mT
@@ -87218,7 +87512,7 @@ uP
 mT
 aD
 aD
-Sp
+aD
 aD
 mT
 Re
@@ -87720,9 +88014,9 @@ JW
 wb
 aD
 aD
-wF
-uA
-Az
+aD
+aD
+wb
 JW
 JW
 JW
@@ -128018,7 +128312,7 @@ JW
 JW
 JW
 Pw
-Pw
+iA
 Pw
 Pw
 Pw
@@ -128520,7 +128814,7 @@ JW
 JW
 JW
 Pw
-Pw
+iA
 Pw
 Pw
 Pw
@@ -135508,12 +135802,12 @@ bC
 oY
 CB
 CB
-RU
+CB
 Ji
 zQ
 CB
-CB
-Rk
+QI
+bC
 GI
 JW
 JW
@@ -136007,15 +136301,15 @@ JW
 JW
 GI
 bC
-TD
+FB
 ZH
 bC
-cs
-cs
+bC
+bC
 hx
 ZH
+FB
 bC
-TD
 GI
 JW
 JW
@@ -136516,8 +136810,8 @@ fV
 fV
 fV
 fV
-bC
 ZT
+bC
 GI
 JW
 JW
@@ -176531,8 +176825,8 @@ JW
 JW
 JW
 Hn
-Hn
-Hn
+Wb
+Wb
 Hn
 Hn
 JO
@@ -177032,7 +177326,7 @@ JW
 JW
 JW
 JW
-JW
+ad
 JW
 JW
 JW
@@ -177534,10 +177828,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Aw
+VO
+VO
+Aw
 qq
 ww
 jJ
@@ -178036,10 +178330,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Aw
+yo
+Wj
+an
 qq
 JH
 jJ
@@ -178538,11 +178832,11 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-qq
+VO
+hk
+GU
+tx
+Gr
 gU
 jJ
 MO
@@ -179040,13 +179334,13 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
-qq
-gU
-jJ
+VO
+Yr
+Uu
+IK
+zD
+kz
+Qj
 MO
 kJ
 JW
@@ -179542,10 +179836,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+VO
+Os
+Fy
+kT
 qq
 JH
 jJ
@@ -180044,10 +180338,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Aw
+Eh
+IT
+kT
 qq
 Rj
 jJ
@@ -180546,10 +180840,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Aw
+Aw
+ig
+Cc
 qq
 Rj
 th
@@ -181049,9 +181343,9 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
+Aw
+Aw
+Aw
 qq
 Rj
 is
@@ -193837,8 +194131,8 @@ JW
 JW
 as
 XJ
-XJ
-XJ
+Rk
+RU
 as
 JW
 JW
@@ -230597,9 +230891,9 @@ wm
 Ul
 tC
 Nz
-JW
-JW
-JW
+YL
+YL
+Nz
 JW
 WT
 HI
@@ -231096,12 +231390,12 @@ Ff
 vV
 Uo
 wS
-zw
-XP
+Tl
+Fl
 Nz
-JW
-JW
-JW
+ov
+ov
+Nz
 WT
 WT
 lV
@@ -231598,11 +231892,11 @@ Ff
 Ff
 fS
 rM
-Tl
-tn
-Nz
+PT
+XP
+or
 bX
-bX
+My
 WT
 WT
 xv
@@ -232099,12 +232393,12 @@ BN
 mO
 Ff
 dy
-wS
-zw
-tN
-Nz
+jH
+Gc
+Eg
+or
 Sk
-Sk
+YT
 WT
 Cr
 Ux
@@ -232600,13 +232894,13 @@ mV
 BN
 MW
 Ff
-fS
-wS
-zw
-XP
-Cg
-uZ
-sU
+SX
+VJ
+VV
+SX
+Nz
+Nz
+Nz
 WT
 MN
 Ux
@@ -233101,14 +233395,14 @@ TT
 TT
 BN
 MW
-Ff
-vV
+Rm
+ZJ
 zL
-dn
-HW
+Ul
+Ul
 Cg
-ro
-Ek
+Ul
+am
 WT
 YU
 Ux
@@ -233601,16 +233895,16 @@ TT
 TT
 TT
 TT
-BN
+VD
 yN
-Ff
-ka
+km
+fU
 nW
-FX
-ka
-WT
-WT
-WT
+My
+My
+My
+fU
+tN
 WT
 dE
 Ux
@@ -234103,17 +234397,17 @@ TT
 TT
 TT
 TT
-BN
-MW
+TT
+TD
 km
-DB
+ne
 Lc
-Ul
-iA
+ED
+ED
+ED
+Ts
+XP
 HI
-qs
-aT
-Rm
 nD
 Ux
 Ux
@@ -234605,20 +234899,20 @@ TT
 TT
 rn
 TT
-BN
-VD
-km
-fS
-wS
-zw
-tN
+TT
+YS
+Ff
+vL
+Di
+ED
+ef
+ED
+Ts
+XP
 HI
+jD
 Ux
 Ux
-Ux
-Ux
-Ux
-ZK
 dz
 WT
 WT
@@ -235105,23 +235399,23 @@ TT
 TT
 TT
 TT
+Ff
 TT
 TT
-BN
 VN
 Qr
 Zz
 sC
-Tl
+Zz
+Zz
+Zz
+Vq
 mZ
-op
-Vq
-Vq
-Vq
-Vq
+nO
+Rr
 Zm
 nQ
-Qp
+dz
 aX
 Qp
 aX
@@ -235607,23 +235901,23 @@ TT
 TT
 TT
 TT
+Ff
 TT
 TT
-BN
 HM
 sW
-fS
-wS
-zw
+ED
+UP
+ED
+ED
+ED
+Ts
 XP
-gp
-Ux
-Ux
-Ux
-Ux
+BI
+jD
 cI
-nQ
-Qp
+dn
+dz
 aX
 Qp
 aX
@@ -236111,20 +236405,20 @@ TT
 TT
 rn
 TT
-BN
+TT
 dC
-km
-fS
-wS
-zw
-tN
+Ff
+pF
+jW
+ED
+ef
+ED
+Ts
+XP
 HI
-Ux
-Ux
-Ux
-Ux
+jD
 cI
-Uw
+Ux
 dz
 WT
 WT
@@ -236613,17 +236907,17 @@ TT
 TT
 TT
 TT
-BN
-Se
+TT
+Ze
 km
-CG
-zL
-dn
+ne
+Lc
 ED
+ED
+ED
+Ts
+XP
 HI
-qs
-hY
-SX
 nD
 qF
 pz
@@ -237115,16 +237409,16 @@ TT
 TT
 TT
 TT
-BN
+IU
 YO
-Ff
-zX
+km
+fU
 xF
-Pe
-zX
-WT
-WT
-WT
+SM
+SM
+SM
+fU
+tN
 WT
 WT
 WT
@@ -237619,11 +237913,11 @@ TT
 TT
 BN
 Se
-Ff
-ZJ
-bl
-tt
-tt
+Rm
+vV
+jH
+Gc
+Gc
 TA
 Gc
 BW
@@ -238122,13 +238416,13 @@ mV
 BN
 Se
 Ff
-tt
-bl
-tt
-tt
-TA
-qj
-uJ
+zX
+fN
+UX
+zX
+xT
+xT
+xT
 WT
 PL
 PL
@@ -238624,13 +238918,13 @@ TT
 BN
 qC
 Ff
-aF
+Lj
 bl
 tt
-gT
-xT
+tt
+ij
 tM
-tM
+SH
 WT
 PL
 PL
@@ -239130,9 +239424,9 @@ tt
 ki
 DP
 tt
-xT
+ij
 MB
-MB
+Il
 WT
 WT
 WT
@@ -239627,15 +239921,15 @@ Us
 TT
 Ff
 Ff
-tt
+Sf
 tt
 Ym
 cv
 Hz
 xT
-JW
-JW
-JW
+tQ
+tQ
+WT
 WT
 on
 on
@@ -240128,16 +240422,16 @@ Ff
 Ff
 Ff
 Ff
-tt
+Oc
 tt
 DP
 OS
 tt
 gT
 xT
-JW
-JW
-JW
+pY
+pY
+WT
 JW
 JW
 JW
