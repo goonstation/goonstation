@@ -162,8 +162,8 @@
 					SPAWN_DBG(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
+							muzzle_flash_any(src, 0, "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
-							muzzle_flash_any(src, get_angle(src,target), "muzzle_flash")
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 
@@ -396,6 +396,8 @@
 			return 0
 		if (!C)
 			return 0
+		if(!isliving(C) || isintangible(C))
+			return 0
 		if (C.health < 0)
 			return 0
 		if (C.stat == 2)
@@ -553,6 +555,7 @@
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
 	desc = "A Nanotrasen Automatic Riot Control System."
+	icon_state = "nt_off"
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target

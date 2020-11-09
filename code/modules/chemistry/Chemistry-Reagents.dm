@@ -258,7 +258,7 @@ datum
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
-					amount *= (0.65 ** mult)
+					amount *= (0.65)
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)

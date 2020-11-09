@@ -1272,7 +1272,7 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32

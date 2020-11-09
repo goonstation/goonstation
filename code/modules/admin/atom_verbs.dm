@@ -190,7 +190,7 @@ var/global/atom_emergency_stop = 0
 	if (!target)
 		return
 
-	if (target && target.emag_act())
+	if (target?.emag_act())
 		target.emag_act(null,null)
 
 		logTheThing("admin", usr, null, "emagged [target] via Emag Target ([showCoords(target.x, target.y, target.z)] in [target.loc])")

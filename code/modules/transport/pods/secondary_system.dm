@@ -79,6 +79,15 @@
 	deactivate()
 		return
 
+	on_shipdeath(var/obj/machinery/vehicle/ship)
+		if (ship)
+			SPAWN_DBG(10)	//idk so it doesn't get caught on big pods when they are still aorund...
+				for (var/obj/O in src.contents)
+					O.set_loc(get_turf(ship))
+					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
+
+		..()
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
@@ -292,7 +301,7 @@
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
-	while(load && load.len)
+	while(length(load))
 		var/obj/O = src.unload(pick(load))
 		if (O)
 			O.visible_message("<span class='alert'><b>[O]</b> is flung out of [src.ship]!</span>")
@@ -502,7 +511,7 @@
 			for(var/mob/M in ship)
 				if(cmptext(href_list["release"], M.name))
 					var/list/turfs = get_area_turfs(/area/shuttle/arrival, 1)
-					if (turfs && turfs.len)
+					if (length(turfs))
 						M.set_loc(pick(turfs))
 						showswirl(get_turf(M))
 		opencomputer(usr)
@@ -752,7 +761,7 @@
 				boutput(usr, "<span class='alert'>You must be inside the ship to do that!</span>")
 				return
 
-			if (ship && ship.locked)
+			if (ship?.locked)
 				ship.locked = 0
 				boutput(usr, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
 				//ship.access_computer(usr)

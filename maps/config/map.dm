@@ -1,5 +1,10 @@
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#include "blank.dm"
 
-#if defined(MAP_OVERRIDE_CONSTRUCTION)
+#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+#include "blank_underwater.dm"
+
+#elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
 
 #elif defined(MAP_OVERRIDE_DESTINY)

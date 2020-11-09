@@ -97,7 +97,7 @@
 			if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
-			if(src && src.reagents)
+			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
 
@@ -273,7 +273,7 @@
 				else
 					src.reagents.trans_to(M, puffrate)
 					src.reagents.reaction(M, INGEST, puffrate)
-			else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
+			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
 		if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
@@ -445,7 +445,7 @@
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
 		..()
-		if (src && src.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
+		if (src?.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
@@ -851,6 +851,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		reagents.add_reagent("phosphorus", 1)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_color(0.94, 0.69, 0.27)
@@ -970,6 +972,13 @@
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
 				src.light(user)
+				return
+			else if (istype (target, /obj/item/reagent_containers/)) // copied from cigarettes
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
+				"<span class='notice'>You crush up the [src] in the [target].</span>")
+				if(src.reagents)
+					src.reagents.trans_to(target, 1)
+				qdel (src)
 				return
 			else
 				if (prob(10))

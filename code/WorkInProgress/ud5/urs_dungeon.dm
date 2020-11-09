@@ -484,6 +484,9 @@
 
 /obj/storage/closet/syndi/hidden/shovel_me
 
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		return
+
 	attack_hand(mob/user as mob)
 		return
 

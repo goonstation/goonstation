@@ -71,7 +71,7 @@ Important Procedures
 				if(!obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
-		if (target && target.checkingcanpass > 0)
+		if (target?.checkingcanpass > 0)
 			for(var/obj/obstacle as() in target)
 				if(!obstacle.CanPass(mover, src, height, air_group))
 					return 0
@@ -181,16 +181,17 @@ datum/controller/air_system
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
 					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
-						if(istype(T,/turf/simulated) && !T:parent)
-							possible_members += T
-							members += T
+						if(istype(T,/turf/simulated))
+							if(!T:parent)
+								possible_members += T
+								members += T
+							else
+								LAZYLISTINIT(possible_borders)
+								possible_borders |= test
 						else if(istype(T, /turf/space))
 							LAZYLISTINIT(possible_space_borders)
 							possible_space_borders |= test
 							test.length_space_border++
-						else
-							LAZYLISTINIT(possible_borders)
-							possible_borders |= test
 
 				if(test.length_space_border > 0)
 					possible_space_length += test.length_space_border

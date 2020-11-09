@@ -251,7 +251,7 @@
 	O.job = "Cyborg"
 	if (O.mind) O.mind.assigned_role = "Cyborg"
 
-	if(O.mind && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+	if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
 			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
@@ -556,7 +556,7 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -576,7 +576,7 @@
 	set name = "Enter VR"
 	set category = "Ghost"
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
@@ -597,7 +597,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -646,7 +646,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/critter/C
 	var/traitor = 0
 
-	if (types && types.len)
+	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint)
 	else
 		traitor = checktraitor(selfmob)
@@ -689,7 +689,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!ticker || !ticker.mode)
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -799,7 +799,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))

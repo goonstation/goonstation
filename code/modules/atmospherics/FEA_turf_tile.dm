@@ -210,7 +210,7 @@ turf
 
 		assume_air(datum/gas_mixture/giver)
 			if(air)
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					if(!parent.air.check_then_merge(giver))
 						parent.suspend_group_processing()
 						air.merge(giver)
@@ -242,7 +242,7 @@ turf
 
 		return_air()
 			if(air)
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					return parent.air
 				else return air
 
@@ -253,7 +253,7 @@ turf
 			if(air)
 				var/datum/gas_mixture/removed = null
 
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					removed = parent.air.check_then_remove(amount)//, remove_water)
 					if(!removed)
 						parent.suspend_group_processing()
@@ -340,7 +340,7 @@ turf
 								enemy_tile.archive()
 #endif
 							var/datum/air_group/sharegroup = enemy_tile.parent //move tile's group to a new variable so we're not referencing multiple layers deep
-							if(sharegroup && sharegroup.group_processing)
+							if(sharegroup?.group_processing)
 								if(sharegroup.current_cycle < current_cycle)
 									if(sharegroup.air.check_gas_mixture(air))
 										connection_difference = air.share(sharegroup.air)
@@ -418,7 +418,7 @@ turf
 								if(air) //Both tiles are open
 
 									if(modeled_neighbor.parent && modeled_neighbor.parent.group_processing)
-										if(parent && parent.group_processing)
+										if(parent?.group_processing)
 											//both are acting as a group
 											//modified using construct developed in datum/air_group/share_air_with_group(...)
 
@@ -440,7 +440,7 @@ turf
 										else
 											air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 									else
-										if(parent && parent.group_processing)
+										if(parent?.group_processing)
 											if(!parent.air.check_me_then_temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT))
 												//may have to deconstruct neighbors air group
 
@@ -463,7 +463,7 @@ turf
 
 							else
 								if(air) //Open but neighbor is solid
-									if(parent && parent.group_processing)
+									if(parent?.group_processing)
 										if(!parent.air.check_me_then_temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity))
 											parent.suspend_group_processing()
 											air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
@@ -479,7 +479,7 @@ turf
 
 						else
 							if(air) //Open
-								if(parent && parent.group_processing)
+								if(parent?.group_processing)
 									if(!parent.air.check_me_then_temperature_mimic(neighbor, neighbor.thermal_conductivity))
 										parent.suspend_group_processing()
 										air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
@@ -496,7 +496,7 @@ turf
 
 			//Conduct with air on my tile if I have it
 			if(air)
-				if(parent && parent.group_processing)
+				if(parent?.group_processing)
 					if(!parent.air.check_me_then_temperature_turf_share(src, src.thermal_conductivity))
 						parent.suspend_group_processing()
 						air.temperature_turf_share(src, src.thermal_conductivity)

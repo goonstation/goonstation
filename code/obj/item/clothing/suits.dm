@@ -310,6 +310,10 @@
 	permeability_coefficient = 0.005
 	over_hair = 1
 
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.6)

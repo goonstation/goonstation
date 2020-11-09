@@ -82,7 +82,7 @@
 
 // Uniform
 	if (src.w_uniform)
-		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
+		if (src.bioHolder?.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
 			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
@@ -655,7 +655,7 @@
 
 	if (world.time - src.last_show_inv <= 30 SECONDS)
 		for (var/client/C in src.showing_inv)
-			if (C && C.mob)
+			if (C?.mob)
 				if (get_dist(src,C.mob) <= 1)
 					src.show_inv(C.mob)
 				else
@@ -1302,7 +1302,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 	var/obj/item/organ/head/HO = organs["head"]
 	var/head_damage = null
-	if (HO && organHolder && organHolder.head)
+	if (HO && organHolder?.head)
 		var/head_brute = min(3,round(HO.brute_dam/10))
 		var/head_burn = min(3,round(HO.burn_dam/10))
 		if (head_brute+head_burn > 0)
@@ -1321,7 +1321,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.body_damage_standing = SafeGetOverlayImage("body_damage", 'icons/mob/dam_human.dmi',"body[brute_state][burn_state]", MOB_DAMAGE_LAYER)// image('icons/mob/dam_human.dmi', "[brute_state][burn_state]", MOB_DAMAGE_LAYER)
 
 		//Head damage if applicable
-		if (head_damage && organHolder && organHolder.head)
+		if (head_damage && organHolder?.head)
 			src.head_damage_standing = SafeGetOverlayImage("head_damage", 'icons/mob/dam_human.dmi', head_damage, MOB_DAMAGE_LAYER) // image('icons/mob/dam_human.dmi', head_damage, MOB_DAMAGE_LAYER)
 		else
 			src.head_damage_standing = SafeGetOverlayImage("head_damage", 'icons/mob/dam_human.dmi', "00", MOB_DAMAGE_LAYER)//image('icons/mob/dam_human.dmi', "00", MOB_DAMAGE_LAYER)

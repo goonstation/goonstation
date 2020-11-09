@@ -658,7 +658,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input && input.signal && isReady() && trunk)
+		if(input?.signal && isReady() && trunk)
 			unReady()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
