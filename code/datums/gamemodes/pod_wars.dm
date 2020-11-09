@@ -5,7 +5,7 @@
 	config_tag = "pod_wars"
 	votable = 1
 	probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
-	crew_shortage_enabled = 1
+	crew_shortage_enabled = 0
 
 	shuttle_available = 0 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	list/latejoin_antag_roles = list() // Unrecognized roles default to traitor in mob/new_player/proc/makebad().
@@ -17,10 +17,6 @@
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
-
-	proc/update_status()
-
-
 
 /datum/game_mode/pod_wars/announce()
 	boutput(world, "<B>The current game mode is - Pod Wars!</B>")
@@ -38,7 +34,6 @@
 	handle_point_change(team_SY, team_SY.points)	//HAX. am
 
 	return 1
-
 
 
 /datum/game_mode/pod_wars/proc/setup_teams()
@@ -69,8 +64,6 @@
 
 	return 1
 
-
-
 /datum/game_mode/pod_wars/post_setup()
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -78,7 +71,7 @@
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
 
 	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
-	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 3, 15, 3)
+	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
 
 	for(var/turf/T in world)
 		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid/pod_wars)) continue
@@ -253,8 +246,8 @@
 			if (!istype(M)) continue
 			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
-			if(jobban_isbanned(M, "NanoTrasen Commander") || "NanoTrasen Commander" in M.client.preferences.jobs_unwanted) continue
-			if(jobban_isbanned(M, "Syndicate Commander") || "Syndicate Commander" in M.client.preferences.jobs_unwanted) continue
+			if(jobban_isbanned(M, "NanoTrasen Commander") || ("NanoTrasen Commander" in M.client.preferences.jobs_unwanted)) continue
+			if(jobban_isbanned(M, "Syndicate Commander") || ("Syndicate Commander" in M.client.preferences.jobs_unwanted)) continue
 			if ((M.ready) && !candidates.Find(M.mind))
 				candidates += M.mind
 
