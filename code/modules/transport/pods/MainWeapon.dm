@@ -145,9 +145,20 @@
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
+	current_projectile = new/datum/projectile/laser/pod
+	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
+
+/obj/item/shipcomponent/mainweapon/laser/short
+	name = "Mk.2 CQ Laser"
+	desc = "A downgraded variant of the upgraded MK 2.0 laser. Doesn't shoot quite as far, but doesn't use quite as much energy either."
+	weapon_score = 0.35
+	appearanceString = "pod_weapon_laser"
+	power_used = 75
 	current_projectile = new/datum/projectile/laser
 	icon_state = "mk-2-scout"
 	muzzle_flash = "muzzle_flash_laser"
+
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
