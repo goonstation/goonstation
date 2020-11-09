@@ -5271,3 +5271,43 @@ area/station/security/visitation
 	name = "Abandoned Mining Outpost Crew Quarters"
 	icon_state = "green"
 #endif
+
+#define MAJOR_AST(num) area/podmode/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
+
+area/podmode/asteroid/major/icon_state = "green"
+area/podmode/asteroid/minor/icon_state = "yellow"
+area/podmode/asteroid/minor/name = "minor asteroid"
+area/podmode/asteroid/minor/nospawn/icon_state = "red"
+
+MAJOR_AST(1)
+MAJOR_AST(2)
+MAJOR_AST(3)
+MAJOR_AST(4)
+MAJOR_AST(5)
+MAJOR_AST(6)
+MAJOR_AST(7)
+MAJOR_AST(8)
+MAJOR_AST(9)
+MAJOR_AST(10)
+MAJOR_AST(11)
+MAJOR_AST(12)
+MAJOR_AST(13)
+MAJOR_AST(14)
+MAJOR_AST(15)
+MAJOR_AST(16)
+MAJOR_AST(17)
+MAJOR_AST(18)
+MAJOR_AST(19)
+MAJOR_AST(20)
+MAJOR_AST(21)
+MAJOR_AST(22)
+MAJOR_AST(23)
+MAJOR_AST(24)
+MAJOR_AST(25)
+MAJOR_AST(26)
+MAJOR_AST(27)
+MAJOR_AST(28)
+MAJOR_AST(29)
+MAJOR_AST(30)
+
+#undef MAJOR_AST
