@@ -42761,6 +42761,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bXx" = (
@@ -43097,9 +43100,6 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/machinery/recharger/wall{
-	pixel_y = -24
-	},
 /obj/item/reagent_containers/food/snacks/donut/robust{
 	pixel_y = 4;
 	rand_pos = 0
@@ -47576,9 +47576,9 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"iGY" = (
+"ghV" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -47588,12 +47588,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"iMg" = (
-/obj/cable{
-	icon_state = "2-4"
+"iPj" = (
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -3;
+	pixel_y = 6
 	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "iPV" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
@@ -47622,12 +47626,6 @@
 	},
 /turf/space/fluid,
 /area/space)
-"kWM" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
@@ -47653,12 +47651,6 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"nlQ" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -47714,6 +47706,12 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qjw" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "qBd" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "secure_dock"
@@ -47728,29 +47726,6 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"ryf" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
-"slW" = (
-/obj/item/kitchen/food_box/donut_box{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/table/reinforced/industrial/auto,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47758,6 +47733,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
+"toE" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "tWV" = (
@@ -47788,9 +47769,28 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"vcb" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
+"vLB" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "wis" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
@@ -91235,8 +91235,8 @@ bTR
 bXu
 bTR
 bTR
-kWM
-nlQ
+vcb
+ghV
 bLr
 bOR
 aqn
@@ -92442,7 +92442,7 @@ bXw
 bXx
 bVX
 bVX
-slW
+iPj
 bTR
 bRU
 bLr
@@ -92744,7 +92744,7 @@ bVZ
 bWH
 bwE
 bVb
-ryf
+vLB
 bTR
 bRU
 bLr
@@ -93349,8 +93349,8 @@ bWK
 bXA
 bVc
 bTR
-iMg
-iGY
+qjw
+toE
 bLr
 bVo
 aqn
