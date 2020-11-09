@@ -396,6 +396,8 @@
 			return 0
 		if (!C)
 			return 0
+		if(!isliving(C) || isintangible(C))
+			return 0
 		if (C.health < 0)
 			return 0
 		if (C.stat == 2)
