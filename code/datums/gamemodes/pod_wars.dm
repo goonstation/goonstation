@@ -685,7 +685,6 @@ obj/screen/score_board
 		else
 			return 0
 
-ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
 /obj/deployable_turret/pod_wars/nt/activated
 	anchored=1
 	active=1
@@ -715,7 +714,6 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/nt/activated)
 		else
 			return 0
 
-ABSTRACT_TYPE(/obj/deployable_turret/pod_wars/sy/activated)
 /obj/deployable_turret/pod_wars/sy/activated
 	anchored=1
 	active=1
