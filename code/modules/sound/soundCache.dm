@@ -4,6 +4,33 @@
 // Note: Vox files are excluded from this to save on rsc size
 
 var/global/list/soundCache = list(
+	"sound/voice/blob/blob01"	= 'sound/voice/blob/blob01'
+	"sound/voice/blob/blob02"	= 'sound/voice/blob/blob02'
+	"sound/voice/blob/blob03"	= 'sound/voice/blob/blob03'
+	"sound/voice/blob/blob04"	= 'sound/voice/blob/blob04'
+	"sound/voice/blob/blob05"	= 'sound/voice/blob/blob05'
+	"sound/voice/blob/blob06"	= 'sound/voice/blob/blob06'
+	"sound/voice/blob/blob07"	= 'sound/voice/blob/blob07'
+	"sound/voice/blob/blob08"	= 'sound/voice/blob/blob08'
+	"sound/voice/blob/blob09"	= 'sound/voice/blob/blob09'
+	"sound/voice/blob/blob10"	= 'sound/voice/blob/blob10'
+	"sound/voice/blob/blob11"	= 'sound/voice/blob/blob11'
+	"sound/voice/blob/blob12"	= 'sound/voice/blob/blob12'
+	"sound/voice/blob/blob13"	= 'sound/voice/blob/blob13'
+	"sound/voice/blob/blob14"	= 'sound/voice/blob/blob14'
+	"sound/voice/blob/blob15"	= 'sound/voice/blob/blob15'
+	"sound/voice/blob/blob16" = 'sound/voice/blob/blob16'
+	"sound/voice/blob/blob17"	= 'sound/voice/blob/blob17'
+	"sound/voice/blob/blob18"	= 'sound/voice/blob/blob18'
+	"sound/voice/blob/blob19" = 'sound/voice/blob/blob19'
+	"sound/voice/blob/blob20"	= 'sound/voice/blob/blob20'
+	"sound/voice/blob/blob21"	= 'sound/voice/blob/blob21'
+	"sound/voice/blob/blob22"	= 'sound/voice/blob/blob22'
+	"sound/voice/blob/blob23" = 'sound/voice/blob/blob23'
+	"sound/voice/blob/blob24" = 'sound/voice/blob/blob24'
+	"sound/voice/blob/blob25" = 'sound/voice/blob/blob25'
+	"sound/voice/blob/blob26" = 'sound/voice/blob/blob26'
+	"sound/voice/blob/blob27" = 'sound/voice/blob/blob27'
 	"icons/emag_fail_sound.ogg" = 'icons/emag_fail_sound.ogg',\
  	"sound/ambience/dojo/dojoambi.ogg" = 'sound/ambience/dojo/dojoambi.ogg',\
  	"sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg" = 'sound/ambience/industrial/AncientPowerPlant_Creaking1.ogg',\
