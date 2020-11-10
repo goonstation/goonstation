@@ -390,7 +390,7 @@
 
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_truf(src))
+		var/distance = get_dist(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
