@@ -646,10 +646,11 @@ obj/screen/score_board
 			else
 				continue
 
-		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
-			if (pod_target_valid(V))
-				var/distance = get_dist(V.loc,src.loc)
-				target_list[V] = distance
+		//VERY POSSIBLY UNNEEDED, -KYLE
+		// for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
+		// 	if (pod_target_valid(V))
+		// 		var/distance = get_dist(V.loc,src.loc)
+		// 		target_list[V] = distance
 
 		if (src.target_list.len>0)
 			var/min_dist = 99999
@@ -665,15 +666,16 @@ obj/screen/score_board
 
 		return src.target
 
-	proc/pod_target_valid(var/obj/machinery/vehicle/V )
-		var/distance = get_dist(V.loc,src.loc)
-		if(distance > src.range)
-			return 0
+	//VERY POSSIBLY UNNEEDED, -KYLE
+	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
+	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	if(distance > src.range)
+	// 		return 0
 
-		if (ismob(V.pilot))
-			return is_friend(V.pilot)
-		else
-			return 0
+	// 	if (ismob(V.pilot))
+	// 		return is_friend(V.pilot)
+	// 	else
+	// 		return 0
 
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"

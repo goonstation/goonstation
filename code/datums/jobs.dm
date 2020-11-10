@@ -2645,7 +2645,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat
 		slot_poc1 = /obj/item/spacecash/hundred
-		slot_poc2 = /obj/item/survival_machete
+		slot_poc2 = /obj/item/survival_machete/syndicate
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
