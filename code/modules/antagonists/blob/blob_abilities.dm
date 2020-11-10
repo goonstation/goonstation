@@ -325,6 +325,18 @@
 			if (B)
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
+					if (prob(16))
+						playsound(user.loc, "sound/voice/blob1", 50, 0)
+					if (prob(16))
+						playsound(user.loc, "sound/voice/blob2", 50, 0)
+					if (prob(16))
+						playsound(user.loc, "sound/voice/blob3", 50, 0)
+					if (prob(16))
+						playsound(user.loc, "sound/voice/blob4", 50, 0)
+					if (prob(16))
+						playsound(user.loc, "sound/voice/blob5", 50, 0)
+					else
+						playsound(user.loc, "sound/voice/blob6", 50, 0)
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
 					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
