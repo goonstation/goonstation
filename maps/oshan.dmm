@@ -31654,7 +31654,9 @@
 /area/station/security/checkpoint/escape)
 "bwD" = (
 /obj/access_spawn/security,
-/obj/machinery/turret,
+/obj/machinery/turret{
+	name = "armory turret"
+	},
 /turf/simulated/floor/delivery/caution,
 /area/station/ai_monitored/armory)
 "bwE" = (
