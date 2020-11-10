@@ -363,7 +363,7 @@ toxic - poisons
 
 /datum/projectile/laser/blaster/pod_pilot
 	cost = 20
-	power = 25
+	power = 33
 	color_red = 0
 	color_green = 0
 	color_blue = 0
@@ -380,7 +380,7 @@ toxic - poisons
 
 /datum/projectile/laser/blaster/pod_pilot/red_SY
 	name = "red blaster bolt"
-	color_icon = "#33ccff"
+	color_icon = "#ff4043"
 	color_red = 0.51
 	color_green = 0.05
 	color_blue = 0.28
