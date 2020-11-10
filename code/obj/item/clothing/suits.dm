@@ -1285,7 +1285,7 @@
 			name = "commander's great coat"
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
-			desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. So scary even the vacuum of space doesn't dare claim the wearer."
 
 			setupProperties()
 				..()
