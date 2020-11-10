@@ -446,7 +446,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+		playsound(T, 'sound/voice/blob/blob01.ogg', 50, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
