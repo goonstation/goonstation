@@ -87,8 +87,8 @@
 	var/team = ship?.pilot?.mind?.special_role
 		
 	for(var/obj/warp_beacon/W in warp_beacons)
-		if (W.name == "NSV Pytheas" && team != "NanoTrasen Crew") continue
-		else if (W.name == "Lodbrok" && team != "Syndicate Crew") continue
+		if (W.name == "NSV Pytheas" && team != "NanoTrasen") continue
+		else if (W.name == "Lodbrok" && team != "Syndicate") continue
 		beacons += W
 #else
 	for(var/obj/warp_beacon/W in warp_beacons)
