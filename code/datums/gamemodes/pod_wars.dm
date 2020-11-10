@@ -106,8 +106,6 @@
 	var/offset = round(-64+fraction * 64, 1)
 	offset ++
 
-	message_admins("[team]||[team_NT]||[team_SY]--[fraction]")
-	// animate(bar_to_change, transform = M1, pixel_x = offset, time = 10)
 	if (team == team_NT)
 		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
 	else
