@@ -949,6 +949,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\stats_meter.dm"
 #include "code\modules\power\switchgear.dm"
+#include "code\modules\power\sword_engine.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\turbine.dm"
 #include "code\modules\power\nuke\centrifuge.dm"

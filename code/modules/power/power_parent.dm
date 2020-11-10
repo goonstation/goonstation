@@ -396,3 +396,5 @@ var/makingpowernetssince = 0
 	if( netexcess > 100)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
+		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
+			SW.restore()				//Restore some of the power that was used.
