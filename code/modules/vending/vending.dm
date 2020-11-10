@@ -2121,9 +2121,9 @@
 	desc = "One stop shop for all your custodial needs."
 	icon_state = "janitor"
 	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
+	icon_off = "janitor-off"
+	icon_broken = "janitor-broken"
+	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
 	mats = 10
