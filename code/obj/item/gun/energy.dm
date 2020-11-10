@@ -1519,6 +1519,35 @@
 			return
 
 
+// Taser Assault Rifle //
+// Taser but more pow pow instead of pew pew
+
+/obj/item/gun/energy/taser_rifle
+	name = "taser assault rifle"
+	desc = "Sometimes, you gotta bring out the big guns"
+	icon_state = "taser_rifle"
+	uses_multiple_icon_states = 1
+	item_state = "taser_rifle"
+	force = 5
+	two_handed = 1
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_elec"
+	can_swap_cell = 0
+
+	New()
+		..()
+		cell = new/obj/item/ammo/power_cell/high_power
+		current_projectile = new/datum/projectile/energy_bolt/taser_rifle_auto
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/taser_rifle_semi)
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "pulse_rifle[ratio]"
+			return
+
 ///////////////////////////////////////Wasp Gun
 /obj/item/gun/energy/wasp
 	name = "mini wasp-egg-crossbow"
