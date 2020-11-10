@@ -570,6 +570,18 @@ a.latejoin-card:hover {
 			//ahahaha you get no choices im going to just shove you in the game now good luck
 			AttemptLateSpawn(new /datum/job/football)
 			return
+		else if(istype(ticker.mode,/datum/game_mode/pod_wars))
+			//Go to the team with less members
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+
+			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
+				// for(var/datum/job/pod_wars/syndicate/J in job_controls.staple_jobs)
+				dat += LateJoinLink(new /datum/job/pod_wars/nanotrasen)
+			else
+				// for(var/datum/job/pod_wars/nanotrasen/J in job_controls.staple_jobs)
+				dat += LateJoinLink(new /datum/job/pod_wars/syndicate)
+
+			return
 		else
 			var/datum/game_mode/construction/C = ticker.mode
 			if (!C.enabled_jobs.len)
