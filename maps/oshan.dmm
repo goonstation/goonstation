@@ -47762,15 +47762,6 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"tfI" = (
-/obj/item/storage/wall/fire{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/simulated/floor/escape{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "tWV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -115999,12 +115990,12 @@ byq
 bzl
 bAp
 bAp
-tfI
+bAp
 ikm
 byY
 byY
 vqP
-tfI
+bAp
 bAp
 bAp
 bCR
