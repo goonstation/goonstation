@@ -55626,6 +55626,8 @@
 /area/station/science/chemistry)
 "cqq" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
@@ -56837,18 +56839,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "csT" = (
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /obj/machinery/glass_recycler,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -56857,16 +56858,30 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/syringes,
-/obj/item/reagent_containers/dropper,
-/obj/item/device/reagentscanner,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/patchbox{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = -1;
+	pixel_y = 14
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 6;
+	pixel_y = 14
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = 1
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -56875,30 +56890,50 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/audio_log,
-/obj/item/reagent_containers/dropper,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/reagent_containers/dropper/mechanical,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/dropper{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = 11;
+	pixel_y = 7
+	},
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
-/obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/chemistry)
 "csW" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/dropper,
-/obj/item/pen/marker,
-/obj/item/device/reagentscanner,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/clothing/gloves/latex{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "csX" = (
@@ -57228,11 +57263,23 @@
 /area/station/maintenance/solar/south)
 "ctM" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 5;
+	pixel_y = -12
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctN" = (
@@ -57368,11 +57415,25 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctZ" = (
@@ -57416,6 +57477,9 @@
 /turf/simulated/floor,
 /area/station/routing/medsci)
 "cud" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
 "cue" = (
@@ -57426,8 +57490,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/simulated/floor,
 /turf/space,
+/turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
 "cuf" = (
@@ -57766,6 +57830,7 @@
 /area/station/science/chemistry)
 "cuP" = (
 /obj/cable{
+	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -57785,8 +57850,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/simulated/floor,
 /turf/space,
+/turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
 "cuR" = (
@@ -57794,8 +57859,8 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor,
 /turf/space,
+/turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
 "cuS" = (
@@ -58557,10 +58622,21 @@
 	},
 /area/station/janitor/supply)
 "cwt" = (
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/dropper,
-/obj/item/device/reagentscanner,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/device/reagentscanner{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/device/reagentscanner{
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 2;
+	pixel_y = -4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cwu" = (
@@ -58597,10 +58673,19 @@
 	},
 /area/station/janitor/supply)
 "cwv" = (
-/obj/item/device/radio/beacon,
-/obj/item/paper/book/medical_guide,
-/obj/item/storage/toolbox/emergency,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/device/radio/beacon{
+	pixel_x = -13;
+	pixel_y = 15
+	},
+/obj/item/paper/book/medical_guide{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/pen/marker{
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cww" = (
@@ -59200,11 +59285,30 @@
 	},
 /area/station/medical/research)
 "cxA" = (
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/hand_labeler,
-/obj/item/clothing/glasses/spectro,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/paper_bin{
+	pixel_x = 8
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/hand_labeler{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/device/audio_log{
+	pixel_x = 7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cxB" = (
@@ -61543,6 +61647,25 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"dwh" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "dGz" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -61662,6 +61785,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
+"eOP" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "ePs" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -61955,16 +62086,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"iey" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/arrival{
-	dir = 6
-	},
-/area/station/medical/medbay)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -62001,14 +62122,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"jlI" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -62208,14 +62321,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"ngG" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay)
 "niO" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -62281,6 +62386,32 @@
 	icon_state = "7"
 	},
 /area/shuttle/arrival/station)
+"nIv" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/arrival{
+	dir = 6
+	},
+/area/station/medical/medbay)
+"nOl" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "nPH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62491,22 +62622,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"syP" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -62882,6 +62997,14 @@
 "xuC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/securityexternal)
+"xwZ" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -94552,7 +94675,7 @@ cwt
 cpu
 ctg
 ctX
-cuO
+dwh
 aaG
 aaa
 aah
@@ -94854,7 +94977,7 @@ cwv
 cpu
 ctg
 ctY
-cuO
+dwh
 aaG
 aaa
 aah
@@ -96964,7 +97087,7 @@ cne
 cne
 crz
 cqz
-syP
+nOl
 cne
 ctm
 cjk
@@ -97259,7 +97382,7 @@ cem
 cfA
 cgS
 chY
-ngG
+xwZ
 ckH
 cmc
 cni
@@ -97875,7 +97998,7 @@ cqB
 bEi
 cuf
 cuV
-iey
+nIv
 cvU
 cwB
 ckG
@@ -105717,7 +105840,7 @@ cca
 cjG
 cjA
 cfX
-jlI
+eOP
 ckY
 ckY
 clp
