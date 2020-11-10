@@ -185,15 +185,15 @@
 		if(bypassing)
 			if(!just_spawned)
 				volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
-				temperature = location.air.temperature
+				src.temperature = location.air.temperature
 		else
 			var/datum/gas_mixture/affected = location.air.remove_ratio(volume/max((location.air.volume/5),1))
 
 			affected.temperature = temperature
 
 			affected.react()
+			src.temperature = affected.temperature
 
-			temperature = affected.temperature
 			volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 
 			location.assume_air(affected)
