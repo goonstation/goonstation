@@ -2591,7 +2591,7 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (src.slot_card)
-			M.equip_new_if_possible(src.slot_card, slot_card)
+			M.equip_new_if_possible(src.slot_card, M.slot_wear_id)
 
 	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))

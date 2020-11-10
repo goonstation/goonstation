@@ -293,6 +293,7 @@
 
 		else if (istype(H))
 			H.Equip_Job_Slots(JOB)
+			H.equip_new_if_possible(JOB.slot_card, H.slot_wear_id)
 
 		if (!ishuman(H))
 			boutput(H, "something went wrong. Horribly wrong.")
