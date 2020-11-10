@@ -1,5 +1,9 @@
 
 (t)mon nov 09 20
+(u)Jawns
+(p)2597
+(e)🐛🗺|bug, mapping
+(+)Upgraded escape pod portal generator teleports you to the correct escape shuttle
 (u)Carbadox
 (p)2613
 (e)🆕|feature
