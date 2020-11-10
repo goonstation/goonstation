@@ -166,6 +166,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"Q" = "drop",
 		"E" = "swaphand",
 		"C" = "attackself",
+		"H" = "selfattack",
+		"X" = "usehand",
 		"DELETE" = "togglethrow"
 	)
 

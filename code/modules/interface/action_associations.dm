@@ -7,6 +7,8 @@ var/list/action_names = list(
 	"swaphand" = "Swap Hand",
 	"equip" = "Equip",
 	"resist" = "Resist",
+	"selfattack" = "Attack self with in-hand",
+	"usehand" = "Use in-hand on other hand",
 
 	"fart" = "Fart",
 	"flip" = "Flip",

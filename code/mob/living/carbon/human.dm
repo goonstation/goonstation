@@ -893,6 +893,14 @@
 			src.zone_sel.select_zone("l_leg")
 		if ("r_leg")
 			src.zone_sel.select_zone("r_leg")
+		if ("selfattack")
+			var/obj/item/W = src.equipped()
+			if (W)
+				src.click(src, list())
+		if ("usehand")
+			var/obj/item/W = src.hand ? src.r_hand : src.l_hand
+			if (W)
+				src.click(W, list())
 		else
 			return ..()
 
