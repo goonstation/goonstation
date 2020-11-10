@@ -128,7 +128,7 @@
 		if (!istype(C.loc.loc,A))
 			continue
 		if ((src.req_access || src.req_access_txt) && src.allowed(C))
-			continue //optional whitelist
+			continue //optional access whitelist
 		. += C
 
 	if (istype(A, /area/station/turret_protected))
