@@ -327,15 +327,15 @@
 				if (success)
 					if (prob(16))
 						playsound(user.loc, "sound/voice/blob1", 50, 0)
-					if (prob(16))
+					else if (prob(16))
 						playsound(user.loc, "sound/voice/blob2", 50, 0)
-					if (prob(16))
+					else if (prob(16))
 						playsound(user.loc, "sound/voice/blob3", 50, 0)
-					if (prob(16))
+					else if (prob(16))
 						playsound(user.loc, "sound/voice/blob4", 50, 0)
-					if (prob(16))
+					else if (prob(16))
 						playsound(user.loc, "sound/voice/blob5", 50, 0)
-					else
+					else if
 						playsound(user.loc, "sound/voice/blob6", 50, 0)
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
