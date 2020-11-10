@@ -1,4 +1,9 @@
 
+(t)tue nov 10 20
+(u)Erinexx, Flaborized, and Sovexe
+(p)2631
+(e)🆕🎨|feature, sprites
+(*)New sprites for beakers, flasks, fountain jugs, and the chemicompiler made by Erinexx and touched up by Flaborized.
 (t)mon nov 09 20
 (u)Jawns
 (p)2597
