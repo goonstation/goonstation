@@ -325,18 +325,6 @@
 			if (B)
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
-					if (prob(16))
-						playsound(T, 'sound/voice/blob/blob01.ogg', 50, 0)
-					else if (prob(16))
-						playsound(T, 'sound/voice/blob/blob02.ogg', 50, 0)
-					else if (prob(16))
-						playsound(T, 'sound/voice/blob/blob03.ogg', 50, 0)
-					else if (prob(16))
-						playsound(T, 'sound/voice/blob/blob04.ogg', 50, 0)
-					else if (prob(16))
-						playsound(T, 'sound/voice/blob/blob05.ogg', 50, 0)
-					else
-						playsound(T, 'sound/voice/blob/blob06.ogg', 50, 0)
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
 					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
@@ -379,6 +367,7 @@
 				spreadability -= R
 
 		if (!owner.starter_buff)
+			playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 
@@ -446,7 +435,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		playsound(T, 'sound/voice/blob/blob01.ogg', 50, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
