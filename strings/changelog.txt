@@ -1,5 +1,39 @@
 
+(t)mon nov 09 20
+(u)Jawns
+(p)2597
+(e)🐛🗺|bug, mapping
+(+)Upgraded escape pod portal generator teleports you to the correct escape shuttle
+(u)Carbadox
+(p)2613
+(e)🆕|feature
+(*)Added a rubber hammer as the Clowns level 10 job reward
+(t)sun nov 08 20
+(u)Arahimine
+(p)2501
+(e)🆕|feature
+(+)Cyborgs can now state their laws via the 'State Laws' and 'State Standard Laws' verbs, in the Robot Commands tab.
+(u)TTerc
+(p)2614
+(e)🗺|mapping
+(+)JaniTech vendor added to Donut 3 and Manta.
+(u)Luxizzle
+(p)2625
+(e)🐛|bug
+(+)Examining brains to see if they are still warm now only requires medical training.
+(u)Luxizzle
+(p)2615
+(e)🐛|bug
+(+)Fixed cyborg legs not showing up on humans.
 (t)sat nov 07 20
+(u)UrsulaMajor
+(p)2620
+(e)🎨|sprites
+(+)Chicken Sandwiches, Spicy and Original - Sprites by Jan!
+(u)virvatuli
+(p)2594
+(e)|
+(+)New Clock gunfire audio, sounds less like someone whacking two sticks together
 (u)UrsulaMajor
 (p)2612
 (e)|

@@ -430,3 +430,14 @@
 	desc = "Wait a minute... this has no real meat in it."
 	icon_state = "coconutburger"
 	food_effects = list("food_refreshed_big", "food_hp_up")
+
+/obj/item/reagent_containers/food/snacks/burger/chicken
+	name = "chicken sandwich"
+	desc = "A delicious chicken sandwich."
+	icon_state = "chickenburger"
+
+/obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+	name = "spicy chicken sandwich"
+	desc = "A delicious chicken sandwich with a bit of a kick."
+	icon_state = "chickenburger-spicy"
+	initial_reagents = list("capsaicin"=15)

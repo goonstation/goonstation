@@ -442,16 +442,18 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/clown10
-	name = "Nothing!!"
-	desc = "Nothing Again Again!!"
+	name = "Rubber Hammer"
+	desc = "Haha, hammer go 'boing'"
 	required_levels = list("Clown"=10)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "Nothing seems to happen!")
+		boutput(C, "You pull your rubber hamer out from your nose!")
+		new /obj/item/rubber_hammer(get_turf(C.mob))
 		return
+
 /datum/jobXpReward/clown15
 	name = "Nothing!!!"
 	desc = "Nothing Again Again Again!!!"
