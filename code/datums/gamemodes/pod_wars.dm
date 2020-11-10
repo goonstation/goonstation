@@ -581,8 +581,8 @@ obj/screen/score_board
 
 	//this is a band aid cause this is broke, delete this override when merged properly and fixed.
 	attackby(obj/item/W, mob/user)
-		..()
 		user.lastattacked = src
+		..()
 
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
