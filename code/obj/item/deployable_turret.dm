@@ -345,7 +345,7 @@
 
 
 	proc/die()
-		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
