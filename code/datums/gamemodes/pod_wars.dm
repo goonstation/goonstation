@@ -604,19 +604,25 @@ obj/screen/score_board
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	var/deployer_path = /obj/deployable_turret/pod_wars
+	var/destroyed = 0
 
 	New(var/direction)
 		..(direction=direction)
 
 	//just "deactivates"
 	die()
-		// playsound(get_turf(src), "sound/effects/robogib.ogg", 50, 1)
-		new /obj/decal/cleanable/robot_debris(src.loc)
-		src.alpha = 30
-		sleep(5 MINUTES)
-		src.alpha = 255
-		health = initial(health)
-		active = 1
+		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		if (!destroyed)
+			destroyed = 1
+			new /obj/decal/cleanable/robot_debris(src.loc)
+			src.alpha = 30
+			src.opacity = 0
+			sleep(5 MINUTES)
+			src.opacity = 1
+			src.alpha = 255
+			health = initial(health)
+			destroyed = 0
+			active = 1
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
