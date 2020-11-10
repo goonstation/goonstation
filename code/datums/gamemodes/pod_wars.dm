@@ -160,6 +160,8 @@
 /datum/game_mode/pod_wars/check_finished()
 	if (team_NT.points < 0 || team_SY.points < 0)
 		return 1
+	if (team_NT.points > team_NT.max_points || team_SY.points > team_SY.max_points)
+		return 1
 
  return 0
 
@@ -916,3 +918,32 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate
 		icon_state = "surv_machete_st"
+
+//so humans/pods can't go over the edge
+#ifdef MAP_OVERRIDE_POD_WARS
+/mob/living/carbon/human/Move(NewLoc, direct)
+	..()
+	dir = direct
+	if((direct & NORTH) && src.y < world.maxy)
+		src.y++
+	if((direct & SOUTH) && src.y > 1)
+		src.y--
+	if((direct & EAST) && src.x < world.maxx)
+		src.x++
+	if((direct & WEST) && src.x > 1)
+		src.x--
+
+/obj/machinery/vehicle/Move(NewLoc, direct)
+	..()
+	dir = direct
+	if((direct & NORTH) && src.y < world.maxy)
+		src.y++
+	if((direct & SOUTH) && src.y > 1)
+		src.y--
+	if((direct & EAST) && src.x < world.maxx)
+		src.x++
+	if((direct & WEST) && src.x > 1)
+		src.x--
+	OnMove()
+
+#endif
