@@ -148,16 +148,15 @@
 		if(!isfloor(T))
 			create_scan_decal++
 			T.ex_act(1)
+			var/atom/new_floor
 			switch(rand(1, 3))
 				if(1)
-					var/atom/new_floor
 					new_floor = new /turf/simulated/floor/plating/damaged1(locate(point_x,point_y,point_z))
 				if(2)
-					var/atom/new_floor
 					new_floor = new /turf/simulated/floor/plating/damaged2(locate(point_x,point_y,point_z))
 				else
-					var/atom/new_floor
 					new_floor = new /turf/simulated/floor/plating/damaged3(locate(point_x,point_y,point_z))
+			new_floor = null //Shut up, Beepsky.
 		for (var/obj/structure/girder/S in locate(point_x,point_y,point_z))
 			create_scan_decal++
 			S.ex_act(1)
