@@ -190,7 +190,8 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"X" = "swaphand",
 	"Z" = "attackself",
 	"Q" = "drop",
-	"C" = "resist"
+	"C" = "resist",
+	"N" = "usehand"
 	)
 
 /datum/keybind_style/human/tg/azerty
