@@ -918,32 +918,3 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate
 		icon_state = "surv_machete_st"
-
-//so humans/pods can't go over the edge
-#ifdef MAP_OVERRIDE_POD_WARS
-/mob/living/carbon/human/Move(NewLoc, direct)
-	..()
-	dir = direct
-	if((direct & NORTH) && src.y < world.maxy)
-		src.y++
-	if((direct & SOUTH) && src.y > 1)
-		src.y--
-	if((direct & EAST) && src.x < world.maxx)
-		src.x++
-	if((direct & WEST) && src.x > 1)
-		src.x--
-
-/obj/machinery/vehicle/Move(NewLoc, direct)
-	..()
-	dir = direct
-	if((direct & NORTH) && src.y < world.maxy)
-		src.y++
-	if((direct & SOUTH) && src.y > 1)
-		src.y--
-	if((direct & EAST) && src.x < world.maxx)
-		src.x++
-	if((direct & WEST) && src.x > 1)
-		src.x--
-	OnMove()
-
-#endif
