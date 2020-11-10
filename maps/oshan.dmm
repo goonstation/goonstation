@@ -19092,6 +19092,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "aRv" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "L8"
 	},
@@ -31653,11 +31657,11 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bwD" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
-"bwE" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
+/obj/machinery/drainage/big,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "bwF" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/yellow/corner{
@@ -32744,21 +32748,18 @@
 	},
 /area/station/hallway/secondary/exit)
 "bzh" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/escape{
+/turf/simulated/floor/escape/corner{
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
 "bzi" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/decal/poster/wallsign/teaparty{
+	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
+	pixel_y = 32
 	},
+/obj/machinery/vending/pizza,
 /turf/simulated/floor/escape{
-	dir = 1
+	dir = 9
 	},
 /area/station/hallway/secondary/exit)
 "bzj" = (
@@ -33829,21 +33830,33 @@
 /turf/simulated/floor/red,
 /area/space)
 "bBE" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "L10"
 	},
 /area/station/hallway/secondary/exit)
 "bBF" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "L12"
 	},
 /area/station/hallway/secondary/exit)
 "bBG" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "L14"
 	},
 /area/station/hallway/secondary/exit)
 "bBH" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "L16"
 	},
@@ -35668,9 +35681,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"bFX" = (
-/turf/simulated/floor/bot,
-/area/station/quartermaster/office)
 "bFY" = (
 /obj/item/mine/stun/armed,
 /turf/space/fluid,
@@ -36415,12 +36425,12 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bHO" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bHP" = (
@@ -42598,10 +42608,7 @@
 	},
 /area/station/storage/warehouse)
 "bWZ" = (
-/obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
-	pixel_y = 32
-	},
+/obj/stool/bench/red/auto,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -47539,6 +47546,33 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
+"cqv" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/vehicle/tank/minisub/escape_sub{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
+"cuP" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"cHs" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/escape{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -47562,6 +47596,70 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"ezR" = (
+/obj/disposalpipe/segment,
+/obj/stool/bench/red/auto,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"fdi" = (
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"ftz" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
+"gtA" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
+"gMi" = (
+/obj/stool/bench/red/auto,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"gSM" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"gYs" = (
+/obj/decal/poster/wallsign/escape,
+/obj/decal/poster/wallsign/escape,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
+"hah" = (
+/obj/stool/bench/green,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"irl" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/vending/cards,
+/turf/simulated/floor/escape{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -47586,6 +47684,21 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"jQL" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"jZp" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47657,6 +47770,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"ovM" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"pwF" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "pIo" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
@@ -47676,6 +47800,17 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qem" = (
+/turf/simulated/floor/escape/corner,
+/area/station/hallway/secondary/exit)
+"qAP" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "qBd" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "secure_dock"
@@ -47690,6 +47825,28 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"rew" = (
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/space)
+"rgw" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"rHe" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"suH" = (
+/obj/table/auto,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47699,6 +47856,27 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"tCR" = (
+/obj/machinery/drainage/big,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"tFb" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/escape/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
+"tRk" = (
+/obj/stool/bench/yellow,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "tWV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47727,6 +47905,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"vez" = (
+/obj/decal/poster/wallsign/escape,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/northeast)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
@@ -47734,6 +47916,18 @@
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
+"wvN" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses and liquids from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric/Fluid Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
 "wzL" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -47755,6 +47949,11 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xWQ" = (
+/obj/stool/bench/blue,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -77859,17 +78058,17 @@ buE
 bbi
 btZ
 btZ
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
 bJw
 bJw
 bJw
@@ -78160,8 +78359,8 @@ buH
 buE
 btZ
 btZ
-bwD
-bwD
+bJw
+bJw
 bzm
 bAr
 bBI
@@ -78461,8 +78660,8 @@ bub
 btX
 buE
 bua
-bwD
-bwD
+bJw
+bJw
 byr
 bzn
 bAs
@@ -78763,7 +78962,7 @@ buc
 btX
 bvr
 btZ
-bwD
+bJw
 aMK
 bys
 bzo
@@ -78772,8 +78971,8 @@ bBK
 bCU
 bEg
 bFe
-bFX
-bFX
+bMS
+bMS
 bHR
 bIC
 bJy
@@ -79065,7 +79264,7 @@ cgp
 btX
 buE
 btZ
-bwD
+bJw
 aTb
 bys
 bzo
@@ -79074,10 +79273,10 @@ bBL
 bCV
 bEg
 bFf
-bwE
+bJA
 bGT
 bHS
-bwE
+bJA
 bJA
 bKk
 bLL
@@ -79367,7 +79566,7 @@ bot
 buI
 buL
 bvY
-bwD
+bJw
 bHP
 bys
 bzp
@@ -79376,7 +79575,7 @@ bAv
 bAv
 bEh
 bys
-bwE
+bJA
 bGU
 bHT
 bID
@@ -79669,7 +79868,7 @@ bBC
 bqs
 buL
 btZ
-bwD
+bJw
 bxB
 byt
 bzq
@@ -79678,7 +79877,7 @@ bBM
 bys
 bEi
 bFg
-bwE
+bJA
 bGV
 bHU
 bIE
@@ -79974,13 +80173,13 @@ btZ
 ciq
 bxC
 byu
-bwE
+bJA
 bzr
 bBN
 bCW
 bEj
 bzr
-bwE
+bJA
 cfG
 bHU
 bIE
@@ -80273,7 +80472,7 @@ bFZ
 bqs
 buL
 bua
-bwE
+bJA
 bxC
 bxC
 bzr
@@ -80575,7 +80774,7 @@ bFZ
 buJ
 buL
 btZ
-bwE
+bJA
 bxD
 bxC
 bzr
@@ -80877,7 +81076,7 @@ bKO
 bqs
 buL
 btZ
-bwE
+bJA
 bxC
 bxC
 bzs
@@ -81179,7 +81378,7 @@ bug
 bqs
 buL
 btZ
-bwE
+bJA
 bxC
 byv
 bzr
@@ -81481,10 +81680,10 @@ buh
 buK
 buL
 btZ
-bwE
+bJA
 bxE
 byw
-bwE
+bJA
 bAA
 bBP
 bCZ
@@ -81783,10 +81982,10 @@ bot
 bot
 bot
 cjd
-bwE
+bJA
 bxF
 bxF
-bwE
+bJA
 aax
 aax
 bDa
@@ -107463,7 +107662,7 @@ byY
 bCI
 byY
 bCJ
-byY
+rgw
 byY
 byY
 bKd
@@ -107760,12 +107959,12 @@ byi
 bzc
 bAh
 aRv
-bCI
-byY
-bCJ
-byY
-bCK
-byY
+tRk
+rHe
+hah
+rHe
+xWQ
+ovM
 byY
 byZ
 bKd
@@ -109269,7 +109468,7 @@ avB
 avB
 bze
 bAm
-bAm
+gtA
 bze
 byq
 byq
@@ -109571,7 +109770,7 @@ aoj
 chS
 bzf
 bAn
-bAn
+qAP
 bCL
 byq
 aqn
@@ -109870,10 +110069,10 @@ chV
 anx
 anx
 anx
-byo
+gYs
 bzg
 bAo
-bAo
+tCR
 bCM
 byo
 aqn
@@ -110170,12 +110369,12 @@ aoj
 aoj
 anx
 anx
-aqn
-aqn
-byq
+gMi
+suH
+gMi
 bzh
 byY
-byY
+rgw
 bCN
 byq
 aqn
@@ -110471,14 +110670,14 @@ aoj
 chU
 anx
 anx
-aqn
-aqn
-aqn
-byq
-bzg
+bzf
+bzh
+gMi
+cuP
 byY
 byY
-bCM
+rgw
+pwF
 byq
 aqn
 bFU
@@ -110772,14 +110971,14 @@ aoj
 aoj
 anx
 anx
-aqn
-aqn
-aqn
-aqn
-byp
-bzi
+cHs
+bzh
 byY
 byY
+byY
+byY
+byY
+rgw
 bCM
 byp
 aqn
@@ -111073,15 +111272,15 @@ bok
 aoj
 aoj
 anx
-aqn
-aqn
-aqn
-aqn
-aqn
-byp
-bzg
-byY
-byY
+irl
+tFb
+rHe
+ezR
+rHe
+rHe
+rHe
+ezR
+gSM
 bCM
 byp
 aqn
@@ -111374,16 +111573,16 @@ bok
 bok
 aoj
 aoj
-anx
-aqn
-aqn
-aqn
-aqn
-aqn
-byp
+vez
 bzj
 byY
+gMi
+jQL
+gMi
 byY
+gMi
+jQL
+gMi
 bCO
 byp
 aqn
@@ -111676,16 +111875,16 @@ aoj
 aoj
 aoj
 aoj
-anx
-aqn
-aqn
-aqn
-aqn
-aqn
-byq
-bzg
-byY
-byY
+chS
+bwD
+cuP
+gMi
+jQL
+gMi
+cuP
+gMi
+jQL
+gMi
 bCM
 byq
 aqn
@@ -111978,16 +112177,16 @@ anx
 anx
 anx
 anx
-anx
-aqn
-aqn
-aqn
-aqn
-aqn
-byq
+vez
 bzg
 byY
+gMi
+jQL
+gMi
 byY
+gMi
+jQL
+gMi
 bCM
 byq
 aqn
@@ -112278,18 +112477,18 @@ bbc
 bbc
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
 byq
-bWZ
+bzi
+bAn
+bzh
 byY
+gMi
+jQL
+gMi
 byY
+gMi
+jQL
+gMi
 bCM
 byo
 byq
@@ -112580,18 +112779,18 @@ bbc
 bbc
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-byo
-bzg
+byq
+bzj
+gMi
 byY
 byY
+gMi
+jQL
+gMi
+byY
+gMi
+jQL
+gMi
 bCM
 aRw
 aRx
@@ -112882,17 +113081,17 @@ bbc
 bbc
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-byq
-bzk
+byp
+bWZ
+jQL
+gMi
+cuP
 byY
+gMi
+byY
+cuP
+byY
+gMi
 byY
 bCQ
 byo
@@ -113184,16 +113383,16 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-byq
-bzl
+byp
+bWZ
+jQL
+gMi
+byY
+byY
+byY
+qem
+fdi
+bAp
 bAp
 bAp
 bCR
@@ -113486,16 +113685,16 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byp
+bzg
+gMi
+bAo
+byY
+bAo
+byY
+bCM
 byq
-bze
+jZp
 bAq
 bAq
 bze
@@ -113788,14 +113987,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+bzl
+bAp
+bAp
+bAp
+bAp
+rew
+bCR
 byq
 bzf
 bAn
@@ -114090,14 +114289,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+ftz
+byo
+ftz
+byo
+ftz
+byo
+ftz
 byq
 bzk
 bAo
@@ -114392,14 +114591,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+cqv
+byq
+cqv
+byq
+cqv
+byq
+cqv
 byq
 bzl
 bAp
@@ -114694,14 +114893,14 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+wvN
+byq
+wvN
+byq
+wvN
+byq
+wvN
 byq
 bze
 bAm
