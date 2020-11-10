@@ -186,9 +186,6 @@
 	flags = FPRINT | NOSPLASH
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
-	var/top_on = 1 //screwed on or screwed off
-	var/water_level = 100 //water level, used to press the coffee
-	var/water_level_max = 100
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null
 	var/image/image_carafe = null
@@ -203,12 +200,6 @@
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
 
-	get_desc(dist, mob/user)
-		if (dist <= 2)
-			. += "There's [src.water_level] out of [src.water_level_max] units of water in the [src]'s tank."
-		if (src.top_on == 0)
-			. += " It appears that the water tank's lid has been screwed off."
-
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
 			if (src.my_carafe)
@@ -221,41 +212,17 @@
 				user.show_text ("You place the [src.carafe_name] into the [src].")
 				src.update()
 				return ..()
-		else if (istype(W, /obj/item/reagent_containers)) //	pour water in the reagent_container inside and update water level
-			if (src.top_on == 0)
-				if (W.reagents.has_reagent("water"))
-					if (src.water_level >= src.water_level_max)
-						user.show_text("You can't pour any more water into the [src].")
-						return ..()
-					else
-						var/wateramt = W.reagents.get_reagent_amount("water")
-						wateramt = min(wateramt, src.water_level_max - src.water_level)
-						W.reagents.remove_reagent("water", wateramt)
-						src.water_level += wateramt
-						user.show_text("You dump [wateramt] units of water into the [src].")
-						return ..()
-				else
-					user.show_text("The container does not have any water in it!")
-					return ..()
-			else
-				user.show_text("Why are you trying to pour junk everywhere? Get the top off, ya fool!")
-				return ..()
 
 	attack_hand(mob/user as mob)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
-			if (src.my_carafe && top_on == 1) //freaking spacing errors made me waste hours on this
+			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!status & (NOPOWER|BROKEN))
 					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
 						if ("Brew coffee")
-							if (src.water_level >= 10)
-								src.water_level -= 10
-								for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-									C.reagents.add_reagent("coffee_fresh",40)
-									playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-							else
-								user.show_text("You don't have enough water in the machine to do that!")
-								return ..()
+							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
+								C.reagents.add_reagent("coffee_fresh",40)
+								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
 								return
@@ -265,32 +232,6 @@
 							src.update()
 						if ("Nothing")
 							return
-				else
-			if (!src.my_carafe && top_on == 1)
-				user.show_text("You begin unscrewing the top of the [src].")
-				if (!do_after(user, 30))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-				else
-					src.top_on = 0
-					user.show_text("You have unscrewed the top of the [src].")
-					src.update()
-			else if (!src.my_carafe && top_on == 0)
-				user.show_text("You begin screwing the top of the [src] back on.")
-				if (!do_after(user, 30))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-				else
-					src.top_on = 1
-					user.show_text("You have screwed the top of the [src] back on.")
-					src.update()
-			else if (src.my_carafe && top_on == 0)
-				user.show_text("You begin screwing the top of the [src] back on.")
-				if (!do_after(user, 30))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-				else
-					src.top_on = 1
-					user.show_text("You have screwed the top of the [src] back on.")
-					src.update()
-				return ..()
 			else return ..()
 
 	ex_act(severity)
@@ -322,17 +263,9 @@
 				src.UpdateOverlays(I, "carafe-fluid")
 			else
 				src.UpdateOverlays(null, "carafe-fluid", 0, 1)
-
 		else
 			src.UpdateOverlays(null, "carafe", 0, 1)
 			src.UpdateOverlays(null, "carafe-fluid", 0, 1)
-
-		if (src.top_on == 0)
-			if (!src.image_top)
-				src.image_top = image(src.icon, icon_state = "coffeemakertopoverlay")
-			src.UpdateOverlays(src.image_top, "top")
-		else
-			src.UpdateOverlays(null, "top")
 		return
 
 /obj/machinery/coffeemaker/medbay
