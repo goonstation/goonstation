@@ -323,6 +323,7 @@
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
 
 			if (B)
+				var/turf/start = user.loc
 				var/success = !B.onUse(T)		//Abilities return 1 on failure and 0 on success. fml
 				if (success)
 					if (prob(16))
