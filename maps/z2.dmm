@@ -68810,7 +68810,9 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/destiny)
 "dkP" = (
-/obj/landmark/escape_pod_succ,
+/obj/landmark/escape_pod_succ{
+	shuttle = SHUTTLE_SOUTH
+	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/north)
 "dkQ" = (
@@ -68829,7 +68831,8 @@
 /area/shuttle/escape/transit/cogmap)
 "dkT" = (
 /obj/landmark/escape_pod_succ{
-	dir = 8
+	dir = 8;
+	shuttle = SHUTTLE_WEST
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/east)
@@ -68841,7 +68844,8 @@
 /area/shuttle_particle_spawn/east)
 "dkW" = (
 /obj/landmark/escape_pod_succ{
-	dir = 1
+	dir = 1;
+	shuttle = SHUTTLE_NORTH
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
@@ -69086,7 +69090,8 @@
 /area/shuttle/escape/transit/battle_shuttle)
 "dlJ" = (
 /obj/landmark/escape_pod_succ{
-	dir = 4
+	dir = 4;
+	shuttle = SHUTTLE_OSHAN
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
@@ -85418,6 +85423,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"qDq" = (
+/obj/landmark/escape_pod_succ{
+	dir = 4;
+	shuttle = SHUTTLE_EAST
+	},
+/turf/space/shuttle_transit,
+/area/shuttle_transit_space/west)
 "qGG" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
@@ -86204,6 +86216,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"umY" = (
+/obj/landmark/escape_pod_succ{
+	dir = 1;
+	shuttle = SHUTTLE_DONUT3
+	},
+/turf/space/shuttle_transit,
+/area/shuttle_transit_space/south)
 "unN" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner{
@@ -149753,7 +149772,7 @@ dkH
 dkH
 dkH
 dkH
-dkW
+umY
 dkH
 dkH
 dkH
@@ -155491,7 +155510,7 @@ dkH
 dkH
 dkH
 dkH
-dkW
+umY
 dkH
 dkH
 dkH
@@ -168727,7 +168746,7 @@ dly
 dly
 dly
 dly
-dlJ
+qDq
 dly
 dly
 dly
@@ -168741,7 +168760,7 @@ dly
 dly
 dly
 dly
-dlJ
+qDq
 dly
 dly
 dly
