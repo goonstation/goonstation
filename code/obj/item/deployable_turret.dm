@@ -390,7 +390,7 @@
 
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(C.loc,src.loc)
+		var/distance = get_dist(get_turf(C),get_truf(src))
 
 		if(distance > src.range)
 			return 0
@@ -418,7 +418,7 @@
 				return 0 */
 
 
-		var/angle = get_angle(src,C)
+		var/angle = get_angle(get_turf(src),get_turf(C))
 
 
 		var/anglemod = (-(angle < 180 ? angle : angle - 360) + 90) //Blatant Code Theft from showLine(), checks to see if there's something in the way of us and the target
