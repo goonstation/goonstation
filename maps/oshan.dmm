@@ -31653,11 +31653,19 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bwD" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
+/obj/access_spawn/security,
+/obj/machinery/turret{
+	name = "armory turret"
+	},
+/turf/simulated/floor/delivery/caution,
+/area/station/ai_monitored/armory)
 "bwE" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
+/obj/machinery/light/incandescent/greenish,
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/ai_monitored/armory)
 "bwF" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/yellow/corner{
@@ -35669,8 +35677,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bFX" = (
-/turf/simulated/floor/bot,
-/area/station/quartermaster/office)
+/obj/disposalpipe/segment/mail,
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/item/storage/box/prosthesis_kit/eye_laser,
+/turf/simulated/floor/delivery,
+/area/station/security/main)
 "bFY" = (
 /obj/item/mine/stun/armed,
 /turf/space/fluid,
@@ -40853,7 +40864,6 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bSO" = (
@@ -41783,15 +41793,13 @@
 /area/station/ai_monitored/armory)
 "bVb" = (
 /obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
+/obj/item/storage/box/stinger_kit,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/revimp_kit,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
 /turf/simulated/floor/redblack{
-	dir = 1
+	dir = 8
 	},
 /area/station/ai_monitored/armory)
 "bVc" = (
@@ -42407,6 +42415,9 @@
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "bWH" = (
@@ -42752,6 +42763,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bXx" = (
@@ -42782,6 +42796,11 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/machinery/turretid{
+	pixel_x = -24;
+	turretArea = /area/station/ai_monitored/armory
+	},
+/obj/access_spawn/hos,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bXB" = (
@@ -43038,6 +43057,11 @@
 	},
 /area/station/ai_monitored/armory)
 "bYp" = (
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
+"bYq" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/heavy,
 /obj/item/clothing/suit/armor/heavy,
@@ -43049,19 +43073,9 @@
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
-"bYq" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/kinetic/flaregun,
-/obj/item/ammo/bullets/flare,
-/obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/assembled/loaded,
 /obj/machinery/light/incandescent/greenish,
-/turf/simulated/floor/redblack{
-	dir = 1
+/turf/simulated/floor/redblack/corner{
+	dir = 8
 	},
 /area/station/ai_monitored/armory)
 "bYr" = (
@@ -43088,12 +43102,11 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bYt" = (
-/obj/rack,
-/obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/revimp_kit,
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
+/obj/item/reagent_containers/food/snacks/donut/robust{
+	pixel_y = 4;
+	rand_pos = 0
+	},
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -45143,8 +45156,11 @@
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "ceT" = (
-/obj/storage/secure/crate/weapon/confiscated_items,
-/obj/item/storage/box/prosthesis_kit/eye_laser,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/kinetic/flaregun,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/obj/item/flamethrower/assembled/loaded,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "ceU" = (
@@ -47562,12 +47578,28 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"ghV" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"iPj" = (
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "iPV" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
@@ -47676,6 +47708,12 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qjw" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "qBd" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "secure_dock"
@@ -47697,6 +47735,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
+"toE" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "tWV" = (
@@ -47727,9 +47771,28 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"vcb" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
+"vLB" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "wis" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
@@ -77859,17 +77922,17 @@ buE
 bbi
 btZ
 btZ
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
-bwD
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
+bJw
 bJw
 bJw
 bJw
@@ -78160,8 +78223,8 @@ buH
 buE
 btZ
 btZ
-bwD
-bwD
+bJw
+bJw
 bzm
 bAr
 bBI
@@ -78461,8 +78524,8 @@ bub
 btX
 buE
 bua
-bwD
-bwD
+bJw
+bJw
 byr
 bzn
 bAs
@@ -78763,7 +78826,7 @@ buc
 btX
 bvr
 btZ
-bwD
+bJw
 aMK
 bys
 bzo
@@ -78772,8 +78835,8 @@ bBK
 bCU
 bEg
 bFe
-bFX
-bFX
+bMS
+bMS
 bHR
 bIC
 bJy
@@ -79065,7 +79128,7 @@ cgp
 btX
 buE
 btZ
-bwD
+bJw
 aTb
 bys
 bzo
@@ -79074,10 +79137,10 @@ bBL
 bCV
 bEg
 bFf
-bwE
+bJA
 bGT
 bHS
-bwE
+bJA
 bJA
 bKk
 bLL
@@ -79367,7 +79430,7 @@ bot
 buI
 buL
 bvY
-bwD
+bJw
 bHP
 bys
 bzp
@@ -79376,7 +79439,7 @@ bAv
 bAv
 bEh
 bys
-bwE
+bJA
 bGU
 bHT
 bID
@@ -79669,7 +79732,7 @@ bBC
 bqs
 buL
 btZ
-bwD
+bJw
 bxB
 byt
 bzq
@@ -79678,7 +79741,7 @@ bBM
 bys
 bEi
 bFg
-bwE
+bJA
 bGV
 bHU
 bIE
@@ -79974,13 +80037,13 @@ btZ
 ciq
 bxC
 byu
-bwE
+bJA
 bzr
 bBN
 bCW
 bEj
 bzr
-bwE
+bJA
 cfG
 bHU
 bIE
@@ -80273,7 +80336,7 @@ bFZ
 bqs
 buL
 bua
-bwE
+bJA
 bxC
 bxC
 bzr
@@ -80575,7 +80638,7 @@ bFZ
 buJ
 buL
 btZ
-bwE
+bJA
 bxD
 bxC
 bzr
@@ -80877,7 +80940,7 @@ bKO
 bqs
 buL
 btZ
-bwE
+bJA
 bxC
 bxC
 bzs
@@ -81179,7 +81242,7 @@ bug
 bqs
 buL
 btZ
-bwE
+bJA
 bxC
 byv
 bzr
@@ -81481,10 +81544,10 @@ buh
 buK
 buL
 btZ
-bwE
+bJA
 bxE
 byw
-bwE
+bJA
 bAA
 bBP
 bCZ
@@ -81783,10 +81846,10 @@ bot
 bot
 bot
 cjd
-bwE
+bJA
 bxF
 bxF
-bwE
+bJA
 aax
 aax
 bDa
@@ -91174,9 +91237,9 @@ bTR
 bXu
 bTR
 bTR
-bRU
+vcb
+ghV
 bLr
-bOR
 bOR
 aqn
 aqn
@@ -91476,10 +91539,10 @@ bWF
 bXv
 bYo
 bTR
+bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -91777,11 +91840,11 @@ bVX
 bWH
 bVX
 bYp
+bYq
 bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -92077,13 +92140,13 @@ bTR
 bVa
 bWJ
 bWH
+bwD
 bVX
-bYq
+bYt
 bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -92380,12 +92443,12 @@ bTR
 bXw
 bXx
 bVX
-bYt
+bVX
+iPj
 bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -92681,13 +92744,13 @@ apB
 bTR
 bVZ
 bWH
-bVX
+bwE
 bVb
+vLB
 bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -92986,10 +93049,10 @@ clX
 bVc
 bVc
 bTR
+bTR
 bRU
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -93287,11 +93350,11 @@ bWa
 bWK
 bXA
 bVc
-bLr
-bRU
+bTR
+qjw
+toE
 bLr
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -93593,7 +93656,7 @@ bLr
 bRU
 bLr
 bVo
-aqn
+bVo
 aqn
 aqn
 aqn
@@ -93893,7 +93956,7 @@ bXC
 bVc
 bLr
 bRU
-bLr
+bVo
 bVo
 aqn
 aqn
@@ -95097,7 +95160,7 @@ ado
 bJR
 bVY
 bWI
-bMp
+bFX
 bJS
 iPV
 yhP
