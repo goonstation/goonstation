@@ -200,7 +200,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
-		arcFlashTurf(user, get_turf(target), 15000)
+		arcFlashTurf(user, get_turf(target), wattage)
 
 /datum/limb/gun
 	var/datum/projectile/proj = null
@@ -403,7 +403,7 @@
 
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
-		if (holder && holder.remove_object && istype(holder.remove_object))
+		if (holder?.remove_object && istype(holder.remove_object))
 			target.attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
@@ -863,7 +863,7 @@
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 
@@ -1505,7 +1505,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 

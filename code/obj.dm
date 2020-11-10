@@ -196,7 +196,7 @@
 				if (I.w_class > 3)
 					return
 				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
-					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder		
+					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
 					if (GH.spooking)
 						src.throw_at(over_object, 7-I.w_class, 1)
 						logTheThing("combat", usr, null, "throws [src] with g_tk.")
@@ -510,7 +510,7 @@
 			user.drop_item()
 			if(W.dir != dirbuffer)
 				W.dir = dirbuffer
-			if (W && W.loc)
+			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16

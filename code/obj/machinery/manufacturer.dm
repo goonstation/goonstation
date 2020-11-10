@@ -2187,6 +2187,7 @@
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,
 	/datum/manufacture/geoscanner,
+	/datum/manufacture/geigercounter,
 	/datum/manufacture/eyes_meson,
 	/datum/manufacture/flashlight,
 	/datum/manufacture/ore_accumulator,

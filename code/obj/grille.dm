@@ -2,7 +2,7 @@
 	desc = "A sturdy metal mesh. Blocks large objects, but lets small items, gas, or energy beams through."
 	name = "grille"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
-	icon_state = "grille-0"
+	icon_state = "grille0-0"
 	density = 1
 	stops_space_move = 1
 	var/health = 30
@@ -44,7 +44,7 @@
 
 	steel
 #ifdef IN_MAP_EDITOR
-		icon_state = "grille-0"
+		icon_state = "grille0-0"
 #endif
 		New()
 			..()

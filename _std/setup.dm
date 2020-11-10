@@ -3,6 +3,10 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
 
+#ifdef RUNTIME_CHECKING
+#define ABSTRACT_VIOLATION_CRASH
+#endif
+
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
 #define SKIP_Z5_SETUP 1
@@ -65,9 +69,13 @@
 
 // holiday toggles!
 
-//#define HALLOWEEN 1
-//#define XMAS 1
-//#define CANADADAY 1
+#if (BUILD_TIME_MONTH == 10)
+#define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 12)
+#define XMAS 1
+#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#define CANADADAY 1
+#endif
 
 // other toggles
 

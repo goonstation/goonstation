@@ -61,7 +61,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	power = 22
-	shot_sound = 'sound/weapons/9x19NATO.ogg' //quieter when fired from a silenced weapon!
+	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
@@ -796,6 +796,7 @@ toxic - poisons
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
+		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 			if (P.data || prob(10))
 				..()
@@ -850,6 +851,11 @@ toxic - poisons
 		pod_seeking
 			name = "pod-seeking grenade"
 			type_to_seek = /obj/machinery/vehicle
+			on_hit(atom/hit)
+				. = ..()
+				if(istype(hit, /obj/machinery/vehicle))
+					var/obj/machinery/vehicle/V = hit
+					V.health -= V.maxhealth / 4 //a little extra punch in the face
 
 		ghost
 			name = "pod-seeking grenade"

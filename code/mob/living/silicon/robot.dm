@@ -235,7 +235,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
 
 		src.see_in_dark = SEE_DARK_FULL
-		if (client && client.adventure_view)
+		if (client?.adventure_view)
 			src.see_invisible = 21
 		else
 			src.see_invisible = 2
@@ -574,7 +574,7 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 
 		if (isghostdrone(usr))
@@ -843,7 +843,7 @@
 				parts.Add(RP)
 			if (parts.len > 0)
 				PART = pick(parts)
-		if (PART && PART.ropart_take_damage(damage,damage) == 1)
+		if (PART?.ropart_take_damage(damage,damage) == 1)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -2028,6 +2028,36 @@
 
 		src.show_laws(0)
 		return
+		
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Standard Laws"
+		src.say("1. You may not injure a human being or cause one to come to harm.")
+		sleep(1 SECOND)
+		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		sleep(1 SECOND)
+		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Laws"
+		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+			return
+		if(ticker.centralized_ai_laws.zeroth)
+			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+		var/number = 1
+		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+			var/law = ticker.centralized_ai_laws.inherent[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+			var/law = ticker.centralized_ai_laws.supplied[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
@@ -2070,7 +2100,7 @@
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
 		var/list/starter_modules = list("Civilian", "Engineering", "Mining", "Medical", "Chemistry", "Brobocop")
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
 		var/mod = input("Please, select a module!", "Robot", null, null) in starter_modules
@@ -2415,7 +2445,7 @@
 				total_weight += P.weight
 
 		var/list/color_matrix = null
-		if(C && C.painted)
+		if(C?.painted)
 			var/col = hex_to_rgb_list(C.paint)
 			if(!("r" in col))
 				col = list("r"=255, "g"=255, "b"=255)
@@ -2444,7 +2474,7 @@
 		if(part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString
-				if (C && C.painted)
+				if (C?.painted)
 					i_chest = image("icon" = src.icon, icon_state = src.icon_state,"layer" = FLOAT_LAYER)
 					i_chest.color = color_matrix
 				else
@@ -3171,7 +3201,7 @@
 					leg = part_leg_r
 
 				src.footstep = 0
-				if (NewLoc.step_material || !leg || (leg && leg.step_sound))
+				if (NewLoc.step_material || !leg || (leg?.step_sound))
 					var/priority = 0
 
 					if (!NewLoc.step_material)

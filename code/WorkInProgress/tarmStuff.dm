@@ -514,3 +514,29 @@ obj/item/gun/reagent/syringe/lovefilled
 		boutput(M, "<span class='notice'>You feel loved</span>")
 		loved += M
 
+//misc stuffs
+/obj/item/device/geiger
+	name = "geiger counter"
+	desc = "A device used to passively measure raditation."
+	icon_state = "geiger-0"
+	item_state = "geiger"
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 5
+	throw_range = 10
+	mats = 5
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/holdertargeting/geiger)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+
+	proc/change_icon_state(source, stage)
+		switch(stage)
+			if(1 to 2)
+				flick("geiger-1", src)
+			if(3 to 4)
+				flick("geiger-2", src)
+			if(5)
+				flick("geiger-3", src)
