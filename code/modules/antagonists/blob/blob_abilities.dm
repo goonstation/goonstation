@@ -367,7 +367,7 @@
 				spreadability -= R
 
 		if (!owner.starter_buff)
-			playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+			playsound(T, 'sound/voice/blob/blob0[pick("1","2","3","4","5","6")].ogg', 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 
