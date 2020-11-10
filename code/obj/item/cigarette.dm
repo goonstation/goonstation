@@ -65,7 +65,7 @@
 			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], gross.</span>",\
 			"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
 			if (!(T.has_cigs))
-				T.desc = "[T.desc] Are those crushed cigarettes on top? That's disgusting!"
+				T.desc = "[T.desc]<br>Are those crushed cigarettes on top? That's disgusting!"
 				T.has_cigs = 1
 			if (src.reagents) // copied wirefix
 				src.reagents.trans_to(T, 5)
