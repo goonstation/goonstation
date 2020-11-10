@@ -985,6 +985,15 @@
 /obj/deployable_turret/pod_wars/nt/activated/east,
 /turf/space,
 /area/space)
+"eV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team1/bar)
 "eW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -1066,6 +1075,14 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/Reliant)
+"fq" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/podmode/team1/mining)
 "fs" = (
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -1424,6 +1441,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team1/bar)
+"hm" = (
+/obj/warp_beacon{
+	name = "Lodbrok"
+	},
+/turf/space,
+/area/space)
 "hq" = (
 /obj/cable{
 	d1 = 2;
@@ -1476,6 +1499,14 @@
 "hz" = (
 /turf/simulated/floor,
 /area/podmode/spacejunk/fstation/secdock)
+"hE" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 8
+	},
+/area/podmode/team2/Mining)
 "hH" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools/few,
@@ -1658,6 +1689,12 @@
 	},
 /turf/simulated/floor/white,
 /area/podmode/team2/Medbay)
+"iH" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/Hangar)
 "iI" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -1938,6 +1975,9 @@
 	icon_state = "4-8"
 	},
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team2/Bar)
 "kj" = (
@@ -2062,6 +2102,9 @@
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/crewquarters)
 "kW" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/caution/corner/nw,
 /area/podmode/team1/manufacturing)
 "kX" = (
@@ -2174,6 +2217,12 @@
 	dir = 5
 	},
 /area/podmode/spacejunk/fstation/primary)
+"lD" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team2/Hangar)
 "lG" = (
 /obj/machinery/light{
 	dir = 4
@@ -2462,6 +2511,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -2728,6 +2780,9 @@
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -2790,9 +2845,18 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/fstation/mess)
+"oN" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team1/bar)
 "oQ" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -2830,6 +2894,9 @@
 "pk" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -3018,6 +3085,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/podmode/spacejunk/uvb67/crew)
+"qc" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Syndicate Commander"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/podmode/team2/Bridge)
 "qd" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -3250,6 +3328,13 @@
 	dir = 6
 	},
 /area/podmode/team1/manufacturing)
+"rp" = (
+/obj/stool/chair/comfy/blue,
+/obj/landmark/start{
+	name = "NanoTrasen Commander"
+	},
+/turf/simulated/floor/blue/side,
+/area/podmode/team1/bridge)
 "rs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -3653,6 +3738,12 @@
 	tag = "icon-catwalk (WEST)"
 	},
 /area/podmode/spacejunk/fstation/landingpads)
+"tE" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/podmode/team1/hangar)
 "tH" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -4017,6 +4108,9 @@
 /obj/stool/chair/comfy/red{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -4221,6 +4315,9 @@
 /area/podmode/team1/bar)
 "wE" = (
 /obj/stool/chair/comfy/red,
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/red/side,
 /area/podmode/team2/Bridge)
 "wF" = (
@@ -4811,6 +4908,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/podmode/team2/Cloning)
+"Ae" = (
+/obj/warp_beacon{
+	name = "NSV Pytheas"
+	},
+/turf/space,
+/area/space)
 "Af" = (
 /turf/simulated/floor/caution/west,
 /area/podmode/team1/manufacturing)
@@ -5301,6 +5404,9 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team1/bar)
 "Cx" = (
@@ -5413,6 +5519,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_east"
 	},
@@ -5472,6 +5581,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_east"
 	},
@@ -5499,6 +5611,9 @@
 	},
 /area/podmode/spacejunk/Snackstand)
 "DB" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/caution/corner/ne,
 /area/podmode/team1/manufacturing)
 "DF" = (
@@ -5540,6 +5655,9 @@
 /area/podmode/spacejunk/fstation)
 "DP" = (
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team2/Bar)
 "DS" = (
@@ -5835,6 +5953,12 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/podmode/spacejunk/Restaurant)
+"Fq" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/caution/north,
+/area/podmode/team2/CentralHallway)
 "Fr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6310,6 +6434,12 @@
 	},
 /turf/simulated/floor/purple,
 /area/podmode/spacejunk/fstation/lounge)
+"HY" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/white,
+/area/podmode/team2/Cloning)
 "HZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6782,6 +6912,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
@@ -6993,6 +7126,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/podmode/team1/mining)
+"LR" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/podmode/team2/Bar)
 "LU" = (
 /obj/machinery/power/smes/magical,
 /obj/cable{
@@ -7262,6 +7401,12 @@
 /obj/table/auto,
 /turf/simulated/floor/white,
 /area/podmode/team2/Cloning)
+"NF" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/caution/south,
+/area/podmode/team1/manufacturing)
 "NG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7301,6 +7446,12 @@
 	dir = 8
 	},
 /area/podmode/spacejunk/fstation/secdock)
+"NP" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor,
+/area/podmode/team1/mining)
 "NQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7787,6 +7938,15 @@
 	},
 /turf/simulated/floor,
 /area/podmode/spacejunk/fstation)
+"Qk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/white,
+/area/podmode/team2/Cloning)
 "Qm" = (
 /turf/simulated/floor/engine{
 	dir = 5;
@@ -8185,6 +8345,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/white,
 /area/podmode/team1/medbay)
 "Sn" = (
@@ -8571,6 +8734,9 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team2/Bar)
 "Uk" = (
@@ -8708,6 +8874,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/podmode/team2/CentralHallway)
+"US" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor/white,
+/area/podmode/team2/Medbay)
 "UU" = (
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -9062,6 +9234,9 @@
 	},
 /area/space)
 "WX" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/yellow/side,
 /area/podmode/team1/mining)
 "WY" = (
@@ -9109,6 +9284,9 @@
 /area/podmode/spacejunk/Nancy/warehouse)
 "Xt" = (
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/podmode/team1/bar)
 "Xu" = (
@@ -9309,6 +9487,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/podmode/spacejunk/uvb67/central)
+"Yj" = (
+/obj/landmark/start{
+	name = "Syndicate Pod Pilot"
+	},
+/turf/simulated/floor,
+/area/podmode/team2/Mining)
 "Ym" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9440,6 +9624,12 @@
 	dir = 9
 	},
 /area/podmode/team2/Hangar)
+"YR" = (
+/obj/landmark/start{
+	name = "NanoTrasen Pod Pilot"
+	},
+/turf/simulated/floor/white,
+/area/podmode/team1/medbay)
 "YS" = (
 /obj/machinery/r_door_control/podbay/t2condoor/new_walls/south,
 /turf/simulated/floor/caution/corner/ne,
@@ -36307,7 +36497,7 @@ VM
 VM
 rW
 Sr
-Sr
+NP
 Ks
 WP
 Mx
@@ -36809,7 +36999,7 @@ gu
 Sr
 Sr
 Sr
-Sr
+NP
 Pq
 WP
 Mx
@@ -37311,7 +37501,7 @@ Sr
 eR
 Sr
 TY
-IH
+fq
 ko
 WP
 Mx
@@ -40830,7 +41020,7 @@ OG
 OG
 uC
 uC
-uC
+tE
 jx
 uC
 uC
@@ -41317,7 +41507,7 @@ bW
 BF
 VK
 ed
-ed
+YR
 ed
 ed
 ed
@@ -43839,7 +44029,7 @@ PE
 ce
 Pe
 wP
-uC
+tE
 uC
 uC
 uC
@@ -44333,7 +44523,7 @@ FA
 fK
 gx
 Hv
-UO
+NF
 tn
 CG
 tn
@@ -44820,7 +45010,7 @@ Mr
 jf
 hi
 HT
-nt
+rp
 pe
 pe
 pe
@@ -44858,7 +45048,7 @@ JW
 JW
 JW
 JW
-JW
+Ae
 JW
 JW
 JW
@@ -45839,7 +46029,7 @@ FD
 fK
 RT
 Dx
-UO
+NF
 tn
 CG
 tn
@@ -46349,7 +46539,7 @@ PE
 ce
 Pe
 bG
-uC
+tE
 uC
 uC
 uC
@@ -49364,7 +49554,7 @@ OG
 OG
 uC
 uC
-uC
+tE
 pM
 uC
 uC
@@ -49850,7 +50040,7 @@ ad
 Fk
 Fk
 IC
-Es
+eV
 mc
 MR
 Cu
@@ -50353,7 +50543,7 @@ JW
 Fk
 bu
 yx
-yx
+oN
 wB
 Xt
 yx
@@ -222939,7 +223129,7 @@ JW
 Kk
 aJ
 fZ
-VW
+qc
 VW
 LX
 TR
@@ -226953,7 +227143,7 @@ JW
 re
 re
 qU
-qU
+HY
 Ab
 uB
 tN
@@ -227962,7 +228152,7 @@ Ab
 Xw
 XP
 JZ
-rc
+US
 rc
 of
 JZ
@@ -229964,7 +230154,7 @@ JW
 JW
 re
 DX
-mv
+Qk
 qU
 Ab
 Xw
@@ -231971,7 +232161,7 @@ TT
 TT
 TT
 TT
-TT
+lD
 TT
 TT
 yi
@@ -232488,10 +232678,10 @@ Sk
 YT
 WT
 Cr
+Yj
 Ux
 Ux
-Ux
-NH
+hE
 bp
 WT
 Tr
@@ -233480,7 +233670,7 @@ TT
 TT
 TT
 TT
-BN
+iH
 MW
 Rm
 ZJ
@@ -233994,7 +234184,7 @@ fU
 tN
 WT
 dE
-Ux
+Yj
 Ux
 Ux
 Ux
@@ -234492,7 +234682,7 @@ Lc
 ED
 ED
 ED
-Ts
+Fq
 XP
 HI
 nD
@@ -235471,7 +235661,7 @@ JW
 JW
 JW
 JW
-JW
+hm
 JW
 JW
 JW
@@ -237002,7 +237192,7 @@ Lc
 ED
 ED
 ED
-Ts
+Fq
 XP
 HI
 nD
@@ -237511,7 +237701,7 @@ WT
 WT
 YU
 Ux
-Ux
+Yj
 hy
 HI
 JW
@@ -237998,7 +238188,7 @@ TT
 TT
 TT
 TT
-BN
+iH
 Se
 Rm
 vV
@@ -238013,7 +238203,7 @@ PL
 dD
 jD
 Ux
-Ux
+Yj
 OM
 HI
 JW
@@ -238515,7 +238705,7 @@ PL
 PL
 jD
 Ux
-Ux
+Yj
 HB
 HI
 JW
@@ -239501,7 +239691,7 @@ TT
 TT
 TT
 TT
-TT
+lD
 TT
 TT
 YG
@@ -240513,7 +240703,7 @@ Oc
 tt
 DP
 OS
-tt
+LR
 gT
 xT
 pY
