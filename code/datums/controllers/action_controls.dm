@@ -379,7 +379,7 @@ var/datum/action_controller/actions
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if(H.traitHolder.hasTrait("carpenter"))
+			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
@@ -599,7 +599,7 @@ var/datum/action_controller/actions
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
-					if (MT && MT.armed)
+					if (MT?.armed)
 						for (var/mob/O in AIviewers(owner))
 							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
@@ -795,7 +795,7 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner && target && target.hasStatus("handcuffed"))
+		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
@@ -1194,7 +1194,7 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (M && M.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
+		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
 			M.dir = turn(M.dir,up ? -90 : 90)
@@ -1269,6 +1269,14 @@ var/datum/action_controller/actions
 		if(get_dist(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(ishuman(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
+			var/mob/living/carbon/human/H = owner
+			if(H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
@@ -1334,7 +1342,7 @@ var/datum/action_controller/actions
 			src.duration = duration
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

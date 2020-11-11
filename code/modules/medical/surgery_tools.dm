@@ -1264,7 +1264,7 @@ CONTAINS:
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
-		def_zone = (user && user.zone_sel && user.zone_sel.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
+		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
 	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
@@ -1365,7 +1365,7 @@ CONTAINS:
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user && user.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
@@ -1447,7 +1447,7 @@ CONTAINS:
 					// irl these things can affect either side of the brain but this will help differentiate them in a video game context I think
 					// (also: injuries to the brain show up as issues on the opposite side of the body, so a left injury affects the right eye, etc)
 					var/datum/ailment_data/malady/AD = H.find_ailment_by_type(/datum/ailment/malady/bloodclot)
-					if (AD && AD.state == "Active" && AD.affected_area == "head") // having a stroke!!
+					if (AD?.state == "Active" && AD.affected_area == "head") // having a stroke!!
 						if (leye)
 							lmove = "[His_Her] left eye doesn't follow the light at all!"
 							lpreact = "doesn't react to the light at all!"

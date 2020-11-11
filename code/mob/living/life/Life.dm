@@ -210,7 +210,7 @@
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, life_mult)
+			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -219,11 +219,6 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
-				for (var/thing in src) //bnlech, do a smarter search later
-					var/atom/movable/A = thing
-					if (A.material)
-						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
@@ -692,7 +687,7 @@
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)

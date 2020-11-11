@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
@@ -2740,7 +2740,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (length(arrested_messages))
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 
@@ -4883,12 +4883,6 @@
 /obj/machinery/bot/guardbot/old/tourguide/destiny
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
-	botcard_access = "Staff Assistant"
-	beacon_freq = 1443
-
-/obj/machinery/bot/guardbot/old/tourguide/linemap
-	name = "Monty"
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Monty'."
 	botcard_access = "Staff Assistant"
 	beacon_freq = 1443
 

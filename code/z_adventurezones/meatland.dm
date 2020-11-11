@@ -377,7 +377,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && dialog && dialog.len)
+			if (prob(10) && length(dialog))
 				speak(pick(dialog))
 			return ..()
 
@@ -1196,7 +1196,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return
 
 		if (command == "key_auth")
-			if (signal && signal.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
+			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
 				if (knownKeys.len >= 2 && !inPasswordRequestMode)
@@ -1205,7 +1205,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 
 		else if (command == "key_deauth")
-			if (signal && signal.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
+			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
 				if (knownKeys.len < 2)

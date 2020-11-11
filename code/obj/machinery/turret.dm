@@ -95,7 +95,7 @@
 					T.target_list = src.target_list
 
 
-		if (target_list && target_list.len)
+		if (length(target_list))
 			if (!isPopping())
 				if (isDown())
 					popUp()
@@ -127,6 +127,8 @@
 			continue
 		if (!istype(C.loc.loc,A))
 			continue
+		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+			continue //optional access whitelist
 		. += C
 
 	if (istype(A, /area/station/turret_protected))

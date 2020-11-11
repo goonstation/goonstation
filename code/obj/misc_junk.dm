@@ -81,7 +81,7 @@
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
-			user.visible_message("<span class='notice'><b>[user]</b> hugs Gnome Chompski!</span>","<span class='notice'>You hug Gnome Chompski!</span>")
+			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
 			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
 			last_laugh = world.time
 
@@ -597,7 +597,7 @@
 
 	New()
 		..()
-		if (usr && usr.loc)
+		if (usr?.loc)
 			src.smoke = new /datum/effects/system/bad_smoke_spread/
 			src.smoke.attach(src)
 			src.smoke.set_up(1, 0, usr.loc)
@@ -673,7 +673,7 @@
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH && PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
+			if(PH?.parent.linked?.handset?.holder)
 				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
 			else
 				smoke_reaction(R, range, get_turf(usr))
@@ -810,7 +810,7 @@
 	pickup(mob/user as mob)
 		if(user != owner)
 			user.bioHolder.AddEffect("fire_resist")
-			if(owner && owner.bioHolder.HasEffect("fire_resist"))
+			if(owner?.bioHolder.HasEffect("fire_resist"))
 				owner.bioHolder.RemoveEffect("fire_resist")
 			pickup_time = world.time
 			boutput(user, "<h3><span class='alert'>You have captured [src.name]!</span></h3>")
@@ -833,7 +833,7 @@
 		if(!owner) return
 		if(world.time - pickup_time >= 300)
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
-			if(owner && owner.client)
+			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				owner.client.respawn_target(owner,1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
@@ -842,7 +842,7 @@
 
 
 	disposing()
-		if(owner && owner.bioHolder.HasEffect("fire_resist"))
+		if(owner?.bioHolder.HasEffect("fire_resist"))
 			owner.bioHolder.RemoveEffect("fire_resist")
 		DEBUG_MESSAGE("Heck someone broke the artifact")
 		var/obj/item/ass_day_artifact/next_artifact

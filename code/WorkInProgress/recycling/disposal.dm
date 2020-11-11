@@ -226,7 +226,7 @@
 			// holder was present
 			H.active = 0
 			var/turf/T = get_turf(src)
-			if(T && T.density)
+			if(T?.density)
 				// deleting pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
 

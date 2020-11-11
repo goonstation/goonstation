@@ -13,6 +13,8 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
+	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
+	var/min_circ_pressure = 10
 
 	anchored = 1.0
 	density = 1
@@ -27,24 +29,41 @@
 		..()
 
 	proc/return_transfer_air()
-		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
-		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
+		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
+		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
+		var/fan_power_draw = 0
+
+		if(!input_starting_pressure)
+			return null
 
 		//Calculate necessary moles to transfer using PV = nRT
-		var/pressure_delta = abs((input_starting_pressure - output_starting_pressure))/2
+		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
-		var/transfer_moles = pressure_delta*air2.volume/max((air1.temperature * R_IDEAL_GAS_EQUATION), 1) //Stop annoying runtime errors
+		// Check if fan/blower is required to overcome passive gate
+		if(input_starting_pressure < (output_starting_pressure+src.min_circ_pressure))
+			pressure_delta = src.min_circ_pressure
+			// P = dp q / μf, q ignored for simplification of system
+			var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
+			fan_power_draw = round((total_pressure) / src.fan_efficiency)
 
-		last_pressure_delta = pressure_delta
+			if(fan_power_draw)
+				if(src.status & NOPOWER)
+					src.last_pressure_delta = 0
+					return null
+				else src.use_power(fan_power_draw)
+
+
+		var/transfer_moles = abs(pressure_delta)*src.air2.volume/max(src.air1.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
+		src.last_pressure_delta = pressure_delta
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+		var/datum/gas_mixture/removed = src.air1.remove(transfer_moles)
 
-		if(network1)
-			network1.update = 1
+		if(src.network1)
+			src.network1.update = 1
 
-		if(network2)
-			network2.update = 1
+		if(src.network2)
+			src.network2.update = 1
 
 		return removed
 
@@ -53,10 +72,10 @@
 		update_icon()
 
 	update_icon()
-		if(status & (BROKEN|NOPOWER))
+		if(src.status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
-		else if(last_pressure_delta > 0)
-			if(last_pressure_delta > ONE_ATMOSPHERE)
+		else if(src.last_pressure_delta >= src.min_circ_pressure)
+			if(src.last_pressure_delta > ONE_ATMOSPHERE)
 				icon_state = "circ[side]-run"
 			else
 				icon_state = "circ[side]-slow"
@@ -187,11 +206,11 @@
 					// this needs a safer lightbust proc
 
 	process()
-		if(!circ1 || !circ2)
+		if(!src.circ1 || !src.circ2)
 			return
 
-		var/datum/gas_mixture/hot_air = circ1.return_transfer_air()
-		var/datum/gas_mixture/cold_air = circ2.return_transfer_air()
+		var/datum/gas_mixture/hot_air = src.circ1.return_transfer_air()
+		var/datum/gas_mixture/cold_air = src.circ2.return_transfer_air()
 
 		var/swapped = 0
 
@@ -239,10 +258,10 @@
 			cold_air = swapTmp
 
 		if(hot_air)
-			circ1.air2.merge(hot_air)
+			src.circ1.air2.merge(hot_air)
 
 		if(cold_air)
-			circ2.air2.merge(cold_air)
+			src.circ2.air2.merge(cold_air)
 		desc = "Current Output: [engineering_notation(lastgen)]W"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
 		if((genlev != lastgenlev) && !spam_limiter)
@@ -433,6 +452,9 @@
 
 	power_change()
 		..()
+		// Why don't the circulators get this from the APC directly?
+		src.circ1?.power_change()
+		src.circ2?.power_change()
 		updateicon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)

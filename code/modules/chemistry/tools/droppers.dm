@@ -94,7 +94,7 @@
 
 				src.log_me(user, target)
 				SPAWN_DBG (5)
-					if (src && src.reagents && target && target.reagents)
+					if (src?.reagents && target?.reagents)
 						src.reagents.trans_to(target, t)
 
 				user.show_text("You transfer [t] units of the solution.", "blue")

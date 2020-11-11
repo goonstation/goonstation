@@ -537,7 +537,6 @@ datum
 			fluid_b = 150
 			transparency = 150
 			viscosity = 0.7
-			volatility = 2.5
 			minimum_reaction_temperature = 1000
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -877,7 +876,7 @@ datum
 				is_dry = 0
 
 			proc/bang()
-				if(holder && holder.my_atom)
+				if(holder?.my_atom)
 					holder.my_atom.visible_message("<b>The powder detonates!</b>")
 
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()

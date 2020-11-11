@@ -97,7 +97,7 @@
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
 								sleep(0.1 SECONDS)
-						if (usr && usr.client)
+						if (usr?.client)
 							if (fexists("adventure/adventure_save_[usr.client.ckey].dat"))
 								fdel("adventure/adventure_save_[usr.client.ckey].dat")
 							var/target = file("adventure/adventure_save_[usr.client.ckey].dat")

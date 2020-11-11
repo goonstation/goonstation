@@ -141,6 +141,7 @@
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	initial_reagents = list("egg"=5)
+	doants = 0 // They're protected by a shell
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -263,6 +264,9 @@
 	initial_reagents = list("honey"=15)
 	brewable = 1
 	brew_result = "mead"
+	New()
+		..()
+		src.setMaterial(getMaterial("beeswax"), appearance = 0, setname = 0)
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"
