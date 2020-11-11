@@ -907,18 +907,21 @@ PIPE BOMBS + CONSTRUCTION
 			if (src.primer_burnt)
 				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
 				return
+
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
 					src.primer_burnt = 1
 					return
+
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = 1
 				SPAWN_DBG( 5 )
 					boom()
 					return
+
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = 1
@@ -929,32 +932,35 @@ PIPE BOMBS + CONSTRUCTION
 	proc/boom()
 		var/turf/location = get_turf(src.loc)
 		if(location)
-			src.visible_message("<span class='alert'>\The [src] explodes!</span>") // moving to avoid race condition
 			if(prob(10))
 				explosion(src, location, 0, 0, 1, 1)
-				qdel (src) // moving to avoid race condition
 			else
 				elecflash(src,power = 2)
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
-				qdel (src)
+		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
+
+		qdel(src)
 
 	attack_self(mob/user as mob)
 		if (user.equipped() == src)
 			if (src.primer_burnt)
 				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
 				return
+
 			else if (src.slashed)
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
 					src.primer_burnt = 1
 					return
+
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = 1
 				SPAWN_DBG( 5 )
 					boom()
 					return
+
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = 1
@@ -965,16 +971,19 @@ PIPE BOMBS + CONSTRUCTION
 	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
 			src.slashed = 1
+			src.name = "empty [src.name]" // its empty now!
 			src.desc = "[src.desc] It has been cut open and emptied out."
 			boutput(user, "You carefully cut [src] open and dump out the contents.")
-			src.name = "empty [src.name]" // its empty now!
+
 			make_cleanable(/obj/decal/cleanable/magnesiumpile, get_turf(src.loc)) // create magnesium pile
 			src.reagents.clear_reagents() // remove magnesium from firework
 			return
+
 		else if (iscuttingtool(A) && !(src.slashed) && (src.primed)) // cutting open a lit firework is a bad idea!
 			boutput(user, "<span class='alert'>You cut open [src], but the lit primer ignites the contents!</span>")
 			boom()
 			return
+
 		else if (iscuttingtool(A) && (src.slashed))
 			boutput(user, "[src] has already been cut open and emptied.")
 			return
