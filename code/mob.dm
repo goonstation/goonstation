@@ -2889,9 +2889,5 @@
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
-/mob/proc/add_karma(how_much)
-	src.mind?.add_karma(how_much)
-	// TODO add NPC karma
-
 /mob/proc/can_eat(var/atom/A)
 	return 1
