@@ -94,7 +94,7 @@
 							user.show_text("You have removed the [src.cup_name] from the [src].")
 							src.update()
 						if ("Nothing")
-								return
+							return
 			else return ..()
 
 	ex_act(severity)
