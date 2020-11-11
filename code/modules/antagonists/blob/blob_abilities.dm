@@ -250,11 +250,21 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-
+		playsound(T, 'sound/voice/blob/blob23.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
 
+//blob13 blob14=death sounds
+//blob23=deploy, building new nucleus
+//blob01-06=spread (1/6th chance each
+//blob16-18=removing blob stuff
+//attack=blob12-13
+//build defenses=15-16
+//build lipids=blob01-5
+//succing someone into blob: 24, 25, 27 and when completed do 26
+//blob7,9 point sounds (every 10-100, cant decide which)
+//blob9 every time you gain an EVO point
 
 /datum/blob_ability/set_color
 	name = "Set Color"
@@ -434,7 +444,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+		playsound(T, "sound/voice/blob/blob[pick("16","17","18")].ogg", 50, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -473,7 +483,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-
+		playsound(T, "sound/voice/blob/blob[pick("12","23")].ogg", 50, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))
