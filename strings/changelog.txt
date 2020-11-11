@@ -1,4 +1,9 @@
 
+(t)wed nov 11 20
+(u)CodeDude
+(p)2639
+(e)🎨|sprites
+(*)Added a new level 5 Botanist job reward, the blue apron.
 (t)tue nov 10 20
 (u)Erinexx, Flaborized, and Sovexe
 (p)2631
