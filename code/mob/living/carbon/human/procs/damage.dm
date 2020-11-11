@@ -4,42 +4,8 @@
 	if(!.)
 		return 0 //early return from parent
 
-	if (src.nodamage) return
-	if (src.spellshield)
-		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-		return
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-				return
-			S.active = 0
-			S.icon_state = "shield0"
-
-
-	if (HAS_MOB_PROPERTY(src, PROP_REFLECTPROT))
-		var/obj/item/equipped = src.equipped()
-		if (equipped && istype(equipped,/obj/item/sword))
-			var/obj/item/sword/S = equipped
-			S.handle_deflect_visuals(src)
-
-		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-		P.die()
-		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
-		return
-
-	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
-		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
-		playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-		P.die()
-		JOB_XP(src, "Chaplain", 2)
-		return
-
-	if(src.material) src.material.triggerOnBullet(src, src, P)
-	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+	if(istype(/atom, .))
+		return . //meatshielded
 
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio

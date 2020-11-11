@@ -1058,7 +1058,7 @@
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
 				if ((user.mind.assigned_role == "Barman") && (prob(10)))
-					JOB_XP(user, "Bartender", 1)
+					JOB_XP(user, "Barman", 1)
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1072,7 +1072,7 @@
 			src.wedge = W
 			src.update_icon()
 			if ((user.mind.assigned_role == "Barman") && (prob(10)))
-				JOB_XP(user, "Bartender", 1)
+				JOB_XP(user, "Barman", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1118,7 +1118,7 @@
 				src.salted = 1
 				src.update_icon()
 				if ((user.mind.assigned_role == "Barman") && (prob(10)))
-					JOB_XP(user, "Bartender", 1)
+					JOB_XP(user, "Barman", 1)
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1742,7 +1742,7 @@
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
 			if ((user.mind.assigned_role == "Barman") && (prob(5)))
-				JOB_XP(user, "Bartender", 2)
+				JOB_XP(user, "Barman", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
 
