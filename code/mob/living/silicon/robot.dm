@@ -186,10 +186,10 @@
 			src.botcard.access = get_all_accesses()
 			src.default_radio = new /obj/item/device/radio(src)
 			src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-			if (!src.shell)
-				src.radio = src.default_radio
 			if (src.shell)
 				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -1839,7 +1839,7 @@
 		if(istype(RM.radio))
 			if (src.shell)
 				src.radio = src.ai_radio
-			if (!src.shell)
+			else
 				src.radio = RM.radio
 			src.ears = src.radio
 			src.radio.set_loc(src)
@@ -1855,10 +1855,10 @@
 		hud.module_removed()
 		if(istype(src.radio) && src.radio != src.default_radio)
 			src.radio.set_loc(RM)
-			if (!src.shell)
-				src.radio = src.default_radio
 			if (src.shell)
 				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 		return RM
 
