@@ -893,9 +893,9 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	var/slashed = 0 // has it been emptied out? if so, better dud!
-	var/primer_burnt = 0 // avoid priming a firework multiple times, that doesn't make sense!
-	var/primed = 0 // cutting open lit fireworks is a BAD idea
+	var/slashed = FALSE // has it been emptied out? if so, better dud!
+	var/primer_burnt = FALSE // avoid priming a firework multiple times, that doesn't make sense!
+	var/primed = FALSE // cutting open lit fireworks is a BAD idea
 
 	New()
 		..()
