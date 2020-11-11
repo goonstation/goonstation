@@ -974,7 +974,7 @@
 			owner.gen_rate_used++
 		src.deduct_bio_points()
 		src.do_cooldown()
-		playsound(T, "sound/voice/blob/blob[pick("15","16","28","29","30")].ogg", 50, 1)
+		playsound(T, "sound/voice/blob/blob[pick("15","16","28","29","30")].ogg", 75, 1)
 
 /datum/blob_ability/build/lipid
 	name = "Build Lipid Cell"
