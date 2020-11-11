@@ -993,7 +993,7 @@ var/image/blob_icon_cache
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(src.loc, "sound/voice/blob/blob36.ogg", 75, 1)
+				playsound(hit.loc, "sound/voice/blob/blob36.ogg", 75, 1)
 
 			if (prob(8))
 				asshole.drop_item()
