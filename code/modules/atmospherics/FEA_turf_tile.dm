@@ -321,7 +321,7 @@ turf
 
 		process_cell()
 			var/list/turf/simulated/possible_fire_spreads
-			if(processing && air)
+			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
@@ -343,14 +343,14 @@ turf
 							if(sharegroup?.group_processing)
 								if(sharegroup.current_cycle < current_cycle)
 									if(sharegroup.air.check_gas_mixture(air))
-										connection_difference = air.share(sharegroup.air)
+										connection_difference = src.air.share(sharegroup.air)
 									else
 										sharegroup.suspend_group_processing()
-										connection_difference = air.share(enemy_tile.air)
+										connection_difference = src.air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
 							else
 								if(enemy_tile.current_cycle < current_cycle)
-									connection_difference = air.share(enemy_tile.air)
+									connection_difference = src.air.share(enemy_tile.air)
 							if(active_hotspot)
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
@@ -368,22 +368,23 @@ turf
 				air_master.active_singletons -= src //not active if not processing!
 				return
 
-			air.react()
 
-			if(active_hotspot && possible_fire_spreads)
-				active_hotspot.process(possible_fire_spreads)
+			src.air.react()
 
-			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+			if(src.active_hotspot && possible_fire_spreads)
+				src.active_hotspot.process(possible_fire_spreads)
+
+			if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 				consider_superconductivity(starting = 1)
 
-			if(air.check_tile_graphic())
+			if(src.air.check_tile_graphic())
 				update_visuals(air)
 
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(src.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
-					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				temperature_expose(air, air.temperature, CELL_VOLUME)
+					item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+				temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
 			return 1
 
