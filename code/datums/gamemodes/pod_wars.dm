@@ -851,3 +851,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate
 		icon_state = "surv_machete_st"
+
+/obj/table/wood/round/champagne
+	name = "champagne table"
+	desc = "It makes champagne. Who ever said spontanious generation was false?"
+	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
+
+	New()
+		..()
+		var/turf/T
+		while (1)
+			T = get_turf(src)
+			if (!locate(to_spawn) in T.contents)
+				new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+			sleep(10 SECONDS)
+
+
+
+
