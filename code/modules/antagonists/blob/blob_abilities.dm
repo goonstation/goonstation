@@ -336,7 +336,7 @@
 
 		if (!tutorial_check("spread", T))
 			return 1
-
+    playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
@@ -364,7 +364,6 @@
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
 				B3.setOvermind(owner)
-				playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 				spreadability -= R
 
 		if (!owner.starter_buff)
