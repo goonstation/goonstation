@@ -53,7 +53,7 @@
 			var/turf/T = get_step(src, src.dir)
 			while (checked < 7 && !T.density)
 				var/obj/machinery/atmos_field_generator/other = locate() in T
-				if (other && other.dir == turn(src.dir, 180))
+				if (other?.dir == turn(src.dir, 180))
 					src.other = other
 					src.other.other = src
 					src.create_field()

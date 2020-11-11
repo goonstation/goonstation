@@ -31,7 +31,7 @@
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
-	var/speed = 0 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
+	var/speed = 1 //FOR PODS : While holding thruster, how much to add on to our max speed. Does nothing for tanks.
 	var/stall = 0 // slow the ship down when firing
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
@@ -65,8 +65,8 @@
 
 
 	remove_air(amount as num)
-		if(atmostank && atmostank.air_contents)
-			if(life_support && life_support.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
+		if(atmostank?.air_contents)
+			if(life_support?.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
 				life_support.power_used = 5 * passengers + 15
 				atmostank.air_contents.oxygen += amount / 5
 				atmostank.air_contents.nitrogen += 4 * amount / 5
@@ -542,12 +542,15 @@
 
 		switch (severity)
 			if (1.0)
+				src.health -= round(src.maxhealth / 3)
 				src.health -= 65
 				checkhealth()
 			if(2.0)
+				src.health -= round(src.maxhealth / 4)
 				src.health -= 40
 				checkhealth()
 			if(3.0)
+				src.health -= round(src.maxhealth / 5)
 				src.health -= 25
 				checkhealth()
 
@@ -960,6 +963,10 @@
 
 	if (boarder in src) // fuck's sake
 		boutput(boarder, "<span class='alert'>You're already inside [src]!</span>")
+		return
+
+	if (!src.allowed(boarder))
+		boutput(boarder, "<span class='alert'>Access denied.</span>")
 		return
 
 	passengers = 0 // reset this shit

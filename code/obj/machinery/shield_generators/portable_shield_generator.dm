@@ -132,7 +132,7 @@
 		PCEL.use(30 * src.range * (power_level * power_level))
 		var/charge_percentage = 0
 		var/current_battery_level = 0
-		if(PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 			switch(charge_percentage)
 				if(75 to 100)
@@ -177,7 +177,7 @@
 	get_desc(dist, mob/user)
 		. = ..()
 		var/charge_percentage = 0
-		if(PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 			. += "The range setting is set to [src.range]."

@@ -82,7 +82,7 @@
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "cameraSecure"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/camera/television/cam
 	var/secstate
@@ -419,7 +419,9 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(by_type[/obj/machinery/camera])
+	var/list/cameras = by_type[/obj/machinery/camera]
+	if (!isnull(cameras))
+		connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
@@ -437,12 +439,12 @@
 		C.referrers.Cut()
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
-	if( camlist.len < 1)  return 1
+	if(!length(camlist))  return 1
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
 	for(var/obj/machinery/camera/C as() in camlist)
-		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
+		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
 

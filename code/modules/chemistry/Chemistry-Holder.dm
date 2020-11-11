@@ -517,7 +517,7 @@ datum
 					src.add_reagent(C.result, speed,, src.total_temperature)
 				covered_cache = 0
 
-				if(my_atom && my_atom.loc) //We might be inside a thing, let's tell it we updated our reagents.
+				if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
 					my_atom.loc.handle_event("reagent_holder_update", src)
 
 			defer_reactions = 0
@@ -615,7 +615,7 @@ datum
 					if(istype(H) && can_burn)
 						var/temp_to_burn_with = total_temperature
 						var/dmg_multiplier = 1
-						if (paramslist && paramslist.len)
+						if (length(paramslist))
 							if ("override_can_burn" in paramslist)
 								temp_to_burn_with = paramslist["override_can_burn"]
 							if ("dmg_multiplier" in paramslist)
@@ -669,7 +669,7 @@ datum
 							var/mob/living/carbon/C = A
 							var/temp_to_burn_with = total_temperature
 							var/dmg_multiplier = 1
-							if (paramslist && paramslist.len)
+							if (length(paramslist))
 								if ("override_can_burn" in paramslist)
 									temp_to_burn_with = paramslist["override_can_burn"]
 								if ("dmg_multiplier" in paramslist)

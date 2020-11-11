@@ -210,7 +210,7 @@ turf
 
 		assume_air(datum/gas_mixture/giver)
 			if(air)
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					if(!parent.air.check_then_merge(giver))
 						parent.suspend_group_processing()
 						air.merge(giver)
@@ -242,7 +242,7 @@ turf
 
 		return_air()
 			if(air)
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					return parent.air
 				else return air
 
@@ -253,7 +253,7 @@ turf
 			if(air)
 				var/datum/gas_mixture/removed = null
 
-				if(parent&&parent.group_processing)
+				if(parent?.group_processing)
 					removed = parent.air.check_then_remove(amount)//, remove_water)
 					if(!removed)
 						parent.suspend_group_processing()
@@ -321,7 +321,7 @@ turf
 
 		process_cell()
 			var/list/turf/simulated/possible_fire_spreads
-			if(processing && air)
+			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
@@ -340,17 +340,17 @@ turf
 								enemy_tile.archive()
 #endif
 							var/datum/air_group/sharegroup = enemy_tile.parent //move tile's group to a new variable so we're not referencing multiple layers deep
-							if(sharegroup && sharegroup.group_processing)
+							if(sharegroup?.group_processing)
 								if(sharegroup.current_cycle < current_cycle)
 									if(sharegroup.air.check_gas_mixture(air))
-										connection_difference = air.share(sharegroup.air)
+										connection_difference = src.air.share(sharegroup.air)
 									else
 										sharegroup.suspend_group_processing()
-										connection_difference = air.share(enemy_tile.air)
+										connection_difference = src.air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
 							else
 								if(enemy_tile.current_cycle < current_cycle)
-									connection_difference = air.share(enemy_tile.air)
+									connection_difference = src.air.share(enemy_tile.air)
 							if(active_hotspot)
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
@@ -368,22 +368,23 @@ turf
 				air_master.active_singletons -= src //not active if not processing!
 				return
 
-			air.react()
 
-			if(active_hotspot && possible_fire_spreads)
-				active_hotspot.process(possible_fire_spreads)
+			src.air.react()
 
-			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+			if(src.active_hotspot && possible_fire_spreads)
+				src.active_hotspot.process(possible_fire_spreads)
+
+			if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 				consider_superconductivity(starting = 1)
 
-			if(air.check_tile_graphic())
+			if(src.air.check_tile_graphic())
 				update_visuals(air)
 
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(src.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
-					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				temperature_expose(air, air.temperature, CELL_VOLUME)
+					item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+				temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
 			return 1
 
@@ -418,7 +419,7 @@ turf
 								if(air) //Both tiles are open
 
 									if(modeled_neighbor.parent && modeled_neighbor.parent.group_processing)
-										if(parent && parent.group_processing)
+										if(parent?.group_processing)
 											//both are acting as a group
 											//modified using construct developed in datum/air_group/share_air_with_group(...)
 
@@ -440,7 +441,7 @@ turf
 										else
 											air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 									else
-										if(parent && parent.group_processing)
+										if(parent?.group_processing)
 											if(!parent.air.check_me_then_temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT))
 												//may have to deconstruct neighbors air group
 
@@ -463,7 +464,7 @@ turf
 
 							else
 								if(air) //Open but neighbor is solid
-									if(parent && parent.group_processing)
+									if(parent?.group_processing)
 										if(!parent.air.check_me_then_temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity))
 											parent.suspend_group_processing()
 											air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
@@ -479,7 +480,7 @@ turf
 
 						else
 							if(air) //Open
-								if(parent && parent.group_processing)
+								if(parent?.group_processing)
 									if(!parent.air.check_me_then_temperature_mimic(neighbor, neighbor.thermal_conductivity))
 										parent.suspend_group_processing()
 										air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
@@ -496,7 +497,7 @@ turf
 
 			//Conduct with air on my tile if I have it
 			if(air)
-				if(parent && parent.group_processing)
+				if(parent?.group_processing)
 					if(!parent.air.check_me_then_temperature_turf_share(src, src.thermal_conductivity))
 						parent.suspend_group_processing()
 						air.temperature_turf_share(src, src.thermal_conductivity)

@@ -45,7 +45,7 @@ Fibre wire
 		var/list/mob/dead/observer/priority_targets = list()
 
 
-		if(ticker && ticker.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
+		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
 				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != "vampthrall" && M.special_role != "mindslave")
 					priority_targets.Add(M.current)
@@ -242,7 +242,7 @@ proc/Create_Tommyname()
 /datum/spectro_analysis
 
 	proc/analyze_reagents(var/datum/reagents/R, var/check_recipes = 0)
-		if(R && R.reagent_list && R.reagent_list.len)
+		if(length(R?.reagent_list))
 			if(check_recipes)
 				. = analyze_reagent_components(R.reagent_list)
 			else
@@ -257,7 +257,7 @@ proc/Create_Tommyname()
 			for (var/id in reagent_ids)
 
 				var/datum/chemical_reaction/recipe = chem_reactions_by_id[id]
-				if(recipe && recipe.required_reagents && recipe.required_reagents.len)
+				if(length(recipe?.required_reagents))
 					analyze_reagent_list(recipe.required_reagents, output)
 				else
 					for(var/i=0, i<rand(2,7), i++) //If it doesn't have a recipe, just spit out some random data

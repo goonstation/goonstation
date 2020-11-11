@@ -161,7 +161,7 @@ Doing this because FindTurfs() isn't even used
 		for(var/obj/machinery/M in T)
 			//boutput(world, " Mach [M] with pdir=[M.p_dir]")
 
-			if(M && M.p_dir)
+			if(M?.p_dir)
 
 				//boutput(world, "Accepted")
 				var/obj/mark/O = locate(/obj/mark/, T)

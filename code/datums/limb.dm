@@ -200,7 +200,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
-		arcFlashTurf(user, get_turf(target), 15000)
+		arcFlashTurf(user, get_turf(target), wattage)
 
 /datum/limb/gun
 	var/datum/projectile/proj = null
@@ -403,7 +403,7 @@
 
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
-		if (holder && holder.remove_object && istype(holder.remove_object))
+		if (holder?.remove_object && istype(holder.remove_object))
 			target.attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
@@ -480,19 +480,58 @@
 			..()
 			return
 
-		if (isobj(target))
-			switch (user.smash_through(target, list("door"))) //No uber grille smashing plz, but you can have windows, as a treat.
-				if (0)
-					if (isitem(target))
-						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
-						return
-					else if (istype(target, /obj/machinery))
-						boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
-						return
+		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
+			if(istype(target, /obj/machinery/door))
+				var/obj/machinery/door/O = target
+				user.lastattacked = O
+				O.visible_message("<span class='alert'><b>[user]</b> violently smashes against the [O]!</span>")
+				attack_particle(user, O)
+				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
+				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 
-				if (1)
-					user.emote("scream")
-					return
+			if(istype(target, /obj/grille))
+				var/obj/grille/O = target
+				user.lastattacked = O
+				if (!O.shock(user, 70))
+					O.visible_message("<span class='alert'><b>[user]</b> violently slashes [O]!</span>")
+					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+					O.damage_slashing(10)
+
+			if(istype(target, /obj/window))
+				var/obj/window/O = target
+				user.lastattacked = O
+				O.visible_message("<span class='alert'>[user] smashes into the window.</span>", "<span class='notice'>You mash yourself against the window.</span>")
+				O.damage_blunt(15)
+				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
+
+			if(istype(target, /obj/table))
+				var/obj/table/O = target
+				user.lastattacked = O
+				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
+				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				O.deconstruct()
+
+			if(istype(target, /obj/structure/woodwall))
+				var/obj/window/O = target
+				user.lastattacked = O
+				O.attack_hand(user)
+
+			if(istype(target, /obj/machinery/bot))
+				var/obj/machinery/bot/O = target
+				user.lastattacked = O
+				O.explode()
+				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
+
+			if(prob(40))
+				user.emote("scream")
+			return
+
+		if (isitem(target))
+			boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
+			return
+		else if (istype(target, /obj/machinery))
+			boutput(user, "<span class='alert'>You're unlikely to be able to use [target]. You manage to scratch its surface though.</span>")
+			return
 
 		..()
 		return
@@ -503,9 +542,30 @@
 		harm(target, user, 1)
 
 	grab(mob/target, var/mob/living/user)
-		logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with zomb limbs (grab intent) at [log_loc(user)].")
-		user.visible_message("<span class='alert'>[user] mauls [target] while trying to grab them!</span>")
-		harm(target, user, 1)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.attack_hand(user)
+			return
+
+		if(check_target_immunity( target ))
+			return 0
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		user.grab_other(target, 1) // Use standard grab proc.
+
+		// Werewolves and shamblers grab aggressively by default.
+		var/obj/item/grab/GD = user.equipped()
+		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
+			GD.state = GRAB_AGGRESSIVE
+			GD.update_icon()
+			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
+
+		return
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
@@ -803,7 +863,7 @@
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 
@@ -1445,7 +1505,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 

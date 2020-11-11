@@ -403,7 +403,7 @@
 	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in health_mon_icons)
 				if (I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -415,7 +415,7 @@
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in arrestIconsAll)
 				if(I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -548,7 +548,7 @@
 			continue
 		L+=T
 
-	if (L && L.len) //ZeWaka: Fix for pick() from empty list
+	if (length(L)) //ZeWaka: Fix for pick() from empty list
 		usr.set_loc(pick(L))
 		OnMove()
 	else
@@ -671,7 +671,7 @@
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
 			var/name = "Nuclear bomb"
@@ -684,7 +684,7 @@
 			creatures[name] = N.the_bomb
 
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		var/datum/game_mode/football/F = ticker.mode
 		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
 			var/name = "THE FOOTBALL"
@@ -806,7 +806,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	newobs.my_ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
-	if (target && target.invisibility)
+	if (target?.invisibility)
 		newobs.see_invisible = target.invisibility
 	if (src.corpse)
 		corpse.ghost = newobs

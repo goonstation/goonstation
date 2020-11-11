@@ -350,7 +350,7 @@
 
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
-		if (leader_mind && leader_mind.current && M.client)
+		if (leader_mind?.current && M.client)
 			var/I = image(antag_spyleader, loc = leader_mind.current)
 			M.client.images += I
 
@@ -361,7 +361,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><font color=red>Your loyalty to [(leader_mind && leader_mind.current) ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
+			boutput(M, "<h1><font color=red>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

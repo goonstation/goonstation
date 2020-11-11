@@ -1146,7 +1146,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				switch (state)
 					if (STATE_DEFAULT)
 						plunk_down_marker()
-						if (spawners && spawners.len)
+						if (length(spawners))
 							var/obj/iomoon_boss/bot_spawner/aSpawner = pick(spawners)
 							aSpawner.spawn_bot()
 

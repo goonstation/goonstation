@@ -295,7 +295,7 @@
 
 		try_build_turf_list()
 
-		if (L && L.len)
+		if (length(L))
 			SPAWN_DBG(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span class='alert'>[AM] falls down [src]!</span>")

@@ -48,7 +48,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(origin, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
+					if(term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -306,7 +306,7 @@
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
 			L.invisibility = 0 //make it visible
-			L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
@@ -328,7 +328,7 @@
 			qdel(O)
 
 /obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
@@ -338,7 +338,7 @@
 
 	for(var/obj/lpt_laser/L in laser_parts)
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_state(mob/user)
 	return tgui_default_state
@@ -492,7 +492,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = max(50,min(255,power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW

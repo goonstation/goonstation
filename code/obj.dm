@@ -510,7 +510,7 @@
 			user.drop_item()
 			if(W.dir != dirbuffer)
 				W.set_dir(dirbuffer)
-			if (W && W.loc)
+			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16

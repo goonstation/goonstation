@@ -1961,8 +1961,8 @@ datum/maintpanel_device_entry
 
 		getControlMenu()
 			return list("  ACTOR ID: [mannequinName]",\
-			"  ACTIVE: [(ourMannequin && ourMannequin.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
-			"  CONDITION: [ourMannequin && ourMannequin.alive ? "OK" : "REPAIRS NEEDED"]")
+			"  ACTIVE: [(ourMannequin?.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
+			"  CONDITION: [ourMannequin?.alive ? "OK" : "REPAIRS NEEDED"]")
 
 		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/critter/mannequin/mannequin, entryName)
 			..()

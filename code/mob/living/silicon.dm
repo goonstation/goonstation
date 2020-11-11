@@ -257,6 +257,11 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
+			else if(istype(S, /mob/living/intangible/flock))
+				var/mob/living/intangible/flock/f = S
+				if(f.flock?.snooping)
+					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening -= src
@@ -708,3 +713,11 @@ var/global/list/module_editors = list()
 		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 
 	. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+
+/mob/living/silicon/proc/singify_text(var/text)
+	var/adverb = pick("robotically", "synthetically", "electronically")
+	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
+	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
+	if (src.singing & LOUD_SINGING)
+		note_img = "[note_img][note_img]"
+	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"

@@ -1572,7 +1572,7 @@
 			W:amount--
 			if(!W:amount) qdel(W)
 
-			if(newdog && newdog.reagents && src.reagents)
+			if(newdog?.reagents && src.reagents)
 				src.reagents.trans_to(newdog, 100)
 
 			if(src.herb)

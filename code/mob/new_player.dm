@@ -67,7 +67,7 @@ mob/new_player
 						observer.set_loc(locate(1, 1, 1))
 					observer.key = key
 
-					if (client && client.preferences)
+					if (client?.preferences)
 						if (client.preferences.be_random_name)
 							client.preferences.randomize_name()
 
@@ -121,7 +121,7 @@ mob/new_player
 			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
 		if(client)
 			winshow(src, "joinmenu", 1)
-		if(client && client.antag_tokens > 0 && (!ticker || current_state <= GAME_STATE_PREGAME))
+		if(client?.antag_tokens > 0 && (!ticker || current_state <= GAME_STATE_PREGAME))
 			winset(src, "joinmenu.button_ready_antag", "is-disabled=false;is-visible=true")
 			winset(src, "joinmenu", "size=240x256")
 			winset(src, "joinmenu.observe", "pos=18,192")
@@ -230,7 +230,7 @@ mob/new_player
 				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
-			if (ticker && ticker.mode)
+			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
@@ -318,7 +318,7 @@ mob/new_player
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
-			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
+			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
 					starting_loc = pick(by_type[/obj/cryotron])
@@ -328,7 +328,7 @@ mob/new_player
 				else
 					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
-			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
+			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
 				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
 				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
@@ -358,11 +358,9 @@ mob/new_player
 
 			var/miscreant = 0
 #ifdef MISCREANTS
-#ifndef RP_MODE
 			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
 				ticker.generate_miscreant_objectives(character.mind)
 				miscreant = 1
-#endif
 #endif
 
 #ifdef CREW_OBJECTIVES
@@ -619,7 +617,7 @@ a.latejoin-card:hover {
 		var/client/C = client
 		mind.transfer_to(new_character)
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 			var/bad_type = "traitor"
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
@@ -653,7 +651,7 @@ a.latejoin-card:hover {
 
 
 
-		if(new_character && new_character.client)
+		if(new_character?.client)
 			new_character.client.loadResources()
 
 #if ASS_JAM
@@ -849,7 +847,7 @@ a.latejoin-card:hover {
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			observer.real_name = observer.name
-			if(observer && observer.client)
+			if(observer?.client)
 				observer.client.loadResources()
 
 			qdel(src)

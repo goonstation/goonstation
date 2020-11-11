@@ -1,6 +1,6 @@
 # Include any directories OR individual files to exclude here (use windows directory separators e.g. sound\foo rather than sound/foo)
 # You must include the full path relative to the current script directory
-$Excludes = @("sound\vox", "browserassets\sounds", "unversioned\*", "sound\radio_station", "+secret")
+$Excludes = @("sound\vox", "browserassets\sounds", "unversioned\*", "sound\radio_station", "+secret\*")
 
 $oggFiles = Get-ChildItem -Recurse -Filter "*.ogg" -Name | %{
     $allowed = $true

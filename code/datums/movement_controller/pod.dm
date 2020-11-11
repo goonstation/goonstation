@@ -91,7 +91,7 @@
 
 		velocity_magnitude = 0
 		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
-			if (owner && owner.engine && owner.engine.active)
+			if (owner?.engine?.active)
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel
@@ -114,9 +114,11 @@
 
 				//normalize and force speed cap
 				velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
-				var/vel_max = velocity_max + max(owner.speed,0)
+				var/vel_max = velocity_max
 				if (!input_x && !input_y)
 					vel_max = velocity_max_no_input
+
+				vel_max /= (owner.speed ? owner.speed : 1)
 
 				if (velocity_magnitude > vel_max)
 					velocity_x /= velocity_magnitude

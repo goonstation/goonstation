@@ -50,7 +50,7 @@ Contains:
 	for(var/obj/item/device/infra/I in range(src.loc))
 		I.visible = 1
 		SPAWN_DBG( 0 )
-			if ((I && I.first))
+			if (I?.first)
 				I.first.vis_spread(1)
 			return
 	for(var/obj/item/assembly/rad_infra/I in range(src.loc))

@@ -576,6 +576,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	attack()
 		return
 
+ABSTRACT_TYPE(/obj/item/wizard_crystal)
 /obj/item/wizard_crystal
 	name = "enchanted quartz"
 	desc = "A magically infused piece of crystal. It seems to emit a minimal amount of light. Some magical object could perhaps amplify this."

@@ -53,7 +53,7 @@
 	..()
 	if(!zone)
 		var/area/A = get_area(loc)
-		if (A && A.name)
+		if (A?.name)
 			zone = A.name
 	SPAWN_DBG(0.5 SECONDS)
 		if (radio_controller)
@@ -62,7 +62,7 @@
 		if (!zone2) //MBC : Hey, this is pretty shitty! But I want to be able to handle firelocks that are bordering 2 areas... without reworking the whole dang thing
 			for (var/d in cardinal)
 				var/area/A = get_area(get_step(src,d))
-				if (A && A.name && A.name != zone)
+				if (A?.name && A.name != zone)
 					zone2 = A.name
 					break
 

@@ -38,7 +38,7 @@
 
 /mob/proc/is_in_colosseum()
 	var/area/A = get_area(src)
-	if (A && A.type == /area/colosseum)
+	if (A?.type == /area/colosseum)
 		return 1
 	return 0
 

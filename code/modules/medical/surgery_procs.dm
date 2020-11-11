@@ -165,7 +165,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/calc_surgery_damage(var/mob/surgeon as mob, var/screw_up_prob = 25, var/damage = 10, var/adj1 = 0.5, adj2 = 200)
 	damage = damage * (adj1 + (screw_up_prob / adj2))
 
-	if (surgeon && surgeon.traitHolder.hasTrait("training_medical")) // doctor better trained and do less hurt
+	if (surgeon?.traitHolder.hasTrait("training_medical")) // doctor better trained and do less hurt
 		damage = max(0, round(damage))
 	else
 		damage = max(2, round(damage))

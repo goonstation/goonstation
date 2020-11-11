@@ -260,7 +260,7 @@ WET FLOOR SIGN
 
 /obj/item/mop/examine()
 	. = ..()
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/mop/afterattack(atom/A, mob/user as mob)
@@ -306,7 +306,7 @@ WET FLOOR SIGN
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN_DBG (5)
-			if (src && src.reagents)
+			if (src?.reagents)
 				src.reagents.clear_reagents()
 				mopcount = 0
 
@@ -367,7 +367,7 @@ WET FLOOR SIGN
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN_DBG (5)
-				if (src && src.reagents)
+				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
 
@@ -384,7 +384,7 @@ WET FLOOR SIGN
 
 		if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN_DBG (5)
-				if (src && src.reagents)
+				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
 
@@ -427,7 +427,7 @@ WET FLOOR SIGN
 
 /obj/item/sponge/examine()
 	. = ..()
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
 /obj/item/sponge/attack_self(mob/user as mob)
@@ -501,7 +501,7 @@ WET FLOOR SIGN
 			choices += "Wipe down"
 			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 				choices += "Wring out"
-		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)))
+		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
 				choices += "Wet"
 
@@ -526,10 +526,10 @@ WET FLOOR SIGN
 				var/turf/T = target
 				var/obj/fluid/F = target
 
-				if (!F && T && T.active_liquid)
+				if (!F && T?.active_liquid)
 					F = T.active_liquid
 
-				if (!(T && T.reagents) && !istype(F)) return
+				if (!(T?.reagents) && !istype(F)) return
 
 				if (F)
 					if (F.group)

@@ -188,6 +188,9 @@
 							M.current._AddComponent(list(/datum/component/drop_loot_on_death, items_to_drop))
 					else // only path provided
 						M.current.make_critter(picked_critter, pestlandmark)
+					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
+					O.owner = M.current
+					O.implanted = 1
 					bad_traitorify(M.current)
 				candidates -= M
 

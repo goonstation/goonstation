@@ -1173,6 +1173,67 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
 
+/proc/demonic_spawn(var/obj/A)
+	if (!A) return
+	var/was_anchored = A.anchored
+	var/original_plane = A.plane
+	var/matrix/M1 = matrix()
+	A.transform = M1.Scale(0,0)
+	var/turf/center = get_turf(A)
+	if (!center) return
+
+	A.plane = PLANE_UNDERFLOOR
+	A.anchored = TRUE
+	playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	SPAWN_DBG(5 SECONDS)
+		var/turf/TA = locate(A.x - 1, A.y - 1, A.z)
+		var/turf/TB = locate(A.x + 1, A.y + 1, A.z)
+		if (!TA || !TB) return
+
+		var/list/fake_hells = list()
+		for (var/turf/T in block(TA, TB))
+			fake_hells += new /obj/fake_hell(T)
+			var/x_modifier = (T.x - center.x)
+			var/y_modifier = (T.y - center.y)
+			if (x_modifier || y_modifier)
+				animate(T, pixel_x = (32 * x_modifier), pixel_y = (32 * y_modifier), 7.5 SECONDS, easing = SINE_EASING)
+			else // center tile
+				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		animate(A, transform = null, time=20, easing = SINE_EASING)
+		A.plane = original_plane
+		A.anchored = was_anchored
+		for (var/turf/T in block(TA, TB))
+			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		for (var/obj/fake_hell/O in fake_hells)
+			qdel(O)
+
+/obj/fake_hell //for use with /proc/demonic_spawn
+	name = "???"
+	desc = "just standing next to it burns your very soul."
+	icon = 'icons/misc/AzungarAdventure.dmi'
+	icon_state = "lava_floor"
+	anchored = TRUE
+	event_handler_flags = USE_HASENTERED
+
+	New()
+		. = ..()
+		src.plane = PLANE_UNDERFLOOR - 1
+		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (isliving(AM))
+			var/mob/living/M = AM
+			M.update_burning(10)
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
+
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
 	var/fade_time = time / 2

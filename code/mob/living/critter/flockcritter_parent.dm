@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(20)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -239,7 +239,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(src.cost)) || locate(structurepath) in target)
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -310,7 +310,7 @@
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && F.flock)
+		if(F?.flock)
 			F.canmove = 1
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
@@ -338,7 +338,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(10)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(10))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -405,7 +405,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || get_dist(owner, target) > 1 || (F && !F.can_afford(15)))
+		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(15))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -451,7 +451,7 @@
 
 	var/atom/target
 
-	New(var/mob/living/ntarg, var/duration_i)
+	New(var/atom/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -460,7 +460,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || get_dist(owner, target) > 1)
+		if (target == null || owner == null || !in_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -502,3 +502,38 @@
 				var/obj/table/flock/f = target
 				playsound(get_turf(f), "sound/items/Deconstruct.ogg", 50, 1)
 				f.deconstruct()
+//
+//deposit action
+//
+
+/datum/action/bar/flock_deposit
+	id = "flock_repair"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	var/const/default_duration = 1 SECOND
+	duration = default_duration
+	var/obj/flock_structure/ghost/target = null
+
+	New(var/obj/flock_structure/ghost/target, var/duration = default_duration)
+		..()
+		src.target = target
+		src.duration = duration
+
+	onUpdate()
+		..()
+		if (target == null || owner == null || !in_range(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='alert'>[owner] deposits materials to the [target]!</span>", "<span class='notice'>You deposit materials to the tealprint</span>")
+		var/mob/living/critter/flock/drone/F = owner
+		var/amounttopay = 0
+		var/difference = target.goal - target.currentmats
+		amounttopay = min(F.resources, difference, 10)
+		F.pay_resources(amounttopay)
+		target.currentmats += amounttopay

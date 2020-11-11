@@ -56,7 +56,7 @@
 					P.name = "[pname] pill"
 
 					src.reagents_internal.trans_to(P,src.pvol)
-					if (P && P.reagents)
+					if (P?.reagents)
 						P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 						P.color_overlay.color = src.average
 						P.color_overlay.alpha = P.color_overlay_alpha

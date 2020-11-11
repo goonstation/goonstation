@@ -349,7 +349,7 @@
 
 		icon_state = "frame-" + max(0,min(change_to,6))
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()

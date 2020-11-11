@@ -423,7 +423,7 @@
 		if((source != host) || !(src in host))
 			return
 
-		if(!command)// || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command)// || (signal?.encryption && signal.encryption != src.id))
 			return
 
 		if(!src.check_connection())

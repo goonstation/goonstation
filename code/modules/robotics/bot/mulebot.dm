@@ -411,7 +411,7 @@
 
 	// returns true if the bot has power
 	proc/has_power()
-		return !open && cell && cell.charge>0 && (wires & wire_power1) && (wires & wire_power2)
+		return !open && cell?.charge>0 && (wires & wire_power1) && (wires & wire_power2)
 
 	// mousedrop a crate to load the bot
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -526,7 +526,7 @@
 					at_target()
 					return
 
-				else if(path && path.len > 0 && target) // valid path
+				else if(length(path) && target) // valid path
 					var/turf/next = path[1]
 					reached_target = 0
 					if(next == loc)
