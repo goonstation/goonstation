@@ -106,8 +106,6 @@
 	var/offset = round(-64+fraction * 64, 1)
 	offset ++
 
-	message_admins("[team]||[team_NT]||[team_SY]--[fraction]")
-	// animate(bar_to_change, transform = M1, pixel_x = offset, time = 10)
 	if (team == team_NT)
 		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
 	else
@@ -159,6 +157,8 @@
 
 /datum/game_mode/pod_wars/check_finished()
 	if (team_NT.points < 0 || team_SY.points < 0)
+		return 1
+	if (team_NT.points > team_NT.max_points || team_SY.points > team_SY.max_points)
 		return 1
 
  return 0
@@ -293,6 +293,7 @@
 
 		else if (istype(H))
 			H.Equip_Job_Slots(JOB)
+			H.equip_new_if_possible(JOB.slot_card, H.slot_wear_id)
 
 		if (!ishuman(H))
 			boutput(H, "something went wrong. Horribly wrong.")
@@ -581,8 +582,8 @@ obj/screen/score_board
 
 	//this is a band aid cause this is broke, delete this override when merged properly and fixed.
 	attackby(obj/item/W, mob/user)
-		..()
 		user.lastattacked = src
+		..()
 
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
@@ -604,19 +605,25 @@ obj/screen/score_board
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	var/deployer_path = /obj/deployable_turret/pod_wars
+	var/destroyed = 0
 
 	New(var/direction)
 		..(direction=direction)
 
 	//just "deactivates"
 	die()
-		// playsound(get_turf(src), "sound/effects/robogib.ogg", 50, 1)
-		new /obj/decal/cleanable/robot_debris(src.loc)
-		src.alpha = 30
-		sleep(5 MINUTES)
-		src.alpha = 255
-		health = initial(health)
-		active = 1
+		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		if (!destroyed)
+			destroyed = 1
+			new /obj/decal/cleanable/robot_debris(src.loc)
+			src.alpha = 30
+			src.opacity = 0
+			sleep(5 MINUTES)
+			src.opacity = 1
+			src.alpha = 255
+			health = initial(health)
+			destroyed = 0
+			active = 1
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
@@ -640,10 +647,11 @@ obj/screen/score_board
 			else
 				continue
 
-		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
-			if (pod_target_valid(V))
-				var/distance = get_dist(V.loc,src.loc)
-				target_list[V] = distance
+		//VERY POSSIBLY UNNEEDED, -KYLE
+		// for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
+		// 	if (pod_target_valid(V))
+		// 		var/distance = get_dist(V.loc,src.loc)
+		// 		target_list[V] = distance
 
 		if (src.target_list.len>0)
 			var/min_dist = 99999
@@ -659,15 +667,16 @@ obj/screen/score_board
 
 		return src.target
 
-	proc/pod_target_valid(var/obj/machinery/vehicle/V )
-		var/distance = get_dist(V.loc,src.loc)
-		if(distance > src.range)
-			return 0
+	//VERY POSSIBLY UNNEEDED, -KYLE
+	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
+	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	if(distance > src.range)
+	// 		return 0
 
-		if (ismob(V.pilot))
-			return is_friend(V.pilot)
-		else
-			return 0
+	// 	if (ismob(V.pilot))
+	// 		return is_friend(V.pilot)
+	// 	else
+	// 		return 0
 
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"

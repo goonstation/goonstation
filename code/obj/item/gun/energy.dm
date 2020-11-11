@@ -800,13 +800,13 @@
 			src.overlays += indicator_display
 
 	nanotrasen
-		muzzle_flash = "muzzle_flash_bluezap"
+		muzzle_flash = "muzzle_flash_laser"
 		display_color =	"#0a4882"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT
 
 	syndicate
-		muzzle_flash = "muzzle_flash_elec"
-		display_color =	"#820a48"
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#ff4043"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
 
 
