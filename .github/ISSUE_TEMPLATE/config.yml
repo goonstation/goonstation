@@ -1,7 +1,7 @@
 contact_links:
   - name: Report an Exploit
     url: https://forum.ss13.co/forumdisplay.php?fid=29
-    about: Please report exploits on our forum.
+    about: Please report exploits on our forum. If you have an exploit (which includes /but is not limited to/ duplication bugs, code-injection vulnerabilities, etc.) , report it here rather then the Github.
   - name: Request a Feature
     url: https://forum.ss13.co/forumdisplay.php?fid=8
     about: Please request features on our forum.
