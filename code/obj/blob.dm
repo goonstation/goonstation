@@ -972,7 +972,7 @@ var/image/blob_icon_cache
 	dissipation_delay = 8
 	ks_ratio = 0.5
 	sname = "slime"
-	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
+	shot_sound = "sound/voice/blob/blob[pick("31","32","33","34","35")].ogg"
 	shot_number = 0
 	damage_type = D_SPECIAL
 	hit_ground_chance = 50
@@ -990,10 +990,10 @@ var/image/blob_icon_cache
 		if (ismob(hit))
 			var/mob/asshole = hit
 			asshole.TakeDamage("All", 8, 0) //haha fuck armor amiright? blobs don't need a nerf in this department
+			playsound(hit.loc, "sound/voice/blob/blob36.ogg", 75, 1)
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, "sound/voice/blob/blob36.ogg", 75, 1)
 
 			if (prob(8))
 				asshole.drop_item()
