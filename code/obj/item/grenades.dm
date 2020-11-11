@@ -912,19 +912,19 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
-					src.primer_burnt = 1
+					src.primer_burnt = TRUE
 					return
 
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.primed = 1
+				src.primed = TRUE
 				SPAWN_DBG( 5 )
 					boom()
 					return
 
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				src.primed = 1
+				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
@@ -951,26 +951,26 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
 					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
-					src.primer_burnt = 1
+					src.primer_burnt = TRUE
 					return
 
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.primed = 1
+				src.primed = TRUE
 				SPAWN_DBG( 5 )
 					boom()
 					return
 
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				src.primed = 1
+				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
 
 	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
 		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
-			src.slashed = 1
+			src.slashed = TRUE
 			src.name = "empty [src.name]" // its empty now!
 			src.desc = "[src.desc] It has been cut open and emptied out."
 			boutput(user, "You carefully cut [src] open and dump out the contents.")
