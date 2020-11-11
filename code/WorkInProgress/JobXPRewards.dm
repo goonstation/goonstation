@@ -500,52 +500,24 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(banana)
 		return
 
-/////////////Bartender////////////////
+/////////////Barman////////////////
 
-/datum/jobXpReward/bartender
+/datum/jobXpReward/barman/goldenshaker
 	name = "Golden Cocktail Shaker"
 	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
-	required_levels = list("Bartender"=0)
+	required_levels = list("Barman"=0)
 	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 
-var/sacrifice_path = /obj/item/reagent_containers/food/drinks/cocktailshaker
-var/reward_path = /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
-var/sacrifice_name = "cocktail shaker"
-
-activate(var/client/C)
-	var/O = locate(sacrifice_path) in C.mob.contents
-	if (istype(O, sacrifice_path))
-		boutput(C.mob, "You blink for a second and suddenly the cocktail shaker is covered from top to bottom in gold!")
-		var/obj/item/reagent_containers/food/drinks/cocktailshaker/golden/T = new/obj/item/reagent_containers/food/drinks/cocktailshaker/golden()
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
-
-/*
 	activate(var/client/C)
-		var/found = 0
-		var/O = locate(sacrifice_path) in C.mob.contents
-		if (istype(O, sacrifice_path))
-			var/obj/item/gun/energy/egun/K = O
-			if (K.nojobreward) // Checks to see if it was scanned by a device analyzer
-				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
-				src.claimedNumbers[usr.key] --
-				return
-			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
-				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
-				src.claimedNumbers[usr.key] --
-				return
-			C.mob.remove_item(K)
-			found = 1
-			qdel(K)
-			boutput(C.mob, "Your energy gun morphs into a sword! What the fuck!")
-			var/obj/item/katana_sheath/captain/T = new/obj/item/katana_sheath/captain()
-			T.set_loc(get_turf(C.mob))
-			C.mob.put_in_hand(T)
-			return
+		var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = locate(/obj/item/reagent_containers/food/drinks/cocktailshaker) in C.mob.contents
 
-		if (!found)
-			boutput(C.mob, "You need to be holding an [sacrifice_name] in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
-			return
-*/
+		if (istype(shaker))
+			C.mob.remove_item(shaker)
+			qdel(shaker)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")

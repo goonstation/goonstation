@@ -1725,14 +1725,9 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "GannetsCocktailer"
+	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
-
-/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
-	name = "golden cocktail shaker"
-	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
-	icon_state = "golden_cocktailshaker"
 
 	New()
 		..()
@@ -1750,3 +1745,8 @@
 				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+	name = "golden cocktail shaker"
+	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	icon_state = "golden_cocktailshaker"
