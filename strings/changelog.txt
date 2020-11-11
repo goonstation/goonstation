@@ -1,5 +1,9 @@
 
 (t)wed nov 11 20
+(u)Arahimine
+(p)2654
+(e)🆕|feature
+(+)AI-controlled cyborg shells now have access to the same communications channels as the AI.
 (u)Jan.antilles
 (p)2599
 (e)🎨|sprites
