@@ -93,7 +93,7 @@
 								C:set_loc(src.loc)
 							user.show_text("You have removed the [src.cup_name] from the [src].")
 							src.update()
-							if ("Nothing")
+						if ("Nothing")
 								return
 			else return ..()
 
