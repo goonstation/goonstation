@@ -1747,6 +1747,11 @@
 /obj/machinery/vending/hydroponics
 	name = "GardenGear"
 	desc = "A vendor for Hydroponics related equipment."
+	icon_state = "gardengear"
+	icon_panel = "standard-panel"
+	icon_off = "gardengear-off"
+	icon_broken = "gardengear-broken"
+	icon_fallen = "gardengear-fallen"
 	acceptcard = 0
 
 	lr = 0.5
@@ -2117,7 +2122,9 @@
 	desc = "One stop shop for all your custodial needs."
 	icon_state = "janitor"
 	icon_panel = "standard-panel"
-	icon_deny = "null"
+	icon_off = "janitor-off"
+	icon_broken = "janitor-broken"
+	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
 	mats = 10
