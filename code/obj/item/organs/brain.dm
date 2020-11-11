@@ -40,7 +40,7 @@
 		return 0
 
 	get_desc()
-		if (usr && (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director"))
+		if (usr?.traitHolder?.hasTrait("training_medical"))
 			if (src.owner && src.owner.current)
 				. += "<br><span class='notice'>This brain is still warm.</span>"
 			else

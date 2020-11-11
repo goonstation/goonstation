@@ -1,18 +1,25 @@
 
 //pass flags
-#define PROJ_PASSNONE 0
-#define PROJ_PASSWALL 1
-#define PROJ_PASSOBJ 2
+#define PROJ_PASSWALL			(1<<1)
+#define PROJ_PASSOBJ			(1<<2)
+
+//pass flags on hit thing take priotity if they exist
+#define PROJ_ATOM_PASSTHROGH	(1<<4)
+#define PROJ_ATOM_CANNOT_PASS	(1<<5)
+#define PROJ_OBJ_HIT_OTHER_OBJS	(1<<6)
+
+
+
 
 //Projectile damage type defines
-#define D_KINETIC 1
-#define D_PIERCING 2
-#define D_SLASHING 4
-#define D_ENERGY 8
-#define D_BURNING 16
-#define D_RADIOACTIVE 32
-#define D_TOXIC 48
-#define D_SPECIAL 128
+#define D_KINETIC				(1<<0)
+#define D_PIERCING				(1<<1)
+#define D_SLASHING				(1<<2)
+#define D_ENERGY				(1<<3)
+#define D_BURNING				(1<<4)
+#define D_RADIOACTIVE			(1<<5)
+#define D_TOXIC					(1<<6)
+#define D_SPECIAL				(1<<7)
 
 //Projectile reflection defines
 #define PROJ_NO_HEADON_BOUNCE 1

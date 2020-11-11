@@ -54,20 +54,26 @@
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
 
-	proc/name_prefix(var/text_to_add, var/return_prefixes = 0)
+	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_prefixes))
 			if (src.name_prefixes.len >= src.num_allowed_prefixes)
 				src.remove_prefixes(1)
-			src.name_prefixes += strip_html(text_to_add)
+			if(prepend)
+				src.name_prefixes.Insert(1, strip_html(text_to_add))
+			else
+				src.name_prefixes += strip_html(text_to_add)
 		if (return_prefixes)
 			var/amt_prefixes = 0
 			for (var/i in src.name_prefixes)
 				if (amt_prefixes >= src.num_allowed_prefixes)
 					prefix += " "
 					break
-				prefix += i + " "
+				if(prepend)
+					prefix = i + " " + prefix
+				else
+					prefix += i + " "
 				amt_prefixes ++
 			return prefix
 
@@ -157,6 +163,11 @@
 
 	proc/Scale(var/scalex = 1, var/scaley = 1)
 		src.transform = matrix(src.transform, scalex, scaley, MATRIX_SCALE)
+
+	// a turn-safe scale, for temporary anisotropic scales
+	proc/SafeScale(var/scalex = 1, var/scaley = 1)
+		var/rot = arctan(src.transform.b, src.transform.a)
+		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scalex, scaley, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
@@ -570,7 +581,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
+	if(src.hiddenFrom?.Find(user.client)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -697,7 +708,7 @@
 		else
 			tex = icon('icons/effects/atom_textures_32.dmi', texture)
 
-	if (A && A.wear_image) //Wire: Fix for: Cannot read null.icon
+	if (A?.wear_image) //Wire: Fix for: Cannot read null.icon
 		var/icon/mask = null
 		mask = icon(A.wear_image.icon, A.wear_image.icon_state)
 		mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)

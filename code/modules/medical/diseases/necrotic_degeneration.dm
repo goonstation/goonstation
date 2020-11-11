@@ -15,6 +15,7 @@
 	if (affected_mob.get_burn_damage() >= 80 && prob(60))
 		affected_mob.cure_disease(D)
 		return
+	affected_mob.is_zombie = 1
 	switch(D.stage)
 		if(1)
 			if (prob(5))

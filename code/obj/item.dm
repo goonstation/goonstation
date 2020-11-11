@@ -400,6 +400,7 @@
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+		eat_twitch(M)
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
@@ -438,6 +439,7 @@
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
+		eat_twitch(M)
 		SPAWN_DBG (10)
 			if (!src || !M || !user)
 				return 0
@@ -696,7 +698,8 @@
 			if (!(in_range(src,user) && in_range(storage,user)))
 				return
 
-		var/succ = src.try_put_hand_mousedrop(user, storage)
+		src.pick_up_by(user)
+		var/succ = user.is_in_hands(src)
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
@@ -707,7 +710,9 @@
 		if (src.cant_self_remove)
 			return
 		if ( !user.restrained() && !user.stat )
-			var/succ = src.try_put_hand_mousedrop(user)
+
+			src.pick_up_by(user)
+			var/succ = user.is_in_hands(src)
 			if (succ)
 				SPAWN_DBG(1 DECI SECOND)
 					if (user.is_in_hands(src))
@@ -783,10 +788,11 @@
 		if (prob(7))
 			elecflash(src)
 		if (prob(7))
-			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
-			smoke.start()
+			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
+				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
 		if (prob(7))
 			fireflash(src, 0)
 
@@ -909,8 +915,6 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (1.0)
-			return
 		if (2.0)
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
@@ -961,8 +965,8 @@
 		src.attack_self(user)
 	else
 		src.pick_up_by(user)
-
 /obj/item/proc/pick_up_by(var/mob/M)
+
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
@@ -1012,7 +1016,7 @@
 		if (4.0) t = "bulky"
 		if (5.0 to INFINITY) t = "huge"
 		else
-	if (usr && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)

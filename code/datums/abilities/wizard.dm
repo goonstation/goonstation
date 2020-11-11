@@ -215,7 +215,7 @@
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
 		var/mob/user = src.holder.owner
-		if (user && user.bioHolder)
+		if (user?.bioHolder)
 			switch (user.bioHolder.HasEffect("arcane_power"))
 				if (1)
 					cool /= 2

@@ -243,7 +243,7 @@
 
 	var/changeling_fakedeath = 0
 	var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-	if (C && C.in_fakedeath)
+	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
 	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.getStatusDuration("weakened")))

@@ -283,6 +283,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "green"
 	blocked = 1
 
+/area/centcom/datacenter
+	name = "NT Data Center"
+	icon_state = "pink"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
@@ -474,3 +478,23 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			src.rejected_mobs.Add(user)
 		src.cant_self_remove = true
 		src.cant_other_remove = false
+
+
+/area/centcom/offices/enakai
+	Entered(atom/movable/Obj,atom/OldLoc)
+		if (isliving(Obj))
+			var/mob/living/L = Obj
+			if (L.ckey == "enakai" || L.ckey == "rodneydick")		//The aussies are immune due to constant exposure
+				return
+			var/matrix/M = L.transform
+			animate(L, transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+			animate( transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+
+	Exited(atom/movable/Obj, atom/newloc)
+		if (isliving(Obj))
+			var/mob/living/L = Obj
+			if (L.ckey == "enakai" || L.ckey == "rodneydick")
+				return
+			var/matrix/M = L.transform
+			animate(L, transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)

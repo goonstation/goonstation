@@ -244,7 +244,7 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = 0
-		if (traits && traits.len && src.occupant.traitHolder)
+		if (length(traits) && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
@@ -294,7 +294,7 @@
 
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
@@ -1035,7 +1035,7 @@
 			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
-		else if (G && G.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
+		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
 			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 
@@ -1143,6 +1143,17 @@
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)
 			target.unequip_all()
+			if (length(target.implant))
+				for (var/obj/item/implant/I in target.implant)
+					if (istype(I,/obj/item/implant/projectile))
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc)
+					newcase.imp = I
+					I.on_remove(target)
+					target.implant.Remove(I)
+					I.set_loc(newcase)
+					newcase.icon_state = "implantcase-b"
+
 		target.set_loc(grinder)
 		grinder.occupant = target
 		qdel(grab)

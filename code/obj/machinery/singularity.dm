@@ -144,10 +144,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			grav_pull = 8
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull, src.get_center()))
+	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
+		if (X == src)
+			continue
+
 		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
@@ -185,7 +188,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
 		SPAWN_DBG(1)
-			boutput(world, "[maxboom]")
 			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 				qdel(src)
 			maxboom = 0
@@ -812,7 +814,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	// Added (Convair880).
 	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
 
-	if (user && user.bioHolder)
+	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric") == 2)
 			var/healing = 0
 			if (shock_damage)

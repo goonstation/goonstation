@@ -178,7 +178,7 @@ Frequency:
 			if (tele_check.teleport_blocked)
 				continue
 			random_turfs += T
-		if (random_turfs && random_turfs.len)
+		if (length(random_turfs))
 			L["None (Dangerous)"] += pick(random_turfs)
 
 		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])

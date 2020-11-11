@@ -161,7 +161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
+			if(M?.z == 1) shake_camera(M, 5, 32, 0.2)
 
 	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
@@ -956,7 +956,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 			return_if_overlay_or_effect(Obj)
 
-			if (L && L.len && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
+			if (length(L) && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
 				Obj.set_loc(pick(L))
 		..(Obj,OldLoc)
 

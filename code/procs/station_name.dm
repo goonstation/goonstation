@@ -197,7 +197,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.client.key
-			ircmsg["name"] = (user && user.real_name) ? user.real_name : "NULL"
+			ircmsg["name"] = (user?.real_name) ? user.real_name : "NULL"
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export("admin", ircmsg)
 
@@ -217,7 +217,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	station_name = name
 
-	if (config && config.server_name)
+	if (config?.server_name)
 		world.name = "[config.server_name]: [name]"
 	else
 		world.name = name

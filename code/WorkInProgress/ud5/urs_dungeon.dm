@@ -163,7 +163,7 @@
 
 /obj/item/clothing/glasses/urs_dungeon_entry
 	name = "\improper VR goggles"
-	desc = "These goggles don't look quite right..."
+	desc = "On the side it says \"A game for 2-4 Players\". Guess you'll need some friends to play with you."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	color = "#550000"
@@ -483,6 +483,9 @@
 				return
 
 /obj/storage/closet/syndi/hidden/shovel_me
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		return
 
 	attack_hand(mob/user as mob)
 		return

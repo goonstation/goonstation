@@ -61,7 +61,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
 		/client/proc/toggle_station_name_changing,
-		/client/proc/cmd_admin_remove_label_from,
+		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
 
@@ -260,9 +260,11 @@ var/list/admin_verbs = list(
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
+		/client/proc/spawn_survival_shit,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
+		/datum/admins/proc/demonically_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
@@ -406,6 +408,7 @@ var/list/admin_verbs = list(
 		/verb/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
+		/client/proc/set_nukie_score,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -724,7 +727,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.owner:stealth)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 
@@ -767,7 +770,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.alt_key)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 */
@@ -1345,7 +1348,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	var/msg
-	if (args && args.len > 0)
+	if (length(args))
 		msg = args[1]
 
 	msg = input(src, "Sends a message as voice to all players", "Dectalk", msg) as null|message
@@ -1804,6 +1807,23 @@ var/list/fun_images = list()
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+
+/client/proc/set_nukie_score()
+	set popup_menu = 0
+	set name = "Set Nuke-Ops Scoreboard Values"
+	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/win_value = input("Enter new win value.") as num
+	world.save_intra_round_value("nukie_win", win_value)
+
+	var/lose_value = input("Enter new lose value.") as num
+	world.save_intra_round_value("nukie_loss", lose_value)
+
+	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
+	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
 
 
 /mob/verb/admin_interact_verb()
