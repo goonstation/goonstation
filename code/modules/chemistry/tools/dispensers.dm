@@ -90,7 +90,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
 
 	get_desc(dist, mob/user)
@@ -119,7 +119,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)

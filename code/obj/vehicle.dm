@@ -2258,7 +2258,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//forklift movement
 	if (direction == 1 || direction == 2 || direction == 4 || direction == 8)
 		if(src.dir != direction)
-			src.dir = direction
+			src.set_dir(direction)
 		walk(src, dir, 2.5)
 	return
 

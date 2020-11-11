@@ -98,7 +98,7 @@
 
 	New(var/direction)
 		..()
-		src.dir = direction
+		src.set_dir(direction)
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"

@@ -656,7 +656,7 @@
 		if (movement_controller)
 			movement_controller.update_owner_dir()
 		else if (flying && facing != flying)
-			dir = facing
+			set_dir(facing)
 
 	disposing()
 		if (movement_controller)

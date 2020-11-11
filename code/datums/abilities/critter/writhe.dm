@@ -34,7 +34,7 @@
 			if (!found_target)
 				playsound(ow.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 30, 1)
 
-			ow.dir = turn(ow.dir, pick(-90,90))
+			ow.set_dir(turn(ow.dir, pick(-90,90)))
 
 			sleep(0.5 SECONDS)
 

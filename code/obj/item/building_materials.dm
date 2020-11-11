@@ -19,7 +19,7 @@ MATERIAL
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/window_reinforce_full_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
-	W.dir = SOUTHWEST
+	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
 	if (!istype(W))
 		return
@@ -902,7 +902,7 @@ MATERIAL
 				H.pixel_x = 0
 				H.pixel_y = pixely
 				pixely += 8
-				H.dir = SOUTH
+				H.set_dir(SOUTH)
 				src.overlays += H
 
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_flies")

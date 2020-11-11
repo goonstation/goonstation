@@ -112,7 +112,7 @@
 		S.icon_state = state
 		S.screen_loc = loc
 		S.layer = layer
-		S.dir = dir
+		S.set_dir(dir)
 		S.tooltipTheme = tooltipTheme
 		src.objects += S
 

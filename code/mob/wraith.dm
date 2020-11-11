@@ -319,7 +319,7 @@
 				if (istype(A)) salted = 1
 				if (salted) break
 
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
 			NewLoc.HasEntered(src)

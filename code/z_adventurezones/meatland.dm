@@ -137,7 +137,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon_state = "acid_floor"
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		set_dir(pick(NORTH,SOUTH))
 
 /obj/stomachacid
 	name = "acid"

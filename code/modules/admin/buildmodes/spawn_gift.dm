@@ -67,7 +67,7 @@ change the direction of created objects.<br>
 			G.icon_state = "gift3-[random_style]"
 		G.gift = A
 		if (isobj(A) || ismob(A))
-			A.dir = holder.dir
+			A.set_dir(holder.dir)
 			A.onVarChanged("dir", SOUTH, A.dir)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

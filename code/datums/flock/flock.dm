@@ -444,7 +444,7 @@
 					for (var/mob/M in O)
 						M.set_loc(converted)
 					qdel(O)
-					converted.dir = dir
+					converted.set_dir(dir)
 					animate_flock_convert_complete(converted)
 
 	// if floor, turn to floor, if wall, turn to wall

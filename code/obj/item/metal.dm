@@ -288,14 +288,14 @@ MATERIAL
 					src.amount--
 					var/obj/stool/chair/C = new /obj/stool/chair( usr.loc )
 					C.setMaterial(src.material)
-					C.dir = usr.dir
+					C.set_dir(usr.dir)
 					if (C.dir == NORTH)
 						C.layer = 5 // TODO layer
 				if("railing")
 					src.amount--
 					var/obj/railing/R = new /obj/railing( usr.loc )
 					C.setMaterial(src.material)
-					C.dir = usr.dir
+					C.set_dir(usr.dir)
 				if("rack")
 					src.amount--
 					var/atom/A = new /obj/item/furniture_parts/rack_parts( usr.loc )
