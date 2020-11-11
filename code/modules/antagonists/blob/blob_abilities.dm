@@ -416,6 +416,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
+		playsound(T, 'sound/voice/blob/blob23.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -697,6 +698,7 @@
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
+		playsound(T, "sound/voice/blob/blob[pick("15","16")].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
