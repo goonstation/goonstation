@@ -156,7 +156,6 @@
 					new_floor = new /turf/simulated/floor/plating/damaged2(locate(point_x,point_y,point_z))
 				else
 					new_floor = new /turf/simulated/floor/plating/damaged3(locate(point_x,point_y,point_z))
-			new_floor = null //Shut up, Beepsky.
 		for (var/obj/structure/girder/S in locate(point_x,point_y,point_z))
 			create_scan_decal++
 			S.ex_act(1)
