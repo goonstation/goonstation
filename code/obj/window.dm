@@ -413,24 +413,7 @@
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
-			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-			var/turf/T = get_turf(user)
-			boutput(user, "<span class='notice'>Now disassembling the window</span>")
-			sleep(4 SECONDS) // this should be a progressbar but other contruction / deconstruction things don't have them
-			// so I'll just leave it as sleep and hope someone else replaces all of these with progressbars
-			if(get_turf(user) == T)
-				boutput(user, "<span class='notice'>You dissasembled the window!</span>")
-				var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					var/datum/material/M = getMaterial("glass")
-					A.setMaterial(M)
-				if(!(src.dir in cardinal)) // full window takes two sheets to make
-					A.amount += 1
-				if(src.reinforcement)
-					A.set_reinforcement(src.reinforcement)
-				qdel(src)
+			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
@@ -481,17 +464,17 @@
 		if(need_rebuild)
 			if(istype(source)) //Rebuild/update nearby group geometry
 				if(source.parent)
-					air_master.queue_update_group(source.parent)
+					air_master.groups_to_rebuild |= source.parent
 				else
-					air_master.queue_update_tile(source)
+					air_master.tiles_to_update |= source
 			if(istype(target))
 				if(target.parent)
-					air_master.queue_update_group(target.parent)
+					air_master.groups_to_rebuild |= target.parent
 				else
-					air_master.queue_update_tile(target)
+					air_master.tiles_to_update |= target
 		else
-			if(istype(source)) air_master.queue_update_tile(source)
-			if(istype(target)) air_master.queue_update_tile(target)
+			if(istype(source)) air_master.tiles_to_update |= source
+			if(istype(target)) air_master.tiles_to_update |= target
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -511,6 +494,71 @@
 			source.selftilenotify() //for fluids
 
 		return 1
+
+
+/datum/action/bar/icon/deconstruct_window
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "deconstruct_window"
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "decon"
+	var/obj/window/the_window
+	var/obj/item/the_tool
+
+	New(var/obj/window/windw, var/obj/item/tool)
+		..()
+		if (windw)
+			the_window = windw
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
+		playsound(the_window.loc, "sound/items/Ratchet.ogg", 100, 1)
+
+	onEnd()
+		..()
+		if(get_dist(owner, the_window) > 1 || the_window == null || owner == null || the_tool == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(ismob(owner))
+			var/mob/M = owner
+			if (!(the_tool in M.equipped_list()))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		boutput(owner, "<span class='notice'>You dissasembled [the_window]!</span>")
+		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
+		if(the_window.material)
+			A.setMaterial(the_window.material)
+		else
+			var/datum/material/M = getMaterial("glass")
+			A.setMaterial(M)
+		if(!(the_window.dir in cardinal)) // full window takes two sheets to make
+			A.amount += 1
+		if(the_window.reinforcement)
+			A.set_reinforcement(the_window.reinforcement)
+		qdel(the_window)
+
+	onInterrupt()
+		if (owner)
+			boutput(owner, "<span class='alert'>Deconstruction of [the_window] interrupted!</span>")
+		..()
 
 /obj/window/pyro
 	icon_state = "pyro"
@@ -697,6 +745,8 @@
 			T.update_icon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
@@ -925,9 +975,13 @@
 	opacity = 1
 	hitsound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
+	default_material = null
 
 	New()
-		SHOULD_CALL_PARENT(FALSE) // I hate this but I don't feel lik refactoring cubicle panels, fuck that
+		..()
+
+	update_nearby_tiles(need_rebuild, selfnotify)
+		return
 
 	smash()
 		if(health <= 0)

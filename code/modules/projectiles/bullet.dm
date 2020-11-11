@@ -61,7 +61,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	power = 22
-	shot_sound = 'sound/weapons/9x19NATO.ogg' //quieter when fired from a silenced weapon!
+	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
@@ -135,6 +135,9 @@ toxic - poisons
 	caliber = 0.38
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
+
+/datum/projectile/bullet/revolver_38/lb
+	shot_sound = 'sound/weapons/lb_execute.ogg'
 
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
 	power = 35
@@ -473,34 +476,6 @@ toxic - poisons
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
-/datum/projectile/bullet/pbr //more powerful less-than-lethal shotgun option.
-	name = "plastic baton round"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	power = 24
-	ks_ratio = 0.2
-	dissipation_rate = 3
-	dissipation_delay = 5
-	implanted = null
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	caliber = 0.72
-	icon_turf_hit = "bhole"
-	casing = /obj/item/casing/shotgun/blue //todo
-
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		if (ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			if(proj.power >= 16)
-				var/throw_range = (proj.power > 20) ? 5 : 3
-
-				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat) M.emote("scream")
-				M.changeStatus("stunned", 1 SECONDS)
-				M.changeStatus("weakened", 2 SECONDS)
-				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
-				M.update_canmove()
-			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
-
 /datum/projectile/bullet/minigun
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
@@ -589,7 +564,7 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 18
+	power = 30
 	cost = 3
 	shot_number = 3
 
@@ -821,6 +796,7 @@ toxic - poisons
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
+		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 			if (P.data || prob(10))
 				..()
@@ -875,6 +851,11 @@ toxic - poisons
 		pod_seeking
 			name = "pod-seeking grenade"
 			type_to_seek = /obj/machinery/vehicle
+			on_hit(atom/hit)
+				. = ..()
+				if(istype(hit, /obj/machinery/vehicle))
+					var/obj/machinery/vehicle/V = hit
+					V.health -= V.maxhealth / 4 //a little extra punch in the face
 
 		ghost
 			name = "pod-seeking grenade"
@@ -899,14 +880,14 @@ toxic - poisons
 		name = "40mm HEDP round"
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit),4,2)
+			explosion_new(null, get_turf(hit), 2.5, 1.75)
 
 	high_explosive //more powerful than HEDP
 		name = "40mm HE round"
 		power = 10
 
 		on_hit(atom/hit)
-			explosion_new(null,get_turf(hit),10)
+			explosion_new(null,get_turf(hit), 8, 0.75)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /datum/projectile/bullet/rpg
@@ -1042,6 +1023,41 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, atom/projectile)
 		startSmoke(hit, dirflag, projectile)
 		return
+
+/datum/projectile/bullet/pbr //direct less-lethal 40mm option
+	name = "plastic baton round"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	power = 50
+	ks_ratio = 0.5
+	dissipation_rate = 5
+	dissipation_delay = 4
+	max_range = 9
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	caliber = 1.57
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(proj.power >= 20)
+				var/throw_range = (proj.power > 30) ? 5 : 3
+
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				if(!M.stat) M.emote("scream")
+				M.changeStatus("stunned", 1 SECONDS)
+				M.changeStatus("weakened", 2 SECONDS)
+				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
+		if(!ismob(hit))
+			shot_volume = 0
+			var/obj/projectile/P = shoot_reflected_bounce(proj, hit, 1, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+			if(P)
+				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
 /datum/projectile/bullet/glitch
 	name = "bullet"

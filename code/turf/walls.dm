@@ -336,11 +336,9 @@
 
 		sleep(10 SECONDS)
 
-		if ((user.loc == T && user.equipped() == W))
+		if (user.loc == T && (user.equipped() == W || isrobot(user)))
 			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			dismantle_wall()
-		else if((isrobot(user) && (user.loc == T)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
+			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			dismantle_wall()
 
 //Spooky halloween key

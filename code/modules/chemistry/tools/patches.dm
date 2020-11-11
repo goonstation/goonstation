@@ -69,6 +69,8 @@
 				icon_state = "[src.style]_med1"
 			if (reagents.has_reagent("LSD",1))
 				icon_state = "[src.style]_LSD"
+			if (reagents.has_reagent("lsd_bee"))
+				icon_state = "[src.style]_LSBee"
 
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "[src.style]-fluid", -1)
@@ -186,7 +188,7 @@
 		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			if (!borg)
 				user.drop_item(src)
 				//user.u_equip(src)
@@ -315,6 +317,13 @@
 
 	cyborg
 		borg = 1
+
+/obj/item/reagent_containers/patch/lsd_bee
+	name = "bluzzer"
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	icon_state = "patch_LSBee"
+	initial_reagents = list("lsd_bee"=20)
+	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
@@ -543,7 +552,7 @@
 		//repair_bleeding_damage(M, 66, 1)
 		var/use_volume_adjusted = use_volume * mult
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			var/list/params = list("nopenetrate")
 			if (silent)
 				params.Add("silent")

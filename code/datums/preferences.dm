@@ -253,7 +253,7 @@ datum/preferences
 
 		var/favoriteJob = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : ""
 		//mbc is sorry
-		var/chui_toggle_script_jqery_thing = (user && user.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
+		var/chui_toggle_script_jqery_thing = (user?.client && !user.client.use_chui) ? "<script type='text/javascript' src='[resource("js/jquery.min.js")]'></script>" : ""
 
 		LAGCHECK(LAG_HIGH)
 		//mbc is sorry
@@ -1107,7 +1107,7 @@ $(function() {
 			<th>Medium Priority <span class="info-thing" title="Medium Priority Jobs are any jobs you would like to play that aren't your favorite. People with jobs in this category get priority over those who have the same job in their low priority bracket. It's best to put jobs here that you actively enjoy playing and wouldn't mind ending up with if you don't get your favorite.">?</span></th>
 			<th>Low Priority <span class="info-thing" title="Low Priority Jobs are jobs that you don't mind doing. When the game is finding candidates for a job, it will try to fill it with Medium Priority players first, then Low Priority players if there are still free slots.">?</span></th>
 			<th>Unwanted Jobs <span class="info-thing" title="Unwanted Jobs are jobs that you absolutely don't want to have. The game will never give you a job you list here. The 'Staff Assistant' role can't be put here, however, as it's the fallback job if there are no other openings.">?</span></th>
-			<th>Antagonist Roles <span class="info-thing" title="Antagonist roles are randomly chosen when the game starts, before jobs have been allocated. Having an antagonist role disabled means you will never be chosen for it automatically.">?</span></th>
+			<th>Antagonist Roles <span class="info-thing" title="Antagonist roles are randomly chosen when the game starts, before jobs have been allocated. Leaving an antagonist role unchecked means you will never be chosen for it automatically.">?</span></th>
 		</tr>
 		<tr>"}
 
@@ -1310,7 +1310,7 @@ $(function() {
 		return 1
 
 	Topic(href, href_list[])
-		if (usr && usr.client && usr.client.preferences)
+		if (usr?.client?.preferences)
 			if (src == usr.client.preferences)
 				process_link(usr, href_list)
 			else
@@ -1667,7 +1667,7 @@ $(function() {
 
 		if (link_tags["toggle_mentorhelp"])
 			rebuild_data["messages"] = 1
-			if (user && user.client && user.client.is_mentor())
+			if (user?.client?.is_mentor())
 				src.see_mentor_pms = !(src.see_mentor_pms)
 				user.client.set_mentorhelp_visibility(src.see_mentor_pms)
 
@@ -2395,7 +2395,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H && change_age)
 		H.bioHolder.age = rand(20,80)
 
-	if (H && H.organHolder && H.organHolder.head && H.organHolder.head.donor_appearance) // aaaa
+	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
 	SPAWN_DBG(1 DECI SECOND)

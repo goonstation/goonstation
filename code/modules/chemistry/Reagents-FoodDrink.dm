@@ -237,9 +237,9 @@ datum
 		fooddrink/alcoholic/rum
 			name = "rum"
 			id = "rum"
-			fluid_r = 161
-			fluid_g = 71
-			fluid_b = 231
+			fluid_r = 240
+			fluid_g = 120
+			fluid_b = 30
 			alch_strength = 0.6
 			description = "An alcoholic beverage derived from sugar."
 			reagent_state = LIQUID
@@ -248,8 +248,8 @@ datum
 		fooddrink/alcoholic/vodka
 			name = "vodka"
 			id = "vodka"
-			fluid_r = 0
-			fluid_g = 0
+			fluid_r = 165
+			fluid_g = 255
 			fluid_b = 255
 			transparency = 20
 			alch_strength = 0.5
@@ -260,9 +260,9 @@ datum
 		fooddrink/alcoholic/bourbon
 			name = "bourbon"
 			id = "bourbon"
-			fluid_r = 161
-			fluid_g = 71
-			fluid_b = 231
+			fluid_r = 240
+			fluid_g = 120
+			fluid_b = 30
 			alch_strength = 0.45
 			description = "An alcoholic beverage derived from maize."
 			reagent_state = LIQUID
@@ -361,7 +361,8 @@ datum
 			fluid_g = 65
 			fluid_b = 30
 			transparency = 190
-			alch_strength = 2
+			alch_strength = 5
+			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				src = null
@@ -532,7 +533,7 @@ datum
 
 				if (method == TOUCH)
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 
@@ -768,7 +769,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -780,7 +781,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
 				return
@@ -1047,9 +1048,9 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 1)
-					do_stunny = prob(100/covered.len)
+				var/list/covered = holder?.covered_turf()
+				if (length(covered) > 1)
+					do_stunny = prob(100/length(covered))
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
@@ -3206,10 +3207,22 @@ datum
 			hunger_value = -2
 			thirst_value = -2
 			bladder_value = -2
+			stun_resist = 100
+			var/remove_buff = 0
 
-			on_add(var/mob/M)
-				if (ismob(M))
+			pooled()
+				..()
+				remove_buff = 0
+
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3226,16 +3239,15 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("tripletriple")
-
-				return
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.remove_stam_mod_regen("tripletriple")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 
-					M.add_stam_mod_regen("tripletriple", 3333)
 				if(probmult(10))
 					new /obj/decal/cleanable/urine(M.loc)
 

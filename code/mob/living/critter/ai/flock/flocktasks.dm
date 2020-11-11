@@ -46,7 +46,7 @@
 /datum/aiTask/sequence/goalbased/replicate/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(100))
+	if(F?.can_afford(100))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/replicate/get_targets()
@@ -105,14 +105,14 @@
 /datum/aiTask/sequence/goalbased/build/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(20))
+	if(F?.can_afford(20))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/build/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 
-	if(F && F.flock)
+	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, null, /proc/heuristic, 20))
@@ -120,7 +120,7 @@
 			return targets
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
-		if(priority_turfs && priority_turfs.len)
+		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
 				if(cirrAstar(get_turf(holder.owner), PT, 1, null, /proc/heuristic, 80))
@@ -131,7 +131,7 @@
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(istype(T, /turf/simulated/floor) && !istype(T, /turf/simulated/floor/feather) || \
 			istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/wall/auto/feather))
-			if(F && F.flock && !F.flock.isTurfFree(T, F.real_name))
+			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), T, 1, null, /proc/heuristic, 40))
@@ -153,7 +153,7 @@
 		return 1
 	if(F && !F.can_afford(20))
 		return 1
-	if(F && F.flock && !F.flock.isTurfFree(build_target, F.real_name)) // oh no, someone else claimed this tile before we got to it
+	if(F?.flock && !F.flock.isTurfFree(build_target, F.real_name)) // oh no, someone else claimed this tile before we got to it
 		return 1
 
 /datum/aiTask/succeedable/build/succeeded()
@@ -164,7 +164,7 @@
 		var/turf/simulated/floor/build_target = holder.target
 		if(build_target && get_dist(holder.owner, build_target) <= 1)
 			var/mob/living/critter/flock/drone/F = holder.owner
-			if(F && F.set_hand(2)) // nanite spray
+			if(F?.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
 				holder.owner.dir = get_dir(holder.owner, holder.target)
 				F.hand_attack(build_target)
@@ -173,7 +173,7 @@
 /datum/aiTask/succeedable/build/on_reset()
 	has_started = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		F.flock.reserveTurf(holder.target, F.real_name)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@
 /datum/aiTask/sequence/goalbased/repair/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(10))
+	if(F?.can_afford(10))
 		. = 1
 
 /datum/aiTask/sequence/goalbased/repair/on_reset()
@@ -295,7 +295,7 @@
 	var/obj/storage/container_target = holder.target
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
 			F.dir = get_dir(F, container_target)
 			F.hand_attack(container_target) // wooo
@@ -355,7 +355,7 @@
 	if(container_target && get_dist(holder.owner, container_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
 		usr = F // don't ask, please, don't
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
 			// drop whatever we're holding
 			F.drop_item()
@@ -460,7 +460,7 @@
 	var/obj/item/harvest_target = holder.target
 	if(harvest_target && get_dist(holder.owner, harvest_target) <= 1 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
-		if(F && F.set_hand(1)) // grip tool
+		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
 			var/obj/item/already_held = F.get_active_hand().item
 			if(already_held)
@@ -538,7 +538,7 @@
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
@@ -561,7 +561,7 @@
 /datum/aiTask/timed/targeted/flockdrone_capture/proc/precondition()
 	. = 0
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.can_afford(15))
+	if(F?.can_afford(15))
 		. = 1
 
 /datum/aiTask/timed/targeted/flockdrone_capture/evaluate()
@@ -598,7 +598,7 @@
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
 	var/list/targets = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F && F.flock)
+	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(F.flock.isEnemy(M) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob is a valid target, check if they're not already in a cage

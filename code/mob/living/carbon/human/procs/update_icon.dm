@@ -82,7 +82,7 @@
 
 // Uniform
 	if (src.w_uniform)
-		if (src.bioHolder && bioHolder.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
+		if (src.bioHolder?.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
 			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
@@ -621,22 +621,23 @@
 
 	var/shielded = 0
 
-	for (var/atom in src)
-		var/atom/A = atom
+	for (var/atom/A as() in src)
 		if (A.flags & NOSHIELD)
-			if (istype(atom,/obj/item/device/shield))
-				var/obj/item/device/shield/S = atom
+			if (istype(A,/obj/item/device/shield))
+				var/obj/item/device/shield/S = A
 				if (S.active)
 					shielded = 1
 					break
-			if (istype(atom,/obj/item/cloaking_device))
-				var/obj/item/cloaking_device/S = atom
+			if (istype(A,/obj/item/cloaking_device))
+				var/obj/item/cloaking_device/S = A
 				if (S.active)
 					shielded = 2
 					break
 
-	if (shielded == 2) src.invisibility = 2
-	else src.invisibility = 0
+	if (shielded == 2)
+		src.invisibility = 2
+	else
+		src.invisibility = 0
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")
@@ -654,7 +655,7 @@
 
 	if (world.time - src.last_show_inv <= 30 SECONDS)
 		for (var/client/C in src.showing_inv)
-			if (C && C.mob)
+			if (C?.mob)
 				if (get_dist(src,C.mob) <= 1)
 					src.show_inv(C.mob)
 				else
@@ -822,6 +823,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 /mob/living/carbon/human/update_body()
 	..()
+
+	var/datum/appearanceHolder/AHol = src?.bioHolder.mobAppearance
 
 	var/file
 	if (!src.decomp_stage)
@@ -1190,11 +1193,30 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 			human_image.color = "#fff"
 		else
+			var/image/mutant_image
 			src.body_standing.overlays += image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_1//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_2//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-			src.body_standing.overlays += mutantrace.detail_3//image(src.mutantrace.icon, src.mutantrace.icon_state, MOB_LIMB_LAYER)
-		src.body_standing.overlays += mutantrace.detail_over_suit// used by lizards so that when they're facing upwards their tail doesn't look awkward.
+			if (AHol.mob_color_flags & BODY_DETAIL_1)
+				mutant_image = src.mutantrace.detail_1
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_2)
+				mutant_image = src.mutantrace.detail_2
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_second_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_3)
+				mutant_image = src.mutantrace.detail_3
+				mutant_image.color = src.bioHolder?.mobAppearance.customization_third_color
+				src.body_standing.overlays += mutant_image
+
+			if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_1)
+				mutant_image = src.mutantrace.detail_over_suit // used by lizards so that when they're facing upwards their tail doesn't look awkward.
+				if (AHol.mob_color_flags & BODY_DETAIL_OVERSUIT_IS_COLORFUL)
+					mutant_image.color = src.bioHolder?.mobAppearance.customization_first_color
+				else
+					mutant_image.color = "#FFFFFF"
+				src.body_standing.overlays += mutant_image
 
 #if ASS_JAM
 	src.maptext_y = 32
@@ -1280,7 +1302,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 	var/obj/item/organ/head/HO = organs["head"]
 	var/head_damage = null
-	if (HO && organHolder && organHolder.head)
+	if (HO && organHolder?.head)
 		var/head_brute = min(3,round(HO.brute_dam/10))
 		var/head_burn = min(3,round(HO.burn_dam/10))
 		if (head_brute+head_burn > 0)
@@ -1299,7 +1321,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.body_damage_standing = SafeGetOverlayImage("body_damage", 'icons/mob/dam_human.dmi',"body[brute_state][burn_state]", MOB_DAMAGE_LAYER)// image('icons/mob/dam_human.dmi', "[brute_state][burn_state]", MOB_DAMAGE_LAYER)
 
 		//Head damage if applicable
-		if (head_damage && organHolder && organHolder.head)
+		if (head_damage && organHolder?.head)
 			src.head_damage_standing = SafeGetOverlayImage("head_damage", 'icons/mob/dam_human.dmi', head_damage, MOB_DAMAGE_LAYER) // image('icons/mob/dam_human.dmi', head_damage, MOB_DAMAGE_LAYER)
 		else
 			src.head_damage_standing = SafeGetOverlayImage("head_damage", 'icons/mob/dam_human.dmi', "00", MOB_DAMAGE_LAYER)//image('icons/mob/dam_human.dmi', "00", MOB_DAMAGE_LAYER)

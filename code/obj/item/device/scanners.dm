@@ -76,7 +76,7 @@ Contains:
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -111,7 +111,7 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -168,7 +168,7 @@ that cannot be itched
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
-		if (get_dist(A,user) > 1) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
+		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
@@ -438,7 +438,7 @@ that cannot be itched
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1)
+		if (get_dist(A, user) > 1 || istype(A, /obj/ability_button))
 			return
 
 		if (istype(A, /obj) || isturf(A))

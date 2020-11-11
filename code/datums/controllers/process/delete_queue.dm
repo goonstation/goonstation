@@ -5,6 +5,7 @@
 // hi i fucked up this file p bad. if it ends up being as bad as
 // it looks pls do "git revert (whatever hash this has)"
 // otherwise this will stink up everything forever
+var/global/harddel_count = 0
 
 datum/controller/process/delete_queue
 	var/tmp/delcount = 0
@@ -94,6 +95,7 @@ datum/controller/process/delete_queue
 #endif
 
 			delcount++
+			harddel_count++
 #ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
 
@@ -172,7 +174,7 @@ datum/controller/process/delete_queue
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
-		if (detailed_delete_count && detailed_delete_count.len)
+		if (length(detailed_delete_count))
 			var/stats = "<b>Delete Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_delete_count)

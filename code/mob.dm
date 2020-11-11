@@ -82,6 +82,7 @@
 	var/dizziness = 0
 	var/is_dizzy = 0
 	var/is_jittery = 0
+	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0.0
 	var/urine = 0.0
@@ -117,7 +118,7 @@
 	var/obj/hud/hud_used = null
 
 	var/list/organs = null
-	var/list/grabbed_by = null
+	var/list/obj/item/grab/grabbed_by = null
 
 	var/datum/traitHolder/traitHolder = null
 
@@ -153,6 +154,7 @@
 	var/speech_void = 0
 	var/now_pushing = null //temp. var used for Bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
+	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires
@@ -708,7 +710,7 @@
 			hud.add_client(src.client)
 
 /mob/proc/detach_hud(datum/hud/hud)
-	if (src && src.huds) //Wire note: Fix for runtime error: bad list
+	if (src?.huds) //Wire note: Fix for runtime error: bad list
 		huds -= hud
 
 	hud.mobs -= src
@@ -881,7 +883,7 @@
 
 /mob/proc/unequip_all(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = src.get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
@@ -893,7 +895,7 @@
 
 /mob/proc/unequip_random(var/delete_stuff=0)
 	var/list/obj/item/to_unequip = get_unequippable()
-	if(to_unequip && to_unequip.len)
+	if(length(to_unequip))
 		var/obj/item/I = pick(to_unequip)
 		src.remove_item(I)
 		if (I)
@@ -2061,7 +2063,7 @@
 		return 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				return 1
@@ -2073,7 +2075,7 @@
 
 	var/tally = 0
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
 				tally++
@@ -2089,7 +2091,7 @@
 		return
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		var/list/OL = list() // Sorted output list. Could definitely be improved, but is functional enough.
 		var/list/O_names = list()
 		var/list/O_namecount = list()
@@ -2241,6 +2243,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
+	src.delStatus("n_radiation")
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)
@@ -2568,7 +2571,7 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B && B.fields["name"])
+					if (B?.fields["name"])
 						B.fields["name"] = newname
 					for (var/obj/item/card/id/ID in src.contents)
 						ID.registered = newname
@@ -2610,7 +2613,7 @@
 
 /mob/OnMove(source = null)
 	..()
-	if(client && client.player && client.player.shamecubed)
+	if(client?.player?.shamecubed)
 		loc = client.player.shamecubed
 		return
 
@@ -2871,9 +2874,12 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
+		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
 	// TODO add NPC karma
+
+/mob/proc/can_eat(var/atom/A)
+	return 1

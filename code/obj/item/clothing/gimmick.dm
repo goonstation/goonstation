@@ -1035,6 +1035,7 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
+ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
 	desc = "A little ring, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."
@@ -1441,6 +1442,12 @@
 	desc = "Dracula who?"
 	body_parts_covered = TORSO
 	icon_state = "vampcape"
+
+/obj/item/clothing/under/gimmick/superhero
+	name = "crimefighting costume"
+	desc = "Definitely not just a pair of pajamas."
+	body_parts_covered = TORSO|LEGS|ARMS
+	icon_state = "superhero"
 
 /obj/item/clothing/under/gimmick/mummy
 	name = "linen body wrappings"

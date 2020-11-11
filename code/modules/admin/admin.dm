@@ -190,6 +190,16 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.audible_prayers = (usr.client.holder.audible_prayers + 1) % 3
 				src.show_pref_window(usr)
+		if ("toggle_audible_ahelps")
+			if (src.level >= LEVEL_MOD)
+				switch(usr.client.holder.audible_ahelps)
+					if (PM_NO_ALERT)
+						usr.client.holder.audible_ahelps = PM_AUDIBLE_ALERT
+					if (PM_AUDIBLE_ALERT)
+						usr.client.holder.audible_ahelps = PM_DECTALK_ALERT
+					if (PM_DECTALK_ALERT)
+						usr.client.holder.audible_ahelps = PM_NO_ALERT
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
@@ -350,7 +360,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -402,7 +412,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -424,7 +434,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -687,7 +697,7 @@ var/global/noir = 0
 				if (current_state > GAME_STATE_PREGAME)
 					cmd = "c_mode_next"
 					addltext = " next round"
-				var/dat = {"
+				var/list/dat = list({"
 							<html><body><title>Select Round Mode</title>
 							<B>What mode do you wish to play[addltext]?</B><br>
 							Current mode is: <i>[master_mode]</i><br>
@@ -718,10 +728,12 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=football'>Football (this only works if built with FOOTBALL_MODE sorry too lazy to ifdef here)</A>
-							</body></html>
-						"}
-				usr.Browse(dat, "window=c_mode")
+							"})
+#if FOOTBALL_MODE
+				dat += "<A href='?src=\ref[src];action=[cmd];type=football'>Football</A>"
+#endif
+				dat += "</body></html>"
+				usr.Browse(dat.Join(), "window=c_mode")
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
@@ -1095,9 +1107,6 @@ var/global/noir = 0
 					if("Kudzuman")
 						H.set_mutantrace(/datum/mutantrace/kudzu)
 						. = 1
-					if("reliquary soldier-Don't use yet please")
-						H.set_mutantrace(/datum/mutantrace/reliquary_soldier)
-						. = 1
 					if("Ghostdrone")
 						droneize(H, 0)
 					if("Flubber")
@@ -1342,7 +1351,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.AddEffect(pick, magical = 1)
@@ -1370,7 +1379,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.RemoveEffect(pick)
@@ -1469,7 +1478,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 
 					for(pick in picklist)
@@ -1575,7 +1584,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -1748,9 +1757,13 @@ var/global/noir = 0
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
 			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-			if (matches.len == 0)
+#ifdef SECRETS_ENABLED
+			matches -= list(/mob/living/critter/vending) //secret repo blacklist
+#endif
+
+			if (!length(matches))
 				return
-			if (matches.len == 1)
+			if (length(matches) == 1)
 				CT = matches[1]
 			else
 				CT = input("Select a match", "matches for pattern", null) as null|anything in matches
@@ -1927,7 +1940,7 @@ var/global/noir = 0
 								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
-						if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang))
+						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += "Gang Leader"
 						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
 						switch(selection)
@@ -2016,7 +2029,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2031,7 +2044,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -2503,7 +2516,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2536,7 +2549,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -2571,7 +2584,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2607,7 +2620,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 								for(pick in picklist)
 									if (string_version)
@@ -2667,7 +2680,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2749,7 +2762,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 floors and walls with wooden ones.")
 							var/nornwalls = 0
-							if (map_settings && map_settings.walls == /turf/simulated/wall/auto/supernorn)
+							if (map_settings?.walls == /turf/simulated/wall/auto/supernorn)
 								nornwalls = 1
 							for (var/turf/simulated/wall/W in world)
 								if (atom_emergency_stop)
@@ -3002,7 +3015,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3022,7 +3035,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3061,7 +3074,7 @@ var/global/noir = 0
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L && L.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
+									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
@@ -3074,7 +3087,7 @@ var/global/noir = 0
 									do //More random
 										people_to_swap -= A
 										var/mob/B = pick(people_to_swap)
-										if(A && A.mind && B)
+										if(A?.mind && B)
 											A.mind.swap_with(B)
 										A = B
 										LAGCHECK(LAG_LOW)
@@ -3143,8 +3156,6 @@ var/global/noir = 0
 						src.owner:debug_variables(data_core)
 					if("miningcontrols")
 						src.owner:debug_variables(mining_controls)
-					if("goonhub")
-						src.owner:debug_variables(goonhub)
 					if("mapsettings")
 						src.owner:debug_variables(map_settings)
 					if("ghostnotifications")
@@ -3167,19 +3178,8 @@ var/global/noir = 0
 				var/ok = 0
 
 				switch(href_list["type"])
-	/*
-					if("clear_bombs")
-						for(var/obj/item/assembly/radio_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/proximity_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/time_bomb/O in world)
-							qdel(O)
-						ok = 1
-	*/
-
 					if("check_antagonist")
-						if (ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
+						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
@@ -3407,7 +3407,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
-					else
+#ifdef SECRETS_ENABLED
+					if ("ideas")
+						usr.Browse(file2text("+secret/assets/fun_admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+#endif
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
 					logTheThing("diary", usr, null, "used secret [href_list["secretsadmin"]]", "admin")
@@ -4031,8 +4034,12 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
-				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A>
+				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+
 			"}
+#ifdef SECRETS_ENABLED
+	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
+#endif
 
 	dat += "</div>"
 
@@ -4055,13 +4062,12 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=emshuttle'>Emergency Shuttle</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=miningcontrols'>Mining Controls</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=goonhub'>Goonhub</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=mapsettings'>Map Settings</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=ghostnotifications'>Ghost Notifications</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=overlays'>Overlays</A>
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
 				"}
 
@@ -4158,8 +4164,6 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>reliquary station "wandf" </A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>reliquary station "tdcc" </A><BR>
 				"}
 
 	dat += "</div>"
@@ -4185,7 +4189,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4264,8 +4268,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4277,8 +4281,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
@@ -4341,7 +4345,7 @@ var/global/noir = 0
 	if(checktraitor(M))
 		boutput(usr, "<span class='alert'>That person is already an antagonist.</span>")
 		return
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
 		boutput(usr, "<span class='alert'>Gang Leaders are currently restricted to gang mode only.</span>")
 		return
 
@@ -4660,6 +4664,27 @@ var/global/noir = 0
 		if (chosen)
 			var/turf/T = get_turf(usr)
 			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Demonically"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+
+		if (chosen)
+			var/obj/A = new chosen()
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
+			demonic_spawn(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 

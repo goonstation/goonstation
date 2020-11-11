@@ -53,9 +53,11 @@
 								//playsound(get_turf(src), src.sound_malescream, 80, 0, 0, src.get_age_pitch())
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+						#ifdef HALLOWEEN
+						spooktober_GH.change_points(src.ckey, 30)
+						#endif
 						var/possumMax = 15
-						for (var/poss in by_type[/obj/critter/opossum])
-							var/obj/critter/opossum/responsePossum = poss
+						for_by_tcl(responsePossum, /obj/critter/opossum)
 							if (!responsePossum.alive)
 								continue
 							if(!IN_RANGE(responsePossum, src, 4))
@@ -63,8 +65,7 @@
 							if (possumMax-- < 0)
 								break
 							responsePossum.CritterDeath() // startled into playing dead!
-						for (var/poss in by_type[/mob/living/critter/small_animal/opossum]) // is this more or less intensive than a range(4)?
-							var/mob/living/critter/small_animal/opossum/P = poss
+						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
 							if(!IN_RANGE(P, src, 4))
@@ -113,8 +114,7 @@
 									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
 
 						var/fart_on_other = 0
-						for (var/thing in src.loc)
-							var/atom/A = thing
+						for (var/atom/A as() in src.loc)
 							if (A.event_handler_flags & IS_FARTABLE)
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
@@ -223,8 +223,7 @@
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 									var/found_bible = 0
-									for (var/thing in H.loc)
-										var/atom/A = thing
+									for (var/atom/A as() in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
 											if (istype(A,/obj/item/storage/bible))
 												found_bible = 1
@@ -980,8 +979,7 @@
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
 
-				for(var/atom in src.get_equipped_items())
-					var/obj/item/C = atom
+				for (var/obj/item/C as() in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
 						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
@@ -1322,8 +1320,7 @@
 				m_type = 1
 
 			if ("wink")
-				for(var/atom in src.get_equipped_items())
-					var/obj/item/C = atom
+				for (var/obj/item/C as() in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
@@ -1585,7 +1582,7 @@
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
-									if(src && src.stance == "dodge")
+									if(src?.stance == "dodge")
 										src.stance = "normal"
 
 							//FLIP OVER TABLES
@@ -1640,7 +1637,7 @@
 									else
 										src.changeStatus("weakened", 3.9 SECONDS)
 
-										if (client && client.hellbanned)
+										if (client?.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
 										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
@@ -1999,8 +1996,8 @@
 					var/obj/item/device/pda2/P = I
 					if(P.ID_card)
 						I = P.ID_card
-				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
-					src.show_text("You can't do that without arms!")
+				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
+					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats

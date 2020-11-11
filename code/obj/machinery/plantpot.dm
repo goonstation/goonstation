@@ -563,14 +563,22 @@
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
-			var/obj/item/seed/WS = unpool(/obj/item/seed)
-			WS.set_loc(src)
-			WS.generic_seed_setup(SP.selected)
-			SPAWN_DBG(0)
-				HYPnewplant(WS)
-				pool (WS)
-			if(!(user in src.contributors))
-				src.contributors += user
+			var/obj/item/seed/SEED
+			if(SP.selected.unique_seed)
+				SEED = unpool(SP.selected.unique_seed)
+			else
+				SEED = unpool(/obj/item/seed)
+			SEED.generic_seed_setup(SP.selected)
+			SEED.set_loc(src)
+			if(SEED.planttype)
+				src.HYPnewplant(SEED)
+				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
+					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				if(!(user in src.contributors))
+					src.contributors += user
+			else
+				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				pool (SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -809,7 +817,7 @@
 		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
 		if(growing.plant_icon)
 			iconname = growing.plant_icon
-		else if(MUT && MUT.iconmod)
+		else if(MUT?.iconmod)
 			if(MUT.plant_icon)
 				iconname = MUT.plant_icon
 			else
@@ -834,7 +842,7 @@
 		var/planticon = null
 		if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		if(MUT && MUT.iconmod)
+		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
@@ -855,7 +863,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
-		if(growing && growing.cantscan) // what if we disable this for a bit, what will happen...
+		if(growing?.cantscan) // what if we disable this for a bit, what will happen...
 			src.name = "\improper strange plant"
 		else
 			if(istype(MUT,/datum/plantmutation/))
@@ -908,7 +916,7 @@
 
 		if(growing.harvested_proc)
 			if(growing.HYPharvested_proc(src,user)) return
-			if(MUT && MUT.HYPharvested_proc_M(src,user)) return
+			if(MUT?.HYPharvested_proc_M(src,user)) return
 			// Does this plant react to being harvested? If so, do it - it also functions as
 			// a check since harvesting will stop here if this returns anything other than 0.
 
@@ -1782,6 +1790,15 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 			light.enable()
 		else
 			light.disable()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(isscrewingtool(W) || iswrenchingtool(W))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = !src.anchored
 
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"

@@ -68,7 +68,7 @@
 	icon_state = "bio"
 	item_state = "bio_hood"
 	permeability_coefficient = 0.01
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 
@@ -102,7 +102,7 @@
 	icon_state = "emerg"
 	item_state = "emerg"
 	permeability_coefficient = 0.25
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
 
@@ -115,7 +115,7 @@
 	name = "Class II Radiation Hood"
 	icon_state = "radiation"
 	permeability_coefficient = 0.01
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -421,6 +421,13 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("gold"))
+
+/obj/item/clothing/head/longtophat
+	name = "Long tophat"
+	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "ltophat"
+	item_state = "lthat"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
@@ -1061,7 +1068,7 @@
 	icon_state = "chemhood"
 	item_state = "chemhood"
 	permeability_coefficient = 0
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
@@ -1189,3 +1196,9 @@
 	desc = "A highly advanced textile experience!"
 	icon_state = "danberet"
 	item_state = "danberet"
+
+/obj/item/clothing/head/janiberet
+	name = "Head of Sanitation beret"
+	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+	icon_state = "janitorberet"
+	item_state = "janitorberet"

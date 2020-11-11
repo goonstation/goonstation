@@ -801,7 +801,7 @@
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
-			if (A && A.virtual)
+			if (A?.virtual)
 				droploot = null
 			..()
 
@@ -816,6 +816,9 @@
 				return
 
 			src.dir = get_dir(src, target)
+
+			if (!cardinal.Find(src.dir))
+				return //hell drone only shoots cardinals
 
 			var/obj/projectile/P1 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
 			var/obj/projectile/P2 =	initialize_projectile(src.loc, current_projectile, 0, 0, src)
@@ -848,7 +851,7 @@
 					P2.set_loc(locate(src.x,src.y+2, src.z))
 					P1.orig_turf = P1.loc
 					P2.orig_turf = P2.loc
-				else
+				if(SOUTH)
 					P1.yo = -96
 					P1.xo = 0
 					P2.yo = -96
@@ -857,6 +860,10 @@
 					P2.set_loc(locate(src.x, src.y, src.z))
 					P1.orig_turf = P1.loc
 					P2.orig_turf = P2.loc
+				else
+					P1.die()
+					P2.die()
+					return
 
 			SPAWN_DBG(0)
 				P1.launch() // FIRE!
@@ -942,25 +949,49 @@
 				P2.set_loc(locate(src.x+2,src.y+2, src.z))
 				P1.orig_turf = P1.loc //our orig_turf was set in initialize_projectile() but that was before we moved it to the side of the ship
 				P2.orig_turf = P2.loc
-			if(EAST)
-				P1.yo = 0
-				P1.xo = 96
-				P2.yo = 0
-				P2.xo = 96
+			if(EAST, NORTHEAST, SOUTHEAST)
+				switch(src.dir)
+					if(NORTHEAST)
+						P1.yo = 96
+						P1.xo = 96
+						P2.yo = 96
+						P2.xo = 96
+					if(SOUTHEAST)
+						P1.yo = -96
+						P1.xo = 96
+						P2.yo = -96
+						P2.xo = 96
+					else
+						P1.yo = 0
+						P1.xo = 96
+						P2.yo = 0
+						P2.xo = 96
 				P1.set_loc(locate(src.x+2,src.y+2,src.z))
 				P2.set_loc(locate(src.x+2,src.y,src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			if(WEST)
-				P1.yo = 0
-				P1.xo = -96
-				P2.yo = 0
-				P2.xo = -96
+			if(WEST, NORTHWEST, SOUTHWEST)
+				switch(src.dir)
+					if(NORTHWEST)
+						P1.yo = 96
+						P1.xo = -96
+						P2.yo = 96
+						P2.xo = -96
+					if(SOUTHWEST)
+						P1.yo = -96
+						P1.xo = -96
+						P2.yo = -96
+						P2.xo = -96
+					else
+						P1.yo = 0
+						P1.xo = -96
+						P2.yo = 0
+						P2.xo = -96
 				P1.set_loc(locate(src.x,src.y, src.z))
 				P2.set_loc(locate(src.x,src.y+2, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
-			else
+			if(SOUTH)
 				P1.yo = -96
 				P1.xo = 0
 				P2.yo = -96
@@ -969,6 +1000,10 @@
 				P2.set_loc(locate(src.x, src.y, src.z))
 				P1.orig_turf = P1.loc
 				P2.orig_turf = P2.loc
+			else
+				P1.die()
+				P2.die()
+				return
 
 		SPAWN_DBG(0)
 			P1.launch()
@@ -1024,7 +1059,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
@@ -1195,7 +1230,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual //we don't want this loot in vr do we???
 		else
 			new/obj/item/instrument/fiddle(src.loc)

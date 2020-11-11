@@ -28,7 +28,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		for (var/client/C in clients)
 			C.sound_playing[ admin_sound_channel ][1] = vol
 			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN )
+			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
@@ -295,27 +295,20 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!video)
 		return
 
-	var/url = "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]"
-	var/response[] = world.Export(url)
-	if (!response)
+	// Fetch via HTTP from goonhub
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
 		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
 		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
 		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
 		return
 
-	var/key
-	var/contentExists = 0
-	for (key in response)
-		if (key == "CONTENT")
-			contentExists = 1
-
-	if (!contentExists)
-		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: Malformed response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: Malformed response from server with video: [video]", "debug")
-		return
-
-	var/data = json_decode(file2text(response["CONTENT"]))
+	var/data = json_decode(response.body)
 	if (data["error"])
 		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return

@@ -489,7 +489,7 @@
 				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for(var/obj/machinery/ore_cloud_storage_container/S in by_type[/obj/machinery/ore_cloud_storage_container])
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			if(S.broken)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
@@ -2148,6 +2148,7 @@
 		/datum/manufacture/cyberliver,
 		/datum/manufacture/cyberlung_left,
 		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -2186,6 +2187,7 @@
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,
 	/datum/manufacture/geoscanner,
+	/datum/manufacture/geigercounter,
 	/datum/manufacture/eyes_meson,
 	/datum/manufacture/flashlight,
 	/datum/manufacture/ore_accumulator,
@@ -2269,7 +2271,8 @@
 	/datum/manufacture/satchel)
 
 	hidden = list(/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
@@ -2346,7 +2349,8 @@
 	hidden = list(/datum/manufacture/id_card_gold,
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
-	/datum/manufacture/patch)
+	/datum/manufacture/patch,
+	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
@@ -2364,6 +2368,49 @@
 	/datum/manufacture/biohazard)
 
 	hidden = list(/datum/manufacture/classcrate)
+
+/obj/machinery/manufacturer/zombie_survival
+	name = "Uber-Extreme Survival Manufacturer"
+	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
+	icon_state = "fab-crates"
+	icon_base = "crates"
+	free_resource_amt = 50
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/engspacesuit,
+	/datum/manufacture/breathmask,
+	/datum/manufacture/suture,
+	/datum/manufacture/scalpel,
+	/datum/manufacture/flashlight,
+	/datum/manufacture/armor_vest,
+	/datum/manufacture/bullet_22,
+	/datum/manufacture/harmonica,
+	/datum/manufacture/riot_shotgun,
+	/datum/manufacture/riot_shotgun_ammo,
+	/datum/manufacture/clock,
+	/datum/manufacture/clock_ammo,
+	/datum/manufacture/saa,
+	/datum/manufacture/saa_ammo,
+	/datum/manufacture/riot_launcher, 
+	/datum/manufacture/riot_launcher_ammo_pbr, 
+	/datum/manufacture/riot_launcher_ammo_flashbang,
+	/datum/manufacture/sniper,
+	/datum/manufacture/sniper_ammo,
+	/datum/manufacture/tac_shotgun,
+	/datum/manufacture/tac_shotgun_ammo,
+	/datum/manufacture/gyrojet,
+	/datum/manufacture/gyrojet_ammo,
+	/datum/manufacture/plank,
+	/datum/manufacture/brute_kit,
+	/datum/manufacture/burn_kit,
+	/datum/manufacture/crit_kit,
+	/datum/manufacture/spacecillin,
+	/datum/manufacture/bat,
+	/datum/manufacture/quarterstaff,
+	/datum/manufacture/cleaver,
+	/datum/manufacture/fireaxe,
+	/datum/manufacture/shovel)
 
 #undef WIRE_EXTEND
 #undef WIRE_POWER
@@ -2420,8 +2467,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/type in typesof(/datum/manufacture))
-		var/datum/manufacture/P = type
+	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

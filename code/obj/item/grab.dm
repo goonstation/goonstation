@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc, mob/assailant = null)
+	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
@@ -34,6 +34,9 @@
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
+		src.affecting = affecting
+		src.affecting.grabbed_by += src
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -80,6 +83,7 @@
 				affecting.grabbed_by -= src
 			affecting = null
 
+		UnregisterSignal(assailant, COMSIG_ATOM_HITBY_PROJ)
 		assailant = null
 		..()
 
@@ -232,7 +236,7 @@
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
-						if (C.body_parts_covered & HEAD)
+						if (C.c_flags & (BLOCKCHOKE))
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
 							return
 				actions.start(new/datum/action/bar/icon/strangle_target(src.affecting, src), src.assailant)
@@ -406,6 +410,18 @@
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
+
+
+	proc/check_hostage(owner, obj/projectile/P)
+		var/mob/hostage = null
+		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
+			hostage = src.affecting
+		if (hostage)
+			P.collide(hostage)
+			//moved here so that it displays after the bullet hit message
+			if(prob(20)) //This should probably not be bulletproof, har har
+				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
+				qdel(src)
 
 //////////////////////
 //PROGRESS BAR STUFF//
@@ -619,24 +635,31 @@
 				return use_internal.remove_air_volume(volume_needed)
 
 	upgrade_to_kill()
-		if (src.assailant.wear_mask && src.assailant.wear_mask.c_flags & COVERSMOUTH | MASKINTERNALS)
+		var/list/clothing = list(src.affecting.wear_mask)
+		if(ishuman(src.affecting))
+			var/mob/living/carbon/human/H = src.affecting
+			clothing += H.wear_suit
+			clothing += H.w_uniform
+			clothing += H.head
+		for (var/obj/item/clothing/C in clothing)
+			if (C.c_flags & (COVERSMOUTH | MASKINTERNALS))
+				for (var/mob/O in AIviewers(src.assailant, null))
+					O.show_message("<span class='alert'>[src.assailant] fails to choke [src.affecting] with [src.loc] because their [C] is in the way!</span>", 1)
+				return 0
+
+		..(msg_overridden = 1)
+
+		var/obj/item/tank/use_internal = null
+		for (var/obj/item/tank/T in src.assailant.equipped_list(check_for_magtractor = 0))
+			use_internal = T
+			break
+
+		if (use_internal)
 			for (var/mob/O in AIviewers(src.assailant, null))
-				O.show_message("<span class='alert'>[src.assailant] fails to choke [src.affecting] with [src.loc] because they are already wearing [src.assailant.wear_mask]!</span>", 1)
-			return 0
+				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!</span>", 1)
 		else
-			..(msg_overridden = 1)
-
-			var/obj/item/tank/use_internal = null
-			for (var/obj/item/tank/T in src.assailant.equipped_list(check_for_magtractor = 0))
-				use_internal = T
-				break
-
-			if (use_internal)
-				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!</span>", 1)
-			else
-				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!</span>", 1)
+			for (var/mob/O in AIviewers(src.assailant, null))
+				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!</span>", 1)
 
 
 
@@ -776,7 +799,7 @@
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I && I.reagents)
+			if(prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
 
@@ -859,7 +882,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && chokehold.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_KILL)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

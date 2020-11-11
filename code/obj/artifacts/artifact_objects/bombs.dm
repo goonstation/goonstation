@@ -1,5 +1,6 @@
 // base
 
+ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
 	associated_object = null
 	rarity_class = 0
@@ -215,9 +216,9 @@
 				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
 				s.start()
 			if(1)
-				O.reagents.smoke_start(10)
+				O.reagents.smoke_start(50)
 			if(2)
-				O.reagents.smoke_start(10,1)
+				O.reagents.smoke_start(50,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
 

@@ -49,6 +49,8 @@
 #define USE_INTENT_SWITCH_TRIGGER 1
 /// allows special attacks to be performed on help and grab intent with this item
 #define USE_SPECIALS_ON_ALL_INTENTS 2
+/// prevents items from creating smoke while burning
+#define SMOKELESS 4
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -93,6 +95,8 @@
 #define ITEM_RARITY_LEGENDARY 6
 #define ITEM_RARITY_MYTHIC 7
 
+// item comp defs
+#define FORCE_EDIBILITY 1
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1

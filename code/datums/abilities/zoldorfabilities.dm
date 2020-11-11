@@ -410,7 +410,7 @@
 		var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 		ectoplasm.set_loc(boothloc)
 		sleep(60 SECONDS)
-		if(sg && sg.mind)
+		if(sg?.mind)
 			sg.mind.transfer_to(user)
 			qdel(sg)
 
@@ -451,7 +451,7 @@
 					var/obj/ectoplasm = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					ectoplasm.set_loc(mobloc)
 					SPAWN_DBG(600)
-						if(sg && sg.mind)
+						if(sg?.mind)
 							if(istype(the_mob,/mob/zoldorf))
 								sg.mind.transfer_to(the_mob)
 								qdel(sg)

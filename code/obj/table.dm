@@ -392,6 +392,8 @@
 	sendOwner()
 		var/const/throw_speed = 0.5
 		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(isnull(thr))
+			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
 			thr.end_throw_callback = .proc/unset_tablepass_callback
@@ -920,7 +922,7 @@
 			duration = duration_i
 		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

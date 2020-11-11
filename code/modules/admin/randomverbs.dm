@@ -14,9 +14,9 @@
 	set name = "Print Flow Networks"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	DEBUG_MESSAGE("Dumping flow network refs")
-	for(var/datum/flow_network/network in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for(var/datum/flow_network/network in by_type[/datum/flow_network])
+	for_by_tcl(network, /datum/flow_network)
 		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
 		// Clear DFS flags
 		network.clear_DFS_flags()
@@ -98,7 +98,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -127,7 +127,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(Mclient.mob, "<span class='alert'>[msg]</span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged [constructTarget(Mclient.mob,"admin")]: [html_encode(msg)]")
@@ -149,7 +149,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(world, "[msg]")
 
 	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
@@ -184,7 +184,7 @@
 	logTheThing("admin", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"admin")] with the message \"[t]\"")
 	logTheThing("diary", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
 
-	if(Mclient && Mclient.mob)
+	if(Mclient?.mob)
 		SPAWN_DBG(0)
 			var/sound/honk = sound('sound/voice/animal/goose.ogg')
 			honk.volume = 75
@@ -462,7 +462,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -472,7 +472,7 @@
 */
 
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report("[command_name()] Update", input)
 
 		var/sound_to_play = "sound/misc/announcement_1.ogg"
@@ -744,7 +744,7 @@
 		return
 
 	disposing()
-		if(usercl && usercl.mob)
+		if(usercl?.mob)
 			usercl.mob.Browse(null, "window=adminpmorph")
 		usercl = null
 		target_mob = null
@@ -1154,17 +1154,14 @@
 
 		return
 
-/client/proc/cmd_admin_remove_label_from()
+/client/proc/cmd_admin_remove_all_labels()
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
-	set name = "Remove Label From"
+	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	var/mob/M = input("Which mob?","Find mob") as null|anything in mobs
-	if (!istype(M,/mob/))
-		boutput(usr, "No mob defined!")
-		return
-
-	M.name_suffixes = list()
+	for (var/mob/M in mobs)
+		M.name_suffixes = null
+		M.UpdateName()
 	return
 
 /client/proc/cmd_admin_aview()
@@ -1800,13 +1797,13 @@
 
 				// Get rid of those uplinks first.
 				var/list/L = H.get_all_items_on_mob()
-				if (L && L.len)
+				if (length(L))
 					for (var/obj/item/device/pda2/PDA in L)
-						if (PDA && PDA.uplink)
+						if (PDA?.uplink)
 							qdel(PDA.uplink)
 							PDA.uplink = null
 					for (var/obj/item/device/radio/R in L)
-						if (R && R.traitorradio)
+						if (R?.traitorradio)
 							qdel(R.traitorradio)
 							R.traitorradio = null
 							R.traitor_frequency = 0
@@ -2078,7 +2075,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "granted VOX access to all AIs!")
 			logTheThing("diary", src, null, "granted VOX access to all AIs!", "admin")
 			boutput(world, "<B>The AI may now use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_help
@@ -2090,7 +2087,7 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "revoked VOX access from all AIs!")
 			logTheThing("diary", src, null, "revoked VOX access from all AIs!", "admin")
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
-			for(var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_announcement
 				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_help
@@ -2602,3 +2599,25 @@ var/global/night_mode_enabled = 0
 				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
+
+/client/proc/cmd_crusher_walls()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Crusher Walls"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Holy shit are you sure?! This is going to turn the walls into crushers!",,"Yes","No"))
+			if("Yes")
+				for(var/turf/simulated/wall/W in world)
+					if (W.z != 1) continue
+					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					if (O) continue
+					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
+					W.density = 0
+
+				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
+				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
+				message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")

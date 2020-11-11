@@ -742,6 +742,7 @@
 				src.goods_sell += new /datum/commodity/drugs/morphine(src)
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
+				src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
@@ -1042,8 +1043,8 @@
 		#if ASS_JAM
 		src.goods_sell += new /datum/commodity/screamshoes(src)
 		src.goods_sell += new /datum/commodity/fartflops(src)
-		#endif 
-		
+		#endif
+
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
@@ -1220,6 +1221,7 @@
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1270,7 +1272,7 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32

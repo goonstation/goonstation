@@ -104,7 +104,7 @@
 		if (src.material)
 			G.setMaterial(src.material)
 		/* not used because it doesn't work (yet?)
-		if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -604,7 +604,7 @@
 			G.color = src.font_color
 		if (src.material)
 			G.setMaterial(src.material)
-		/*if (src.uses_handwriting && user && user.mind && user.mind.handwriting)
+		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
 		*/
@@ -672,7 +672,7 @@
 			return
 		tooltip_rebuild = 1
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
-		if(url_regex && url_regex.Find(str))
+		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
 			boutput(usr, "<span class='notice'>Label text cleared.</span>")
@@ -728,7 +728,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] labels [him_or_her(user)]self \"DEAD\"!</b></span>")
-		src.label = "(DEAD)"
+		src.label = "DEAD"
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
@@ -837,7 +837,7 @@
 					if (length(str) > 30)
 						boutput(usr, "<span class='alert'>A title that long will never catch on!</span>") //We're actually checking because titles above a certain length get clipped, but where's the fun in that
 						return
-					if(url_regex && url_regex.Find(str))
+					if(url_regex?.Find(str))
 						return
 					P.name = str
 
@@ -1066,7 +1066,7 @@
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
+			if (S?.ammo)
 				user.drop_item()
 				src.pages += P
 				P.set_loc(src)

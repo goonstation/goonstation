@@ -116,6 +116,12 @@
 		icon_state = "jacket_yellow"
 		item_state = "jacket_yellow"
 
+	sparkly
+		name = "sparkly jacket"
+		desc = "No glitter. No LEDs. Just magic!"
+		icon_state = "jacket_sparkly"
+		item_state = "jacket_sparkly"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -304,6 +310,10 @@
 	permeability_coefficient = 0.005
 	over_hair = 1
 
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.6)
@@ -374,6 +384,12 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+
+/obj/item/clothing/suit/apron/botanist
+	name = "blue apron"
+	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+	icon_state = "apron-botany"
+	item_state = "apron-botany"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -1291,6 +1307,13 @@
 		item_state = "hasturcultist"
 		over_all = 1
 
+	nerd
+		name = "robes of dungeon mastery"
+		desc = "Neeeeerds."
+
+		New()
+			. = ..()
+			src.enchant(min(rand(1, 5), rand(1, 5)))
 
 /obj/item/clothing/suit/flockcultist
 	name = "weird cultist robe"

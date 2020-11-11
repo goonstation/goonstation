@@ -13,6 +13,8 @@
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
 	..()
 
+	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
+
 	src.real_name = "[pick(consonants_upper)][pick(vowels_lower)].[pick(vowels_lower)]"
 
 	if(istype(F))
@@ -20,6 +22,7 @@
 		src.flock.addTrace(src)
 	else
 		src.death() // f u
+	src.abilityHolder.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/trace/proc/describe_state()
 	var/state = list()
@@ -55,7 +58,7 @@
 	stat(null, " ")
 	if(src.flock)
 		stat("Flock:", src.flock.name)
-		stat("Drones:", src.flock.units?.len)
+		stat("Drones:", length(src.flock.units))
 	else
 		stat("Flock:", "none")
 		stat("Drones:", 0)
@@ -77,8 +80,8 @@
 	src.canmove = 0
 	flick("flocktrace-death", src)
 	src.ghostize()
-	sleep(2 SECONDS) // wait for the animation to finish
-	qdel(src)
+	spawn(2 SECONDS) // wait for the animation to finish
+		qdel(src)
 
 /mob/living/intangible/flock/trace/ghostize()
 	var/mob/dead/observer/O = ..()

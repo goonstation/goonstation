@@ -400,8 +400,7 @@ proc/debug_color_of(var/thing)
 				else
 
 					var/pressure = MIXTURE_PRESSURE(air)
-					img.app.desc = ""
-
+					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(air)]Temperature=[air.temperature]<br/>"
 
 					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
 					//Partial pressure of the O2 in our breath
@@ -445,7 +444,7 @@ proc/debug_color_of(var/thing)
 						gt.color = is_group
 						img.app.overlays += gt
 
-					if (group && group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
 					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
 
@@ -562,6 +561,7 @@ proc/debug_color_of(var/thing)
 						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
 							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
+							img.app.desc = "[MOLES_REPORT(air)]"
 						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
 							pipe_image.maptext_x = -3
@@ -640,8 +640,7 @@ proc/debug_color_of(var/thing)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
 			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
-			for(var/X in theTurf)
-				var/atom/A = X
+			for (var/atom/A as() in theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -650,11 +649,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
 			var/num = 0
-			for(var/X in theTurf.contents + theTurf)
-				var/atom/A = X
+			for (var/atom/A as() in theTurf.contents + theTurf)
 				num += 1 + A.overlays.len + A.underlays.len
-				for(var/O in A.overlays + A.underlays)
-					var/atom/A2 = O
+				for (var/atom/A2 as() in A.overlays + A.underlays)
 					num += A2.overlays.len + A2.underlays.len
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
@@ -892,12 +889,11 @@ proc/debug_color_of(var/thing)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/list/available_overlays = list()
-	for(var/iov_type in childrentypesof(/datum/infooverlay))
-		var/datum/infooverlay/dummy = iov_type
+	for (var/datum/infooverlay/dummy as() in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
-			name = replacetext("[iov_type]", "/datum/infooverlay/", "")
-		available_overlays[name] = iov_type
+			name = replacetext("[dummy]", "/datum/infooverlay/", "")
+		available_overlays[name] = dummy
 	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
 	if(activeOverlay)
 		activeOverlay.OnDisabled(src)
@@ -921,7 +917,7 @@ proc/debug_color_of(var/thing)
 		RenderOverlay()
 		SPAWN_DBG(1 DECI SECOND)
 			var/client/X = src
-			while (X && X.activeOverlay)
+			while (X?.activeOverlay)
 				// its a debug overlay so f u
 				X.RenderOverlay()
 				sleep(1 SECOND)
@@ -934,7 +930,7 @@ proc/debug_color_of(var/thing)
 			var/x = text2num(splittext(offs[1], ":")[1])
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
-			if(im && im.desc)
+			if(im?.desc)
 				usr.client.tooltipHolder.transient.show(src, list(
 					"params" = params,
 					"title" = "Diagnostics",
@@ -951,7 +947,7 @@ proc/debug_color_of(var/thing)
 /*
 // having to wiggle around to update the overlay dumb, bad, esp when you can move real fast
 /mob/OnMove()
-	if(client && client.activeOverlay)
+	if(client?.activeOverlay)
 		client.GenerateOverlay()
 		client.RenderOverlay()
 	.=..()

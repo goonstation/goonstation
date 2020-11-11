@@ -1,5 +1,5 @@
 "a" = (/turf/unsimulated/wall/trench,/area/noGenerate)
-"b" = (/turf/variableTurf/clear,/area)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/turf/variableTurf/clear,/area/noGenerate)
 "d" = (/turf/variableTurf/wall,/area/noGenerate)
 "e" = (/obj/critter/gunbot/drone/raildrone,/turf/variableTurf/clear,/area/noGenerate)

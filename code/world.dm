@@ -18,7 +18,7 @@
 	turf = /turf/space
 	#endif
 
-	area = /area
+	area = /area/space
 
 	view = "15x15"
 
@@ -396,7 +396,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 		Z_LOG_DEBUG("Preload", "  /obj/trait")
 		for(var/A in childrentypesof(/obj/trait)) //Creating trait objects. I hate this.
-			var/obj/trait/T = new A( )
+			var/obj/trait/T = new A( )							//Sentiment shared -G
 			traitList.Add(T.id)
 			traitList[T.id] = T
 
@@ -487,9 +487,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	sun = new /datum/sun()
 
-	Z_LOG_DEBUG("World/Init", "Goonhub init")
-	goonhub = new()
-
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
@@ -563,7 +560,7 @@ var/f_color_selector_handler/F_Color_Selector
 	SetupOccupationsList()
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
-	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker && ticker.hide_mode) ? "secret" : master_mode))
+	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -611,10 +608,6 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	UPDATE_TITLE_STATUS("Mapping spatials")
-	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
-	init_spatial_map()
-
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
@@ -658,8 +651,15 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
-
+#ifdef PREFAB_CHECKING
+	placeAllPrefabs()
+#endif
+#ifdef RUNTIME_CHECKING
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
 #undef UPDATE_TITLE_STATUS
+	return
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
@@ -701,7 +701,26 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+#ifdef RUNTIME_CHECKING
+	for (var/client/C in clients)
+		ehjax.send(C, "browseroutput", "hardrestart")
 
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
+	if (isnull(runtimeDetails))
+		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+	else if (length(runtimeDetails) == 0)
+		text2file("No runtimes generated!", "no_runtimes.txt")
+	else
+		world.log << "[length(runtimeDetails)] runtimes generated:"
+		for (var/idx in runtimeDetails)
+			var/list/details = runtimeDetails[idx]
+			var/timestamp = details["seen"]
+			var/file = details["file"]
+			var/line = details["line"]
+			var/name = details["name"]
+			world.log << "\[[timestamp]\] [file],[line]: [name]"
+	shutdown()
+#endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -758,10 +777,10 @@ var/f_color_selector_handler/F_Color_Selector
 	//we start off with an animated bee gif because, well, this is who we are.
 	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
 
-	if (config && config.server_name)
+	if (config?.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	if (ticker && ticker.mode)
+	if (ticker?.mode)
 		s += "<b>[istype(ticker.mode, /datum/game_mode/construction) ? "Construction Mode" : station_name()]</b>"
 	else
 		s += "<b>[station_name()]</b>"
@@ -783,30 +802,21 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-	if (abandon_allowed)
-		features += "respawn allowed"
-
 #if ASS_JAM
 	features += "Ass Jam"
 #endif
 
-	var/n = 0
-	for (var/client/C in clients)
-		if (C)
-			n++
+	var/n = length(clients)
 
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
+	if(n == 1)
 		features += "~[n] player"
+	else
+		features += "~[n] players"
 
-	if (features)
+	if(features)
 		s += ": [jointext(features, ", ")]"
 
 	s += " (<a href=\"https://ss13.co\">Website</a>)"
-
-	//Temporary while we rebrand
-	s += " (Previously LLJK)"
 
 	/* does this help? I do not know */
 	if (src.status != s)
@@ -871,7 +881,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "status")
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = (ticker && ticker.hide_mode) ? "secret" : master_mode
+		s["mode"] = (ticker?.hide_mode) ? "secret" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
 		s["ai"] = config.allow_ai
@@ -892,7 +902,7 @@ var/f_color_selector_handler/F_Color_Selector
 		else elapsed = "welp"
 		s["elapsed"] = elapsed
 		var/n = 0
-		for(var/client/C)
+		for(var/client/C in clients)
 			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
 			n++
 		s["players"] = n
@@ -1195,6 +1205,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+				msg = discord_emojify(msg)
 
 				logTheThing("ooc", null, null, "Discord OOC: [nick]: [msg]")
 
@@ -1223,6 +1234,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = discord_emojify(msg)
 				logTheThing("ooc", nick, null, "OOC: [msg]")
 				logTheThing("diary", nick, null, ": [msg]", "ooc")
 				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
@@ -1250,6 +1262,7 @@ var/f_color_selector_handler/F_Color_Selector
 					return ircbot.response(ircmsg)
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = discord_emojify(msg)
 
 				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
@@ -1295,16 +1308,17 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
+				var/game_msg = discord_emojify(msg)
 
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
-							<div style="background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+							<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
 								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a>
 							</div>
 							<div style="padding: 0.2em 0.5em;">
-								[msg]
+								[game_msg]
 							</div>
 							<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
 								<a href=\"byond://?action=priv_msg_irc&nick=[nick]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
@@ -1319,7 +1333,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1335,11 +1349,13 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["nick"] || !plist["msg"] || !plist["target"]) return 0
 
 				var/nick = plist["nick"]
-				var/msg = plist["msg"]
+				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
 				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/game_msg = discord_emojify(msg)
+
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1348,9 +1364,9 @@ var/f_color_selector_handler/F_Color_Selector
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>")
+									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[game_msg]</span></span>")
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[game_msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1366,7 +1382,7 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["target"]) return 0
 
 				var/list/whom = splittext(plist["target"], ",")
-				if (whom && whom.len)
+				if (length(whom))
 					var/list/parsedWhois = list()
 					var/count = 0
 					var/list/whois_result
@@ -1435,7 +1451,7 @@ var/f_color_selector_handler/F_Color_Selector
 						ircmsg["msg"] = "Admin [nick] healed / revived [M.ckey]"
 						found.Add(ircmsg)
 
-				if (found && found.len > 0)
+				if (length(found))
 					return ircbot.response(found)
 				else
 					return 0
@@ -1504,7 +1520,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msgText = file2text(msgFile)
 
 				//Prints to every networked printer in the world
-				for (var/obj/machinery/networked/printer/P in machine_registry[MACHINES_PRINTERS])
+				for (var/obj/machinery/networked/printer/P as() in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
 
@@ -1656,6 +1672,16 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return 1
 
+/world/proc/setMaxZ(new_maxz)
+	if (!isnum(new_maxz) || new_maxz <= src.maxz)
+		return src.maxz
+	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
+		src.maxz++
+		src.setupZLevel(zlevel)
+	return src.maxz
+
+/world/proc/setupZLevel(new_zlevel)
+	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null

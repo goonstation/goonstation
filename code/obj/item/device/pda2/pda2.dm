@@ -82,6 +82,12 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 
+	ntso
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+		setup_drive_size = 32
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+
 	ai
 		icon_state = "pda-h"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/ai
@@ -834,7 +840,7 @@
 			return
 
 		if(src in bible_contents)
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+			for_by_tcl(B, /obj/item/storage/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)

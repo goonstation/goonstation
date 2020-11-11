@@ -56,7 +56,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
-		RegisterSignal(src, COMSIG_ALTER_PROJECTILE, .proc/alter_projectile)
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -98,7 +97,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(!c_firing)
 		c_firing = 1
 		SPAWN_DBG(0)
-			while(src && src.c_mouse_down)
+			while(src?.c_mouse_down)
 				pixelaction(src.c_target.target, src.c_target.params, src.c_target.user, 0, 1)
 				suppress_fire_msg = 1
 				sleep(src.c_interval)
@@ -156,7 +155,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
 	var/pox
@@ -326,7 +325,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, projsource = src)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 		if (!P)
 			return
 		if (user == M)
@@ -353,7 +352,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (flag)
 		return
 
-/obj/item/gun/proc/alter_projectile(source, var/obj/projectile/P)
+/obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -402,7 +401,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, projsource = src)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 	if (P)
 		P.forensic_ID = src.forensic_ID
 

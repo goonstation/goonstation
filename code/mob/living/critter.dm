@@ -1158,6 +1158,9 @@
 		..()
 		src.update_inhands()
 
+	proc/on_sleep()
+		return
+
 	proc/on_wake()
 		return
 

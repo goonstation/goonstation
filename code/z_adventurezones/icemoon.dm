@@ -103,7 +103,7 @@ Contents:
 		if (isobserver(A) || isintangible(A))
 			return ..()
 
-		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
+		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
 		if(T)
 			fall_to(T, A)
 			return

@@ -181,21 +181,6 @@
 	src.chatOutput = new /datum/chatOutput(src)
 	//src.chui = new /datum/chui(src)
 
-	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn && !(!address || (world.address == src.address)))
-		var/list/chuiResources = list(
-			"browserassets/js/jquery.min.js",
-			"browserassets/js/jquery.nanoscroller.min.js",
-			"browserassets/js/chui/chui.js",
-			"browserassets/js/errorHandler.js",
-			"browserassets/css/fonts/fontawesome-webfont.eot",
-			"browserassets/css/fonts/fontawesome-webfont.svg",
-			"browserassets/css/fonts/fontawesome-webfont.ttf",
-			"browserassets/css/fonts/fontawesome-webfont.woff",
-			"browserassets/css/font-awesome.css"
-		)
-		src.loadResourcesFromList(chuiResources)
-
 	if (!isnewplayer(src.mob))
 		src.loadResources()
 
@@ -217,31 +202,30 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!src.address || src.address == world.host)
-			world.log << ("Hello host or developer person! You're not logged into BYOND. Fix this so you can test your feature turned bug!")
-		var/gueststring = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>No guest logins allowed!</title>
-								<style>
-									h1, .banreason {
-										font-color:#F00;
-									}
+		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+			var/gueststring = {"
+							<!doctype html>
+							<html>
+								<head>
+									<title>No guest logins allowed!</title>
+									<style>
+										h1, .banreason {
+											font-color:#F00;
+										}
 
-								</style>
-							</head>
-							<body>
-								<h1>Guest Login Denied</h1>
-								Don't forget to log in to your byond account prior to connecting to this server.
-							</body>
-						</html>
-					"}
-		src.mob.Browse(gueststring, "window=getout")
-		sleep(10)
-		if (src)
-			del(src)
-		return
+									</style>
+								</head>
+								<body>
+									<h1>Guest Login Denied</h1>
+									Don't forget to log in to your byond account prior to connecting to this server.
+								</body>
+							</html>
+						"}
+			src.mob.Browse(gueststring, "window=getout")
+			sleep(10)
+			if (src)
+				del(src)
+			return
 
 	if (world.time < 7 SECONDS)
 		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
@@ -433,12 +417,19 @@
 #endif
 		//Cloud data
 		if (cdn)
-			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-			if( !http )
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+			// Fetch via HTTP from goonhub
+			var/datum/http_request/request = new()
+			request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
+			request.begin_async()
+			UNTIL(request.is_complete())
+			var/datum/http_response/response = request.into_response()
 
-			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-			if( ret["status"] == "error" )
+			if (response.errored || !response.body)
+				logTheThing("debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+				return
+
+			var/list/ret = json_decode(response.body)
+			if(ret["status"] == "error")
 				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
 			else
 				cloudsaves = ret["saves"]
@@ -784,17 +775,24 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
-	set background = 1
 	joined_date = ""
-	var/list/text = world.Export("http://byond.com/members/[src.ckey]?format=text")
-	if(text)
-		var/content = file2text(text["CONTENT"])
-		var/savefile/save = new
-		save.ImportText("/", content)
-		save.cd = "general"
-		joined_date = save["joined"]
-		jd_warning(joined_date)
-	return
+
+	// Get join date from BYOND members page
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		return
+
+	var/savefile/save = new
+	save.ImportText("/", response.body)
+	save.cd = "general"
+	joined_date = save["joined"]
+	jd_warning(joined_date)
 
 /client/verb/ping()
 	set name = "Ping"
@@ -1026,18 +1024,22 @@ var/global/curr_day = null
 
 //drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
 //Sets and uploads cloud data on the client
-//Try to avoid calling often, as it contacts Goonhub and uses the dreaded spawn.
 //TODO: Pool puts, determine value of doing as such.
 /client/proc/cloud_put( var/key, var/value )
 	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining."//oh no
+		return "Failed to talk to Goonhub; try rejoining." //oh no
 	clouddata[key] = "[value]"
-	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
-		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
-//Returns some cloud data on the client
+
+	// Via rust-g HTTP
+	var/datum/http_request/request = new() //If it fails, oh well...
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+	request.begin_async()
+
+/// Returns some cloud data on the client
 /client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
-//Returns 1 if you can set or retrieve cloud data on the client
+
+/// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
 	return !!clouddata
 
@@ -1397,6 +1399,8 @@ menub.background-color=[_SKIN_BG];\
 menub.text-color=[_SKIN_TEXT];\
 bugreportb.background-color=[_SKIN_BG];\
 bugreportb.text-color=[_SKIN_TEXT];\
+githubb.background-color=[_SKIN_BG];\
+githubb.text-color=[_SKIN_TEXT];\
 wikib.background-color=[_SKIN_BG];\
 wikib.text-color=[_SKIN_TEXT];\
 mapb.background-color=[_SKIN_BG];\

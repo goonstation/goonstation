@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
@@ -1499,7 +1499,7 @@
 
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				speak("Critical battery.")
-				src.snooze()
+				INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1874,7 +1874,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					src.snooze()
+					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -2740,7 +2740,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (length(arrested_messages))
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 
@@ -4091,8 +4091,8 @@
 			return
 
 		else
-			..()
-		return
+			spawn(0)
+				..()
 
 
 //The Docking Station.  Recharge here!
@@ -4530,7 +4530,7 @@
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				robot.snooze()
+				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 
@@ -4883,12 +4883,6 @@
 /obj/machinery/bot/guardbot/old/tourguide/destiny
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
-	botcard_access = "Staff Assistant"
-	beacon_freq = 1443
-
-/obj/machinery/bot/guardbot/old/tourguide/linemap
-	name = "Monty"
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Monty'."
 	botcard_access = "Staff Assistant"
 	beacon_freq = 1443
 

@@ -99,7 +99,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
@@ -130,7 +130,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
@@ -350,7 +350,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*400, power*125)
+				reagents.temperature_reagents(power*500, power*125)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -581,6 +581,12 @@
 	proc/update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			src.icon_state = "itemtank[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
-			fluid_image.color = average.to_rgba()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = initial(src.icon_state)
+

@@ -41,7 +41,7 @@
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)
 				var/mob/rand_mob_mult
-				if (rand_client_mult && rand_client_mult.mob) //ZeWaka: Fix for null.mob
+				if (rand_client_mult?.mob) //ZeWaka: Fix for null.mob
 					rand_mob_mult = rand_client_mult.mob //A randomly selected player that's different to each viewer
 
 
@@ -58,8 +58,6 @@
 					title = replacetext(title, "%mrand_name%", rand_mob_mult.name)
 					title = replacetext(title, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
-					title = sanitize(title)
-
 				text = replacetext(text, "%name%", M.real_name)
 				text = replacetext(text, "%key%", M.key)
 				text = replacetext(text, "%job%", M.job ? M.job : "space hobo")
@@ -68,8 +66,6 @@
 				text = replacetext(text, "%srand_job%", rand_mob_single.job ? rand_mob_single.job : "space hobo")
 				text = replacetext(text, "%mrand_name%", rand_mob_mult.name)
 				text = replacetext(text, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
-
-				text = sanitize(text)
 
 				boutput(M, "<h1 class='alert'>[command_name()] Update</h1>")
 				if(title != "") boutput(M, "<h2 class='alert'>[title]</h2>")

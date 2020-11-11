@@ -10,8 +10,10 @@
 
 	unsimulated
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
+#ifdef RUNTIME_CHECKING
+		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
+#endif
 		allows_vehicles = 0
-
 	proc/set_dir(newdir)
 		dir = newdir
 
@@ -56,8 +58,8 @@
 		..()
 
 	Del()
-		if (cameras && cameras.len)
-			for (var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+		if (length(cameras))
+			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
 				if(C.coveredTiles)
 					C.coveredTiles -= src
 		cameras = null
@@ -102,7 +104,8 @@
 			return 0
 		for( var/thing in contents )
 			var/atom/A = thing
-			if( A.density && !ismob(A) ) return 0
+			if( A.density && !ismob(A) )
+				return 0
 		return 1
 
 	proc/tilenotify(turf/notifier)
@@ -111,12 +114,12 @@
 
 	proc/generate_worldgen()
 
-	proc/inherit_area()//jerko built a thing
+	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
 			var/area/fuck_everything = thing?.loc
-			if(fuck_everything && fuck_everything.expandable && (fuck_everything.type != /area))
+			if(fuck_everything?.expandable && (fuck_everything.type != /area))
 				fuck_everything.contents += src
 				return
 
@@ -247,7 +250,7 @@
 	if (density)
 		pathable = 0
 	for(var/atom/movable/AM as mob|obj in src)
-		if (AM) // ????
+		if (AM) // ???? x2
 			src.Entered(AM)
 	RL_Init()
 	return
@@ -261,10 +264,11 @@
 		return 1
 
 	//First, check objects to block exit
-	if (cturf && cturf.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
+	if (cturf?.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in cturf)
 			var/obj/obstacle = thing
-			if(obstacle == mover) continue
+			if(obstacle == mover)
+				continue
 			if((mover != obstacle) && (forget != obstacle))
 				if(obstacle.event_handler_flags & USE_CHECKEXIT)
 					if(!obstacle.CheckExit(mover, src))
@@ -365,7 +369,7 @@
 				if (A.event_handler_flags & USE_PROXIMITY)
 					A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
-	if(!src.throw_unlimited && M && M.no_gravity)
+	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
@@ -587,10 +591,10 @@
 
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.queue_update_tile(N)
+				air_master.tiles_to_update |= N
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.queue_update_group(oldparent) //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
@@ -1034,7 +1038,7 @@ Other Goonstation servers:[serverList]"}
 
 	if (A.z == 1 && zlevel != A.z)
 		if (!(isitem(A) && A:w_class <= 2))
-			for (var/obj/machinery/communications_dish/C in by_type[/obj/machinery/communications_dish])
+			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
 	A.z = zlevel
@@ -1043,7 +1047,7 @@ Other Goonstation servers:[serverList]"}
 	if (newy)
 		A.y = newy
 	SPAWN_DBG (0)
-		if ((A && A.loc))
+		if ((A?.loc))
 			A.loc.Entered(A)
 
 //Vr turf is a jerk and pretends to be broken.

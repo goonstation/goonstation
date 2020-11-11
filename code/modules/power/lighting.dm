@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	event_handler_flags = IMMUNE_SINGULARITY
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)
@@ -601,6 +601,22 @@
 
 		var/obj/item/lamp_manufacturer/M = W
 		var/obj/item/light/L = null
+
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (S.cell)
+				if (!inserted_lamp)
+					S.cell.charge -= M.cost_empty
+				else
+					S.cell.charge -= M.cost_broken
+		else
+			if (M.metal_ammo > 0)
+				M.metal_ammo--
+				M.inventory_counter.update_number(M.metal_ammo)
+			else
+				boutput(user, "You need to load up some metal sheets.")
+				return // Stop lights from being made if a human user lacks materials.
+
 		if (fitting == "tube")
 			L = new M.dispensing_tube()
 		else
@@ -610,14 +626,6 @@
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
 				return //Stop borgs from making more sparks than necessary
-
-		if (issilicon(user)) //Not that non-silicons should have these
-			var/mob/living/silicon/S = user
-			if (S.cell)
-				if (!inserted_lamp)
-					S.cell.charge -= M.cost_empty
-				else
-					S.cell.charge -= M.cost_broken
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
