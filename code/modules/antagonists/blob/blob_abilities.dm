@@ -365,8 +365,8 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
+		playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 		if (!owner.starter_buff)
-			playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 
