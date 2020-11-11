@@ -316,6 +316,7 @@
 	onUse(var/turf/T)
 		if (!owner.starter_buff && ..())
 			return 1
+
 		if (!T)
 			T = get_turf(owner)
 
@@ -333,10 +334,9 @@
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
 		if (!istype(B1))
 			return 1
-
+				playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 		if (!tutorial_check("spread", T))
 			return 1
-    playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
