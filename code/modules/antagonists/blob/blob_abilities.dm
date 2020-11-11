@@ -364,10 +364,10 @@
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
 				B3.setOvermind(owner)
+				playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 				spreadability -= R
 
 		if (!owner.starter_buff)
-			playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 
