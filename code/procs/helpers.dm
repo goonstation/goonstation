@@ -1224,8 +1224,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/thing in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
-		var/atom/A = thing
+	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1708,7 +1707,7 @@ proc/countJob(rank)
 	if (!letter) // you get something random you shithead
 		letter = pick("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 	if (!dir)
-		set_dir(NORTHEAST)
+		dir = NORTHEAST
 	if (!lcolor)
 		lcolor = rgb(rand(0,255),rand(0,255),rand(0,255))
 	var/image/B = image('icons/effects/letter_overlay.dmi', loc = src, icon_state = "[letter]2")
