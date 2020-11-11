@@ -7036,6 +7036,7 @@
 	},
 /area/podmode/team2/Mining)
 "Ju" = (
+/obj/table/wood/round/champagne,
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
@@ -7577,6 +7578,10 @@
 	dir = 1
 	},
 /area/podmode/spacejunk/Snackstand)
+"MJ" = (
+/obj/table/wood/round/champagne,
+/turf/simulated/floor/red/side,
+/area/podmode/team2/CentralHallway)
 "ML" = (
 /obj/cable{
 	d1 = 2;
@@ -235695,7 +235700,7 @@ ED
 ef
 ED
 Ts
-XP
+MJ
 HI
 jD
 Ux

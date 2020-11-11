@@ -303,73 +303,7 @@
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
 		H.client.screen += mode.board
-
-
 		// SHOW_TIPS(H)
-
-
-		// var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
-
-		// if (team_num == TEAM_NANOTRASEN)
-		// 	var/obj/item/card/id/pod_wars/nanotrasen/I = new/obj/item/card/id/pod_wars/nanotrasen(H)
-		// 	//commanders get a couple extra things...
-		// 	if (H.mind == commander)
-		// 		H.mind.special_role = "NanoTrasen Commander"
-		// 		I.name = "NanoTrasen Commander"
-		// 		I.assignment = "NanoTrasen Commander"
-		// 		H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
-		// 	else
-		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
-
-		// 	H.equip_if_possible(I, H.slot_wear_id)
-
-		// 	H.equip_if_possible(headset, H.slot_ears)
-		// 	H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
-		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
-		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
-		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
-		// 	H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_l_store)
-
-
-
-
-		// else if (team_num == TEAM_SYNDICATE)
-		// 	var/obj/item/card/id/pod_wars/syndicate/I = new/obj/item/card/id/pod_wars/syndicate(H)
-		// 	if (H.mind == commander)
-		// 		H.mind.special_role = "Syndicate Commander"
-		// 		I.name = "Syndicate Commander"
-		// 		I.assignment = "Syndicate Commander"
-		// 		if (prob(10))
-		// 			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
-		// 		else
-		// 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_l_store)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
-
-		// 	else
-		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
-
-		// 	H.equip_if_possible(I, H.slot_wear_id)
-		// 	H.equip_if_possible(headset, H.slot_ears)
-		// 	H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
-		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
-		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
-		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
-		// 	H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_l_store)
-
-
-		// if (headset)
-		// 	headset.set_secure_frequency("g",src.comms_frequency)
-		// 	headset.secure_classes["g"] = RADIOCL_SYNDICATE
-		// 	boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
-
-		// H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-
-
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -917,3 +851,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate
 		icon_state = "surv_machete_st"
+
+/obj/table/wood/round/champagne
+	name = "champagne table"
+	desc = "It makes champagne. Who ever said spontanious generation was false?"
+	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
+
+	New()
+		..()
+		var/turf/T
+		while (1)
+			T = get_turf(src)
+			if (!locate(to_spawn) in T.contents)
+				new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+			sleep(10 SECONDS)
+
+
+
+
