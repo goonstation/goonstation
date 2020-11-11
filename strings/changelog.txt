@@ -1,5 +1,9 @@
 
 (t)wed nov 11 20
+(u)PissOffMate18
+(p)2645
+(e)|
+(+)Added the ability to cut open fireworks as a hobo source of magnesium.
 (u)Arahimine
 (p)2654
 (e)🆕|feature
