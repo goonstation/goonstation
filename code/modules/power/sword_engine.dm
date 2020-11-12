@@ -259,9 +259,9 @@
 		updateicon()
 
 
-///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal && terminal.powernet)
-//		terminal.powernet.newavail += amount
+/obj/machinery/power/sword_engine/add_avail(var/amount)
+	if (terminal && terminal.powernet)
+		terminal.powernet.newavail += amount
 
 
 /obj/machinery/power/sword_engine/add_load(var/amount)
@@ -347,12 +347,6 @@
 				src.output = clamp(text2num(target), 0 , SEMAXOUTPUT)
 				. = TRUE
 	src.updateicon()
-
-///proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
-//	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
-//	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
-//	if (Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
-//	return rate
 
 #undef SEMAXCHARGELEVEL
 #undef SEMAXOUTPUT
