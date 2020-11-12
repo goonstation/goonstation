@@ -26,6 +26,11 @@ const icon_state_designs = {
   test: 'test',
 };
 
+let boxHeight = 0;
+let boxWidth = 0;
+let boxPosX = 0;
+let boxPosY = 0;
+
 const sanitize_text = value => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
@@ -215,34 +220,56 @@ const Stamp = (props, context) => {
   const {
     image,
     opacity,
+    active_stamp,
   } = props;
   const stamp_transform = {
     'left': image.x + 'px',
     'top': image.y + 'px',
-    'transform': 'rotate(' + image.rotate + 'turn)',
+    'transform-origin': '50% 50%',
+    'transform': 'rotate(' + image.rotate + 'deg)',
     'opacity': opacity || 1.0,
   };
   const stamp_text_transform = {
     'left': image.x + 'px',
-    'top': image.y + 20 + 'px',
-    'transform': 'rotate(' + image.rotate + 'turn)',
+    'top': image.y + 'px',
+    'height': '40px',
+    'transform': 'rotate(' + image.rotate + 'deg)',
     'opacity': opacity || 1.0,
+  };
+  const newstyle = {
+    'transform': 'rotate(' + image.rotate + 'deg)',
+  };
+  const style = {
+    'left': image.x + 'px',
+    'top': image.y + 'px',
+    'width': stampWidth + 'px',
+    'height': stampHeight+ 'px',
+    'position': 'absolute',
   };
   return (
     <Fragment>
       {!image.sprite.includes(".png") && (
         <Box
+          id={active_stamp && "stamp"}
           style={stamp_text_transform}
           className="Paper__Stamp-Text">
           {image.sprite}
         </Box>
       )}
-      {image.sprite.includes(".png") && (
+      {active_stamp && (
+        <Box
+          backgroundColor="pink"
+          style={style} />
+      )}
+      {image.sprite.includes(".png") && active_stamp && (
         <img
-          unselectable="on"
+          backgroundColor="pink"
+          id={active_stamp && "stamp"}
+          unselectable="true"
+          style={stamp_transform}
           className="Paper__Stamp"
           src={resolveAsset(image.sprite)}
-          style={stamp_transform} />
+        />
       )}
     </Fragment>
   );
@@ -292,6 +319,16 @@ export const PaperSheetView = (props, context) => {
   );
 };
 
+
+let stampBoundingBox = null;
+let stampHeight = null;
+let stampWidth = null;
+let currentWidth = null;
+let currentHeight = null;
+let widthMin = null;
+let heightMin = null;
+let widthMax = null;
+let heightMax = null;
 // again, need the states for dragging and such
 class PaperSheetStamper extends Component {
   constructor(props, context) {
@@ -299,10 +336,10 @@ class PaperSheetStamper extends Component {
     this.state = {
       x: 0,
       y: 0,
-      rotating: false,
-      heldX: 0,
-      rotate: 0,
+      rotate: 90,
+      center: [0, 0],
     };
+    this.style = null;
     this.handleMouseMove = e => {
       const pos = this.findStampPosition(e);
       if (!pos) { return; }
@@ -311,6 +348,8 @@ class PaperSheetStamper extends Component {
       this.setState({ x: pos[0], y: pos[1] });
     };
     this.handleMouseClick = e => {
+      if (e.pageY <= 30) { return; }
+      logger.log(e.pageY);
       let pos = this.findStampPosition(e);
       if (!pos) {
         pos = [
@@ -336,45 +375,62 @@ class PaperSheetStamper extends Component {
   findStampPosition(e) {
     const windowRef = document.querySelector('.Layout__content');
     if (e.shiftKey) {
-      if (!this.state.rotating) {
-        const rotating = { rotating: true };
-        this.setState(() => rotating);
+      const radians = Math.atan2(
+        e.pageX - this.state.center[0],
+        e.pageY - this.state.center[1]
+      );
 
-        const heldX = { heldX: e.pageX };
-
-        this.setState(() => heldX);
-      }
-
-      const rad = (e.pageX / 360) + this.state.rotate;
-      const circularMath = ((Math.round(rad * 10) / 10) >= 2.0) ? 0 : rad;
-      logger.log(circularMath);
+      const degreeOffset = (radians * (180 / Math.PI) * -1);
 
       // const rotate = { rotate: (this.state.heldX - (e.pageX / 360)) };
-      const rotate = { rotate: circularMath };
+      const rotate = { rotate: degreeOffset };
       this.setState(() => rotate);
 
       return;
     }
-    const borderOffset = {
-      x: 55,
-      y: 55,
-    };
-    const angulo = ((this.state.rotate > Math.PI * 0.5 && this.state.rotate < Math.PI * 1) || (this.state.rotate > Math.PI * 1.5 && this.state.rotate < Math.PI * 2))? Math.PI - this.state.rotate : this.state.rotate;
-    const yThing = Math.sin(angulo) * borderOffset["y"] + Math.cos(angulo) * borderOffset["y"];
-    const xThing = Math.sin(angulo) * borderOffset["x"] + Math.cos(angulo) * borderOffset["x"];
-    // logger.log(xThing);
-    // logger.log(clamp(e.pageY + windowRef.scrollTop, borderOffset["y"], (windowRef.clientHeight - borderOffset["y"])));
-    // logger.log(clamp(e.pageX, borderOffset["x"], (windowRef.clientWidth - borderOffset["x"])));
-    // logger.log(e.pageX);
-    const rotating = { rotating: false };
-    this.setState(() => rotating);
+
+    const stamp = document.getElementById("stamp");
+
+    stampBoundingBox = stamp.getBoundingClientRect();
+    stampHeight = stampBoundingBox.height;
+    stampWidth = stampBoundingBox.width;
+
+    const stampOffsetX = (stamp.clientWidth/ 2);
+    const stampOffsetY = (stamp.clientHeight / 2);
+
+    currentWidth = e.pageX - stampOffsetX;
+    currentHeight = (e.pageY + windowRef.scrollTop);
+
+    widthMin = stampWidth - (stampOffsetX);
+    heightMin = stampHeight - (stampOffsetY);
+
+    widthMax = (windowRef.clientWidth) - (
+      stampWidth);
+    heightMax = (windowRef.clientHeight + windowRef.scrollTop) - (
+      stampHeight);
+
+    boxWidth = stampWidth;
+    boxHeight = stampHeight;
+
     const pos = [
-      clamp(e.pageX, borderOffset["x"], (windowRef.clientWidth - borderOffset["x"])),
-      clamp(e.pageY + windowRef.scrollTop, borderOffset["y"], (windowRef.clientHeight - borderOffset["y"])),
+      clamp(currentWidth, widthMin, widthMax),
+      clamp(currentHeight, heightMin, heightMax),
     ];
+
+
+
+    boxPosX = pos[0];
+    boxPosY = pos[1];
+    // Ilogger.log([stampHeight, stampWidth]);
+
+
+
     const centerOffset = vecScale([121, 120], 0.5);
     const center = vecSubtract(pos, centerOffset);
-    return center;
+    const centerState = { center: pos };
+    this.setState(() => centerState);
+    // logger.log(e.pageY);
+    return pos;
   }
 
   componentDidMount() {
@@ -395,6 +451,13 @@ class PaperSheetStamper extends Component {
       ...rest
     } = this.props;
     const stamp_list = stamps || [];
+    this.style = {
+      'left': this.state.x + 'px',
+      'top': this.state.y + 'px',
+      'width': stampWidth + 'px',
+      'height': stampHeight+ 'px',
+      'position': 'absolute',
+    };
     const current_pos = {
       sprite: stamp_class,
       x: this.state.x,
@@ -408,6 +471,7 @@ class PaperSheetStamper extends Component {
           value={value}
           stamps={stamp_list} />
         <Stamp
+          active_stamp
           opacity={0.5} image={current_pos} />
       </Fragment>
     );
@@ -686,6 +750,7 @@ export class PaperSheet extends Component {
           ref={this.windowRef}
           scrollable>
           <Box
+            id="page"
             fitted
             fillPositionedParent>
             {decide_mode(edit_mode)}

@@ -5,24 +5,24 @@
 #define MAX_PAPER_STAMPS 30
 #define MAX_PAPER_STAMPS_OVERLAYS 4
 
-#define CLEAN_NAME list(;\
-	"Clown" = "stamp-clown",;\
-	"Denied" = "stamp-deny" ,;\
-	"Granted" = "stamp-ok",;\
-	"Head of Personnel" = "stamp-hop",;\
-	"Medical Director" = "stamp-md",;\
-	"Chief Engineer" = "stamp-ce",;\
-	"Head of Security" = "stamp-hos",;\
-	"Research Director" = "stamp-rd",;\
-	"Captain" = "stamp-cap",;\
-	"Quartermaster" = "stamp-qm",;\
-	"Security" = "stamp-law",;\
-	"Chaplain" = "stamp-chap",;\
-	"Mime" = "stamp-mime",;\
-	"Centcom" = "stamp-centcom",;\
-	"Syndicate" = "stamp-syndicate",;\
-	"Void" = "stamp-void",;\
-	"Your Name" = "stamp-name",;\
+#define CLEAN_NAME list(\
+	"Clown" = "stamp-clown",\
+	"Denied" = "stamp-deny" ,\
+	"Granted" = "stamp-ok",\
+	"Head of Personnel" = "stamp-hop",\
+	"Medical Director" = "stamp-md",\
+	"Chief Engineer" = "stamp-ce",\
+	"Head of Security" = "stamp-hos",\
+	"Research Director" = "stamp-rd",\
+	"Captain" = "stamp-cap",\
+	"Quartermaster" = "stamp-qm",\
+	"Security" = "stamp-law",\
+	"Chaplain" = "stamp-chap",\
+	"Mime" = "stamp-mime",\
+	"Centcom" = "stamp-centcom",\
+	"Syndicate" = "stamp-syndicate",\
+	"Void" = "stamp-void",\
+	"Your Name" = "stamp-name",\
 	"Current Time" = "stamp-time",)
 
 /obj/item/paper
