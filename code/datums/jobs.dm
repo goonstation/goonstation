@@ -2592,11 +2592,21 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		..()
 		if (src.slot_card)
 			M.equip_new_if_possible(src.slot_card, M.slot_wear_id)
+		
+		if (!M.abilityHolder)
+			M.abilityHolder = new /datum/abilityHolder/pod_pilot(src)
+			M.abilityHolder.owner = src
+		else if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+			var/datum/abilityHolder/composite/AH = M.abilityHolder
+			AH.addHolder(/datum/abilityHolder/pod_pilot)
 
-	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
+
+	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))
 			headset.set_secure_frequency("g",freq)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
+			headset.cant_self_remove = 0 
+			headset.cant_other_remove = 0 
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
@@ -2626,10 +2636,11 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				M.mind.special_role = mode.team_NT?.name
-				set_headset_freq(M.ears, mode.team_NT?.comms_frequency)
+				setup_headset(M.ears, mode.team_NT?.comms_frequency)
 
 		commander
 			name = "NanoTrasen Commander"
+			limit = 1
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
@@ -2665,10 +2676,11 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				M.mind.special_role = mode.team_SY?.name
-				set_headset_freq(M.ears, mode.team_SY?.comms_frequency)
+				setup_headset(M.ears, mode.team_SY?.comms_frequency)
 
 		commander
 			name = "Syndicate Commander"
+			limit = 1
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 0
