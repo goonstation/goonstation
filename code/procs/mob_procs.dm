@@ -816,9 +816,9 @@
 		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/PW = ticker.mode
-			if (locate(src.mind) in PW.team_NT.members)
+			if (src.mind.special_role == "NanoTrasen")
 				PWT_to_see = PW.team_NT
-			else if (locate(src.mind) in PW.team_SY.members)
+			else if (src.mind.special_role == "Syndicate")
 				PWT_to_see = PW.team_SY
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src

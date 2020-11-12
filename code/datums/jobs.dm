@@ -2592,15 +2592,28 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		..()
 		if (src.slot_card)
 			M.equip_new_if_possible(src.slot_card, M.slot_wear_id)
+		
+		if (!M.abilityHolder)
+			M.abilityHolder = new /datum/abilityHolder/pod_pilot(src)
+			M.abilityHolder.owner = src
+		else if (istype(M.abilityHolder, /datum/abilityHolder/composite))
+			var/datum/abilityHolder/composite/AH = M.abilityHolder
+			AH.addHolder(/datum/abilityHolder/pod_pilot)
 
-	proc/set_headset_freq(var/obj/item/device/radio/headset/headset, var/freq)
+
+	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
 		if (istype(headset))
 			headset.set_secure_frequency("g",freq)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
+			headset.cant_self_remove = 0 
+			headset.cant_other_remove = 0 
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
 		linkcolor = "#3348ff"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
+		cant_allocate_unwanted = 1
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds
@@ -2611,8 +2624,9 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_ears = /obj/item/device/radio/headset
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat/NT
-		slot_poc1 = /obj/item/spacecash/hundred
+		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
 
 		//get the pod wars mode, get the teams comms frequency
 		special_setup(var/mob/living/carbon/human/M)
@@ -2622,10 +2636,14 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				M.mind.special_role = mode.team_NT?.name
-				set_headset_freq(M.ears, mode.team_NT?.comms_frequency)
+				setup_headset(M.ears, mode.team_NT?.comms_frequency)
 
 		commander
 			name = "NanoTrasen Commander"
+			limit = 1
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
+			cant_allocate_unwanted = 0
 			slot_head = /obj/item/clothing/head/NTberet/commander
 			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
 			slot_card = /obj/item/card/id/pod_wars/nanotrasen/commander
@@ -2633,6 +2651,9 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 	syndicate
 		name = "Syndicate Pod Pilot"
 		linkcolor = "#FF0000"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
+		cant_allocate_unwanted = 1
 
 		slot_back = /obj/item/storage/backpack/syndie
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/syndicate
@@ -2644,8 +2665,9 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_ears = /obj/item/device/radio/headset
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat
-		slot_poc1 = /obj/item/spacecash/hundred
+		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete/syndicate
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -2654,10 +2676,14 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				M.mind.special_role = mode.team_SY?.name
-				set_headset_freq(M.ears, mode.team_SY?.comms_frequency)
+				setup_headset(M.ears, mode.team_SY?.comms_frequency)
 
 		commander
 			name = "Syndicate Commander"
+			limit = 1
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
+			cant_allocate_unwanted = 0
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
 			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat
 			slot_card = /obj/item/card/id/pod_wars/syndicate/commander

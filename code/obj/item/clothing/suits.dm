@@ -385,6 +385,12 @@
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
 
+/obj/item/clothing/suit/apron/botanist
+	name = "blue apron"
+	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+	icon_state = "apron-botany"
+	item_state = "apron-botany"
+
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."

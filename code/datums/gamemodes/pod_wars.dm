@@ -17,6 +17,8 @@
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
+	var/round_limit = 35 MINUTES
+	var/force_end = 0
 
 /datum/game_mode/pod_wars/announce()
 	boutput(world, "<B>The current game mode is - Pod Wars!</B>")
@@ -59,8 +61,8 @@
 
 		else
 			var/half = round(length/2)
-			team_NT.accept_players(readied_minds.Copy(1, half))
-			team_SY.accept_players(readied_minds.Copy(half+1, length))
+			team_NT.accept_players(readied_minds.Copy(1, half+1))
+			team_SY.accept_players(readied_minds.Copy(half+1, 0))
 
 	return 1
 
@@ -68,22 +70,137 @@
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
+	if(round_limit > 0)
+		SPAWN_DBG (round_limit) // this has got to end soon
+			command_alert("Something something radiation.","Emergency Update")
+			sleep(6000) // 10 minutes to clean up shop
+			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Update")
+			sleep(3000) // 5 minutes until everyone dies
+			command_alert("You may feel a slight burning sensation.", "Emergency Update")
+			sleep(10 SECONDS) // welp
+			for(var/mob/living/carbon/M in mobs)
+				M.gib()
+			force_end = 1
+
+
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
 
-	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
-	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
+//	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
+//	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
 
-	for(var/turf/T in world)
-		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid/pod_wars)) continue
+	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
+	for(var/area/podmode/asteroid/minor/A in world)
+		if(!istype(A, /area/podmode/asteroid/minor/nospawn))
+			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+				//Do the ore_picking
+				AST.randomize_ore(minor_ores)
 
-		//half chance for nothing in an asteroid, just skip.
-		if (prob(50)) continue
+	var/list/datum/ore_cluster/oreClusts = list()
+	for(var/OC in concrete_typesof(/datum/ore_cluster))
+		oreClusts += new OC
 
-		var/turf/simulated/wall/asteroid/pod_wars/AST = T
-		//Do the ore_picking
-		AST.randomize_ore(weightedprob(types, weights))
-
+	for(var/area/podmode/asteroid/major/A in world)
+		var/datum/ore_cluster/OC = pick(oreClusts)
+		OC.quantity -= 1
+		if(OC.quantity <= 0) oreClusts -= OC
+		//oreClusts -= OC
+		for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+			if(prob(OC.fillerprob))
+				AST.randomize_ore(minor_ores)
+			else
+				AST.randomize_ore(OC)
+			AST.hardness += OC.hardness_mod
 	return 1
+
+//////////////////
+///////////////pod_wars asteroids
+/turf/simulated/wall/asteroid/pod_wars
+	fullbright = 1
+	name = "asteroid"
+	desc = "It's asteroid material."
+	hardness = 1
+	default_ore = /obj/item/raw_material/rock
+
+	// varied layers
+
+	New()
+		..()
+
+	//Don't think this can go in new.
+	proc/randomize_ore(var/datum/ore_cluster/OC)
+		if(!prob(OC.density)) return
+
+		var/ore_name
+		ore_name = weighted_pick(OC.ore_types + (((length(OC.hiddenores) && !(locate(/turf/space) in range(1, src)))) ? OC.hiddenores : list()))
+
+		//stolen from Turfspawn_Asteroid_SeedSpecificOre
+		var/datum/ore/O = mining_controls?.get_ore_from_string(ore_name)
+		src.ore = O
+		src.hardness += O.hardness_mod
+		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
+		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
+		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
+		ore_overlay.pixel_x += rand(-6,6)
+		ore_overlay.pixel_y += rand(-6,6)
+		src.overlays += ore_overlay
+
+		if(prob(OC.gem_prob))
+			add_event(/datum/ore/event/gem, O)
+
+	proc/add_event(var/list/datum/ore/event/new_event, var/datum/ore/O)
+		var/datum/ore/event/E = new new_event
+		E.set_up(O)
+		src.set_event(E)
+
+ABSTRACT_TYPE(/datum/ore_cluster)
+/datum/ore_cluster
+	var/list/ore_types
+	var/density = 40
+	var/hardness_mod = 0
+	var/list/hiddenores
+	var/quantity = 1
+	var/fillerprob = 0
+	var/gem_prob = 0
+
+	minor
+		ore_types = list("mauxite" = 100, "pharosium" = 100, "molitz" = 100, "char" = 125, "ice" = 55, "cobryl" = 55, "bohrum" = 25, "claretine" = 25, "viscerite" = 55, "koshmarite" = 40, "syreline" = 20, "gold" = 20, "plasmastone" = 15, "cerenkite" = 20, "miraclium" = 10, "nanite cluster" = 1, "erebite" = 5, "starstone" = 2)
+		quantity = 15
+		gem_prob = 10
+
+	pharosium
+		ore_types = list("pharosium" = 100, "gold" = 5)
+		quantity = 2
+		fillerprob = 10
+
+	starstone
+		ore_types = list( "char" = 95)
+		hiddenores = list("starstone" = 5)
+		density = 40
+		hardness_mod = 3
+
+	metal
+		ore_types = list("mauxite" = 100, "cobryl" = 30, "bohrum" = 50, "syreline" = 10, "gold" = 5, "pharosium" = 20)
+		hiddenores = list("nanite_cluster" = 2)
+		quantity = 10
+		fillerprob = 5
+
+	rads
+		ore_types = list("cerenkite" = 50, "plasmastone" = 40)
+		hiddenores = list("erebite" = 10)
+		density = 40
+		quantity = 2
+
+	shitty_comet
+		ore_types = list("ice" = 100)
+		hiddenores = list("miraclium" = 100)
+		density = 50
+		quantity = 2
+
+	crystal
+		ore_types = list("molitz" = 100, "plasmastone" = 10)
+		hiddenores = list("erebite" = 1)
+		gem_prob = 5
+		quantity = 3
 
 //for testing, can remove when sure this works - Kyle
 /datum/game_mode/pod_wars/proc/test_point_change(var/team as num, var/amt as num)
@@ -107,12 +224,11 @@
 	offset ++
 
 	if (team == team_NT)
+		board?.bar_NT.points = team.points
 		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
 	else
+		board?.bar_SY.points = team.points
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
-
-	if (team.points <= 0)
-		check_finished()
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
@@ -156,7 +272,9 @@
 
 
 /datum/game_mode/pod_wars/check_finished()
-	if (team_NT.points < 0 || team_SY.points < 0)
+	if (force_end)
+		return 1
+	if (team_NT.points <= 0 || team_SY.points <= 0)
 		return 1
 	if (team_NT.points > team_NT.max_points || team_SY.points > team_SY.max_points)
 		return 1
@@ -201,7 +319,7 @@
 			base_area = /area/podmode/team1 //area north, NT crew
 #endif
 		else if (team_num == TEAM_SYNDICATE)
-			name = "The Syndicate"
+			name = "Syndicate"
 #ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/podmode/team2 //area south, Syndicate crew
 #endif
@@ -293,7 +411,7 @@
 
 		else if (istype(H))
 			H.Equip_Job_Slots(JOB)
-			H.equip_new_if_possible(JOB.slot_card, H.slot_wear_id)
+			JOB.special_setup(H)
 
 		if (!ishuman(H))
 			boutput(H, "something went wrong. Horribly wrong.")
@@ -302,74 +420,8 @@
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
-		H.client.screen += mode.board
-
-
+		// H.client.screen += mode.board
 		// SHOW_TIPS(H)
-
-
-		// var/obj/item/device/radio/headset/headset = new /obj/item/device/radio/headset(H)
-
-		// if (team_num == TEAM_NANOTRASEN)
-		// 	var/obj/item/card/id/pod_wars/nanotrasen/I = new/obj/item/card/id/pod_wars/nanotrasen(H)
-		// 	//commanders get a couple extra things...
-		// 	if (H.mind == commander)
-		// 		H.mind.special_role = "NanoTrasen Commander"
-		// 		I.name = "NanoTrasen Commander"
-		// 		I.assignment = "NanoTrasen Commander"
-		// 		H.equip_if_possible(new /obj/item/clothing/head/NTberet/commander(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot/commander(H), H.slot_wear_suit)
-		// 	else
-		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/ntso(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/nanotrasen/pilot(H), H.slot_wear_suit)
-
-		// 	H.equip_if_possible(I, H.slot_wear_id)
-
-		// 	H.equip_if_possible(headset, H.slot_ears)
-		// 	H.equip_if_possible(new /obj/item/storage/backpack/NT(H), H.slot_back)
-		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/turds(H), H.slot_w_uniform)
-		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat/NT(H), H.slot_gloves)
-		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/nanotrasen(H), H.slot_belt)
-		// 	H.equip_if_possible(new /obj/item/survival_machete(H), H.slot_l_store)
-
-
-
-
-		// else if (team_num == TEAM_SYNDICATE)
-		// 	var/obj/item/card/id/pod_wars/syndicate/I = new/obj/item/card/id/pod_wars/syndicate(H)
-		// 	if (H.mind == commander)
-		// 		H.mind.special_role = "Syndicate Commander"
-		// 		I.name = "Syndicate Commander"
-		// 		I.assignment = "Syndicate Commander"
-		// 		if (prob(10))
-		// 			H.equip_if_possible(new /obj/item/clothing/head/bighat/syndicate(H), H.slot_l_store)
-		// 		else
-		// 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_l_store)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
-
-		// 	else
-		// 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist(H), H.slot_head)
-		// 		H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate(H), H.slot_wear_suit)
-
-		// 	H.equip_if_possible(I, H.slot_wear_id)
-		// 	H.equip_if_possible(headset, H.slot_ears)
-		// 	H.equip_if_possible(new /obj/item/storage/backpack/syndie(H), H.slot_back)
-		// 	H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
-		// 	H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
-		// 	H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-		// 	H.equip_if_possible(new /obj/item/gun/energy/blaster_pod_wars/syndicate(H), H.slot_belt)
-		// 	H.equip_if_possible(new /obj/item/survival_machete/syndicate(H), H.slot_l_store)
-
-
-		// if (headset)
-		// 	headset.set_secure_frequency("g",src.comms_frequency)
-		// 	headset.secure_classes["g"] = RADIOCL_SYNDICATE
-		// 	boutput(H, "Your headset has been tuned to your crew's frequency. Prefix a message with :g to communicate on this channel.")
-
-		// H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-
-
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -490,6 +542,9 @@
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
+
+	ex_act(severity)
+		return
 
 	disposing()
 		..()
@@ -861,36 +916,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				equip_mining()
 				..()
 
-//////////////////
-///////////////pod_wars asteroids
-
-
-/turf/simulated/wall/asteroid/pod_wars
-	fullbright = 1
-	name = "asteroid"
-	desc = "It's asteroid material."
-	hardness = 1
-	default_ore = /obj/item/raw_material/rock
-
-	// varied layers
-
-	New()
-		..()
-
-	//Don't think this can go in new.
-	proc/randomize_ore(var/ore_name as text)
-		//stolen from Turfspawn_Asteroid_SeedSpecificOre
-		var/datum/ore/O = mining_controls?.get_ore_from_string(ore_name)
-		src.ore = O
-		src.hardness += O.hardness_mod
-		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-		ore_overlay.pixel_x += rand(-6,6)
-		ore_overlay.pixel_y += rand(-6,6)
-		src.overlays += ore_overlay
-
-
 //////////survival_machete//////////////
 /obj/item/survival_machete
 	name = "pilot survival machete"
@@ -917,3 +942,224 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate
 		icon_state = "surv_machete_st"
+
+/obj/table/wood/round/champagne
+	name = "champagne table"
+	desc = "It makes champagne. Who ever said spontanious generation was false?"
+	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
+
+	New()
+		..()
+		var/turf/T
+		while (1)
+			T = get_turf(src)
+			if (!locate(to_spawn) in T.contents)
+				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+				champers.pixel_y = 10
+			sleep(10 SECONDS)
+
+
+
+
+/obj/machinery/manufacturer/pod_wars
+	name = "Ship Component Fabricator"
+	desc = "A manufacturing unit calibrated to produce parts for ships."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	free_resource_amt = 50
+	free_resources = list(
+		/obj/item/material_piece/mauxite,
+		/obj/item/material_piece/pharosium,
+		/obj/item/material_piece/molitz
+	)
+	available = list(
+		/datum/manufacture/putt/engine,
+		/datum/manufacture/putt/boards,
+		/datum/manufacture/putt/control,
+		/datum/manufacture/putt/parts,
+		/datum/manufacture/pod/engine,
+		/datum/manufacture/pod/boards,
+		/datum/manufacture/pod/armor_light,
+		/datum/manufacture/pod/armor_heavy,
+		/datum/manufacture/pod/armor_industrial,
+		/datum/manufacture/pod/control,
+		/datum/manufacture/pod/parts,
+		/datum/manufacture/cargohold,
+		/datum/manufacture/orescoop,
+		/datum/manufacture/conclave,
+		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining/drill,
+		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/engine2,
+		/datum/manufacture/engine3,
+		/datum/manufacture/pod/lock
+	)
+
+/datum/manufacture/pod_wars/lock	//
+	name = "Cleaver"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
+	time = 1 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/////////////////////////////////////////////////
+///////////////////ABILITY HOLDER////////////////
+/////////////////////////////////////////////////
+
+//stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
+/obj/screen/ability/topBar/pod_pilot
+	clicked(params)
+		var/datum/targetable/pod_pilot/spell = owner
+		var/datum/abilityHolder/holder = owner.holder
+
+		if (!istype(spell))
+			return
+		if (!spell.holder)
+			return
+
+		if(params["shift"] && params["ctrl"])
+			if(owner.waiting_for_hotkey)
+				holder.cancel_action_binding()
+				return
+			else
+				owner.waiting_for_hotkey = 1
+				src.updateIcon()
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				return
+
+		if (!isturf(owner.holder.owner.loc))
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			return
+		if (spell.targeted && usr.targeting_ability == owner)
+			usr.targeting_ability = null
+			usr.update_cursor()
+			return
+		if (spell.targeted)
+			if (world.time < spell.last_cast)
+				return
+			owner.holder.owner.targeting_ability = owner
+			owner.holder.owner.update_cursor()
+		else
+			SPAWN_DBG(0)
+				spell.handleCast()
+		return
+
+
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
+
+/datum/abilityHolder/pod_pilot
+	usesPoints = 0
+	regenRate = 0
+	tabName = "pod_pilot"
+	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	points = 0
+	pointName = "points"
+
+	New()
+		..()
+		add_all_abilities()
+
+
+	disposing()
+		..()
+
+	onLife(var/mult = 1)
+		if(..()) return
+
+	proc/add_all_abilities()
+		src.addAbility(/datum/targetable/pod_pilot/scoreboard)
+
+/datum/targetable/pod_pilot
+	icon = 'icons/mob/pod_pilot_abilities.dmi'
+	icon_state = "template"
+	cooldown = 0
+	last_cast = 0
+	pointCost = 0
+	preferred_holder_type = /datum/abilityHolder/pod_pilot
+	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
+	var/not_when_handcuffed = 0
+	var/unlock_message = null
+	var/can_cast_anytime = 0		//while alive
+
+	New()
+		var/obj/screen/ability/topBar/pod_pilot/B = new /obj/screen/ability/topBar/pod_pilot(null)
+		B.icon = src.icon
+		B.icon_state = src.icon_state
+		B.owner = src
+		B.name = src.name
+		B.desc = src.desc
+		src.object = B
+		return
+
+	onAttach(var/datum/abilityHolder/H)
+		..()
+		if (src.unlock_message && src.holder && src.holder.owner)
+			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+		return
+
+	updateObject()
+		..()
+		if (!src.object)
+			src.object = new /obj/screen/ability/topBar/pod_pilot()
+			object.icon = src.icon
+			object.owner = src
+		if (src.last_cast > world.time)
+			var/pttxt = ""
+			if (pointCost)
+				pttxt = " \[[pointCost]\]"
+			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.icon_state = src.icon_state + "_cd"
+		else
+			var/pttxt = ""
+			if (pointCost)
+				pttxt = " \[[pointCost]\]"
+			object.name = "[src.name][pttxt]"
+			object.icon_state = src.icon_state
+		return
+
+	castcheck()
+		if (!holder)
+			return 0
+		var/mob/living/M = holder.owner
+		if (!M)
+			return 0
+		if (!(iscarbon(M) || ismobcritter(M)))
+			boutput(M, __red("You cannot use any powers in your current form."))
+			return 0
+		if (can_cast_anytime && !isdead(M))
+			return 1
+		if (!can_act(M, 0))
+			boutput(M, __red("You can't use this ability while incapacitated!"))
+			return 0
+
+		if (src.not_when_handcuffed && M.restrained())
+			boutput(M, __red("You can't use this ability when restrained!"))
+			return 0
+
+		return 1
+
+	cast(atom/target)
+		. = ..()
+		actions.interrupt(holder.owner, INTERRUPT_ACT)
+		return
+
+/datum/targetable/pod_pilot/scoreboard
+	name = "scoreboard"
+	desc = "How many scores do we have?"
+	icon = 'icons/mob/pod_pilot_abilities.dmi'
+	icon_state = "empty"
+	targeted = 0
+	cooldown = 0
+	special_screen_loc = "NORTH,CENTER-2"
+
+	onAttach(var/datum/abilityHolder/H)
+		object.mouse_opacity = 0
+		// object.maptext_y = -32
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			object.vis_contents += mode.board
+		return
