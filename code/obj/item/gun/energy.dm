@@ -1524,7 +1524,7 @@
 
 /obj/item/gun/energy/taser_rifle
 	name = "taser assault rifle"
-	desc = "Sometimes, you gotta bring out the big guns"
+	desc = "Sometimes, you gotta bring out the big guns."
 	icon_state = "taser_rifle"
 	uses_multiple_icon_states = 1
 	item_state = "taser_rifle"
