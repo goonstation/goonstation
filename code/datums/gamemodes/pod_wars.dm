@@ -61,8 +61,8 @@
 
 		else
 			var/half = round(length/2)
-			team_NT.accept_players(readied_minds.Copy(1, half))
-			team_SY.accept_players(readied_minds.Copy(half+1, length))
+			team_NT.accept_players(readied_minds.Copy(1, half+1))
+			team_SY.accept_players(readied_minds.Copy(half+1, 0))
 
 	return 1
 
