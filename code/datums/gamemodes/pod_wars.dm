@@ -165,6 +165,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	minor
 		ore_types = list("mauxite" = 100, "pharosium" = 100, "molitz" = 100, "char" = 125, "ice" = 55, "cobryl" = 55, "bohrum" = 25, "claretine" = 25, "viscerite" = 55, "koshmarite" = 40, "syreline" = 20, "gold" = 20, "plasmastone" = 15, "cerenkite" = 20, "miraclium" = 10, "nanite cluster" = 1, "erebite" = 5, "starstone" = 2)
 		quantity = 15
+		gem_prob = 10
 
 	pharosium
 		ore_types = list("pharosium" = 100, "gold" = 5)
