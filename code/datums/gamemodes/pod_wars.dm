@@ -17,7 +17,7 @@
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
-	var/round_limit = 35 MIUNTES
+	var/round_limit = 35 MINUTES
 	var/force_end = 0
 
 /datum/game_mode/pod_wars/announce()
