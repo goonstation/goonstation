@@ -17,6 +17,8 @@
 	var/datum/pod_wars_team/team_SY
 
 	var/obj/screen/score_board/board
+	var/round_limit = 35 MIUNTES
+	var/force_end = 0
 
 /datum/game_mode/pod_wars/announce()
 	boutput(world, "<B>The current game mode is - Pod Wars!</B>")
@@ -67,6 +69,19 @@
 /datum/game_mode/pod_wars/post_setup()
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
+
+	if(round_limit > 0)
+		SPAWN_DBG (round_limit) // this has got to end soon
+			command_alert("Something something radiation.","Emergency Update")
+			sleep(6000) // 10 minutes to clean up shop
+			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Update")
+			sleep(3000) // 5 minutes until everyone dies
+			command_alert("You may feel a slight burning sensation.", "Emergency Update")
+			sleep(10 SECONDS) // welp
+			for(var/mob/living/carbon/M in mobs)
+				M.gib()
+			force_end = 1
+
 
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
 
@@ -155,6 +170,8 @@
 
 
 /datum/game_mode/pod_wars/check_finished()
+	if (force_end)
+		return 1
 	if (team_NT.points <= 0 || team_SY.points <= 0)
 		return 1
 	if (team_NT.points > team_NT.max_points || team_SY.points > team_SY.max_points)
