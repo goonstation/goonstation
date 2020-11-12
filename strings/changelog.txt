@@ -1,4 +1,27 @@
 
+(t)wed nov 11 20
+(u)Jan.antilles
+(p)2599
+(e)🎨|sprites
+(+)Replaced sprites for the salt and pepper shakers, and added new sprites for the GardenGear vending machine and the JaniTech vending machine.
+(u)CodeDude
+(p)2639
+(e)🎨|sprites
+(*)Added a new level 5 Botanist job reward, the blue apron.
+(t)tue nov 10 20
+(u)Erinexx, Flaborized, and Sovexe
+(p)2631
+(e)🆕🎨|feature, sprites
+(*)New sprites for beakers, flasks, fountain jugs, and the chemicompiler made by Erinexx and touched up by Flaborized.
+(t)mon nov 09 20
+(u)Jawns
+(p)2597
+(e)🐛🗺|bug, mapping
+(+)Upgraded escape pod portal generator teleports you to the correct escape shuttle
+(u)Carbadox
+(p)2613
+(e)🆕|feature
+(*)Added a rubber hammer as the Clowns level 10 job reward
 (t)sun nov 08 20
 (u)Arahimine
 (p)2501
