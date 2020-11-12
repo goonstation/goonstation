@@ -107,12 +107,11 @@
 	offset ++
 
 	if (team == team_NT)
+		board?.bar_NT.points = team.points
 		animate(board.bar_NT, transform = M1, pixel_x = offset, time = 10)
 	else
+		board?.bar_SY.points = team.points
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
-
-	if (team.points <= 0)
-		check_finished()
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
@@ -156,7 +155,7 @@
 
 
 /datum/game_mode/pod_wars/check_finished()
-	if (team_NT.points < 0 || team_SY.points < 0)
+	if (team_NT.points <= 0 || team_SY.points <= 0)
 		return 1
 	if (team_NT.points > team_NT.max_points || team_SY.points > team_SY.max_points)
 		return 1
@@ -201,7 +200,7 @@
 			base_area = /area/podmode/team1 //area north, NT crew
 #endif
 		else if (team_num == TEAM_SYNDICATE)
-			name = "The Syndicate"
+			name = "Syndicate"
 #ifdef MAP_OVERRIDE_POD_WARS
 			base_area = /area/podmode/team2 //area south, Syndicate crew
 #endif
@@ -424,6 +423,9 @@
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
+
+	ex_act(severity)
+		return
 
 	disposing()
 		..()
