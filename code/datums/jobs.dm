@@ -2601,6 +2601,8 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
 		linkcolor = "#3348ff"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
 		cant_allocate_unwanted = 1
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
@@ -2627,6 +2629,8 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 
 		commander
 			name = "NanoTrasen Commander"
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
 			cant_allocate_unwanted = 0
 			slot_head = /obj/item/clothing/head/NTberet/commander
 			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
@@ -2635,6 +2639,8 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 	syndicate
 		name = "Syndicate Pod Pilot"
 		linkcolor = "#FF0000"
+		no_jobban_from_this_job = 1
+		low_priority_job = 1
 		cant_allocate_unwanted = 1
 
 		slot_back = /obj/item/storage/backpack/syndie
@@ -2661,6 +2667,8 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 
 		commander
 			name = "Syndicate Commander"
+			no_jobban_from_this_job = 0
+			high_priority_job = 1
 			cant_allocate_unwanted = 0
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
 			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat
