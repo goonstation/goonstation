@@ -567,7 +567,8 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/storage/box/record/radio/host/New()
 	..()
-	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE).Copy()
+	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
+	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
 	for (var/i = 1, i < 8, i++)
 		var/obj/item/record/R = pick(possibilities)
 		new R(src)
