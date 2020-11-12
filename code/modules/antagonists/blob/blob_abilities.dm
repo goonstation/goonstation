@@ -1,5 +1,4 @@
 // TODO: merge this with the new ability system.
-
 /datum/blob_ability
 	var/name = null
 	var/desc = null
@@ -248,6 +247,7 @@
 
 		if (!owner.tutorial)
 			//do a little "blobsplosion"
+		//sound and sound code additions by retkid#9135, coding assitance by pali#0439 and Paul#7955
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
 		playsound(T, 'sound/voice/blob/blob23.ogg', 50, 1)
@@ -259,9 +259,6 @@
 //blob23=deploy, building new nucleus
 //blob01-06=spread (1/6th chance each
 //blob16-18=removing blob stuff
-//attack=blob12-13
-//build defenses=15-16
-//build lipids=blob01-5
 //succing someone into blob: 24, 25, 27 and when completed do 26
 //blob7,9 point sounds (every 10-100, cant decide which)
 //blob9 every time you gain an EVO point
@@ -1120,11 +1117,18 @@
 		src.evo_point_cost = round(src.evo_point_cost * src.scaling_cost_mult)
 		src.evo_point_cost += scaling_cost_add
 
+
 	proc/take_upgrade()
 		if (!istype(owner))
 			return 1
 		if (!tutorial_check())
 			return 1
+			if (prob(5))
+				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
+			else if (prob(10))
+				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
+			else if (prob(10))
+				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 		if (!(src in owner.upgrades))
 			owner.upgrades += src
 		if (repeatable > 0)
