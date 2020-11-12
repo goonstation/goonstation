@@ -18730,11 +18730,6 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "aQJ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/rack,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/breath,
@@ -24515,10 +24510,10 @@
 /area/station/crew_quarters/barber_shop)
 "bfo" = (
 /obj/cable/reinforced{
-	icon_state = "4-8-thick"
+	icon_state = "1-4-thick"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/shuttle/sea_elevator_room)
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "bfp" = (
 /turf/space/fluid,
 /area/flock_trader)
@@ -45601,18 +45596,14 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = NORTH
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgh" = (
 /obj/grille/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = WEST
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgi" = (
 /obj/machinery/light/incandescent/greenish,
@@ -45632,9 +45623,7 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = EAST
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,
@@ -45909,8 +45898,9 @@
 /area/station/maintenance/inner/central)
 "cgV" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/cable,
 /obj/cable/reinforced{
 	icon_state = "0-4-thick"
 	},
@@ -46510,11 +46500,17 @@
 /area/station/maintenance/inner/central)
 "ciX" = (
 /obj/cable/reinforced{
-	icon_state = "1-4-thick"
+	icon_state = "4-8-thick"
+	},
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "ciY" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
@@ -46527,9 +46523,6 @@
 "cja" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
-	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -46580,7 +46573,8 @@
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -46824,11 +46818,13 @@
 /area/station/maintenance/inner/central)
 "cjT" = (
 /obj/cable/reinforced{
-	icon_state = "1-2-thick"
+	icon_state = "4-8-thick"
 	},
-/obj/machinery/light/small/floor/blueish,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/central)
+/area/shuttle/sea_elevator_room)
 "cjU" = (
 /obj/critter/roach,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
@@ -47605,6 +47601,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dCo" = (
+/obj/cable/reinforced{
+	icon_state = "2-8-thick"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47619,6 +47621,12 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"fQs" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47800,6 +47808,20 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"qWD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
+"rBz" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/obj/machinery/drainage/big,
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -85833,9 +85855,9 @@ ciZ
 ciZ
 cgS
 ciL
-ciL
-cjT
-ciX
+bfo
+cjR
+ciW
 ciW
 cjR
 ciW
@@ -86135,9 +86157,9 @@ cga
 cga
 cgZ
 ciM
+ciX
 ciM
 ciM
-cja
 ciM
 ciM
 ciM
@@ -86437,9 +86459,9 @@ aCD
 aCD
 aCD
 cjR
-ciW
+cja
 aCD
-cjf
+aCD
 aCD
 aCD
 aCD
@@ -86739,9 +86761,9 @@ aqn
 aqn
 chd
 ciW
-ciW
+cja
 chd
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87041,9 +87063,9 @@ aqn
 aqn
 chd
 ciW
-cjR
+cjf
 chd
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87343,9 +87365,9 @@ aqn
 aqn
 aLV
 aaM
-aaM
+cjT
 aLV
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87645,9 +87667,9 @@ aqn
 aqn
 aLV
 acJ
-cfY
+rBz
 aLV
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87947,9 +87969,9 @@ aqn
 aqn
 aLV
 aaM
-aaM
+cjT
 aLV
-bfo
+aLV
 aLV
 aLV
 aLV
@@ -88551,9 +88573,9 @@ aqn
 ciS
 cjx
 cgY
-acK
-cgb
-cfU
+dCo
+qWD
+fQs
 cfR
 cgf
 cgh
