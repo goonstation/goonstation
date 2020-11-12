@@ -2614,8 +2614,9 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_ears = /obj/item/device/radio/headset
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat/NT
-		slot_poc1 = /obj/item/spacecash/hundred
+		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
 
 		//get the pod wars mode, get the teams comms frequency
 		special_setup(var/mob/living/carbon/human/M)
@@ -2653,8 +2654,9 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		slot_ears = /obj/item/device/radio/headset
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat
-		slot_poc1 = /obj/item/spacecash/hundred
+		slot_poc1 = /obj/item/tank/emergency_oxygen
 		slot_poc2 = /obj/item/survival_machete/syndicate
+		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
