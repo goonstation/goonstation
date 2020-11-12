@@ -475,7 +475,9 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/tomato,
 /datum/figure_info/zooblarskrippus,
 /datum/figure_info/vivi,
-/datum/figure_info/giggles
+/datum/figure_info/giggles,
+/datum/figure_info/mavericksabre,
+/datum/figure_info/whitneystingray
 )
 
 /datum/figure_info
@@ -864,6 +866,14 @@ var/list/figure_patreon_rarity = list(\
 	giggles
 		name = "\improper Giggles"
 		icon_state = "giggles"
+
+	mavericksabre
+		name = "\improper Maverick Sabre"
+		icon_state = "mavericksabre"
+
+	whitneystingray
+		name = "\improper Whitney Stingray"
+		icon_state = "whitneystingray"
 
 #ifdef XMAS
 	santa
