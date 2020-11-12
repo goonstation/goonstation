@@ -212,7 +212,7 @@
 	var/spam_flag = 0
 
 /obj/item/toy/plush/small/arthur/attack_hand(mob/user as mob)
-	if (spam_flag < world.time)
+	if (user == src.loc && spam_flag < world.time)
 		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 		spam_flag = world.time + 2 SECONDS
