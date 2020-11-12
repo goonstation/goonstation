@@ -954,7 +954,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		while (1)
 			T = get_turf(src)
 			if (!locate(to_spawn) in T.contents)
-				new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+				champers.pixel_y = 10
 			sleep(10 SECONDS)
 
 
