@@ -120,7 +120,7 @@ atom/movable/proc/set_pos_px(px, py)
 		src.vx = dx / dr * src.velocity
 		src.vy = dy / dr * src.velocity
 
-		src.dir = get_dir_adv(src, target)
+		src.set_dir(get_dir_adv(src, target))
 
 		//that's it
 

@@ -32,7 +32,7 @@
 				for(var/turf/T in block(A, B))
 					var/atom/at = T
 					T.ReplaceWith(walltype, keep_old_material=0, force=1)
-					at.dir = holder.dir
+					at.set_dir(holder.dir)
 					blink(get_turf(at))
 					new /area/adventure(at)
 					reset_lum(at)
@@ -55,7 +55,7 @@
 					else
 						C = locate(tx, ty, tz)
 						C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.dir = WEST
+					C.set_dir(WEST)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -69,7 +69,7 @@
 					else
 						C = locate(tx, ty, tz)
 						C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.dir = EAST
+					C.set_dir(EAST)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -84,7 +84,7 @@
 					else
 						C = locate(tx, ty, tz)
 						C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.dir = SOUTH
+					C.set_dir(SOUTH)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -98,7 +98,7 @@
 					else
 						C = locate(tx, ty, tz)
 						C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.dir = NORTH
+					C.set_dir(NORTH)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -120,7 +120,7 @@
 				else
 					C = locate(tx, ty, tz)
 					C.ReplaceWith(walltype, keep_old_material=0, force=1)
-				C.dir = SOUTHWEST
+				C.set_dir(SOUTHWEST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -142,7 +142,7 @@
 				else
 					C = locate(tx, ty, tz)
 					C.ReplaceWith(walltype, keep_old_material=0, force=1)
-				C.dir = SOUTHEAST
+				C.set_dir(SOUTHEAST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -164,7 +164,7 @@
 				else
 					C = locate(tx, ty, tz)
 					C.ReplaceWith(walltype, keep_old_material=0, force=1)
-				C.dir = NORTHWEST
+				C.set_dir(NORTHWEST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -186,7 +186,7 @@
 				else
 					C = locate(tx, ty, tz)
 					C.ReplaceWith(walltype, keep_old_material=0, force=1)
-				C.dir = NORTHEAST
+				C.set_dir(NORTHEAST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -197,7 +197,7 @@
 				for(var/turf/T in block(Q, B))
 					C = T
 					C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.dir = holder.dir
+					C.set_dir(holder.dir)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)

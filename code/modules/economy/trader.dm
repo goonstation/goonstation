@@ -1039,6 +1039,7 @@
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
+		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		#if ASS_JAM
 		src.goods_sell += new /datum/commodity/screamshoes(src)

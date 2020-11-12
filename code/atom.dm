@@ -298,6 +298,13 @@
 	src.icon_state = new_state
 	signal_event("icon_updated")
 
+/atom/proc/set_dir(var/new_dir)
+#ifdef COMSIG_ATOM_DIR_CHANGED
+	if (src.dir != new_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGED, src.dir, new_dir)
+#endif
+	src.dir = new_dir
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -569,6 +576,13 @@
 			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 				G.shoot()
 	return
+
+/atom/movable/set_dir(new_dir)
+	..()
+	if(src.medium_lights)
+		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist)
 

@@ -201,6 +201,21 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You blink and your watering can seems different...")
 
+/datum/jobXpReward/botanist/apron
+	name = "Blue apron"
+	desc = "An apron to protect yourself from any workplace spills and messes."
+	required_levels = list("Botanist"=5)
+	icon_state
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "The apron pops into existance!")
+		var/obj/item/I = new/obj/item/clothing/suit/apron/botanist()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
 /datum/jobXpReward/botanist/wateringcan/weed
 	name = "Weed Watering Can"
 	desc = "A Watering can with the likeness of a certain plant on it. Seems the same as normal otherwise..."

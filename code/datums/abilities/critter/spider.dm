@@ -111,7 +111,7 @@
 				if (prob(30))
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 					"<span class='combat'><b>You bite [MT]!</b></span>")
-				holder.owner.dir = pick(cardinal)
+				holder.owner.set_dir(pick(cardinal))
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)
@@ -329,7 +329,7 @@
 					MT.TakeDamageAccountArmor("All", rand(5,8), 0, 0, DAMAGE_STAB)
 				holder.owner.visible_message("<span class='combat'><b>[holder.owner] stomps on [MT]!</b></span>",\
 				"<span class='combat'><b>You stomp on [MT]!</b></span>")
-				holder.owner.dir = pick(cardinal)
+				holder.owner.set_dir(pick(cardinal))
 				holder.owner.pixel_x = rand(-2,2) * 2
 				holder.owner.pixel_y = rand(-2,2) * 2
 				sleep(0.4 SECONDS)

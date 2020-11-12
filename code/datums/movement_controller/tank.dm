@@ -85,7 +85,7 @@
 				rot = (rot*0.5) + ((velocity_max/velocity_magnitude) * (rot*0.5)) //you turn a little faster when you're going fast with tires. is this too weird?
 
 		if (next_rot <= world.time && rot)
-			owner.dir = turn(owner.dir,45 * (rot > 0 ? -1 : 1)  * ((reverse_gear && !can_turn_while_parked) ? -1 : 1))
+			owner.set_dir(turn(owner.dir,45 * (rot > 0 ? -1 : 1)  * ((reverse_gear && !can_turn_while_parked) ? -1 : 1)))
 			owner.facing = owner.dir
 			owner.flying = owner.dir
 			next_rot = world.time + abs(rot)
@@ -146,7 +146,7 @@
 
 			step(owner,(reverse_gear ? turn(velocity_dir,180) : velocity_dir))
 			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
-			owner.dir = owner.facing
+			owner.set_dir(owner.facing)
 			if (owner.loc != target_turf)
 				velocity_magnitude = 0
 				//boutput(world,"[src.owner] crashed?")
@@ -162,8 +162,8 @@
 		return min(delay, next_rot-world.time)
 
 	update_owner_dir(var/atom/movable/ship) //after move, update ddir
-		if (owner?.flying && owner.facing != owner.flying)
-			owner.dir = owner.facing
+		if (owner.flying && owner.facing != owner.flying)
+			owner.set_dir(owner.facing)
 
 	hotkey(mob/user, name)
 		switch (name)

@@ -92,6 +92,7 @@
 	module_research = list("cuisine" = 6)
 	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
+	var/has_cigs = 0
 
 	var/use_bite_mask = 1
 	var/current_mask = 5

@@ -410,7 +410,7 @@
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
-			dir = get_step_towards(src,ai_target)
+			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else
 			//step_towards(src, ai_target)

@@ -279,7 +279,7 @@ proc/goldsnap(var/mob/user)
 	sleep(1 SECOND)
 	boutput(user, "<span class='alert'><B>Everything around you turns to gold!</B></span>")
 	var/turf/T = get_turf(user)
-	user.dir = SOUTH
+	user.set_dir(SOUTH)
 	user:become_gold_statue()
 	for(var/turf/G in range(10, T))
 		G.setMaterial(getMaterial("gold"))
