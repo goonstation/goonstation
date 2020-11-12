@@ -576,10 +576,10 @@ a.latejoin-card:hover {
 
 			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
 				// for(var/datum/job/pod_wars/syndicate/J in job_controls.staple_jobs)
-				dat += LateJoinLink(new /datum/job/pod_wars/nanotrasen)
+				dat += LateJoinLink(new /datum/job/pod_wars/syndicate)
 			else
 				// for(var/datum/job/pod_wars/nanotrasen/J in job_controls.staple_jobs)
-				dat += LateJoinLink(new /datum/job/pod_wars/syndicate)
+				dat += LateJoinLink(new /datum/job/pod_wars/nanotrasen)
 
 			return
 		else
