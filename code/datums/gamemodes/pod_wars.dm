@@ -85,20 +85,121 @@
 
 /datum/game_mode/pod_wars/proc/setup_asteroid_ores()
 
-	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
-	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
+//	var/list/types = list("mauxite", "pharosium", "molitz", "char", "ice", "cobryl", "bohrum", "claretine", "viscerite", "koshmarite", "syreline", "gold", "plasmastone", "cerenkite", "miraclium", "nanite cluster", "erebite", "starstone")
+//	var/list/weights = list(100, 100, 100, 125, 55, 55, 25, 25, 55, 40, 20, 20, 15, 20, 10, 1, 5, 2)
 
-	for(var/turf/T in world)
-		if (T.z != 1 || !istype(T, /turf/simulated/wall/asteroid/pod_wars)) continue
+	var/datum/ore_cluster/minor/minor_ores = new /datum/ore_cluster/minor
+	for(var/area/podmode/asteroid/minor/A in world)
+		if(!istype(A, /area/podmode/asteroid/minor/nospawn))
+			for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+				//Do the ore_picking
+				AST.randomize_ore(minor_ores)
 
-		//half chance for nothing in an asteroid, just skip.
-		if (prob(50)) continue
+	var/list/datum/ore_cluster/oreClusts = list()
+	for(var/OC in concrete_typesof(/datum/ore_cluster))
+		oreClusts += new OC
 
-		var/turf/simulated/wall/asteroid/pod_wars/AST = T
-		//Do the ore_picking
-		AST.randomize_ore(weightedprob(types, weights))
-
+	for(var/area/podmode/asteroid/major/A in world)
+		var/datum/ore_cluster/OC = pick(oreClusts)
+		OC.quantity -= 1
+		if(OC.quantity <= 0) oreClusts -= OC
+		//oreClusts -= OC
+		for(var/turf/simulated/wall/asteroid/pod_wars/AST in A)
+			if(prob(OC.fillerprob))
+				AST.randomize_ore(minor_ores)
+			else
+				AST.randomize_ore(OC)
+			AST.hardness += OC.hardness_mod
 	return 1
+
+//////////////////
+///////////////pod_wars asteroids
+/turf/simulated/wall/asteroid/pod_wars
+	fullbright = 1
+	name = "asteroid"
+	desc = "It's asteroid material."
+	hardness = 1
+	default_ore = /obj/item/raw_material/rock
+
+	// varied layers
+
+	New()
+		..()
+
+	//Don't think this can go in new.
+	proc/randomize_ore(var/datum/ore_cluster/OC)
+		if(!prob(OC.density)) return
+
+		var/ore_name
+		ore_name = weighted_pick(OC.ore_types + (((length(OC.hiddenores) && !(locate(/turf/space) in range(1, src)))) ? OC.hiddenores : list()))
+
+		//stolen from Turfspawn_Asteroid_SeedSpecificOre
+		var/datum/ore/O = mining_controls?.get_ore_from_string(ore_name)
+		src.ore = O
+		src.hardness += O.hardness_mod
+		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
+		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
+		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
+		ore_overlay.pixel_x += rand(-6,6)
+		ore_overlay.pixel_y += rand(-6,6)
+		src.overlays += ore_overlay
+
+		if(prob(OC.gem_prob))
+			add_event(/datum/ore/event/gem, O)
+
+	proc/add_event(var/list/datum/ore/event/new_event, var/datum/ore/O)
+		var/datum/ore/event/E = new new_event
+		E.set_up(O)
+		src.set_event(E)
+
+ABSTRACT_TYPE(/datum/ore_cluster)
+/datum/ore_cluster
+	var/list/ore_types
+	var/density = 40
+	var/hardness_mod = 0
+	var/list/hiddenores
+	var/quantity = 1
+	var/fillerprob = 0
+	var/gem_prob = 0
+
+	minor
+		ore_types = list("mauxite" = 100, "pharosium" = 100, "molitz" = 100, "char" = 125, "ice" = 55, "cobryl" = 55, "bohrum" = 25, "claretine" = 25, "viscerite" = 55, "koshmarite" = 40, "syreline" = 20, "gold" = 20, "plasmastone" = 15, "cerenkite" = 20, "miraclium" = 10, "nanite cluster" = 1, "erebite" = 5, "starstone" = 2)
+		quantity = 15
+
+	pharosium
+		ore_types = list("pharosium" = 100, "gold" = 5)
+		quantity = 2
+		fillerprob = 10
+
+	starstone
+		ore_types = list( "char" = 95)
+		hiddenores = list("starstone" = 5)
+		density = 40
+		hardness_mod = 3
+
+	metal
+		ore_types = list("mauxite" = 100, "cobryl" = 30, "bohrum" = 50, "syreline" = 10, "gold" = 5, "pharosium" = 20)
+		hiddenores = list("nanite_cluster" = 2)
+		quantity = 10
+		fillerprob = 5
+
+	rads
+		ore_types = list("cerenkite" = 50, "plasmastone" = 40)
+		hiddenores = list("erebite" = 10)
+		density = 40
+		quantity = 2
+
+	shitty_comet
+		ore_types = list("ice" = 100)
+		hiddenores = list("miraclium" = 100)
+		density = 50
+		quantity = 2
+
+	crystal
+		ore_types = list("molitz" = 100, "plasmastone" = 10)
+		hiddenores = list("erebite" = 1)
+		gem_prob = 5
+		quantity = 3
 
 //for testing, can remove when sure this works - Kyle
 /datum/game_mode/pod_wars/proc/test_point_change(var/team as num, var/amt as num)
@@ -813,36 +914,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			New()
 				equip_mining()
 				..()
-
-//////////////////
-///////////////pod_wars asteroids
-
-
-/turf/simulated/wall/asteroid/pod_wars
-	fullbright = 1
-	name = "asteroid"
-	desc = "It's asteroid material."
-	hardness = 1
-	default_ore = /obj/item/raw_material/rock
-
-	// varied layers
-
-	New()
-		..()
-
-	//Don't think this can go in new.
-	proc/randomize_ore(var/ore_name as text)
-		//stolen from Turfspawn_Asteroid_SeedSpecificOre
-		var/datum/ore/O = mining_controls?.get_ore_from_string(ore_name)
-		src.ore = O
-		src.hardness += O.hardness_mod
-		src.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-		var/image/ore_overlay = image('icons/turf/asteroid.dmi',O.name)
-		ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-		ore_overlay.pixel_x += rand(-6,6)
-		ore_overlay.pixel_y += rand(-6,6)
-		src.overlays += ore_overlay
-
 
 //////////survival_machete//////////////
 /obj/item/survival_machete
