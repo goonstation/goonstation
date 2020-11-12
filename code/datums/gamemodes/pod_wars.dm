@@ -869,3 +869,47 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 
 
+/obj/machinery/manufacturer/pod_wars
+	name = "Ship Component Fabricator"
+	desc = "A manufacturing unit calibrated to produce parts for ships."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	free_resource_amt = 50
+	free_resources = list(
+		/obj/item/material_piece/mauxite,
+		/obj/item/material_piece/pharosium,
+		/obj/item/material_piece/molitz
+	)
+	available = list(
+		/datum/manufacture/putt/engine,
+		/datum/manufacture/putt/boards,
+		/datum/manufacture/putt/control,
+		/datum/manufacture/putt/parts,
+		/datum/manufacture/pod/engine,
+		/datum/manufacture/pod/boards,
+		/datum/manufacture/pod/armor_light,
+		/datum/manufacture/pod/armor_heavy,
+		/datum/manufacture/pod/armor_industrial,
+		/datum/manufacture/pod/control,
+		/datum/manufacture/pod/parts,
+		/datum/manufacture/cargohold,
+		/datum/manufacture/orescoop,
+		/datum/manufacture/conclave,
+		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining/drill,
+		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/engine2,
+		/datum/manufacture/engine3,
+		/datum/manufacture/pod/lock
+	)
+
+/datum/manufacture/pod_wars/lock	//
+	name = "Cleaver"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
+	time = 1 SECONDS
+	create = 1
+	category = "Miscellaneous"
