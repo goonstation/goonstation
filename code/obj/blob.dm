@@ -972,14 +972,12 @@ var/image/blob_icon_cache
 	dissipation_delay = 8
 	ks_ratio = 0.5
 	sname = "slime"
+	shot_sound = 'sound/voice/blob/blob35.ogg'
 	shot_number = 0
 	damage_type = D_SPECIAL
 	hit_ground_chance = 50
 	window_pass = 0
 	override_color = 1
-	New()
-		src.shot_sound = "sound/voice/blob/blob[pick("31","32","33","34","35")].ogg"
-		..()
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		..()
@@ -995,6 +993,8 @@ var/image/blob_icon_cache
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
+				playsound(hit.loc, 'sound/voice/blob/blob36.ogg', 100, 1)
+
 			if (prob(8))
 				asshole.drop_item()
 
