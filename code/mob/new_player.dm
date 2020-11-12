@@ -575,11 +575,9 @@ a.latejoin-card:hover {
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
 			if (mode?.team_NT?.members?.len > mode?.team_SY?.members?.len)
-				// for(var/datum/job/pod_wars/syndicate/J in job_controls.staple_jobs)
-				dat += LateJoinLink(new /datum/job/pod_wars/syndicate)
+				AttemptLateSpawn(new /datum/job/pod_wars/syndicate)
 			else
-				// for(var/datum/job/pod_wars/nanotrasen/J in job_controls.staple_jobs)
-				dat += LateJoinLink(new /datum/job/pod_wars/nanotrasen)
+				AttemptLateSpawn(new /datum/job/pod_wars/nanotrasen)
 
 			return
 		else
