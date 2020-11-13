@@ -25,7 +25,7 @@ var/global
 
 	lagcheck_enabled = 0
 
-	vpn_blacklist_enabled = FALSE
+	vpn_blacklist_enabled = TRUE
 
 	datum/datacore/data_core = null
 
