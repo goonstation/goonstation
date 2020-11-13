@@ -73,7 +73,7 @@
 			src.occupant = G
 			src.updateSprite()
 			G.charging = 1
-			G.dir = SOUTH
+			G.set_dir(SOUTH)
 			G.updateSprite()
 			G.canmove = 1
 

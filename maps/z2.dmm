@@ -39710,8 +39710,7 @@
 	name = "Wall"
 	},
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bTZ" = (
 /obj/grille/catwalk{
@@ -39912,14 +39911,12 @@
 "bUz" = (
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bUA" = (
 /turf/unsimulated/wall/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bUB" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -40674,8 +40671,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bWG" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -41271,8 +41267,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bYl" = (
 /obj/landmark{
@@ -41280,8 +41275,7 @@
 	},
 /turf/unsimulated/bombvr,
 /area/sim/test_area{
-	name = "VR Test Area";
-	requires_power = 0
+	name = "VR Test Area"
 	})
 "bYm" = (
 /obj/grille/steel,
@@ -68816,7 +68810,9 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/destiny)
 "dkP" = (
-/obj/landmark/escape_pod_succ,
+/obj/landmark/escape_pod_succ{
+	shuttle = SHUTTLE_SOUTH
+	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/north)
 "dkQ" = (
@@ -68835,7 +68831,8 @@
 /area/shuttle/escape/transit/cogmap)
 "dkT" = (
 /obj/landmark/escape_pod_succ{
-	dir = 8
+	dir = 8;
+	shuttle = SHUTTLE_WEST
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/east)
@@ -68847,7 +68844,8 @@
 /area/shuttle_particle_spawn/east)
 "dkW" = (
 /obj/landmark/escape_pod_succ{
-	dir = 1
+	dir = 1;
+	shuttle = SHUTTLE_NORTH
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
@@ -69092,7 +69090,8 @@
 /area/shuttle/escape/transit/battle_shuttle)
 "dlJ" = (
 /obj/landmark/escape_pod_succ{
-	dir = 4
+	dir = 4;
+	shuttle = SHUTTLE_OSHAN
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
@@ -83050,6 +83049,15 @@
 	dir = 1
 	},
 /area/ship_interior/cruisertest)
+"gkM" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs2_wide"
+	},
+/area/centcom)
 "gtU" = (
 /obj/machinery/light{
 	dir = 1
@@ -85388,6 +85396,15 @@
 /turf/space,
 /turf/simulated/floor,
 /area/ship_interior/cruisertest)
+"qAl" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "stairs_middle"
+	},
+/area/centcom)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -85406,6 +85423,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"qDq" = (
+/obj/landmark/escape_pod_succ{
+	dir = 4;
+	shuttle = SHUTTLE_EAST
+	},
+/turf/space/shuttle_transit,
+/area/shuttle_transit_space/west)
 "qGG" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
@@ -86079,6 +86103,15 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"toQ" = (
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/unsimulated/floor/stairs{
+	dir = 4;
+	icon_state = "Stairs_wide"
+	},
+/area/centcom)
 "ttX" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -86183,6 +86216,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"umY" = (
+/obj/landmark/escape_pod_succ{
+	dir = 1;
+	shuttle = SHUTTLE_DONUT3
+	},
+/turf/space/shuttle_transit,
+/area/shuttle_transit_space/south)
 "unN" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner{
@@ -145319,10 +145359,10 @@ dmJ
 dkK
 dsd
 dnZ
-dmX
-dmY
-dmY
-dmZ
+toQ
+qAl
+qAl
+gkM
 dnJ
 dkK
 dkK
@@ -148943,10 +148983,10 @@ dmJ
 dkK
 dts
 dnZ
-dmX
-dmY
-dmY
-dmZ
+toQ
+qAl
+qAl
+gkM
 dnJ
 dkK
 dkK
@@ -149732,7 +149772,7 @@ dkH
 dkH
 dkH
 dkH
-dkW
+umY
 dkH
 dkH
 dkH
@@ -155470,7 +155510,7 @@ dkH
 dkH
 dkH
 dkH
-dkW
+umY
 dkH
 dkH
 dkH
@@ -168706,7 +168746,7 @@ dly
 dly
 dly
 dly
-dlJ
+qDq
 dly
 dly
 dly
@@ -168720,7 +168760,7 @@ dly
 dly
 dly
 dly
-dlJ
+qDq
 dly
 dly
 dly

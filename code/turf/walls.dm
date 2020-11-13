@@ -100,7 +100,7 @@
 	// find the direction from the mob to the target wall
 	for (var/d in cardinal)
 		if (get_step(source,d) == target)
-			dir = d
+			set_dir(d)
 			break
 
 	// if no direction was found, fail. need to be standing cardinal to the wall to put the fixture up
@@ -121,7 +121,7 @@
 	boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(source)
-	newlight.dir = dir
+	newlight.set_dir(dir)
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting

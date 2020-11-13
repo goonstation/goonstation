@@ -90,7 +90,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
 
 	get_desc(dist, mob/user)
@@ -119,7 +119,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)
@@ -581,6 +581,12 @@
 	proc/update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			src.icon_state = "itemtank[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
-			fluid_image.color = average.to_rgba()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = initial(src.icon_state)
+

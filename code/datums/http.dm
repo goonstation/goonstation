@@ -1,4 +1,4 @@
-// By @AffectedArc07 on GitHub from paradise/tgstation (tgstation/tgstation/pull/49374). Licensed to us under MIT.
+// By @skull132/<@84559773487353856> on GitHub/Discord from paradise/aurora (tgstation/tgstation/pull/49374). Licensed to us under MIT(https://opensource.org/licenses/MIT).
 
 /**
   * # HTTP Request

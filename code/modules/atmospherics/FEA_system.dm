@@ -221,6 +221,8 @@ datum/controller/air_system
 					if ((test.dist_to_space == null) || (dist < test.dist_to_space))
 						test.dist_to_space = dist
 
+			// Allow groups to determine if group processing is applicable after FEA setup
+			if(current_cycle) group.group_processing = 0
 			group.members = members
 			air_groups += group
 
@@ -273,6 +275,8 @@ datum/controller/air_system
 		var/list/turf/turf_list = list()
 
 		for(var/datum/air_group/turf_AG in groups_to_rebuild) // Deconstruct groups, gathering their old members
+			if(turf_AG.group_processing)	// Ensure correct air is used for reconstruction, otherwise parent is destroyed
+				turf_AG.suspend_group_processing()
 			for(var/turf/simulated/T as() in turf_AG.members)
 				T.parent = null
 				turf_list += T

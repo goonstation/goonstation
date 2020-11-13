@@ -584,7 +584,7 @@
 		stepsound = pick(sounds_mechanicalfootstep)
 		if(dir != lastdir)
 			if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-				dir = lastdir
+				set_dir(lastdir)
 				changeIcon()
 			else
 				lastdir = dir

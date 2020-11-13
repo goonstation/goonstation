@@ -59,15 +59,25 @@
 			reagents.add_reagent(src.flavor, 40)
 			return
 
-	afterattack(atom/target, mob/user, flag) // copied from the propuffs
-		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
-			"<span class='notice'>You crush up the [src] in the [target].</span>")
-
-			if (src.reagents) //Wire: Fix for: Cannot execute null.trans to()
-				src.reagents.trans_to(target, 5)
-
+	afterattack(atom/target , mob/user, flag) // copied from the propuffs
+		if (istype(target, /obj/item/reagent_containers/food/snacks/)) // you dont crush cigs INTO food, you crush them ONTO food!
+			var/obj/item/reagent_containers/food/snacks/T = target // typecasting because atom/target was causing some STINKY problems
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], gross.</span>",\
+			"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+			if (!(T.has_cigs))
+				T.desc = "[T.desc]<br>Are those crushed cigarettes on top? That's disgusting!"
+				T.has_cigs = 1
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(T, 5)
 			qdel (src)
+			return
+		else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+			"<span class='notice'>You crush up [src] into [target].</span>")
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(target, 5)
+			qdel (src)
+			return
 		else if (istype(target, /obj/item/match) && src.on)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
@@ -851,6 +861,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		reagents.add_reagent("phosphorus", 1)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_color(0.94, 0.69, 0.27)
@@ -970,6 +982,20 @@
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
 				src.light(user)
+				return
+			else if (istype(target, /obj/item/reagent_containers/food/snacks/)) // RE-copied from cigarettes
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], what the fuck?.</span>",\
+				"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
+				return
+			else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+				"<span class='notice'>You crush up [src] into [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
 				return
 			else
 				if (prob(10))

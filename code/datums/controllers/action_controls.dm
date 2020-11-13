@@ -392,7 +392,7 @@ var/datum/action_controller/actions
 		if (istype(R))
 			R.amount = amount
 			R.inventory_counter?.update_number(R.amount)
-		R.dir = owner.dir
+		R.set_dir(owner.dir)
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)
 			sheet2.consume_sheets(cost2)
@@ -880,7 +880,7 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
-	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
 		..()
@@ -902,7 +902,7 @@ var/datum/action_controller/actions
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
-	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
 		..()
@@ -1197,7 +1197,7 @@ var/datum/action_controller/actions
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
-			M.dir = turn(M.dir,up ? -90 : 90)
+			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
 			if (pixely != clamp(pixely, -5,5))
 				up = !up
