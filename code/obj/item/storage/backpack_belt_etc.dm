@@ -62,6 +62,11 @@
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+#if ASS_JAM
+	New()
+		..()
+		ADD_MORTY(12, 7, 8, 8)
+#endif
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -90,6 +95,11 @@
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	icon_state = "satchel_medic"
+#if ASS_JAM
+	New()
+		..()
+		ADD_MORTY(8, 11, 7, 7)
+#endif
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru"

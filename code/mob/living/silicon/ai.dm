@@ -185,6 +185,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	holograms = list()
 
+#if ASS_JAM
+	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
+	src.set_hat(new hat_type)
+	if(prob(5))
+		src.give_feet()
+#endif
+
 	SPAWN_DBG(0)
 		src.botcard.access = get_all_accesses()
 		src.cell.charge = src.cell.maxcharge

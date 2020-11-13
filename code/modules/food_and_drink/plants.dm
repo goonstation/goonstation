@@ -718,7 +718,24 @@
 	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
+#if ASS_JAM
+/obj/item/reagent_containers/food/snacks/plant/pear/sickly
+	name = "sickly pear"
+	desc = "You'd definitely become terribly ill if you ate this."
+	icon_state = "pear"
+	//planttype = ///datum/plant/pear
+	amount = 1
+	heal_amt = 2
+	brewable = 1
+	plant_reagent = "too much"
+	brew_result = list("cider","rotting") //bad
+	food_color = "#3FB929"
+	initial_volume = 30
 
+	make_reagents()
+		..()
+		reagents.add_reagent("too much",25)
+#endif
 /obj/item/reagent_containers/food/snacks/plant/peach/
 	name = "peach"
 	desc = "Feelin' peachy now, but after you eat it it's the pits."

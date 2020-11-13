@@ -202,6 +202,11 @@
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
+		#if ASS_JAM
+		src.emag_stages = 3
+		src.tacticool = 1
+		src.report_arrests = 1
+		#endif
 
 		if (src.tacticool)
 			make_tacticool()
@@ -310,6 +315,15 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			mode = SECBOT_IDLE
 			src.target = null
+
+			#if ASS_JAM
+			if(src.emagged >= 3)
+				src.stun_type = "harm_classic"
+				processing_bucket = 1
+				processing_tier = PROCESSING_FULL
+				current_processing_tier = PROCESSING_FULL
+				playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 99, 1, 0.1, 0.7)
+			#endif
 
 			if(user)
 				src.oldtarget_name = user.name

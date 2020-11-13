@@ -930,6 +930,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	attack_hand(mob/M)
 		..()
+#if ASS_JAM
+		src.gib()
+#endif
 		if(isdead(src))
 			return
 		if (prob(30))
@@ -954,5 +957,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai.interrupt()
 		src.ai.target = M
 		src.ai.enabled = 1
+
+
+
+#if ASS_JAM //explodey yank
+		say("Feel My Wrath.")
+		explosion_new(src, src.loc, 20)
+		src.gib()
+#endif
 
 #undef BILL_PICK

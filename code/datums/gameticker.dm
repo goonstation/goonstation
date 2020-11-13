@@ -59,6 +59,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	pregame_timeleft = 1
 	#endif
 
+	#if ASS_JAM
+	SPAWN_DBG(10 SECONDS) // wait for people to login etc.
+		vote_manager.active_vote = new/datum/vote_new/mode("everyone-is-a-traitor")
+		boutput(world, "<B>ASS JAM: Everyone-Is-A-Traitor Mode vote has been started: [newVoteLinkStat.chat_link()] (120 seconds remaining)<br>(or click on the Status map as you do for map votes)</B>")
+	#endif
+
 	var/did_mapvote = 0
 	var/obj/overlay/zamujasa/round_start_countdown/timer/title_countdown = new()
 	while (current_state <= GAME_STATE_PREGAME)
@@ -159,7 +165,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	ooc_allowed = 0
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
-	if (istype(src.mode, /datum/game_mode/construction))
+	if (ASS_JAM || istype(src.mode, /datum/game_mode/construction))
 		looc_allowed = 1
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
@@ -683,6 +689,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (player.mind.all_objs)
 					earnings += 100; // ALL CREW OBJECTIVE SBUX BONUS
 					bank_earnings.all_objs = 100
+
+#if ASS_JAM
+				earnings *= 2
+#endif
 
 			//pilot's bonus check and reward
 			var/pilot_bonus = 500 //for receipt

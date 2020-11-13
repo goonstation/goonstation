@@ -30,6 +30,9 @@
 
 		src.product_amount = amount
 		src.product_cost = round(cost)
+#if ASS_JAM
+		src.product_cost -= 0.01
+#endif
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
 
@@ -1093,6 +1096,13 @@
 	lr = 1
 	lg = 0.88
 	lb = 0.88
+
+#if ASS_JAM
+	New()
+		. = ..()
+		if(src.type == /obj/machinery/vending/medical)
+			ADD_MORTY(7, 8, 12, 12)
+#endif
 
 	create_products()
 		..()

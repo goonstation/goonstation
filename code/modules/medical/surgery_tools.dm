@@ -317,6 +317,9 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
+		#if ASS_JAM
+			//DISABLE ZIPGUN DURING ASSJAM
+		#else
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -334,6 +337,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
+		#endif
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red

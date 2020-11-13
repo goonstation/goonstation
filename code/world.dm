@@ -595,6 +595,9 @@ var/f_color_selector_handler/F_Color_Selector
 	build_camera_network()
 	build_manufacturer_icons()
 	clothingbooth_setup()
+#if ASS_JAM
+	ass_jam_init()
+#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
@@ -798,6 +801,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 	if (abandon_allowed)
 		features += "respawn allowed"
+
+#if ASS_JAM
+	features += "Ass Jam"
+#endif
 
 	var/n = length(clients)
 

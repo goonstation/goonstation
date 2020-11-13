@@ -1218,12 +1218,40 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					mutant_image.color = "#FFFFFF"
 				src.body_standing.overlays += mutant_image
 
+#if ASS_JAM
+	src.maptext_y = 32
+	src.maptext_width = 64
+	src.maptext_x = -16
+	health_update_queue |= src
+#endif
+
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()
 	//Also forcing the updates since the overlays may have been modified on the images
 	src.UpdateOverlays(src.body_standing, "body", 1, 1)
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 
+#if ASS_JAM //Oh neat apparently this has to do with cool maptext for your health, very neat. plz comment cool things like this so I know what all is on assjam!
+/mob/living/carbon/human/UpdateDamage()
+	var/prev = health
+	..()
+	src.updatehealth()
+	if (!isdead(src))
+		var/h_color = "#999999"
+		var/h_pct = round((health / (max_health != 0 ? max_health : 1)) * 100)
+		switch (h_pct)
+			if (50 to INFINITY)
+				h_color	= "rgb([(100 - h_pct) / 50 * 255], 255, [(100 - h_pct) * 0.3])"
+			if (0 to 50)
+				h_color	= "rgb(255, [h_pct / 50 * 255], 0)"
+			if (-100 to 0)
+				h_color	= "#ffffff"
+		src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[h_pct]%</span>"
+		if (prev != health)
+			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
+	else
+		src.maptext = ""
+#else
 /mob/living/carbon/human/tdummy/UpdateDamage()
 	var/prev = health
 	..()
@@ -1243,6 +1271,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			new /obj/maptext_junk/damage(get_turf(src), change = health - prev)
 	else
 		src.maptext = ""
+#endif
 
 /mob/living/carbon/human/UpdateDamageIcon()
 	if (lastDamageIconUpdate && !(world.time - lastDamageIconUpdate))

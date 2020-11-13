@@ -2166,6 +2166,28 @@
 	upperfluc = 100
 	lowerfluc = -20
 
+#if ASS_JAM
+/datum/commodity/screamshoes
+	comname = "scream shoes"
+	comtype = /obj/item/clothing/shoes/scream
+	desc = "AAAAAAAAAAAAAAAAAAAA!"
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+
+/datum/commodity/fartflops
+	comname = "fart-flops"
+	comtype = /obj/item/clothing/shoes/fart
+	desc = "They fart when you walk."
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+#endif
+
 /// pathology
 /datum/commodity/synthmodule
 	comname = "Synth-O-Matic module"

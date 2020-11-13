@@ -80,6 +80,14 @@
 			if (src.alive && !src.sleeping)
 				animate_bumble(src)
 
+#if ASS_JAM
+		if(src.icon_body == "petbee" && prob(5))
+			src.icon_body = "sonicbee"
+			src.icon_state = "[src.icon_body]-wings"
+			src.sleeping_icon_state = "[src.icon_body]-sleep"
+			src.desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"
+#endif
+
 	process()
 		if(shorn && (world.time - shorn_time) >= 1800)
 			shorn = 0
