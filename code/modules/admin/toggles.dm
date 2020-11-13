@@ -895,9 +895,9 @@ var/global/IP_alerts = 1
 #ifdef DO_VPN_CHECKS
 		vpn_blacklist_enabled = !vpn_blacklist_enabled
 
-		logTheThing("admin", src, null, "toggled the VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
-		logTheThing("diary", src, null, "toggled the VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
-		message_admins("[key_name(src)] toggled the VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
+		logTheThing("admin", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
+		logTheThing("diary", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
+		message_admins("[key_name(src)] toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
 #else
 		boutput(src, "VPN Checks are currently disabled on this server!")
 #endif
