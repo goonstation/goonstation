@@ -55,9 +55,6 @@
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 	var/is_detonating = 0//to start modeling fuses
-#if ASS_JAM
-	var/projectile_paused = FALSE //for time stopping
-#endif
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -91,10 +88,6 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!disposed && !pooled)
-#if ASS_JAM //dont move while in timestop
-			while(src.projectile_paused)
-				sleep(1 SECOND)
-#endif
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0

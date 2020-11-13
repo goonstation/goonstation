@@ -1,6 +1,6 @@
 /datum/random_event/minor/gimmick_flood
 	name = "Random Flood"
-	disabled = !ASS_JAM
+	disabled = TRUE
 	weight = 30
 	customization_available = 1
 	var/reagent_type = null

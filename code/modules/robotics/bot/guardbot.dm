@@ -182,11 +182,7 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
-#if ASS_JAM
-	var/lawbringer_alwaysbigshot = 1
-#else
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-#endif
 	//
 	////////////////////// GUN STUFF -^
 

@@ -105,11 +105,6 @@
 	/obj/item/storage/box/lglo_kit/random = 2,
 	/obj/item/storage/box/clothing/patient_gowns = 2)
 
-#if ASS_JAM
-	New()
-		. = ..()
-		ADD_MORTY(11, 8, 11, 11)
-#endif
 
 /obj/item/storage/wall/research_supplies
 	name = "research supplies"
