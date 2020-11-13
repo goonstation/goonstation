@@ -98,6 +98,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/deployed_to_eyecam = 0
 	var/list/holograms
 	var/const/max_holograms = 8
+	var/list/hologramContextActions
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -184,6 +185,19 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.eyecam.attach_hud(hud)
 
 	holograms = list()
+
+	src.hologramContextActions = list() //childrentypesof(/datum/contextAction/ai_hologram)
+	hologramContextActions += new/datum/contextAction/ai_hologram/caution(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/o2(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/beepsky(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/up_arrow(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/down_arrow(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/left_arrow(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/right_arrow(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/happy_face(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/neutral_face(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/sad_face(src)
+	hologramContextActions += new/datum/contextAction/ai_hologram/angry_face(src)
 
 #if ASS_JAM
 	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
@@ -409,7 +423,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/click(atom/target, params)
 	if (!src.stat)
-		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK) ) // ugh
+		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)

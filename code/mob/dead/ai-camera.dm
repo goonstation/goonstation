@@ -95,6 +95,10 @@
 	Move(NewLoc, direct)//Ewww!
 		last_loc = src.loc
 
+		src.closeContextActions()
+		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
+		src.mainframe.closeContextActions()
+
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
 
@@ -143,7 +147,7 @@
 		//var/inrange = in_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
-		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK) ) // ugh
+		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
 				mainframe.ai_actual_track(target)
@@ -161,6 +165,11 @@
 
 			target.attack_ai(src, params, location, control)
 
+		if (src.client.check_any_key(KEY_POINT))
+			var/turf/T = get_turf(target)
+			mainframe.show_hologram_context(T)
+			return
+
 		if (src.client.check_any_key(KEY_EXAMINE))
 			. = ..()
 
@@ -174,6 +183,9 @@
 				return
 			if(src.client.check_key(KEY_SHOCK))
 				src.set_cursor('icons/cursors/shock.dmi')
+				return
+			if(src.client.check_key(KEY_POINT))
+				src.set_cursor('icons/cursors/point.dmi')
 				return
 		return ..()
 
