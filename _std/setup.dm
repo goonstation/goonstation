@@ -137,3 +137,6 @@ var/ZLOG_START_TIME
 #if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
 #endif
+
+//do we want to check incoming clients to see if theyre using a vpn?
+#define DO_VPN_CHECKS 1
