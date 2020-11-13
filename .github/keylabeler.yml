@@ -29,7 +29,6 @@ labelMappings:
     "[ENHANCEMENT]": feature
     "[FEATURE]": feature
     "[FEAT]": feature
-    "[ASS-JAM]": ass-jam
     "[BALANCE]": balance
     "[CLEANLINESS]": cleanliness
     "[CLEAN]": cleanliness
