@@ -19002,6 +19002,7 @@
 /area/station/medical/medbooth)
 "aPw" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/book/medical_surgery_guide,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/glass/beaker/large/brute,
@@ -19018,6 +19019,7 @@
 /obj/item/suture,
 /obj/item/staple_gun,
 /obj/item/hemostat,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "aPx" = (
