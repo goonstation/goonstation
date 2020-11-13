@@ -370,7 +370,7 @@
 
 
 	Move()
-		..()
+		. = ..()
 		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 30, 10, -2)
 
 

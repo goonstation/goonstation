@@ -140,7 +140,7 @@
 		if (src.stepsound)
 			if(prob(30))
 				playsound(src.loc, src.stepsound, 50, 0)
-		..()
+		. = ..()
 
 	CritterAttack(mob/M)
 		if(ismob(M))
