@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT3", "HORIZON", "OSHAN", "KONDARU", "ATLAS", "MANTA", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
-        compiletype: ["default", "ass"]
+        compiletype: ["default"]
     steps:
       - uses: actions/checkout@v2
 
@@ -46,11 +46,6 @@ jobs:
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
-
-      - name: Setup for assjam
-        if: "matrix.compiletype == 'ass'"
-        run: |
-          sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
       - name: Setup rust-g
         run: |
@@ -89,7 +84,7 @@ jobs:
       fail-fast: false
       matrix:
         map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT3", "HORIZON", "OSHAN", "KONDARU", "ATLAS", "MANTA", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
-        compiletype: ["default", "ass"]
+        compiletype: ["default"]
 
     steps:
       - uses: actions/checkout@v2
@@ -121,11 +116,6 @@ jobs:
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
-
-      - name: Setup for assjam
-        if: "matrix.compiletype == 'ass'"
-        run: |
-          sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
       - name: Setup rust-g
         run: |
