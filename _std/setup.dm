@@ -68,6 +68,7 @@
 #define ASS_JAM 0
 #endif
 */
+#define ASS_JAM 0
 
 // holiday toggles!
 
