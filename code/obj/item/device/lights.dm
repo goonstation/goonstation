@@ -331,7 +331,7 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
-			if (temperature > T0C+430)
+			if (temperature > (T0C + 430))
 				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
 				src.light()
 
