@@ -326,9 +326,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1)
-				if (isnull(data))
-					throw EXCEPTION("API Error: Cancelled query due to [!apiHandler.enabled ? "disabled apiHandler" : "missing route parameter"]")
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1, 1, 1)
 
 				// Goonhub API error encountered
 				if (data["error"])
