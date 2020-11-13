@@ -27,6 +27,5 @@ jobs:
         REPO: ${{ github.repository }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CHANGELOG_PATH: strings/changelog.txt
-        ASS_CHANGELOG_PATH: strings/ass_changelog.txt
         GIT_EMAIL: "65057909+robuddybot@users.noreply.github.com"
         GIT_NAME: "robuddybot"
