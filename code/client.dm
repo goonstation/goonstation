@@ -314,6 +314,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (is_vpn_address)
 			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
 			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
+			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 			src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 			sleep(3 SECONDS)
 			if (src)
@@ -354,6 +355,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							global.vpn_ip_checks["[src.address]"] = true
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 							sleep(3 SECONDS)
 							if (src)
