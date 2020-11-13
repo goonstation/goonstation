@@ -55,16 +55,33 @@
 		shuffle_list(readied_minds)
 		if (length < 2)
 			if (prob(100))	//change to 50 - KYLE
-				team_NT.accept_players(readied_minds)
+				team_NT.accept_initial_players(readied_minds)
 			else
-				team_SY.accept_players(readied_minds)
+				team_SY.accept_initial_players(readied_minds)
 
 		else
 			var/half = round(length/2)
-			team_NT.accept_players(readied_minds.Copy(1, half+1))
-			team_SY.accept_players(readied_minds.Copy(half+1, 0))
+			team_NT.accept_initial_players(readied_minds.Copy(1, half+1))
+			team_SY.accept_initial_players(readied_minds.Copy(half+1, 0))
 
 	return 1
+
+/datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
+	if (istype(JOB, /datum/job/pod_wars/nanotrasen))
+		team_NT.members += mind
+		team_NT.equip_player(mind.current)
+	else if (istype(JOB, /datum/job/pod_wars/syndicate))
+		team_SY.members += mind
+		team_SY.equip_player(mind.current)
+
+	for(var/turf/T in landmarks[LANDMARK_LATEJOIN])
+		if (istype(T.loc, /area/podmode/team1))
+			mind.current.set_loc(T)
+			return
+		else if (istype(T.loc, /area/podmode/team2))
+			mind.current.set_loc(T)
+			return
+
 
 /datum/game_mode/pod_wars/post_setup()
 	SPAWN_DBG(-1)
@@ -339,7 +356,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		mode.frequencies_used += comms_frequency
 
 
-	proc/accept_players(var/list/players)
+	proc/accept_initial_players(var/list/players)
 		members = players
 		select_commander()
 
@@ -391,21 +408,18 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
+			H = N.create_character(JOB)
 			if (team_num == TEAM_NANOTRASEN)
 				if (M.mind == commander)
-					H = N.create_character(JOB)
 					H.mind.assigned_role = "NanoTrasen Commander"
 				else
-					H = N.create_character(JOB)
 					H.mind.assigned_role = "NanoTrasen Pod Pilot"
 				H.mind.special_role = "NanoTrasen"
 
 			else if (team_num == TEAM_SYNDICATE)
 				if (M.mind == commander)
-					H = N.create_character(JOB)
 					H.mind.assigned_role = "Syndicate Commander"
 				else
-					H = N.create_character(JOB)
 					H.mind.assigned_role = "Syndicate Pod Pilot"
 				H.mind.special_role = "Syndicate"
 
@@ -420,7 +434,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		H.set_clothing_icon_dirty()
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
-		// H.client.screen += mode.board
+		// bestow_objective(player,/datum/objective/battle_royale/win)
 		// SHOW_TIPS(H)
 
 /obj/pod_base_critical_system
