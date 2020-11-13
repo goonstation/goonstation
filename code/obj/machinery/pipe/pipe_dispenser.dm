@@ -114,7 +114,7 @@
 
 	Move(var/turf/new_loc,direction)
 		var/old_loc = loc
-		..()
+		. = ..()
 		if(!(direction in cardinal)) // cardinal sin
 			return
 		if(old_loc != loc)

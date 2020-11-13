@@ -162,7 +162,7 @@
 	Move()
 		var/turf/T = get_turf(src)
 		T.temp_flags &= ~HAS_KUDZU
-		..()
+		. = ..()
 
 	disposing()
 		var/turf/T = get_turf(src)

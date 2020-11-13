@@ -453,7 +453,7 @@
 
 	Move()
 		playsound(src.loc, "sound/machines/glitch4.ogg", 50, 0)
-		..()
+		. = ..()
 
 	seek_target()
 

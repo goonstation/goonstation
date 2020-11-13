@@ -79,7 +79,7 @@
 		set_density(0) //mbc : icky but useful for fluids
 		update_nearby_tiles(need_rebuild=1, selfnotify = 1) //only selfnotify when density is 0, because i dont want windows to displace fluids every single move() step. would be slow probably
 		set_density(1)
-		..()
+		. = ..()
 
 
 		src.set_dir(src.ini_dir)
