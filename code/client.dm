@@ -542,6 +542,14 @@
 		SPAWN_DBG(0)
 			sendItemIcons(src)
 
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
