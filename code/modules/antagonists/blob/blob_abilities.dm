@@ -512,6 +512,7 @@
 		if (B)
 			B.heal_damage(20)
 			B.update_icon()
+			owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("07","08","09")].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 		else
@@ -1123,7 +1124,7 @@
 			return 1
 		if (!tutorial_check())
 			return 1
-			if (prob(5))
+			if (prob(80))
 				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
 			else if (prob(10))
 				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
