@@ -1,4 +1,9 @@
 
+(t)sat nov 14 20
+(u)virvatuli
+(p)2689
+(e)🎨|sprites
+(+)Added a bunch of previously missing clothing sprites for monkeys
 (t)fri nov 13 20
 (u)adharainspace
 (p)2590
