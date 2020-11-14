@@ -281,6 +281,11 @@
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
+/obj/item/record/random/dance_on_a_space_volcano
+	name = "record - \"Dance On A Space Volcano\""
+	record_name = "Dance On A Space Volcano"
+	song = "sound/radio_station/dance_on_a_space_volcano.ogg"
+
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
 	record_name = "adventure track #1"
