@@ -583,6 +583,7 @@ var/image/blob_icon_cache
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY && src.overmind && prob(src.overmind.nucleus_reflectivity))
 			shoot_reflected_to_sender(P, src)
+			playsound(src.loc, "sound/voice/blob/blob[pick("37","38","39","40","41")].ogg", 75, 1)
 		else
 			..()
 

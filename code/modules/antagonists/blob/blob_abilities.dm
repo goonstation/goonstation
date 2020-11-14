@@ -633,7 +633,7 @@
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4
-			playsound(src.loc, "sound/voice/blob/blob[pick("26")].ogg", 100, 1)
+			playsound(H.loc, "sound/voice/blob/blob[pick("26")].ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
