@@ -22,6 +22,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/kiss
 	name = "kiss"
+	ammo_ID = "kiss"
+	ammo_name = "kiss"
+	ammo_name_plural = "kisses"
 	icon_state = "kiss"
 	power = 0
 	sname = "kiss"
@@ -34,6 +37,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acid
 	name = "acid"
+	ammo_ID = "acid"
+	ammo_name = "acidic glob"
 	icon_state = "radbolt"
 	power = 45
 	dissipation_rate = 30
@@ -45,13 +50,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_corrosive(power)
 
 	potent
+		ammo_ID = "acid_potent"
+		ammo_name = "very acidic glob"
 		power = 100
 
 	weak
+		ammo_ID = "acid_weak"
+		ammo_name = "mildly acidic glob"
 		power = 15
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
+	ammo_ID = "acid_spit"
+	ammo_name = "acidic spitwad"
 	icon_state = "cbbolt"
 	power = 0.8
 	dissipation_rate = 20
@@ -70,6 +81,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/ice
 	name = "ice"
+	ammo_ID = "ice"
+	ammo_name = "cryogenic cell"
 	icon_state = "ice"
 	power = 120
 	dissipation_rate = 10
@@ -84,6 +97,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
+	ammo_ID = "transmutation"
+	ammo_name = "alchemical reconfiguration device"
 	icon_state = "ice"
 	power = 1
 	dissipation_rate = 1
@@ -102,6 +117,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/piercing
 	name = "focused beam"
+	ammo_ID = "piercing"
+	ammo_name = "focused energy cell"
 	sname = "focused beam"
 	icon_state = "laser_white"
 	window_pass = 1
@@ -114,6 +131,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/wallhax
 	name = "phased beam"
+	ammo_ID = "piercing_more"
+	ammo_name = "really focused energy cell"
 	sname = "phased beam"
 	icon_state = "crescent_white"
 	window_pass = 1
@@ -250,6 +269,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/shock_orb
 	name = "ball lightning"
+	ammo_ID = "ball_lightning"
+	ammo_name = "lightning cell"
 	sname = "ball lightning"
 	icon_state = "elecorb"
 	shot_sound = 'sound/weapons/energy/LightningCannon.ogg'
@@ -296,7 +317,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			sfloors -= Q
 
 	always_mob
-
+		ammo_ID = "ball_lightning_mob"
+		ammo_name = "arcing lightning cell"
 		tick(var/obj/projectile/P)
 			if (prob(arc_chance_per_tick))
 				var/list/smobs = list()
@@ -311,6 +333,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/inferno
 	name = "inferno bomb"
+	ammo_ID = "inferno"
+	ammo_name = "incindiary charge"
 	sname = "inferno bomb"
 	icon_state = "fusionorb"
 	shot_sound = 'sound/weapons/energy/InfernoCannon.ogg'
@@ -334,6 +358,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
+	ammo_ID = "plasma_howitzer"
+	ammo_name = "plasma howitzer shell"
 	sname = "plasma howitzer"
 	icon = 'icons/obj/32x96.dmi'
 	icon_state = "howitzer-shot"
@@ -391,6 +417,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/misc/boing/6.ogg'
 	name  = "meowitzer"
 	sname  = "meowitzer"
+	ammo_ID = "meowitzer"
+	ammo_name = "high-explosive pet carrier"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "cat1"
 	dissipation_delay = 75
@@ -419,6 +447,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 /datum/projectile/special/meowitzer/inert
+	ammo_ID = "meowitzer_harmless"
+	ammo_name = "pet carrier"
 	explosive_hits = 0
 
 /datum/projectile/special/spewer

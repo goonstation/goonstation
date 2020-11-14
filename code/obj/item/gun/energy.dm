@@ -13,6 +13,7 @@
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
+	caliber = CALIBER_BATTERY
 	muzzle_flash = null
 	inventory_counter_enabled = 1
 

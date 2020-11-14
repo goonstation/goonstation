@@ -527,6 +527,12 @@ datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var
 		name = "projectile"
+		/// ID used by gun magazines to form the manifest
+		ammo_ID = "abstract_projectile"
+		/// Short description of the projectile in ammo-form
+		ammo_name = "Abstract projectile"
+		/// Replaces ammo_name with this string if a plural is needed and a string is defined. Otherwise (typically) just appends an S
+		ammo_name_plural = null
 		icon = 'icons/obj/projectiles.dmi'
 		icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
 		icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
@@ -560,7 +566,7 @@ datum/projectile
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
+		caliber = null           // NOT a list! Determines what magazines it'll fit in
 		nomsg = 0
 
 		datum/material/material = null

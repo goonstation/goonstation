@@ -4,20 +4,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
-	var/obj/item/ammo/bullets/ammo = null
-	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
-	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
-
-	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
-	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
-
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
-
-	var/allowReverseReload = 1 //Use gun on ammo to reload
-	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
-
 	muzzle_flash = "muzzle_flash"
 
 	// caliber list: update as needed
@@ -105,14 +92,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					src.logme_temp(user, src, b)
 					return
 				if(6)
-					switch (src.ammo.swap(b,src))
-						if(0)
-							user.show_text("This ammo won't fit!", "red")
-							return
-						if(1)
-							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-						if(2)
-							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+					// switch (src.ammo.swap(b,src))
+					// 	if(0)
+					// 		user.show_text("This ammo won't fit!", "red")
+					// 		return
+					// 	if(1)
+					// 		user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
+					// 	if(2)
+					// 		user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
 		else
@@ -342,10 +329,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = 5
-	caliber = 0.308
+	caliber = CALIBER_MINIGUN
 	max_ammo_capacity = 100
 	auto_eject = 1
-
+	ammo = /obj/item/ammo/bullets/minigun
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	spread_angle = 25
@@ -357,11 +344,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 
-	New()
-		ammo = new/obj/item/ammo/bullets/minigun
-		current_projectile = new/datum/projectile/bullet/minigun
-		..()
-
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.4)
@@ -372,13 +354,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "revolver"
 	item_state = "revolver"
 	force = 8.0
-	caliber = list(0.38, 0.357) // Just like in RL (Convair880).
+	caliber = list(CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM) // Just like in RL (Convair880).
 	max_ammo_capacity = 7
-
-	New()
-		ammo = new/obj/item/ammo/bullets/a357
-		current_projectile = new/datum/projectile/bullet/revolver_357
-		..()
+	ammo = /obj/item/ammo/bullets/internal/revolver/magnum
 
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
@@ -388,10 +366,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
 	force = 5.0
-	caliber = 0.41
+	caliber = CALIBER_DERRINGER
 	max_ammo_capacity = 2
 	w_class = 2
 	muzzle_flash = null
+	ammo = /obj/item/ammo/bullets/internal/derringer
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -403,28 +382,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			..()
 		return
 
-	New()
-		ammo = new/obj/item/ammo/bullets/derringer
-		current_projectile = new/datum/projectile/bullet/derringer
-		..()
-
 /obj/item/gun/kinetic/faith
 	name = "Faith"
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
 	force = 5.0
-	caliber = 0.22
+	caliber = CALIBER_PISTOL_SMALL
 	max_ammo_capacity = 4
 	auto_eject = 1
 	w_class = 2
 	muzzle_flash = null
 	has_empty_state = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/bullet_22/faith
-		current_projectile = new/datum/projectile/bullet/bullet_22
-		..()
-
+	ammo = new/obj/item/ammo/bullets/bullet_22/faith
 
 /obj/item/gun/kinetic/detectiverevolver
 	name = "Detective Special revolver"
@@ -433,14 +402,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "detective"
 	w_class = 2.0
 	force = 2.0
-	caliber = 0.38
+	caliber = CALIBER_REVOLVER
 	max_ammo_capacity = 7
 	gildable = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/a38/stun
-		current_projectile = new/datum/projectile/bullet/revolver_38/stunners
-		..()
+	ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
 /obj/item/gun/kinetic/colt_saa
 	name = "colt saa revolver"
@@ -449,26 +414,19 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "colt_saa"
 	w_class = 3.0
 	force = 5.0
-	caliber = 0.45
+	caliber = CALIBER_REVOLVER_OLDTIMEY
 	spread_angle = 1
 	max_ammo_capacity = 7
 	var/hammer_cocked = 0
+	ammo = /obj/item/ammo/bullets/internal/revolver/oldtimey
 
 	detective
 		name = "Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
 		force = 2.0
-		caliber = 0.38
-		New()
-			..()
-			ammo = new/obj/item/ammo/bullets/a38/stun
-			current_projectile = new/datum/projectile/bullet/revolver_38/stunners
-
-	New()
-		ammo = new/obj/item/ammo/bullets/c_45
-		current_projectile = new/datum/projectile/bullet/revolver_45
-		..()
+		caliber = CALIBER_REVOLVER
+		ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
 	canshoot()
 		if (hammer_cocked)
@@ -500,7 +458,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	max_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
@@ -578,16 +536,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "spas"
 	force = 18.0
 	contraband = 7
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
+	ammo = /obj/item/ammo/bullets/internal/shotgun
 
 	New()
 		if(prob(10))
 			name = pick("SPEZZ-12", "SPESS-12", "SPETZ-12", "SPOCK-12", "SCHPATZL-12", "SABRINA-12", "SAURUS-12", "SABER-12", "SOSIG-12", "DINOHUNTER-12", "PISS-12", "ASS-12", "SPES-12", "SHIT-12", "SHOOT-12", "SHOTGUN-12", "FAMILYGUY-12", "SPAGOOTER-12")
-		ammo = new/obj/item/ammo/bullets/a12
-		current_projectile = new/datum/projectile/bullet/a12
 		..()
 
 	custom_suicide = 1
@@ -609,12 +566,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return 1
 
 	engineer
+		ammo = /obj/item/ammo/bullets/internal/shotgun/weak
 		New()
 			..()
 			src.name = replacetext("[src.name]", "12", "6") //only half as good
-			ammo = new/obj/item/ammo/bullets/a12/weak
-			current_projectile = new/datum/projectile/bullet/a12/weak
-
 
 /obj/item/gun/kinetic/riotgun
 	name = "Riot Shotgun"
@@ -624,18 +579,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotty"
 	force = 15.0
 	contraband = 5
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/abg
-		current_projectile = new/datum/projectile/bullet/abg
-		..()
+	ammo = /obj/item/ammo/bullets/internal/shotgun/rubber
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
@@ -645,17 +596,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ak47"
 	force = 30.0
 	contraband = 8
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/ak47
-		current_projectile = new/datum/projectile/bullet/ak47
-		..()
+	ammo = new/obj/item/ammo/bullets/ak47
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
@@ -665,18 +612,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ohr"
 	force = 10
 	contraband = 8
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/rifle_3006
-		current_projectile = new/datum/projectile/bullet/rifle_3006
-		..()
+	ammo = new/obj/item/ammo/bullets/rifle_3006
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "Tranquilizer Rifle"
@@ -686,17 +629,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "tranq"
 	force = 10
 	//contraband = 8
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/tranq_darts
-		current_projectile = new/datum/projectile/bullet/tranq_dart
-		..()
+	ammo = new/obj/item/ammo/bullets/tranq_darts
 
 /obj/item/gun/kinetic/zipgun
 	name = "Zip Gun"
@@ -704,23 +643,19 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "zipgun"
 	force = 3
 	contraband = 6
-	caliber = null // use any ammo at all BA HA HA HA HA
+	caliber = CALIBER_ANY // use any ammo at all BA HA HA HA HA
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
+	ammo = /obj/item/ammo/bullets/internal/zipgun
 
-	New()
 #if ASS_JAM
+	New()
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
 		new/obj/item/gun/kinetic/slamgun(T)
 		qdel(src)
 		return // Sorry! No zipguns during ASS JAM
-#else
-		ammo = new/obj/item/ammo/bullets/derringer
-		ammo.amount_left = 0 // start empty
-		current_projectile = new/datum/projectile/bullet/derringer
-		..()
 #endif
 
 	shoot(var/target,var/start ,var/mob/user)
@@ -748,17 +683,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	silenced = 1
 	force = 3
 	contraband = 4
-	caliber = 0.22
+	caliber = CALIBER_PISTOL_SMALL
 	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
 	has_empty_state = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/bullet_22HP
-		current_projectile = new/datum/projectile/bullet/bullet_22/HP
-		..()
+	ammo = new/obj/item/ammo/bullets/bullet_22/HP
 
 /obj/item/gun/kinetic/vgun
 	name = "Virtual Pistol"
@@ -767,11 +698,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10.0
 	contraband = 0
 	max_ammo_capacity = 200
-
-	New()
-		ammo = new/obj/item/ammo/bullets/vbullet
-		current_projectile = new/datum/projectile/bullet/vbullet
-		..()
+	ammo = new/obj/item/ammo/bullets/vbullet
 
 	shoot(var/target,var/start ,var/mob/user)
 		var/turf/T = get_turf(src)
@@ -789,14 +716,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flaregun"
 	force = 5.0
 	contraband = 2
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 1
 	has_empty_state = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/flare/single
-		current_projectile = new/datum/projectile/bullet/flare
-		..()
+	ammo = new/obj/item/ammo/bullets/internal/shotgun/flare
 
 /obj/item/gun/kinetic/riot40mm
 	desc = "A 40mm riot control launcher."
@@ -805,14 +728,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	//item_state = "flaregun"
 	force = 5.0
 	contraband = 7
-	caliber = 1.57
+	caliber = CALIBER_GRENADE
 	max_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
-
-	New()
-		ammo = new/obj/item/ammo/bullets/smoke/single
-		current_projectile = new/datum/projectile/bullet/smoke
-		..()
+	ammo = new/obj/item/ammo/bullets/internal/launcher/smoke
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
@@ -844,31 +763,25 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_range = 4
 	force = 5
 	contraband = 8
-	caliber = 1.58
+	caliber = CALIBER_RPG
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
 	has_empty_state = 1
-
-	New()
-		ammo = new /obj/item/ammo/bullets/rpg
-		ammo.amount_left = 0 // Spawn empty.
-		current_projectile = new /datum/projectile/bullet/rpg
-		..()
-		return
+	ammo = /obj/item/ammo/bullets/internal/launcher/rpg
 
 	update_icon()
 		..()
-		if (src.ammo.amount_left < 1)
+		if (src.loaded_magazine.len < 1)
 			src.item_state = "rpg7_empty"
 		else
 			src.item_state = "rpg7"
 
 	loaded
 		New()
+			src.loaded_magazine = new src.ammo(var_override = list("amount_left" = 1))
 			..()
-			ammo.amount_left = 1
 			src.update_icon()
 			return
 
@@ -879,26 +792,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flaregun"
 	force = 10.0
 	contraband = 6
-	caliber = 1.0
+	caliber = CALIBER_ROD
 	max_ammo_capacity = 2
-
-	New()
-		ammo = new/obj/item/ammo/bullets/rod
-		current_projectile = new/datum/projectile/bullet/rod
-		..()
+	ammo = /obj/item/ammo/bullets/rod
 
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
 	name = "Airzooka"
 	desc = "The new double action air projection device from Donk Co!"
 	icon_state = "airzooka"
 	max_ammo_capacity = 10
-	caliber = 4.6 // I rolled a dice
+	caliber = CALIBER_TRASHBAG // I rolled a dice
 	muzzle_flash = "muzzle_flash_launch"
-
-	New()
-		ammo = new/obj/item/ammo/bullets/airzooka
-		current_projectile = new/datum/projectile/bullet/airzooka
-		..()
+	ammo = new/obj/item/ammo/bullets/airzooka
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"
@@ -907,17 +812,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	max_ammo_capacity = 30
 	auto_eject = 1
 
 	continuous = 1
 	c_interval = 1.1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
-		current_projectile = new/datum/projectile/bullet/bullet_9mm/smg
-		..()
+	ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
 
 //  <([['v') - Gannets Nuke Ops Class Guns - ('u']])>  //
 
@@ -929,15 +830,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/bullet_9mm
-		current_projectile = new/datum/projectile/bullet/bullet_9mm
-		..()
+	ammo = new/obj/item/ammo/bullets/bullet_9mm
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
@@ -947,16 +844,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	max_ammo_capacity = 30
 	auto_eject = 0
 	hide_attack = 1
 	muzzle_flash = null
-
-	New()
-		ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
-		current_projectile = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
-		..()
+	ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 
 // scout
 /obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
@@ -966,27 +859,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotgun"
 	force = 5
 	contraband = 7
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 8
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
-
-	New()
-		ammo = new/obj/item/ammo/bullets/buckshot_burst
-		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
-		..()
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-/obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
-	name = "Oblivion"
-	New()
-		return
-
-*/ /////////////////////////////////////////////////////////////////////////////////////////
+	ammo = new/obj/item/ammo/bullets/internal/shotgun/buckshot_burst
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -997,7 +875,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "assault_rifle"
 	force = 20.0
 	contraband = 8
-	caliber = 0.223
+	caliber = CALIBER_ASSAULT_RIFLE
 	max_ammo_capacity = 30
 	auto_eject = 1
 	object_flags = NO_ARM_ATTACH
@@ -1005,43 +883,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	can_dual_wield = 0
 	spread_angle = 0
-
-	New()
-		ammo = new/obj/item/ammo/bullets/assault_rifle
-		current_projectile = new/datum/projectile/bullet/assault_rifle
-		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
-		..()
-
-	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
-		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
-			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
-				if(mode_was_burst) // we were in burst shot mode
-					current_projectile = new/datum/projectile/bullet/assault_rifle/burst/armor_piercing
-					projectiles = list(new/datum/projectile/bullet/assault_rifle/armor_piercing, current_projectile)
-				else // we were in single shot mode
-					current_projectile = new/datum/projectile/bullet/assault_rifle/armor_piercing
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
-			else // we switched from armor penetrating ammo to normal
-				if(mode_was_burst) // we were in burst shot mode
-					current_projectile = new/datum/projectile/bullet/assault_rifle/burst
-					projectiles = list(new/datum/projectile/bullet/assault_rifle, current_projectile)
-				else // we were in single shot mode
-					current_projectile = new/datum/projectile/bullet/assault_rifle
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
-
-	attack_self(mob/user as mob)
-		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
-			spread_angle = 12.5
-			shoot_delay = 4 DECI SECONDS
-		else
-			spread_angle = 0
-			shoot_delay = 3 DECI SECONDS
-
-
+	ammo = new/obj/item/ammo/bullets/assault_rifle
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
@@ -1052,9 +896,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	max_ammo_capacity = 100
 	auto_eject = 1
+	burst_count = 8
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -1068,10 +913,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	two_handed = 1
 	w_class = 4
+	ammo = new/obj/item/ammo/bullets/lmg
 
 	New()
-		ammo = new/obj/item/ammo/bullets/lmg
-		current_projectile = new/datum/projectile/bullet/lmg
 		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
 		..()
 
@@ -1088,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 10
-	caliber = 0.787
+	caliber = CALIBER_CANNON
 	max_ammo_capacity = 1
 	auto_eject = 1
 
@@ -1104,12 +948,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	muzzle_flash = "muzzle_flash_launch"
-
-
-	New()
-		ammo = new/obj/item/ammo/bullets/cannon/single
-		current_projectile = new/datum/projectile/bullet/cannon
-		..()
+	ammo = new/obj/item/ammo/bullets/cannon/single
 
 	setupProperties()
 		..()
@@ -1126,18 +965,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "grenade_launcher"
 	force = 5.0
 	contraband = 7
-	caliber = 1.57
+	caliber = CALIBER_GRENADE
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
 	object_flags = NO_ARM_ATTACH
 	auto_eject = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/grenade_round/explosive
-		ammo.amount_left = max_ammo_capacity
-		current_projectile = new/datum/projectile/bullet/grenade_round/explosive
-		..()
+	ammo = new/obj/item/ammo/bullets/internal/launcher/multi/explosive
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
@@ -1163,7 +997,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	inhand_image_icon = 'icons/obj/slamgun.dmi'
 	item_state = "slamgun-ready-world"
 	force = 9
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 1
 	auto_eject = 0
 	spread_angle = 10 // sorry, no sniping with slamguns
@@ -1172,17 +1006,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	ammo = /obj/item/ammo/bullets/internal/slamgun
 
 	New()
-		current_projectile = new/datum/projectile/bullet/nails
-		ammo = new /obj/item/ammo/bullets/a12
-		ammo.amount_left = 0 // Spawn empty.
-		..()
+		src.loaded_magazine = new src.ammo("max_amount" = 1)
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
 			w_class = 3
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+			if (src.loaded_magazine.len > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
@@ -1215,7 +1047,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.item_state = "slamgun-ready-world"
 		else
 			src.item_state = "slamgun-open-world"
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+			if (src.loaded_magazine.len > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
@@ -1230,7 +1062,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.sanitycheck(0, 1) == 0)
 				usr.show_text("You can't unload this gun.", "red")
 				return
-			if (src.ammo.amount_left <= 0)
+			if (src.loaded_magazine.len <= 0)
 				if ((src.casings_to_eject > 0))
 					if (src.sanitycheck(1, 0) == 0)
 						src.casings_to_eject = 0
@@ -1288,7 +1120,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	max_ammo_capacity = 4
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
@@ -1300,12 +1132,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = 4
-
+	ammo = new/obj/item/ammo/bullets/rifle_762_NATO
 	var/datum/movement_controller/snipermove = null
 
 	New()
-		ammo = new/obj/item/ammo/bullets/rifle_762_NATO
-		current_projectile = new/datum/projectile/bullet/rifle_762_NATO
 		snipermove = new/datum/movement_controller/sniper_look()
 		..()
 
@@ -1419,19 +1249,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flintlock"
 	force = 4
 	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
-	caliber = 0.58
-	max_ammo_capacity = 1 // It's magazine-fed (Convair880).
+	caliber = CALIBER_FLINTLOCK
 	auto_eject = null
 	var/failure_chance = 1
-
-	New()
-		ammo = new/obj/item/ammo/bullets/flintlock
-		current_projectile = new/datum/projectile/bullet/flintlock
-		..()
+	ammo = new/obj/item/ammo/bullets/internal/flintlock
 
 	shoot()
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+		if(src.loaded_magazine.mag_contents.len > 0 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
+			var/check_this_bullet = src.loaded_magazine.mag_contents[1]
+			failure_chance = max(10,min(33,round(check_this_bullet.caliber * (check_this_bullet.power/2))))
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
@@ -1452,18 +1278,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_speed = 2
 	throw_range = 4
 	force = 5
-	caliber = 1.12 //Based on APILAS
+	caliber = CALIBER_ROCKET //Based on APILAS
 	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
-
-	New()
-		ammo = new /obj/item/ammo/bullets/antisingularity
-		ammo.amount_left = 0 // Spawn empty.
-		current_projectile = new /datum/projectile/bullet/antisingularity
-		..()
-		return
+	ammo = new /obj/item/ammo/bullets/internal/rpg/antisingularity
 
 	setupProperties()
 		..()
@@ -1475,15 +1295,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "gungun"
 	item_state = "gungun"
 	w_class = 3
-	caliber = 3//fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
+	caliber = CALIBER_WHOLE_DERRINGER //fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
 	max_ammo_capacity = 6 //6 guns
 	force = 5
-
-	New()
-		ammo = new /obj/item/ammo/bullets/gun
-		ammo.amount_left = 6 //spawn full please
-		current_projectile = new /datum/projectile/special/spawner/gun
-		..()
+	ammo = new /obj/item/ammo/bullets/internal/launcher/multi/derringers
 
 /obj/item/gun/kinetic/meowitzer
 	name = "\improper Meowitzer"
@@ -1493,7 +1308,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	color = "#ff7b00"
 	force = 5
-	caliber = 20
+	caliber = CALIBER_CAT
 	max_ammo_capacity = 1
 	auto_eject = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1503,17 +1318,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown_time = 0
 	two_handed = 1
 	w_class = 4
-
-	New()
-		ammo = new/obj/item/ammo/bullets/meowitzer
-		current_projectile = new/datum/projectile/special/meowitzer
-		..()
+	ammo = new/obj/item/ammo/bullets/internal/launcher/cat
 
 	afterattack(atom/A, mob/user as mob)
-		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
-			src.ammo.amount_left += 1
+		if(src.loaded_magazine.mag_contents.len < src.loaded_magazine.max_amount && istype(A, /obj/critter/cat))
+			src.loaded_magazine.mag_contents += new src.ammo
 			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
-			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
+			var/datum/projectile/special/meowitzer/cat = src.loaded_magazine.mag_contents[1]
+			cat.icon_state = A.icon_state //match the cat sprite that we load
 			qdel(A)
 			return
 		else
@@ -1521,9 +1333,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/meowitzer/inert
 	New()
-		..()
 		ammo = new/obj/item/ammo/bullets/meowitzer/inert
-		current_projectile = new/datum/projectile/special/meowitzer/inert
+		..()
 
 
 
@@ -1535,7 +1346,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = 8.0
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	max_ammo_capacity = 30
 	auto_eject = 0
 
@@ -1547,12 +1358,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	var/cases_to_eject = 0
 	var/open = FALSE
-
-
-	New()
-		ammo = new/obj/item/ammo/bullets/nine_mm_NATO
-		current_projectile = new/datum/projectile/bullet/nine_mm_NATO/burst
-		..()
+	ammo = new/obj/item/ammo/bullets/nine_mm_NATO
 
 	attack_hand(mob/user as mob)
 		if(!user.find_in_hand(src))

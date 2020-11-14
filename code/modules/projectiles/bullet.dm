@@ -1,20 +1,22 @@
 ABSTRACT_TYPE(/datum/projectile/bullet)
 /datum/projectile/bullet
-//How much of a punch this has, tends to be seconds/damage before any resist
+	ammo_ID = "abstract_bullet"
+	ammo_name = "Abstract bullet"
+	///How much of a punch this has, tends to be seconds/damage before any resist
 	power = 45
-//How much ammo this costs
+	///How much ammo this costs
 	cost = 1
-//How fast the power goes away
+	///How fast the power goes away
 	dissipation_rate = 5
-//How many tiles till it starts to lose power
+	///How many tiles till it starts to lose power
 	dissipation_delay = 5
-//Kill/Stun ratio
+	///Kill/Stun ratio
 	ks_ratio = 1.0
-//name of the projectile setting, used when you change a guns setting
+	//name of the projectile setting, used when you change a guns setting
 	sname = "single shot"
-//file location for the sound you want it to play
+	///file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Gunshot.ogg'
-//How many projectiles should be fired, each will cost the full cost
+	///How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 
 	// caliber list: update as needed
@@ -60,6 +62,8 @@ toxic - poisons
 
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
+	ammo_ID = "bullet_22"
+	ammo_name = ".22 bullet"
 	power = 22
 	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
@@ -71,12 +75,16 @@ toxic - poisons
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 
 /datum/projectile/bullet/bullet_22/HP
+	ammo_ID = "bullet_22_HP"
+	ammo_name = ".22 hollow-point bullet"
 	power = 35
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22HP
 
-/datum/projectile/bullet/bullet_9mm
+/datum/projectile/bullet/bullet_9mm // little bigboy syndie pistol bullets
+	ammo_ID = "bullet_9mm"
+	ammo_name = "9mm JHP +P+ bullet"
 	name = "bullet"
 	power = 25
 	shot_sound = 'sound/weapons/smg_shot.ogg'
@@ -88,10 +96,14 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 
 	smg
+		ammo_ID = "bullet_9mm_smg"
+		ammo_name = "9mm JHP bullet"
 		power = 20
 
 /datum/projectile/bullet/custom
 	name = "bullet"
+	ammo_ID = "bullet_22_custom"
+	ammo_name = "custom-made .22 bullet"
 	power = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -102,6 +114,8 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_357
 	name = "bullet"
+	ammo_ID = "bullet_357"
+	ammo_name = ".357 magnum JHP bullet"
 	power = 60 // okay this can be made worse again now that crit isn't naptime
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -111,6 +125,8 @@ toxic - poisons
 	casing = /obj/item/casing/medium
 
 /datum/projectile/bullet/revolver_357/AP
+	ammo_ID = "bullet_357_AP"
+	ammo_name = ".357 magnum AP bullet"
 	power = 50
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
@@ -118,6 +134,8 @@ toxic - poisons
 
 /datum/projectile/bullet/staple
 	name = "staple"
+	ammo_ID = "bullet_staple"
+	ammo_name = "15mm 18gauge all-purpose staple"
 	power = 5
 	damage_type = D_KINETIC // don't staple through armor
 	hit_type = DAMAGE_BLUNT
@@ -129,6 +147,8 @@ toxic - poisons
 /datum/projectile/bullet/revolver_38
 	name = "bullet"
 	sname = "execute"
+	ammo_ID = "bullet_38"
+	ammo_name = ".38 JHP bullet"
 	power = 35
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_38
@@ -137,9 +157,13 @@ toxic - poisons
 	casing = /obj/item/casing/medium
 
 /datum/projectile/bullet/revolver_38/lb
+	ammo_ID = "bullet_38_lawbringer"
+	ammo_name = ".38 electro-lawslug"
 	shot_sound = 'sound/weapons/lb_execute.ogg'
 
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
+	ammo_ID = "bullet_38_AP"
+	ammo_name = ".38 AP bullet"
 	power = 35
 	implanted = /obj/item/implant/projectile/bullet_38AP
 	damage_type = D_PIERCING
@@ -147,6 +171,8 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_45
 	name = "bullet"
+	ammo_ID = "bullet_45"
+	ammo_name = ".45 FMJ bullet"
 	power = 35
 	ks_ratio = 1.0
 	hit_type = DAMAGE_CUT
@@ -155,8 +181,10 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
 
-/datum/projectile/bullet/nine_mm_NATO
+/datum/projectile/bullet/nine_mm_NATO // littleboy NTSO Clock-shot
 	name = "bullet"
+	ammo_ID = "bullet_9mm_ntso"
+	ammo_name = "9x19mm NTAO bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 6
 	ks_ratio = 0.9
@@ -177,15 +205,10 @@ toxic - poisons
 			if(M.getStatusDuration("slowed") < 2.5 SECONDS)
 				M.changeStatus("slowed", 1 SECOND, optional = 2)
 
-
-/datum/projectile/bullet/nine_mm_NATO/burst
-	shot_number = 3
-	cost = 3
-	sname = "burst fire"
-
-
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
+	ammo_ID = "bullet_3006_rifle"
+	ammo_name = ".30-06 magnum bullet"
 	power = 85
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
@@ -213,6 +236,8 @@ toxic - poisons
 
 /datum/projectile/bullet/rifle_762_NATO //like .308 but military
 	name = "bullet"
+	ammo_ID = "bullet_3006_sniper"
+	ammo_name = ".30-06 match bullet"
 	power = 70
 	icon_state = "sniper_bullet"
 	damage_type = D_PIERCING
@@ -246,6 +271,8 @@ toxic - poisons
 
 /datum/projectile/bullet/tranq_dart
 	name = "dart"
+	ammo_ID = "bullet_dart"
+	ammo_name = ".308 haloperidol dart cartridge"
 	power = 10
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringeproj"
@@ -262,28 +289,35 @@ toxic - poisons
 		return
 
 	syndicate
+		ammo_ID = "bullet_dart_thiopentol"
+		ammo_name = ".308 sodium thiopental dart cartridge"
 		reagent_payload = "sodium_thiopental" // HEH
 
 		pistol
+			ammo_ID = "bullet_dart_thiopental_355"
+			ammo_name = ".355 sodium thopental dart cartridge"
 			caliber = 0.355
 			casing = /obj/item/casing/small
 			shot_sound = 'sound/weapons/tranq_pistol.ogg'
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver
+		ammo_ID = "bullet_dart_lawbringer"
+		ammo_name = ".355 haloperidol electro-lawdart"
 		sname = "knockout"
 		caliber = 0.355
 		casing = /obj/item/casing/small
 		shot_sound = 'sound/weapons/tranq_pistol.ogg'
 
 	anti_mutant
+		ammo_ID = "bullet_dart_mutadone"
+		ammo_name = ".308 mutadone dart cartridge"
 		reagent_payload = "mutadone" // HAH
-
-
-
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
+	ammo_ID = "bullet_38_stun"
+	ammo_name = ".38 Shok-Mastr stun cartridge"
 	power = 20
 	ks_ratio = 0.0
 	dissipation_delay = 6 //One more tick before falloff begins
@@ -291,20 +325,10 @@ toxic - poisons
 	hit_type = null
 	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
 
-	/* this is now handled in the projectile parent on_hit for all ks_ratio 0.0 weapons.
-	on_hit(atom/hit) // adding this so these work like taser shots I guess, if this sucks feel free to remove it
-		if (ishuman(hit))
-			var/mob/living/carbon/human/H = hit
-			H.changeStatus("slowed", power)
-			H.change_misstep_chance(5)
-			H.emote("twitch_v")
-			if (H.getStatusDuration("slowed") > power)
-				H.changeStatus("stunned", power)
-		return*/
-
-
 /datum/projectile/bullet/derringer
 	name = "bullet"
+	ammo_ID = "bullet_41_derringer"
+	ammo_name = ".41 magnum shell"
 	shot_sound = 'sound/weapons/derringer.ogg'
 	power = 120
 	dissipation_delay = 1
@@ -325,6 +349,8 @@ toxic - poisons
 
 /datum/projectile/bullet/a12
 	name = "buckshot"
+	ammo_ID = "bullet_shotgun_magnum"
+	ammo_name = "12 gauge space-bear shotshell"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
@@ -361,11 +387,15 @@ toxic - poisons
 			..()
 
 	weak
+		ammo_ID = "bullet_shotgun_short"
+		ammo_name = "12 gauge space-bird shotshell"
 		power = 50 //can have a little throwing, as a treat
 
 
 /datum/projectile/bullet/airzooka
 	name = "airburst"
+	ammo_ID = "bullet_airzooka"
+	ammo_name = "Jannie's Choice (TM) 5-gallon trashbag"
 	shot_sound = 'sound/weapons/airzooka.ogg'
 	power = 0
 	ks_ratio = 1.0
@@ -391,6 +421,8 @@ toxic - poisons
 
 /datum/projectile/bullet/airzooka/bad
 	name = "plasmaburst"
+	ammo_ID = "bullet_airzooka_bad"
+	ammo_name = "Flubberized plasmatex sheet"
 	shot_sound = 'sound/weapons/airzooka.ogg'
 	power = 15
 	ks_ratio = 1.0
@@ -417,6 +449,8 @@ toxic - poisons
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
+	ammo_ID = "bullet_shotgun_explosive"
+	ammo_name = "12 gauge explosive space-yeti slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 25 // the damage should be more from the explosion
 	ks_ratio = 1.0
@@ -438,6 +472,8 @@ toxic - poisons
 	lawbringer
 		name = "lawbringer"
 		sname = "bigshot"
+		ammo_ID = "bullet_shotgun_explosive_lawbringer"
+		ammo_name = ".38 explosive space-tider slug"
 		power = 1
 		cost = 150
 
@@ -449,6 +485,8 @@ toxic - poisons
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
+	ammo_ID = "bullet_shotgun_rubber"
+	ammo_name = "12 gauge rubberized space-clown slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 24
 	ks_ratio = 0.2
@@ -478,6 +516,8 @@ toxic - poisons
 
 /datum/projectile/bullet/minigun
 	name = "bullet"
+	ammo_ID = "bullet_minigun"
+	ammo_name = ".308 ultralow-pressure \"Wrist-Saver\" bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 8
 	cost = 10
@@ -493,11 +533,15 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 
 /datum/projectile/bullet/minigun/turret
+	ammo_ID = "bullet_minigun_turret"
+	ammo_name = ".308 low-pressure \"Weld-Saver\" bullet"
 	power = 15
 	dissipation_delay = 8
 
 /datum/projectile/bullet/lmg
 	name = "bullet"
+	ammo_ID = "bullet_lmg"
+	ammo_name = ".308 lmg bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 12
 	cost = 8
@@ -520,6 +564,8 @@ toxic - poisons
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 /datum/projectile/bullet/lmg/weak
+	ammo_ID = "bullet_lmg_weak"
+	ammo_name = ".308 \"Blood-Driver\" flechette"
 	power = 1
 	cost = 2
 	shot_number = 16
@@ -531,6 +577,8 @@ toxic - poisons
 
 /datum/projectile/bullet/ak47
 	name = "bullet"
+	ammo_ID = "bullet_ak"
+	ammo_name = "7.62x39mm FMJ bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'
 	power = 40
 	cost = 3
@@ -545,6 +593,8 @@ toxic - poisons
 
 /datum/projectile/bullet/assault_rifle
 	name = "bullet"
+	ammo_ID = "bullet_ar"
+	ammo_name = ".221 FMJ bullet"
 	shot_sound = 'sound/weapons/ak47shot.ogg'  // todo: single shot sound?
 	power = 30
 	cost = 1
@@ -558,30 +608,15 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 
 	armor_piercing
+		ammo_ID = "bullet_ar_ap"
+		ammo_name = ".221 AP bullet"
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
-
-/datum/projectile/bullet/assault_rifle/burst
-	sname = "burst fire"
-	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 30
-	cost = 3
-	shot_number = 3
-
-	armor_piercing
-		damage_type = D_PIERCING
-		hit_type = DAMAGE_STAB
-
-/*
-/datum/projectile/bullet/revolver_357/AP
-	power = 50
-	damage_type = D_PIERCING
-	hit_type = DAMAGE_STAB
-	implanted = /obj/item/implant/projectile/bullet_357AP
-*/
 
 /datum/projectile/bullet/vbullet
 	name = "virtual bullet"
+	ammo_ID = "bullet_vr"
+	ammo_name = "Virtual Bullet"
 	shot_sound = 'sound/weapons/Gunshot.ogg'
 	power = 10
 	cost = 1
@@ -594,6 +629,8 @@ toxic - poisons
 
 /datum/projectile/bullet/flare
 	name = "flare"
+	ammo_ID = "bullet_shotgun_flare"
+	ammo_name = "12 gauge incendiary space-wendigo slug"
 	sname = "hotshot"
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	power = 20
@@ -622,12 +659,17 @@ toxic - poisons
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
+	ammo_ID = "bullet_shotgun_flare_ufo"
+	ammo_name = "UFO plasma cell"
 	window_pass = 1
 	icon_state = "plasma"
 	casing = null
 
 /datum/projectile/bullet/shrapnel // for explosions
 	name = "shrapnel"
+	ammo_ID = "bullet_shrapnel"
+	ammo_name = "jagged piece of metal"
+	ammo_name_plural = "jagged pieces of metal"
 	power = 10
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_CUT
@@ -639,6 +681,8 @@ toxic - poisons
 
 /datum/projectile/bullet/cannon // autocannon should probably be renamed next
 	name = "cannon round"
+	ammo_ID = "bullet_cannon"
+	ammo_name = "20mm armor-piercing high-explosive \"Badman\" shell"
 	brightness = 0.7
 	window_pass = 0
 	icon_state = "20mmAPHE"
@@ -723,23 +767,10 @@ toxic - poisons
 				T.throw_shrapnel(T, 1, 1)
 				T.ex_act(2)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /datum/projectile/bullet/autocannon
 	name = "HE grenade"
+	ammo_ID = "bullet_grenade_he"
+	ammo_name = "40mm high-explosive grenade cartridge"
 	window_pass = 0
 	icon_state = "40mmR"
 	damage_type = D_KINETIC
@@ -758,6 +789,8 @@ toxic - poisons
 
 	knocker
 		name = "breaching round"
+		ammo_ID = "bullet_grenade_breaching"
+		ammo_name = "40mm \"All-Access\" door-breaching grenade cartridge"
 		power = 10
 		on_hit(atom/hit)
 			if(istype(hit , /obj/machinery/door))
@@ -767,6 +800,8 @@ toxic - poisons
 			explosion_new(null, get_turf(hit), 4, 1.75)
 
 	plasma_orb
+		ammo_ID = "bullet_autocannon_fusion"
+		ammo_name = "40mm plasma autocannon shell"
 		name = "fusion orb"
 		damage_type = D_BURNING
 		hit_type = null
@@ -782,6 +817,8 @@ toxic - poisons
 		casing = null
 
 	huge
+		ammo_ID = "bullet_autocannon_huge"
+		ammo_name = "400mm \"Shuttle-Call\" higher-explosive autocannon cartridge"
 		icon_state = "400mm"
 		power = 100
 		caliber = 15.7
@@ -791,6 +828,8 @@ toxic - poisons
 			explosion_new(null, get_turf(hit), 80)
 
 	seeker
+		ammo_ID = "bullet_grenade_droneseeker"
+		ammo_name = "40mm \"X-Dead\" drone-seeking grenade cartridge"
 		name = "drone-seeking grenade"
 		power = 50 //even if they don't explode, you FEEL this one
 		var/max_turn_rate = 20
@@ -849,6 +888,8 @@ toxic - poisons
 			P.rotateDirection(max(-max_turn_rate, min(max_turn_rate, sign * relang)))
 
 		pod_seeking
+			ammo_ID = "bullet_grenade_podseeker"
+			ammo_name = "40mm \"Putt-Driver\" pod-seeking grenade cartridge"
 			name = "pod-seeking grenade"
 			type_to_seek = /obj/machinery/vehicle
 			on_hit(atom/hit)
@@ -858,11 +899,15 @@ toxic - poisons
 					V.health -= V.maxhealth / 4 //a little extra punch in the face
 
 		ghost
+			ammo_ID = "bullet_grenade_ghostseeker"
+			ammo_name = "40mm \"Diablo\" soul-seeking grenade cartridge" // not even death can save you from me
 			name = "pod-seeking grenade"
 			type_to_seek = /mob/dead/observer
 
 /datum/projectile/bullet/grenade_round
 	name = "40mm round"
+	ammo_ID = "bullet_grenade_nonexplosive"
+	ammo_name = "40mm \"Marv\" slug cartridge"
 	window_pass = 0
 	icon_state = "40mmR"
 	damage_type = D_KINETIC
@@ -878,11 +923,15 @@ toxic - poisons
 
 	explosive
 		name = "40mm HEDP round"
+		ammo_ID = "bullet_grenade_hedp"
+		ammo_name = "40mm \"Sensible\" high-explosive dual-purpose grenade cartridge"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 2.5, 1.75)
 
 	high_explosive //more powerful than HEDP
+		ammo_ID = "bullet_grenade_he2"
+		ammo_name = "40mm \"Reasonable\" higher-explosive grenade cartridge"
 		name = "40mm HE round"
 		power = 10
 
@@ -892,6 +941,8 @@ toxic - poisons
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /datum/projectile/bullet/rpg
 	name = "MPRT rocket"
+	ammo_ID = "bullet_rpg"
+	ammo_name = "MPRT \"Fluke\" rocket-propelled grenade"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
@@ -980,6 +1031,8 @@ toxic - poisons
 		return ..()
 
 /datum/projectile/bullet/smoke
+	ammo_ID = "bullet_grenade_smoke"
+	ammo_name = "40mm smoke grenade cartridge"
 	name = "smoke grenade"
 	sname = "smokeshot"
 	window_pass = 0
@@ -1026,6 +1079,8 @@ toxic - poisons
 
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
+	ammo_ID = "bullet_grenade_baton"
+	ammo_name = "40mm plastic baton cartridge"
 	shot_sound = 'sound/weapons/launcher.ogg'
 	power = 50
 	ks_ratio = 0.5
@@ -1061,6 +1116,8 @@ toxic - poisons
 
 /datum/projectile/bullet/glitch
 	name = "bullet"
+	ammo_ID = "bullet_glitch"
+	ammo_name = "src.die()"
 	window_pass = 1
 	icon_state = "glitchproj"
 	damage_type = D_KINETIC
@@ -1087,10 +1144,14 @@ toxic - poisons
 		playsound(hit, "sound/machines/glitch3.ogg", 50, 1)
 
 /datum/projectile/bullet/glitch/gun
+	ammo_ID = "bullet_glitch_gun"
+	ammo_name = "text += "\[DEAD\]\""
 	power = 1
 
 /datum/projectile/bullet/rod // for the coilgun
 	name = "metal rod"
+	ammo_ID = "bullet_metal_rod"
+	ammo_name = "inanimate conductive rod"
 	power = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
@@ -1107,6 +1168,8 @@ toxic - poisons
 
 /datum/projectile/bullet/frog/ //sorry for making this, players -ZeWaka
 	name = "green splat" //thanks aibm for wording this beautifully
+	ammo_ID = "bullet_frog"
+	ammo_name = "welcoming frog"
 	window_pass = 0
 	icon_state = "acidspit"
 	hit_type = null
@@ -1125,6 +1188,8 @@ toxic - poisons
 		hit.UpdateOverlays(image('icons/misc/frogs.dmi', "icon_state" = "getin"), "getin") //why did i code this
 
 /datum/projectile/bullet/frog/getout
+	ammo_ID = "bullet_frog_out"
+	ammo_name = "not-so-welcoming frog"
 	sname = "Get Out"
 
 	on_hit(atom/hit)
@@ -1133,6 +1198,8 @@ toxic - poisons
 
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"
+	ammo_ID = "bullet_flak_chunk"
+	ammo_name = "flak chunk"
 	sname = "flak chunk"
 	icon_state = "trace"
 	shot_sound = null
@@ -1143,6 +1210,8 @@ toxic - poisons
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
+	ammo_ID = "bullet_shotgun_pellet"
+	ammo_name = "12 gauge pellet"
 	sname = "buckshot"
 	icon_state = "trace"
 	power = 6
@@ -1152,6 +1221,8 @@ toxic - poisons
 
 /datum/projectile/bullet/nails
 	name = "nails"
+	ammo_ID = "bullet_nail"
+	ammo_name = "18 gauge brad nail"
 	sname = "nails"
 	icon_state = "trace"
 	power = 4
@@ -1162,6 +1233,8 @@ toxic - poisons
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
+	ammo_ID = "bullet_grenade_conversion"
+	ammo_name = "40mm grenade conversion shell"
 	window_pass = 0
 	icon_state = "40mmR"
 	damage_type = D_KINETIC
@@ -1268,6 +1341,8 @@ toxic - poisons
 
 /datum/projectile/bullet/flintlock
 	name = "bullet"
+	ammo_ID = "bullet_flintlock"
+	ammo_name = ".58 blackpowder cartridge"
 	power = 100
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
@@ -1295,6 +1370,8 @@ toxic - poisons
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
+	ammo_ID = "bullet_rpg_antisingulo"
+	ammo_name = "rocket-propelled quantum multiplicity field generator"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "regrocket"
@@ -1326,6 +1403,8 @@ toxic - poisons
 
 /datum/projectile/bullet/clownshot
 	name = "clownshot"
+	ammo_ID = "bullet_clownshot_lawbringer"
+	ammo_name = ".42 merriment-suppression device"
 	sname = "clownshot"
 	power = 1
 	cost = 15				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
@@ -1360,6 +1439,8 @@ toxic - poisons
 
 /datum/projectile/bullet/mininuke //Assday only.
 	name = "miniature nuclear warhead"
+	ammo_ID = "bullet_mininuke"
+	ammo_name = "M68 \"Popey Crunchett\" tactical thermonuclear device"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "mininuke"
@@ -1383,6 +1464,8 @@ toxic - poisons
 
 /datum/projectile/bullet/spike
 	name = "spike"
+	ammo_ID = "bullet_spike"
+	ammo_name = "spike"
 	sname = "spike"
 	icon_state = "spike"
 	power = 7.2

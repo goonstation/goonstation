@@ -100,3 +100,58 @@
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
+
+// Guns'n'ammo defines
+// Ammo item types
+/// A naked pile of ammunition, like a box of shells, or belt of bullets
+#define AMMO_PILE "ammo_pile"
+/// A clip-like device that holds bullets, for quick loading into an internal magazine
+#define AMMO_CLIP "ammo_clip"
+/// A mechanism that feeds bullets into a gun, designed to be swapped out to reload
+#define AMMO_MAGAZINE "ammo_magazine"
+/// A box designed to hold a belt of bullets, typically for machine guns
+/// Basically just a mag that's really easy to load and unload bullets into/from
+#define AMMO_BOX "ammo_box"
+/// A battery, uses a number to determine remaining ammo
+#define AMMO_ENERGY "ammo_energy"
+// Ammo numbering defines
+/// The max number of unique ammotypes that can fit into a magazine/pile/etc
+#define MAX_UNIQUE_AMMO_TYPES 10
+/// The max total number of bullets that can fit into any magazine/pile/etc though normal means
+#define MAX_MAGAZINE_CAPACITY 2000
+// Ammo caliber defines
+#define CALIBER_ASSAULT_RIFLE 0.223
+#define CALIBER_HEAVY_RIFLE 0.308
+#define CALIBER_PISTOL 0.355
+#define CALIBER_PISTOL_SMALL 0.22
+#define CALIBER_MINIGUN 0.10
+#define CALIBER_CAT 9.5
+#define CALIBER_TRASHBAG 9.5
+#define CALIBER_REVOLVER_MAGNUM 0.357
+#define CALIBER_REVOLVER_OLDTIMEY 0.45
+#define CALIBER_REVOLVER 0.38
+#define CALIBER_DERRINGER 0.41
+#define CALIBER_WHOLE_DERRINGER 3.00
+#define CALIBER_SHOTGUN 0.72
+#define CALIBER_CANNON 0.787
+#define CALIBER_GRENADE 1.57
+#define CALIBER_ROCKET 1.12
+#define CALIBER_RPG 1.58
+#define CALIBER_ROD 1.00
+#define CALIBER_FLINTLOCK 0.56
+#define CALIBER_BATTERY 1.30
+#define CALIBER_ANY -1
+// Gun flags
+/// Accepts ammo piles
+#define ACCEPT_PILE (1<<0)
+/// Accepts ammo clips
+#define ACCEPT_CLIP (1<<1)
+/// Accepts ammo magazines
+#define ACCEPT_MAGAZINE (1<<2)
+/// Accepts ammo boxes
+#define ACCEPT_BOX (1<<3)
+/// Accepts ammo boxes
+#define ACCEPT_ENERGY (1<<4)
+// Gun Defs
+/// Return when currently shooting
+#define GUN_IS_SHOOTING 2

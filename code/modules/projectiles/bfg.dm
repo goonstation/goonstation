@@ -1,5 +1,7 @@
 /datum/projectile/bfg
 	name = "BFG shot"
+	ammo_ID = "bfg_shot"
+	ammo_name = "40 energy cells"
 	icon_state = "bfg"
 	power = 400
 	cost = 100

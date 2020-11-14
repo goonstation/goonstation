@@ -31,10 +31,46 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/suppress_fire_msg = 0
 
+	/// Currently loaded magazine, shoot will read whatever's in its mag_contents to determine what to shoot
+	/// Should be null here
+	var/obj/item/ammo/loaded_magazine
+	/// Magazine to load into the gun when spawned. Vars can be overridden in New()
+	/// Should *not* be null, empty guns should have at least some kind of obj/item/ammo/bullets/empty
+	var/obj/item/ammo/ammo = /obj/item/ammo/bullets/empty
+	/// Checks against the magazine's caliber to see if it'll hold it
+	var/caliber = CALIBER_ANY // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+	/// What kind(s) of magazine do we accept?
+	/// Set to ACCEPT_ENERGY to make the gun an energy weapon
+	var/accepted_mag = (ACCEPT_PILE | ACCEPT_CLIP)
+	/// Is the magazine fixed in place and cant be removed, like a shotgun? Makes most sense with accepted_mag AMMO_PILE and AMMO_CLIP
+	var/fixed_mag = TRUE
+
+	/// Overrides the bullet's own shoot-sound. Uses bullet's sound if null
+	var/shoot_sound
+	/// Overrides the bullet's own shoot-sound, but when the gun is silenced. Uses bullet's sound if null
+	var/shoot_sound_silenced
+	/// Sound it plays when out of ammo
+	var/shoot_sound_empty = "sound/weapons/Gunclick.ogg"
+
+	/// Infinite Ammo -- Magazine list isnt changed on firing
+	/// Projectile Override -- Shoot default projectile instead of what's in the mag's list
+
+	var/has_empty_state = 0 //does this gun have a special icon state for having no ammo lefT?
+	var/gildable = 0 //can this gun be affected by the [Helios] medal reward?
+
+	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
+	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
+
+	var/allowReverseReload = 1 //Use gun on ammo to reload
+	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
+
 	var/spread_angle = 0
 	var/datum/projectile/current_projectile = null
+	/// Gun can switch between different projectiles. Also means it ignores entries in the magazine.
+	/// Works best with AMMO_ENERGY magazines.
 	var/list/projectiles = null
 	var/current_projectile_num = 1
+
 	var/silenced = 0
 	var/can_dual_wield = 1
 
@@ -47,6 +83,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
 
+	/// Number of times to shoot the gun when asked to shoot
+	var/burst_count = 1
+	/// Time between shots
+	var/refire_delay = (0.7 DECI SECONDS)
+	/// List of firemodes, changes how the gun fires
+	/// structure: list(list("name" = "name of mode", "burst_count" = burst, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = null))
+	/// if left blank, New() will set the first firemode to the default settings
+	var/list/firemodes
+	/// Our current firemode's index
+	var/firemode_index = 1
+
+	/// Currently shooting, so don't accept more requests to shoot
+	var/shooting = 0
+
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	buildTooltipContent()
@@ -56,6 +106,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
+		if(!src.loaded_magazine.len)
+			src.loaded_magazine = new src.ammo
+		if(!src.firemodes.len)
+			src.firemodes = list(list("name" = "single shot", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "projectile" = null))
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -116,9 +170,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
-///Return 0 for fail
+///return FALSE for fail
 /obj/item/gun/proc/check_lock(var/user as mob)
-	return 1
+	return TRUE
 
 ///CHECK_VALID_SHOT
 ///Call to check and make sure the shot is ok
@@ -127,29 +181,35 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(target)
 	if(!istype(T) || !istype(U))
-		return 0
+		return FALSE
 	if (U == T)
 		//user.bullet_act(current_projectile)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /*
 /obj/item/gun/proc/emag(obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/card/emag))
 		boutput(user, "<span class='alert'>No lock to break!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 */
 /obj/item/gun/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
 		boutput(user, "<span class='alert'>No lock to break!</span>")
-	return 0
+	return FALSE
 
 /obj/item/gun/attack_self(mob/user as mob)
-	if(src.projectiles && src.projectiles.len > 1)
-		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
-		src.current_projectile = src.projectiles[src.current_projectile_num]
-		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
-	return
+	if(src.firemodes.len > 1)
+		if(src.firemode_index += 1 > round(src.firemodes.len))
+			src.firemode_index = 1
+		var/current_firemode = src.firemodes[src.firemode_index]
+		src.shoot_delay = current_firemode["shoot_delay"]
+		src.burst_count = current_firemode["burst_count"]
+		src.refire_delay = current_firemode["refire_delay"]
+		src.spread_angle = current_firemode["spread_angle"]
+		if(istype(current_firemode["projectile"], /datum/projectile))
+			src.current_projectile = current_firemode["projectile"]
+		boutput(user, "<span class='notice'>you set [src] to [src.current_firemode["name"]].</span>")
 
 /datum/action/bar/icon/guncharge
 	duration = 150
@@ -176,15 +236,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	onEnd()
 		..()
-		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
+		ownerGun.shoot_manager(target_turf, user_turf, owner, pox, poy)
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
-		return 0
+		return FALSE
 	if (!isturf(user.loc))
-		return 0
+		return FALSE
 	if(continuous && !continuousFire)
-		return 0
+		return FALSE
 
 	var/pox = text2num(params["icon-x"]) - 16
 	var/poy = text2num(params["icon-y"]) - 16
@@ -193,9 +253,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(charge_up && !can_dual_wield && canshoot())
 		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 	else
-		if(canshoot())
-			user.next_click = max(user.next_click, world.time + src.shoot_delay)
-		shoot(target_turf, user_turf, user, pox, poy)
+		shoot_manager(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up))
@@ -204,12 +262,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				if (user.r_hand:canshoot())
 					user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.r_hand:shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
 				if (user.l_hand:canshoot())
 					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.l_hand:shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
@@ -221,10 +279,37 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			SPAWN_DBG(0)
 				for(var/obj/item/gun/gun in guns)
 					sleep(0.2 SECONDS)
-					gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					gun.shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+	return TRUE
 
+/// Handles bursts, fire-rate, updating loaded magazine, etc
+/obj/item/gun/shoot_manager(atom/target, params, mob/user, reach, continuousFire = 0)
+	var/canshoot = src.can_shoot()
+	if (!canshoot)
+		src.dry_fire(user)
+		return FALSE
+	else if (canshoot == GUN_IS_SHOOTING)
+		return FALSE
+	else if(canshoot == TRUE)
+		user.next_click = max(user.next_click, world.time + src.shoot_delay)
+	SPAWN_DBG(0)
+		src.shooting = 1
+		for(var/burst in 1 to src.burst_count)
+			var/shoot_result = shoot(target_turf, user_turf, user, pox, poy)
+			if(shoot_result == FALSE)
+				break
+		src.shooting = 0
 
-	return 1
+// Gun can't fire
+/obj/item/gun/dry_fire(mob/user, var/point_blank)
+	if(..()) return
+	if (!silenced)
+		if(point_blank)
+			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
+		playsound(user, src.shoot_sound_empty, 60, 1)
+	else
+		user.show_text("*click* *click*", "red")
+
 
 /obj/item/gun/attack(mob/M as mob, mob/user as mob)
 	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
@@ -252,10 +337,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
 		return
-
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
+		return FALSE
+	if (!istype(src.current_projectile,/datum/projectile/))
+		return FALSE
+	if (!process_ammo(user))
+		return FALSE
 
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
@@ -277,15 +365,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					else
 						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
 
-
-	if (!canshoot())
-		if (!silenced)
-			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-		else
-			user.show_text("*click* *click*", "red")
-		return
-
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
 		var/mob/living/carbon/human/H = user
 		H.gunshot_residue = 1
@@ -296,9 +375,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
 		user.show_text("<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
-
-	if (!process_ammo(user))
-		return
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -356,21 +432,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return
 
 /obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	if (get_dist(user,target)<=1)
+		src.shoot_point_blank(M = target, user = user)
+		return
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return
-	if (!canshoot())
-		if (ismob(user))
-			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
-			if (!silenced)
-				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-		return
-	if (!process_ammo(user))
-		return
+		return FALSE
 	if (!isturf(target) || !isturf(start))
-		return
+		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
+		return FALSE
+	var/canshoot = src.can_shoot()
+	if (!canshoot)
+		src.dry_fire(user)
 		return
+	else if (canshoot == GUN_IS_SHOOTING)
+		return
+	else if(canshoot == TRUE)
+		user.next_click = max(user.next_click, world.time + src.shoot_delay)
+	if (!process_ammo(user)) // does magazine stuff
+		return FALSE
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -424,8 +505,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	src.update_icon()
 
+// Checks if the gun is able to shoot
 /obj/item/gun/proc/canshoot()
-	return 0
+	if(!src.loaded_magazine)
+		return FALSE
+	if(src.shooting)
+		return GUN_SHOOTING
+	if(src.loaded_magazine.mag_type & AMMO_ENERGY)
+		if(src.loaded_magazine.charge < src.current_projectile.cost)
+			return FALSE
+	else
+		if(!istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
+			return FALSE
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -433,13 +524,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return ..()
 
 /obj/item/gun/proc/update_icon()
-	return 0
+	return FALSE
 
+/// Checks if it can shoot, then deducts ammo from the magazine
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, "<span class='alert'>*click* *click*</span>")
-	if (!src.silenced)
-		playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-	return 0
+	if(src.loaded_magazine.mag_type & AMMO_ENERGY)
+		if(!istype(src.current_projectile, /datum/projectile))
+			src.loaded_magazine.charge -= src.current_projectile.cost
+			return TRUE
+	else
+		if(istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
+			src.current_projectile = src.loaded_magazine.mag_contents[1]
+			src.loaded_magazine.mag_contents.Cut(1,2)
+			return TRUE
+	return FALSE
 
 // Could be useful in certain situations (Convair880).
 /obj/item/gun/proc/logme_temp(mob/user as mob, obj/item/gun/G as obj, obj/item/ammo/A as obj)
@@ -459,9 +557,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/custom_suicide = 1
 /obj/item/gun/suicide(var/mob/living/carbon/human/user as mob)
 	if (!src.user_can_suicide(user))
-		return 0
+		return FALSE
 	if (!src.canshoot())
-		return 0
+		return FALSE
 
 	src.process_ammo(user)
 	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
@@ -472,7 +570,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.TakeDamage("head", 500, 0)
 	else if (new_dmg < (dmg + 20))
 		user.visible_message("<span class='alert'>[user] hangs their head in shame because they chose such a weak gun.</span>")
-	return 1
+	return TRUE
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	. = ..(user)

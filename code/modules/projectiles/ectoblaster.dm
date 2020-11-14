@@ -1,5 +1,7 @@
 /datum/projectile/ectoblaster
 	name = "ectobolt"
+	ammo_ID = "ectoblaster"
+	ammo_name = "ectoplasmic recorporialization cell"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ecto"
 	power = 4
