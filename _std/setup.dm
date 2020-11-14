@@ -59,7 +59,6 @@
 #define LOOC_RANGE 8
 
 //Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
-/*
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
@@ -67,7 +66,6 @@
 #else
 #define ASS_JAM 0
 #endif
-*/
 
 // holiday toggles!
 
@@ -83,6 +81,7 @@
 
 #define FOOTBALL_MODE 1
 //#define RP_MODE
+//#define ASS_JAM_ENABLED 1 //you need to set BUILD_TIME_DAY to 13 manually in __build.dm
 
 //handles ass jam stuff
 #if ASS_JAM
