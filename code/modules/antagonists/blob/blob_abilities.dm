@@ -250,7 +250,7 @@
 		//sound and sound code additions by retkid#9135, coding assitance by pali#0439 and Paul#7955
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		playsound(T, 'sound/voice/blob/blob23.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blob23.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
@@ -372,7 +372,7 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
-		playsound(T, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
 		if (!owner.starter_buff)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -413,7 +413,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		playsound(T, 'sound/voice/blob/blob23.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blob23.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -442,7 +442,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		playsound(T, "sound/voice/blob/blob[pick("16","17","18")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("16","17","18")].ogg", 50, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -481,7 +481,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-		playsound(T, "sound/voice/blob/blob[pick("12","23")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("12","23")].ogg", 50, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))
@@ -696,7 +696,7 @@
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
-		playsound(T, "sound/voice/blob/blob[pick("15","16")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("15","16")].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
@@ -972,7 +972,7 @@
 			owner.gen_rate_used++
 		src.deduct_bio_points()
 		src.do_cooldown()
-		playsound(T, "sound/voice/blob/blob[pick("15","16","28","29","30")].ogg", 75, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("15","16","28","29","30")].ogg", 75, 1)
 
 /datum/blob_ability/build/lipid
 	name = "Build Lipid Cell"
@@ -1124,18 +1124,19 @@
 			return 1
 		if (!tutorial_check())
 			return 1
-			if (prob(80))
-				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
-			else if (prob(10))
-				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
-			else if (prob(10))
-				owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 		if (!(src in owner.upgrades))
 			owner.upgrades += src
 		if (repeatable > 0)
 			repeatable--
 		if (repeatable == 0)
 			owner.available_upgrades -= src
+//using this line to seperate my sounds. I think of it seperate so i try to indent it when i cant but i cannot here
+		if (prob(80))
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
+		else if (prob(10))
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
+		else if (prob(10))
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
 		owner.update_buttons()
 
