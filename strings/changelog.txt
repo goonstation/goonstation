@@ -1,5 +1,9 @@
 
 (t)sat nov 14 20
+(u)Retrino
+(p)2686
+(e)🎨|sprites
+(+)Added pink and orange hat sprites, printable from uniform and hop fabricators. Adjusts the psychedelic hat
 (u)virvatuli
 (p)2689
 (e)🎨|sprites
