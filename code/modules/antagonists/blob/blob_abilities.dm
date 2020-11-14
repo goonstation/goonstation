@@ -633,7 +633,7 @@
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4
-
+			playsound(src.loc, "sound/voice/blob/blob[pick("26")].ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -1133,9 +1133,9 @@
 //using this line to seperate my sounds. I think of it seperate so i try to indent it when i cant but i cannot here
 		if (prob(80))
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
-		else if (prob(10))
+		else if (prob(50))
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
-		else if (prob(10))
+		else
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
 		owner.update_buttons()
