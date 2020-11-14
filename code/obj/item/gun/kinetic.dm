@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	muzzle_flash = null
 	has_empty_state = 1
-	ammo = new/obj/item/ammo/bullets/bullet_22/faith
+	ammo = /obj/item/ammo/bullets/bullet_22/faith
 
 /obj/item/gun/kinetic/detectiverevolver
 	name = "Detective Special revolver"
@@ -470,9 +470,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			item_state = "glocktan"
 
 		if(throw_return)
-			ammo = new/obj/item/ammo/bullets/nine_mm_NATO/boomerang
+			ammo = /obj/item/ammo/bullets/nine_mm_NATO/boomerang
 		else
-			ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+			ammo = /obj/item/ammo/bullets/nine_mm_NATO
 
 		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
 
@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
-	ammo = new/obj/item/ammo/bullets/ak47
+	ammo = /obj/item/ammo/bullets/ak47
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	has_empty_state = 1
 	gildable = 1
-	ammo = new/obj/item/ammo/bullets/rifle_3006
+	ammo = /obj/item/ammo/bullets/rifle_3006
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "Tranquilizer Rifle"
@@ -635,7 +635,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
-	ammo = new/obj/item/ammo/bullets/tranq_darts
+	ammo = /obj/item/ammo/bullets/tranq_darts
 
 /obj/item/gun/kinetic/zipgun
 	name = "Zip Gun"
@@ -689,7 +689,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	hide_attack = 1
 	muzzle_flash = null
 	has_empty_state = 1
-	ammo = new/obj/item/ammo/bullets/bullet_22/HP
+	ammo = /obj/item/ammo/bullets/bullet_22/HP
 
 /obj/item/gun/kinetic/vgun
 	name = "Virtual Pistol"
@@ -698,7 +698,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10.0
 	contraband = 0
 	max_ammo_capacity = 200
-	ammo = new/obj/item/ammo/bullets/vbullet
+	ammo = /obj/item/ammo/bullets/vbullet
 
 	shoot(var/target,var/start ,var/mob/user)
 		var/turf/T = get_turf(src)
@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = CALIBER_SHOTGUN
 	max_ammo_capacity = 1
 	has_empty_state = 1
-	ammo = new/obj/item/ammo/bullets/internal/shotgun/flare
+	ammo = /obj/item/ammo/bullets/internal/shotgun/flare
 
 /obj/item/gun/kinetic/riot40mm
 	desc = "A 40mm riot control launcher."
@@ -731,7 +731,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = CALIBER_GRENADE
 	max_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = new/obj/item/ammo/bullets/internal/launcher/smoke
+	ammo = /obj/item/ammo/bullets/internal/launcher/smoke
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
@@ -803,7 +803,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 10
 	caliber = CALIBER_TRASHBAG // I rolled a dice
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = new/obj/item/ammo/bullets/airzooka
+	ammo = /obj/item/ammo/bullets/airzooka
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"
@@ -818,7 +818,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	continuous = 1
 	c_interval = 1.1
-	ammo = new/obj/item/ammo/bullets/bullet_9mm/smg
+	ammo = /obj/item/ammo/bullets/bullet_9mm/smg
 
 //  <([['v') - Gannets Nuke Ops Class Guns - ('u']])>  //
 
@@ -834,7 +834,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
-	ammo = new/obj/item/ammo/bullets/bullet_9mm
+	ammo = /obj/item/ammo/bullets/bullet_9mm
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 0
 	hide_attack = 1
 	muzzle_flash = null
-	ammo = new/obj/item/ammo/bullets/tranq_darts/syndicate/pistol
+	ammo = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 
 // scout
 /obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
@@ -864,7 +864,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
-	ammo = new/obj/item/ammo/bullets/internal/shotgun/buckshot_burst
+	ammo = /obj/item/ammo/bullets/internal/shotgun/buckshot_burst
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -883,7 +883,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	can_dual_wield = 0
 	spread_angle = 0
-	ammo = new/obj/item/ammo/bullets/assault_rifle
+	ammo = /obj/item/ammo/bullets/assault_rifle
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
 	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
 
@@ -913,7 +913,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	two_handed = 1
 	w_class = 4
-	ammo = new/obj/item/ammo/bullets/lmg
+	ammo = /obj/item/ammo/bullets/lmg
 
 	New()
 		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
@@ -948,7 +948,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = new/obj/item/ammo/bullets/cannon/single
+	ammo = /obj/item/ammo/bullets/cannon/single
 
 	setupProperties()
 		..()
@@ -971,7 +971,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	object_flags = NO_ARM_ATTACH
 	auto_eject = 1
-	ammo = new/obj/item/ammo/bullets/internal/launcher/multi/explosive
+	ammo = /obj/item/ammo/bullets/internal/launcher/multi/explosive
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
@@ -1132,7 +1132,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = 4
-	ammo = new/obj/item/ammo/bullets/rifle_762_NATO
+	ammo = /obj/item/ammo/bullets/rifle_762_NATO
 	var/datum/movement_controller/snipermove = null
 
 	New()
@@ -1232,7 +1232,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 
 	New()
-		ammo = new/obj/item/ammo/bullets/cannon
+		ammo = /obj/item/ammo/bullets/cannon
 		current_projectile = new/datum/projectile/bullet/cannon
 		snipermove = new/datum/movement_controller/sniper_look()
 		..()
@@ -1252,7 +1252,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = CALIBER_FLINTLOCK
 	auto_eject = null
 	var/failure_chance = 1
-	ammo = new/obj/item/ammo/bullets/internal/flintlock
+	ammo = /obj/item/ammo/bullets/internal/flintlock
 
 	shoot()
 		if(src.loaded_magazine.mag_contents.len > 0 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
@@ -1318,7 +1318,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown_time = 0
 	two_handed = 1
 	w_class = 4
-	ammo = new/obj/item/ammo/bullets/internal/launcher/cat
+	ammo = /obj/item/ammo/bullets/internal/launcher/cat
 
 	afterattack(atom/A, mob/user as mob)
 		if(src.loaded_magazine.mag_contents.len < src.loaded_magazine.max_amount && istype(A, /obj/critter/cat))
@@ -1333,7 +1333,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/meowitzer/inert
 	New()
-		ammo = new/obj/item/ammo/bullets/meowitzer/inert
+		ammo = /obj/item/ammo/bullets/meowitzer/inert
 		..()
 
 
@@ -1358,7 +1358,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	var/cases_to_eject = 0
 	var/open = FALSE
-	ammo = new/obj/item/ammo/bullets/nine_mm_NATO
+	ammo = /obj/item/ammo/bullets/nine_mm_NATO
 
 	attack_hand(mob/user as mob)
 		if(!user.find_in_hand(src))
