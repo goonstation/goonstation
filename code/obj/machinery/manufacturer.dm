@@ -2266,6 +2266,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/satchel)
@@ -2344,6 +2346,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,
@@ -2392,8 +2396,8 @@
 	/datum/manufacture/clock_ammo,
 	/datum/manufacture/saa,
 	/datum/manufacture/saa_ammo,
-	/datum/manufacture/riot_launcher, 
-	/datum/manufacture/riot_launcher_ammo_pbr, 
+	/datum/manufacture/riot_launcher,
+	/datum/manufacture/riot_launcher_ammo_pbr,
 	/datum/manufacture/riot_launcher_ammo_flashbang,
 	/datum/manufacture/sniper,
 	/datum/manufacture/sniper_ammo,

@@ -21,7 +21,12 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris, /obj/item/toy/plush/small/fancyflippers, /obj/item/toy/plush/small/billy)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/plush/small/tuba,\
+	/obj/item/toy/plush/small/chris,\
+	/obj/item/toy/plush/small/fancyflippers,\
+	/obj/item/toy/plush/small/billy,\
+	/obj/item/toy/plush/small/arthur)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -83,7 +88,7 @@
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(10) ? (prob(10) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
+	var/obj/item/P = pick(prob(20) ? (prob(20) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	P.throw_at(M, 16, 3)
@@ -201,6 +206,18 @@
 	name = "Billy the hungry fish"
 	icon_state = "billy"
 
+/obj/item/toy/plush/small/arthur
+	name = "Arthur the bumblespider"
+	icon_state = "arthur"
+	var/spam_flag = 0
+
+/obj/item/toy/plush/small/arthur/attack_hand(mob/user as mob)
+	if (user == src.loc && spam_flag < world.time)
+		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] awoos!</span>")
+		spam_flag = world.time + 2 SECONDS
+	else return ..()
+
 /obj/item/toy/sword
 	name = "toy sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -254,8 +271,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
-	var/patreon_prob = 8
-	var/rare_prob = 11
+	var/patreon_prob = 9
+	var/rare_prob = 12
 	var/datum/figure_info/info = null
 
 	// grumble grumble
@@ -475,7 +492,10 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/tomato,
 /datum/figure_info/zooblarskrippus,
 /datum/figure_info/vivi,
-/datum/figure_info/giggles
+/datum/figure_info/giggles,
+/datum/figure_info/mavericksabre,
+/datum/figure_info/whitneystingray,
+/datum/figure_info/fleur
 )
 
 /datum/figure_info
@@ -864,6 +884,18 @@ var/list/figure_patreon_rarity = list(\
 	giggles
 		name = "\improper Giggles"
 		icon_state = "giggles"
+
+	mavericksabre
+		name = "\improper Maverick Sabre"
+		icon_state = "mavericksabre"
+
+	whitneystingray
+		name = "\improper Whitney Stingray"
+		icon_state = "whitneystingray"
+
+	fleur
+		name = "\improper Fleur DeLaCreme"
+		icon_state = "fleur"
 
 #ifdef XMAS
 	santa

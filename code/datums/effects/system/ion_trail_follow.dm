@@ -30,7 +30,7 @@
 						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
 						I.set_loc(src.oldposition)
 						src.oldposition = T
-						I.dir = src.holder.dir
+						I.set_dir(src.holder.dir)
 						flick(istate, I)
 						I.icon_state = "blank"
 						I.pixel_x = xoffset

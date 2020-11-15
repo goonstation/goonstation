@@ -273,7 +273,7 @@
 			return
 
 		if (!l_arm && howmany > 0)
-			if (holder?.mutantrace.l_limb_arm_type_mutantrace)
+			if (holder?.mutantrace?.l_limb_arm_type_mutantrace)
 				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
 			else
 				l_arm = new /obj/item/parts/human_parts/arm/left(holder)
@@ -285,7 +285,7 @@
 			howmany--
 
 		if (!r_arm && howmany > 0)
-			if (holder?.mutantrace.r_limb_arm_type_mutantrace)
+			if (holder?.mutantrace?.r_limb_arm_type_mutantrace)
 				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
 			else
 				r_arm = new /obj/item/parts/human_parts/arm/right(holder)
@@ -297,7 +297,7 @@
 			howmany--
 
 		if (!l_leg && howmany > 0)
-			if (holder?.mutantrace.l_limb_leg_type_mutantrace)
+			if (holder?.mutantrace?.l_limb_leg_type_mutantrace)
 				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
 			else
 				l_leg = new /obj/item/parts/human_parts/leg/left(holder)
@@ -308,7 +308,7 @@
 			howmany--
 
 		if (!r_leg && howmany > 0)
-			if (holder?.mutantrace.r_limb_leg_type_mutantrace)
+			if (holder?.mutantrace?.r_limb_leg_type_mutantrace)
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
@@ -956,7 +956,7 @@
 	u_equip(I)
 
 	if (get_dist(src, target) > 0)
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
 	if (I)

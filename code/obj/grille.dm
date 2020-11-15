@@ -360,7 +360,7 @@
 					if (S.material)
 						WI.setMaterial(S.material)
 					if(win_thin)
-						WI.dir = win_dir
+						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
 					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([showCoords(usr.x, usr.y, usr.z)] in [usr.loc.loc])")
 				else

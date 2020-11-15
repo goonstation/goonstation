@@ -149,6 +149,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(src.loc)
 				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			return TRUE
 
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
@@ -1088,7 +1089,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				M.changeStatus("stunned", 1 SECOND)
 				G.state = 1
 				G.update_icon()
-				src.dir = get_dir(src, M)
+				src.set_dir(get_dir(src, M))
 				playsound(src.loc, "sound/voice/animal/werewolf_attack3.ogg", 65, 1, 0, 0.5)
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
 

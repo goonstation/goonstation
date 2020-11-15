@@ -1,5 +1,42 @@
 
+(t)sat nov 14 20
+(u)Chickenish
+(p)2659
+(e)🆕|feature
+(+)Candles are now lit by environmental heat.
+(u)Retrino
+(p)2686
+(e)🎨|sprites
+(+)Added pink and orange hat sprites, printable from uniform and hop fabricators. Adjusts the psychedelic hat
+(u)virvatuli
+(p)2689
+(e)🎨|sprites
+(+)Added a bunch of previously missing clothing sprites for monkeys
+(t)fri nov 13 20
+(u)adharainspace
+(p)2590
+(e)🆕|feature
+(+)if you run into an issue where you can't join because of a vpn and you need to use one, please join the goonstation discord (https://discord.gg/zd8t6pY) and we'll see what we can do.
+(t)thu nov 12 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Roosters now hatch eggs.
 (t)wed nov 11 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Roosters! They may not lay eggs, but they WILL peck your eyes out! :)
+(u)Carbadox
+(p)2651
+(e)⛔|removal
+(+)Coffee/espresso machines no longer have removeable tops and don't need to be manually refilled with water anymore. This should solve the issue with unscrewing the machine even when unintended.
+(u)adharainspace
+(p)2504
+(e)🆕|feature
+(*)makes directional lights update more consistently when you change direction
+(u)PissOffMate18
+(p)2645
+(e)|
+(+)Added the ability to cut open fireworks as a hobo source of magnesium.
 (u)Arahimine
 (p)2654
 (e)🆕|feature

@@ -80,7 +80,7 @@
 			var/sanity = 0
 			while (sanity < 10)
 				var/obj/atmos_field/field = new(T)
-				field.dir = dir
+				field.set_dir(dir)
 				src.fields += field
 				if (T == target)
 					break

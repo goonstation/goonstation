@@ -110,7 +110,7 @@
 		O.quality = quality
 		O.icon = icon
 		O.icon_state = icon_state
-		O.dir = dir
+		O.set_dir(src.dir)
 		O.desc = desc
 		O.pixel_x = pixel_x
 		O.pixel_y = pixel_y
@@ -492,7 +492,7 @@
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x
 		replica.pixel_y = O.pixel_y
-		replica.dir = O.dir
+		replica.set_dir(O.dir)
 		qdel(O)
 
 
@@ -509,7 +509,7 @@
 			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 			user.drop_item()
 			if(W.dir != dirbuffer)
-				W.dir = dirbuffer
+				W.set_dir(dirbuffer)
 			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])

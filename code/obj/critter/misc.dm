@@ -484,7 +484,7 @@
 
 	Move()
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
-		..()
+		. = ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()

@@ -70,11 +70,11 @@
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			return
 
-		dir = direct
+		set_dir(direct)
 		if((direct & NORTH) && src.y < world.maxy)
 			src.y++
 		if((direct & SOUTH) && src.y > 1)
