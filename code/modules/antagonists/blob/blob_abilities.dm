@@ -436,7 +436,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(2, 4)].ogg", 60, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 3)].ogg", 60, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -690,7 +690,7 @@
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(3, 4)].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 2)].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
@@ -966,7 +966,7 @@
 			owner.gen_rate_used++
 		src.deduct_bio_points()
 		src.do_cooldown()
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(3, 7)].ogg", 75, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 6)].ogg", 75, 1)
 
 /datum/blob_ability/build/lipid
 	name = "Build Lipid Cell"
