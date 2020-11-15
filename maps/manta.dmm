@@ -3931,8 +3931,12 @@
 /area/station/hallway/starboardlowerhallway)
 "akS" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
+	icon_state = "1-10"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
@@ -4016,63 +4020,31 @@
 	dir = 4
 	},
 /area/listeningpost/syndicateassaultvessel)
-"alf" = (
-/obj/machinery/computer3/terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/red,
-/area/listeningpost/syndicateassaultvessel)
 "alg" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
-	dir = 5
+	dir = 4
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alh" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "6-10"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "ali" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
-	dir = 8
+	dir = 9
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/porttorpedoes)
 "alk" = (
-/obj/machinery/computer3/terminal,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "all" = (
@@ -4098,16 +4070,17 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "alo" = (
-/turf/simulated/floor/stairs/dark/wide{
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/cable{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/stairs/dark{
 	dir = 5
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alp" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/npc/trader/robot{
 	icon = 'icons/mob/robots.dmi';
 	icon_state = "syndibot";
@@ -4179,9 +4152,10 @@
 /area/station/bridge)
 "alw" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "2-9"
+	},
+/obj/cable{
+	icon_state = "2-5"
 	},
 /obj/marker/supplymarker,
 /turf/simulated/floor/red,
@@ -4207,19 +4181,6 @@
 	dir = 4
 	},
 /area/listeningpost/syndicateassaultvessel)
-"alz" = (
-/obj/machinery/door/airlock/pyro/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Syndicate Assault Vessel"
-	},
-/obj/access_spawn/syndie_shuttle,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/syndicateassaultvessel)
 "alA" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -4228,9 +4189,7 @@
 /area/station/hangar/starboard)
 "alB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "4-10"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -4309,19 +4268,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alL" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/syndicateassaultvessel)
-"alM" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/syndicateassaultvessel)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/portlowerhallway)
 "alN" = (
 /obj/machinery/torpedo_console,
 /turf/simulated/floor/redblack{
@@ -4350,6 +4298,9 @@
 	name = "Listening Post"
 	},
 /obj/access_spawn/syndie_shuttle,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alR" = (
@@ -4405,7 +4356,7 @@
 	dir = 1
 	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -4426,8 +4377,6 @@
 /area/listeningpost/syndicateassaultvessel)
 "amc" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/warm{
@@ -4457,6 +4406,9 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
@@ -4553,16 +4505,26 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amr" = (
-/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/redblack/corner{
 	dir = 6
 	},
 /area/listeningpost/syndicateassaultvessel)
 "ams" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/mainframe/zeta{
+	tag = "OTHER_MAINFRAME"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
@@ -4570,24 +4532,14 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/obj/machinery/light/incandescent/warm{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/networked/mainframe/zeta{
-	tag = "OTHER_MAINFRAME"
-	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack,
 /area/listeningpost/syndicateassaultvessel)
 "amt" = (
-/obj/machinery/computer/security,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/security,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -4621,14 +4573,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "amy" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -4638,6 +4583,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "4-10"
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost/syndicateassaultvessel)
 "amA" = (
@@ -4645,9 +4593,9 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/redblack{
 	dir = 6
@@ -4655,18 +4603,23 @@
 /area/listeningpost/syndicateassaultvessel)
 "amB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /obj/cable{
-	icon_state = "1-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "amC" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
@@ -4807,8 +4760,7 @@
 "amY" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "0-5"
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -4816,16 +4768,14 @@
 /area/listeningpost/syndicateassaultvessel)
 "amZ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "ana" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/listeningpost/syndicateassaultvessel)
 "anb" = (
@@ -4849,6 +4799,9 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/listeningpost/syndicateassaultvessel)
 "ane" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/listeningpost/syndicateassaultvessel)
 "anf" = (
@@ -4909,12 +4862,36 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "anm" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/listeningpost/syndicateassaultvessel)
 "ann" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/listeningpost/syndicateassaultvessel)
 "ano" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/listeningpost/syndicateassaultvessel)
 "anp" = (
@@ -4925,11 +4902,6 @@
 /area/listeningpost/syndicateassaultvessel)
 "anq" = (
 /obj/decal/cleanable/blood,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "anr" = (
@@ -4939,11 +4911,6 @@
 	name = "Prison";
 	req_access = null;
 	req_access_txt = "52"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/red,
@@ -4966,7 +4933,6 @@
 	icon_state = "floor5"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/cable,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "anv" = (
@@ -5079,18 +5045,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
-"anI" = (
-/obj/machinery/door/airlock/pyro/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Syndicate Assault Vessel"
-	},
+"anJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/syndie_shuttle,
-/turf/simulated/floor/red,
-/area/listeningpost/syndicateassaultvessel)
-"anJ" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Syndicate Assault Vessel"
@@ -5147,14 +5105,12 @@
 /area/station/hallway/starboardupperhallway)
 "anO" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-9"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
@@ -5178,21 +5134,23 @@
 /area/listeningpost/syndicateassaultvessel)
 "anR" = (
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "anS" = (
 /obj/cable{
-	icon_state = "2-8"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "5-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
@@ -5213,6 +5171,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
 "anV" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /obj/machinery/power/furnace,
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5222,20 +5184,14 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "anW" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "5-8"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
@@ -5243,14 +5199,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -5260,7 +5208,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anY" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
@@ -5274,11 +5222,14 @@
 /area/listeningpost/syndicateassaultvessel)
 "aoa" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-10"
 	},
-/turf/simulated/floor/black,
+/obj/cable{
+	icon_state = "9-10"
+	},
+/turf/simulated/floor/stairs/dark{
+	dir = 9
+	},
 /area/listeningpost/syndicateassaultvessel)
 "aob" = (
 /obj/disposalpipe/segment,
@@ -5293,14 +5244,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
@@ -5309,18 +5252,18 @@
 /area/listeningpost/syndicateassaultvessel)
 "aod" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "4-9"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aoe" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/power/furnace,
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5329,10 +5272,6 @@
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
@@ -5343,11 +5282,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "aog" = (
-/obj/machinery/power/furnace,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aoh" = (
@@ -5378,18 +5317,16 @@
 /area/listeningpost/syndicateassaultvessel)
 "aom" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aon" = (
-/obj/machinery/power/furnace,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/furnace,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aoo" = (
@@ -6434,63 +6371,34 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "aqe" = (
-/obj/storage/crate/furnacefuel,
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aqf" = (
-/obj/machinery/power/smes/magical,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/turf/simulated/floor/black,
-/area/listeningpost/syndicateassaultvessel)
-"aqg" = (
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-6"
 	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
+/obj/machinery/power/smes/magical,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "aqh" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "aqi" = (
+/obj/cable{
+	icon_state = "0-10"
+	},
 /obj/machinery/power/smes/magical,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "aqj" = (
@@ -6498,43 +6406,41 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Control";
 	locked = 0;
 	name = "Databank - Control";
 	setup_drive_type = /obj/item/disk/data/tape/master
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aqk" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "9-10"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "aql" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "5-6"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
@@ -6543,8 +6449,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/networked/radio,
 /obj/machinery/power/data_terminal,
+/obj/machinery/networked/radio,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "aqn" = (
@@ -7946,22 +7852,11 @@
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "atC" = (
+/obj/cable,
 /obj/submachine/syndicate_teleporter,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "atD" = (
@@ -7993,8 +7888,17 @@
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
 "atG" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/portlowerhallway)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/syndicateassaultvessel)
+"atH" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "atI" = (
 /obj/storage/closet/syndicate/personal,
 /obj/item/clothing/under/misc/syndicate,
@@ -8102,13 +8006,11 @@
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
 "atX" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/syndie_shuttle,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "atY" = (
@@ -18055,6 +17957,12 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"aPq" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "aPr" = (
 /obj/cable{
 	d1 = 4;
@@ -44840,6 +44748,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"cud" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "cuz" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 8
@@ -44983,6 +44900,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"dPH" = (
+/obj/stool/chair/comfy/red{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/syndicateassaultvessel)
 "dWi" = (
 /obj/cable{
 	d1 = 4;
@@ -45030,6 +44956,32 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction2)
+"enA" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/syndicateassaultvessel)
+"eyj" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
+"eEJ" = (
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/listeningpost/syndicateassaultvessel)
 "eFJ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -45200,6 +45152,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"gtD" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "9-10"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/syndicateassaultvessel)
 "gtZ" = (
 /obj/landmark{
 	name = "bubsbeejob"
@@ -45305,6 +45268,17 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/hos)
+"hxU" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/listeningpost/syndicateassaultvessel)
 "hAj" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -45616,6 +45590,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"lRZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "lSg" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -45664,6 +45647,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"mgj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "mnz" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -45715,6 +45707,17 @@
 	},
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"mPH" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/listeningpost/syndicateassaultvessel)
 "mSY" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -45881,6 +45884,15 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"oqw" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/listeningpost/syndicateassaultvessel)
 "ozn" = (
 /obj/wingrille_spawn/auto,
 /obj/wingrille_spawn/auto,
@@ -46069,6 +46081,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer)
+"rcL" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "rdE" = (
 /obj/cable{
 	d1 = 1;
@@ -46153,6 +46171,15 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"sRL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "sTs" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -46228,6 +46255,12 @@
 /obj/item/pen/pencil,
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"ulO" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "uFt" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -46308,6 +46341,17 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"vuB" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost/syndicateassaultvessel)
 "vzA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -46327,6 +46371,14 @@
 "vRo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/construction)
+"vVw" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/listeningpost/syndicateassaultvessel)
 "vWe" = (
 /obj/lattice{
 	dir = 4;
@@ -46471,6 +46523,12 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
+"wWK" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -86051,7 +86109,7 @@ buY
 buY
 buY
 bAp
-atG
+alL
 bFQ
 bGM
 auh
@@ -88563,12 +88621,12 @@ amQ
 akF
 anh
 anl
-alB
+alD
 anv
 akH
-aqg
+aqh
 anO
-anY
+avM
 akH
 aoi
 aap
@@ -89165,9 +89223,9 @@ amx
 alF
 amR
 amY
-amR
+enA
 alF
-alB
+alD
 aly
 anB
 akH
@@ -89450,29 +89508,29 @@ aln
 alt
 akV
 alC
-alL
-akS
-akS
-akS
+alD
+rcL
+amZ
+amZ
 amc
 atX
-akS
-akS
-akS
-akS
-akS
-akS
+amZ
+amZ
+amZ
+amZ
+amZ
+amZ
 atX
 amy
-akS
-akS
+rcL
+lRZ
 amZ
-akS
-akS
+cud
+mgj
 amZ
-akS
-akS
-anI
+amZ
+amZ
+anJ
 anR
 akH
 aoi
@@ -89747,8 +89805,8 @@ bMv
 ale
 bMy
 akV
-alf
-avM
+alk
+anY
 avM
 akV
 alr
@@ -89769,7 +89827,7 @@ amz
 amJ
 amS
 ana
-amS
+oqw
 anm
 akH
 akH
@@ -90054,7 +90112,7 @@ alo
 alu
 akV
 alr
-alB
+atH
 akH
 alY
 atB
@@ -90349,14 +90407,14 @@ akF
 akP
 alD
 alD
-akS
+alD
 aub
 alh
 alp
 alw
-alz
+anJ
 akS
-alM
+amZ
 alQ
 alZ
 atC
@@ -90374,7 +90432,7 @@ amK
 amT
 anc
 ani
-ann
+vVw
 ans
 anx
 anD
@@ -90654,11 +90712,11 @@ alD
 bMA
 akV
 ali
-alq
+aoa
 alq
 akV
 alr
-alD
+aPq
 akH
 ama
 atD
@@ -90676,7 +90734,7 @@ amK
 amT
 amT
 and
-ann
+hxU
 akH
 any
 anE
@@ -90956,11 +91014,11 @@ bMx
 bMB
 akV
 alk
-avM
+atG
 avM
 akV
 alr
-alD
+ulO
 alR
 akH
 akH
@@ -90973,11 +91031,11 @@ avS
 alD
 akH
 akH
-alr
+vuB
 amL
 amU
 ane
-amU
+dPH
 ano
 akH
 akH
@@ -91263,29 +91321,29 @@ alt
 akV
 alC
 alD
-alD
-alD
-alD
+eyj
+amZ
+amZ
 amg
-aub
-alD
-alD
-alD
-alD
-alD
-alD
-aub
-alD
-alD
-alD
-alD
-alD
-alD
-alD
-alD
-alD
+atX
+amZ
+amZ
+amZ
+amZ
+amZ
+amZ
+atX
+wWK
+eyj
+amZ
+amZ
+lRZ
+sRL
+amZ
+amZ
+amZ
 anJ
-anQ
+mPH
 akH
 aok
 aap
@@ -91581,7 +91639,7 @@ amD
 alx
 amV
 alD
-amV
+gtD
 alx
 alG
 alE
@@ -92192,7 +92250,7 @@ anz
 akH
 aqh
 anS
-aoa
+avM
 akH
 aok
 aap
@@ -92794,7 +92852,7 @@ amM
 amv
 anz
 akH
-aqe
+eEJ
 anQ
 aod
 aom
