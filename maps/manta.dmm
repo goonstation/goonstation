@@ -9159,7 +9159,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce)
 "axc" = (
-/obj/cable{
+/obj/cable/colored/white{
 	icon_state = "4-6"
 	},
 /turf/simulated/floor/yellow,
@@ -9529,13 +9529,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "axP" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "6-10"
 	},
-/obj/cable{
+/obj/cable/colored/white{
 	icon_state = "2-8"
 	},
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/yellow/side{
@@ -9832,13 +9832,13 @@
 	},
 /area/station/engine/engineering/ce)
 "ayt" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "2-8"
 	},
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "0-2"
 	},
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
@@ -9950,16 +9950,16 @@
 	},
 /area/station/engine/engineering/ce)
 "ayH" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "5-6"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "ayI" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "6-9"
 	},
-/obj/cable{
+/obj/cable/colored/white{
 	icon_state = "1-9"
 	},
 /turf/simulated/floor/yellow/side{
@@ -9967,10 +9967,10 @@
 	},
 /area/station/engine/inner)
 "ayJ" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "9-10"
 	},
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor,
@@ -9997,7 +9997,7 @@
 	},
 /area/station/engine/engineering/ce)
 "ayL" = (
-/obj/cable{
+/obj/cable/colored/yellow{
 	icon_state = "5-9"
 	},
 /turf/simulated/floor/yellow/side{
