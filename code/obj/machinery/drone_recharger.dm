@@ -17,6 +17,12 @@
 	New()
 		..()
 
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
+		..()
+
 	process()
 		if(!(status & BROKEN))
 			if (occupant)

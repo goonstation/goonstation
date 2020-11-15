@@ -35,7 +35,9 @@ var/list/genescanner_addresses = list()
 		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
-		occupant = null
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	allow_drop()
