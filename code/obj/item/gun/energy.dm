@@ -768,6 +768,17 @@
 	var/image/indicator_display = null
 	var/display_color =	"#00FF00"
 	var/initial_proj = /datum/projectile/laser/blaster
+	var/team_num = 0	//1 is NT, 2 is Syndicate
+
+	shoot(var/target,var/start,var/mob/user)
+		if (canshoot())
+			if (team_num)
+				if (team_num == 1 && user?.mind?.special_role == "Nanotrasen")
+					return ..(target, start, user)
+				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
+					return ..(target, start, user)
+			else
+				return ..(target, start, user)
 
 	disposing()
 		indicator_display = null
@@ -783,6 +794,7 @@
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+
 		..()
 
 	update_icon()
@@ -803,12 +815,13 @@
 		muzzle_flash = "muzzle_flash_plaser"
 		display_color =	"#0a4882"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT
+		team_num = 1
 
 	syndicate
 		muzzle_flash = "muzzle_flash_laser"
 		display_color =	"#ff4043"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
-
+		team_num = 2
 
 ///////////////////////////////////////Modular Blasters
 /obj/item/gun/energy/blaster_pistol
