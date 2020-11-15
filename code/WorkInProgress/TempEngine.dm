@@ -35,8 +35,8 @@
 	var/reagents_consumed = 0.5 //amount of reagents consumed
 	var/lube_boost = 1.0
 	var/circulator_flags = BACKFLOW_PROTECTION
-	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
-	var/min_circ_pressure = 10
+	var/fan_efficiency = 0.9 // 0.9 ideal
+	var/min_circ_pressure = 75
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 
 	anchored = 1.0

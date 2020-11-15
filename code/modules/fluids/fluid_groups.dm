@@ -645,7 +645,7 @@
 			src.update_loop()
 			return src.avg_viscosity
 
-		if (src.members[1] != drain_source)
+		if (length(members) && src.members[1] != drain_source)
 			if (src.members.len <= 30)
 				var/list/L = drain_source.get_connected_fluids()
 				if (L.len == members.len)
@@ -654,7 +654,7 @@
 		var/list/fluids_removed = list()
 		var/fluids_removed_avg_viscosity = 0
 
-		for (var/i = members.len, i > 0, i--)
+		for (var/i = length(members), i > 0, i--)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > members.len) continue

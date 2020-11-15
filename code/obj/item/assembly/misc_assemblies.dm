@@ -861,7 +861,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/Move()
-	..()
+	. = ..()
 	src.part2.sense()
 	return
 

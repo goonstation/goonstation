@@ -347,6 +347,7 @@ var/list/ai_move_scheduled = list()
 
 	// next task is not defined here, handled by sequence
 	proc/failed()
+		fails++
 		return fails >= max_fails
 
 	proc/succeeded()

@@ -263,7 +263,7 @@
 			icon_state = "gps-off"
 			return
 
-		src.dir = get_dir(src,tracking_target)
+		src.set_dir(get_dir(src,tracking_target))
 		if (get_dist(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else

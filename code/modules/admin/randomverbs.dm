@@ -2340,7 +2340,7 @@ var/global/night_mode_enabled = 0
 	for (var/direction in (alldirs + 0))
 		if (direction)
 			var/obj/window/auto/reinforced/indestructible/extreme/R = new /obj/window/auto/reinforced/indestructible/extreme(get_step(targetLoc, direction))
-			//R.dir = direction
+			//R.set_dir(direction)
 			R.name = "robust shamecube glass"
 			R.desc = "A pane of robust, yet shameful, glass."
 		var/turf/void = new/turf/unsimulated/floor/void(get_step(targetLoc, direction))

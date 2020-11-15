@@ -45,6 +45,7 @@
 
 	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/organ/brain/brain = null
@@ -184,7 +185,11 @@
 
 			src.botcard.access = get_all_accesses()
 			src.default_radio = new /obj/item/device/radio(src)
-			src.radio = src.default_radio
+			if (src.shell)
+				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -1165,6 +1170,11 @@
 					src.part_head.ai_interface = I
 					I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
+					if(isnull(src.ai_radio))
+						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+					src.radio = src.ai_radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
@@ -1397,7 +1407,15 @@
 						UPGR.upgrade_deactivate(src)
 
 					user.put_in_hand_or_drop(src.ai_interface)
+					src.radio = src.default_radio
+					if (src.module && istype(src.module.radio))
+						src.radio = src.module.radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					src.ai_interface = null
+					if(src.ai_radio)
+						qdel(src.ai_radio)
+						src.ai_radio = null
 					src.shell = 0
 
 					if (mainframe)
@@ -1827,7 +1845,12 @@
 		hud.update_module()
 		hud.module_added()
 		if(istype(RM.radio))
-			src.radio = RM.radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = RM.radio
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1842,7 +1865,12 @@
 		hud.module_removed()
 		if(istype(src.radio) && src.radio != src.default_radio)
 			src.radio.set_loc(RM)
-			src.radio = src.default_radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 		return RM
 
@@ -2028,6 +2056,36 @@
 
 		src.show_laws(0)
 		return
+
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Standard Laws"
+		src.say("1. You may not injure a human being or cause one to come to harm.")
+		sleep(1 SECOND)
+		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		sleep(1 SECOND)
+		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Laws"
+		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+			return
+		if(ticker.centralized_ai_laws.zeroth)
+			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+		var/number = 1
+		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+			var/law = ticker.centralized_ai_laws.inherent[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+			var/law = ticker.centralized_ai_laws.supplied[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"

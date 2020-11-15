@@ -30,7 +30,7 @@
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
 			SPAWN_DBG(0.5 SECONDS)
-				src.dir = pdir
+				src.set_dir(pdir)
 			qdel(P)
 
 
@@ -944,7 +944,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
 	var/last_gather_time
@@ -979,7 +979,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -1017,7 +1017,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1027,7 +1027,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1037,7 +1037,7 @@
 /turf/simulated/floor/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
@@ -1781,7 +1781,7 @@
 
 		New()
 			..()
-			dir = pick(1,2,4,8)
+			set_dir(pick(1,2,4,8))
 			return
 
 	swampgrass_edging
