@@ -2470,7 +2470,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/hos)
+/area/station/ai_monitored/armory)
 "agr" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
@@ -5418,7 +5418,7 @@
 /obj/item/bandage,
 /obj/item/staple_gun,
 /turf/simulated/floor/black,
-/area/mantaSpace)
+/area/station/medical/robotics)
 "aoq" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -7993,18 +7993,8 @@
 /turf/simulated/floor/bot/blue,
 /area/station/ai_monitored/storage/eva)
 "atG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
-	desc = "It's locked up pretty tight.";
-	dir = 4;
-	name = "Syndicate Assault Vessel"
-	},
-/obj/access_spawn/syndie_shuttle,
-/turf/simulated/floor/red,
-/area/mantaSpace)
-"atH" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/red,
-/area/mantaSpace)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/portlowerhallway)
 "atI" = (
 /obj/storage/closet/syndicate/personal,
 /obj/item/clothing/under/misc/syndicate,
@@ -9635,7 +9625,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/engine/storage)
 "axj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18065,14 +18055,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"aPq" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/upperstarboard)
 "aPr" = (
 /obj/cable{
 	d1 = 4;
@@ -20590,7 +20572,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
-/area/mantaSpace)
+/area/station/medical/robotics)
 "aUT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -31340,7 +31322,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
-/area/station/hallway/starboardlowerhallway)
+/area/station/hallway/portlowerhallway)
 "bqr" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -32457,7 +32439,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor,
-/area/station/hallway/starboardlowerhallway)
+/area/station/hallway/portlowerhallway)
 "bsM" = (
 /obj/cable{
 	d1 = 1;
@@ -33043,7 +33025,7 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
-/area/space)
+/area/station/hallway/seaturtlehallway)
 "buf" = (
 /obj/lattice{
 	dir = 4;
@@ -33549,7 +33531,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid/manta,
-/area/space)
+/area/mantaSpace)
 "bvs" = (
 /obj/lattice{
 	dir = 4;
@@ -46432,7 +46414,7 @@
 /obj/storage/secure/closet/civilian/hydro,
 /obj/item/clothing/under/misc/hydroponics,
 /turf/simulated/floor/grass/random,
-/area/station/hydroponics)
+/area/station/hydroponics/bay)
 "wBW" = (
 /obj/cable{
 	d1 = 1;
@@ -78485,7 +78467,7 @@ acO
 acO
 aES
 aoJ
-aPq
+apD
 acD
 acD
 acD
@@ -79685,7 +79667,7 @@ aaa
 aaa
 act
 act
-aBr
+acO
 acO
 ait
 aoJ
@@ -79986,8 +79968,8 @@ aaa
 aaa
 act
 act
-aBr
-aBr
+acO
+acO
 auc
 aoJ
 apD
@@ -83673,7 +83655,7 @@ bHD
 bHD
 bHG
 bEF
-bEw
+bEF
 act
 aaa
 aaa
@@ -86069,7 +86051,7 @@ buY
 buY
 buY
 bAp
-bEF
+atG
 bFQ
 bGM
 auh
@@ -86751,7 +86733,7 @@ aaa
 aaa
 arH
 akE
-atG
+alO
 alU
 arH
 aaa
@@ -87053,7 +87035,7 @@ aaa
 akE
 akH
 akH
-atH
+alS
 akH
 akH
 alU
