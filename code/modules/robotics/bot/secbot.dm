@@ -476,7 +476,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)

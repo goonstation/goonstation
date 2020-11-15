@@ -461,6 +461,7 @@
 				else
 					lastdir = dir
 					changeIcon()
+			return TRUE
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)

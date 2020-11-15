@@ -3113,7 +3113,7 @@ Returns:
 	var/my_dir=1
 
 	Move(NewLoc,Dir=0)
-		..(NewLoc,Dir)
+		. = ..(NewLoc,Dir)
 		src.set_dir(my_dir)
 
 	unpooled(var/poolname)

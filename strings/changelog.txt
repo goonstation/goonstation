@@ -1,4 +1,26 @@
 
+(t)sat nov 14 20
+(u)Chickenish
+(p)2659
+(e)🆕|feature
+(+)Candles are now lit by environmental heat.
+(u)Retrino
+(p)2686
+(e)🎨|sprites
+(+)Added pink and orange hat sprites, printable from uniform and hop fabricators. Adjusts the psychedelic hat
+(u)virvatuli
+(p)2689
+(e)🎨|sprites
+(+)Added a bunch of previously missing clothing sprites for monkeys
+(t)fri nov 13 20
+(u)adharainspace
+(p)2590
+(e)🆕|feature
+(+)if you run into an issue where you can't join because of a vpn and you need to use one, please join the goonstation discord (https://discord.gg/zd8t6pY) and we'll see what we can do.
+(t)thu nov 12 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Roosters now hatch eggs.
 (t)wed nov 11 20
 (u)UrsulaMajor
 (e)🆕|feature

@@ -2263,6 +2263,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/satchel)
@@ -2341,6 +2343,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,

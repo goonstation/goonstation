@@ -172,6 +172,6 @@
 	return
 
 /obj/item/device/prox_sensor/Move()
-	..()
+	. = ..()
 	src.sense()
 	return

@@ -157,7 +157,7 @@
 		next_move = world.time + delay
 		return min(delay, next_rot-world.time)
 
-	update_owner_dir(var/atom/movable/ship) //after move, update ddir
+	update_owner_dir() //after move, update ddir
 		if (owner.flying && owner.facing != owner.flying)
 			owner.set_dir(owner.facing)
 

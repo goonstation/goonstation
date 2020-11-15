@@ -107,7 +107,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			pool(src)
 
 	Move(NewLoc, direct)
-		..()
+		. = ..()
 		if (last_turf && istype(last_turf))
 			last_turf.messy = max(last_turf.messy-1, 0)
 		last_turf = src.loc
