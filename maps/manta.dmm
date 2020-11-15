@@ -2564,6 +2564,11 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
+"aha" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
 "ahb" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/freeform,
@@ -6456,6 +6461,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
+"aqJ" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
+"aqK" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
 "aqL" = (
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/random,
@@ -6859,6 +6876,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
+"arM" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
 "arN" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/diskbox,
@@ -6979,7 +7004,9 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "asa" = (
-/obj/machinery/computer/ordercomp,
+/obj/machinery/computer/ordercomp{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "asb" = (
@@ -7060,9 +7087,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/arrival{
 	dir = 4
@@ -10584,6 +10608,17 @@
 "aAh" = (
 /turf/simulated/floor,
 /area/station/engine/power)
+"aAi" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/fakeobjects{
+	desc = "Under construction";
+	dir = 1;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "constructionsign";
+	name = "construction zone"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/construction2)
 "aAj" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -11764,6 +11799,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
+"aCO" = (
+/obj/decal/fakeobjects{
+	desc = "Under construction";
+	dir = 1;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "constructionsign";
+	name = "construction zone"
+	},
+/turf/simulated/floor,
+/area/station/construction/under_construction)
 "aCP" = (
 /obj/stool/bed,
 /obj/item/storage/secure/ssafe{
@@ -13590,10 +13635,6 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
 	},
 /turf/simulated/floor/arrival{
 	dir = 5
@@ -30988,17 +31029,6 @@
 /obj/table/glass/auto,
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
-"btT" = (
-/obj/disposalpipe/segment,
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "btU" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -31013,6 +31043,13 @@
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/decal/fakeobjects{
+	desc = "Under construction";
+	dir = 1;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "constructionsign";
+	name = "construction zone"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction2)
@@ -31063,13 +31100,9 @@
 /turf/simulated/floor,
 /area/station/construction/under_construction)
 "buc" = (
-/obj/disposalpipe/junction/right/north,
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -31085,13 +31118,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bue" = (
-/obj/decal/fakeobjects{
-	desc = "Under construction";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "construction zone"
-	},
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
@@ -32401,7 +32427,7 @@
 "bxn" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/arrival{
 	dir = 4
@@ -35552,7 +35578,10 @@
 /area/station/crewquarters/garbagegarbs)
 "bEv" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left,
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bEw" = (
@@ -35817,6 +35846,9 @@
 /area/station/maintenance/lowerport)
 "bFh" = (
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -42120,13 +42152,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/seaturtlehallway)
-"bUz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction/left/north,
-/turf/simulated/floor,
-/area/station/hallway/seaturtlehallway)
 "bUA" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -42646,10 +42671,10 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "hhp" = (
@@ -42840,7 +42865,10 @@
 /area/station/hallway/secondary/construction2)
 "jLO" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2/right{
+	layer = 2.9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jMM" = (
@@ -43150,6 +43178,8 @@
 /area/station/hallway/portlowerhallway)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
@@ -43713,13 +43743,13 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "vzC" = (
@@ -77121,7 +77151,7 @@ nHa
 ain
 bsO
 asl
-asl
+aAi
 ebD
 btV
 jnl
@@ -77725,9 +77755,9 @@ bsZ
 byk
 bzI
 bjW
-btT
+bcj
 bGV
-btT
+bcj
 bcj
 bLC
 bsZ
@@ -90389,7 +90419,7 @@ aMU
 ben
 bda
 bcb
-aDb
+aha
 aFZ
 aDo
 bet
@@ -90691,7 +90721,7 @@ aMU
 ben
 bda
 bcb
-aDb
+aqJ
 aGa
 aDo
 beu
@@ -91599,7 +91629,7 @@ bda
 bcb
 aDa
 aHH
-aDC
+aqK
 aDC
 bew
 aDa
@@ -101883,7 +101913,7 @@ bxH
 bzp
 bAM
 bCp
-bDI
+arM
 bEV
 bGh
 bHt
@@ -124855,7 +124885,7 @@ bTT
 bUq
 bUr
 buc
-bUz
+bOC
 bue
 bON
 bPS
@@ -125458,9 +125488,9 @@ bSv
 bva
 bub
 bSI
-bSI
+aCO
 bST
-bSI
+aCO
 ase
 bSJ
 aaa
