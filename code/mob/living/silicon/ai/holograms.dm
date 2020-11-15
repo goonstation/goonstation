@@ -9,11 +9,9 @@
 		if (length(holograms)>= max_holograms)
 			boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
 			return
-		//select from list of icon_state in holograms.dmi
-		var/input = input("Select a type of hologram to display.","Hologram") as null|anything in hologramTypes
-		if (input)
-			var/turf/T = get_turf(src.eyecam)
-			src.create_hologram_at_turf(T, input)
+
+		var/turf/T = get_turf(src.eyecam)
+		src.show_hologram_context(T)
 
 	proc/create_hologram_at_turf(var/turf/T, var/holo_type)
 		if (!deployed_to_eyecam)
