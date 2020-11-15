@@ -250,18 +250,10 @@
 		//sound and sound code additions by retkid#9135, coding assitance by pali#0439 and Paul#7955
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		owner.playsound_local(owner.loc, 'sound/voice/blob/blob23.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy1.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
-
-//blob13 blob14=death sounds
-//blob23=deploy, building new nucleus
-//blob01-06=spread (1/6th chance each
-//blob16-18=removing blob stuff
-//succing someone into blob: 24, 25, 27 and when completed do 26
-//blob7,9 point sounds (every 10-100, cant decide which)
-//blob9 every time you gain an EVO point
 
 /datum/blob_ability/set_color
 	name = "Set Color"
@@ -372,7 +364,7 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("01","02","03","04","05","06")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 50, 1)
 		if (!owner.starter_buff)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -413,7 +405,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, 'sound/voice/blob/blob23.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy1.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -442,7 +434,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("16","17","18")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(1, 3)].ogg", 10, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -481,7 +473,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("12","23")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy[rand(1, 2)].ogg", 50, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))
@@ -512,7 +504,7 @@
 		if (B)
 			B.heal_damage(20)
 			B.update_icon()
-			owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("07","08","09")].ogg", 50, 1)
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 		else
@@ -633,7 +625,7 @@
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4
-			playsound(H.loc, "sound/voice/blob/blob[pick("26")].ogg", 100, 1)
+			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -696,7 +688,7 @@
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("15","16")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(3, 4)].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
@@ -972,7 +964,7 @@
 			owner.gen_rate_used++
 		src.deduct_bio_points()
 		src.do_cooldown()
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("15","16","28","29","30")].ogg", 75, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(3, 7)].ogg", 75, 1)
 
 /datum/blob_ability/build/lipid
 	name = "Build Lipid Cell"
