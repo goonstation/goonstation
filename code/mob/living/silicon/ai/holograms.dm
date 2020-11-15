@@ -31,7 +31,6 @@
 	proc/show_hologram_context(var/turf/T)
 		showContextActions(hologramContextActions, T, contextLayout)
 
-ABSTRACT_TYPE(/datum/contextAction/ai_hologram)
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
 	var/holo_type
