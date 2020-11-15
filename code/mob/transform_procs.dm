@@ -20,7 +20,10 @@
 		if (src.mind)
 			src.mind.transfer_to(character)
 		if (equip_rank == 1)
-			character.Equip_Rank("Staff Assistant", 1)
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				character.Equip_Rank("Nanotrasen Pod Pilot", 1)
+			else
+				character.Equip_Rank("Staff Assistant", 1)
 
 		if (!tele_to_arrival_shuttle || (tele_to_arrival_shuttle && !ASLoc))
 			character.set_loc(currentLoc)
