@@ -11,11 +11,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-#if ASS_JAM
-	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
-#else
 	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
-#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -108,24 +104,6 @@
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
-
-#if ASS_JAM
-	var/station_only = prob(40)
-	target_locations = list()
-	for(var/area/A in world)
-		var/has_turfs = 0
-		for (var/turf/T in A)
-			has_turfs = 1
-			break
-		if(!has_turfs)
-			break
-		if(station_only && !istype(A, /area/station))
-			continue
-		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A.type)
-		else
-			target_locations[A.name].Add(A.type)
-#endif
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)

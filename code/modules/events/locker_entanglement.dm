@@ -2,7 +2,7 @@
 	name = "Locker Entanglement"
 	centcom_headline = "Quantum Anomaly"
 	centcom_message = {"A quantum anomaly has been detected on station. Locker dimensional subspaces might have become unstable. Enter lockers at your own risk."}
-	disabled = !ASS_JAM
+	disabled = TRUE
 
 	event_effect()
 		..()

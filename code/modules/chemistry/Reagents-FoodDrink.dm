@@ -1923,12 +1923,6 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
-#if ASS_JAM
-			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > (T0C + 50))
-					holder.add_reagent("chemilin", 10, donotreact = 1)
-#endif
-
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/ingredient/cheese) in T))

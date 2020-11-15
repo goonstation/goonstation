@@ -13,9 +13,6 @@
 		var/obj/O = src.path
 		src.name = initial(O.name)
 	cost = round(cost)
-#if ASS_JAM
-	cost -= 0.01
-#endif
 
 /datum/clothingbooth_item/proc/get_icon()
 	if(isnull(src.cached_icon))

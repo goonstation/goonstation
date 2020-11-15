@@ -311,18 +311,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	nectarlevel = 10
 	commuts = list(/datum/plant_gene_strain/quality)
 
-
-	#if ASS_JAM
-	mutations = list(/datum/plantmutation/pear/sickly)
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		if(reagent == "urine")
-			if (prob(50))
-				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pear/sickly)
-	#endif
-
 /datum/plant/fruit/peach
 	name = "Peach"
 	seedcolor = "#DEBA5F"

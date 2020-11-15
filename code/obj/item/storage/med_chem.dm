@@ -16,9 +16,6 @@
 			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
-#if ASS_JAM
-		ADD_MORTY(13, 11, 5, 5)
-#endif
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid1"
@@ -262,11 +259,6 @@
 	icon_state = "health_upgr"
 	desc = "A box containing health analyzer reagent scan upgrade cards."
 	spawn_contents = list(/obj/item/device/analyzer/healthanalyzer_upgrade = 7)
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(13, 9, 7, 7)
-#endif
 
 /obj/item/storage/box/iv_box
 	name = "\improper IV drip box"
@@ -373,11 +365,6 @@
 	icon_state = "minimed"
 	spawn_contents = list()
 
-#if ASS_JAM
-	New()
-		. = ..()
-		ADD_MORTY(10, 7, 12, 12)
-#endif
 
 	make_my_stuff()
 		..()

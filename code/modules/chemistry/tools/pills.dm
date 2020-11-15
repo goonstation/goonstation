@@ -336,15 +336,6 @@
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
 
-#if ASS_JAM
-		primaries--
-		adulterants--
-		var/the_spicy_stuff = rand(2, 4)
-		while(the_spicy_stuff > 0)
-			the_spicy_stuff--
-			reagents.add_reagent(pick(all_functional_reagent_ids), 3)
-#endif
-
 		while(primaries > 0)
 			primaries--
 			reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)

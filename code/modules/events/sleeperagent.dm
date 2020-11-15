@@ -100,15 +100,6 @@
 				sleep(src.message_delay)
 				command_alert("[src.centcom_message]", "[src.centcom_headline]")
 
-	#if ASS_JAM // no idea what this does or who did it
-			var/list/sleepers = list()
-			for(var/mob/listener in listeners)
-				sleepers += new/obj/machinery/sleeper(get_turf(listener))
-			sleep(3 SECONDS)
-			for(var/atom/sleeper in sleepers)
-				qdel(sleeper)
-	#endif
-
 			cleanup_event()
 		return
 
