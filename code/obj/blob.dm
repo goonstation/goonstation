@@ -236,7 +236,7 @@ var/image/blob_icon_cache
 				adj1 = "harm"
 		act1 = pick_string("blob.txt", "act1_[adj1]")
 		adj1 = pick_string("blob.txt", "adj1_[adj1]")
-		playsound(src.loc, "sound/voice/blob/blobshoot[rand(1, 5)].ogg", 75, 1)
+		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		src.visible_message("<span class='combat'><b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!</span>")
 		return
 
@@ -253,7 +253,7 @@ var/image/blob_icon_cache
 			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
 		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
-		playsound(src.loc, "sound/voice/blob/blobshoot[rand(1, 5)].ogg", 75, 1)
+		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
 
@@ -979,7 +979,7 @@ var/image/blob_icon_cache
 	dissipation_delay = 8
 	ks_ratio = 0.5
 	sname = "slime"
-	shot_sound = 'sound/voice/blob/blobshoot5.ogg'
+	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0
 	damage_type = D_SPECIAL
 	hit_ground_chance = 50
