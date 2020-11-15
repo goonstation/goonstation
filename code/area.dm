@@ -681,7 +681,7 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			else
 				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
-		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
+		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod) && !istype(Obj, /obj/machinery/vehicle/tank/minisub/escape_sub))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
 				if (target && Obj)
