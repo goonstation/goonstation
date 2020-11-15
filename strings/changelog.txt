@@ -1,5 +1,9 @@
 
 (t)sat nov 14 20
+(u)Chickenish
+(p)2659
+(e)🆕|feature
+(+)Candles are now lit by environmental heat.
 (u)Retrino
 (p)2686
 (e)🎨|sprites
