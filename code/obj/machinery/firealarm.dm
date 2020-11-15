@@ -13,12 +13,12 @@
 	var/detecting = 1.0
 	var/working = 1.0
 	var/lockdownbyai = 0
+	processing_tier = PROCESSING_HALF
 	anchored = 1.0
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0
 	var/dont_spam = 0
-	var/secondary_tick = 0
 	var/datum/radio_frequency/frequency
 	var/static/manual_off_reactivate_idle = 2 SECONDS //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
@@ -34,7 +34,6 @@
 
 	if(!net_id)
 		net_id = generate_net_id(src)
-	secondary_tick = rand(0, 2)
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 	SPAWN_DBG (10)
@@ -94,19 +93,15 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 	use_power(10, ENVIRON)
-	if(src.detecting)
-		secondary_tick++
-		if(secondary_tick > 2)
-			secondary_tick = 0
-			var/turf/location = src.loc
-			var/datum/gas_mixture/environment = location.return_air()
-			var/gaspressure = MIXTURE_PRESSURE(environment)
-			if(gaspressure < ONE_ATMOSPHERE*0.25)
-				src.alarm(ALARM_PRESSURE)
-			if(environment.toxins > 5)
-				src.alarm(ALARM_PLASMA)
-			if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level >= 2)
-				src.alarm(ALARM_FLOOD)
+	var/turf/location = src.loc
+	var/datum/gas_mixture/environment = location.return_air()
+	var/gaspressure = MIXTURE_PRESSURE(environment)
+	if(gaspressure < ONE_ATMOSPHERE*0.25)
+		src.alarm(ALARM_PRESSURE)
+	if(environment.toxins > 5)
+		src.alarm(ALARM_PLASMA)
+	if(location.active_liquid && location.active_liquid.group && location.active_liquid.group.last_depth_level >= 2)
+		src.alarm(ALARM_FLOOD)
 
 
 /obj/machinery/firealarm/power_change()
