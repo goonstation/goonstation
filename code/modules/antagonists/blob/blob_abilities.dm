@@ -250,7 +250,7 @@
 		//sound and sound code additions by retkid#9135, coding assitance by pali#0439 and Paul#7955
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy1.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
@@ -328,13 +328,16 @@
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
 					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
+
 			return 1
 
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
 		if (!istype(B1))
 			return 1
+
 		if (!tutorial_check("spread", T))
 			return 1
+
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
@@ -405,7 +408,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy1.ogg', 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -473,7 +476,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy[rand(1, 2)].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("deploy", "attack")].ogg", 50, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))
@@ -1122,7 +1125,6 @@
 			repeatable--
 		if (repeatable == 0)
 			owner.available_upgrades -= src
-//using this line to seperate my sounds. I think of it seperate so i try to indent it when i cant but i cannot here
 		if (prob(80))
 			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
 		else if (prob(50))
