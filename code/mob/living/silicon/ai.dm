@@ -189,8 +189,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.hologramContextActions = list()
 	src.hologramTypes = list()
-	for(var/Action in childrentypesof(/datum/contextAction/ai_hologram))
-		var/datum/contextAction/ai_hologram/action = new Action(src)
+	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
+		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 		hologramTypes += action.holo_type
 

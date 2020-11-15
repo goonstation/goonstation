@@ -178,13 +178,13 @@
 			if (src.client.check_key(KEY_OPEN))
 				src.set_cursor('icons/cursors/open.dmi')
 				return
-			if (src.client.check_key(KEY_BOLT))
+			else if (src.client.check_key(KEY_BOLT))
 				src.set_cursor('icons/cursors/bolt.dmi')
 				return
-			if(src.client.check_key(KEY_SHOCK))
+			else if(src.client.check_key(KEY_SHOCK))
 				src.set_cursor('icons/cursors/shock.dmi')
 				return
-			if(src.client.check_key(KEY_POINT))
+			else if(src.client.check_key(KEY_POINT))
 				src.set_cursor('icons/cursors/point.dmi')
 				return
 		return ..()
