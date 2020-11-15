@@ -434,7 +434,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(1, 3)].ogg", 10, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[rand(2, 4)].ogg", 60, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
