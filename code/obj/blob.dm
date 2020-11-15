@@ -624,7 +624,7 @@ var/image/blob_icon_cache
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
 			if (prob(50))
-				playsound(src.loc, "sound/voice/blob/blobdeploy1.ogg", 100, 1)
+				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
 			else
 				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
 
@@ -1000,7 +1000,7 @@ var/image/blob_icon_cache
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, 'sound/voice/blob/blobhit.ogg', 100, 1)
+				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()

@@ -247,7 +247,6 @@
 
 		if (!owner.tutorial)
 			//do a little "blobsplosion"
-		//sound and sound code additions by retkid#9135, coding assitance by pali#0439 and Paul#7955
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
 		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
@@ -1126,11 +1125,11 @@
 		if (repeatable == 0)
 			owner.available_upgrades -= src
 		if (prob(80))
-			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup1.ogg", 50, 1)
 		else if (prob(50))
-			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup2.ogg", 50, 1)
 		else
-			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup3.ogg", 50, 1)
 
 		owner.update_buttons()
 
