@@ -99,6 +99,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/list/holograms
 	var/const/max_holograms = 8
 	var/list/hologramContextActions
+	var/list/hologramTypes
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -186,18 +187,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	holograms = list()
 
-	src.hologramContextActions = list() //childrentypesof(/datum/contextAction/ai_hologram)
-	hologramContextActions += new/datum/contextAction/ai_hologram/caution(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/o2(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/beepsky(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/up_arrow(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/down_arrow(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/left_arrow(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/right_arrow(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/happy_face(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/neutral_face(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/sad_face(src)
-	hologramContextActions += new/datum/contextAction/ai_hologram/angry_face(src)
+	src.hologramContextActions = list()
+	src.hologramTypes = list()
+	for(var/Action in concrete_typesof(/datum/contextAction/ai_hologram))
+		var/datum/contextAction/ai_hologram/action = new Action(src)
+		hologramContextActions += action
+		hologramTypes += action.holo_type
 
 #if ASS_JAM
 	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))

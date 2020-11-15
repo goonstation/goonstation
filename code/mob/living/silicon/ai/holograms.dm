@@ -1,19 +1,6 @@
 //AI HOLOGRAMS
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
-	var/list/hologramTypes = list(
-		"caution",
-		"o2",
-		"beepsky",
-		"up_arrow",
-		"down_arrow",
-		"left_arrow",
-		"right_arrow",
-		"happy_face",
-		"neutral_face",
-		"sad_face",
-		"angry_face"
-	)
 
 	proc/create_hologram()
 		if (!deployed_to_eyecam)
@@ -44,6 +31,7 @@
 	proc/show_hologram_context(var/turf/T)
 		showContextActions(hologramContextActions, T, contextLayout)
 
+ABSTRACT_TYPE(/datum/contextAction/ai_hologram)
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
 	var/holo_type
