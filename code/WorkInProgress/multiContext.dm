@@ -247,6 +247,8 @@ var/list/globalContextActions = null
 				C.screen_loc = "[lattitude_dir][targetx],[longitude_dir][targety]"
 
 				addButtonToHud(usr, C)
+				var/mob/dead/observer/GO = usr
+				if(istype(GO)) GO.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
