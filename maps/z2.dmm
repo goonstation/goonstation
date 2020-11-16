@@ -84379,6 +84379,13 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"mFt" = (
+/obj/landmark/escape_pod_succ{
+	dir = 1;
+	shuttle = SHUTTLE_MANTA
+	},
+/turf/space/shuttle_transit,
+/area/shuttle_transit_space/south)
 "mKe" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
@@ -149434,7 +149441,7 @@ dkH
 dkH
 dkH
 dkH
-dkH
+mFt
 dkH
 dkH
 dkH
@@ -153662,7 +153669,7 @@ dkH
 dkH
 dkH
 dkH
-dkH
+mFt
 dkH
 dkH
 dkH
