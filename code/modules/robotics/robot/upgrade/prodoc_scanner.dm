@@ -15,9 +15,6 @@
 			src.assigned.images.Remove(health_mon_icons)
 			src.assigned = null
 
-	else
-		processing_items.Remove(src)
-
 /obj/item/roboupgrade/healthgoggles/proc/addIcons()
 	if (src.assigned)
 		for (var/image/I in health_mon_icons)
@@ -39,5 +36,5 @@
 	if (src.assigned)
 		src.assigned.images.Remove(health_mon_icons)
 		src.assigned = null
-		processing_items.Remove(src)
+	processing_items.Remove(src)
 	return

@@ -15,9 +15,6 @@
 				src.assigned.images.Remove(arrestIconsAll)
 				src.assigned = null
 
-		else
-			processing_items.Remove(src)
-
 	proc/addIcons()
 		if (src.assigned)
 			for (var/image/I in arrestIconsAll)
@@ -39,5 +36,5 @@
 		if (src.assigned)
 			src.assigned.images.Remove(arrestIconsAll)
 			src.assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
 		return
