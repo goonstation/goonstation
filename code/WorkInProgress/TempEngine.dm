@@ -45,8 +45,8 @@
 	New()
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
-		create_reagents(20)
-		reagents.add_reagent("oil", 15)
+		create_reagents(400)
+		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
 
 	proc/assign_variant(partial_serial_num, varient_a, varient_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][varient_a][rand(100,999)]"
@@ -128,6 +128,26 @@
 		src.last_pressure_delta = pressure_delta
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
+		if(removed)
+			var/reaction_temp = 0
+			if(src.reagents.has_active_reaction("cryostylane_cold"))
+
+				reaction_temp -= 200
+				if(prob(5))
+					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
+			if(src.reagents.has_active_reaction("thalmerite_heat"))
+				reaction_temp += 200
+				if(prob(5))
+					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
+
+			if(reaction_temp)
+				var/heat_capcity = HEAT_CAPACITY(removed)
+				// Azrun TODO
+				// maybe should do standard air at temp? currently that is just water @ 20C -- * 4182 / heat_capcity
+				// +/- 200 for a temp benefit initially seems sufficiently costed for only getting read at 1/2 reaction rate
+				removed.temperature += reaction_temp
+				removed.temperature = max(removed.temperature,1)
+
 		// Leaks gas varient
 		if((circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
@@ -147,13 +167,13 @@
 		var/datum/gas_mixture/gas_output = air2
 
 		//flowing backwards
-		if(last_pressure_delta < 0 && !(circulator_flags & BACKFLOW_PROTECTION))
+		if(last_pressure_delta < 0 && !(src.circulator_flags & BACKFLOW_PROTECTION))
 			gas_input = air2
 			gas_output = air1
 
 		if(gas) gas_output.merge(gas)
 
-		if(!is_circulator_active() && !(circulator_flags & BACKFLOW_PROTECTION))
+		if(!is_circulator_active() && !(src.circulator_flags & BACKFLOW_PROTECTION))
 			gas_input.share(gas_output)
 
 		if(is_circulator_active())
@@ -256,6 +276,7 @@
 	var/datum/light/light
 	var/varient_a = null
 	var/varient_b = null
+	var/conductor_temp = T20C
 
 	var/boost = 0
 	var/generator_flags = 0
@@ -394,7 +415,7 @@
 			// logTheThing("debug", null, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				// carnot efficiency * 65%
-				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * (efficiency_controller * 0.01) //controller expressed as a percentage
+				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(hot_air, cold_air) //controller expressed as a percentage
 
 				// energy transfer required to bring the hot and cold loops to thermal equilibrium (accounting for the energy removed by the engine)
 				var/energy_transfer = delta_temperature * hot_air_heat_capacity * cold_air_heat_capacity / (hot_air_heat_capacity + cold_air_heat_capacity - hot_air_heat_capacity*efficiency)
@@ -436,6 +457,22 @@
 				spam_limiter = 0
 
 		process_grump()
+
+	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
+		var/efficiency_scale = efficiency_controller
+
+		if(src.generator_flags & (TEG_HIGH_TEMP | TEG_LOW_TEMP))
+			var/heat = delta_temperature * (heat_capacity* cold_capacity /(heat_capacity + cold_capacity))
+			src.conductor_temp += heat/heat_capacity
+			src.conductor_temp -= heat/cold_capacity
+			src.conductor_temp = max(src.conductor_temp, 1)
+
+			if(src.generator_flags & TEG_HIGH_TEMP)
+				efficiency_scale += clamp(-15 + 1.79 * log(src.conductor_temp), -5, 15)
+			else if(src.generator_flags & TEG_LOW_TEMP)
+				efficiency_scale += clamp(46.5 + -6.33 * log(src.conductor_temp), -15, 15)
+
+		return efficiency_scale * 0.01
 
 	proc/process_grump()
 		var/stoked_sum = 0
@@ -975,3 +1012,9 @@
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
 #undef LUBE_CHECK_RATE
+#undef BACKFLOW_PROTECTION
+#undef LEAKS_GAS
+#undef LEAKS_LUBE
+#undef LUBE_DRAIN_OPEN
+#undef TEG_HIGH_TEMP
+#undef TEG_LOW_TEMP
