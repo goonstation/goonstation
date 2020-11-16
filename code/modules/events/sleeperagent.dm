@@ -132,7 +132,7 @@
 		var/datum/objective/new_objective = null
 		for(var/i = 0, i < num_objectives, i++)
 			new_objective = pick(eligible_objectives)
-			if (new_objective == /datum/objective/regular/killstirstir)
+			if (new_objective == /datum/objective/regular/killstirstir) // single-use
 				eligible_objectives -= /datum/objective/regular/killstirstir
 				escape_objectives -= /datum/objective/escape/stirstir
 			objectives += new new_objective
