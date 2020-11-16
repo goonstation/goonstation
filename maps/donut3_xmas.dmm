@@ -8944,6 +8944,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 1
 	},
