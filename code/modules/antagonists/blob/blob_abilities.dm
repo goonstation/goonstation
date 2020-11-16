@@ -327,7 +327,6 @@
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
 					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
-
 			return 1
 
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
