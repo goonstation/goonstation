@@ -1,5 +1,9 @@
 
 (t)sun nov 15 20
+(u)TTerc
+(p)2647
+(e)🗺|mapping
+(+)Door-linked force fields added to Cogmap 2, Atlas, Clarion and Destiny
 (u)Luxizzle
 (p)2688
 (e)🆕🎨|feature, sprites
