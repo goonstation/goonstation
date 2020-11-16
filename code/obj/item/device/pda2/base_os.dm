@@ -334,6 +334,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
+							logTheThing("pdamsg", usr, null, "sets ringtone of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))

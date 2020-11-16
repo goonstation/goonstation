@@ -41,7 +41,7 @@
 			if (!istype(beamTurf) || beamTurf.density)
 				return
 			src.beam = new /obj/beam/custom(beamTurf, setup_beam_length)
-			src.beam.dir = src.dir
+			src.beam.set_dir(src.dir)
 			src.beam.lens = src.lens
 
 			return

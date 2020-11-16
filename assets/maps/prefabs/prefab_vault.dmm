@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/space)
 "b" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/noGenerate)
 "c" = (/turf/simulated/wall/r_wall{opacity = 0},/area/noGenerate)
 "d" = (/obj/rack,/obj/item/material_piece/uqill,/obj/item/material_piece/uqill,/obj/item/material_piece/uqill,/turf/simulated/floor/scorched2,/area/noGenerate)

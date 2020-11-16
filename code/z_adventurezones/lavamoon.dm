@@ -945,7 +945,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 
 			if (src.health <= 0 && active != -1)
-				src.dir = 2
+				src.set_dir(2)
 				src.active = -1
 				src.visible_message("<span class='alert'>[src] shuts down. Forever.</span>")
 				return
@@ -957,13 +957,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return -1
 
 			active = 1
-			src.dir = 1
+			src.set_dir(1)
 			src.visible_message("<span class='alert'>[src] begins to whirr ominously!</span>")
 			SPAWN_DBG(2 SECONDS)
 				if (health <= 0)
-					dir = 2
+					set_dir(2)
 					return
-				src.dir = 4
+				src.set_dir(4)
 				if(prob(50)) //cheese reduction
 					src.visible_message("<span class='alert'>[src] produces a terrifying vibration!</span>")
 					for(var/atom/A in orange(3, src))
@@ -971,7 +971,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 							A.ex_act(1)
 				sleep(1 SECOND)
 				if (health <= 0)
-					dir = 2
+					set_dir(2)
 					return
 				if (prob(80))
 					new /obj/critter/ancient_repairbot/grumpy (src.loc)
@@ -981,7 +981,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
 				active = 0
-				dir = 2
+				set_dir(2)
 
 			return
 
@@ -1146,7 +1146,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				switch (state)
 					if (STATE_DEFAULT)
 						plunk_down_marker()
-						if (spawners && spawners.len)
+						if (length(spawners))
 							var/obj/iomoon_boss/bot_spawner/aSpawner = pick(spawners)
 							aSpawner.spawn_bot()
 
@@ -1486,7 +1486,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			var/obj/iomoon_puzzle/ancient_robot_door/energy/current = src
 			while (length-- > 1)
 				current.next = new src.type ( get_step(current, src.dir) )
-				current.next.dir = current.dir
+				current.next.set_dir(current.dir)
 				current.next.opened = src.opened
 				current = current.next
 

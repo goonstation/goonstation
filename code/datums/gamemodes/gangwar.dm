@@ -728,7 +728,7 @@
 		try
 			if (ismob(owner))
 				M = owner
-			if (M && M.mind && M.mind.gang)
+			if (M?.mind?.gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
 				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
@@ -1249,7 +1249,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer","Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

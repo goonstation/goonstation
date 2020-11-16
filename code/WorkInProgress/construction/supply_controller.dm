@@ -290,7 +290,7 @@
 
 /datum/supply_control/cable_kit
 	maximum_stock = 3
-	supply_packs = list(/datum/supply_packs/electrical)
+	supply_packs = list(/datum/supply_packs/electrical/red)
 
 /datum/supply_control/homing_kit
 	maximum_stock = 3

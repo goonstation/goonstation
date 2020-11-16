@@ -1,20 +1,20 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/gehenna/desert,
-/area)
+/area/space)
 "ab" = (
 /turf/gehenna/desert,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ac" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ad" = (
 /obj/machinery/door/airlock/pyro/external{
 	icon_state = "airlock_closed";
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ae" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -23,22 +23,22 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "af" = (
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ag" = (
 /turf/simulated/floor/stairs/wide/other{
 	icon_state = "Stairs2_wide";
 	dir = 4
 	},
-/area/station/mining)
+/area/station/mining/staff_room)
 "ah" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ai" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aj" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -47,22 +47,22 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ak" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/sw,
-/area/station/mining)
+/area/station/mining/staff_room)
 "al" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/mining)
+/area/station/mining/staff_room)
 "am" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/staff_room)
 "an" = (
 /turf/simulated/floor/stairs/medical/wide,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ao" = (
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ap" = (
 /obj/machinery/light{
 	dir = 4;
@@ -71,7 +71,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aq" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -81,15 +81,15 @@
 	},
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ar" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/mining)
+/area/station/mining/staff_room)
 "as" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/mining)
+/area/station/mining/staff_room)
 "at" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -98,10 +98,10 @@
 	pixel_x = -12
 	},
 /turf/gehenna/desert,
-/area/station/mining)
+/area/station/mining/staff_room)
 "au" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
-/area/station/mining)
+/area/station/mining/staff_room)
 "av" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -110,11 +110,11 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aw" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ax" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -124,28 +124,28 @@
 	},
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ay" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
-/area/station/mining)
+/area/station/mining/staff_room)
 "az" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aA" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aB" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aC" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/mining)
+/area/station/mining/staff_room)
 "aD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area)
+/area/space)
 "aE" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -160,7 +160,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aF" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -171,7 +171,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aG" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -186,7 +186,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aH" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -197,14 +197,14 @@
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aI" = (
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aJ" = (
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aK" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -215,60 +215,60 @@
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "aL" = (
 /turf/simulated/floor/blueblack/corner,
-/area)
+/area/space)
 "aM" = (
 /turf/simulated/floor/blueblack,
-/area)
+/area/space)
 "aN" = (
 /turf/simulated/floor/blueblack/corner{
 	dir = 4
 	},
-/area)
+/area/space)
 "aO" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area)
+/area/space)
 "aP" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "aQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 2;
 	name = "Pathogen Research"
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "aR" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "aS" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 8
 	},
-/area)
+/area/space)
 "aT" = (
 /obj/submachine/chef_sink{
 	name = "bathroom sink"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "aU" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "aV" = (
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "aW" = (
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "aX" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -276,14 +276,14 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "aY" = (
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "aZ" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "ba" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -292,7 +292,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "bb" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -301,18 +301,18 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "bc" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Bathroom"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bd" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "be" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
@@ -320,43 +320,43 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bf" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bg" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bh" = (
 /obj/machinery/bathtub{
 	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bi" = (
 /obj/machinery/shower{
 	dir = 8;
 	pixel_x = -8
 	},
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bj" = (
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bk" = (
 /obj/machinery/shower{
 	dir = 4;
 	pixel_x = 8
 	},
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bl" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -364,32 +364,32 @@
 	tag = ""
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bm" = (
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bn" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bo" = (
 /obj/decal/nothing,
 /turf/simulated/floor/stairs/dark/wide,
-/area)
+/area/space)
 "bp" = (
 /obj/decal/nothing,
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 6
 	},
-/area)
+/area/space)
 "bq" = (
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 9
 	},
-/area)
+/area/space)
 "br" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -398,7 +398,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bs" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -407,70 +407,70 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bt" = (
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 8
 	},
-/area)
+/area/space)
 "bu" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/stairs/dark/wide,
-/area)
+/area/space)
 "bv" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 6
 	},
-/area)
+/area/space)
 "bw" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area)
+/area/space)
 "bx" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area)
+/area/space)
 "by" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area)
+/area/space)
 "bz" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area)
+/area/space)
 "bA" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 4
 	},
-/area)
+/area/space)
 "bB" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bC" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area)
+/area/space)
 "bD" = (
 /turf/simulated/floor/carpet/blue/fancy/edge,
-/area)
+/area/space)
 "bE" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge,
-/area)
+/area/space)
 "bF" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area)
+/area/space)
 "bG" = (
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/stairs/dark/wide{
 	icon_state = "dark_stairs2";
 	dir = 5
 	},
-/area)
+/area/space)
 "bH" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -480,22 +480,22 @@
 	},
 /obj/landmark/viscontents_spawn,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "bI" = (
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/white,
-/area)
+/area/space)
 "bJ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 2;
 	name = "Quarantine"
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bK" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bL" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light/incandescent/cool{
@@ -505,18 +505,18 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-corner2";
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bN" = (
 /obj/machinery/disposal/morgue,
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bO" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
@@ -525,7 +525,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bP" = (
 /obj/machinery/light{
 	desc = "A regular ordinary lighting fixture.";
@@ -534,7 +534,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/sanitary/white,
-/area)
+/area/space)
 "bQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -542,76 +542,76 @@
 	req_access_txt = null
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "bR" = (
 /turf/simulated/floor,
-/area)
+/area/space)
 "bS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bT" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
 	dir = 9
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bY" = (
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary/blue,
-/area)
+/area/space)
 "bZ" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ca" = (
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
-/area)
+/area/space)
 "cb" = (
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1
 	},
-/area)
+/area/space)
 "cc" = (
 /turf/simulated/floor/blueblack/corner{
 	icon_state = "blueblackcorner";
 	dir = 1
 	},
-/area)
+/area/space)
 "cd" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -626,7 +626,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "ce" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -637,7 +637,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "cf" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "tile1";
@@ -652,21 +652,21 @@
 	dir = 5
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "cg" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/white,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ch" = (
 /turf/simulated/floor/plating,
-/area/station/mining)
+/area/station/mining/staff_room)
 "ci" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	icon_state = "maint_closed";
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "cj" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -674,127 +674,127 @@
 	req_access_txt = null
 	},
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "ck" = (
 /obj/machinery/conveyor/west,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cl" = (
 /obj/landmark/viscontents_spawn,
 /obj/machinery/conveyor/west,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cm" = (
 /obj/machinery/conveyor/east,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cn" = (
 /obj/landmark/viscontents_spawn,
 /obj/machinery/conveyor/south,
 /turf/simulated/floor,
-/area)
+/area/space)
 "co" = (
 /obj/landmark/viscontents_spawn,
 /obj/machinery/conveyor/north,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cp" = (
 /obj/landmark/viscontents_spawn,
 /obj/machinery/conveyor/east,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cq" = (
 /obj/decal/tile_edge/floorguide/arrow_w{
 	icon_state = "endpiece_w";
 	dir = 4
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cr" = (
 /obj/decal/tile_edge/floorguide/arrow_e{
 	icon_state = "endpiece_e";
 	dir = 1
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cs" = (
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/floor,
-/area)
+/area/space)
 "ct" = (
 /obj/stool/bed,
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cu" = (
 /obj/table/folding,
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cv" = (
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	icon_state = "glass_closed";
 	dir = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cx" = (
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "cy" = (
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor/black,
-/area)
+/area/space)
 "cz" = (
 /obj/machinery/door/airlock/pyro/external{
 	icon_state = "airlock_closed";
 	dir = 8
 	},
 /turf/simulated/floor,
-/area)
+/area/space)
 "cA" = (
 /obj/landmark/viscontents_spawn,
 /obj/machinery/conveyor/south,
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cB" = (
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cC" = (
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cD" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cE" = (
 /obj/machinery/door/airlock/pyro/external{
 	icon_state = "airlock_closed";
 	dir = 8
 	},
 /turf/gehenna/desert,
-/area)
+/area/space)
 "cF" = (
 /obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cG" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /turf/simulated/floor,
-/area)
+/area/space)
 "cH" = (
 /obj/machinery/light/small/warm/very,
 /turf/simulated/grimycarpet,
-/area)
+/area/space)
 "cI" = (
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

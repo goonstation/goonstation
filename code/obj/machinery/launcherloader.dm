@@ -37,7 +37,7 @@
 				else
 					driver = pick(drivers)
 
-				src.dir = get_dir(src,driver)
+				src.set_dir(get_dir(src,driver))
 
 	proc/activate()
 		if(operating || !isturf(src.loc)) return
@@ -136,11 +136,11 @@
 					break
 
 		if(next_dest)
-			src.dir = next_dest
+			src.set_dir(next_dest)
 		else
 			if (!trigger_when_no_match)
 				operating = 0
-			src.dir = default_direction
+			src.set_dir(default_direction)
 
 		operating = 1
 

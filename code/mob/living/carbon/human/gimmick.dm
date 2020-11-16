@@ -498,7 +498,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					else
 						dead_mobs += M
 
-			if(dead_mobs && dead_mobs.len > 0 && prob(60)) //SpyGuy for undefined var/len (what the heck)
+			if(length(dead_mobs) && prob(60)) //SpyGuy for undefined var/len (what the heck)
 				var/mob/M = pick(dead_mobs)
 				say("[BILL_PICK("deadguy")] [M.name]...")
 			else if (alive_mobs.len > 0)
@@ -506,7 +506,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					greeted_murray = 1
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN_DBG(rand(20,40))
-						if (murray && murray.on && !murray.idle)
+						if (murray?.on && !murray.idle)
 							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else

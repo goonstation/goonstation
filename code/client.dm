@@ -1,3 +1,5 @@
+var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
+
 /client
 	preload_rsc = 1
 	var/datum/player/player = null
@@ -162,10 +164,8 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
 
-	player = find_player(key)
-	if (!player)
-		player = make_player(key)
-	player.client = src
+	src.player = make_player(key)
+	src.player.client = src
 
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
@@ -180,21 +180,6 @@
 	//Assign custom interface datums
 	src.chatOutput = new /datum/chatOutput(src)
 	//src.chui = new /datum/chui(src)
-
-	//Should eliminate any local resource loading issues with chui windows
-	if (!cdn && !(!address || (world.address == src.address)))
-		var/list/chuiResources = list(
-			"browserassets/js/jquery.min.js",
-			"browserassets/js/jquery.nanoscroller.min.js",
-			"browserassets/js/chui/chui.js",
-			"browserassets/js/errorHandler.js",
-			"browserassets/css/fonts/fontawesome-webfont.eot",
-			"browserassets/css/fonts/fontawesome-webfont.svg",
-			"browserassets/css/fonts/fontawesome-webfont.ttf",
-			"browserassets/css/fonts/fontawesome-webfont.woff",
-			"browserassets/css/font-awesome.css"
-		)
-		src.loadResourcesFromList(chuiResources)
 
 	if (!isnewplayer(src.mob))
 		src.loadResources()
@@ -308,6 +293,83 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+//vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
+#ifdef DO_VPN_CHECKS
+	if (vpn_blacklist_enabled)
+		var/vpn_kick_string = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>VPN or Proxy Detected</title>
+							</head>
+							<body>
+								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+							</body>
+						</html>
+					"}
+		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
+
+		// We have already checked this user this round and they are indeed on a VPN, kick em
+		if (is_vpn_address)
+			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
+			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
+			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+			src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+			sleep(3 SECONDS)
+			if (src)
+				del(src)
+			return
+
+		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
+		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
+		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
+			var/list/data
+			try
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1)
+
+				// Goonhub API error encountered
+				if (data["error"])
+					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
+					logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
+
+				// Successful Goonhub API query
+				else
+					data = json_decode(html_decode(data["response"]))
+
+					// VPN checker service returns error responses in a "message" property
+					if (data["message"])
+						// Yes, we're forcing a cache for a no-VPN response here on purpose
+						// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+						//			  so we want to avoid spamming the goonhub API this round for literally no gain
+						global.vpn_ip_checks["[src.address]"] = false
+						logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+						logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+
+					// Successful VPN check
+					else
+						var/list/security_info = data["security"]
+
+						// IP is a known VPN, cache locally and kick
+						if (security_info["vpn"] == true)
+							global.vpn_ip_checks["[src.address]"] = true
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+							sleep(3 SECONDS)
+							if (src)
+								del(src)
+							return
+
+						// IP is not a known VPN
+						else
+							global.vpn_ip_checks["[src.address]"] = false
+
+			catch(var/exception/e)
+				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
+				logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [e.name]", "debug")
+#endif
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -432,12 +494,19 @@
 #endif
 		//Cloud data
 		if (cdn)
-			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-			if( !http )
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
+			// Fetch via HTTP from goonhub
+			var/datum/http_request/request = new()
+			request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
+			request.begin_async()
+			UNTIL(request.is_complete())
+			var/datum/http_response/response = request.into_response()
 
-			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-			if( ret["status"] == "error" )
+			if (response.errored || !response.body)
+				logTheThing("debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+				return
+
+			var/list/ret = json_decode(response.body)
+			if(ret["status"] == "error")
 				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
 			else
 				cloudsaves = ret["saves"]
@@ -549,6 +618,14 @@
 	if (browse_item_initial_done)
 		SPAWN_DBG(0)
 			sendItemIcons(src)
+
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
@@ -783,17 +860,24 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
-	set background = 1
 	joined_date = ""
-	var/list/text = world.Export("http://byond.com/members/[src.ckey]?format=text")
-	if(text)
-		var/content = file2text(text["CONTENT"])
-		var/savefile/save = new
-		save.ImportText("/", content)
-		save.cd = "general"
-		joined_date = save["joined"]
-		jd_warning(joined_date)
-	return
+
+	// Get join date from BYOND members page
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		return
+
+	var/savefile/save = new
+	save.ImportText("/", response.body)
+	save.cd = "general"
+	joined_date = save["joined"]
+	jd_warning(joined_date)
 
 /client/verb/ping()
 	set name = "Ping"
@@ -1025,18 +1109,22 @@ var/global/curr_day = null
 
 //drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
 //Sets and uploads cloud data on the client
-//Try to avoid calling often, as it contacts Goonhub and uses the dreaded spawn.
 //TODO: Pool puts, determine value of doing as such.
 /client/proc/cloud_put( var/key, var/value )
 	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining."//oh no
+		return "Failed to talk to Goonhub; try rejoining." //oh no
 	clouddata[key] = "[value]"
-	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
-		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
-//Returns some cloud data on the client
+
+	// Via rust-g HTTP
+	var/datum/http_request/request = new() //If it fails, oh well...
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+	request.begin_async()
+
+/// Returns some cloud data on the client
 /client/proc/cloud_get( var/key )
 	return clouddata ? clouddata[key] : null
-//Returns 1 if you can set or retrieve cloud data on the client
+
+/// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
 	return !!clouddata
 

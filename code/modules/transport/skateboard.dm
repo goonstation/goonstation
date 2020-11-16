@@ -106,7 +106,7 @@
 		if(81 to 100)
 			speed_delay = 0
 
-	if(runningAction && runningAction.bar)
+	if(runningAction?.bar)
 		if(sickness >= 60)
 			runningAction.bar.color = "#00DD00"
 		else

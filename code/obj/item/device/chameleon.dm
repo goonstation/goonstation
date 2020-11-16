@@ -135,7 +135,7 @@
 			cham.real_desc = target.desc
 			cham.icon = target.icon
 			cham.icon_state = target.icon_state
-			cham.dir = target.dir
+			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
 		else
@@ -245,7 +245,7 @@
 			src.real_desc = target.desc
 			src.icon = target.icon
 			src.icon_state = target.icon_state
-			src.dir = target.dir
+			src.set_dir(target.dir)
 			can_use = 1
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")

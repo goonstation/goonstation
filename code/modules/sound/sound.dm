@@ -31,9 +31,9 @@
 
 #define MAX_SOUND_RANGE 33
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
-#define CLIENT_IGNORES_SOUND(C) (C && C.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
+#define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
-// returns 0 to 1 based on air pressure in turf
+/// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
 	var/turf/T = get_turf(loc)
@@ -63,22 +63,28 @@ var/global/list/falloff_cache = list()
 //volumous hair with l'orial paris
 /client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5)
 /client/var/list/sound_playing = new/list(1024, 2)
-//Returns a list of friendly names for available sound channels
+
+/// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
 	return list("Game", "Ambient", "Radio", "Admin")
-//Returns a list of friendly descriptions for available sound channels
+
+/// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
 	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.")
-//Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
+
+/// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
 	return volumes[id + 1] * volumes[1] * 100
-//Returns the master volume (0-1)
+
+/// Returns the master volume (0-1)
 /client/proc/getMasterVolume()
 	return volumes[1]
-//Returns the true volume for a channel, unattenuated for the master channel (0-1)
+
+/// Returns the true volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getRealVolume(channel)
 	return volumes[channel + 1]
-//Sets and applies the volume for a channel (0-1)
+
+/// Sets and applies the volume for a channel (0-1)
 /client/proc/setVolume(channel, volume)
 	volume = clamp(volume, 0, 1)
 	volumes[channel + 1] = volume
@@ -110,9 +116,6 @@ var/global/list/falloff_cache = list()
 
 	// don't play if the sound is happening nowhere
 	if (!source || !source.loc || source.z <= 0)
-		return
-
-	if (!length(spatial_z_maps))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)

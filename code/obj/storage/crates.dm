@@ -264,7 +264,7 @@
 		if (islist(syndi_buylist_cache))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
-				if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 					for (var/V in S.blockedmode)
 						if (ispath(V) && istype(ticker.mode, V))
 							blocked = 1
@@ -616,4 +616,8 @@
 	weapons4
 		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
+
+	cargonia
+		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
+		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 

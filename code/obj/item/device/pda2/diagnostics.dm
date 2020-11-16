@@ -47,7 +47,7 @@
 		if(mode == 0)
 			dat += "<a href='byond://?src=\ref[src];send=1'>Send ping</A><BR><HR>"
 
-			if(result && result.len > 0)
+			if(length(result))
 				for(var/t in result)
 					dat+=t
 

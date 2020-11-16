@@ -20,7 +20,7 @@ datum/controller/process/healthupdates
 		global.health_update_queue.len = 0
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

@@ -41,7 +41,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-			if (user && user.bioHolder.HasEffect("clumsy"))
+			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_armed
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -192,7 +192,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-			if (user && user.bioHolder.HasEffect("clumsy"))
+			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
@@ -229,7 +229,7 @@ PIPE BOMBS + CONSTRUCTION
 					continue
 				if (istype(X, /obj))
 					var/area/t = get_area(X)
-					if(t && t.sanctuary) continue
+					if(t?.sanctuary) continue
 					if (prob(50) && X:anchored != 2)
 						step_towards(X,src)
 		qdel(src)
@@ -258,7 +258,7 @@ PIPE BOMBS + CONSTRUCTION
 				return
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
-			if (user && user.bioHolder.HasEffect("clumsy"))
+			if (user?.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
@@ -318,7 +318,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
-		if (usr && usr.loc) //Wire: Fix for Cannot read null.loc
+		if (usr?.loc) //Wire: Fix for Cannot read null.loc
 			src.smoke = new /datum/effects/system/bad_smoke_spread/
 			src.smoke.attach(src)
 			src.smoke.set_up(10, 0, usr.loc)
@@ -372,7 +372,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
-		if (usr && usr.loc) //Wire: Fix for Cannot read null.loc
+		if (usr?.loc) //Wire: Fix for Cannot read null.loc
 			src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
 			src.mustard_gas.attach(src)
 			src.mustard_gas.set_up(5, 0, usr.loc)
@@ -388,6 +388,8 @@ PIPE BOMBS + CONSTRUCTION
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
 	icon_state_armed = "fragnade1"
+	var/custom_projectile_type = null
+	var/pellets_to_fire = 20
 
 	prime()
 		var/turf/T = ..()
@@ -406,11 +408,15 @@ PIPE BOMBS + CONSTRUCTION
 			if (F)
 				playsound(T, "sound/effects/smoke.ogg", 20, 1, -2)
 				SPAWN_DBG(0)
-					if (F && F.smoke) //Wire note: Fix for Cannot execute null.start()
+					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
 							F.smoke.start()
 							sleep(1 SECOND)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+			if(src.custom_projectile_type)
+				PJ.spread_projectile_type = src.custom_projectile_type
+				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
+			PJ.pellets_to_fire = src.pellets_to_fire
 			var/targetx = src.y - rand(-5,5)
 			var/targety = src.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, src.z)
@@ -430,7 +436,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
-		if (usr && usr.loc)
+		if (usr?.loc)
 			src.smoke = new /datum/effects/system/bad_smoke_spread/
 			src.smoke.attach(src)
 			src.smoke.set_up(7, 1, usr.loc)
@@ -539,7 +545,7 @@ PIPE BOMBS + CONSTRUCTION
 			for (var/turf/tile in range(world.view-1, T))
 				for (var/atom/O in tile.contents)
 					var/area/t = get_area(O)
-					if(t && t.sanctuary) continue
+					if(t?.sanctuary) continue
 					O.emp_act()
 
 			qdel(grenade)
@@ -753,7 +759,7 @@ PIPE BOMBS + CONSTRUCTION
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
-			if(t && t.sanctuary) continue
+			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
 				M.owlgib()
 		..()
@@ -767,7 +773,7 @@ PIPE BOMBS + CONSTRUCTION
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
-			if(t && t.sanctuary) continue
+			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
 				if (!(M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/owl_mask)))
 					for(var/obj/item/clothing/O in M)
@@ -796,7 +802,7 @@ PIPE BOMBS + CONSTRUCTION
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
-			if(t && t.sanctuary) continue
+			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
 				if (!(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 					for(var/obj/item/clothing/O in M)
@@ -835,7 +841,7 @@ PIPE BOMBS + CONSTRUCTION
 			T.setMaterial(getMaterial("gold"))
 		for(var/mob/living/carbon/human/M in range(3, src))
 			var/area/t = get_area(M)
-			if(t && t.sanctuary) continue
+			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
 				M.become_gold_statue()
 		..()
@@ -872,7 +878,7 @@ PIPE BOMBS + CONSTRUCTION
 
 /obj/item/firework
 	name = "firework"
-	desc = "BOOM!"
+	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one says it was manufactured in Space-China."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "firework"
 	opacity = 0
@@ -887,16 +893,38 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	var/slashed = FALSE // has it been emptied out? if so, better dud!
+	var/primer_burnt = FALSE // avoid priming a firework multiple times, that doesn't make sense!
+	var/primed = FALSE // cutting open lit fireworks is a BAD idea
+
+	New()
+		..()
+		create_reagents(10)
+		reagents.add_reagent("magnesium", 10)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (user.bioHolder.HasEffect("clumsy"))
+			if (src.primer_burnt)
+				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
+				return
+
+			else if (src.slashed)
+				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				SPAWN_DBG( src.det_time )
+					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
+					src.primer_burnt = TRUE
+					return
+
+			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
+				src.primed = TRUE
 				SPAWN_DBG( 5 )
 					boom()
 					return
+
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
@@ -915,16 +943,50 @@ PIPE BOMBS + CONSTRUCTION
 
 	attack_self(mob/user as mob)
 		if (user.equipped() == src)
-			if (user.bioHolder.HasEffect("clumsy"))
+			if (src.primer_burnt)
+				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
+				return
+
+			else if (src.slashed)
+				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				SPAWN_DBG( src.det_time )
+					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
+					src.primer_burnt = TRUE
+					return
+
+			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
+				src.primed = TRUE
 				SPAWN_DBG( 5 )
 					boom()
 					return
+
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
 					boom()
 					return
+
+	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
+			src.slashed = TRUE
+			src.name = "empty [src.name]" // its empty now!
+			src.desc = "[src.desc] It has been cut open and emptied out."
+			boutput(user, "You carefully cut [src] open and dump out the contents.")
+
+			make_cleanable(/obj/decal/cleanable/magnesiumpile, get_turf(src.loc)) // create magnesium pile
+			src.reagents.clear_reagents() // remove magnesium from firework
+			return
+
+		else if (iscuttingtool(A) && !(src.slashed) && (src.primed)) // cutting open a lit firework is a bad idea!
+			boutput(user, "<span class='alert'>You cut open [src], but the lit primer ignites the contents!</span>")
+			boom()
+			return
+
+		else if (iscuttingtool(A) && (src.slashed))
+			boutput(user, "[src] has already been cut open and emptied.")
+			return
 
 //////////////////////// Breaching charges //////////////////////////////////
 
@@ -1088,7 +1150,7 @@ PIPE BOMBS + CONSTRUCTION
 			src.invisibility = 101
 
 			for (var/turf/T in range(src.expl_range, location))
-				if( T && T.loc:sanctuary ) continue
+				if( T?.loc:sanctuary ) continue
 				if (!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/floor))
 					continue
 
@@ -1383,6 +1445,10 @@ PIPE BOMBS + CONSTRUCTION
 		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
+	ex_act(severity)
+		do_explode()
+		. = ..()
+
 	proc/do_explode()
 		if (src.strength)
 			if (src.material)
@@ -1482,11 +1548,13 @@ PIPE BOMBS + CONSTRUCTION
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,src.loc))
 					if(!target.blocks_air && target.air)
-						if(target.parent)
+						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
 
 						var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-						payload.toxins = plasma * 400
+						payload.toxins = plasma * 100
+						payload.temperature = T20C
+						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 
 			if (throw_objs.len && throw_objs.len > 0)

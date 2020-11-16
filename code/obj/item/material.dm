@@ -62,7 +62,7 @@
 		else if (isliving(AM))
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
-			if (S && S.satchel && S.satchel.contents.len < S.satchel.maxitems && src.scoopable)
+			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
@@ -794,7 +794,7 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_modifier, var/extra_mat)
+	proc/output_bar_from_item(obj/item/O, var/amount_modifier = 1, var/extra_mat)
 		if (!O || !O.material)
 			return
 
@@ -841,6 +841,9 @@
 		playsound(src.loc, sound_process, 40, 1)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
 			boutput(user, "You load [W] into [src].")
 			W.set_loc(src)
@@ -942,7 +945,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.name != O.name)
 				continue

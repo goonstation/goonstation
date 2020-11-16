@@ -33,6 +33,16 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
+/obj/item/clothing/head/pink
+	desc = "A knit cap in pink."
+	icon_state = "pink"
+	item_state = "pgloves"
+
+/obj/item/clothing/head/orange
+	desc = "A knit cap in orange."
+	icon_state = "orange"
+	item_state = "ogloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
 	desc = "A plsing hat."
@@ -421,6 +431,13 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("gold"))
+
+/obj/item/clothing/head/longtophat
+	name = "Long tophat"
+	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "ltophat"
+	item_state = "lthat"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"

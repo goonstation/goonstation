@@ -43,7 +43,7 @@
 				boutput(owner, "<span class='alert'>That ability is on cooldown for [round((last_used - world.time) / 10)] seconds.</span>")
 				return 1
 			var/area/A = get_area(T)
-			if(A && A.sanctuary)
+			if(A?.sanctuary)
 				boutput(owner, "<span class='alert'>You cannot use that ability here.</span>")
 				return 1
 			return 0
@@ -605,7 +605,7 @@
 		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
-			if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
+			if (blob_o?.mind) //ahem ahem AI blobs exist
 				blob_o.mind.blob_absorb_victims += target
 			return
 
@@ -615,13 +615,13 @@
 			return
 
 		var/mob/living/carbon/human/H = target
-		if (H && H.decomp_stage == 4)
+		if (H?.decomp_stage == 4)
 			H.decomp_stage = 4
 
-		if (blob_o && blob_o.mind) //ahem ahem AI blobs exist
+		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
-		if (ismonkey(H))
+		if (isnpcmonkey(H))
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4

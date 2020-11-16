@@ -197,7 +197,7 @@
 	for(var/d in cardinal)
 		var/turf/simulated/T = get_step(src, d)
 		//if(istype(T) && !T.density)
-		if (T && T.pathable && !T.density)
+		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
 				L.Add(T)
 	return L
@@ -210,7 +210,7 @@
 	for(var/d in alldirs)
 		var/turf/simulated/T = get_step(src, d)
 		//if(istype(T) && !T.density)
-		if (T && T.pathable && !T.density)
+		if (T?.pathable && !T.density)
 			if(!LinkBlockedWithAccess(src, T, ID))
 				L.Add(T)
 	return L

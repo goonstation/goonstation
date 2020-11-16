@@ -403,7 +403,7 @@
 	proc/loosen()
 
 	proc/rotate()
-		src.dir = turn(src.dir, -90)
+		src.set_dir(turn(src.dir, -90))
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispryingtool(W))
@@ -447,7 +447,7 @@
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
+		return ..()
 
 	pick_up_by(var/mob/M)
 		if(level != 1) return ..()
@@ -658,7 +658,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input && input.signal && isReady() && trunk)
+		if(input?.signal && isReady() && trunk)
 			unReady()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
@@ -878,7 +878,7 @@
 			if(lastturf.opacity || !lastturf.canpass())
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
-			newbeam.dir = src.dir
+			newbeam.set_dir(src.dir)
 			beamobjs[++beamobjs.len] = newbeam
 			lastturf = get_step(lastturf, dir)
 

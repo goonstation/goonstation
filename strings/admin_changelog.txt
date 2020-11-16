@@ -1,3 +1,9 @@
+(t)sat nov 07 20
+(u)Sovexe
+(*)New buildmode mode, Appearance. Allows you to copy the appearance of any mob/obj/turf and apply it to any other mob/obj/turf.
+(t)tue oct 27 20
+(u)Sovexe
+(*)New verb, Spawn-Demonically.
 (t)wed oct 07 20
 (u)Sovexe
 (+)Oceanify no longer overwrites trench hole turfs.

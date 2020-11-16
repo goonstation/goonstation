@@ -57,7 +57,7 @@
 	else
 		if (ismap("COGMAP2"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
@@ -72,8 +72,8 @@
 			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the inner hall of the medbay" = list(/area/station/medical/medbay),
-			"the main hallway in research" = list(/area/station/science),
-			"the chapel" = list(/area/station/chapel/main),
+			"the main hallway in research" = list(/area/station/science/lobby),
+			"the chapel" = list(/area/station/chapel/sanctuary),
 			"the escape hallway" = list(/area/station/hallway/secondary/exit),
 			"the Research Director's office" = list(/area/station/crew_quarters/hor),
 			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
@@ -81,7 +81,7 @@
 
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/mining/refinery),
@@ -93,7 +93,7 @@
 
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
 			"the central warehouse" = list(/area/station/storage/warehouse),
@@ -235,7 +235,7 @@
 		return 1
 
 	if (emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		if (the_bomb && the_bomb.armed)
+		if (the_bomb?.armed)
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
@@ -252,7 +252,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time && !the_bomb.disposed)
+	if (the_bomb?.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
