@@ -13,7 +13,7 @@
 	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
-	var/operation_time = 10
+	var/operation_time = 1 SECONDS
 	anchored = 1
 	var/autoclose = 0
 	var/interrupt_autoclose = 0
@@ -25,10 +25,11 @@
 	var/icon_base = "door"
 	var/brainloss_stumble = 0 // Can a mob stumble into this door if they have enough brain damage? Won't work if you override Bumped() or attackby() and don't check for it separately.
 	var/brainloss_nospam = 1 // In relation to world time.
-	var/crush_delay = 60
+	var/crush_delay = 6 SECONDS
 	var/sound_deny = 0
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
 	var/close_trys = 0
+	var/meatcube_present = FALSE //used to prevent creating multiple meatcubes with one mob
 
 	var/health = 600
 	var/health_max = 600
@@ -564,9 +565,19 @@
 				L.layer = src.layer - 0.01
 				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
 				L.emote("scream")
-
+				if (isdead(L) && (((src.dir == SOUTH || src.dir == NORTH) && (L.squish_axis == "Horizontal")) || ((src.dir == EAST || src.dir == WEST) && (L.squish_axis == "Vertical"))))
+					var/mob/M
+					for(M in get_turf(src))
+						if (istype(M, /mob/living/carbon/cube))
+							src.meatcube_present = TRUE
+							break
+					if (src.meatcube_present == FALSE)
+						L.make_cube(life = INFINITY, T = get_turf(L))
 				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
-
+				if (isdead(L) && src.dir == SOUTH || src.dir == NORTH)
+					L.squish_axis = "Vertical"
+				if (isdead(L) && src.dir == EAST || src.dir == WEST)
+					L.squish_axis = "Horizontal"
 				L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1

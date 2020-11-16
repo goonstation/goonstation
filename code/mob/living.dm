@@ -44,6 +44,7 @@
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
+	var/squish_axis = "None"
 
 	var/canspeak = 1
 
