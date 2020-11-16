@@ -33571,9 +33571,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/juggleplaque{
-	desc = {"Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""};
-	name = "dedication plaque";
+/obj/juggleplaque/dedicationplaque/emily{
 	pixel_y = 25
 	},
 /turf/simulated/floor/carpet{
@@ -33586,9 +33584,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
+/obj/juggleplaque/dedicationplaque/manta{
 	pixel_y = 25
 	},
 /turf/simulated/floor/plating/random,

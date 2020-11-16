@@ -36,6 +36,16 @@
 	opacity = 0
 	density = 0
 
+/obj/juggleplaque/dedicationplaque
+	name = "dedication plaque"
+	desc = "A plaque in dedication of some event or person."
+
+/obj/juggleplaque/dedicationplaque/emily
+	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta  \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""
+
+/obj/juggleplaque/dedicationplaque/manta
+	desc = "NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""
+
 /obj/cairngorm_stats
 	name = "scoreboard of sorts"
 	icon = 'icons/obj/decals/wallsigns.dmi'
