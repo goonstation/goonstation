@@ -8,6 +8,10 @@
 (p)2647
 (e)🗺|mapping
 (+)Door-linked force fields added to Cogmap 2, Atlas, Clarion and Destiny
+(u)Luxizzle
+(p)2688
+(e)🆕🎨|feature, sprites
+(*)The AI can now hold their point key (B) and click on a location to spawn a hologram.
 (u)UrsulaMajor
 (e)🆕|feature
 (*)New Chicken Breeds! See if you can find them all! (Not Secret! Feel free to share with your friends what you find out!)
