@@ -1,5 +1,9 @@
 
 (t)sun nov 15 20
+(u)Flaborized
+(p)2695
+(e)🎨|sprites
+(*)Cyborgs and cyborg related items have a new look!
 (u)TTerc
 (p)2647
 (e)🗺|mapping
