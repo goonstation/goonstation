@@ -41361,20 +41361,6 @@
 /obj/item/plank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
-"bNc" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/lowerport)
 "bNd" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
@@ -45482,6 +45468,10 @@
 	},
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"iQl" = (
+/obj/decal/poster/wallsign/escape,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/lowerstarboard)
 "jmo" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -45501,6 +45491,13 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"jYw" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "escape sub"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerport)
 "keQ" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
@@ -45803,12 +45800,33 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"nAy" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/machinery/vehicle/tank/minisub/escape_sub,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerport)
 "nHa" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
 /area/station/crewquarters/cryotron)
+"nHI" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/escape_horizontal/single_horizontal{
+	name = "escape sub pod bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerport)
 "nTP" = (
 /obj/decal/cleanable/dirt,
 /turf/space/fluid/manta,
@@ -46026,6 +46044,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/construction)
+"qtW" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/escape_horizontal/single_horizontal{
+	name = "escape sub pod bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerstarboard)
 "qHY" = (
 /obj/lattice{
 	dir = 10;
@@ -46167,6 +46192,20 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"sNF" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/machinery/vehicle/tank/minisub/escape_sub,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerstarboard)
 "sTs" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -46235,6 +46274,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"tPw" = (
+/obj/decal/mule/dropoff,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "escape sub"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/lowerstarboard)
 "uhU" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clipboard,
@@ -46338,6 +46384,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"vGw" = (
+/obj/decal/poster/wallsign/escape,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/lowerport)
 "vRo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/construction)
@@ -85183,10 +85233,10 @@ bNa
 bMq
 bEF
 bEF
-aaa
-act
-aaa
-aaa
+bEF
+bEF
+bEF
+aab
 aaa
 aaa
 aaa
@@ -85485,12 +85535,12 @@ bNb
 bHm
 bMq
 bEF
-bEF
-act
-act
-aaa
-aaa
-aaa
+jYw
+nAy
+nHI
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -85787,12 +85837,12 @@ aym
 aNp
 bHm
 bMq
+vGw
 bEF
 bEF
-act
-act
-aaa
-aaa
+bEF
+bEF
+aab
 aaa
 aaa
 aaa
@@ -86089,14 +86139,14 @@ aym
 avp
 bHn
 bHm
-bNc
-bEF
-bEF
+bMq
+bHD
+jYw
+nAy
+nHI
 act
-act
-aaa
-aaa
-aaa
+aab
+aab
 aaa
 aaa
 aaa
@@ -86393,12 +86443,12 @@ axj
 bHE
 axu
 bMI
+vGw
 bEF
 bEF
-act
-act
-aaa
-aaa
+bEF
+bEF
+aab
 aaa
 aaa
 aaa
@@ -86696,12 +86746,12 @@ avp
 bHD
 bHm
 bMq
-bEF
-bEF
+bHD
+jYw
+nAy
+nHI
 act
-act
-aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -86999,11 +87049,11 @@ avp
 bHD
 bHm
 bMq
+vGw
 bEF
 bEF
-act
-act
-aaa
+bEF
+bEF
 aaa
 aaa
 aaa
@@ -87302,10 +87352,10 @@ avp
 bHD
 bHm
 bMq
-bEF
-bEF
-act
-act
+bHD
+jYw
+nAy
+nHI
 aaa
 aaa
 aaa
@@ -87605,9 +87655,9 @@ azJ
 aNp
 bHm
 bMq
+vGw
 bEF
 bEF
-act
 act
 act
 act
@@ -87908,7 +87958,7 @@ azJ
 bHD
 bHm
 bMq
-bEF
+bHD
 bEF
 bEF
 bEF
@@ -92740,7 +92790,7 @@ azJ
 bFt
 bHa
 bIc
-bEw
+bFt
 bEw
 bEw
 bEw
@@ -93041,9 +93091,9 @@ azJ
 bJx
 bHa
 bIc
+iQl
 bEw
 bEw
-act
 act
 act
 act
@@ -93342,10 +93392,10 @@ avp
 asz
 bHa
 bIc
-bEw
-bEw
-act
-act
+bFt
+tPw
+sNF
+qtW
 aaa
 aaa
 aaa
@@ -93643,11 +93693,11 @@ avp
 bFt
 bHa
 bIc
+iQl
 bEw
 bEw
-act
-act
-aaa
+bEw
+bEw
 aaa
 aaa
 aaa
@@ -93944,12 +93994,12 @@ avp
 bFt
 bHa
 bIc
-bEw
-bEw
+bFt
+tPw
+sNF
+qtW
 act
 act
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -94245,12 +94295,12 @@ avp
 bFt
 bHa
 bMd
+iQl
+bEw
+bEw
 bEw
 bEw
 act
-act
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -94545,14 +94595,14 @@ avp
 avp
 bGZ
 bHa
-bMO
-bEw
-bEw
+bIc
+bFt
+tPw
+sNF
+qtW
 act
 act
-aaa
-aaa
-aaa
+act
 aaa
 aaa
 aaa
@@ -94847,12 +94897,12 @@ avp
 bJx
 bHa
 bIc
+iQl
+bEw
+bEw
 bEw
 bEw
 act
-act
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -95149,12 +95199,12 @@ bFt
 bHa
 bIc
 bEw
-bEw
+tPw
+sNF
+qtW
 act
 act
-aaa
-aaa
-aaa
+act
 aaa
 aaa
 aaa
@@ -95451,10 +95501,10 @@ bHa
 bIc
 bEw
 bEw
-aaa
+bEw
+bEw
+bEw
 act
-aaa
-aaa
 aaa
 aaa
 aaa
