@@ -141,7 +141,7 @@
 					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
 
 			if(reaction_temp)
-				var/heat_capcity = HEAT_CAPACITY(removed)
+				//var/heat_capcity = HEAT_CAPACITY(removed)
 				// Azrun TODO
 				// maybe should do standard air at temp? currently that is just water @ 20C -- * 4182 / heat_capcity
 				// +/- 200 for a temp benefit initially seems sufficiently costed for only getting read at 1/2 reaction rate
