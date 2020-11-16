@@ -27,6 +27,13 @@
 	reagents.add_reagent("fuel", 250)
 	src.build_icon()
 
+/obj/machinery/recharge_station/disposing()
+	if(occupant)
+		occupant.set_loc(get_turf(src.loc))
+		occupant = null
+	..()
+
+
 /obj/machinery/recharge_station/process()
 	if (!(src.status & BROKEN))
 		// todo / at some point id like to fix the disparity between cells and 'normal power'

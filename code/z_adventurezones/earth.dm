@@ -287,6 +287,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Data Center"
 	icon_state = "pink"
 
+/area/centcom/retentioncenter
+	name = "NT Retention Center"
+	icon_state = "dk_yellow"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
