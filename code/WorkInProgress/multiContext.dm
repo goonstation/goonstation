@@ -13,37 +13,6 @@ var/list/globalContextActions = null
 	proc/showButtons(var/list/buttons, var/atom/target)
 		return
 
-	proc/addButtonToHud(var/target, var/obj/screen/contextButton/C)
-		var/mob/living/carbon/human/H = target
-		if(istype(H))
-			H.hud.add_screen(C)
-
-		var/mob/living/critter/R = target
-		if(istype(R))
-			R.hud.add_screen(C)
-
-		var/mob/wraith/W = target
-		if(istype(W))
-			W.hud.add_screen(C)
-
-		if (isrobot(target))
-			var/mob/living/silicon/robot/robot = target
-			robot.hud.add_screen(C)
-
-		if (isAI(target))
-			var/mob/living/silicon/ai/A = null
-			if (isAIeye(target))
-				var/mob/dead/aieye/AE = target
-				A = AE.mainframe
-			else
-				A = target
-
-			A.hud.add_screen(C)
-
-		if (ishivebot(target))
-			var/mob/living/silicon/hivebot/hivebot = target
-			hivebot.hud.add_screen(C)
-
 	flexdefault
 		var/width = 2
 		var/spacingX = 16
@@ -72,7 +41,18 @@ var/list/globalContextActions = null
 			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -109,7 +89,18 @@ var/list/globalContextActions = null
 			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER,CENTER+0.6"
 
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -125,33 +116,44 @@ var/list/globalContextActions = null
 			return buttons
 
 	experimentalcircle
-		var/dist
-
-		New(var/Dist = 32)
-			dist = Dist
-			return ..()
-
 		showButtons(var/list/buttons, var/atom/target)
 			var/atom/screenCenter = get_turf(usr.client.virtual_eye)
-			var/screenX = (screenCenter.x - target.x) * -1 * 32
-			var/screenY = (screenCenter.y - target.y) * -1 * 32
+			var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
+			var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 
 			var/anglePer = round(360 / buttons.len)
+			var/dist = 16
 
 			var/count = 0
 
+			var/list/bounds = getIconBounds(icon(target.icon, target.icon_state), target.icon_state)
+			var/sizeX = bounds["top"] - bounds["bottom"]
+			var/sizeY = bounds["right"] - bounds["left"]
+
+			var/additionalX = target.pixel_x + round((sizeX / 2) )
+			var/additionalY = target.pixel_y + round((sizeY / 2) )
+
+			screenX += additionalX
+			screenY += additionalY
+
 			for(var/obj/screen/contextButton/C in buttons)
-				C.screen_loc = "CENTER:[screenX],CENTER:[screenY]"
+				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
-				// Uh, hardcoded sizes. getIconBounds doesnt work here since our icons can have empty pixels and then they wont be properly aligned with our button background.
-				var/icon/Icon = icon(C.action.icon, C.action.icon_state)
-				var/sizeX = Icon.Width()
-				var/sizeY = Icon.Height()
-
-				var/offX = round(dist * cos(anglePer * count)) + round(sizeX / 2)
-				var/offY = round(dist * sin(anglePer * count)) + round(sizeY / 2)
+				var/offX = round(dist*cos(anglePer*count)) + additionalX
+				var/offY = round(dist*sin(anglePer*count))	+ additionalY
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -171,7 +173,18 @@ var/list/globalContextActions = null
 			for(var/obj/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -197,7 +210,18 @@ var/list/globalContextActions = null
 			for(var/obj/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -245,8 +269,20 @@ var/list/globalContextActions = null
 			for(var/obj/screen/contextButton/C in buttons)
 				//C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 				C.screen_loc = "[lattitude_dir][targetx],[longitude_dir][targety]"
-
-				addButtonToHud(usr, C)
+				var/mob/living/carbon/human/H = usr
+				if(istype(H)) H.hud.add_screen(C)
+				var/mob/living/critter/R = usr
+				if(istype(R)) R.hud.add_screen(C)
+				var/mob/wraith/W = usr
+				if(istype(W)) W.hud.add_screen(C)
+				var/mob/dead/observer/GO = usr
+				if(istype(GO)) GO.hud.add_screen(C)
+				if (isrobot(usr))
+					var/mob/living/silicon/robot/robot = usr
+					robot.hud.add_screen(C)
+				if (ishivebot(usr))
+					var/mob/living/silicon/hivebot/hivebot = usr
+					hivebot.hud.add_screen(C)
 
 				var/matrix/trans = unpool(/matrix)
 				trans = trans.Reset()
@@ -284,7 +320,7 @@ var/list/globalContextActions = null
 		if(applicable.len) return applicable
 		else return list()
 
-	proc/showContextActions(var/list/applicable, var/atom/target, var/datum/contextLayout/customContextLayout)
+	proc/showContextActions(var/list/applicable, var/atom/target)
 		if(contextButtons.len)
 			closeContextActions()
 		var/list/buttons = list()
@@ -294,9 +330,7 @@ var/list/globalContextActions = null
 			B.alpha = 0
 			buttons.Add(B)
 
-		if (customContextLayout)
-			customContextLayout.showButtons(buttons,target)
-		else if(target.contextLayout)
+		if(target.contextLayout)
 			target.contextLayout.showButtons(buttons,target)
 		else
 			contextLayout.showButtons(buttons,target)
@@ -308,29 +342,15 @@ var/list/globalContextActions = null
 		for(var/obj/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
 			var/mob/living/carbon/human/H = src
 			if(istype(H)) H.hud.remove_screen(C)
-
 			var/mob/living/critter/R = src
 			if(istype(R)) R.hud.remove_screen(C)
-
 			var/mob/wraith/W = src
 			if(istype(W)) W.hud.remove_screen(C)
-
 			var/mob/dead/observer/GO = usr
 			if(istype(GO)) GO.hud.remove_screen(C)
-
 			if (isrobot(src))
 				var/mob/living/silicon/robot/robot = src
 				robot.hud.remove_screen(C)
-
-			var/mob/living/silicon/ai/A = null
-			if (isAI(src))
-				if (isAIeye(src))
-					var/mob/dead/aieye/AE = src
-					A = AE.mainframe
-				else
-					A = src
-
-				 A.hud.remove_screen(C)
 			if (ishivebot(src))
 				var/mob/living/silicon/hivebot/hivebot = src
 				hivebot.hud.remove_screen(C)
