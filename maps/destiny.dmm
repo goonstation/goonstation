@@ -4068,6 +4068,12 @@
 	layer = 4;
 	name = "North Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
@@ -4092,6 +4098,12 @@
 	id = "pod_fore";
 	layer = 4;
 	name = "North Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
@@ -4224,6 +4236,12 @@
 	id = "pod_fore";
 	layer = 4;
 	name = "North Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
@@ -30843,6 +30861,11 @@
 	layer = 4;
 	name = "Disposals Vent"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bcj" = (
@@ -40670,6 +40693,11 @@
 	layer = 4;
 	name = "Inbound Cargo Belt"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bsT" = (
@@ -41198,6 +41226,11 @@
 	id = "qm_dock_out";
 	layer = 4;
 	name = "Outbound Cargo Belt"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
@@ -41934,6 +41967,11 @@
 	layer = 4;
 	name = "West Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -41945,6 +41983,11 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -41959,6 +42002,11 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -42332,6 +42380,11 @@
 	layer = 4;
 	name = "East Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -42343,6 +42396,11 @@
 	id = "pod_star";
 	layer = 4;
 	name = "East Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -42357,6 +42415,11 @@
 	id = "pod_star";
 	layer = 4;
 	name = "East Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"

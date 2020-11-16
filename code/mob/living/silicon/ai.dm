@@ -98,6 +98,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/deployed_to_eyecam = 0
 	var/list/holograms
 	var/const/max_holograms = 8
+	var/list/hologramContextActions
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -184,6 +185,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.eyecam.attach_hud(hud)
 
 	holograms = list()
+
+	src.hologramContextActions = list()
+	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
+		var/datum/contextAction/ai_hologram/action = new actionType(src)
+		hologramContextActions += action
 
 	SPAWN_DBG(0)
 		src.botcard.access = get_all_accesses()
@@ -402,7 +408,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/click(atom/target, params)
 	if (!src.stat)
-		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK) ) // ugh
+		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)

@@ -136,7 +136,9 @@
 
 
 	disposing()
-		deconstructed_thing = null
+		if(deconstructed_thing)
+			deconstructed_thing.dispose()
+			deconstructed_thing = null
 		store_type = null
 		..()
 
