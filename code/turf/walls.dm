@@ -100,7 +100,7 @@
 	// find the direction from the mob to the target wall
 	for (var/d in cardinal)
 		if (get_step(source,d) == target)
-			set_dir(d)
+			dir = d
 			break
 
 	// if no direction was found, fail. need to be standing cardinal to the wall to put the fixture up
