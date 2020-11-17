@@ -527,7 +527,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 5
+			spread_angle = 8
 			shoot_delay = 4
 		else
 			spread_angle = 0
