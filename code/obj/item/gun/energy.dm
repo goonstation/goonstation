@@ -777,6 +777,9 @@
 					return ..(target, start, user)
 				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
 					return ..(target, start, user)
+				else
+					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon! E-gad!</span><br>")
+					return
 			else
 				return ..(target, start, user)
 

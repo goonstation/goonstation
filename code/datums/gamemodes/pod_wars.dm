@@ -408,7 +408,6 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
-			H = N.create_character(JOB)
 			if (team_num == TEAM_NANOTRASEN)
 				if (M.mind == commander)
 					H.mind.assigned_role = "NanoTrasen Commander"
@@ -422,6 +421,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 				else
 					H.mind.assigned_role = "Syndicate Pod Pilot"
 				H.mind.special_role = "Syndicate"
+			H = N.create_character(JOB)
 
 		else if (istype(H))
 			H.Equip_Job_Slots(JOB)
