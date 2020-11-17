@@ -1,5 +1,6 @@
 /datum/job/
 	var/name = null
+	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
 	var/wages = 0
@@ -820,6 +821,7 @@
 
 /datum/job/civilian/bartender
 	name = "Bartender"
+	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
 	slot_belt = /obj/item/device/pda2/bartender

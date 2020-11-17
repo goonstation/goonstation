@@ -988,14 +988,14 @@ var/datum/job_controller/job_controls
 	if (string in excluded_strings)
 		return null
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string)
+		if (J.name == string || string in J.alias_names)
 			return J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string)
+			if (J.name == string || string in J.alias_names)
 				return J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string)
+			if (J.name == string || string in J.alias_names)
 				return J
 	logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
 	return null
