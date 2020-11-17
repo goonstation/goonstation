@@ -1232,7 +1232,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
