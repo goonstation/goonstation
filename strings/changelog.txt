@@ -1,4 +1,9 @@
 
+(t)tue nov 17 20
+(u)pali
+(p)2710
+(e)🐛|bug
+(+)VR chess now works again!
 (t)mon nov 16 20
 (u)Kyle
 (*)Fix Clock 188 bug where its shot delay while on burst mode was too low.
