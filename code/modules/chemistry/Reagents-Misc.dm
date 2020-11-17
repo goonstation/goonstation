@@ -3603,10 +3603,10 @@ datum
 
 #undef CONTENT_MULTIPLIER
 
-		king_readsterium
-			name = "King Readsterium"
+		mimicillium
+			name = "Mimicillium"
 			id = "badmanjuice"
-			description = "Essence of a King, and a very bad man, known to attract the attention of a certain Senator."
+			description = "Just looking at this, you get the feeling that a vote for Death Badman is a vote for Death Badman."
 			reagent_state = LIQUID
 			penetrates_skin = 1
 			depletion_rate = 2.5

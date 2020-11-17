@@ -40,6 +40,8 @@
 		..()
 
 	keys_changed(mob/user, keys, changed)
+		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub) || !owner)
+			return
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
 			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
@@ -63,6 +65,8 @@
 				user.attempt_move()
 
 	process_move(mob/user, keys)
+		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			return
 		var/accel = 0
 		var/rot = 0
 		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
@@ -157,7 +161,7 @@
 		next_move = world.time + delay
 		return min(delay, next_rot-world.time)
 
-	update_owner_dir(var/atom/movable/ship) //after move, update ddir
+	update_owner_dir() //after move, update ddir
 		if (owner.flying && owner.facing != owner.flying)
 			owner.set_dir(owner.facing)
 

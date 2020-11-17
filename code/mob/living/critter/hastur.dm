@@ -63,7 +63,7 @@ var/HasturPresent = 0
 			else
 				lastdir = dir
 				changeIcon()
-		..()
+		. = ..()
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)

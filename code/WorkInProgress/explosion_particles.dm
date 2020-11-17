@@ -12,10 +12,6 @@
 		dispose()
 	return
 
-/obj/effects/expl_particles/Move()
-	..()
-	return
-
 /datum/effects/system/expl_particles
 	var/number = 10
 	var/turf/location

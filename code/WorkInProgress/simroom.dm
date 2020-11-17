@@ -202,6 +202,11 @@
 	..()
 	src.update_icon()
 
+/obj/machinery/sim/vr_bed/disposing()
+	go_out()
+	. = ..()
+
+
 /obj/machinery/sim/vr_bed/proc/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
@@ -333,9 +338,9 @@
 	if (!src.occupant)
 		return
 	for(var/obj/O in src)
-		O.set_loc(src.loc)
+		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
-	src.occupant.set_loc(src.loc)
+	src.occupant.set_loc(get_turf(src.loc))
 	src.occupant.changeStatus("weakened", 2 SECONDS)
 	src.occupant.network_device = null
 	src.occupant = null

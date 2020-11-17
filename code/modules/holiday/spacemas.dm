@@ -149,6 +149,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				var/obj/sparks = unpool(/obj/effects/sparks)
 				sparks.set_loc(src.loc)
 				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			return TRUE
 
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
