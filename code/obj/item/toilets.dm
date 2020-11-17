@@ -62,7 +62,7 @@ TOILET
 			var/list/destinations = list()
 
 			for_by_tcl(T, /obj/item/storage/toilet)
-				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
+				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc.loc,/area) && T.loc.loc:teleport_blocked))
 					continue
 				destinations.Add(T)
 
