@@ -1,5 +1,10 @@
 
 (t)mon nov 16 20
+(u)Luxizzle
+(p)2694
+(e)🆕🎨|feature, sprites
+(*)Added the Security HUD upgrade for cyborgs.
+(+)Replaced Repair Pack in brobocop module to the new Security HUD upgrade.
 (u)Chronoquest
 (p)2664
 (e)🆕|feature
