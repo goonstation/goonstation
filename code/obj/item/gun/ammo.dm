@@ -12,7 +12,7 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 20
-	/// What to load into the mag/clip/etc on creation. must be some form of new/datum/projectile/thing
+	/// What to load into the mag/clip/etc on creation. must be some form of /datum/projectile/thing
 	/// Loading will cycle through the list
 	var/list/ammo_type = list()
 	/// Defines what bullets can enter this magazine. Can be a list
@@ -26,6 +26,7 @@
 	var/amount_left = 0.0
 	/// How many shots can fit inside the mag/clip/box. Ignored on piles, cus its a pile
 	var/max_amount = 1000
+	/// For power cells and theoretical mags that also need to be charged for some reason
 	var/charge = 100.0
 	var/max_charge = 100.0
 
@@ -39,6 +40,7 @@
 
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
+	var/self_charging = 0
 
 	/// What form does this ammo-thing take?
 	/// AMMO_PILE - generic pile of bullets, or a belt. Slow to load a gun, but easy to merge
@@ -63,9 +65,9 @@
 
 	New(var/list/var_override, var/list/new_mag)
 		..()
-		if(var_override.len)
-			for(var/override in var_override)
-				src.vars[override] = var_override[override]
+		// if(var_override.len)
+		// 	for(var/override in var_override)
+		// 		src.vars[override] = var_override[override]
 		if(new_mag)
 			src.mag_contents = new_mag
 		load_up_the_magazine()
@@ -77,14 +79,15 @@
 
 	/// Fills the magazine with whatever's supposed to be in it on spawn
 	proc/load_up_the_magazine() // initial mag filler
-		if (src.mag_contents.len < 1 || !src.ammo_type.len) return // Preloaded by init, or ammo_type is invalid
-		var/load_this_many = src.amount_left > src.max_amount? src.max_amount : src.amount_left
+		if (src.mag_contents.len || !src.ammo_type) return
+		var/load_this_many = src.amount_left > src.max_amount ? src.max_amount : src.amount_left
 		if(load_this_many <= 0)
 			return
-		var/load_slot = 1
-		while(load_slot <= load_this_many)
-			src.mag_contents.Add(new src.ammo_type[(load_slot % src.ammo_type.len) + 1])
-			load_slot++
+		if(!islist(src.ammo_type))
+			src.ammo_type = list(src.ammo_type)
+		for(var/load_slot in 1 to load_this_many)
+			var/load_bullet = src.ammo_type[(load_slot % src.ammo_type.len) + 1]
+			src.mag_contents.Add(new load_bullet)
 
 	/// Move bullets from one bullet-holding-thing to another
 	proc/transfer_ammo(var/obj/item/ammo/bullets/from_this_mag, var/list/these_bullets, var/mob/user)
@@ -128,7 +131,7 @@
 			return 0
 		max_to_move = min((src.max_amount - src.mag_contents.len), max_to_move)
 
-		into_this_mag.mag_contents.Insert(1, these_bullets[1], these_bullets[max_to_move])
+		src.mag_contents.Insert(1, these_bullets[1], these_bullets[max_to_move])
 		boutput(user, "You load [max_to_move] bullets into the thing.")
 		if(src.mag_contents.len < 1)
 			if(src.mag_type == AMMO_PILE)
@@ -143,6 +146,21 @@
 		from_this_mag.update_bullet_manifest()
 		from_this_mag.update_icon()
 		return
+
+	proc/make_ammo_string(var/mode = "list")
+		if(!src.mag_manifest)
+			src.make_bullet_manifest()
+
+		for (var/I in src.mag_manifest)
+			if(src.mag_manifest[I]["count"] >= 1)
+				. += "src.mag_manifest[I]["name"] ([src.mag_manifest[I]["count"]]"
+		. = sortList(.)
+
+		switch(mode)
+			if("list")
+				return
+			if("line")
+				return english_list(.)
 
 	/// Move bullets from the bullet-holding thing to your hand. Typically makes a new pile of ammo
 	proc/unload_magazine(var/obj/item/ammo/magazine, var/mob/user)
@@ -164,17 +182,13 @@
 		switch(magazine.mag_type)
 			if(AMMO_PILE) // aaa
 				src.update_bullet_manifest()
-				var/list/ammo_contents = list() // Thanks, produce satchel!
-				for (var/I in src.mag_manifest)
-					if(src.mag_manifest[I]["count"] >= 1)
-						ammo_contents += "src.mag_manifest[I]["name"] ([src.mag_manifest[I]["count"]]" = [I]
-				ammo_contents = sortList(ammo_contents)
+				var/list/ammo_contents = src.make_ammo_string() // Thanks, produce satchel!
 				what_to_take = input("Which thing to split from the pile?", "Which?", null) as null|anything in ammo_contents
 				if(!what_to_take)
 					boutput(user, "Never mind.")
 					return
 				else
-					num_2_take = round(input("How many [manif_entry["name"]] to split?","Max [manif_entry["count"]]",1) as num|null)
+					num_2_take = round(input("How many [src.mag_manifest[what_to_take]["name"]] to split?","Max [src.mag_manifest[what_to_take]["count"]]",1) as num|null)
 					if(!num_2_take < 1)
 						boutput(user, "Never mind.")
 						return
@@ -194,7 +208,7 @@
 				new_mag_list.Add(new what_to_take["type"])
 				num_to_make--
 
-		var/obj/item/ammo/bullet/pile/new_pile = new /obj/item/ammo/bullet/pile(new_mag = new_mag_list)
+		var/obj/item/ammo/bullets/pile/new_pile = new /obj/item/ammo/bullets/pile(new_mag = new_mag_list)
 
 		src.mag_contents -= new_mag_list
 		update_bullet_manifest()
@@ -226,9 +240,9 @@
 		for(var/datum/projectile/bullet in bullets)
 			if(src.mag_manifest.Find(bullet.ammo_ID))
 				if(mode == "add")
-					src.mag_manifest[bullet.ID]["count"]++
+					src.mag_manifest[bullet.ammo_ID]["count"]++
 				else
-					src.mag_manifest[bullet.ID]["count"] = max(src.mag_manifest[bullet.ID]["count"]--, 0)
+					src.mag_manifest[bullet.ammo_ID]["count"] = max(src.mag_manifest[bullet.ammo_ID]["count"]--, 0)
 			else
 				if(mode == "add")
 					src.mag_manifest.Add(bullet.ammo_ID = list("name" = bullet.name, "type" = bullet.type, "count" = 1))
@@ -246,11 +260,13 @@
 			return 0
 
 	attackby(obj/b as obj, mob/user as mob)
-		if(istype(b, /obj/item/gun/ammo))
-			transfer_ammo(b, b.mag_contents user = user)
+		if(istype(b, /obj/item/ammo))
+			var/obj/item/ammo/B = b
+			transfer_ammo(B, B.mag_contents, user = user)
 			return
-		else if(istype(b, /obj/item/gun) && b.allowReverseReload)
-			b.loadammo(src, user = user)
+		else if(istype(b, /obj/item/gun) && b:allowReverseReload)
+			var/obj/item/gun/G = b
+			src.loadammo(src, G, user = user)
 			return
 		/* else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
@@ -377,7 +393,7 @@
 		var/check = 0
 		switch(src.mag_type)
 			if(AMMO_PILE)
-				if(!K?.fixed_mag && ((K?.loaded_magazine.caliber == CALIBER_ANY || src.top_bullet.caliber in K.loaded_magazine.caliber) && src.transfer_ammo(K.loaded_magazine, src.top_bullet, user)))
+				if(!K?.fixed_mag && ((K?.loaded_magazine.caliber == CALIBER_ANY || (src.top_bullet.caliber in K.loaded_magazine.caliber)) && src.transfer_ammo(K.loaded_magazine, src.top_bullet, user)))
 					check = 1
 				else
 					return 0
@@ -495,7 +511,7 @@
 		inventory_counter.update_number(num_count)
 
 	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
-		src.desc = "There are [num_count][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
+		src.desc = "There are [num_count][src.mag_contents[1].material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 		if (num_count > 0)
 			if (src.icon_dynamic && src.icon_short)
@@ -507,6 +523,17 @@
 				src.icon_state = src.icon_empty
 		return
 
+	proc/charge(var/amt = 0)
+		if (src.charge >= src.max_charge)
+			src.charge = src.max_charge
+			return 0
+		else
+			if (amt > 0)
+				src.charge = min(src.charge + amt, src.max_charge)
+				src.update_icon()
+				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
+			else
+				return 0
 /////////////////////////////// Bullets for kinetic firearms /////////////////////////////////
 
 // CALIBER_ASSAULT_RIFLE 0.223
@@ -535,9 +562,38 @@
 	icon_state = "power_cell"
 	m_amt = 40000
 	g_amt = 0
-	ammo_type = new/datum/projectile/bullet
+	ammo_type = /datum/projectile/bullet
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
+
+/obj/item/ammo/bullets/pile
+	name = "Pile of Bullets"
+	sname = "Pile"
+	desc = "A bunch of ammo."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 40000
+	g_amt = 0
+	ammo_type = null
+	mag_type = AMMO_PILE
+	module_research = list("weapons" = 2, "miniaturization" = 5)
+	module_research_type = /obj/item/ammo/bullets
+
+	New(list/var_override, list/new_mag)
+		. = ..()
+
+	update_icon()
+		. = ..()
+
+		if(!src.mag_manifest)
+			src.make_bullet_manifest()
+
+		if(src.mag_manifest.len == 1)
+			src.name = "[src.mag_manifest[1]["name"]](s)"
+		else
+			src.name = "Some bullets"
+
+		src.desc = "Contents: [src.make_ammo_string(mode = "line")]"
 
 
 /obj/item/ammo/bullets/empty
@@ -566,8 +622,8 @@
 	mag_type = AMMO_MAGAZINE
 
 /obj/item/ammo/bullets/internal/zipgun
-	sname = "Metal Pipe"
-	name = "Metal Pipe"
+	sname = "Metal Pipes"
+	name = "Metal Pipes"
 	icon_state = "357-2"
 	amount_left = 0
 	max_amount = 2
@@ -597,7 +653,7 @@
 	icon_state = "357-2"
 	amount_left = 0
 	max_amount = 2
-	ammo_type = new/datum/projectile/bullet/flintlock
+	ammo_type = /datum/projectile/bullet/flintlock
 	caliber = CALIBER_FLINTLOCK
 	icon_dynamic = 1
 	icon_short = "357"
@@ -610,7 +666,7 @@
 	icon_state = "357-2"
 	amount_left = 2
 	max_amount = 2
-	ammo_type = new/datum/projectile/bullet/derringer
+	ammo_type = /datum/projectile/bullet/derringer
 	caliber = CALIBER_DERRINGER
 	icon_dynamic = 1
 	icon_short = "357"
@@ -623,27 +679,28 @@
 	icon_state = "357-2"
 	amount_left = 7
 	max_amount = 7
-	ammo_type = new/datum/projectile/bullet/revolver_38
-	caliber = (CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM)
+	ammo_type = /datum/projectile/bullet/revolver_38
+	caliber = CALIBER_REVOLVER
 	icon_dynamic = 1
 	icon_short = "357"
 	icon_empty = "357-0"
 
 /obj/item/ammo/bullets/internal/revolver/AP
-	ammo_type = new/datum/projectile/bullet/revolver_38/AP
+	ammo_type = /datum/projectile/bullet/revolver_38/AP
 
 /obj/item/ammo/bullets/internal/revolver/stun
-	ammo_type = new/datum/projectile/bullet/revolver_38/stunners
+	ammo_type = /datum/projectile/bullet/revolver_38/stunners
 
 /obj/item/ammo/bullets/internal/revolver/oldtimey
-	ammo_type = new/datum/projectile/bullet/revolver_45
-	caliber = (CALIBER_REVOLVER_OLDTIMEY)
+	ammo_type = /datum/projectile/bullet/revolver_45
+	caliber = CALIBER_REVOLVER_OLDTIMEY
 
 /obj/item/ammo/bullets/internal/revolver/magnum
-	ammo_type = new/datum/projectile/bullet/revolver_357
+	ammo_type = /datum/projectile/bullet/revolver_357
+	caliber = list(CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM)
 
 /obj/item/ammo/bullets/internal/revolver/magnum/AP
-	ammo_type = new/datum/projectile/bullet/revolver_357/AP
+	ammo_type = /datum/projectile/bullet/revolver_357/AP
 
 /obj/item/ammo/bullets/internal/shotgun
 	sname = "Shotgun Tube"
@@ -651,27 +708,27 @@
 	icon_state = "357-2"
 	amount_left = 8
 	max_amount = 8
-	ammo_type = new/datum/projectile/bullet/a12
+	ammo_type = /datum/projectile/bullet/a12
 	caliber = CALIBER_SHOTGUN
 	icon_dynamic = 1
 	icon_short = "357"
 	icon_empty = "357-0"
 
 /obj/item/ammo/bullets/internal/shotgun/weak
-	ammo_type = new/datum/projectile/bullet/a12/weak
+	ammo_type = /datum/projectile/bullet/a12/weak
 
 /obj/item/ammo/bullets/internal/shotgun/rubber
-	ammo_type = new/datum/projectile/bullet/abg
+	ammo_type = /datum/projectile/bullet/abg
 
 /obj/item/ammo/bullets/internal/shotgun/explosive
-	ammo_type = new/datum/projectile/bullet/aex
+	ammo_type = /datum/projectile/bullet/aex
 
 /obj/item/ammo/bullets/internal/shotgun/flare
 	sname = "Flare Tube"
 	name = "Flare Tube"
 	amount_left = 1
 	max_amount = 1
-	ammo_type = new/datum/projectile/bullet/flare
+	ammo_type = /datum/projectile/bullet/flare
 
 /obj/item/ammo/bullets/internal/launcher
 	sname = "Launcher Tube"
@@ -679,7 +736,7 @@
 	icon_state = "357-2"
 	amount_left = 1
 	max_amount = 1
-	ammo_type = new/datum/projectile/bullet/smoke
+	ammo_type = /datum/projectile/bullet/smoke
 	caliber = CALIBER_GRENADE
 	icon_dynamic = 1
 	icon_short = "357"
@@ -687,16 +744,20 @@
 
 /obj/item/ammo/bullets/internal/launcher/rpg
 	amount_left = 0
-	ammo_type = new/datum/projectile/bullet/rpg
-	caliber = CALIBER_RPG
+	ammo_type = /datum/projectile/bullet/rpg
+	caliber = list(CALIBER_RPG, CALIBER_ROCKET)
 
 /obj/item/ammo/bullets/internal/launcher/antisingularity
 	amount_left = 0
-	ammo_type = new/datum/projectile/bullet/antisingularity
+	ammo_type = /datum/projectile/bullet/antisingularity
 	caliber = CALIBER_ROCKET
 
 /obj/item/ammo/bullets/internal/launcher/cat
-	ammo_type = new/datum/projectile/special/meowitzer
+	ammo_type = /datum/projectile/special/meowitzer
+	caliber = CALIBER_CAT
+
+/obj/item/ammo/bullets/internal/launcher/beepsky
+	ammo_type = /datum/projectile/special/spawner/beepsky
 	caliber = CALIBER_CAT
 
 /obj/item/ammo/bullets/internal/launcher/multi
@@ -706,12 +767,12 @@
 	max_amount = 4
 
 /obj/item/ammo/bullets/internal/launcher/multi/explosive
-	ammo_type = new/datum/projectile/bullet/grenade_round/explosive
+	ammo_type = /datum/projectile/bullet/grenade_round/explosive
 
 /obj/item/ammo/bullets/internal/launcher/multi/derringers
 	amount_left = 6
 	max_amount = 6
-	ammo_type = new/datum/projectile/special/spawner/gun
+	ammo_type = /datum/projectile/special/spawner/gun
 	caliber = CALIBER_WHOLE_DERRINGER
 
 /obj/item/ammo/bullets/derringer
@@ -720,49 +781,49 @@
 	icon_state = "357-2"
 	amount_left = 2.0
 	max_amount = 2.0
-	ammo_type = new/datum/projectile/bullet/derringer
+	ammo_type = /datum/projectile/bullet/derringer
 	caliber = CALIBER_DERRINGER
 	icon_dynamic = 1
 	icon_short = "357"
 	icon_empty = "357-0"
 
-/obj/item/ammo/bullets/custom
-	sname = ".22 LR Custom"
-	name = "custom .22 ammo box"
-	icon_state = "custom-8"
-	amount_left = 8.0
-	max_amount = 8.0
-	ammo_type = new/datum/projectile/bullet/custom
-	caliber = CALIBER_PISTOL_SMALL
-	icon_dynamic = 1
-	icon_short = "custom"
-	icon_empty = "custom-0"
-	mag_type = AMMO_MAGAZINE
+// /obj/item/ammo/bullets/custom
+// 	sname = ".22 LR Custom"
+// 	name = "custom .22 ammo box"
+// 	icon_state = "custom-8"
+// 	amount_left = 8.0
+// 	max_amount = 8.0
+// 	ammo_type = /datum/projectile/bullet/custom
+// 	caliber = CALIBER_PISTOL_SMALL
+// 	icon_dynamic = 1
+// 	icon_short = "custom"
+// 	icon_empty = "custom-0"
+// 	mag_type = AMMO_PILE
 
-	onMaterialChanged()
-		ammo_type.material = copyMaterial(src.material)
+// 	onMaterialChanged()
+// 		src.mag_contents[1].material = copyMaterial(src.material)
 
-		if(src.material)
-			ammo_type.power = round(material.getProperty("density") / 2.75)
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 4)
-			ammo_type.ks_ratio = max(0,round(material.getProperty("hard") / 75))
+// 		if(src.material)
+// 			src.mag_contents[1].power = round(material.getProperty("density") / 2.75)
+// 			src.mag_contents[1].dissipation_delay = round(material.getProperty("density") / 4)
+// 			src.mag_contents[1].ks_ratio = max(0,round(material.getProperty("hard") / 75))
 
-			if((src.material.material_flags & MATERIAL_CRYSTAL))
-				ammo_type.damage_type = D_PIERCING
-			if((src.material.material_flags & MATERIAL_METAL))
-				ammo_type.damage_type = D_KINETIC
-			if((src.material.material_flags & MATERIAL_ORGANIC))
-				ammo_type.damage_type = D_TOXIC
-			if((src.material.material_flags & MATERIAL_ENERGY))
-				ammo_type.damage_type = D_ENERGY
-			if((src.material.material_flags & MATERIAL_METAL) && (src.material.material_flags & MATERIAL_CRYSTAL))
-				ammo_type.damage_type = D_SLASHING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_ORGANIC))
-				ammo_type.damage_type = D_BURNING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_METAL))
-				ammo_type.damage_type = D_RADIOACTIVE
+// 			if((src.material.material_flags & MATERIAL_CRYSTAL))
+// 				src.mag_contents[1].damage_type = D_PIERCING
+// 			if((src.material.material_flags & MATERIAL_METAL))
+// 				src.mag_contents[1].damage_type = D_KINETIC
+// 			if((src.material.material_flags & MATERIAL_ORGANIC))
+// 				src.mag_contents[1].damage_type = D_TOXIC
+// 			if((src.material.material_flags & MATERIAL_ENERGY))
+// 				src.mag_contents[1].damage_type = D_ENERGY
+// 			if((src.material.material_flags & MATERIAL_METAL) && (src.material.material_flags & MATERIAL_CRYSTAL))
+// 				src.mag_contents[1].damage_type = D_SLASHING
+// 			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_ORGANIC))
+// 				src.mag_contents[1].damage_type = D_BURNING
+// 			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_METAL))
+// 				src.mag_contents[1].damage_type = D_RADIOACTIVE
 
-		return ..()
+// 		return ..()
 
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
@@ -770,7 +831,7 @@
 	icon_state = "pistol_magazine"
 	amount_left = 10.0
 	max_amount = 10.0
-	ammo_type = new/datum/projectile/bullet/bullet_22
+	ammo_type = /datum/projectile/bullet/bullet_22
 	caliber = CALIBER_PISTOL_SMALL
 	mag_type = AMMO_MAGAZINE
 
@@ -782,7 +843,7 @@
 	sname = ".22 Hollow Point"
 	name = ".22 HP magazine"
 	icon_state = "pistol_magazine_hp"
-	ammo_type = new/datum/projectile/bullet/bullet_22/HP
+	ammo_type = /datum/projectile/bullet/bullet_22/HP
 
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
@@ -790,7 +851,7 @@
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/revolver_357
+	ammo_type = /datum/projectile/bullet/revolver_357
 	caliber = CALIBER_REVOLVER_MAGNUM
 	icon_dynamic = 1
 	icon_short = "38"
@@ -801,7 +862,7 @@
 	sname = ".357 Mag AP"
 	name = ".357 AP speedloader"
 	icon_state = "38A-7"
-	ammo_type = new/datum/projectile/bullet/revolver_357/AP
+	ammo_type = /datum/projectile/bullet/revolver_357/AP
 	icon_dynamic = 1
 	icon_short = "38A"
 	icon_empty = "speedloader_empty"
@@ -812,7 +873,7 @@
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/revolver_38
+	ammo_type = /datum/projectile/bullet/revolver_38
 	caliber = CALIBER_REVOLVER
 	icon_dynamic = 1
 	icon_short = "38"
@@ -825,7 +886,7 @@
 	icon_state = "38A-7"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/revolver_38/AP
+	ammo_type = /datum/projectile/bullet/revolver_38/AP
 	icon_dynamic = 1
 	icon_short = "38A"
 	icon_empty = "speedloader_empty"
@@ -836,7 +897,7 @@
 	icon_state = "38S-7"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/revolver_38/stunners
+	ammo_type = /datum/projectile/bullet/revolver_38/stunners
 	icon_dynamic = 1
 	icon_short = "38S"
 	icon_empty = "speedloader_empty"
@@ -847,7 +908,7 @@
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/revolver_45
+	ammo_type = /datum/projectile/bullet/revolver_45
 	caliber = CALIBER_REVOLVER_OLDTIMEY
 	icon_dynamic = 1
 	icon_short = "38"
@@ -864,7 +925,7 @@
 	g_amt = 0
 	amount_left = 10
 	max_amount = 10
-	ammo_type = new/datum/projectile/bullet/airzooka
+	ammo_type = /datum/projectile/bullet/airzooka
 	caliber = CALIBER_TRASHBAG
 	mag_type = AMMO_MAGAZINE // ?
 
@@ -878,7 +939,7 @@
 	g_amt = 0
 	amount_left = 10
 	max_amount = 10
-	ammo_type = new/datum/projectile/bullet/airzooka/bad
+	ammo_type = /datum/projectile/bullet/airzooka/bad
 	caliber = 4.6
 
 /obj/item/ammo/bullets/nine_mm_NATO
@@ -887,7 +948,7 @@
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 18.0
 	max_amount = 18.0
-	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
+	ammo_type = /datum/projectile/bullet/nine_mm_NATO
 	caliber = CALIBER_PISTOL
 	mag_type = AMMO_MAGAZINE
 
@@ -897,7 +958,7 @@
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
 	name = "12ga buckshot ammo box"
-	ammo_type = new/datum/projectile/bullet/a12
+	ammo_type = /datum/projectile/bullet/a12
 	icon_state = "12"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -907,13 +968,13 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	weak //for nuke ops engineer
-		ammo_type = new/datum/projectile/bullet/a12/weak
+		ammo_type = /datum/projectile/bullet/a12/weak
 
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
 	name = "buckshot ammo box"
-	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/
 	icon_state = "12"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -925,7 +986,7 @@
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
-	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/nails
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/nails
 	icon_state = "custom-8"
 	icon_short = "custom"
 	amount_left = 8.0
@@ -938,7 +999,7 @@
 /obj/item/ammo/bullets/aex
 	sname = "12ga AEX"
 	name = "12ga AEX ammo box"
-	ammo_type = new/datum/projectile/bullet/aex
+	ammo_type = /datum/projectile/bullet/aex
 	icon_state = "AEX"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -950,7 +1011,7 @@
 /obj/item/ammo/bullets/abg
 	sname = "12ga Rubber Slug"
 	name = "12ga rubber slugs"
-	ammo_type = new/datum/projectile/bullet/abg
+	ammo_type = /datum/projectile/bullet/abg
 	icon_state = "bg"
 	amount_left = 8.0
 	max_amount = 8.0
@@ -962,7 +1023,7 @@
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
-	ammo_type = new/datum/projectile/bullet/ak47
+	ammo_type = /datum/projectile/bullet/ak47
 	icon_state = "ak47"
 	amount_left = 30.0
 	max_amount = 30.0
@@ -973,7 +1034,7 @@
 /obj/item/ammo/bullets/assault_rifle
 	sname = "5.56x45mm NATO"
 	name = "STENAG magazine" //heh
-	ammo_type = new/datum/projectile/bullet/assault_rifle
+	ammo_type = /datum/projectile/bullet/assault_rifle
 	icon_state = "stenag_mag"
 	amount_left = 30.0
 	max_amount = 30.0
@@ -984,17 +1045,17 @@
 	armor_piercing
 		sname = "5.56x45mm NATO AP"
 		name = "AP STENAG magazine"
-		ammo_type = new/datum/projectile/bullet/assault_rifle/armor_piercing
+		ammo_type = /datum/projectile/bullet/assault_rifle/armor_piercing
 		icon_state = "stenag_mag-AP"
 
 /obj/item/ammo/bullets/minigun
 	sname = "7.62×51mm NATO"
 	name = "Minigun cartridge"
-	ammo_type = new/datum/projectile/bullet/minigun
+	ammo_type = /datum/projectile/bullet/minigun
 	icon_state = "40mmR"
 	icon_empty = "40mmR-0"
-	amount_left = 100.0
-	max_amount = 100.0
+	amount_left = 500.0
+	max_amount = 500.0
 	caliber = CALIBER_MINIGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	mag_type = AMMO_BOX
@@ -1002,7 +1063,7 @@
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	ammo_type = new/datum/projectile/bullet/rifle_3006
+	ammo_type = /datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip"
 	amount_left = 4
 	max_amount = 4
@@ -1012,7 +1073,7 @@
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
 	name = "7.62 NATO magazine"
-	ammo_type = new/datum/projectile/bullet/rifle_762_NATO
+	ammo_type = /datum/projectile/bullet/rifle_762_NATO
 	icon_state = "rifle_box_mag" //todo
 	amount_left = 4
 	max_amount = 4
@@ -1022,7 +1083,7 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
-	ammo_type = new/datum/projectile/bullet/tranq_dart
+	ammo_type = /datum/projectile/bullet/tranq_dart
 	icon_state = "tranq_clip"
 	amount_left = 4
 	max_amount = 4
@@ -1031,7 +1092,7 @@
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
-		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
+		ammo_type = /datum/projectile/bullet/tranq_dart/syndicate
 
 		pistol
 			sname = ".355 Tranqilizer"
@@ -1039,17 +1100,17 @@
 			amount_left = 15
 			max_amount = 15
 			caliber = CALIBER_PISTOL
-			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
+			ammo_type = /datum/projectile/bullet/tranq_dart/syndicate/pistol
 
 	anti_mutant
 		sname = ".308 Mutadone"
 		name = ".308 mutadone darts"
-		ammo_type = new/datum/projectile/bullet/tranq_dart/anti_mutant
+		ammo_type = /datum/projectile/bullet/tranq_dart/anti_mutant
 
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
 	name = "VR magazine"
-	ammo_type = new/datum/projectile/bullet/vbullet
+	ammo_type = /datum/projectile/bullet/vbullet
 	icon_state = "ak47"
 	caliber = CALIBER_HEAVY_RIFLE
 	amount_left = 200
@@ -1061,7 +1122,7 @@
 	amount_left = 8
 	max_amount = 8
 	icon_state = "12"
-	ammo_type = new/datum/projectile/bullet/flare
+	ammo_type = /datum/projectile/bullet/flare
 	caliber = CALIBER_SHOTGUN
 	icon_dynamic = 0
 	icon_empty = "12-0"
@@ -1077,7 +1138,7 @@
 	amount_left = 5
 	max_amount = 5
 	icon_state = "40mmR"
-	ammo_type = new/datum/projectile/bullet/cannon
+	ammo_type = /datum/projectile/bullet/cannon
 	caliber = CALIBER_CANNON
 	w_class = 2
 	icon_dynamic = 1
@@ -1094,7 +1155,7 @@
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mmR"
-	ammo_type = new/datum/projectile/bullet/autocannon
+	ammo_type = /datum/projectile/bullet/autocannon
 	caliber = CALIBER_GRENADE
 	w_class = 3
 	icon_dynamic = 0
@@ -1108,12 +1169,12 @@
 	seeker
 		sname = "40mm HE Seeker"
 		name = "40mm HE pod-seeking shells"
-		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
+		ammo_type = /datum/projectile/bullet/autocannon/seeker/pod_seeking
 
 	knocker
 		sname = "40mm HE Knocker"
 		name = "40mm HE airlock-breaching shells"
-		ammo_type = new/datum/projectile/bullet/autocannon/knocker
+		ammo_type = /datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm HEDP"
@@ -1121,7 +1182,7 @@
 	amount_left = 8
 	max_amount = 8
 	icon_state = "40mmR"
-	ammo_type = new/datum/projectile/bullet/grenade_round/
+	ammo_type = /datum/projectile/bullet/grenade_round/
 	caliber = CALIBER_GRENADE
 	w_class = 3
 	icon_dynamic = 0
@@ -1130,7 +1191,7 @@
 
 	explosive
 		desc = "High Explosive Dual Purpose grenade rounds compatible with grenade launchers. Effective against infantry and armour."
-		ammo_type = new/datum/projectile/bullet/grenade_round/explosive
+		ammo_type = /datum/projectile/bullet/grenade_round/explosive
 
 	high_explosive
 		desc = "High Explosive grenade rounds compatible with grenade launchers. Devastatingly effective against infantry targets."
@@ -1138,7 +1199,7 @@
 		name = "40mm HE shells"
 		icon_state = "AEX"
 		icon_empty = "AEX-0"
-		ammo_type = new/datum/projectile/bullet/grenade_round/high_explosive
+		ammo_type = /datum/projectile/bullet/grenade_round/high_explosive
 
 /obj/item/ammo/bullets/smoke
 	sname = "40mm Smoke"
@@ -1146,7 +1207,7 @@
 	amount_left = 5
 	max_amount = 5
 	icon_state = "40mmB"
-	ammo_type = new/datum/projectile/bullet/smoke
+	ammo_type = /datum/projectile/bullet/smoke
 	caliber = CALIBER_GRENADE
 	w_class = 3
 	icon_dynamic = 0
@@ -1160,7 +1221,7 @@
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
-	ammo_type = new/datum/projectile/bullet/pbr
+	ammo_type = /datum/projectile/bullet/pbr
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mmB"
@@ -1178,7 +1239,7 @@
 	amount_left = 1
 	max_amount = 1
 	icon_state = "paintballr-4"
-	ammo_type = new/datum/projectile/bullet/grenade_shell
+	ammo_type = /datum/projectile/bullet/grenade_shell
 	caliber = CALIBER_GRENADE
 	w_class = 3
 	icon_dynamic = 0
@@ -1251,7 +1312,7 @@
 	max_amount = 2
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rod_1"
-	ammo_type = new/datum/projectile/bullet/rod
+	ammo_type = /datum/projectile/bullet/rod
 	caliber = CALIBER_ROD
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -1261,7 +1322,7 @@
 	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
-	ammo_type = new/datum/projectile/bullet/bullet_9mm
+	ammo_type = /datum/projectile/bullet/bullet_9mm
 	caliber = CALIBER_PISTOL
 	mag_type = AMMO_MAGAZINE
 
@@ -1269,12 +1330,12 @@
 		name = "9mm SMG magazine"
 		amount_left = 30.0
 		max_amount = 30.0
-		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
+		ammo_type = /datum/projectile/bullet/bullet_9mm/smg
 
 /obj/item/ammo/bullets/lmg
 	sname = "7.62×51mm NATO"
 	name = "LMG belt"
-	ammo_type = new/datum/projectile/bullet/lmg
+	ammo_type = /datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
 	amount_left = 100.0
@@ -1286,7 +1347,7 @@
 	weak
 		sname = "7.62×51mm NATO W"
 		name = "discount LMG belt"
-		ammo_type = new/datum/projectile/bullet/lmg/weak
+		ammo_type = /datum/projectile/bullet/lmg/weak
 		amount_left = 25.0
 		max_amount = 25.0
 
@@ -1376,9 +1437,9 @@
 		else return ..()
 
 	swap(var/obj/item/gun/energy/E)
-		if(!istype(E.cell,/obj/item/ammo/power_cell))
+		if(!istype(E.loaded_magazine ,/obj/item/ammo/power_cell))
 			return 0
-		var/obj/item/ammo/power_cell/swapped_cell = E.cell
+		var/obj/item/ammo/power_cell/swapped_cell = E.loaded_magazine
 		var/mob/living/M = src.loc
 		var/atom/old_loc = src.loc
 
@@ -1386,7 +1447,7 @@
 			usr.u_equip(src)
 
 		src.set_loc(E)
-		E.cell = src
+		E.loaded_magazine = src
 
 		if(istype(old_loc, /obj/item/storage))
 			swapped_cell.set_loc(old_loc)
@@ -1404,18 +1465,6 @@
 
 		playsound(get_turf(src), sound_load, 50, 1)
 		return 1
-
-	proc/charge(var/amt = 0)
-		if (src.charge >= src.max_charge)
-			src.charge = src.max_charge
-			return 0
-		else
-			if (amt > 0)
-				src.charge = min(src.charge + amt, src.max_charge)
-				src.update_icon()
-				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
-			else
-				return 0
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
@@ -1506,10 +1555,22 @@
 	name = "Power Cell"
 	desc = "A custom-made power cell."
 
+/obj/item/ammo/power_cell/self_charging/med_power
+	name = "Power Cell - Blaster Charger"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 200PU."
+	charge = 200.0
+	max_charge = 200.0
+
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
 	recharge_rate = 2.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
+
+/obj/item/ammo/power_cell/self_charging/slowcharge/hundred
+	name = "Power Cell - Atomic Slowcharge Deluxe"
+	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 100PU."
+	charge = 100.0
+	max_charge = 100.0
 
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"
@@ -1566,11 +1627,12 @@
 /obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
 	sname = ".58 Flintlock"
 	name = ".58 Flintlock"
-	ammo_type = new/datum/projectile/bullet/flintlock
+	ammo_type = /datum/projectile/bullet/flintlock
 	icon_state = null
+	mag_type = AMMO_PILE
 	amount_left = 1
 	max_amount = 1
-	caliber = 0.58
+	caliber = CALIBER_FLINTLOCK
 
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
@@ -1579,8 +1641,9 @@
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "regularrocket"
-	ammo_type = new /datum/projectile/bullet/antisingularity
-	caliber = 1.12
+	ammo_type = /datum/projectile/bullet/antisingularity
+	caliber = CALIBER_ROCKET
+	mag_type = AMMO_PILE
 	w_class = 3
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -1592,8 +1655,9 @@
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "mininuke"
-	ammo_type = new /datum/projectile/bullet/mininuke
-	caliber = 1.12
+	ammo_type = /datum/projectile/bullet/mininuke
+	caliber = CALIBER_ROCKET
+	mag_type = AMMO_PILE
 	w_class = 3
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -1609,8 +1673,9 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 20
-	ammo_type = new /datum/projectile/special/spawner/gun
-	caliber = 3 //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
+	mag_type = AMMO_MAGAZINE
+	ammo_type = /datum/projectile/special/spawner/gun
+	caliber = CALIBER_WHOLE_DERRINGER //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
 	delete_on_reload = 1
 
 /obj/item/ammo/bullets/meowitzer
@@ -1621,8 +1686,9 @@
 	icon_empty = "lmg_ammo-0"
 	amount_left = 1
 	max_amount = 1
-	ammo_type = new/datum/projectile/special/meowitzer
-	caliber = 20
+	mag_type = AMMO_CLIP
+	ammo_type = /datum/projectile/special/meowitzer
+	caliber = CALIBER_CAT
 	w_class = 3
 
 
@@ -1630,6 +1696,6 @@
 	sname = "inert meowitzer"
 	name = "inert meowitzer"
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
-	ammo_type = new/datum/projectile/special/meowitzer/inert
+	ammo_type = /datum/projectile/special/meowitzer/inert
 
 

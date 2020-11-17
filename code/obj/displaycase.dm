@@ -191,12 +191,14 @@
 
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
 				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))
+				L.firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = src.our_projectile))
+
 				L.current_projectile = new src.our_projectile
 				if (!isnull(src.our_projectile2))
-					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
-					L.projectiles = src.our_projectiles
+					L.firemodes += list("name" = "burst-fire", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = src.our_projectile2)
 				src.our_cell.set_loc(L)
-				L.cell = src.our_cell
+				qdel(L.loaded_magazine)
+				L.loaded_magazine = src.our_cell
 
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
@@ -319,7 +321,7 @@
 			if (user && ismob(user))
 				user.show_text("The [src.name]'s high-quality replacement parts fit together perfectly, increasing the gun's output.", "blue")
 			src.our_projectile = /datum/projectile/laser/old
-			src.our_projectile2 = /datum/projectile/laser/old_burst
+			src.our_projectile2 = /datum/projectile/laser/old
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return

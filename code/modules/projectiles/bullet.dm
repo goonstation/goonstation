@@ -20,13 +20,13 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	shot_number = 1
 
 	// caliber list: update as needed
-	// 0.22 pistol / zipgun
-	// 0.308 - rifles
-	// 0.357 - revolver
-	// 0.38 - detective
+	// CALIBER_PISTOL_SMALL pistol / zipgun
+	// CALIBER_HEAVY_RIFLE - rifles
+	// CALIBER_REVOLVER_MAGNUM - revolver
+	// CALIBER_REVOLVER - detective
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
-	// 1.57 - grenade shell, 40mm
+	// CALIBER_GRENADE - grenade shell, 40mm
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
 //What is our damage type
@@ -70,7 +70,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	caliber = 0.22
+	caliber = CALIBER_PISTOL_SMALL
 	icon_turf_hit = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 
@@ -92,7 +92,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	icon_turf_hit = "bhole-small"
 
 	smg
@@ -109,7 +109,7 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
-	caliber = 0.22
+	caliber = CALIBER_PISTOL_SMALL
 	icon_turf_hit = "bhole-small"
 
 /datum/projectile/bullet/revolver_357
@@ -120,7 +120,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_357
-	caliber = 0.357
+	caliber = CALIBER_REVOLVER_MAGNUM
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
 
@@ -152,13 +152,14 @@ toxic - poisons
 	power = 35
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_38
-	caliber = 0.38
+	caliber = CALIBER_REVOLVER
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
 
-/datum/projectile/bullet/revolver_38/lb
+/datum/projectile/bullet/revolver_38/lawbringer
 	ammo_ID = "bullet_38_lawbringer"
 	ammo_name = ".38 electro-lawslug"
+	cost = 30
 	shot_sound = 'sound/weapons/lb_execute.ogg'
 
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
@@ -177,7 +178,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_45
-	caliber = 0.45
+	caliber = CALIBER_REVOLVER_OLDTIMEY
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
 
@@ -192,7 +193,7 @@ toxic - poisons
 	dissipation_rate = 2
 	dissipation_delay = 8
 	projectile_speed = 36
-	caliber = 0.355
+	caliber = CALIBER_PISTOL
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
 	implanted = /obj/item/implant/projectile/bullet_nine_mm_NATO
@@ -216,7 +217,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	icon_turf_hit = "bhole-small"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -249,7 +250,7 @@ toxic - poisons
 	projectile_speed = 56
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
@@ -281,7 +282,7 @@ toxic - poisons
 	implanted = null
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	dissipation_delay = 10
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
 
@@ -296,16 +297,17 @@ toxic - poisons
 		pistol
 			ammo_ID = "bullet_dart_thiopental_355"
 			ammo_name = ".355 sodium thopental dart cartridge"
-			caliber = 0.355
+			caliber = CALIBER_PISTOL
 			casing = /obj/item/casing/small
 			shot_sound = 'sound/weapons/tranq_pistol.ogg'
 
 	//haha gannets, fuck you I stole ur shit! - kyle
-	law_giver
+	lawbringer
 		ammo_ID = "bullet_dart_lawbringer"
 		ammo_name = ".355 haloperidol electro-lawdart"
 		sname = "knockout"
-		caliber = 0.355
+		cost = 60
+		caliber = CALIBER_REVOLVER
 		casing = /obj/item/casing/small
 		shot_sound = 'sound/weapons/tranq_pistol.ogg'
 
@@ -338,7 +340,7 @@ toxic - poisons
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
 	ks_ratio = 0.66
-	caliber = 0.41
+	caliber = CALIBER_DERRINGER
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/derringer
 
@@ -358,7 +360,7 @@ toxic - poisons
 	dissipation_rate = 10
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	caliber = 0.72 // roughly
+	caliber = CALIBER_SHOTGUN // roughly
 	icon_turf_hit = "bhole"
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_12ga
@@ -408,7 +410,7 @@ toxic - poisons
 	icon_turf_hit = "bhole"
 	implanted = null
 	casing = null
-	caliber = 4.6 // I rolled a dice
+	caliber = CALIBER_TRASHBAG // I rolled a dice
 	cost = 1
 
 	on_hit(atom/hit, dirflag)
@@ -459,7 +461,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/shotgun/orange
 
@@ -475,6 +477,7 @@ toxic - poisons
 		ammo_ID = "bullet_shotgun_explosive_lawbringer"
 		ammo_name = ".38 explosive space-tider slug"
 		power = 1
+		caliber = CALIBER_REVOLVER
 		cost = 150
 
 		on_hit(atom/hit)
@@ -495,7 +498,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	caliber = 0.72
+	caliber = CALIBER_SHOTGUN
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/shotgun/blue
 
@@ -521,13 +524,12 @@ toxic - poisons
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 8
 	cost = 10
-	shot_number = 10
 	shot_delay = 0.7
 	dissipation_delay = 7
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -544,14 +546,12 @@ toxic - poisons
 	ammo_name = ".308 lmg bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 12
-	cost = 8
-	shot_number = 8
 	shot_delay = 0.7
 	dissipation_delay = 12
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -567,8 +567,6 @@ toxic - poisons
 	ammo_ID = "bullet_lmg_weak"
 	ammo_name = ".308 \"Blood-Driver\" flechette"
 	power = 1
-	cost = 2
-	shot_number = 16
 	shot_delay = 0.7
 	dissipation_delay = 8
 	nomsg = 1
@@ -585,8 +583,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 3
-	caliber = 0.308
+	caliber = CALIBER_HEAVY_RIFLE
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -601,8 +598,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 1
-	caliber = 0.223
+	caliber = CALIBER_ASSAULT_RIFLE
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -644,7 +640,7 @@ toxic - poisons
 	color_blue = 0
 	icon_state = "flare"
 	implanted = null
-	caliber = 0.72 // 12 guage
+	caliber = CALIBER_SHOTGUN // 12 guage
 	icon_turf_hit = "bhole"
 	casing = /obj/item/casing/shotgun/orange
 
@@ -656,6 +652,16 @@ toxic - poisons
 			fireflash(hit, 0)
 		else
 			fireflash(get_turf(hit), 0)
+
+/datum/projectile/bullet/flare/lawbringer
+	name = "flare"
+	ammo_ID = "bullet_shotgun_flare_lawbringer"
+	ammo_name = ".38 incendiary electro-lawslug"
+	sname = "hotshot"
+	caliber = CALIBER_REVOLVER
+	shot_sound = 'sound/weapons/flaregun.ogg'
+	power = 20
+	cost = 60
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
@@ -671,6 +677,7 @@ toxic - poisons
 	ammo_name = "jagged piece of metal"
 	ammo_name_plural = "jagged pieces of metal"
 	power = 10
+	caliber = CALIBER_PISTOL_SMALL
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_CUT
 	window_pass = 0
@@ -697,7 +704,7 @@ toxic - poisons
 	implanted = null
 
 	ks_ratio = 1.0
-	caliber = 0.787 //20mm
+	caliber = CALIBER_CANNON //20mm
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/cannon
 	pierces = 4
@@ -780,7 +787,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 1.57 // 40mm grenade shell
+	caliber = CALIBER_GRENADE // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -818,10 +825,10 @@ toxic - poisons
 
 	huge
 		ammo_ID = "bullet_autocannon_huge"
-		ammo_name = "400mm \"Shuttle-Call\" higher-explosive autocannon cartridge"
+		ammo_name = "400mm \"Shuttle-Call\" higher-explosive autocannon shell"
 		icon_state = "400mm"
 		power = 100
-		caliber = 15.7
+		caliber = CALIBER_CANNON_MASSIVE
 		icon_turf_hit = "bhole-large"
 
 		on_hit(atom/hit)
@@ -917,7 +924,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	caliber = 1.57
+	caliber = CALIBER_GRENADE
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -953,7 +960,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 1.58
+	caliber = CALIBER_RPG
 	icon_turf_hit = "bhole-large"
 
 	on_hit(atom/hit)
@@ -1043,7 +1050,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
-	caliber = 1.57 // 40mm grenade shell
+	caliber = CALIBER_GRENADE // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -1077,6 +1084,14 @@ toxic - poisons
 		startSmoke(hit, dirflag, projectile)
 		return
 
+/datum/projectile/bullet/smoke/lawbringer
+	ammo_ID = "bullet_grenade_smoke_lawbringer"
+	ammo_name = ".38 smoke electro-lawslug"
+	name = "smoke slug"
+	sname = "smokeshot"
+	cost = 50
+	caliber = CALIBER_REVOLVER
+
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
 	ammo_ID = "bullet_grenade_baton"
@@ -1090,7 +1105,7 @@ toxic - poisons
 	implanted = null
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	caliber = 1.57
+	caliber = CALIBER_GRENADE
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -1145,7 +1160,7 @@ toxic - poisons
 
 /datum/projectile/bullet/glitch/gun
 	ammo_ID = "bullet_glitch_gun"
-	ammo_name = "text += "\[DEAD\]\""
+	ammo_name = "text += \"\[DEAD\]\""
 	power = 1
 
 /datum/projectile/bullet/rod // for the coilgun
@@ -1158,7 +1173,7 @@ toxic - poisons
 	window_pass = 0
 	icon_state = "rod_1"
 	dissipation_delay = 25
-	caliber = 1.0
+	caliber = CALIBER_ROD
 	shot_sound = 'sound/weapons/ACgun2.ogg'
 	casing = null
 	icon_turf_hit = "bhole-large"
@@ -1176,6 +1191,7 @@ toxic - poisons
 	damage_type = 0
 	power = 0
 	dissipation_delay = 12
+	caliber = CALIBER_FROG
 	sname = "Get In"
 	shot_sound = 'sound/weapons/ribbit.ogg' //heh
 	casing = null
@@ -1204,6 +1220,7 @@ toxic - poisons
 	icon_state = "trace"
 	shot_sound = null
 	power = 12
+	caliber = CALIBER_PISTOL_SMALL
 	dissipation_rate = 5
 	dissipation_delay = 8
 	damage_type = D_KINETIC
@@ -1215,6 +1232,7 @@ toxic - poisons
 	sname = "buckshot"
 	icon_state = "trace"
 	power = 6
+	caliber = CALIBER_PISTOL_SMALL
 	dissipation_rate = 5
 	dissipation_delay = 3
 	damage_type = D_KINETIC
@@ -1226,6 +1244,7 @@ toxic - poisons
 	sname = "nails"
 	icon_state = "trace"
 	power = 4
+	caliber = CALIBER_PISTOL_SMALL
 	dissipation_rate = 3
 	dissipation_delay = 4
 	damage_type = D_SLASHING
@@ -1243,7 +1262,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 1.57 // 40mm grenade shell
+	caliber = CALIBER_GRENADE // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -1350,7 +1369,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
 	casing = null
-	caliber = 0.58
+	caliber = CALIBER_FLINTLOCK
 	icon_turf_hit = "bhole-small"
 
 	on_hit(atom/hit, dirflag)
@@ -1382,7 +1401,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 1.12
+	caliber = CALIBER_ROCKET
 	icon_turf_hit = "bhole-large"
 	implanted = null
 
@@ -1407,6 +1426,7 @@ toxic - poisons
 	ammo_name = ".42 merriment-suppression device"
 	sname = "clownshot"
 	power = 1
+	caliber = CALIBER_REVOLVER
 	cost = 15				//This should either cost a lot or a little I don't know. On one hand if it costs nothing you can truly tormet clowns with it, but on the other hand if it costs your full charge, then the clown will know how much you hate it because of how much you sacraficed to harm it. I settled for a med amount...
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
@@ -1451,7 +1471,7 @@ toxic - poisons
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	ks_ratio = 1.0
-	caliber = 1.12
+	caliber = CALIBER_ROCKET
 	icon_turf_hit = "bhole-large"
 	implanted = null
 
@@ -1469,6 +1489,7 @@ toxic - poisons
 	sname = "spike"
 	icon_state = "spike"
 	power = 7.2
+	caliber = CALIBER_PISTOL_SMALL
 	dissipation_rate = 1
 	dissipation_delay = 45
 	damage_type = D_KINETIC

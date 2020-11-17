@@ -14,6 +14,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_SPECIAL
+	caliber = CALIBER_ANY
 	hit_ground_chance = 50
 	window_pass = 0
 
@@ -126,6 +127,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 1
 	dissipation_delay = 3
 	damage_type = D_ENERGY
+	caliber = CALIBER_BATTERY
 	pierces = -1
 	ticks_between_mob_hits = 10
 
@@ -140,6 +142,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 1
 	dissipation_delay = 3
 	damage_type = D_ENERGY
+	caliber = CALIBER_BATTERY
 	goes_through_walls = 1
 
 // Mildly crazy shit
@@ -215,6 +218,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 10
 	spread_projectile_type = /datum/projectile/bullet/buckshot
+	caliber = CALIBER_SHOTGUN
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
@@ -250,6 +254,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle = 33
 	cost = 200
 	pellets_to_fire = 5
+	caliber = CALIBER_BATTERY
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
 	shot_sound = 'sound/weapons/laser_f.ogg'
 
@@ -277,6 +282,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 75
 	cost = 75
 	damage_type = D_ENERGY
+	caliber = CALIBER_BATTERY
 	dissipation_delay = 15
 	color_red = 0.1
 	color_green = 0.3
@@ -338,6 +344,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "inferno bomb"
 	icon_state = "fusionorb"
 	shot_sound = 'sound/weapons/energy/InfernoCannon.ogg'
+	caliber = CALIBER_GRENADE
 	power = 75
 	cost = 75
 	damage_type = D_BURNING
@@ -367,6 +374,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 10000 // blam = INF
 	cost = 2500
 	damage_type = D_BURNING
+	caliber = CALIBER_CANNON_MASSIVE
 	dissipation_delay = 75
 	dissipation_rate = 300
 	ks_ratio = 0.8
@@ -421,6 +429,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	ammo_name = "high-explosive pet carrier"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "cat1"
+	caliber = CALIBER_CAT
 	dissipation_delay = 75
 	dissipation_rate = 300
 	projectile_speed = 20
@@ -454,6 +463,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spewer
 	name = "volatile bolt"
 	sname = "volatile bolt"
+	ammo_ID = "volitile_bolt"
+	ammo_name = "volitile bolt"
 	icon_state = "orb_white"
 	shot_sound = 'sound/weapons/laserultra.ogg'
 	power = 100
@@ -485,6 +496,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/laser/spewer_bolt
 	name = "volatile bolt fragment"
 	sname = "volatile bolt fragment"
+	ammo_ID = "volitile_bolt_fragment"
+	ammo_name = "volitile bolt fragment"
 	icon_state = "ball_white"
 	shot_sound = 'sound/weapons/blaster_a.ogg'
 	power = 5
@@ -493,6 +506,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/laser/punch // yep :I
 	name = "punch"
+	ammo_ID = "punch_laser"
+	ammo_name = "spring-loaded miniature fist"
 	window_pass = 0
 	icon_state = "punch"
 	damage_type = D_KINETIC
@@ -512,6 +527,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 //mbc : hey i know homing projectiles exist already as 'seeker', but i like mine better
 /datum/projectile/special/homing
 	name = "homing"
+	ammo_ID = "homing_taser"
+	ammo_name = "homing taser cell"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laser"
 	power = 1
@@ -521,6 +538,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_SPECIAL
+	caliber = CALIBER_BATTERY
 	hit_ground_chance = 100
 	window_pass = 0
 
@@ -607,10 +625,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		..()
 
 /datum/projectile/special/homing/slow
+	ammo_ID = "homing_taser_slow"
+	ammo_name = "slow homing taser cell"
 	max_speed = 1
 
 /datum/projectile/special/homing/vamp_blood
 	name = "blood glob"
+	ammo_ID = "vamp_blood_glob"
+	ammo_name = "bloody clump"
 	icon_state = "bloodproj"
 	start_speed = 9
 	goes_through_walls = 1
@@ -659,6 +681,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 //vamp bail out travel
 /datum/projectile/special/homing/travel
 	name = "mysterious mystery mist"
+	ammo_ID = "vamp_mist"
+	ammo_name = "baggie of vampire dust"
+	ammo_name_plural = "baggies of vampire dust"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
 	max_speed = 2
@@ -705,6 +730,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		..()
 
 /datum/projectile/special/homing/orbiter
+	ammo_ID = "orbit_parent"
+	ammo_name = "orbital blood missile"
 	icon_state = "bloodproj"
 	easemult = 0.3
 
@@ -749,13 +776,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/homing/orbiter/spiritbat
 	name = "frost bat"
+	ammo_ID = "frost_bat"
+	ammo_name = "taped-up frost bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
 	rotate_proj = 0
 	face_desired_dir = 1
 	goes_through_walls = 1
 	is_magical = 1
-
+	caliber = CALIBER_GRENADE
 	shot_sound = 0
 	hit_mob_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
 	hit_object_sound = 'sound/effects/mag_iceburstimpact_high.ogg'
@@ -813,10 +842,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
+	ammo_ID = "taser_shotgun"
+	ammo_name = "wide-angle taser cell"
 	cost = 37.5
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL
+	caliber = CALIBER_BATTERY
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/energy_bolt/tasershotgun
 	split_type = 0
@@ -841,10 +873,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spreader/quadwasp
 	name = "4 space wasp eggs"
+	ammo_ID = "wasp_eggs"
+	ammo_name = "quad-carton of wasp eggs"
+	ammo_name = "quad-cartons of wasp eggs"
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	icon_state = "critter_egg"
 	brightness = 0
 	sname = "4 space wasp eggs"
+	caliber = CALIBER_BATTERY
 	shot_sound = null
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
@@ -875,6 +911,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
+	ammo_ID = "spawner_parent"
+	ammo_name = "unattuned spawn-cell"
 	power = 1
 	dissipation_rate = 0
 	max_range = 10
@@ -905,8 +943,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner/gun //shoot guns
 	name = "gun"
+	ammo_ID = "derringer_gun"
+	ammo_name = "mint-in-box derringer"
 	power = 20 //20 damage from getting beaned with a gun idk
 	damage_type = D_KINETIC
+	caliber = CALIBER_WHOLE_DERRINGER
 	hit_type = DAMAGE_BLUNT
 	shot_sound = 'sound/weapons/rocket.ogg'
 	icon_state = "gun"
@@ -917,11 +958,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 
 /datum/projectile/special/spawner/wasp //shoot wasps
+	ammo_ID = "wasp_spawner"
+	ammo_name = "aerodynamic wasp egg"
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	icon_state = "critter_egg"
 	name = "space wasp egg"
 	brightness = 0
 	sname = "space wasp egg"
+	caliber = CALIBER_BATTERY
 	shot_sound = null
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
@@ -947,10 +991,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
+	ammo_ID = "beepsky_bullet"
+	ammo_name = "Beepsky brand security robot"
 	window_pass = 0
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 	damage_type = D_KINETIC
+	caliber = CALIBER_SECBOT
 	hit_type = DAMAGE_BLUNT
 	power = 5
 	dissipation_delay = 30
@@ -978,12 +1025,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/spawner/battlecrate
 	name = "Battlecrate"
+	ammo_ID = "battlecrate"
+	ammo_name = "battlecrate delivery beacon"
 	power = 100
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "attachecase"
+	caliber = CALIBER_GRENADE
 	typetospawn = /obj/lootbox
 	var/explosion_power = 15
 

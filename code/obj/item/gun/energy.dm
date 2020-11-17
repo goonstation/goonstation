@@ -6,20 +6,14 @@
 	g_amt = 1000
 	mats = 32
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
-	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
-	var/robocharge = 800
-	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
-	var/obj/item/ammo/power_cell/cell = null
-	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
-	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
-	var/can_swap_cell = 1
+	rechargeable = 1
+
+	accepted_mag = ACCEPT_ENERGY
 	caliber = CALIBER_BATTERY
 	muzzle_flash = null
 	inventory_counter_enabled = 1
 
 	New()
-		if (!cell)
-			cell = new cell_type
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		..()
@@ -32,8 +26,8 @@
 
 	examine()
 		. = ..()
-		if(src.cell)
-			. += "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+		if(src.loaded_magazine)
+			. += "It is set to [src.firemodes[src.firemode_index]["name"]]. There are [src.loaded_magazine.charge]/[src.loaded_magazine.max_charge] PUs left!"
 		else
 			. += "There is no cell loaded!"
 		if(current_projectile)
@@ -42,15 +36,15 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
-		if (src.cell)
-			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		if (src.loaded_magazine)
+			inventory_counter.update_percent(src.loaded_magazine.charge, src.loaded_magazine.max_charge)
 		else
 			inventory_counter.update_text("-")
 		return 0
 
 	emp_act()
-		if (src.cell && istype(src.cell))
-			src.cell.use(INFINITY)
+		if (src.loaded_magazine && istype(src.loaded_magazine))
+			src.loaded_magazine.charge = 0
 			src.update_icon()
 		return
 
@@ -63,43 +57,34 @@
 			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
 			processing_items.Add(src)
 			return
-		if (!src.cell)
+		if (!src?.loaded_magazine?.self_charging)
 			processing_items.Remove(src)
 			return
-		if (!istype(src.cell, /obj/item/ammo/power_cell/self_charging)) // Plain cell? No need for dynamic updates then (Convair880).
-			processing_items.Remove(src)
-			return
-		if (src.cell.charge == src.cell.max_charge) // Keep them in the loop, as we might fire the gun later (Convair880).
+		if (src.loaded_magazine.charge == src.loaded_magazine.max_charge) // Keep them in the loop, as we might fire the gun later (Convair880).
 			return
 
 		src.update_icon()
 		return
 
-	canshoot()
-		if(src.cell && src.cell:charge && src.current_projectile)
-			if(src.cell:charge >= src.current_projectile:cost)
-				return 1
-		return 0
-
-	process_ammo(var/mob/user)
-		if(isrobot(user))
-			var/mob/living/silicon/robot/R = user
-			if(R.cell)
-				if(R.cell.charge >= src.robocharge)
-					R.cell.charge -= src.robocharge
-					return 1
-			return 0
-		else
-			if(src.cell && src.current_projectile)
-				if(src.cell.use(src.current_projectile.cost))
-					return 1
-			boutput(user, "<span class='alert'>*click* *click*</span>")
-			if (!src.silenced)
-				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-			return 0
+	// process_ammo(var/mob/user)
+	// 	if(isrobot(user))
+	// 		var/mob/living/silicon/robot/R = user
+	// 		if(R.cell)
+	// 			if(R.cell.charge >= src.robocharge)
+	// 				R.cell.charge -= src.robocharge
+	// 				return 1
+	// 		return 0
+	// 	else
+	// 		if(src.loaded_magazine && src.current_projectile)
+	// 			if(src.loaded_magazine.use(src.current_projectile.cost))
+	// 				return 1
+	// 		boutput(user, "<span class='alert'>*click* *click*</span>")
+	// 		if (!src.silenced)
+	// 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+	// 		return 0
 
 	attackby(obj/item/b as obj, mob/user as mob)
-		if (can_swap_cell && istype(b, /obj/item/ammo/power_cell))
+		if (!fixed_mag && istype(b, /obj/item/ammo/power_cell))
 			var/obj/item/ammo/power_cell/pcell = b
 			if (src.custom_cell_max_capacity && (pcell.max_charge > src.custom_cell_max_capacity))
 				boutput(user, "<span class='alert'>This [pcell.name] won't fit!</span>")
@@ -107,11 +92,11 @@
 			src.logme_temp(user, src, pcell) //if (!src.rechargeable)
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
-			if (src.cell)
+			if (src.loaded_magazine)
 				if (pcell.swap(src))
 					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
-				src.cell = pcell
+				src.loaded_magazine = pcell
 				user.drop_item()
 				pcell.set_loc(src)
 				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
@@ -120,10 +105,10 @@
 
 	attack_hand(mob/user as mob)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
-			if (src.can_swap_cell && src.cell&&!src.rechargeable)
-				var/obj/item/ammo/power_cell/W = src.cell
+			if (!src.fixed_mag && src.loaded_magazine && !src.rechargeable)
+				var/obj/item/ammo/power_cell/W = src.loaded_magazine
 				user.put_in_hand_or_drop(W)
-				src.cell = null
+				src.loaded_magazine = null
 				update_icon()
 				src.add_fingerprint(user)
 			else
@@ -133,8 +118,8 @@
 		return
 
 	proc/charge(var/amt)
-		if(src.cell && rechargeable)
-			return src.cell.charge(amt)
+		if(src.loaded_magazine && rechargeable)
+			return src.loaded_magazine.charge(amt)
 		else
 			//No cell, or not rechargeable. Tell anything trying to charge it.
 			return -1
@@ -152,14 +137,8 @@
 	slowdown_time = 5
 	w_class = 4
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-
-	New()
-		current_projectile = new/datum/projectile/heavyion
-		projectiles = list(current_projectile)
-		cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-		cell.max_charge = 100
-		cell.charge = 100
-		..()
+	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge/hundred
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/heavyion))
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(..(target, params, user, reach))
@@ -172,23 +151,20 @@
 	item_state = "taser"
 	uses_multiple_icon_states = 1
 	force = 1.0
-	cell_type = /obj/item/ammo/power_cell/med_power
+	ammo = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
 	muzzle_flash = "muzzle_flash_elec"
-
-	New()
-		current_projectile = new/datum/projectile/energy_bolt
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/burst)
-		..()
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = /datum/projectile/energy_bolt))
 
 	update_icon()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if (current_projectile.type == /datum/projectile/energy_bolt/burst)
+			if (src.firemodes[src.firemode_index]["name"] == "single-shot")
 				src.icon_state = "taserburst[ratio]"
-			else if(current_projectile.type == /datum/projectile/energy_bolt)
+			else if(src.firemodes[src.firemode_index]["name"] == "3-round burst")
 				src.icon_state = "taser[ratio]"
 		..()
 
@@ -197,24 +173,17 @@
 		update_icon()
 
 	borg
-		New()
-			cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-			cell.max_charge = 100
-			cell.charge = 100
-			..()
+		ammo = new/obj/item/ammo/power_cell/self_charging/slowcharge/hundred
 
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
-
-	New()
-		..()
-		current_projectile = new/datum/projectile/energy_bolt/bouncy
-		projectiles = list(current_projectile)
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/bouncy),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = /datum/projectile/energy_bolt/bouncy))
 
 	update_icon()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/bouncy)
 				src.icon_state = "taser[ratio]"
@@ -226,30 +195,22 @@
 	icon_state = "laser"
 	item_state = "laser"
 	uses_multiple_icon_states = 1
-	cell_type = /obj/item/ammo/power_cell/med_plus_power
+	ammo = /obj/item/ammo/power_cell/med_plus_power
 	force = 7.0
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_laser"
-
-	New()
-		current_projectile = new/datum/projectile/laser
-		projectiles = list(current_projectile)
-		..()
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser))
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
-		New()
-			..()
-			current_projectile = new /datum/projectile/laser/virtual
-			projectiles.len = 0
-			projectiles += current_projectile
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/virtual))
 
 	update_icon()
-		if(cell)
+		if(src.loaded_magazine)
 			//Wire: Fix for Division by zero runtime
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "laser[ratio]"
 			return
@@ -264,22 +225,13 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-
-	New()
-		if (!src.cell)
-			src.cell = new /obj/item/ammo/power_cell/med_power
-		if (!src.current_projectile)
-			src.current_projectile = new /datum/projectile/laser
-		if (isnull(src.projectiles))
-			src.projectiles = list(src.current_projectile)
-		src.update_icon()
-		..()
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser))
 
 	update_icon()
 		..()
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		if (src.loaded_magazine)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "caplaser[ratio]"
 			return
@@ -294,17 +246,13 @@
 	desc = "A gun that produces a harmful phaser bolt, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_phaser"
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/laser/light
-		projectiles = list(current_projectile)
-		..()
+	ammo = new/obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/light))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "phaser-new[ratio]"
 			return
@@ -322,29 +270,23 @@
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
-	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/rad_bolt
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge
 	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	muzzle_flash = null
-
-	New()
-		current_projectile = new/datum/projectile/rad_bolt
-		projectiles = list(current_projectile)
-		..()
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/rad_bolt))
 
 	update_icon()
 		..()
-		if(cell)
-			if(src.cell.charge >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
+		if(src.loaded_magazine)
+			if(src.loaded_magazine.charge >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				set_icon_state("crossbow")
 				return
 			else
-				var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+				var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 				ratio = round(ratio, 0.25) * 100
 				set_icon_state("crossbow[ratio]")
 				return
@@ -354,7 +296,7 @@
 	name = "energy gun"
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
-	cell_type = /obj/item/ammo/power_cell/med_plus_power
+	ammo = /obj/item/ammo/power_cell/med_plus_power
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
@@ -362,21 +304,20 @@
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
+	firemodes = list(list("name" = "stun", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt),\
+	                 list("name" = "kill", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser))
 
-	New()
-		current_projectile = new/datum/projectile/energy_bolt
-		projectiles = list(current_projectile,new/datum/projectile/laser)
-		..()
+
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(current_projectile.type == /datum/projectile/energy_bolt)
+			if(src.firemodes[src.firemode_index]["name"] == "stun")
 				src.item_state = "egun"
 				src.icon_state = "energystun[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/laser)
+			else if (src.firemodes[src.firemode_index]["name"] == "kill")
 				src.item_state = "egun-kill"
 				src.icon_state = "energykill[ratio]"
 				muzzle_flash = "muzzle_flash_laser"
@@ -384,6 +325,7 @@
 				src.item_state = "egun"
 				src.icon_state = "energy[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
+
 	attack_self(var/mob/M)
 		..()
 		update_icon()
@@ -405,23 +347,22 @@
 	contraband = 8
 	two_handed = 1
 	spread_angle = 6
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "stun", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 6, "projectile" = /datum/projectile/energy_bolt/ntburst),\
+	                 list("name" = "kill", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 6, "projectile" = /datum/projectile/laser/ntburst))
 
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/energy_bolt/ntburst
-		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
-		..()
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(current_projectile.type == /datum/projectile/energy_bolt/ntburst)
+			if(src.firemodes[src.firemode_index]["name"] == "stun")
 				src.icon_state = "ntstun[ratio]"
-			else if (current_projectile.type == /datum/projectile/laser/ntburst)
+			else if (src.firemodes[src.firemode_index]["name"] == "kill")
 				src.icon_state = "ntlethal[ratio]"
 			else
 				src.icon_state = "ntneutral[ratio]"
+
 	attack_self()
 		..()
 		update_icon()
@@ -435,33 +376,22 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	ammo = /obj/item/ammo/power_cell/high_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
 	shoot_delay = 6
 	muzzle_flash = "muzzle_flash_elec"
-
-	New()
-		current_projectile = new/datum/projectile/special/spreader/tasershotgunspread
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
-		..()
+	firemodes = list(list("name" = "spread", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 6, "spread_angle" = 6, "projectile" = /datum/projectile/special/spreader/tasershotgunspread),\
+	                 list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 4, "spread_angle" = 6, "projectile" = /datum/projectile/energy_bolt/tasershotgun))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			set_icon_state("tasers[ratio]")
 			return
-
-	attack_self()
-		..()
-		if(istype(current_projectile, /datum/projectile/energy_bolt))
-			shoot_delay = 4
-		else
-			shoot_delay = 6
-
 
 ////////////////////////////////////VUVUV
 /obj/item/gun/energy/vuvuzela_gun
@@ -471,16 +401,13 @@
 	item_state = "bike_horn"
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	is_syndicate = 1
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "BWAAAAAAMP", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt_v))
 
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/energy_bolt_v
-		projectiles = list(current_projectile)
-		..()
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "vuvuzela[ratio]"
 
@@ -497,28 +424,19 @@
 	throw_speed = 8
 	throw_range = 12
 	rechargeable = 0
-	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/claw
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
-
-	New()
-		current_projectile = new/datum/projectile/claw
-		projectiles = list(current_projectile)
-		..()
+	firemodes = list(list("name" = "crab", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/claw))
 
 	attackby(obj/item/b, mob/user)
-		if(istype(b, /obj/item/ammo/power_cell))
+		if(istype(b, /obj/item/ammo))
 			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
 			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
 			return
 		. = ..()
-
-
-
 
 //////////////////////////////////////Disruptor
 /obj/item/gun/energy/disruptor
@@ -528,18 +446,14 @@
 	desc = "Disruptor Blaster - Comes equipped with self-charging powercell."
 	m_amt = 4000
 	force = 6.0
-
-	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/disruptor
-		current_projectile = new/datum/projectile/disruptor
-		projectiles = list(current_projectile,new/datum/projectile/disruptor/burst,new/datum/projectile/disruptor/high)
-		src.update_icon()
-		..()
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/disruptor),\
+	                 list("name" = "burst-fire", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/disruptor),\
+	                 list("name" = "super-disrupt", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/disruptor/high))
 
 	update_icon()
 		..()
-		if (src.cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if (src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.20) * 100
 			src.icon_state = "disruptor[ratio]"
 		return
@@ -550,31 +464,29 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	ammo = /obj/item/ammo/power_cell/high_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
 	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
 	muzzle_flash = "muzzle_flash_wavep"
-
-	New()
-		current_projectile = new/datum/projectile/wavegun
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
-		..()
+	firemodes = list(list("name" = "inverse", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/wavegun),\
+	                 list("name" = "transverse", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/wavegun/transverse),\
+	                 list("name" = "electromagnetoverse", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/wavegun/emp))
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
 	// Flaborized has made even more wavegun sprites!
 	update_icon()
 		..()
-		if (src.cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if (src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(current_projectile.type == /datum/projectile/wavegun)
+			if(src.firemodes[src.firemode_index]["name"] == "inverse")
 				src.icon_state = "wavegun[ratio]"
 				item_state = "wave"
 				muzzle_flash = "muzzle_flash_wavep"
-			else if (current_projectile.type == /datum/projectile/wavegun/transverse)
+			else if (src.firemodes[src.firemode_index]["name"] == "transverse")
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
 				muzzle_flash = "muzzle_flash_waveg"
@@ -597,16 +509,8 @@
 	force = 6.0
 	desc = "I think it stands for Banned For Griefing?"
 	module_research = list("weapons" = 25, "energy" = 25)
-
-	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/bfg
-		projectiles = list(new/datum/projectile/bfg)
-		..()
-
-	update_icon()
-		..()
-		return
+	ammo = /obj/item/ammo/power_cell/high_power
+	firemodes = list(list("name" = "obliterate", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bfg))
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
@@ -632,20 +536,16 @@
 	var/obj/item/our_target = null
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 	module_research = list("weapons" = 3, "energy" = 2, "science" = 10)
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new /datum/projectile/tele_bolt
-		projectiles = list(current_projectile)
-		..()
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "teleport", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/tele_bolt))
 
 	update_icon()
 		..()
-		if (!cell)
+		if (!src.loaded_magazine)
 			icon_state = "teleport"
 			return
 
-		icon_state = "teleport[round((src.cell.charge / src.cell.max_charge), 0.25) * 100]"
+		icon_state = "teleport[round((src.loaded_magazine.charge / src.loaded_magazine.max_charge), 0.25) * 100]"
 		return
 
 	// I overhauled everything down there. Old implementation made the telegun unreliable and crap, to be frank (Convair880).
@@ -750,12 +650,8 @@
 	mats = 0
 	module_research = list("weapons" = 1, "energy" = 5, "science" = 10)
 	muzzle_flash = "muzzle_flash_waveg"
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new /datum/projectile/energy_bolt_antighost
-		projectiles = list(current_projectile)
-		..()
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "bust", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt_antighost))
 
 ///////////////////////////////////////Modular Blasters
 /obj/item/gun/energy/blaster_pistol
@@ -766,7 +662,8 @@
 	w_class = 3.0
 	force = 5.0
 	mats = 0
-
+	ammo = new/obj/item/ammo/power_cell/self_charging/med_power
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/blaster))
 
 	/*
 	var/obj/item/gun_parts/emitter/emitter = null
@@ -788,20 +685,11 @@
 	//handle gun mods at a workbench
 
 
-	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/
-		cell.max_charge = 200
-		cell.charge = 200
-		current_projectile = new /datum/projectile/laser/blaster
-		projectiles = list(current_projectile)
-		..()
-
-
 	update_icon()
 		..()
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		if (src.loaded_magazine)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "pistol[ratio]"
 			return
@@ -814,7 +702,7 @@
 		if(emitter)
 			boutput(usr, "<span class='notice'>[src.emitter.name]</span>")
 		if(cell)
-			boutput(usr, "<span class='notice'>[src.cell.name]</span>")
+			boutput(usr, "<span class='notice'>[src.loaded_magazine.name]</span>")
 		if(back)
 			boutput(usr, "<span class='notice'>[src.back.name]</span>")
 		if(top_rail)
@@ -839,22 +727,15 @@
 	w_class = 3.0
 	force = 7.0
 	mats = 0
-
-
-	New()
-		cell = new/obj/item/ammo/power_cell/self_charging
-		cell.max_charge = 200
-		cell.charge = 200
-		current_projectile = new /datum/projectile/laser/blaster/burst
-		projectiles = list(current_projectile)
-		..()
-
+	ammo = new/obj/item/ammo/power_cell/self_charging/med_power
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/blaster),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = /datum/projectile/laser/blaster))
 
 	update_icon()
 		..()
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		if (src.loaded_magazine)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "smg[ratio]"
 			return
@@ -869,21 +750,18 @@
 	two_handed = 1
 	w_class = 4
 	force = 15
-
+	ammo = new/obj/item/ammo/power_cell/self_charging/big
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/special/spreader/uniform_burst/blaster))
 
 	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/big
-		current_projectile = new /datum/projectile/special/spreader/uniform_burst/blaster
-		projectiles = list(current_projectile)
 		flags |= ONBACK
 		..()
 
-
 	update_icon()
 		..()
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		if (src.loaded_magazine)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "cannon[ratio]"
 			return
@@ -956,17 +834,14 @@
 	force = 5.0
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/owl
-		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
-		..()
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "owl", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/owl),\
+	                 list("name" = "owler", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/owl/owlate))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "ghost[ratio]"
 
@@ -977,17 +852,13 @@
 	force = 5.0
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/owl
-		projectiles = list(current_projectile)
-		..()
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "owl", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/owl))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "ghost[ratio]"
 
@@ -999,13 +870,9 @@
 	force = 0.0
 	icon_state = "frog"
 	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
-
-	New()
-		cell = new/obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
-		current_projectile = new/datum/projectile/bullet/frog
-		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
-		..()
-
+	ammo = /obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
+	firemodes = list(list("name" = ":getin:", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/frog),\
+	                 list("name" = ":getout:", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/frog/getout))
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -1014,26 +881,19 @@
 	force = 5.0
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
+	ammo = new/obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/shrink_beam))
 
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/shrink_beam
-		projectiles = list(current_projectile)
-		..()
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "ghost[ratio]"
 
 /obj/item/gun/energy/shrinkray/growray
 	name = "Grow ray"
-	New()
-		..()
-		current_projectile = new/datum/projectile/shrink_beam/grow
-		projectiles = list(current_projectile)
-
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/shrink_beam/grow))
 
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
@@ -1043,12 +903,8 @@
 	m_amt = 4000
 	force = 0.0
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
-
-	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/bullet/glitch/gun
-		projectiles = list(new/datum/projectile/bullet/glitch/gun)
-		..()
+	ammo = new/obj/item/ammo/power_cell/high_power
+	firemodes = list(list("name" = "src.firemodes\[src.firemode_index\]\[\"name\"\]", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/glitch/gun))
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
@@ -1065,17 +921,13 @@
 	uses_multiple_icon_states = 1
 	force = 5.0
 	muzzle_flash = "muzzle_flash_plaser"
-
-	New()
-		..()
-		cell = new/obj/item/ammo/power_cell/self_charging/big
-		current_projectile = new/datum/projectile/laser/pred
-		projectiles = list(new/datum/projectile/laser/pred)
+	ammo = new/obj/item/ammo/power_cell/self_charging/big
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/pred))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "bullpup[ratio]"
 			return
@@ -1099,9 +951,7 @@
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
-	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/pickpocket/steal
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge
 	is_syndicate = 1
 	silenced = 1
 	hide_attack = 1
@@ -1110,11 +960,9 @@
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
-
-	New()
-		current_projectile = new/datum/projectile/pickpocket/steal
-		projectiles = list(current_projectile, new/datum/projectile/pickpocket/plant, new/datum/projectile/pickpocket/harass)
-		..()
+	firemodes = list(list("name" = "steal", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/pickpocket/steal),\
+	                 list("name" = "plant", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/pickpocket/plant),\
+	                 list("name" = "harass", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/pickpocket/harass))
 
 	get_desc(dist)
 		..()
@@ -1151,10 +999,10 @@
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
+		if (src.firemodes[src.firemode_index]["name"] == "steal" && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
-		if (istype(current_projectile, /datum/projectile/pickpocket/plant) && !heldItem)
+		if (src.firemodes[src.firemode_index]["name"] == "plant" && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -1170,10 +1018,10 @@
 		return ..(M, user)
 
 	shoot(var/target, var/start, var/mob/user)
-		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
+		if (src.firemodes[src.firemode_index]["name"] == "steal" && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
-		if (istype(current_projectile, /datum/projectile/pickpocket/plant) && !heldItem)
+		if (src.firemodes[src.firemode_index]["name"] == "plant" && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -1192,7 +1040,7 @@
 		return ..(target, start, user)
 
 /obj/item/gun/energy/pickpocket/testing // has a beefier cell in it
-	cell = new/obj/item/ammo/power_cell/self_charging/big
+	ammo = /obj/item/ammo/power_cell/self_charging/big
 
 /obj/item/gun/energy/alastor
 	name = "Alastor pattern laser rifle"
@@ -1206,19 +1054,15 @@
 	two_handed = 1
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
-
-	New()
-		cell = new/obj/item/ammo/power_cell/med_power
-		current_projectile = new/datum/projectile/laser/alastor
-		projectiles = list(current_projectile)
-		..()
+	ammo = /obj/item/ammo/power_cell/med_power
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/laser/alastor))
 
 	update_icon()
 		..()
-		if(cell)
+		if(src.loaded_magazine)
 			//Wire: Fix for Division by zero runtime
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+			var/maxCharge = (src.loaded_magazine.max_charge > 0 ? src.loaded_magazine.max_charge : 0)
+			var/ratio = min(1, src.loaded_magazine.charge / maxCharge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "alastor[ratio]"
 			return
@@ -1243,18 +1087,22 @@
 	var/owner_prints = null
 	var/image/indicator_display = null
 	rechargeable = 0
-	can_swap_cell = 0
+	fixed_mag = TRUE
 	muzzle_flash = "muzzle_flash_elec"
+	ammo = new/obj/item/ammo/power_cell/self_charging/lawbringer
+	firemode_index = "detain" // assoc'd list of assoc'd lists so the yell-a-mode thing works properly
+	firemodes = list("detain" = list("name" = "detain", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/aoe),\
+	                 "execute" = list("name" = "execute", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/revolver_38/lawbringer),\
+	                 "smokeshot" = list("name" = "smokeshot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/smoke/lawbringer),\
+	                 "hotshot" = list("name" = "hotshot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/flare/lawbringer),\
+	                 "knockout" = list("name" = "knockout", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/tranq_dart/lawbringer),\
+	                 "bigshot" = list("name" = "bigshot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/aex/lawbringer),\
+	                 "clownshot" = list("name" = "clownshot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/bullet/clownshot),\
+	                 "pulse" = list("name" = "pulse", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/pulse))
 
 	New(var/mob/M)
-		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
-		current_projectile = new/datum/projectile/energy_bolt/aoe
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
-		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
-
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
-		asign_name(M)
-
+		assign_name(M)
 		..()
 
 	disposing()
@@ -1264,9 +1112,15 @@
 	attack_hand(mob/user as mob)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
-			asign_name(user)
+			assign_name(user)
 		..()
 
+	set_firemode(var/mob/user)
+		src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
+		src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
+		src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
+		src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
+		src.current_projectile = new src.firemodes[src.firemode_index]["projectile"]
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
@@ -1274,11 +1128,11 @@
 		src.add_fingerprint(user)
 		if (!owner_prints)
 			boutput(user, "<span class='alert'>[src] has accepted your fingerprint ID. You are its owner!</span>")
-			asign_name(user)
+			assign_name(user)
 		else
 			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
 
-	proc/asign_name(var/mob/M)
+	proc/assign_name(var/mob/M)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
@@ -1308,9 +1162,11 @@
 			are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
-		if(!src.projectiles && !src.projectiles.len > 1)
+		if(!src.firemodes || !src.firemodes.len)
 			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
-			current_projectile = new/datum/projectile/energy_bolt/aoe
+			src.firemodes = initial(src.firemodes)
+			src.firemode_index = "detain"
+			src.set_firemode()
 			item_state = "lawg-detain"
 			M.update_inhands()
 			update_icon()
@@ -1320,46 +1176,40 @@
 		if (fingerprints_can_shoot(M))
 			switch(text)
 				if ("detain")
-					current_projectile = projectiles["detain"]
+					src.firemode_index = "detain"
 					item_state = "lawg-detain"
 					playsound(M, "sound/vox/detain.ogg", 50)
 				if ("execute")
-					current_projectile = projectiles["execute"]
-					current_projectile.cost = 30
+					src.firemode_index = "execute"
 					item_state = "lawg-execute"
 					playsound(M, "sound/vox/exterminate.ogg", 50)
 				if ("smokeshot")
-					current_projectile = projectiles["smokeshot"]
-					current_projectile.cost = 50
+					src.firemode_index = "smokeshot"
 					item_state = "lawg-smokeshot"
 					playsound(M, "sound/vox/smoke.ogg", 50)
 				if ("knockout")
-					current_projectile = projectiles["knockout"]
-					current_projectile.cost = 60
+					src.firemode_index = "knockout"
 					item_state = "lawg-knockout"
 					playsound(M, "sound/vox/sleep.ogg", 50)
 				if ("hotshot")
-					current_projectile = projectiles["hotshot"]
-					current_projectile.cost = 60
+					src.firemode_index = "hotshot"
 					item_state = "lawg-hotshot"
 					playsound(M, "sound/vox/hot.ogg", 50)
 				if ("bigshot","highexplosive","he")
-					current_projectile = projectiles["bigshot"]
-					current_projectile.cost = 170
+					src.firemode_index = "bigshot"
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
 					sleep(0.4 SECONDS)
 					playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
-					current_projectile = projectiles["clownshot"]
+					src.firemode_index = "clownshot"
 					item_state = "lawg-clownshot"
 					playsound(M, "sound/vox/clown.ogg", 30)
 				if ("pulse")
-					current_projectile = projectiles["pulse"]
+					src.firemode_index = "pulse"
 					item_state = "lawg-pulse"
 					playsound(M, "sound/vox/push.ogg", 50)
-
-					/datum/projectile/energy_bolt/pulse
+			src.set_firemode()
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","bigshot","highexplosive","he","clownshot", "pulse")
@@ -1396,36 +1246,36 @@
 		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			//if we're showing zero charge, don't do any overlay, since the main image shows an empty gun anyway
 			if (ratio == 0)
 				return
 			indicator_display.icon_state = "[old ? "old-" : ""]lawbringer-d[ratio]"
 
-			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
+			if(src.firemode_index == "detain")			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/bullet/revolver_38/lb)			//execute - cyan
+			else if (src.firemode_index == "execute")			//execute - cyan
 				indicator_display.color = "#00FFFF"
 				muzzle_flash = "muzzle_flash"
-			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
+			else if (src.firemode_index == "smoke")			//smokeshot - dark-blue
 				indicator_display.color = "#0000FF"
 				muzzle_flash = "muzzle_flash"
-			else if (current_projectile.type == /datum/projectile/bullet/tranq_dart/law_giver)	//knockout - green
+			else if (src.firemode_index == "knockout")	//knockout - green
 				indicator_display.color = "#008000"
 				muzzle_flash = null
-			else if (current_projectile.type == /datum/projectile/bullet/flare)			//hotshot - red
+			else if (src.firemode_index == "hotshot")			//hotshot - red
 				indicator_display.color = "#FF0000"
 				muzzle_flash = null
-			else if (current_projectile.type == /datum/projectile/bullet/aex/lawbringer)	//bigshot - purple
+			else if (src.firemode_index == "bigshot")	//bigshot - purple
 				indicator_display.color = "#551A8B"
 				muzzle_flash = null
-			else if (current_projectile.type == /datum/projectile/bullet/clownshot)		//clownshot - pink
+			else if (src.firemode_index == "clownshot")		//clownshot - pink
 				indicator_display.color = "#FFC0CB"
 				muzzle_flash = null
-			else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
+			else if (src.firemode_index == "pulse")		//pulse - pale-blue
 				indicator_display.color = "#EEEEFF"
 				muzzle_flash = "muzzle_flash_bluezap"
 			else
@@ -1461,7 +1311,7 @@
 			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
 			// 	return
 
-			if (current_projectile.type == /datum/projectile/bullet/flare)
+			if (src.firemode_index == "hotshot")
 				shoot_fire_hotspots(target, start, user)
 		return ..(target, start, user)
 
@@ -1504,17 +1354,13 @@
 	two_handed = 1
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_bluezap"
-
-	New()
-		..()
-		cell = new/obj/item/ammo/power_cell/high_power //300 PU
-		current_projectile = new/datum/projectile/energy_bolt/pulse //uses 35PU per shot, so 8 shots
-		projectiles = list(new/datum/projectile/energy_bolt/pulse)
+	ammo = /obj/item/ammo/power_cell/high_power //300 PU
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/pulse))
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "pulse_rifle[ratio]"
 			return
@@ -1531,18 +1377,12 @@
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
-	cell = new/obj/item/ammo/power_cell/self_charging/slowcharge
-	current_projectile = new/datum/projectile/special/spreader/quadwasp
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge
 	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
 	module_research = list("science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10, "hydroponics" = 10) //deprecated in current code
-
-	New()
-		current_projectile = new/datum/projectile/special/spreader/quadwasp
-		projectiles = list(current_projectile)
-		..()
+	firemodes = list(list("name" = "wasp", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/special/spreader/quadwasp))
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
@@ -1555,9 +1395,5 @@
 	force = 25
 	two_handed = 1
 	can_dual_wield = 0
-
-	New()
-		..()
-		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
-		current_projectile = new/datum/projectile/special/howitzer
-		projectiles = list(new/datum/projectile/special/howitzer )
+	ammo = /obj/item/ammo/power_cell/self_charging/howitzer
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/special/howitzer))

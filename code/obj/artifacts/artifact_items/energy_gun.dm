@@ -9,26 +9,29 @@
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
+	var/art_projectiles = list()
 
 	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
+		src.firemodes = AS.artifact_firemodes
+		src.art_projectiles = AS.artifact_bullets
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		// The other three are normal for energy gun setup, so proceed as usual i guess
-		qdel(cell)
-		cell = null
+		qdel(src.loaded_magazine)
+		src.loaded_magazine = null
 
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
 			var/datum/artifact/A = src.artifact
-			cell = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
+			src.loaded_magazine = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
 			src.ArtifactDevelopFault(15)
+			src.firemode_index = 1
+			src.set_firemode()
+			src.loaded_magazine.max_charge = max(src.loaded_magazine.max_charge, src.current_projectile.cost * src.firemodes[1]["burst_count"])
 
-			current_projectile = AS.bullet
-			projectiles = list(src.current_projectile)
-			cell.max_charge = max(cell.max_charge, current_projectile.cost)
 
 		src.setItemSpecial(null)
 
@@ -47,6 +50,19 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
+	set_firemode(mob/user)
+		src.firemode_index = rand(1, src.firemodes.len)
+		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
+			src.firemode_index = 1
+		src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
+		src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
+		src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
+		src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
+		src.current_projectile = new src.art_projectiles[src.firemode_index]
+		var/datum/artifact/A = src.artifact
+		if(A.activated && user)
+			boutput(user, "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>")
+
 	process_ammo(var/mob/user)
 		if(isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -56,10 +72,8 @@
 					return 1
 			return 0
 		else
-			if(src.current_projectile)
-				if(src.cell)
-					if(src.cell.use(src.current_projectile.cost))
-						return 1
+			if(src.current_projectile && src.loaded_magazine && src.loaded_magazine.use(src.current_projectile.cost))
+				return 1
 			return 0
 
 	shoot(var/target,var/start,var/mob/user)
@@ -88,6 +102,8 @@
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/integrity = 100
 	var/integrity_loss = 5
+	var/list/artifact_firemodes
+	var/list/artifact_bullets
 	var/datum/projectile/artifact/bullet = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
@@ -95,13 +111,27 @@
 
 	New()
 		..()
-		bullet = new/datum/projectile/artifact
-		bullet.randomise()
-		// artifact tweak buff, people said guns were useless compared to their cells
-		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
-		bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
-		bullet.dissipation_rate = rand(1,bullet.power)
-		bullet.cost = rand(35,100) // randomise puts it at 50-150
+		var/bullet_num = rand(1,3)
+		for(var/i in 1 to bullet_num)
+			var/burst_count = rand(1, 10)
+			var/refire_delay = rand(0.1, 10)
+			var/shoot_delay = rand(0.1, 10)
+			var/spread_angle = rand(0, 180)
+			var/number_mult = rand(2, 20)
+			var/mode_name = list(" lights", " things", " uncanny feelings")
+
+			var/datum/projectile/artifact/artbullet = new/datum/projectile/artifact
+			artbullet = new/datum/projectile/artifact
+			artbullet.randomise()
+			// artifact tweak buff, people said guns were useless compared to their cells
+			// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
+			artbullet.power = rand(15,35) / burst_count // randomise puts it between 2 and 50, let's make it less variable
+			artbullet.dissipation_rate = rand(1,artbullet.power)
+			artbullet.cost = rand(35,100) / burst_count // randomise puts it at 50-150
+			src.artifact_bullets[i] = artbullet
+
+			src.artifact_firemodes[i] = list("name" = "[burst_count * number_mult][mode_name]", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = i)
+
 
 		integrity = rand(50, 100)
 		integrity_loss = rand(1, 3) // was rand(1,7)

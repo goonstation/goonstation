@@ -62,23 +62,18 @@
 	item_state = "incapacitor"
 	force = 1.0
 	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
-	cell = new/obj/item/ammo/power_cell/self_charging
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
+	fixed_mag = TRUE
 	custom_cell_max_capacity = 100
-
-/obj/item/gun/energy/flock/New()
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
-	projectiles = list(current_projectile)
-	..()
+	firemodes = list(list("name" = "si.ng.le.sh.ot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/flockdrone))
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
 	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 		special_desc += "<br><span class='bold'>ID:</span> Incapacitor"
-		special_desc += "<br><span class='bold'>Energy:</span> [src.cell.charge]"
-		special_desc += "<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]"
+		special_desc += "<br><span class='bold'>Energy:</span> [src.loaded_magazine.charge]"
+		special_desc += "<br><span class='bold'>Max Energy:</span> [src.loaded_magazine.max_charge]"
 		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else

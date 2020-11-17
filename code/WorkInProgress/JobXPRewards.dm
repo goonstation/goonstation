@@ -239,8 +239,8 @@ mob/verb/checkrewards()
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/E = O
-			if (E.cell)
-				charge = E.cell.charge
+			if (E.loaded_magazine)
+				charge = E.loaded_magazine.charge
 			C.mob.remove_item(E)
 			found = 1
 			qdel(E)
@@ -259,7 +259,7 @@ mob/verb/checkrewards()
 			return
 		//Don't let em get get a charged power cell for a spent one
 		if (charge < 200)
-			LG.cell.charge = charge
+			LG.loaded_magazine.charge = charge
 
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)

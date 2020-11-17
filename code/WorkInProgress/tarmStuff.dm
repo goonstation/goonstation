@@ -11,15 +11,17 @@
 	uses_multiple_icon_states = 1
 	force = 15.0
 	contraband = 8
-	caliber = 0.185
-	max_ammo_capacity = 45
+	caliber = CALIBER_CASELESS_RIFLE
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
+	ammo = /obj/item/ammo/bullets/g11
+	accepted_mag = ACCEPT_MAGAZINE
+	firemodes = list(list("name" = "three-round burst", "burst_count" = 3, "refire_delay" = 0.4 DECI SECONDS, "shoot_delay" = 0.4, "spread_angle" = 0, "projectile" = null))
 
 	New()
 		current_projectile = new/datum/projectile/bullet/g11
-		ammo = new/obj/item/ammo/bullets/g11
+
 		. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -41,35 +43,36 @@
 	sname = "\improper Manticore rounds" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "\improper Manticore magazine"
 	desc = "The side of the magazine is stamped with \"Anderson Para-Munitions\""
-	ammo_type = new/datum/projectile/bullet/g11
+	ammo_type = /datum/projectile/bullet/g11
 	icon_state = "caseless"
 	amount_left = 45.0
 	max_amount = 45.0
-	caliber = 0.185
+	caliber = CALIBER_CASELESS_RIFLE
+	mag_type = AMMO_MAGAZINE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	icon_empty = "caseless-empty"
 
 	blast
 		icon_state = "caseless_grey"
-		ammo_type = new/datum/projectile/bullet/g11/blast
+		ammo_type = /datum/projectile/bullet/g11/blast
 
 	void
 		icon_state = "caseless_purple"
-		ammo_type = new/datum/projectile/bullet/g11/void
+		ammo_type = /datum/projectile/bullet/g11/void
 
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
+	ammo_ID = "manticore_bullet"
+	ammo_name = "\improper Manticore round"
 	cost = 3
 	power = 60
 	ks_ratio = 1.0
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 3
-	shot_delay = 0.4
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
-	caliber = 0.185
+	caliber = CALIBER_CASELESS_RIFLE
 	dissipation_delay = 10
 	dissipation_rate = 5
 	icon_turf_hit = "bhole-small"
@@ -165,6 +168,11 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
+	caliber = CALIBER_PISTOL
+	accepted_mag = ACCEPT_MAGAZINE
+	ammo = /obj/item/ammo/bullets/bullet_9mm
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
+
 	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
@@ -176,10 +184,13 @@
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	silenced = 1
-	max_ammo_capacity = 30
+	caliber = CALIBER_PISTOL
+	accepted_mag = ACCEPT_MAGAZINE
+	ammo = /obj/item/ammo/bullets/bullet_9mm/smg
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
+
 	New()
 		..()
-		ammo.amount_left = 30
 		AddComponent(/datum/component/holdertargeting/smartgun, 3)
 
 /datum/component/holdertargeting/smartgun
@@ -258,7 +269,7 @@
 		return round(K.ammo.amount_left * K.current_projectile.cost)
 	else if(istype(G, /obj/item/gun/energy))
 		var/obj/item/gun/energy/E = G
-		return round(E.cell.charge * E.current_projectile.cost)
+		return round(E.loaded_magazine.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 
 /obj/item/gun/kinetic/gyrojet
@@ -266,14 +277,12 @@
 	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
 	item_state = "gyrojet"
-	caliber = 0.512
-	max_ammo_capacity = 6
+	caliber = CALIBER_GYROJET
 	has_empty_state = 1
+	ammo = /obj/item/ammo/bullets/gyrojet
+	accepted_mag = ACCEPT_MAGAZINE
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
-	New()
-		ammo = new/obj/item/ammo/bullets/gyrojet
-		current_projectile = new/datum/projectile/bullet/gyrojet
-		. = ..()
 
 /obj/item/ammo/bullets/gyrojet
 	sname = "13mm Gyrojet"
@@ -281,17 +290,20 @@
 	icon_state = "pistol_magazine"
 	amount_left = 6.0
 	max_amount = 6.0
-	ammo_type = new/datum/projectile/bullet/gyrojet
-	caliber = 0.512
+	ammo_type = /datum/projectile/bullet/gyrojet
+	mag_type = AMMO_MAGAZINE
+	caliber = CALIBER_GYROJET
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
+	ammo_ID = "gyrojet_bullet"
+	ammo_name = "gyrojet bullet"
 	projectile_speed = 5
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
 	precalculated = 0
-	caliber = 0.512
+	caliber = CALIBER_GYROJET
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
@@ -315,22 +327,17 @@
 	force = 18.0 //mmm, pistol whip
 	throwforce = 50 //HEAVY pistol
 	auto_eject = 1
-	max_ammo_capacity = 7
-	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	caliber = list(CALIBER_PISTOL_MAGNUM, CALIBER_DERRINGER, CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
+	ammo = /obj/item/ammo/bullets/deagle50cal
+	accepted_mag = ACCEPT_MAGAZINE
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
-	New()
-		current_projectile = new/datum/projectile/bullet/deagle50cal
-		ammo = new/obj/item/ammo/bullets/deagle50cal
-		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
-		New()
-			. = ..()
-			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
-			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+		ammo = /obj/item/ammo/bullets/deagle50cal/decapitation
 
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal
@@ -339,27 +346,32 @@
 	icon_state = "pistol_magazine"
 	amount_left = 7.0
 	max_amount = 7.0
-	ammo_type = new/datum/projectile/bullet/deagle50cal
-	caliber = 0.50
+	ammo_type = /datum/projectile/bullet/deagle50cal
+	caliber = CALIBER_PISTOL_MAGNUM
+	mag_type = AMMO_MAGAZINE
 
 	//gimmick deagle ammo that decapitates
 	decapitation
-		ammo_type = new/datum/projectile/bullet/deagle50cal/decapitation
+		ammo_type = /datum/projectile/bullet/deagle50cal/decapitation
 
 /datum/projectile/bullet/deagle50cal
 	name = "bullet"
+	ammo_ID = "bullet_deagle_50"
+	ammo_name = ".50 pistol bullet"
 	power = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	caliber = 0.50
+	caliber = CALIBER_PISTOL_MAGNUM
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
 	//gimmick deagle ammo that decapitates
 	decapitation
+		ammo_ID = "bullet_deagle_50_decap"
+		ammo_name = ".50 guillotine bullet"
 		on_hit(atom/hit, angle, obj/projectile/O)
 			. = ..()
 			if(ishuman(hit))

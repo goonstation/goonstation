@@ -25,52 +25,57 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	examine()
 		. = ..()
-		if (src.ammo && (src.ammo.amount_left > 0))
-			var/datum/projectile/ammo_type = src.ammo
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
-		else
-			. += "There are 0 bullets left!"
-		if (current_projectile)
-			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
+		if (src?.loaded_magazine)
+			if(src.loaded_magazine.is_null_mag)
+				. += "There isn't a magazine in the gun!"
+			else
+				var/datum/projectile/ammo_type = src.loaded_magazine.mag_contents[1]
+				if(src.loaded_magazine.mag_contents.len == 1)
+					. += "There is 1 [ammo_type.ammo_name] left!"
+				else if(src.loaded_magazine.mag_contents.len > 1)
+					. += "There are [src.loaded_magazine.mag_contents.len] [ammo_type.ammo_name_plural ? ammo_type.ammo_name_plural : (ammo_type.ammo_name + "s")] left!"
+				else
+					. += "There aren't any bullets left!"
+		if (src.firemodes && src.firemode_index)
+			. += "Each shot will currently use [src.firemodes[src.firemode_index]["burst_count"]] bullets!"
 		else
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
-		if (src.ammo)
-			inventory_counter.update_number(src.ammo.amount_left)
+		if (src.loaded_magazine)
+			inventory_counter.update_number(src.loaded_magazine.mag_contents.len)
 		else
 			inventory_counter.update_text("-")
 
 		if(src.has_empty_state)
-			if (src.ammo.amount_left < 1 && !findtext(src.icon_state, "-empty")) //sanity check
+			if (src.loaded_magazine.mag_contents.len < 1 && !findtext(src.icon_state, "-empty")) //sanity check
 				src.icon_state = "[src.icon_state]-empty"
 			else
 				src.icon_state = replacetext(src.icon_state, "-empty", "")
 		return 0
 
 	canshoot()
-		if(src.ammo && src.current_projectile)
-			if(src.ammo:amount_left >= src.current_projectile:cost)
-				return 1
+		if(src.loaded_magazine.mag_contents.len >= 1)
+			return 1
 		return 0
 
-	process_ammo(var/mob/user)
-		if(src.ammo && src.current_projectile)
-			if(src.ammo.use(current_projectile.cost))
-				return 1
-		boutput(user, "<span class='alert'>*click* *click*</span>")
-		if (!src.silenced)
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-		return 0
+	// process_ammo(var/mob/user)
+	// 	if(src.ammo && src.current_projectile)
+	// 		if(src.ammo.use(current_projectile.cost))
+	// 			return 1
+	// 	boutput(user, "<span class='alert'>*click* *click*</span>")
+	// 	if (!src.silenced)
+	// 		playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+	// 	return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (istype(O, /obj/item/ammo/bullets) && allowDropReload)
 			attackby(O, user)
 		return ..()
 
-	attackby(obj/item/ammo/bullets/b as obj, mob/user as mob)
-		if(istype(b, /obj/item/ammo/bullets))
-			switch (src.ammo.loadammo(b,src))
+	attackby(obj/item/ammo/b as obj, mob/user as mob)
+		if(istype(b, /obj/item/ammo/))
+			switch (src.loaded_magazine.loadammo(b,src))
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
@@ -84,7 +89,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					user.show_text("[src] is full!", "red")
 					return
 				if(4)
-					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
+					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.loaded_magazine.mag_contents.len] rounds remaining.</span>")
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
 				if(5)
@@ -116,7 +121,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.sanitycheck(0, 1) == 0)
 				user.show_text("You can't unload this gun.", "red")
 				return
-			if (src.ammo.amount_left <= 0)
+			if (src.loaded_magazine.mag_contents.len <= 0)
 				// The gun may have been fired; eject casings if so.
 				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
 					if (src.sanitycheck(1, 0) == 0)
@@ -132,12 +137,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 
 			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
+			var/obj/item/ammo/bullets/ammoHand = new src.loaded_magazine.type
+			ammoHand.amount_left = src.loaded_magazine.mag_contents.len
+			ammoHand.name = src.loaded_magazine.name
+			ammoHand.icon = src.loaded_magazine.icon
+			ammoHand.icon_state = src.loaded_magazine.icon_state
+			ammoHand.ammo_type = src.loaded_magazine.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
 			ammoHand.update_icon()
 			user.put_in_hand_or_drop(ammoHand)
@@ -147,7 +152,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.update_icon()
-			src.ammo.amount_left = 0
+			src.loaded_magazine.mag_contents.len = 0
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -193,31 +198,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
 		..()
-
-	proc/ejectcasings()
-		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-			var/turf/T = get_turf(src)
-			if(T)
-				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
-				var/obj/item/casing/C = null
-				while (src.casings_to_eject > 0)
-					C = new src.current_projectile.casing(T)
-					C.forensic_ID = src.forensic_ID
-					C.set_loc(T)
-					src.casings_to_eject--
-		return
-
-	// Don't set this too high. Absurdly large reloads and item spawning can cause a lot of lag. (Convair880).
-	proc/sanitycheck(var/casings = 0, var/ammo = 1)
-		if (casings && (src.casings_to_eject > 30 || src.current_projectile.shot_number > 30))
-			logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-			if (src.casings_to_eject > 0)
-				src.casings_to_eject = 0
-			return 0
-		if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
-			logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
-			return 0
-		return 1
 
 /obj/item/casing
 	name = "bullet casing"
@@ -330,7 +310,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "heavy"
 	force = 5
 	caliber = CALIBER_MINIGUN
-	max_ammo_capacity = 100
+	accepted_mag = ACCEPT_BOX
 	auto_eject = 1
 	ammo = /obj/item/ammo/bullets/minigun
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -343,6 +323,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	two_handed = 1
 	w_class = 4
+	firemodes = list(list("name" = "low-speed", "burst_count" = 10, "refire_delay" = 1.5 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null),\
+	                 list("name" = "high-speed", "burst_count" = 50, "refire_delay" = 0.2 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 90, "projectile" = null))
+
 
 	setupProperties()
 		..()
@@ -355,7 +338,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "revolver"
 	force = 8.0
 	caliber = list(CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM) // Just like in RL (Convair880).
-	max_ammo_capacity = 7
 	ammo = /obj/item/ammo/bullets/internal/revolver/magnum
 
 /obj/item/gun/kinetic/revolver/vr
@@ -367,7 +349,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "derringer"
 	force = 5.0
 	caliber = CALIBER_DERRINGER
-	max_ammo_capacity = 2
 	w_class = 2
 	muzzle_flash = null
 	ammo = /obj/item/ammo/bullets/internal/derringer
@@ -387,8 +368,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
 	force = 5.0
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL_SMALL
-	max_ammo_capacity = 4
 	auto_eject = 1
 	w_class = 2
 	muzzle_flash = null
@@ -403,7 +384,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2.0
 	force = 2.0
 	caliber = CALIBER_REVOLVER
-	max_ammo_capacity = 7
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
@@ -414,9 +394,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "colt_saa"
 	w_class = 3.0
 	force = 5.0
+	accepted_mag = ACCEPT_PILE // cus who doesnt love to reload during a battle?
 	caliber = CALIBER_REVOLVER_OLDTIMEY
 	spread_angle = 1
-	max_ammo_capacity = 7
 	var/hammer_cocked = 0
 	ammo = /obj/item/ammo/bullets/internal/revolver/oldtimey
 
@@ -425,6 +405,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
 		force = 2.0
+		accepted_mag = ACCEPT_PILE
 		caliber = CALIBER_REVOLVER
 		ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
@@ -458,36 +439,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL
-	max_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
 	gildable = 1
+	ammo = /obj/item/ammo/bullets/nine_mm_NATO
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+
 
 	New()
 		if (prob(70))
 			icon_state = "glocktan"
 			item_state = "glocktan"
-
-		if(throw_return)
-			ammo = /obj/item/ammo/bullets/nine_mm_NATO/boomerang
-		else
-			ammo = /obj/item/ammo/bullets/nine_mm_NATO
-
-		current_projectile = new/datum/projectile/bullet/nine_mm_NATO
-
-		if(throw_return)
-			projectiles = list(current_projectile)
-		else
-			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
-
-	attack_self(mob/user as mob)
-		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 5
-		else
-			spread_angle = 0
 
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
@@ -497,6 +463,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_speed = 1
 	throw_return = 1
 	var/prob_clonk = 0
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
+
 
 	throw_begin(atom/target)
 		playsound(src.loc, "rustle", 50, 1)
@@ -507,7 +475,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
-				src.shoot_point_blank(user, user)
+				src.shoot_manager(user, user)
 				user.force_laydown_standup()
 			else
 				src.attack_hand(usr)
@@ -518,7 +486,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/mob/living/carbon/human/user = usr
 				if(istype(user.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
-					src.shoot_point_blank(M, M)
+					src.shoot_manager(user, user)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
 					src.silenced = initial(src.silenced)
 
@@ -537,7 +505,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 18.0
 	contraband = 7
 	caliber = CALIBER_SHOTGUN
-	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
 	ammo = /obj/item/ammo/bullets/internal/shotgun
@@ -580,7 +547,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 15.0
 	contraband = 5
 	caliber = CALIBER_SHOTGUN
-	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -596,13 +562,16 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ak47"
 	force = 30.0
 	contraband = 8
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_HEAVY_RIFLE
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/ak47
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
@@ -612,8 +581,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ohr"
 	force = 10
 	contraband = 8
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_HEAVY_RIFLE
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -629,8 +598,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "tranq"
 	force = 10
 	//contraband = 8
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_HEAVY_RIFLE
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -644,10 +613,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 3
 	contraband = 6
 	caliber = CALIBER_ANY // use any ammo at all BA HA HA HA HA
-	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
 	ammo = /obj/item/ammo/bullets/internal/zipgun
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
+	                 list("name" = "double-shot", "burst_count" = 2, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+
 
 #if ASS_JAM
 	New()
@@ -663,7 +634,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			var/turf/T = get_turf(src)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
+		if(src.current_projectile?.power)
 			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
@@ -683,8 +654,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	silenced = 1
 	force = 3
 	contraband = 4
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL_SMALL
-	max_ammo_capacity = 10
 	auto_eject = 1
 	hide_attack = 1
 	muzzle_flash = null
@@ -697,7 +668,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "railgun"
 	force = 10.0
 	contraband = 0
-	max_ammo_capacity = 200
 	ammo = /obj/item/ammo/bullets/vbullet
 
 	shoot(var/target,var/start ,var/mob/user)
@@ -717,7 +687,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5.0
 	contraband = 2
 	caliber = CALIBER_SHOTGUN
-	max_ammo_capacity = 1
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/internal/shotgun/flare
 
@@ -729,13 +698,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5.0
 	contraband = 7
 	caliber = CALIBER_GRENADE
-	max_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = /obj/item/ammo/bullets/internal/launcher/smoke
+	ammo = /obj/item/ammo/bullets/internal/launcher/
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.ammo.amount_left > 0)
+			if(src.loaded_magazine.mag_contents.len > 0)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
@@ -764,7 +732,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5
 	contraband = 8
 	caliber = CALIBER_RPG
-	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
@@ -773,7 +740,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	update_icon()
 		..()
-		if (src.loaded_magazine.len < 1)
+		if (src.loaded_magazine.mag_contents.len < 1)
 			src.item_state = "rpg7_empty"
 		else
 			src.item_state = "rpg7"
@@ -793,14 +760,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 10.0
 	contraband = 6
 	caliber = CALIBER_ROD
-	max_ammo_capacity = 2
 	ammo = /obj/item/ammo/bullets/rod
 
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
 	name = "Airzooka"
 	desc = "The new double action air projection device from Donk Co!"
 	icon_state = "airzooka"
-	max_ammo_capacity = 10
 	caliber = CALIBER_TRASHBAG // I rolled a dice
 	muzzle_flash = "muzzle_flash_launch"
 	ammo = /obj/item/ammo/bullets/airzooka
@@ -812,8 +777,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL
-	max_ammo_capacity = 30
 	auto_eject = 1
 
 	continuous = 1
@@ -830,8 +795,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL
-	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/bullet_9mm
@@ -844,8 +809,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL
-	max_ammo_capacity = 30
 	auto_eject = 0
 	hide_attack = 1
 	muzzle_flash = null
@@ -860,11 +825,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5
 	contraband = 7
 	caliber = CALIBER_SHOTGUN
-	max_ammo_capacity = 8
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
-	ammo = /obj/item/ammo/bullets/internal/shotgun/buckshot_burst
+	ammo = /obj/item/ammo/bullets/internal/shotgun
 
 // assault
 /obj/item/gun/kinetic/assault_rifle
@@ -875,8 +839,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "assault_rifle"
 	force = 20.0
 	contraband = 8
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_ASSAULT_RIFLE
-	max_ammo_capacity = 30
 	auto_eject = 1
 	object_flags = NO_ARM_ATTACH
 
@@ -896,8 +860,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
+	accepted_mag = (ACCEPT_BOX | ACCEPT_MAGAZINE)
 	caliber = CALIBER_HEAVY_RIFLE
-	max_ammo_capacity = 100
 	auto_eject = 1
 	burst_count = 8
 
@@ -914,6 +878,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	ammo = /obj/item/ammo/bullets/lmg
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null),\
+	                 list("name" = "fully automatic", "burst_count" = 8, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+
 
 	New()
 		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
@@ -933,7 +900,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 10
 	caliber = CALIBER_CANNON
-	max_ammo_capacity = 1
 	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
@@ -966,7 +932,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = 5.0
 	contraband = 7
 	caliber = CALIBER_GRENADE
-	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
 	object_flags = NO_ARM_ATTACH
@@ -975,7 +940,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.ammo.amount_left > 0)
+			if(src.loaded_magazine.mag_contents.len > 0)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
@@ -998,7 +963,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "slamgun-ready-world"
 	force = 9
 	caliber = CALIBER_SHOTGUN
-	max_ammo_capacity = 1
 	auto_eject = 0
 	spread_angle = 10 // sorry, no sniping with slamguns
 
@@ -1010,11 +974,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New()
 		src.loaded_magazine = new src.ammo("max_amount" = 1)
+		. = ..()
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
 			w_class = 3
-			if (src.loaded_magazine.len > 0 || src.casings_to_eject > 0)
+			if (src.loaded_magazine.mag_contents.len > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
@@ -1047,7 +1012,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.item_state = "slamgun-ready-world"
 		else
 			src.item_state = "slamgun-open-world"
-			if (src.loaded_magazine.len > 0 || src.casings_to_eject > 0)
+			if (src.loaded_magazine.mag_contents.len > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
@@ -1062,7 +1027,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.sanitycheck(0, 1) == 0)
 				usr.show_text("You can't unload this gun.", "red")
 				return
-			if (src.loaded_magazine.len <= 0)
+			if (src.loaded_magazine.mag_contents.len <= 0)
 				if ((src.casings_to_eject > 0))
 					if (src.sanitycheck(1, 0) == 0)
 						src.casings_to_eject = 0
@@ -1078,12 +1043,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 
 			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
+			var/obj/item/ammo/bullets/ammoHand = new src.loaded_magazine.type
+			ammoHand.amount_left = src.loaded_magazine.mag_contents.len
+			ammoHand.name = src.loaded_magazine.name
+			ammoHand.icon = src.loaded_magazine.icon
+			ammoHand.icon_state = src.loaded_magazine.icon_state
+			ammoHand.ammo_type = src.loaded_magazine.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
 			ammoHand.update_icon()
 			usr.put_in_hand_or_drop(ammoHand)
@@ -1092,7 +1057,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.ejectcasings()
 			src.casings_to_eject = 0
 
-			src.ammo.amount_left = 0
+			src.loaded_magazine.mag_contents.len = 0
 			src.update_icon()
 
 			src.add_fingerprint(usr)
@@ -1106,7 +1071,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
 			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src]!</span>")
 			return
-		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
+		if (istype(b, /obj/item/ammo/bullets) && (src.loaded_magazine.mag_contents.len > 0 || src.casings_to_eject > 0))
 			boutput(user, "<span class='alert'>The [src] already has a shell inside! You'll have to unload the [src]!</span>")
 			return
 		..()
@@ -1120,8 +1085,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	caliber = CALIBER_HEAVY_RIFLE
-	max_ammo_capacity = 4
+	accepted_mag = ACCEPT_MAGAZINE
+	caliber = CALIBER_HEAVY_RIFLE // technically can accept LMG rounds if you really wanted to
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -1256,7 +1221,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot()
 		if(src.loaded_magazine.mag_contents.len > 0 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
-			var/check_this_bullet = src.loaded_magazine.mag_contents[1]
+			var/datum/projectile/check_this_bullet = src.loaded_magazine.mag_contents[1]
 			failure_chance = max(10,min(33,round(check_this_bullet.caliber * (check_this_bullet.power/2))))
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
@@ -1279,11 +1244,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_range = 4
 	force = 5
 	caliber = CALIBER_ROCKET //Based on APILAS
-	max_ammo_capacity = 1
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = new /obj/item/ammo/bullets/internal/rpg/antisingularity
+	ammo = /obj/item/ammo/bullets/internal/launcher/antisingularity
 
 	setupProperties()
 		..()
@@ -1296,7 +1260,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gungun"
 	w_class = 3
 	caliber = CALIBER_WHOLE_DERRINGER //fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
-	max_ammo_capacity = 6 //6 guns
 	force = 5
 	ammo = new /obj/item/ammo/bullets/internal/launcher/multi/derringers
 
@@ -1309,7 +1272,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	color = "#ff7b00"
 	force = 5
 	caliber = CALIBER_CAT
-	max_ammo_capacity = 1
 	auto_eject = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	spread_angle = 0
@@ -1346,8 +1308,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = 8.0
+	accepted_mag = ACCEPT_MAGAZINE
 	caliber = CALIBER_PISTOL
-	max_ammo_capacity = 30
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY

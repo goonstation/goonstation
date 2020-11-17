@@ -31,10 +31,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/suppress_fire_msg = 0
 
+	var/rechargeable = 0 // Can we put this gun in a recharger?
+	var/robocharge = 800
+	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
+	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
+
 	/// Currently loaded magazine, shoot will read whatever's in its mag_contents to determine what to shoot
-	/// Should be null here
+	/// Should be null here, but can be overridden in the gun's New()
 	var/obj/item/ammo/loaded_magazine
-	/// Magazine to load into the gun when spawned. Vars can be overridden in New()
+	/// Magazine to load into the gun when spawned
 	/// Should *not* be null, empty guns should have at least some kind of obj/item/ammo/bullets/empty
 	var/obj/item/ammo/ammo = /obj/item/ammo/bullets/empty
 	/// Checks against the magazine's caliber to see if it'll hold it
@@ -65,11 +70,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
 
 	var/spread_angle = 0
+	// On non-energy weapons, this is set by the top index in src.loaded_magazine.mag_contents when asked to shoot
+	// On energy weapons, this is set by the firemode's "projectile" setting
+	// In either case, this should probably stay null
 	var/datum/projectile/current_projectile = null
-	/// Gun can switch between different projectiles. Also means it ignores entries in the magazine.
-	/// Works best with AMMO_ENERGY magazines.
-	var/list/projectiles = null
-	var/current_projectile_num = 1
 
 	var/silenced = 0
 	var/can_dual_wield = 1
@@ -106,10 +110,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
-		if(!src.loaded_magazine.len)
+		if(!src.loaded_magazine)
 			src.loaded_magazine = new src.ammo
-		if(!src.firemodes.len)
-			src.firemodes = list(list("name" = "single shot", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "projectile" = null))
+		src.set_firemode(TRUE)
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -119,6 +122,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/params = null
 	var/target = null
 	var/user = 0
+
+/obj/item/gun/proc/sanitycheck(var/casings = 0, var/ammo = 1)
+	if (casings && (src.casings_to_eject > 30 || src.current_projectile.shot_number > 30))
+		logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+		if (src.casings_to_eject > 0)
+			src.casings_to_eject = 0
+		return 0
+	// if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
+	// 	logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
+	// 	return 0
+	return 1
 
 /obj/item/gun/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(!continuous) return
@@ -200,16 +214,39 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/attack_self(mob/user as mob)
 	if(src.firemodes.len > 1)
-		if(src.firemode_index += 1 > round(src.firemodes.len))
+		src.set_firemode()
+
+/obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
+	if(initialize)
+		if(!src.firemodes.len) // Not spawned with a list of firemodes? Generate one from the current settings
+			src.firemodes = list(list("name" = "single shot", "burst_count" = src.burst_count, "refire_delay" = src.refire_delay, "shoot_delay" = src.shoot_delay, "projectile" = src.current_projectile))
+	else
+		src.firemode_index += 1
+		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
 			src.firemode_index = 1
-		var/current_firemode = src.firemodes[src.firemode_index]
-		src.shoot_delay = current_firemode["shoot_delay"]
-		src.burst_count = current_firemode["burst_count"]
-		src.refire_delay = current_firemode["refire_delay"]
-		src.spread_angle = current_firemode["spread_angle"]
-		if(istype(current_firemode["projectile"], /datum/projectile))
-			src.current_projectile = current_firemode["projectile"]
-		boutput(user, "<span class='notice'>you set [src] to [src.current_firemode["name"]].</span>")
+	src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
+	src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
+	src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
+	src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
+	. = "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>"
+	if(istype(src.firemodes[src.firemode_index]["projectile"], /datum/projectile))
+		src.current_projectile = new src.firemodes[src.firemode_index]["projectile"]
+		. += "<span class='notice'>Each shot will use [src.current_projectile.cost] ammo units.</span>"
+	if(user)
+		boutput(user, .)
+
+/obj/item/gun/proc/ejectcasings()
+	if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
+		var/turf/T = get_turf(src)
+		if(T)
+			//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
+			var/obj/item/casing/C = null
+			while (src.casings_to_eject > 0)
+				C = new src.current_projectile.casing(T)
+				C.forensic_ID = src.forensic_ID
+				C.set_loc(T)
+				src.casings_to_eject--
+	return
 
 /datum/action/bar/icon/guncharge
 	duration = 150
@@ -283,29 +320,37 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return TRUE
 
 /// Handles bursts, fire-rate, updating loaded magazine, etc
-/obj/item/gun/shoot_manager(atom/target, params, mob/user, reach, continuousFire = 0)
-	var/canshoot = src.can_shoot()
+/obj/item/gun/proc/shoot_manager(var/target,var/start,var/mob/user,var/POX,var/POY)
+	if(src.shooting) return
+	if (isghostdrone(user))
+		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
+		return FALSE
+	if (!isturf(target) || !isturf(start))
+		return FALSE
+	var/canshoot = src.canshoot()
 	if (!canshoot)
 		src.dry_fire(user)
-		return FALSE
+		return
 	else if (canshoot == GUN_IS_SHOOTING)
-		return FALSE
+		return
 	else if(canshoot == TRUE)
 		user.next_click = max(user.next_click, world.time + src.shoot_delay)
 	SPAWN_DBG(0)
 		src.shooting = 1
 		for(var/burst in 1 to src.burst_count)
-			var/shoot_result = shoot(target_turf, user_turf, user, pox, poy)
+			if (!process_ammo(user)) // handles magazine stuff, sets current projectile if needed
+				return FALSE
+			var/shoot_result = shoot(target, start, user, POX, POY)
 			if(shoot_result == FALSE)
 				break
+			sleep(src.refire_delay)
 		src.shooting = 0
 
 // Gun can't fire
-/obj/item/gun/dry_fire(mob/user, var/point_blank)
-	if(..()) return
+/obj/item/gun/proc/dry_fire(var/mob/user, var/mob/M, var/point_blank)
 	if (!silenced)
 		if(point_blank)
-			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
+			user.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
 		playsound(user, src.shoot_sound_empty, 60, 1)
 	else
 		user.show_text("*click* *click*", "red")
@@ -337,12 +382,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
 		return
-	if (isghostdrone(user))
-		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return FALSE
+
 	if (!istype(src.current_projectile,/datum/projectile/))
-		return FALSE
-	if (!process_ammo(user))
 		return FALSE
 
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
@@ -435,22 +476,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (get_dist(user,target)<=1)
 		src.shoot_point_blank(M = target, user = user)
 		return
-	if (isghostdrone(user))
-		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return FALSE
-	if (!isturf(target) || !isturf(start))
-		return FALSE
+
 	if (!istype(src.current_projectile,/datum/projectile/))
-		return FALSE
-	var/canshoot = src.can_shoot()
-	if (!canshoot)
-		src.dry_fire(user)
-		return
-	else if (canshoot == GUN_IS_SHOOTING)
-		return
-	else if(canshoot == TRUE)
-		user.next_click = max(user.next_click, world.time + src.shoot_delay)
-	if (!process_ammo(user)) // does magazine stuff
 		return FALSE
 
 	if (src.muzzle_flash)
@@ -507,16 +534,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 // Checks if the gun is able to shoot
 /obj/item/gun/proc/canshoot()
-	if(!src.loaded_magazine)
-		return FALSE
-	if(src.shooting)
-		return GUN_SHOOTING
-	if(src.loaded_magazine.mag_type & AMMO_ENERGY)
-		if(src.loaded_magazine.charge < src.current_projectile.cost)
-			return FALSE
-	else
-		if(!istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
-			return FALSE
+	return
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -527,12 +545,16 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return FALSE
 
 /// Checks if it can shoot, then deducts ammo from the magazine
-/obj/item/gun/proc/process_ammo(var/mob/user)
-	if(src.loaded_magazine.mag_type & AMMO_ENERGY)
-		if(!istype(src.current_projectile, /datum/projectile))
+/obj/item/gun/proc/process_ammo()
+	if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Has a battery
+		if(!src.current_projectile)
+			if(istype(src.firemodes[1]["projectile"], /datum/projectile))
+				src.current_projectile = new src.firemodes[1]["projectile"]
+			else return FALSE
+		if (src.loaded_magazine.charge >= src.current_projectile.cost)
 			src.loaded_magazine.charge -= src.current_projectile.cost
 			return TRUE
-	else
+	else // uses bullets
 		if(istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
 			src.current_projectile = src.loaded_magazine.mag_contents[1]
 			src.loaded_magazine.mag_contents.Cut(1,2)
@@ -561,10 +583,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.canshoot())
 		return FALSE
 
-	src.process_ammo(user)
+	if(!src.process_ammo(user)) return FALSE
 	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
-	src.shoot_point_blank(user, user)
+	src.shoot_manager(user, user)
 	var/new_dmg = user.get_brute_damage() + user.get_burn_damage()
 	if (new_dmg >= (dmg + 20)) // it did some appreciable amount of damage
 		user.TakeDamage("head", 500, 0)
@@ -576,5 +598,5 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	. = ..(user)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
-		src.shoot_point_blank(user, user)
+		src.shoot_manager(user, user)
 		JOB_XP(user, "Clown", 3)
