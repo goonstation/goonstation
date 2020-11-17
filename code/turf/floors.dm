@@ -1403,6 +1403,8 @@
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
 		if(do_after(user, 30))
+			if(!src.reinforced)
+				return
 			var/obj/R1 = new /obj/item/rods(src)
 			var/obj/R2 = new /obj/item/rods(src)
 			if (material)
