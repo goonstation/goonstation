@@ -312,6 +312,12 @@
 					src.link.master = src
 			src.net_id = format_net_id("\ref[src]")
 
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
+		..()
+
 	proc/update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
@@ -745,7 +751,7 @@
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
- 
+
 /// Yells at doctors to check the thing when it's sent home
 /obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
 	if (src.loc != homeloc)

@@ -1027,6 +1027,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\robotics\robot\upgrade\recharge_pack.dm"
 #include "code\modules\robotics\robot\upgrade\recovery.dm"
 #include "code\modules\robotics\robot\upgrade\repair_pack.dm"
+#include "code\modules\robotics\robot\upgrade\sechud_scanner.dm"
 #include "code\modules\robotics\robot\upgrade\self_repair.dm"
 #include "code\modules\robotics\robot\upgrade\spectro_scanner.dm"
 #include "code\modules\robotics\robot\upgrade\speed.dm"
