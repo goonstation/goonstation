@@ -282,6 +282,7 @@
 		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 ABSTRACT_TYPE(/obj/item/record/random)
+
 /obj/item/record/random/dance_on_a_space_volcano
 	name = "record - \"Dance On A Space Volcano\""
 	record_name = "Dance On A Space Volcano"
