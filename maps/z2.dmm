@@ -83286,19 +83286,15 @@
 /obj/item/paper{
 	icon_state = "paper";
 	name = "SQL Server nonsense";
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/obj/item/paper{
-	icon_state = "paper";
-	name = "SQL Server nonsense";
-	pixel_y = 4
-	},
-/obj/item/paper{
-	icon_state = "paper";
-	name = "SQL Server nonsense";
 	pixel_x = 9;
 	pixel_y = 6
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Approval for one basement";
+	name = "basement construction permit";
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
@@ -86770,6 +86766,13 @@
 /obj/item/paper{
 	icon_state = "paper";
 	name = "Promotion to Double Mentor"
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Approval for one basement";
+	name = "Basement Construction Permit";
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
