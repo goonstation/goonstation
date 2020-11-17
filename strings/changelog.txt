@@ -1,5 +1,9 @@
 
 (t)mon nov 16 20
+(u)Chronoquest
+(p)2664
+(e)🆕|feature
+(*)6 new radio station songs
 (u)UrsulaMajor
 (e)⚖|balance
 (*)Multitools now require high energy conductive material (such as clarentine) to fabricate, to limit the number of them that are easily available to would-be hackers at round start.
