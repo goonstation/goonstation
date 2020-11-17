@@ -1650,6 +1650,9 @@
 		icon_state = "leadwindow_1"
 		opacity = 0
 
+		full
+			icon_state = "leadwindow_2"
+
 		gray
 			icon_state = "leadwindow_gray_1"
 
