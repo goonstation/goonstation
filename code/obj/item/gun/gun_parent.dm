@@ -214,7 +214,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/attack_self(mob/user as mob)
 	if(src.firemodes.len > 1)
-		src.set_firemode()
+		src.set_firemode(user)
 
 /obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
 	if(initialize)
@@ -339,7 +339,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		src.shooting = 1
 		for(var/burst in 1 to src.burst_count)
 			if (!process_ammo(user)) // handles magazine stuff, sets current projectile if needed
-				return FALSE
+				break
 			var/shoot_result = shoot(target, start, user, POX, POY)
 			if(shoot_result == FALSE)
 				break
@@ -534,7 +534,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 // Checks if the gun is able to shoot
 /obj/item/gun/proc/canshoot()
-	return
+	if(src.loaded_magazine)
+		return 1
+	return 0
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -547,10 +549,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /// Checks if it can shoot, then deducts ammo from the magazine
 /obj/item/gun/proc/process_ammo()
 	if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Has a battery
-		if(!src.current_projectile)
-			if(istype(src.firemodes[1]["projectile"], /datum/projectile))
-				src.current_projectile = new src.firemodes[1]["projectile"]
-			else return FALSE
+		if(!src.current_projectile?.name)
+			var/proj = src.firemodes[1]["projectile"]
+			if(ispath(proj, /datum/projectile))
+				src.current_projectile = new proj
+			else
+				return FALSE
 		if (src.loaded_magazine.charge >= src.current_projectile.cost)
 			src.loaded_magazine.charge -= src.current_projectile.cost
 			return TRUE

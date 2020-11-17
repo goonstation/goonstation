@@ -54,11 +54,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.icon_state = replacetext(src.icon_state, "-empty", "")
 		return 0
 
-	canshoot()
-		if(src.loaded_magazine.mag_contents.len >= 1)
-			return 1
-		return 0
-
 	// process_ammo(var/mob/user)
 	// 	if(src.ammo && src.current_projectile)
 	// 		if(src.ammo.use(current_projectile.cost))

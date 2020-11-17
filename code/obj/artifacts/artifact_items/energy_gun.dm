@@ -58,7 +58,7 @@
 		src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
 		src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
 		src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
-		src.current_projectile = new src.art_projectiles[src.firemode_index]
+		src.current_projectile = src.firemodes[src.firemode_index]["projectile"]
 		var/datum/artifact/A = src.artifact
 		if(A.activated && user)
 			boutput(user, "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>")
@@ -102,8 +102,8 @@
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/integrity = 100
 	var/integrity_loss = 5
-	var/list/artifact_firemodes
-	var/list/artifact_bullets
+	var/list/artifact_firemodes = list()
+	var/list/artifact_bullets = list()
 	var/datum/projectile/artifact/bullet = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
@@ -112,11 +112,13 @@
 	New()
 		..()
 		var/bullet_num = rand(1,3)
+		src.artifact_bullets.len = bullet_num
+		src.artifact_firemodes.len = bullet_num
 		for(var/i in 1 to bullet_num)
-			var/burst_count = rand(1, 10)
+			var/burst_count = rand(1, 3)
 			var/refire_delay = rand(0.1, 10)
 			var/shoot_delay = rand(0.1, 10)
-			var/spread_angle = rand(0, 180)
+			var/spread_angle = rand(0, 30)
 			var/number_mult = rand(2, 20)
 			var/mode_name = list(" lights", " things", " uncanny feelings")
 
@@ -128,9 +130,7 @@
 			artbullet.power = rand(15,35) / burst_count // randomise puts it between 2 and 50, let's make it less variable
 			artbullet.dissipation_rate = rand(1,artbullet.power)
 			artbullet.cost = rand(35,100) / burst_count // randomise puts it at 50-150
-			src.artifact_bullets[i] = artbullet
-
-			src.artifact_firemodes[i] = list("name" = "[burst_count * number_mult][mode_name]", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = i)
+			src.artifact_firemodes[i] += list("name" = "[burst_count * number_mult][pick(mode_name)]", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = artbullet)
 
 
 		integrity = rand(50, 100)
