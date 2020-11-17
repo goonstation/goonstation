@@ -298,6 +298,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	firevuln = 1
 	brutevuln = 1
 	butcherable = 2
+	is_pet = 1
 
 	New()
 		..()
