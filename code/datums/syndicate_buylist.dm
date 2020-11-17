@@ -75,13 +75,7 @@ proc/build_syndi_buylist_cache()
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 	blockedmode = list(/datum/game_mode/revolution)
 
-#if ASS_JAM
-/datum/syndicate_buylist/generic/crabgun
-	name = "Crabgun"
-	item = /obj/item/gun/energy/crabgun
-	cost = 6
-	desc = "This genetically modified crab can shoot claws containing strands of part its own DNA, allowing you to instantly transform targets into crabs. No need to feed it, it's battery powered."
-#endif
+
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
