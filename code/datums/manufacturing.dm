@@ -1801,6 +1801,16 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/ore_scoop
+	name = "Ore Scoop"
+	item_paths = list("MET-1","CRY-1")
+	item_names = list("Metal","Crystal")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/ore_scoop)
+	time = 10 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
 	item_paths = list("FAB-1")
