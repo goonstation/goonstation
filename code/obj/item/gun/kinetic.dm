@@ -712,18 +712,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/failured = 0
 
 	New()
-#if ASS_JAM
-		var/turf/T = get_turf(src)
-		playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-		new/obj/item/gun/kinetic/slamgun(T)
-		qdel(src)
-		return // Sorry! No zipguns during ASS JAM
-#else
+
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
-#endif
+
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)

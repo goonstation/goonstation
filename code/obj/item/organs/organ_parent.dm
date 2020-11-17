@@ -241,14 +241,7 @@
 	take_damage(brute, burn, tox, damage_type)
 		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
 			return //vampires are already dead inside
-#if ASS_JAM //timestop stuff
-		if (ishuman(donor))
-			var/mob/living/carbon/human/H = donor
-			if (H.paused)
-				H.pausedburn = max(0, H.pausedburn + burn)
-				H.pausedbrute = max(0, H.pausedbrute + brute)
-				return 0
-#endif
+
 		src.brute_dam += brute
 		src.burn_dam += burn
 		src.tox_dam += tox

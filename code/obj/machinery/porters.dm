@@ -821,9 +821,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	New()
 		..()
 
-#if ASS_JAM
-		ADD_MORTY(8, 12, 10, 10)
-#endif
+
 
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))
