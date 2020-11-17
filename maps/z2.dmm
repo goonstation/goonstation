@@ -72600,7 +72600,7 @@
 	icon_state = "blue"
 	})
 "dvO" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four},
+/turf/unsimulated/wall/setpieces/leadwall/junction_four,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -80922,7 +80922,7 @@
 	},
 /area/centcom/lobby)
 "dQe" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four},
+/turf/unsimulated/wall/setpieces/leadwall/junction_four,
 /area/centcom/lobby)
 "dQf" = (
 /obj/item/storage/toilet/random{
