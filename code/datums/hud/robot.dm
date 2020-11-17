@@ -272,7 +272,7 @@
 
 
 	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
-		if(!master) return
+		if(!master || user != master) return
 		switch(id)
 			if("object1", "object2", "object3", "object4", "object5", "object6", "object7", "next", "nextbg", "prev", "prevbg", "boxes")
 				if(dy < 0) items_screen++

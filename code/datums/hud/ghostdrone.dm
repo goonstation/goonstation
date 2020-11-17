@@ -199,7 +199,7 @@
 
 
 	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
-		if(!master) return
+		if(!master || user != master) return
 
 		if(scr.item)
 			if(dy < 0) items_screen++
