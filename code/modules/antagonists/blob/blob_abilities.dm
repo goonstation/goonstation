@@ -435,7 +435,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 3)].ogg", 60, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 60, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -686,10 +686,11 @@
 
 		B.visible_message("<span class='alert'><b>[B] reinforces using [reinforcing]!</b></span>")
 
+
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 2)].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobreinforce[rand(1, 2)].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
