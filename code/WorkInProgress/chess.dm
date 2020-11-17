@@ -62,7 +62,7 @@ obj/chessbutton
 			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
 			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
 
-			for(var/turf/simulated/floor/chess/T in chessboard)
+			for(var/turf/unsimulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC
 				for(var/obj/item/O in T)
 					qdel(O)
