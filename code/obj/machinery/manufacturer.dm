@@ -765,7 +765,7 @@
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
-					quantity = input("How many units do you want to purchase?", "Ore Purchase", null, null) as num
+					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
 
 					////////////
 
