@@ -38,6 +38,8 @@
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
 	var/serial_num = "CIRC-FEEDDEADBEEF"
+	var/repairstate = 0
+	var/repair_desc = ""
 
 	anchored = 1.0
 	density = 1
@@ -63,10 +65,11 @@
 		..()
 
 	get_desc(dist, mob/user)
+		if(dist <= 5)
+			. += "[repair_desc]"
+			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
 		if(dist <= 2)
 			. += "<br><span class='notice'>Serial Number: [serial_num].</span>"
-		if(dist <= 5)
-			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
 		if(dist <= 2 && reagents && (src.flags & OPENCONTAINER) )
 			. += "<br><span class='notice'>The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].</span>"
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
@@ -74,6 +77,28 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/open =  flags & OPENCONTAINER
+
+		// Weld > Crowbar > Rods > Weld
+		if(open && repairstate)
+			switch(repairstate)
+				if(1)
+					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						return
+				if(2)
+					if (istool(W, TOOL_PRYING))
+						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						return
+				if(3)
+					if (istype(W, /obj/item/rods))
+						var/obj/item/rods/S = W
+						if (S.amount >= 5)
+							actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						return
+				if(4)
+					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						return
 
 		if(isscrewingtool(W))
 			open = !open
@@ -115,7 +140,7 @@
 			gas_input = air2
 			gas_output = air1
 
-		pressure_delta *= lube_boost
+		pressure_delta *= src.lube_boost
 
 		if(fan_power_draw)
 			if(src.status & NOPOWER)
@@ -128,25 +153,7 @@
 		src.last_pressure_delta = pressure_delta
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
-		if(removed)
-			var/reaction_temp = 0
-			if(src.reagents.has_active_reaction("cryostylane_cold"))
-
-				reaction_temp -= 200
-				if(prob(5))
-					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
-			if(src.reagents.has_active_reaction("thalmerite_heat"))
-				reaction_temp += 200
-				if(prob(5))
-					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
-
-			if(reaction_temp)
-				//var/heat_capcity = HEAT_CAPACITY(removed)
-				// Azrun TODO
-				// maybe should do standard air at temp? currently that is just water @ 20C -- * 4182 / heat_capcity
-				// +/- 200 for a temp benefit initially seems sufficiently costed for only getting read at 1/2 reaction rate
-				removed.temperature += reaction_temp
-				removed.temperature = max(removed.temperature,1)
+		handle_reactions(removed)
 
 		// Leaks gas varient
 		if((circulator_flags & LEAKS_GAS ) && prob(5))
@@ -158,6 +165,45 @@
 		if(src.network2) src.network2.update = 1
 
 		return removed
+
+
+	// This is special handeling for reagent interactions and reagent reactions with circulator
+	proc/handle_reactions(var/datum/gas_mixture/gas_passed)
+		var/reaction_temp = 0
+
+		// Interactions with circulator
+		if( !(src.circulator_flags & LEAKS_LUBE)							\
+			&& ( src.reagents.has_reagent("pacid", 10)					\
+		    || src.reagents.has_reagent("clacid", 10)					\
+		    || src.reagents.has_reagent("nitric_acid", 10))		\
+		  && prob(2))
+			src.circulator_flags |= LEAKS_LUBE
+			src.repairstate = 1
+			if( circulator_flags & OPENCONTAINER && src.reagents.total_volume )
+				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
+			else
+				src.audible_message("<span class='alert'>An usettling gurgling sound can be heard from [src].</span>")
+			src.repair_desc = "Lubrication system is a mess, the piping needs to be cut up with welder prior to removal."
+
+
+		// Interactions with transferred gas
+		if(gas_passed)
+			if(src.reagents.has_active_reaction("cryostylane_cold"))
+				reaction_temp -= 200
+				if(prob(5))
+					src.visible_message("<span class='alert'>A thin layer of frost momentarily forms around [src].</span>")
+			if(src.reagents.has_active_reaction("thalmerite_heat"))
+				reaction_temp += 200
+				if(prob(5))
+					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
+
+			if(reaction_temp)
+				// Azrun TODO - Further Evaluation
+				//var/heat_capcity = HEAT_CAPACITY(removed)
+				// maybe should do standard air at temp? currently that is just water @ 20C -- * 4182 / heat_capcity
+				// +/- 200 for a temp benefit initially seems sufficiently costed for only getting read at 1/2 reaction rate
+				gas_passed.temperature += reaction_temp
+				gas_passed.temperature = max(gas_passed.temperature,1)
 
 	proc/is_circulator_active()
 		return last_pressure_delta > src.min_circ_pressure
@@ -247,6 +293,99 @@
 /obj/machinery/atmospherics/binary/circulatorTemp/right
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
+
+
+/datum/action/bar/icon/teg_circulator_fix
+	id = "teg_circulator_fix1"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 200
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/machinery/atmospherics/binary/circulatorTemp/circ
+	var/obj/item/the_tool
+
+	New(var/obj/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			circ = O
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.mind.assigned_role == "Chief Engineer")
+				duration = round(duration / 2)
+			if (H.mind.assigned_role == "Engineer")
+				duration = round(duration / 2)
+			if (H.mind.assigned_role == "Mechanic")
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (circ == null || the_tool == null || owner == null || get_dist(owner, circ) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		// Weld > Crowbar > Rods > Weld
+		if (circ.repairstate == 1)
+			playsound(get_turf(circ), "sound/items/Welder.ogg", 50, 1)
+			owner.visible_message("<span class='notice'>[owner] begins to cut up the damaged piping of the lubrication system.</span>")
+		if (circ.repairstate == 2)
+			owner.visible_message("<span class='notice'>[owner] begins prying out the damaged lubrication system.</span>")
+			playsound(get_turf(circ), "sound/items/Crowbar.ogg", 60, 1)
+		if (circ.repairstate == 3)
+			playsound(get_turf(circ), "sound/impact_sounds/Generic_Stab_1.ogg", 60, 1)
+			owner.visible_message("<span class='notice'>[owner] begins replacing the sections of lubrication piping.</span>")
+		if (circ.repairstate == 4)
+			playsound(get_turf(circ), "sound/items/Welder.ogg", 60, 1)
+			owner.visible_message("<span class='notice'>[owner] begins to weld the lubrication piping.</span>")
+
+	onEnd()
+		..()
+		// Weld > Crowbar > Rods > Weld
+		if (circ.repairstate == 1)
+			circ.repairstate = 2
+			boutput(owner, "<span class='notice'>You slice up the damage piping for removal.</span>")
+			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+			circ.repair_desc = "Lubrication system is a mess but you should be able to pry it out now."
+			return
+		if (circ.repairstate == 2)
+			circ.repairstate = 3
+			boutput(owner, "<span class='notice'>You pry out the damaged lubrication system.</span>")
+			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+			circ.repair_desc = "Lubrication system piping is missing, should be able to make a new one out of rods."
+			return
+
+		if (circ.repairstate == 3)
+			circ.repairstate = 4
+			boutput(owner, "<span class='notice'>You finish rebuilding the lubrication system.</span>")
+			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+			circ.repair_desc = "Lubrication system is nearly fixed, just have to weld a few pipes."
+			if (the_tool != null)
+				the_tool.amount -= 5
+				if(the_tool.amount <= 0)
+					qdel(the_tool)
+				else if(istype(the_tool, /obj/item/rods))
+					var/obj/item/rods/R = the_tool
+					R.update_icon()
+			return
+
+		if (circ.repairstate == 4)
+			circ.repairstate = 0
+			circ.circulator_flags ^= LEAKS_LUBE
+			circ.repair_desc = ""
+			boutput(owner, "<span class='notice'>You finish welding the replacement lubrication system, the circulator is again in working condition.</span>")
+			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
