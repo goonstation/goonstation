@@ -18,7 +18,7 @@
 
 
 #define SHUTTLE_SOUTH    "cogmap"
-#define SHUTTLE_EAST  	 "cogmap"
+#define SHUTTLE_EAST  	 "cogmap2"
 #define SHUTTLE_WEST   	 "donut2"
 #define SHUTTLE_DONUT3   "donut3"
 #define SHUTTLE_OSHAN    "oshan"

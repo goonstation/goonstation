@@ -18730,11 +18730,6 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "aQJ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/rack,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/breath,
@@ -24515,10 +24510,10 @@
 /area/station/crew_quarters/barber_shop)
 "bfo" = (
 /obj/cable/reinforced{
-	icon_state = "4-8-thick"
+	icon_state = "1-4-thick"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/shuttle/sea_elevator_room)
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "bfp" = (
 /turf/space/fluid,
 /area/flock_trader)
@@ -34850,13 +34845,21 @@
 /turf/space/fluid,
 /area/space)
 "bEa" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+/obj/machinery/light/incandescent/netural{
+	dir = 1
 	},
-/obj/machinery/light/runway_light/delay2,
-/turf/space/fluid,
-/area/space)
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/vehicle/tank/minisub/escape_sub{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
 "bEb" = (
 /obj/lattice{
 	dir = 4;
@@ -34866,15 +34869,16 @@
 /turf/space/fluid,
 /area/space)
 "bEc" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4
 	},
-/obj/warp_beacon{
-	name = "Escape"
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses and fluids from passing through it.";
+	dir = 8;
+	powerlevel = 1
 	},
-/turf/space/fluid,
-/area/space)
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
 "bEd" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -45592,18 +45596,14 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = NORTH
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgh" = (
 /obj/grille/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = WEST
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgi" = (
 /obj/machinery/light/incandescent/greenish,
@@ -45623,9 +45623,7 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/bot{
-	dir = EAST
-	},
+/turf/simulated/floor/bot,
 /area/shuttle/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,
@@ -45900,8 +45898,9 @@
 /area/station/maintenance/inner/central)
 "cgV" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/cable,
 /obj/cable/reinforced{
 	icon_state = "0-4-thick"
 	},
@@ -46501,11 +46500,17 @@
 /area/station/maintenance/inner/central)
 "ciX" = (
 /obj/cable/reinforced{
-	icon_state = "1-4-thick"
+	icon_state = "4-8-thick"
+	},
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "ciY" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
@@ -46518,9 +46523,6 @@
 "cja" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
-	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -46571,7 +46573,8 @@
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -46815,11 +46818,13 @@
 /area/station/maintenance/inner/central)
 "cjT" = (
 /obj/cable/reinforced{
-	icon_state = "1-2-thick"
+	icon_state = "4-8-thick"
 	},
-/obj/machinery/light/small/floor/blueish,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/central)
+/area/shuttle/sea_elevator_room)
 "cjU" = (
 /obj/critter/roach,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
@@ -47565,6 +47570,28 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"cXA" = (
+/obj/item/storage/wall/emergency{
+	dir = 4;
+	pixel_x = -31
+	},
+/turf/simulated/floor/escape{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
+"cXB" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
+"cXC" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -47574,10 +47601,32 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dCo" = (
+/obj/cable/reinforced{
+	icon_state = "2-8-thick"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"hbh" = (
+/turf/simulated/floor/escape/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"ikm" = (
+/turf/simulated/floor/escape/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"fQs" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47590,6 +47639,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"iMf" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "Escape"
+	},
+/turf/space/fluid,
+/area/space)
 "iPj" = (
 /obj/item/kitchen/food_box/donut_box{
 	pixel_x = -3;
@@ -47618,6 +47677,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"jPN" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space/fluid,
+/area/space)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47644,12 +47711,25 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"mEu" = (
+/obj/decal/poster/wallsign/escape_right,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
 "mYN" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/south)
+"ngC" = (
+/obj/item/storage/wall/emergency{
+	dir = 4;
+	pixel_x = -31
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -47728,6 +47808,20 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"qWD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/shuttle/sea_elevator_room)
+"rBz" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/obj/machinery/drainage/big,
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47771,6 +47865,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"vqP" = (
+/turf/simulated/floor/escape/corner,
+/area/station/hallway/secondary/exit)
+"vNf" = (
+/obj/item/storage/wall/emergency{
+	dir = 4;
+	pixel_x = -31
+	},
+/turf/simulated/floor/escape{
+	dir = 10
+	},
+/area/station/hallway/secondary/exit)
 "vcb" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -47846,6 +47952,11 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
+"yiS" = (
+/turf/simulated/floor/escape/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 
 (1,1,1) = {"
 cer
@@ -85744,9 +85855,9 @@ ciZ
 ciZ
 cgS
 ciL
-ciL
-cjT
-ciX
+bfo
+cjR
+ciW
 ciW
 cjR
 ciW
@@ -86046,9 +86157,9 @@ cga
 cga
 cgZ
 ciM
+ciX
 ciM
 ciM
-cja
 ciM
 ciM
 ciM
@@ -86348,9 +86459,9 @@ aCD
 aCD
 aCD
 cjR
-ciW
+cja
 aCD
-cjf
+aCD
 aCD
 aCD
 aCD
@@ -86650,9 +86761,9 @@ aqn
 aqn
 chd
 ciW
-ciW
+cja
 chd
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -86952,9 +87063,9 @@ aqn
 aqn
 chd
 ciW
-cjR
+cjf
 chd
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87254,9 +87365,9 @@ aqn
 aqn
 aLV
 aaM
-aaM
+cjT
 aLV
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87556,9 +87667,9 @@ aqn
 aqn
 aLV
 acJ
-cfY
+rBz
 aLV
-bbc
+aqn
 aqn
 aqn
 aqn
@@ -87858,9 +87969,9 @@ aqn
 aqn
 aLV
 aaM
-aaM
+cjT
 aLV
-bfo
+aLV
 aLV
 aLV
 aLV
@@ -88462,9 +88573,9 @@ aqn
 ciS
 cjx
 cgY
-acK
-cgb
-cfU
+dCo
+qWD
+fQs
 cfR
 cgf
 cgh
@@ -114161,12 +114272,12 @@ aqn
 aqn
 aqn
 aqn
-byq
+bze
 bzk
 bAo
 bAo
 bCQ
-byq
+bze
 aqn
 bFU
 bFU
@@ -114463,12 +114574,12 @@ aqn
 aqn
 aqn
 aqn
-byq
-bzl
-bAp
-bAp
-bCR
-byq
+bze
+bzg
+byY
+byY
+bCM
+bze
 aqn
 aqn
 bFU
@@ -114765,12 +114876,12 @@ aqn
 aqn
 aqn
 aqn
-byq
 bze
-bAm
-bAm
+bzg
+byY
+byY
+bCM
 bze
-byq
 aqn
 aqn
 aqn
@@ -115067,12 +115178,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
+byq
+bzg
+byY
+byY
+bCM
+byq
 aqn
 aqn
 aqn
@@ -115365,20 +115476,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-bEa
-aqn
-aqn
-aqn
-aqn
+byq
+byq
+bze
+byq
+byq
+bzg
+byY
+byY
+bCM
+byq
+byq
+bze
+byq
+byq
 aqn
 aqn
 aqn
@@ -115667,20 +115778,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
-aqn
-aqn
-aqn
-aqn
+bze
+cXA
+cXC
+ngC
+bAn
+yiS
+byY
+byY
+hbh
+bAn
+ngC
+cXC
+vNf
+bze
 aqn
 aqn
 aqn
@@ -115969,20 +116080,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-bEb
-aqn
-aqn
-aqn
-aqn
+bze
+bzl
+bAp
+bAp
+bAp
+ikm
+byY
+byY
+vqP
+bAp
+bAp
+bAp
+bCR
+bze
 aqn
 aqn
 aqn
@@ -116271,20 +116382,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-bEc
-aqn
-aqn
-aqn
-aqn
+byq
+cXB
+mEu
+cXB
+byq
+bzk
+bAo
+bAo
+bCQ
+byq
+cXB
+mEu
+cXB
+byq
 aqn
 aqn
 aqn
@@ -116573,20 +116684,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+bEa
+byq
+bEa
+byq
+bzl
+bAp
+bAp
+bCR
+byq
+bEa
+byq
+bEa
+byq
 aqn
 aqn
 aqn
@@ -116875,20 +116986,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+byq
+bEc
+byq
+bEc
+byq
+bze
+bAm
+bAm
+bze
+byq
+bEc
+byq
+bEc
+byq
 aqn
 aqn
 aqn
@@ -117186,7 +117297,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+aBF
 aqn
 aqn
 aqn
@@ -117488,7 +117599,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+jPN
 aqn
 aqn
 aqn
@@ -117790,7 +117901,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+aBF
 aqn
 aqn
 aqn
@@ -118092,7 +118203,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+bEb
 aqn
 aqn
 aqn
@@ -118394,7 +118505,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+iMf
 aqn
 aqn
 aqn

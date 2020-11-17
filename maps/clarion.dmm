@@ -7236,6 +7236,12 @@
 	layer = 4;
 	name = "West Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7582,6 +7588,12 @@
 	layer = 4;
 	name = "North Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7592,6 +7604,12 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -7745,6 +7763,12 @@
 	layer = 4;
 	name = "North Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7757,6 +7781,12 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -8122,6 +8152,12 @@
 	id = "pod_fore";
 	layer = 4;
 	name = "North Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -15217,6 +15253,12 @@
 	id = "disposals_vent";
 	layer = 4;
 	name = "Disposals Vent"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -39468,6 +39510,12 @@
 	layer = 4;
 	name = "Emergency Mass Driver"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	dir = 4;
 	icon_state = "engine_caution_misc"
@@ -40621,6 +40669,12 @@
 	id = "hangar_artlab";
 	name = "Research Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -41267,6 +41321,12 @@
 	id = "hangar_artlab";
 	name = "Research Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -41835,6 +41895,12 @@
 	icon_state = "bdoorright1";
 	id = "hangar_artlab";
 	name = "Research Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -43929,6 +43995,11 @@
 	name = "Outbound Cargo Belt"
 	},
 /obj/plasticflaps,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCY" = (
@@ -43944,6 +44015,11 @@
 	name = "Inbound Cargo Belt"
 	},
 /obj/plasticflaps,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCZ" = (
@@ -46893,6 +46969,11 @@
 	layer = 4;
 	name = "Cargo Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)
 "bJn" = (
@@ -46948,6 +47029,11 @@
 	layer = 4;
 	name = "Cargo Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)
 "bJs" = (
@@ -46962,6 +47048,11 @@
 	id = "cargo_hangar";
 	layer = 4;
 	name = "Cargo Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)

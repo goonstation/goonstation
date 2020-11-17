@@ -1,5 +1,82 @@
 
+(t)tue nov 17 20
+(u)pali
+(p)2710
+(e)🐛|bug
+(+)VR chess now works again!
+(t)mon nov 16 20
+(u)Kyle
+(*)Fix Clock 188 bug where its shot delay while on burst mode was too low.
+(u)Luxizzle
+(p)2694
+(e)🆕🎨|feature, sprites
+(*)Added the Security HUD upgrade for cyborgs.
+(+)Replaced Repair Pack in brobocop module to the new Security HUD upgrade.
+(u)Chronoquest
+(p)2664
+(e)🆕|feature
+(*)6 new radio station songs
+(u)UrsulaMajor
+(e)⚖|balance
+(*)Multitools now require high energy conductive material (such as clarentine) to fabricate, to limit the number of them that are easily available to would-be hackers at round start.
+(t)sun nov 15 20
+(u)Flaborized
+(p)2695
+(e)🎨|sprites
+(*)Cyborgs and cyborg related items have a new look!
+(u)TTerc
+(p)2647
+(e)🗺|mapping
+(+)Door-linked force fields added to Cogmap 2, Atlas, Clarion and Destiny
+(u)Luxizzle
+(p)2688
+(e)🆕🎨|feature, sprites
+(*)The AI can now hold their point key (B) and click on a location to spawn a hologram.
+(u)UrsulaMajor
+(e)🆕|feature
+(*)New Chicken Breeds! See if you can find them all! (Not Secret! Feel free to share with your friends what you find out!)
+(t)sat nov 14 20
+(u)Chickenish
+(p)2659
+(e)🆕|feature
+(+)Candles are now lit by environmental heat.
+(u)Retrino
+(p)2686
+(e)🎨|sprites
+(+)Added pink and orange hat sprites, printable from uniform and hop fabricators. Adjusts the psychedelic hat
+(u)virvatuli
+(p)2689
+(e)🎨|sprites
+(+)Added a bunch of previously missing clothing sprites for monkeys
+(t)fri nov 13 20
+(u)adharainspace
+(p)2590
+(e)🆕|feature
+(+)if you run into an issue where you can't join because of a vpn and you need to use one, please join the goonstation discord (https://discord.gg/zd8t6pY) and we'll see what we can do.
+(t)thu nov 12 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Roosters now hatch eggs.
 (t)wed nov 11 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Roosters! They may not lay eggs, but they WILL peck your eyes out! :)
+(u)Carbadox
+(p)2651
+(e)⛔|removal
+(+)Coffee/espresso machines no longer have removeable tops and don't need to be manually refilled with water anymore. This should solve the issue with unscrewing the machine even when unintended.
+(u)adharainspace
+(p)2504
+(e)🆕|feature
+(*)makes directional lights update more consistently when you change direction
+(u)PissOffMate18
+(p)2645
+(e)|
+(+)Added the ability to cut open fireworks as a hobo source of magnesium.
+(u)Arahimine
+(p)2654
+(e)🆕|feature
+(+)AI-controlled cyborg shells now have access to the same communications channels as the AI.
 (u)Jan.antilles
 (p)2599
 (e)🎨|sprites

@@ -71,7 +71,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 		var/datum/thrown_thing/thr = _thr
 		var/atom/movable/thing = thr.thing
 #if ASS_JAM
-		if(thing.throwing_paused)//timestop effect
+		if(thing?.throwing_paused)//timestop effect
 			continue
 #endif
 		var/end_throwing = FALSE

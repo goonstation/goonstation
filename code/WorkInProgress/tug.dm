@@ -116,7 +116,7 @@
 
 	Move()
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.loc == oldloc)
 			return
 		if (next_cart)
@@ -346,7 +346,7 @@
 
 	Move()
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.loc == oldloc)
 			return
 		if (cart)

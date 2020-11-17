@@ -25,6 +25,8 @@ var/global
 
 	lagcheck_enabled = 0
 
+	vpn_blacklist_enabled = TRUE
+
 	datum/datacore/data_core = null
 
 	obj/overlay/plmaster = null

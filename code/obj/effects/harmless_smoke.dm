@@ -24,10 +24,6 @@
 	SPAWN_DBG(time)
 		pool(src)
 
-/obj/effects/harmless_smoke/Move()
-	..()
-	return
-
 
 proc/harmless_smoke_puff(var/turf/location, var/duration = 100)
 	if(!istype(location)) return

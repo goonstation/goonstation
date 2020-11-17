@@ -70,6 +70,7 @@ var/image/blob_icon_cache
 					continue
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
+				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
 
 	proc/right_click_action()
 		usr.examine_verb()
@@ -235,7 +236,7 @@ var/image/blob_icon_cache
 				adj1 = "harm"
 		act1 = pick_string("blob.txt", "act1_[adj1]")
 		adj1 = pick_string("blob.txt", "adj1_[adj1]")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
+		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		src.visible_message("<span class='combat'><b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!</span>")
 		return
 
@@ -252,7 +253,7 @@ var/image/blob_icon_cache
 			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
 		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
+		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
 
@@ -352,6 +353,7 @@ var/image/blob_icon_cache
 			src.onKilled()
 			if (overmind)
 				overmind.onBlobDeath(src, user)
+			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
 			src.update_icon()
@@ -581,6 +583,7 @@ var/image/blob_icon_cache
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY && src.overmind && prob(src.overmind.nucleus_reflectivity))
 			shoot_reflected_to_sender(P, src)
+			playsound(src.loc, "sound/voice/blob/blobreflect[rand(1, 5)].ogg", 100, 1)
 		else
 			..()
 
@@ -620,6 +623,10 @@ var/image/blob_icon_cache
 		//all dead :(
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
+			if (prob(50))
+				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
+			else
+				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
@@ -972,7 +979,7 @@ var/image/blob_icon_cache
 	dissipation_delay = 8
 	ks_ratio = 0.5
 	sname = "slime"
-	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
+	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0
 	damage_type = D_SPECIAL
 	hit_ground_chance = 50
@@ -993,6 +1000,7 @@ var/image/blob_icon_cache
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
+				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()
@@ -1031,6 +1039,7 @@ var/image/blob_icon_cache
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
 			shoot_reflected_to_sender(P, src)
+			playsound(src.loc, "sound/voice/blob/blobreflect[rand(1, 5)].ogg", 100, 1)
 		else
 			..()
 

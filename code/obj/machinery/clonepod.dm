@@ -95,7 +95,7 @@
 			connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
-			occupant.set_loc(src.loc)
+			occupant.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -799,6 +799,13 @@
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()
+
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+		occupant = null
+		..()
+
 
 	proc/find_pods()
 		if (!islist(src.pods))

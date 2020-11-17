@@ -2101,14 +2101,14 @@ var/global/noir = 0
 							if ("absolute")
 								for (var/path in paths)
 									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.dir = direction ? direction : SOUTH
+									thing.set_dir(direction ? direction : SOUTH)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
 										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.dir = direction ? direction : SOUTH
+										thing.set_dir(direction ? direction : SOUTH)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -4995,7 +4995,7 @@ var/global/noir = 0
 
 		if(NewLoc)
 			usr.set_loc(NewLoc)
-			src.mob.dir = direct
+			src.mob.set_dir(direct)
 			return
 
 		if((direct & NORTH) && usr.y < world.maxy)
@@ -5007,7 +5007,7 @@ var/global/noir = 0
 		if((direct & WEST) && usr.x > 1)
 			usr.x--
 
-		src.mob.dir = direct
+		src.mob.set_dir(direct)
 	else
 		..()
 

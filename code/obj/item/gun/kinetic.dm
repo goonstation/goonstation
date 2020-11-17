@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		src.pixel_y += rand(-12,12)
 		src.pixel_x += rand(-12,12)
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		return
 
 /obj/item/gun/kinetic/minigun
@@ -528,8 +528,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
 			spread_angle = 5
+			shoot_delay = 4
 		else
 			spread_angle = 0
+			shoot_delay = 2
 
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."

@@ -99,7 +99,7 @@
 	virtual
 		desc = "A key made of a fancy, silvery set of pixels."
 		Move()
-			..()
+			. = ..()
 			var/area/A = get_area(src)
 			if (A && !A.virtual)
 				qdel(src)

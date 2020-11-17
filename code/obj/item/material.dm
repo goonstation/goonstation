@@ -635,7 +635,7 @@
 /obj/item/material_piece/pharosium
 	desc = "A processed bar of Pharosium, a conductive metal."
 	default_material = "pharosium"
-	icon_state = "cobryl-bar"
+	icon_state = "pharosium-bar"
 
 /obj/item/material_piece/cobryl
 	desc = "A processed bar of Cobryl, a somewhat valuable metal."

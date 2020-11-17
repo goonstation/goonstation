@@ -33,6 +33,16 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
+/obj/item/clothing/head/pink
+	desc = "A knit cap in pink."
+	icon_state = "pink"
+	item_state = "pgloves"
+
+/obj/item/clothing/head/orange
+	desc = "A knit cap in orange."
+	icon_state = "orange"
+	item_state = "ogloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
 	desc = "A plsing hat."

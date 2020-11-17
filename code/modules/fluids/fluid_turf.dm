@@ -61,13 +61,13 @@
 			switch(rand(1,3))
 				if(1)
 					icon_state = "sand_other_texture"
-					src.dir = pick(alldirs)
+					src.set_dir(pick(alldirs))
 				if(2)
 					icon_state = "sand_other_texture2"
-					src.dir = pick(alldirs)
+					src.set_dir(pick(alldirs))
 				if(3)
 					icon_state = "sand_other_texture3"
-					src.dir = pick(cardinal)
+					src.set_dir(pick(cardinal))
 
 		if (spawningFlags && current_state <= GAME_STATE_WORLD_INIT)
 			//worldgenCandidates[src] = 1 //Adding self to possible worldgen turfs
@@ -366,7 +366,7 @@
 
 	New()
 		..()
-		src.dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 
 	ex_act(severity)
@@ -415,21 +415,21 @@
 
 		//have fun reading this! also fuck youu!
 		if (e && s)
-			dir = SOUTH
-			e.dir = NORTH
-			s.dir = WEST
+			set_dir(SOUTH)
+			e.set_dir(NORTH)
+			s.set_dir(WEST)
 		else if (e && n)
-			dir = WEST
-			e.dir = EAST
-			n.dir = SOUTH
+			set_dir(WEST)
+			e.set_dir(EAST)
+			n.set_dir(SOUTH)
 		else if (w && s)
-			dir = NORTH
-			w.dir = SOUTH
-			s.dir = EAST
+			set_dir(NORTH)
+			w.set_dir(SOUTH)
+			s.set_dir(EAST)
 		else if (w && n)
-			dir = EAST
-			w.dir = WEST
-			n.dir = NORTH
+			set_dir(EAST)
+			w.set_dir(WEST)
+			n.set_dir(NORTH)
 
 
 	ex_act(severity)

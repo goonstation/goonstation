@@ -496,7 +496,7 @@
 				die()
 				return
 
-		dir = facing_dir
+		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
 
 		var/dx = loc.x - orig_turf.x
@@ -972,7 +972,7 @@ datum/projectile/snowball
 	P.yo = yo
 
 	if(DATA.dissipation_rate <= 0)
-		P.max_range = PROJ_INFINITE_RANGE
+		P.max_range = DATA.max_range
 	else
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 

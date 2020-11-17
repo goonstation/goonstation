@@ -52,7 +52,7 @@ Contents:
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //okay these are getting messy as hell, i need to consolidate this shit later
 /turf/unsimulated/floor/arctic/snow/ice
