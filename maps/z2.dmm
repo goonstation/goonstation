@@ -32241,10 +32241,8 @@
 	},
 /area/iomoon/base)
 "bBy" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/outside)
 "bBz" = (
@@ -34792,10 +34790,8 @@
 	},
 /area/iomoon)
 "bGQ" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/outside)
 "bGR" = (
@@ -68270,17 +68266,13 @@
 /turf/space,
 /area/space)
 "djo" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom)
 "djp" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom)
 "djq" = (
@@ -68783,10 +68775,8 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/sealab)
 "dkJ" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom)
 "dkK" = (
@@ -69352,10 +69342,8 @@
 /turf/unsimulated/floor/orangeblack/side,
 /area/centcom)
 "dmv" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom/lounge)
 "dmw" = (
@@ -69364,10 +69352,8 @@
 	},
 /area/centcom)
 "dmx" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/lounge)
 "dmy" = (
@@ -69651,17 +69637,13 @@
 	},
 /area/centcom/lounge)
 "dnt" = (
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
 /area/centcom)
 "dnu" = (
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom)
 "dnv" = (
@@ -69733,10 +69715,8 @@
 	},
 /area/centcom/lounge)
 "dnH" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/lounge)
 "dnI" = (
@@ -72500,20 +72480,9 @@
 /obj/extremely_spooky_ghost,
 /turf/unsimulated/grass,
 /area/centcom/lounge)
-"dvv" = (
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dvw" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -72609,10 +72578,8 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dvK" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -72627,10 +72594,8 @@
 	icon_state = "blue"
 	})
 "dvM" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -74779,10 +74744,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "dAV" = (
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -76721,17 +76684,13 @@
 	},
 /area/centcom/lounge)
 "dFO" = (
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
 /area/centcom/lounge)
 "dFP" = (
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom/lounge)
 "dFQ" = (
@@ -77135,10 +77094,8 @@
 	},
 /area/centcom/lounge)
 "dGP" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 1
 	},
 /area/centcom/lounge)
 "dGQ" = (
@@ -78352,17 +78309,13 @@
 	},
 /area/centcom/lounge)
 "dKh" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom/garden)
 "dKi" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/garden)
 "dKj" = (
@@ -78390,10 +78343,8 @@
 	},
 /area/centcom/lounge)
 "dKn" = (
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom/garden)
 "dKo" = (
@@ -78565,10 +78516,8 @@
 	},
 /area/centcom/lounge)
 "dKC" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/garden)
 "dKD" = (
@@ -78680,17 +78629,13 @@
 	},
 /area/centcom/lobby)
 "dKP" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/lobby)
 "dKQ" = (
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/lobby)
 "dKR" = (
@@ -78722,10 +78667,8 @@
 	},
 /area/centcom/garden)
 "dKU" = (
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
 /area/centcom/garden)
 "dKV" = (
@@ -79228,10 +79171,8 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dMa" = (
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
 /area/centcom/lobby)
 "dMb" = (
@@ -79245,10 +79186,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom/lobby)
 "dMd" = (
@@ -79293,10 +79232,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/unsimulated/wall{
-	dir = 5;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
 	},
 /area/centcom/lobby)
 "dMg" = (
@@ -80025,27 +79962,21 @@
 /turf/unsimulated/floor/darkblue,
 /area/centcom/lobby)
 "dNI" = (
-/turf/unsimulated/wall{
-	dir = 9;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
 	},
 /area/centcom/lobby)
 "dNJ" = (
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom/lobby)
 "dNK" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/unsimulated/wall{
-	dir = 10;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
 /area/centcom/lobby)
 "dNL" = (
@@ -80072,10 +80003,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/unsimulated/wall{
-	dir = 6;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
 	},
 /area/centcom/lobby)
 "dNN" = (
@@ -85145,10 +85074,8 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
 "pEf" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 1
 	},
 /area/centcom)
 "pEv" = (
@@ -85856,10 +85783,8 @@
 /obj/decal/poster/wallsign/space{
 	pixel_y = -7
 	},
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -155678,7 +155603,7 @@ dDP
 dDP
 dDP
 dDP
-dvv
+qNW
 aES
 aES
 aES
@@ -158126,7 +158051,7 @@ dvN
 dDP
 dwu
 dDP
-dvv
+qNW
 aES
 aES
 aES
@@ -159639,7 +159564,7 @@ dDP
 dvO
 dDP
 dDP
-dvv
+qNW
 aES
 aES
 aES
@@ -160546,7 +160471,7 @@ dxs
 dEY
 dFf
 dvM
-dvv
+qNW
 aES
 aES
 aES
@@ -160809,7 +160734,7 @@ dDP
 dRC
 dDP
 dDP
-dvv
+qNW
 dvy
 dvy
 dvw
@@ -168382,7 +168307,7 @@ dvN
 dDP
 dBB
 dDP
-dvv
+qNW
 aaa
 dkG
 dly
@@ -172308,7 +172233,7 @@ dvN
 dDP
 dBK
 dDP
-dvv
+qNW
 aaa
 dkG
 dly

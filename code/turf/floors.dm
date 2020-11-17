@@ -1627,6 +1627,15 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwall"
 
+		junction
+			icon_state = "leadjunction"
+
+		junction_four
+			icon_state = "leadjunction_4way"
+
+		cap
+			icon_state = "leadcap"
+
 		gray
 			icon_state = "leadwall_gray"
 
