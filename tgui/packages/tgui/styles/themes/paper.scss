@@ -8,7 +8,7 @@
 
 @use '~tgui/styles/colors.scss' with (
   $primary: #ffffff,
-  $bg-lightness: -25%,
+  $bg-lightness: 25%,
   $fg-lightness: -10%,
   $label: #3b3b3b,
   // Makes button look actually grey due to weird maths.
