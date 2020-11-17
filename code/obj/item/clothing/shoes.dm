@@ -573,4 +573,8 @@
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
+			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+			else
+				kick_bonus = 0
 		return
