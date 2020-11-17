@@ -1554,6 +1554,16 @@
 	create = 1
 	category = "Component"
 
+/datum/manufacture/robup_sechudgoggles
+	name = "Security HUD Upgrade"
+	item_paths = list("CRY-1","CON-1")
+	item_names = list("Crystal","Conductive Material")
+	item_amounts = list(4,6)
+	item_outputs = list(/obj/item/roboupgrade/sechudgoggles)
+	time = 90 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/robup_spectro
 	name = "Spectroscopic Scanner Upgrade"
 	item_paths = list("CRY-1","CON-1")

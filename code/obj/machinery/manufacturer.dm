@@ -2058,6 +2058,7 @@
 	/datum/manufacture/deafhs,
 	/datum/manufacture/robup_jetpack,
 	/datum/manufacture/robup_healthgoggles,
+	/datum/manufacture/robup_sechudgoggles,
 	/datum/manufacture/robup_spectro,
 	/datum/manufacture/robup_recharge,
 	/datum/manufacture/robup_repairpack,
