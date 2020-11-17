@@ -8698,7 +8698,7 @@
 /area/crew_quarters/bar)
 "tS" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)

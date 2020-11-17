@@ -624,8 +624,8 @@
 			// 				src.active_record_general.fields["rank"] = "Head of Personnel"
 			// 			if ("captain")
 			// 				src.active_record_general.fields["rank"] = "Captain"
-			// 			if ("barman")
-			// 				src.active_record_general.fields["rank"] = "Barman"
+			// 			if ("bartender")
+			// 				src.active_record_general.fields["rank"] = "Bartender"
 			// 			if ("chemist")
 			// 				src.active_record_general.fields["rank"] = "Chemist"
 			// 			if ("janitor")

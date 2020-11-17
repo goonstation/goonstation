@@ -95,12 +95,12 @@
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/chef)
 
-/obj/item/storage/box/clothing/barman
-	name = "\improper Barman's equipment"
+/obj/item/storage/box/clothing/bartender
+	name = "\improper Bartender's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/waiter
 	name = "\improper Waiter's equipment"
@@ -108,7 +108,7 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/wcoat,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/chaplain
 	name = "\improper Chaplain's equipment"

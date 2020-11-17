@@ -4057,7 +4057,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/decal/poster/wallsign/poster_rand{
 	pixel_y = 26
