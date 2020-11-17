@@ -495,7 +495,8 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/giggles,
 /datum/figure_info/mavericksabre,
 /datum/figure_info/whitneystingray,
-/datum/figure_info/fleur
+/datum/figure_info/fleur,
+/datum/figure_info/joaquinfry
 )
 
 /datum/figure_info
@@ -896,6 +897,10 @@ var/list/figure_patreon_rarity = list(\
 	fleur
 		name = "\improper Fleur DeLaCreme"
 		icon_state = "fleur"
+
+	joaquinfry
+		name = "\improper Joaquin Fry"
+		icon_state = "joaquinfry"
 
 #ifdef XMAS
 	santa
