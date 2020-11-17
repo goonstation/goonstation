@@ -327,7 +327,8 @@
 					boutput(owner, "<span class='notice'>You create a bridge on [T].</span>")
 				else
 					boutput(owner, "<span class='alert'>You were unable to place a bridge on [T].</span>")
-			return 1
+
+				return 1
 
 		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
 		if (!istype(B1))
@@ -406,7 +407,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
