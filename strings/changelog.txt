@@ -1,5 +1,7 @@
 
 (t)mon nov 16 20
+(u)Kyle
+(*)Fix Clock 188 bug where its shot delay while on burst mode was too low.
 (u)Luxizzle
 (p)2694
 (e)🆕🎨|feature, sprites
