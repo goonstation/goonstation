@@ -69757,10 +69757,8 @@
 	},
 /area/centcom)
 "dnO" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
 	},
 /area/centcom)
 "dnP" = (
@@ -71273,10 +71271,8 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "dsd" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
 	},
 /area/centcom)
 "dse" = (
@@ -71702,10 +71698,8 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/destiny)
 "dts" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
 	},
 /area/centcom)
 "dtu" = (
@@ -72585,10 +72579,8 @@
 	icon_state = "blue"
 	})
 "dvL" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -72601,27 +72593,20 @@
 	icon_state = "blue"
 	})
 "dvN" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
 	},
 /area/centcom/offices{
 	icon_state = "blue"
 	})
 "dvO" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction_4way"
-	},
+/turf/unsimulated/wall/setpieces/leadwall/junction_four},
 /area/centcom/offices{
 	icon_state = "blue"
 	})
 "dvP" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -76946,10 +76931,8 @@
 	},
 /area/centcom/lounge)
 "dGy" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
 	},
 /area/centcom/lounge)
 "dGz" = (
@@ -77256,10 +77239,8 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHq" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
 	},
 /area/centcom/lounge)
 "dHr" = (
@@ -77275,10 +77256,8 @@
 	},
 /area/centcom/lounge)
 "dHt" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
 	},
 /area/centcom/lounge)
 "dHu" = (
@@ -78490,10 +78469,8 @@
 	},
 /area/centcom/lounge)
 "dKz" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
 	},
 /area/centcom/garden)
 "dKA" = (
@@ -78622,10 +78599,8 @@
 	},
 /area/centcom/lobby)
 "dKO" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
 	},
 /area/centcom/lobby)
 "dKP" = (
@@ -78676,10 +78651,8 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dKW" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
 	},
 /area/centcom/garden)
 "dKX" = (
@@ -78809,10 +78782,8 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dLn" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
 	},
 /area/centcom/lobby)
 "dLo" = (
@@ -78856,10 +78827,8 @@
 	},
 /area/centcom/lobby)
 "dLs" = (
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
 	},
 /area/centcom/lobby)
 "dLt" = (
@@ -79295,10 +79264,8 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dMp" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction"
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
 	},
 /area/centcom/garden)
 "dMq" = (
@@ -80955,10 +80922,7 @@
 	},
 /area/centcom/lobby)
 "dQe" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadjunction_4way"
-	},
+/turf/unsimulated/wall/setpieces/leadwall/junction_four},
 /area/centcom/lobby)
 "dQf" = (
 /obj/item/storage/toilet/random{
