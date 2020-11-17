@@ -772,7 +772,7 @@ MATERIAL
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
+				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
 					src.consume_rods(2)
