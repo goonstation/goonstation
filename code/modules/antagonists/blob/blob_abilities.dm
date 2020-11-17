@@ -366,7 +366,7 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 75, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 80, 1)
 		if (!owner.starter_buff)
 			src.deduct_bio_points()
 			src.do_cooldown()
