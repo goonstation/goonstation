@@ -179,11 +179,14 @@
 		  && prob(2))
 			src.circulator_flags |= LEAKS_LUBE
 			src.repairstate = 1
-			if( circulator_flags & OPENCONTAINER && src.reagents.total_volume )
+			if((circulator_flags & OPENCONTAINER) && src.reagents.total_volume )
 				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
+				playsound(src.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
 			else
 				src.audible_message("<span class='alert'>An usettling gurgling sound can be heard from [src].</span>")
-			src.repair_desc = "Lubrication system is a mess, the piping needs to be cut up with welder prior to removal."
+				playsound(src.loc, "sound/effects/bubbles3.ogg", 20, 1, -3, pitch=0.7)
+
+			src.repair_desc = "Lubrication system is a mess and needs replacing, the piping needs to be cut up with a welder prior to removal."
 
 
 		// Interactions with transferred gas
@@ -437,14 +440,24 @@
 	var/list/history
 	var/const/history_max = 50
 
-	proc/generate_variants()
-		src.varient_a = rand(10,99)
+	proc/generate_variants(a=null,b=null)
 		var/prepend_serial_num = "[pick(consonants_upper)][pick(consonants_upper)]"
-		if(prob(20)) src.varient_b = pick(consonants_upper)
+
+		if(is_null_or_space(a))	src.varient_a = rand(10,99)
+		else src.varient_a = a
+
+		if(is_null_or_space(b))
+			if(prob(30)) src.varient_b = pick(uppercase_letters)
+		else src.varient_b = b
 
 		src.circ1?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
 
+		if(src.varient_b)
+			if(src.varient_b in list("A","B","C","D"))
+				src.generator_flags |= TEG_HIGH_TEMP
+			else if(src.varient_b in list("E","F","G","H"))
+				src.generator_flags |= TEG_LOW_TEMP
 
 	New()
 		..()
