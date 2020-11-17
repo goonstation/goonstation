@@ -53,7 +53,7 @@
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (master && (!master.click_check || (usr in master.mobs)))
-			master.scrolled(src, O, user)
+			master.MouseDrop_T(src, O, user)
 
 
 /datum/hud
