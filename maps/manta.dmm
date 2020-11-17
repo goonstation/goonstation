@@ -12865,6 +12865,8 @@
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
+/obj/item/basketball,
+/obj/item/basketball,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDR" = (
