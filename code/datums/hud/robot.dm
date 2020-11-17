@@ -271,7 +271,7 @@
 		mainframe.underlays += "block"
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
+	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
 		if(!master) return
 		switch(id)
 			if("object1", "object2", "object3", "object4", "object5", "object6", "object7", "next", "nextbg", "prev", "prevbg", "boxes")

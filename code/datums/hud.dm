@@ -179,7 +179,7 @@
 		return null
 
 	proc/clicked(id)
-	proc/scrolled(id, dx, dy, usr, parms)
+	proc/scrolled(id, dx, dy, user, parms)
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
 	proc/MouseDrop(var/obj/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
