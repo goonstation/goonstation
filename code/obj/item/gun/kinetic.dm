@@ -48,14 +48,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (src?.loaded_magazine)
 			if(src.loaded_magazine.is_null_mag)
 				. += "There isn't a magazine in the gun!"
-			else
+			else if(src.loaded_magazine.mag_contents.len >= 1 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
 				var/datum/projectile/ammo_type = src.loaded_magazine.mag_contents[1]
 				if(src.loaded_magazine.mag_contents.len == 1)
 					. += "There is 1 [ammo_type.ammo_name] left!"
 				else if(src.loaded_magazine.mag_contents.len > 1)
 					. += "There are [src.loaded_magazine.mag_contents.len] [ammo_type.ammo_name_plural ? ammo_type.ammo_name_plural : (ammo_type.ammo_name + "s")] left!"
-				else
-					. += "There aren't any bullets left!"
+			else
+				. += "There aren't any bullets left!"
 		if (src.firemodes && src.firemode_index)
 			. += "Each shot will currently use [src.firemodes[src.firemode_index]["burst_count"]] bullets!"
 		else

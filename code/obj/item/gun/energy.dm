@@ -133,20 +133,6 @@
 		else
 			..()
 
-	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
-			if (!src.fixed_mag && src.loaded_magazine && !src.rechargeable)
-				var/obj/item/ammo/power_cell/W = src.loaded_magazine
-				user.put_in_hand_or_drop(W)
-				src.loaded_magazine = null
-				update_icon()
-				src.add_fingerprint(user)
-			else
-				return ..()
-		else
-			return ..()
-		return
-
 	proc/charge(var/amt)
 		if(src.loaded_magazine && rechargeable)
 			return src.loaded_magazine.charge(amt)

@@ -305,7 +305,7 @@
 				return */ // Full reload or ammo left over.
 		else return ..()
 
-	/// Move *this* ammo into *that* gun
+	/// Move *this* ammo into *that* gun ... should probably be on the gun, tho
 	proc/loadammo(var/obj/item/gun/K, var/mob/user)
 		// Also see attackby() in kinetic.dm.
 		if (!K)

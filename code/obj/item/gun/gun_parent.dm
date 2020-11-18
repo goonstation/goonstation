@@ -134,8 +134,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/sanitycheck(var/casings = 0, var/ammo = 1)
 	if (casings && (src.casings_to_eject.len > 30 || src.current_projectile?.shot_number > 30))
 		logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-		if (src.casings_to_eject > 0)
-			src.casings_to_eject = 0
+		if (src.casings_to_eject.len > 0)
+			src.casings_to_eject.len = 0
 		return 0
 	// if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
 	// 	logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
@@ -220,6 +220,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(user, "<span class='alert'>No lock to break!</span>")
 	return FALSE
 
+/obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
+	if(initialize)
+		if(!src.firemodes.len) // Not spawned with a list of firemodes? Generate one from the current settings
+			src.firemodes = list(list("name" = "single shot", "burst_count" = src.burst_count, "refire_delay" = src.refire_delay, "shoot_delay" = src.shoot_delay, "projectile" = src.current_projectile))
+		src.firemode_index = 1
+	else
+		src.firemode_index += 1
+		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
+			src.firemode_index = 1
+	src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
+	src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
+	src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
+	src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
+	. = "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>"
+	if(istype(src.firemodes[src.firemode_index]["projectile"], /datum/projectile))
+		src.current_projectile = new src.firemodes[src.firemode_index]["projectile"]
+		. += "<span class='notice'>Each shot will use [src.current_projectile.cost] ammo units.</span>"
+	if(user)
+		boutput(user, .)
+
 /obj/item/gun/attackby(obj/item/ammo/b as obj, mob/user as mob)
 	if(istype(b, /obj/item/ammo/))
 		switch (b.loadammo(src, user))
@@ -287,97 +307,113 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return ..()
 
-/obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
-	if(initialize)
-		if(!src.firemodes.len) // Not spawned with a list of firemodes? Generate one from the current settings
-			src.firemodes = list(list("name" = "single shot", "burst_count" = src.burst_count, "refire_delay" = src.refire_delay, "shoot_delay" = src.shoot_delay, "projectile" = src.current_projectile))
+/obj/item/gun/attack_hand(mob/user as mob)
+	if ((user.r_hand == src || user.l_hand == src))
+		if(src.unload_gun(user = user))
+			return
+		else
+			return ..()
 	else
-		src.firemode_index += 1
-		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
-			src.firemode_index = 1
-	src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
-	src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
-	src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
-	src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
-	. = "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>"
-	if(istype(src.firemodes[src.firemode_index]["projectile"], /datum/projectile))
-		src.current_projectile = new src.firemodes[src.firemode_index]["projectile"]
-		. += "<span class='notice'>Each shot will use [src.current_projectile.cost] ammo units.</span>"
-	if(user)
-		boutput(user, .)
+		return ..()
+
+/obj/item/gun/proc/unload_gun(var/mob/user)
+	if(!user || !src.loaded_magazine) return FALSE
+
+	if(src.fixed_mag) // Cant remove the magazine, so lets try removing whats inside it!
+		if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Fixed battery? Cant remove it
+			boutput(user, "The battery cannot be removed!")
+			return FALSE
+		else
+	else // Removable magazine, lets remove it!
+		if(src.loaded_magazine.is_null_mag) // but only if there is one in there
+			boutput(user, "There's no magazine in the gun!")
+			return FALSE
+		var/obj/item/ammo/W = src.loaded_magazine
+		W.loaded_in = null
+		W.update_icon()
+		user.put_in_hand_or_drop(W)
+		src.loaded_magazine = new /obj/item/ammo/bullets/empty(src)
+		src.loaded_magazine.loaded_in = src
+		src.update_icon()
+		src.add_fingerprint(user)
+		handle_casings(eject_stored = TRUE, user = user) // Some kind of gun that stores its casings in the mag, I guess
+		boutput(user, "You unload \the [W] from \the [src]!")
+		if (user.r_hand != W && user.l_hand != W)
+			boutput(user, "[W] fell on the ground. Whoops.")
+		return TRUE
 
 /obj/item/gun/proc/swap(var/obj/item/ammo/A, var/mob/user)
 	// // I tweaked this for improved user feedback and to support zip guns (Convair880).
-	// var/check = 0
-	// if (!A || !src)
-	// 	check = 0
-	// if (src.sanitycheck() == 0)
-	// 	check = 0
-	// if (A.caliber == src.caliber)
-	// 	check = 1
-	// else if (A.caliber in src.caliber) // Some guns can have multiple calibers.
-	// 	check = 1
-	// else if (src.caliber == null) // Special treatment for zip guns, huh.
-	// 	check = 1
-	// if (!check)
-	// 	return 0
-	// 	//DEBUG_MESSAGE("Couldn't swap [src]'s ammo ([src.ammo.type]) with [A.type].")
+		// var/check = 0
+		// if (!A || !src)
+		// 	check = 0
+		// if (src.sanitycheck() == 0)
+		// 	check = 0
+		// if (A.caliber == src.caliber)
+		// 	check = 1
+		// else if (A.caliber in src.caliber) // Some guns can have multiple calibers.
+		// 	check = 1
+		// else if (src.caliber == null) // Special treatment for zip guns, huh.
+		// 	check = 1
+		// if (!check)
+		// 	return 0
+		// 	//DEBUG_MESSAGE("Couldn't swap [src]'s ammo ([src.ammo.type]) with [A.type].")
 
-	// // The gun may have been fired; eject casings if so.
-	// src.ejectcasings()
+		// // The gun may have been fired; eject casings if so.
+		// src.ejectcasings()
 
-	// // We can't delete A here, because there's going to be ammo left over.
-	// if (src.max_ammo_capacity < A.amount_left)
-	// 	// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-	// 	var/obj/item/ammo/bullets/ammoDrop = new src.ammo.type
-	// 	ammoDrop.amount_left = src.ammo.amount_left
-	// 	ammoDrop.name = src.ammo.name
-	// 	ammoDrop.icon = src.ammo.icon
-	// 	ammoDrop.icon_state = src.ammo.icon_state
-	// 	ammoDrop.ammo_type = src.ammo.ammo_type
-	// 	ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
-	// 	ammoDrop.update_icon()
-	// 	usr.put_in_hand_or_drop(ammoDrop)
-	// 	src.ammo.amount_left = 0 // Make room for the new ammo.
-	// 	src.ammo.loadammo(A, src) // Let the other proc do the work for us.
-	// 	//DEBUG_MESSAGE("Swapped [src]'s ammo with [A.type]. There are [A.amount_left] round left over.")
-	// 	return 2
+		// // We can't delete A here, because there's going to be ammo left over.
+		// if (src.max_ammo_capacity < A.amount_left)
+		// 	// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
+		// 	var/obj/item/ammo/bullets/ammoDrop = new src.ammo.type
+		// 	ammoDrop.amount_left = src.ammo.amount_left
+		// 	ammoDrop.name = src.ammo.name
+		// 	ammoDrop.icon = src.ammo.icon
+		// 	ammoDrop.icon_state = src.ammo.icon_state
+		// 	ammoDrop.ammo_type = src.ammo.ammo_type
+		// 	ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
+		// 	ammoDrop.update_icon()
+		// 	usr.put_in_hand_or_drop(ammoDrop)
+		// 	src.ammo.amount_left = 0 // Make room for the new ammo.
+		// 	src.ammo.loadammo(A, src) // Let the other proc do the work for us.
+		// 	//DEBUG_MESSAGE("Swapped [src]'s ammo with [A.type]. There are [A.amount_left] round left over.")
+		// 	return 2
 
-	// else
+		// else
 
-	// 	usr.u_equip(A) // We need a free hand for ammoHand first.
+		// 	usr.u_equip(A) // We need a free hand for ammoHand first.
 
-	// 	// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-	// 	var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-	// 	ammoHand.amount_left = src.ammo.amount_left
-	// 	ammoHand.name = src.ammo.name
-	// 	ammoHand.icon = src.ammo.icon
-	// 	ammoHand.icon_state = src.ammo.icon_state
-	// 	ammoHand.ammo_type = src.ammo.ammo_type
-	// 	ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
-	// 	ammoHand.update_icon()
-	// 	usr.put_in_hand_or_drop(ammoHand)
+		// 	// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
+		// 	var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
+		// 	ammoHand.amount_left = src.ammo.amount_left
+		// 	ammoHand.name = src.ammo.name
+		// 	ammoHand.icon = src.ammo.icon
+		// 	ammoHand.icon_state = src.ammo.icon_state
+		// 	ammoHand.ammo_type = src.ammo.ammo_type
+		// 	ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
+		// 	ammoHand.update_icon()
+		// 	usr.put_in_hand_or_drop(ammoHand)
 
-	// 	var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
-	// 	ammoGun.amount_left = A.amount_left
-	// 	ammoGun.name = A.name
-	// 	ammoGun.icon = A.icon
-	// 	ammoGun.icon_state = A.icon_state
-	// 	ammoGun.ammo_type = A.ammo_type
-	// 	//DEBUG_MESSAGE("Swapped [src]'s ammo with [A.type].")
-	// 	qdel(src.ammo) // Make room for the new ammo.
-	// 	qdel(A) // We don't need you anymore.
-	// 	ammoGun.set_loc(src)
-	// 	src.ammo = ammoGun
-	// 	src.current_projectile = ammoGun.ammo_type
-	// 	if(src.silenced)
-	// 		src.current_projectile.shot_sound = 'sound/machines/click.ogg'
-	// 	src.update_icon()
+		// 	var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
+		// 	ammoGun.amount_left = A.amount_left
+		// 	ammoGun.name = A.name
+		// 	ammoGun.icon = A.icon
+		// 	ammoGun.icon_state = A.icon_state
+		// 	ammoGun.ammo_type = A.ammo_type
+		// 	//DEBUG_MESSAGE("Swapped [src]'s ammo with [A.type].")
+		// 	qdel(src.ammo) // Make room for the new ammo.
+		// 	qdel(A) // We don't need you anymore.
+		// 	ammoGun.set_loc(src)
+		// 	src.ammo = ammoGun
+		// 	src.current_projectile = ammoGun.ammo_type
+		// 	if(src.silenced)
+		// 		src.current_projectile.shot_sound = 'sound/machines/click.ogg'
+		// 	src.update_icon()
 
-	// 	return 1
+		// 	return 1
 
-	// ok lets load it
-	// Only accept magazines, boxes, and batteries. Everything else it handled by mag-to-mag transfer procs
+		// ok lets load it
+		// Only accept magazines, boxes, and batteries. Everything else it handled by mag-to-mag transfer procs
 	var/list/allowed_kinds = list(AMMO_MAGAZINE, AMMO_ENERGY, AMMO_BOX)
 	if(!(A.mag_type in allowed_kinds))
 		boutput(user, "Wrong kind of thing to put into this thing!")
@@ -385,6 +421,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 
 	A.set_loc(src)
+	src.handle_casings(eject_stored = TRUE, user = user)
 	user.u_equip(A)
 	if(src.loaded_magazine.is_null_mag)
 		qdel(src.loaded_magazine)
@@ -552,37 +589,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					gun.shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 	return TRUE
 
-/// Handles bursts, fire-rate, updating loaded magazine, etc
-/obj/item/gun/proc/shoot_manager(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
-	if(src.shooting) return
-	if (isghostdrone(user))
-		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return FALSE
-	if(!isturf(target))
-		target = get_turf(target)
-	if(!isturf(start))
-		start = get_turf(start)
-	if (!isturf(target) || !isturf(start))
-		return FALSE
-	var/canshoot = src.canshoot()
-	if (!canshoot)
-		src.dry_fire(user)
-		return
-	else if (canshoot == GUN_IS_SHOOTING)
-		return
-	else if(canshoot == TRUE)
-		user.next_click = max(user.next_click, world.time + src.shoot_delay)
-	SPAWN_DBG(0)
-		src.shooting = 1
-		for(var/burst in 1 to src.burst_count)
-			if (!process_ammo(user)) // handles magazine stuff, sets current projectile if needed
-				break
-			var/shoot_result = shoot(target, start, user, POX, POY)
-			if(shoot_result == FALSE)
-				break
-			sleep(src.refire_delay)
-		src.shooting = 0
-
 // Gun can't fire
 /obj/item/gun/proc/dry_fire(var/mob/user, var/mob/M, var/point_blank)
 	if (!silenced)
@@ -616,9 +622,106 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
-	if (!M || !user)
+/// Handles bursts, fire-rate, updating loaded magazine, etc
+/obj/item/gun/proc/shoot_manager(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
+	if(src.shooting) return
+	if (isghostdrone(user))
+		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
+		return FALSE
+	var/canshoot = src.canshoot()
+	if (!canshoot)
+		src.dry_fire(user)
 		return
+	else if (canshoot == GUN_IS_SHOOTING)
+		return
+	else if(canshoot == TRUE)
+		user.next_click = max(user.next_click, world.time + src.shoot_delay)
+	SPAWN_DBG(0)
+		src.shooting = 1
+		for(var/burst in 1 to src.burst_count)
+			if (!process_ammo(user)) // handles magazine stuff, sets current projectile if needed
+				break
+			var/shoot_result = shoot(target, start, user, POX, POY)
+			if(shoot_result == FALSE)
+				break
+			sleep(src.refire_delay)
+		src.shooting = 0
+
+/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
+	if (get_dist(user,target)<=1 && ismob(target))
+		src.shoot_point_blank(M = target, user = user, second_shot = second_shot)
+		return
+
+	if(!isturf(target))
+		target = get_turf(target)
+	if(!isturf(start))
+		start = get_turf(start)
+	if (!isturf(target) || !isturf(start))
+		return FALSE
+
+	if (!istype(src.current_projectile,/datum/projectile/))
+		return FALSE
+
+	if (src.muzzle_flash)
+		if (isturf(user.loc))
+			var/turf/origin = user.loc
+			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+
+	if (ismob(user))
+		var/mob/M = user
+		if (M.mob_flags & AT_GUNPOINT)
+			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
+				G.shoot()
+		if(slowdown)
+			SPAWN_DBG(-1)
+				M.movement_delay_modifier += slowdown
+				sleep(slowdown_time)
+				M.movement_delay_modifier -= slowdown
+
+	var/spread = 0
+	if (user.reagents)
+		var/how_drunk = 0
+		var/amt = user.reagents.get_reagent_amount("ethanol")
+		switch(amt)
+			if (110 to INFINITY)
+				how_drunk = 2
+			if (1 to 110)
+				how_drunk = 1
+		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
+		spread += 5 * how_drunk
+	spread = max(spread, spread_angle)
+	handle_casings(user = user)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
+	if (P)
+		P.forensic_ID = src.forensic_ID
+
+	if(user && !suppress_fire_msg)
+		if(!src.silenced)
+			for(var/mob/O in AIviewers(user, null))
+				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
+		else
+			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
+				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
+
+		var/turf/T = target
+		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+
+	if (ismob(user))
+		var/mob/M = user
+		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
+			var/mob/living/carbon/human/H = user
+			H.gunshot_residue = 1
+	src.update_icon()
+
+// Checks if the gun is able to shoot
+/obj/item/gun/proc/canshoot()
+	if(src.loaded_magazine)
+		return 1
+	return 0
+
+/obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
+	if (!ismob(M) || !user)
+		return FALSE
 
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return FALSE
@@ -702,6 +805,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
+	src.update_icon()
 	if(continuous) return
 	if (flag)
 		return
@@ -709,102 +813,39 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
-/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
-	if (get_dist(user,target)<=1)
-		src.shoot_point_blank(M = target, user = user, second_shot = second_shot)
-		return
-
-	if (!istype(src.current_projectile,/datum/projectile/))
-		return FALSE
-
-	if (src.muzzle_flash)
-		if (isturf(user.loc))
-			var/turf/origin = user.loc
-			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
-
-	if (ismob(user))
-		var/mob/M = user
-		if (M.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
-				G.shoot()
-		if(slowdown)
-			SPAWN_DBG(-1)
-				M.movement_delay_modifier += slowdown
-				sleep(slowdown_time)
-				M.movement_delay_modifier -= slowdown
-
-	var/spread = 0
-	if (user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user) ? 1 : 0)
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-	handle_casings(user = user)
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
-	if (P)
-		P.forensic_ID = src.forensic_ID
-
-	if(user && !suppress_fire_msg)
-		if(!src.silenced)
-			for(var/mob/O in AIviewers(user, null))
-				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
-		else
-			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
-				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
-
-		var/turf/T = target
-		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
-
-	if (ismob(user))
-		var/mob/M = user
-		if (ishuman(M) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
-			var/mob/living/carbon/human/H = user
-			H.gunshot_residue = 1
-	src.update_icon()
-
-// Checks if the gun is able to shoot
-/obj/item/gun/proc/canshoot()
-	if(src.loaded_magazine)
-		return 1
-	return 0
-
 /obj/item/gun/proc/handle_casings(var/eject_stored = 0, var/mob/user)
 
 	if(eject_stored)
-		if(!user)
+		if(!user || src.casings_to_eject.len < 1)
 			return
-		if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
-			src.add_fingerprint(user)
-			if (src.sanitycheck(0, 1) == 0)
-				user.show_text("You can't unload this gun.", "red")
-				return
-			if (src.loaded_magazine.mag_contents.len <= 0)
-				// The gun may have been fired; eject casings if so.
-				if ((src.casings_to_eject.len > 0))
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject.len = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						var/turf/T = get_turf(src)
-						if(T)
-							var/obj/item/casing/C = null
-							while (src.casings_to_eject.len > 0)
-								C = new src.current_projectile.casing(T)
-								C.forensic_ID = src.forensic_ID
-								C.set_loc(T)
-								src.casings_to_eject--
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
+		if (src.sanitycheck(1, 0) == 0)
+			logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+			src.casings_to_eject.len = 0
+			boutput(user, "You don't find any casings to eject. Huh.")
+			return
+		// If it accepts a clip at all, unload all of them. Like a revolver
+		// If not, eject one casing. Like a revolver, the kind that takes one bullet at a time
+		if ((AMMO_CLIP) in src.accepted_mag)
+			user.show_text("You eject [src.casings_to_eject.len > 1 ? "[src.casings_to_eject.len] casings" : "a casing"] from [src].", "red")
+			var/turf/T = get_turf(src)
+			if(T)
+				var/obj/item/casing/C = null
+				while (src.casings_to_eject.len >= 1)
+					C = new src.current_projectile.casing(T)
+					C.forensic_ID = src.forensic_ID
+					C.set_loc(T)
+					src.casings_to_eject -= src.casings_to_eject[1]
+			return
+		else
+			user.show_text("You eject a casing from [src].", "red")
+			var/turf/T = get_turf(src)
+			if(T)
+				var/obj/item/casing/C = null
+				C = new src.current_projectile.casing(T)
+				C.forensic_ID = src.forensic_ID
+				C.set_loc(T)
+				src.casings_to_eject -= src.casings_to_eject[1]
+			return
 	else
 		if (!istype(src.current_projectile, /datum/projectile))
 			return
@@ -820,8 +861,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 						C.forensic_ID = src.forensic_ID
 						C.set_loc(T)
 		else
-			if (src.casings_to_eject < 0)
-				src.casings_to_eject = 0
+			if (src.casings_to_eject.len < 0)
+				src.casings_to_eject.len = 0
 			src.casings_to_eject += new src.current_projectile.casing(src)
 
 /obj/item/gun/examine()
@@ -855,7 +896,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			src.loaded_magazine.charge -= src.current_projectile.cost
 			return TRUE
 	else // uses bullets
-		if(istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
+		if(src.loaded_magazine.mag_contents.len >= 1 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
 			src.current_projectile = src.loaded_magazine.mag_contents[1]
 			src.loaded_magazine.mag_contents.Cut(1,2)
 			return TRUE
