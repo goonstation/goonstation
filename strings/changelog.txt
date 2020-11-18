@@ -1,12 +1,15 @@
 
 (t)tue nov 17 20
+(u)kyle
+(+)Station NTSOs now only get standard security and bridge access.
+(+)Blunt bullet projectile types don't deal bleed damage. Looking at you 9mm NATO.
 (u)pali
 (p)2710
 (e)🐛|bug
 (+)VR chess now works again!
 (t)mon nov 16 20
 (u)Kyle
-(*)Fix Clock 188 bug where its shot delay while on burst mode was too low.
+(*)Fix Clock 188 bug where its shot delay while on burst mode was too low. Increase spread by 3 degrees too.
 (u)Luxizzle
 (p)2694
 (e)🆕🎨|feature, sprites

@@ -2318,7 +2318,7 @@
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_access("Security Officer") + list(access_heads)
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
