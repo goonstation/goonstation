@@ -1,6 +1,7 @@
 
 (t)tue nov 17 20
 (u)kyle
+(+)Station NTSOs now only get standard security and bridge access.
 (+)Blunt bullet projectile types don't deal bleed damage. Looking at you 9mm NATO.
 (u)pali
 (p)2710
