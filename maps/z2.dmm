@@ -81058,9 +81058,7 @@
 	})
 "dQx" = (
 /obj/machinery/door/airlock/gannets/maintenance,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/plating,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -82711,6 +82709,10 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/cogmap)
+"fen" = (
+/obj/structure/woodwall,
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "fge" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -83001,6 +83003,13 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"gKc" = (
+/obj/machinery/light/small/frostedred{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "gKo" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -83174,6 +83183,16 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"hPi" = (
+/obj/landmark/viscontents_spawn{
+	targetZ = 4
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "hQa" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -83594,6 +83613,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"jMV" = (
+/obj/machinery/light/small/frostedred{
+	dir = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "jNl" = (
 /obj/table/wood/auto,
 /obj/item/gun/energy/wavegun,
@@ -83745,6 +83771,9 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
+"kkw" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/centcom/retentioncenter)
 "kmt" = (
 /turf/unsimulated/floor/void/channel{
 	density = 1;
@@ -83955,6 +83984,10 @@
 	dir = 4
 	},
 /area/ship_interior/cruisertest)
+"lkO" = (
+/obj/machinery/door/airlock/gannets/maintenance,
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "loc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -83999,6 +84032,11 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"lsi" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/centcom/retentioncenter)
 "lsA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -84096,6 +84134,11 @@
 "lGN" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"lIU" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/centcom/retentioncenter)
 "lLo" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -85326,6 +85369,12 @@
 /obj/machinery/computer3/generic/personal/meatland,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qHA" = (
+/obj/landmark/viscontents_spawn{
+	targetZ = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "qIQ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -85524,6 +85573,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"rwy" = (
+/obj/decal/poster/wallsign/hazard_exheat,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/centcom/retentioncenter)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -85580,6 +85635,11 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"rHF" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 1
+	},
+/area/centcom/retentioncenter)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -85630,6 +85690,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"rNJ" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
+	},
+/area/centcom/retentioncenter)
 "rOb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -85875,6 +85940,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sord)
+"sPS" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/centcom/retentioncenter)
+"sTc" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap{
+	dir = 8
+	},
+/area/centcom/retentioncenter)
 "sTU" = (
 /obj/item/wirecutters,
 /turf/space,
@@ -86029,6 +86104,10 @@
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
+"tPH" = (
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -86061,6 +86140,12 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"tZc" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/centcom/retentioncenter)
 "tZr" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -86139,6 +86224,11 @@
 /turf/space,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
+"uzo" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/centcom/retentioncenter)
 "uzz" = (
 /obj/table/wood/auto/desk,
 /obj/item/gun/kinetic/meowitzer/inert{
@@ -86232,6 +86322,9 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"vjH" = (
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "vlp" = (
 /obj/machinery/light{
 	dir = 1
@@ -86576,6 +86669,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"wWU" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/centcom/retentioncenter)
 "wYI" = (
 /turf/space,
 /turf/simulated/floor/caution/corner/sw,
@@ -86640,6 +86738,13 @@
 	dir = 8
 	},
 /area/ship_interior/cruisertest)
+"xia" = (
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/centcom/retentioncenter)
 "xky" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -160023,15 +160128,15 @@ dFc
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+lsi
+rHF
+rHF
+rHF
+sPS
+wWU
 aES
 dFl
+aES
 aES
 aES
 aES
@@ -160325,12 +160430,12 @@ dFc
 aES
 aES
 dFl
-aES
-aES
-aES
-aES
-aES
-aES
+uzo
+qHA
+vjH
+vjH
+uzo
+uzo
 aES
 aES
 aES
@@ -160627,17 +160732,17 @@ dFc
 aES
 aES
 aES
+uzo
+hPi
+sTc
+gKc
+lIU
+uzo
 aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+dFl
 aES
 aES
 aES
@@ -160929,13 +161034,13 @@ dFc
 aES
 aES
 aES
+uzo
+qHA
+uzo
+tPH
+vjH
+uzo
 aES
-aES
-dFl
-aES
-aES
-aES
-dFl
 aES
 aES
 aES
@@ -161231,13 +161336,13 @@ dFc
 aES
 dFl
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+uzo
+vjH
+lIU
+rHF
+rHF
+rNJ
+jMV
 aES
 aES
 aES
@@ -161533,12 +161638,12 @@ dFc
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
+rwy
+tPH
+vjH
+xia
+fen
+lkO
 aES
 aES
 aES
@@ -161835,12 +161940,12 @@ dFc
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
+lIU
+rHF
+rHF
+kkw
+kkw
+tZc
 aES
 aES
 aES
@@ -162136,12 +162241,12 @@ aaa
 dFc
 aES
 aES
-aES
 dFl
 aES
 aES
 aES
-dFl
+aES
+aES
 aES
 aES
 aES
