@@ -1,4 +1,13 @@
 
+(t)wed nov 18 20
+(u)Chickenish
+(p)2735
+(e)🐛|bug
+(+)Pill Bottles are now able to be quick filled again.
+(u)Luxizzle
+(p)2725
+(e)⚖🆕|balance, feature
+(+)Cyborgs now twitch when being disoriented.
 (t)tue nov 17 20
 (u)kyle
 (+)Station NTSOs now only get standard security and bridge access.

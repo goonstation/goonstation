@@ -9,6 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 
 	get_desc()
