@@ -1,5 +1,9 @@
 
 (t)wed nov 18 20
+(u)Chickenish
+(p)2735
+(e)🐛|bug
+(+)Pill Bottles are now able to be quick filled again.
 (u)Luxizzle
 (p)2725
 (e)⚖🆕|balance, feature
