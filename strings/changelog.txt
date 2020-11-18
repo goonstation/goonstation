@@ -1,5 +1,7 @@
 
 (t)tue nov 17 20
+(u)kyle
+(+)Blunt bullet projectile types don't deal bleed damage. Looking at you 9mm NATO.
 (u)pali
 (p)2710
 (e)🐛|bug
