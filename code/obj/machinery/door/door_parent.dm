@@ -572,7 +572,7 @@
 							src.meatcube_present = TRUE
 							break
 					if (src.meatcube_present == FALSE)
-						L.make_cube(life = INFINITY, T = get_turf(L))
+						L.make_cube(life = 20 MINUTES, T = get_turf(L))
 				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 				if (isdead(L) && src.dir == SOUTH || src.dir == NORTH)
 					L.squish_axis = "Vertical"
