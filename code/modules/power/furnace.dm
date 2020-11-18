@@ -229,7 +229,7 @@
 	// original is 1 only if it's the item a person directly puts in, so that putting in a
 	// fried item doesn't say each item in it was put in
 	proc/load_into_furnace(obj/item/W as obj, var/original, mob/user as mob)
-		var/pooled_type = 0
+		var/pooled_type = FALSE
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (istype(W, /obj/item/raw_material/char))
