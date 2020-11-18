@@ -496,7 +496,8 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/mavericksabre,
 /datum/figure_info/whitneystingray,
 /datum/figure_info/fleur,
-/datum/figure_info/joaquinfry
+/datum/figure_info/joaquinfry,
+/datum/figure_info/carolineaudibert
 )
 
 /datum/figure_info
@@ -901,6 +902,10 @@ var/list/figure_patreon_rarity = list(\
 	joaquinfry
 		name = "\improper Joaquin Fry"
 		icon_state = "joaquinfry"
+
+	carolineaudibert
+		name = "\improper Caroline Audibert"
+		icon_state = "carolineaudibert"
 
 #ifdef XMAS
 	santa
