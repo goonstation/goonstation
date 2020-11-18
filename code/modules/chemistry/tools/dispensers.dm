@@ -381,7 +381,7 @@
 	icon_state = "compost"
 	anchored = 0
 	amount_per_transfer_from_this = 30
-
+	event_handler_flags = NO_MOUSEDROP_QOL
 	New()
 		..()
 
@@ -460,7 +460,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "still"
 	amount_per_transfer_from_this = 25
-
+	event_handler_flags = NO_MOUSEDROP_QOL
 	// what was the point here exactly
 	//New()
 		//..()

@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
@@ -2391,8 +2392,8 @@
 	/datum/manufacture/clock_ammo,
 	/datum/manufacture/saa,
 	/datum/manufacture/saa_ammo,
-	/datum/manufacture/riot_launcher, 
-	/datum/manufacture/riot_launcher_ammo_pbr, 
+	/datum/manufacture/riot_launcher,
+	/datum/manufacture/riot_launcher_ammo_pbr,
 	/datum/manufacture/riot_launcher_ammo_flashbang,
 	/datum/manufacture/sniper,
 	/datum/manufacture/sniper_ammo,
