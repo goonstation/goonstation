@@ -67583,11 +67583,7 @@
 /obj/storage/crate/medical{
 	name = "Medkits"
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/oxygen,
 /obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/mender/burn,
 /obj/item/reagent_containers/mender/brute,
 /turf/unsimulated/floor/redwhite{
@@ -67736,11 +67732,7 @@
 /obj/storage/crate/medical{
 	name = "Medkits"
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/oxygen,
 /obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/mender/burn,
 /obj/item/reagent_containers/mender/brute,
 /turf/unsimulated/floor/redwhite{
@@ -67772,6 +67764,9 @@
 /area/syndicate_station/battlecruiser)
 "dhK" = (
 /obj/stool/chair/couch/red,
+/obj/cairngorm_stats{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhL" = (
