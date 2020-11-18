@@ -365,6 +365,11 @@
 		.= 0
 		src.changeStatus("disorient", disorient)
 
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	// Apply the twitching disorient animation for as long as the maximum stun duration is.
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	. = ..()
+
 //STAMINA UTILITY PROCS
 
 
