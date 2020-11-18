@@ -10,7 +10,7 @@
 #define AIRLOCK_WIRE_SAFETY 10
 
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
-#define NET_VERIF_OPTIONS 32
+#define NET_ACCESS_OPTIONS 32
 
 /*
 	New methods:
@@ -213,7 +213,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if(!isrestrictedz(src.z))
 			var/area/station/A = get_area(src)
 			src.name = A.name
-		src.net_access_code = rand(1, NET_VERIF_OPTIONS)
+		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
 	disposing()
@@ -801,7 +801,7 @@ About the new airlock wires panel:
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			if(prob(10))
-				src.net_access_code = rand(1, NET_VERIF_OPTIONS)
+				src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 			if (src.aiControlDisabled == 0)
 				src.aiControlDisabled = 1
 			else if (src.aiControlDisabled == -1)
@@ -1883,4 +1883,4 @@ obj/machinery/door/airlock
 						src.attach_signaler(which_wire+1, usr)
 						. = TRUE
 
-#undef NET_VERIF_OPTIONS
+#undef NET_ACCESS_OPTIONS
