@@ -450,14 +450,18 @@
 			if(prob(30)) src.varient_b = pick(uppercase_letters)
 		else src.varient_b = b
 
-		src.circ1?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
-		src.circ2?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
-
 		if(src.varient_b)
 			if(src.varient_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
 			else if(src.varient_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
+			else
+				// Reassign varient_b to null so unsupported varients aren't shown to players
+				// to avoid confusion
+				src.varient_b = null
+
+		src.circ1?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
+		src.circ2?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
 
 	New()
 		..()
