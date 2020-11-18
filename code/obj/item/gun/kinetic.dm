@@ -7,15 +7,35 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	muzzle_flash = "muzzle_flash"
 
-	// caliber list: update as needed
-	// 0.22 - pistols
-	// 0.308 - rifles
-	// 0.357 - revolver
-	// 0.38 - detective
-	// 0.41 - derringer
-	// 0.72 - shotgun shell, 12ga
-	// 1.57 - 40mm shell
-	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
+	// Ammo caliber defines
+	// #define CALIBER_RIFLE_ASSAULT 0.223
+	// #define CALIBER_RIFLE_HEAVY 0.308
+	// #define CALIBER_RIFLE_CASELESS 0.185
+	// #define CALIBER_PISTOL 0.355
+	// #define CALIBER_PISTOL_SMALL 0.22
+	// #define CALIBER_PISTOL_MAGNUM 0.50
+	// #define CALIBER_PISTOL_GYROJET 0.512
+	// #define CALIBER_PISTOL_FLINTLOCK 0.56
+	// #define CALIBER_MINIGUN 0.10
+	// #define CALIBER_REVOLVER_MAGNUM 0.357
+	// #define CALIBER_REVOLVER_OLDTIMEY 0.45
+	// #define CALIBER_REVOLVER 0.38
+	// #define CALIBER_DERRINGER 0.41
+	// #define CALIBER_WHOLE_DERRINGER 3.00
+	// #define CALIBER_SHOTGUN 0.72
+	// #define CALIBER_CANNON 0.787
+	// #define CALIBER_CANNON_MASSIVE 15.7
+	// #define CALIBER_GRENADE 1.57
+	// #define CALIBER_ROCKET 1.12
+	// #define CALIBER_RPG 1.58
+	// #define CALIBER_ROD 1.00
+	// #define CALIBER_CAT 9.5
+	// #define CALIBER_FROG 8.0
+	// #define CALIBER_CRAB 12
+	// #define CALIBER_TRASHBAG 9.5
+	// #define CALIBER_SECBOT 11.5
+	// #define CALIBER_BATTERY 1.30
+	// #define CALIBER_ANY -1
 
 	New()
 		if(silenced)
@@ -41,19 +61,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
-	update_icon()
-		if (src.loaded_magazine)
-			inventory_counter.update_number(src.loaded_magazine.mag_contents.len)
-		else
-			inventory_counter.update_text("-")
-
-		if(src.has_empty_state)
-			if (src.loaded_magazine.mag_contents.len < 1 && !findtext(src.icon_state, "-empty")) //sanity check
-				src.icon_state = "[src.icon_state]-empty"
-			else
-				src.icon_state = replacetext(src.icon_state, "-empty", "")
-		return 0
-
 	// process_ammo(var/mob/user)
 	// 	if(src.ammo && src.current_projectile)
 	// 		if(src.ammo.use(current_projectile.cost))
@@ -67,132 +74,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (istype(O, /obj/item/ammo/bullets) && allowDropReload)
 			attackby(O, user)
 		return ..()
-
-	attackby(obj/item/ammo/b as obj, mob/user as mob)
-		if(istype(b, /obj/item/ammo/))
-			switch (src.loaded_magazine.loadammo(b,src))
-				if(0)
-					user.show_text("You can't reload this gun.", "red")
-					return
-				if(1)
-					user.show_text("This ammo won't fit!", "red")
-					return
-				if(2)
-					user.show_text("There's no ammo left in [b.name].", "red")
-					return
-				if(3)
-					user.show_text("[src] is full!", "red")
-					return
-				if(4)
-					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.loaded_magazine.mag_contents.len] rounds remaining.</span>")
-					src.logme_temp(user, src, b) // Might be useful (Convair880).
-					return
-				if(5)
-					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
-					src.logme_temp(user, src, b)
-					return
-				if(6)
-					// switch (src.ammo.swap(b,src))
-					// 	if(0)
-					// 		user.show_text("This ammo won't fit!", "red")
-					// 		return
-					// 	if(1)
-					// 		user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-					// 	if(2)
-					// 		user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
-					src.logme_temp(user, src, b)
-					return
-		else
-			..()
-
-	//attack_self(mob/user as mob)
-	//	return
-
-	attack_hand(mob/user as mob)
-	// Added this to make manual reloads possible (Convair880).
-
-		if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
-			src.add_fingerprint(user)
-			if (src.sanitycheck(0, 1) == 0)
-				user.show_text("You can't unload this gun.", "red")
-				return
-			if (src.loaded_magazine.mag_contents.len <= 0)
-				// The gun may have been fired; eject casings if so.
-				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.loaded_magazine.type
-			ammoHand.amount_left = src.loaded_magazine.mag_contents.len
-			ammoHand.name = src.loaded_magazine.name
-			ammoHand.icon = src.loaded_magazine.icon
-			ammoHand.icon_state = src.loaded_magazine.icon_state
-			ammoHand.ammo_type = src.loaded_magazine.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
-			user.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.update_icon()
-			src.loaded_magazine.mag_contents.len = 0
-			src.add_fingerprint(user)
-			ammoHand.add_fingerprint(user)
-
-			user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
-			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
-			return
-
-		return ..()
-
-	attack(mob/M as mob, mob/user as mob)
-	// Finished Cogwerks' former WIP system (Convair880).
-		if (src.canshoot() && user.a_intent != "help" && user.a_intent != "grab")
-			if (src.auto_eject)
-				var/turf/T = get_turf(src)
-				if(T)
-					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
-						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
-			else
-				if (src.casings_to_eject < 0)
-					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
-		..()
-
-	shoot(var/target,var/start ,var/mob/user)
-		if (src.canshoot())
-			if (src.auto_eject)
-				var/turf/T = get_turf(src)
-				if(T)
-					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
-						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
-			else
-				if (src.casings_to_eject < 0)
-					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
-		..()
 
 /obj/item/casing
 	name = "bullet casing"
@@ -305,7 +186,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "heavy"
 	force = 5
 	caliber = CALIBER_MINIGUN
-	accepted_mag = ACCEPT_BOX
+	accepted_mag = AMMO_BOX
 	auto_eject = 1
 	ammo = /obj/item/ammo/bullets/minigun
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -332,6 +213,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "revolver"
 	item_state = "revolver"
 	force = 8.0
+	fixed_mag = TRUE
 	caliber = list(CALIBER_REVOLVER, CALIBER_REVOLVER_MAGNUM) // Just like in RL (Convair880).
 	ammo = /obj/item/ammo/bullets/internal/revolver/magnum
 
@@ -343,6 +225,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
 	icon_state = "derringer"
 	force = 5.0
+	fixed_mag = TRUE
 	caliber = CALIBER_DERRINGER
 	w_class = 2
 	muzzle_flash = null
@@ -363,7 +246,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "'Cause ya gotta have Faith."
 	icon_state = "faith"
 	force = 5.0
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL_SMALL
 	auto_eject = 1
 	w_class = 2
@@ -378,6 +261,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "detective"
 	w_class = 2.0
 	force = 2.0
+	fixed_mag = TRUE
 	caliber = CALIBER_REVOLVER
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/internal/revolver/stun
@@ -389,7 +273,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "colt_saa"
 	w_class = 3.0
 	force = 5.0
-	accepted_mag = ACCEPT_PILE // cus who doesnt love to reload during a battle?
+	fixed_mag = TRUE
+	accepted_mag = AMMO_PILE // cus who doesnt love to reload during a battle?
 	caliber = CALIBER_REVOLVER_OLDTIMEY
 	spread_angle = 1
 	var/hammer_cocked = 0
@@ -400,7 +285,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
 		w_class = 2.0
 		force = 2.0
-		accepted_mag = ACCEPT_PILE
+		accepted_mag = AMMO_PILE
 		caliber = CALIBER_REVOLVER
 		ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
@@ -434,7 +319,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot_delay = 2
 	w_class = 2.0
 	force = 7.0
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL
 	auto_eject = 1
 	has_empty_state = 1
@@ -499,6 +384,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "spas"
 	force = 18.0
 	contraband = 7
+	fixed_mag = TRUE
 	caliber = CALIBER_SHOTGUN
 	auto_eject = 1
 	can_dual_wield = 0
@@ -541,6 +427,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotty"
 	force = 15.0
 	contraband = 5
+	fixed_mag = TRUE
 	caliber = CALIBER_SHOTGUN
 	auto_eject = 1
 	can_dual_wield = 0
@@ -557,8 +444,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ak47"
 	force = 30.0
 	contraband = 8
-	accepted_mag = ACCEPT_MAGAZINE
-	caliber = CALIBER_HEAVY_RIFLE
+	accepted_mag = AMMO_MAGAZINE
+	caliber = CALIBER_RIFLE_HEAVY
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -576,8 +463,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "ohr"
 	force = 10
 	contraband = 8
-	accepted_mag = ACCEPT_MAGAZINE
-	caliber = CALIBER_HEAVY_RIFLE
+	accepted_mag = AMMO_MAGAZINE
+	caliber = CALIBER_RIFLE_HEAVY
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -593,8 +480,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "tranq"
 	force = 10
 	//contraband = 8
-	accepted_mag = ACCEPT_MAGAZINE
-	caliber = CALIBER_HEAVY_RIFLE
+	accepted_mag = AMMO_MAGAZINE
+	caliber = CALIBER_RIFLE_HEAVY
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
@@ -607,13 +494,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "zipgun"
 	force = 3
 	contraband = 6
+	fixed_mag = TRUE
 	caliber = CALIBER_ANY // use any ammo at all BA HA HA HA HA
 	var/failure_chance = 6
 	var/failured = 0
 	ammo = /obj/item/ammo/bullets/internal/zipgun
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
-	                 list("name" = "double-shot", "burst_count" = 2, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
-
+	                 list("name" = "double-shotzinga", "burst_count" = 25, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+#warn ZIPGUN IS FUCKED
 
 #if ASS_JAM
 	New()
@@ -649,7 +537,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	silenced = 1
 	force = 3
 	contraband = 4
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL_SMALL
 	auto_eject = 1
 	hide_attack = 1
@@ -681,6 +569,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flaregun"
 	force = 5.0
 	contraband = 2
+	fixed_mag = TRUE
 	caliber = CALIBER_SHOTGUN
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/internal/shotgun/flare
@@ -692,6 +581,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	//item_state = "flaregun"
 	force = 5.0
 	contraband = 7
+	fixed_mag = TRUE
 	caliber = CALIBER_GRENADE
 	muzzle_flash = "muzzle_flash_launch"
 	ammo = /obj/item/ammo/bullets/internal/launcher/
@@ -726,12 +616,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_range = 4
 	force = 5
 	contraband = 8
+	fixed_mag = TRUE
 	caliber = CALIBER_RPG
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
 	has_empty_state = 1
-	ammo = /obj/item/ammo/bullets/internal/launcher/rpg
+	ammo = /obj/item/ammo/bullets/internal/launcher/rpg/unloaded
 
 	update_icon()
 		..()
@@ -741,11 +632,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.item_state = "rpg7"
 
 	loaded
-		New()
-			src.loaded_magazine = new src.ammo(var_override = list("amount_left" = 1))
-			..()
-			src.update_icon()
-			return
+		ammo = /obj/item/ammo/bullets/internal/launcher/rpg
 
 /obj/item/gun/kinetic/coilgun_TEST
 	name = "coil gun"
@@ -772,7 +659,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL
 	auto_eject = 1
 
@@ -790,7 +677,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL
 	auto_eject = 1
 	has_empty_state = 1
@@ -804,7 +691,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 2
 	force = 3
 	contraband = 4
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL
 	auto_eject = 0
 	hide_attack = 1
@@ -819,6 +706,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotgun"
 	force = 5
 	contraband = 7
+	fixed_mag = TRUE
 	caliber = CALIBER_SHOTGUN
 	auto_eject = 1
 	two_handed = 1
@@ -834,8 +722,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "assault_rifle"
 	force = 20.0
 	contraband = 8
-	accepted_mag = ACCEPT_MAGAZINE
-	caliber = CALIBER_ASSAULT_RIFLE
+	accepted_mag = AMMO_MAGAZINE
+	caliber = CALIBER_RIFLE_ASSAULT
 	auto_eject = 1
 	object_flags = NO_ARM_ATTACH
 
@@ -855,8 +743,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	accepted_mag = (ACCEPT_BOX | ACCEPT_MAGAZINE)
-	caliber = CALIBER_HEAVY_RIFLE
+	accepted_mag = list(AMMO_BOX, AMMO_MAGAZINE)
+	caliber = CALIBER_RIFLE_HEAVY
 	auto_eject = 1
 	burst_count = 8
 
@@ -894,6 +782,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 10
+	fixed_mag = TRUE
 	caliber = CALIBER_CANNON
 	auto_eject = 1
 
@@ -926,6 +815,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "grenade_launcher"
 	force = 5.0
 	contraband = 7
+	fixed_mag = TRUE
 	caliber = CALIBER_GRENADE
 	two_handed = 1
 	can_dual_wield = 0
@@ -957,6 +847,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	inhand_image_icon = 'icons/obj/slamgun.dmi'
 	item_state = "slamgun-ready-world"
 	force = 9
+	fixed_mag = TRUE
 	caliber = CALIBER_SHOTGUN
 	auto_eject = 0
 	spread_angle = 10 // sorry, no sniping with slamguns
@@ -966,10 +857,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = 4
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	ammo = /obj/item/ammo/bullets/internal/slamgun
-
-	New()
-		src.loaded_magazine = new src.ammo("max_amount" = 1)
-		. = ..()
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
@@ -1029,8 +916,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						return
 					else
 						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
+						handle_casings(eject_stored = 1, user = usr)
 						src.update_icon()
 						return
 				else
@@ -1049,8 +935,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			usr.put_in_hand_or_drop(ammoHand)
 
 			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
+			handle_casings(eject_stored = 1, user = usr)
 
 			src.loaded_magazine.mag_contents.len = 0
 			src.update_icon()
@@ -1080,8 +965,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	accepted_mag = ACCEPT_MAGAZINE
-	caliber = CALIBER_HEAVY_RIFLE // technically can accept LMG rounds if you really wanted to
+	accepted_mag = AMMO_MAGAZINE
+	caliber = CALIBER_RIFLE_HEAVY // technically can accept LMG rounds if you really wanted to
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
@@ -1209,7 +1094,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "flintlock"
 	force = 4
 	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
-	caliber = CALIBER_FLINTLOCK
+	fixed_mag = TRUE
+	caliber = CALIBER_PISTOL_FLINTLOCK
 	auto_eject = null
 	var/failure_chance = 1
 	ammo = /obj/item/ammo/bullets/internal/flintlock
@@ -1238,6 +1124,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_speed = 2
 	throw_range = 4
 	force = 5
+	fixed_mag = TRUE
 	caliber = CALIBER_ROCKET //Based on APILAS
 	can_dual_wield = 0
 	two_handed = 1
@@ -1254,6 +1141,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "gungun"
 	item_state = "gungun"
 	w_class = 3
+	fixed_mag = TRUE
 	caliber = CALIBER_WHOLE_DERRINGER //fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
 	force = 5
 	ammo = new /obj/item/ammo/bullets/internal/launcher/multi/derringers
@@ -1266,6 +1154,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	color = "#ff7b00"
 	force = 5
+	fixed_mag = TRUE
 	caliber = CALIBER_CAT
 	auto_eject = 0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1289,13 +1178,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			..()
 
 /obj/item/gun/kinetic/meowitzer/inert
-	New()
-		ammo = /obj/item/ammo/bullets/meowitzer/inert
-		..()
-
-
-
-
+	ammo = /obj/item/ammo/bullets/meowitzer/inert
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
@@ -1303,7 +1186,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = 8.0
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	caliber = CALIBER_PISTOL
 	auto_eject = 0
 
@@ -1352,7 +1235,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						return
 					else
 						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
+						handle_casings(eject_stored = 1, user = user)
 						return
 				else
 					user.show_text("[src] is empty!", "red")

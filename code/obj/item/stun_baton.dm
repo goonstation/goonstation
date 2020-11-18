@@ -399,17 +399,17 @@
 			src.log_cellswap(user, pcell) //if (!src.rechargeable)
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
-			if (src.cell)
+			/* if (src.cell)
 				if (pcell.swap(src))
 					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.cell = pcell
 				user.drop_item()
 				pcell.set_loc(src)
-				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
+				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>") */
 		else
 			..()
-
+#warn STUNBATON IS FUCKED
 	proc/log_cellswap(var/mob/user as mob, var/obj/item/ammo/power_cell/C)
 		if (!user || !src || !istype(src) || !C || !istype(C))
 			return

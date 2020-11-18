@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 
 	// caliber list: update as needed
 	// CALIBER_PISTOL_SMALL pistol / zipgun
-	// CALIBER_HEAVY_RIFLE - rifles
+	// CALIBER_RIFLE_HEAVY - rifles
 	// CALIBER_REVOLVER_MAGNUM - revolver
 	// CALIBER_REVOLVER - detective
 	// 0.41 - derringer
@@ -217,7 +217,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	icon_turf_hit = "bhole-small"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
@@ -250,7 +250,7 @@ toxic - poisons
 	projectile_speed = 56
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	icon_turf_hit = "bhole-small"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 2) //pierces 2 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use both pierces
@@ -282,7 +282,7 @@ toxic - poisons
 	implanted = null
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	dissipation_delay = 10
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	reagent_payload = "haloperidol"
 	casing = /obj/item/casing/rifle
 
@@ -529,7 +529,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -551,7 +551,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -583,7 +583,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = CALIBER_HEAVY_RIFLE
+	caliber = CALIBER_RIFLE_HEAVY
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -598,7 +598,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = CALIBER_ASSAULT_RIFLE
+	caliber = CALIBER_RIFLE_ASSAULT
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -1369,7 +1369,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
 	casing = null
-	caliber = CALIBER_FLINTLOCK
+	caliber = CALIBER_PISTOL_FLINTLOCK
 	icon_turf_hit = "bhole-small"
 
 	on_hit(atom/hit, dirflag)

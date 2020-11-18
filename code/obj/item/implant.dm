@@ -1521,7 +1521,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	mats = 8
 	contraband = 1
 	var/obj/item/implant/my_implant = null
-
+#warn IMPLANT GUN IS FUCKED
 	New()
 		current_projectile = new/datum/projectile/implanter
 		..()

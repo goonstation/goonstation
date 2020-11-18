@@ -11,12 +11,12 @@
 	uses_multiple_icon_states = 1
 	force = 15.0
 	contraband = 8
-	caliber = CALIBER_CASELESS_RIFLE
+	caliber = CALIBER_RIFLE_CASELESS
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
 	ammo = /obj/item/ammo/bullets/g11
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	firemodes = list(list("name" = "three-round burst", "burst_count" = 3, "refire_delay" = 0.4 DECI SECONDS, "shoot_delay" = 0.4, "spread_angle" = 0, "projectile" = null))
 
 	New()
@@ -47,7 +47,7 @@
 	icon_state = "caseless"
 	amount_left = 45.0
 	max_amount = 45.0
-	caliber = CALIBER_CASELESS_RIFLE
+	caliber = CALIBER_RIFLE_CASELESS
 	mag_type = AMMO_MAGAZINE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	icon_empty = "caseless-empty"
@@ -72,7 +72,7 @@
 	hit_type = DAMAGE_CUT
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
-	caliber = CALIBER_CASELESS_RIFLE
+	caliber = CALIBER_RIFLE_CASELESS
 	dissipation_delay = 10
 	dissipation_rate = 5
 	icon_turf_hit = "bhole-small"
@@ -169,7 +169,7 @@
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
 	caliber = CALIBER_PISTOL
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	ammo = /obj/item/ammo/bullets/bullet_9mm
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
@@ -185,7 +185,7 @@
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	silenced = 1
 	caliber = CALIBER_PISTOL
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	ammo = /obj/item/ammo/bullets/bullet_9mm/smg
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
@@ -277,10 +277,10 @@
 	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
 	item_state = "gyrojet"
-	caliber = CALIBER_GYROJET
+	caliber = CALIBER_PISTOL_GYROJET
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/gyrojet
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
 
@@ -292,7 +292,7 @@
 	max_amount = 6.0
 	ammo_type = /datum/projectile/bullet/gyrojet
 	mag_type = AMMO_MAGAZINE
-	caliber = CALIBER_GYROJET
+	caliber = CALIBER_PISTOL_GYROJET
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
@@ -303,7 +303,7 @@
 	dissipation_rate = 0
 	power = 10
 	precalculated = 0
-	caliber = CALIBER_GYROJET
+	caliber = CALIBER_PISTOL_GYROJET
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
@@ -331,7 +331,7 @@
 	has_empty_state = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/deagle50cal
-	accepted_mag = ACCEPT_MAGAZINE
+	accepted_mag = AMMO_MAGAZINE
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
 
 

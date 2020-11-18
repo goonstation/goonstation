@@ -104,29 +104,29 @@
 // Guns'n'ammo defines
 // Ammo item types
 /// A naked pile of ammunition, like a box of shells, or belt of bullets
-#define AMMO_PILE "ammo_pile"
+#define AMMO_PILE (1<<0)
 /// A clip-like device that holds bullets, for quick loading into an internal magazine
-#define AMMO_CLIP "ammo_clip"
+#define AMMO_CLIP (1<<1)
 /// A mechanism that feeds bullets into a gun, designed to be swapped out to reload
-#define AMMO_MAGAZINE "ammo_magazine"
+#define AMMO_MAGAZINE (1<<2)
 /// A box designed to hold a belt of bullets, typically for machine guns
 /// Basically just a mag that's really easy to load and unload bullets into/from
-#define AMMO_BOX "ammo_box"
+#define AMMO_BOX (1<<3)
 /// A battery, uses a number to determine remaining ammo
-#define AMMO_ENERGY "ammo_energy"
+#define AMMO_ENERGY (1<<4)
 // Ammo numbering defines
 /// The max number of unique ammotypes that can fit into a magazine/pile/etc
 #define MAX_UNIQUE_AMMO_TYPES 10
 /// The max total number of bullets that can fit into any magazine/pile/etc though normal means
 #define MAX_MAGAZINE_CAPACITY 2000
 // Ammo caliber defines
-#define CALIBER_ASSAULT_RIFLE 0.223
-#define CALIBER_HEAVY_RIFLE 0.308
-#define CALIBER_CASELESS_RIFLE 0.185
+#define CALIBER_RIFLE_ASSAULT 0.223
+#define CALIBER_RIFLE_HEAVY 0.308
+#define CALIBER_RIFLE_CASELESS 0.185
 #define CALIBER_PISTOL 0.355
 #define CALIBER_PISTOL_SMALL 0.22
 #define CALIBER_PISTOL_MAGNUM 0.50
-#define CALIBER_GYROJET 0.512
+#define CALIBER_PISTOL_GYROJET 0.512
 #define CALIBER_MINIGUN 0.10
 #define CALIBER_CAT 9.5
 #define CALIBER_FROG 8.0
@@ -145,20 +145,13 @@
 #define CALIBER_ROCKET 1.12
 #define CALIBER_RPG 1.58
 #define CALIBER_ROD 1.00
-#define CALIBER_FLINTLOCK 0.56
+#define CALIBER_PISTOL_FLINTLOCK 0.56
 #define CALIBER_BATTERY 1.30
 #define CALIBER_ANY -1
-// Gun flags
-/// Accepts ammo piles
-#define ACCEPT_PILE (1<<0)
-/// Accepts ammo clips
-#define ACCEPT_CLIP (1<<1)
-/// Accepts ammo magazines
-#define ACCEPT_MAGAZINE (1<<2)
-/// Accepts ammo boxes
-#define ACCEPT_BOX (1<<3)
-/// Accepts ammo boxes
-#define ACCEPT_ENERGY (1<<4)
 // Gun Defs
 /// Return when currently shooting
 #define GUN_IS_SHOOTING 2
+/// Gun consumes charge from loaded magazine
+#define GUN_NEEDS_ENERGY (1<<0)
+/// Gun needs projectile entries in its loaded magazine's mag_contents
+#define GUN_NEEDS_BULLETS (1<<1)

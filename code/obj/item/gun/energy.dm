@@ -8,10 +8,40 @@
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	rechargeable = 1
 
-	accepted_mag = ACCEPT_ENERGY
+	accepted_mag = AMMO_ENERGY
 	caliber = CALIBER_BATTERY
 	muzzle_flash = null
 	inventory_counter_enabled = 1
+
+	// Ammo caliber defines
+	// #define CALIBER_RIFLE_ASSAULT 0.223
+	// #define CALIBER_RIFLE_HEAVY 0.308
+	// #define CALIBER_RIFLE_CASELESS 0.185
+	// #define CALIBER_PISTOL 0.355
+	// #define CALIBER_PISTOL_SMALL 0.22
+	// #define CALIBER_PISTOL_MAGNUM 0.50
+	// #define CALIBER_PISTOL_GYROJET 0.512
+	// #define CALIBER_PISTOL_FLINTLOCK 0.56
+	// #define CALIBER_MINIGUN 0.10
+	// #define CALIBER_REVOLVER_MAGNUM 0.357
+	// #define CALIBER_REVOLVER_OLDTIMEY 0.45
+	// #define CALIBER_REVOLVER 0.38
+	// #define CALIBER_DERRINGER 0.41
+	// #define CALIBER_WHOLE_DERRINGER 3.00
+	// #define CALIBER_SHOTGUN 0.72
+	// #define CALIBER_CANNON 0.787
+	// #define CALIBER_CANNON_MASSIVE 15.7
+	// #define CALIBER_GRENADE 1.57
+	// #define CALIBER_ROCKET 1.12
+	// #define CALIBER_RPG 1.58
+	// #define CALIBER_ROD 1.00
+	// #define CALIBER_CAT 9.5
+	// #define CALIBER_FROG 8.0
+	// #define CALIBER_CRAB 12
+	// #define CALIBER_TRASHBAG 9.5
+	// #define CALIBER_SECBOT 11.5
+	// #define CALIBER_BATTERY 1.30
+	// #define CALIBER_ANY -1
 
 	New()
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
@@ -93,7 +123,7 @@
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.loaded_magazine)
-				if (pcell.swap(src))
+				if (src.swap(b))
 					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.loaded_magazine = pcell
