@@ -515,9 +515,10 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
-					var/cur = volumes.len
+					var/list/old_volumes = volumes.Copy()
 					volumes = json_decode(decoded)
-					volumes.len = cur
+					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+						volumes += old_volumes[i]
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")

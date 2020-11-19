@@ -218,7 +218,18 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	usr.client.setVolume( VOLUME_CHANNEL_MASTER, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed Master Volume to [vol].</span>")
 
+/mob/verb/screamfartvolume()
+	set name = "Alter ScreamFart Volume"
+	set desc = "Alter ScreamFart volume, default is 100"
+	//set hidden = 1
 
+	if (!usr.client)
+		return
+
+	var/vol = input("Goes from 0-100. Default is 100", "ScreamFart Volume", usr.client.getRealVolume(VOLUME_CHANNEL_SCREAMFART) * 100) as num
+	vol = max(0,min(vol,100))
+	usr.client.setVolume( VOLUME_CHANNEL_SCREAMFART, vol/100 )
+	boutput(usr, "<span class='notice'>You have changed ScreamFart Volume to [vol].</span>")
 
 
 
