@@ -37,9 +37,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 
 	/// Currently loaded magazine, shoot will read whatever's in its mag_contents to determine what to shoot
-	/// Should be null here, but can be overridden in the gun's New()
+	/// Should be null here
 	var/obj/item/ammo/loaded_magazine
-	/// Magazine to load into the gun when spawned
+	/// Magazine to load into the gun when spawned. AMMO_MAGAZINEs and AMMO_BOXes only, please
 	/// Should *not* be null, empty guns should have at least some kind of obj/item/ammo/bullets/empty
 	var/obj/item/ammo/ammo = /obj/item/ammo/bullets/empty
 	/// Checks against the magazine's caliber to see if it'll hold it
@@ -49,6 +49,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/list/accepted_mag = list(AMMO_PILE, AMMO_CLIP)
 	/// Is the magazine fixed in place and cant be removed, like a shotgun? Makes most sense with accepted_mag AMMO_PILE and AMMO_CLIP
 	var/fixed_mag = FALSE
+	/// Are we allowed to unload the gun at all?
+	var/can_unload = TRUE
+	/// Are we allowed to reload the gun at all?
+	var/can_reload = TRUE
 
 	/// Overrides the bullet's own shoot-sound. Uses bullet's sound if null
 	var/shoot_sound
@@ -121,10 +125,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			src.loaded_magazine = new src.ammo
 			src.loaded_magazine.loaded_in = src
 		src.set_firemode(TRUE)
+		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
+			processing_items.Add(src)
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
+		update_icon()
 		return ..()
+
+	disposing()
+		processing_items -= src
+		..()
 
 /datum/gunTarget
 	var/params = null
@@ -162,6 +173,42 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/onMouseUp(object,location,control,params)
 	c_mouse_down = 0
+
+// Thanks, material.dm!
+/obj/item/gun/MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+	if (isobserver(usr))
+		boutput(usr, "<span class='alert'>Hey! Keep your cold, dead hands off of that!</span>")
+		return
+
+	if(!istype(over_object, /obj/screen/hud))
+		if (get_dist(usr,src) > 1)
+			boutput(usr, "<span class='alert'>You're too far away from [src] to do that.</span>")
+			return
+		if (get_dist(usr,over_object) > 1)
+			boutput(usr, "<span class='alert'>You're too far away from [over_object] to do that.</span>")
+			return
+
+	if(isturf(over_object)) // Drag this gun to that turf? Unload gun and put whatever comes out there
+		boutput(usr, "Unloading [src] to [over_object] via clickdragon.")
+		var/mob/user = usr
+		if(src.unload_gun(user = user, put_it_here = over_object))
+			return
+
+	else if(istype(over_object, /obj/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
+		var/obj/screen/hud/H = over_object
+		var/mob/living/carbon/human/dude = usr
+		switch(H.id)
+			if("lhand")
+				if(dude.l_hand && dude.l_hand != src && src.unload_gun(user = dude))
+					return
+			if("rhand")
+				if(dude.r_hand && dude.r_hand != src && src.unload_gun(user = dude))
+					return
+		// can't unload to any other slot until I can figure out how that works
+		// till then, mags from two-handed guns go right on the floor where they belong
+
+	return ..()
+
 
 /obj/item/gun/proc/continuousFire(atom/target, params, mob/user)
 	if(!continuous) return
@@ -242,7 +289,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/attackby(obj/item/ammo/b as obj, mob/user as mob)
 	if(istype(b, /obj/item/ammo/))
-		switch (b.loadammo(src, user))
+		switch (src.load_gun(b, user))
 			if(0)
 				user.show_text("You can't reload this gun.", "red")
 				return
@@ -316,33 +363,136 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		return ..()
 
-/obj/item/gun/proc/unload_gun(var/mob/user)
+	/// Move into *this* gun *that* ammo
+/obj/item/gun/proc/load_gun(var/obj/item/ammo/A, var/mob/user)
+	// Also see attackby() in kinetic.dm.
+	if (!user) return
+	if (!A)
+		boutput(user, "No ammo to load!")
+		return FALSE // Error message.
+	if (!istype(A, /obj/item/ammo))
+		boutput(user, "That's not ammunition!")
+		return FALSE // Error message.
+	if (!src.can_reload)
+		boutput(user, "[src] can't be reloaded!")
+		return FALSE
+	if (src.sanitycheck() == 0)
+		return FALSE
+	if(!(A.mag_type in src.accepted_mag))
+		boutput(user, "[A] doesn't fit in [src]!")
+		return FALSE
+
+	src.add_fingerprint(user)
+	A.add_fingerprint(user)
+
+	// pile -> gun, check if the gun has a fixed magazine, then check if top_bullet is in the pile,
+	//              check if top_bullet's caliber is valid with the gun's loaded magazine, then transfer that one bullet
+	//              delete the pile if it ends up empty. Most of this is handled by the ammo pile item itself
+	// magazine/box/energy -> gun, check if the gun's magazine isnt fixed and accepts magazines,
+	//                        check if the magazine's stated caliber is in the gun's list of calibers, then swap the magazines
+	//                        delete what comes out of the gun if its a dummy null magazine
+	// clip -> gun, check if the gun's magazine is fixed, check if the magazine's stated caliber is in the gun's magazine's list of calibers,
+	//              then transfer the bullets to the magazine
+	//              don't delete the clip if it gets empty
+
+	var/caliber_check
+	if(!islist(src.caliber))
+		src.caliber = list(src.caliber)
+	if(!islist(A.caliber))
+		A.caliber = list(A.caliber)
+	// piles bypass the caliber check, it needs a bit more checking
+	if((A.mag_type == AMMO_PILE) || ((CALIBER_ANY) in src.loaded_magazine.caliber))
+		caliber_check = TRUE
+	else
+		for(var/this_caliber in A.caliber)
+			if(this_caliber in src.caliber)
+				caliber_check = TRUE
+				break
+
+	if(!caliber_check)
+		var/list/caliber_list = A.caliber
+		if(caliber_list.len > 3) caliber_list.len = 3
+		boutput(user, "[A] ([A.caliber]) is the wrong caliber for \the [src] ([src.caliber]).")
+		return FALSE
+
+	switch(A.mag_type)
+		if(AMMO_PILE, AMMO_CLIP) // Piles can only ever go into a loaded gun if the gun's magazine is fixed (revolver, shotgun, RPG, etc.)
+			if(src.fixed_mag && src.loaded_magazine)
+				src.loaded_magazine.load_ammo(A, user = user)
+			else
+				boutput(user, "You can't load anything into [src.loaded_magazine] while it's inside \the [src]! Try removing the magazine first.")
+				return FALSE
+		if(AMMO_MAGAZINE, AMMO_BOX, AMMO_ENERGY)
+			if(src.fixed_mag) // Kinda hard to load a magazine into a revolver
+				boutput(user, "\The [src] doesn't have a magazine you can remove or swap out, try feeding it some loose bullets or a clip.")
+				return FALSE
+			else
+				src.swap(A, user) // Theres always a magazine inside the gun, even if its empty
+
+	src.update_icon()
+	A.update_icon()
+
+/obj/item/gun/proc/unload_gun(var/mob/user, var/atom/put_it_here)
 	if(!user || !src.loaded_magazine) return FALSE
 
+	if(src.loaded_magazine.is_null_mag) // but only if there is one in there
+		boutput(user, "\The [src] doesn't have a magazine loaded!")
+		return FALSE
+	else if(!src.can_unload) // Something's preventing this gun from being unloaded
+		boutput(user, "\The [src] can't be unloaded!")
 	if(src.fixed_mag) // Cant remove the magazine, so lets try removing whats inside it!
 		if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Fixed battery? Cant remove it
-			boutput(user, "The battery cannot be removed!")
+			boutput(user, "\The [src] doesn't have a removable battery!")
 			return FALSE
 		else
+			src.loaded_magazine.unload_magazine(user = user)
+			src.handle_casings(eject_stored = TRUE, user = user)
+			src.update_icon()
+			return TRUE
 	else // Removable magazine, lets remove it!
-		if(src.loaded_magazine.is_null_mag) // but only if there is one in there
-			boutput(user, "There's no magazine in the gun!")
-			return FALSE
 		var/obj/item/ammo/W = src.loaded_magazine
 		W.loaded_in = null
 		W.update_icon()
-		user.put_in_hand_or_drop(W)
+		if(put_it_here && isturf(put_it_here))
+			W.set_loc(put_it_here)
+		else
+			user.put_in_hand_or_drop(W)
 		src.loaded_magazine = new /obj/item/ammo/bullets/empty(src)
 		src.loaded_magazine.loaded_in = src
 		src.update_icon()
 		src.add_fingerprint(user)
-		handle_casings(eject_stored = TRUE, user = user) // Some kind of gun that stores its casings in the mag, I guess
+		src.handle_casings(eject_stored = TRUE, user = user) // Some kind of gun that stores its casings in the mag, I guess
 		boutput(user, "You unload \the [W] from \the [src]!")
-		if (user.r_hand != W && user.l_hand != W)
-			boutput(user, "[W] fell on the ground. Whoops.")
+		if (put_it_here)
+			boutput(user, "You put [W] on \the [put_it_here].")
+		else if (user.r_hand != W && user.l_hand != W)
+			boutput(user, "Your hands were full, so [W] fell on the ground. Whoops.")
 		return TRUE
 
 /obj/item/gun/proc/swap(var/obj/item/ammo/A, var/mob/user)
+	var/list/allowed_kinds = list(AMMO_MAGAZINE, AMMO_ENERGY, AMMO_BOX)
+	if(!(A.mag_type in allowed_kinds))
+		boutput(user, "Wrong kind of thing to put into this thing!")
+		return 0
+
+
+	A.set_loc(src)
+	src.handle_casings(eject_stored = TRUE, user = user)
+	user.u_equip(A)
+	if(src.loaded_magazine.is_null_mag)
+		qdel(src.loaded_magazine)
+	else
+		var/obj/item/ammo/old_mag = src.loaded_magazine
+		old_mag.loaded_in = null
+		old_mag.update_bullet_manifest()
+		old_mag.update_icon()
+		user.put_in_hand_or_drop(old_mag)
+	src.loaded_magazine = A
+	src.loaded_magazine.loaded_in = src
+	src.loaded_magazine.update_bullet_manifest()
+	src.loaded_magazine.update_icon()
+	src.update_icon()
+
 	// // I tweaked this for improved user feedback and to support zip guns (Convair880).
 		// var/check = 0
 		// if (!A || !src)
@@ -375,7 +525,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		// 	ammoDrop.update_icon()
 		// 	usr.put_in_hand_or_drop(ammoDrop)
 		// 	src.ammo.amount_left = 0 // Make room for the new ammo.
-		// 	src.ammo.loadammo(A, src) // Let the other proc do the work for us.
+		// 	src.ammo.load_gun(A, src) // Let the other proc do the work for us.
 		// 	//DEBUG_MESSAGE("Swapped [src]'s ammo with [A.type]. There are [A.amount_left] round left over.")
 		// 	return 2
 
@@ -414,28 +564,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		// ok lets load it
 		// Only accept magazines, boxes, and batteries. Everything else it handled by mag-to-mag transfer procs
-	var/list/allowed_kinds = list(AMMO_MAGAZINE, AMMO_ENERGY, AMMO_BOX)
-	if(!(A.mag_type in allowed_kinds))
-		boutput(user, "Wrong kind of thing to put into this thing!")
-		return 0
 
-
-	A.set_loc(src)
-	src.handle_casings(eject_stored = TRUE, user = user)
-	user.u_equip(A)
-	if(src.loaded_magazine.is_null_mag)
-		qdel(src.loaded_magazine)
-	else
-		var/obj/item/ammo/old_mag = src.loaded_magazine
-		old_mag.loaded_in = null
-		old_mag.update_bullet_manifest()
-		old_mag.update_icon()
-		user.put_in_hand_or_drop(old_mag)
-	src.loaded_magazine = A
-	src.loaded_magazine.loaded_in = src
-	src.loaded_magazine.update_bullet_manifest()
-	src.loaded_magazine.update_icon()
-	src.update_icon()
 	//src.ejectcasings()
 	//playsound(get_turf(src), sound_load, 50, 1)
 
@@ -941,3 +1070,34 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_manager(user, user)
 		JOB_XP(user, "Clown", 3)
+
+/obj/item/gun/proc/charge(var/amt)
+	if(src.loaded_magazine && rechargeable)
+		return src.loaded_magazine.charge(amt)
+	else
+		//No cell, or not rechargeable. Tell anything trying to charge it.
+		return -1
+
+/obj/item/gun/emp_act()
+	if (src.loaded_magazine && istype(src.loaded_magazine))
+		src.loaded_magazine.charge = 0
+		src.update_icon()
+	return
+
+/obj/item/gun/process()
+	src.wait_cycle = !src.wait_cycle // Self-charging cells recharge every other tick (Convair880).
+	if (src.wait_cycle)
+		return
+
+	if (!(src in processing_items))
+		logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+		processing_items.Add(src)
+		return
+	if (!src?.loaded_magazine?.self_charging)
+		processing_items.Remove(src)
+		return
+	if (src.loaded_magazine.charge == src.loaded_magazine.max_charge) // Keep them in the loop, as we might fire the gun later (Convair880).
+		return
+
+	src.update_icon()
+	return

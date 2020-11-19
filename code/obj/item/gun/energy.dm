@@ -14,45 +14,7 @@
 	inventory_counter_enabled = 1
 
 	// Ammo caliber defines
-	// #define CALIBER_RIFLE_ASSAULT 0.223
-	// #define CALIBER_RIFLE_HEAVY 0.308
-	// #define CALIBER_RIFLE_CASELESS 0.185
-	// #define CALIBER_PISTOL 0.355
-	// #define CALIBER_PISTOL_SMALL 0.22
-	// #define CALIBER_PISTOL_MAGNUM 0.50
-	// #define CALIBER_PISTOL_GYROJET 0.512
-	// #define CALIBER_PISTOL_FLINTLOCK 0.56
-	// #define CALIBER_MINIGUN 0.10
-	// #define CALIBER_REVOLVER_MAGNUM 0.357
-	// #define CALIBER_REVOLVER_OLDTIMEY 0.45
-	// #define CALIBER_REVOLVER 0.38
-	// #define CALIBER_DERRINGER 0.41
-	// #define CALIBER_WHOLE_DERRINGER 3.00
-	// #define CALIBER_SHOTGUN 0.72
-	// #define CALIBER_CANNON 0.787
-	// #define CALIBER_CANNON_MASSIVE 15.7
-	// #define CALIBER_GRENADE 1.57
-	// #define CALIBER_ROCKET 1.12
-	// #define CALIBER_RPG 1.58
-	// #define CALIBER_ROD 1.00
-	// #define CALIBER_CAT 9.5
-	// #define CALIBER_FROG 8.0
-	// #define CALIBER_CRAB 12
-	// #define CALIBER_TRASHBAG 9.5
-	// #define CALIBER_SECBOT 11.5
-	// #define CALIBER_BATTERY 1.30
-	// #define CALIBER_ANY -1
-
-	New()
-		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
-			processing_items.Add(src)
-		..()
-		update_icon()
-
-	disposing()
-		processing_items -= src
-		..()
-
+	// see \_std\defines\item.dm for caliber defines!
 
 	examine()
 		. = ..()
@@ -71,47 +33,6 @@
 		else
 			inventory_counter.update_text("-")
 		return 0
-
-	emp_act()
-		if (src.loaded_magazine && istype(src.loaded_magazine))
-			src.loaded_magazine.charge = 0
-			src.update_icon()
-		return
-
-	process()
-		src.wait_cycle = !src.wait_cycle // Self-charging cells recharge every other tick (Convair880).
-		if (src.wait_cycle)
-			return
-
-		if (!(src in processing_items))
-			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
-			processing_items.Add(src)
-			return
-		if (!src?.loaded_magazine?.self_charging)
-			processing_items.Remove(src)
-			return
-		if (src.loaded_magazine.charge == src.loaded_magazine.max_charge) // Keep them in the loop, as we might fire the gun later (Convair880).
-			return
-
-		src.update_icon()
-		return
-
-	// process_ammo(var/mob/user)
-	// 	if(isrobot(user))
-	// 		var/mob/living/silicon/robot/R = user
-	// 		if(R.cell)
-	// 			if(R.cell.charge >= src.robocharge)
-	// 				R.cell.charge -= src.robocharge
-	// 				return 1
-	// 		return 0
-	// 	else
-	// 		if(src.loaded_magazine && src.current_projectile)
-	// 			if(src.loaded_magazine.use(src.current_projectile.cost))
-	// 				return 1
-	// 		boutput(user, "<span class='alert'>*click* *click*</span>")
-	// 		if (!src.silenced)
-	// 			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-	// 		return 0
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (!fixed_mag && istype(b, /obj/item/ammo/power_cell))
@@ -132,13 +53,6 @@
 				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
-
-	proc/charge(var/amt)
-		if(src.loaded_magazine && rechargeable)
-			return src.loaded_magazine.charge(amt)
-		else
-			//No cell, or not rechargeable. Tell anything trying to charge it.
-			return -1
 
 /obj/item/gun/energy/heavyion
 	name = "heavy ion blaster"

@@ -8,34 +8,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash"
 
 	// Ammo caliber defines
-	// #define CALIBER_RIFLE_ASSAULT 0.223
-	// #define CALIBER_RIFLE_HEAVY 0.308
-	// #define CALIBER_RIFLE_CASELESS 0.185
-	// #define CALIBER_PISTOL 0.355
-	// #define CALIBER_PISTOL_SMALL 0.22
-	// #define CALIBER_PISTOL_MAGNUM 0.50
-	// #define CALIBER_PISTOL_GYROJET 0.512
-	// #define CALIBER_PISTOL_FLINTLOCK 0.56
-	// #define CALIBER_MINIGUN 0.10
-	// #define CALIBER_REVOLVER_MAGNUM 0.357
-	// #define CALIBER_REVOLVER_OLDTIMEY 0.45
-	// #define CALIBER_REVOLVER 0.38
-	// #define CALIBER_DERRINGER 0.41
-	// #define CALIBER_WHOLE_DERRINGER 3.00
-	// #define CALIBER_SHOTGUN 0.72
-	// #define CALIBER_CANNON 0.787
-	// #define CALIBER_CANNON_MASSIVE 15.7
-	// #define CALIBER_GRENADE 1.57
-	// #define CALIBER_ROCKET 1.12
-	// #define CALIBER_RPG 1.58
-	// #define CALIBER_ROD 1.00
-	// #define CALIBER_CAT 9.5
-	// #define CALIBER_FROG 8.0
-	// #define CALIBER_CRAB 12
-	// #define CALIBER_TRASHBAG 9.5
-	// #define CALIBER_SECBOT 11.5
-	// #define CALIBER_BATTERY 1.30
-	// #define CALIBER_ANY -1
+	// see \_std\defines\item.dm for caliber defines!
 
 	New()
 		if(silenced)
@@ -60,15 +33,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. += "Each shot will currently use [src.firemodes[src.firemode_index]["burst_count"]] bullets!"
 		else
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
-
-	// process_ammo(var/mob/user)
-	// 	if(src.ammo && src.current_projectile)
-	// 		if(src.ammo.use(current_projectile.cost))
-	// 			return 1
-	// 	boutput(user, "<span class='alert'>*click* *click*</span>")
-	// 	if (!src.silenced)
-	// 		playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
-	// 	return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (istype(O, /obj/item/ammo/bullets) && allowDropReload)

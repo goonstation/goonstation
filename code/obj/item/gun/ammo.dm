@@ -1,5 +1,7 @@
-//////////////////////////////// Parent ////////////////////////////
+#define TOP_IS_WRONG_CALIBER 1
+#define TOP_NOT_FOUND 2
 
+//////////////////////////////// Parent ////////////////////////////
 /obj/item/ammo
 	name = "ammo"
 	var/sname = "Generic Ammo"
@@ -17,22 +19,25 @@
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
 	/// What form does this ammo-thing take? Please pick only one!
-	/// AMMO_PILE - generic pile of bullets, or a belt. Slow to load a gun, but easy to merge
-	/// AMMO_CLIP - speedloaders, for guns with internal magazines
-	/// AMMO_MAGAZINE - detatchable mags
-	/// AMMO_BOX - Holds a pile of a specific kind of ammo, usually a pile, which can be removed and reinserted easily
-	/// AMMO_ENERGY - Don't check its mag_contents, they likely don't exist
+	/// AMMO_PILE - generic pile of (sometimes assorted) bullets. Slow to load into anything but boxes and other piles
+	/// AMMO_CLIP - speedloaders, quick to load other things, but slow to be loaded with bullets
+	/// AMMO_MAGAZINE - that are easily swapped out for other mags, but are slow to be loaded or unloaded with bullets
+	/// AMMO_BOX - Same as a magazine, but can be loaded by piles and clips easily, and unloaded quickly
+	/// AMMO_ENERGY - Is a battery, doesn't hold any mag_contents (usually), and operates using charge
 	var/mag_type = AMMO_PILE
 	/// What the mag/pile/clip/etc holds. Read by the gun to shoot whatever's in the list
 	/// Or also by other mags/piles/clips/etc to see what to swap around
 	/// basically a list of new/datum/projectile/thing
-	/// on energy weapons, its a list of valid projectiles
+	/// usually empty on energy weapons
 	var/list/mag_contents = list()
 	/// The types and amounts of bullets loaded into the magazine, for easy reference
-	/// Is an associated list, "projectileID" = list(new/datum/projectile/thing, count)
+	/// Is an associated list, bullet.ammo_ID = list("name" = bullet.ammo_name, "type" = bullet.type, "count" = 1)
 	var/list/mag_manifest = list()
-	/// For piles, its the type of bullet that'll be transferred
+	/// For piles, its the type of bullet that'll be transferred to a magazine or clip, if applicable
+	/// Lets you customize your mags and clips
 	var/datum/projectile/top_bullet
+	/// index in the mag manifest for the top bullet, so we can cycle through them
+	var/top_bullet_index
 	/// The magazine is actually a stand-in for a missing magazine.
 	var/is_null_mag = FALSE
 	/// What to load into the mag/clip/etc on creation. must be some form of /datum/projectile/thing
@@ -89,17 +94,45 @@
 				continue
 			src.mag_contents.Add(new load_bullet)
 
-	/// Move *that* ammo into *this* magazine
-	proc/transfer_ammo(var/obj/item/ammo/from_this_mag, var/mob/user)
+	attack_self(var/mob/user)
+		src.cycle_top_bullet(user = user)
+
+	attack_hand(var/mob/user)
+		if ((user.r_hand == src || user.l_hand == src))
+			src.unload_magazine(user = user)
+		else
+			..()
+
+	proc/cycle_top_bullet(var/mob/user)
+		if(src.mag_type == AMMO_PILE)
+			src.update_bullet_manifest()
+			if(src.mag_manifest.len < 1)
+				boutput(user, "[src] doesn't have anything in it!")
+				return
+			if(src.mag_manifest.len >= 2 || (src.mag_manifest.len == 1 && !src.top_bullet))
+				qdel(src.top_bullet)
+				src.top_bullet_index += 1
+				if(src.top_bullet_index > src.mag_manifest.len)
+					src.top_bullet_index = 1
+				var/make_top = src.mag_manifest[src.top_bullet_index]
+				make_top = src.mag_manifest[make_top]["type"]
+				src.top_bullet = new make_top(src)
+				boutput(user, "You fiddle with \the [src] so that [src.top_bullet.ammo_name] will be loaded next.")
+			else
+				boutput(user, "You notice that no matter how much you fiddle with \the [src], [src.top_bullet.ammo_name] will be loaded next.")
+
+	/// move *into this* magazine/pile/etc, *that* ammo
+	proc/load_ammo(var/obj/item/ammo/from_this_mag, var/mob/user)
+		if(!user || !from_this_mag) return
 		if(!istype(from_this_mag, /obj/item/ammo/))
-			boutput(user, "Your ammo holding thing is busted, call a coder")
-			return 0
+			boutput(user, "\The [from_this_mag] is busted, call a coder.")
+			return FALSE
 		else if(from_this_mag.mag_contents.len < 1)
-			boutput(user, "That doesnt have anything transferable!")
-			return 0
+			boutput(user, "\The [from_this_mag] is empty!")
+			return FALSE
 		else if(src.mag_contents.len >= src.max_amount)
-			boutput(user, "You can't fit any more of that in there!")
-			return 0
+			boutput(user, "\The [src] can't fit anything else in it!")
+			return FALSE
 
 		// Pile -> Pile, move the whole amount
 		// Pile -> Clip / Mag, move one at a time
@@ -108,12 +141,14 @@
 		// Clip -> anything, move the whole amount
 		// Box -> anything but pile, don't move anything
 
+		var/top_bullet_ok // mags and clips get the "top" bullet if being loaded by a pile. Boxes and piles do not.
 		var/num_to_move
 		switch(from_this_mag.mag_type)
 			if(AMMO_PILE)
 				switch(src.mag_type)
 					if(AMMO_MAGAZINE, AMMO_CLIP)
 						num_to_move = 1
+						top_bullet_ok = 1
 					if(AMMO_PILE, AMMO_BOX)
 						num_to_move = from_this_mag.mag_contents.len
 			if(AMMO_MAGAZINE)
@@ -124,118 +159,184 @@
 				if(src.mag_type == AMMO_PILE)
 					num_to_move = from_this_mag.mag_contents.len
 		if(num_to_move < 1)
-			boutput(user, "Cant move those")
-			return 0
+			boutput(user, "You can't move anything from your [from_this_mag] to \the [src] in this form! Try yanking the bullets from one of them first.")
+			return FALSE
+
+		var/ammo_wildcard = ((CALIBER_ANY) in src.caliber)
+		// Lets stick one specific bullet into the mag/clip, if we're loading a mag or clip
+		if(top_bullet_ok && from_this_mag.mag_type == AMMO_PILE && from_this_mag.top_bullet && istype(from_this_mag.top_bullet, /datum/projectile))
+			var/failtype = 0
+			if((((from_this_mag.top_bullet.caliber) in src.caliber) || ammo_wildcard))
+				failtype = TOP_NOT_FOUND // it'll be unset if VV goes correctly
+				for(var/datum/projectile/bullet in from_this_mag.mag_contents)
+					if(bullet.type == from_this_mag.top_bullet.type)
+						src.mag_contents.Insert(1, bullet)
+						from_this_mag.mag_contents -= bullet
+						boutput(user, "Loaded \the [src] with \a [bullet.ammo_name]!")
+						src.update_icon()
+						from_this_mag.update_icon()
+						failtype = 0
+						return TRUE
+			else
+				failtype = TOP_IS_WRONG_CALIBER
+			if(failtype == TOP_IS_WRONG_CALIBER && istype(from_this_mag.top_bullet, /datum/projectile))
+				boutput(user, "[from_this_mag.top_bullet] isn't the right caliber for \the [src]. Trying a different kind of ammo.")
+			else if(failtype == TOP_NOT_FOUND)
+				boutput(user, "Couldn't find \a [from_this_mag.top_bullet] in your [from_this_mag]. Trying a different kind of ammo.")
+
+		// If the above failed, load as normal
 		num_to_move = min((src.max_amount - src.mag_contents.len), num_to_move)
 		var/amount_to_move = num_to_move
-		var/ammo_wildcard = ((CALIBER_ANY) in src.caliber)
+		var/list/temp_mag = list()
 		for(var/datum/projectile/bullet in from_this_mag.mag_contents)
 			if(ammo_wildcard || (bullet.caliber in src.caliber))
-				src.mag_contents.Insert(1, bullet)
+				temp_mag.Insert(1, bullet)
 				from_this_mag.mag_contents -= bullet
 				amount_to_move--
 			if(amount_to_move < 1)
 				break
 
-		if(amount_to_move > 0)
-			num_to_move -= amount_to_move
+		if(temp_mag.len)
+			var/load_results
+			load_results = src.make_ammo_string(list_in = src.make_bullet_manifest(temp_mag), mode = "line")
+			src.mag_contents.Insert(1, temp_mag)
 
-		boutput(user, "You load [num_to_move] bullet\s into the thing.")
-		if(from_this_mag.mag_contents.len < 1)
-			if(from_this_mag.mag_type == AMMO_PILE)
-				boutput(user, "That used the whole pile!")
-				user.u_equip(from_this_mag)
-				qdel(from_this_mag)
-				return
-			else
-				boutput(user, "Now [from_this_mag] is empty!")
-		src.update_bullet_manifest()
-		src.update_icon()
-		from_this_mag.update_bullet_manifest()
-		from_this_mag.update_icon()
-		return
+			if(amount_to_move > 0)
+				num_to_move -= amount_to_move
 
-	proc/make_ammo_string(var/mode = "list")
-		if(!src.mag_manifest)
-			src.make_bullet_manifest()
+			src.update_bullet_manifest()
+			src.update_icon()
+			boutput(user, "You load [load_results] into \the [src].")
+			if(from_this_mag.mag_contents.len < 1)
+				if(from_this_mag.mag_type == AMMO_PILE)
+					boutput(user, "That used up the whole pile!")
+					user.u_equip(from_this_mag)
+					qdel(from_this_mag)
+					return TRUE
+				else
+					boutput(user, "\The [from_this_mag] is now empty!")
+			from_this_mag.update_bullet_manifest()
+			from_this_mag.update_icon()
+			return TRUE
+		else
+			boutput(user, "You couldn't find anything in [from_this_mag] to fit in [src]")
+			return FALSE
 
-		for (var/I in src.mag_manifest)
-			if(src.mag_manifest[I]["count"] >= 1)
-				. += "src.mag_manifest[I]["name"] ([src.mag_manifest[I]["count"]]"
-		. = sortList(.)
+	/// Builds a user-readable list or line of whatever's in the supplied mag_manifest
+	proc/make_ammo_string(var/list/list_in, var/mode = "list")
+		if(!list_in)
+			list_in = src.mag_manifest
+			if(!list_in.len)
+				src.make_bullet_manifest()
+
+		var/list/returnlist = list()
+		for (var/I in list_in)
+			if(list_in[I]["count"] >= 1)
+				returnlist["[list_in[I]["name"]] ([list_in[I]["count"]])"] = I
 
 		switch(mode)
 			if("list")
-				return
+				returnlist = sortList(returnlist)
+				return returnlist
 			if("line")
-				return english_list(.)
+				return english_list(returnlist)
 
-	/// Move bullets from the bullet-holding thing to your hand. Typically makes a new pile of ammo
-	proc/unload_magazine(var/obj/item/ammo/magazine, var/obj/item/gun/gun, var/mob/user)
-		if(!istype(magazine, /obj/item/ammo))
-			boutput(user, "Mag's busted, call a coder")
-			return 0
-		else if(magazine.mag_contents.len < 1)
-			boutput(user, "That thing is empty!")
-			return 0
+	/// Move bullets from this thing to (hopefully) your hand
+	proc/unload_magazine(var/count, var/mob/user, var/atom/put_that_here)
+		if(!user) return
+		if(src.mag_type == AMMO_ENERGY)
+			boutput(user, "You can't just just reach into \the [src] and pull out all the electrons and battery juices!")
+			return FALSE
+		if(src.mag_contents.len < 1)
+			boutput(user, "\The [src] is empty.")
+			return FALSE
 
 		// Pile, pick a type of bullet, then a number to move, then move that many bullets to a new pile
 		// Mag, get the top bullet, move that to a new pile
 		// Clip / Box, move all the bullets to a new pile.
 		var/what_to_take // entry in mag_manifest
-		var/num_2_take
-		var/list/new_mag_list
+		var/type_to_take // type entry in mag_manifest
+		var/num_to_take
+		var/just_transfer // if we don't need to do any fancy bullet management that can be handled by transfer
 
-		switch(magazine.mag_type)
-			if(AMMO_PILE) // aaa
-				src.update_bullet_manifest()
-				var/list/ammo_contents = src.make_ammo_string() // Thanks, produce satchel!
-				what_to_take = input("Which thing to split from the pile?", "Which?", null) as null|anything in ammo_contents
-				if(!what_to_take)
-					boutput(user, "Never mind.")
-					return
+		if (src.mag_type == AMMO_PILE) // aaa
+			src.update_bullet_manifest()
+			var/list/ammo_contents = src.make_ammo_string() // Thanks, produce satchel!
+			if(src.mag_manifest.len == 1) // Only one kind of bullet
+				what_to_take = src.mag_manifest[1]
+			else
+				// should return an entry in src.mag_manifest. it does not.
+				what_to_take = ammo_contents[input("Which kind of thing do you want to pick out of the pile?", "Which?", null) as null|anything in ammo_contents]
+			if(!what_to_take)
+				boutput(user, "Never mind.")
+				return FALSE
+			else
+				//what_to_take = ammo_contents[what_to_take]
+				type_to_take = src.mag_manifest[what_to_take]["type"]
+				num_to_take = round(input("How many [src.mag_manifest[what_to_take]["name"]] do you want to take?","Max [src.mag_manifest[what_to_take]["count"]]",1) as num|null)
+			if(num_to_take < 1)
+				boutput(user, "Never mind.")
+				return FALSE
+			else
+				num_to_take = min(src.mag_manifest[what_to_take]["count"], num_to_take)
+				boutput(user, "Taking [num_to_take] [src.mag_manifest[what_to_take]["name"]].")
+		else
+			just_transfer = 1
+
+
+		if(src.mag_contents.len >= 1 && IN_RANGE(src, user, 1))
+			var/obj/item/ammo/bullets/pile/new_pile = new /obj/item/ammo/bullets/pile
+			if(put_that_here && isturf(put_that_here) && IN_RANGE(user, put_that_here, 1))
+				new_pile.set_loc(put_that_here)
+			else
+				user.put_in_hand_or_drop(new_pile)
+			if(just_transfer)
+				new_pile.load_ammo(src, user)
+				return TRUE
+			else // Only piles from here forward
+				for(var/datum/projectile/bullet in src.mag_contents)
+					if(istype(bullet, type_to_take))
+						new_pile.mag_contents.Insert(1, bullet)
+						src.mag_contents -= bullet
+						num_to_take--
+					if(num_to_take < 1)
+						break
+
+				if(src.mag_contents.len < 1)
+					boutput(user, "That used up the whole pile!")
+					user.u_equip(src)
+					qdel(src)
 				else
-					num_2_take = round(input("How many [src.mag_manifest[what_to_take]["name"]] to split?","Max [src.mag_manifest[what_to_take]["count"]]",1) as num|null)
-					if(!num_2_take < 1)
-						boutput(user, "Never mind.")
-						return
-			if(AMMO_MAGAZINE)
-				num_2_take = 1
-				new_mag_list = src.mag_contents[1]
-			if(AMMO_CLIP || AMMO_BOX)
-				new_mag_list = src.mag_contents
-		if(num_2_take < 1)
-			boutput(user, "Cant move those")
-			return 0
-
-		num_2_take = clamp(num_2_take, 1, what_to_take["count"])
-		if(new_mag_list.len < 1)
-			var/num_to_make = num_2_take
-			while(num_to_make >= 1)
-				new_mag_list.Add(new what_to_take["type"])
-				num_to_make--
-		src.mag_contents -= new_mag_list
-		update_bullet_manifest()
-		if(src.mag_contents.len < 1 && src.mag_type == AMMO_PILE)
-			user.u_equip(src)
-			qdel(src)
-
-		var/obj/item/ammo/bullets/pile/new_pile = new /obj/item/ammo/bullets/pile
-		new_pile.mag_contents = new_mag_list
-		user.put_in_hand_or_drop(new_pile)
+					src.update_bullet_manifest()
+					src.update_icon()
+				new_pile.update_bullet_manifest()
+				new_pile.update_icon()
+				return TRUE
+		else
+			boutput(user, "You're too far from [src] to keep messing with it.")
+			return FALSE
 
 	/// Generate an associated list of all the unique bullets and their amounts
-	proc/make_bullet_manifest()
-		if(src.mag_contents.len < 1) return
-		src.mag_manifest = list()
+	proc/make_bullet_manifest(var/list/other_list)
+		var/list/list_to_read
+		if(other_list?.len)
+			list_to_read = other_list
+		else
+			list_to_read = src.mag_contents
+		if(list_to_read.len < 1) return
+		var/list/list_to_write = list()
 
-		for(var/datum/projectile/bullet in src.mag_contents)
-			if(src.mag_manifest.Find(bullet.ammo_ID))
-				src.mag_manifest[bullet.ammo_ID]["count"]++
+		for(var/datum/projectile/bullet in list_to_read)
+			if(list_to_write.Find(bullet.ammo_ID))
+				list_to_write[bullet.ammo_ID]["count"]++
 			else
 				var/new_bullet = bullet.ammo_ID
-				src.mag_manifest.Add(new_bullet)
-				src.mag_manifest[new_bullet] = list("name" = bullet.ammo_name, "type" = bullet.type, "count" = 1)
+				list_to_write.Add(new_bullet)
+				list_to_write[new_bullet] = list("name" = bullet.ammo_name, "type" = bullet.type, "count" = 1)
+		if(other_list?.len)
+			return list_to_write
+		else
+			src.mag_manifest = list_to_write
 
 	proc/update_bullet_manifest(var/list/bullets, var/mode)
 		if(!bullets || !mode)
@@ -256,25 +357,57 @@
 				else
 					boutput(world, "Tried to remove something from [src]'s manifest that wasnt there!!")
 
-	proc/use(var/amt = 0)
-		src.mag_contents.Cut(1,2)
-		if(amount_left >= amt)
-			amount_left -= amt
-			update_icon()
-			return 1
-		else
-			src.update_icon()
-			return 0
+	// Thanks, material.dm!
+	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
+		if (isobserver(usr))
+			boutput(usr, "<span class='alert'>Hey! Keep your cold, dead hands off of that!</span>")
+			return
+
+		if(!istype(over_object, /obj/screen/hud))
+			if (get_dist(usr,src) > 1)
+				boutput(usr, "<span class='alert'>You're too far away from [src] to do that.</span>")
+				return
+			if (get_dist(usr,over_object) > 1)
+				boutput(usr, "<span class='alert'>You're too far away from [over_object] to do that.</span>")
+				return
+
+		if(isturf(over_object)) // Drag this ammo-thing to that turf? Unload it to there!
+			boutput(usr, "Unloading [src] to [over_object] via clickdragon.")
+			var/mob/user = usr
+			if(src.unload_magazine(user = user, put_that_here = over_object))
+				return
+
+		else if(istype(over_object, /obj/item/ammo)) // Drag this ammo-thing to other ammo? Try to merge em!
+			boutput(usr, "Transferring [src] to [over_object] via clickdragon.")
+			var/obj/item/ammo/A = over_object
+			var/mob/user = usr
+			if(A.load_ammo(src, user = user))
+				return
+
+		else if(istype(over_object, /obj/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
+			var/obj/screen/hud/H = over_object
+			var/mob/living/carbon/human/dude = usr
+			switch(H.id)
+				if("lhand")
+					if(dude.l_hand && dude.l_hand != src && src.unload_magazine(user = dude))
+						return
+				if("rhand")
+					if(dude.r_hand && dude.r_hand != src && src.unload_magazine(user = dude))
+						return
+			// can't unload to any other slot until I can figure out how that works
+			// till then, mags from two-handed guns go right on the floor where they belong
+
+		return ..()
 
 	attackby(obj/b as obj, mob/user as mob)
 		if(istype(b, /obj/item/ammo))
 			var/obj/item/ammo/B = b
-			transfer_ammo(B, user = user)
+			load_ammo(B, user = user)
 			return
-		else if(istype(b, /obj/item/gun))
+		else if(istype(b, /obj/item/gun) && src.mag_type != AMMO_PILE && src.mag_type != AMMO_CLIP)
 			var/obj/item/gun/G = b
 			if(G.allowReverseReload)
-				src.loadammo(G, user = user)
+				G.load_gun(src, user = user)
 				return
 		/* else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
@@ -305,63 +438,7 @@
 				return */ // Full reload or ammo left over.
 		else return ..()
 
-	/// Move *this* ammo into *that* gun ... should probably be on the gun, tho
-	proc/loadammo(var/obj/item/gun/K, var/mob/user)
-		// Also see attackby() in kinetic.dm.
-		if (!K)
-			boutput(user, "No gun to load!")
-			return 0 // Error message.
-		if (K.sanitycheck() == 0)
-			return 0
-		if(!(src.mag_type in K.accepted_mag))
-			boutput(user, "[src] doesn't fit in [K]!")
-			return 0
 
-		K.add_fingerprint(user)
-		src.add_fingerprint(user)
-
-		// pile -> gun, check if the gun has a fixed magazine, then check if top_bullet is in the pile,
-		//              check if top_bullet's caliber is valid with the gun's loaded magazine, then transfer that one bullet
-		//              delete the pile if it ends up empty
-		// magazine/box/energy -> gun, check if the gun's magazine isnt fixed and accepts magazines,
-		//                        check if the magazine's stated caliber is in the gun's list of calibers, then swap the magazines
-		//                        delete what comes out of the gun if its a dummy null magazine
-		// clip -> gun, check if the gun's magazine is fixed, check if the magazine's stated caliber is in the gun's magazine's list of calibers,
-		//              then transfer the bullets to the magazine
-		//              don't delete the clip if it gets empty
-
-		var/caliber_check
-		if(!islist(src.caliber))
-			src.caliber = list(src.caliber)
-		if(!islist(K.caliber))
-			K.caliber = list(K.caliber)
-		// piles bypass the caliber check, it needs a bit more checking
-		if((src.mag_type == AMMO_PILE) || ((CALIBER_ANY) in K.loaded_magazine.caliber))
-			caliber_check = TRUE
-		else
-			for(var/this_caliber in src.caliber)
-				if(this_caliber in K.caliber)
-					caliber_check = TRUE
-					break
-
-		if(!caliber_check)
-			boutput(user, "Mag dont fit")
-			return 0
-
-		switch(src.mag_type)
-			if(AMMO_PILE, AMMO_CLIP) // Piles can only ever go into a loaded gun if the gun's magazine is fixed (revolver, shotgun, RPG, etc.)
-				if(K.fixed_mag && K.loaded_magazine)
-					K.loaded_magazine.transfer_ammo(src, user = user)
-				else
-					boutput(user, "Cant load these into that")
-					return 0
-			if(AMMO_MAGAZINE, AMMO_BOX, AMMO_ENERGY)
-				if(!K.fixed_mag) // Kinda hard to load a magazine into a revolver
-					K.swap(src, user) // Theres always a magazine inside the gun, even if its empty
-				else
-					boutput(user, "This gun doesnt have a swappable magazine, try feeding it loose bullets. or a clip.")
-					return 0
-		K.update_icon()
 
 	proc/update_icon()
 		var/num_count = 0
@@ -377,6 +454,7 @@
 
 	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
 		src.desc = "There are [num_count] bullet\s left!"
+		src.desc += "Contents: [src.make_ammo_string(mode = "line")]"
 
 		if (num_count > 0)
 			if (src.icon_dynamic && src.icon_short)
@@ -391,45 +469,29 @@
 	proc/charge(var/amt = 0)
 		if (src.charge >= src.max_charge)
 			src.charge = src.max_charge
-			return 0
+			return FALSE
 		else
 			if (amt > 0)
 				src.charge = min(src.charge + amt, src.max_charge)
 				src.update_icon()
 				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
 			else
-				return 0
+				return FALSE
+
+
+	proc/use(var/amt = 0)
+		src.mag_contents.Cut(1,2)
+		if(amount_left >= amt)
+			amount_left -= amt
+			update_icon()
+			return 1
+		else
+			src.update_icon()
+			return FALSE
 /////////////////////////////// Bullets for kinetic firearms /////////////////////////////////
 
 	// Ammo caliber defines
-	// #define CALIBER_RIFLE_ASSAULT 0.223
-	// #define CALIBER_RIFLE_HEAVY 0.308
-	// #define CALIBER_RIFLE_CASELESS 0.185
-	// #define CALIBER_PISTOL 0.355
-	// #define CALIBER_PISTOL_SMALL 0.22
-	// #define CALIBER_PISTOL_MAGNUM 0.50
-	// #define CALIBER_PISTOL_GYROJET 0.512
-	// #define CALIBER_PISTOL_FLINTLOCK 0.56
-	// #define CALIBER_MINIGUN 0.10
-	// #define CALIBER_REVOLVER_MAGNUM 0.357
-	// #define CALIBER_REVOLVER_OLDTIMEY 0.45
-	// #define CALIBER_REVOLVER 0.38
-	// #define CALIBER_DERRINGER 0.41
-	// #define CALIBER_WHOLE_DERRINGER 3.00
-	// #define CALIBER_SHOTGUN 0.72
-	// #define CALIBER_CANNON 0.787
-	// #define CALIBER_CANNON_MASSIVE 15.7
-	// #define CALIBER_GRENADE 1.57
-	// #define CALIBER_ROCKET 1.12
-	// #define CALIBER_RPG 1.58
-	// #define CALIBER_ROD 1.00
-	// #define CALIBER_CAT 9.5
-	// #define CALIBER_FROG 8.0
-	// #define CALIBER_CRAB 12
-	// #define CALIBER_TRASHBAG 9.5
-	// #define CALIBER_SECBOT 11.5
-	// #define CALIBER_BATTERY 1.30
-	// #define CALIBER_ANY -1
+	// see \_std\defines\item.dm for caliber defines!
 
 /obj/item/ammo/bullets
 	name = "Ammo box"
@@ -456,22 +518,6 @@
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
 
-	New(list/var_override, list/new_mag)
-		. = ..()
-
-	update_icon()
-		. = ..()
-
-		if(!src.mag_manifest)
-			src.make_bullet_manifest()
-
-		if(src.mag_manifest.len == 1)
-			src.name = "[src.mag_manifest[1]["name"]](s)"
-		else
-			src.name = "Some bullets"
-
-		src.desc = "Contents: [src.make_ammo_string(mode = "line")]"
-
 /obj/item/ammo/bullets/pile/test
 	name = "Pile of Bullets"
 	sname = "Pile"
@@ -486,6 +532,30 @@
 	mag_type = AMMO_PILE
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
+
+/obj/item/ammo/bullets/pile/test2
+	name = "Assorted Pile of Bullets"
+	sname = "Pile"
+	desc = "A bunch of ammo."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 40000
+	g_amt = 0
+	amount_left = 25
+	max_amount = 50
+	ammo_type = /datum/projectile/bullet/revolver_38
+	mag_type = AMMO_PILE
+	module_research = list("weapons" = 2, "miniaturization" = 5)
+	module_research_type = /obj/item/ammo/bullets
+
+	New(list/var_override, list/new_mag)
+		ammo_type = list()
+		var/list/proj_types = concrete_typesof(/datum/projectile, cache=TRUE)
+		for(var/i in 1 to amount_left)
+			ammo_type.Add(pick(proj_types))
+		. = ..()
+
+
 
 /obj/item/ammo/bullets/empty
 	sname = "Missing detatchable magazine"
@@ -1314,14 +1384,14 @@
 	use(var/amt = 0)
 		if (src.charge <= 0)
 			src.charge = 0
-			return 0
+			return FALSE
 		else
 			if (amt > 0)
 				src.charge = max(0, src.charge - amt)
 				src.update_icon()
 				return 1
 			else
-				return 0
+				return FALSE
 
 	attackby(obj/attacking_item as obj, mob/attacker as mob)
 		if(istype(attacking_item, /obj/item/gun/energy))
@@ -1562,3 +1632,5 @@
 	ammo_type = /datum/projectile/special/meowitzer/inert
 
 
+#undef TOP_IS_WRONG_CALIBER
+#undef TOP_NOT_FOUND

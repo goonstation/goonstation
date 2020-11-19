@@ -1451,7 +1451,7 @@
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
-	var/obj/item/ammo/power_cell/cell = null
+	var/obj/item/ammo/power_cell/loaded_magazine = null
 	var/status = 0
 	var/digcost = 0
 	var/weakener = 0
@@ -1467,19 +1467,19 @@
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
 		. = ..()
-		if (!src.cell)
+		if (!src.loaded_magazine)
 			return
 		if (isrobot(user))
 			return // Drains battery instead.
-		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.loaded_magazine.charge]/[src.loaded_magazine.max_charge] PUs left!"
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
 			return 0
-		if (cell.charge < 1)
+		if (loaded_magazine.charge < 1)
 			return 0
-		src.cell.use(use)
-		if (src.cell.charge == 0)
+		src.loaded_magazine.use(use)
+		if (src.loaded_magazine.charge == 0)
 			src.power_down()
 			var/turf/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
@@ -1492,8 +1492,8 @@
 
 	proc/charge(var/amount)
 		//Support for recharge stations. Increment uses by one until we reach max.
-		if(src.cell)
-			return src.cell.charge(amount)
+		if(src.loaded_magazine)
+			return src.loaded_magazine.charge(amount)
 		else//No cell, or not rechargeable. Tell anything trying to charge it.
 			return -1
 
@@ -1511,14 +1511,32 @@
 			signal_event("icon_updated")
 		return
 #warn MINING IS FUCKED
-	// attackby(obj/item/b as obj, mob/user as mob)
-	// 	if (istype(b, /obj/item/ammo/power_cell/))
-	// 		var/obj/item/ammo/power_cell/pcell = b
-	// 		if (src.cell)
-	// 			if (pcell.swap(src))
-	// 				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
-	// 	else
-	// 		..()
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/power_cell/))
+			var/obj/item/ammo/power_cell/pcell = b
+			if (src.loaded_magazine)
+				if (src.swap_cell(pcell))
+					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
+		else
+			..()
+
+	proc/swap_cell(var/obj/item/ammo/A, var/mob/user)
+		if(!user)
+			return 0
+		A.set_loc(src)
+		user.u_equip(A)
+		if(src.loaded_magazine.is_null_mag)
+			qdel(src.loaded_magazine)
+		else
+			var/obj/item/ammo/old_mag = src.loaded_magazine
+			old_mag.loaded_in = null
+			old_mag.update_bullet_manifest()
+			old_mag.update_icon()
+			user.put_in_hand_or_drop(old_mag)
+		src.loaded_magazine = A
+		src.loaded_magazine.loaded_in = src
+		src.loaded_magazine.update_bullet_manifest()
+		src.loaded_magazine.update_icon()
 
 	proc/update_icon()
 		return
@@ -1549,7 +1567,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 2
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	loaded_magazine = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
@@ -1622,7 +1640,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "phammer1"
-	cell = new/obj/item/ammo/power_cell
+	loaded_magazine = new/obj/item/ammo/power_cell
 	force = 9
 	dig_strength = 3
 	digcost = 3
@@ -1688,7 +1706,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 0
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	loaded_magazine = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
