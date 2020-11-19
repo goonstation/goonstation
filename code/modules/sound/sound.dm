@@ -61,7 +61,7 @@ var/global/list/falloff_cache = list()
 
 
 //volumous hair with l'orial paris
-/client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5)
+/client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 /client/var/list/sound_playing = new/list(1024, 2)
 
 /// Returns a list of friendly names for available sound channels

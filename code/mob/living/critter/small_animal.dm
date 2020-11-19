@@ -2042,7 +2042,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/animal/butterflyscream.ogg", 80, 1)
+					playsound(get_turf(src), "sound/voice/animal/butterflyscream.ogg", 80, 1, channel=VOLUME_CHANNEL_SCREAMFART)
 					return "<span class='emote'><b>[src]</b> cheeps.</span>"
 			if ("flutter","dance")
 				if (src.emote_check(voluntary, 50)) //copied from moonwalk code
@@ -2299,7 +2299,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6)
+					playsound(get_turf(src), "sound/voice/screams/Robot_scream_2.ogg", 50, 1, 0.1, 2.6, channel=VOLUME_CHANNEL_SCREAMFART)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
@@ -2319,7 +2319,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if ("honk") playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 					if ("fart")
 						if (farting_allowed)
-							playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1)
+							playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_SCREAMFART)
 					if ("burp") playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
 					if ("squeak") playsound(src.loc, "sound/misc/clownstep1.ogg", 50, 1)
 					if ("cat") playsound(src.loc, "sound/voice/animal/cat.ogg", 50, 1)
@@ -2424,7 +2424,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3)
+					playsound(get_turf(src), (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_SCREAMFART)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("burp")
 				if (src.emote_check(voluntary, 30))
@@ -2432,7 +2432,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<span class='emote'><b>[src]</b> burps.</span>"
 			if ("fart")
 				if (src.emote_check(voluntary))
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
+					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_SCREAMFART)
 					return "<span class='emote'><b>[src]</b> farts!</span>"
 
 		return null
@@ -2565,11 +2565,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
+					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_SCREAMFART)
 					var/obj/item/storage/bible/B = locate(/obj/item/storage/bible) in get_turf(src)
 					if(B)
 						SPAWN_DBG(1) // so that this message happens second
-							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_SCREAMFART)
 							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
 			if ("dance")
