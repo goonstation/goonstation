@@ -400,7 +400,7 @@
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.loaded_magazine)
-				if (src.swap_cell(pcell))
+				if (src.swap_cell(pcell, user))
 					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 			else
 				src.loaded_magazine = pcell

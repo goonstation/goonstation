@@ -1515,7 +1515,7 @@
 		if (istype(b, /obj/item/ammo/power_cell/))
 			var/obj/item/ammo/power_cell/pcell = b
 			if (src.loaded_magazine)
-				if (src.swap_cell(pcell))
+				if (src.swap_cell(pcell, user))
 					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
