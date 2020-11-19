@@ -1,5 +1,9 @@
 
 (t)wed nov 18 20
+(u)Azrun
+(p)2732
+(e)🐛|bug
+(+)Furnaces easier to load.  Resolved issue where excess items in stacks would get consumed without benefit.
 (u)Chickenish
 (p)2735
 (e)🐛|bug
