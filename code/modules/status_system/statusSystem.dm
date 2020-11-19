@@ -1085,6 +1085,27 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				violent_twitch(owner)
 			.=..(timePassed)
 
+	// Basically disorient, but only does the animation and its maxDuration is
+	// upped a bit to synchronize with other stuns.
+	cyborg_disorient
+		id = "cyborg-disorient"
+		name = "Disoriented"
+		icon_state = "disorient"
+		visible = 0
+		unique = 1
+		maxDuration = 30 SECONDS
+		var/counter = 0
+		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/count = 7
+
+		onUpdate(var/timePassed)
+			counter += timePassed
+			if (counter >= count && owner)
+				counter -= count
+				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				violent_twitch(owner)
+			.=..(timePassed)
+
 	drunk
 		id = "drunk"
 		name = "Drunk"

@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
