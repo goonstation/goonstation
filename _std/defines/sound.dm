@@ -18,6 +18,15 @@
 #define VOLUME_CHANNEL_ADMIN 4
 #define VOLUME_CHANNEL_SCREAMFART 5
 
+var/global/list/audio_channel_name_to_id = list(
+	"master" = VOLUME_CHANNEL_MASTER,
+	"game" = VOLUME_CHANNEL_GAME,
+	"ambient" = VOLUME_CHANNEL_AMBIENT,
+	"radio" = VOLUME_CHANNEL_RADIO,
+	"admin" = VOLUME_CHANNEL_ADMIN,
+	"screamfart" = VOLUME_CHANNEL_SCREAMFART
+)
+
 //Area Ambience
 #define AMBIENCE_LOOPING 1
 #define AMBIENCE_FX_1 2
