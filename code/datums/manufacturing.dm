@@ -1722,7 +1722,7 @@
 	category = "Tool"
 
 /datum/manufacture/ore_scoop
-	name = "Ore scoop"
+	name = "Ore Scoop"
 	item_paths = list("MET-1","CON-1","CRY-1")
 	item_names = list("Metal","Conductive Material","Crystal")
 	item_amounts = list(1,1,1)
