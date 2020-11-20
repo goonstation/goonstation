@@ -161,8 +161,8 @@
 			src.audible_message("<span class='alert'>[src] makes a hissing sound.</span>")
 			if(leaked) loc.assume_air(leaked)
 
-		src?.network1.update = 1
-		src?.network2.update = 1
+		src.network1?.update = 1
+		src.network2?.update = 1
 
 		return removed
 
