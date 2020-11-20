@@ -1525,10 +1525,12 @@
 /obj/item/gun/energy/taser_rifle
 	name = "taser assault rifle"
 	desc = "Sometimes, you gotta bring out the big guns."
+	icon = 'icons/obj/48x32.dmi'
 	icon_state = "taser_rifle"
 	uses_multiple_icon_states = 1
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "taser_rifle"
-	force = 5
+	force = 8
 	two_handed = 1
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_elec"
@@ -1545,7 +1547,7 @@
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "pulse_rifle[ratio]"
+			src.icon_state = "taser_rifle[ratio]"
 			return
 
 ///////////////////////////////////////Wasp Gun

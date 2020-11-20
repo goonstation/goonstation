@@ -236,15 +236,15 @@ toxic - poisons
 	power = 30
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "minispark"
-	cost = 20
+	cost = 23
 	sname = "rifle burst stun"
 
 /datum/projectile/energy_bolt/taser_rifle_semi
-	power = 15
+	power = 13
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
 	cost = 25
-	sname = "rifle single stun"
+	sname = "semi-automatic stun"
 
 //lawgiver detain
 /datum/projectile/energy_bolt/aoe
