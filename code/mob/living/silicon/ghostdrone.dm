@@ -822,7 +822,7 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(get_turf(src), 'sound/vox/birdwell.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -845,9 +845,9 @@
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
-						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1)
+						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1)
+						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<B>[src]</B> does a flip!"
 					m_anim = 1
 					if (prob(50))

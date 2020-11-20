@@ -511,7 +511,7 @@
 			if(mob.emote_allowed)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> screams with \his mind! Guh, that's creepy!"
-				playsound(get_turf(mob), "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+				playsound(get_turf(mob), "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
@@ -660,7 +660,7 @@
 			if(mob.emote_allowed)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
-				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
@@ -795,7 +795,7 @@
 			if(mob.emote_allowed)
 				mob.emote_allowed = 0
 				message = "<B>[mob]</B> moans!"
-				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+				playsound(get_turf(mob), "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN_DBG(3 SECONDS)
 					mob.emote_allowed = 1
 			return message
@@ -923,7 +923,7 @@
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] screeches!</B></span>"
-					playsound(get_turf(mob), "sound/voice/creepyshriek.ogg", 60, 1)
+					playsound(get_turf(mob), "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
 		return message
@@ -1027,14 +1027,14 @@
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
-					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)))
+					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
 			if("burp")
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> belches."
-					playsound(get_turf(mob), "sound/voice/burp_alien.ogg", 60, 1)
+					playsound(get_turf(mob), "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG(1 SECOND)
 						mob.emote_allowed = 1
 		return message
@@ -1662,7 +1662,7 @@
 			if ("scream")
 				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> moos!"
-					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch())
+					playsound(get_turf(mob), "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (mob.emote_check(voluntary))
 					.= release_milk()

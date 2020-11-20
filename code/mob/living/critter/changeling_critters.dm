@@ -158,7 +158,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1)
+					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
@@ -386,7 +386,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
+					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -572,7 +572,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
+					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 

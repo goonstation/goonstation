@@ -459,7 +459,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1)
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
@@ -489,9 +489,9 @@
 						src.TakeDamage("head", 2, 4)
 					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
 						if (narrator_mode)
-							playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1)
+							playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1)
+							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						message = "<B>[src]</B> beep-bops!"
 						if (prob(50))
 							animate_spin(src, "R", 1, 0)

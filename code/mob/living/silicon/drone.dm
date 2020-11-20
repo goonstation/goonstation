@@ -278,13 +278,13 @@
 				emote_sound = beeps_n_boops[5]
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
-				playsound(src.loc, pick(glitchy_noise), 50, 1)
+				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
 		if (emote_sound)
-			playsound(src.loc, emote_sound, 50, 1)
+			playsound(src.loc, emote_sound, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		if (message)
 			src.visible_message(message)
 		return
