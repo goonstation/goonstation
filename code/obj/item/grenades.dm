@@ -896,6 +896,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/slashed = FALSE // has it been emptied out? if so, better dud!
 	var/primer_burnt = FALSE // avoid priming a firework multiple times, that doesn't make sense!
 	var/primed = FALSE // cutting open lit fireworks is a BAD idea
+	var/bootleg_level = 0 // 0 = normal, 1 = unstable, 2 = unstable and you arm fall off
 
 	New()
 		..()
@@ -919,144 +920,10 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( 5 )
-					boom()
-					return
-
-			else
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
-					boom()
-					return
-
-	proc/boom()
-		var/turf/location = get_turf(src.loc)
-		if(location)
-			if(prob(10))
-				explosion(src, location, 0, 0, 1, 1)
-			else
-				elecflash(src,power = 2)
-				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
-		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
-
-		qdel(src)
-
-	attack_self(mob/user as mob)
-		if (user.equipped() == src)
-			if (src.primer_burnt)
-				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
-				return
-
-			else if (src.slashed)
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
-					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
-					src.primer_burnt = TRUE
-					return
-
-			else if (user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				src.primed = TRUE
-				SPAWN_DBG( 5 )
-					boom()
-					return
-
-			else
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				src.primed = TRUE
-				SPAWN_DBG( src.det_time )
-					boom()
-					return
-
-	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
-		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
-			src.slashed = TRUE
-			src.name = "empty [src.name]" // its empty now!
-			src.desc = "[src.desc] It has been cut open and emptied out."
-			boutput(user, "You carefully cut [src] open and dump out the contents.")
-
-			make_cleanable(/obj/decal/cleanable/magnesiumpile, get_turf(src.loc)) // create magnesium pile
-			src.reagents.clear_reagents() // remove magnesium from firework
-			return
-
-		else if (iscuttingtool(A) && !(src.slashed) && (src.primed)) // cutting open a lit firework is a bad idea!
-			boutput(user, "<span class='alert'>You cut open [src], but the lit primer ignites the contents!</span>")
-			boom()
-			return
-
-		else if (iscuttingtool(A) && (src.slashed))
-			boutput(user, "[src] has already been cut open and emptied.")
-			return
-
-/obj/item/bootleg_firework
-	name = "bootleg firework"
-	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one seems to be missing a label, weird."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "firework"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	var/det_time = 20
-	stamina_damage = 5
-	stamina_cost = 5
-	stamina_crit_chance = 5
-	var/slashed = FALSE // has it been emptied out? if so, better dud!
-	var/primer_burnt = FALSE // avoid priming a firework multiple times, that doesn't make sense!
-	var/primed = FALSE // cutting open lit fireworks is a BAD idea
-	var/bootleg_level = 0 // 0 = normal, 1 = unstable, 2 = unstable and you arm fall off
-
-	New()
-		..()
-		create_reagents(10)
-
-		if (prob(30))
-			reagents.add_reagent("flashpowder", 5) // must've been a mix-up!
-
-			if (prob(15))
-				reagents.add_reagent("blackpowder", 5) // thats one hell of a mix-up
-				src.bootleg_level = 2
-			else
-				reagents.add_reagent("flashpowder", 5) // this way every firework has 10u reagents
-				src.bootleg_level = 1
-
-		else
-			reagents.add_reagent("magnesium", 10)
-
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (user.equipped() == src)
-			if (src.primer_burnt)
-				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
-				return
-
-			else if (src.slashed)
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
-				SPAWN_DBG( src.det_time )
-					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
-					src.primer_burnt = TRUE
-					return
-
-			else if (user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				if (src.bootleg_level > 0)
-					boom(user)
-					return
-
-				src.primed = TRUE
-				SPAWN_DBG( 5 )
 					boom(user)
 					return
 
 			else
-				if (src.bootleg_level > 0)
-					boutput(user, "<span class='alert'>You prime the firework, but the contents ignite immediately!</span>")
-					boom(user)
-					return
-
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
@@ -1103,21 +970,12 @@ PIPE BOMBS + CONSTRUCTION
 
 			else if (user.bioHolder.HasEffect("clumsy"))
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-				if (src.bootleg_level > 0)
-					boom(user)
-					return
-
 				src.primed = TRUE
 				SPAWN_DBG( 5 )
 					boom(user)
 					return
 
 			else
-				if (src.bootleg_level > 0)
-					boutput(user, "<span class='alert'>You prime the firework, but the contents ignite immediately!</span>")
-					boom(user)
-					return
-
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
@@ -1125,12 +983,7 @@ PIPE BOMBS + CONSTRUCTION
 					return
 
 	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
-		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
-			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
-			boom(user)
-			return
-
-		else if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
+		if (iscuttingtool(A) && !(src.slashed) && !(src.primed))
 			src.slashed = TRUE
 			src.name = "empty [src.name]" // its empty now!
 			src.desc = "[src.desc] It has been cut open and emptied out."
@@ -1148,6 +1001,52 @@ PIPE BOMBS + CONSTRUCTION
 		else if (iscuttingtool(A) && (src.slashed))
 			boutput(user, "[src] has already been cut open and emptied.")
 			return
+
+/obj/item/firework/bootleg
+	name = "bootleg firework"
+	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one seems to be missing a label, weird."
+
+	New()
+		..()
+		create_reagents(10)
+
+		if (prob(30))
+			reagents.add_reagent("flashpowder", 5) // must've been a mix-up!
+
+			if (prob(15))
+				reagents.add_reagent("blackpowder", 5) // thats one hell of a mix-up
+				src.bootleg_level = 2
+			else
+				reagents.add_reagent("flashpowder", 5) // this way every firework has 10u reagents
+				src.bootleg_level = 1
+
+		else
+			reagents.add_reagent("magnesium", 10)
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You try to prime the firework, but the contents ignite immediately!</span>")
+			boom(user)
+			return
+
+		..()
+
+	attack_self(mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You try to prime the firework, but the contents ignite immediately!</span>")
+			boom(user)
+			return
+
+		..()
+
+	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
+			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
+			boom(user)
+			return
+
+		..()
+
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
