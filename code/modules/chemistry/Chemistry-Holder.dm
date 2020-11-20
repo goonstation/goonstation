@@ -799,7 +799,7 @@ datum
 			for(var/datum/chemical_reaction/C in src.active_reactions)
 				if(C.id == reaction_id)
 					return C && C.result_amount >= amount
-			return 0
+			return FALSE
 
 		proc/get_reagent(var/reagent_id)
 			return reagent_list[reagent_id]

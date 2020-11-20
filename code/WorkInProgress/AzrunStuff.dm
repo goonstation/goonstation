@@ -1,3 +1,7 @@
+// Provide support for IIR filters to perform all your standard filtering needs!
+// Previous inputs and outputs of the function will be summed together and output
+//
+// https://en.wikipedia.org/wiki/Infinite_impulse_response
 /datum/digital_filter
 	var/list/a_coefficients //feedback (scalars for sumation of previous results)
 	var/list/b_coefficients //feedforward (scalars for sumation of previous inputs)
@@ -27,6 +31,7 @@
 		. = feedback_sum + input_sum
 		if(length(src.z_a)) src.z_a[1] = .
 
+	// Sum equally weighted previous inputs of window_size
 	window_average
 		init(window_size)
 			var/list/coeff_list = new()
@@ -34,6 +39,13 @@
 				coeff_list += 1/window_size
 			..(null, coeff_list)
 
+	// Sum weighted current input and weighted previous output to achieve output
+	// input weight will be ratio of weight assigned to input value while remaining goes to previous output
+	//
+	// Exponential Smoothing
+	// Time constant will be the amount of time to achieve 63.2% of original sum
+	// NOTE: This should be performed by a scheduled process as this ensures constant sample interval
+	// https://en.wikipedia.org/wiki/Exponential_smoothing
 	exponential_moving_average
 		proc/init_basic(input_weight)
 			var/input_weight_list[1]

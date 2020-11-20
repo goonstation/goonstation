@@ -40,6 +40,7 @@
 		add_avail(src.genrate)
 
 	proc/on_inactive()
+		return
 
 	proc/update_icon()
 		if(active != last_active)

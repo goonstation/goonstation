@@ -5,7 +5,7 @@
 #define RIGHT_CIRCULATOR 2
 #define LUBE_CHECK_RATE 5
 
-// Circulator Varients
+// Circulator variants
 /// no backflow
 #define BACKFLOW_PROTECTION	 (1<<0)
 /// periodically leaks input gas
@@ -15,7 +15,7 @@
 /// LUBE Drain
 #define LUBE_DRAIN_OPEN			 (1<<3)
 
-// TEG Varients
+// TEG variants
 // HIGH TEMP Model
 #define TEG_HIGH_TEMP	(1<<0)
 // LOW TEMP Model
@@ -50,10 +50,10 @@
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
 
-	proc/assign_variant(partial_serial_num, varient_a, varient_b=null)
-		src.serial_num = "CIRC-[partial_serial_num][varient_a][rand(100,999)]"
+	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
+		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
 		src.serial_num += src.side==1? "L":"R"
-		if(varient_b) src.serial_num += "-[varient_b]"
+		if(variant_b) src.serial_num += "-[variant_b]"
 
 	disposing()
 		switch (side)
@@ -155,14 +155,14 @@
 
 		handle_reactions(removed)
 
-		// Leaks gas varient
+		// Leaks gas variant
 		if((circulator_flags & LEAKS_GAS ) && prob(5))
 			var/datum/gas_mixture/leaked = gas_input.remove_ratio(rand(2,8)*0.01)
 			src.audible_message("<span class='alert'>[src] makes a hissing sound.</span>")
 			if(leaked) loc.assume_air(leaked)
 
-		if(src.network1) src.network1.update = 1
-		if(src.network2) src.network2.update = 1
+		src?.network1.update = 1
+		src?.network2.update = 1
 
 		return removed
 
@@ -201,10 +201,6 @@
 					src.visible_message("<span class='alert'>The [src] looks kind of hazey for a moment.</span>")
 
 			if(reaction_temp)
-				// Azrun TODO - Further Evaluation
-				//var/heat_capcity = HEAT_CAPACITY(removed)
-				// maybe should do standard air at temp? currently that is just water @ 20C -- * 4182 / heat_capcity
-				// +/- 200 for a temp benefit initially seems sufficiently costed for only getting read at 1/2 reaction rate
 				gas_passed.temperature += reaction_temp
 				gas_passed.temperature = max(gas_passed.temperature,1)
 
@@ -257,10 +253,6 @@
 		. = ..()
 		var/lube_efficiency = 0.0
 
-		/*
-			Azrun TODO - Consider making these more punishing/beneficial to drive player discovery,
-									 is this something that could get moved to secrets to avoid spoilers?  You know... FOR THE GOOD/TERRIBLE STUFF
-		*/
 		if(src.reagents?.total_volume)
 			for(var/reagent_id as() in src.reagents.reagent_list)
 				var/datum/reagent/R = src.reagents.reagent_list[reagent_id]
@@ -320,11 +312,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.mind.assigned_role == "Chief Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
+			if (H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -416,8 +404,8 @@
 	var/spam_limiter = 0  // stop the lights and icon updates from spazzing out as much at the threshold between power tiers
 	var/efficiency_controller = 52 // cogwerks - debugging/testing var
 	var/datum/light/light
-	var/varient_a = null
-	var/varient_b = null
+	var/variant_a = null
+	var/variant_b = null
 	var/conductor_temp = T20C
 
 	var/boost = 0
@@ -443,25 +431,25 @@
 	proc/generate_variants(a=null,b=null)
 		var/prepend_serial_num = "[pick(consonants_upper)][pick(consonants_upper)]"
 
-		if(is_null_or_space(a))	src.varient_a = rand(10,99)
-		else src.varient_a = a
+		if(is_null_or_space(a))	src.variant_a = rand(10,99)
+		else src.variant_a = a
 
 		if(is_null_or_space(b))
-			if(prob(30)) src.varient_b = pick(uppercase_letters)
-		else src.varient_b = b
+			if(prob(30)) src.variant_b = pick(uppercase_letters)
+		else src.variant_b = b
 
-		if(src.varient_b)
-			if(src.varient_b in list("A","B","C","D"))
+		if(src.variant_b)
+			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
-			else if(src.varient_b in list("E","F","G","H"))
+			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
 			else
-				// Reassign varient_b to null so unsupported varients aren't shown to players
+				// Reassign variant_b to null so unsupported variants aren't shown to players
 				// to avoid confusion
-				src.varient_b = null
+				src.variant_b = null
 
-		src.circ1?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
-		src.circ2?.assign_variant(prepend_serial_num, src.varient_a, src.varient_b)
+		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
+		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 
 	New()
 		..()
