@@ -751,6 +751,8 @@
 				src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
 				src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
 
+				src.goods_buy += new /datum/commodity/relics/bootlegfirework(src)
+
 			if(2) // diner attendant
 				src.goods_sell += new /datum/commodity/diner/mysteryburger(src)
 				src.goods_sell += new /datum/commodity/diner/monster(src)
