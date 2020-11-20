@@ -10431,7 +10431,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/machinery/phone/wall{
 	pixel_x = 24;
@@ -10920,7 +10920,7 @@
 "vO" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	name = "Barman's Room"
+	name = "Bartender's Room"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -11320,7 +11320,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro{
-	name = "Barman's Room"
+	name = "Bartender's Room"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)

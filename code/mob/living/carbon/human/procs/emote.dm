@@ -1889,7 +1889,7 @@
 						sleep(0.8 SECONDS)
 						src.say_verb("The Chef.")
 						sleep(0.8 SECONDS)
-						src.say_verb("The Barman.")
+						src.say_verb("The Bartender.")
 						sleep(0.8 SECONDS)
 						src.say_verb("But not me.")
 						sleep(0.5 SECONDS)

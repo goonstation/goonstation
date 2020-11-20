@@ -31805,7 +31805,7 @@
 "bpf" = (
 /obj/stool,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet{
 	dir = 2;
