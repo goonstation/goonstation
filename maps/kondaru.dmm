@@ -21478,7 +21478,7 @@
 /area/station/hallway/primary/east)
 "aWV" = (
 /obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour20;desc=Thank you for joining me on this tour! You should now be acclimatized to the station. If you're still feeling a bit lost, look for the Barman or Head of Personnel.";
+	codes_txt = "tour;next_tour=tour20;desc=Thank you for joining me on this tour! You should now be acclimatized to the station. If you're still feeling a bit lost, look for the Bartender or Head of Personnel.";
 	freq = 1443;
 	location = "tour19";
 	name = "tour 19 - conclusion"
@@ -27760,7 +27760,7 @@
 "blD" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	name = "Barman's Room"
+	name = "Bartender's Room"
 	},
 /obj/access_spawn/bar,
 /obj/cable{
@@ -28329,7 +28329,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)

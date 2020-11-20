@@ -615,7 +615,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/barman,\
+	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
 	/obj/item/storage/box/clothing/waiter,\
 	/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\

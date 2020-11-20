@@ -1,4 +1,25 @@
 
+(t)fri nov 20 20
+(u)pali
+(p)2712
+(e)🗺🎨|mapping, sprites
+(+)Barman role renamed to Bartender
+(u)Innox
+(p)2706
+(e)🆕|feature
+(+)Allowed creating apple on a stick with rods too - take that popsicle sticks!
+(+)Allowed creating corndogs with popsicle sticks too - take that rods!
+(t)thu nov 19 20
+(u)Gannets
+(p)2742
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Nuclear Operative Combat Medic balance changes.
+(*)Removes donk pocket box from medic class crate.
+(*)Adds high-capacity autoinjector of donk pocket reagents to medic crate.
+(*)Adds a single warm donk pocket as a purchasable Utility item from the Syndicate Weapon Vendor on the Cairngorm.
+(+)Adds sprite for syringe gun canister.
+(+)Adds a second canister of neurotoxin to medic crate.
+(+)Removes some medkits from the Cairngorm
 (t)wed nov 18 20
 (u)Azrun
 (p)2732

@@ -39447,7 +39447,7 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
