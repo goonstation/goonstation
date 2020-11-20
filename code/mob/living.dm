@@ -1200,7 +1200,7 @@
 	var/checkpath = src.static_type_override ? src.static_type_override : src.type
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace) && H.mutantrace.icon_override_static)
+		if (istype(H.mutantrace))
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1
