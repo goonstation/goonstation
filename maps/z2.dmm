@@ -18681,15 +18681,12 @@
 /area/marsoutpost)
 "aVd" = (
 /obj/table/auto,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
-	},
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "aVe" = (
@@ -50476,25 +50473,20 @@
 /area/syndicate_station/battlecruiser)
 "cvY" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/pinpointer/nuke,
+/obj/item/pinpointer/nuke,
+/obj/item/pinpointer/nuke,
+/obj/item/pinpointer/nuke,
+/obj/item/pinpointer/nuke,
+/obj/item/pinpointer/nuke,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
-/obj/table/auto,
-/obj/machinery/light,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/turf/unsimulated/floor/darkblue,
+/obj/rack,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "cwa" = (
 /obj/machinery/light{
@@ -66457,11 +66449,10 @@
 	},
 /area/sim/racing_track)
 "dff" = (
-/obj/storage/secure/crate/gear/sarin_grenades,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
+/obj/table/auto,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dfg" = (
@@ -67462,13 +67453,6 @@
 /area/iomoon)
 "dhg" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
-"dhh" = (
-/obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
@@ -67476,6 +67460,19 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
+"dhh" = (
+/obj/table/auto,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing"
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dhi" = (
@@ -67510,12 +67507,14 @@
 /area/iomoon/caves)
 "dhk" = (
 /obj/table/auto,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
+/obj/machinery/light,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
+/obj/item/remote/syndicate_teleporter,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dhl" = (
@@ -82782,6 +82781,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sord)
+"fxL" = (
+/obj/storage/secure/crate/gear/sarin_grenades,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "fCL" = (
 /obj/item/spacecash/twenty{
 	pixel_x = -12;
@@ -85769,6 +85776,18 @@
 	tag = "icon-fpurple1"
 	},
 /area/centcom/lounge)
+"sdh" = (
+/obj/rack,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "she" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -112700,7 +112719,7 @@ bqV
 dfo
 dfQ
 dfQ
-dgw
+cvZ
 aKf
 dgQ
 dgY
@@ -113002,7 +113021,7 @@ bqV
 dfo
 dfQ
 dfQ
-dgw
+sdh
 aKf
 dgQ
 dgZ
@@ -117232,7 +117251,7 @@ btf
 btf
 btf
 dgK
-btf
+fxL
 dff
 aKf
 dhv
@@ -119045,7 +119064,7 @@ btf
 btf
 btf
 btf
-cvZ
+btf
 aKf
 cwk
 dhN
