@@ -4,6 +4,7 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -69,10 +70,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-#if ASS_JAM
-	/obj/item/gun/kinetic/beepsky,
-	/obj/item/turret_deployer/riot,
-#endif
+
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/command/hop
@@ -324,14 +322,7 @@
 	icon_opened = "secure_white-open"
 	req_access_txt = "10"
 
-#if ASS_JAM
-	update_icon()
-		. = ..()
-		if(src.open)
-			src.UpdateOverlays(null, "morty")
-		else
-			ADD_MORTY(11, 11, 7, 7)
-#endif
+
 
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"

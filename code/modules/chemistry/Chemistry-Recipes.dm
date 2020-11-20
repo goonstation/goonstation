@@ -3915,8 +3915,8 @@ datum
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 
-		king_readsterium
-			name = "King Readsterium"
+		mimicillium
+			name = "Mimicillium"
 			id = "badmanjuice"
 			result = "badmanjuice"
 			required_reagents = list("transparium" = 1, "glitter" = 1, "port" = 1, "cholesterol" = 1 )

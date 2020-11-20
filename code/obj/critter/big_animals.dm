@@ -510,7 +510,7 @@ obj/critter/bear/care
 	Move()
 		if(prob(15))
 			playsound(src.loc, "rustle", 10, 1)
-		..()
+		. = ..()
 
 /obj/critter/bat/doctor
 	name = "Dr. Acula"

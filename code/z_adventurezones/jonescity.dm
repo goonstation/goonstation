@@ -66,7 +66,7 @@ JONES CITY TURFS
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /obj/item/paper/jones_note //When the lord plays, nothing is fair.
 	name = "slimy wad of paper"

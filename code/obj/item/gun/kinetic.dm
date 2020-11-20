@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		src.pixel_y += rand(-12,12)
 		src.pixel_x += rand(-12,12)
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		return
 
 /obj/item/gun/kinetic/minigun

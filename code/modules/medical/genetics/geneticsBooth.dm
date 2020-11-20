@@ -96,8 +96,10 @@
 
 	disposing()
 		STOP_TRACKING
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
-
 
 	process()
 		if (occupant)
@@ -193,7 +195,7 @@
 			ClearSpecificOverlays("screen")
 
 
-	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1)
+	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1, var/override_dir = null)
 		if (occupant)
 
 			if (add_power)
@@ -223,11 +225,10 @@
 			updateicon()
 
 		started = 0
-		SPAWN_DBG(0)
-			var/turf/dispense = get_step(src.loc,eject_dir)
-			for (var/atom in src)
-				var/atom/movable/A = atom
-				A.set_loc(dispense)
+		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
+		for (var/atom in src)
+			var/atom/movable/A = atom
+			A.set_loc(dispense)
 
 
 	proc/try_billing(var/mob/living/carbon/human/M)
@@ -339,8 +340,7 @@
 		if (direction != eject_dir)
 			if (direction & WEST || direction & EAST)
 				if (occupant == user && !(started>1))
-					src.eject_occupant(0,0)
-					step(user,direction)
+					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src

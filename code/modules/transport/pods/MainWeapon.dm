@@ -287,9 +287,9 @@
 				if(isfiring) return
 				isfiring = 1
 				var/obj/decal/D = new/obj/decal(ship.loc)
-				D.dir = ship.dir
+				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
-					D.dir = shot_dir_override
+					D.set_dir(shot_dir_override)
 
 				D.name = "metal foam spray"
 				D.icon = 'icons/obj/chemical.dmi'

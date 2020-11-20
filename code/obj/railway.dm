@@ -272,7 +272,7 @@
 			return
 		current = R
 		moving_dir = towards_dir
-		dir = moving_dir
+		set_dir(moving_dir)
 		set_loc(T)
 		current.entering(src)
 		distance = default_distance
@@ -308,7 +308,7 @@
 						return
 				current = NR
 				moving_dir = current.get_travel_dir(moving_dir)
-				dir = moving_dir
+				set_dir(moving_dir)
 				current.entering(src)
 				set_loc(next)
 				if (!self_powered)

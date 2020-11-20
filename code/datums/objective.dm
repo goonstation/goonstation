@@ -404,13 +404,6 @@ proc/create_fluff(var/datum/mind/target)
 			return 1
 		return 0
 
-/datum/objective/regular/destroy_outpost
-	explanation_text = "Activate the computer mainframe's self-destruct charge."
-
-	check_completion()
-		if (outpost_destroyed == 1) return 1
-		else return 0
-
 /datum/objective/regular/cash
 	var/target_cash
 	var/current_cash

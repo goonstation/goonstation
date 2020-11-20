@@ -93,6 +93,7 @@
 /obj/item/reagent_containers/glass/bottle/syringe_canister
 	name = "poison canister"
 	desc = "A large fluid-filled canister designed to fill a syringe gun."
+	icon_state = "syringe_canister"
 	initial_volume = 90
 
 	curare

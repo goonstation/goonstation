@@ -144,7 +144,7 @@
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
-			src.dir = turn(get_dir(src, src.pulling), 180)
+			src.set_dir(turn(get_dir(src, src.pulling), 180))
 
 /obj/maptext_spawner
 	var/loc_maptext = ""

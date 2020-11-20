@@ -631,7 +631,6 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
-#if ASS_JAM
 /obj/item/parts/human_parts/arm/left/hot
 	name = "left hot arm"
 	icon_state = "arm_left"
@@ -667,7 +666,7 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-#endif
+
 
 /obj/item/parts/human_parts/arm/left/bear
 	name = "left bear arm"

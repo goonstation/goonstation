@@ -125,13 +125,13 @@
 
 // Pear Mutations
 
-#if ASS_JAM
+/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	assoc_reagents = list("too much")
 
-#endif
+*/
 
 // Melon Mutations
 

@@ -121,7 +121,7 @@
 	boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(source)
-	newlight.dir = dir
+	newlight.set_dir(dir)
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting

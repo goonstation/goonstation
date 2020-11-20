@@ -2535,7 +2535,7 @@
 						return
 					src.scan_beam = new /obj/beam/ir_beam(beamTurf, setup_beam_length)
 					src.scan_beam.master = src
-					src.scan_beam.dir = src.dir
+					src.scan_beam.set_dir(src.dir)
 
 				return
 			if (2)
@@ -2773,7 +2773,7 @@
 
 				src.next = new src.type(nextTurf, src.limit-1)
 				//next.master = src.master
-				next.dir = src.dir
+				next.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in nextTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.hit(hitAtom)
@@ -2844,7 +2844,7 @@
 
 			src.next = new /obj/beam/ir_beam(nextTurf, src.limit-1)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 		return
 
 //Rather fancy science emitter gizmo
@@ -3189,7 +3189,7 @@
 					return 0
 				src.beam = new /obj/beam/h7_beam(beamTurf, setup_beam_length, crystalCount)
 				src.beam.master = src
-				src.beam.dir = src.dir
+				src.beam.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in beamTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.beam.hit(hitAtom)
@@ -3368,7 +3368,7 @@
 
 			src.next = new /obj/beam/h7_beam(nextTurf, src.limit-1, src.power)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 			for (var/atom/movable/hitAtom in nextTurf)
 				if (hitAtom.density && !hitAtom.anchored)
 					src.hit(hitAtom)

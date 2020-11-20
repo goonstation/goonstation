@@ -34,7 +34,7 @@
 	update_icon()
 		if(node)
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-			dir = get_dir(src, node)
+			set_dir(get_dir(src, node))
 		else
 			icon_state = "exposed"
 
@@ -43,7 +43,7 @@
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(node)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-			dir = get_dir(src, node)
+			set_dir(get_dir(src, node))
 		else
 			icon_state = "exposed"
 

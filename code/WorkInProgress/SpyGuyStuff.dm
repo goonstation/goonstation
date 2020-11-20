@@ -766,7 +766,7 @@ proc/Create_Tommyname()
 			O.pixel_x = ipx
 			O.pixel_y = ipy
 			if(setdir)
-				O.dir = setdir
+				O.set_dir(setdir)
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
@@ -775,7 +775,7 @@ proc/Create_Tommyname()
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [showCoords(T.x, T.y, T.z)]")
 		var/turf/NT = new turf_type(T)
-		if(setdir) NT.dir = setdir
+		if(setdir) NT.set_dir(setdir)
 		created_atoms += NT
 
 
@@ -814,7 +814,7 @@ proc/Create_Tommyname()
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
 	src.opacity = initial(T.opacity)
-	src.dir = initial(T.dir)
+	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = 0
 	if(TTL)

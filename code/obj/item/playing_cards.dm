@@ -102,19 +102,19 @@
 				if (src.face_up)
 					if (src.card_reversible && src.card_reversed)
 						src.name = "reversed [src.card_name]"
-						src.dir = NORTH
+						src.set_dir(NORTH)
 					else if (src.card_tappable && src.card_tapped)
 						src.name = "tapped [src.card_name]"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = src.card_name
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 					src.desc = "[src.card_desc] It's \an [src.name]."
 					src.icon_state = "card-[src.card_face]"
 					if (src.card_foil)
@@ -125,15 +125,15 @@
 					if (src.card_tappable && src.card_tapped)
 						src.name = "tapped playing card"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = "playing card"
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 			if (2 to 4)
 				src.name = "hand of cards"
 				src.desc = "Some cards, for playing some kinda game with."
