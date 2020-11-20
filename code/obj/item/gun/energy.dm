@@ -1538,7 +1538,7 @@
 
 	New()
 		..()
-		cell = new/obj/item/ammo/power_cell/high_power
+		cell_type = /obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/energy_bolt/taser_rifle_auto
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/taser_rifle_semi)
 
