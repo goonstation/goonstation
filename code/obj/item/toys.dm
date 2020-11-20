@@ -401,7 +401,7 @@ var/list/figure_low_rarity = list(\
 /datum/figure_info/assistant,
 /datum/figure_info/chef,
 /datum/figure_info/chaplain,
-/datum/figure_info/barman,
+/datum/figure_info/bartender,
 /datum/figure_info/botanist,
 /datum/figure_info/janitor,
 /datum/figure_info/doctor,
@@ -497,7 +497,8 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/whitneystingray,
 /datum/figure_info/fleur,
 /datum/figure_info/joaquinfry,
-/datum/figure_info/carolineaudibert
+/datum/figure_info/carolineaudibert,
+/datum/figure_info/helgergunnink
 )
 
 /datum/figure_info
@@ -523,8 +524,8 @@ var/list/figure_patreon_rarity = list(\
 		name = "chaplain"
 		icon_state = "chaplain"
 
-	barman
-		name = "barman"
+	bartender
+		name = "bartender"
 		icon_state = "barman"
 
 	botanist
@@ -906,6 +907,10 @@ var/list/figure_patreon_rarity = list(\
 	carolineaudibert
 		name = "\improper Caroline Audibert"
 		icon_state = "carolineaudibert"
+
+	helgergunnink
+		name = "\improper Helger Gunnink"
+		icon_state = "helgergunnink"
 
 #ifdef XMAS
 	santa

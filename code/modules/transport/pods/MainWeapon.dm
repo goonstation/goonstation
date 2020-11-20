@@ -165,7 +165,7 @@
 	firerate = 25
 
 /obj/item/shipcomponent/mainweapon/gun
-	name = "SPK-12 Ballistic System"
+	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
 	current_projectile = new/datum/projectile/bullet/a12

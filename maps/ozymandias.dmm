@@ -12574,7 +12574,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/cable{
 	icon_state = "0-2"
