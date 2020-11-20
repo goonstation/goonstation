@@ -88,7 +88,7 @@
 
 /datum/commodity/trader/pianzi/scanners
 	comname = "Scanning Devices"
-	comtype = /obj/item/emeter
+	comtype = /obj/item/device/reagentscanner
 	amount = 10
 	price_boundary = list(100,500)
 	possible_alt_types = list(/obj/item/oreprospector,/obj/item/plantanalyzer,/obj/item/device/analyzer/healthanalyzer)

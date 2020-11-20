@@ -8786,7 +8786,6 @@
 	name = "organic wall"
 	},
 /obj/item/stamp,
-/obj/item/emeter,
 /obj/lattice,
 /obj/item/parts/robot_parts/head/antique,
 /obj/item/parts/robot_parts/head/antique,

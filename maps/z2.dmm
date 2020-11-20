@@ -23434,7 +23434,6 @@
 /area/marsoutpost)
 "bgK" = (
 /obj/storage/crate,
-/obj/item/emeter,
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bgL" = (
@@ -67403,7 +67402,6 @@
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dgY" = (
 /obj/storage/crate/wooden,
-/obj/item/emeter,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgZ" = (

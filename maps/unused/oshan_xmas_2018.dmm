@@ -21116,7 +21116,6 @@
 	name = "organic wall"
 	},
 /obj/item/stamp,
-/obj/item/emeter,
 /obj/lattice,
 /obj/item/parts/robot_parts/head/antique,
 /obj/item/parts/robot_parts/head/antique,
@@ -46754,7 +46753,6 @@
 /area/station/engine/storage)
 "ceP" = (
 /obj/table/reinforced/auto,
-/obj/item/emeter,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},

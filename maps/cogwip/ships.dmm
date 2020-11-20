@@ -1175,7 +1175,7 @@
 "wW" = (/obj/landmark{name = "Syndicate-Gear-Closet"},/obj/machinery/light{dir = 4; layer = 9.1; pixel_x = 10},/turf/unsimulated/floor/red,/area/space)
 "wX" = (/obj/storage/crate/packing,/obj/item/football,/turf/unsimulated/floor/black/grime,/area/space)
 "wY" = (/obj/storage/cart,/turf/unsimulated/floor/black/grime,/area/space)
-"wZ" = (/obj/storage/crate/wooden,/obj/item/emeter,/turf/unsimulated/floor/black,/area/space)
+"wZ" = (/obj/storage/crate/wooden,/turf/unsimulated/floor/black,/area/space)
 "xa" = (/obj/machinery/light,/obj/random_item_spawner/tools,/obj/rack,/turf/unsimulated/floor/black,/area/space)
 "xb" = (/obj/storage/crate/packing,/obj/item/instrument/bagpipe,/turf/unsimulated/floor/black/grime,/area/space)
 "xc" = (/obj/storage/crate/wooden,/obj/item/device/light/zippo,/turf/unsimulated/floor/black,/area/space)

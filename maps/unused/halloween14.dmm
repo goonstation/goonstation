@@ -50558,7 +50558,6 @@
 /area/marsoutpost)
 "cat" = (
 /obj/crate,
-/obj/item/emeter,
 /turf/unsimulated/floor/wood{
 	dir = 2
 	},
