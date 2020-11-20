@@ -2182,6 +2182,7 @@
 	/datum/manufacture/powercell,
 	/datum/manufacture/powercellE,
 	/datum/manufacture/powercellC,
+	/datum/manufacture/ore_scoop,
 	/datum/manufacture/oresatchel,
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,

@@ -1731,6 +1731,16 @@
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/ore_scoop
+	name = "Ore Scoop"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Metal","Conductive Material","Crystal")
+	item_amounts = list(1,1,1)
+	item_outputs = list(/obj/item/ore_scoop)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/geigercounter
 	name = "Geiger Counter"
 	item_paths = list("MET-1","CON-1","CRY-1")
