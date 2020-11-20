@@ -56,7 +56,10 @@ var/datum/mechanic_controller/mechanic_controls
 				mats_types = mats_number
 				mats_number = 0
 				for(var/mat in mats_types)
-					mats_number += mats_types[mat]
+					var/amt = mats_types[mat]
+					if(isnull(amt))
+						amt = 1
+					mats_number += amt
 			if (!isnum(mats_number))
 				mats_number = 10
 
