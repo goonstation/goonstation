@@ -136,7 +136,9 @@
 
 
 	disposing()
-		deconstructed_thing = null
+		if(deconstructed_thing)
+			deconstructed_thing.dispose()
+			deconstructed_thing = null
 		store_type = null
 		..()
 
@@ -181,7 +183,7 @@
 
 	if (ispryingtool(W))
 		if (!anchored)
-			src.dir = turn(src.dir, 90)
+			src.set_dir(turn(src.dir, 90))
 			return
 	else if (iswrenchingtool(W))
 		boutput(user, "<span class='alert'>You deconstruct [src] into its base materials!</span>")
@@ -242,13 +244,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.dir = 1
+						src.set_dir(1)
 					if("Down")
-						src.dir = 2
+						src.set_dir(2)
 					if("Left")
-						src.dir = 8
+						src.set_dir(8)
 					if("Right")
-						src.dir = 4
+						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
 			switch(alert("Ready to deploy?",,"Yes","No"))
 				if("Yes")
@@ -291,12 +293,12 @@
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		O.set_loc(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
 		deconstructed_thing = null
 	else
 		O = new store_type(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 1)
 	//O.mats = "Built"
 	O.deconstruct_flags |= DECON_BUILT

@@ -353,7 +353,7 @@
 		return
 	if(src.busy_tiles[requester.name])
 		return src.busy_tiles[requester.name] // work on your claimed tile first you JERK
-	if(priority_tiles && priority_tiles.len)
+	if(length(priority_tiles))
 		var/list/available_tiles = priority_tiles
 		for(var/owner in src.busy_tiles)
 			available_tiles -= src.busy_tiles[owner]
@@ -444,7 +444,7 @@
 					for (var/mob/M in O)
 						M.set_loc(converted)
 					qdel(O)
-					converted.dir = dir
+					converted.set_dir(dir)
 					animate_flock_convert_complete(converted)
 
 	// if floor, turn to floor, if wall, turn to wall

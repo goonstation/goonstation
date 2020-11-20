@@ -824,35 +824,24 @@
 /turf/space,
 /area/space)
 "acn" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
-"aco" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
 /area/station/security/armory)
-"acp" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+"aco" = (
+/obj/deployable_turret/riot{
+	active = 1;
+	anchored = 1
 	},
-/obj/securearea{
-	desc = "";
-	icon_state = "shock";
-	name = "Danger: High Voltage"
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/access_spawn/hos,
+/turf/simulated/floor/black,
 /area/station/security/armory)
-"acq" = (
+"acp" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
@@ -881,7 +870,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "acr" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -896,7 +885,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "acs" = (
 /obj/cable{
 	d2 = 4;
@@ -911,7 +900,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "act" = (
 /obj/grille/steel,
 /obj/cable{
@@ -926,7 +915,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "acu" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/tubes,
@@ -1095,7 +1084,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "acV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
@@ -1349,7 +1338,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "adp" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -1456,18 +1445,6 @@
 /obj/machinery/vending/paint/broken,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
-"adC" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
 "adD" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/black,
@@ -1487,7 +1464,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "adG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/observatory)
@@ -1502,7 +1479,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "adI" = (
 /obj/cable{
 	d1 = 1;
@@ -1704,15 +1681,15 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer3/generic/communications,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
@@ -1996,10 +1973,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/solar/north)
-"aeV" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
 "aeW" = (
 /obj/machinery/recharger/wall/sticky,
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
@@ -2384,22 +2357,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
-"afM" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/security/armory)
 "afN" = (
 /obj/cable{
 	d1 = 4;
@@ -2407,10 +2364,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
-"afO" = (
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
-/turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "afP" = (
 /obj/table/auto,
@@ -2424,7 +2377,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "afR" = (
@@ -2451,7 +2403,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "afT" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -2785,7 +2737,7 @@
 	},
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/security/armory)
+/area/station/turret_protected/armory_outside)
 "agE" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -2883,9 +2835,8 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "agP" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "agQ" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn,
@@ -3033,13 +2984,9 @@
 	name = "Catering Hangar"
 	})
 "ahm" = (
-/obj/securearea{
-	desc = "";
-	icon_state = "shock";
-	name = "Danger: High Voltage"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/armory)
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/armory_outside)
 "ahn" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -3993,13 +3940,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal{
-	name = "ejection chute"
-	},
-/obj/disposalpipe/trunk/ejection{
+/obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/caution/east,
+/turf/simulated/floor/black,
 /area/station/security/armory)
 "ajk" = (
 /obj/machinery/door_control{
@@ -4057,22 +4001,17 @@
 	},
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/security/armory)
 "ajq" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null;
-	req_access_txt = null
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/hos,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
 "ajr" = (
 /obj/cable{
@@ -4972,10 +4911,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "als" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
@@ -5131,11 +5066,20 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/storage/box/stinger_kit{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/donut/frosted{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "alP" = (
-/obj/table/auto,
-/obj/machinery/recharger,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -5146,14 +5090,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/storage/box/stinger_kit{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/snacks/donut/frosted{
-	pixel_x = 7;
-	pixel_y = -6
-	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "alQ" = (
@@ -5401,17 +5338,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "amt" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs{
 	dir = 1;
-	icon_state = "Stairs2_wide"
+	icon_state = "stairs_middle"
 	},
 /area/station/security/brig)
 "amu" = (
@@ -19040,6 +18973,7 @@
 /area/station/medical/medbooth)
 "aPw" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/book/medical_surgery_guide,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/glass/beaker/large/brute,
@@ -19056,6 +18990,7 @@
 /obj/item/suture,
 /obj/item/staple_gun,
 /obj/item/hemostat,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "aPx" = (
@@ -62840,6 +62775,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
+"diC" = (
+/obj/storage/secure/closet/security/armory,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "dnQ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -62863,6 +62802,14 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
+"dHa" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "dIa" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable{
@@ -62926,6 +62873,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"eFW" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "eJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -62969,6 +62922,31 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"fju" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/armory_outside)
+"foS" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/suit/armor/EOD,
+/obj/item/clothing/head/helmet/EOD,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -63004,6 +62982,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"fML" = (
+/obj/lattice,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "fQQ" = (
 /obj/cable{
 	d2 = 8;
@@ -63032,6 +63014,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"fWA" = (
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "fYA" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
@@ -63117,6 +63103,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"gsU" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "gtK" = (
 /obj/grille/catwalk/cross{
 	dir = 10;
@@ -63260,11 +63253,42 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"klV" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/station/security/brig)
 "kvk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kvm" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
+"kCn" = (
+/obj/machinery/door/airlock/pyro/security{
+	aiControlDisabled = 1;
+	name = "Armory";
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/hos,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/security/armory)
 "kFg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/cable{
@@ -63376,6 +63400,11 @@
 	},
 /turf/space,
 /area/space)
+"myy" = (
+/obj/lattice,
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "mKe" = (
 /obj/securearea,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -63387,11 +63416,32 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"ndn" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/caution/north,
+/area/station/security/brig)
 "niO" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
+"niY" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/disposal{
+	name = "ejection chute"
+	},
+/obj/disposalpipe/trunk/ejection{
+	dir = 4
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "nlN" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -63501,6 +63551,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"oQg" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'COLLISION HAZARD'";
+	name = "COLLISION HAZARD";
+	pixel_y = -4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/armory_outside)
 "poA" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -63689,6 +63747,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"tzN" = (
+/obj/storage/secure/crate/weapon/armory/phaser,
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "tAM" = (
 /obj/securearea,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -63714,6 +63776,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"tZB" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "udJ" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot radiator outlet valve";
@@ -63721,6 +63790,22 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"uvz" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/armory_outside)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63768,6 +63853,18 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"vjb" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/armory_outside)
 "vli" = (
 /obj/cable{
 	d1 = 1;
@@ -63859,6 +63956,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"wfU" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/armory_outside)
 "wof" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63869,6 +63974,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"wwh" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "wKE" = (
 /obj/cable{
 	d2 = 4;
@@ -63912,6 +64025,9 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics)
+"xuC" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/armory_outside)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -63919,6 +64035,13 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"xMr" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "xOs" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63930,6 +64053,13 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"xPv" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "xXP" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -92123,23 +92253,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
 amr
 anx
 anv
@@ -92425,23 +92555,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
 amr
 any
 aoK
@@ -92727,23 +92857,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaw
-aaw
-aaw
+agP
+agP
+dHa
+eFW
+eFW
+eFW
+xMr
+eFW
+eFW
+eFW
+xMr
+eFW
+eFW
+tZB
+tZB
+tZB
+tZB
 amr
 amr
 aoL
@@ -93029,19 +93159,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
+agP
 aho
 aho
 akk
@@ -93331,19 +93461,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
+fju
+acU
+vjb
+vjb
+vjb
+vjb
+uvz
+agD
+wfU
 agy
 ajn
 akr
@@ -93633,18 +93763,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 acp
-acU
-adC
-adC
-adC
-adC
-afM
-agD
+acV
+acV
+acV
+acV
+acV
+afN
+acV
 ahm
 aho
 ajo
@@ -93935,19 +94065,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-acq
+agP
+agP
+wwh
+eFW
+acr
 acV
+foS
+diC
+fWA
+tzN
+niY
 acV
-acV
-acV
-acV
-afN
-acV
-ahn
+aho
 aho
 aho
 akn
@@ -94237,20 +94367,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aak
-aar
+agP
+agP
+gsU
+agP
 acr
 acV
 acn
-aeV
-afO
-agP
+adE
+adE
+adE
 ajj
-acV
-aho
-aho
+kCn
+ndn
+klV
 anD
 asa
 asV
@@ -94539,10 +94669,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 acs
 acV
 aco
@@ -94841,10 +94971,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 acs
 acV
 aep
@@ -95143,10 +95273,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 act
 acV
 adD
@@ -95445,10 +95575,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aak
-aar
+agP
+agP
+wwh
+eFW
 act
 acV
 adV
@@ -95747,10 +95877,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 ado
 acV
 acV
@@ -95759,7 +95889,7 @@ acV
 acV
 afN
 acV
-ahn
+ahm
 aho
 ajs
 akr
@@ -96049,10 +96179,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
 adF
 acU
 adH
@@ -96061,7 +96191,7 @@ adH
 adH
 afS
 agD
-ahm
+wfU
 aho
 ajt
 akr
@@ -96351,19 +96481,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aah
-aaa
-aah
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+agP
+agP
+gsU
+agP
+gsU
+agP
+gsU
+agP
+agP
+agP
+agP
+agP
+agP
 ahs
 aju
 aks
@@ -96653,18 +96783,18 @@ aar
 aar
 aar
 aar
-aar
-aar
-aar
-aar
-aap
-aai
-aap
-aar
-aar
-aar
-aar
-aaw
+eFW
+eFW
+kvm
+eFW
+fML
+xuC
+myy
+eFW
+eFW
+eFW
+xMr
+tZB
 ahs
 ahs
 ajv
@@ -96955,18 +97085,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aah
-aaa
-aah
-aaa
-aaa
-aaa
-aaa
-aag
+agP
+agP
+agP
+agP
+gsU
+agP
+gsU
+agP
+agP
+agP
+agP
+xPv
 aht
 aip
 aip
@@ -97257,18 +97387,18 @@ aar
 aar
 aar
 aar
-aar
-aar
-aar
-aar
-aap
-aay
-aap
-aar
-aar
-aar
-aar
-aap
+eFW
+eFW
+eFW
+eFW
+fML
+oQg
+fML
+eFW
+eFW
+eFW
+eFW
+fML
 ahu
 ahs
 ajw

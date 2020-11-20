@@ -255,7 +255,7 @@ proc/get_angle(atom/a, atom/b)
 	if (!T) return 0
 	if(T.density) return 1
 	for(var/atom/A in T)
-		if(A && A.density)//&&A.anchored
+		if(A?.density)//&&A.anchored
 			return 1
 	return 0
 
@@ -832,7 +832,7 @@ proc/get_angle(atom/a, atom/b)
 	if(ref)
 		param = "\ref[ref]"
 
-	if (user && user.client) winset(user, windowid, "on-close=\".windowclose [param]\"")
+	if (user?.client) winset(user, windowid, "on-close=\".windowclose [param]\"")
 
 	//boutput(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
@@ -858,7 +858,7 @@ proc/get_angle(atom/a, atom/b)
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
+	if(src?.mob)
 		src.mob.remove_dialogs()
 	return
 
@@ -1224,8 +1224,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/thing in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
-		var/atom/A = thing
+	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1316,7 +1315,7 @@ proc/get_angle(atom/a, atom/b)
 //Returns a list of minds that are some type of antagonist role
 //This may be a stop gap until a better solution can be figured out
 /proc/get_all_enemies()
-	if(ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
+	if(ticker?.mode && current_state >= GAME_STATE_PLAYING)
 		var/datum/mind/enemies[] = new()
 		var/datum/mind/someEnemies[] = new()
 
@@ -1885,7 +1884,7 @@ proc/countJob(rank)
 	var/is_immune = 0
 
 	var/area/a = get_area( target )
-	if( a && a.sanctuary )
+	if( a?.sanctuary )
 		return 1
 
 	if (isliving(target))

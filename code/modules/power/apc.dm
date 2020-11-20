@@ -179,7 +179,7 @@ var/zapLimiter = 0
 		src.net_id = generate_net_id(src)
 	else
 		terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.set_dir(tdir)
 	terminal.master = src
 
 	SPAWN_DBG(0.5 SECONDS)
@@ -352,14 +352,14 @@ var/zapLimiter = 0
 						if (istype(newTerm) && !newTerm.master)
 							src.terminal = newTerm
 							newTerm.master = src
-							newTerm.dir = initial(src.dir) //Can't use CURRENT dir because it is set to south on spawn.
+							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
 						else
 							if (src.setup_networkapc)
 								src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
 							else
 								src.terminal = new /obj/machinery/power/terminal(src.loc)
 							src.terminal.master = src
-							src.terminal.dir = initial(src.dir)
+							src.terminal.set_dir(initial(src.dir))
 
 					status &= ~BROKEN //Clear broken flag
 					icon_state = initial(src.icon_state)
@@ -1089,7 +1089,7 @@ var/zapLimiter = 0
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal && terminal.powernet && !circuit_disabled)
+	if(terminal?.powernet && !circuit_disabled)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/apc/avail()
@@ -1156,7 +1156,7 @@ var/zapLimiter = 0
 		main_status = 2
 
 	var/perapc = 0
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
@@ -1354,7 +1354,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/overload_lighting(var/omit_emergency_lights)
 	if(!get_connection() || !operating || shorted)
 		return
-	if( cell && cell.charge>=20)
+	if( cell?.charge>=20)
 		cell.charge-=20;
 		SPAWN_DBG(0)
 			for(var/obj/machinery/light/L in area)

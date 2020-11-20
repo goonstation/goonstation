@@ -560,7 +560,7 @@ var/f_color_selector_handler/F_Color_Selector
 	SetupOccupationsList()
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
-	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker && ticker.hide_mode) ? "secret" : master_mode))
+	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -777,10 +777,10 @@ var/f_color_selector_handler/F_Color_Selector
 	//we start off with an animated bee gif because, well, this is who we are.
 	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
 
-	if (config && config.server_name)
+	if (config?.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	if (ticker && ticker.mode)
+	if (ticker?.mode)
 		s += "<b>[istype(ticker.mode, /datum/game_mode/construction) ? "Construction Mode" : station_name()]</b>"
 	else
 		s += "<b>[station_name()]</b>"
@@ -881,7 +881,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "status")
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = (ticker && ticker.hide_mode) ? "secret" : master_mode
+		s["mode"] = (ticker?.hide_mode) ? "secret" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
 		s["ai"] = config.allow_ai
@@ -1382,7 +1382,7 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["target"]) return 0
 
 				var/list/whom = splittext(plist["target"], ",")
-				if (whom && whom.len)
+				if (length(whom))
 					var/list/parsedWhois = list()
 					var/count = 0
 					var/list/whois_result
@@ -1451,7 +1451,7 @@ var/f_color_selector_handler/F_Color_Selector
 						ircmsg["msg"] = "Admin [nick] healed / revived [M.ckey]"
 						found.Add(ircmsg)
 
-				if (found && found.len > 0)
+				if (length(found))
 					return ircbot.response(found)
 				else
 					return 0

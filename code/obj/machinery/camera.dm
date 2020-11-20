@@ -439,7 +439,7 @@
 		C.referrers.Cut()
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
-	if( camlist.len < 1)  return 1
+	if(!length(camlist))  return 1
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0

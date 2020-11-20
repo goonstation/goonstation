@@ -2113,6 +2113,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mopbucket,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "akz" = (
@@ -4962,8 +4963,8 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/obj/machinery/fluid_canister,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/fluid_canister,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "beo" = (
@@ -8943,6 +8944,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 1
 	},
@@ -11495,7 +11497,10 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/mopbucket,
+/obj/machinery/disposal/mail/small/autoname/janitor/east,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cYC" = (
@@ -43460,13 +43465,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"mFB" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "mFE" = (
 /obj/table/auto,
 /obj/item/football,
@@ -70429,10 +70427,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/machinery/disposal/mail/small/autoname/janitor/west,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
+/obj/machinery/vending/janitor,
 /turf/simulated/floor/black,
 /area/station/janitor/office)
 "uwt" = (
@@ -76635,7 +76630,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "wjo" = (
@@ -120008,7 +120003,7 @@ nvr
 qOI
 eHe
 wjj
-mFB
+ogT
 ogT
 dnh
 mSM

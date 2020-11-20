@@ -48,7 +48,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(origin, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
+					if(term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -257,7 +257,7 @@
 		T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.dir = dir
+		laser.set_dir(dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
@@ -328,7 +328,7 @@
 			qdel(O)
 
 /obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()

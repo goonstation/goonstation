@@ -77,13 +77,13 @@
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			var/blocked = 0
-			if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 				for (var/V in S.blockedmode)
 					if (ispath(V) && istype(ticker.mode, V))
 						blocked = 1
 						break
 
-			if (ticker && ticker.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
+			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
 				for (var/V in S.exclusivemode)
 					if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
 						blocked = 1
@@ -531,12 +531,12 @@
 			LAGCHECK(LAG_LOW)
 			big_choice = pick(BS)
 			obj_existing = locate(big_choice)
-			if (obj_existing && obj_existing.z == 1)
+			if (obj_existing?.z == 1)
 				break
 			else
 				obj_existing = 0
 
-		if (obj_existing && obj_existing.z == 1)
+		if (obj_existing?.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)
 			B.path = obj_existing.type
 			B.item = obj_existing

@@ -95,7 +95,7 @@
 			connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
-			occupant.set_loc(src.loc)
+			occupant.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -244,7 +244,7 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = 0
-		if (traits && traits.len && src.occupant.traitHolder)
+		if (length(traits) && src.occupant.traitHolder)
 			src.occupant.traitHolder.traits = traits
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
@@ -294,7 +294,7 @@
 
 		// -- Mode/mind specific stuff goes here
 
-			if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 		// -- End mode specific stuff
@@ -800,6 +800,13 @@
 		SPAWN_DBG(0)
 			src.find_pods()
 
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+		occupant = null
+		..()
+
+
 	proc/find_pods()
 		if (!islist(src.pods))
 			src.pods = list()
@@ -1035,7 +1042,7 @@
 			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
-		else if (G && G.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
+		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
 			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 

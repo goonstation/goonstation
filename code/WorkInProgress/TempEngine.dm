@@ -13,8 +13,8 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-	var/fan_efficiency = 10 // 0.9 ideal, but I don't want everyone to suffer... yet.
-	var/min_circ_pressure = 10
+	var/fan_efficiency = 0.9 // 0.9 is considered an optimal fan
+	var/min_circ_pressure = 75
 
 	anchored = 1.0
 	density = 1

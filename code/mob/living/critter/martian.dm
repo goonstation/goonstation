@@ -209,7 +209,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 
 	var/rendered = ""
 	var/adminrendered = ""
-	if(C && C.holder && speak_as_admin)
+	if(C?.holder && speak_as_admin)
 		// admin mode go
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)

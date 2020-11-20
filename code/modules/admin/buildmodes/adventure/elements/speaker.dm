@@ -27,7 +27,7 @@
 				speaker.name = speaker_name
 				speaker.speaker_type = speaker_type
 				speaker.icon_state = "speaker_[speaker_type]"
-				speaker.dir = holder.dir
+				speaker.set_dir(holder.dir)
 				speaker.anchored = speaker_anchored
 				speaker.message = message
 				if (speaker_type == "invisible")

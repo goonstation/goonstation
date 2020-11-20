@@ -253,7 +253,7 @@
 		underlays.Add(tube)
 
 		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
-			dir = NORTH
+			set_dir(NORTH)
 
 		rebuildOverlays()
 		return .
@@ -323,20 +323,20 @@
 			if(ismob(loaded))
 				var/mob/M = loaded
 				M.set_loc(start)
-				M.dir = src.dir
+				M.set_dir(src.dir)
 				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
-				C.dir = src.dir
+				C.set_dir(src.dir)
 				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded
 				T.set_loc(start)
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
 				SPAWN_DBG(0)
@@ -456,11 +456,12 @@
 		if(..(NewLoc, Dir, step_x, step_y))
 			if(dir != lastdir)
 				if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-					dir = lastdir
+					set_dir(lastdir)
 					changeIcon()
 				else
 					lastdir = dir
 					changeIcon()
+			return TRUE
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)
@@ -483,7 +484,7 @@
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
 		var/obj/torpedo/T = loaded
 		loaded = null
-		T.dir = (direction ? direction : src.dir)
+		T.set_dir((direction ? direction : src.dir))
 		T.set_loc(target)
 		changeIcon()
 		return

@@ -17,7 +17,7 @@
 	//var/obj/o_shooter = null
 	var/list/targets = list()
 	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
-	var/max_range = 0 //max range
+	var/max_range = PROJ_INFINITE_RANGE //max range
 	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
 	var/forensic_ID = null
@@ -55,9 +55,7 @@
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 	var/is_detonating = 0//to start modeling fuses
-#if ASS_JAM
-	var/projectile_paused = FALSE //for time stopping
-#endif
+
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -91,10 +89,7 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!disposed && !pooled)
-#if ASS_JAM //dont move while in timestop
-			while(src.projectile_paused)
-				sleep(1 SECOND)
-#endif
+
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -142,7 +137,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		if(proj_data && proj_data.material) //ZeWaka: Fix for null.material
+		if(proj_data?.material) //ZeWaka: Fix for null.material
 			proj_data.material.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
@@ -151,7 +146,7 @@
 				O.bullet_act(src)
 			T = A
 			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
-				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
+				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
 						W.forensic_impacts += src.forensic_ID
@@ -163,7 +158,7 @@
 						impact.pixel_y += rand(-12,12)
 						W.proj_impacts += impact
 						W.update_projectile_image(ticker.round_elapsed_ticks)
-				if (proj_data && proj_data.hit_object_sound)
+				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
@@ -201,10 +196,10 @@
 		else if (isobj(A))
 			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
 				if (iscritter(A))
-					if (proj_data && proj_data.hit_mob_sound)
+					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 				else
-					if (proj_data && proj_data.hit_object_sound)
+					if (proj_data?.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
 			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
@@ -496,7 +491,7 @@
 				die()
 				return
 
-		dir = facing_dir
+		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
 
 		var/dx = loc.x - orig_turf.x
@@ -538,7 +533,7 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 0            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
@@ -971,13 +966,10 @@ datum/projectile/snowball
 	P.xo = xo
 	P.yo = yo
 
-	if(!DATA.max_range)
-		if(DATA.dissipation_rate <= 0)
-			P.max_range = PROJ_INFINITE_RANGE
-		else
-			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
-	else
+	if(DATA.dissipation_rate <= 0)
 		P.max_range = DATA.max_range
+	else
+		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
 	return P
 

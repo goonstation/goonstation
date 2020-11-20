@@ -207,22 +207,12 @@
 		transmit_connection.post_signal(null, pdaSignal)
 
 
-#if ASS_JAM
-		if(prob(5))
-			var/list/turf/viable_turfs = get_area_turfs(/area/station/quartermaster/cargobay)
-			if(!viable_turfs.len)
-				viable_turfs = get_area_turfs(/area/station/quartermaster)
-			if(viable_turfs.len)
-				var/turf/ass_spawn = pick(viable_turfs)
-				S.set_loc(ass_spawn)
-				heavenly_spawn(S)
-				return
-#endif
+
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)
-					if (P && P.density)
+					if (P?.density)
 						P.open()
 				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)

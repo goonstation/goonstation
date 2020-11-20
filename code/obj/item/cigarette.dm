@@ -59,15 +59,25 @@
 			reagents.add_reagent(src.flavor, 40)
 			return
 
-	afterattack(atom/target, mob/user, flag) // copied from the propuffs
-		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
-			"<span class='notice'>You crush up the [src] in the [target].</span>")
-
-			if (src.reagents) //Wire: Fix for: Cannot execute null.trans to()
-				src.reagents.trans_to(target, 5)
-
+	afterattack(atom/target , mob/user, flag) // copied from the propuffs
+		if (istype(target, /obj/item/reagent_containers/food/snacks/)) // you dont crush cigs INTO food, you crush them ONTO food!
+			var/obj/item/reagent_containers/food/snacks/T = target // typecasting because atom/target was causing some STINKY problems
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], gross.</span>",\
+			"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+			if (!(T.has_cigs))
+				T.desc = "[T.desc]<br>Are those crushed cigarettes on top? That's disgusting!"
+				T.has_cigs = 1
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(T, 5)
 			qdel (src)
+			return
+		else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+			"<span class='notice'>You crush up [src] into [target].</span>")
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(target, 5)
+			qdel (src)
+			return
 		else if (istype(target, /obj/item/match) && src.on)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
@@ -97,7 +107,7 @@
 			if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
-			if(src && src.reagents)
+			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
 
@@ -273,7 +283,7 @@
 				else
 					src.reagents.trans_to(M, puffrate)
 					src.reagents.reaction(M, INGEST, puffrate)
-			else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
+			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
 		if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
@@ -445,18 +455,18 @@
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
 		..()
-		if (src && src.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
+		if (src?.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			if(prob(5))
 				src.reagents.add_reagent("triplemeth",5)
 
-#if ASS_JAM
+
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding // Wow! What an example!
 	buttdesc = "Ain't twice the 'Rillo it used to be."
 	exploding = 1
-#endif
+
 
 /obj/item/clothing/mask/cigarette/propuffs
 	desc = "Pro Puffs - a new taste thrill in every cigarette."
@@ -851,6 +861,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		reagents.add_reagent("phosphorus", 1)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_color(0.94, 0.69, 0.27)
@@ -970,6 +982,20 @@
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
 				src.light(user)
+				return
+			else if (istype(target, /obj/item/reagent_containers/food/snacks/)) // RE-copied from cigarettes
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], what the fuck?.</span>",\
+				"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
+				return
+			else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+				"<span class='notice'>You crush up [src] into [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
 				return
 			else
 				if (prob(10))

@@ -62,7 +62,7 @@
 				src.master = null
 				return 1
 
-			while(master && master.path && master.path.len && target_turf && master.moving)
+			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
 				//if(compare_movepath != current_movepath)
 				//	break
@@ -182,11 +182,8 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
-#if ASS_JAM
-	var/lawbringer_alwaysbigshot = 1
-#else
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-#endif
+
 	//
 	////////////////////// GUN STUFF -^
 
@@ -349,6 +346,16 @@
 		name = "Shockbuddy"
 		desc = "The PR-6MS Shockbuddy was remarketed under the Guardbuddy line following the establishment of stricter electroconvulsive therapy regulations."
 		setup_default_tool_path = /obj/item/device/guardbot_tool/tesla
+
+	pie
+		name = "Clownbuddy"
+		desc = "This guardbuddy doesn't look quite right..."
+		setup_default_tool_path = /obj/item/device/guardbot_tool/pie_launcher
+
+		New()
+			..()
+			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
+			src.update_icon()
 
 	bodyguard
 		setup_charge_percentage = 98
@@ -1935,6 +1942,40 @@
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
 
+	//pie launcher module
+	pie_launcher
+		name = "Shoddy Pie Launcher"
+		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
+		icon_state = "tool_pie"
+		tool_id = "PIE"
+		is_gun = 1
+		is_stun = 1
+		var/datum/projectile/current_projectile = new /datum/projectile/pie
+		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
+
+
+			if (ranged)
+				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				if (!P)
+					return
+
+
+				user.visible_message("<span class='alert'><b>[master] throws a pie at [target]!</b></span>")
+
+			else
+				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] slaps [target] in the face with a pie!</b></span>")
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target)
+
+			src.last_use = world.time
+			return
+
+
 	//A syringe gun module. Mercy sakes.
 	medicator
 		name = "Medicator tool module"
@@ -2740,7 +2781,7 @@
 											src.drop_arrest_target()
 											master.set_emotion("smug")
 
-											if (arrested_messages && arrested_messages.len)
+											if (length(arrested_messages))
 												var/arrest_message = pick(arrested_messages)
 												master.speak(arrest_message)
 

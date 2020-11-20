@@ -4,6 +4,7 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	New()
 		. = ..()
@@ -508,8 +509,8 @@
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
 	icon = 'icons/obj/large_storage.dmi'
-	icon_closed = "medicalclothes"
-	icon_state = "medicalclothes"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,

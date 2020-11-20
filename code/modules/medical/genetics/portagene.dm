@@ -21,6 +21,9 @@
 	disposing()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	examine()

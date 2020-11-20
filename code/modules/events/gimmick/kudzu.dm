@@ -162,7 +162,7 @@
 	Move()
 		var/turf/T = get_turf(src)
 		T.temp_flags &= ~HAS_KUDZU
-		..()
+		. = ..()
 
 	disposing()
 		var/turf/T = get_turf(src)
@@ -363,7 +363,7 @@
 	New()
 		if (..())
 			return 1
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
 		src.pixel_x += rand(-8,8)
 

@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1

@@ -253,7 +253,7 @@
 		return
 
 	castcheck()
-		if (holder && holder.owner)
+		if (holder?.owner)
 			return 1
 		else
 			boutput(usr, "<span class='alert'>You're not a revenant, what the heck are you doing?</span>")

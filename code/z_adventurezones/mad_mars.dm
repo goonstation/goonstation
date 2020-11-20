@@ -102,7 +102,7 @@
 		if(!src.randomized) return
 		src.generate_edges()
 		if(prob(30))
-			src.dir = pick(NORTH,SOUTH,EAST,WEST)
+			src.set_dir(pick(NORTH,SOUTH,EAST,WEST))
 		if(prob(1))
 			new /obj/shrub/redweed(src)
 	t1
@@ -370,7 +370,7 @@
 
 
 	Move()
-		..()
+		. = ..()
 		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 30, 10, -2)
 
 
@@ -429,7 +429,7 @@
 			qdel(P)
 			if((wheel)&&(oxy)&&(battery)&&(glass)&&(motherboard))
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
-				R.dir = WEST
+				R.set_dir(WEST)
 				playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 				boutput(user, "<span class='notice'>The rover has been completed!</span>")
 				qdel(src)

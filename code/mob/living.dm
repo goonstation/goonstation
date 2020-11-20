@@ -27,9 +27,7 @@
 	var/ai_attacknpc = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
-#if ASS_JAM
-	var/ai_prefrozen //needed for timestop
-#endif
+
 
 	var/mob/living/ai_target = null
 	var/list/mob/living/ai_target_old = list()
@@ -182,16 +180,16 @@
 	..()
 
 /mob/living/death(gibbed)
+	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
-	if (src.key) statlog_death(src,gibbed)
-	if (src.client && (ticker.round_elapsed_ticks >= 12000))
+	if (src.key) statlog_death(src, gibbed)
+	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
 			if (!C.mob) continue
-			var/mob/players = C.mob
-			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
+			var/mob/player = C.mob
+			if (!isdead(player) && VALID_MOB(player))
 				num_players++
-			LAGCHECK(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
@@ -200,6 +198,7 @@
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 				world << csound("sound/misc/shuttle_enroute.ogg")
+	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
 		src.deathConfetti()
@@ -714,11 +713,7 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
-#if ASS_JAM //no speak in timestop
-	if(paused)
-		boutput(src, "<span class='alert'>Can't speak in stopped time dummy!.</span>")
-		return
-#endif
+
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
@@ -1167,15 +1162,12 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
-#if ASS_JAM //timestop moving when shouldnt bugfix. canmove doesnt work with keyspamming diagonals???
-	if(paused)
-		return
-#endif
+
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
 		var/list/equippedlist = src.equipped_list()
-		if (equippedlist && equippedlist.len)
+		if (length(equippedlist))
 			var/move_callback_happened = 0
 			for (var/I in equippedlist)
 				if (I == move_laying)
@@ -1427,10 +1419,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/mob/living/carbon/human/H = M
 		gloves = H.gloves
 	else
-		gloves = 0
+		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves && gloves.material)
+	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
 		for (var/atom/A in src)
 			if (A.material)
@@ -1484,7 +1476,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.gib()
 				return
 			*/
-			if (gloves && gloves.activeweapon)
+			if (gloves?.activeweapon)
 				gloves.special_attack(src)
 				return
 
@@ -1969,14 +1961,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				explosion(origin, T, -1,-1,1,2)
 			if (prob(20))
 				boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				make_cleanable(/obj/decal/cleanable/ash,src.loc)
 				SPAWN_DBG(1 DECI SECOND)
 					src.elecgib()
 			else
 				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
-				if (H && H.shoes)
+				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
 				src.throw_at(targetTurf, 200, 4)

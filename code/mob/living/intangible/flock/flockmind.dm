@@ -131,7 +131,7 @@
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
-		if(O && O.client)
+		if(O?.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
 		SPAWN_DBG (10)

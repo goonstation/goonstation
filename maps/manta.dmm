@@ -12865,6 +12865,8 @@
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
+/obj/item/basketball,
+/obj/item/basketball,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDR" = (
@@ -28605,6 +28607,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/sponge,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -29273,6 +29276,10 @@
 	dir = 8;
 	nostick = 1
 	},
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -29321,14 +29328,11 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/item/caution,
-/obj/item/caution,
-/obj/item/caution,
-/obj/item/caution,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
 	nostick = 1
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/purple/checker{
 	dir = 8
 	},
@@ -29832,7 +29836,6 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
-/obj/item/sponge,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -29885,11 +29888,11 @@
 	},
 /area/station/janitor/office)
 "bnD" = (
-/obj/storage/closet/biohazard,
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/machinery/vending/janitor,
 /turf/simulated/floor/purple/checker{
 	dir = 4
 	},

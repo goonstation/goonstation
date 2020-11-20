@@ -35,7 +35,7 @@
 			sleep(24 SECONDS)
 			if (user.loc == T && user.equipped() == W && !user.stat)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
-				magnet.dir = src.dir
+				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
@@ -1790,10 +1790,10 @@ obj/item/clothing/gloves/concussive
 						user.drop_item()
 
 						// Yes, please (Convair880).
-						if (src && src.hacked)
+						if (src?.hacked)
 							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
-						user.dir = get_dir(user, target)
+						user.set_dir(get_dir(user, target))
 						user.drop_item()
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
@@ -2067,7 +2067,7 @@ obj/item/clothing/gloves/concussive
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
-		if (user && user.client)
+		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
 		qdel (O)
