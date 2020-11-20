@@ -1,5 +1,9 @@
 
 (t)fri nov 20 20
+(u)MatheusIsNotAvailable & Retrino
+(p)2729
+(e)|
+(+)Added the ore scoop to the mining fabricator!
 (u)pali
 (p)2712
 (e)🗺🎨|mapping, sprites
