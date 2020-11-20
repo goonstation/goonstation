@@ -298,6 +298,13 @@
 	src.icon_state = new_state
 	signal_event("icon_updated")
 
+/atom/proc/set_dir(var/new_dir)
+#ifdef COMSIG_ATOM_DIR_CHANGED
+	if (src.dir != new_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGED, src.dir, new_dir)
+#endif
+	src.dir = new_dir
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -346,9 +353,7 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/throwforce = 1
-#if ASS_JAM //timestop var used for pausing thrown stuff midair
-	var/throwing_paused = FALSE
-#endif
+
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
@@ -569,6 +574,13 @@
 			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 				G.shoot()
 	return
+
+/atom/movable/set_dir(new_dir)
+	..()
+	if(src.medium_lights)
+		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist)
 

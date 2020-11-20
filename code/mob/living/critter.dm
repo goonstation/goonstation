@@ -456,7 +456,7 @@
 						playsound(NewLoc, src.stepsound, 50, 1)
 				else
 					playsound(NewLoc, src.stepsound, 20, 1)
-		..()
+		. = ..()
 
 	update_clothing()
 		equipment_image.overlays.len = 0

@@ -244,6 +244,7 @@
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	flags = FPRINT
 	anchored = 1
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."

@@ -27,9 +27,7 @@
 	var/ai_attacknpc = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
-#if ASS_JAM
-	var/ai_prefrozen //needed for timestop
-#endif
+
 
 	var/mob/living/ai_target = null
 	var/list/mob/living/ai_target_old = list()
@@ -182,16 +180,16 @@
 	..()
 
 /mob/living/death(gibbed)
+	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
-	if (src.key) statlog_death(src,gibbed)
-	if (src.client && (ticker.round_elapsed_ticks >= 12000))
+	if (src.key) statlog_death(src, gibbed)
+	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
 			if (!C.mob) continue
-			var/mob/players = C.mob
-			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
+			var/mob/player = C.mob
+			if (!isdead(player) && VALID_MOB(player))
 				num_players++
-			LAGCHECK(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
@@ -200,6 +198,7 @@
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 				world << csound("sound/misc/shuttle_enroute.ogg")
+	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
 		src.deathConfetti()
@@ -714,11 +713,7 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
-#if ASS_JAM //no speak in timestop
-	if(paused)
-		boutput(src, "<span class='alert'>Can't speak in stopped time dummy!.</span>")
-		return
-#endif
+
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
@@ -1167,10 +1162,7 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
-#if ASS_JAM //timestop moving when shouldnt bugfix. canmove doesnt work with keyspamming diagonals???
-	if(paused)
-		return
-#endif
+
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)

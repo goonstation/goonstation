@@ -501,7 +501,7 @@
 			stoneman.icon = composite
 
 			holder.set_loc(stoneman)
-			stoneman.dir = get_dir(stoneman, src)
+			stoneman.set_dir(get_dir(stoneman, src))
 
 		else
 			. += desc
@@ -670,6 +670,6 @@
 	proc/spooky_shake()
 		set waitfor = 0
 		for (var/i=src.trigger_duration, i>0, i--)
-			src.dir = pick(cardinal)
+			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
 			sleep(0.1 SECONDS)

@@ -23,7 +23,7 @@
 		..()
 	else
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)

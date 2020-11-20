@@ -23067,7 +23067,7 @@
 /area/station/crew_quarters/bar)
 "aVX" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/decal/tile_edge/stripe/xmas{
 	icon_state = "xmas";

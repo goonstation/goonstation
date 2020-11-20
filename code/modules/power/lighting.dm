@@ -139,7 +139,7 @@
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
-						src.dir = dir
+						src.set_dir(dir)
 						if (dir == EAST)
 							if (is_jen_wall)
 								src.pixel_x = 12
@@ -196,6 +196,9 @@
 	purpleish
 		name = "purpleish fluorescent light bulb"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light bulb"
+		light_type = /obj/item/light/bulb/emergency
 
 	warm
 		name = "fluorescent light bulb"

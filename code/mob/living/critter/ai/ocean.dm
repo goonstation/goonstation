@@ -85,7 +85,7 @@
 				owncritter.a_intent = INTENT_HARM
 
 			owncritter.hud.update_intent()
-			owncritter.dir = get_dir(owncritter, M)
+			owncritter.set_dir(get_dir(owncritter, M))
 
 			var/list/params = list()
 			params["left"] = 1
@@ -216,7 +216,7 @@
 		owncritter.a_intent = INTENT_HARM
 
 		owncritter.hud.update_intent()
-		owncritter.dir = get_dir(owncritter, holder.target)
+		owncritter.set_dir(get_dir(owncritter, holder.target))
 
 		var/list/params = list()
 		params["left"] = 1
@@ -326,7 +326,7 @@
 			if (dist <= 1)
 				owncritter.a_intent = INTENT_GRAB
 				owncritter.hud.update_intent()
-				owncritter.dir = get_dir(owncritter, M)
+				owncritter.set_dir(get_dir(owncritter, M))
 
 				var/list/params = list()
 				params["left"] = 1
