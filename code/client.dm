@@ -518,7 +518,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					var/list/old_volumes = volumes.Copy()
 					volumes = json_decode(decoded)
 					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-						if(i - 1 == VOLUME_CHANNEL_SCREAMFART) // screamfart channel defaults to game volume
+						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
 							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
 						else
 							volumes += old_volumes[i]

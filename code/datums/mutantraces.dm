@@ -1238,7 +1238,7 @@
 						mob.emote_allowed = 0
 
 					. = "<B>[mob]</B> screams!"
-					playsound(get_turf(mob), src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_SCREAMFART)
+					playsound(get_turf(mob), src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 					SPAWN_DBG(5 SECONDS)
 						if (mob)
@@ -1282,7 +1282,7 @@
 							if(25) . = "<B>[mob]</B> makes a big goofy grin and farts loudly."
 							if(26) . = "<B>[mob]</B> hovers off the ground for a moment using a powerful fart."
 							if(27) . = "<B>[mob]</B> plays drums on its ass while farting."
-					playsound(mob.loc, "sound/voice/farts/poo2.ogg", 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_SCREAMFART)
+					playsound(mob.loc, "sound/voice/farts/poo2.ogg", 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 					mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
 					mob.stamina_stun()
@@ -1476,7 +1476,7 @@
 				if (mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
-					playsound(get_turf(mob), pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_SCREAMFART)
+					playsound(get_turf(mob), pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG (30)
 						if (mob) mob.emote_allowed = 1
 					return message
@@ -1485,7 +1485,7 @@
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<B>[mob]</B> croaks."
-					playsound(get_turf(mob), "sound/voice/farts/frogfart.ogg", 60, 1, channel=VOLUME_CHANNEL_SCREAMFART)
+					playsound(get_turf(mob), "sound/voice/farts/frogfart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG(1 SECOND)
 						if (mob) mob.emote_allowed = 1
 					return message

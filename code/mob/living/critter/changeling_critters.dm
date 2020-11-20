@@ -507,7 +507,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src),"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_SCREAMFART)
+					playsound(get_turf(src),"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					var/turf/fart_turf = get_turf(src)
 					fart_turf.fluid_react_single("toxic_fart",1,airborne = 1)
 					return "<b><span class='alert'>[src] farts!</span></b>"

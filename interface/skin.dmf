@@ -430,8 +430,8 @@ menu "menu"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
-		name = "&Adjust ScreamFart Volume"
-		command = "change-volume screamfart"
+		name = "&Adjust Emote Volume"
+		command = "change-volume emote"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem

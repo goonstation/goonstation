@@ -1968,7 +1968,7 @@
 	else
 		gibs(src.loc, virus, ejectables)
 
-	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_SCREAMFART)
+	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)

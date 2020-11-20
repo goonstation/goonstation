@@ -16,7 +16,7 @@
 #define VOLUME_CHANNEL_AMBIENT 2
 #define VOLUME_CHANNEL_RADIO 3
 #define VOLUME_CHANNEL_ADMIN 4
-#define VOLUME_CHANNEL_SCREAMFART 5
+#define VOLUME_CHANNEL_EMOTE 5
 
 var/global/list/audio_channel_name_to_id = list(
 	"master" = VOLUME_CHANNEL_MASTER,
@@ -24,7 +24,7 @@ var/global/list/audio_channel_name_to_id = list(
 	"ambient" = VOLUME_CHANNEL_AMBIENT,
 	"radio" = VOLUME_CHANNEL_RADIO,
 	"admin" = VOLUME_CHANNEL_ADMIN,
-	"screamfart" = VOLUME_CHANNEL_SCREAMFART
+	"emote" = VOLUME_CHANNEL_EMOTE
 )
 
 //Area Ambience
