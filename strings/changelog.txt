@@ -1,5 +1,9 @@
 
 (t)fri nov 20 20
+(u)pali
+(p)2712
+(e)🗺🎨|mapping, sprites
+(+)Barman role renamed to Bartender
 (u)Innox
 (p)2706
 (e)🆕|feature
