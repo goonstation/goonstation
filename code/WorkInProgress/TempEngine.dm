@@ -313,6 +313,9 @@
 
 		src.lube_boost = lube_efficiency
 
+		if(src.generator?.variant_clock)
+			src.generator.variant_clock.check_reagent_transformation()
+
 	process()
 		..()
 		src.lube_loss_check()
@@ -345,7 +348,7 @@
 			src.UpdateOverlays(image(open_icon), "open")
 		else
 			src.UpdateOverlays(null, "open")
-		if(src.generator.variant_b)
+		if(src.generator?.variant_b)
 			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
 		else
 			UpdateOverlays(null, "variant")
@@ -494,6 +497,9 @@ datum/pump_ui/circulator_ui
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/list/obj/machinery/power/furnace/furnaces
+	var/datum/teg_transformation/active_form
+	var/datum/teg_transformation_clock/variant_clock
+	var/obj/item/teg_semiconductor/semiconductor
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -506,6 +512,8 @@ datum/pump_ui/circulator_ui
 	var/variant_b = null
 	var/variant_description
 	var/conductor_temp = T20C
+	var/semiconductor_state = 0
+	var/semiconductor_repair = ""
 
 	var/boost = 0
 	var/generator_flags = 0
@@ -583,6 +591,7 @@ datum/pump_ui/circulator_ui
 		//List init
 		history = list()
 		furnaces = list()
+		variant_clock = new(src)
 		grump_prefix = list("an upsetting", "an unsettling", "a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
 												"an awful", "a horrible", "a despicable", "a pretty rad", "a godawful")
 		grump_suffix = list("noise", "racket", "ruckus", "sound", "clatter", "fracas", "hubbub")
@@ -600,12 +609,16 @@ datum/pump_ui/circulator_ui
 			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
 			src.circ2?.side = RIGHT_CIRCULATOR
+			src.variant_clock.generator = src
 
 			//furnaces
 			for(var/obj/machinery/power/furnace/F in orange(15, src.loc))
 				src.furnaces += F
 
 			src.generate_variants()
+
+			if(!src.semiconductor)
+				semiconductor = new
 
 			updateicon()
 
@@ -614,6 +627,8 @@ datum/pump_ui/circulator_ui
 		src.circ1 = null
 		src.circ2?.generator = null
 		src.circ2 = null
+		qdel(variant_clock)
+		src.active_form = null
 		..()
 
 	proc/updateicon()
@@ -732,6 +747,8 @@ datum/pump_ui/circulator_ui
 
 		process_grump()
 
+		src.variant_clock.check_material_transformation()
+
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
 
@@ -748,6 +765,40 @@ datum/pump_ui/circulator_ui
 
 		return efficiency_scale * 0.01
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		// Weld > Crowbar > Rods > Weld
+		switch(semiconductor_state)
+			if(0)
+				if (istool(W, TOOL_SCREWING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					return
+			if(1)
+				if (istool(W, TOOL_SNIPPING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					return
+				if (istool(W, TOOL_SCREWING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					return
+			if(2)
+				if (istool(W, TOOL_SNIPPING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					return
+			if(3)
+				if (istool(W, TOOL_PRYING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 50), user)
+					return
+				if (istype(W, /obj/item/cable_coil))
+					var/obj/item/cable_coil/C = W
+					if (C.amount >= 4)
+						actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+						return
+			if(4)
+				if(istype(W,/obj/item/teg_semiconductor))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 50), user)
+					return
+
+		..()
+
 	proc/process_grump()
 		var/stoked_sum = 0
 		if(lastgenlev > 0)
@@ -761,7 +812,9 @@ datum/pump_ui/circulator_ui
 			if(prob(50)) grump--
 			if(prob(5)) grump -= min(stoked_sum/10, 15)
 
-		classic_grump()
+		// Use classic grump if not handled by variant
+		if(!src.active_form?.on_grump(src))
+			classic_grump()
 
 	// engine looping sounds and hazards
 	proc/classic_grump()
