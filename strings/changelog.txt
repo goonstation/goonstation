@@ -1,4 +1,10 @@
 
+(t)fri nov 20 20
+(u)Innox
+(p)2706
+(e)🆕|feature
+(+)Allowed creating apple on a stick with rods too - take that popsicle sticks!
+(+)Allowed creating corndogs with popsicle sticks too - take that rods!
 (t)thu nov 19 20
 (u)Gannets
 (p)2742
