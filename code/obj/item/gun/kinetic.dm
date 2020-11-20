@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	firemodes = list(list("name" = "low-speed", "burst_count" = 10, "refire_delay" = 1.5 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null),\
-	                 list("name" = "high-speed", "burst_count" = 50, "refire_delay" = 0.2 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 90, "projectile" = null))
+	                 list("name" = "high-speed", "burst_count" = 50, "refire_delay" = 0.2 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 30, "projectile" = null))
 
 
 	setupProperties()
@@ -289,8 +289,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/nine_mm_NATO
-	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
-	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
+	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 1 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
+	                 list("name" = "3-round burst", "burst_count" = 3, "refire_delay" = 1 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
 
 
 	New()
