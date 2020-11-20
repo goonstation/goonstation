@@ -24,7 +24,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture
 	var/name = null                // Name of the schematic
-	var/list/item_paths = list()   // Materials required
+	var/list/item_paths = null   // Materials required (generate from `mats` if null)
 	var/list/item_names = null   // Name of each material (generated automatically if null)
 	var/list/item_amounts = list() // How many of each material is needed
 	var/list/item_outputs = list() // What the schematic outputs
@@ -40,6 +40,21 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 	New()
 		..()
+		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
+			// sadly we can't use initial() because it's a list :/
+			var/item_type = item_outputs[1]
+			var/obj/dummy = new item_type
+			if(islist(dummy.mats))
+				item_paths = list()
+				for(var/mat in dummy.mats)
+					item_paths += mat
+					var/amt = dummy.mats[mat]
+					if(isnull(amt))
+						amt = 1
+					item_amounts += amt
+			qdel(dummy)
+		if(isnull(item_paths))
+			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
@@ -285,8 +300,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/multitool
 	name = "Multi Tool"
-	item_paths = list("CRY-1","CON-2")
-	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/device/multitool)
 	time = 8 SECONDS
 	create = 1

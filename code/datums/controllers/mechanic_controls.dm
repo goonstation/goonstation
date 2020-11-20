@@ -76,7 +76,10 @@ var/datum/mechanic_controller/mechanic_controls
 				M.item_amounts.Cut()
 				for(var/mat in mats_types)
 					M.item_paths += mat
-					M.item_amounts += mats_types[mat]
+					var/amt = mats_types[mat]
+					if(isnull(amt))
+						amt = 1
+					M.item_amounts += amt
 			else if (mats_number > 0)
 				for(var/tracker = 1, tracker <= mats_number, tracker ++)
 					M.item_amounts[rand(1,3)] += 1
