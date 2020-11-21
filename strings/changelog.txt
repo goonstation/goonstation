@@ -1,4 +1,9 @@
 
+(t)sat nov 21 20
+(u)Gannets
+(p)2772
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a memorial to the Cairngorm that shows nuke ops win/loss values.
 (t)fri nov 20 20
 (u)TTerc
 (p)2726
