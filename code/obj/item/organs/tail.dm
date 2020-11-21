@@ -100,7 +100,7 @@
 		return 1
 
 	on_removal()
-		if (src.failure_ability && src.donor.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
+		if (src.failure_ability && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
