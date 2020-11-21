@@ -347,12 +347,7 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
-#if ASS_JAM //pausing damage in timestop
-	if (src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
+
 	brute = max(0, brute)
 	burn = max(0, burn)
 	//tox = max(0, burn)

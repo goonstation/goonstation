@@ -2166,7 +2166,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-#if ASS_JAM
+/*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
 	comtype = /obj/item/clothing/shoes/scream
@@ -2186,7 +2186,7 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-#endif
+*/
 
 /// pathology
 /datum/commodity/synthmodule

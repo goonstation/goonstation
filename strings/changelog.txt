@@ -1,4 +1,85 @@
 
+(t)fri nov 20 20
+(u)TTerc
+(p)2726
+(e)🆕|feature
+(+)Mailman spawns with a custom headset now
+(u)MatheusIsNotAvailable & Retrino
+(p)2729
+(e)|
+(+)Added the ore scoop to the mining fabricator!
+(u)pali
+(p)2712
+(e)🗺🎨|mapping, sprites
+(+)Barman role renamed to Bartender
+(u)Innox
+(p)2706
+(e)🆕|feature
+(+)Allowed creating apple on a stick with rods too - take that popsicle sticks!
+(+)Allowed creating corndogs with popsicle sticks too - take that rods!
+(t)thu nov 19 20
+(u)Gannets
+(p)2742
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Nuclear Operative Combat Medic balance changes.
+(*)Removes donk pocket box from medic class crate.
+(*)Adds high-capacity autoinjector of donk pocket reagents to medic crate.
+(*)Adds a single warm donk pocket as a purchasable Utility item from the Syndicate Weapon Vendor on the Cairngorm.
+(+)Adds sprite for syringe gun canister.
+(+)Adds a second canister of neurotoxin to medic crate.
+(+)Removes some medkits from the Cairngorm
+(t)wed nov 18 20
+(u)Azrun
+(p)2732
+(e)🐛|bug
+(+)Furnaces easier to load.  Resolved issue where excess items in stacks would get consumed without benefit.
+(u)Chickenish
+(p)2735
+(e)🐛|bug
+(+)Pill Bottles are now able to be quick filled again.
+(u)Luxizzle
+(p)2725
+(e)⚖🆕|balance, feature
+(+)Cyborgs now twitch when being disoriented.
+(t)tue nov 17 20
+(u)kyle
+(+)Station NTSOs now only get standard security and bridge access.
+(+)Blunt bullet projectile types don't deal bleed damage. Looking at you 9mm NATO.
+(u)pali
+(p)2710
+(e)🐛|bug
+(+)VR chess now works again!
+(t)mon nov 16 20
+(u)Kyle
+(*)Fix Clock 188 bug where its shot delay while on burst mode was too low. Increase spread by 3 degrees too.
+(u)Luxizzle
+(p)2694
+(e)🆕🎨|feature, sprites
+(*)Added the Security HUD upgrade for cyborgs.
+(+)Replaced Repair Pack in brobocop module to the new Security HUD upgrade.
+(u)Chronoquest
+(p)2664
+(e)🆕|feature
+(*)6 new radio station songs
+(u)UrsulaMajor
+(e)⚖|balance
+(*)Multitools now require high energy conductive material (such as clarentine) to fabricate, to limit the number of them that are easily available to would-be hackers at round start.
+(t)sun nov 15 20
+(u)Flaborized
+(p)2695
+(e)🎨|sprites
+(*)Cyborgs and cyborg related items have a new look!
+(u)TTerc
+(p)2647
+(e)🗺|mapping
+(+)Door-linked force fields added to Cogmap 2, Atlas, Clarion and Destiny
+(u)Luxizzle
+(p)2688
+(e)🆕🎨|feature, sprites
+(*)The AI can now hold their point key (B) and click on a location to spawn a hologram.
+(u)UrsulaMajor
+(e)🆕|feature
+(*)New Chicken Breeds! See if you can find them all! (Not Secret! Feel free to share with your friends what you find out!)
 (t)sat nov 14 20
 (u)Chickenish
 (p)2659

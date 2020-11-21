@@ -22212,7 +22212,7 @@
 /area/station/crew_quarters/bar)
 "aVW" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)

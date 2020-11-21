@@ -196,6 +196,9 @@
 	purpleish
 		name = "purpleish fluorescent light bulb"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light bulb"
+		light_type = /obj/item/light/bulb/emergency
 
 	warm
 		name = "fluorescent light bulb"

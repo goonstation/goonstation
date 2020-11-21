@@ -314,7 +314,7 @@
 
 		else if(istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
@@ -367,9 +367,7 @@
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
 
-				S.amount--
-				if (S.amount < 1)
-					qdel(S)
+				S.consume_sheets(2)
 				return
 			else
 				..()

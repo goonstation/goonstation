@@ -197,6 +197,7 @@
 		materiel_stock += new/datum/materiel/utility/belt
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
+		materiel_stock += new/datum/materiel/utility/donk
 
 	accepted_token()
 		src.current_sidearm_credits++
@@ -361,6 +362,12 @@
 	path = /obj/item/storage/pouch/rpg
 	catagory = "Utility"
 	description = "An additional four MPRT rockets."
+
+/datum/materiel/utility/donk
+	name = "Warm Donk Pocket"
+	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
+	catagory = "Utility"
+	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
 // Requisition tokens
 

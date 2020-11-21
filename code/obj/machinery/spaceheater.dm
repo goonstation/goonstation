@@ -235,7 +235,7 @@
 							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 
-						cell.use(current_power/20000)
+						cell.use(abs(current_power)/20000)
 
 						//boutput(world, "now at [removed.temperature]")
 

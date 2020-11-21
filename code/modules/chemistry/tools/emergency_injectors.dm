@@ -257,3 +257,11 @@
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector
+	name = "Donk injector"
+	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains a cocktail of chemicals intended to mimic the effect of eating a warm donk pocket."
+	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "methamphetamine" = 15)
+	label = "bigblue"
+	initial_volume = 90
+	amount_per_transfer_from_this = 15

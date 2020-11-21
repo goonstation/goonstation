@@ -326,7 +326,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1)
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 
 				// Goonhub API error encountered
 				if (data["error"])
@@ -335,36 +335,41 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					data = json_decode(html_decode(data["response"]))
-
-					// VPN checker service returns error responses in a "message" property
-					if (data["message"])
-						// Yes, we're forcing a cache for a no-VPN response here on purpose
-						// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
-						//			  so we want to avoid spamming the goonhub API this round for literally no gain
+					if (data["whitelisted"])
+						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
-						logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
-						logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
-					// Successful VPN check
 					else
-						var/list/security_info = data["security"]
+						data = json_decode(html_decode(data["response"]))
 
-						// IP is a known VPN, cache locally and kick
-						if (security_info["vpn"] == true)
-							global.vpn_ip_checks["[src.address]"] = true
-							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-							sleep(3 SECONDS)
-							if (src)
-								del(src)
-							return
-
-						// IP is not a known VPN
-						else
+						// VPN checker service returns error responses in a "message" property
+						if (data["message"])
+							// Yes, we're forcing a cache for a no-VPN response here on purpose
+							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+							//			  so we want to avoid spamming the goonhub API this round for literally no gain
 							global.vpn_ip_checks["[src.address]"] = false
+							logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+
+						// Successful VPN check
+						else
+							var/list/security_info = data["security"]
+
+							// IP is a known VPN, cache locally and kick
+							if (security_info["vpn"] == true)
+								global.vpn_ip_checks["[src.address]"] = true
+								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+								sleep(3 SECONDS)
+								if (src)
+									del(src)
+								return
+
+							// IP is not a known VPN
+							else
+								global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")

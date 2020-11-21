@@ -7874,7 +7874,7 @@
 /area/station2/crew_quarters/cafeteria)
 "atm" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -53795,7 +53795,7 @@
 	dir = 1
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/cable{
 	d1 = 1;
@@ -57958,7 +57958,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/carpet/grime,

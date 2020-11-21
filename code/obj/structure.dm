@@ -282,7 +282,8 @@ obj/structure/ex_act(severity)
 		var/FloorName = T.name
 		var/oldmat = src.material
 
-		var/atom/A = new /turf/simulated/wall/false_wall(src.loc)
+		T.ReplaceWith(/turf/simulated/wall/false_wall, FALSE, FALSE, FALSE)
+		var/atom/A = src.loc
 		if(oldmat)
 			A.setMaterial(oldmat)
 		else
@@ -296,9 +297,7 @@ obj/structure/ex_act(severity)
 		FW.known_by += user
 		if (S.reinforcement)
 			FW.icon_state = "rdoor1"
-		S.amount--
-		if (S.amount < 1)
-			qdel(S)
+		S.consume_sheets(1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		qdel(src)
