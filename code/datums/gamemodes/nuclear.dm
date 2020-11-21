@@ -472,10 +472,10 @@ var/syndicate_name = null
 		if(isnull(losses))
 			losses = 0
 		var/dat = ""
-		dat += "<b>Battlecruiser Cairngorm Mission Memorial</b><BR>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]"
+		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x400")
+		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
 
