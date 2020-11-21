@@ -120,6 +120,17 @@
 		SubscribeToProcess()
 		return
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istool(W, TOOL_WRENCHING))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 1
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				src.anchored = 0
+
 	onVarChanged(variable, oldval, newval)
 		if (variable == "grillitem")
 			if (!oldval && newval)
