@@ -5,6 +5,7 @@
 	item_state = "arm-left"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	var/mob/living/original_holder = null
+	var/datum/appearanceHolder/holder_ahol
 	force = 6
 	stamina_damage = 40
 	stamina_cost = 23
@@ -70,9 +71,14 @@
 
 	New(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
 		..()
+		if(AHolAlmostThere && istype(AHolAlmostThere, /datum/appearanceHolder))
+			src.holder_ahol = AHolAlmostThere
 		if (ismob(new_holder))
 			holder = new_holder
 			original_holder = new_holder
+			if(!src.holder_ahol && ishuman(original_holder))
+				var/mob/living/carbon/human/H = original_holder
+				src.holder_ahol = H?.bioHolder?.mobAppearance
 			if(!src.bones)
 				src.bones = new /datum/bone(src)
 			src.bones.donor = new_holder
@@ -86,12 +92,12 @@
 				if (new_holder && istype(new_holder))
 					name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
-			if (AHolAlmostThere)
-				colorize_limb_icon(AHolAlmostThere)
+			if (holder_ahol)
+				colorize_limb_icon()
 				set_skin_tone()
 			else if(holder)	//
 				SPAWN_DBG(1 SECOND)
-					colorize_limb_icon(AHolAlmostThere)
+					colorize_limb_icon()
 					set_skin_tone()
 					holder.set_body_icon_dirty()
 					holder.set_face_icon_dirty()
@@ -176,19 +182,19 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
-	proc/colorize_limb_icon(var/datum/appearanceHolder/AHolFinalDestination)	// Actually just sets the skin tone, the limbs are colorized elsewhere
-		if (!src.skintoned)	// ^^ also used by lings!
-			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
+	/// Determines what the limb's skin tone should be
+	proc/colorize_limb_icon()
+		if (!src.skintoned) return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		var/mob/living/carbon/human/M
 		if(ishuman(src.original_holder))
 			M = src.original_holder
 		var/blend_color = null
 		var/has_aH = 0
 		var/datum/appearanceHolder/AHLIMB
-		if (istype(AHolFinalDestination))
-			AHLIMB = AHolFinalDestination
+		if (istype(src.holder_ahol, /datum/appearanceHolder))
+			AHLIMB = src.holder_ahol
 			has_aH = 1
-		else if (M.bioHolder?.mobAppearance)
+		else if (M?.bioHolder?.mobAppearance)
 			AHLIMB = M.bioHolder.mobAppearance
 			has_aH = 1
 		if (has_aH)
@@ -206,7 +212,8 @@
 				src.skin_tone = standard_skintones[blend_color]
 		set_limb_icon_coloration()
 
-	proc/set_limb_icon_coloration()	// Actually colorizes the limb with the skin tone
+	/// Applies the correct (hopefully) colors to the limbs
+	proc/set_limb_icon_coloration()
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!

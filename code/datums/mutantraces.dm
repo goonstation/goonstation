@@ -10,7 +10,6 @@
 	var/race_mutation = null
 ///////////// AAAAAAAAAAAAAAAAAA FIX THIS UP ?////////////////
 	var/datum/appearanceHolder/AH
-	var/mutant_color_flags = null
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -22,22 +21,12 @@
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
 	/// whether fat icons/disabilities are used
 	var/allow_fat = 0
-
-	// dump as much visual data into the appearance holder as possible
-	var/datum/appearanceHolder/AH
 	var/mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	// This should be a normal-ish human:
 	// (IS_MUTANT | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HAIR_COLORED_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD)
 	var/mutant_color_flags = (HAS_UNUSED_HAIR_COLOR | HEAD_HAS_OWN_COLORS)
 	// if you want to use all the details, plus oversuit =
 	// (BODYDETAIL_1 | BODYDETAIL_2 | BODYDETAIL_3 | OVERSUIT_USES_PREF_COLOR_1)
-
-	// set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
-	var/override_attack = 1	// but they must explicitly specify if they're overriding via this var
-
-	var/override_language = null // set to a language ID to replace the language of the human
-	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	var/allow_fat = 0			// whether fat icons/disabilities are used.
 
 //////////////////////////////////AAAAAAAAAAAAAAAAAAAAAAAAA/////////////////////////
 
@@ -221,6 +210,13 @@
 					if (H && H.organHolder && H.organHolder.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
+
+				SPAWN_DBG (25) // Don't remove.
+					if (H?.organHolder?.skull) // check for H.organHolder as well so we don't get null.skull runtimes
+						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
+
 			if (movement_modifier) // causes runtimes, so its down here now
 				REMOVE_MOVEMENT_MODIFIER(mob, movement_modifier, src.type)
 
@@ -391,22 +387,6 @@
 				//////////////HEAD//////////////////
 				L.organHolder.head.MakeMutantHead(HEAD_HUMAN)
 
-				H.set_face_icon_dirty()
-				H.set_body_icon_dirty()
-
-				SPAWN_DBG (25) // Don't remove.
-					if (H?.organHolder?.skull) // check for H.organHolder as well so we don't get null.skull runtimes
-						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
-
 	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
 		if(!ishuman(O) || !(O?.organHolder))
 			return // hard to mess with someone's organs if they can't have any
@@ -464,35 +444,6 @@
 		if (L.len == 3)
 			return rgb(L["r"], L["g"], L["b"])
 		return rgb(22, 210, 22)
-
-	/// Backs up the character's hair colors, then does fix_colors on those colors if the FIX_COLORS flag is set
-	proc/AppearanceSetter(var/mob/living/carbon/human/Q, var/mode as text)
-		if(!ishuman(Q) || !(Q?.bioHolder?.mobAppearance))
-			return // please dont call set_mutantrace on a non-human non-appearanceholder
-
-		src.AH = Q.bioHolder.mobAppearance // i mean its called appearance holder for a reason
-
-		switch(mode)
-			if("set")	// upload everything, the appearance flags'll determine what gets used
-				AH.mob_color_flags = src.mutant_color_flags
-				// Store our old colors, just in case we stop being a weirdo
-				AH.customization_first_color_carry = AH.customization_first_color
-				AH.customization_second_color_carry = AH.customization_second_color
-				AH.customization_third_color_carry = AH.customization_third_color
-				if (src.mutant_color_flags & FIX_COLORS)
-					AH.customization_first_color = fix_colors(AH.customization_first_color)
-					AH.customization_second_color = fix_colors(AH.customization_second_color)
-					AH.customization_third_color = fix_colors(AH.customization_third_color)
-
-			if("reset")
-				AH.mob_color_flags = (HAS_HAIR_COLORED_HAIR)
-				AH.customization_first_color = AH.customization_first_color_carry
-				AH.customization_second_color = AH.customization_second_color_carry
-				AH.customization_third_color = AH.customization_third_color_carry
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit = null
 
 	/// Applies or removes the bioeffect associated with the mutantrace
 	proc/MutateMutant(var/mob/living/carbon/human/H, var/mode as text)
