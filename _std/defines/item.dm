@@ -111,7 +111,7 @@
 #define AMMO_MAGAZINE (1<<2)
 /// A box designed to hold a belt of bullets, typically for machine guns
 /// Basically just a mag that's really easy to load and unload bullets into/from
-#define AMMO_BOX (1<<3)
+#define AMMO_BELTMAG (1<<3)
 /// A battery, uses a number to determine remaining ammo
 #define AMMO_ENERGY (1<<4)
 // Ammo numbering defines
@@ -155,3 +155,22 @@
 #define GUN_NEEDS_ENERGY (1<<0)
 /// Gun needs projectile entries in its loaded magazine's mag_contents
 #define GUN_NEEDS_BULLETS (1<<1)
+// Gun Sound assoc Defs
+/// Load single
+#define LOAD_SINGLE "load_single"
+/// Load multiple
+#define LOAD_MULTIPLE "load_multiple"
+/// Load magazine
+#define LOAD_MAGAZINE "load_magazine"
+/// Unload single
+#define UNLOAD_SINGLE "unload_single"
+/// Unload multiple
+#define UNLOAD_MULTIPLE "unload_multiple"
+/// Unload magazine
+#define UNLOAD_MAGAZINE "unload_magazine"
+/// Shoot gun
+#define SHOOT_SOUND "shoot_sound"
+/// Shoot gun, but silenced
+#define SHOOT_SILENCED_SOUND "shoot_silent"
+/// Shoot gun, but its empty
+#define SHOOT_EMPTY "shoot_empty"

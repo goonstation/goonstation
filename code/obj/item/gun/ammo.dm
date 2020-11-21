@@ -22,7 +22,7 @@
 	/// AMMO_PILE - generic pile of (sometimes assorted) bullets. Slow to load into anything but boxes and other piles
 	/// AMMO_CLIP - speedloaders, quick to load other things, but slow to be loaded with bullets
 	/// AMMO_MAGAZINE - that are easily swapped out for other mags, but are slow to be loaded or unloaded with bullets
-	/// AMMO_BOX - Same as a magazine, but can be loaded by piles and clips easily, and unloaded quickly
+	/// AMMO_BELTMAG - Same as a magazine, but can be loaded by piles and clips easily, and unloaded quickly
 	/// AMMO_ENERGY - Is a battery, doesn't hold any mag_contents (usually), and operates using charge
 	var/mag_type = AMMO_PILE
 	/// What the mag/pile/clip/etc holds. Read by the gun to shoot whatever's in the list
@@ -54,10 +54,11 @@
 	var/max_amount = 1000
 	/// For power cells and theoretical mags that also need to be charged for some reason
 	var/charge = 100.0
+	/// Maximum charge that this thing can hold
 	var/max_charge = 100.0
 
-	// This is needed to avoid duplicating empty magazines (Convair880).
-	var/delete_on_reload = 0
+	/// For certain piles that shouldnt disappear when empty, like boxes of shells
+	var/delete_when_empty = 0
 	var/force_new_current_projectile = 0 //for custom grenade shells
 
 	var/icon_dynamic = 0 // For dynamic desc and/or icon updates (Convair880).
@@ -72,7 +73,7 @@
 		..()
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN_DBG(1 SECONDS)
 			if(!src.disposed)
 				load_up_the_magazine()
 				make_bullet_manifest()
@@ -149,13 +150,13 @@
 					if(AMMO_MAGAZINE, AMMO_CLIP)
 						num_to_move = 1
 						top_bullet_ok = 1
-					if(AMMO_PILE, AMMO_BOX)
+					if(AMMO_PILE, AMMO_BELTMAG)
 						num_to_move = from_this_mag.mag_contents.len
 			if(AMMO_MAGAZINE)
 				num_to_move = 1
 			if(AMMO_CLIP)
 				num_to_move = from_this_mag.mag_contents.len
-			if(AMMO_BOX)
+			if(AMMO_BELTMAG)
 				if(src.mag_type == AMMO_PILE)
 					num_to_move = from_this_mag.mag_contents.len
 		if(num_to_move < 1)
@@ -176,7 +177,7 @@
 						src.update_icon()
 						from_this_mag.update_icon()
 						failtype = 0
-						return TRUE
+						return 1
 			else
 				failtype = TOP_IS_WRONG_CALIBER
 			if(failtype == TOP_IS_WRONG_CALIBER && istype(from_this_mag.top_bullet, /datum/projectile))
@@ -187,6 +188,7 @@
 		// If the above failed, load as normal
 		num_to_move = min((src.max_amount - src.mag_contents.len), num_to_move)
 		var/amount_to_move = num_to_move
+		. = num_to_move
 		var/list/temp_mag = list()
 		for(var/datum/projectile/bullet in from_this_mag.mag_contents)
 			if(ammo_wildcard || (bullet.caliber in src.caliber))
@@ -212,12 +214,12 @@
 					boutput(user, "That used up the whole pile!")
 					user.u_equip(from_this_mag)
 					qdel(from_this_mag)
-					return TRUE
+					return
 				else
 					boutput(user, "\The [from_this_mag] is now empty!")
 			from_this_mag.update_bullet_manifest()
 			from_this_mag.update_icon()
-			return TRUE
+			return
 		else
 			boutput(user, "You couldn't find anything in [from_this_mag] to fit in [src]")
 			return FALSE
@@ -284,16 +286,16 @@
 			just_transfer = 1
 
 
-		if(src.mag_contents.len >= 1 && IN_RANGE(src, user, 1))
+		if(src.mag_contents.len >= 1)
 			var/obj/item/ammo/bullets/pile/new_pile = new /obj/item/ammo/bullets/pile
 			if(put_that_here && isturf(put_that_here) && IN_RANGE(user, put_that_here, 1))
 				new_pile.set_loc(put_that_here)
 			else
 				user.put_in_hand_or_drop(new_pile)
 			if(just_transfer)
-				new_pile.load_ammo(src, user)
-				return TRUE
+				return new_pile.load_ammo(src, user)
 			else // Only piles from here forward
+				. = num_to_take
 				for(var/datum/projectile/bullet in src.mag_contents)
 					if(istype(bullet, type_to_take))
 						new_pile.mag_contents.Insert(1, bullet)
@@ -311,9 +313,9 @@
 					src.update_icon()
 				new_pile.update_bullet_manifest()
 				new_pile.update_icon()
-				return TRUE
+				return
 		else
-			boutput(user, "You're too far from [src] to keep messing with it.")
+			boutput(user, "Never mind.")
 			return FALSE
 
 	/// Generate an associated list of all the unique bullets and their amounts
@@ -452,7 +454,7 @@
 			num_count = src.mag_contents.len
 		inventory_counter.update_number(num_count)
 
-	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
+		// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
 		src.desc = "There are [num_count] bullet\s left!"
 		src.desc += "Contents: [src.make_ammo_string(mode = "line")]"
 
@@ -509,14 +511,49 @@
 	name = "Pile of Bullets"
 	sname = "Pile"
 	desc = "A bunch of ammo."
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "power_cell"
+	icon = 'icons/obj/foodNdrink/platestack.dmi'
+	icon_state = "platestack1"
+	var/orig_icon_state = "platestack"
 	m_amt = 40000
 	g_amt = 0
 	ammo_type = null
 	mag_type = AMMO_PILE
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
+
+	update_icon()
+		. = ..()
+		if(src.mag_contents.len >= 1)
+			var/state_num = 1
+			switch(src.mag_contents.len)
+				if(1 to 10)
+					state_num = 1
+				if(11 to 20)
+					state_num = 2
+				if(21 to 30)
+					state_num = 3
+				if(31 to 40)
+					state_num = 4
+				if(41 to 50)
+					state_num = 5
+				if(51 to 60)
+					state_num = 6
+				if(61 to 70)
+					state_num = 7
+				if(71 to 80)
+					state_num = 8
+				if(81 to 90)
+					state_num = 9
+				if(91 to 100)
+					state_num = 10
+				if(101 to 110)
+					state_num = 11
+				if(111 to 120)
+					state_num = 12
+				if(121 to INFINITY)
+					state_num = 13
+			src.icon_state = "[orig_icon_state][state_num]"
+
 
 /obj/item/ammo/bullets/pile/test
 	name = "Pile of Bullets"
@@ -1021,7 +1058,7 @@
 	max_amount = 500.0
 	caliber = CALIBER_MINIGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	mag_type = AMMO_BOX
+	mag_type = AMMO_BELTMAG
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
@@ -1195,7 +1232,7 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
-/obj/item/ammo/bullets/grenade_shell
+/obj/item/ammo/bullets/grenade_shell // likely fucked, needs testing
 	sname = "40mm Custom Shell"
 	name = "40mm hand grenade conversion chamber"
 	desc = "A 40mm shell used for converting hand grenades into impact detonation explosive shells"
@@ -1207,7 +1244,6 @@
 	w_class = 3
 	icon_dynamic = 0
 	icon_empty = "paintballb-4"
-	delete_on_reload = 0 //deleting it before the shell can be fired breaks things
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	force_new_current_projectile = 1
 
@@ -1261,10 +1297,9 @@
 	max_amount = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
-	ammo_type = new /datum/projectile/bullet/rpg
+	ammo_type = /datum/projectile/bullet/rpg
 	caliber = CALIBER_ROCKET
 	w_class = 3
-	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/rod
@@ -1305,7 +1340,7 @@
 	max_amount = 100.0
 	caliber = CALIBER_RIFLE_HEAVY
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	mag_type = AMMO_BOX
+	mag_type = AMMO_BELTMAG
 
 	weak
 		sname = "7.62×51mm NATO W"
@@ -1578,7 +1613,6 @@
 	caliber = CALIBER_ROCKET
 	mag_type = AMMO_PILE
 	w_class = 3
-	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/mininuke
@@ -1592,7 +1626,6 @@
 	caliber = CALIBER_ROCKET
 	mag_type = AMMO_PILE
 	w_class = 3
-	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/gun
@@ -1609,7 +1642,6 @@
 	mag_type = AMMO_MAGAZINE
 	ammo_type = /datum/projectile/special/spawner/gun
 	caliber = CALIBER_WHOLE_DERRINGER //idk what caliber to actually make it but apparently its diameter of the tube so i figure it should be 3 inches????
-	delete_on_reload = 1
 
 /obj/item/ammo/bullets/meowitzer
 	sname = "meowitzer"

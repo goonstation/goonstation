@@ -39,7 +39,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	/// Currently loaded magazine, shoot will read whatever's in its mag_contents to determine what to shoot
 	/// Should be null here
 	var/obj/item/ammo/loaded_magazine
-	/// Magazine to load into the gun when spawned. AMMO_MAGAZINEs and AMMO_BOXes only, please
+	/// Magazine to load into the gun when spawned. AMMO_MAGAZINEs and AMMO_BELTMAGes only, please
 	/// Should *not* be null, empty guns should have at least some kind of obj/item/ammo/bullets/empty
 	var/obj/item/ammo/ammo = /obj/item/ammo/bullets/empty
 	/// Checks against the magazine's caliber to see if it'll hold it
@@ -54,12 +54,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	/// Are we allowed to reload the gun at all?
 	var/can_reload = TRUE
 
-	/// Overrides the bullet's own shoot-sound. Uses bullet's sound if null
-	var/shoot_sound
-	/// Overrides the bullet's own shoot-sound, but when the gun is silenced. Uses bullet's sound if null
-	var/shoot_sound_silenced
-	/// Sound it plays when out of ammo
-	var/shoot_sound_empty = "sound/weapons/Gunclick.ogg"
+	/// List of sounds to play
+	/// format: list(GUN_SOUND_DEF = "sound")
+	var/list/gunsounds = list(LOAD_SINGLE = "sound/weapons/gun_cocked_colt45.ogg",\
+	                          LOAD_MULTIPLE = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          LOAD_MAGAZINE = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          UNLOAD_SINGLE = "sound/weapons/gun_cocked_colt45.ogg",\
+	                          UNLOAD_MULTIPLE = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          UNLOAD_MAGAZINE = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          SHOOT_SOUND = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          SHOOT_SILENCED_SOUND = "sound/musical_instruments/Airhorn_1.ogg",\
+	                          SHOOT_EMPTY = "sound/weapons/Gunclick.ogg")
+
 
 	/// Infinite Ammo -- Magazine list isnt changed on firing
 	/// Projectile Override -- Shoot default projectile instead of what's in the mag's list
@@ -418,11 +424,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	switch(A.mag_type)
 		if(AMMO_PILE, AMMO_CLIP) // Piles can only ever go into a loaded gun if the gun's magazine is fixed (revolver, shotgun, RPG, etc.)
 			if(src.fixed_mag && src.loaded_magazine)
-				src.loaded_magazine.load_ammo(A, user = user)
+				var/loaded = src.loaded_magazine.load_ammo(A, user = user)
+				if(loaded == 1)
+					playsound(user, src.gunsounds[LOAD_SINGLE], 50)
+				else if (loaded > 1)
+					playsound(user, src.gunsounds[LOAD_MULTIPLE], 50)
 			else
 				boutput(user, "You can't load anything into [src.loaded_magazine] while it's inside \the [src]! Try removing the magazine first.")
 				return FALSE
-		if(AMMO_MAGAZINE, AMMO_BOX, AMMO_ENERGY)
+		if(AMMO_MAGAZINE, AMMO_BELTMAG, AMMO_ENERGY)
 			if(src.fixed_mag) // Kinda hard to load a magazine into a revolver
 				boutput(user, "\The [src] doesn't have a magazine you can remove or swap out, try feeding it some loose bullets or a clip.")
 				return FALSE
@@ -445,9 +455,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			boutput(user, "\The [src] doesn't have a removable battery!")
 			return FALSE
 		else
-			src.loaded_magazine.unload_magazine(user = user)
+			var/unloaded = src.loaded_magazine.unload_magazine(user = user, put_that_here = put_it_here)
 			src.handle_casings(eject_stored = TRUE, user = user)
 			src.update_icon()
+			if(unloaded == 1)
+				playsound(user, src.gunsounds[UNLOAD_SINGLE], 50)
+			else if (unloaded > 1)
+				playsound(user, src.gunsounds[UNLOAD_MULTIPLE], 50)
 			return TRUE
 	else // Removable magazine, lets remove it!
 		var/obj/item/ammo/W = src.loaded_magazine
@@ -462,6 +476,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		src.update_icon()
 		src.add_fingerprint(user)
 		src.handle_casings(eject_stored = TRUE, user = user) // Some kind of gun that stores its casings in the mag, I guess
+		playsound(user, src.gunsounds[UNLOAD_MAGAZINE], 50)
 		boutput(user, "You unload \the [W] from \the [src]!")
 		if (put_it_here)
 			boutput(user, "You put [W] on \the [put_it_here].")
@@ -470,7 +485,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return TRUE
 
 /obj/item/gun/proc/swap(var/obj/item/ammo/A, var/mob/user)
-	var/list/allowed_kinds = list(AMMO_MAGAZINE, AMMO_ENERGY, AMMO_BOX)
+	var/list/allowed_kinds = list(AMMO_MAGAZINE, AMMO_ENERGY, AMMO_BELTMAG)
 	if(!(A.mag_type in allowed_kinds))
 		boutput(user, "Wrong kind of thing to put into this thing!")
 		return 0
@@ -486,11 +501,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		old_mag.loaded_in = null
 		old_mag.update_bullet_manifest()
 		old_mag.update_icon()
+		playsound(user, src.gunsounds[UNLOAD_MAGAZINE], 50)
 		user.put_in_hand_or_drop(old_mag)
 	src.loaded_magazine = A
 	src.loaded_magazine.loaded_in = src
 	src.loaded_magazine.update_bullet_manifest()
 	src.loaded_magazine.update_icon()
+	playsound(user, src.gunsounds[LOAD_MAGAZINE], 50)
 	src.update_icon()
 
 	// // I tweaked this for improved user feedback and to support zip guns (Convair880).
@@ -723,7 +740,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!silenced)
 		if(point_blank)
 			user.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
-		playsound(user, src.shoot_sound_empty, 60, 1)
+		playsound(user, src.gunsounds[SHOOT_EMPTY], 60, 1)
 	else
 		user.show_text("*click* *click*", "red")
 
@@ -820,6 +837,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 	handle_casings(user = user)
+	if(silenced)
+		playsound(user, src.gunsounds[SHOOT_SILENCED_SOUND], 60, 1)
+	else
+		playsound(user, src.gunsounds[SHOOT_SOUND], 60, 1)
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 	if (P)
 		P.forensic_ID = src.forensic_ID
@@ -923,6 +944,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		P.was_pointblank = 1
 	else
 		P.launch()
+	if(silenced)
+		playsound(user, src.gunsounds[SHOOT_SILENCED_SOUND], 60, 1)
+	else
+		playsound(user, src.gunsounds[SHOOT_SOUND], 60, 1)
 	handle_casings(user = user)
 
 	var/mob/living/L = M
@@ -1013,13 +1038,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return FALSE
 
 /// Checks if it can shoot, then deducts ammo from the magazine
-/obj/item/gun/proc/process_ammo()
+/obj/item/gun/proc/process_ammo(var/mob/user)
 	if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Has a battery
 		if(!src.current_projectile?.name)
 			var/proj = src.firemodes[1]["projectile"]
 			if(ispath(proj, /datum/projectile))
 				src.current_projectile = new proj
 			else
+				src.dry_fire(user)
 				return FALSE
 		if (src.loaded_magazine.charge >= src.current_projectile.cost)
 			src.loaded_magazine.charge -= src.current_projectile.cost
@@ -1029,6 +1055,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			src.current_projectile = src.loaded_magazine.mag_contents[1]
 			src.loaded_magazine.mag_contents.Cut(1,2)
 			return TRUE
+	src.dry_fire(user)
 	return FALSE
 
 // Could be useful in certain situations (Convair880).

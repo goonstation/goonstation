@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "heavy"
 	force = 5
 	caliber = CALIBER_MINIGUN
-	accepted_mag = AMMO_BOX
+	accepted_mag = AMMO_BELTMAG
 	auto_eject = 1
 	ammo = /obj/item/ammo/bullets/minigun
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
 	force = 5
-	accepted_mag = list(AMMO_BOX, AMMO_MAGAZINE)
+	accepted_mag = list(AMMO_BELTMAG, AMMO_MAGAZINE)
 	caliber = CALIBER_RIFLE_HEAVY
 	auto_eject = 1
 	burst_count = 8
@@ -868,54 +868,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	MouseDrop(atom/over_object, src_location, over_location, params)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
-		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			src.add_fingerprint(usr)
-			if (src.sanitycheck(0, 1) == 0)
-				usr.show_text("You can't unload this gun.", "red")
-				return
-			if (src.loaded_magazine.mag_contents.len <= 0)
-				if ((src.casings_to_eject > 0))
-					if (src.sanitycheck(1, 0) == 0)
-						src.casings_to_eject = 0
-						return
-					else
-						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						handle_casings(eject_stored = 1, user = usr)
-						src.update_icon()
-						return
-				else
-					usr.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.loaded_magazine.type
-			ammoHand.amount_left = src.loaded_magazine.mag_contents.len
-			ammoHand.name = src.loaded_magazine.name
-			ammoHand.icon = src.loaded_magazine.icon
-			ammoHand.icon_state = src.loaded_magazine.icon_state
-			ammoHand.ammo_type = src.loaded_magazine.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
-			usr.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			handle_casings(eject_stored = 1, user = usr)
-
-			src.loaded_magazine.mag_contents.len = 0
-			src.update_icon()
-
-			src.add_fingerprint(usr)
-			ammoHand.add_fingerprint(usr)
-
-			usr.visible_message("<span class='alert'>[usr] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
-			return
-		..()
+		if (src.icon_state != "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
+			return ..()
 
 	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
+		if (istype(b, /obj/item/ammo) && src.icon_state == "slamgun-ready")
 			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src]!</span>")
 			return
-		if (istype(b, /obj/item/ammo/bullets) && (src.loaded_magazine.mag_contents.len > 0 || src.casings_to_eject > 0))
+		if (istype(b, /obj/item/ammo) && (src.loaded_magazine.mag_contents.len > 0 || src.casings_to_eject > 0))
 			boutput(user, "<span class='alert'>The [src] already has a shell inside! You'll have to unload the [src]!</span>")
 			return
 		..()
