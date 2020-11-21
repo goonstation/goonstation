@@ -441,3 +441,46 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+/obj/cairngorm_stats/
+	name = "Mission Memorial"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+
+	attack_hand(var/mob/user as mob)
+		if (..(user))
+			return
+
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		var/dat = ""
+		dat += "<b>Battlecruiser Cairngorm Mission Memorial</b><BR>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]"
+
+		src.add_dialog(user)
+		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x400")
+		onclose(user, "cairngorm_stats_[src]")
+		return
+
+/obj/cairngorm_stats/left
+	icon_state = "memorial_left"
+
+/obj/cairngorm_stats/right
+	icon_state = "memorial_right"
