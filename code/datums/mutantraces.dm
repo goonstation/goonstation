@@ -135,10 +135,7 @@
 		if(ishuman(M))
 			AppearanceSetter(M, "set")
 			LimbSetter(M, "set")
-			var/droptail = 1
-			if(ischangeling(M))
-				droptail = 0
-			organ_mutator(M, "set", droptail)
+			organ_mutator(M, "set")
 			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
