@@ -233,7 +233,7 @@ toxic - poisons
 //Taser rifle
 /datum/projectile/energy_bolt/taser_rifle_auto
 	shot_number = 3
-	power = 30
+	power = 20
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "minispark"
 	cost = 23

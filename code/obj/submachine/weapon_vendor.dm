@@ -151,6 +151,7 @@
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
+		materiel_stock += new/datum/materiel/loadout/utility
 
 	vended(var/atom/A)
 		..()
@@ -244,7 +245,7 @@
 	name = "Offense"
 	path = /obj/item/storage/belt/security/offense
 	catagory = "Loadout"
-	description = "One belt containing a wavegun and a baton."
+	description = "One belt containing a taser rifle, 3 flashbangs and a baton."
 
 /datum/materiel/loadout/support
 	name = "Support"
@@ -257,6 +258,12 @@
 	path = /obj/item/storage/belt/security/control
 	catagory = "Loadout"
 	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
+
+/datum/materiel/loadout/utility
+	name = "Utility"
+	path = /obj/item/storage/belt/security/utility
+	catagory = "Loadout"
+	description = "One belt containing a wavegun and a baton."
 
 
 //SYNDIE
