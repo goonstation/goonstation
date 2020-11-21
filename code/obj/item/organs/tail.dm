@@ -95,7 +95,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && src.donor.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor)) // Humans dont need tails to not be clumsy idiots
+		if (src.get_damage() >= FAIL_DAMAGE && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor)) // Humans dont need tails to not be clumsy idiots
 			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 		return 1
 
