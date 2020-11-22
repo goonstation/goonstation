@@ -390,6 +390,8 @@
 			T.opaque_atom_count++
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
+		if(isturf(src.loc)) // call it on the area too
+			src.loc.loc.Entered(src, null)
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
