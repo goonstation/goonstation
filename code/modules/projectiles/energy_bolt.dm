@@ -86,6 +86,7 @@ toxic - poisons
 	color_red = 0.2
 	color_green = 0.6
 	color_blue = 0.8
+	ie_type = "E"
 
 	on_hit(atom/hit)
 		if (isliving(hit))
@@ -93,7 +94,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
-		impact_image_effect("E", hit)
+		impact_image_effect(ie_type, hit)
 		return
 
 /datum/projectile/energy_bolt/robust
@@ -171,20 +172,21 @@ toxic - poisons
 	window_pass = 0
 
 	disruption = 0
+	ie_type = "T"
 
 //Any special things when it hits shit?
 	on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
 		if (isliving(hit))
 			var/mob/living/L = hit
 			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 80)
-			impact_image_effect("T", hit)
+			impact_image_effect(ie_type, hit)
 		return
 
  //purposefully keeping (some of) the pointblank double-dip,
  //because a staffie with a vuvu won't always have the option to follow up with a baton and cuffs, and this helps keep a guy down
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
-		impact_image_effect("T", M)
+		impact_image_effect(ie_type, M)
 
 //////////// Ghost Hunting for Halloween
 /datum/projectile/energy_bolt_antighost
@@ -358,4 +360,96 @@ toxic - poisons
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			M.changeStatus("slowed", 1.5 SECONDS)
+
+/datum/projectile/energy_bolt/signifer_tase
+	name = "signifer_tase"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_tase"
+	cost = 12
+	power = 10
+	ks_ratio = 0.1
+
+	sname = "signifer2_tase"
+	damage_type = D_ENERGY
+	hit_ground_chance = 0
+	brightness = 1
+	color_red = 1
+	color_green = 1
+	color_blue = 0
+
+	disruption = 2
+	ie_type = "T"
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+		//When it hits a mob or such should anything special happen
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		// var/dir = angle2dir(angle)
+		..()
+		// var/dir = get_dir(O.shooter, hit)
+		// var/pow = O.power
+		// if (ishuman(hit))
+		// 	var/mob/living/carbon/human/H = hit
+		// 	H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
+		// 	H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
+		// 	H.emote("twitch_v")
+		// 	H.changeStatus("slowed", 3 SECONDS)
+
+
+
+/datum/projectile/laser/signifer_lethal
+	name = "signifer_lethal"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_brute"
+	power = 25
+	cost = 50
+	sname = "signifer2_lethal"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+	brightness = 1
+	color_red = 0.2
+	color_green = 0.2
+	color_blue = 1
+
+	disruption = 8
+
+	// shot_delay = 2
+	shot_number = 2
+	ie_type = "E"
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	var/num = 1			//for doing the "two different projectiles in the burst" bit
+	var/pop = null
+
+	on_launch(var/obj/projectile/O)
+		if (num % 2)
+			num = 2
+			icon_state = "signifer2_burn"
+			damage_type = D_ENERGY
+			color_red = 0.0
+			color_green = 0.0
+			color_blue = 1.0
+
+		else 
+			num = 1
+			icon_state = "signifer2_brute"
+			damage_type = D_KINETIC
+			color_red = 1.0
+			color_green = 0.0
+			color_blue = 0.0
+
+		return ..()
+	
+	on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
+		//first hit
+		if (num % 2)
+			if (pop == hit)
+				elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+			pop = null
+
+		else
+			if (istype(hit, /turf) || istype(hit, /mob) || istype(hit, /obj))	//Expensive!
+				pop = hit
+				// SPAWN_DBG(2.5)
+				// 	pop = null
 
