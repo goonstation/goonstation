@@ -498,7 +498,8 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/fleur,
 /datum/figure_info/joaquinfry,
 /datum/figure_info/carolineaudibert,
-/datum/figure_info/helgergunnink
+/datum/figure_info/helgergunnink,
+/datum/figure_info/hex
 )
 
 /datum/figure_info
@@ -911,6 +912,10 @@ var/list/figure_patreon_rarity = list(\
 	helgergunnink
 		name = "\improper Helger Gunnink"
 		icon_state = "helgergunnink"
+
+	hex
+		name = "\improper HEX"
+		icon_state = "hex"
 
 #ifdef XMAS
 	santa
