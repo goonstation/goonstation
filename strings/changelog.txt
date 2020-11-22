@@ -1,4 +1,13 @@
 
+(t)sun nov 22 20
+(u)Kyle, Enakai, & Virvatuli
+(e)🆕🎨|feature, sprites
+(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
+(t)sat nov 21 20
+(u)Gannets
+(p)2772
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a memorial to the Cairngorm that shows nuke ops win/loss values.
 (t)fri nov 20 20
 (u)TTerc
 (p)2726
