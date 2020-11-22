@@ -342,50 +342,6 @@
 
 	return ..()
 
-/obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
-	var/writing_style = "Dancing Script"
-	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user?.mind?.handwriting)
-			writing_style = user.mind.handwriting
-		if (islist(src.fonts) && !src.fonts[writing_style])
-			src.fonts[writing_style] = 1
-	t = replacetext(t, "\[sign\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	t = replacetext(t, "\[signature\]", "<span style='font-family: [writing_style], cursive;'>[user.real_name]</span>")
-	return t
-
-/obj/item/paper/proc/build_formpoints()
-	var/formStart = 1
-	var/formEnd = 0
-
-	if (form_startpoints)
-		form_startpoints.len = 0
-	else
-		form_startpoints = list()
-
-	if (form_endpoints)
-		form_endpoints.len = 0
-	else
-		form_endpoints = list()
-
-	. = 0
-	while (formStart)
-		formStart = findtext(src.info, "__", formStart)
-		if (formStart)
-			formEnd = formStart + 1
-			while (copytext(src.info, formEnd, formEnd+1) == "_")
-				formEnd++
-
-			if (!form_startpoints)
-				form_startpoints = list()
-
-			if (!form_endpoints)
-				form_endpoints = list()
-
-			form_startpoints["[.]"] = formStart
-			form_endpoints["[.++]"] = formEnd
-
-			formStart = formEnd+1
-
 /obj/item/paper/thermal
 	name = "Thermal Paper"
 	stampable = 0
