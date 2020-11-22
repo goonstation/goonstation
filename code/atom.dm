@@ -816,13 +816,13 @@
 
 	oldloc?.Exited(src, newloc)
 
-	if(my_area != new_area && my_area)
+	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
 	newloc?.Entered(src, oldloc)
 
 	//Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
-	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
+	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
 		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
