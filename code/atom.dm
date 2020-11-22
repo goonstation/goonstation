@@ -808,8 +808,7 @@
 			loc = src:client:player:shamecubed
 			return
 
-	if (isturf(loc))
-		loc.Exited(src, newloc)
+	loc.Exited(src, newloc)
 
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
@@ -823,9 +822,7 @@
 	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
 		new_area.Entered(src, oldloc)
 
-	if(isturf(newloc))
-		var/turf/nloc = newloc
-		nloc.Entered(src, oldloc)
+	newloc.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
 		for (var/atom/movable/M in src.attached_objs)
