@@ -1,5 +1,9 @@
 
 (t)sun nov 22 20
+(u)Jawns
+(p)2704
+(e)|
+(+)Sleeper agents should only get achievable objectives now- please submit a bug report if your objectives seem impossible!
 (u)Erinexx
 (p)2780
 (e)🎨|sprites
