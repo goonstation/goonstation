@@ -139,7 +139,6 @@
 			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
 			src.mob = M
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
-			AppearanceSetter(M, "set")
 			MutateMutant(M, "set")
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
@@ -189,7 +188,6 @@
 						W.layer = initial(W.layer)
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
-				AppearanceSetter(H, "reset")
 				MutateMutant(H, "reset")
 				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
@@ -233,18 +231,14 @@
 			if("set")	// upload everything, the appearance flags'll determine what gets used
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
-				AH.customization_first_special = src.special_hair_1
-				AH.customization_second_special = src.special_hair_2
-				AH.customization_third_special = src.special_hair_3
+				AH.customization_first = src.special_hair_1
+				AH.customization_second = src.special_hair_2
+				AH.customization_third = src.special_hair_3
 				AH.customization_icon_special = src.mutant_folder
 				if (src.mutant_color_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-					AH.customization_first_color_special = fix_colors(AH.customization_first_color)
-					AH.customization_second_color_special = fix_colors(AH.customization_second_color)
-					AH.customization_third_color_special = fix_colors(AH.customization_third_color)
-				else
-					AH.customization_first_color_special = AH.customization_first_color
-					AH.customization_second_color_special = AH.customization_second_color
-					AH.customization_third_color_special = AH.customization_third_color
+					AH.customization_first_color = fix_colors(AH.customization_first_color)
+					AH.customization_second_color = fix_colors(AH.customization_second_color)
+					AH.customization_third_color = fix_colors(AH.customization_third_color)
 				AH.mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
@@ -264,11 +258,14 @@
 				AH.body_icon_state = "skeleton"
 				AH.head_icon = 'icons/mob/human_head.dmi'
 				AH.head_icon_state = "head"
-				AH.s_tone_special = AH.s_tone
+				AH.s_tone = AH.s_tone_original
 				AH.customization_icon = 'icons/mob/human_hair.dmi'
-				AH.customization_first_special = AH.customization_first
-				AH.customization_second_special = AH.customization_second
-				AH.customization_third_special = AH.customization_third
+				AH.customization_first = AH.customization_first_original
+				AH.customization_second = AH.customization_second_original
+				AH.customization_third = AH.customization_third_original
+				AH.customization_first_color = AH.customization_first_color_original
+				AH.customization_second_color = AH.customization_second_color_original
+				AH.customization_third_color = AH.customization_third_color_original
 				AH.mob_detail_1 = null
 				AH.mob_detail_2 = null
 				AH.mob_detail_3 = null

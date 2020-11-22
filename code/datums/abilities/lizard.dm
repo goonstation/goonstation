@@ -17,6 +17,32 @@
 			src.remove_ability_holder(/datum/abilityHolder/lizard)
 	else return
 
+/mob/living/carbon/human/proc/update_lizard_parts()
+	if (ishuman(src))
+		var/mob/living/carbon/human/liz = src
+		if (liz.limbs.l_arm && istype(liz.limbs.l_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/LA = liz.limbs.l_arm
+			LA.colorize_limb_icon()
+			LA.set_skin_tone()
+		if (liz.limbs.r_arm && istype(liz.limbs.r_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/RA = liz.limbs.r_arm
+			RA.colorize_limb_icon()
+			RA.set_skin_tone()
+		if (liz.limbs.l_leg && istype(liz.limbs.l_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/LL = liz.limbs.l_leg
+			LL.colorize_limb_icon()
+			LL.set_skin_tone()
+		if (liz.limbs.r_leg && istype(liz.limbs.r_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/RL = liz.limbs.r_leg
+			RL.colorize_limb_icon()
+			RL.set_skin_tone()
+		if (liz.organHolder?.head)
+			liz.organHolder.head.update_icon()
+		if (liz.organHolder?.tail && istype(liz.organHolder.tail, /obj/item/organ/tail/lizard))
+			var/obj/item/organ/tail/T = liz.organHolder.tail
+			T.colorize_tail(liz.bioHolder.mobAppearance)
+		liz?.bioHolder?.mobAppearance.UpdateMob()
+
 /datum/abilityHolder/lizard
 	topBarRendered = 1
 	points = 0
@@ -74,7 +100,7 @@
 			AHs.customization_third_color = col2
 
 			L.visible_message("<span class='notice'><b>[L.name]</b> changes colors!</span>")
-			L.update_body()
+			L.update_lizard_parts()
 
 /datum/targetable/lizardAbility/colorchange
 	name = "Chromatophore Activation"
@@ -148,7 +174,7 @@
 				AHliz.customization_third_color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", "<span class='notice'>Your [region_name] changes color!</span>")
-		L.update_body()
+		L.update_lizard_parts()
 		..()
 
 	onInterrupt()

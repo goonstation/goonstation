@@ -89,7 +89,7 @@
 		return 0
 
 /datum/action/bar/private/icon/changelingAbsorb
-	duration = 10
+	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'

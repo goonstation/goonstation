@@ -3291,3 +3291,30 @@
 		if(AM.throwforce >= 40)
 			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
 			src.changeStatus("stunned", 3 SECONDS)
+
+/// Goes through all the things that can be recolored and updates their colors
+/mob/living/carbon/human/proc/update_colorful_parts()
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (H.limbs.l_arm && istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/LA = H.limbs.l_arm
+			LA.colorize_limb_icon()
+			LA.set_skin_tone()
+		if (H.limbs.r_arm && istype(H.limbs.r_arm, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/RA = H.limbs.r_arm
+			RA.colorize_limb_icon()
+			RA.set_skin_tone()
+		if (H.limbs.l_leg && istype(H.limbs.l_leg, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/LL = H.limbs.l_leg
+			LL.colorize_limb_icon()
+			LL.set_skin_tone()
+		if (H.limbs.r_leg && istype(H.limbs.r_leg, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/RL = H.limbs.r_leg
+			RL.colorize_limb_icon()
+			RL.set_skin_tone()
+		if (H.organHolder?.head)
+			H.organHolder.head.update_icon()
+		if (H.organHolder?.tail)
+			var/obj/item/organ/tail/T = H.organHolder.tail
+			T.colorize_tail(H.bioHolder.mobAppearance)
+		H?.bioHolder?.mobAppearance.UpdateMob()

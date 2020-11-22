@@ -833,9 +833,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				var/skin_tone = "#777777"
 				if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
 					skin_tone = "#FFFFFF"	// Preserve their true coloration
-				else if (AHOLD.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-					skin_tone = AHOLD.s_tone_special
-				else	// normal-ass skintone
+				else
 					skin_tone = AHOLD.s_tone
 				human_image.color = skin_tone
 				human_decomp_image.color = skin_tone
@@ -851,23 +849,23 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 						if(AHOLD.mob_color_flags & BODYDETAIL_1)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_1, MOB_BODYDETAIL_LAYER1)
-							human_image.color = AHOLD.customization_first_color_special
+							human_image.color = AHOLD.customization_first_color
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & BODYDETAIL_2)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_2, MOB_BODYDETAIL_LAYER1)
-							human_image.color = AHOLD.customization_second_color_special
+							human_image.color = AHOLD.customization_second_color
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & BODYDETAIL_3)
 							human_image = image(AHOLD.body_icon, AHOLD.mob_detail_3, MOB_BODYDETAIL_LAYER1)
-							human_image.color = AHOLD.customization_third_color_special
+							human_image.color = AHOLD.customization_third_color
 							src.body_standing.overlays += human_image
 
 						if(AHOLD.mob_color_flags & BODYDETAIL_OVERSUIT_1)	// need more oversuits? Make more of these!
 							human_detail_image = image(icon = AHOLD.body_icon, icon_state = AHOLD.mob_oversuit_1, layer = MOB_OVERSUIT_LAYER1)
 							if(AHOLD.mob_color_flags & BODYDETAIL_OVERSUIT_IS_COLORFUL)
-								human_detail_image.color = AHOLD.customization_first_color_special
+								human_detail_image.color = AHOLD.customization_first_color
 							else
 								human_detail_image.color = "#FFFFFF"
 							src.detail_standing_oversuit.overlays += human_detail_image

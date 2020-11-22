@@ -43,23 +43,26 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_icon = 'icons/mob/human_hair.dmi'
 	var/customization_icon_special = 'icons/mob/human_hair.dmi'
 
-	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
+	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
-	var/customization_first_color_special = "#101010"
+	/// The color that was set by the player's preferences
+	var/customization_first_color_original = "#101010"
+	/// The hair style / detail thing that gets displayed on your spaceperson
 	var/customization_first = "Trimmed"
-	var/customization_first_special = "None"
+	/// The hair style / detail thing that was set by the player in their settings
+	var/customization_first_original = "None"
 
 	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
-	var/customization_second_color_special = "#101010"
+	var/customization_second_color_original = "#101010"
 	var/customization_second = "None"
-	var/customization_second_special = "None"
+	var/customization_second_original = "None"
 
 	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
-	var/customization_third_color_special = "#101010"
+	var/customization_third_color_original = "#101010"
 	var/customization_third = "None"
-	var/customization_third_special = "None"
+	var/customization_third_original = "None"
 
 	var/mob_detail_1	// For torso details
 	var/mob_detail_2	// Such as that lizard splotch
@@ -72,12 +75,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/mutantrace/mutant_race = null	// for limb-making purposes, like lings
 
 	var/e_color = "#101010"
-	var/e_color_carry = "#101010"
-	var/e_color_special = "#101010"
+	var/e_color_original = "#101010"
 
-	var/s_tone_carry = "#FFCC99"
+	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
-	var/s_tone_special = "#FFCC99" // mutantraces change this, so they don't mess up the original color
 
 	// Standard tone reference:
 	// FAD7D0 - Albino
@@ -152,23 +153,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 		customization_icon = toCopy.customization_icon
 		customization_icon_special = toCopy.customization_icon_special
 
-		customization_first_color_carry = toCopy.customization_first_color_carry
-		customization_first_color_special = toCopy.customization_first_color_special
+		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
-		customization_first_special = toCopy.customization_first_special
+		customization_first_original = toCopy.customization_first_original
 
-		customization_second_color_carry = toCopy.customization_second_color_carry
-		customization_second_color_special = toCopy.customization_second_color_special
+		customization_second_color_original = toCopy.customization_second_color_original
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
-		customization_second_special = toCopy.customization_second_special
+		customization_second_original = toCopy.customization_second_original
 
-		customization_third_color_carry = toCopy.customization_third_color_carry
-		customization_third_color_special = toCopy.customization_third_color_special
+		customization_third_color_original = toCopy.customization_third_color_original
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
-		customization_third_special = toCopy.customization_third_special
+		customization_third_original = toCopy.customization_third_original
 
 		mob_detail_1 = toCopy.mob_detail_1
 		mob_detail_2 = toCopy.mob_detail_2
@@ -183,11 +181,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_color_flags = toCopy.mob_color_flags
 
 		e_color = toCopy.e_color
-		e_color_special = toCopy.e_color_special
+		e_color_original = toCopy.e_color_original
 
 		s_tone = toCopy.s_tone
-		s_tone_carry = toCopy.s_tone_carry
-		s_tone_special = toCopy.s_tone_special
+		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
@@ -267,11 +264,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					src.s_tone_special = src.customization_first_color_special
+					src.s_tone = src.customization_first_color
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					src.s_tone_special = src.customization_second_color_special
+					src.s_tone = src.customization_second_color
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					src.s_tone_special = src.customization_third_color_special
+					src.s_tone = src.customization_third_color
 
 			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
 

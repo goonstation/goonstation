@@ -26,6 +26,8 @@
 	var/datum/appearanceHolder/donor_appearance = null
 
 	var/image/head_image = null
+	var/head_icon = null
+	var/head_state = null
 	var/our_hair_icon = 'icons/mob/human_hair.dmi'
 
 	var/image/head_image_eyes = null
@@ -52,11 +54,11 @@
 				src.bones.name = "skull"
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.update_icon(0)
+					src.update_icon(makeshitup = 0, initialize_head = 1)
 				else //The heck?
-					src.update_icon(1)
+					src.update_icon(makeshitup = 1, initialize_head = 1)
 			else
-				src.update_icon(1)
+				src.update_icon(makeshitup = 1, initialize_head = 1)
 			src.pixel_y = rand(-20,-8)
 			src.pixel_x = rand(-8,8)
 
@@ -115,14 +117,15 @@
 		if (!src.left_eye)
 			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
 
-	//This proc does a full rebuild of the head's stored data
-	//only call it if something changes the head in a major way, like becoming a lizard
-	//it will cause the head to be rebuilt from the mob's appearanceholder!
-	//use alter_features to change someone's hairstyle or something (it doesnt exist yet, just a note tho)
-	proc/update_icon(var/makeshitup) // should only happen once, maybe again if they change mutant race
+	/// This proc does a full rebuild of the head's stored data
+	/// only call it if something changes the head in a major way, like becoming a lizard
+	/// it will cause the head to be rebuilt from the mob's appearanceholder!
+	proc/update_icon(var/makeshitup, var/datum/appearanceHolder/AH_in, var/initialize_head) // should only happen once, maybe again if they change mutant race
 		var/datum/appearanceHolder/AHead = null
 
-		if(!src.donor_appearance || makeshitup || !src.donor)
+		if(AH_in && istype(AH_in, /datum/appearanceHolder))
+			AHead = AH_in
+		else if(!src.donor_appearance || makeshitup || !src.donor)
 			AHead = new/datum/appearanceHolder()
 			randomize_look(AHead, 0, 0, 0, 0, 0, 0)
 			src.donor_appearance = AHead
@@ -137,20 +140,23 @@
 			src.skintone = "#FFFFFF"
 		else if (AHead.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 			if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-				src.skintone = AHead.customization_first_color_special
+				src.skintone = AHead.customization_first_color
 			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-				src.skintone = AHead.customization_second_color_special
+				src.skintone = AHead.customization_second_color
 			else if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-				src.skintone = AHead.customization_third_color_special
+				src.skintone = AHead.customization_third_color
 		else // in case you didn't set your flags, which you really should
 			src.skintone = "#FFFFFF"
 
-		// this gets shipped bare, but colorized, to update_body
-		src.head_image = image(AHead.head_icon, AHead.head_icon_state, MOB_LIMB_LAYER)
+		/// Set the head icon on initialize, so any later updates don't change the head's intended shape
+		if(initialize_head)
+			src.head_icon = AHead.head_icon
+			src.head_state = AHead.head_icon_state
+		src.head_image = image(src.head_icon,src.head_state, MOB_LIMB_LAYER)
 		src.head_image.color = src.skintone
 
 		// The rest of this shit gets sent to update_face
-		//get and install eyes, if any. nothing uses special eyes *yet*
+		//get and install eyes, if any.
 		if (AHead.mob_appearance_flags & HAS_HUMAN_EYES)
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "eyes", layer = MOB_FACE_LAYER)
 		else if (AHead.mob_appearance_flags & HAS_NO_EYES)
@@ -158,7 +164,7 @@
 		src.head_image_eyes.color = AHead.e_color
 
 		// Set up the hair icon
-		if (AHead.mob_appearance_flags & ~HAS_NO_HAIR) // if theys doesnt has no hair
+		if (AHead.mob_appearance_flags & ~HAS_NO_HAIR) // if don't not have hair
 			if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR) // which is to say they have hair
 				our_hair_icon = AHead.customization_icon
 			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR) // or special hair
@@ -180,17 +186,17 @@
 				src.head_image_cust_three.color = AHead.customization_third_color
 			else
 				if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR)
-					src.head_image_cust_one.icon_state = hair_list[AHead.customization_first_special]
-					src.head_image_cust_two.icon_state = hair_list[AHead.customization_second_special]
-					src.head_image_cust_three.icon_state = hair_list[AHead.customization_third_special]
+					src.head_image_cust_one.icon_state = hair_list[AHead.customization_first]
+					src.head_image_cust_two.icon_state = hair_list[AHead.customization_second]
+					src.head_image_cust_three.icon_state = hair_list[AHead.customization_third]
 				else if (AHead.mob_appearance_flags & HAS_BODYDETAIL_HAIR) // no list to pick from, defined by mutantraces
-					src.head_image_cust_one.icon_state = AHead.customization_first_special
-					src.head_image_cust_two.icon_state = AHead.customization_second_special
-					src.head_image_cust_three.icon_state = AHead.customization_third_special
+					src.head_image_cust_one.icon_state = AHead.customization_first
+					src.head_image_cust_two.icon_state = AHead.customization_second
+					src.head_image_cust_three.icon_state = AHead.customization_third
 
-				src.head_image_cust_one.color = AHead.customization_first_color_special
-				src.head_image_cust_two.color = AHead.customization_second_color_special
-				src.head_image_cust_three.color = AHead.customization_third_color_special
+				src.head_image_cust_one.color = AHead.customization_first_color
+				src.head_image_cust_two.color = AHead.customization_second_color
+				src.head_image_cust_three.color = AHead.customization_third_color
 
 		else // no hair
 			src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)

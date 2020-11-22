@@ -191,19 +191,24 @@
 		var/blend_color = null
 		var/has_aH = 0
 		var/datum/appearanceHolder/AHLIMB
-		if (istype(src.holder_ahol, /datum/appearanceHolder))
-			AHLIMB = src.holder_ahol
-			has_aH = 1
-		else if (M?.bioHolder?.mobAppearance)
+		if (M?.bioHolder?.mobAppearance)
 			AHLIMB = M.bioHolder.mobAppearance
 			has_aH = 1
+		else if (istype(src.holder_ahol, /datum/appearanceHolder))
+			AHLIMB = src.holder_ahol
+			has_aH = 1
 		if (has_aH)
-			if(AHLIMB.mob_appearance_flags & HAS_HUMAN_SKINTONE)
-				skin_tone = AHLIMB.s_tone	// Preserve their true coloration
-			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				skin_tone = AHLIMB.s_tone_special
-			else if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
+			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
 				skin_tone = "#FFFFFF"
+			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+					skin_tone = AHLIMB.customization_first_color
+				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+					skin_tone = AHLIMB.customization_second_color
+				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+					skin_tone = AHLIMB.customization_third_color
+			else
+				skin_tone = AHLIMB.s_tone
 		else	// This is going to look *weird* if these somehow spawn on a mob
 			if (istype(src, /obj/item/parts/human_parts/arm/mutant/lizard) || istype(src, /obj/item/parts/human_parts/arm/mutant/lizard))
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them

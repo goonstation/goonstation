@@ -28,12 +28,22 @@
 	New()
 		..()
 		if(src.colorful) // Set us some colors
-			if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-				src.organ_color_1 = organ_fix_colors(src.donor_AH.customization_first_color)
-				src.organ_color_2 = organ_fix_colors(src.donor_AH.customization_second_color)
-			else	// Just throw some colors in there or something
-				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			colorize_tail()
+		else
+			build_mob_tail_image()
+			update_tail_icon()
+
+	proc/colorize_tail(var/datum/appearanceHolder/AHL)
+		if (AHL && istype(AHL, /datum/appearanceHolder))
+			src.organ_color_1 = organ_fix_colors(AHL.customization_first_color)
+			src.organ_color_2 = organ_fix_colors(AHL.customization_second_color)
+			src.donor_AH = AHL
+		else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
+			src.organ_color_1 = organ_fix_colors(src.donor_AH.customization_first_color)
+			src.organ_color_2 = organ_fix_colors(src.donor_AH.customization_second_color)
+		else	// Just throw some colors in there or something
+			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
 		build_mob_tail_image()
 		update_tail_icon()
 
