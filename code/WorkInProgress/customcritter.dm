@@ -1328,7 +1328,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				if (!T)
 					return
 				C.set_loc(T)
-				C.dir = pick(1,2,4,8)
+				C.set_dir(pick(1,2,4,8))
 				C.tokenized_message(frenzy_attack, atmob)
 				C.play_optional_sound(frenzy_attack_sound)
 				C.dodamage(atmob, attacktype, max(rand(attack_power), rand(attack_power)))

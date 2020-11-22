@@ -533,7 +533,7 @@ datum
 
 				if (method == TOUCH)
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 
@@ -769,7 +769,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -781,7 +781,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
 				return
@@ -1076,7 +1076,7 @@ datum
 			alch_strength = 0.1
 			description = "An alleged cocktail invented by a notorious scientist. Useful in a pinch as an impromptu purgative, or interrogation tool."
 			reagent_state = LIQUID
-			//Acts like ghetto calomel that can be made outside medbay, chance to give food poisoning, vomit constantly and explosively while racking up moderate toxin damage that has no/very low HP cap and burning out other chemicals in the body at a rate equal to/greater than calomel - more potent, more dangerous/weaponizable, alternate sleepypen fuel for barman
+			//Acts like ghetto calomel that can be made outside medbay, chance to give food poisoning, vomit constantly and explosively while racking up moderate toxin damage that has no/very low HP cap and burning out other chemicals in the body at a rate equal to/greater than calomel - more potent, more dangerous/weaponizable, alternate sleepypen fuel for bartender
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1923,11 +1923,7 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
-#if ASS_JAM
-			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > (T0C + 50))
-					holder.add_reagent("chemilin", 10, donotreact = 1)
-#endif
+
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null

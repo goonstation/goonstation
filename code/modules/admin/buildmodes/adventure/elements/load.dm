@@ -121,7 +121,7 @@
 							if (correct_path)
 								F["[base].TURF.tag"] >> Q.tag
 								if (!Q.dir)
-									Q.dir = SOUTH
+									Q.set_dir(SOUTH)
 								new /area/adventure(Q)
 								blink(Q)
 							workgroup_curr++
@@ -158,7 +158,7 @@
 						O:deserialize_postprocess()
 					if (this)
 						this.pasting = 0
-					if (usr && usr.client)
+					if (usr?.client)
 						boutput(usr, "<span class='notice'>Pasting finished. Fixing lights.</span>")
 						if (fexists("ADV_LOAD_[usr.client.ckey]"))
 							fdel("ADV_LOAD_[usr.client.ckey]")

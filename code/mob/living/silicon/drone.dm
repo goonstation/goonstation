@@ -185,7 +185,7 @@
 			return src.next_click - world.time
 
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))
@@ -349,7 +349,7 @@
 
 		icon_state = "frame-" + max(0,min(change_to,6))
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()

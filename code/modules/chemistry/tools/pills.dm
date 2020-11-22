@@ -134,10 +134,7 @@
 			return ..()
 
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
-		if (istype(over_object,/obj/item/chem_pill_bottle)) //dont do our whole fancy pickup thjing
-			return
-		..()
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -336,14 +333,7 @@
 		var/primaries = rand(1,3)
 		var/adulterants = rand(2,4)
 
-#if ASS_JAM
-		primaries--
-		adulterants--
-		var/the_spicy_stuff = rand(2, 4)
-		while(the_spicy_stuff > 0)
-			the_spicy_stuff--
-			reagents.add_reagent(pick(all_functional_reagent_ids), 3)
-#endif
+
 
 		while(primaries > 0)
 			primaries--

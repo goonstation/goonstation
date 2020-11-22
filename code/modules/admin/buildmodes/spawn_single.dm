@@ -51,7 +51,7 @@ change the direction of created objects.<br>
 
 
 						if (isobj(A) || ismob(A) || isturf(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 						sleep(0.5 SECONDS)
 						mtx.Reset()
@@ -70,7 +70,7 @@ change the direction of created objects.<br>
 						A = new objpath(T)
 
 					if (isobj(A) || ismob(A) || isturf(A))
-						A.dir = holder.dir
+						A.set_dir(holder.dir)
 						A.onVarChanged("dir", SOUTH, A.dir)
 						blink(T)
 				if("Supplydrop")
@@ -95,7 +95,7 @@ change the direction of created objects.<br>
 						A = new objpath(T)
 
 					if (isobj(A) || ismob(A) || isturf(A))
-						A.dir = holder.dir
+						A.set_dir(holder.dir)
 						A.onVarChanged("dir", SOUTH, A.dir)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)

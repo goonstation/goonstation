@@ -345,7 +345,7 @@
 /obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
 	var/writing_style = "Dancing Script"
 	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
-		if (user && user.mind && user.mind.handwriting)
+		if (user?.mind?.handwriting)
 			writing_style = user.mind.handwriting
 		if (islist(src.fonts) && !src.fonts[writing_style])
 			src.fonts[writing_style] = 1
@@ -391,6 +391,7 @@
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
+	item_function_flags = SMOKELESS
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"

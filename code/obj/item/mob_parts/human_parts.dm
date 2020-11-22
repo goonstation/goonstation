@@ -214,7 +214,7 @@
 		. = ..()
 
 	disposing()
-		if(holder?.handcuffs)
+		if(ismob(holder) && holder.handcuffs)
 			var/obj/item/I = holder.handcuffs
 			holder.u_equip(I)
 			I.set_loc(holder.loc)
@@ -631,7 +631,6 @@
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_wendigo")
 		return standImage
 
-#if ASS_JAM
 /obj/item/parts/human_parts/arm/left/hot
 	name = "left hot arm"
 	icon_state = "arm_left"
@@ -667,7 +666,7 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-#endif
+
 
 /obj/item/parts/human_parts/arm/left/bear
 	name = "left bear arm"
@@ -952,6 +951,7 @@
 	side = "left"
 	decomp_affected = 0
 	override_attack_hand = 1
+	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"
@@ -970,6 +970,7 @@
 	side = "right"
 	decomp_affected = 0
 	override_attack_hand = 1
+	can_hold_items = 0
 	limb_type = /datum/limb/bear/zombie //Basically zombie arms am I right?
 	skintoned = 1
 	streak_descriptor = "undeadly"

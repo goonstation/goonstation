@@ -60,9 +60,9 @@
 		else if (direction & 2)
 			src.speed = min(src.maximum_speed, src.speed + 1)
 		else if (src.can_rotate && direction & 4)
-			src.dir = turn(src.dir, -90.0)
+			src.set_dir(turn(src.dir, -90.0))
 		else if (src.can_rotate && direction & 8)
-			src.dir = turn(src.dir, 90)
+			src.set_dir(turn(src.dir, 90))
 		else if (direction & 16 && src.can_maximize_speed)
 			src.speed = src.maximum_speed
 

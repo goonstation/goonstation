@@ -21,7 +21,12 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba, /obj/item/toy/plush/small/chris, /obj/item/toy/plush/small/fancyflippers)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/plush/small/tuba,\
+	/obj/item/toy/plush/small/chris,\
+	/obj/item/toy/plush/small/fancyflippers,\
+	/obj/item/toy/plush/small/billy,\
+	/obj/item/toy/plush/small/arthur)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -83,7 +88,7 @@
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(10) ? (prob(10) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
+	var/obj/item/P = pick(prob(20) ? (prob(20) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	P.throw_at(M, 16, 3)
@@ -197,6 +202,22 @@
 	name = "Fancyflippers the gentoo penguin"
 	icon_state = "fancyflippers"
 
+/obj/item/toy/plush/small/billy
+	name = "Billy the hungry fish"
+	icon_state = "billy"
+
+/obj/item/toy/plush/small/arthur
+	name = "Arthur the bumblespider"
+	icon_state = "arthur"
+	var/spam_flag = 0
+
+/obj/item/toy/plush/small/arthur/attack_hand(mob/user as mob)
+	if (user == src.loc && spam_flag < world.time)
+		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] awoos!</span>")
+		spam_flag = world.time + 2 SECONDS
+	else return ..()
+
 /obj/item/toy/sword
 	name = "toy sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -250,8 +271,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
-	var/patreon_prob = 8
-	var/rare_prob = 11
+	var/patreon_prob = 9
+	var/rare_prob = 12
 	var/datum/figure_info/info = null
 
 	// grumble grumble
@@ -380,7 +401,7 @@ var/list/figure_low_rarity = list(\
 /datum/figure_info/assistant,
 /datum/figure_info/chef,
 /datum/figure_info/chaplain,
-/datum/figure_info/barman,
+/datum/figure_info/bartender,
 /datum/figure_info/botanist,
 /datum/figure_info/janitor,
 /datum/figure_info/doctor,
@@ -468,7 +489,17 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/raphaelzahel,
 /datum/figure_info/derekclarke,
 /datum/figure_info/fartcan,
-/datum/figure_info/tomato
+/datum/figure_info/tomato,
+/datum/figure_info/zooblarskrippus,
+/datum/figure_info/vivi,
+/datum/figure_info/giggles,
+/datum/figure_info/mavericksabre,
+/datum/figure_info/whitneystingray,
+/datum/figure_info/fleur,
+/datum/figure_info/joaquinfry,
+/datum/figure_info/carolineaudibert,
+/datum/figure_info/helgergunnink,
+/datum/figure_info/hex
 )
 
 /datum/figure_info
@@ -494,8 +525,8 @@ var/list/figure_patreon_rarity = list(\
 		name = "chaplain"
 		icon_state = "chaplain"
 
-	barman
-		name = "barman"
+	bartender
+		name = "bartender"
 		icon_state = "barman"
 
 	botanist
@@ -853,6 +884,38 @@ var/list/figure_patreon_rarity = list(\
 	vivi
 		name = "\improper Vivi"
 		icon_state = "vivi"
+
+	giggles
+		name = "\improper Giggles"
+		icon_state = "giggles"
+
+	mavericksabre
+		name = "\improper Maverick Sabre"
+		icon_state = "mavericksabre"
+
+	whitneystingray
+		name = "\improper Whitney Stingray"
+		icon_state = "whitneystingray"
+
+	fleur
+		name = "\improper Fleur DeLaCreme"
+		icon_state = "fleur"
+
+	joaquinfry
+		name = "\improper Joaquin Fry"
+		icon_state = "joaquinfry"
+
+	carolineaudibert
+		name = "\improper Caroline Audibert"
+		icon_state = "carolineaudibert"
+
+	helgergunnink
+		name = "\improper Helger Gunnink"
+		icon_state = "helgergunnink"
+
+	hex
+		name = "\improper HEX"
+		icon_state = "hex"
 
 #ifdef XMAS
 	santa

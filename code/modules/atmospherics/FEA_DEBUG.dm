@@ -416,7 +416,7 @@ turf/simulated
 		force_temperature(temp as num)
 			set src in world
 			set category = "Minor"
-			if(parent&&parent.group_processing)
+			if(parent?.group_processing)
 				parent.suspend_group_processing()
 
 			air.temperature = temp

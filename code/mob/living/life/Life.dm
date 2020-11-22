@@ -424,7 +424,7 @@
 				A:set_loc(src.loc)
 
 	src.set_density(src.item ? src.item.density : 0)
-	src.item.dir = src.dir
+	src.item.set_dir(src.dir)
 	src.icon = src.item.icon
 	src.icon_state = src.item.icon_state
 	src.color = src.item.color
@@ -687,7 +687,7 @@
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)

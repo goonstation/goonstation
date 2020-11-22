@@ -862,7 +862,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Apply(var/obj/particle/par)
 		if(..())
-			par.dir = src.star_direction
+			par.set_dir(src.star_direction)
 			if (prob(40))
 				par.icon_state = "starlarge"
 

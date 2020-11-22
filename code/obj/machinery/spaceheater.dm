@@ -207,7 +207,7 @@
 
 	process()
 		if(on)
-			if(cell && cell.charge > 0)
+			if(cell?.charge > 0)
 
 				var/turf/simulated/L = loc
 				if(istype(L))
@@ -235,7 +235,7 @@
 							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 
-						cell.use(current_power/20000)
+						cell.use(abs(current_power)/20000)
 
 						//boutput(world, "now at [removed.temperature]")
 
@@ -413,7 +413,7 @@
 
 	process()
 		if(on)
-			if(cell && cell.charge > 0)
+			if(cell?.charge > 0)
 
 				var/turf/simulated/L = loc
 				if(istype(L))

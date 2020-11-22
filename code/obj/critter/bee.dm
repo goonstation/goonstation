@@ -79,14 +79,13 @@
 			src.update_icon()
 			if (src.alive && !src.sleeping)
 				animate_bumble(src)
-
-#if ASS_JAM
+/*
 		if(src.icon_body == "petbee" && prob(5))
 			src.icon_body = "sonicbee"
 			src.icon_state = "[src.icon_body]-wings"
 			src.sleeping_icon_state = "[src.icon_body]-sleep"
 			src.desc = "OH GOD IT IS BACK, WE WERE SURE WE REMOVED IT FROM THE CODEBASE BUT IT KEEPS COMING BACK OH GOD"
-#endif
+*/
 
 	process()
 		if(shorn && (world.time - shorn_time) >= 1800)
@@ -1646,42 +1645,45 @@
 		if (src.anchored)
 			return
 		user.visible_message("[user] primes [src] and puts it down.", "You twist [src], priming it to hatch, then place it on the ground.")
-		src.anchored = 1
-		src.layer = initial(src.layer)
 		user.u_equip(src)
-		src.set_loc(get_turf(user))
 
 		SPAWN_DBG(0)
-			var/hatch_wiggle_counter = rand(3,8)
-			while (hatch_wiggle_counter-- > 0)
-				src.pixel_x++
-				sleep(0.2 SECONDS)
-				src.pixel_x--
-				sleep(1 SECOND)
+			src.hatch(user,get_turf(user))
 
-			src.visible_message("[src] hatches!")
-			var/obj/critter/domestic_bee_larva/newLarva
-			if (larva_type)
-				newLarva = new larva_type(get_turf(src))
-			else
-				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
+	proc/hatch(var/mob/user, var/turf/T)
+		src.set_loc(T)
+		src.anchored = 1
+		src.layer = initial(src.layer)
+		var/hatch_wiggle_counter = rand(3,8)
+		while (hatch_wiggle_counter-- > 0)
+			src.pixel_x++
+			sleep(0.2 SECONDS)
+			src.pixel_x--
+			sleep(1 SECOND)
 
-			reagents.del_reagent("egg")
-			reagents.del_reagent("bee")
-			var/main_reagent = reagents.get_master_reagent()
-			if (main_reagent == "LSD")
-				newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
-			if (main_reagent == "lsd_bee")
-				newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
+		src.visible_message("[src] hatches!")
+		var/obj/critter/domestic_bee_larva/newLarva
+		if (larva_type)
+			newLarva = new larva_type(get_turf(src))
+		else
+			newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
-			newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
+		reagents.del_reagent("egg")
+		reagents.del_reagent("bee")
+		var/main_reagent = reagents.get_master_reagent()
+		if (main_reagent == "LSD")
+			newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
+		if (main_reagent == "lsd_bee")
+			newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
 
-			if (bee_name)
-				newLarva.name = bee_name
-			else if (prob(50))
-				newLarva.name = pick_string("bee_names.txt", "beename")
+		newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
 
-			qdel(src)
+		if (bee_name)
+			newLarva.name = bee_name
+		else if (prob(50))
+			newLarva.name = pick_string("bee_names.txt", "beename")
+
+		qdel(src)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)

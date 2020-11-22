@@ -80,6 +80,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/doorsOpen)
 	src.addAbility(/datum/targetable/flockmindAbility/radioStun)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
+	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/flockmind/proc/addAbility(var/abilityType)
 	src.abilityHolder.addAbility(abilityType)
@@ -130,7 +131,7 @@
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
-		if(O && O.client)
+		if(O?.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
 		SPAWN_DBG (10)
@@ -148,3 +149,4 @@
 	// send out a request to ghosts
 	ghost_notifier.send_notification(src, src, /datum/ghost_notification/respawn/flockdrone)
 	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
+

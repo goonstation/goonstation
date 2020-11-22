@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
@@ -765,7 +766,7 @@
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
-					quantity = input("How many units do you want to purchase?", "Ore Purchase", null, null) as num
+					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
 
 					////////////
 
@@ -1937,9 +1938,9 @@
 	name = "General Manufacturer"
 	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters,
 		/datum/manufacture/wrench,
@@ -1991,9 +1992,6 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-#if ASS_JAM
-		/datum/manufacture/bullet_12g_nail,
-#endif
 		/datum/manufacture/stapler)
 
 /obj/machinery/manufacturer/robotics
@@ -2002,9 +2000,9 @@
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 
 	available = list(/datum/manufacture/robo_frame,
 	/datum/manufacture/full_cyborg_standard,
@@ -2058,6 +2056,7 @@
 	/datum/manufacture/deafhs,
 	/datum/manufacture/robup_jetpack,
 	/datum/manufacture/robup_healthgoggles,
+	/datum/manufacture/robup_sechudgoggles,
 	/datum/manufacture/robup_spectro,
 	/datum/manufacture/robup_recharge,
 	/datum/manufacture/robup_repairpack,
@@ -2100,10 +2099,10 @@
 	icon_state = "fab-med"
 	icon_base = "med"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/cloth/cottonfabric,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
 
 	available = list(
 		/datum/manufacture/scalpel,
@@ -2163,9 +2162,9 @@
 	icon_state = "fab-mining"
 	icon_base = "mining"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,
-	/obj/item/material_piece/pharosium,
-	/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/pick,
 	/datum/manufacture/powerpick,
 	/datum/manufacture/blastchargeslite,
@@ -2183,10 +2182,12 @@
 	/datum/manufacture/powercell,
 	/datum/manufacture/powercellE,
 	/datum/manufacture/powercellC,
+	/datum/manufacture/ore_scoop,
 	/datum/manufacture/oresatchel,
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,
 	/datum/manufacture/geoscanner,
+	/datum/manufacture/geigercounter,
 	/datum/manufacture/eyes_meson,
 	/datum/manufacture/flashlight,
 	/datum/manufacture/ore_accumulator,
@@ -2207,11 +2208,9 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(
-		/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/molitz
-	)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
@@ -2265,6 +2264,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
 	/datum/manufacture/satchel)
@@ -2298,7 +2299,9 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 
 /obj/machinery/manufacturer/personnel
 	name = "Personnel Equipment Manufacturer"
@@ -2306,7 +2309,9 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter) //hey if you update these please remember to add it to /hop_and_uniform's list too
 	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
@@ -2318,7 +2323,10 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/id_card,
 	/datum/manufacture/implant_access,
@@ -2343,6 +2351,8 @@
 	/datum/manufacture/hat_yellow,
 	/datum/manufacture/hat_red,
 	/datum/manufacture/hat_green,
+	/datum/manufacture/hat_pink,
+	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat)
 
 	hidden = list(/datum/manufacture/id_card_gold,
@@ -2357,7 +2367,7 @@
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/mauxite)
+	free_resources = list(/obj/item/material_piece/steel)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/crate,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/packingcrate,
@@ -2374,7 +2384,10 @@
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 50
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz)
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/engspacesuit,
@@ -2385,31 +2398,31 @@
 	/datum/manufacture/armor_vest,
 	/datum/manufacture/bullet_22,
 	/datum/manufacture/harmonica,
-	/datum/manufacture/clock,	// /obj/item/gun/kinetic/clock_188
-	/datum/manufacture/clock_ammo,	// /obj/item/ammo/bullets/nine_mm_NATO
-	/datum/manufacture/saa,	// /obj/item/gun/kinetic/colt_saa
-	/datum/manufacture/saa_ammo,	// /obj/item/ammo/bullets/c_45
-	/datum/manufacture/riot_launcher,	// /obj/item/gun/kinetic/riot40mm
-	/datum/manufacture/riot_launcher_ammo_pbr,	// /obj/item/ammo/bullets/pbr
-	/datum/manufacture/riot_launcher_ammo_flashbang,	// /obj/item/chem_grenade/flashbang
-	/datum/manufacture/riot_launcher_ammo_tactical,
-	/datum/manufacture/sniper,	// /obj/item/gun/kinetic/sniper
-	/datum/manufacture/sniper_ammo,	// /obj/item/ammo/bullets/rifle_762_NATO
-	/datum/manufacture/tac_shotgun,	// /obj/item/gun/kinetic/tactical_shotgun
-	/datum/manufacture/tac_shotgun_ammo,	// /obj/item/ammo/bullets/buckshot_burst
-	/datum/manufacture/gyrojet,	// /obj/item/gun/kinetic/gyrojet
-	/datum/manufacture/gyrojet_ammo,	// /obj/item/ammo/bullets/gyrojet
-	/datum/manufacture/plank,	// /obj/item/plank
-	/datum/manufacture/brute_kit,	// /obj/item/storage/firstaid/brute
-	/datum/manufacture/burn_kit,	// /obj/item/storage/firstaid/fire
-	/datum/manufacture/crit_kit, // /obj/item/storage/firstaid/crit
-	/datum/manufacture/spacecillin,	// /obj/item/reagent_containers/syringe/antiviral
-	/datum/manufacture/bat,	// /obj/item/bat
-	/datum/manufacture/quarterstaff,	//	/obj/item/quarterstaff
-	/datum/manufacture/cleaver,	// /obj/item/kitchen/utensil/knife/cleaver
-	/datum/manufacture/fireaxe,	// /obj/item/fireaxe
-	/datum/manufacture/shovel	// /obj/item/shovel	//this is powerful
-	)
+	/datum/manufacture/riot_shotgun,
+	/datum/manufacture/riot_shotgun_ammo,
+	/datum/manufacture/clock,
+	/datum/manufacture/clock_ammo,
+	/datum/manufacture/saa,
+	/datum/manufacture/saa_ammo,
+	/datum/manufacture/riot_launcher,
+	/datum/manufacture/riot_launcher_ammo_pbr,
+	/datum/manufacture/riot_launcher_ammo_flashbang,
+	/datum/manufacture/sniper,
+	/datum/manufacture/sniper_ammo,
+	/datum/manufacture/tac_shotgun,
+	/datum/manufacture/tac_shotgun_ammo,
+	/datum/manufacture/gyrojet,
+	/datum/manufacture/gyrojet_ammo,
+	/datum/manufacture/plank,
+	/datum/manufacture/brute_kit,
+	/datum/manufacture/burn_kit,
+	/datum/manufacture/crit_kit,
+	/datum/manufacture/spacecillin,
+	/datum/manufacture/bat,
+	/datum/manufacture/quarterstaff,
+	/datum/manufacture/cleaver,
+	/datum/manufacture/fireaxe,
+	/datum/manufacture/shovel)
 
 #undef WIRE_EXTEND
 #undef WIRE_POWER

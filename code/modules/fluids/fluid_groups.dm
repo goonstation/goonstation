@@ -4,7 +4,7 @@
 
 
 /datum/reagents/fluid_group
-	var/datum/fluid_group/my_group = 0
+	var/datum/fluid_group/my_group = null
 	var/last_reaction_loc = 0
 	var/skip_next_update = 0
 	covered_turf()
@@ -91,7 +91,7 @@
 	var/updating = 0 //already updating? block another loop from being started
 
 
-	var/datum/reagents/fluid_group/reagents = 0
+	var/datum/reagents/fluid_group/reagents = null
 	var/contained_amt = 0 //total reagent amt including all members
 	var/amt_per_tile = 0 //Don't pull from this value for group calculations without updating it first
 	var/required_to_spread = 30
@@ -137,8 +137,8 @@
 
 		members = 0
 
-		reagents.my_group = 0
-		reagents = 0
+		reagents.my_group = null
+		reagents = null
 
 		spread_member = 0
 		updating = 0
@@ -172,7 +172,7 @@
 
 	proc/update_amt_per_tile()
 		contained_amt = src.reagents.total_volume
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 
 	proc/evaporate()
 		//boutput(world,"IM HITTING THE VAPE!!!!!!!!!!")
@@ -223,19 +223,19 @@
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 					t.active_liquid.update_icon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
 		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
 		if (lost_fluid)
 			src.reagents.skip_next_update = 1
@@ -271,17 +271,17 @@
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 					t.active_liquid.update_icon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
 				t = get_step( F, dir )
-				if (t && t.active_liquid)
+				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/amt_to_remove = min(amt_per_tile, vol_max)
 
 		if(amt_to_remove == amt_per_tile)
@@ -344,7 +344,7 @@
 		if (!(channel && F)) return 0
 		LAGCHECK(LAG_HIGH)
 		var/turf/jump_turf = 0
-		var/amt_per_tile_added = (members && members.len) ? (contained_amt+1) / members.len : 0
+		var/amt_per_tile_added = length(members) ? (contained_amt+1) / length(members) : 0
 
 		if (amt_per_tile_added <= channel.required_to_pass && spread_dir != channel.dir)
 			return 0
@@ -446,17 +446,17 @@
 				fluids_to_create = force
 
 			var/list/created = src.spread(fluids_to_create)
-			if (created && created.len && !src.qdeled)
+			if (length(created) && !src.qdeled)
 				src.members += created
 				return
 
 		LAGCHECK(LAG_HIGH)
 
-		if (src.last_contained_amt == src.contained_amt && src.members.len == src.last_members_amt && !force)
+		if (src.last_contained_amt == src.contained_amt && length(src.members) == src.last_members_amt && !force)
 			src.updating = 0
 			return 1
 
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
 			if (amt_per_tile > x)
@@ -465,7 +465,7 @@
 		LAGCHECK(LAG_MED)
 
 		var/datum/color/last_color = src.average_color
-		src.average_color = src.reagents.get_average_color()
+		src.average_color = src.reagents?.get_average_color()
 		var/color_dif = 0
 		if (!last_color)
 			color_dif = 999
@@ -473,7 +473,7 @@
 			color_dif = abs(average_color.r - last_color.r) + abs(average_color.g - last_color.g) + abs(average_color.b - last_color.b)
 		var/color_changed = (color_dif > 10)
 
-		if (my_depth_level == last_depth_level && !color_changed && src.members.len == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
+		if (my_depth_level == last_depth_level && !color_changed && length(src.members) == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
 			src.updating = 0
 			return 1
 
@@ -482,10 +482,10 @@
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
 
-		src.master_reagent_name = src.reagents.get_master_reagent_name()
-		src.master_reagent_id = src.reagents.get_master_reagent_id()
+		src.master_reagent_name = src.reagents?.get_master_reagent_name()
+		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
-		var/master_opacity = !drains_floor && reagents.get_master_reagent_gas_opaque()
+		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
 
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
@@ -511,7 +511,7 @@
 				F.last_depth_level = my_depth_level
 				for(var/obj/O in F.loc)
 					LAGCHECK(LAG_MED)
-					if (O && O.submerged_images)
+					if (O?.submerged_images)
 						F.HasEntered(O,O.loc)
 
 				depth_changed = 1
@@ -614,7 +614,7 @@
 					.+= C
 					created++
 
-				if ((members?.len + created)<=0) //this can happen somehow
+				if ((length(members) + created)<=0) //this can happen somehow
 					continue
 
 				amt_per_tile = contained_amt / (members.len + created)
@@ -633,7 +633,7 @@
 		if (!drain_source || drain_source.group != src) return
 
 		//Don't delete tiles if we can just drain existing deep fluid
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 
 		if (amt_per_tile > required_to_spread)
 			if (transfer_to && transfer_to.reagents && src.reagents)
@@ -645,7 +645,7 @@
 			src.update_loop()
 			return src.avg_viscosity
 
-		if (src.members[1] != drain_source)
+		if (length(members) && src.members[1] != drain_source)
 			if (src.members.len <= 30)
 				var/list/L = drain_source.get_connected_fluids()
 				if (L.len == members.len)
@@ -654,7 +654,7 @@
 		var/list/fluids_removed = list()
 		var/fluids_removed_avg_viscosity = 0
 
-		for (var/i = members.len, i > 0, i--)
+		for (var/i = length(members), i > 0, i--)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > members.len) continue
@@ -707,7 +707,7 @@
 
 		src.update_loop() //just in case one wasn't running already
 		//src.last_add_time = world.time
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		return 1
 
 	proc/try_split(var/turf/removed_loc) //called when a fluid is removed. check if the removal causes a split, and proceed from there.
@@ -738,7 +738,7 @@
 
 		//remove some of contained_amt from src and add it to FG
 		src.can_update = 0
-		amt_per_tile = (members && members.len) ? contained_amt / members.len : 0
+		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/datum/fluid_group/FG = new group_type
 		FG.can_update = 0
 		//add members to FG, remove them from src

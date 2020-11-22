@@ -191,7 +191,7 @@
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
-	barman
+	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	mechanic

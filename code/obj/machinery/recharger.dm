@@ -68,7 +68,7 @@ obj/machinery/recharger
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
 					if (istype(T,/turf/simulated/wall))
-						src.dir = dir
+						src.set_dir(dir)
 						switch(src.dir)
 							if(NORTH)
 								src.pixel_y = 28

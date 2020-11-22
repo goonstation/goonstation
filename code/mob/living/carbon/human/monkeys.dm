@@ -37,9 +37,7 @@
 	name = "Mr. Rathen"
 	real_name = "Mr. Rathen"
 	gender = "male"
-#if ASS_JAM
-	unkillable = 1
-#endif
+
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)

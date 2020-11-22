@@ -280,8 +280,8 @@
 
 /datum/manufacture/multitool
 	name = "Multi Tool"
-	item_paths = list("CRY-1","CON-1")
-	item_names = list("Crystal","Conductive Material")
+	item_paths = list("CRY-1","CON-2")
+	item_names = list("Crystal","High Energy Conductor")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/device/multitool)
 	time = 8 SECONDS
@@ -1554,6 +1554,16 @@
 	create = 1
 	category = "Component"
 
+/datum/manufacture/robup_sechudgoggles
+	name = "Security HUD Upgrade"
+	item_paths = list("CRY-1","CON-1")
+	item_names = list("Crystal","Conductive Material")
+	item_amounts = list(4,6)
+	item_outputs = list(/obj/item/roboupgrade/sechudgoggles)
+	time = 90 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/robup_spectro
 	name = "Spectroscopic Scanner Upgrade"
 	item_paths = list("CRY-1","CON-1")
@@ -1717,6 +1727,26 @@
 	item_names = list("Metal","Conductive Material","Crystal")
 	item_amounts = list(1,1,1)
 	item_outputs = list(/obj/item/oreprospector)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/ore_scoop
+	name = "Ore Scoop"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Metal","Conductive Material","Crystal")
+	item_amounts = list(1,1,1)
+	item_outputs = list(/obj/item/ore_scoop)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/geigercounter
+	name = "Geiger Counter"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_names = list("Metal","Conductive Material","Crystal")
+	item_amounts = list(1,1,1)
+	item_outputs = list(/obj/item/device/geiger)
 	time = 8 SECONDS
 	create = 1
 	category = "Tool"
@@ -2012,6 +2042,26 @@
 	item_names = list("Fabric")
 	item_amounts = list(2)
 	item_outputs = list(/obj/item/clothing/head/yellow)
+	time = 2 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/hat_pink
+	name = "Pink Hat"
+	item_paths = list("FAB-1")
+	item_names = list("Fabric")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/clothing/head/pink)
+	time = 2 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/hat_orange
+	name = "Orange Hat"
+	item_paths = list("FAB-1")
+	item_names = list("Fabric")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/clothing/head/orange)
 	time = 2 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2615,6 +2665,25 @@
 	create = 1
 	category = "ammo"
 
+/datum/manufacture/riot_shotgun	//
+	name = "Riot Shotgun"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	time = 20 SECONDS
+	create = 1
+	category = "Weapon"
+/datum/manufacture/riot_shotgun_ammo	//
+	name = "Rubber Bullet ammo"
+	item_paths = list("MET-1")
+	item_names = list("Metal")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/ammo/bullets/abg)
+	time = 7 SECONDS
+	create = 1
+	category = "ammo"
+
 /datum/manufacture/riot_launcher	//
 	name = "Riot Launcher"
 	item_paths = list("MET-1")
@@ -2711,7 +2780,7 @@
 	item_paths = list("MET-1")
 	item_names = list("Metal")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/plank)
+	item_outputs = list(/obj/item/plank/anti_zombie)
 	time = 5 SECONDS
 	create = 1
 	category = "Medicine"
@@ -2799,7 +2868,7 @@
 /datum/manufacture/fireaxe	//
 	name = "Fireaxe"
 	item_paths = list("MET-3", "CON-2")
-	item_names = list("Metal", "Conductive Material")
+	item_names = list("Dense Metal", "Conductive Material")
 	item_amounts = list(20, 5)
 	item_outputs = list(/obj/item/fireaxe)
 	time = 20 SECONDS

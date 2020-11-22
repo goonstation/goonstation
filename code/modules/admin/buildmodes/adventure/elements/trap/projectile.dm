@@ -40,7 +40,7 @@
 				P.proj_type = proj_type
 				P.trap_delay = trap_delay
 				P.invisibility = invisibility
-				P.dir = holder.dir
+				P.set_dir(holder.dir)
 		else if (pa.Find("right"))
 			if (isturf(object))
 				if (target == object)

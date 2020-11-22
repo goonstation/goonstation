@@ -98,7 +98,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -127,7 +127,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(Mclient.mob, "<span class='alert'>[msg]</span>")
 
 	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged [constructTarget(Mclient.mob,"admin")]: [html_encode(msg)]")
@@ -149,7 +149,7 @@
 
 	if (!msg)
 		return
-	if (src && src.holder)
+	if (src?.holder)
 		boutput(world, "[msg]")
 
 	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
@@ -184,7 +184,7 @@
 	logTheThing("admin", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"admin")] with the message \"[t]\"")
 	logTheThing("diary", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
 
-	if(Mclient && Mclient.mob)
+	if(Mclient?.mob)
 		SPAWN_DBG(0)
 			var/sound/honk = sound('sound/voice/animal/goose.ogg')
 			honk.volume = 75
@@ -744,7 +744,7 @@
 		return
 
 	disposing()
-		if(usercl && usercl.mob)
+		if(usercl?.mob)
 			usercl.mob.Browse(null, "window=adminpmorph")
 		usercl = null
 		target_mob = null
@@ -1797,13 +1797,13 @@
 
 				// Get rid of those uplinks first.
 				var/list/L = H.get_all_items_on_mob()
-				if (L && L.len)
+				if (length(L))
 					for (var/obj/item/device/pda2/PDA in L)
-						if (PDA && PDA.uplink)
+						if (PDA?.uplink)
 							qdel(PDA.uplink)
 							PDA.uplink = null
 					for (var/obj/item/device/radio/R in L)
-						if (R && R.traitorradio)
+						if (R?.traitorradio)
 							qdel(R.traitorradio)
 							R.traitorradio = null
 							R.traitor_frequency = 0
@@ -2340,7 +2340,7 @@ var/global/night_mode_enabled = 0
 	for (var/direction in (alldirs + 0))
 		if (direction)
 			var/obj/window/auto/reinforced/indestructible/extreme/R = new /obj/window/auto/reinforced/indestructible/extreme(get_step(targetLoc, direction))
-			//R.dir = direction
+			//R.set_dir(direction)
 			R.name = "robust shamecube glass"
 			R.desc = "A pane of robust, yet shameful, glass."
 		var/turf/void = new/turf/unsimulated/floor/void(get_step(targetLoc, direction))

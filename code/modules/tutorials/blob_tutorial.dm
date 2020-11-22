@@ -81,6 +81,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			bowner.tutorial = null
 			bowner.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 			bowner.starter_buff = 1
+			qdel(src)
 
 	disposing()
 		if (tutorial_area_type)
@@ -97,6 +98,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
+			marker.filters= filter(type="outline", size=1)
 
 	SetUp()
 		..()
@@ -111,7 +113,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			..()
 			var/datum/tutorial/blob/MT = tutorial
 			must_deploy = locate(MT.initial_turf.x, MT.initial_turf.y + 1, MT.initial_turf.z)
-			must_deploy.overlays += marker
+			must_deploy.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "deploy" && context == must_deploy)
@@ -122,7 +124,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			must_deploy.overlays.len = 0
+			must_deploy.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -140,7 +142,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
 			for (var/dir in cardinal)
 				var/turf/Q = get_step(T, dir)
-				Q.overlays += marker
+				Q.UpdateOverlays(marker,"marker")
 				must_spread_to += Q
 
 		PerformAction(var/action, var/context)
@@ -151,7 +153,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (!(context in must_spread_to))
 				return 0
 			var/turf/T = context
-			T.overlays.len = 0
+			T.UpdateOverlays(null,"marker")
 			must_spread_to -= context
 			return 1
 
@@ -250,7 +252,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				T = get_step(T, NORTH)
 			spread_max_y = T.y
 
-			T.overlays += marker
+			T.UpdateOverlays(marker,"marker")
 			TT = T
 
 		PerformAction(var/action, var/context)
@@ -266,7 +268,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			TT.overlays.len = 0
+			TT.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -286,7 +288,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.dir = 2
+				W.set_dir(2)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -327,11 +329,11 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			MT.bowner.bio_points_max_bonus = 50
 			MT.bowner.gen_rate_bonus = 9
 
-			T.overlays += marker
+			T.UpdateOverlays(marker,"marker")
 			TT = T
 
 		TearDown()
-			TT.overlays.len = 0
+			TT.UpdateOverlays(null,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "firewall" && context == TT)
@@ -363,7 +365,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.dir = 2
+				W.set_dir(2)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -379,7 +381,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-		ribosomes
+	ribosomes
 		name = "Ribosomes"
 		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
@@ -393,7 +395,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			var/tz = MT.initial_turf.z
 			target = locate(tx, ty - 1, tz)
 			var/obj/blob/B = locate() in target
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "move")
@@ -419,7 +421,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
 			target = locate(tx + 3, ty + 3, tz)
-			target.overlays += marker
+			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "clickmove" && context == target)
@@ -428,7 +430,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			target.overlays.len = 0
+			target.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -447,7 +449,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			target = locate(tx, ty, tz)
 			var/obj/blob/B = locate() in target
 			B.take_damage(5, 1, "brute")
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "repair" && context == target)
@@ -457,7 +459,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		TearDown()
 			var/obj/blob/B = locate() in target
-			B.overlays.len = 0
+			B.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -537,7 +539,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (istype(B, /obj/blob/deposit))
 				T = locate(tx - 2, ty, tz)
 				B = locate() in T
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "move")
@@ -551,7 +553,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			B.overlays -= marker
+			B.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -621,7 +623,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			var/tz = MT.initial_turf.z
 			var/turf/T = locate(tx, ty, tz)
 			target = locate() in T
-			target.overlays += marker
+			target.UpdateOverlays(marker,"marker")
 			tx += 3
 			H = new(locate(tx, ty, tz))
 
@@ -634,6 +636,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				return 1
 
 		TearDown()
+			target.UpdateOverlays(null,"marker")
 			if (H)
 				H.gib()
 
@@ -643,8 +646,6 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		MayAdvance()
-			if (target)
-				return 0
 			if (!H)
 				return 1
 			if (isdead(H))

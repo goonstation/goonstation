@@ -474,7 +474,7 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (src && src.owner && usr.client.tooltipHolder && control == "mapwindow.map")
+		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -504,7 +504,7 @@
 				H.hud?.update_ability_hotbar()
 
 	disposing()
-		if(owner && owner.hud)
+		if(owner?.hud)
 			owner.hud.remove_object(src)
 		..()
 
@@ -517,7 +517,7 @@
 	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
 		src.screen_loc = "NORTH-[pos_y],[pos_x]"
 
-		if(owner && owner.hud)
+		if(owner?.hud)
 			owner.hud.remove_object(src)
 			owner.hud.add_object(src, HUD_LAYER, src.screen_loc)
 
