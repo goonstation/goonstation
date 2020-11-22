@@ -1091,12 +1091,13 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab
 	name = "Prefab"
 	icon_state = "orange"
+
 /area/prefab/discount_dans_asteroid
-	name = "Discount Dans delivery asteroid"
+	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
 
 /area/prefab/clown_nest
-	name = "Honky Gibbersons Clownspider farm"
+	name = "Honky Gibberson's Clownspider Farm"
 	icon_state = "orange"
 
 /area/prefab/drug_den

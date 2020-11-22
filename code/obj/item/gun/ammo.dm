@@ -815,6 +815,9 @@
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
 	caliber = 0.355
 
+	five_shots
+		amount_left = 5.0
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
