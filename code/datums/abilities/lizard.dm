@@ -20,6 +20,8 @@
 /mob/living/carbon/human/proc/update_lizard_parts()
 	if (ishuman(src))
 		var/mob/living/carbon/human/liz = src
+		if(!liz?.limbs)
+			return
 		if (liz.limbs.l_arm && istype(liz.limbs.l_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
 			var/obj/item/parts/human_parts/LA = liz.limbs.l_arm
 			LA.colorize_limb_icon()

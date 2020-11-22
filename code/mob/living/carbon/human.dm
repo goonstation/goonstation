@@ -3296,6 +3296,8 @@
 /mob/living/carbon/human/proc/update_colorful_parts()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
+		if(!H?.limbs)
+			return
 		if (H.limbs.l_arm && istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
 			var/obj/item/parts/human_parts/LA = H.limbs.l_arm
 			LA.colorize_limb_icon()
