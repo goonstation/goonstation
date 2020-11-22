@@ -364,13 +364,13 @@ toxic - poisons
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer_tase"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "non-lethal"
+	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
 	power = 10
 	ks_ratio = 0.1
 
-	sname = "signifer2_tase"
+	sname = "non-lethal"
 	damage_type = D_ENERGY
 	hit_ground_chance = 0
 	brightness = 1
