@@ -365,6 +365,7 @@ toxic - poisons
 	name = "signifer_tase"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
+	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
 	power = 10
 	ks_ratio = 0.1
@@ -382,40 +383,25 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
-		//When it hits a mob or such should anything special happen
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		// var/dir = angle2dir(angle)
-		..()
-		// var/dir = get_dir(O.shooter, hit)
-		// var/pow = O.power
-		// if (ishuman(hit))
-		// 	var/mob/living/carbon/human/H = hit
-		// 	H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
-		// 	H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-		// 	H.emote("twitch_v")
-		// 	H.changeStatus("slowed", 3 SECONDS)
-
-
-
 /datum/projectile/laser/signifer_lethal
 	name = "signifer_lethal"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_brute"
-	power = 25
-	cost = 50
+	power = 15
+	cost = 25
 	sname = "signifer2_lethal"
-	shot_sound = 'sound/weapons/Laser.ogg'
+	shot_sound = 'sound/weapons/SigLethal.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
 	brightness = 1
 	color_red = 0.2
 	color_green = 0.2
-	color_blue = 1
+	color_blue = 0.8
 
 	disruption = 8
 
 	// shot_delay = 2
-	shot_number = 2
+	shot_number = 1
 	ie_type = "E"
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 	var/num = 1			//for doing the "two different projectiles in the burst" bit
@@ -426,21 +412,21 @@ toxic - poisons
 			num = 2
 			icon_state = "signifer2_burn"
 			damage_type = D_ENERGY
-			color_red = 0.0
-			color_green = 0.0
-			color_blue = 1.0
+			color_red = 0.1
+			color_green = 0.1
+			color_blue = 0.8
 
 		else 
 			num = 1
 			icon_state = "signifer2_brute"
 			damage_type = D_KINETIC
-			color_red = 1.0
-			color_green = 0.0
-			color_blue = 0.0
+			color_red = 0.8
+			color_green = 0.1
+			color_blue = 0.1
 
 		return ..()
 	
-	on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
+	on_hit(atom/hit, angle, var/obj/projectile/O)
 		//first hit
 		if (num % 2)
 			if (pop == hit)
@@ -448,8 +434,5 @@ toxic - poisons
 			pop = null
 
 		else
-			if (istype(hit, /turf) || istype(hit, /mob) || istype(hit, /obj))	//Expensive!
-				pop = hit
-				// SPAWN_DBG(2.5)
-				// 	pop = null
+			pop = hit
 

@@ -1590,7 +1590,7 @@
 			else //if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "signifer_2-smg"
 				src.icon_state = "signifer_2-smg"
-				muzzle_flash = "muzzle_flash_laser"
+				muzzle_flash = "muzzle_flash_bluezap"
 				force = 12
 				spread_angle = 3
 				shoot_delay = 5
