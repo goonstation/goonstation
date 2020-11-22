@@ -808,21 +808,22 @@
 			loc = src:client:player:shamecubed
 			return
 
-	loc.Exited(src, newloc)
-
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
+
+	var/oldloc = loc
+	loc = newloc
+
+	oldloc.Exited(src, newloc)
 
 	if(my_area != new_area && my_area)
 		my_area.Exited(src, newloc)
 
-	var/oldloc = loc
-	loc = newloc
-	 //Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
+	newloc.Entered(src, oldloc)
+
+	//Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
 	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
 		new_area.Entered(src, oldloc)
-
-	newloc.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
 		for (var/atom/movable/M in src.attached_objs)
