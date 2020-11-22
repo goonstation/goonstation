@@ -47,7 +47,7 @@ var/datum/action_controller/actions
 					return OA
 			running[owner] += A
 		A.owner = owner
-		A.started = world.time
+		A.started = TIME
 		A.onStart()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
@@ -61,7 +61,7 @@ var/datum/action_controller/actions
 		for(var/X in running)
 			for(var/datum/action/A in running[X])
 
-				if( ((A.duration >= 0 && world.time >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
+				if( ((A.duration >= 0 && TIME >= (A.started + A.duration)) && A.state == ACTIONSTATE_RUNNING) || A.state == ACTIONSTATE_FINISH)
 					A.state = ACTIONSTATE_ENDED
 					A.onEnd()
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
@@ -82,7 +82,7 @@ var/datum/action_controller/actions
 	var/duration = 1 //How long does this action take in ticks.
 	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION //When and how this action is interrupted.
 	var/state = ACTIONSTATE_STOPPED //Current state of the action.
-	var/started = -1 //world.time this action was started at
+	var/started = -1 //TIME this action was started at
 	var/id = "base" //Unique ID for this action. For when you want to remove actions by ID on a person.
 
 	proc/interrupt(var/flag) //This is called by the default interrupt actions
@@ -209,7 +209,7 @@ var/datum/action_controller/actions
 	updateBar(var/animate = 1)
 		if (duration <= 0)
 			return
-		var/done = world.time - started
+		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"
 		var/fakeduration = duration + ((animate && done < duration) ? (world.tick_lag * 7) : 0)
 		var/remain = max(0, fakeduration - done)
