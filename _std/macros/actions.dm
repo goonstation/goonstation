@@ -1,5 +1,5 @@
 /**
-* uses /datum/action/bar/icon/callback, in code/datums/controllers/action_controls.dm
+* uses [/datum/action/bar/icon/callback]
 *
 * creates an actionbar that calls the specified proc on -either- owner or target if the duration passes without interruption.
 *

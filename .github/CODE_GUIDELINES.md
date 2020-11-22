@@ -207,4 +207,4 @@ If total cpu and real time are the same the proc never sleeps, otherwise real ti
 * ninjanomnom from TG has written up a [useful primer](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.
 
 ### Generic Action bar
-* Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro! Check [_std/macros/actions.dm`](https://github.com/goonstation/goonstation/blob/681d0b0a28ede4f0b7a09f02cf9ff79bb0b23b7c/_std/macros/actions.dm) for more information.  
+* Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro! Check [_std/macros/actions.dm`](https://github.com/goonstation/goonstation/blob/master/_std/macros/actions.dm) for more information.  
