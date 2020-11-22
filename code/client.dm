@@ -394,9 +394,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	clients += src
 
-	if(!cloud_available())
-		src.player.cloud_fetch()
-
 	SPAWN_DBG(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))
 			src.has_contestwinner_medal = 0
@@ -499,10 +496,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 		//Cloud data
 		if (cdn)
-			var/tries = 10
-			while(!cloud_available() && tries) // we might sill be waiting for cloud_fetch triggered above
-				tries--
-				sleep(0.1 SECONDS)
+			if(!cloud_available())
+				src.player.cloud_fetch()
 
 			if(cloud_available())
 				src.load_antag_tokens()
