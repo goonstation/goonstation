@@ -574,7 +574,7 @@ export const PaperSheet = (props, context) => {
     pen_color = "black",
     pen_font = "Verdana",
     stamps,
-    stamp_class = "",
+    stamp_class,
     sizeX,
     sizeY,
     name,

@@ -5,7 +5,7 @@
 #define MAX_PAPER_STAMPS 30
 #define MAX_PAPER_STAMPS_OVERLAYS 4
 
-#define CLEAN_NAME list(\
+#define STAMP_IDS list(\
 	"Clown" = "stamp-clown",\
 	"Denied" = "stamp-deny" ,\
 	"Granted" = "stamp-ok",\
@@ -194,7 +194,7 @@
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to write.</span>")
+		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
 	return ..()
 
@@ -263,7 +263,6 @@
 	.["text"] = src.info
 	.["max_length"] = MAX_PAPER_LENGTH
 	.["paper_color"] = (color || "white")	// color might not be set
-	.["paper_state"] = src.icon_state	/// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = src.stamps
 	.["stampable"] = src.stampable
 	.["sealed"] = src.sealed
@@ -276,11 +275,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	if (ticker)
-		var/S = round(ticker.round_elapsed_ticks / 10)
-		T = time_type + ": [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-	else
-		T = time_type
+	T = time_type + ": [time2text(world.timeofday, "hh:mm:ss")]"
 
 	var/stamp_assets = list(
 		"stamp-clown" = "large_stamp-clown.png",
@@ -1130,7 +1125,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	..()
 	if(special_mode)
 		available_modes += special_mode
-		current_mode = (CLEAN_NAME[special_mode])
+		current_mode = (STAMP_IDS[special_mode])
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -1161,7 +1156,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
-	src.current_mode = (CLEAN_NAME[NM])
+	src.current_mode = (STAMP_IDS[NM])
 	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
