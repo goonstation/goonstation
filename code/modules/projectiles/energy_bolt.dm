@@ -364,7 +364,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer_tase"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "signifer2_tase"
+	icon_state = "non-lethal"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
 	power = 10
@@ -386,7 +386,7 @@ toxic - poisons
 /datum/projectile/laser/signifer_lethal
 	name = "signifer_lethal"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "signifer2_brute"
+	icon_state = "lethal"
 	power = 15
 	cost = 25
 	sname = "signifer2_lethal"

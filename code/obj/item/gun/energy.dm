@@ -1597,8 +1597,7 @@
 
 	attack_self(var/mob/M)
 		..()
-		setTwoHanded(!src.two_handed)
-		update_icon()
-
-		M.update_inhands()
+		if (setTwoHanded(!src.two_handed))
+			update_icon()
+			M.update_inhands()
 
