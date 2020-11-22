@@ -518,7 +518,6 @@ PIPE BOMBS + CONSTRUCTION
 	det_time = 50.0
 	org_det_time = 50
 	alt_det_time = 30
-	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
