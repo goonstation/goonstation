@@ -1,5 +1,17 @@
 
 (t)sun nov 22 20
+(u)Flaborized
+(p)2782
+(e)🎨|sprites
+(+)New scanner sprites!
+(u)Jawns
+(p)2704
+(e)|
+(+)Sleeper agents should only get achievable objectives now- please submit a bug report if your objectives seem impossible!
+(u)Erinexx
+(p)2780
+(e)🎨|sprites
+(+)Resprited some devices
 (u)Kyle, Enakai, & Virvatuli
 (e)🆕🎨|feature, sprites
 (*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
