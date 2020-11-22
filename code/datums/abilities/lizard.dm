@@ -40,7 +40,7 @@
 			RL.set_skin_tone()
 		if (liz.organHolder?.head)
 			liz.organHolder.head.update_icon()
-		if (liz.organHolder?.tail && istype(liz.organHolder.tail, /obj/item/organ/tail/lizard))
+		if (istype(liz.organHolder?.tail, /obj/item/organ/tail/lizard))
 			var/obj/item/organ/tail/T = liz.organHolder.tail
 			T.colorize_tail(liz.bioHolder.mobAppearance)
 		liz?.bioHolder?.mobAppearance.UpdateMob()
