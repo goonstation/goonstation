@@ -464,8 +464,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/failured = 0
 	ammo = /obj/item/ammo/bullets/internal/zipgun
 	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null),\
-	                 list("name" = "double-shotzinga", "burst_count" = 25, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
-#warn ZIPGUN IS FUCKED
+	                 list("name" = "double-shotz", "burst_count" = 2, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 12.5, "projectile" = null))
 
 #if ASS_JAM
 	New()
@@ -614,7 +613,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "airzooka"
 	caliber = CALIBER_TRASHBAG // I rolled a dice
 	muzzle_flash = "muzzle_flash_launch"
-	ammo = /obj/item/ammo/bullets/airzooka
+	ammo = /obj/item/ammo/bullets/internal/airzooka
 
 /obj/item/gun/kinetic/smg //testing keelin's continuous fire POC
 	name = "submachine gun"

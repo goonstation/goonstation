@@ -148,6 +148,7 @@
 #define CALIBER_PISTOL_FLINTLOCK 0.56
 #define CALIBER_BATTERY 1.30
 #define CALIBER_ANY -1
+#define REALLY_BIG_PROJECTILE -1
 // Gun Defs
 /// Return when currently shooting
 #define GUN_IS_SHOOTING 2

@@ -50,14 +50,17 @@
 	var/obj/item/gun/loaded_in = null
 	/// Initial load fills magazines to this or max_amount, whichever's less
 	var/amount_left = 0.0
-	/// How many shots can fit inside the mag/clip/box. Ignored on piles, cus its a pile
+	/// How many shots can fit inside the mag/clip/box
 	var/max_amount = 1000
 	/// For power cells and theoretical mags that also need to be charged for some reason
 	var/charge = 100.0
 	/// Maximum charge that this thing can hold
 	var/max_charge = 100.0
+	/// Prevents piles from having more than one. Only relevant on piles
+	var/has_big_projectile = 0
 
-	/// For certain piles that shouldnt disappear when empty, like boxes of shells
+	/// For certain piles that should disappear when empty
+	/// Set to 0 for piles that are some kind of rigid container, like boxes of ammo
 	var/delete_when_empty = 0
 	var/force_new_current_projectile = 0 //for custom grenade shells
 
@@ -111,7 +114,8 @@
 				boutput(user, "[src] doesn't have anything in it!")
 				return
 			if(src.mag_manifest.len >= 2 || (src.mag_manifest.len == 1 && !src.top_bullet))
-				qdel(src.top_bullet)
+				if(src.top_bullet)
+					qdel(src.top_bullet)
 				src.top_bullet_index += 1
 				if(src.top_bullet_index > src.mag_manifest.len)
 					src.top_bullet_index = 1
@@ -131,7 +135,7 @@
 		else if(from_this_mag.mag_contents.len < 1)
 			boutput(user, "\The [from_this_mag] is empty!")
 			return FALSE
-		else if(src.mag_contents.len >= src.max_amount)
+		else if(src.mag_contents.len >= src.max_amount || src.has_big_projectile)
 			boutput(user, "\The [src] can't fit anything else in it!")
 			return FALSE
 
@@ -192,10 +196,16 @@
 		var/list/temp_mag = list()
 		for(var/datum/projectile/bullet in from_this_mag.mag_contents)
 			if(ammo_wildcard || (bullet.caliber in src.caliber))
+				if(bullet.caliber == CALIBER_RPG || bullet.caliber == CALIBER_ROCKET)
+					if(src.mag_contents.len || temp_mag.len) // only it if there isnt anything in there
+						boutput(user, "[bullet] is really big. It simply won't fit inside anything that has anything else in it!")
+						continue
+					else
+						src.has_big_projectile = 1
 				temp_mag.Insert(1, bullet)
 				from_this_mag.mag_contents -= bullet
 				amount_to_move--
-			if(amount_to_move < 1)
+			if(amount_to_move < 1 || src.has_big_projectile)
 				break
 
 		if(temp_mag.len)
@@ -204,7 +214,7 @@
 			src.mag_contents.Insert(1, temp_mag)
 
 			if(amount_to_move > 0)
-				num_to_move -= amount_to_move
+				. -= amount_to_move
 
 			src.update_bullet_manifest()
 			src.update_icon()
@@ -298,13 +308,24 @@
 				. = num_to_take
 				for(var/datum/projectile/bullet in src.mag_contents)
 					if(istype(bullet, type_to_take))
+						if(bullet.caliber == CALIBER_RPG || bullet.caliber == CALIBER_ROCKET)
+							if(new_pile.mag_contents.len) // only it if there isnt anything in there
+								boutput(user, "[bullet] is really big. It simply won't fit inside anything that has anything else in it!")
+								continue
+							else
+								src.has_big_projectile = 0
+								for(var/datum/projectile/rocket in src.mag_contents)
+									if(rocket.caliber == CALIBER_RPG || rocket.caliber == CALIBER_ROCKET)
+										src.has_big_projectile = 1
+										break
+								new_pile.has_big_projectile = 1
 						new_pile.mag_contents.Insert(1, bullet)
 						src.mag_contents -= bullet
 						num_to_take--
-					if(num_to_take < 1)
+					if(num_to_take < 1 || new_pile.has_big_projectile)
 						break
 
-				if(src.mag_contents.len < 1)
+				if(src.mag_contents.len < 1 && src.delete_when_empty)
 					boutput(user, "That used up the whole pile!")
 					user.u_equip(src)
 					qdel(src)
@@ -411,33 +432,6 @@
 			if(G.allowReverseReload)
 				G.load_gun(src, user = user)
 				return
-		/* else if(b.type == src.type)
-			var/obj/item/ammo/bullets/A = b
-			if(A.amount_left<1)
-				user.show_text("There's no ammo left in [A.name].", "red")
-				return
-			if(src.amount_left>=src.max_amount)
-				user.show_text("[src] is full!", "red")
-				return
-
-			while ((A.amount_left > 0) && (src.amount_left < src.max_amount))
-				A.amount_left--
-				src.amount_left++
-			if ((A.amount_left < 1) && (src.amount_left < src.max_amount))
-				A.update_icon()
-				src.update_icon()
-				if (A.delete_on_reload)
-					qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
-				return // Couldn't fully reload the gun.
-			if ((A.amount_left >= 0) && (src.amount_left == src.max_amount))
-				A.update_icon()
-				src.update_icon()
-				if (A.amount_left == 0)
-					if (A.delete_on_reload)
-						qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name].</span>")
-				return */ // Full reload or ammo left over.
 		else return ..()
 
 
@@ -518,12 +512,71 @@
 	g_amt = 0
 	ammo_type = null
 	mag_type = AMMO_PILE
+	delete_when_empty = 1
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
 
 	update_icon()
 		. = ..()
-		if(src.mag_contents.len >= 1)
+		src.overlays.len = 0
+		var/has_new_icon
+		if(src.mag_manifest.len)
+			for(var/I in src.mag_manifest)
+				var/ammoicon_temp
+				var/ammostate_temp
+				switch(I) // scream
+					if("bullet_rpg")
+						src.icon = 'icons/obj/projectiles.dmi'
+						src.icon_state = "rpg_rocket"
+						has_new_icon = 1
+						break // only one rocket ever
+					if("bullet_rpg_antisingulo")
+						src.icon = 'icons/obj/items/ammo.dmi'
+						src.icon_state = "regularrocket"
+						has_new_icon = 1
+						break // only one rocket ever
+					if("bullet_mininuke")
+						src.icon = 'icons/obj/items/ammo.dmi'
+						src.icon_state = "mininuke"
+						has_new_icon = 1
+						break // only one rocket ever
+					if("bullet_shotgun_magnum", "bullet_shotgun_short", "bullet_shotgun_pellet")
+						ammoicon_temp = 'icons/obj/items/casings.dmi'
+						ammostate_temp = "shotgun_red"
+					if("bullet_shotgun_explosive", "bullet_shotgun_explosive_lawbringer", "bullet_shotgun_flare", "bullet_shotgun_flare_lawbringer")
+						ammoicon_temp = 'icons/obj/items/casings.dmi'
+						ammostate_temp = "shotgun_orange"
+					if("bullet_shotgun_rubber")
+						ammoicon_temp = 'icons/obj/items/casings.dmi'
+						ammostate_temp = "shotgun_blue"
+					if("bullet_22", "bullet_22_HP", "bullet_9mm", "bullet_9mm_smg", "bullet_9mm_ntso", "bullet_minigun", "bullet_minigun_turret", "bullet_38", "bullet_38_lawbringer", "bullet_38_AP", "bullet_38_stun")
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "small"
+					if("bullet_357", "bullet_357_AP", "bullet_45", "bullet_41_derringer", "bullet_lmg_weak", "bullet_grenade_smoke_lawbringer", "bullet_flintlock", "bullet_clownshot_lawbringer")
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "medium"
+					if("bullet_3006_rifle", "bullet_3006_sniper", "bullet_lmg", "bullet_ak", "bullet_ar", "bullet_ar_ap", "bullet_vr")
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "large"
+					if("bullet_grenade_he", "bullet_autocannon_fusion", "bullet_autocannon_huge", "bullet_grenade_droneseeker", "bullet_grenade_podseeker", "bullet_grenade_hedp", "bullet_grenade_he2")
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "40mmR-ammo"
+					if("bullet_grenade_breaching", "bullet_grenade_ghostseeker", "bullet_grenade_nonexplosive", "bullet_grenade_smoke", "bullet_grenade_baton", "bullet_grenade_conversion")
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "40mmB-ammo"
+				if(ammoicon_temp && ammostate_temp)
+					var/num_bullets = min(src.mag_manifest[I]["count"], 10)
+					if(num_bullets < 1) continue // shrug
+					for(var/B in 1 to num_bullets)
+						if(!has_new_icon)
+							src.icon = ammoicon_temp
+							src.icon_state = ammostate_temp
+							has_new_icon = 1
+						else
+							var/image/bulletpic = image(icon = ammoicon_temp, icon_state = ammostate_temp, dir = pick(alldirs), pixel_x = rand(-10,10), pixel_y = rand(-10,10))
+							src.overlays += bulletpic
+
+		if(!has_new_icon && src.mag_contents.len >= 1) // Nothing in the list apply? huh.
 			var/state_num = 1
 			switch(src.mag_contents.len)
 				if(1 to 10)
@@ -552,6 +605,7 @@
 					state_num = 12
 				if(121 to INFINITY)
 					state_num = 13
+			src.icon = 'icons/obj/foodNdrink/platestack.dmi'
 			src.icon_state = "[orig_icon_state][state_num]"
 
 
@@ -567,6 +621,7 @@
 	max_amount = 50
 	ammo_type = /datum/projectile/bullet/revolver_38
 	mag_type = AMMO_PILE
+	delete_when_empty = 1
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
 
@@ -582,6 +637,7 @@
 	max_amount = 50
 	ammo_type = /datum/projectile/bullet/revolver_38
 	mag_type = AMMO_PILE
+	delete_when_empty = 1
 	module_research = list("weapons" = 2, "miniaturization" = 5)
 	module_research_type = /obj/item/ammo/bullets
 
@@ -591,8 +647,6 @@
 		for(var/i in 1 to amount_left)
 			ammo_type.Add(pick(proj_types))
 		. = ..()
-
-
 
 /obj/item/ammo/bullets/empty
 	sname = "Missing detatchable magazine"
@@ -624,7 +678,7 @@
 	name = "Metal Pipe"
 	icon_state = "357-2"
 	amount_left = 0
-	max_amount = 100
+	max_amount = 2
 	ammo_type = null
 	caliber = CALIBER_ANY
 	icon_dynamic = 1
@@ -699,6 +753,18 @@
 
 /obj/item/ammo/bullets/internal/revolver/magnum/AP
 	ammo_type = /datum/projectile/bullet/revolver_357/AP
+
+/obj/item/ammo/bullets/internal/airzooka
+	sname = "Elastic Trashbag Retainer"
+	name = "Elastic Trashbag Retainer"
+	icon_state = "357-2"
+	amount_left = 10
+	max_amount = 10
+	ammo_type = /datum/projectile/bullet/airzooka
+	caliber = CALIBER_TRASHBAG
+	icon_dynamic = 1
+	icon_short = "357"
+	icon_empty = "357-0"
 
 /obj/item/ammo/bullets/internal/shotgun
 	sname = "Shotgun Tube"
@@ -903,16 +969,16 @@
 	icon_empty = "speedloader_empty"
 
 /obj/item/ammo/bullets/c_45
-	sname = "Cold .45"
-	name = "Colt .45 speedloader"
-	icon_state = "38-7"
+	sname = "Colt .45"
+	name = "Colt .45 bullets"
+	icon_state = "357-7"
 	amount_left = 7.0
 	max_amount = 7.0
 	ammo_type = /datum/projectile/bullet/revolver_45
 	caliber = CALIBER_REVOLVER_OLDTIMEY
 	icon_dynamic = 1
-	icon_short = "38"
-	icon_empty = "speedloader_empty"
+	icon_short = "357"
+	icon_empty = "0"
 
 
 /obj/item/ammo/bullets/airzooka
@@ -927,7 +993,8 @@
 	max_amount = 10
 	ammo_type = /datum/projectile/bullet/airzooka
 	caliber = CALIBER_TRASHBAG
-	mag_type = AMMO_MAGAZINE // ?
+	mag_type = AMMO_PILE
+	delete_when_empty = 1
 
 /obj/item/ammo/bullets/airzooka/bad
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
@@ -1241,6 +1308,7 @@
 	icon_state = "paintballr-4"
 	ammo_type = /datum/projectile/bullet/grenade_shell
 	caliber = CALIBER_GRENADE
+	delete_when_empty = 1
 	w_class = 3
 	icon_dynamic = 0
 	icon_empty = "paintballb-4"
@@ -1298,6 +1366,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	ammo_type = /datum/projectile/bullet/rpg
+	delete_when_empty = 1
 	caliber = CALIBER_ROCKET
 	w_class = 3
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -1311,6 +1380,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rod_1"
 	ammo_type = /datum/projectile/bullet/rod
+	delete_when_empty = 1
 	caliber = CALIBER_ROD
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -1596,7 +1666,6 @@
 	sname = ".58 Flintlock"
 	name = ".58 Flintlock"
 	ammo_type = /datum/projectile/bullet/flintlock
-	icon_state = null
 	mag_type = AMMO_PILE
 	amount_left = 1
 	max_amount = 1

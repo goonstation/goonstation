@@ -20,14 +20,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	shot_number = 1
 
 	// caliber list: update as needed
-	// CALIBER_PISTOL_SMALL pistol / zipgun
-	// CALIBER_RIFLE_HEAVY - rifles
-	// CALIBER_REVOLVER_MAGNUM - revolver
-	// CALIBER_REVOLVER - detective
-	// 0.41 - derringer
-	// 0.72 - shotgun shell, 12ga
-	// CALIBER_GRENADE - grenade shell, 40mm
-	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
+	// see defines/item.dm for caliber defs!
 
 //What is our damage type
 /*
@@ -353,7 +346,7 @@ toxic - poisons
 /datum/projectile/bullet/a12
 	name = "buckshot"
 	ammo_ID = "bullet_shotgun_magnum"
-	ammo_name = "12 gauge space-bear shotshell"
+	ammo_name = "12 gauge space-bearshot shell"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
 	ks_ratio = 1.0
@@ -391,7 +384,7 @@ toxic - poisons
 
 	weak
 		ammo_ID = "bullet_shotgun_short"
-		ammo_name = "12 gauge space-bird shotshell"
+		ammo_name = "12 gauge space-birdshot shell"
 		power = 50 //can have a little throwing, as a treat
 
 
@@ -453,7 +446,7 @@ toxic - poisons
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	ammo_ID = "bullet_shotgun_explosive"
-	ammo_name = "12 gauge explosive space-yeti slug"
+	ammo_name = "12 gauge space-yetishot explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 25 // the damage should be more from the explosion
 	ks_ratio = 1.0
@@ -476,7 +469,7 @@ toxic - poisons
 		name = "lawbringer"
 		sname = "bigshot"
 		ammo_ID = "bullet_shotgun_explosive_lawbringer"
-		ammo_name = ".38 explosive space-tider slug"
+		ammo_name = ".38 space-tidershot explosive electroslug"
 		power = 1
 		caliber = CALIBER_REVOLVER
 		cost = 150
@@ -490,7 +483,7 @@ toxic - poisons
 /datum/projectile/bullet/abg
 	name = "rubber slug"
 	ammo_ID = "bullet_shotgun_rubber"
-	ammo_name = "12 gauge rubberized space-clown slug"
+	ammo_name = "12 gauge space-clownshot riotslug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 24
 	ks_ratio = 0.2
@@ -530,7 +523,7 @@ toxic - poisons
 	ks_ratio = 1.0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	caliber = CALIBER_RIFLE_HEAVY
+	caliber = CALIBER_MINIGUN
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -915,7 +908,7 @@ toxic - poisons
 /datum/projectile/bullet/grenade_round
 	name = "40mm round"
 	ammo_ID = "bullet_grenade_nonexplosive"
-	ammo_name = "40mm \"Marv\" slug cartridge"
+	ammo_name = "40mm \"Dummy\" slug cartridge"
 	window_pass = 0
 	icon_state = "40mmR"
 	damage_type = D_KINETIC
@@ -932,7 +925,7 @@ toxic - poisons
 	explosive
 		name = "40mm HEDP round"
 		ammo_ID = "bullet_grenade_hedp"
-		ammo_name = "40mm \"Sensible\" high-explosive dual-purpose grenade cartridge"
+		ammo_name = "40mm \"Sensible\" HEDP grenade cartridge"
 
 		on_hit(atom/hit)
 			explosion_new(null, get_turf(hit), 2.5, 1.75)
@@ -1161,7 +1154,7 @@ toxic - poisons
 
 /datum/projectile/bullet/glitch/gun
 	ammo_ID = "bullet_glitch_gun"
-	ammo_name = "text += \"\[DEAD\]\""
+	ammo_name = "src.text += \"\[DEAD\]\""
 	power = 1
 
 /datum/projectile/bullet/rod // for the coilgun
