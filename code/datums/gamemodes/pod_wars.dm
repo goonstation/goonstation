@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	metal
 		ore_types = list("mauxite" = 100, "cobryl" = 30, "bohrum" = 50, "syreline" = 10, "gold" = 5, "pharosium" = 20)
-		hiddenores = list("nanite_cluster" = 2)
+		hiddenores = list("nanite cluster" = 2)
 		quantity = 10
 		fillerprob = 5
 
