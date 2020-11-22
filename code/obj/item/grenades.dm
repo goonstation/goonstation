@@ -522,7 +522,7 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "emp"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "empar"
+	icon_state_armed = "emp1"
 
 	prime()
 		var/turf/T = ..()
