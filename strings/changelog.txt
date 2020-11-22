@@ -1,4 +1,8 @@
 
+(t)sun nov 22 20
+(u)Kyle, Enakai, & Virvatuli
+(e)🆕🎨|feature, sprites
+(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
 (t)sat nov 21 20
 (u)Gannets
 (p)2772
