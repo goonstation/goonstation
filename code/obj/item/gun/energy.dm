@@ -1596,8 +1596,22 @@
 				shoot_delay = 5
 
 	attack_self(var/mob/M)
+		if (!src.two_handed)
+
+			if(M.l_hand == src)
+				if(M.r_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+			else if(M.r_hand == src)
+				if(M.l_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
 		..()
-		if (setTwoHanded(!src.two_handed))
-			update_icon()
-			M.update_inhands()
+
+		setTwoHanded(!src.two_handed)
+		update_icon()
+
+		M.update_inhands()
 
