@@ -417,4 +417,4 @@
 				src.name = "[src.donor_name]'s synthetic head"
 				src.desc = "Half stone, half tofu, all unfinished."
 
-		src.update_icon()	// so our head actually looks like the thing its supposed to be
+		src.update_icon(makeshitup = 0, initialize_head = 1)	// so our head actually looks like the thing its supposed to be
