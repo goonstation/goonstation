@@ -6,37 +6,16 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-
-import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
-import DOMPurify from 'dompurify';
+import { Fragment } from 'inferno';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
-import { createLogger } from '../logging';
 import { clamp } from 'common/math';
-
-const logger = createLogger('Paper');
+import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
-
-const sanitize_text = value => {
-  // This is VERY important to think first if you NEED
-  // the tag you put in here.  We are pushing all this
-  // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it doesn't
-  // kill href links or such
-  return DOMPurify.sanitize(value, {
-    FORBID_ATTR: ['class', 'style'],
-    ALLOWED_TAGS: [
-      'br', 'code', 'li', 'p', 'pre',
-      'span', 'table', 'td', 'tr',
-      'th', 'ul', 'ol', 'menu', 'font', 'b',
-      'center', 'table', 'tr', 'th',
-    ],
-  });
-};
 
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
@@ -66,7 +45,7 @@ const createIDHeader = index => {
 // we will then output a TEXT input for it that hopefully covers
 // the exact amount of spaces
 const field_regex = /\[(_+)\]/g;
-const field_tag_regex = /\[<input\s+(.*?)id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
+const field_tag_regex = /\[<input\s+(?!disabled)(.*?)\s+id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
 const sign_regex = /%s(?:ign)?(?=\\s|$)/igm;
 
 const createInputField = (length, width, font,
@@ -160,13 +139,11 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
       if (dom_text.length === 0) {
         continue;
       }
-      const sanitized_text = DOMPurify.sanitize(dom.value.trim(), {
-        ALLOWED_TAGS: [],
-      });
+      const sanitized_text = sanitizeText(dom.value.trim(), []);
       if (sanitized_text.length === 0) {
         continue;
       }
-      // this is easyer than doing a bunch of text manipulations
+      // this is easier than doing a bunch of text manipulations
       const target = dom.cloneNode(true);
       // in case they sign in a field
       if (sanitized_text.match(sign_regex)) {
@@ -224,7 +201,7 @@ const Stamp = (props, context) => {
         <Box
           id={active_stamp && "stamp"}
           style={stamp_transform}
-          className="Paper__Stamp-Text">
+          className="paper__stamp-text">
           {image.sprite}
         </Box>
       )}
@@ -232,7 +209,7 @@ const Stamp = (props, context) => {
         <img
           id={active_stamp && "stamp"}
           style={stamp_transform}
-          className="Paper__Stamp"
+          className="paper__stamp"
           src={resolveAsset(image.sprite)}
         />
       )}
@@ -253,8 +230,6 @@ export const PaperSheetView = (props, context) => {
     value = "",
     stamps = [],
     backgroundColor,
-    width,
-    height,
     readOnly,
   } = props;
   const stamp_list = stamps;
@@ -265,19 +240,21 @@ export const PaperSheetView = (props, context) => {
   };
   return (
     <Box
+      className="paper__page"
       position="relative"
       backgroundColor={backgroundColor}
-      width={width || "100%"}
-      height={height || "100%"} >
+      width={"100%"}
+      height={"100%"} >
       <Box
+        className="Paper__Page"
         color="black"
         fillPositionedParent
-        width={width || "100%"}
-        height={height || "100%"}
+        width="100%"
+        height="100%"
         dangerouslySetInnerHTML={text_html}
         p="10px" />
       {stamp_list.map((o, i) => (
-        <Stamp key={i}
+        <Stamp key={o[0] + i}
           image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
       ))}
     </Box>
@@ -292,81 +269,67 @@ class PaperSheetStamper extends Component {
       x: 0,
       y: 0,
       rotate: 0,
-      center: [0, 0],
     };
     this.style = null;
     this.handleMouseMove = e => {
       const pos = this.findStampPosition(e);
       if (!pos) { return; }
-      // center offset of stamp
+      // center offset of stamp & rotate
       pauseEvent(e);
-      this.setState({ x: pos[0], y: pos[1] });
+      this.setState({ x: pos[0], y: pos[1], rotate: pos[2] });
     };
     this.handleMouseClick = e => {
       if (e.pageY <= 30) { return; }
-      let pos = this.findStampPosition(e);
-      if (!pos) {
-        pos = [
-          this.state.x,
-          this.state.y,
-        ];
-      }
       const { act, data } = useBackend(this.context);
       const stamp_obj = {
-        x: pos[0], y: pos[1], r: this.state.rotate,
+        x: this.state.x, y: this.state.y, r: this.state.rotate,
         stamp_class: this.props.stamp_class,
         stamp_icon_state: data.stamp_icon_state,
       };
       act("stamp", stamp_obj);
-      this.setState({ x: pos[0], y: pos[1] });
-    };
-    this.getScroll = e => {
-      return window.scrollX;
     };
   }
 
   findStampPosition(e) {
-    let rotating = false;
+    let rotating;
     const windowRef = document.querySelector('.Layout__content');
     if (e.shiftKey) {
       rotating = true;
-      const radians = Math.atan2(
-        e.pageX - this.state.center[0],
-        e.pageY - this.state.center[1]
-      );
-
-      const degreeOffset = (radians * (180 / Math.PI) * -1);
-
-      // const rotate = { rotate: (this.state.heldX - (e.pageX / 360)) };
-      const rotate = { rotate: degreeOffset };
-      this.setState(() => rotate);
     }
 
-    const stamp = document.getElementById("stamp");
+    if (document.getElementById("stamp"))
+    {
+      const stamp = document.getElementById("stamp");
+      const stampHeight = stamp.clientHeight;
+      const stampWidth = stamp.clientWidth;
 
-    const stampHeight = stamp.clientHeight;
-    const stampWidth = stamp.clientWidth;
+      const currentHeight = rotating ? this.state.y : e.pageY
+      - windowRef.scrollTop - stampHeight;
+      const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
 
-    const currentHeight = rotating ? this.state.y : e.pageY - stampHeight;
-    const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
+      const widthMin = 0;
+      const heightMin = 0;
 
+      const widthMax = (windowRef.clientWidth) - (
+        stampWidth);
+      const heightMax = (windowRef.clientHeight - windowRef.scrollTop) - (
+        stampHeight);
 
-    const widthMin = 0;
-    const heightMin = 0;
+      const radians = Math.atan2(
+        e.pageX - currentWidth,
+        e.pageY - currentHeight
+      );
 
-    const widthMax = (windowRef.clientWidth) - (
-      stampWidth);
-    const heightMax = (windowRef.clientHeight + windowRef.scrollTop) - (
-      stampHeight);
+      const rotate = rotating ? (radians * (180 / Math.PI) * -1)
+        : this.state.rotate;
 
-    const pos = [
-      clamp(currentWidth, widthMin, widthMax),
-      clamp(currentHeight, heightMin, heightMax),
-    ];
-
-    const centerState = { center: pos };
-    this.setState(() => centerState);
-    return pos;
+      const pos = [
+        clamp(currentWidth, widthMin, widthMax),
+        clamp(currentHeight, heightMin, heightMax),
+        rotate,
+      ];
+      return pos;
+    }
   }
 
   componentDidMount() {
@@ -441,7 +404,7 @@ class PaperSheetEdit extends Component {
       // First lets make sure it ends in a new line
       value += value[value.length] === "\n" ? " \n" : "\n \n";
       // Second, we sanitize the text of html
-      const sanitized_text = sanitize_text(value);
+      const sanitized_text = sanitizeText(value);
       const signed_text = signDocument(sanitized_text, pen_color, edit_usr);
       // Third we replace the [__] with fields as markedjs fucks them up
       const fielded_text = createFields(
@@ -607,11 +570,11 @@ export const PaperSheet = (props, context) => {
   const {
     edit_mode,
     text,
-    paper_color,
+    paper_color = "white",
     pen_color = "black",
     pen_font = "Verdana",
     stamps,
-    stamp_class,
+    stamp_class = "",
     sizeX,
     sizeY,
     name,

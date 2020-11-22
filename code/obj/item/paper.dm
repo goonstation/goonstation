@@ -224,11 +224,10 @@
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
 				stamp_overlay.transform = stamp_matrix
 
-				boutput(world, "stamps_[stamps.len % MAX_PAPER_STAMPS_OVERLAYS]")
 				src.UpdateOverlays(stamp_overlay, "stamps_[stamps.len % MAX_PAPER_STAMPS_OVERLAYS]")
-
 				update_static_data(usr,ui)
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
+				var/obj/stamp = ui.user.equipped()
+				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -303,15 +302,7 @@
 		"stamp-time" =  T,
 		"stamp-name" = user.name
 	)
-	if(istype(O, /obj/item/pen/crayon))
-		var/obj/item/pen/crayon/PEN = O
-		data["pen_font"] = PEN.font
-		data["pen_color"] = PEN.font_color
-		data["edit_mode"] = MODE_WRITING
-		data["is_crayon"] = TRUE
-		data["stamp_class"] = "FAKE"
-		data["stamp_icon_state"] = "FAKE"
-	else if(istype(O, /obj/item/pen))
+	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		data["pen_font"] = PEN.font
 		data["pen_color"] = PEN.color
@@ -1277,7 +1268,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/is_reassignable = 1
 	var/assignment = null
 	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
-	var/current_mode = "Granted"
+	var/current_mode = "stamp-ok"
 
 /obj/item/stamp/New()
 	..()

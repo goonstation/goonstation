@@ -152,8 +152,8 @@ class PaperView extends Component {
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView
-          width={'400'}
-          height={'500'}
+          width="400"
+          height="500"
           value={value}
           stamps={stamps}
           readOnly />
