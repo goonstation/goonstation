@@ -274,7 +274,7 @@ datum/preferences
 				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				for( var/name in client.cloudsaves )
+				for( var/name in client.player.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -1861,7 +1861,7 @@ $(function() {
 		*/
 
 		if (!isnull(user) && !IsGuestKey(user.key))
-			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
+			if (link_tags["cloudsave"] && user.client.player.cloudsaves[ link_tags["cloudsave"] ])
 				rebuild_profile = 1
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
@@ -1870,7 +1870,7 @@ $(function() {
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
@@ -1882,14 +1882,14 @@ $(function() {
 							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
 							boutput( user, "<span class='notice'>Savefile saved!</span>" )
-			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
+			else if( link_tags["clouddelete"] && user.client.player.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				rebuild_profile = 1
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
-			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+			else if (link_tags["cloudload"] && user.client.player.cloudsaves[ link_tags["cloudload"] ])
 				for (var/x in rebuild_data)
 					rebuild_data[x] = 1
 				rebuild_profile = 1
