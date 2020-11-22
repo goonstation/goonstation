@@ -1,9 +1,14 @@
 /**
 * uses /datum/action/bar/icon/callback, in code/datums/controllers/action_controls.dm
+*
 * creates an actionbar that calls the specified proc on -either- owner or target if the duration passes without interruption.
+*
 * icon / icon state can also be set. duration should be in seconds. end message is a string that displays once the action succeeds.
+*
 * you can directly instantiate a callback actionbar if you need to modify variables on it that the macro doesnt easily let you do.
+*
 * for instance, callback actionbars have an "args" variable you can modify to call the callback proc with arguements.
+*
 * just make sure to start it once its been made!
 */
 #define SETUP_GENERIC_ACTIONBAR(owner, target, duration, proc_path, action_icon, action_icon_state, end_message) \

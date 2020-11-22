@@ -349,7 +349,8 @@ var/datum/action_controller/actions
 
 /**
 * calls a specified proc if it finishes without interruptions.
-* check [_std/macros/actions.dm](https://github.com/goonstation/goonstation/blob/681d0b0a28ede4f0b7a09f02cf9ff79bb0b23b7c/_std/macros/actions.dm) for macro documentation
+*
+* check [_std/macros/actions.dm] for documentation on a macro that uses this.
 */
 /datum/action/bar/icon/callback
 	/// set to a string version of the callback proc path
