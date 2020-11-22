@@ -347,128 +347,6 @@
 
 	return ..()
 
-/* /obj/item/paper/attackby(obj/item/P as obj, mob/user as mob)
-
-	if (istype(P, /obj/item/pen))
-		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to write.</span>")
-			return ..()
-
-		if (isghostdrone(user))
-			return ..()
-
-		if (src.sealed)
-			boutput(user, "<span class='alert'>You can't write on [src].</span>")
-			return
-
-		var/custom_font = "Georgia"
-		var/custom_color = "black"
-		var/custom_size = 16
-
-		var/obj/item/pen/pen = P
-		if (pen.font)
-			custom_font = pen.font
-		if (pen.font_color)
-			custom_color = pen.font_color
-
-		if (pen.uses_handwriting)
-			custom_font = "Dancing Script"
-			if (user && user.mind && user.mind.handwriting)
-				custom_font = user.mind.handwriting
-			if (islist(src.fonts) && !src.fonts[custom_font])
-				src.fonts[custom_font] = 1
-			custom_font += ", cursive"
-			custom_size += rand(0,4)
-
-		else if (pen.webfont && islist(src.fonts) && !src.fonts[pen.webfont])
-			src.fonts[pen.webfont] = 1
-
-		var/t = input(user, "What text do you wish to add?", "[src.name]", null) as null|message
-		if (!t)
-			return
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
-			return
-		//t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-		t = copytext(html_encode(t), 1, 2*MAX_MESSAGE_LEN)
-		t = replacetext(t, "\n", "<BR>")
-		t = replacetext(t, "\[b\]", "<B>")
-		t = replacetext(t, "\[/b\]", "</B>")
-		t = replacetext(t, "\[i\]", "<I>")
-		t = replacetext(t, "\[/i\]", "</I>")
-		t = replacetext(t, "\[u\]", "<U>")
-		t = replacetext(t, "\[/u\]", "</U>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[/hr\]", "</HR>")
-		t = replacetext(t, "\[sup\]", "<SUP>")
-		t = replacetext(t, "\[/sup\]", "</SUP>")
-		t = replacetext(t, "\[h1\]", "<H1>")
-		t = replacetext(t, "\[/h1\]", "</H1>")
-		t = replacetext(t, "\[h2\]", "<H2>")
-		t = replacetext(t, "\[/h2\]", "</H2>")
-		t = replacetext(t, "\[h3\]", "<H3>")
-		t = replacetext(t, "\[/h3\]", "</H3>")
-		t = replacetext(t, "\[h4\]", "<H4>")
-		t = replacetext(t, "\[/h4\]", "</H4>")
-		t = replacetext(t, "\[li\]", "<LI>")
-		t = replacetext(t, "\[/li\]", "</LI>")
-		t = replacetext(t, "\[ul\]", "<UL>")
-		t = replacetext(t, "\[/ul\]", "</UL>")
-		t = replacetext(t, "\[bq\]", "<BLOCKQUOTE>")
-		t = replacetext(t, "\[/bq\]", "</BLOCKQUOTE>")
-
-		logTheThing("say", user, null, "writes on a piece of paper: [t]")
-
-		t = sign_name(t, user)
-		src.info += "<span style='font-family: [custom_font]; color: [custom_color]; font-size: [custom_size]px'>[t]</span>"
-
-		//src.info += "<font face=[custom_font] color=[custom_color] size='3'> [t] </font>" // shit's hard to read at size 2 goddamn
-		// bad font arguments don't seem to do much
-
-		build_formpoints()
-
-		if (src.icon_state == "paper_blank" && src.info)
-			src.icon_state = "paper"
-	else
-		if (istype(P, /obj/item/stamp) && src.stampable)
-			if ((!in_range(src, usr) && src.loc != user && !(istype(src.loc, /obj/item/clipboard)) && src.loc.loc != user && user.equipped() != P))
-				return
-			var/obj/item/stamp/S = P
-			src.info += "<br>" + S.get_stamp_text() + "<br>"
-			src.icon_state = "paper_stamped"
-			boutput(user, "<span class='notice'>You stamp the paper.</span>")
-
-		else if (issnippingtool(P))
-			boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
-			var/obj/item/paper_mask/M = new /obj/item/paper_mask(src.loc)
-			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
-			usr.u_equip(src)
-			pool(src)
-
-		else if (istype(P, /obj/item/paper) && !istype(P, /obj/item/paper/manufacturer_blueprint))
-			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
-			if (S && S.ammo)
-				var/obj/item/paper_booklet/B = new
-				B.set_loc(src.loc)
-				user.drop_item()
-				B.pages += src
-				B.pages += P
-				src.visible_message("[user] staples [P] under [src].")
-				src.set_loc(B)
-				P.set_loc(B)
-				S.ammo--
-				playsound(user,"sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to staple these papers.</span>")
-
-		else
-			..()
-
-	src.add_fingerprint(user)
-	return */
-
 /obj/item/paper/proc/sign_name(var/t as text, mob/user as mob)
 	var/writing_style = "Dancing Script"
 	if (findtext(t, "\[sign\]") || findtext(t, "\[signature\]"))
@@ -1227,28 +1105,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
 
-/*
-/obj/item/paper_bin/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/paper))
-		user.drop_item()
-		W.set_loc(src)
-	else
-		if (isweldingtool(W))
-			if ((T:try_weld(user,0,1,0,0) && T:weldfuel > 0))
-				viewers(user, null) << text("[] burns the paper with the welding tool!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-		else
-			if (istype(W, /obj/item/device/igniter))
-				viewers(user, null) << text("[] burns the paper with the igniter!", user)
-				SPAWN_DBG( 0 )
-					src.burn(1800000.0)
-					return
-	src.update()
-	return
-*/ //TODO: FIX
-
 /obj/item/stamp
 	name = "Rubber Stamp"
 	desc = "A rubber stamp for stamping important documents."
@@ -1285,34 +1141,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-
-/* /obj/item/stamp/proc/get_stamp_text()
-	var/T = null;
-	switch (src.current_mode)
-		if ("Approved")
-			if (src.assignment)
-				T = "APPROVED ([src.assignment])"
-			else
-				T = "APPROVED"
-		if ("Rejected")
-			if (src.assignment)
-				T = "REJECTED ([src.assignment])"
-			else
-				T = "REJECTED"
-		if ("Void")
-			T = "VOID"
-		if ("X")
-			T = "X"
-		if ("Current Time")
-			if (ticker)
-				var/S = round(ticker.round_elapsed_ticks / 10)
-				T = "SHIFT TIME: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-			else
-				T = "SHIFT TIME"
-		else
-			T = src.current_mode
-	return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>[T]<b>\]</b></span>"
- */
 /obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
@@ -1454,34 +1282,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		special_mode = "Security"
 		is_reassignable = 0
 		assignment = "stamp-law"
-
-/* //		get_stamp_text()
-			var/T = null;
-			switch (src.current_mode)
-				if ("Approved")
-					T = " :o) "
-				if ("Rejected")
-					T = html_encode(" >:o( ")
-				if ("Void")
-					T = "HONK"
-				if ("X")
-					T = pick("X", "!", "#", "?")
-				if ("Current Time")
-					if (ticker)
-						var/S = round(ticker.round_elapsed_ticks / 10)
-						T = "HONK O'CLOCK: [round(S / 3600)]:[add_zero(round(S % 3600 / 60), 2)]:[add_zero(num2text(S % 60), 2)]"
-					else
-						T = "HONK O'CLOCK"
-				else
-					T = src.current_mode
-			return "<span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 24px; color: red;'><b>\[</b><span style='font-family: Comic Sans MS;'>[T]</span><b>\]</b></span>"
- */
-/* who did this
-/obj/item/stamp/New()
-
-	..()
-	return
-WHO DID THIS */
 
 /obj/item/paper/folded
 	name = "folded paper"
