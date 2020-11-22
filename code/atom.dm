@@ -798,7 +798,7 @@
   * there are lots of old places in the code that set loc directly.
 	* ignore them they'll be fixed later, please use this proc in the future
   */
-/atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+/atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
@@ -811,15 +811,15 @@
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
 
-	var/oldloc = loc
+	var/atom/oldloc = loc
 	loc = newloc
 
-	oldloc.Exited(src, newloc)
+	oldloc?.Exited(src, newloc)
 
 	if(my_area != new_area && my_area)
 		my_area.Exited(src, newloc)
 
-	newloc.Entered(src, oldloc)
+	newloc?.Entered(src, oldloc)
 
 	//Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
 	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
