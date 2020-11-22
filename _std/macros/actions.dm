@@ -1,4 +1,4 @@
-/*
+/**
 * creates an actionbar that calls the specified proc on !!either!! owner or target if the duration passes without interruption.
 * icon / icon state can also be set. duration should be in seconds. end message is a string that displays once the action succeeds.
 * you can directly instantiate a callback actionbar if you need to modify variables on it that the macro doesnt easily let you do.
