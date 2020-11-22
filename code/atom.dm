@@ -388,6 +388,8 @@
 			T.checkinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+	if(!isnull(src.loc))
+		src.loc.Entered(src, null)
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
