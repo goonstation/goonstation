@@ -959,6 +959,38 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 
+	hos
+		name = "head of security's smelly old kilt"
+		desc = "An old heirloom, from before space travel. Wearing it takes you back to the good old days. It reeks."
+		var/accent1 = null
+		var/accent2 = null
+		equipped(var/mob/user, var/slot)
+			if (slot == SLOT_W_UNIFORM && user.bioHolder)
+				if (user.bioHolder.HasEffect("accent_scots"))
+					accent1 = 1
+					boutput(user, "Och, this kilt really resonates with ye, what with it being scottish an' all.")
+				else
+					user.bioHolder.AddEffect("accent_scots", 0, 0, 0, 1)
+					boutput(user, "Wearing this kilt really takes you back.")
+				if (user.bioHolder.HasEffect("stinky"))
+					accent2 = 1
+				else
+					user.bioHolder.AddEffect("stinky", 0, 0, 0, 1)
+			..()
+
+		unequipped(var/mob/user)
+			if (user.bioHolder)
+				if(accent1)
+					boutput(user,"Ye scottish blood is repulsed by ye actions, but ye overcome it.")
+				else
+					user.bioHolder.RemoveEffect("accent_scots")
+					boutput(user, "You're reminded of the bleakness of modernity once more.")
+				if(!accent2)
+					user.bioHolder.RemoveEffect("stinky")
+			accent1 = null
+			accent2 = null
+			..()
+
 /obj/item/clothing/under/gimmick/ziggy
 	name = "familiar jumpsuit"
 	desc = "A bold jumpsuit, reminiscent of a long lost, but very loved celebrity from long ago."

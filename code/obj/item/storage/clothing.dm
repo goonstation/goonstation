@@ -23,6 +23,7 @@
 	/obj/item/clothing/under/suit/hos,
 	/obj/item/clothing/under/suit/hos/dress,
 	/obj/item/clothing/under/rank/head_of_securityold/fancy,
+	/obj/item/clothing/under/gimmick/kilt/hos,
 	/obj/item/clothing/suit/wintercoat/command)
 
 /obj/item/storage/box/clothing/hop
