@@ -139,14 +139,16 @@
 
 		if (response.errored || !response.body)
 			logTheThing("debug", src.key, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return
+			return FALSE
 
 		var/list/ret = json_decode(response.body)
 		if(ret["status"] == "error")
 			logTheThing( "debug", src.key, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			return FALSE
 		else
 			cloudsaves = ret["saves"]
 			clouddata = ret["cdata"]
+			return TRUE
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
