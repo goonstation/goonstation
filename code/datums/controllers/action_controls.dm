@@ -346,16 +346,27 @@ var/datum/action_controller/actions
 			del(icon_image)
 		..()
 
-/datum/action/bar/icon/callback //calls a specified proc if it finishes without interruptions, moderately customiseable
-	id = null //set to a string version of the callback proc path
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION //unsure if these will need to be overriden
-	var/proc_path = null //set to the proc path of the proc to be "called back"
-	var/target = null //what the target of the action is, if any
-	var/end_message = ""
-	var/maximum_range = 1 //what is the maximum range target and owner can be apart? need to modify directly before starting the action.
-	var/list/proc_args = null //a list of args for the callback proc, if needed.
 
-	New(var/owner, var/target, var/duration, var/owner_proc_path, var/target_proc_path, var/icon, var/icon_state, var/end_message)
+/**
+* calls a specified proc if it finishes without interruptions.
+* check [_std/macros/actions.dm](https://github.com/goonstation/goonstation/blob/681d0b0a28ede4f0b7a09f02cf9ff79bb0b23b7c/_std/macros/actions.dm) for macro documentation
+*/
+/datum/action/bar/icon/callback
+	/// set to a string version of the callback proc path
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+
+	New(var/owner, var/target, var/duration, var/proc_path, var/icon, var/icon_state, var/end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -367,10 +378,8 @@ var/datum/action_controller/actions
 			src.duration = duration
 		else //no duration dont do the thing
 			CRASH("action bars need a duration to run for, there's no default duration")
-		if (owner_proc_path)
-			src.proc_path = owner_proc_path
-		else if (src.target && target_proc_path) //if we dont have a owner proc path, maybe a target one?
-			src.proc_path = target_proc_path
+		if (proc_path)
+			src.proc_path = proc_path
 		else //no proc, dont do the thing
 			CRASH("no proc was specified to be called once the action bar ends")
 		if (icon) //optional, dont always want an icon
@@ -412,9 +421,9 @@ var/datum/action_controller/actions
 
 		src.owner.visible_message("[src.end_message]")
 		if (src.target)
-			call(src.target, src.proc_path)(arglist(src.proc_args))
+			INVOKE_ASYNC(src.target, src.proc_path, src.proc_args)
 		else
-			call(src.owner, src.proc_path)(arglist(src.proc_args))
+			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
 
 /datum/action/bar/icon/build
 	duration = 30
