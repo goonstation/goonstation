@@ -1969,7 +1969,7 @@ var/list/fun_images = list()
 	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
-/client/proc/vpn_whitelist_remove(ckey as text)
+/client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	try
