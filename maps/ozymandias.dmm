@@ -2909,6 +2909,14 @@
 "aUp" = (
 /turf/simulated/floor/blueblack/corner,
 /area/station/hallway/secondary/north)
+"aUq" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "aUy" = (
 /obj/cable{
 	d1 = 1;
@@ -5722,6 +5730,11 @@
 	dir = 1
 	},
 /area/station/medical/staff)
+"bPy" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "bPG" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -58090,11 +58103,8 @@
 /turf/simulated/floor/stairs/wood,
 /area/station/crew_quarters/arcade)
 "rBU" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = -11
-	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -65590,11 +65600,8 @@
 	name = "Officers' Lounge"
 	})
 "tBL" = (
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = -11
-	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "tBQ" = (
@@ -143638,7 +143645,7 @@ kDK
 xsJ
 xsJ
 tBL
-tBL
+bPy
 wMD
 jRU
 wMD
@@ -143646,7 +143653,7 @@ wMD
 wMD
 jRU
 rBU
-rBU
+aUq
 qwk
 xsJ
 mbb
