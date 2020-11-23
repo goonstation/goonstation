@@ -816,12 +816,13 @@
 
 	oldloc?.Exited(src, newloc)
 
+	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
 	newloc?.Entered(src, oldloc)
 
-	//Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
+	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
 	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
 		new_area.Entered(src, oldloc)
 
