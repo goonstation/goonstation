@@ -429,8 +429,10 @@ toxic - poisons
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		//first hit
 		if (num % 2)
+			//do special shit
 			if (pop == hit)
-				elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+				elecflash(get_turf(hit),radius=0, power=4, exclude_center = 0)
+				random_brute_damage(hit, rand(5,10), 0)
 			pop = null
 
 		else
