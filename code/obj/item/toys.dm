@@ -1111,3 +1111,27 @@ var/list/figure_patreon_rarity = list(\
 
 /obj/item/toy/gooncode/attack()
 	return
+
+/obj/item/toy/cellphone
+	name = "flip phone"
+	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
+	icon = 'icons/obj/cellphone.dmi'
+	icon_state = "cellphone-on"
+	w_class = 2
+	var/datum/game/tetris
+	var/datum/mail
+
+	New()
+		src.contextLayout = new /datum/contextLayout/instrumental(16)
+		src.contextActions = childrentypesof(/datum/contextAction/cellphone)
+		..()
+		START_TRACKING
+		src.tetris = new /datum/game/tetris(src)
+
+	disposing()
+		..()
+		STOP_TRACKING
+
+	attack_self(mob/user as mob)
+		..()
+		user.showContextActions(contextActions, src)
