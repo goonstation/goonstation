@@ -1,5 +1,9 @@
 
 (t)sun nov 22 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Two New Chicken Breeds! See if you can find them all! (Not Secret! Feel free to share with your friends what you find out!)
+(*)You can now make chicken feed out of any food! This statement is most certainly not related to the previous one!
 (u)Flaborized
 (p)2782
 (e)🎨|sprites
