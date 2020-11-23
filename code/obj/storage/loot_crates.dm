@@ -289,7 +289,7 @@
 							items += /obj/item/cigpacket/random
 							item_amounts += rand(2,4)
 				else
-					picker = rand(1,4)
+					picker = rand(1,5)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/shoes/moon
@@ -307,6 +307,10 @@
 						if(4)
 							items += /obj/critter/cat
 							item_amounts += 1
+						if(5)
+							items += /obj/item/device/flyswatter
+							items += /obj/item/storage/box/mousetraps
+							item_amounts += 2
 
 		var/trap_prob = 100
 		var/newlock = null
