@@ -25,50 +25,80 @@
 #define TAIL_ROACH 8
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
-#define IS_MUTANT								1	// so far just makes fat mutants render as male
+/// so far just makes fat mutants render as male
+#define IS_MUTANT								(1<<0)
 
-#define HAS_HUMAN_SKINTONE			2	// Skin tone determined through the usual route
-#define HAS_SPECIAL_SKINTONE		4	// Skin tone defined some other way
-#define HAS_NO_SKINTONE					8	// Please dont tint my mob it looks weird
+/// Skin tone defined through the usual route
+#define HAS_HUMAN_SKINTONE			(1<<1)
+/// Skin tone defined some other way
+#define HAS_SPECIAL_SKINTONE		(1<<2)
+/// Please dont tint my mob it looks weird
+#define HAS_NO_SKINTONE					(1<<3)
 
-// used in appearance holder
-#define HAS_HUMAN_HAIR					16 // Hair sprites are roughly what you set in the prefs
-#define HAS_SPECIAL_HAIR				32 // Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_BODYDETAIL_HAIR					64 // Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_NO_HAIR							128 // Please don't render hair on my wolves it looks too cute
+/// used in appearance holder
+/// Hair sprites are roughly what you set in the prefs
+#define HAS_HUMAN_HAIR					(1<<4)
+/// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
+#define HAS_SPECIAL_HAIR				(1<<5)
+/// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
+#define HAS_BODYDETAIL_HAIR			(1<<6)
+/// Please don't render hair on my wolves it looks too cute
+#define HAS_NO_HAIR							(1<<7)
 
-#define HAS_HUMAN_EYES					256 // We have normal human eyes of human color where human eyes tend to be
-#define HAS_SPECIAL_EYES				512 //	We have different eyes of different color probably somewhere else
-#define HAS_NO_EYES							1024 // We have no eyes and yet must see (cus they're baked into the sprite or something)
 
-#define HAS_HUMAN_HEAD					2048	// Head is roughly human-shaped with no additional features
-#define HAS_SPECIAL_HEAD				4096	// Head is shaped differently, but otherwise just a head
-#define HAS_NO_HEAD							8192	// Don't show their head, its already baked into their icon override
+/// We have normal human eyes of human color where human eyes tend to be
+#define HAS_HUMAN_EYES					(1<<8)
+///We have different eyes of different color probably somewhere else
+#define HAS_SPECIAL_EYES				(1<<9)
+/// We have no eyes and yet must see (cus they're baked into the sprite or something)
+#define HAS_NO_EYES							(1<<10)
 
-#define BUILT_FROM_PIECES				16384	// Use humanlike body rendering process, otherwise use a static icon or something
-#define HAS_EXTRA_DETAILS				32768	// Has a non-head something in their detail slot they want to show off, like lizard splotches. non-tail oversuits count!
-//#define HAS_A_TAIL							65536	// Has a tail. used for checking if tail loss should cause clumsines
-#define WEARS_UNDERPANTS				131072	// Draw underwear on them. can be overridden with human var underpants_override. dont actually do this though
-#define USES_STATIC_ICON				262144	// Mob's body is drawn using a single, flat image and not several flat images slapped together
 
-//non-hairstyle body accessory bitflags
-//corresponds to the color settings in user prefs
-#define BODYDETAIL_1	1	//
-#define BODYDETAIL_2	2	//
-#define BODYDETAIL_3	4	//
+/// Don't show their head, its already baked into their icon override
+#define HAS_NO_HEAD							(1<<13)
 
-#define HAS_HAIR_COLORED_HAIR			8		// Hair (if any) is/are the color/s you/we (hopefully) set/assigned
-#define HAS_SPECIAL_COLORED_HAIR	16	// Hair color is determined some other way
-#define HAS_HAIR_COLORED_DETAILS	32	// Hair color is used to determine the color of certain non-hair things. Like horns or scales
-#define HAS_UNUSED_HAIR_COLOR			64	// Hair color isnt used for anything :/ unused
 
-#define BODYDETAIL_OVERSUIT_1		128		// Has a detail that goes over the suit, like a cute little enormous cow muzzle
-#define BODYDETAIL_OVERSUIT_2		256		// currently unused
-#define BODYDETAIL_OVERSUIT_IS_COLORFUL		512		// The oversuit is colorful, otherwise don't color it. Defaults to first customization color
+/// Use humanlike body rendering process, otherwise use a static icon or something
+#define BUILT_FROM_PIECES				(1<<14)
+/// Has a non-head something in their detail slot they want to show off, like lizard splotches. non-tail oversuits count!
+#define HAS_EXTRA_DETAILS				(1<<15)
+/// Draw underwear on them. can be overridden with human var underpants_override. dont actually do this though
+#define WEARS_UNDERPANTS				(1<<16)
+/// Mob's body is drawn using a single, flat image and not several flat images slapped together
+#define USES_STATIC_ICON				(1<<17)
 
-#define SKINTONE_USES_PREF_COLOR_1		1024	//
-#define SKINTONE_USES_PREF_COLOR_2		2048	// unused... for now
-#define SKINTONE_USES_PREF_COLOR_3		4096	// unused... for now
 
-#define FIX_COLORS										8192	// Clamp customization RBG vals between 50 and 190, lizard-style
-#define	HEAD_HAS_OWN_COLORS						16384	// our head has its own colors that would look weird if tinted
+
+///non-hairstyle body accessory bitflags
+
+///corresponds to the color settings in user prefs
+/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_1
+#define BODYDETAIL_1	(1<<1)
+/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_2
+#define BODYDETAIL_2	(1<<2)
+/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_3
+#define BODYDETAIL_3	(1<<3)
+
+/// Hair color is used to determine the color of certain non-hair things. Like horns or scales
+#define HAS_HAIR_COLORED_DETAILS	(1<<5)
+
+
+/// Has a non-tail detail that goes over the suit, like a cute little enormous cow muzzle
+#define BODYDETAIL_OVERSUIT_1		(1<<6)
+/// The oversuit is colorful, otherwise don't color it. Defaults to first customization color
+#define BODYDETAIL_OVERSUIT_IS_COLORFUL		(1<<7)
+
+
+/// Skintone is determined by the character's first custom color
+#define SKINTONE_USES_PREF_COLOR_1		(1<<8)
+/// Skintone is determined by the character's second custom color
+#define SKINTONE_USES_PREF_COLOR_2		(1<<9)
+/// Skintone is determined by the character's third custom color
+#define SKINTONE_USES_PREF_COLOR_3		(1<<10)
+
+
+/// Clamp customization RBG vals between 50 and 190, lizard-style
+#define FIX_COLORS										(1<<11)
+/// Our head has its own colors that would look weird if tinted
+#define	HEAD_HAS_OWN_COLORS						(1<<12)
+

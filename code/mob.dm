@@ -234,7 +234,6 @@
 	huds = new
 	render_special = new
 	traitHolder = new(src)
-	cooldowns = new
 	if (!bioHolder)
 		bioHolder = new /datum/bioHolder ( src )
 	attach_hud(render_special)

@@ -1,19 +1,3 @@
-/* IMPORTANT NOTES ABOUT THE APPEARANCE HOLDER
-   Hi, auntie Lagg here to explain you how the Appearance Holder makes people look different!
-	 Just about everything visual that isnt already defined in a specific bodypart is defined here
-	 Skin tone, hair / detail colors and styles
-
-	 If your mob uses a different skintone than the one defined by client prefs,
-	 swap the mob_appearance_flags HAS_HUMAN_SKINTONE with HAS_SPECIAL_SKINTONE
-	 and set the skintone in s_tone_special. The body renderer will handle the rest!
-	 This way, if we for whatever reason return to something with human skintone
-	 We can just swap the flags and we'll use our old skintone!
-
-	 more info about appearance and color flags in _std/macrow/_appearace.dm
-	 if your mob is a mutantrace, it'll set the flags here with what's defined by the mutantrace
-	 and hopefully reset them to default human
-
- */
 var/list/bioUids = new/list() //Global list of all uids and their respective mobs
 
 var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
@@ -31,16 +15,33 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /// Holds all the appearance information.
 /datum/appearanceHolder
-	//Holds all the appearance information.
-	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_HUMAN_HEAD | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
-	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+	/** Mob Appearance Flags - used to modify how the mob is drawn
+	*
+	* These flags help define what features get drawn when the mob's sprite is assembled
+	*
+	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	*
+	* SEE: appearance.dm for more flags and details!
+	*/
+	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+	/** Mob Color Flags - used to modify how the mob's features are drawn
+	*
+	* SEE: appearance.dm for more flags and details!
+	*/
+	var/mob_color_flags = null
 
-	var/body_icon = 'icons/mob/human.dmi'	// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
-	var/body_icon_state = "skeleton"	// for mutant races that are rendered using a static icon
+	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
+	var/body_icon = 'icons/mob/human.dmi'
+	/// for mutant races that are rendered using a static icon. Ignored if BUILT_FROM_PIECES is set in mob_appearance_flags
+	var/body_icon_state = "skeleton"
+	/// What DMI holds the mob's head sprite
 	var/head_icon = 'icons/mob/human_head.dmi'
-	var/head_icon_state = "head"	// if our head's state isnt "head"
+	/// What icon state is our mob's head?
+	var/head_icon_state = "head"
 
+	/// What DMI holds the mob's hair sprites
 	var/customization_icon = 'icons/mob/human_hair.dmi'
+	/// What DMI holds any additional hair sprites that we need
 	var/customization_icon_special = 'icons/mob/human_hair.dmi'
 
 	/// The color that gets used for determining your colors
@@ -64,15 +65,25 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_third = "None"
 	var/customization_third_original = "None"
 
-	var/mob_detail_1	// For torso details
-	var/mob_detail_2	// Such as that lizard splotch
-	var/mob_detail_3	// And... that's about it right now
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_1
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_2
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_3
 
-	var/mob_oversuit_1	// For non-tail oversuit details
-	var/mob_oversuit_2	// Like a big muzzle thing that shows through suits
-	var/mob_oversuit_3	// Tail oversuits are defined in tail.dm
 
-	var/datum/mutantrace/mutant_race = null	// for limb-making purposes, like lings
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	/// Not to be used to define a tail oversuit, that's done by the tail organ.
+	/// This is for things like the cow having a muzzle that shows up over their outer-suit
+	var/mob_oversuit_1
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	var/mob_oversuit_2
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	var/mob_oversuit_3
+
+	/// Used by changelings to determine which type of limbs their victim had
+	var/datum/mutantrace/mutant_race = null
 
 	var/e_color = "#101010"
 	var/e_color_original = "#101010"
@@ -130,15 +141,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	New()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
-
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
@@ -210,7 +212,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
-	// TODO: make this work
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 

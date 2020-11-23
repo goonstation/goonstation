@@ -1107,7 +1107,7 @@
 		else
 			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[g]")
 
-		if(!(src.mutantrace /* && src.mutantrace.override_skintone */))
+		if(!src.mutantrace?.override_skintone)
 			// Skin tone
 			if (src.s_tone)
 				src.preview_icon.Blend(src.s_tone ? src.s_tone : "#FFFFFF", ICON_MULTIPLY)
@@ -1116,11 +1116,11 @@
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes")
 
-		if(!(src.mutantrace /* && src.mutantrace.override_eyes */))
+		if(!src.mutantrace?.override_eyes)
 			eyes_s.Blend(src.e_color, ICON_MULTIPLY)
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
-		if(!(src.mutantrace /* && src.mutantrace.override_hair */))
+		if(!src.mutantrace?.override_hair)
 			customization_first_r = customization_styles[customization_first]
 			if(!customization_first_r)
 				customization_first_r = customization_styles_gimmick[customization_first]
@@ -1130,7 +1130,7 @@
 			hair_s.Blend(src.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
-		if(!(src.mutantrace /* && src.mutantrace.override_beard */))
+		if(!src.mutantrace?.override_beard)
 			customization_second_r = customization_styles[customization_second]
 			if(!customization_second_r)
 				customization_second_r = customization_styles_gimmick[customization_second]
@@ -1140,7 +1140,7 @@
 			facial_s.Blend(src.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
-		if(!(src.mutantrace /* && src.mutantrace.override_detail */))
+		if(!src.mutantrace?.override_detail)
 			customization_third_r = customization_styles[customization_third]
 			if(!customization_third_r)
 				customization_third_r = customization_styles_gimmick[customization_third]

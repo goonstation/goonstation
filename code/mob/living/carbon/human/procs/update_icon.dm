@@ -657,23 +657,17 @@
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 
-		//cust_icon = my_head.our_hair_icon
 		image_eyes = my_head.head_image_eyes
 		src.hair_standing.overlays += image_eyes
 
 		if (!seal_hair)
 			image_cust_one = my_head.head_image_cust_one
-			//cust_one_state = my_head.head_image_cust_one.icon_state
 			src.hair_standing.overlays += image_cust_one
 
-		if (!seal_hair)
 			image_cust_two = my_head.head_image_cust_two
-			//cust_two_state = my_head.head_image_cust_two.icon_state
 			src.hair_standing.overlays += image_cust_two
 
-		if (!seal_hair)
 			image_cust_three = my_head.head_image_cust_three
-			//cust_three_state = my_head.head_image_cust_three.icon_state
 			src.hair_standing.overlays += image_cust_three
 
 		UpdateOverlays(hair_standing, "hair", 1, 1)
@@ -873,12 +867,12 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 						else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
 							UpdateOverlays(null, "detail_oversuit")
 
-					if (src.organHolder && src.organHolder.head && AHOLD.mob_appearance_flags & ~HAS_NO_HEAD)
+					if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 						var/obj/item/organ/head/our_head = src.organHolder.head
 						human_head_image = our_head.head_image // head data is stored in the head
 						src.body_standing.overlays += human_head_image
 
-					if (src.organHolder && src.organHolder.tail)
+					if (src.organHolder?.tail)
 						var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
 						human_tail_image = our_tail.tail_image_1
 						src.tail_standing.overlays += human_tail_image
@@ -1021,7 +1015,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 				human_image.color = "#fff"
 
-				if (src.organHolder && src.organHolder.heart)
+				if (src.organHolder?.heart)
 					if (src.organHolder.heart.robotic)
 						heart_image.icon_state = "roboheart"
 						src.body_standing.overlays += heart_image

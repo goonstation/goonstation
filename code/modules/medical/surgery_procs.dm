@@ -1177,7 +1177,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
-						patient.TakeDamage("torso", damage_low, 0)
+						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
 
@@ -1190,7 +1190,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						surgeon, "<span class='alert'>You snip the skin along the base of [surgeon == patient ? "your" : "[patient]'s"] tail with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] the skin along the base of your tail with [src]!</span>")
 
-					patient.TakeDamage("torso", damage_low, 0)
+					patient.TakeDamage("chest", damage_low, 0)
 					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else
@@ -1203,7 +1203,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
-						patient.TakeDamage("torso", damage_low, 0)
+						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low)
 						return 1
 
@@ -1216,7 +1216,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						surgeon, "<span class='alert'>You snip away the last few remaining strings of flesh attaching [surgeon == patient ? "your" : "[patient]'s"] tail to [surgeon == patient ? "your" : "[his_or_her(patient)]"] lower body with [src]!</span>",\
 						patient, "<span class='alert'>[patient == surgeon ? "You snip" : "<b>[surgeon]</b> saws through"] away the last few remaining strings of flesh attaching your tail to your butt with [src]!</span>")
 
-					patient.TakeDamage("torso", damage_low, 0)
+					patient.TakeDamage("chest", damage_low, 0)
 					if (!surgeon.find_type_in_hand(/obj/item/hemostat))
 						take_bleeding_damage(patient, surgeon, damage_low)
 					else

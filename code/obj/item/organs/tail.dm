@@ -39,8 +39,8 @@
 			src.organ_color_2 = AHL.customization_second_color
 			src.donor_AH = AHL
 		else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-			src.organ_color_1 = organ_fix_colors(src.donor_AH.customization_first_color)
-			src.organ_color_2 = organ_fix_colors(src.donor_AH.customization_second_color)
+			src.organ_color_1 = fix_colors(src.donor_AH.customization_first_color)
+			src.organ_color_2 = fix_colors(src.donor_AH.customization_second_color)
 		else	// Just throw some colors in there or something
 			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
 			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
@@ -114,7 +114,7 @@
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
-		if(prob(2) && src.donor.mutantrace)
+		if(probmult(2) && src.donor.mutantrace)
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
 
@@ -229,9 +229,9 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = null
 
-/obj/item/organ/tail/seamonkey
+/obj/item/organ/tail/monkey/seamonkey
 	name = "seamonkey tail"
-	desc = "A long, scaled tail."
+	desc = "A long, pink tail."
 	icon_state = "tail-seamonkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
 	tail_num = TAIL_SEAMONKEY

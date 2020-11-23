@@ -164,7 +164,7 @@
 		src.head_image_eyes.color = AHead.e_color
 
 		// Set up the hair icon
-		if (AHead.mob_appearance_flags & ~HAS_NO_HAIR) // if don't not have hair
+		if (!(AHead.mob_appearance_flags & HAS_NO_HAIR)) // if not have no hair
 			if (AHead.mob_appearance_flags & HAS_HUMAN_HAIR) // which is to say they have hair
 				our_hair_icon = AHead.customization_icon
 			else if (AHead.mob_appearance_flags & HAS_SPECIAL_HAIR) // or special hair

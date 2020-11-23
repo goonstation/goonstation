@@ -3298,19 +3298,19 @@
 		var/mob/living/carbon/human/H = src
 		if(!H?.limbs)
 			return
-		if (H.limbs.l_arm && istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
+		if (istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
 			var/obj/item/parts/human_parts/LA = H.limbs.l_arm
 			LA.colorize_limb_icon()
 			LA.set_skin_tone()
-		if (H.limbs.r_arm && istype(H.limbs.r_arm, /obj/item/parts/human_parts ))
+		if (istype(H.limbs.r_arm, /obj/item/parts/human_parts ))
 			var/obj/item/parts/human_parts/RA = H.limbs.r_arm
 			RA.colorize_limb_icon()
 			RA.set_skin_tone()
-		if (H.limbs.l_leg && istype(H.limbs.l_leg, /obj/item/parts/human_parts ))
+		if (istype(H.limbs.l_leg, /obj/item/parts/human_parts ))
 			var/obj/item/parts/human_parts/LL = H.limbs.l_leg
 			LL.colorize_limb_icon()
 			LL.set_skin_tone()
-		if (H.limbs.r_leg && istype(H.limbs.r_leg, /obj/item/parts/human_parts ))
+		if (istype(H.limbs.r_leg, /obj/item/parts/human_parts ))
 			var/obj/item/parts/human_parts/RL = H.limbs.r_leg
 			RL.colorize_limb_icon()
 			RL.set_skin_tone()
