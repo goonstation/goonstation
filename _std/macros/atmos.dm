@@ -181,6 +181,7 @@ proc/gas_text_color(gas_id)
 
 #define ATMOS_EPSILON 0.0001
 #define MINIMUM_HEAT_CAPACITY	0.0003
+#define MINIMUM_REACT_QUANTITY MINIMUM_HEAT_CAPACITY
 #define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
 /// Given a gas mixture, zeroes it

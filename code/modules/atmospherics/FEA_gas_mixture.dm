@@ -111,13 +111,14 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
+	var/reaction_rate
 
 	if(length(src.trace_gases) > 0)
-		if(src.temperature > 900)
-			if(src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+		if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 				var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in trace_gases
-				if(trace_gas)
-					var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+				if(trace_gas?.moles > MINIMUM_REACT_QUANTITY )
+					reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+					reaction_rate = QUANTIZE(reaction_rate)
 
 					src.carbon_dioxide -= reaction_rate
 					src.oxygen += reaction_rate
@@ -128,8 +129,9 @@ What are the archived variables for?
 
 					reacting = 1
 
-	if(src.temperature > 900 && src.farts && src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
-		var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+		reaction_rate = QUANTIZE(reaction_rate)
 
 		src.carbon_dioxide -= reaction_rate
 		src.toxins += reaction_rate
@@ -174,7 +176,7 @@ What are the archived variables for?
 			src.fuel_burnt += burned_fuel
 
 	//Handle plasma burning
-	if(src.toxins > MINIMUM_HEAT_CAPACITY)
+	if(src.toxins > MINIMUM_REACT_QUANTITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
 		//more energy released at higher temperatures
@@ -189,10 +191,10 @@ What are the archived variables for?
 				plasma_burn_rate = (src.toxins * temperature_scale) / 4
 			else
 				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
-			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				src.toxins -= plasma_burn_rate / 3
-				src.oxygen -= plasma_burn_rate * oxygen_burn_rate
-				src.carbon_dioxide += plasma_burn_rate / 3
+			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
+				src.toxins -= QUANTIZE(plasma_burn_rate / 3)
+				src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
+				src.carbon_dioxide += QUANTIZE(plasma_burn_rate / 3)
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
