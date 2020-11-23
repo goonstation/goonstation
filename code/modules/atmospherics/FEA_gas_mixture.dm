@@ -115,19 +115,19 @@ What are the archived variables for?
 
 	if(length(src.trace_gases) > 0)
 		if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
-				var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in trace_gases
-				if(trace_gas?.moles > MINIMUM_REACT_QUANTITY )
-					reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
-					reaction_rate = QUANTIZE(reaction_rate)
+			var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in trace_gases
+			if(trace_gas?.moles > MINIMUM_REACT_QUANTITY )
+				reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+				reaction_rate = QUANTIZE(reaction_rate)
 
-					src.carbon_dioxide -= reaction_rate
-					src.oxygen += reaction_rate
+				src.carbon_dioxide -= reaction_rate
+				src.oxygen += reaction_rate
 
-					trace_gas.moles -= reaction_rate*0.05
+				trace_gas.moles -= reaction_rate*0.05
 
-					src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+				src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
 
-					reacting = 1
+				reacting = 1
 
 	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
