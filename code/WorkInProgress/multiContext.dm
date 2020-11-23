@@ -267,18 +267,19 @@ var/list/globalContextActions = null
 
 	proc/checkContextActions(var/atom/target)
 		var/list/applicable = list()
-		var/obj/item/W = src.equipped()
-		if(W && length(W.contextActions))
-			for(var/datum/contextAction/C in W.contextActions)
-				var/action = C.checkRequirements(target, src)
-				if(action) applicable.Add(C)
 
 		if(length(target?.contextActions))
 			for(var/datum/contextAction/C in target.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
 
-		if(length(src.contextActions))
+		var/obj/item/W = src.equipped()
+		if(W && W != target && length(W.contextActions))
+			for(var/datum/contextAction/C in W.contextActions)
+				var/action = C.checkRequirements(target, src)
+				if(action) applicable.Add(C)
+
+		if(src != target && length(src.contextActions))
 			for(var/datum/contextAction/C in src.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
