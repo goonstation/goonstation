@@ -114,6 +114,7 @@
 		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
+				src.bioHolder.mobAppearance.gender = src.gender
 				src.bioHolder.mobAppearance.customization_first = "None"
 				src.cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
