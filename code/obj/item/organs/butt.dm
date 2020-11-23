@@ -30,6 +30,7 @@
 	var/datum/organHolder/holder = null
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
 	var/made_from = "butt"
+	var/robotic = 0 // ffs
 
 	disposing()
 		if (donor?.organs)
@@ -196,6 +197,7 @@
 	toned = 0
 	made_from = "pharosium"
 	sound_fart = "sound/voice/farts/poo2_robot.ogg"
+	robotic = 1
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for
 
