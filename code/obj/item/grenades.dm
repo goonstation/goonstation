@@ -903,16 +903,16 @@ PIPE BOMBS + CONSTRUCTION
 		create_reagents(10)
 		reagents.add_reagent("magnesium", 10)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (user.equipped() == src)
 			if (src.primer_burnt)
-				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
+				boutput(user, "<span class='alert'>You accidentally strike the primer, but it's already burnt!</span>")
 				return
 
 			else if (src.slashed)
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
-					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
+					boutput(user, "<span class='alert'>The firework probably should have exploded by now.</span>")
 					src.primer_burnt = TRUE
 					return
 
@@ -924,7 +924,7 @@ PIPE BOMBS + CONSTRUCTION
 					return
 
 			else
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
 					boom(user)
@@ -932,15 +932,13 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/boom(mob/user as mob)
 		var/turf/location = get_turf(src.loc)
-		if (!ishuman(user))
-			return
-		var/mob/living/carbon/human/H = user
 
 		if(location)
 			if((prob(10)) || (src.bootleg_level == 2))
 				explosion(src, location, 0, 0, 1, 1)
 
-				if (src.bootleg_level == 2)
+				if ((src.bootleg_level == 2) && (ishuman(user)))
+					var/mob/living/carbon/human/H = user
 					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 
 			else
@@ -1023,9 +1021,9 @@ PIPE BOMBS + CONSTRUCTION
 		else
 			reagents.add_reagent("magnesium", 10)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (src.bootleg_level > 0)
-			boutput(user, "<span class='alert'>You try to prime the firework, but the contents ignite immediately!</span>")
+			boutput(user, "<span class='alert'>You accidentally prime the firework, and the contents ignite immediately!</span>")
 			boom(user)
 			return
 
