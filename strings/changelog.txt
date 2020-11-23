@@ -1,5 +1,9 @@
 
 (t)mon nov 23 20
+(u)Flourish
+(p)2805
+(e)|
+(+)Fixed the bug where you could clone someone that was just cloned.
 (u)Kubius
 (p)2788
 (e)🆕🗺|feature, mapping
