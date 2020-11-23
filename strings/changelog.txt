@@ -1,5 +1,9 @@
 
 (t)mon nov 23 20
+(u)Kubius
+(p)2788
+(e)🆕🗺|feature, mapping
+(+)Small Kondaru upgrades: some bits of escape widened, a few things in Medbay shuffled about, and a new airlock in Mining.
 (u)adharainspace
 (p)2795
 (e)🆕|feature
