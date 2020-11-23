@@ -22,7 +22,7 @@
 			var/mob/living/critter/MC = M
 			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach))
 				SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
-				if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 					return
 				user.visible_message("<span class='notice'><b>[user] smacks [M] with [src]. KO!</b></span>")
 				playsound(get_turf(M), "sound/effects/electric_shock_short.ogg", 50, 1)
@@ -35,7 +35,3 @@
 				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, 20)
 				return
 		return ..()
-
-
-
-
