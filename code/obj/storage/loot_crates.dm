@@ -309,8 +309,9 @@
 							item_amounts += 1
 						if(5)
 							items += /obj/item/device/flyswatter
+							item_amounts += 1
 							items += /obj/item/storage/box/mousetraps
-							item_amounts += 2
+							item_amounts += 1
 
 		var/trap_prob = 100
 		var/newlock = null
