@@ -162,6 +162,10 @@
 	name = "assistant monkey plush toy"
 	icon_state = "monkey_assistant"
 
+/obj/item/toy/plush/small/monkey/george
+	name = "curious george monkey plush toy"
+	icon_state = "monkey_george"
+
 /obj/item/toy/plush/small/possum
 	name = "possum plush toy"
 	icon_state = "possum"
