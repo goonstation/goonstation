@@ -1543,7 +1543,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 		onUpdate(timePassed)
 			var/oxy_damage = min(20, H.oxyloss, oxygenAmount)
-			if(oxy_damage <= 0)
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
 				endCount += timePassed
 			else
 				endCount = 0
@@ -1567,7 +1567,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 		onUpdate(timePassed)
 			var/oxy_damage = min(20, H.oxyloss)
-			if(oxy_damage <= 0)
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
 				endCount += timePassed
 			else
 				endCount = 0
@@ -1575,7 +1575,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				owner.delStatus(src.id)
 			if (H.oxyloss)
 				H.take_oxygen_deprivation(-oxy_damage)
-				H.TakeDamage("chest", oxy_damage/1, 0)
+				H.TakeDamage("chest", oxy_damage/efficiency, 0)
 				H.losebreath = 0
 
 		getTooltip()
