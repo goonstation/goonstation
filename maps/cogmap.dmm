@@ -57926,14 +57926,17 @@
 	pixel_y = 2
 	},
 /obj/item/storage/wall/medical_wear,
-/turf/simulated/floor/caution/corner/sw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cuV" = (
 /obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "corner_east"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
+/turf/simulated/floor,
 /area/station/medical/medbay)
 "cuW" = (
 /obj/machinery/vending/coffee,
