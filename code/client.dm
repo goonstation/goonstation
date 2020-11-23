@@ -412,6 +412,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		var/image/I = globalImages[key]
 		src << I
 
+	src.volumes = default_channel_volumes.Copy()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
 	SPAWN_DBG(0)
