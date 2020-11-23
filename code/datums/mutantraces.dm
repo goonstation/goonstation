@@ -455,7 +455,7 @@
 						var/obj/item/organ_get = src.mutant_organs[mutorgan]
 						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
 					return
-			if("reset")
+			if("reset") // Make everything mutant back into stock-ass human
 				if(!src.mutant_organs.len)
 					return // All done!
 				else
@@ -466,11 +466,12 @@
 								OHM.drop_organ("tail")
 								if (!drop_tail)
 									qdel(organ_drop)
+								continue // No new tails for humans!
 						else // But everyone has everything else.
 							var/obj/item/organ/org = OHM.get_organ(mutorgan)
 							if (!istype(org) || org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
-							var/obj/item/organ_get = OHM.organ_list[mutorgan] // Get us a new stock human-ass organ
+							var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // Get us a new stock human-ass organ
 							OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
 					return
 
