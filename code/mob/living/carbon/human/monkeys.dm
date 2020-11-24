@@ -102,6 +102,7 @@
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+	icon_state = "monkey"
 	static_type_override = /datum/mutantrace/monkey
 	ai_aggressive = 0
 	ai_calm_down = 1
