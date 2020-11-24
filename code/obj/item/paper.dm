@@ -237,6 +237,7 @@
 				src.icon_state = "paper"
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
+
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
@@ -320,8 +321,8 @@
 		data["is_crayon"] = FALSE
 		data["stamp_icon_state"] = "FAKE"
 		data["stamp_class"] = "FAKE"
-		data["field_counter"] = field_counter
-		data["form_fields"] = form_fields
+	data["field_counter"] = field_counter
+	data["form_fields"] = form_fields
 
 	return data
 
@@ -335,12 +336,18 @@
 	else if(istype(P, /obj/item/stamp))
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
-		return /// Normaly you just stamp, you don't need to read the thing
+		return // Normaly you just stamp, you don't need to read the thing
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
 
 	return ..()
+
+/obj/item/paper/proc/build_fields(var/length)
+	var/pixel_width = (14 + (12 * (length-1)))
+	src.field_counter++
+	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_3" maxlength=[length] size=[length] />\]"}
+
 
 /obj/item/paper/thermal
 	name = "Thermal Paper"
