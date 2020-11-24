@@ -1,6 +1,7 @@
 
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+	icon_state = "monkey"
 	static_type_override = /datum/mutantrace/monkey
 
 	New()
