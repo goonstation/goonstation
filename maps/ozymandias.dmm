@@ -24950,10 +24950,6 @@
 	},
 /area/station/hallway/primary/east)
 "hpC" = (
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "AI Core";
@@ -24962,6 +24958,14 @@
 /obj/access_spawn/ai_upload,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
