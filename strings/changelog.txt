@@ -7,6 +7,8 @@
 (u)UrsulaMajor
 (e)🆕|feature
 (*)Chickens will now let you know how they feel about the different foods they eat with helpful status bubbles!
+(*)New Chicken Breed! Sorta! You'll know what I mean when you see it
+(+)Some major chicken bugfixes in this patch
 (u)Flourish
 (p)2805
 (e)|
