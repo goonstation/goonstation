@@ -1597,3 +1597,11 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		if (src.owner && !(locate(/mob/dead/target_observer/mentor_mouse_observer) in src.owner))
 			owner.delStatus("admin_mouse")
 		. = ..()
+
+/datum/statusEffect/signified
+	id = "signified"
+	name = "Signified"
+	desc = "A Signifier bolt has made you vulnerable! Also you should never be seeing this!"
+	icon_state = null
+	duration = 0.5 SECONDS
+	visible = 0

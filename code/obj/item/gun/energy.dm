@@ -1569,6 +1569,8 @@
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	can_swap_cell = 0
+	var/shotcount = 0
+
 
 	New()
 		current_projectile = new/datum/projectile/energy_bolt/signifer_tase
@@ -1616,3 +1618,11 @@
 
 		M.update_inhands()
 
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(++shotcount == 2)
+			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
+
+	shoot()
+		shotcount = 0
+		. = ..()
