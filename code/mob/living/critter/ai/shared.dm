@@ -89,6 +89,10 @@
 	holder.owner.process_move()
 	LAGCHECK(LAG_LOW)
 
+/datum/aiTask/timed/wander/on_tick()
+	. = ..()
+	holder.stop_move()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
 // a timed task that also relates to a target and the acquisition of said target
