@@ -10,14 +10,11 @@
   $primary: #ffffff,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
-  // Commenting out color maps will adjust all colors based on the lightness
-  // settings above, but will add extra 10KB to the theme.
-  $fg-map-keys: (),
-  $bg-map-keys: (),
 );
 @use '../base.scss' with (
   $color-fg: #000000,
-  $color-bg: #ffffff,
+  $color-bg: #eeeeee,
+  $color-bg-section: #ffffff,
   $color-bg-grad-spread: 0%,
 );
 
