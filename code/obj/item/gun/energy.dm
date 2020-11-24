@@ -1611,6 +1611,7 @@
 		..()
 
 		setTwoHanded(!src.two_handed)
+		src.can_dual_wield = !src.two_handed
 		update_icon()
 
 		M.update_inhands()
