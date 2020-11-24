@@ -1704,6 +1704,12 @@
 			bleed(mob, 10, 3, T)
 			T.react_all_cleanables()
 
+/datum/mutantrace/chicken
+	name = "Chicken"
+	icon_state = "chicken_m"
+	allow_fat = 0
+	human_compatible = 1
+	jerk = 0
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

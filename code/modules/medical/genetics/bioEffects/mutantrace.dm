@@ -163,3 +163,12 @@
 	msgGain = "You feel like you're ready for some Cow RP."
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
+
+/datum/bioEffect/mutantrace/chicken
+	name = "Experimental Strain Epsilon Gamma Gamma #5"
+	desc = "For exclusive use under the supervision of Dr. Cox MD. Unauthorized modification, replication, and distribution prohibited."
+	id = "chicken"
+	mutantrace_option = "Chicken"
+	mutantrace_path = /datum/mutantrace/chicken
+	msgGain = "bwah...bwah..bwah...BWAHCAWCK!"
+	msgLose = "Well that clucks."
