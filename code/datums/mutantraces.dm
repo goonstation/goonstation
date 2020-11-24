@@ -448,9 +448,13 @@
 								OHM.drop_organ("tail")
 								if (!drop_tail)
 									qdel(organ_drop)
-						else // But everyone has everything else.
+						else if(mutorgan == "butt") // butts arent organs
+							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
+							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
+								continue
+						else // everything else is an organ, though
 							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!istype(org) || org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
 								continue
 						var/obj/item/organ_get = src.mutant_organs[mutorgan]
 						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
@@ -458,21 +462,23 @@
 			if("reset") // Make everything mutant back into stock-ass human
 				if(!src.mutant_organs.len)
 					return // All done!
+				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
+					var/obj/organ_drop = OHM.tail
+					OHM.drop_organ("tail")
+					if (!drop_tail)
+						qdel(organ_drop)
 				else
 					for(var/mutorgan in src.mutant_organs)
-						if (mutorgan == "tail") // Humans don't have a tail
-							if (OHM.tail)
-								var/obj/organ_drop = OHM.tail
-								OHM.drop_organ("tail")
-								if (!drop_tail)
-									qdel(organ_drop)
-								continue // No new tails for humans!
-						else // But everyone has everything else.
-							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!istype(org) || org?.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+						if(mutorgan == "butt") // butts arent organs
+							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
+							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
 								continue
-							var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // Get us a new stock human-ass organ
-							OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
+						else // everything else is an organ, though
+							var/obj/item/organ/org = OHM.get_organ(mutorgan)
+							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
+								continue
+						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
+						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace

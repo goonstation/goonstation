@@ -271,10 +271,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
 					src.s_tone = src.customization_third_color
 
-			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
-
 			H.gender = src.gender
 
+			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
 			H.update_body()
 			H.update_clothing()
 

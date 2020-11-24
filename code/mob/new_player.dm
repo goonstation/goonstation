@@ -614,6 +614,9 @@ a.latejoin-card:hover {
 		close_spawn_windows()
 
 		client.preferences.copy_to(new_character,src)
+		if(ishuman(new_character))
+			var/mob/living/carbon/human/H = new_character
+			H.update_colorful_parts()
 		var/client/C = client
 		mind.transfer_to(new_character)
 
