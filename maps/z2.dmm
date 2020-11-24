@@ -75734,7 +75734,7 @@
 /obj/stool/chair/office/green{
 	dir = 1
 	},
-/obj/item/toy/plush/small/monkey/assistant,
+/obj/item/toy/plush/small/monkey/george,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/flourish)
 "dDx" = (

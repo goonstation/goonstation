@@ -305,6 +305,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							</head>
 							<body>
 								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
 							</body>
 						</html>
 					"}

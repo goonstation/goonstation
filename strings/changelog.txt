@@ -2,6 +2,18 @@
 (u)UrsulaMajor
 (e)🆕|feature
 (*)Chickens will now let you know how they feel about the different foods they eat with helpful status bubbles!
+(u)Flourish
+(p)2805
+(e)|
+(+)Fixed the bug where you could clone someone that was just cloned.
+(u)Kubius
+(p)2788
+(e)🆕🗺|feature, mapping
+(+)Small Kondaru upgrades: some bits of escape widened, a few things in Medbay shuffled about, and a new airlock in Mining.
+(u)adharainspace
+(p)2795
+(e)🆕|feature
+(*)new radio songs are now quieter. your ears may rest again....
 (t)sun nov 22 20
 (u)UrsulaMajor
 (e)🆕|feature
