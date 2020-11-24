@@ -1,5 +1,9 @@
 
 (t)mon nov 23 20
+(u)Flourish
+(p)2801
+(e)🆕🎨|feature, sprites
+(+)Added an electric fly swatter that one-hit KOs player bugs. You can find it in locked crates or purchase it from Josh. Sprite stolen from Flaborized!
 (u)Kubius
 (p)2806
 (e)🆕🗺|feature, mapping
