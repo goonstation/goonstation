@@ -785,9 +785,11 @@ var/f_color_selector_handler/F_Color_Selector
 	else
 		s += "<b>[station_name()]</b><br>"
 
-	s += "The classic SS13 experience.<br>"
+	s += "The classic SS13 experience. (<a href=\"https://goonhub.com\">Website</a>|<a href=\"https://discord.gg/0117EEzASKYV2vtek\">Discord</a>)<br>"
 
-	s += "Map: <b>[istext(map_settings.display_name) ? map_settings.display_name : map_settings.name]</b><br>"
+	var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
+	var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
+	s += "Map: <b>[map_link_str]</b><br>"
 
 	var/list/features = list()
 
@@ -812,8 +814,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	if(features)
 		s += "[jointext(features, ", ")]"
-
-	s += " (<a href=\"https://goonhub.com\">Website</a>|<a href=\"https://discord.gg/0117EEzASKYV2vtek\">Discord</a>)"
 
 	/* does this help? I do not know */
 	if (src.status != s)
