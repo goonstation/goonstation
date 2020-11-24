@@ -1,5 +1,9 @@
 
 (t)tue nov 24 20
+(u)Kubius
+(p)2810
+(e)🆕🗺|feature, mapping
+(+)Further Ozymandias changes, most notably a more resilient AI upload and a LOT of electrification.
 (u)Azrun
 (p)2821
 (e)|
