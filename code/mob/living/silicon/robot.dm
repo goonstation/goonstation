@@ -2891,6 +2891,20 @@
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
 
+	proc/collapse_to_pieces()
+		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
+		var/turf/T = get_turf(src)
+		for(var/obj/item/parts/robot_parts/R in src.contents)
+			R.set_loc(T)
+		src.part_chest = null
+		src.part_head = null
+		src.part_arm_l = null
+		src.part_arm_r = null
+		src.part_leg_l = null
+		src.part_leg_r = null
+		qdel(src)
+		return
+
 /mob/living/silicon/robot/var/image/i_batterydistress
 
 /mob/living/silicon/robot/proc/batteryDistress()

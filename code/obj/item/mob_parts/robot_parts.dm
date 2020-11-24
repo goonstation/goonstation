@@ -1091,11 +1091,7 @@
 				return 1
 		return 0
 
-	proc/collapse_to_pieces()
-		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
-		. = get_turf(src)
-		for(var/obj/item/O in src.contents)
-			O.set_loc(.)
+	proc/reset_frame()
 		src.chest = null
 		src.head = null
 		src.l_arm = null
@@ -1103,7 +1099,6 @@
 		src.l_leg = null
 		src.r_leg = null
 		src.updateicon()
-		return
 
 	proc/finish_cyborg()
 		var/mob/living/silicon/robot/O = null
@@ -1123,13 +1118,13 @@
 			else if (src.head.ai_interface)
 				O.ai_interface = src.head.ai_interface
 			else
-				src.collapse_to_pieces()
-				qdel(O)
+				O.collapse_to_pieces()
+				src.reset_frame()
 				return
 		else
 			// how the fuck did you even do this
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
 		if(O.brain?.owner?.key)
@@ -1140,8 +1135,8 @@
 			var/mob/M = find_ghost_by_key(O.brain.owner.ckey)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
-				O.brain = null // don't wanna delete the brain!
-				qdel(O)
+				O.collapse_to_pieces()
+				src.reset_frame()
 				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
@@ -1158,8 +1153,8 @@
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(get_turf(src), "sound/weapons/radxbow.ogg", 40, 1)
 		else
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
 		if (src.chest && src.chest.cell)
