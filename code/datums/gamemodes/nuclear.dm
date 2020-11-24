@@ -473,6 +473,7 @@ var/syndicate_name = null
 			losses = 0
 		var/dat = ""
 		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
 
 		src.add_dialog(user)
 		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
