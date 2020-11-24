@@ -667,7 +667,7 @@ obj/item/gnomechompski/elf
 	rechargeable = 0
 	custom_cell_max_capacity = 100
 	ammo = new/obj/item/ammo/power_cell/self_charging
-	firemodes = list(list("name" = "wonk", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/wonk))
+	firemodes = list(/datum/firemode/own_proj/owl/wonk)
 
 	update_icon()
 		if(src.loaded_magazine)

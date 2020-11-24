@@ -192,7 +192,7 @@
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
 				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))
 				L.firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = src.our_projectile))
-
+#warn FIX THIS TOO
 				L.current_projectile = new src.our_projectile
 				if (!isnull(src.our_projectile2))
 					L.firemodes += list("name" = "burst-fire", "burst_count" = 3, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = src.our_projectile2)

@@ -16,7 +16,7 @@
 	fixed_mag = TRUE
 	accepted_mag = null
 	ammo = /obj/item/ammo/bullets/empty
-	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/syringe))
+	firemodes = list(/datum/firemode/own_proj/reagent)
 
 	New()
 		src.create_reagents(capacity)
@@ -169,7 +169,7 @@
 	ammo_reagents = list("ectoplasm")
 	force = 7.0
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
-	firemodes = list(list("name" = "15-units", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/ectoblaster))
+	firemodes = list(/datum/firemode/own_proj/reagent/ectoplasm)
 
 	update_icon()
 		if(src.reagents)

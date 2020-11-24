@@ -66,7 +66,7 @@
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	fixed_mag = TRUE
 	custom_cell_max_capacity = 100
-	firemodes = list(list("name" = "si.ng.le.sh.ot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt/flockdrone))
+	firemodes = list(/datum/firemode/own_proj/taser/flock)
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
 	if(isflock(user))

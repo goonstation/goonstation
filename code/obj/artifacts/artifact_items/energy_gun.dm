@@ -108,7 +108,7 @@
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
 	module_research_insight = 3
-
+#warn UNFUCK IT
 	New()
 		..()
 		var/bullet_num = rand(1,3)

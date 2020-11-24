@@ -220,7 +220,7 @@ proc/Create_Tommyname()
 	force = 0.0
 	desc = "It smells of cheap cologne and..."
 	ammo = /obj/item/ammo/power_cell/high_power
-	firemodes = list(list("name" = "fully autommytic", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/tommy))
+	firemodes = list(/datum/firemode/own_proj/tommy)
 
 	update_icon()
 		return
@@ -408,7 +408,7 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
 	ammo = /obj/item/ammo/power_cell/high_power
-	firemodes = list(list("name" = "violate rule 5", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = /datum/projectile/energy_bolt_v/trumpet))
+	firemodes = list(/datum/firemode/own_proj/trump)
 
 ////////////////////////////// Power machine
 /obj/machinery/power/debug_generator

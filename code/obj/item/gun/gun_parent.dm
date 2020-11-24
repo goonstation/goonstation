@@ -55,7 +55,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/can_reload = TRUE
 
 	/// List of sounds to play
-	/// format: list(GUN_SOUND_DEF = "sound")
+	/// format: list(GUN_SOUND_DEF = "sound") // DATUMIZE
 	var/list/gunsounds = list(LOAD_SINGLE = "sound/weapons/gun_cocked_colt45.ogg",\
 	                          LOAD_MULTIPLE = "sound/musical_instruments/Airhorn_1.ogg",\
 	                          LOAD_MAGAZINE = "sound/musical_instruments/Airhorn_1.ogg",\
@@ -104,10 +104,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/refire_delay = (0.7 DECI SECONDS)
 	/// If not 0, the bullet will shoot off course by between 0 and this number degrees
 	var/spread_angle = 0
-	/// List of firemodes, changes how the gun fires
-	/// structure: list(list("name" = "name of mode", "burst_count" = burst, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = null))
-	/// if "projectile" is blank, it'll use the projectile stored in the magazine
-	var/list/firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7, "shoot_delay" = 4, "spread_angle" = 0, "projectile" = null))
+	/// Firemode datum, changes how the gun fires
+	var/list/firemodes = list(/datum/firemode)
 	/// Our current firemode's index
 	var/firemode_index = 1
 
@@ -272,7 +270,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (user)
 		boutput(user, "<span class='alert'>No lock to break!</span>")
 	return FALSE
-
+#warn MAKETHISWORK
 /obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
 	if(initialize)
 		if(!src.firemodes.len) // Not spawned with a list of firemodes? Generate one from the current settings
