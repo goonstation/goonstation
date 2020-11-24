@@ -1,5 +1,9 @@
 
 (t)tue nov 24 20
+(u)Azrun
+(p)2821
+(e)|
+(+)Special TEG variants should now produce power again.
 (u)TTerc
 (p)2815
 (e)🗺|mapping
