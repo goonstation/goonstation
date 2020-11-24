@@ -1,4 +1,7 @@
-
+(t)mon nov 23 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Chickens will now let you know how they feel about the different foods they eat with helpful status bubbles!
 (t)sun nov 22 20
 (u)UrsulaMajor
 (e)🆕|feature
