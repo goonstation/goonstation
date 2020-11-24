@@ -180,10 +180,8 @@ datum/pathogeneffects/benevolent/oxygenconversion
 		if (!origin.symptomatic)
 			return
 		var/mob/living/carbon/C = M
-		var/oxy_damage = max(20, C.get_oxygen_deprivation())
-		if (C.oxyloss || oxy_damage > 20)
-			var/datum/statusEffect/patho_oxy_speed/bad/POS = C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS)
-			POS.efficiency = origin.stage/2.5 // more efficient conversion at higher stages
+		if (C.oxyloss)
+			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
 
 datum/pathogeneffects/benevolent/oxygenstorage
 	name = "Oxygen Storage"
@@ -200,11 +198,9 @@ datum/pathogeneffects/benevolent/oxygenstorage
 			origin.symptom_data["oxygen_storage"] = 0
 
 		var/mob/living/carbon/C = M
-		var/oxy_damage = max(20, C.get_oxygen_deprivation())
-		if (C.oxyloss || oxy_damage > 20)
+		if (C.oxyloss)
 			if(origin.symptom_data["oxygen_storage"] > 10)
-				var/datum/statusEffect/patho_oxy_speed/POS = C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS)
-				POS.oxygenAmount = origin.symptom_data["oxygen_storage"]
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
 				origin.symptom_data["oxygen_storage"] = 0
 		else
 			// faster reserve replenishment at higher stages

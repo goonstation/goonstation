@@ -1532,7 +1532,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/mob/living/carbon/human/H
 		var/endCount = 0
 
-		onAdd()
+		onAdd(optional)
+			src.oxygenAmount = optional
 			if(iscarbon(owner))
 				H = owner
 			else
@@ -1561,6 +1562,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/efficiency = 1
 
 		onAdd(optional)
+			src.efficiency = optional
 			..()
 			if(H)
 				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
