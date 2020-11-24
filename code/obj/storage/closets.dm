@@ -4,7 +4,6 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
-	event_handler_flags = NO_MOUSEDROP_QOL
 
 	New()
 		. = ..()
