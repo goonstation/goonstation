@@ -171,7 +171,7 @@
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
 			return
-		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $HE, $HIS, $HIM", "Custom Arrival Alert", src.arrivalalert) as null|text
+		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert) as null|text
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))
@@ -202,7 +202,7 @@
 			src.announcement_radio = new(src)
 
 		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$HE", "[he_or_she(person)]"), "$HIM", "[him_or_her(person)]"), "$HIS", "[his_or_her(person)]")
+		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
