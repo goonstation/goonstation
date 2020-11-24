@@ -1,4 +1,11 @@
 
+(t)tue nov 24 20
+(u)Azrun
+(p)2520
+(e)🆕|feature
+(*)Circulators now hold "lubricant" (accessible by opening maintenance hatch with screwdriver). See what it likes!
+(*)Circulators and TEG now stamped with a serial number.  More experimental models to come!
+(+)Furnaces now slowly heat up and are more accepting of alternative fuel sources.
 (t)mon nov 23 20
 (u)Flourish
 (p)2801
