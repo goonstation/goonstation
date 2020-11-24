@@ -48,6 +48,10 @@
 	event_effect(var/source)
 		if(src.lock)
 			return
+#ifdef RP_MODE
+		if(source=="random")
+			return
+#endif
 		if (src.admin_override != 1)
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
