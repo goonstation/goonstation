@@ -89,6 +89,10 @@
 	holder.owner.process_move()
 	LAGCHECK(LAG_LOW)
 
+/datum/aiTask/timed/wander/on_reset()
+	. = ..()
+	holder.stop_move()
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
