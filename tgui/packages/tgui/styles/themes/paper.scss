@@ -10,6 +10,7 @@
   $primary: #ffffff,
   $bg-lightness: 25%,
   $fg-lightness: -10%,
+  //we need to recalculate the color maps for a lighter theme.
 );
 @use '../base.scss' with (
   $color-fg: #000000,
