@@ -1,4 +1,9 @@
+
 (t)mon nov 23 20
+(u)Kubius
+(p)2806
+(e)🆕🗺|feature, mapping
+(+)All active Kubius maps (Kondaru, Ozymandias, Fleet, and Icarus) are now chicken-enabled.
 (u)UrsulaMajor
 (e)🆕|feature
 (*)Chickens will now let you know how they feel about the different foods they eat with helpful status bubbles!
