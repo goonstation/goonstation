@@ -1145,8 +1145,6 @@
 						B.owner = M.ghostize()?.mind
 						qdel(M)
 					B.owner.transfer_to(src)
-					if (B.owner.current.client)
-						src.lastKnownIP = B.owner.current.client.address
 					if (src.emagged || src.syndicate)
 						src.handle_robot_antagonist_status("brain_added", 0, user)
 
