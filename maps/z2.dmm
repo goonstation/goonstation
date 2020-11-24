@@ -77924,6 +77924,15 @@
 	},
 /area/centcom/lounge)
 "dJl" = (
+/obj/decal/fakeobjects{
+	anchored = 2;
+	desc = "By order of the NTPS Postmaster General";
+	dir = 1;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "constructionsign";
+	name = "repairs in progress";
+	true_name = "repairs in progress"
+	},
 /turf/unsimulated/floor/stairs{
 	dir = 4
 	},
