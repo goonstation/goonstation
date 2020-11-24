@@ -1711,6 +1711,13 @@
 	human_compatible = 1
 	jerk = 0
 
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (mob.emote_check(voluntary, 50))
+					. = "<B>[mob]</B> BWAHCAWCKs!"
+					playsound(get_turf(mob), "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, mob.get_age_pitch())
+
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R
 #undef OVERRIDE_LEG_R
