@@ -780,10 +780,14 @@ var/f_color_selector_handler/F_Color_Selector
 	if (config?.server_name)
 		s += "<b>[config.server_name]</b> &#8212; "
 
-	if (ticker?.mode)
-		s += "<b>[istype(ticker.mode, /datum/game_mode/construction) ? "Construction Mode" : station_name()]</b>"
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
+		s += "<b>Construction Mode</b><br>"
 	else
-		s += "<b>[station_name()]</b>"
+		s += "<b>[station_name()]</b><br>"
+
+	s += "The classic SS13 experience.<br>"
+
+	s += "Map: <b>[map_settings.display_name ? map_settings.display_name : map_settings.name]</b><br>"
 
 	var/list/features = list()
 
@@ -806,17 +810,10 @@ var/f_color_selector_handler/F_Color_Selector
 	features += "Ass Jam"
 #endif
 
-	var/n = length(clients)
-
-	if(n == 1)
-		features += "~[n] player"
-	else
-		features += "~[n] players"
-
 	if(features)
 		s += ": [jointext(features, ", ")]"
 
-	s += " (<a href=\"https://ss13.co\">Website</a>)"
+	s += " (<a href=\"https://goonhub.com\">Website</a> | <a href=\"https://discord.gg/0117EEzASKYV2vtek\">Discord</a>)"
 
 	/* does this help? I do not know */
 	if (src.status != s)
