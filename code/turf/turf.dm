@@ -348,8 +348,6 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
-			if(A == thing)
-				continue
 			// I Said No sanity check
 			if(i++ >= 50)
 				break
