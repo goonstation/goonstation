@@ -504,4 +504,5 @@ toxic - poisons
 			if(hit.hasStatus("signified"))
 				elecflash(get_turf(hit),radius=0, power=4, exclude_center = 0)
 				random_brute_damage(hit, rand(5,10), 0)
+				hit.delStatus("signified")
 			..()
