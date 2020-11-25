@@ -67,16 +67,16 @@
 	get_desc(dist, mob/user)
 		if(dist <= 5)
 			. += "[repair_desc]"
-			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
+			. += "<br><span class='notice'>The maintenance panel is [src.is_open_container() ? "open" : "closed"].</span>"
 		if(dist <= 2)
 			. += "<br><span class='notice'>Serial Number: [serial_num].</span>"
-		if(dist <= 2 && reagents && (src.flags & OPENCONTAINER) )
+		if(dist <= 2 && reagents && is_open_container() )
 			. += "<br><span class='notice'>The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].</span>"
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		var/open =  flags & OPENCONTAINER
+		var/open = is_open_container()
 
 		// Weld > Crowbar > Rods > Weld
 		if(open && repairstate)
@@ -136,6 +136,8 @@
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
+				if(src.reagents.has_reagent("voltagen", 1))
+					fan_power_draw = 0
 		else if(pressure_delta < 0)
 			gas_input = air2
 			gas_output = air1
@@ -170,6 +172,7 @@
 	// This is special handeling for reagent interactions and reagent reactions with circulator
 	proc/handle_reactions(var/datum/gas_mixture/gas_passed)
 		var/reaction_temp = 0
+		var/reagent_amount
 
 		// Interactions with circulator
 		if( !(src.circulator_flags & LEAKS_LUBE)							\
@@ -179,15 +182,25 @@
 		  && prob(2))
 			src.circulator_flags |= LEAKS_LUBE
 			src.repairstate = 1
-			if((circulator_flags & OPENCONTAINER) && src.reagents.total_volume )
+			if(src.is_open_container() && src.reagents.total_volume )
 				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
 				playsound(src.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
 			else
-				src.audible_message("<span class='alert'>An usettling gurgling sound can be heard from [src].</span>")
+				src.audible_message("<span class='alert'>An unsettling gurgling sound can be heard from [src].</span>")
 				playsound(src.loc, "sound/effects/bubbles3.ogg", 20, 1, -3, pitch=0.7)
 
 			src.repair_desc = "Lubrication system is a mess and needs replacing, the piping needs to be cut up with a welder prior to removal."
 
+		if( src.reagents.has_reagent("hugs") && src.generator.grump && prob(5) )
+			reagent_amount = src.reagents.get_reagent_amount("hugs")
+			src.generator.grump -= reagent_amount * 5
+			src.reagents.remove_reagent("hugs", 1)
+			src.audible_message("<span class='alert'>The [src] makes a fun gurgling sound.</span>")
+
+		if( src.reagents.has_reagent("love") && src.generator.grump && prob(5)  )
+			src.reagents.remove_reagent("love", 1)
+			src.generator.grump -= 100
+			src.audible_message("<span class='alert'>A remarkable sound of contentment can be heard from [src]. How wonderful!</span>")
 
 		// Interactions with transferred gas
 		if(gas_passed)
