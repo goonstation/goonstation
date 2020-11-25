@@ -28,7 +28,7 @@
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
 			qdel(src)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -56,7 +56,7 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
-	spawn_contents = list(/obj/item/crowbar,\
+	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/device/radio)
@@ -279,7 +279,7 @@
 			asize++
 		acount++
 	src.playsound_local(src.loc,"sound/effects/screech.ogg", 100, 1)
-	shake_camera(src, 20, 1)
+	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
 	return
@@ -293,6 +293,7 @@
 	stage_prob = 8
 
 	New()
+		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
 	stage_act()

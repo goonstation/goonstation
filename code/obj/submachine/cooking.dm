@@ -21,7 +21,7 @@
 			user.show_text("You add water to the rice to make sticky rice!", "blue")
 			new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(src.loc)
 			qdel(W)
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/))
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
 			if (fill == W.reagents.total_volume)
 				user.show_text("[W] is too full already.", "red")
@@ -393,6 +393,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
+			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
+			src.recipes += new /datum/cookingrecipe/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
@@ -714,6 +716,9 @@ table#cooktime a#start {
 		if (isghostdrone(user))
 			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return
 		if (src.working)
 			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
@@ -1000,6 +1005,7 @@ var/list/mixer_recipes = list()
 	var/working = 0
 
 	New()
+		..()
 		src.recipes = mixer_recipes
 		if (!src.recipes)
 			src.recipes = list()

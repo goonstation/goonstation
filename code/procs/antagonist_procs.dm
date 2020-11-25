@@ -49,7 +49,7 @@
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 		boutput(traitor_mob, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
 		SHOW_TRAITOR_HARDMODE_TIPS(traitor_mob)
 		return
@@ -197,7 +197,7 @@
 		loc = "in your backpack"
 		if (traitor_mob.equip_if_possible(R, traitor_mob.slot_in_backpack) == 0)
 			loc = "on the floor"
-			R.loc = get_turf(traitor_mob)
+			R.set_loc(get_turf(traitor_mob))
 
 	if (istype(R, /obj/item/device/pda2))
 		var/obj/item/device/pda2/P = R
@@ -221,6 +221,7 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
 		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
+		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
 	else
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
@@ -230,10 +231,7 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
-	//synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
-	synd_mob.equip_if_possible(new /obj/item/remote/syndicate_teleporter(synd_mob), synd_mob.slot_l_store)
-	//synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
 /*
 	var/obj/item/uplink/syndicate/U = new /obj/item/uplink/syndicate/alternate(synd_mob)
@@ -243,6 +241,8 @@
 */
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
+	if(leader)
+		I = new /obj/item/card/id/syndicate/commander(synd_mob)
 	I.icon_state = "id"
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
@@ -253,7 +253,7 @@
 	M.implanted(synd_mob)
 
 	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		the_frequency = N.agent_radiofreq
 

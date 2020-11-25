@@ -116,6 +116,12 @@
 		icon_state = "jacket_yellow"
 		item_state = "jacket_yellow"
 
+	sparkly
+		name = "sparkly jacket"
+		desc = "No glitter. No LEDs. Just magic!"
+		icon_state = "jacket_sparkly"
+		item_state = "jacket_sparkly"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -304,6 +310,10 @@
 	permeability_coefficient = 0.005
 	over_hair = 1
 
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.6)
@@ -338,7 +348,7 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/det_suit/hos
-	name = "HoS jacket"
+	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
@@ -374,6 +384,12 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
+
+/obj/item/clothing/suit/apron/botanist
+	name = "blue apron"
+	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+	icon_state = "apron-botany"
+	item_state = "apron-botany"
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -1049,7 +1065,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 3)
+			setProperty("exploprot", 40)
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
@@ -1070,6 +1086,12 @@
 		desc = "A syndicate issue combat dress system, pressurized for space travel."
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 20)
+			setProperty("meleeprot", 4)
+			setProperty("rangedprot", 1.5)
 
 		medic
 			name = "specialist operative medic uniform"
@@ -1103,6 +1125,13 @@
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+
+		grenadier
+			name = "specialist operative bombsuit"
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 60)
 
 		unremovable
 			cant_self_remove = 1
@@ -1193,7 +1222,7 @@
 		setProperty("radprot", 50)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 25)
-		setProperty("exploprot", 3)
+		setProperty("exploprot", 30)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
@@ -1237,7 +1266,7 @@
 		setProperty("radprot", 25)
 		setProperty("coldprot", 50)
 		setProperty("heatprot", 15)
-		setProperty("exploprot", 2)
+		setProperty("exploprot", 20)
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
@@ -1278,6 +1307,13 @@
 		item_state = "hasturcultist"
 		over_all = 1
 
+	nerd
+		name = "robes of dungeon mastery"
+		desc = "Neeeeerds."
+
+		New()
+			. = ..()
+			src.enchant(min(rand(1, 5), rand(1, 5)))
 
 /obj/item/clothing/suit/flockcultist
 	name = "weird cultist robe"

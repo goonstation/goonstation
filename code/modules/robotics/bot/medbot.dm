@@ -226,7 +226,7 @@
 
 
 /obj/machinery/bot/medbot/Move(var/turf/NewLoc, direct)
-	..()
+	. = ..()
 	if (src.patient && (get_dist(src,src.patient) <= 1))
 		if (!src.currently_healing)
 			src.currently_healing = 1
@@ -545,7 +545,7 @@
 			if ((get_dist(src, src.patient) <= 1) && (src.on))
 				if ((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
-					src.reagent_glass.reagents.reaction(src.patient, 2)
+					src.reagent_glass.reagents.reaction(src.patient, 2, src.injection_amount)
 				else
 					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
 				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")

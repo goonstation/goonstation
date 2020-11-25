@@ -9,7 +9,7 @@
 		..()
 		if(halloween_mode)
 			return
-		if(emergency_shuttle && emergency_shuttle.location) //it's too late!
+		if(emergency_shuttle?.location) //it's too late!
 			return
 		halloween_mode = 1
 
@@ -36,7 +36,7 @@
 		/obj/item/device/key/haunted,
 		/obj/item/book_kinginyellow)
 
-		var/list/halloweenspawn_temp = halloweenspawn.Copy()
+		var/list/halloweenspawn_temp = landmarks[LANDMARK_HALLOWEEN_SPAWN].Copy()
 		var/turf/majorspawn = pick(halloweenspawn_temp)
 		halloweenspawn_temp.Remove(majorspawn)
 

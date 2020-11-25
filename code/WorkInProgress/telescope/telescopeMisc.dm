@@ -74,10 +74,12 @@ var/list/magnet_locations = list()
 
 	proc/lrtsend(var/place)
 		if (place && src.is_good_location(place))
-			var/turf/target = null //set later
-			for (var/obj/landmark/lrt/potential in landmarks)
-				if (potential.name == place) //if the place we want to go has a matching landmark
-					target = potential.held_turf
+			var/turf/target = null
+			for(var/turf/T in landmarks[LANDMARK_LRT])
+				var/name = landmarks[LANDMARK_LRT][T]
+				if(name == place)
+					target = T
+					break
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
@@ -97,10 +99,12 @@ var/list/magnet_locations = list()
 
 	proc/lrtrecieve(var/place)
 		if (place && src.is_good_location(place))
-			var/turf/target = null //set later
-			for (var/obj/landmark/lrt/potential in landmarks)
-				if (potential.name == place) //if the place we want to go has a matching landmark
-					target = potential.held_turf
+			var/turf/target = null
+			for(var/turf/T in landmarks[LANDMARK_LRT])
+				var/name = landmarks[LANDMARK_LRT][T]
+				if(name == place)
+					target = T
+					break
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1

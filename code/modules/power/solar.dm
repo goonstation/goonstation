@@ -46,7 +46,7 @@
 		sun_angle = angle
 
 		//set icon dir to show sun illumination
-		dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
+		set_dir(turn(NORTH, -angle - 22.5))	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 		// find all solar controls and update them
 		// currently, just update all controllers in world
@@ -146,7 +146,10 @@
 	else
 		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 		src.icon_state = "solar_panel"
-		src.dir = angle2dir(adir)
+		// src.set_dir(angle2dir(adir))
+		src.set_dir(NORTH)
+		animate(src, time=rand(0.1 SECONDS, 9 SECONDS))
+		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	if(obscured)
@@ -175,12 +178,13 @@
 			control.gen += sgen
 
 	if(adir != ndir)
-		SPAWN_DBG(10+rand(0,15))
-			var/old_adir = adir
-			adir = (360+adir+clamp(ndir-adir,-10,10))%360
-			if (round((old_adir+22.5)%360) != round((old_adir+22.5)%360)) // it's basically angle2dir except it returns wrong values, but it changes when angle2dir changes and stays the same when angle2dir stays the same
-				updateicon()
-			update_solar_exposure()
+		var/old_adir = adir
+		var/max_move = rand(8, 12)
+		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
+		if(adir != old_adir)
+			updateicon()
+
+		update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	status |= BROKEN
@@ -282,7 +286,7 @@
 		if (!solcon)
 			solcon = new /obj/overlay {icon='icons/obj/computer.dmi'; icon_state="solcon-o";} (src)
 
-		solcon.dir = angle2dir(cdir)
+		solcon.set_dir(angle2dir(cdir))
 		overlays += solcon
 	*/
 	return

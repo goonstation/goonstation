@@ -64,10 +64,11 @@ client/proc/replace_space()
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
+
 	var/type = 0
 	if(L.len == 1)
 		type = L[1]
@@ -79,7 +80,7 @@ client/proc/replace_space()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, "began to convert all space tiles into an ocean of [reagent.id].")
+	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
 	SPAWN_DBG(0)
@@ -105,10 +106,11 @@ client/proc/replace_space_exclusive()
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
-		for(var/R in childrentypesof(/datum/reagent))
+		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
 	else
-		L = childrentypesof(/datum/reagent)
+		L = concrete_typesof(/datum/reagent)
+
 	var/type = 0
 	if(L.len == 1)
 		type = L[1]
@@ -120,7 +122,7 @@ client/proc/replace_space_exclusive()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, "began to convert all station space tiles into an ocean of [reagent.id].")
+	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
 	SPAWN_DBG(0)
@@ -143,12 +145,14 @@ client/proc/replace_space_exclusive()
 
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
-			if (S.z != 1) continue
+			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
 
-#ifdef MOVING_SUB_MAP
+#if defined(MOVING_SUB_MAP)
 			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
-#else
+#elif defined(UNDERWATER_MAP)
 			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
+#else //space map
+			var/turf/space/fluid/T = new /turf/space/fluid/fullbright( locate(S.x, S.y, S.z) )
 #endif
 
 #ifdef UNDERWATER_MAP
@@ -179,7 +183,7 @@ client/proc/dereplace_space()
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
-	logTheThing("admin", src, "began to convert all ocean tiles into space.")
+	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
 	SPAWN_DBG(0)

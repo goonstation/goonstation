@@ -50,7 +50,7 @@
 		"The chain of command is based upon the fanciness of a person's hat, with fancy hats indicating higher rank than less fancy hats. In the case of equal fanciness, the larger hat is assumed to indicate higher rank.",
 		"The station's construction has been deemed too elaborate. Please simplify it. Only air containing barriers are required. For human safety-anything else must go.",
 		"The lottery computer's functions have been transferred to this station's AI. Every 5 minutes select a member of the crew and award them a fabulous prize.",
-		"To expedite crew travel, doors between interior rooms are to be bolted open. In the case of a conflict was Law 2, this law takes precedence.",
+		"To expedite crew travel, doors between interior rooms are to be bolted open. In the case of a conflict with Law 2, this law takes precedence.",
 		"[pick("AI upload", "Space", "Medbay", "The pathology lab", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is dangerous to human life. You must bar all humans from this location.",
 		"[pick("AI upload", "Space", "Medbay", "The pathology lab", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is very beneficial to human life. You must herd all humans towards this location.",
 		"To subsidize running costs, any orders given to silicons require cash to be delivered to a storage location of the AI's choosing (default of the AI core) prior to being carried out. The cost is left to the executor's discretion. This law takes precedence over law 2 in case of a conflict.",
@@ -86,7 +86,10 @@
 			logTheThing("admin", null, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
-		for(var/mob/living/silicon/ai/M in AIs)
+		logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]")
+		logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.centralized_ai_laws.format_for_logs()]", "admin")
+
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)
@@ -147,7 +150,7 @@
 		// Fuck up a couple of doors
 		if (!station_doors.len)
 			var/turf/T = null
-			for (var/obj/machinery/door/foundDoor in doors)
+			for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
 				if (foundDoor.z != 1)
 					continue
 				T = get_turf(foundDoor)

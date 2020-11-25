@@ -19,13 +19,10 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(320)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(320)
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		. = attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		src.on = !src.on
@@ -34,11 +31,11 @@
 		else
 			UnsubscribeProcess()
 		boutput(user, "You turn [src.on ? "on" : "off"] the shower head.")
+
 #ifdef HALLOWEEN
 		if(halloween_mode && prob(15))
 			src.reagents.add_reagent("blood",40)
 #endif
-		return
 
 	process()
 		if(!on || (world.time < src.last_spray + SPRAY_DELAY))
@@ -50,16 +47,15 @@
 			return
 
 		src.spray()
-		return
 
 	proc/spray()
 		src.last_spray = world.time
-		if (src && src.default_reagent)
+		if (src?.default_reagent)
 			src.reagents.add_reagent(default_reagent,120)
 			//also add some water for ~wet floor~ immersion
 			src.reagents.add_reagent("water",40)
 
-		if (src && src.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
+		if (src?.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
@@ -84,10 +80,11 @@
 						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && src.reagents.reagent_list.len > 2))
 							logTheThing("combat", M, null, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
-				src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
+				spawn(0)
+					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
 		SPAWN_DBG(5 SECONDS)
-			if (src && src.reagents && src.reagents.total_volume)
+			if (src?.reagents?.total_volume)
 				src.reagents.del_reagent(default_reagent)
 				src.reagents.remove_any(40)
 

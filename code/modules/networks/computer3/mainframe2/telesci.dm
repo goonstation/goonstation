@@ -14,27 +14,26 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in teleport_jammers)
+	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		if (istype(atom, /obj/machinery/telejam))
 			var/obj/machinery/telejam/TJ = atom
 			if (!TJ.active)
 				continue
-			if(DIST_CHECK(TJ, T, TJ.range))
+			if(IN_RANGE(TJ, T, TJ.range))
 				return 0
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
-			if(DIST_CHECK(F, T, F.range))
+			if(IN_RANGE(F, T, F.range))
 				return 0
 
-	for (var/X in by_type[/obj/blob/nucleus])
-		var/obj/blob/nucleus/N = X
-		if(DIST_CHECK(N, T, 3))
+	for_by_tcl(N, /obj/blob/nucleus)
+		if(IN_RANGE(N, T, 3))
 			return 0
 
 	// first check the always allowed turfs from map landmarks
-	if (T in telesci)
+	if (T in landmarks[LANDMARK_TELESCI])
 		return 1
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
@@ -56,6 +55,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
+	plane = PLANE_NOSHADOW_BELOW
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -603,7 +603,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		processbadeffect(effect)
+		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -616,7 +616,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)
 					if (N.client)
-						shake_camera(N, 6, 4)
+						shake_camera(N, 6, 32)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
@@ -630,7 +630,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -670,9 +670,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("rads")
 				for(var/turf/T in view(5,src.loc))
 					if(!T.reagents)
-						var/datum/reagents/R = new/datum/reagents(1000)
-						T.reagents = R
-						R.my_atom = T
+						T.create_reagents(1000)
 					T.reagents.add_reagent("radium", 20)
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
 				return
@@ -688,7 +686,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -729,7 +727,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -755,7 +753,8 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
 				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")
@@ -801,7 +800,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if (turfs && turfs.len)
+				if (length(turfs))
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)

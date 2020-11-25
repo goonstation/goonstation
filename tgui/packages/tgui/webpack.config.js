@@ -36,8 +36,8 @@ module.exports = (env = {}, argv) => {
     },
     output: {
       path: argv.useTmpFolder
-        ? path.resolve(__dirname, './public/.tmp')
-        : path.resolve(__dirname, './public'),
+        ? path.resolve(__dirname, '../../../browserassets/tgui/.tmp')
+        : path.resolve(__dirname, '../../../browserassets/tgui'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -57,7 +57,7 @@ module.exports = (env = {}, argv) => {
                   ['@babel/preset-env', {
                     modules: 'commonjs',
                     useBuiltIns: 'entry',
-                    corejs: '3',
+                    corejs: '3.6',
                     spec: false,
                     loose: true,
                     targets: {

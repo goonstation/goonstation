@@ -161,10 +161,9 @@
 			src.reagents.add_reagent(src.initial_reagent, 5)
 
 	equipped(var/mob/user, var/slot)
-		if (slot == SLOT_WEAR_MASM && istype(user))
+		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if (src.reagents && !src.reagents.total_volume)
 				user.show_text("Looks like [src] has lost its flavor, darn.")
 		return ..()
@@ -184,7 +183,7 @@
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
 					SPAWN_DBG (0)
-						if (src && src.reagents && src.chewer && src.chewer.reagents)
+						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
 				src.spam_flag--
@@ -1108,7 +1107,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "sailormoon"
 		if (hit_atom == usr)
 			if (ishuman(usr))
@@ -1150,7 +1149,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usagi.say("MOON PRISM POWER, MAKE UP!")
 			src.activated = 1
 			for (var/i = 0, i < 4, i++)
-				usagi.dir = turn(usagi.dir, -90)
+				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
 			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
@@ -1272,7 +1271,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
 		if (!ismob(M) || !M.contents.len)
@@ -1496,7 +1495,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //wrongend's bang! gun
 /obj/item/bang_gun
@@ -1594,7 +1593,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && isvampire(hit_atom))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1763,8 +1762,8 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1
-						src.dir = get_dir(src, H)
-						H.dir = get_dir(H, src)
+						src.set_dir(get_dir(src, H))
+						H.set_dir(get_dir(H, src))
 						src.visible_message("<span class='alert'><B>[src] menacingly grabs [H] by the neck!</B></span>")
 						src.say("Shakthi Degi Kali Ma.")
 						var/dir_offset = get_dir(src, H)

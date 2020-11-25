@@ -58,6 +58,7 @@
 	/obj/item/device/flash,
 	/obj/item/storage/box/clothing/hos,
 	/obj/item/clothing/suit/det_suit/hos,
+	/obj/item/clothing/suit/armor/hoscape,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
@@ -68,10 +69,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-#if ASS_JAM
-	/obj/item/gun/kinetic/beepsky,
-	/obj/item/turret_deployer/riot,
-#endif
+
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/command/hop
@@ -153,6 +151,13 @@
 	/obj/item/device/multitool,
 	/obj/item/device/flash,
 	/obj/item/stamp/ce,
+#ifdef UNDERWATER_MAP
+	/obj/item/clothing/suit/space/diving/engineering,
+	/obj/item/clothing/head/helmet/space/engineer/diving,
+#else
+	/obj/item/clothing/suit/space/engineer,
+	/obj/item/clothing/head/helmet/space/engineer,
+#endif
 	/obj/item/device/radio/headset/command/ce)
 
 /* ==================== */
@@ -316,6 +321,8 @@
 	icon_opened = "secure_white-open"
 	req_access_txt = "10"
 
+
+
 /obj/storage/secure/closet/medical/medicine
 	name = "medicine storage locker"
 	spawn_contents = list(/obj/item/clothing/glasses/visor,
@@ -331,6 +338,8 @@
 
 /obj/storage/secure/closet/medical/medkit
 	name = "medkit storage locker"
+	icon_closed = "medical_medkit"
+	icon_state = "medical_medkit"
 	spawn_contents = list()
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -361,6 +370,8 @@
 
 /obj/storage/secure/closet/medical/anesthetic
 	name = "anesthetic storage locker"
+	icon_closed = "medical_anesthetic"
+	icon_state = "medical_anesthetic"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/morphine = 2,
 	/obj/item/storage/box/syringes,
 	/obj/item/tank/anesthetic = 5,
@@ -368,6 +379,8 @@
 
 /obj/storage/secure/closet/medical/uniforms
 	name = "medical uniform locker"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/box/clothing/medical,
@@ -381,6 +394,8 @@
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
+	icon_closed = "medical_restricted"
+	icon_state = "medical_restricted"
 	spawn_contents = list()
 	req_access_txt = "53"
 	make_my_stuff()
@@ -504,7 +519,9 @@
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
-	/obj/item/deconstructor)
+	/obj/item/deconstructor,
+	/obj/item/electronics/frame/mech_cabinet=2,
+	/obj/item/storage/mechanics/housing_handheld=1)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
@@ -541,7 +558,8 @@
 	/obj/item/ore_scoop,
 	/obj/item/mining_tool/power_pick,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/storage/belt/mining)
+	/obj/item/storage/belt/mining,
+	/obj/item/device/geiger)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"
@@ -568,7 +586,8 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4)
+	/obj/item/caution = 4,
+	/obj/item/clothing/gloves/long)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -595,7 +614,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/barman,\
+	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
 	/obj/item/storage/box/clothing/waiter,\
 	/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
@@ -620,7 +639,7 @@
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/reagent_containers/glass/bottle/holywater)
+	/obj/item/storage/box/holywaterkit)
 
 /* =================== */
 /* ----- Fridges ----- */
@@ -634,6 +653,16 @@
 	icon_greenlight = "fridge-greenlight"
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
+	intact_frame = 1
+
+/obj/storage/secure/closet/fridge/opened
+	New()
+		..()
+		name = "busted refrigerator"
+		desc = "The newest cooling technology...now with - oh god! What happened to the poor door?!"
+		intact_frame = 0
+		unlock()
+		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)

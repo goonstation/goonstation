@@ -33,6 +33,7 @@ var/datum/event_controller/random_events
 	var/minimum_population = 15 // Minimum amount of players connected for event to occur
 
 	New()
+		..()
 		for (var/X in childrentypesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
@@ -214,7 +215,7 @@ var/datum/event_controller/random_events
 
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
-		if(usr && usr.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
 
 		if(href_list["TriggerEvent"])
 			var/datum/random_event/RE = locate(href_list["TriggerEvent"]) in events

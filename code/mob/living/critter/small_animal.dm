@@ -73,14 +73,14 @@ todo: add more small animals!
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
 		if(src.is_pet)
-			pets += src
+			START_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
 
 	disposing()
 		if(src.is_pet)
-			pets -= src
+			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
 	setup_healths()
@@ -199,6 +199,16 @@ todo: add more small animals!
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/ingredient/cheese) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			qdel(I)
+			return
+		. = ..()
+
 /mob/living/critter/small_animal/mouse/weak
 	health_brute = 2
 	health_burn = 2
@@ -261,7 +271,7 @@ todo: add more small animals!
 	New()
 		..()
 		if (src.randomize_name)
-			src.name = pick(cat_names)
+			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
 		if (src.randomize_look)
 #ifdef HALLOWEEN
@@ -449,7 +459,7 @@ todo: add more small animals!
 	pull_w_class = 4
 
 	OnMove()
-		if(client && client.player && client.player.shamecubed)
+		if(client?.player?.shamecubed)
 			loc = client.player.shamecubed
 			return
 
@@ -968,7 +978,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		SPAWN_DBG(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
-				var/new_species = input(src, "Select Species", "Select Species") as anything in (parrot_species + special_parrot_species)
+				var/new_species = input(src, "Select Species", "Select Species") as() in (parrot_species + special_parrot_species)
 				if (new_species)
 					src.apply_species(new_species)
 
@@ -2002,6 +2012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	var/butterflytype = 1
+	isFlying = 1
 
 	New()
 		..()
@@ -2093,6 +2104,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2102,7 +2114,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		abilityHolder.updateButtons()
 
 	Move()
-		..()
+		. = ..()
 		misstep_chance = 23
 
 	setup_hands()
@@ -2156,6 +2168,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_walk_delay = 1.8
 	health_brute = 8
 	health_burn = 8
+	isFlying = 1
 
 	New()
 		..()
@@ -2165,7 +2178,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		abilityHolder.updateButtons()
 
 	Move()
-		..()
+		. = ..()
 		misstep_chance = 23
 
 	setup_hands()
@@ -2468,14 +2481,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "mouse-mentor"
 	icon_state_dead = "mouse-mentor-dead"
 	var/icon_state_exclaim = "mouse-mentor-exclaim"
+	health_brute = 35
+	health_burn = 35
 
 	New()
 		..()
 		/*src.fur_color = "#c486ec"
 		src.eye_color = "#000000"
 		src.setup_overlays()*/
-		var/list/valid_adjectives = list("cute", "adorable", "nerdy", "small", "large", "grody", "tiny", "chubby", "smelly", "fluffy", "bewildered", "confused", "bouncy", "tired", "purple", "squeaky", "sneaky", "friendly", "helpful", "quick", "champion", "muscular", "heroic", "space federation wrestling champion", "brainy", "hungry", "chatty", "awesome", "humongous", "wise", "worried")
-		src.real_name = "[pick(valid_adjectives)] [src.name]"
+		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 
 	setup_overlays()
@@ -2520,7 +2534,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
@@ -2549,10 +2563,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if(src.icon_state_exclaim)
 						flick(src.icon_state_exclaim, src)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
-		return ..()
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3)
@@ -2562,6 +2572,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 							playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
 							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
 					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					animate_bouncy(src) // bouncy!
+					return "<span class='emote'><b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!</span>"
 		return ..()
 
 	specific_emote_type(var/act)
@@ -2572,7 +2586,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"
-	real_name = "mentor mouse"
+	real_name = "admin mouse"
 	desc = "A helpful (?) admin in the form of a mouse. Click to put them in your pocket so they can help you."
 	status_name = "admin_mouse"
 	is_admin = 1
@@ -2591,6 +2605,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.into_pocket(M, 0)
 		else
 			return ..()
+
+	understands_language(language)
+		if(language == "animal") // by default admin mice speak english but we want them to understand animal-ese
+			return 1
+		return ..()
 
 /mob/living/critter/small_animal/crab
 	name = "crab"

@@ -10,7 +10,7 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..()
-		if (H && H.owner) //Wire note: Fix for Cannot read null.real_name
+		if (H?.owner) //Wire note: Fix for Cannot read null.real_name
 			last_used_name = H.owner.real_name
 
 	cast(atom/target)
@@ -100,7 +100,9 @@
 		C.real_name = target_name
 		C.bioHolder.CopyOther(D)
 		C.bioHolder.RemoveEffect("husk")
-		if (istype(C))
+		if (C.bioHolder?.mobAppearance?.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+		else
 			C.set_mutantrace(null)
 		C.update_face()
 		C.update_body()

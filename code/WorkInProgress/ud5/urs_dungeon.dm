@@ -96,9 +96,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(5000)
 		..()
 
 	trigger_actions()
@@ -165,7 +163,7 @@
 
 /obj/item/clothing/glasses/urs_dungeon_entry
 	name = "\improper VR goggles"
-	desc = "These goggles don't look quite right..."
+	desc = "On the side it says \"A game for 2-4 Players\". Guess you'll need some friends to play with you."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	color = "#550000"
@@ -200,7 +198,7 @@
 				if (get_dist(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
-					shake_camera(N, 6, 4)
+					shake_camera(N, 6, 32)
 
 			H.unequip_all()
 			H.set_loc(src.target)
@@ -261,7 +259,7 @@
 			if (get_dist(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 
 		H.set_loc(pick(L))
 
@@ -485,6 +483,9 @@
 				return
 
 /obj/storage/closet/syndi/hidden/shovel_me
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		return
 
 	attack_hand(mob/user as mob)
 		return

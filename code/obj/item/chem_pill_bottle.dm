@@ -8,6 +8,7 @@
 	stamina_crit_chance = 1
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	var/pname
 	var/pvol
 	var/pcount
@@ -52,11 +53,11 @@
 					src.pcount = 0
 				else
 					P = unpool(/obj/item/reagent_containers/pill)
-					P.loc = src
+					P.set_loc(src)
 					P.name = "[pname] pill"
 
 					src.reagents_internal.trans_to(P,src.pvol)
-					if (P && P.reagents)
+					if (P?.reagents)
 						P.color_overlay = image('icons/obj/items/pills.dmi', "pill0")
 						P.color_overlay.color = src.average
 						P.color_overlay.alpha = P.color_overlay_alpha

@@ -24,7 +24,7 @@
 /datum/aiTask/sequence/goalbased/proc/get_best_target(var/list/targets)
 	. = null
 	var/best_score = -1.#INF
-	if(targets && targets.len)
+	if(length(targets))
 		for(var/atom/A in targets)
 			var/score = src.score_target(A)
 			if(score > best_score)
@@ -84,9 +84,14 @@
 
 /datum/aiTask/timed/wander/on_tick()
 	// thanks zewaka for reminding me the previous implementation of this is BYOND NATIVE
-	step_rand(holder.owner, 0)
+	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
+	holder.owner.move_dir = pick(1,2,4,5,6,8,9,10)
+	holder.owner.process_move()
 	LAGCHECK(LAG_LOW)
 
+/datum/aiTask/timed/wander/on_tick()
+	. = ..()
+	holder.stop_move()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -98,7 +103,7 @@
 /datum/aiTask/timed/targeted/proc/get_best_target(var/list/targets)
 	. = null
 	var/best_score = -1.#INF
-	if(targets && targets.len)
+	if(length(targets))
 		for(var/atom/A in targets)
 			var/score = src.score_target(A)
 			if(score > best_score)

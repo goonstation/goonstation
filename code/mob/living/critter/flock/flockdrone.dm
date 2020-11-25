@@ -105,7 +105,7 @@
 			src.mind.current = src
 			ticker.minds += src.mind
 	// move controller into ourselves
-	pilot.loc = src
+	pilot.set_loc(src)
 	controller = pilot
 	if(src.client)
 		src.client.color = null // stop being all fucked up and weird aaaagh
@@ -122,7 +122,7 @@
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 	if(controller)
 		// move controller out
-		controller.loc = get_turf(src)
+		controller.set_loc(get_turf(src))
 		// move us over to the controller
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -291,6 +291,9 @@
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
 				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
 				return "<b>[src]</b> [fart_message]"
+		if ("laugh") //no good sound for it - moon
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> caws heartily!"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)
@@ -316,7 +319,7 @@
 				var/anything_tumbled = 0
 				for(var/obj/O in I.contents)
 					if(istype(O, /obj/item))
-						O.loc = src.loc
+						O.set_loc(src.loc)
 						anything_tumbled = 1
 					else
 						qdel(O)
@@ -398,7 +401,7 @@
 	if(floorrunning)
 		// do our custom MOVE THROUGH ANYTHING stuff
 		// copypasted from intangible.dm
-		src.dir = get_dir(src, NewLoc)
+		src.set_dir(get_dir(src, NewLoc))
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -466,7 +469,7 @@
 		src.harmedBy(M)
 
 // also maybe we've just had environmental damage, who knows
-/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn)
+/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	var/prev_damaged = src.damaged
 	src.check_health()
@@ -592,7 +595,7 @@
 		if(src.flock)
 			src.flock.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
-			B.loc = pick(candidate_turfs)
+			B.set_loc(pick(candidate_turfs))
 	sleep(0.1 SECONDS) // make sure the animation finishes
 	// finally, away with us
 	src.ghostize()
@@ -717,7 +720,7 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather) || istype(target, /obj/flock_structure/ghost)))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -765,14 +768,16 @@
 				..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
-		if(istype(target, /obj/machinery/door/feather))
-			var/obj/machinery/door/feather/F = target
-			if(F.broken || (F.health > F.health_max))
-				if(user.resources < 10)
-					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-				else
-					actions.start(new/datum/action/bar/flock_repair(F), user)
-
+		switch(target.type)//making this into switches for easy of expansion later
+			if(/obj/machinery/door/feather)
+				var/obj/machinery/door/feather/F = target
+				if(F.broken || (F.health < F.health_max))
+					if(user.resources < 10)
+						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+					else
+						actions.start(new/datum/action/bar/flock_repair(F), user)
+			if(/obj/flock_structure/ghost)
+				actions.start(new /datum/action/bar/flock_deposit(target), user)
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)

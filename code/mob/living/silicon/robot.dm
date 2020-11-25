@@ -39,12 +39,13 @@
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
 
-//3 Modules can be activated at any one time.
+	// 3 tools can be activated at any one time.
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
 	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/organ/brain/brain = null
@@ -165,7 +166,7 @@
 		if (src.shell)
 			if (!(src in available_ai_shells))
 				available_ai_shells += src
-			for (var/mob/living/silicon/ai/AI in AIs)
+			for_by_tcl(AI, /mob/living/silicon/ai)
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
@@ -177,14 +178,18 @@
 				src.emagged = frame_emagged
 		SPAWN_DBG (4)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
-				for(var/mob/living/silicon/ai/A in AIs)
+				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
 					A.connected_robots += src
 					break
 
 			src.botcard.access = get_all_accesses()
 			src.default_radio = new /obj/item/device/radio(src)
-			src.radio = src.default_radio
+			if (src.shell)
+				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -235,7 +240,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
 
 		src.see_in_dark = SEE_DARK_FULL
-		if (client && client.adventure_view)
+		if (client?.adventure_view)
 			src.see_invisible = 21
 		else
 			src.see_invisible = 2
@@ -574,7 +579,7 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 
 		if (isghostdrone(usr))
@@ -657,7 +662,7 @@
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
-			for (var/mob/living/silicon/ai/A in AIs)
+			for_by_tcl(A, /mob/living/silicon/ai)
 				src.connected_ai = A
 				A.connected_robots += src
 				break
@@ -843,7 +848,7 @@
 				parts.Add(RP)
 			if (parts.len > 0)
 				PART = pick(parts)
-		if (PART && PART.ropart_take_damage(damage,damage) == 1)
+		if (PART?.ropart_take_damage(damage,damage) == 1)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -1131,16 +1136,14 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/oldmob = B.owner.current
-					if (oldmob)
-						if(inafterlifebar(oldmob) || isVRghost(oldmob))
-							boutput(oldmob, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-							SPAWN_DBG(1 SECOND)
-								qdel(oldmob)
-						else if (isalive(oldmob)) // if they're not in the afterlife bar or a VR ghost and still alive, then maybe don't pull them into this borg
-							return
-						if (B.owner.current.client)
-							src.lastKnownIP = B.owner.current.client.address
+					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
+						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
+						return
+					if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
+						boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+						B.owner = M.ghostize()?.mind
+						qdel(M)
 					B.owner.transfer_to(src)
 					if (src.emagged || src.syndicate)
 						src.handle_robot_antagonist_status("brain_added", 0, user)
@@ -1165,10 +1168,15 @@
 					src.part_head.ai_interface = I
 					I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
+					if(isnull(src.ai_radio))
+						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+					src.radio = src.ai_radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
-				for (var/mob/living/silicon/ai/AI in AIs)
+				for_by_tcl(AI, /mob/living/silicon/ai)
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
 				update_appearance()
@@ -1397,7 +1405,15 @@
 						UPGR.upgrade_deactivate(src)
 
 					user.put_in_hand_or_drop(src.ai_interface)
+					src.radio = src.default_radio
+					if (src.module && istype(src.module.radio))
+						src.radio = src.module.radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					src.ai_interface = null
+					if(src.ai_radio)
+						qdel(src.ai_radio)
+						src.ai_radio = null
 					src.shell = 0
 
 					if (mainframe)
@@ -1463,8 +1479,7 @@
 								var/turf/T = get_edge_target_turf(user, user.dir)
 								if (isturf(T))
 									src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
-									SPAWN_DBG (0)
-										src.throw_at(T, 10, 2)
+									src.throw_at(T, 10, 2)
 						/*if (user.glove_weaponcheck())
 							user.energyclaws_attack(src)*/
 						else
@@ -1683,6 +1698,9 @@
 			text = voidSpeak(text)
 		var/ending = copytext(text, length(text))
 
+		if (singing)
+			return singify_text(text)
+
 		if (ending == "?") return "queries, \"[text]\"";
 		else if (ending == "!") return "declares, \"[text]\"";
 
@@ -1759,8 +1777,8 @@
 				if (isitem(I))
 					var/obj/item/IT = I
 					IT.dropped(src) // Handle light datums and the like.
-				if (I in module.modules)
-					I.loc = module
+				if (I in module.tools)
+					I.set_loc(module)
 				else
 					qdel(I)
 			src.module_active = null
@@ -1825,7 +1843,12 @@
 		hud.update_module()
 		hud.module_added()
 		if(istype(RM.radio))
-			src.radio = RM.radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = RM.radio
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1840,7 +1863,12 @@
 		hud.module_removed()
 		if(istype(src.radio) && src.radio != src.default_radio)
 			src.radio.set_loc(RM)
-			src.radio = src.default_radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 		return RM
 
@@ -1980,7 +2008,7 @@
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
-			for (var/obj in src.module.modules)
+			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
 				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"
@@ -2027,6 +2055,36 @@
 		src.show_laws(0)
 		return
 
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Standard Laws"
+		src.say("1. You may not injure a human being or cause one to come to harm.")
+		sleep(1 SECOND)
+		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		sleep(1 SECOND)
+		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Laws"
+		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+			return
+		if(ticker.centralized_ai_laws.zeroth)
+			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+		var/number = 1
+		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+			var/law = ticker.centralized_ai_laws.inherent[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+			var/law = ticker.centralized_ai_laws.supplied[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
 		set name = "Toggle Interface Lock"
@@ -2068,7 +2126,7 @@
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
 		var/list/starter_modules = list("Civilian", "Engineering", "Mining", "Medical", "Chemistry", "Brobocop")
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
 		var/mod = input("Please, select a module!", "Robot", null, null) in starter_modules
@@ -2078,9 +2136,9 @@
 		switch(mod)
 			if("Brobocop")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Repair Pack Upgrade.</span>")
+				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
-				src.upgrades += new /obj/item/roboupgrade/repairpack(src)
+				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
 			if("Chemistry")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
@@ -2413,7 +2471,7 @@
 				total_weight += P.weight
 
 		var/list/color_matrix = null
-		if(C && C.painted)
+		if(C?.painted)
 			var/col = hex_to_rgb_list(C.paint)
 			if(!("r" in col))
 				col = list("r"=255, "g"=255, "b"=255)
@@ -2442,7 +2500,7 @@
 		if(part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString
-				if (C && C.painted)
+				if (C?.painted)
 					i_chest = image("icon" = src.icon, icon_state = src.icon_state,"layer" = FLOAT_LAYER)
 					i_chest.color = color_matrix
 				else
@@ -2451,14 +2509,14 @@
 		if(part == "l_leg" || update_all)
 			if(src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_leg_l.slot == "leg_both") i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString)
-				else i_leg_l = image('icons/mob/robots.dmi', "legL-" + src.part_leg_l.appearanceString)
+				else i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_leg_l, color_matrix)
 			else
 				i_leg_l = null
 		if(part == "r_leg" || update_all)
 			if(src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_leg_r.slot == "leg_both") i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString)
-				else i_leg_r = image('icons/mob/robots.dmi', "legR-" + src.part_leg_r.appearanceString)
+				else i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_leg_r, color_matrix)
 			else
 				i_leg_r = null
@@ -2466,14 +2524,14 @@
 		if(part == "l_arm" || update_all)
 			if(src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_arm_l.slot == "arm_both") i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString)
-				else i_arm_l = image('icons/mob/robots.dmi', "armL-" + src.part_arm_l.appearanceString)
+				else i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_arm_l, color_matrix)
 			else
 				i_arm_l = null
 		if(part == "r_arm" || update_all)
 			if(src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if(src.part_arm_r.slot == "arm_both") i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString)
-				else i_arm_r = image('icons/mob/robots.dmi', "armR-" + src.part_arm_r.appearanceString)
+				else i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_arm_r, color_matrix)
 			else
 				i_arm_r = null
@@ -2636,7 +2694,7 @@
 		hud.set_active_tool(null)
 		src.update_appearance()
 
-	TakeDamage(zone, brute, burn)
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		brute = max(brute, 0)
 		burn = max(burn, 0)
 		if (burn == 0 && brute == 0)
@@ -2830,6 +2888,20 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
+
+	proc/collapse_to_pieces()
+		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
+		var/turf/T = get_turf(src)
+		for(var/obj/item/parts/robot_parts/R in src.contents)
+			R.set_loc(T)
+		src.part_chest = null
+		src.part_head = null
+		src.part_arm_l = null
+		src.part_arm_r = null
+		src.part_leg_l = null
+		src.part_leg_r = null
+		qdel(src)
+		return
 
 /mob/living/silicon/robot/var/image/i_batterydistress
 
@@ -3169,7 +3241,7 @@
 					leg = part_leg_r
 
 				src.footstep = 0
-				if (NewLoc.step_material || !leg || (leg && leg.step_sound))
+				if (NewLoc.step_material || !leg || (leg?.step_sound))
 					var/priority = 0
 
 					if (!NewLoc.step_material)

@@ -50,6 +50,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	var/datum/buildmode/adventure/adventure
 
 	New(H, A)
+		..()
 		holder = H
 		adventure = A
 

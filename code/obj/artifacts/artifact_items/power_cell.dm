@@ -9,11 +9,11 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		//src.artifact = new /datum/artifact/powercell(src)
 		var/datum/artifact/powercell/AS = new /datum/artifact/powercell(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
@@ -40,7 +40,7 @@
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	rarity_class = 1
+	rarity_class = 2 // modified from 1 as part of art tweak
 	validtypes = list("ancient","martian","wizard","precursor")
 	automatic_activation = 1
 	react_elec = list("equal",0,10)

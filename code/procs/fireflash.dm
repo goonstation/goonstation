@@ -22,6 +22,9 @@
 		hotspots += h
 
 		T.hotspot_expose(h.temperature, h.volume)
+/*// experimental thing to let temporary hotspots affect atmos
+		h.perform_exposure()
+*/
 		//SPAWN_DBG(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
@@ -31,7 +34,7 @@
 				L.bodytemperature = max(temp/3, L.bodytemperature)
 				LAGCHECK(LAG_REALTIME)
 			for(var/obj/critter/C in T)
-				if(istype(C, "/obj/critter/zombie")) C.health -= 15
+				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				SPAWN_DBG(0.5 SECONDS)
@@ -63,8 +66,7 @@
 		LAGCHECK(LAG_REALTIME)
 
 	SPAWN_DBG(3 SECONDS)
-		for(var/atom in hotspots)
-			var/obj/hotspot/A = atom
+		for (var/obj/hotspot/A as() in hotspots)
 			if (!A.pooled)
 				pool(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
@@ -121,8 +123,9 @@
 		affected[T] = existing_hotspot.temperature
 		if (need_expose && expose_temp)
 			T.hotspot_expose(expose_temp, existing_hotspot.volume)
-			if (T == ff_debug_turf && ff_debugger)
-				boutput(ff_debugger, "<span style='color:#ff8800'>Fireflash affecting tile at [showCoords(T.x, T.y, T.z)], exposing to temperature [expose_temp], central tile is at [showCoords(Ce.x, Ce.y, Ce.z)], previous temperature: [prev_temp]</span>")
+/* // experimental thing to let temporary hotspots affect atmos
+			existing_hotspot.perform_exposure()
+*/
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		for (var/mob/living/L in T)
 			L.update_burning(min(55, max(0, expose_temp - 100 / 550)))

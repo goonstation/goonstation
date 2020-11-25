@@ -190,6 +190,16 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.audible_prayers = (usr.client.holder.audible_prayers + 1) % 3
 				src.show_pref_window(usr)
+		if ("toggle_audible_ahelps")
+			if (src.level >= LEVEL_MOD)
+				switch(usr.client.holder.audible_ahelps)
+					if (PM_NO_ALERT)
+						usr.client.holder.audible_ahelps = PM_AUDIBLE_ALERT
+					if (PM_AUDIBLE_ALERT)
+						usr.client.holder.audible_ahelps = PM_DECTALK_ALERT
+					if (PM_DECTALK_ALERT)
+						usr.client.holder.audible_ahelps = PM_NO_ALERT
+				src.show_pref_window(usr)
 		if ("toggle_buildmode_view")
 			if (src.level >= LEVEL_PA)
 				usr.client.holder.buildmode_view = !usr.client.holder.buildmode_view
@@ -350,7 +360,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -402,7 +412,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -424,7 +434,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -687,7 +697,7 @@ var/global/noir = 0
 				if (current_state > GAME_STATE_PREGAME)
 					cmd = "c_mode_next"
 					addltext = " next round"
-				var/dat = {"
+				var/list/dat = list({"
 							<html><body><title>Select Round Mode</title>
 							<B>What mode do you wish to play[addltext]?</B><br>
 							Current mode is: <i>[master_mode]</i><br>
@@ -718,10 +728,12 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=football'>Football (this only works if built with FOOTBALL_MODE sorry too lazy to ifdef here)</A>
-							</body></html>
-						"}
-				usr.Browse(dat, "window=c_mode")
+							"})
+#if FOOTBALL_MODE
+				dat += "<A href='?src=\ref[src];action=[cmd];type=football'>Football</A>"
+#endif
+				dat += "</body></html>"
+				usr.Browse(dat.Join(), "window=c_mode")
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
@@ -826,10 +838,10 @@ var/global/noir = 0
 				var/team
 				var/type = href_list["type"]
 				if (type == "1")
-					M.set_loc(pick(tdome1))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_1))
 					team = "Team 1"
 				else if (type == "2")
-					M.set_loc(pick(tdome2))
+					M.set_loc(pick_landmark(LANDMARK_THUNDERDOME_2))
 					team = "Team 2"
 
 				logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the thunderdome. ([team])")
@@ -1095,9 +1107,6 @@ var/global/noir = 0
 					if("Kudzuman")
 						H.set_mutantrace(/datum/mutantrace/kudzu)
 						. = 1
-					if("reliquary soldier-Don't use yet please")
-						H.set_mutantrace(/datum/mutantrace/reliquary_soldier)
-						. = 1
 					if("Ghostdrone")
 						droneize(H, 0)
 					if("Flubber")
@@ -1342,7 +1351,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.AddEffect(pick, magical = 1)
@@ -1370,7 +1379,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.RemoveEffect(pick)
@@ -1413,10 +1422,10 @@ var/global/noir = 0
 				var/list/L = list()
 				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 				if(searchFor)
-					for(var/R in childrentypesof(/datum/reagent))
+					for(var/R in concrete_typesof(/datum/reagent))
 						if(findtext("[R]", searchFor)) L += R
 				else
-					L = childrentypesof(/datum/reagent)
+					L = concrete_typesof(/datum/reagent)
 
 				var/type
 				if(L.len == 1)
@@ -1469,7 +1478,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 
 					for(pick in picklist)
@@ -1575,7 +1584,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/ab_to_add = input("Which holder?", "Ability", null) as anything in childrentypesof(/datum/abilityHolder)
+				var/ab_to_add = input("Which holder?", "Ability", null) as() in childrentypesof(/datum/abilityHolder)
 				M.add_ability_holder(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] created abilityHolder [ab_to_add] for [key_name(M)].")
@@ -1748,9 +1757,13 @@ var/global/noir = 0
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
 			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-			if (matches.len == 0)
+#ifdef SECRETS_ENABLED
+			matches -= list(/mob/living/critter/vending) //secret repo blacklist
+#endif
+
+			if (!length(matches))
 				return
-			if (matches.len == 1)
+			if (length(matches) == 1)
 				CT = matches[1]
 			else
 				CT = input("Select a match", "matches for pattern", null) as null|anything in matches
@@ -1905,11 +1918,11 @@ var/global/noir = 0
 
 			//they're nothing so turn them into a traitor!
 			if(ishuman(M) || isAI(M) || isrobot(M) || ismobcritter(M))
-				var/traitorize = "Cancel"
-				traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
-				if(traitorize == "Cancel")
+				var/antagonize = "Cancel"
+				antagonize = alert("Is not an antagonist, make antagonist?", "antagonist", "Yes", "Cancel")
+				if(antagonize == "Cancel")
 					return
-				if(traitorize == "Yes")
+				if(antagonize == "Yes")
 					if (issilicon(M))
 						evilize(M, "traitor")
 					else if (ismobcritter(M))
@@ -1927,7 +1940,7 @@ var/global/noir = 0
 								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
-						if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang))
+						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += "Gang Leader"
 						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
 						switch(selection)
@@ -1976,13 +1989,13 @@ var/global/noir = 0
 				if (src.level >= LEVEL_CODER)
 					dat += {"
 							<A href='?src=\ref[src];action=chgadlvl;type=Coder;target=\ref[C]'>Coder</A><BR>
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
 							"}
 				if (src.level >= LEVEL_ADMIN)
+					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>"
 					dat += "<A href='?src=\ref[src];action=chgadlvl;type=Primary Administrator;target=\ref[C]'>Primary Administrator</A><BR>"
 				if (src.level >= LEVEL_PA)
 					dat += {"
-							<A href='?src=\ref[src];action=chgadlvl;type=Administrator;target=\ref[C]'>Administrator</A><BR>
+							<A href='?src=\ref[src];action=chgadlvl;type=Intermediate Administrator;target=\ref[C]'>Intermediate Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Secondary Administrator;target=\ref[C]'>Secondary Administrator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Moderator;target=\ref[C]'>Moderator</A><BR>
 							<A href='?src=\ref[src];action=chgadlvl;type=Ayn Rand%27s Armpit;target=\ref[C]'>Ayn Rand's Armpit</A><BR>
@@ -2016,7 +2029,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2031,7 +2044,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -2060,8 +2073,6 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (dirty_path in do_not_spawn && src.level < LEVEL_PA)
-							removed_paths += dirty_path
 						else if (ispath(path, /mob) && src.level < LEVEL_PA)
 							removed_paths += dirty_path
 						else
@@ -2089,14 +2100,14 @@ var/global/noir = 0
 							if ("absolute")
 								for (var/path in paths)
 									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.dir = direction ? direction : SOUTH
+									thing.set_dir(direction ? direction : SOUTH)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
 										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.dir = direction ? direction : SOUTH
+										thing.set_dir(direction ? direction : SOUTH)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -2335,7 +2346,7 @@ var/global/noir = 0
 						logTheThing("admin", usr, null, "teleported all players to the prison zone.")
 						logTheThing("diary", usr, null, "teleported all players to the prison zone.", "admin")
 						for(var/mob/living/carbon/human/H in mobs)
-							var/turf/loc = find_loc(H)
+							var/turf/loc = get_turf(H)
 							var/security = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
@@ -2347,12 +2358,11 @@ var/global/noir = 0
 										security++
 							if(!security)
 								//teleport person to cell
-								H.set_loc(pick(prisonwarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONWARP))
 							else
 								//teleport security person
-								H.set_loc(pick(prisonsecuritywarp))
+								H.set_loc(pick_landmark(LANDMARK_PRISONSECURITYWARP))
 							prisonwarped += H
-							LAGCHECK(LAG_LOW)
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
@@ -2506,7 +2516,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2539,7 +2549,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as() in childrentypesof(/datum/targetable)
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -2574,7 +2584,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2610,7 +2620,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 								for(pick in picklist)
 									if (string_version)
@@ -2670,7 +2680,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2752,7 +2762,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 floors and walls with wooden ones.")
 							var/nornwalls = 0
-							if (map_settings && map_settings.walls == /turf/simulated/wall/auto/supernorn)
+							if (map_settings?.walls == /turf/simulated/wall/auto/supernorn)
 								nornwalls = 1
 							for (var/turf/simulated/wall/W in world)
 								if (atom_emergency_stop)
@@ -2797,7 +2807,7 @@ var/global/noir = 0
 					if ("yeolde")
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 airlocks with wooden doors.")
-							for (var/obj/machinery/door/D in doors)
+							for (var/obj/machinery/door/D in by_type[/obj/machinery/door])
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 airlocks with wooden doors was terminated due to the atom emerygency stop!")
 									return
@@ -2966,17 +2976,17 @@ var/global/noir = 0
 
 					if("shakecamera")
 						if (src.level >= LEVEL_ADMIN)
-							var/intensity = input("Enter intensity of the shaking effect. (2 or over  will also cause mobs to trip over.)","Shaking intensity",null) as num|null
+							var/intensity = input("Enter intensity of the shaking effect (pixels to jostle view around by). 64 or over will also cause mobs to trip over.","Shaking intensity",null) as num|null
 							if (!intensity)
 								return
-							var/time = input("Enter lenght of the shaking effect.(In milliseconds, don't use more then 400 unless you want players to complain.) ", "Lenght of shaking effect", 1) as num
-							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], lenght [time])")
-							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], lenght [time])", "admin")
-							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], lenght [time]).")
+							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
+							logTheThing("admin", src, null, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing("diary", src, null, "created a shake effect (intensity [intensity], length [time])", "admin")
+							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN_DBG(0)
-									shake_camera(M, time, intensity)
-								if (intensity >= 2)
+									shake_camera(M, time * 10, intensity)
+								if (intensity >= 64)
 									M.changeStatus("weakened", 2 SECONDS)
 
 						else
@@ -3005,7 +3015,7 @@ var/global/noir = 0
 							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
@@ -3025,7 +3035,7 @@ var/global/noir = 0
 							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 
 							if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for (var/obj/machinery/communications_dish/C in comm_dishes)
+								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report("[command_name()] Update", input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
@@ -3064,7 +3074,7 @@ var/global/noir = 0
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L && L.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
+									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
@@ -3077,7 +3087,7 @@ var/global/noir = 0
 									do //More random
 										people_to_swap -= A
 										var/mob/B = pick(people_to_swap)
-										if(A && A.mind && B)
+										if(A?.mind && B)
 											A.mind.swap_with(B)
 										A = B
 										LAGCHECK(LAG_LOW)
@@ -3146,8 +3156,6 @@ var/global/noir = 0
 						src.owner:debug_variables(data_core)
 					if("miningcontrols")
 						src.owner:debug_variables(mining_controls)
-					if("goonhub")
-						src.owner:debug_variables(goonhub)
 					if("mapsettings")
 						src.owner:debug_variables(map_settings)
 					if("ghostnotifications")
@@ -3160,6 +3168,8 @@ var/global/noir = 0
 						src.owner:debug_variables(world)
 					if("globals")
 						src.owner:debug_variables("GLOB")
+					if("globalprocs")
+						src.owner:show_proc_list(null)
 			else
 				alert("You need to be at least a Coder to use debugging secrets.")
 
@@ -3168,19 +3178,8 @@ var/global/noir = 0
 				var/ok = 0
 
 				switch(href_list["type"])
-	/*
-					if("clear_bombs")
-						for(var/obj/item/assembly/radio_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/proximity_bomb/O in world)
-							qdel(O)
-						for(var/obj/item/assembly/time_bomb/O in world)
-							qdel(O)
-						ok = 1
-	*/
-
 					if("check_antagonist")
-						if (ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
+						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
@@ -3233,7 +3232,7 @@ var/global/noir = 0
 									if(!M) continue
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdead(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									var/turf/mob_loc = get_turf_loc(M)
+									var/turf/mob_loc = get_turf(M)
 									dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
@@ -3408,7 +3407,10 @@ var/global/noir = 0
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
-					else
+#ifdef SECRETS_ENABLED
+					if ("ideas")
+						usr.Browse(file2text("+secret/assets/fun_admin_ideas.html"), "window=admin_ideas;size=700x450;title=Admin Ideas")
+#endif
 				if (usr)
 					logTheThing("admin", usr, null, "used secret [href_list["secretsadmin"]]")
 					logTheThing("diary", usr, null, "used secret [href_list["secretsadmin"]]", "admin")
@@ -3417,6 +3419,10 @@ var/global/noir = 0
 				return
 			else
 				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+
+		if ("view_logs_web")
+			if ((src.level >= LEVEL_MOD) && !src.tempmin)
+				usr << link("https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3761,8 +3767,8 @@ var/global/noir = 0
 
 		if ("toggle_dj")
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			if(M && M.client)
-				toggledj(M.client, usr.client)
+			if(M?.client)
+				global.dj_panel.toggledj(M.client, usr.client)
 			else
 				alert ("No client found, sorry.")
 
@@ -3774,7 +3780,7 @@ var/global/noir = 0
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
-				var/mob/target = targetClient.mob
+				var/mob/target = targetClient?.mob
 				if(!target)
 					var/targetCkey = href_list["targetckey"]
 					for (var/mob/M in mobs) //The ref may have changed with our actions, find it again
@@ -4028,8 +4034,12 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
-				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A>
+				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+
 			"}
+#ifdef SECRETS_ENABLED
+	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
+#endif
 
 	dat += "</div>"
 
@@ -4052,18 +4062,19 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=emshuttle'>Emergency Shuttle</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=miningcontrols'>Mining Controls</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=goonhub'>Goonhub</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=mapsettings'>Map Settings</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=ghostnotifications'>Ghost Notifications</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=overlays'>Overlays</A>
 					<A href='?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=world'>World</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A>
+					<A href='?src=\ref[src];action=secretsdebug;type=globals'>Global Variables</A> |
+					<A href='?src=\ref[src];action=secretsdebug;type=globalprocs'>Global Procs</A>
 				"}
 
 		dat += "</div>"
 
 	dat += {"<hr><div class='optionGroup' style='border-color:#77DD77'><b class='title' style='background:#77DD77'>Logs</b>
+				<b><A href='?src=\ref[src];action=view_logs_web'>View all logs - web version</A></b><BR>
 				<A href='?src=\ref[src];action=view_logs;type=all_logs_string'>Search all Logs</A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log'>Speech Log </A>
 				<A href='?src=\ref[src];action=view_logs;type=speech_log_string'><small>(Search)</small></A><BR>
@@ -4145,14 +4156,14 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsfun;type=fartyparty'>Farty Party All The Time</A><BR>
 		"}
 
+	dat += "</div>"
+
 	if (src.level >= LEVEL_ADMIN || (src.level == LEVEL_SA && usr.client.holder.state == 2))
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_wandf'>DO NOT PRESS</A><BR>
-					<A href='?src=\ref[src];action=secretsfun;type=reliquarystation_tdcc'>DO NOT PRESS</A><BR>
 				"}
 
 	dat += "</div>"
@@ -4178,7 +4189,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4230,12 +4241,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing("admin", usr, null, "delayed the game start.")
 		logTheThing("diary", usr, null, "delayed the game start.", "admin")
-		message_admins("<span class='internal>[usr.key] has delayed the game start.</span>")
+		message_admins("<span class='internal'>[usr.key] has delayed the game start.</span>")
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing("admin", usr, null, "removed the game start delay.")
 		logTheThing("diary", usr, null, "removed the game start delay.", "admin")
-		message_admins("<span class='internal>[usr.key] has removed the game start delay.</span>")
+		message_admins("<span class='internal'>[usr.key] has removed the game start delay.</span>")
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -4245,7 +4256,7 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing("admin", usr, null, "removed the restart delay and triggered an immediate restart.")
 		logTheThing("diary", usr, null, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins("<span class='internal>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
+		message_admins("<span class='internal'>[usr.key] removed the restart delay and triggered an immediate restart.</span>")
 		ircbot.event("roundend")
 		Reboot_server()
 
@@ -4257,8 +4268,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4270,8 +4281,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
@@ -4334,7 +4345,7 @@ var/global/noir = 0
 	if(checktraitor(M))
 		boutput(usr, "<span class='alert'>That person is already an antagonist.</span>")
 		return
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
 		boutput(usr, "<span class='alert'>Gang Leaders are currently restricted to gang mode only.</span>")
 		return
 
@@ -4630,10 +4641,52 @@ var/global/noir = 0
 
 		if (chosen)
 			var/obj/A = new chosen()
-			A.set_loc(usr.loc)
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
 			heavenly_spawn(A)
-			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
-			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/supplydrop_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Supplydrop"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+		var/preDropTime = 3 SECONDS
+
+		if (chosen)
+			var/turf/T = get_turf(usr)
+			new/obj/effect/supplymarker/safe(T, preDropTime, chosen)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/demonically_spawn_obj(var/obj/object as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="(object path) Spawn an object. But all fancy-like"
+	set name="Spawn-Demonically"
+	if(!object)
+		return
+	if (usr.client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(object)
+
+		if (chosen)
+			var/obj/A = new chosen()
+			var/turf/T = get_turf(usr)
+			A.set_loc(T)
+			demonic_spawn(A)
+			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z)])")
+			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(T.x, T.y, T.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
@@ -4941,7 +4994,7 @@ var/global/noir = 0
 
 		if(NewLoc)
 			usr.set_loc(NewLoc)
-			src.mob.dir = direct
+			src.mob.set_dir(direct)
 			return
 
 		if((direct & NORTH) && usr.y < world.maxy)
@@ -4953,7 +5006,7 @@ var/global/noir = 0
 		if((direct & WEST) && usr.x > 1)
 			usr.x--
 
-		src.mob.dir = direct
+		src.mob.set_dir(direct)
 	else
 		..()
 

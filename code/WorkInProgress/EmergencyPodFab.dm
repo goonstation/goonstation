@@ -124,7 +124,7 @@
 	proc/beginFab()
 		active = 1
 		icon_state = "fab-mov"
-		holo.loc = src.loc
+		holo.set_loc(src.loc)
 		var/turf/outputLoc = get_turf(src.loc) //this shouldn't be unset going into the proc due to being set prior, but I wanted to be sure
 		var/progress = 0
 		var/noiseThreshold = (0.8 * fabTime) - 2 //don't play noises all the way till the end as they carry on a bit
@@ -141,11 +141,11 @@
 		if(!blocked)
 			var/obj/f = new createdObject
 			if (override_dir)
-				f.dir = override_dir
+				f.set_dir(override_dir)
 			else
-				f.dir = src.dir
-			f.loc = src.loc
-		holo.loc = src
+				f.set_dir(src.dir)
+			f.set_loc(src.loc)
+		holo.set_loc(src)
 		holo.alpha = 5
 		active = 0
 		icon_state = "fab-still"
@@ -165,9 +165,9 @@
 		holo.name = "semi-constructed [itemName]"
 		holo.desc = "A partially constructed [itemName] in the process of being assembled by a fabricator."
 		if (override_dir) //fabricator will default to assembling things in the direction it's facing, but can be overridden
-			holo.dir = override_dir
+			holo.set_dir(override_dir)
 		else
-			holo.dir = src.dir
+			holo.set_dir(src.dir)
 		qdel(refInstance)
 		isSetup = 1
 

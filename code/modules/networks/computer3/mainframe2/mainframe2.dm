@@ -911,7 +911,7 @@
 			if(!src.holder || !src.holder.root)
 				return 0
 
-			for(var/datum/computer/C in src.holder.root)
+			for(var/datum/computer/C in src.holder.root.contents)
 				if(C == src || C == src.holding_folder)
 					continue
 
@@ -949,7 +949,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as() in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

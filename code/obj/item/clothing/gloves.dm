@@ -1,7 +1,7 @@
 // NO GLOVES NO LOVES
 
 var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwerk's forensic ID system (Convair880).
-
+ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
 	w_class = 2.0
@@ -44,7 +44,6 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 			src.glove_ID = src.CreateID()
 			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
 				glove_IDs.Add(src.glove_ID)
-		return
 
 	examine()
 		. = ..()
@@ -429,7 +428,7 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"

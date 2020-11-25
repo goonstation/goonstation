@@ -14,19 +14,22 @@
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	SPAWN_DBG(1 SECOND)
-	flip()
+		src.set_loc(user.loc)
+		user.u_equip(src)
+		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
+		flip()
 
-/obj/item/coin/throw_impact(atom/hit_atom)
+/obj/item/coin/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	flip()
-		
-		
+
+
 /obj/item/coin/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	..()
 	if(!emagged)
 		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
 		emagged = TRUE
-		
+
 /obj/item/coin/proc/flip()
 	if(!emagged)
 		if(prob(1))

@@ -16,6 +16,11 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+/turf/unsimulated/floor/airless/solar
+	icon_state = "solarbase"
+	step_material = "step_lattice"
+	step_priority = STEP_PRIORITY_MED
+
 // cogwerks - catwalk plating
 
 /turf/simulated/floor/airless/plating/catwalk
@@ -554,7 +559,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
+	reinforced = TRUE
 	allows_vehicles = 1
 
 /turf/simulated/floor/airless/engine/vacuum
@@ -773,7 +778,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/airless/snow/green
 	name = "snow-covered floor"
@@ -792,7 +797,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -814,7 +819,7 @@
 /turf/simulated/floor/airless/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/airless/grass/random/alt
 	icon_state = "grass_eh"

@@ -102,7 +102,7 @@
 	process()
 		// consume any fluid near us
 		var/turf/T = get_turf(src)
-		if(T && T.active_liquid)
+		if(T?.active_liquid)
 			var/obj/fluid/F = T.active_liquid
 			F.group.drain(F, 15, src)
 
@@ -129,7 +129,7 @@
 			else if(occupant)
 				occupant.gib() // sorry buddy but if you're some freaky-deaky cube thing or some other weird living thing we can't be doing with this now
 			if(target)
-				target.loc = src
+				target.set_loc(src)
 		else
 			underlays -= target
 			if(hasvar(target, "health"))

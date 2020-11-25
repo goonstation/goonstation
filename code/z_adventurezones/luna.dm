@@ -148,33 +148,28 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
-					dir = 4
+					set_dir(4)
 
 				else
 					//Upper right
-					dir = 1
+					set_dir(1)
 
 			else
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower left
-					dir = 8
+					set_dir(8)
 
 				else
 					//Upper left
-					dir = 2
+					set_dir(2)
 
 
 	Entered(atom/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
 
-		if (isHemera && moonfall_hemera.len)
-			var/turf/T = pick(moonfall_hemera)
-			fall_to(T, A)
-			return
-
-		else if (!isHemera && moonfall_museum.len)
-			var/turf/T = pick(moonfall_museum)
+		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
+		if (T)
 			fall_to(T, A)
 			return
 
@@ -305,6 +300,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	ex_employee
 		New()
+			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
 "LOCALHOST",
@@ -1100,7 +1096,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		if (prob(5))
 			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-			src.dir = pick(alldirs)
+			src.set_dir(pick(alldirs))
 
 /obj/critter/moonspy
 	name = "\proper not a syndicate spy probe"
@@ -1965,8 +1961,8 @@ datum/maintpanel_device_entry
 
 		getControlMenu()
 			return list("  ACTOR ID: [mannequinName]",\
-			"  ACTIVE: [(ourMannequin && ourMannequin.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
-			"  CONDITION: [ourMannequin && ourMannequin.alive ? "OK" : "REPAIRS NEEDED"]")
+			"  ACTIVE: [(ourMannequin?.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
+			"  CONDITION: [ourMannequin?.alive ? "OK" : "REPAIRS NEEDED"]")
 
 		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/critter/mannequin/mannequin, entryName)
 			..()
@@ -2140,7 +2136,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 			new /obj/effects/explosion/tiny_baby (src.loc)
 			for (var/mob/living/carbon/unfortunate_jerk in range(1, src))
 				if (!isdead(unfortunate_jerk) && unfortunate_jerk.client)
-					shake_camera(unfortunate_jerk, 12, 4)
+					shake_camera(unfortunate_jerk, 12, 32)
 				unfortunate_jerk.changeStatus("stunned", 4 SECONDS)
 				unfortunate_jerk.stuttering += 4
 				unfortunate_jerk.lying = 1

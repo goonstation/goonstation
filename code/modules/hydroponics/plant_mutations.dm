@@ -125,13 +125,13 @@
 
 // Pear Mutations
 
-#if ASS_JAM
+/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	assoc_reagents = list("too much")
 
-#endif
+*/
 
 // Melon Mutations
 
@@ -174,14 +174,7 @@
 
 		if (prob(thud_prob))
 			playsound(POT.loc, "sound/effects/exlow.ogg", 30, 1)
-			var/wiggle = 4
-			while(wiggle > 0)
-				wiggle--
-				POT.pixel_x = rand(-2,2)
-				POT.pixel_y = rand(-2,2)
-				sleep(0.1 SECONDS)
-			POT.pixel_x = 0
-			POT.pixel_y = 0
+			animate_wiggle_then_reset(POT)
 
 
 // Bean Mutations
@@ -341,6 +334,24 @@
 	name_prefix = "Burning "
 	iconmod = "CommolBurning"
 	assoc_reagents = list("phlogiston")
+	chance = 10
+
+// Ipecacuanha Mutations
+
+/datum/plantmutation/ipecacuanha/bilious
+	name = "Bilious Ipecacuanha"
+	name_prefix = "Bilious "
+	iconmod = "IpecacuanhaBilious"
+	crop = /obj/item/plant/herb/ipecacuanha/bilious
+	assoc_reagents = list("vomit","sewage","bitters")
+	chance = 10
+
+/datum/plantmutation/ipecacuanha/invigorating
+	name = "Invigorating Ipecacuanha"
+	name_prefix = "Invigorating "
+	iconmod = "IpecacuanhaInvigorating"
+	crop = /obj/item/plant/herb/ipecacuanha/invigorating
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Venne Mutations

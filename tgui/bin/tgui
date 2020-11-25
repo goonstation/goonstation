@@ -19,9 +19,15 @@ if ! readlink --version >/dev/null 2>&1; then
   fi
 fi
 
-## Find a canonical path to project root
+## Find a canonical path to tgui project root
 base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
 base_dir="$(tgui-realpath "${base_dir}")"
+## Find a canonical path to repo root
+root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
+root_dir="$(tgui-realpath "${root_dir}")"
+## Find a canonical path to build target folder
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/tgui"
+target_dir="$(tgui-realpath "${target_dir}")"
 
 ## Add locally installed node programs to path
 PATH="${PATH}:node_modules/.bin"
@@ -58,16 +64,16 @@ task-eslint() {
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
-  rm -f **/package-lock.json
+  cd "${target_dir}"
+  rm -rf .tmp
 }
 
 ## Validates current build against the build stored in git
 task-validate-build() {
-  cd "${base_dir}"
+  cd "${root_dir}"
   local diff
-  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  diff="$(git diff browserassets/tgui/tgui.bundle.*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."

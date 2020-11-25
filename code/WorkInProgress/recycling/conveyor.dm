@@ -5,12 +5,16 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
 	power_usage = 100
-	layer = 2.5
+	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -57,9 +61,9 @@
 
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		dir = turn(basedir,180)
+		set_dir(turn(basedir,180))
 	else
-		dir = basedir
+		set_dir(basedir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -409,12 +413,12 @@
 
 /obj/machinery/conveyor_switch/New()
 	..()
-	conveyor_switches += src
+	START_TRACKING
 	update()
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src
@@ -423,7 +427,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 
 /obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
+	STOP_TRACKING
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.owner = null
 	conveyors = null
@@ -474,7 +478,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+	for_by_tcl(S, /obj/machinery/conveyor_switch)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -505,9 +509,9 @@
 
 	setdir()
 		if(operating == -1)
-			dir = altdir
+			set_dir(altdir)
 		else
-			dir = startdir
+			set_dir(startdir)
 		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 		update()
 
@@ -606,7 +610,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

@@ -36,7 +36,7 @@
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
 		SPAWN_DBG (100) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
-				original_object.loc = src.loc
+				original_object.set_loc(src.loc)
 				original_object = null
 				qdel(src)
 		return ..()
@@ -438,7 +438,7 @@
 		if (M.reagents)
 			M.reagents.add_reagent("histamine", 12)
 			M.reagents.add_reagent("toxin", 2)
-			karma_update(1, "SAINT", M)
+			M.add_karma(1)
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
@@ -484,7 +484,7 @@
 
 	Move()
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
-		..()
+		. = ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
@@ -599,23 +599,22 @@
 	generic = 0
 	atk_text = "bashes against"
 	atk_brute_amt = 7
+	is_pet = FALSE
 	var/reagent_id = null
 
 	New()
 		..()
 
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1000)
 
 		SPAWN_DBG(4 SECONDS)
-			if(!reagents.total_volume)
+			if(reagents && !reagents.total_volume)
 				if (all_functional_reagent_ids.len > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
 				else
 					src.reagent_id = "water"
 
-				R.add_reagent(src.reagent_id, 10)
+				reagents.add_reagent(src.reagent_id, 10)
 
 				var/oldcolor = src.reagents.get_master_color()
 				var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
@@ -834,6 +833,7 @@
 	seekrange = 5
 	invisibility = 1
 	flying = 1
+	is_pet = FALSE
 
 	generic = 0
 
@@ -1302,7 +1302,7 @@
 		var/this_expiration_id = rand(1, 100000)
 		src.expiration_id = this_expiration_id
 		SPAWN_DBG(time)
-			if(src && src.alive && src.expiration_id == this_expiration_id)
+			if(src?.alive && src.expiration_id == this_expiration_id)
 				src.health = 0
 				src.CritterDeath()
 

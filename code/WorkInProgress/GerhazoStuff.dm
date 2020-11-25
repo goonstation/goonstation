@@ -12,10 +12,6 @@
 			bioHolder.mobAppearance.customization_second_color = "#555555"
 			bioHolder.mobAppearance.customization_third_color = "#555555"
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
-				abilityHolder.updateButtons()
-
 			real_name = "Cyalume Knight"
 			desc = "A knight of modern times."
 			gender = "male"
@@ -45,6 +41,11 @@
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
 			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+
+			sleep(1 SECOND)
+
+			bioHolder.mobAppearance.UpdateMob()
+			abilityHolder.updateButtons()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
 		var/obj/item/sword/deflecting_sword
@@ -271,11 +272,10 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			SPAWN_DBG(0)
-				//if(!M.stat) M.emote("scream")
-				M.do_disorient(15, weakened = 10)
-				M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
-				M.update_canmove()
+			//if(!M.stat) M.emote("scream")
+			M.do_disorient(15, weakened = 10)
+			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
+			M.update_canmove()
 
 /datum/targetable/cyalume_knight/push
 	name = "Push"
@@ -585,7 +585,7 @@
 	onStart()
 		..()
 		src.loopStart()
-	
+
 	loopStart()
 		..()
 		checkNulls()

@@ -36,7 +36,7 @@
 
 	var/list/old_types = splittext("[A.type]", "/")
 
-	for(var/obj/machinery/camera/current in cameras)
+	for_by_tcl(current, /obj/machinery/camera)
 		if(old.z != current.z)
 			continue
 		//make sure it's the right direction

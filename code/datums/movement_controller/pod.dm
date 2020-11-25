@@ -16,7 +16,7 @@
 
 		velocity_max = 6
 		velocity_max_no_input = 5
-		accel = 3
+		accel = 2
 
 		min_delay = 14
 
@@ -28,6 +28,7 @@
 		last_dir = 0
 
 	New(owner)
+		..()
 		src.owner = owner
 		M = matrix()
 
@@ -63,12 +64,12 @@
 				input_y /= input_magnitude
 				input_dir = vector_to_dir(input_x,input_y)
 
-			owner.dir = input_dir
+			owner.set_dir(input_dir)
 			owner.facing = input_dir
 
 			if (input_magnitude)
 				if (input_dir & (input_dir-1))
-					owner.dir = NORTH
+					owner.set_dir(NORTH)
 					owner.transform = turn(M,arctan(input_y,input_x))
 				else
 					owner.transform = null
@@ -78,8 +79,8 @@
 				user.attempt_move()
 
 
-	update_owner_dir(var/atom/movable/ship) //after move, update ddir
-		owner.dir = last_dir
+	update_owner_dir(var/atom/movable/ship) //after move, update dir
+		owner.set_dir(last_dir)
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
@@ -90,10 +91,17 @@
 
 		velocity_magnitude = 0
 		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
-			if (owner && owner.engine && owner.engine.active)
+			if (owner?.engine?.active)
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel
+
+				//We're on autopilot before the warp, NO FUCKING IT UP!
+				if (owner.engine.warp_autopilot)
+					return 0
+
+				if (owner.rcs && input_x == 0 && input_y == 0)
+					braking = 1
 
 				//braking
 				if (braking)
@@ -106,9 +114,11 @@
 
 				//normalize and force speed cap
 				velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
-				var/vel_max = velocity_max + max(owner.speed,0)
+				var/vel_max = velocity_max
 				if (!input_x && !input_y)
 					vel_max = velocity_max_no_input
+
+				vel_max /= (owner.speed ? owner.speed : 1)
 
 				if (velocity_magnitude > vel_max)
 					velocity_x /= velocity_magnitude

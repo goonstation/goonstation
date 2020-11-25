@@ -33,6 +33,25 @@
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/synthburger
 
+/datum/cookingrecipe/spicychickensandwich_2
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+
+/datum/cookingrecipe/spicychickensandwich
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+
+/datum/cookingrecipe/chickensandwich
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken
+
 /datum/cookingrecipe/mysteryburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -1197,6 +1216,7 @@
 		B.update_icon(0)
 		if (S)
 			S.reagents.trans_to(B, 50)
+			B.food_effects += S.food_effects
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
 
@@ -1206,7 +1226,6 @@
 			B.name = "[rand(50) ? "yellow" : "white"] cake"
 
 		B.desc = "Mmm! A delicious-looking [B.name]!"
-		B.food_effects += S.food_effects
 		return B
 
 

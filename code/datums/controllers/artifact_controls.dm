@@ -9,10 +9,6 @@ var/datum/artifact_controller/artifact_controls
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/artifact) - /datum/artifact/art)
-			var/datum/artifact/A = new X
-			artifact_types += A
-
 		for (var/X in childrentypesof(/datum/artifact_origin))
 			var/datum/artifact_origin/AO = new X
 			artifact_origins += AO
@@ -79,6 +75,10 @@ var/datum/artifact_controller/artifact_controls
 				dat += "in [T.loc]<br>"
 
 			dat += "[O.name], [A.artitype.name], [A.type]<br>"
+			for(var/trigger in A.triggers)
+				dat += "[trigger] "
+			if(A.triggers.len)
+				dat += "<br>"
 
 			dat += "<a href='byond://?src=\ref[src];Activate=\ref[O]'>"
 			if (!A.activated)
@@ -265,7 +265,7 @@ var/datum/artifact_controller/artifact_controls
 	nouns_small = list("wand","scepter","staff","rod","cane","crozier","trophy")
 	touch_descriptors = list("It feels warm.","It feels smooth.","It is suprisingly pleasant to touch.")
 	var/list/material = list("ebon","ivory","pearl","golden","malachite","diamond","ruby","emerald","sapphire","opal")
-	var/list/object = list("jewel","trophy","favor","boon","token","crown","treaure","sacrament","oath")
+	var/list/object = list("jewel","trophy","favor","boon","token","crown","treasure","sacrament","oath")
 	var/list/aspect = list("wonder","splendor","power","plenty","mystery","glory","majesty","eminence","grace")
 
 	generate_name()

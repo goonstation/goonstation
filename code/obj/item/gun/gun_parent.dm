@@ -18,6 +18,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	contraband = 4
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = "sound/items/pickup_gun.ogg"
+	inventory_counter_enabled = 1
 
 	var/continuous = 0 //If 1, fire pixel based while button is held.
 	var/c_interval = 3 //Interval between shots while button is held.
@@ -47,7 +48,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
-	var/list/muzzle_flash_simplelight_color
 
 	buildTooltipContent()
 		. = ..()
@@ -97,7 +97,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(!c_firing)
 		c_firing = 1
 		SPAWN_DBG(0)
-			while(src && src.c_mouse_down)
+			while(src?.c_mouse_down)
 				pixelaction(src.c_target.target, src.c_target.params, src.c_target.user, 0, 1)
 				suppress_fire_msg = 1
 				sleep(src.c_interval)
@@ -155,7 +155,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
 	var/pox
@@ -325,14 +325,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, M, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 		if (!P)
 			return
 		if (user == M)
 			P.shooter = null
 			P.mob_shooter = user
 
-		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
 		if(get_dist(user,M) <= 1)
 			hit_with_existing_projectile(P, M) // Includes log entry.
@@ -402,9 +401,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 	if (P)
-		alter_projectile(P)
 		P.forensic_ID = src.forensic_ID
 
 	if(user && !suppress_fire_msg)

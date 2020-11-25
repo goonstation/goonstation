@@ -21,7 +21,12 @@
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
 	/obj/item/toy/plush/small/penguin/cool)
-	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca, /obj/item/toy/plush/small/tuba)
+	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/plush/small/tuba,\
+	/obj/item/toy/plush/small/chris,\
+	/obj/item/toy/plush/small/fancyflippers,\
+	/obj/item/toy/plush/small/billy,\
+	/obj/item/toy/plush/small/arthur)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -56,6 +61,10 @@
 		interrupt(INTERRUPT_ALWAYS)
 		return
 
+/datum/action/bar/icon/claw_machine/onResume()
+	..()
+	state = ACTIONSTATE_DELETE
+
 /datum/action/bar/icon/claw_machine/onInterrupt()
 	..()
 	CM.busy = 0
@@ -79,7 +88,7 @@
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(10) ? (prob(10) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
+	var/obj/item/P = pick(prob(20) ? (prob(20) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	P.throw_at(M, 16, 3)
@@ -102,11 +111,17 @@
 	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 	if (!message || get_dist(src, user) > 1)
 		return
-	logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
 	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 	var/mob/living/carbon/human/H = user
 	if (H.sims)
 		H.sims.affectMotive("fun", 1)
+
+/obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
+	if (user.a_intent == INTENT_HELP)
+		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
+	else
+		. = ..()
 
 /obj/item/toy/plush/small
 	name = "small plush toy"
@@ -147,6 +162,10 @@
 	name = "assistant monkey plush toy"
 	icon_state = "monkey_assistant"
 
+/obj/item/toy/plush/small/monkey/george
+	name = "curious george monkey plush toy"
+	icon_state = "monkey_george"
+
 /obj/item/toy/plush/small/possum
 	name = "possum plush toy"
 	icon_state = "possum"
@@ -179,6 +198,30 @@
 	name = "Tuba the rat"
 	icon_state = "tuba"
 
+/obj/item/toy/plush/small/chris
+	name = "Chris the goat"
+	icon_state = "chris"
+
+/obj/item/toy/plush/small/fancyflippers
+	name = "Fancyflippers the gentoo penguin"
+	icon_state = "fancyflippers"
+
+/obj/item/toy/plush/small/billy
+	name = "Billy the hungry fish"
+	icon_state = "billy"
+
+/obj/item/toy/plush/small/arthur
+	name = "Arthur the bumblespider"
+	icon_state = "arthur"
+	var/spam_flag = 0
+
+/obj/item/toy/plush/small/arthur/attack_hand(mob/user as mob)
+	if (user == src.loc && spam_flag < world.time)
+		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] awoos!</span>")
+		spam_flag = world.time + 2 SECONDS
+	else return ..()
+
 /obj/item/toy/sword
 	name = "toy sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -207,7 +250,7 @@
 		icon_state = "sword1-[bladecolor]"
 		item_state = "sword1-[bladecolor]"
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_SWORD
+		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target as mob, mob/user as mob)
 		..()
@@ -232,8 +275,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
-	var/patreon_prob = 8
-	var/rare_prob = 11
+	var/patreon_prob = 9
+	var/rare_prob = 12
 	var/datum/figure_info/info = null
 
 	// grumble grumble
@@ -278,19 +321,17 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
-			var/datum/reagents/R = new/datum/reagents(30)
-			src.reagents = R
-			R.my_atom = src
+			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
 			var/adulterants = rand(2,4)
 
 			while(primaries > 0)
 				primaries--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_primaries), 6)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 6)
 			while(adulterants > 0)
 				adulterants--
-				src.reagents.add_reagent(pick(CYBERPUNK_drug_adulterants), 3)
+				src.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 3)
 
 
 	custom_suicide = 1
@@ -364,7 +405,7 @@ var/list/figure_low_rarity = list(\
 /datum/figure_info/assistant,
 /datum/figure_info/chef,
 /datum/figure_info/chaplain,
-/datum/figure_info/barman,
+/datum/figure_info/bartender,
 /datum/figure_info/botanist,
 /datum/figure_info/janitor,
 /datum/figure_info/doctor,
@@ -448,7 +489,22 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/beebo,
 /datum/figure_info/romillybartlesby,
 /datum/figure_info/dillbehrt,
-/datum/figure_info/listelsheerfield)
+/datum/figure_info/listelsheerfield,
+/datum/figure_info/raphaelzahel,
+/datum/figure_info/derekclarke,
+/datum/figure_info/fartcan,
+/datum/figure_info/tomato,
+/datum/figure_info/zooblarskrippus,
+/datum/figure_info/vivi,
+/datum/figure_info/giggles,
+/datum/figure_info/mavericksabre,
+/datum/figure_info/whitneystingray,
+/datum/figure_info/fleur,
+/datum/figure_info/joaquinfry,
+/datum/figure_info/carolineaudibert,
+/datum/figure_info/helgergunnink,
+/datum/figure_info/hex
+)
 
 /datum/figure_info
 	var/name = "staff assistant"
@@ -473,8 +529,8 @@ var/list/figure_patreon_rarity = list(\
 		name = "chaplain"
 		icon_state = "chaplain"
 
-	barman
-		name = "barman"
+	bartender
+		name = "bartender"
 		icon_state = "barman"
 
 	botanist
@@ -809,6 +865,62 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Listel Sheerfield"
 		icon_state = "listelsheerfield"
 
+	raphaelzahel
+		name = "\improper Raphael Zahel"
+		icon_state = "raphaelzahel"
+
+	derekclarke
+		name = "\improper Derek Clarke"
+		icon_state = "derekclarke"
+
+	fartcan
+		name = "\improper Fart Canister"
+		icon_state = "fartcan"
+
+	tomato
+		name = "\improper Tomato"
+		icon_state = "tomato"
+
+	zooblarskrippus
+		name = "\improper Zooblar Skrippus"
+		icon_state = "zooblarskrippus"
+
+	vivi
+		name = "\improper Vivi"
+		icon_state = "vivi"
+
+	giggles
+		name = "\improper Giggles"
+		icon_state = "giggles"
+
+	mavericksabre
+		name = "\improper Maverick Sabre"
+		icon_state = "mavericksabre"
+
+	whitneystingray
+		name = "\improper Whitney Stingray"
+		icon_state = "whitneystingray"
+
+	fleur
+		name = "\improper Fleur DeLaCreme"
+		icon_state = "fleur"
+
+	joaquinfry
+		name = "\improper Joaquin Fry"
+		icon_state = "joaquinfry"
+
+	carolineaudibert
+		name = "\improper Caroline Audibert"
+		icon_state = "carolineaudibert"
+
+	helgergunnink
+		name = "\improper Helger Gunnink"
+		icon_state = "helgergunnink"
+
+	hex
+		name = "\improper HEX"
+		icon_state = "hex"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
@@ -862,8 +974,8 @@ var/list/figure_patreon_rarity = list(\
 	New()
 		..()
 		//Products
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=100)
-		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=500)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")
@@ -1003,3 +1115,27 @@ var/list/figure_patreon_rarity = list(\
 
 /obj/item/toy/gooncode/attack()
 	return
+
+/obj/item/toy/cellphone
+	name = "flip phone"
+	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
+	icon = 'icons/obj/cellphone.dmi'
+	icon_state = "cellphone-on"
+	w_class = 2
+	var/datum/game/tetris
+	var/datum/mail
+
+	New()
+		src.contextLayout = new /datum/contextLayout/instrumental(16)
+		src.contextActions = childrentypesof(/datum/contextAction/cellphone)
+		..()
+		START_TRACKING
+		src.tetris = new /datum/game/tetris(src)
+
+	disposing()
+		..()
+		STOP_TRACKING
+
+	attack_self(mob/user as mob)
+		..()
+		user.showContextActions(contextActions, src)

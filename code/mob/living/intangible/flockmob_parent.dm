@@ -92,7 +92,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 		return 0.75 + movement_delay_modifier
 
 /mob/living/intangible/flock/Move(NewLoc, direct)
-	src.dir = get_dir(src, NewLoc)
+	src.set_dir(get_dir(src, NewLoc))
 	if (isturf(NewLoc) && istype(NewLoc, /turf/unsimulated/wall)) // no getting past these walls, fucko
 		return 0
 	..()
@@ -143,7 +143,7 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 		..()
 	else
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
 /mob/living/intangible/flock/say_quote(var/text)
@@ -212,3 +212,8 @@ var/list/fuckedUpFlockVisionColorMatrix = list(\
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
 				O.show_message(message, m_type)
+
+
+/mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
+	//todo check for flocktile underneath flockmind cheers
+	new /obj/flock_structure/ghost(src.loc, T, src.flock, resources)

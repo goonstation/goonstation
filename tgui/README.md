@@ -40,7 +40,6 @@ You will need these programs to start developing in tgui:
 - [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - Some kind of terminal, whether it in be a Unix-like environment, or a Windows one.
-- **A git version that supports symlinks.** If using Git for Windows, be sure to *install* it with symlink support!
 
 ## Usage
 
@@ -176,6 +175,10 @@ use in tgui. Each theme must be registered in `webpack.config.js` file.
 ## Component Reference
 
 See: [Component Reference](docs/component-reference.md).
+
+## FontAwesome Icon
+
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5.14.0/icons?d=gallery&s=regular,solid&m=free)
 
 ## License
 

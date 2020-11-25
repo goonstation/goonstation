@@ -4,7 +4,7 @@
 
 /datum/artifact/heater
 	associated_object = /obj/machinery/artifact/heater
-	rarity_class = 2
+	rarity_class = 1 // modified from 2 as part of art tweak
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
@@ -17,7 +17,7 @@
 
 	post_setup()
 		heat_target = rand(0,620)
-		if (artitype == "eldritch" && prob(66))
+		if (artitype.name == "eldritch" && prob(66))
 			if (heat_target > 310)
 				heat_target *= 2
 			if (heat_target < 310 && heat_target != 0)

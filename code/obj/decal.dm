@@ -9,9 +9,9 @@
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
 			if (random_dir >= 8)
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 			else
-				src.dir = pick(cardinal)
+				src.set_dir(pick(cardinal))
 
 		if (!real_name)
 			real_name = name
@@ -30,9 +30,9 @@
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
 			if (random_dir >= 8)
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 			else
-				src.dir = pick(cardinal)
+				src.set_dir(pick(cardinal))
 
 		if (!real_name)
 			real_name = name
@@ -127,7 +127,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -142,7 +142,7 @@
 	pixel_x = -16
 	mouse_opacity = 0
 	New(var/atom/location)
-		src.loc = location
+		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
 
@@ -151,6 +151,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "arrow"
 	layer = EFFECTS_LAYER_1
+	plane = PLANE_HUD
 	anchored = 1
 
 /* - Replaced by functional version: /obj/item/instrument/large/jukebox
@@ -484,7 +485,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	New()
 		..()
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
 		src.pixel_x += rand(-8,8)
 
@@ -495,13 +496,13 @@ obj/decal/fakeobjects/teleport_pad
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 
 	unpooled()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 
@@ -669,6 +670,21 @@ obj/decal/fakeobjects/teleport_pad
 	name = "QM Navigation Guide"
 	desc = "The quartermaster is in this direction."
 	icon_state = "guide_qm"
+
+/obj/decal/tile_edge/floorguide/hop
+	name = "Head Of Personnel Navigation Guide"
+	desc = "The Head of Personnel's office is in this direction."
+	icon_state = "guide_hop"
+
+/obj/decal/tile_edge/floorguide/ai
+	name = "AI Navigation Guide"
+	desc = "The AI core is in this direction."
+	icon_state = "guide_ai"
+
+/obj/decal/tile_edge/floorguide/catering
+	name = "Catering Navigation Guide"
+	desc = "Catering is in this direction."
+	icon_state = "guide_catering"
 
 /obj/decal/tile_edge/floorguide/arrow_e
 	name = "Directional Navigation Guide"

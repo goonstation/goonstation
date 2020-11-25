@@ -16,8 +16,7 @@ datum/controller/process/statusEffects
 
 		var/list/notifyUiUpdate = list() //List of objects that need to update their status ui.
 
-		for(var/statuseffect in globalStatusInstances)
-			var/datum/statusEffect/S = statuseffect
+		for (var/datum/statusEffect/S as() in globalStatusInstances)
 			if(S == null) continue
 			if(S.owner)
 				S.onUpdate(actual)
@@ -42,7 +41,7 @@ datum/controller/process/statusEffects
 				if(globalStatusInstances.Find(S)) globalStatusInstances.Remove(S)
 
 		for(var/atom/A in notifyUiUpdate)
-			SPAWN_DBG(0) if(A && A.statusEffects) A.updateStatusUi()
+			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()
 
 		lastUpdate = world.timeofday
 		lastProcessLength =  (world.timeofday - lastProcessLength)

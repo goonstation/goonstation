@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
@@ -23,14 +24,16 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-
-	var/datum/reagents/R = new/datum/reagents(500)
-	src.reagents = R
-	R.maximum_volume = 500
-	R.my_atom = src
-	R.add_reagent("fuel", 250)
-
+	src.create_reagents(500)
+	reagents.add_reagent("fuel", 250)
 	src.build_icon()
+
+/obj/machinery/recharge_station/disposing()
+	if(occupant)
+		occupant.set_loc(get_turf(src.loc))
+		occupant = null
+	..()
+
 
 /obj/machinery/recharge_station/process()
 	if (!(src.status & BROKEN))
@@ -312,7 +315,7 @@
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
 			if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
 				return
-			if (url_regex && url_regex.Find(newname))
+			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return

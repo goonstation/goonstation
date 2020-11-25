@@ -4,7 +4,7 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
-var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+ABSTRACT_TYPE(/datum/reagent)
 
 datum
 	reagent
@@ -80,7 +80,7 @@ datum
 
 		proc/on_remove()
 			if (stun_resist > 0)
-				if (ismob(holder.my_atom))
+				if (ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
 					M.remove_stun_resist_mod("reagent_[src.id]")
 			return
@@ -258,7 +258,7 @@ datum
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
-					amount *= (0.65 ** mult)
+					amount *= (0.65)
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)

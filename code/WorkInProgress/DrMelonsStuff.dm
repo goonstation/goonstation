@@ -9,10 +9,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1000)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(3000)
 
 	process()
 		if(reagents.has_reagent("radium"))
@@ -106,10 +103,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(500)
-		reagents = R
-		R.my_atom = src
-		return
+		src.create_reagents(500)
 
 
 	get_desc(dist, mob/user)
@@ -232,7 +226,7 @@
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/wizard))
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/wizard))
 			for (var/obj/item/mop/M in orange(5,src))
 				src.visible_message("<span class='alert'>[src] begins to twitch and move!</span>")
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)

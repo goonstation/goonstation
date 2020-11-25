@@ -35,11 +35,12 @@
 		// ensuring that its location is actually the center of the damn thing
 		// this keeps it from needing to move mobs one over,
 		// and stops the "decompression" from coming out the left side
-		rp_latejoin += src
+		START_TRACKING
 		processing_items += src
 		x += 1
 
 	disposing()
+		STOP_TRACKING
 		var/turf/T = get_turf(src)
 		for (var/mob/M in src)
 			M.set_loc(T)
@@ -97,7 +98,7 @@
 		var/datum/job/job = their_jobs[1]
 		their_jobs.Cut(1,2)
 		var/be_loud = job ? job.radio_announcement : 1
-		if (!istype(thePerson))
+		if (!istype(thePerson) || thePerson.loc != src)
 			busy = 0
 			return (folks_to_spawn.len != 0)
 
@@ -106,7 +107,7 @@
 
 		//sleep(1.9 SECONDS)
 		SPAWN_DBG(1.9 SECONDS)
-			if (!thePerson)
+			if (!thePerson || thePerson.loc != src)
 				busy = 0
 				return (folks_to_spawn.len != 0)
 			var/turf/firstLoc = locate(src.x, src.y, src.z)
@@ -127,9 +128,9 @@
 			if (thePerson)
 				thePerson.hibernating = 0
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
-					for (var/obj/machinery/computer/announcement/A in machine_registry[MACHINES_ANNOUNCEMENTS])
+					for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
-							A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
+							A.announce_arrival(thePerson)
 
 			sleep(0.9 SECONDS)
 			busy = 0
@@ -189,10 +190,10 @@
 			return 0
 		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated or restrained!</b>")
 			return 0
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
-			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return 0
 		if (get_dist(src, L) > 1)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")

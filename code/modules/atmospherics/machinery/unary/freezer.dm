@@ -79,17 +79,17 @@
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
-			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=red>[air_contents.temperature - T0C]</FONT>"
 		else if(air_contents.temperature < (T0C - 20) && air_contents.temperature > (T0C - 100))
-			temp_text = "<FONT color=black>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=black>[air_contents.temperature - T0C]</FONT>"
 		else
-			temp_text = "<FONT color=blue>[air_contents.temperature]</FONT>"
+			temp_text = "<FONT color=blue>[air_contents.temperature - T0C]</FONT>"
 
 		var/dat = {"<B>Cryo gas cooling system</B><BR>
 		Current status: [ on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
-		Current gas temperature: [temp_text]<BR>
-		Current air pressure: [MIXTURE_PRESSURE(air_contents)]<BR>
-		Target gas temperature: <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> <A href='?src=\ref[src];settemp=1'>[current_temperature]</A> <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A><BR>
+		Current gas temperature: [temp_text]&deg;C<BR>
+		Current air pressure: [MIXTURE_PRESSURE(air_contents)] kPa<BR>
+		Target gas temperature: <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> <A href='?src=\ref[src];settemp=1'>[current_temperature - T0C]&deg;C</A> <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A><BR>
 		"}
 
 		user.Browse(dat, "window=freezer;size=400x500")
@@ -108,9 +108,9 @@
 				else
 					src.current_temperature = max((T0C - 200), src.current_temperature+amount)
 			if (href_list["settemp"])
-				var/change = input(usr,"Target Temperature (73.15-293.15):","Enter target temperature",current_temperature) as num
+				var/change = input(usr,"Target Temperature (-200 C - 20 C):","Enter target temperature",current_temperature - T0C) as num
 				if(!isnum(change)) return
-				current_temperature = min(max(73.15, change),293.15)
+				current_temperature = min(max(73.15, change + T0C),293.15)
 				src.updateUsrDialog()
 				return
 

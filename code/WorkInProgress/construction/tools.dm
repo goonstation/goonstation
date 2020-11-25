@@ -6,9 +6,10 @@
 	density = 1
 	anchored = 1
 	New()
+		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
-			term.dir = get_dir(get_turf(term), src)
+			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
 			qdel(src)
 
@@ -45,7 +46,6 @@
 			M.set_loc(get_turf(src))
 			var/mob/living/silicon/ai/TheAI = M.AIize(0, 1)
 			TheAI.set_loc(src)
-			src.loc = null
 			B.set_loc(TheAI)
 			TheAI.brain = B
 			TheAI.anchored = 0
@@ -89,7 +89,7 @@
 					power_usage = 750
 				else
 					var/target = pick(targets)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					if (src.enabled)
 						power_usage = 750
 						src.shootAt(target)
@@ -181,8 +181,9 @@
 	var/datum/progress/designated = null
 
 	attack_self(var/mob/user)
-		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 			boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
+			return
 		var/datum/game_mode/construction/C = ticker.mode
 		var/list/pickable = list()
 		for (var/datum/progress/P in C.milestones)
@@ -226,10 +227,24 @@
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
+
+/obj/item/lamp_manufacturer/organic
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
+	icon_state = "bio-white"
+	flags = FPRINT | TABLEPASS | EXTRADELAY
+	w_class = 2
+	click_delay = 1
+	prefix = "bio"
+	metal_ammo = 20
+	inventory_counter_enabled = 1
+	New()
+		..()
+		inventory_counter.update_number(metal_ammo)
 
 /obj/item/material_shaper
 	name = "\improper Window Planner"
@@ -416,7 +431,6 @@
 					continue
 				if (MT.mat_id == DM.mat_id)
 					playsound(src.loc, sound_process, 40, 1)
-					M.loc = null
 					if (which == "metal")
 						metal_count += 10
 					else
@@ -446,7 +460,7 @@
 
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 		//	boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
 
 		if (selecting)
@@ -488,7 +502,7 @@
 		else
 			var/class = marker_class[mode]
 			old = new class(T, selected)
-			old.dir = get_dir(user, T)
+			old.set_dir(get_dir(user, T))
 			// if (pod_turf)
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
@@ -663,25 +677,23 @@
 		var/mask = bmask
 		if (mask & 1)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 1
+			W.set_dir(1)
 			W.setMaterial(glass)
 
 		if (mask & 2)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 2
+			W.set_dir(2)
 			W.setMaterial(glass)
 
 		if (mask & 4)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 4
+			W.set_dir(4)
 			W.setMaterial(glass)
 
 		if (mask & 8)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 8
+			W.set_dir(8)
 			W.setMaterial(glass)
-
-		src.loc = null
 		qdel(src)
 
 	proc/cancelled()
@@ -689,7 +701,6 @@
 		var/turf/S = locate(x, y - 1, 1)
 		var/turf/W = locate(x - 1, y, 1)
 		var/turf/E = locate(x + 1, y, 1)
-		src.loc = null
 		if (N)
 			var/obj/plan_marker/glass_shaper/G = locate() in N
 			if (G)
@@ -737,18 +748,16 @@
 			if (src.icon_state != "* AUTO *")
 				T.icon = src.icon
 				T.icon_state = src.icon_state
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T:allows_vehicles = src.allows_vehicles
 			else if (istype(T, /turf/simulated/wall/auto))
 				var/turf/simulated/wall/auto/AT = T
 				AT.icon = initial(AT.icon)
 				AT.icon_state = initial(AT.icon_state)
-				AT.dir = initial(AT.dir)
+				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
 				AT.update_icon()
 				AT.update_neighbors()
-
-			src.loc = null
 			qdel(src)
 
 /obj/plan_marker/floor
@@ -763,7 +772,6 @@
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
-			T.dir = src.dir
+			T.set_dir(src.dir)
 			// T:allows_vehicles = src.allows_vehicles
-			src.loc = null
 			qdel(src)

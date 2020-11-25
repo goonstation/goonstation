@@ -1,3 +1,4 @@
+/// Job/tool modules for cyborgs
 /obj/item/robot_module
 	name = "blank cyborg module"
 	desc = "A blank cyborg module. It has minimal function in its current state."
@@ -7,8 +8,7 @@
 	item_state = "electronic"
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | CONDUCT
-	// TODO: refactor name to /var/list/tools
-	var/list/modules = list()
+	var/list/tools = list()
 	var/mod_hudicon = "unknown"
 	var/cosmetic_mods = null
 	var/include_common_tools = TRUE
@@ -18,6 +18,7 @@
 	var/obj/item/device/radio/radio = null
 
 /obj/item/robot_module/New()
+	..()
 	// add contents
 	if (src.include_common_tools)
 		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)
@@ -41,7 +42,7 @@
 		var/obj/item/I = adding_contents
 		I.cant_drop = 1
 		I.set_loc(src)
-		src.modules += I
+		src.tools += I
 		return I
 	if (ispath(adding_contents, /obj/item))
 		// handle adding tool by path (instantiate)

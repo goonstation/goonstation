@@ -45,6 +45,7 @@ chui/window
 
 	//If overriden, be sure to call ..()
 	New(var/atom/adam)
+		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )
 		theAtom = adam
@@ -318,7 +319,7 @@ chui/window
 				targetDatum.Topic("close=1", params2list("close=1"), targetDatum)
 
 		src << browse( null, "window=[window]" )//Might not be a standard chui window but we'll play along.
-		if(src && src.mob)
+		if(src?.mob)
 			//boutput(world, "[src] was [src.mob.machine], setting to null")
 			if (istype(win) && win.theAtom && isobj(win.theAtom))
 				win.theAtom:remove_dialog(src.mob)

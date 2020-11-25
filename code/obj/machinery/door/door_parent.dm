@@ -161,13 +161,13 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
 		update_nearby_tiles(need_rebuild=1)
-		doors.Add(src)
+		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.update_icon()
 
 	disposing()
 		update_nearby_tiles()
-		doors.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/toggleinput()
@@ -204,6 +204,9 @@
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
 
+#ifdef HALLOWEEN
+	user.emote("scream")
+#endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
 		SPAWN_DBG (6)

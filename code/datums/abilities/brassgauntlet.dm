@@ -28,7 +28,7 @@
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
 				var/obj/critter/livingobj/L = new/obj/critter/livingobj(I.loc)
-				I.loc = L
+				I.set_loc(L)
 				L.name = "Living [I.name]"
 				L.desc = "[I.desc]. It appears to be alive!"
 				L.overlays += I
@@ -279,7 +279,7 @@ proc/goldsnap(var/mob/user)
 	sleep(1 SECOND)
 	boutput(user, "<span class='alert'><B>Everything around you turns to gold!</B></span>")
 	var/turf/T = get_turf(user)
-	user.dir = SOUTH
+	user.set_dir(SOUTH)
 	user:become_gold_statue()
 	for(var/turf/G in range(10, T))
 		G.setMaterial(getMaterial("gold"))

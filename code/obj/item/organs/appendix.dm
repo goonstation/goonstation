@@ -10,7 +10,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2) && !robotic)
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -20,13 +20,17 @@
 	icon_state = "cyber-appendix"
 	// item_state = "cyber-"
 	robotic = 1
+	made_from = "pharosium"
 	edible = 0
 	mats = 6
 
 	//A bad version of the robutsec... For now.
 	on_life(var/mult = 1)
-		if (src.get_damage() < FAIL_DAMAGE && prob(10))
-			donor.reagents.add_reagent(pick("saline", "salbutamol", "salicylic_acid", "charcoal"), 4 * mult)
+		if (!..())
+			return 0
+		if (src.get_damage() < FAIL_DAMAGE && prob(percentmult(10, mult)))
+			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
+			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 3 : 4) //salicyclic has very low depletion, reduce chances of overdose
 
 		if(emagged && !broken && donor.health < 0) //emagged and we're in crit
 			src.take_damage(200, 200, 200)
@@ -34,7 +38,7 @@
 			donor.setStatus("weakened", 3 SECONDS)
 
 			donor.reagents.add_reagent("salbutamol", 20) //copied mostly from robusttec
-			donor.reagents.add_reagent("epinephrine", 15) 
+			donor.reagents.add_reagent("epinephrine", 15)
 			donor.reagents.add_reagent("omnizine", 15) //reduced omnizine amount
 			donor.reagents.add_reagent("teporone", 20)
 			#ifdef CREATE_PATHOGENS

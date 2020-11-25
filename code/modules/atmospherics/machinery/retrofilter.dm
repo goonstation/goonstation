@@ -79,8 +79,6 @@ obj/machinery/atmospherics/retrofilter
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
 
-		loc = null
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -287,7 +285,8 @@ obj/machinery/atmospherics/retrofilter
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
 				if(removed && length(removed.trace_gases))
-					for(var/datum/gas/trace_gas in removed.trace_gases)
+					for(var/G in removed.trace_gases)
+						var/datum/gas/trace_gas = G
 						if(trace_gas)
 							removed.trace_gases -= trace_gas
 							if(!removed.trace_gases.len)

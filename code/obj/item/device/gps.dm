@@ -1,5 +1,3 @@
-var/global/list/all_GPSs = list()
-
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "Tells you your coordinates based on the nearest coordinate beacon."
@@ -102,7 +100,7 @@ var/global/list/all_GPSs = list()
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>GPS Units</b></div>"
-		for (var/obj/item/device/gps/G in all_GPSs)//world)
+		for_by_tcl(G, /obj/item/device/gps)
 			LAGCHECK(LAG_LOW)
 			if (G.allowtrack == 1)
 				var/turf/T = get_turf(G.loc)
@@ -113,7 +111,7 @@ var/global/list/all_GPSs = list()
 				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
-		for (var/obj/item/implant/tracking/imp in tracking_implants)//world)
+		for_by_tcl(imp, /obj/item/implant/tracking)
 			LAGCHECK(LAG_LOW)
 			if (isliving(imp.loc))
 				var/turf/T = get_turf(imp.loc)
@@ -123,7 +121,7 @@ var/global/list/all_GPSs = list()
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B in machine_registry[MACHINES_BEACONS])
+		for (var/obj/machinery/beacon/B as() in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
 				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
@@ -203,13 +201,16 @@ var/global/list/all_GPSs = list()
 	New()
 		..()
 		serial = rand(4201,7999)
-		desc += " Its serial code is [src.serial]-[identifier]."
-		if (!islist(all_GPSs))
-			all_GPSs = list()
-		all_GPSs.Add(src)
+		START_TRACKING
 		if (radio_controller)
 			src.net_id = generate_net_id(src)
 			radio_control = radio_controller.add_object(src, "[frequency]")
+
+	get_desc(dist, mob/user)
+		. = "<br>Its serial code is [src.serial]-[identifier]."
+		if (dist > 2)
+			return
+		. += "<br>There's a sticker on the back saying \"Net Identifier: [net_id]\" on it."
 
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
@@ -262,7 +263,7 @@ var/global/list/all_GPSs = list()
 			icon_state = "gps-off"
 			return
 
-		src.dir = get_dir(src,tracking_target)
+		src.set_dir(get_dir(src,tracking_target))
 		if (get_dist(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
@@ -271,13 +272,7 @@ var/global/list/all_GPSs = list()
 		SPAWN_DBG(0.5 SECONDS) .()
 
 	disposing()
-		..()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
-
-	disposing()
-		if (islist(all_GPSs))
-			all_GPSs.Remove(src)
+		STOP_TRACKING
 		if (radio_controller)
 			radio_controller.remove_object(src, "[src.frequency]")
 		..()
@@ -303,7 +298,7 @@ var/global/list/all_GPSs = list()
 					if (!sender)
 						return
 
-					var/turf/T = get_turf(usr)
+					var/turf/T = get_turf(src)
 					var/datum/signal/reply = get_free_signal()
 					reply.source = src
 					reply.data["sender"] = src.net_id
@@ -323,7 +318,7 @@ var/global/list/all_GPSs = list()
 			pingsignal.data["netid"] = src.net_id
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
-			pingsignal.data["identifier"] = "[src.serial]-[src.identifier]"
+			pingsignal.data["data"] = "[src.serial]-[src.identifier]"
 			pingsignal.data["distress"] = "[src.distress]"
 			pingsignal.transmission_method = TRANSMISSION_RADIO
 

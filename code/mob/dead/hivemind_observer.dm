@@ -71,7 +71,7 @@
 		if (src.mind)
 			mind.transfer_to(my_ghost)
 
-		var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (target)
 			var/turf/T = get_turf(target)
 			if (T && (!isghostrestrictedz(T.z) || isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || my_ghost.client && my_ghost.client.holder)))

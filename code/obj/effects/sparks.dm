@@ -28,7 +28,7 @@
 	..()
 
 /obj/effects/sparks/Move()
-	..()
+	. = ..()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100,usr)

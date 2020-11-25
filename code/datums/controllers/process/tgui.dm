@@ -23,7 +23,7 @@ var/global/datum/controller/process/tgui/tgui_process
 	setup()
 		name = "tgui"
 		schedule_interval = 9 DECI SECONDS
-		basehtml = grabResource("tgui/tgui.html") // [GOONSTATION-ADD]
+		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
 		tgui_process = src
 
 	doWork()
@@ -34,7 +34,7 @@ var/global/datum/controller/process/tgui/tgui_process
 		while(current_run.len)
 			var/datum/tgui/ui = current_run[current_run.len]
 			current_run.len--
-			if(ui && ui.user && ui.src_object)
+			if(ui?.user && ui.src_object)
 				ui.process()
 			else
 				open_uis.Remove(ui)

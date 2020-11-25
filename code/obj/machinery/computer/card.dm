@@ -80,7 +80,7 @@
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
-			var/list/civilianjobs = list("Staff Assistant", "Barman", "Chef", "Botanist", "Chaplain", "Janitor", "Clown")
+			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist")
 			var/list/securityjobs = list("Security Officer", "Detective")
@@ -121,7 +121,7 @@
 			42 (access_engineering_eva)*/
 			var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 			var/supply_access = list("<br>Supply:")
-			var/list/supply_access_list = list(access_hangar, access_cargo, access_mining, access_mining_shuttle, access_mining_outpost)
+			var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 			var/research_access = list("<br>Science and Medical:")
 			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry)
 			var/security_access = list("<br>Security:")

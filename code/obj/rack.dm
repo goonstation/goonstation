@@ -80,7 +80,6 @@
 
 /obj/rack/disposing()
 	var/turf/OL = get_turf(src)
-	loc = null
 	if (!OL)
 		return
 	if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -134,7 +133,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

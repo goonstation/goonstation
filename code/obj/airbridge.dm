@@ -51,7 +51,7 @@
 		..()
 
 	proc/get_link()
-		for(var/obj/airbridge_controller/C in by_type[/obj/airbridge_controller])
+		for_by_tcl(C, /obj/airbridge_controller)
 			LAGCHECK(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
@@ -169,7 +169,7 @@
 					else // floor
 						curr = get_steps(T, turn(dir, 90),i)
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
-					curr.dir = dir
+					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
 				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 				sleep(slide_delay)
@@ -183,6 +183,9 @@
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
 				light.filters = null
+				var/obj/machinery/light/l = light
+				if(istype(l))
+					l.seton(1)
 
 
 			working = 0
@@ -287,7 +290,7 @@
 		..()
 
 	proc/get_links()
-		for (var/obj/airbridge_controller/C in by_type[/obj/airbridge_controller])
+		for_by_tcl(C, /obj/airbridge_controller)
 			if (C.id == src.id)
 				links.Add(C)
 				if (C.primary_controller)

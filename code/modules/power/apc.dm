@@ -21,11 +21,11 @@ var/zapLimiter = 0
 	name = "area power controller"
 	icon_state = "apc0"
 	anchored = 1
+	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
 	object_flags = CAN_REPROGRAM_ACCESS
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	text = ""
-	machine_registry_idx = MACHINES_POWER
 	var/area/area
 	var/areastring = null
 	var/autoname_on_spawn = 0 // Area.name
@@ -167,8 +167,8 @@ var/zapLimiter = 0
 		// 2015 addendum: The fixed name checks are kept for backward compatibility, I'm not gonna manually replace every APC of each of the six maps we have right now.
 		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
 			src.name = "[area.name] APC"
-
-	src.area.area_apc = src
+	if (!QDELETED(src.area))
+		src.area.area_apc = src
 
 	src.updateicon()
 
@@ -179,7 +179,7 @@ var/zapLimiter = 0
 		src.net_id = generate_net_id(src)
 	else
 		terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.set_dir(tdir)
 	terminal.master = src
 
 	SPAWN_DBG(0.5 SECONDS)
@@ -187,7 +187,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/disposing()
 	cell = null
-	terminal.master = null
+	terminal?.master = null
 	terminal = null
 	..()
 
@@ -352,14 +352,14 @@ var/zapLimiter = 0
 						if (istype(newTerm) && !newTerm.master)
 							src.terminal = newTerm
 							newTerm.master = src
-							newTerm.dir = initial(src.dir) //Can't use CURRENT dir because it is set to south on spawn.
+							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
 						else
 							if (src.setup_networkapc)
 								src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
 							else
 								src.terminal = new /obj/machinery/power/terminal(src.loc)
 							src.terminal.master = src
-							src.terminal.dir = initial(src.dir)
+							src.terminal.set_dir(initial(src.dir))
 
 					status &= ~BROKEN //Clear broken flag
 					icon_state = initial(src.icon_state)
@@ -531,7 +531,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && (!issilicon(user) || isghostdrone(user)))
+	if(opened && (!issilicon(user) || isghostdrone(user) || !isAI(user)))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.updateicon()
@@ -687,23 +687,24 @@ var/zapLimiter = 0
 
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted && !do_not_operate)
-		area.power_light = (lighting > 1)
-		area.power_equip = (equipment > 1)
-		area.power_environ = (environ > 1)
-		/*for (var/area/relatedArea in area)
-			relatedArea.power_light = (lighting > 1)
-			relatedArea.power_equip = (equipment > 1)
-			relatedArea.power_environ = (environ > 1)*/
-	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
-		/*for (var/area/relatedArea in area)
-			relatedArea.power_light = 0
-			relatedArea.power_equip = 0
-			relatedArea.power_environ = 0*/
-	area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
+	if (!QDELETED(src.area))
+		if(operating && !shorted && !do_not_operate)
+			area.power_light = (lighting > 1)
+			area.power_equip = (equipment > 1)
+			area.power_environ = (environ > 1)
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = (lighting > 1)
+				relatedArea.power_equip = (equipment > 1)
+				relatedArea.power_environ = (environ > 1)*/
+		else
+			area.power_light = 0
+			area.power_equip = 0
+			area.power_environ = 0
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = 0
+				relatedArea.power_equip = 0
+				relatedArea.power_environ = 0*/
+		area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
 
 /obj/machinery/power/apc/proc/isWireColorCut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1088,7 +1089,7 @@ var/zapLimiter = 0
 		return 0
 
 /obj/machinery/power/apc/add_load(var/amount)
-	if(terminal && terminal.powernet && !circuit_disabled)
+	if(terminal?.powernet && !circuit_disabled)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/apc/avail()
@@ -1155,7 +1156,7 @@ var/zapLimiter = 0
 		main_status = 2
 
 	var/perapc = 0
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		perapc = terminal.powernet.perapc
 
 	if(zapLimiter < APC_ZAP_LIMIT_PER_5 && prob(6) && !shorted && avail() > 3000000)
@@ -1353,7 +1354,7 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/overload_lighting(var/omit_emergency_lights)
 	if(!get_connection() || !operating || shorted)
 		return
-	if( cell && cell.charge>=20)
+	if( cell?.charge>=20)
 		cell.charge-=20;
 		SPAWN_DBG(0)
 			for(var/obj/machinery/light/L in area)

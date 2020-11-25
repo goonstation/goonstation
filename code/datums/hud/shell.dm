@@ -12,6 +12,7 @@
 	var/mob/living/silicon/hivebot/master
 
 	New(M)
+		..()
 		master = M
 
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-3:16, SOUTH to CENTER+2:16, SOUTH", HUD_LAYER)
@@ -102,7 +103,7 @@
 
 			tool_selector_tools.len = 0
 			var/i = 0
-			for (var/obj/item/tool in master.module.modules)
+			for (var/obj/item/tool in master.module.tools)
 				if (!(tool in master.module_states))
 					tool_selector_tools += tool
 					tool.screen_loc = "CENTER+2:16, SOUTH+[1+i]"

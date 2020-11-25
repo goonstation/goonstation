@@ -236,8 +236,7 @@
 					processing_items.Remove(src)
 				if("play")
 					src.mode = 2
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 				if("stop")
 					src.mode = 0
 					processing_items.Remove(src)

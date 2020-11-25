@@ -92,6 +92,7 @@
 	module_research = list("cuisine" = 6)
 	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
+	var/has_cigs = 0
 
 	var/use_bite_mask = 1
 	var/current_mask = 5
@@ -176,6 +177,8 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
+		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
 		if (M == user && user.mob_flags & IS_RELIQUARY)
 			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0
@@ -186,6 +189,10 @@
 			return 0
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
+				//can this person eat this food?
+				if(!M.can_eat(src))
+					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+					return 0
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
@@ -210,7 +217,6 @@
 						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
 							S.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
 
 				//no or broken stomach
 				if (ishuman(M))
@@ -232,8 +238,8 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					//M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					//"<span class='alert'>You finish eating [src].</span>")
+					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+					"<span class='alert'>You finish eating [src].</span>")*/
 					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
@@ -275,6 +281,11 @@
 				return
 			else if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+			else if(!M.can_eat(src))
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+				return 0
 			else
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
@@ -324,7 +335,7 @@
 		return
 
 	proc/on_bite(mob/eater)
-		//if (reagents && reagents.total_volume)
+		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
@@ -369,12 +380,12 @@
 					var/item_slot = M.get_slot_from_item(src)
 					if(item_slot)
 						M.u_equip(src)
-						src.loc = null
+						src.set_loc(null)
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
 							H.force_equip(I,item_slot) // mobs don't have force_equip
 							return
-			drop.loc = get_turf(src.loc)
+			drop.set_loc(get_turf(src.loc))
 
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"
@@ -429,6 +440,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
+	var/can_recycle = 1
 
 	New()
 		..()
@@ -493,7 +505,7 @@
 					return
 				user.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>")
 
-			if (M.mind && M.mind.assigned_role == "Barman")
+			if (M.mind && M.mind.assigned_role == "Bartender")
 				var/reag_list = ""
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
@@ -516,7 +528,7 @@
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
 				SPAWN_DBG (5)
-					if (src && src.reagents && M && M.reagents)
+					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
 			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)
@@ -723,7 +735,7 @@
 
 			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
 
-			S.loc = get_turf(src)
+			S.set_loc(get_turf(src))
 			qdel(src)
 
 
@@ -890,11 +902,11 @@
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Barman")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Barman")
+		else if (user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 50
 			hurt_prob = 10
 
@@ -1126,7 +1138,7 @@
 			return ..()
 
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with [src].</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
@@ -1139,13 +1151,13 @@
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
 				choices += "eat [src.in_glass]"
 		if (src.wedge)
-			choices += "remove [src.wedge] wedge"
-			choices += "eat [src.wedge] wedge"
+			choices += "remove [src.wedge]"
+			choices += "eat [src.wedge]"
 		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with the glass?") as null|anything in choices
+		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
 		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
@@ -1170,7 +1182,7 @@
 			remove_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "remove [src.wedge] wedge")
+		else if (selection == "remove [src.wedge]")
 			remove_thing = src.wedge
 			src.wedge = null
 
@@ -1178,7 +1190,7 @@
 			eat_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "eat [src.wedge] wedge")
+		else if (selection == "eat [src.wedge]")
 			eat_thing = src.wedge
 			src.wedge = null
 
@@ -1233,9 +1245,102 @@
 			src.wedge = null
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	MouseDrop(atom/over_object)
+		..()
+		if(!(usr == over_object)) return
+		if(!istype(usr, /mob/living/carbon)) return
+		var/mob/living/carbon/C = usr
+
+		var/maybe_too_clumsy = FALSE
+		var/maybe_too_tipsy = FALSE
+		var/too_drunk = FALSE
+		if(C.bioHolder)
+			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
+		if(C.reagents.reagent_list["ethanol"])
+			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
+			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
+
+		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
+			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
+			src.set_loc(get_turf(C))
+			C.u_equip(src)
+			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
+			src.throw_at(target, 7, 1)
+			if (!C.hasStatus("weakened"))
+				//Make them fall over, they lost their balance.
+				C.changeStatus("weakened", 2 SECONDS)
+		else
+			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
+		return
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
+
+//this action accepts a target that is not the owner, incase we want to allow forced chugging.
+/datum/action/bar/icon/drinkingglass_chug
+	duration = 0.5 SECONDS
+	id = "drinkingglass chugging"
+	var/mob/glassholder
+	var/mob/target
+	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
+
+	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
+		..()
+		target = Target
+		glass = Glass
+		icon = glass.icon
+		icon_state = glass.icon_state
+
+	proc/checkContinue()
+		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		glassholder = src.owner
+		loopStart()
+		if(glassholder == target)
+			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
+		else
+			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
+		logTheThing("combat", glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		return
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onUpdate()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onInterrupt(flag)
+		..()
+		target.visible_message("[target.name] couldn't drink everything in the [glass.name].")
+
+	onEnd()
+
+		if (glass.reagents.total_volume) //Take a sip
+			glass.reagents.reaction(target, INGEST, glass.gulp_size)
+			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
+			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			target.urine += 0.1
+			eat_twitch(target)
+
+		if(glass.reagents.total_volume <= 0)
+			..()
+			target.visible_message("[target.name] chugged everything in the [glass.name]!")
+		else if(!checkContinue())
+			..()
+			target.visible_message("[target.name] stops chugging.")
+		else
+			onRestart()
+		return
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -1439,6 +1544,14 @@
 		item_state = "dan_mug"
 		initial_volume = 120
 
+	dan_drunk
+		name = "odd mug"
+		desc = "A nondescript ceramic mug. Something about it seems a bit strange."
+		icon_state = "dan_mug"
+		item_state = "dan_mug"
+		initial_volume = 120
+		initial_reagents = list("coffee" = 80, "vodka" = 40)
+
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
 		..()
@@ -1451,6 +1564,7 @@
 	item_state = "drink_glass"
 	rc_flags = RC_SPECTRO
 	initial_volume = 15
+	can_recycle = 0
 
 /obj/item/reagent_containers/food/drinks/espressocup
 	name = "espresso cup"
@@ -1523,7 +1637,7 @@
 			G.set_loc(src.loc)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
@@ -1607,6 +1721,7 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "GannetsCocktailer"
 	initial_volume = 120
+	can_recycle = 0
 
 	New()
 		..()
@@ -1615,7 +1730,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 50, 1, -6)
+			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()

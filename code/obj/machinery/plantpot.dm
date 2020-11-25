@@ -122,13 +122,10 @@
 	New()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
-		var/datum/reagents/R = new/datum/reagents(400)
-		reagents = R
-		R.maximum_volume = 400
+		src.create_reagents(400)
 		// The plantpot can store 400 reagents in total, we want a bit more than the max water
 		// level since we can put other additives in the pot for various effects.
-		R.my_atom = src
-		R.add_reagent("water", 200)
+		reagents.add_reagent("water", 200)
 		// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
@@ -458,7 +455,7 @@
 
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
-			if(src.anchored == 1)
+			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 				src.anchored = 0
@@ -566,14 +563,22 @@
 				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
-			var/obj/item/seed/WS = unpool(/obj/item/seed)
-			WS.set_loc(src)
-			WS.generic_seed_setup(SP.selected)
-			SPAWN_DBG(0)
-				HYPnewplant(WS)
-				pool (WS)
-			if(!(user in src.contributors))
-				src.contributors += user
+			var/obj/item/seed/SEED
+			if(SP.selected.unique_seed)
+				SEED = unpool(SP.selected.unique_seed)
+			else
+				SEED = unpool(/obj/item/seed)
+			SEED.generic_seed_setup(SP.selected)
+			SEED.set_loc(src)
+			if(SEED.planttype)
+				src.HYPnewplant(SEED)
+				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
+					logTheThing("combat", user, null, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				if(!(user in src.contributors))
+					src.contributors += user
+			else
+				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				pool (SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -812,7 +817,7 @@
 		var/iconname = 'icons/obj/hydroponics/plants_weed.dmi'
 		if(growing.plant_icon)
 			iconname = growing.plant_icon
-		else if(MUT && MUT.iconmod)
+		else if(MUT?.iconmod)
 			if(MUT.plant_icon)
 				iconname = MUT.plant_icon
 			else
@@ -837,7 +842,7 @@
 		var/planticon = null
 		if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
-		if(MUT && MUT.iconmod)
+		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)
 			planticon = "[growing.sprite]-G[src.grow_level]"
@@ -858,7 +863,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
-		if(growing && growing.cantscan) // what if we disable this for a bit, what will happen...
+		if(growing?.cantscan) // what if we disable this for a bit, what will happen...
 			src.name = "\improper strange plant"
 		else
 			if(istype(MUT,/datum/plantmutation/))
@@ -911,7 +916,7 @@
 
 		if(growing.harvested_proc)
 			if(growing.HYPharvested_proc(src,user)) return
-			if(MUT && MUT.HYPharvested_proc_M(src,user)) return
+			if(MUT?.HYPharvested_proc_M(src,user)) return
 			// Does this plant react to being harvested? If so, do it - it also functions as
 			// a check since harvesting will stop here if this returns anything other than 0.
 
@@ -969,7 +974,7 @@
 		var/getitem = null
 		var/dont_rename_crop = false
 		// Figure out what crop we use - the base crop or a mutation crop.
-		if(growing.crop)
+		if(growing.crop || MUT?.crop)
 			if(MUT)
 				if(MUT.crop)
 					getitem = MUT.crop
@@ -1264,7 +1269,7 @@
 				harvest_string += " and [seedcount] seed"
 				if (seedcount > 1)
 					harvest_string += "s"
-			boutput(user, "<span class='notice'>[harvest_string.Join()]</span>")
+			boutput(user, "<span class='notice'>[harvest_string.Join()].</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
@@ -1786,6 +1791,15 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		else
 			light.disable()
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(isscrewingtool(W) || iswrenchingtool(W))
+			if(!src.anchored)
+				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			else
+				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			src.anchored = !src.anchored
+
 /obj/machinery/hydro_mister
 	name = "\improper Botanical Mister"
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
@@ -1799,11 +1813,8 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.maximum_volume = 5000
-		R.my_atom = src
-		R.add_reagent("water", 1000)
+		src.create_reagents(5000)
+		reagents.add_reagent("water", 1000)
 
 	get_desc()
 		var/reag_list = ""

@@ -120,7 +120,7 @@
 			qdel(src)
 		else
 			boutput(user, "<span class='alert'>You hit the concrete wall and really hurt your hand!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Punch_[rand(1,4)]", 50, 1)
+			playsound(src.loc, pick(sounds_punch), 50, 1)
 			random_brute_damage(user, 5)
 		return
 

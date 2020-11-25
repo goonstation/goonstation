@@ -35,7 +35,7 @@
 			sleep(24 SECONDS)
 			if (user.loc == T && user.equipped() == W && !user.stat)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
-				magnet.dir = src.dir
+				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
@@ -252,7 +252,7 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
@@ -287,6 +287,8 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
+	var/uses_global_controls = TRUE
+
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
 	var/sound_activate = 'sound/machines/ArtifactAnc1.ogg'
@@ -306,6 +308,7 @@
 		var/marker_type = /obj/magnet_target_marker
 		var/obj/magnet_target_marker/target = null
 		var/list/wall_bits = list()
+		uses_global_controls = FALSE
 
 		get_magnetic_center()
 			if (target)
@@ -720,7 +723,7 @@
 			src.generate_interface(usr)
 
 		else if (href_list["show_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -736,7 +739,7 @@
 			return
 
 		else if (href_list["activate_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -747,7 +750,7 @@
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -1459,7 +1462,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
@@ -1557,6 +1560,7 @@ obj/item/clothing/gloves/concussive
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1646,6 +1650,7 @@ obj/item/clothing/gloves/concussive
 		src.setItemSpecial(/datum/item_special/simple)
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1695,6 +1700,7 @@ obj/item/clothing/gloves/concussive
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1784,10 +1790,10 @@ obj/item/clothing/gloves/concussive
 						user.drop_item()
 
 						// Yes, please (Convair880).
-						if (src && src.hacked)
+						if (src?.hacked)
 							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
-						user.dir = get_dir(user, target)
+						user.set_dir(get_dir(user, target))
 						user.drop_item()
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
@@ -1855,7 +1861,7 @@ obj/item/clothing/gloves/concussive
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele
@@ -1926,13 +1932,6 @@ obj/item/clothing/gloves/concussive
 
 		if(do_after(user, 50))
 			// And these too (Convair880).
-			if(src.target)
-				var/turf/t = get_turf(src.target)
-				if(isrestrictedz(t.z))
-					if(user)
-						user.show_text("<span class='alert'>The [src] fails to power on!")
-						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
-					return
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
 			if (istype(T.loc, /obj/item/storage))
@@ -1973,6 +1972,7 @@ obj/item/clothing/gloves/concussive
 	var/list/possible_targets = list()
 
 	New()
+		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
 			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
@@ -2067,7 +2067,7 @@ obj/item/clothing/gloves/concussive
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
-		if (user && user.client)
+		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
 		qdel (O)

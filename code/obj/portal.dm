@@ -76,7 +76,7 @@
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
 		if (!isturf(target))
-			var/turf/destination = find_loc(src.target) // Beacons and tracking implant might have been moved.
+			var/turf/destination = get_turf(src.target) // Beacons and tracking implant might have been moved.
 			if (destination)
 				if (prob(failchance)) //oh dear a problem, put em in deep space
 					src.icon_state = "portal1"

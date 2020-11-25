@@ -20,7 +20,6 @@
 // cirr here, the amount of code duplication for suicides a) made me sad and b) ought to have been in a parent proc to allow this functionality for everyone anyway
 // the suiciding var is already at the mob level for fuck's sakes
 /mob/verb/suicide()
-	set hidden = 1
 
 	if (!isliving(src) || isdead(src))
 		boutput(src, "You're already dead!")
@@ -38,6 +37,9 @@
 		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
 		return
 
+	if(src.is_zombie)
+		boutput(src,"<span class='alert'>You can't suicide. Brains...</span>")
+		return
 
 	if (!ticker)
 		boutput(src, "You can't commit suicide before the game starts!")

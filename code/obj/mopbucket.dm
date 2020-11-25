@@ -11,9 +11,8 @@
 	p_class = 1.2
 
 /obj/mopbucket/New()
-	var/datum/reagents/R = new/datum/reagents(200)
-	reagents = R
-	R.my_atom = src
+	..()
+	create_reagents(200)
 	START_TRACKING
 
 /obj/mopbucket/disposing()
@@ -76,7 +75,7 @@
 				user.changeStatus("weakened", 4 SECONDS)
 			if (prob(25))
 				user.show_text("You hit your head on [no_go]!", "red")
-				user.TakeDamage("head", 0, 10) //emotional harm. I guess.
+				user.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT) //emotional harm. I guess.
 			return
 
 		if (iscarbon(O))

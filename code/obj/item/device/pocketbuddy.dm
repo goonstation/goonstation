@@ -140,8 +140,7 @@
   src.speak("System message. Pocketbuddy v0.9 initializing.")
   sleep(2 SECONDS)
   src.speak(src.get_quip_for("init"))
-  if(!(src in processing_items))
-    processing_items += src
+  processing_items |= src
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")
@@ -247,7 +246,7 @@
 //    "disposals"=/area/station/maintenance/disposal,
 //    "cafeteria"=list(/area/station/crew_quarters/cafeteria, /area/station/crew_quarters/bar),
 //    "quarters"=/area/station/crew_quarters/,
-//    "research"=list(/area/station/artifact,/area/station/chemistry,/area/station/science),
+//    "research"=list(/area/station/artifact,/area/station/science/),
 //    "hydro"=/area/station/hydroponics,
 //    "brig"=/area/station/security/brig,
 //    "sec"=/area/station/security,

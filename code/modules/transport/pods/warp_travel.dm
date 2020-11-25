@@ -107,13 +107,12 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	return
 
 /obj/warp_portal/New()
+	..()
 	SPAWN_DBG(0)
-		animate_portal_appear(src)
+		// animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
-	SPAWN_DBG(30 SECONDS)
+		sleep(30 SECONDS)
 		qdel(src)
-		return
-	return
 
 /obj/warp_portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport

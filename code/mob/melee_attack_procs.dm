@@ -196,10 +196,8 @@
 	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		S.buckle_in(src,src,1)
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src)
+		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
-		G.affecting = src
-		src.grabbed_by += G
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
@@ -223,9 +221,7 @@
 	if (!I)
 		src.grab_self()
 	else
-		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src)
-		G.affecting = src
-		src.grabbed_by += G
+		var/obj/item/grab/block/G = new /obj/item/grab/block(I, src, src)
 		G.loc = I
 
 		I.chokehold = G
@@ -291,18 +287,12 @@
 			P.ongrab(target)
 
 	if (!grab_item)
-		var/obj/item/grab/G = new /obj/item/grab(src)
-		G.assailant = src
+		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
 		src.put_in_hand(G, src.hand)
-		G.affecting = target
-		target.grabbed_by += G
 	else// special. return it too
 		if (!grab_item.special_grab)
 			return
-		var/obj/item/grab/G = new grab_item.special_grab(grab_item)
-		G.assailant = src
-		G.affecting = target
-		target.grabbed_by += G
+		var/obj/item/grab/G = new grab_item.special_grab(grab_item, src, target)
 		G.loc = grab_item
 		.= G
 
@@ -531,8 +521,7 @@
 	if(getStatusDuration("stonerit"))
 		ret += 20
 
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		ret += C.getProperty("block")
 
 	return ret
@@ -656,7 +645,7 @@
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
 		else
-			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
+			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
 
@@ -693,8 +682,13 @@
 
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
-
+		var/pre_armor_damage = damage
 		damage -= armor_mod
+		if(damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+		if(damage <= 0)
+			fuckup_attack_particle(src)
 
 		//reduce stamina by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
@@ -707,10 +701,22 @@
 
 		if (can_crit && prob(crit_chance))
 			msgs.stamina_crit = 1
-			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+		var/armor_blocked = 0
+
+		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
+			block_spark(target,armor=1)
+			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+			if(damage <= 0)
+				fuckup_attack_particle(src)
+				armor_blocked = 1
+
+		if(armor_blocked)
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 			msgs.stamina_self -= STAMINA_HTH_COST
@@ -819,6 +825,7 @@
 	var/force_stamina_target = null
 
 	New(var/mob/M)
+		..()
 		owner = M
 
 	proc/clear(var/mob/M)
@@ -968,7 +975,7 @@
 						target.OnMove(owner)
 			else
 				target.deliver_move_trigger("bump")
-
+		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
@@ -1041,7 +1048,7 @@
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
-				if(target.client && target.health < 0) //Only do rev stuff if they have a client and are low health
+				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
 							target.HealDamage("All", max(30 - target.health,0), 0)
@@ -1189,7 +1196,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents && reagents.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 
@@ -1207,7 +1214,7 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
@@ -1222,7 +1229,7 @@
 	return 0
 
 /mob/living/carbon/human/get_chest_pierce_prot()
-	if (client && client.hellbanned)
+	if (client?.hellbanned)
 		return 0
 	if ((wear_suit && wear_suit.body_parts_covered & TORSO) || (w_uniform && w_uniform.body_parts_covered & TORSO))
 		if (wear_suit && !w_uniform)
@@ -1251,8 +1258,7 @@
 				var/turf/T = get_edge_target_turf(src, src.dir)
 				if (isturf(T))
 					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					SPAWN_DBG (0)
-						target.throw_at(T, 10, 2)
+					target.throw_at(T, 10, 2)
 
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
@@ -1285,8 +1291,7 @@
 	T.changeStatus("weakened", 5 SECONDS)
 	var/turf/throwpoint = get_edge_target_turf(H, get_dir(H, T))
 	if (throwpoint && isturf(throwpoint))
-		SPAWN_DBG(0)
-			T.throw_at(throwpoint, 10, 2)
+		T.throw_at(throwpoint, 10, 2)
 
 	return
 
@@ -1309,7 +1314,7 @@
 /mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
-		src.dir = get_dir(src, M)
+		src.set_dir(get_dir(src, M))
 		playsound(src.loc, "sound/weapons/punchmiss.ogg", 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
@@ -1327,8 +1332,8 @@
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (target && W && W.tainted_saliva_reservior.total_volume > 0)
-			W.tainted_saliva_reservior.trans_to(target,5, 2)
+		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
+			W.tainted_saliva_reservoir.trans_to(target,5, 2)
 
 
 /*/mob/proc/energyclaws_attack(var/mob/living/target)

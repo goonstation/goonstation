@@ -146,10 +146,10 @@
 			src.add_contents(W)
 			T.hud.remove_item(W)
 		else
-			user.u_equip(W)
-			W.dropped(user)
 			src.add_contents(W)
+			user.u_equip(W)
 		hud.add_item(W)
+		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
@@ -338,7 +338,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
@@ -395,15 +395,10 @@
 		if (!I)
 			return
 
-		I.throwforce += 8 //Ugly. Who cares.
-		SPAWN_DBG(1.5 SECONDS)
-			if (I)
-				I.throwforce -= 8
-
 		I.set_loc(get_turf(src.loc))
 		I.dropped()
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
-		I.throw_at(target, 8, 2)
+		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)

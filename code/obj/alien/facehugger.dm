@@ -50,7 +50,7 @@
 
 	examine()
 		. = ..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 		if(!alive)
 			. += "<span class='alert'><B>the alien is not moving</B></span>"
@@ -73,7 +73,7 @@
 		if (src.health <= 0)
 			src.death()
 		else if (W.force)
-			if(ishuman(user) || ismonkey(user))
+			if(ishuman(user), ismonkey(user))
 				src.target = user
 				src.state = 1
 		..()

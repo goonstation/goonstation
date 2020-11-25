@@ -233,7 +233,7 @@
 		..()
 		return
 
-	hitby(A as mob|obj)
+	hitby(atom/movable/A, datum/thrown_thing/thr)
 		if (!src.armed)
 			return ..()
 		src.visible_message("<span class='alert'><B>The mousetrap is triggered by [A].</B></span>")
@@ -397,7 +397,7 @@
 		user.u_equip(src)
 
 		src.layer = initial(src.layer)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
 	Bump(atom/movable/AM as mob|obj)

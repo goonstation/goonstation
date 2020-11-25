@@ -1,8 +1,5 @@
 var/list/recently_dead = new/list()
 var/datum/vote_manager/vote_manager = new/datum/vote_manager()
-var/list/vote_log = new/list()
-var/const/max_votes_per_round = 2
-var/const/recently_time = 6000 // 10 mins
 
 //commented out for assjam modevote
 /**
@@ -109,7 +106,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				boutput(world, "<span class='success'><BIG><B>Vote gamemode ([mode]) initiated by [C.ckey]</B></BIG></span>")
 				show_vote(C)
 				return 1
-			/**if("Player Ban")
+			/*if("Player Ban")
 				if(world.time < 6000)
 					boutput(C, "<span class='alert'>You may not start this type of vote yet.</span>")
 					return

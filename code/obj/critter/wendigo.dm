@@ -66,7 +66,7 @@
 				if(!king && iswerewolf(H))
 					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
 					step_away(src, H, 15)
-					src.dir = get_dir(src, H)
+					src.set_dir(get_dir(src, H))
 					continue
 
 			src.boredom_countdown = rand(2,5)
@@ -350,7 +350,7 @@
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
@@ -369,10 +369,10 @@
 			if(king)
 				playsound(src.loc, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>")
-			SPAWN_DBG(1 DECI SECOND)
-				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
+			sleep(1 DECI SECOND)
+			if(!flailing) src.flail()
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span class='alert'><b>[src] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
 				random_brute_damage(target, 10,1)

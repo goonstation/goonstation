@@ -8,6 +8,7 @@
 	cooldown = 300
 	pointCost = 60
 	when_stunned = 1
+	var/duration = 10 SECONDS
 	not_when_handcuffed = 0
 	unlock_message = "You have gained chiropteran screech. It deafens nearby foes, damages windows and lights."
 	var/level = 1
@@ -61,8 +62,10 @@
 			if (HH == M) continue
 
 			if (level == 2)
-				HH.emag_act() //disable gtheir radios
-
+				radio_controller.active_jammers.Add(M)
+				SPAWN_DBG (src.duration)
+					if (M && istype(M) && radio_controller && istype(radio_controller) && radio_controller.active_jammers.Find(M))
+						radio_controller.active_jammers.Remove(M)
 			if (isvampire(HH) && HH.check_vampire_power(3) == 1)
 				boutput(HH, __blue("You are immune to [M]'s screech!"))
 				continue
@@ -80,6 +83,6 @@
 
 /datum/targetable/vampire/vampire_scream/mk2
 	name = "Chiropteran Screech Mk2"
-	desc = "Deafens nearby foes, smashes windows and lights. Blocked by ear protection."
+	desc = "Deafens nearby foes, silences radios, smashes windows and lights. Blocked by ear protection."
 	unlock_message = "Your Chiropteran Screech power disables nearby radios in addition to its original effect."
 	level = 2

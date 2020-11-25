@@ -53,21 +53,22 @@
 								//playsound(get_turf(src), src.sound_malescream, 80, 0, 0, src.get_age_pitch())
 							//else
 							playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+						#ifdef HALLOWEEN
+						spooktober_GH.change_points(src.ckey, 30)
+						#endif
 						var/possumMax = 15
-						for (var/poss in by_type[/obj/critter/opossum])
-							var/obj/critter/opossum/responsePossum = poss
+						for_by_tcl(responsePossum, /obj/critter/opossum)
 							if (!responsePossum.alive)
 								continue
-							if(!DIST_CHECK(responsePossum, src, 4))
+							if(!IN_RANGE(responsePossum, src, 4))
 								continue
 							if (possumMax-- < 0)
 								break
 							responsePossum.CritterDeath() // startled into playing dead!
-						for (var/poss in by_type[/mob/living/critter/small_animal/opossum]) // is this more or less intensive than a range(4)?
-							var/mob/living/critter/small_animal/opossum/P = poss
+						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
-							if(!DIST_CHECK(P, src, 4))
+							if(!IN_RANGE(P, src, 4))
 								continue
 							P.play_dead(rand(20,40)) // shorter than the regular "death" stun
 					else
@@ -113,8 +114,7 @@
 									playsound(get_turf(src), src.sound_fart, 50, 0, 0, src.get_age_pitch())
 
 						var/fart_on_other = 0
-						for (var/thing in src.loc)
-							var/atom/A = thing
+						for (var/atom/A as() in src.loc)
 							if (A.event_handler_flags & IS_FARTABLE)
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
@@ -125,7 +125,7 @@
 										sims.affectMotive("fun", 4)
 									if (src.mind)
 										if (M.mind && M.mind.assigned_role == "Geneticist")
-											karma_update(10, "SAINT", src)
+											src.add_karma(10)
 									fart_on_other = 1
 									break
 								else if (istype(A,/obj/item/storage/bible))
@@ -223,8 +223,7 @@
 								for(var/mob/living/H in mobs)
 									if (H.bioHolder && H.bioHolder.HasEffect("linkedfart")) continue
 									var/found_bible = 0
-									for (var/thing in H.loc)
-										var/atom/A = thing
+									for (var/atom/A as() in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
 											if (istype(A,/obj/item/storage/bible))
 												found_bible = 1
@@ -313,7 +312,7 @@
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [param]</I>"
-								karma_update(2, "SAINT", src)
+								src.add_karma(2)
 
 				else
 					message = "<B>[src]</B> struggles to move."
@@ -593,8 +592,8 @@
 						SPAWN_DBG(1 SECOND)
 							hat.set_loc(src.loc)
 							src.head = null
+							src.add_karma(-10)
 							src.gib()
-							karma_update(10, "SIN", src)
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
 						//maptext_out = "<I>tips hat</I>"
@@ -639,7 +638,7 @@
 						hat.icon_state = "hoscap-smash"
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					if(src.mind && src.mind.assigned_role != "Head of Security")
-						karma_update(5, "SAINT", src)
+						src.add_karma(5)
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm and grumbles."
 				m_type = 1
@@ -794,7 +793,7 @@
 				message = "<B>[src]</B> shakes [his_or_her(src)] ass!"
 				maptext_out = "<I>shakes [his_or_her(src)] ass!</I>"
 				m_type = 1
-				karma_update(3, "SIN", src)
+				src.add_karma(-3)
 
 				SPAWN_DBG (5)
 					var/beeMax = 15
@@ -953,7 +952,7 @@
 					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(2, "SIN", src)
+					src.add_karma(-2)
 
 			if ("nosepick","picknose")
 				if (!src.restrained())
@@ -964,7 +963,7 @@
 					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
 				m_type = 1
 				if (src.mind)
-					karma_update(1, "SIN", src)
+					src.add_karma(-1)
 
 			if ("flex","flexmuscles")
 				if (!src.restrained())
@@ -980,8 +979,7 @@
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
 
-				for(var/atom in src.get_equipped_items())
-					var/obj/item/C = atom
+				for (var/obj/item/C as() in src.get_equipped_items())
 					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
 						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
@@ -1188,7 +1186,7 @@
 									message = "<B>[src]</B> offers [M] a highfive, but [M] leaves [him_or_her(src)] hanging!"
 									maptext_out = "<I>tries to highfive [M] but is left hanging!</I>"
 									if (M.mind)
-										karma_update(5, "SIN", src)
+										src.add_karma(-5)
 							else
 								message = "<B>[src]</B> highfives [M]!"
 								maptext_out = "<I>highfives [M]!</I>"
@@ -1322,8 +1320,7 @@
 				m_type = 1
 
 			if ("wink")
-				for(var/atom in src.get_equipped_items())
-					var/obj/item/C = atom
+				for (var/obj/item/C as() in src.get_equipped_items())
 					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 						var/drophand = (src.hand == 0 ? slot_r_hand : slot_l_hand)
@@ -1359,7 +1356,7 @@
 							animate_levitate(src, 1, 10)
 							SPAWN_DBG(0) // some movement to make it look cooler
 								for (var/i = 0, i < 10, i++)
-									src.dir = turn(src.dir, 90)
+									src.set_dir(turn(src.dir, 90))
 									sleep(0.2 SECONDS)
 
 							elecflash(src,power = 2)
@@ -1394,7 +1391,7 @@
 										message = "<B>[src]</B> is raving super hard!"
 								SPAWN_DBG(0)
 									for (var/i = 0, i < 4, i++)
-										src.dir = turn(src.dir, 90)
+										src.set_dir(turn(src.dir, 90))
 										sleep(0.2 SECONDS)
 							//standard dancing
 							else
@@ -1405,14 +1402,14 @@
 										message = "<B>[src]</B> busts out some mad moves."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 
 									if (2)
 										message = "<B>[src]</B> does the twist, like they did last summer."
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 
 									if (3)
@@ -1430,11 +1427,11 @@
 										SPAWN_DBG(0)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 2
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 2
-												src.dir = turn(src.dir, 90)
+												src.set_dir(turn(src.dir, 90))
 												sleep(0.2 SECONDS)
 
 									if (5)
@@ -1465,12 +1462,12 @@
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x+= 1
 												src.pixel_y+= 1
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 											for (var/i = 0, i < 4, i++)
 												src.pixel_x-= 1
 												src.pixel_y-= 1
-												src.dir = turn(src.dir, -90)
+												src.set_dir(turn(src.dir, -90))
 												sleep(0.2 SECONDS)
 										// expand this too, however much
 
@@ -1488,7 +1485,7 @@
 									break
 
 								responseBee.dance_response()
-								karma_update(1, "SAINT", src)
+								src.add_karma(1)
 
 							LAGCHECK(LAG_MED)
 							var/parrotMax = 15
@@ -1511,9 +1508,9 @@
 						if (src.traitHolder && src.traitHolder.hasTrait("happyfeet"))
 							if (prob(33))
 								SPAWN_DBG(0.5 SECONDS)
-									LAGCHECK(LAG_MED)
-									for (var/mob/living/carbon/human/responseMonkey in range(1, src)) // they don't have to be monkeys, but it's signifying monkey code
-										if (responseMonkey.stat || responseMonkey.getStatusDuration("paralysis") || responseMonkey.sleeping || responseMonkey.getStatusDuration("stunned") || (responseMonkey == src))
+									for (var/mob/living/carbon/human/responseMonkey in orange(1, src)) // they don't have to be monkeys, but it's signifying monkey code
+										LAGCHECK(LAG_MED)
+										if (!can_act(responseMonkey, 0))
 											continue
 										responseMonkey.emote("dance")
 
@@ -1529,7 +1526,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-
+					var/combatflip = 0
 					//TODO: space flipping
 					//if ((!src.restrained()) && (!src.lying) && (istype(src.loc, /turf/space)))
 					//	message = "<B>[src]</B> does a flip!"
@@ -1585,7 +1582,7 @@
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN_DBG(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
-									if(src && src.stance == "dodge")
+									if(src?.stance == "dodge")
 										src.stance = "normal"
 
 							//FLIP OVER TABLES
@@ -1608,6 +1605,9 @@
 									continue
 								if (!G.affecting) //Wire note: Fix for Cannot read null.loc
 									continue
+								if (src.a_intent == INTENT_HELP)
+									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
+									continue
 								flipped_a_guy = 1
 								if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
 									var/obj/table/tabl = locate() in src.loc.contents
@@ -1625,6 +1625,7 @@
 									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 									M.lastattacker = src
 									M.lastattackertime = world.time
+									combatflip = 1
 									if (iswrestler(src))
 										if (prob(50))
 											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
@@ -1636,7 +1637,7 @@
 									else
 										src.changeStatus("weakened", 3.9 SECONDS)
 
-										if (client && client.hellbanned)
+										if (client?.hellbanned)
 											src.changeStatus("weakened", 4 SECONDS)
 										if (G.affecting && !G.affecting.hasStatus("weakened"))
 											G.affecting.changeStatus("weakened", 4.5 SECONDS)
@@ -1666,8 +1667,8 @@
 
 
 														G.affecting.force_laydown_standup()
-														SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
-															src.force_laydown_standup()
+														sleep(1 SECOND) //let us do that combo shit people like with throwing
+														src.force_laydown_standup()
 
 								if (G && G.state < 1) //ZeWaka: Fix for null.state
 									var/turf/oldloc = src.loc
@@ -1684,7 +1685,7 @@
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
-
+										combatflip = 1
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
 										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
@@ -1697,7 +1698,8 @@
 									else
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
-
+					if(combatflip)
+						actions.interrupt(src, INTERRUPT_ACT)
 					if (src.lying)
 						message = "<B>[src]</B> flops on the floor like a fish."
 					// If there is a chest item, see if its reagents can be dumped into the body
@@ -1887,7 +1889,7 @@
 						sleep(0.8 SECONDS)
 						src.say_verb("The Chef.")
 						sleep(0.8 SECONDS)
-						src.say_verb("The Barman.")
+						src.say_verb("The Bartender.")
 						sleep(0.8 SECONDS)
 						src.say_verb("But not me.")
 						sleep(0.5 SECONDS)
@@ -1994,15 +1996,15 @@
 					var/obj/item/device/pda2/P = I
 					if(P.ID_card)
 						I = P.ID_card
-				if(H && (!H.limbs.l_arm || !H.limbs.r_arm))
-					src.show_text("You can't do that without arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || it_is_ass_day || istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
+					src.show_text("You can't do that without free arms!")
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isnukeop(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
-					karma_update(4, "SIN", src)
+					src.add_karma(-4)
 					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
 						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = src.name
@@ -2046,7 +2048,7 @@
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
 						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0)
-						shake_camera(src, 40, 0.5)
+						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
 								src.limbs.l_arm.sever()
@@ -2057,7 +2059,7 @@
 								if(dab_id)
 									dab_id.arm_count++
 							H.emote("scream")
-					if(!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate) && (!istype(src.slot_head, /obj/item/clothing/head/bighat/syndicate/biggest)) || (!src.reagents.has_reagent("puredabs")))
+					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						if(dab_id)
 							dab_id.brain_damage_count += 10
@@ -2127,6 +2129,13 @@
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
 
+// I'm very sorry for this but it's to trick the linter into thinking emote doesn't sleep (since it usually doesn't)
+// you see from the important places it's called as emote("scream") etc. which doesn't actually sleep but for the linter to recognize
+// that would be difficult, datumize emotes 2day!
+#ifdef SPACEMAN_DMM
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null)
+#endif
+
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
@@ -2151,6 +2160,8 @@
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
 /mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+	if(PROC_ON_COOLDOWN(2 SECONDS))
+		return
 	H.render_target = "*\ref[H]"
 	var/image/left_arm = image(null, H)
 	left_arm.render_source = H.render_target
@@ -2166,7 +2177,7 @@
 	torso.appearance_flags = KEEP_APART
 	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 	H.update_canmove()
-	H.dir = SOUTH
+	H.set_dir(SOUTH)
 	H.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
 	world << torso
@@ -2184,11 +2195,8 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
-		torso.loc = null
 		qdel(torso)
-		right_arm.loc = null
 		qdel(right_arm)
-		left_arm.loc = null
 		qdel(left_arm)
 		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
 		H.update_canmove()

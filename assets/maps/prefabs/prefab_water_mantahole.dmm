@@ -3,7 +3,7 @@
 "c" = (/obj/decal/cleanable/machine_debris{icon_state = "gib7"},/turf/variableTurf/clear,/area/noGenerate)
 "d" = (/obj/item/scrap,/turf/variableTurf/clear,/area/noGenerate)
 "e" = (/obj/decal/cleanable/machine_debris,/turf/variableTurf/clear,/area/noGenerate)
-"f" = (/obj/item/raw_material/shard/glass,/turf/variableTurf/clear,/area)
+"f" = (/obj/item/raw_material/shard/glass,/turf/variableTurf/clear,/area/space)
 "g" = (/turf/unsimulated/floor/polarispit/polarispitwall,/area/noGenerate)
 "h" = (/obj/map/light/cyan,/turf/unsimulated/floor/polarispit/polarispitwall,/area/noGenerate)
 "i" = (/turf/unsimulated/floor/polarispit,/area/noGenerate)

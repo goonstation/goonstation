@@ -8,7 +8,7 @@
 	var/obj/item/fuel_pellet/fuel_pellet
 
 	process()
-		if (fuel_pellet && fuel_pellet.material && fuel_pellet.material.hasProperty("radioactive"))
+		if (fuel_pellet?.material && fuel_pellet.material.hasProperty("radioactive"))
 			lastgen = (4800 + rand(-100, 100)) * log(1 + fuel_pellet.material.getProperty("radioactive"))
 			fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
@@ -35,7 +35,7 @@
 		if (istype(I, /obj/item/fuel_pellet))
 			if (!fuel_pellet)
 				user.drop_item()
-				I.loc = src
+				I.set_loc(src)
 				fuel_pellet = I
 				updateicon()
 			else
@@ -48,7 +48,7 @@
 			usr.Browse(null, "window=rtg")
 			src.remove_dialog(usr)
 		else if (href_list["eject"] && in_range(src, usr))
-			fuel_pellet.loc = src.loc
+			fuel_pellet.set_loc(src.loc)
 			usr.put_in_hand_or_eject(src.fuel_pellet) // try to eject it into the users hand, if we can
 			fuel_pellet = null
 			updateicon()

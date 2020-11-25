@@ -135,16 +135,12 @@ var/datum/action_controller/actions
 		var/atom/movable/A = owner
 		if(owner != null)
 			bar = unpool(/obj/actions/bar)
-			bar.loc = owner.loc
 			border = unpool(/obj/actions/border)
-			border.loc = owner.loc
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (!islist(A.attached_objs))
-				A.attached_objs = list()
-			A.attached_objs.Add(bar)
-			A.attached_objs.Add(border)
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = "#4444FF"
 			updateBar()
@@ -157,9 +153,9 @@ var/datum/action_controller/actions
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -172,9 +168,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner != null && islist(A.attached_objs))
-			A.attached_objs.Remove(bar)
-			A.attached_objs.Remove(border)
+		if (owner != null)
+			A.vis_contents -= bar
+			A.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -383,7 +379,7 @@ var/datum/action_controller/actions
 		..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if(H.traitHolder.hasTrait("carpenter"))
+			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
@@ -396,7 +392,7 @@ var/datum/action_controller/actions
 		if (istype(R))
 			R.amount = amount
 			R.inventory_counter?.update_number(R.amount)
-		R.dir = owner.dir
+		R.set_dir(owner.dir)
 		sheet.consume_sheets(cost)
 		if (sheet2 && cost2)
 			sheet2.consume_sheets(cost2)
@@ -603,7 +599,7 @@ var/datum/action_controller/actions
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
-					if (MT && MT.armed)
+					if (MT?.armed)
 						for (var/mob/O in AIviewers(owner))
 							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
@@ -799,7 +795,7 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
-		if(owner && target && target.hasStatus("handcuffed"))
+		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			for(var/mob/O in AIviewers(H))
@@ -884,37 +880,45 @@ var/datum/action_controller/actions
 	icon_state = "bar"
 	layer = 101
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 /obj/actions/border
 	layer = 100
 	icon_state = "border"
 	plane = PLANE_HUD + 1
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
 	New()
+		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
 	unpooled()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
+		..()
 
 	pooled()
 		loc = null
 		attached_objs = list()
 		overlays.len = 0
+		..()
 
 //Use this to start the action
 //actions.start(new/datum/action/bar/private/icon/magPicker(item, picker), usr)
@@ -1190,10 +1194,10 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if (M && M.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
+		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
 			M.update_burning(-1.2)
 
-			M.dir = turn(M.dir,up ? -90 : 90)
+			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
 			if (pixely != clamp(pixely, -5,5))
 				up = !up
@@ -1265,6 +1269,14 @@ var/datum/action_controller/actions
 		if(get_dist(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(ishuman(owner)) //This is horrible and clunky and probably going to kill us all, I am so, so sorry.
+			var/mob/living/carbon/human/H = owner
+			if(H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
@@ -1301,3 +1313,65 @@ var/datum/action_controller/actions
 			..()
 			if (can_reach(owner,over_object) && ismob(owner) && owner:equipped() == target)
 				over_object.attackby(target, owner, params)
+
+/// general purpose action to anchor or unanchor stuff
+/datum/action/bar/icon/anchor_or_unanchor
+	id = "table_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/target
+	var/obj/item/tool
+	var/unanchor = FALSE
+
+	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+		..()
+		if (target)
+			src.target = target
+		if (tool)
+			src.tool = tool
+			icon = src.tool.icon
+			icon_state = src.tool.icon_state
+		if (!isnull(unanchor))
+			src.unanchor = unanchor
+		else
+			src.unanchor = target.anchored
+		if (duration)
+			src.duration = duration
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (target == null || tool == null || owner == null || get_dist(owner, target) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(unanchor && !target.anchored || !unanchor && target.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(iswrenchingtool(tool))
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+		else if(isweldingtool(tool))
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+		else if(isscrewingtool(tool))
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		if(unanchor)
+			target.anchored = FALSE
+		else
+			target.anchored = TRUE

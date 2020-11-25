@@ -25,11 +25,10 @@
 	stamina_crit_chance = 0
 
 	New()
+		..()
 		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
-		var/datum/reagents/R = new/datum/reagents(150000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(150000)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
@@ -190,7 +189,7 @@
 			var/min_dispersal = src.reagents.get_dispersal()
 			for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
 				if ( A == src ) continue
-				if (src && src.reagents) // Erik: fix for cannot execute null.grenade effects()
+				if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
@@ -327,7 +326,7 @@
 
 	revolution //convertssss
 		explode()
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
 				var/min_dispersal = src.reagents.get_dispersal()
 				for (var/mob/M in range(max(min_dispersal,6), get_turf(src.loc)))

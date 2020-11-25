@@ -1,4 +1,7 @@
 //Contains Fire / Explosion / Implosion related reagents.
+
+ABSTRACT_TYPE(/datum/reagent/combustible)
+
 datum
 	reagent
 		combustible/
@@ -534,7 +537,6 @@ datum
 			fluid_b = 150
 			transparency = 150
 			viscosity = 0.7
-			volatility = 2.5
 			minimum_reaction_temperature = 1000
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -873,15 +875,8 @@ datum
 				..()
 				is_dry = 0
 
-			unpooled()
-				..()
-				bang()
-
-			New()
-				bang()
-
 			proc/bang()
-				if(holder && holder.my_atom)
+				if(holder?.my_atom)
 					holder.my_atom.visible_message("<b>The powder detonates!</b>")
 
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -931,6 +926,7 @@ datum
 			viscosity = 0.3
 
 			New()
+				..()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
@@ -938,6 +934,7 @@ datum
 			unpooled()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
+				..()
 
 
 
@@ -950,12 +947,15 @@ datum
 			minimum_reaction_temperature = -INFINITY
 
 			New()
+				..()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 
 			unpooled()
+				is_dry = 1
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
+				..()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/obj/decal/cleanable/nitrotriiodide/NT = ..()

@@ -9,7 +9,7 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
@@ -110,7 +110,7 @@
 		O.quality = quality
 		O.icon = icon
 		O.icon_state = icon_state
-		O.dir = dir
+		O.set_dir(src.dir)
 		O.desc = desc
 		O.pixel_x = pixel_x
 		O.pixel_y = pixel_y
@@ -180,14 +180,27 @@
 		if (iswraith(usr))
 			if(!src.anchored && isitem(src))
 				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws \the [src] with wraith telekinesis.")
+				logTheThing("combat", usr, null, "throws [src] with wtk.")
 
 		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj) && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
 			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
 
 			if(!src.anchored && (isitem(src) || TK.variant == 2))
 				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws \the [src] with telekinesis.")
+				logTheThing("combat", usr, null, "throws [src] with tk.")
+
+#ifdef HALLOWEEN
+		else if (istype(usr, /mob/dead/observer))	//ghost
+			if(!src.anchored && isitem(src))
+				var/obj/item/I = src
+				if (I.w_class > 3)
+					return
+				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
+					if (GH.spooking)
+						src.throw_at(over_object, 7-I.w_class, 1)
+						logTheThing("combat", usr, null, "throws [src] with g_tk.")
+#endif
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -291,6 +304,7 @@
 	stops_space_move = 1
 	anchored = 1.0
 	layer = LATTICE_LAYER
+	plane = PLANE_FLOOR
 	//	flags = CONDUCT
 	text = "<font color=#333>+"
 
@@ -478,7 +492,7 @@
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x
 		replica.pixel_y = O.pixel_y
-		replica.dir = O.dir
+		replica.set_dir(O.dir)
 		qdel(O)
 
 
@@ -495,8 +509,8 @@
 			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 			user.drop_item()
 			if(W.dir != dirbuffer)
-				W.dir = dirbuffer
-			if (W && W.loc)
+				W.set_dir(dirbuffer)
+			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16
@@ -516,3 +530,15 @@
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
+
+/obj/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	. = ..()
+	if(!.)
+		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
+	if(!src.anchored)
+		step(src, AM.dir)
+	if(AM.throwforce >= 40)
+		if(!src.anchored && !src.throwing)
+			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+		else if(AM.throwforce >= 80 && !isrestrictedz(src.z))
+			src.meteorhit(AM)

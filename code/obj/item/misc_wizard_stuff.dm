@@ -3,7 +3,7 @@
 // - Staves
 // - Magic mirror
 
-/////////////////////////////////////////////////// Teleportation scroll ///////////////////////////////////
+// // // // // // // // // // Teleportation scroll // // // // // // // // // // // //
 
 /obj/item/teleportation_scroll
 	name = "Teleportation Scroll"
@@ -78,7 +78,7 @@
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 		. = ..()
@@ -232,7 +232,7 @@
 
 		// Teamwork, perhaps? The M.is_target check that used to be here doesn't cut it in the mixed game mode (Convair880).
 		for (var/datum/mind/M in ticker.minds)
-			if (M && M.special_role == "wizard" && M.current)
+			if (M?.special_role == "wizard" && M.current)
 				W_count++
 				T += "<hr>"
 				T += "<b>[M.current.real_name]'s objectives:</b>"

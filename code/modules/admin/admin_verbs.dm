@@ -61,8 +61,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
 		/client/proc/toggle_station_name_changing,
-		/client/proc/cmd_admin_remove_label_from,
+		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
+		/client/proc/retreat_to_office,
+
 		),
 
 
@@ -172,7 +174,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_scale_type,
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
-		/client/proc/cmd_get_type
+		/client/proc/cmd_get_type,
+
+		/client/proc/vpn_whitelist_add,
+		/client/proc/vpn_whitelist_remove
 		),
 
 	4 = list(
@@ -233,6 +238,7 @@ var/list/admin_verbs = list(
 		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
+		/client/proc/toggle_vpn_blacklist,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -258,11 +264,15 @@ var/list/admin_verbs = list(
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
+		/client/proc/spawn_survival_shit,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
+		/datum/admins/proc/supplydrop_spawn_obj,
+		/datum/admins/proc/demonically_spawn_obj,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
+		/client/proc/SetInfoOverlayAlias,
 
 		),
 
@@ -296,7 +306,6 @@ var/list/admin_verbs = list(
 		/client/proc/sendmobs,
 		/client/proc/gettraitors,
 		/client/proc/getnontraitors,
-		/client/proc/Debug2,
 		/datum/admins/proc/adrev,
 		/datum/admins/proc/adspawn,
 		/datum/admins/proc/adjump,
@@ -314,6 +323,7 @@ var/list/admin_verbs = list(
 		/client/proc/sharkban,
 		/client/proc/toggle_literal_disarm,
 		/client/proc/implant_all,
+		/client/proc/cmd_crusher_walls,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -329,6 +339,10 @@ var/list/admin_verbs = list(
 		/client/proc/dereplace_space,
 		/client/proc/ghostdroneAll,
 		/client/proc/showPregameHTML,
+
+		/client/proc/call_proc,
+		/client/proc/call_proc_all,
+		/client/proc/debug_global_variable,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -398,6 +412,7 @@ var/list/admin_verbs = list(
 		/verb/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
+		/client/proc/set_nukie_score,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -716,7 +731,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.owner:stealth)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "Has enabled stealth mode as ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 
@@ -759,7 +774,7 @@ var/list/special_pa_observing_verbs = list(
 	if (src.alt_key)
 		var/ircmsg[] = new()
 		ircmsg["key"] = src.owner:key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "Has set their displayed key to ([src.owner:fakekey])"
 		ircbot.export("admin", ircmsg)
 */
@@ -1337,7 +1352,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	var/msg
-	if (args && args.len > 0)
+	if (length(args))
 		msg = args[1]
 
 	msg = input(src, "Sends a message as voice to all players", "Dectalk", msg) as null|message
@@ -1444,16 +1459,14 @@ var/list/fun_images = list()
 		return
 
 	if(new_grenade)
-		var/obj/item/old_grenade/thing_thrower/nade = new
+		var/obj/item/old_grenade/thing_thrower/nade = new(usr.loc)
 		nade.count = input("How many things?", "How many things?", 8) as null|num
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana
+		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
 		nade.payload = obj_path
-		nade.loc = usr.loc
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	logTheThing("admin", src, null, "spawned a custom grenade at [usr.loc]")
@@ -1799,6 +1812,23 @@ var/list/fun_images = list()
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
 
+/client/proc/set_nukie_score()
+	set popup_menu = 0
+	set name = "Set Nuke-Ops Scoreboard Values"
+	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/win_value = input("Enter new win value.") as num
+	world.save_intra_round_value("nukie_win", win_value)
+
+	var/lose_value = input("Enter new lose value.") as num
+	world.save_intra_round_value("nukie_loss", lose_value)
+
+	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
+	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
+
 
 /mob/verb/admin_interact_verb()
 	set name = "admin_interact"
@@ -1820,10 +1850,9 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atoms = list(clicked_turf)
-		for(var/thing in clicked_turf)
-			var/atom/atom = thing
-			atoms += atom
+		var/list/atom/atoms = list(clicked_turf)
+		for(var/atom/thing as() in clicked_turf)
+			atoms += thing
 		if (atoms.len)
 			A = input(usr, "Which item to admin-interact with?") as null|anything in atoms
 			if (isnull(A)) return
@@ -1909,7 +1938,10 @@ var/list/fun_images = list()
 			C.getturftelesci(A)
 
 		if ("Possess")
-			possess(A)
+			if(istype(A, /mob))
+				possessmob(A)
+			else
+				possess(A)
 		if ("Create Poster")
 			C.generate_poster(A)
 
@@ -1923,3 +1955,28 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 
 	src.update_cursor()
+
+
+/client/proc/vpn_whitelist_add(vpnckey as text)
+	set name = "VPN whitelist add"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	return 1
+
+/client/proc/vpn_whitelist_remove(vpnckey as text)
+	set name = "VPN whitelist remove"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	return 1

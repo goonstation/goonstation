@@ -2,40 +2,42 @@
 /datum/lifeprocess/decomposition
 
 	//proc/handle_decomposition()
-	process(var/datum/gas_mixture/environment)
+	process(datum/gas_mixture/environment)
 		if (isdead(owner) && human_owner) //hey i know this only hanldes human right now but i predict we will want other mobs to decompose later on
 			var/mob/living/carbon/human/H = owner
 			var/turf/T = get_turf(owner)
 			if (!T)
 				return ..()
 
-			if (H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
+			var/mult = get_multiplier()
+
+			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
-			var/suspend_rot = 0
+			if (H.mutantrace && !H.mutantrace.decomposes)
+				return ..()
+
+			var/suspend_rot = \
+					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
+					istype(owner.loc, /obj/morgue) || \
+					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
+					owner.reagents?.has_reagent("formaldehyde")
+
+			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
+				icky_icky_miasma(T)
+
 			if (H.decomp_stage >= 4)
-				suspend_rot = (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(owner.loc, /obj/morgue) || (owner.reagents && owner.reagents.has_reagent("formaldehyde")))
-				if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
-					icky_icky_miasma(T)
 				return ..()
 
-			if (H.mutantrace)
-				return ..()
-			suspend_rot = (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || istype(owner.loc, /obj/morgue) || (owner.reagents && owner.reagents.has_reagent("formaldehyde")))
 			var/env_temp = 0
-			// cogwerks note: both the cryo cell and morgue things technically work, but the corpse rots instantly when removed
-			// if it has been in there longer than the next decomp time that was initiated before the corpses went in. fuck!
-			// will work out a fix for that soon, too tired right now
 
-			// hello I fixed the thing by making it so that next_decomp_time is added to even if src is in a morgue/cryo or they have formaldehyde in them - haine
 			if (!suspend_rot && environment)
 				env_temp = environment.temperature
-				H.next_decomp_time -= min(30, max(round((env_temp - T20C)/10), -60))
-				if(!(istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded)))
-					icky_icky_miasma(T)
+				var/temperature_modifier = (env_temp - T20C) / 10
+				H.time_until_decomposition -= clamp(2 SECONDS + temperature_modifier, 0, 6 SECONDS) * mult
 
-			if (world.time > H.next_decomp_time) // advances every 4-10 game minutes
-				H.next_decomp_time = world.time + rand(240,600)*10
+			if(H.time_until_decomposition < 0)
+				H.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 				if (suspend_rot)
 					return ..()
 				H.decomp_stage = min(H.decomp_stage + 1, 4)

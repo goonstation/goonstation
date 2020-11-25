@@ -24,6 +24,7 @@
  * required id string A unique window identifier.
  */
 /datum/tgui_window/New(client/client, id, tgui_pooled = FALSE)
+	..()
 	src.id = id
 	src.client = client
 	src.tgui_pooled = tgui_pooled
@@ -42,7 +43,9 @@
  * optional inline_assets list List of assets to inline into the html.
  */
 /datum/tgui_window/proc/initialize(inline_assets = list())
-	log_tgui(client, "[id]/initialize")
+	log_tgui(client,
+		context = "[id]/initialize",
+		window = src)
 	if(!client)
 		return
 	status = TGUI_WINDOW_LOADING
@@ -59,11 +62,11 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets [GOONSTATION-CHANGE]
+	// Process inline assets |GOONSTATION-CHANGE|
 	var/list/inline_styles = list()
 	var/list/inline_scripts = list()
 
-	// Handle CDN Assets, Goonstation-style [GOONSTATION-ADD]
+	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
 	for(var/datum/asset/asset in inline_assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
@@ -80,7 +83,7 @@
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
 
-/** [GOONSTATION-ADD]
+/** |GOONSTATION-ADD|
  * private
  *
  * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
@@ -167,11 +170,15 @@
 	if(!client)
 		return
 	if(can_be_suspended && can_be_suspended())
-		log_tgui(client, "[id]/close: suspending")
+		log_tgui(client,
+			context = "[id]/close (suspending)",
+			window = src)
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
-	log_tgui(client, "[id]/close")
+	log_tgui(client,
+		context = "[id]/close",
+		window = src)
 	release_lock()
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null

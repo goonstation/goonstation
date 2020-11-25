@@ -9,12 +9,6 @@
 
 //******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
 
-var/list/mantaTiles = list()
-var/list/mantaBubbles = list()
-var/list/mantaPlants = list()
-var/list/mantaPropellers = list()
-var/list/mantaHeaters = list()
-var/list/mantaJunctionbox = list ()
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
@@ -30,11 +24,11 @@ var/obj/manta_speed_lever/mantaLever = null
 	mouse_opacity = 0
 
 	New()
-		mantaBubbles.Add(src)
-		return ..()
+		START_TRACKING
+		..()
 
 	disposing()
-		mantaBubbles.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	small
@@ -74,7 +68,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		updateIcon()
 		..()
 //This crap is here so nothing can destroy it.
-	hitby()
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -149,7 +144,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /proc/mantaIsBroken()
 	var/broken = 0
-	for(var/obj/machinery/mantapropulsion/A in mantaPropellers)
+	for_by_tcl(A, /obj/machinery/mantapropulsion)
 		if(!A.important) continue
 		if(A.health == 0) broken++
 		if(A.health > 0) broken--
@@ -166,19 +161,18 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 15, 0.2)
+			if(M?.z == 1) shake_camera(M, 5, 32, 0.2)
 
-	for(var/A in mantaTiles)
-		var/turf/space/fluid/manta/T = A
+	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
-	for(var/A in mantaBubbles)
-		var/obj/O = A
+
+	for_by_tcl(O, /obj/decal/mantaBubbles)
 		O.alpha = (moving ? 255:0)
-	for(var/A in mantaPlants)
-		var/obj/O = A
+
+	for_by_tcl(O, /obj/sea_plant_manta)
 		O.alpha = (moving ? 0:255)
-	for(var/A in mantaPropellers)
-		var/obj/machinery/mantapropulsion/O = A
+
+	for_by_tcl(O, /obj/machinery/mantapropulsion)
 		O.setOn(moving)
 
 	mantaMoving = moving
@@ -201,14 +195,15 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/broken = 0
 
 	New()
+		..()
 		stateOff = "sea_propulsion_off"
 		stateOn = "sea_propulsion"
 		icon_state = stateOn
 		on = 1
-		return .
+		START_TRACKING
 
 	disposing()
-		mantaPropellers.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	Bumped(atom/AM) //This is stolen straight from the crusher, just making sure that the propellers are actually on.
@@ -367,7 +362,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	appearance_flags = TILE_BOUND
 
 	New()
-		mantaPropellers.Add(src)
 		. = ..()
 		stateOff = "bigsea_propulsion_off"
 		stateOn = "bigsea_propulsion"
@@ -440,12 +434,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 
 	New()
-		mantaJunctionbox.Add(src)
+		START_TRACKING
 		. = ..()
 		update_icon()
 
 	disposing()
-		mantaJunctionbox.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 	attack_hand(mob/user as mob)
@@ -496,7 +490,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	proc/Breakdown()
 		src.broken = 1
 		src.repairstate = 1
-		mantaJunctionbox.Remove(src)
 		src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 
 	proc/Repair()
@@ -714,8 +707,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		busy = 0
 
 	proc/teleport(mob/user)
-		for(var/X in by_type[/obj/miningteleporter])
-			var/obj/miningteleporter/S = X
+		for_by_tcl(S, /obj/miningteleporter)
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1
@@ -738,7 +730,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/rddiploma
 	name = "RD's diploma"
@@ -774,7 +766,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/constructioncone
 	desc = "Caution!"
@@ -824,7 +816,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			src.pixel_x = rand(-8,8)
 		if (!src.pixel_y)
 			src.pixel_y = rand(-8,8)
-		mantaPlants.Add(src)
+		START_TRACKING
 
 	attackby(obj/item/W, mob/user)
 		if (drop_type && issnippingtool(W))
@@ -835,7 +827,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 
 	disposing()
-		mantaPlants.Remove(src)
+		STOP_TRACKING
 		return ..()
 
 
@@ -929,7 +921,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/list/L = list()
 
 	New()
-		mantaTiles.Add(src)
+		START_TRACKING
 		. = ..()
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
@@ -937,8 +929,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		on = 1
 		return .
 
-	disposing()
-		mantaTiles.Remove(src)
+	Del()
+		STOP_TRACKING
 		return ..()
 
 	ex_act(severity)
@@ -959,12 +951,12 @@ var/obj/manta_speed_lever/mantaLever = null
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
 					L+=T
 
-			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced))
+			if (istype(Obj,/obj/torpedo_targeter) ||istype(Obj,/mob/dead) || istype(Obj,/mob/wraith) || istype(Obj,/mob/living/intangible) || istype(Obj, /obj/lattice) || istype(Obj, /obj/cable/reinforced) || istype(Obj, /obj/arrival_missile))
 				return
 
 			return_if_overlay_or_effect(Obj)
 
-			if (L && L.len && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
+			if (length(L) && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
 				Obj.set_loc(pick(L))
 		..(Obj,OldLoc)
 
@@ -1103,7 +1095,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			boutput(owner, "<span class='notice'>You finish welding  the replacement propellers,the propeller is again in working condition.</span>")
 			playsound(get_turf(propeller), "sound/items/Deconstruct.ogg", 80, 1)
 			propeller.health = 100
-			mantaPropellers.Add(src)
 		if (mantaMoving == 1)
 			propeller.on = 1
 			propeller.icon_state = "bigsea_propulsion"
@@ -1200,7 +1191,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			box.broken = 0
 			boutput(owner, "<span class='notice'>You successfully screw the casing back on.</span>")
 			playsound(get_turf(box), "sound/items/Deconstruct.ogg", 80, 1)
-			mantaJunctionbox.Add(src)
 			box.desc = "An electrical junction box is an enclosure housing electrical connections, to protect the connections and provide a safety barrier."
 			return
 
@@ -1324,8 +1314,8 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/obj/machinery/junctionbox/J = mantaJunctionbox[rand(3,mantaJunctionbox.len)]
-		if (J.broken == 1)
+		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
+		if (J.broken)
 			return
 		J.Breakdown()
 		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction")
@@ -1335,22 +1325,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		//var/delay = rand(2000,3000) hissssss
-		//var/obj/effect/boommarker/B = /obj/effect/boommarker
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "bigboom")
-				EV.Add(S.loc)
-		var/bigboommark = pick(EV)
-
-		var/list/eligible = mantaPropellers.Copy()
+		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
 		for(var/i=0, i<3, i++)
-			var/obj/machinery/mantapropulsion/big/P = eligible[rand(1,eligible.len)]
+			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
 			P.Breakdown()
 			eligible.Remove(P)
 			sleep(1 SECOND)
 
-		new /obj/effect/boommarker(bigboommark)
+		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
 #endif
 
 
@@ -1525,7 +1507,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if(istype(W, /obj/item/parts/human_parts/arm/right/polaris))
 			user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 			playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
-			for (var/obj/machinery/door/airlock/M in doors)
+			for_by_tcl(M, /obj/machinery/door/airlock)
 				if (M.id == src.id)
 					if (M.density)
 						M.open()
@@ -1543,12 +1525,12 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.limbs && (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/polaris)))
 				user.visible_message("<span class='notice'>The [src] accepts the biometrics of the hand and beeps, granting you access.</span>")
 
-				for (var/obj/machinery/door/poddoor/M in doors)
+				for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
 
-				for (var/obj/machinery/door/airlock/M in doors)
+				for_by_tcl(M, /obj/machinery/door/airlock)
 					if (M.id == src.id)
 						if (M.density)
 							M.open()
@@ -1632,9 +1614,13 @@ var/obj/manta_speed_lever/mantaLever = null
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			if(AM.anchored)
+				return ..()
 
-		if (polarisfall.len)
-			var/turf/T = pick(polarisfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()

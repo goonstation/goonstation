@@ -110,7 +110,7 @@
 	onAbilityStat()
 		..()
 		.= list()
-		.["DNA Collected:"] = owner:absorbed_dna
+		.["DNA Collected:"] = owner?:absorbed_dna
 
 
 /mob/living/critter/changeling/handspider
@@ -172,9 +172,9 @@
 						var/mob/living/L = pick(possible_targets)
 						var/dir = get_dir(L, src)
 						if(dir & (EAST | WEST))
-							src.dir = dir
+							src.set_dir(dir)
 						else if (dir & (NORTH | SOUTH))
-							src.dir = get_dir(src,L)
+							src.set_dir(get_dir(src,L))
 
 						src.icon_state = "[icon_prefix]handspider-flip"
 						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
@@ -609,7 +609,7 @@
 		return ismob(C) && !isdead(C) && (!owner || C.mind != owner) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
-	if(ishuman(M))
+	if(ishuman(M) && isalive(M))
 		var/mob/living/carbon/human/H = M
 		src.set_loc(H.loc)
 		random_brute_damage(H, 10)

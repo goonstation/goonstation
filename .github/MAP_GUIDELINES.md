@@ -23,6 +23,7 @@ If these features do not work in the current codebase then your map PR will be *
 - A **Correctly placed** landmark for the Map at 1,1.
 - **Windows** should be placed using the `obj/wingrille_spawn` spawners.
     - Non-full-tile windows ('thindows') should not be used, as they are being phased out.
+- **Firedoors** should be placed using the `obj/firedoor_spawn` spawners.
 - **Drains** scattered around, the path is `/obj/machinery/drainage`.
 
 ## Recommended

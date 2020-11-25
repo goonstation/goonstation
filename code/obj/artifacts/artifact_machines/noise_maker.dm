@@ -28,7 +28,7 @@
 	'sound/machines/signal.ogg','sound/machines/ufo_move.ogg','sound/machines/modem.ogg','sound/effects/creaking_metal1.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/industrial/Precursor_Choir.ogg',
 	'sound/voice/animal/cat.ogg')
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		src.react_heat[2] = "HIGH INTERNAL CONVECTION"
 		src.spamsound = pick(sounds)
@@ -47,8 +47,10 @@
 			src.times_to_play = rand(2, 3)
 			if(prob(5))
 				src.times_to_play = 10
+
+	post_setup()
 		var/harmprob = 5
-		if (src.artitype == "eldritch")
+		if (src.artitype.name == "eldritch")
 			harmprob += 20
 		if (prob(harmprob))
 			src.harmful = 1

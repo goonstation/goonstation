@@ -69,7 +69,7 @@
 		HH.can_range_attack = 1
 
 		HH = hands[3]
-		HH.limb = new /datum/limb/small_critter/med
+		HH.limb = new /datum/limb/small_critter/strong
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
@@ -78,3 +78,9 @@
 	setup_healths()
 		add_hh_robot(-75, 75, 1)
 		add_hh_robot_burn(-50, 50, 1)
+
+	get_melee_protection(zone, damage_type)
+		return 6
+	
+	get_ranged_protection()
+		return 2

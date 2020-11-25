@@ -147,10 +147,7 @@ Contents:
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
-#if ASS_JAM
-		if(prob(50))
-			bad_traitorify(M, "Samurai")
-#endif
+
 
 // Objects
 

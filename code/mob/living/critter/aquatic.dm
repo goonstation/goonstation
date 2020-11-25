@@ -37,16 +37,17 @@
 	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 		src.is_pet = 0
 	if(src.is_pet)
-		pets += src
+		START_TRACKING_CAT(TR_CAT_PETS)
 	src.update_water_status(loc)
 	..()
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/disposing()
 	if(ai)
 		ai.dispose()
 	ai = null
 	if(src.is_pet)
-		pets -= src
+		STOP_TRACKING_CAT(TR_CAT_PETS)
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
@@ -203,7 +204,7 @@
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
 	if(!water_need && !isdead(src))
 		animate_bumble(src)
@@ -236,11 +237,11 @@
 				SPAWN_DBG(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					if(!src.water_need)
 						animate_bumble(src)
@@ -457,11 +458,11 @@
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))

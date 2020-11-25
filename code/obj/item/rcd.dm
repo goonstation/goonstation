@@ -382,7 +382,7 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
 
-			//if(map_setting == "COG2") T.dir = user.dir
+			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
 	proc/update_icon() //we got fancy rcds now
@@ -535,7 +535,7 @@ Broken RCD + Effects
 						var/poddir = turn(stepdir, 90)
 						var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
 						B.id = "[hangar_id]"
-						B.dir = poddir
+						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
 						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
@@ -580,7 +580,7 @@ Broken RCD + Effects
 		if (do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
 			var/obj/machinery/door/airlock/T = new door_type(A)
 			log_construction(user, null, "builds an airlock ([T], name: [door_name], access: [door_access], type: [door_type])")
-			T.dir = door_dir
+			T.set_dir(door_dir)
 			T.autoclose = 1
 			T.name = door_name
 			if (door_access)
@@ -763,7 +763,7 @@ Broken RCD + Effects
 				A.pixel_x = rand(-4,4)
 				A.pixel_y = rand(-4,4)
 			else if (isliving(A))
-				shake_camera(A, 8, 3)
+				shake_camera(A, 8, 32)
 				A.ex_act( get_dist(src, A) > 1 ? 3 : 1 )
 
 			else if (istype(A, /obj) && (A != src))

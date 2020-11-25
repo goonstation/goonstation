@@ -11,26 +11,6 @@ var/global/debug_messages = 0
 	logTheThing("diary", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
-/client/proc/Debug2()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Debug-Game"
-	admin_only
-	if(src.holder.rank == "Coder")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else if(src.holder.rank == "Host")
-		Debug2 = !Debug2
-
-		boutput(src, "Debugging [Debug2 ? "On" : "Off"]")
-		logTheThing("admin", src, null, "toggled debugging to [Debug2]")
-		logTheThing("diary", src, null, "toggled debugging to [Debug2]", "admin")
-	else
-		alert("Coders only baby")
-		return
-
 /client/proc/debug_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
@@ -300,28 +280,61 @@ var/global/debug_messages = 0
 			target = null
 	doCallProc(target)
 
-/proc/doCallProc(target = null)
+/proc/doCallProc(target = null, procname = null) // also accepts actual proc
 	var/returnval = null
-	var/procname = input("Procpath (ex. /proc/bust_lights)","path:", null) as null|text
+	if(isnull(procname))
+		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
 	if (isnull(procname))
 		return
 
 	var/list/listargs = get_proccall_arglist()
 
-	if (target)
+	var/list/name_list
+
+	if(istext(procname))
+		if(copytext(procname, 1, 6) == "proc/")
+			procname = copytext(procname, 6)
+		else if(copytext(procname, 1, 7) == "/proc/")
+			procname = copytext(procname, 7)
+		name_list = list(procname, "proc/" + procname, "/proc/" + procname, "verb/" + procname)
+	else // is an actual proc, not a name
+		name_list = list(procname)
+
+	if(target)
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(target,procname)(arglist(listargs))
-		else
-			returnval = call(target,procname)()
 	else
 		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
-		if(islist(listargs) && listargs.len)
-			returnval = call(procname)(arglist(listargs))
-		else
-			returnval = call(procname)()
 
-	boutput(usr, "<span class='notice'>Proc returned: [json_encode(returnval)]</span>")
+	var/success = FALSE
+	for(var/actual_proc in name_list)
+		try
+			if (target)
+				if(islist(listargs) && listargs.len)
+					returnval = call(target,actual_proc)(arglist(listargs))
+				else
+					returnval = call(target,actual_proc)()
+			else
+				if(islist(listargs) && listargs.len)
+					returnval = call(actual_proc)(arglist(listargs))
+				else
+					returnval = call(actual_proc)()
+			success = TRUE
+			break
+		catch(var/exception/e)
+			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
+				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				throw e
+
+	if(!success)
+		boutput(usr, "<span class='alert'>Proc [procname] not found!</span>")
+		return
+
+	var/pretty_returnval = returnval
+	if(istype(returnval, /datum) || istype(returnval, /client))
+		pretty_returnval = "<a href='byond://?src=\ref[usr.client];Refresh=\ref[returnval]'>[returnval] \ref[returnval]</a>"
+	else
+		pretty_returnval = json_encode(returnval)
+	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
 /proc/get_proccall_arglist()
@@ -421,10 +434,12 @@ var/global/debug_messages = 0
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/S = locate(text("start*AI"))
-		if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
+		var/turf/new_loc
+		if (job_start_locations["AI"])
+			new_loc = pick(job_start_locations["AI"])
+		if (new_loc)
 			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
-			M.set_loc(S.loc)
+			M.set_loc(new_loc)
 			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
 		logTheThing("admin", src, M, "AIized [constructTarget(M,"admin")]")
@@ -556,30 +571,7 @@ var/global/debug_messages = 0
 
 	explosion_new(null, T, esize, bris)
 	return
-/*
-/client/proc/cmd_ultimategrife()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "ULTIMATE GRIFE"
 
-	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
-		if("Yes")
-			for(var/turf/simulated/wall/W in world)
-				new /obj/machinery/crusher(get_turf(W))
-				qdel(W)
-
-			for(var/turf/simulated/wall/r_wall/RW in world)
-				new /obj/machinery/crusher(get_turf(RW))
-				qdel(RW)
-
-			logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
-			logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
-			message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
-
-			alert("Uh oh.")
-
-		if("No")
-			alert("Thank god for that.")
-*/
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
 	set name = "Change Mutant Race"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -654,7 +646,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
 		alert("It isn't gang mode, dummy!")
 		return
 
@@ -670,16 +662,16 @@ body
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
 	switch (selected)
 		if ("Disco Inferno")
-			for (var/turf/T in blobstart)
+			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
 				var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
 				gas.toxins = 10000
 				gas.oxygen = 10000
 				gas.temperature = 10000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/airlock/maintenance/door in doors)
+			for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
-			for (var/obj/machinery/door/firedoor/door in doors)
+			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
 				LAGCHECK(LAG_LOW)
 				qdel(door)
 		if ("Chemist's Delight")
@@ -853,7 +845,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -896,7 +888,7 @@ var/global/debug_camera_paths = 0
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
-	for (var/obj/machinery/camera/C in cameras)
+	for_by_tcl(C, /obj/machinery/camera)
 		if (C.c_north)
 			camera_path_list.Add(particleMaster.SpawnSystem(new /datum/particleSystem/mechanic(C.loc, C.c_north.loc)))
 

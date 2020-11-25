@@ -22,9 +22,16 @@
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
 
+	process_move(keys)
+		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+			..()
+
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
 			params = params2list(params)
+
+		if(!params["ctrl"]) // mouse ping is now ctrl+click
+			return ..()
 
 		src.the_guy << src.ping
 		src << src.ping
@@ -100,6 +107,9 @@
 		boutput(src, rendered)
 		boutput(src.the_guy, rendered)
 
+	emote(act, voluntary=0)
+		src.my_mouse.emote(act, voluntary)
+
 	stop_observing()
 		boot()
 
@@ -113,6 +123,8 @@
 			src.my_mouse.set_loc(get_turf(src))
 			if(src.mind)
 				src.mind.transfer_to(src.my_mouse)
+			if(!get_turf(src))
+				src.my_mouse.gib()
 		src.the_guy = null
 		src.my_mouse = null
 		..()
@@ -129,5 +141,7 @@
 			src.mind.transfer_to(src.my_mouse)
 		else if(src.client)
 			src.my_mouse.client = src.client
+		if(!get_turf(src))
+			src.my_mouse.gib()
 		src.my_mouse = null
 		qdel(src)

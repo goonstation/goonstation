@@ -152,47 +152,48 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-
 				if (isliving(M))
 					var/mob/living/H = M
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 3
 					var/liver_damage = 0
-					if (!isalcoholresistant(H))
+					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (holder.get_reagent_amount(src.id) >= 15)
-							if(prob(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
+							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && prob(10))
+							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (holder.get_reagent_amount(src.id) >= 25)
 							liver_damage = 0.25
-							if(prob(10)) H.emote(pick("hiccup", "burp"))
-							if (prob(10)) H.stuttering += rand(1,10)
+							if(probmult(10)) H.emote(pick("hiccup", "burp"))
+							if (probmult(10)) H.stuttering += rand(1,10)
 						if (holder.get_reagent_amount(src.id) >= 45)
-							if(prob(10))
+							if(probmult(10))
 								H.emote(pick("hiccup", "burp"))
-							if (prob(15))
+							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && prob(8))
+							if (H.canmove && isturf(H.loc) && probmult(8))
 								step(H, pick(cardinal))
 						if (holder.get_reagent_amount(src.id) >= 55)
 							liver_damage = 0.5
-							if(prob(10))
+							if(probmult(10))
 								H.emote(pick("hiccup", "fart", "mumble", "grumble"))
 							H.stuttering += 1
-							if (prob(33))
+							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && prob(15))
+							if (H.canmove && isturf(H.loc) && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
-							if(prob(6))
+							if(probmult(6))
 								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (holder.get_reagent_amount(src.id) >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(prob(6)) H.drowsyness += 5
+							if(probmult(6)) H.drowsyness += 5
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
 					if (ishuman(M))
@@ -264,7 +265,7 @@ datum
 						H.take_oxygen_deprivation(-1 * mult)
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
-				if(prob(5))
+				if(probmult(5))
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
@@ -289,7 +290,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.canmove && isturf(M.loc))
 					step(M, pick(cardinal))
-				if(prob(5)) M.emote(pick("twitch","drool","moan"))
+				if(probmult(5)) M.emote(pick("twitch","drool","moan"))
 				..()
 				return
 
@@ -826,8 +827,11 @@ datum
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
 					else if (method == TOUCH)
-						boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-						M.take_brain_damage(-10)
+						if (M.traitHolder?.hasTrait("atheist"))
+							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
+						else
+							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+							M.take_brain_damage(-10)
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

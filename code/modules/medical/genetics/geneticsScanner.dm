@@ -35,7 +35,9 @@ var/list/genescanner_addresses = list()
 		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
-		occupant = null
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	allow_drop()
@@ -68,7 +70,7 @@ var/list/genescanner_addresses = list()
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1)
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
 			return
 
 		if (target == user)
@@ -117,7 +119,7 @@ var/list/genescanner_addresses = list()
 		src.go_in(M)
 
 		for(var/obj/O in src)
-			O.loc = src.loc
+			O.set_loc(src.loc)
 
 		src.add_fingerprint(usr)
 
@@ -244,11 +246,14 @@ var/list/genescanner_addresses = list()
 		if (src.locked)
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
@@ -293,7 +298,7 @@ var/list/genescanner_addresses = list()
 		return
 
 	disposing()
-		if(usercl && usercl.mob)
+		if(usercl?.mob)
 			usercl.mob.Browse(null, "window=geneticsappearance")
 			usercl = null
 		target_mob = null
