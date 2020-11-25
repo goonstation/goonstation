@@ -41860,9 +41860,6 @@
 /area/station/maintenance/southwest)
 "bQT" = (
 /obj/decal/cleanable/dirt,
-/obj/item/device/radio/intercom/cargo{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -54544,6 +54541,13 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
+"hTE" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/cargo,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "hVr" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
@@ -89777,7 +89781,7 @@ bGc
 bOd
 bGc
 bGc
-bSq
+hTE
 bAQ
 bVY
 bvo
