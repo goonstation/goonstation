@@ -275,7 +275,7 @@
 
 /obj/item/cell/potato/New(var/loc, var/potency, var/endurance)
 	src.maxcharge += rand(1,100) //slight deviation by specimen
-	src.maxcharge += round(potency*(8+rand())) //more deviation
+	src.maxcharge += round(potency*(6+rand(1,4))) //more deviation
 	src.genrate = round(endurance/rand(12,16))
 	if(genrate) desc = "An improvised organic power cell. It seems to be holding up well."
 	src.charge = src.maxcharge
