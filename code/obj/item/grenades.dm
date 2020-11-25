@@ -1551,7 +1551,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			if (throw_objs.len && throw_objs.len > 0)
 				var/turf/T = get_turf(src.loc)
-				var/count = 6
+				var/count = 20
 				var/obj/spawn_item
 				for (var/mob/living/L in oview(5, src.loc))
 					spawn_item = pick(throw_objs)
@@ -1560,7 +1560,7 @@ PIPE BOMBS + CONSTRUCTION
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
 					O.throw_at(L,5,3)
-					count++
+					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,src.loc))
 						if (prob(4))
@@ -1570,7 +1570,7 @@ PIPE BOMBS + CONSTRUCTION
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
 							O.throw_at(target,4,3)
-							count++
+							count--
 						if (count <= 0)
 							break;
 
