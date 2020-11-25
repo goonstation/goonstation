@@ -106,6 +106,7 @@
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the maintenance panel on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the maintenance panel on the [src].</span>")
 			flags ^= OPENCONTAINER
+			update_icon()
 		else if(iswrenchingtool(W) && open)
 			src.add_fingerprint(user)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1)
@@ -295,6 +296,21 @@
 				icon_state = "circ[side]-slow"
 		else
 			icon_state = "circ[side]-off"
+
+		if(src.is_open_container())
+			if(src.GetOverlayImage("open")) return 1
+
+			var/icon/open_icon = icon('icons/obj/atmospherics/atmos.dmi',"can-oT")
+			if(src.side == RIGHT_CIRCULATOR)
+				open_icon.Flip(WEST)
+				open_icon.Shift(SOUTH,5)
+				open_icon.Shift(EAST,5)
+			else
+				open_icon.Shift(SOUTH,5)
+				open_icon.Shift(WEST,5)
+			src.UpdateOverlays(image(open_icon), "open")
+		else
+			src.UpdateOverlays(null, "open")
 
 		return 1
 
@@ -506,12 +522,10 @@
 	proc/updateicon()
 
 		if(status & (NOPOWER|BROKEN))
-			overlays = null
+			UpdateOverlays(null, "power_level")
 		else
-			overlays = null
-
 			if(lastgenlev != 0)
-				overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power_level")
 
 			switch (lastgenlev)
 				if(0)
