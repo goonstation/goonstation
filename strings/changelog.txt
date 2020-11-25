@@ -1,6 +1,10 @@
 
 (t)tue nov 24 20
 (u)Kubius
+(p)2823
+(e)⚖🆕|balance, feature
+(+)Potato batteries scale more with potency and endurance, and the trimmed-down gun versions can now recharge with sufficiently high endurance.
+(u)Kubius
 (p)2810
 (e)🆕🗺|feature, mapping
 (+)Further Ozymandias changes, most notably a more resilient AI upload and a LOT of electrification.
