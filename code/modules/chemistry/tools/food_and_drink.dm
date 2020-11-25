@@ -92,6 +92,7 @@
 	module_research = list("cuisine" = 6)
 	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
+	var/has_cigs = 0
 
 	var/use_bite_mask = 1
 	var/current_mask = 5
@@ -188,6 +189,10 @@
 			return 0
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
+				//can this person eat this food?
+				if(!M.can_eat(src))
+					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+					return 0
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
@@ -212,7 +217,6 @@
 						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
 							S.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
 
 				//no or broken stomach
 				if (ishuman(M))
@@ -277,6 +281,11 @@
 				return
 			else if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+			else if(!M.can_eat(src))
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+				return 0
 			else
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
@@ -496,7 +505,7 @@
 					return
 				user.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>")
 
-			if (M.mind && M.mind.assigned_role == "Barman")
+			if (M.mind && M.mind.assigned_role == "Bartender")
 				var/reag_list = ""
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
@@ -893,11 +902,11 @@
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Barman")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Barman")
+		else if (user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 50
 			hurt_prob = 10
 

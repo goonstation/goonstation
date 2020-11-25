@@ -35,7 +35,7 @@ mob
 				src.move_dir = 0
 
 			if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
-				src.dir = src.move_dir
+				src.set_dir(src.move_dir)
 		if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 			src.update_cursor()
 
@@ -75,7 +75,7 @@ mob
 				src.animate_movement = SLIDE_STEPS
 				src.set_loc(get_step(src.loc, move_dir))
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
-					src.dir = move_dir
+					src.set_dir(move_dir)
 				OnMove()
 				src.glide_size = glide
 				next_move = world.time + (running ? 0.5 : 1.5)
@@ -158,7 +158,7 @@ mob
 							// also fuck it.
 							var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
 							I.set_loc(src.loc)
-							I.dir = src.dir
+							I.set_dir(src.dir)
 							flick("ion_fade", I)
 							I.icon_state = "blank"
 							I.pixel_x = src.pixel_x
@@ -179,7 +179,7 @@ mob
 						src.animate_movement = SLIDE_STEPS
 						//if (src.client && src.client.flying)
 						//	src.set_loc(get_step(src.loc, move_dir))
-						//	src.dir = move_dir
+						//	src.set_dir(move_dir)
 						//else
 						src.pushing = 0
 

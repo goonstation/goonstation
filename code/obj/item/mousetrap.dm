@@ -397,7 +397,7 @@
 		user.u_equip(src)
 
 		src.layer = initial(src.layer)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
 	Bump(atom/movable/AM as mob|obj)

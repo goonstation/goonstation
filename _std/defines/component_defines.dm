@@ -56,6 +56,9 @@
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
 // ---- atom signals ----
+
+/// when an atom changes dir (olddir, newdir)
+#define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 
@@ -63,7 +66,6 @@
 
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
-
 
 // ---- item signals ----
 
@@ -122,7 +124,8 @@
 #define COMSIG_MOB_DROPPED "mob_drop"
 
 #define COMSIG_MOB_CLICK "mob_click"
-
+/// sent when radiation status ticks on mob (stage)
+#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 // ---- mob/living signals ----
 /// when start sprinting
 #define COMSIG_LIVING_SPRINT_START "living_sprint_start"

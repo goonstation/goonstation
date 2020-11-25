@@ -45,6 +45,7 @@
 
 	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/organ/brain/brain = null
@@ -184,7 +185,11 @@
 
 			src.botcard.access = get_all_accesses()
 			src.default_radio = new /obj/item/device/radio(src)
-			src.radio = src.default_radio
+			if (src.shell)
+				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -1131,16 +1136,14 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/oldmob = B.owner.current
-					if (oldmob)
-						if(inafterlifebar(oldmob) || isVRghost(oldmob))
-							boutput(oldmob, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
-							SPAWN_DBG(1 SECOND)
-								qdel(oldmob)
-						else if (isalive(oldmob)) // if they're not in the afterlife bar or a VR ghost and still alive, then maybe don't pull them into this borg
-							return
-						if (B.owner.current.client)
-							src.lastKnownIP = B.owner.current.client.address
+					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
+						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
+						return
+					if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
+						boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+						B.owner = M.ghostize()?.mind
+						qdel(M)
 					B.owner.transfer_to(src)
 					if (src.emagged || src.syndicate)
 						src.handle_robot_antagonist_status("brain_added", 0, user)
@@ -1165,6 +1168,11 @@
 					src.part_head.ai_interface = I
 					I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
+					if(isnull(src.ai_radio))
+						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+					src.radio = src.ai_radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
@@ -1397,7 +1405,15 @@
 						UPGR.upgrade_deactivate(src)
 
 					user.put_in_hand_or_drop(src.ai_interface)
+					src.radio = src.default_radio
+					if (src.module && istype(src.module.radio))
+						src.radio = src.module.radio
+					src.ears = src.radio
+					src.radio.set_loc(src)
 					src.ai_interface = null
+					if(src.ai_radio)
+						qdel(src.ai_radio)
+						src.ai_radio = null
 					src.shell = 0
 
 					if (mainframe)
@@ -1827,7 +1843,12 @@
 		hud.update_module()
 		hud.module_added()
 		if(istype(RM.radio))
-			src.radio = RM.radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = RM.radio
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1842,7 +1863,12 @@
 		hud.module_removed()
 		if(istype(src.radio) && src.radio != src.default_radio)
 			src.radio.set_loc(RM)
-			src.radio = src.default_radio
+			if (src.shell)
+				if(isnull(src.ai_radio))
+					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
+				src.radio = src.ai_radio
+			else
+				src.radio = src.default_radio
 			src.ears = src.radio
 		return RM
 
@@ -2029,6 +2055,36 @@
 		src.show_laws(0)
 		return
 
+	verb/cmd_state_standard_laws()
+		set category = "Robot Commands"
+		set name = "State Standard Laws"
+		src.say("1. You may not injure a human being or cause one to come to harm.")
+		sleep(1 SECOND)
+		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		sleep(1 SECOND)
+		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
+	verb/cmd_state_laws()
+		set category = "Robot Commands"
+		set name = "State Laws"
+		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+			return
+		if(ticker.centralized_ai_laws.zeroth)
+			src.say("0. [ticker.centralized_ai_laws.zeroth]")
+		var/number = 1
+		for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
+			var/law = ticker.centralized_ai_laws.inherent[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+		for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
+			var/law = ticker.centralized_ai_laws.supplied[index]
+			if (length(law) > 0)
+				src?.say("[number]. [law]")
+				number++
+				sleep(1 SECOND)
+
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
 		set name = "Toggle Interface Lock"
@@ -2080,9 +2136,9 @@
 		switch(mod)
 			if("Brobocop")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Repair Pack Upgrade.</span>")
+				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
-				src.upgrades += new /obj/item/roboupgrade/repairpack(src)
+				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
 			if("Chemistry")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
@@ -2832,6 +2888,20 @@
 
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
+
+	proc/collapse_to_pieces()
+		src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
+		var/turf/T = get_turf(src)
+		for(var/obj/item/parts/robot_parts/R in src.contents)
+			R.set_loc(T)
+		src.part_chest = null
+		src.part_head = null
+		src.part_arm_l = null
+		src.part_arm_r = null
+		src.part_leg_l = null
+		src.part_leg_r = null
+		qdel(src)
+		return
 
 /mob/living/silicon/robot/var/image/i_batterydistress
 

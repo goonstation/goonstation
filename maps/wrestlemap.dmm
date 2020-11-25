@@ -1173,7 +1173,7 @@
 "dXv" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "5-6"},/turf/simulated/floor/plating,/area/station/maintenance/north)
 "dXF" = (/turf/simulated/floor/greenwhite{dir = 8},/area/station/medical/research)
 "dXO" = (/obj/machinery/atmospherics/pipe/simple/horizontal,/turf/simulated/wall/auto/supernorn,/area/station/crew_quarters/arcade)
-"dXP" = (/obj/landmark/start{name = "Barman"},/obj/disposalpipe/segment/brig,/obj/cable{icon_state = "2-4"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
+"dXP" = (/obj/landmark/start{name = "Bartender"},/obj/disposalpipe/segment/brig,/obj/cable{icon_state = "2-4"},/turf/simulated/floor/carpet/grime,/area/station/crew_quarters/baroffice)
 "dXT" = (/obj/decal/tile_edge/line/white{dir = 9; icon_state = "line2"},/obj/cable{icon_state = "4-8"},/obj/cable{icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/northwest,/turf/simulated/floor/bluewhite{dir = 9},/area/station/medical/medbay)
 "dXU" = (/obj/decal/stage_edge,/turf/simulated/floor/wood/two,/area/station/crew_quarters/courtroom)
 "dXY" = (/obj/machinery/disposal,/obj/machinery/disposal,/turf/simulated/floor/neutral/side{dir = 10},/area/station/hallway/primary/south)

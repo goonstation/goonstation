@@ -172,9 +172,9 @@
 						var/mob/living/L = pick(possible_targets)
 						var/dir = get_dir(L, src)
 						if(dir & (EAST | WEST))
-							src.dir = dir
+							src.set_dir(dir)
 						else if (dir & (NORTH | SOUTH))
-							src.dir = get_dir(src,L)
+							src.set_dir(get_dir(src,L))
 
 						src.icon_state = "[icon_prefix]handspider-flip"
 						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)

@@ -101,7 +101,7 @@
 					popUp()
 				else
 					var/atom/target = pick(target_list)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					lastfired = world.time //Setting this here to prevent immediate firing when enabled
 					if (src.enabled)
 						//if (isliving(target))
@@ -127,6 +127,8 @@
 			continue
 		if (!istype(C.loc.loc,A))
 			continue
+		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+			continue //optional access whitelist
 		. += C
 
 	if (istype(A, /area/station/turret_protected))

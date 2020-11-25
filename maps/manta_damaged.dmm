@@ -1051,11 +1051,11 @@
 /obj/machinery/disposal/mail/small{
 	dir = 1;
 	icon_state = "mailchute";
-	mail_tag = "Barman's room";
+	mail_tag = "Bartender's room";
 	mailgroup = "bar";
 	mailgroup2 = null;
 	message = "1";
-	name = "mail chute-'Barman's room'";
+	name = "mail chute-'Bartender's room'";
 	pixel_y = 24
 	},
 /obj/disposalpipe/trunk/mail{
@@ -18230,7 +18230,7 @@
 	pixel_y = -24
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -20330,7 +20330,7 @@
 /area/station/security/brig/genpop)
 "aSv" = (
 /obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "Barman's room"
+	mail_tag = "Bartender's room"
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
@@ -28623,7 +28623,7 @@
 "biP" = (
 /obj/stool/bar,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)

@@ -95,7 +95,7 @@
 			connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
-			occupant.set_loc(src.loc)
+			occupant.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -235,7 +235,7 @@
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
 
-		ghost.client.mob = src.occupant
+		ghost.mind.transfer_to(src.occupant)
 
 		if(src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
@@ -799,6 +799,13 @@
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()
+
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+		occupant = null
+		..()
+
 
 	proc/find_pods()
 		if (!islist(src.pods))

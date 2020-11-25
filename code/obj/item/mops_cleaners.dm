@@ -83,7 +83,7 @@ WET FLOOR SIGN
 			go(direction)
 
 	proc/go(var/direction)
-		src.dir = direction
+		src.set_dir(direction)
 		clean(direction)
 		for(var/i=0, i<10, i++)
 			var/turf/T = get_step(src.loc, direction)
@@ -98,7 +98,7 @@ WET FLOOR SIGN
 				else
 					src.set_loc(T)
 					clean(direction)
-					src.dir = direction
+					src.set_dir(direction)
 			sleep(0.2 SECONDS)
 		vanish()
 		return
@@ -501,7 +501,7 @@ WET FLOOR SIGN
 			choices += "Wipe down"
 			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 				choices += "Wring out"
-		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)))
+		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
 				choices += "Wet"
 

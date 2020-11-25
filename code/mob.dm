@@ -206,16 +206,7 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-//start of needed for timestop
-#if ASS_JAM
-	var/paused = FALSE
-	var/pausedbrute = 0
-	var/pausedburn = 0
-	var/pausedtox = 0
-	var/pausedoxy = 0
-	var/pausedbrain = 0
-#endif
-//end of needed for timestop
+
 	var/dir_locked = FALSE
 
 	var/list/mob_properties
@@ -255,6 +246,9 @@
 /mob/Move(a, b, flag)
 	if (src.buckled && src.buckled.anchored)
 		return
+
+	if (src.dir_locked)
+		b = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -992,12 +986,6 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
-#if ASS_JAM//pausing damage for timestop
-	if(src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
@@ -2831,6 +2819,15 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
+/mob/proc/add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma
+
+/mob/set_dir(var/new_dir)
+	if (!src.dir_locked)
+		..()
+		src.update_directional_lights()
+
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
@@ -2877,6 +2874,5 @@
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
-/mob/proc/add_karma(how_much)
-	src.mind?.add_karma(how_much)
-	// TODO add NPC karma
+/mob/proc/can_eat(var/atom/A)
+	return 1

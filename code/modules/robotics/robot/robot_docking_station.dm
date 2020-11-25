@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
@@ -26,6 +27,13 @@
 	src.create_reagents(500)
 	reagents.add_reagent("fuel", 250)
 	src.build_icon()
+
+/obj/machinery/recharge_station/disposing()
+	if(occupant)
+		occupant.set_loc(get_turf(src.loc))
+		occupant = null
+	..()
+
 
 /obj/machinery/recharge_station/process()
 	if (!(src.status & BROKEN))

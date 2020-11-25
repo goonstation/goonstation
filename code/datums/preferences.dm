@@ -50,6 +50,7 @@ datum/preferences
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
+	var/PDAcolor = "#6F7961"
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -232,11 +233,11 @@ datum/preferences
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor"=null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
 								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
 								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
@@ -611,6 +612,19 @@ $(function() {
 		</th>
 		<td colspan="2">
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
+		</td>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["PDAcolor"])
+			rebuild_data["PDAcolor"] = 0
+			data_cache["PDAcolor"] = {"
+	<tr>
+		<th>
+			PDA Backlight<span class="info-thing" title="Your character's default PDA background color.">?</span>
+		</th>
+		<td>
+			<a href='[pref_link]PDAcolor=input'>&#9998;</a>
+			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
 		</td>
 	</tr>"}
 		LAGCHECK(80)
@@ -1709,6 +1723,10 @@ $(function() {
 			src.use_azerty = !src.use_azerty
 			src.keybind_prefs_updated(user.client)
 
+		if (link_tags["PDAcolor"])
+			rebuild_data["PDAcolor"] = 1
+			src.PDAcolor = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
@@ -1964,6 +1982,7 @@ $(function() {
 			tooltip_option = TOOLTIP_ALWAYS
 			tgui_fancy = TRUE
 			tgui_lock = FALSE
+			PDAcolor = "#6F7961"
 			if (!force_random_names)
 				be_random_name = 0
 			else

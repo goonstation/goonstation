@@ -418,7 +418,9 @@ proc/find_ghost_by_key(var/find_key)
 		connected?.scanner = null
 		connected = null
 		pods = null
-		occupant = null
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	MouseDrop_T(mob/living/target, mob/user)

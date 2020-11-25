@@ -28,7 +28,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		for (var/client/C in clients)
 			C.sound_playing[ admin_sound_channel ][1] = vol
 			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN )
+			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")

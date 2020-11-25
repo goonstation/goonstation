@@ -108,13 +108,15 @@
 		if (!isturf(T))
 			return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
-		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("n_radiation", (rad_strength)*10, 3)
-			if (prob(mutate_prob) && M.bioHolder)
-				if (prob(bad_mut_prob))
-					M.bioHolder.RandomEffect("bad")
-				else
-					M.bioHolder.RandomEffect("good")
+		for (var/atom/A in T.contents)
+			A.changeStatus("n_radiation", (rad_strength)*10, 3)
+			if(iscarbon(A))
+				var/mob/living/carbon/M = A
+				if (prob(mutate_prob) && M.bioHolder)
+					if (prob(bad_mut_prob))
+						M.bioHolder.RandomEffect("bad")
+					else
+						M.bioHolder.RandomEffect("good")
 
 
 // Oldest version of event - just unavoidably puts radiation on everyone

@@ -121,7 +121,7 @@
 							if (correct_path)
 								F["[base].TURF.tag"] >> Q.tag
 								if (!Q.dir)
-									Q.dir = SOUTH
+									Q.set_dir(SOUTH)
 								new /area/adventure(Q)
 								blink(Q)
 							workgroup_curr++

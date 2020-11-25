@@ -218,7 +218,7 @@ As per captain, except:
 * Cuffs:
 	* H280, S100, B75
 
-## Barman
+## Bartender
 
 * Base
 	* Luminosity: H0, S0, B100, O25

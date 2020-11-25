@@ -509,7 +509,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = null
+	M.sprint_particle.set_dir(null)
 	if (M.sprint_particle.icon_state == "sprint_cloud")
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
@@ -526,7 +526,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_small")
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
@@ -542,7 +542,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
@@ -946,12 +946,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/turned
 
 	if (isnum(dir) && dir > 0)
-		A.dir = WEST
+		A.set_dir(WEST)
 		turndir = 90
 		turned = matrix(A.transform, 90, MATRIX_ROTATE)
 
 	else
-		A.dir = EAST
+		A.set_dir(EAST)
 		turndir = -90
 		turned = matrix(A.transform, -90, MATRIX_ROTATE)
 
@@ -1273,7 +1273,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		. = ..()
 		src.icon = T.icon
 		src.icon_state = T.icon_state
-		src.dir = T.dir
+		src.set_dir(T.dir)
 		src.color = T.color
 		src.layer = T.layer - 1
 		src.plane = T.plane

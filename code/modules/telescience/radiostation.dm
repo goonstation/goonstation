@@ -281,6 +281,8 @@
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
+ABSTRACT_TYPE(/obj/item/record/random)
+
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
 	record_name = "adventure track #1"
@@ -392,6 +394,42 @@
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
+
+ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
+/obj/item/record/random/chronoquest
+	New()
+		. = ..()
+		src.desc += {" Created by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+
+/obj/item/record/random/chronoquest/waystations
+	record_name = "Waystations"
+	name = "record - \"Waystations\""
+	song = "sound/radio_station/waystations.ogg"
+
+/obj/item/record/random/chronoquest/planets
+	record_name = "Planets"
+	name = "record - \"Planets\""
+	song = "sound/radio_station/planets.ogg"
+
+/obj/item/record/random/chronoquest/oh_no_evil_star
+	record_name = "Oh No Evil Star"
+	name = "record - \"Oh No Evil Star\""
+	song = "sound/radio_station/oh_no_evil_star.ogg"
+
+/obj/item/record/random/chronoquest/cloudskymanguy
+	record_name = "Cloudskymanguy"
+	name = "record - \"Cloudskymanguy\""
+	song = "sound/radio_station/cloudskymanguy.ogg"
+
+/obj/item/record/random/chronoquest/black_wing_interface
+	record_name = "Black Wing Interface"
+	name = "record - \"Black Wing Interface\""
+	song = "sound/radio_station/black_wing_interface.ogg"
+
+/obj/item/record/random/chronoquest/riverdancer
+	name = "record - \"Riverdancer\""
+	record_name = "Riverdancer"
+	song = "sound/radio_station/riverdancer.ogg"
 
 /obj/item/record/random/key_lime
 	name = "record - \"key_lime #1\""
@@ -513,12 +551,24 @@
 	/obj/item/record/november,
 	/obj/item/record/december)
 
+/obj/item/storage/box/record/radio/chronoquest
+	name = "\improper Chronoquest record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records made by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+	spawn_contents = list(
+		/obj/item/record/random/chronoquest/waystations,
+		/obj/item/record/random/chronoquest/planets,
+		/obj/item/record/random/chronoquest/oh_no_evil_star,
+		/obj/item/record/random/chronoquest/cloudskymanguy,
+		/obj/item/record/random/chronoquest/black_wing_interface,
+		/obj/item/record/random/chronoquest/riverdancer)
+
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
 /obj/item/storage/box/record/radio/host/New()
 	..()
-	var/list/possibilities = childrentypesof(/obj/item/record/random)
+	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
+	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
 	for (var/i = 1, i < 8, i++)
 		var/obj/item/record/R = pick(possibilities)
 		new R(src)

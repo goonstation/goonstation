@@ -795,6 +795,12 @@ datum
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 			return current_reagent && current_reagent.volume >= amount
 
+		proc/has_active_reaction(var/reaction_id, var/amount=0)
+			for(var/datum/chemical_reaction/C in src.active_reactions)
+				if(C.id == reaction_id)
+					return C && C.result_amount >= amount
+			return FALSE
+
 		proc/get_reagent(var/reagent_id)
 			return reagent_list[reagent_id]
 

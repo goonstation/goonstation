@@ -4,7 +4,7 @@
 
 
 /datum/reagents/fluid_group
-	var/datum/fluid_group/my_group = 0
+	var/datum/fluid_group/my_group = null
 	var/last_reaction_loc = 0
 	var/skip_next_update = 0
 	covered_turf()
@@ -91,7 +91,7 @@
 	var/updating = 0 //already updating? block another loop from being started
 
 
-	var/datum/reagents/fluid_group/reagents = 0
+	var/datum/reagents/fluid_group/reagents = null
 	var/contained_amt = 0 //total reagent amt including all members
 	var/amt_per_tile = 0 //Don't pull from this value for group calculations without updating it first
 	var/required_to_spread = 30
@@ -137,8 +137,8 @@
 
 		members = 0
 
-		reagents.my_group = 0
-		reagents = 0
+		reagents.my_group = null
+		reagents = null
 
 		spread_member = 0
 		updating = 0
@@ -452,7 +452,7 @@
 
 		LAGCHECK(LAG_HIGH)
 
-		if (src.last_contained_amt == src.contained_amt && src.members.len == src.last_members_amt && !force)
+		if (src.last_contained_amt == src.contained_amt && length(src.members) == src.last_members_amt && !force)
 			src.updating = 0
 			return 1
 
@@ -465,7 +465,7 @@
 		LAGCHECK(LAG_MED)
 
 		var/datum/color/last_color = src.average_color
-		src.average_color = src.reagents.get_average_color()
+		src.average_color = src.reagents?.get_average_color()
 		var/color_dif = 0
 		if (!last_color)
 			color_dif = 999
@@ -473,7 +473,7 @@
 			color_dif = abs(average_color.r - last_color.r) + abs(average_color.g - last_color.g) + abs(average_color.b - last_color.b)
 		var/color_changed = (color_dif > 10)
 
-		if (my_depth_level == last_depth_level && !color_changed && src.members.len == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
+		if (my_depth_level == last_depth_level && !color_changed && length(src.members) == src.last_members_amt) //saves cycles for stuff like an ocean flooding into a pretty-much-aready-filled room
 			src.updating = 0
 			return 1
 
@@ -482,10 +482,10 @@
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
 
-		src.master_reagent_name = src.reagents.get_master_reagent_name()
-		src.master_reagent_id = src.reagents.get_master_reagent_id()
+		src.master_reagent_name = src.reagents?.get_master_reagent_name()
+		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
-		var/master_opacity = !drains_floor && reagents.get_master_reagent_gas_opaque()
+		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
 
 		var/depth_changed = 0 //force icon update later in the proc if fluid member depth changed
 		var/last_icon = 0
@@ -645,7 +645,7 @@
 			src.update_loop()
 			return src.avg_viscosity
 
-		if (src.members[1] != drain_source)
+		if (length(members) && src.members[1] != drain_source)
 			if (src.members.len <= 30)
 				var/list/L = drain_source.get_connected_fluids()
 				if (L.len == members.len)
@@ -654,7 +654,7 @@
 		var/list/fluids_removed = list()
 		var/fluids_removed_avg_viscosity = 0
 
-		for (var/i = members.len, i > 0, i--)
+		for (var/i = length(members), i > 0, i--)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
 			if (i > members.len) continue

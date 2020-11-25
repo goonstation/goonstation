@@ -64,12 +64,12 @@
 				input_y /= input_magnitude
 				input_dir = vector_to_dir(input_x,input_y)
 
-			owner.dir = input_dir
+			owner.set_dir(input_dir)
 			owner.facing = input_dir
 
 			if (input_magnitude)
 				if (input_dir & (input_dir-1))
-					owner.dir = NORTH
+					owner.set_dir(NORTH)
 					owner.transform = turn(M,arctan(input_y,input_x))
 				else
 					owner.transform = null
@@ -79,8 +79,8 @@
 				user.attempt_move()
 
 
-	update_owner_dir(var/atom/movable/ship) //after move, update ddir
-		owner.dir = last_dir
+	update_owner_dir(var/atom/movable/ship) //after move, update dir
+		owner.set_dir(last_dir)
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
@@ -114,9 +114,11 @@
 
 				//normalize and force speed cap
 				velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
-				var/vel_max = velocity_max + max(owner.speed,0)
+				var/vel_max = velocity_max
 				if (!input_x && !input_y)
 					vel_max = velocity_max_no_input
+
+				vel_max /= (owner.speed ? owner.speed : 1)
 
 				if (velocity_magnitude > vel_max)
 					velocity_x /= velocity_magnitude

@@ -48,6 +48,7 @@
 		F["[profileNum]_fartsound"] << AH.fartsound
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
+		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -201,6 +202,7 @@
 		F["[profileNum]_fartsound"] >> AH.fartsound
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
+		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -285,6 +287,9 @@
 			AH.screamsound = "male"
 		if (!AH.voicetype)
 			AH.voicetype = RANDOM_HUMAN_VOICE
+
+		if(!is_valid_color_string(src.PDAcolor)) //how?
+			src.PDAcolor = "#6F7961"
 
 		if (!istext(src.hud_style))
 			src.hud_style = "New"

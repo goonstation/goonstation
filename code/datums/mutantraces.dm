@@ -1183,7 +1183,7 @@
 							src.mob.pixel_x+= 1
 							sleep(0.1 SECONDS)
 						for (var/i = 0, i < 4, i++)
-							src.mob.dir = turn(src.mob.dir, -90)
+							src.mob.set_dir(turn(src.mob.dir, -90))
 							sleep(0.2 SECONDS)
 						for (var/i = 0, i < 4, i++)
 							src.mob.pixel_x-= 1
@@ -1704,6 +1704,19 @@
 			bleed(mob, 10, 3, T)
 			T.react_all_cleanables()
 
+/datum/mutantrace/chicken
+	name = "Chicken"
+	icon_state = "chicken_m"
+	allow_fat = 0
+	human_compatible = 1
+	jerk = 0
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (mob.emote_check(voluntary, 50))
+					. = "<B>[mob]</B> BWAHCAWCKs!"
+					playsound(get_turf(mob), "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, mob.get_age_pitch())
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

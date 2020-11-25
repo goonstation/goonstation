@@ -273,7 +273,7 @@
 			return
 
 		if (!l_arm && howmany > 0)
-			if (holder?.mutantrace.l_limb_arm_type_mutantrace)
+			if (holder?.mutantrace?.l_limb_arm_type_mutantrace)
 				l_arm = new holder.mutantrace.l_limb_arm_type_mutantrace(holder)
 			else
 				l_arm = new /obj/item/parts/human_parts/arm/left(holder)
@@ -285,7 +285,7 @@
 			howmany--
 
 		if (!r_arm && howmany > 0)
-			if (holder?.mutantrace.r_limb_arm_type_mutantrace)
+			if (holder?.mutantrace?.r_limb_arm_type_mutantrace)
 				r_arm = new holder.mutantrace.r_limb_arm_type_mutantrace(holder)
 			else
 				r_arm = new /obj/item/parts/human_parts/arm/right(holder)
@@ -297,7 +297,7 @@
 			howmany--
 
 		if (!l_leg && howmany > 0)
-			if (holder?.mutantrace.l_limb_leg_type_mutantrace)
+			if (holder?.mutantrace?.l_limb_leg_type_mutantrace)
 				l_leg = new holder.mutantrace.l_limb_leg_type_mutantrace(holder)
 			else
 				l_leg = new /obj/item/parts/human_parts/leg/left(holder)
@@ -308,7 +308,7 @@
 			howmany--
 
 		if (!r_leg && howmany > 0)
-			if (holder?.mutantrace.r_limb_leg_type_mutantrace)
+			if (holder?.mutantrace?.r_limb_leg_type_mutantrace)
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
@@ -931,10 +931,7 @@
 	src.throw_mode_off()
 	if (src.stat)
 		return
-#if ASS_JAM //no throwing while in timestop
-	if (paused)
-		return
-#endif
+
 
 	//MBC : removing this because it felt bad and it wasn't *too* exploitable. still does click delay on the end of a throw anyway.
 	//if (usr.next_click > world.time)
@@ -956,7 +953,7 @@
 	u_equip(I)
 
 	if (get_dist(src, target) > 0)
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
 	if (I)
@@ -997,11 +994,9 @@
 		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
-#if ASS_JAM
-			explosion_new(I,get_turf(I),20,1)
-#else
+
 			playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
-#endif
+
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
@@ -1227,10 +1222,7 @@
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
 		return 1
-#if ASS_JAM //no fucking with inventory in timestop
-	if (paused)
-		return 1
-#endif
+
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
 		return 1*/
 

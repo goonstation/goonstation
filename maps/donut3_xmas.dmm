@@ -2113,6 +2113,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mopbucket,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "akz" = (
@@ -4028,6 +4029,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/fitness)
+"aPo" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "aPw" = (
 /obj/cable{
 	d1 = 1;
@@ -4962,8 +4968,8 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/obj/machinery/fluid_canister,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/fluid_canister,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "beo" = (
@@ -8943,6 +8949,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 1
 	},
@@ -10637,6 +10644,12 @@
 /obj/decal/garland,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
+"cNg" = (
+/obj/machinery/light/incandescent/netural,
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "cNh" = (
 /obj/cable{
 	d1 = 4;
@@ -11495,7 +11508,10 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/mopbucket,
+/obj/machinery/disposal/mail/small/autoname/janitor/east,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cYC" = (
@@ -39442,7 +39458,7 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -42532,6 +42548,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "mrI" = (
@@ -43460,13 +43479,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"mFB" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "mFE" = (
 /obj/table/auto,
 /obj/item/football,
@@ -68635,6 +68647,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "tRW" = (
@@ -70429,10 +70444,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/machinery/disposal/mail/small/autoname/janitor/west,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
+/obj/machinery/vending/janitor,
 /turf/simulated/floor/black,
 /area/station/janitor/office)
 "uwt" = (
@@ -76635,7 +76647,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "wjo" = (
@@ -120008,7 +120020,7 @@ nvr
 qOI
 eHe
 wjj
-mFB
+ogT
 ogT
 dnh
 mSM
@@ -131761,7 +131773,7 @@ kHx
 mke
 mke
 mke
-kHx
+aPo
 wqJ
 vHl
 amI
@@ -132063,7 +132075,7 @@ rGc
 mru
 oqV
 eQI
-xNi
+cNg
 wqJ
 yjy
 yjy

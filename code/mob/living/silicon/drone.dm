@@ -185,7 +185,7 @@
 			return src.next_click - world.time
 
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))

@@ -166,7 +166,7 @@
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(F?.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(build_target)
 				has_started = 1
 
@@ -239,7 +239,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 
@@ -297,7 +297,7 @@
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target) // wooo
 	// tick up a fail counter so we don't try to open something we can't forever
 	fails++
@@ -360,7 +360,7 @@
 			// drop whatever we're holding
 			F.drop_item()
 			sleep(0.1 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target)
 			sleep(0.2 SECONDS)
 			if(F.equipped() == container_target)
@@ -470,7 +470,7 @@
 				F.empty_hand(1) // drop whatever we might be holding just in case
 				sleep(0.1 SECONDS)
 				// grab the item
-				F.dir = get_dir(F, harvest_target)
+				F.set_dir(get_dir(F, harvest_target))
 				F.hand_attack(harvest_target)
 			// if we have the item, equip it into our horrifying death chamber
 			if(F.is_in_hands(harvest_target))
@@ -523,7 +523,7 @@
 			if(owncritter.active_hand != 3) // stunner
 				owncritter.set_hand(3)
 				sleep(0.2 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
@@ -540,7 +540,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc?.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
@@ -592,7 +592,7 @@
 				owncritter.a_intent = INTENT_DISARM
 				owncritter.hud.update_intent()
 				sleep(0.1 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
@@ -668,7 +668,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 
