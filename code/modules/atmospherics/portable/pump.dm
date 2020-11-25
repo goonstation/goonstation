@@ -2,7 +2,8 @@
 	name = "Portable Air Pump"
 
 	icon = 'icons/obj/atmospherics/atmos.dmi'
-	icon_state = "psiphon:0"
+	icon_state = "psiphon-off"
+	dir = NORTH //so it spawns with the fan side showing
 	density = 1
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
@@ -15,9 +16,17 @@
 
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	if(on)
-		icon_state = "psiphon:1"
+		if (holding)
+			icon_state = "psiphon-T-on"
+		else
+			icon_state = "psiphon-on"
+		//animate(src, pixel_x =)
 	else
-		icon_state = "psiphon:0"
+		if (holding)
+			icon_state = "psiphon-T-off"
+		else
+			icon_state = "psiphon-off"
+		pixel_x = 0
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
