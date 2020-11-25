@@ -1,5 +1,9 @@
 
 (t)wed nov 25 20
+(u)RSG250
+(p)2579
+(e)🆕|feature
+(+)you can now make shoes at the Nanofabricator.
 (u)BenLubar
 (p)2818
 (e)🆕|feature
