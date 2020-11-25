@@ -1543,7 +1543,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
 
 		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.oxyloss, oxygenAmount)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
 			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
 				endCount += timePassed
 			else
@@ -1568,7 +1568,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
 
 		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.oxyloss)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation())
 			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
 				endCount += timePassed
 			else

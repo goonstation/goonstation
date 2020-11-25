@@ -180,7 +180,7 @@ datum/pathogeneffects/benevolent/oxygenconversion
 		if (!origin.symptomatic)
 			return
 		var/mob/living/carbon/C = M
-		if (C.oxyloss)
+		if (C.get_oxygen_deprivation())
 			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
 
 datum/pathogeneffects/benevolent/oxygenstorage
@@ -198,7 +198,7 @@ datum/pathogeneffects/benevolent/oxygenstorage
 			origin.symptom_data["oxygen_storage"] = 0
 
 		var/mob/living/carbon/C = M
-		if (C.oxyloss)
+		if (C.get_oxygen_deprivation())
 			if(origin.symptom_data["oxygen_storage"] > 10)
 				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
 				origin.symptom_data["oxygen_storage"] = 0
