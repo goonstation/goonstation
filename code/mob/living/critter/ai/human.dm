@@ -243,6 +243,9 @@
 	name = "chicken man"
 	real_name = "chicken man"
 	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
 	New()
 		. = ..()
 		src.bioHolder.AddEffect("chicken", 0, 0, 1)
