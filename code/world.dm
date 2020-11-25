@@ -780,12 +780,7 @@ var/f_color_selector_handler/F_Color_Selector
 	if (config?.server_name)
 		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
-		s += "<b>Construction Mode</b><br>"
-	else
-		s += "<b>[station_name()]</b><br>"
-
-	s += "The classic SS13 experience. <a href=\"https://bit.ly/3pVRuTT\">Discord</a><br>"
+	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
 
 	var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 	var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
