@@ -1,4 +1,9 @@
 
+(t)wed nov 25 20
+(u)BatElite
+(p)2816
+(e)🎨|sprites
+(+)The pyro class fire axe has new sprites, so you now look menacing while you chop up the crew!
 (t)tue nov 24 20
 (u)Kubius
 (p)2823
