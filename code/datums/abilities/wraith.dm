@@ -127,7 +127,6 @@
 		if (!M && error)
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
-			owner.playsound_local(owner.loc, "soulsucc[rand(10, 50)].ogg", 50, 1)
 		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 		//Make the corpse all grody and skeleton-y
@@ -142,13 +141,13 @@
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
+		playsound(M, "sound/voice/wraith/soulsucc[rand(1, 2)].ogg", 75, 0)
 		for (var/mob/living/V in viewers(7, holder.owner))
 			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
-			owner.playsound_local(owner.loc, "animate3.ogg", 50, 1)
 		return 0
 		doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
-			if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
-				return
+		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
+			return
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
@@ -185,17 +184,16 @@
 			return 1
 
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		usr.playsound_local(usr.loc, "sound/voice/wraith/possesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-			owner.playsound_local(owner.loc, "possesobject.ogg", 50, 1)
-
 		SPAWN_DBG (450)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
 		SPAWN_DBG (600) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/leaveoject.ogg", 50, 0)
 				O.death(0)
-				owner.playsound_local(owner.loc, "leaveoject.ogg", 50, 1)
 		return 0
 
 
@@ -205,8 +203,8 @@
 	desc = "Take control of an intact corpse as a powerful Revenant! You will not be able to absorb this corpse later. As a revenant, you gain increased point generation, but your revenant abilities cost much more points than normal."
 	targeted = 1
 	target_anything = 1
-	pointCost = 1000
-	cooldown = 5000 //5 minutes
+	pointCost = 1 //1000 encause i forget
+	cooldown = 1 //5 minutes //5000 encause i forget
 
 	cast(atom/T)
 		if (..())
@@ -225,10 +223,10 @@
 
 		if (ishuman(T))
 			var/mob/wraith/W = holder.owner
-			return W.makeRevenant(T)
-				owner.playsound_local(owner.loc, "animate[rand(1, 3)].ogg", 50, 1)
-
-			//return 0
+			. = W.makeRevenant(T)		//return 0
+			if(!.)
+				playsound(W.loc, "sound/voice/wraith/posses1.ogg", 85, 0)
+			return
 		else
 			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
 			return 1
@@ -268,6 +266,7 @@
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/staminadrain.ogg", 75, 0)
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
@@ -306,6 +305,7 @@
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
 				return 1
 			else
+				playsound(H, "sound/voice/wraith/wraithspook[rand(1, 3)]", 50, 0)
 				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
 				// T:stunned = max(max(T:weakened, T:stunned), 3)
 				H.delStatus("weakened")
@@ -313,7 +313,11 @@
 				H.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
-				if (pr/datum/targetable/1 SECOND)
+				if (prob(current_prob))
+					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
+					thrown += O
+					animate_float(O)
+		SPAWN_DBG(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -349,7 +353,7 @@
 			S.name = "[personname]'s skeleton"
 			S.health = 1
 			H.gib()
-			owner.playsound_local(owner.loc, "animate3.ogg", 50, 1)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/animate[rand(1, 3)].ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
@@ -397,7 +401,7 @@
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)
-				owner.playsound_local(owner.loc, "livingobject.ogg", 50, 1)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/livingobject.ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
@@ -416,6 +420,7 @@
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
+		playsound(W.loc, "sound/voice/wraith/mortalrealm.ogg", 100, 0)
 		return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -626,7 +631,7 @@
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 0)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -670,7 +675,7 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-			owner.playsound_local(owner.loc, "portalmake1.ogg", 50, 1)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/portalmake1.ogg", 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)
@@ -695,7 +700,7 @@
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
-		owner.playsound_local(owner.loc, "ghostrespawn.ogg", 50, 1)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
 		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")

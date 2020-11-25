@@ -152,6 +152,7 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		playsound(src.wraith, "sound/voice/wraith/posses2.ogg", 100, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
@@ -200,6 +201,7 @@
 
 		if (owner.health < -50)
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
+			playsound(src.wraith, "sound/voice/wraith/posses2.ogg", 100, 0)
 			owner.death(0) // todo: add custom death
 			return
 
