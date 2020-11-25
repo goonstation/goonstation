@@ -300,12 +300,12 @@
 		var/list/thrown = list()
 		var/current_prob = 100
 		if (ishuman(T))
+			playsound(T.loc, "sound/voice/wraith/wraithspook[rand(1, 3)]", 50, 0)
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
 				return 1
 			else
-				playsound(H, "sound/voice/wraith/wraithspook[rand(1, 3)]", 50, 0)
 				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
 				// T:stunned = max(max(T:weakened, T:stunned), 3)
 				H.delStatus("weakened")
@@ -420,7 +420,7 @@
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
-		playsound(W.loc, "sound/voice/wraith/mortalrealm.ogg", 100, 0)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/mortalrealm.ogg", 100, 0)
 		return W.haunt()
 
 /datum/targetable/wraithAbility/spook
