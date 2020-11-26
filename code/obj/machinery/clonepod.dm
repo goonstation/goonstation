@@ -237,6 +237,9 @@
 
 		ghost.mind.transfer_to(src.occupant)
 
+		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
+			src.occupant.client.set_layout(src.occupant.client.tg_layout)
+
 		if(src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
 			src.occupant.setStatus("maxhealth-", null, -health_penalty)
