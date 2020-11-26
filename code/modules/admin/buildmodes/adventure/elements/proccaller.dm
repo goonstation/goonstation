@@ -1,4 +1,4 @@
-/// Adventure puzzle thing - calls procs on a linked object (via .interesting)
+/// Adventure puzzle thing - calls set proc on a linked object (via .name or .interesting)
 /obj/adventurepuzzle/triggerable/targetable/proccall
 	name = "proccaller"
 	invisibility = 20
@@ -15,12 +15,13 @@
 
 	New(loc, var/to_set)
 		..()
-		spawn(10 SECONDS)
-			if (to_set) object_to_call = to_set
-			for (var/atom/A as() in get_turf(src))
-				if (src.object_to_call == A.name || src.object_to_call == A.interesting) // oh boo hoo, sue me for misuse of variables
-					object_to_call = A
-					break
+			if (to_set)
+				object_to_call = to_set
+			SPAWN_DBG(2 SECONDS) // let the world load
+				for (var/atom/A as() in get_turf(src))
+					if (src.object_to_call == A.name || src.object_to_call == A.interesting) // oh boo hoo, sue me for misuse of variables
+						object_to_call = A
+						break
 
 	trigger_actions()
 		return triggeracts
