@@ -1,4 +1,9 @@
 
+(t)thu nov 26 20
+(u)pali
+(p)2738
+(e)⚖📄|balance, tgui
+(*)When using packets to hack airlocks you now need to provide access_code. You can either guess it or read it from the wire panel.
 (t)wed nov 25 20
 (u)Kubius
 (p)2827
