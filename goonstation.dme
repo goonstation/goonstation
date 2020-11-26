@@ -607,6 +607,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\adventure\elements\load.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\portal.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\pressurepad.dm"
+#include "code\modules\admin\buildmodes\adventure\elements\proccaller.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\remote.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\save.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\spawner.dm"
