@@ -183,7 +183,6 @@
 		materiel_stock += new/datum/materiel/loadout/assault
 		materiel_stock += new/datum/materiel/loadout/heavy
 		materiel_stock += new/datum/materiel/loadout/grenadier
-		materiel_stock += new/datum/materiel/loadout/infiltrator
 		materiel_stock += new/datum/materiel/loadout/medic
 		materiel_stock += new/datum/materiel/loadout/firebrand
 		materiel_stock += new/datum/materiel/loadout/engineer
