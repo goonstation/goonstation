@@ -5,7 +5,7 @@
 	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
 	name = "Tank Storage Unit"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "dispenser"
+	icon_state = "dispenser-empty"
 	density = 1
 	var/o2tanks = 10
 	var/pltanks = 10
@@ -56,6 +56,7 @@
 /obj/machinery/dispenser/New()
 	..()
 	UnsubscribeProcess()
+	update_icon()
 
 /obj/machinery/dispenser/process()
 	return
@@ -63,6 +64,16 @@
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
+
+/obj/machinery/dispenser/proc/update_icon()
+	if (o2tanks > 0 && pltanks > 0)
+		icon_state = "dispenser-both"
+	else
+		icon_state = "dispenser-empty"
+		if (o2tanks > 0)
+			icon_state = "dispenser-oxygen"
+		if (pltanks > 0)
+			icon_state = "dispenser-plasma"
 
 /* INTERFACE */
 
@@ -97,3 +108,4 @@
 				usr.put_in_hand_or_eject(newtank)
 				src.o2tanks--
 			. = TRUE
+	update_icon()
