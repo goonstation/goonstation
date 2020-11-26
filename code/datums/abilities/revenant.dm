@@ -281,6 +281,7 @@
 	cooldown = 300
 
 	cast(atom/target)
+
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -314,7 +315,7 @@
 	desc = "Emit a shockwave, breaking nearby lights and walls, and stunning nearby humans for a short time."
 	icon_state = "shockwave"
 	targeted = 0
-	pointCost = 750
+	pointCost = 1 //750
 	cooldown = 350 // 35s
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
@@ -323,6 +324,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
+		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 27, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
