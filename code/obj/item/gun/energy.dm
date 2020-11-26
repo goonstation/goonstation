@@ -68,7 +68,7 @@
 	w_class = 4
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge/hundred
-	firemodes = list(/datum/firemode/own_proj/heavy_ion)
+	firemodes = list(new/datum/firemode/single(proj = new/datum/projectile/heavyion))
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(..(target, params, user, reach))
@@ -85,13 +85,14 @@
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 2)
 	muzzle_flash = "muzzle_flash_elec"
-	firemodes = list(/datum/firemode/own_proj/taser,\
-	                 /datum/firemode/own_proj/taser/burst)
+	firemodes = list(new/datum/firemode/single(name = "stun", proj = new/datum/projectile/energy_bolt),\
+	                 new/datum/firemode/triple(name = "burst-stun", proj = new/datum/projectile/energy_bolt))
 	update_icon()
 		if(src.loaded_magazine)
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/taser/burst))
+			var/datum/firemode/F = src.firemodes[src.firemode_index]
+			if (F.burst_count > 1)
 				src.icon_state = "taserburst[ratio]"
 			else
 				src.icon_state = "taser[ratio]"
@@ -107,8 +108,8 @@
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
-	firemodes = list(/datum/firemode/own_proj/taser/bouncy,\
-	                 /datum/firemode/own_proj/taser/burst/bouncy)
+	firemodes = list(new/datum/firemode/taser/single(name = "bouncy stun", proj = new/datum/projectile/energy_bolt/bouncy),\
+	                 new/datum/firemode/taser/triple(name = "bouncy burst-stun", proj = new/datum/projectile/energy_bolt/bouncy))
 
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
@@ -121,11 +122,11 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_laser"
-	firemodes = list(/datum/firemode/own_proj/laser)
+	firemodes = list(new/datum/firemode/single(name = "laser", proj = new/datum/projectile/laser))
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
-	firemodes = list(/datum/firemode/own_proj/laser/vr)
+	firemodes = list(new/datum/firemode/single(name = "xX-l4z0rZ-Xx", proj = new/datum/projectile/laser))
 
 	update_icon()
 		if(src.loaded_magazine)
@@ -146,7 +147,7 @@
 	uses_multiple_icon_states = 1
 	desc = "Wait, that's not a plastic toy..."
 	muzzle_flash = "muzzle_flash_laser"
-	firemodes = list(/datum/firemode/own_proj/laser)
+	firemodes = list(new/datum/firemode/single(name = "laser", proj = new/datum/projectile/laser))
 
 	update_icon()
 		..()
@@ -168,7 +169,7 @@
 	module_research = list("weapons" = 4, "energy" = 4)
 	muzzle_flash = "muzzle_flash_phaser"
 	ammo = new/obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/phaser)
+	firemodes = list(new/datum/firemode/single(name = "phaser", proj = new/datum/projectile/laser/light))
 
 	update_icon()
 		..()
@@ -198,7 +199,7 @@
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	muzzle_flash = null
-	firemodes = list(/datum/firemode/own_proj/radbow)
+	firemodes = list(new/datum/firemode/single(name = "irradiate", proj = new/datum/projectile/rad_bolt))
 
 	update_icon()
 		..()
@@ -225,8 +226,8 @@
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
-	firemodes = list(/datum/firemode/own_proj/taser,\
-	                 /datum/firemode/own_proj/laser)
+	firemodes = list(new/datum/firemode/single(name = "taser", proj = new/datum/projectile/energy_bolt),\
+	                 new/datum/firemode/single(name = "laser", proj = new/datum/projectile/laser))
 
 
 	update_icon()
@@ -234,11 +235,12 @@
 		if(src.loaded_magazine)
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/taser))
+			var/datum/firemode/F = src.firemodes[src.firemode_index]
+			if (F.name == "taser")
 				src.item_state = "egun"
 				src.icon_state = "energystun[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/laser))
+			else if (F.name == "laser")
 				src.item_state = "egun-kill"
 				src.icon_state = "energykill[ratio]"
 				muzzle_flash = "muzzle_flash_laser"
@@ -269,17 +271,18 @@
 	two_handed = 1
 	spread_angle = 6
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/taser/burst/nt,\
-	                 /datum/firemode/own_proj/laser/burst/nt)
+	firemodes = list(new/datum/firemode/triple(name = "burst-taser", proj = new/datum/projectile/energy_bolt/ntburst),\
+	                 new/datum/firemode/triple(name = "burst-laser", proj = new/datum/projectile/laser/ntburst)
 
 	update_icon()
 		..()
 		if(src.loaded_magazine)
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/taser))
+			var/datum/firemode/F = src.firemodes[src.firemode_index]
+			if (F.name == "burst-taser")
 				src.icon_state = "ntstun[ratio]"
-			else if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/laser))
+			else if (F.name == "burst-laser")
 				src.icon_state = "ntlethal[ratio]"
 			else
 				src.icon_state = "ntneutral[ratio]"
@@ -303,8 +306,8 @@
 	can_dual_wield = 0
 	shoot_delay = 6
 	muzzle_flash = "muzzle_flash_elec"
-	firemodes = list(/datum/firemode/own_proj/taser/shotgun,\
-	                 /datum/firemode/own_proj/taser/shotgun/single)
+	firemodes = list(new/datum/firemode/single(name = "spread-taser", proj = new/datum/projectile/special/spreader/tasershotgunspread),\
+	                 new/datum/firemode/single(name = "taser", proj = new/datum/projectile/energy_bolt/tasershotgun))
 
 	update_icon()
 		..()
@@ -323,7 +326,7 @@
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	is_syndicate = 1
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/taser/horn)
+	firemodes = list(new/datum/firemode/single(name = "BWAAAAAMP", proj = new/datum/projectile/energy_bolt_v))
 
 	update_icon()
 		..()
@@ -348,7 +351,7 @@
 	ammo = /obj/item/ammo/power_cell/self_charging/slowcharge
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
-	firemodes = list(/datum/firemode/own_proj/crab)
+	firemodes = list(new/datum/firemode/single(name = "crab", proj = new/datum/projectile/claw))
 
 	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo))
@@ -367,9 +370,9 @@
 	desc = "Disruptor Blaster - Comes equipped with self-charging powercell."
 	m_amt = 4000
 	force = 6.0
-	firemodes = list(/datum/firemode/own_proj/disruptor,\
-	                 /datum/firemode/own_proj/disruptor/burst,\
-	                 /datum/firemode/own_proj/disruptor/super)
+	firemodes = list(new/datum/firemode/single(name = "disruptor", proj = new/datum/projectile/disruptor),\
+	                 new/datum/firemode/triple(name = "burst-disruptor", proj = new/datum/projectile/disruptor),\
+	                 new/datum/firemode/single(name = "super-disrupt", proj = new/datum/projectile/disruptor/high))
 
 	update_icon()
 		..()
@@ -391,9 +394,9 @@
 	force = 6.0
 	module_research = list("weapons" = 2, "energy" = 2, "miniaturization" = 3)
 	muzzle_flash = "muzzle_flash_wavep"
-	firemodes = list(/datum/firemode/own_proj/wave,\
-	                 /datum/firemode/own_proj/wave/transverse,\
-	                 /datum/firemode/own_proj/wave/emp)
+	firemodes = list(new/datum/firemode/single(name = "inverse", proj = new/datum/projectile/wavegun),\
+	                 new/datum/firemode/single(name = "transverse", proj = new/datum/projectile/wavegun/transverse),\
+	                 new/datum/firemode/single(name = "electromagnetoverse", proj = new/datum/projectile/wavegun/emp))
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
@@ -403,11 +406,12 @@
 		if (src.loaded_magazine)
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			if(istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/wave/transverse))
+			var/datum/firemode/F = src.firemodes[src.firemode_index]
+			if (F.name == "transverse")
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
 				muzzle_flash = "muzzle_flash_waveg"
-			else if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/wave/emp))
+			else if (F.name == "electromagnetoverse")
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
 				muzzle_flash = "muzzle_flash_waveb"
@@ -431,7 +435,7 @@
 	desc = "I think it stands for Banned For Griefing?"
 	module_research = list("weapons" = 25, "energy" = 25)
 	ammo = /obj/item/ammo/power_cell/high_power
-	firemodes = list(/datum/firemode/own_proj/bfg)
+	firemodes = list(new/datum/firemode/single(name = "obliterate", proj = new/datum/projectile/bfg))
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
@@ -458,7 +462,7 @@
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 	module_research = list("weapons" = 3, "energy" = 2, "science" = 10)
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/teleport)
+	firemodes = list(new/datum/firemode/single(name = "teleport", proj = new/datum/projectile/tele_bolt))
 
 	update_icon()
 		..()
@@ -572,7 +576,7 @@
 	module_research = list("weapons" = 1, "energy" = 5, "science" = 10)
 	muzzle_flash = "muzzle_flash_waveg"
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/ghost_gun)
+	firemodes = list(new/datum/firemode/single(name = "bust", proj = new/datum/projectile/energy_bolt_antighost))
 
 ///////////////////////////////////////Modular Blasters
 /obj/item/gun/energy/blaster_pistol
@@ -584,7 +588,7 @@
 	force = 5.0
 	mats = 0
 	ammo = new/obj/item/ammo/power_cell/self_charging/med_power
-	firemodes = list(/datum/firemode/own_proj/blaster)
+	firemodes = list(new/datum/firemode/single(name = "blast", proj = new/datum/projectile/laser/blaster))
 
 	/*
 	var/obj/item/gun_parts/emitter/emitter = null
@@ -649,8 +653,8 @@
 	force = 7.0
 	mats = 0
 	ammo = new/obj/item/ammo/power_cell/self_charging/med_power
-	firemodes = list(/datum/firemode/own_proj/blaster,\
-	                 /datum/firemode/own_proj/blaster/burst)
+	firemodes = list(new/datum/firemode/single(name = "blast", proj = new/datum/projectile/laser/blaster),\
+	                 new/datum/firemode/triple(name = "burst-blast", proj = new/datum/projectile/laser/blaster))
 
 	update_icon()
 		..()
@@ -672,7 +676,7 @@
 	w_class = 4
 	force = 15
 	ammo = new/obj/item/ammo/power_cell/self_charging/big
-	firemodes = list(/datum/firemode/own_proj/blaster/shotgun)
+	firemodes = list(new/datum/firemode/single(name = "shot-blast", proj = new/datum/projectile/special/spreader/uniform_burst/blaster))
 
 	New()
 		flags |= ONBACK
@@ -756,8 +760,8 @@
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/owl,\
-	                 /datum/firemode/own_proj/owl/er)
+	firemodes = list(new/datum/firemode/single(name = "owl", proj = new/datum/projectile/owl),\
+	                 new/datum/firemode/single(name = "owler", proj = new/datum/projectile/owl/owlate))
 
 	update_icon()
 		..()
@@ -774,7 +778,7 @@
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/owl)
+	firemodes = list(new/datum/firemode/owl)
 
 	update_icon()
 		..()
@@ -792,8 +796,8 @@
 	icon_state = "frog"
 	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
 	ammo = /obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
-	firemodes = list(/datum/firemode/own_proj/frog,\
-	                 /datum/firemode/own_proj/frog/out)
+	firemodes = list(new/datum/firemode/single(name = ":getin:", proj = new/datum/projectile/bullet/frog),\
+	                 new/datum/firemode/single(name = ":getout:", proj = new/datum/projectile/bullet/frog/getout))
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -803,7 +807,7 @@
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	ammo = new/obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/shrink)
+	firemodes = list(new/datum/firemode/single(name = "shrink", proj = new/datum/projectile/shrink_beam))
 
 	update_icon()
 		..()
@@ -814,7 +818,7 @@
 
 /obj/item/gun/energy/shrinkray/growray
 	name = "Grow ray"
-	firemodes = list(/datum/firemode/own_proj/shrink/grow)
+	firemodes = list(new/datum/firemode/single(name = "grow", proj = new/datum/projectile/shrink_beam/grow))
 
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
@@ -825,7 +829,7 @@
 	force = 0.0
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 	ammo = new/obj/item/ammo/power_cell/high_power
-	firemodes = list(/datum/firemode/own_proj/glitch)
+	firemodes = list(new/datum/firemode/single(name = "boutput(usr, \[src.firemodes\[src.firemode_index\].mode_name\])", proj = new/datum/projectile/glitch/gun))
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
@@ -843,8 +847,8 @@
 	force = 5.0
 	muzzle_flash = "muzzle_flash_plaser"
 	ammo = new/obj/item/ammo/power_cell/self_charging/big
-	firemodes = list(/datum/firemode/own_proj/laser/rifle,\
-	                 /datum/firemode/own_proj/laser/burst/rifle)
+	firemodes = list(new/datum/firemode/single(name = "laser", proj = new/datum/projectile/laser/pred),\
+	                 new/datum/firemode/triple(name = "burst-laser", proj = new/datum/projectile/laser/pred, refire = 4 DECI SECONDS))
 
 	update_icon()
 		..()
@@ -882,9 +886,9 @@
 	module_research = list("medicine" = 2, "science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10)
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
-	firemodes = list(/datum/firemode/own_proj/pickpocket/steal,\
-	                 /datum/firemode/own_proj/pickpocket/plant,\
-	                 /datum/firemode/own_proj/pickpocket/harass)
+	firemodes = list(new/datum/firemode/single(name = "steal", proj = new/datum/projectile/pickpocket/steal),\
+	                 new/datum/firemode/single(name = "plant", proj = new/datum/projectile/pickpocket/plant),\
+	                 new/datum/firemode/single(name = "harass", proj = new/datum/projectile/pickpocket/harass))
 
 	get_desc(dist)
 		..()
@@ -921,10 +925,10 @@
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/pickpocket/steal) && heldItem)
+		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
-		if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/pickpocket/plant) && !heldItem)
+		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/plant) && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -940,10 +944,10 @@
 		return ..(M, user)
 
 	shoot(var/target, var/start, var/mob/user)
-		if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/pickpocket/steal) && heldItem)
+		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
-		if (istype(src.firemodes[src.firemode_index], /datum/firemode/own_proj/pickpocket/plant) && !heldItem)
+		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/plant) && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -977,7 +981,7 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(/datum/firemode/own_proj/laser/alastor)
+	firemodes = list(new/datum/firemode/single(name = "laser", proj = new/datum/projectile/laser/alastor))
 
 	update_icon()
 		..()
@@ -1013,14 +1017,14 @@
 	muzzle_flash = "muzzle_flash_elec"
 	ammo = new/obj/item/ammo/power_cell/self_charging/lawbringer
 	firemode_index = "detain" // assoc'd list of assoc'd lists so the yell-a-mode thing works properly
-	firemodes = list("detain" = /datum/firemode/own_proj/lawbringer/detain,\
-	                 "execute" = /datum/firemode/own_proj/lawbringer/execute,\
-	                 "smokeshot" = /datum/firemode/own_proj/lawbringer/smokeshot,\
-	                 "hotshot" = /datum/firemode/own_proj/lawbringer/hotshot,\
-	                 "knockout" = /datum/firemode/own_proj/lawbringer/knockout,\
-	                 "bigshot" = /datum/firemode/own_proj/lawbringer/bigshot,\
-	                 "clownshot" = /datum/firemode/own_proj/lawbringer/clownshot,\
-	                 "pulse" = /datum/firemode/own_proj/lawbringer/pulse)
+	firemodes = list("detain" = new/datum/firemode/lawbringer/detain,\
+	                 "execute" = new/datum/firemode/lawbringer/execute,\
+	                 "smokeshot" = new/datum/firemode/lawbringer/smokeshot,\
+	                 "hotshot" = new/datum/firemode/lawbringer/hotshot,\
+	                 "knockout" = new/datum/firemode/lawbringer/knockout,\
+	                 "bigshot" = new/datum/firemode/lawbringer/bigshot,\
+	                 "clownshot" = new/datum/firemode/lawbringer/clownshot,\
+	                 "pulse" = new/datum/firemode/lawbringer/pulse)
 
 	New(var/mob/M)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
@@ -1278,7 +1282,7 @@
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_bluezap"
 	ammo = /obj/item/ammo/power_cell/high_power //300 PU
-	firemodes = list(/datum/firemode/own_proj/lawbringer/pulse)
+	firemodes = list(new/datum/firemode/lawbringer/pulse)
 
 	update_icon()
 		..()
@@ -1305,7 +1309,7 @@
 	silenced = 1
 	custom_cell_max_capacity = 100
 	module_research = list("science" = 2, "weapons" = 2, "energy" = 2, "miniaturization" = 10, "hydroponics" = 10) //deprecated in current code
-	firemodes = list(/datum/firemode/own_proj/wasp)
+	firemodes = list(new/datum/firemode/single(name = "wasp", proj = new/datum/projectile/special/spreader/quadwasp))
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
@@ -1319,4 +1323,4 @@
 	two_handed = 1
 	can_dual_wield = 0
 	ammo = /obj/item/ammo/power_cell/self_charging/howitzer
-	firemodes = list(/datum/firemode/own_proj/plasma_howitzer)
+	firemodes = list(new/datum/firemode/single(name = "one-shot", proj = new/datum/projectile/special/howitzer))

@@ -9,7 +9,6 @@
 	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
-	var/art_projectiles = list()
 
 	New(var/loc, var/forceartiorigin)
 		..()
@@ -28,9 +27,16 @@
 			var/datum/artifact/A = src.artifact
 			src.loaded_magazine = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
 			src.ArtifactDevelopFault(15)
-			src.firemode_index = 1
 			src.set_firemode()
-			src.loaded_magazine.max_charge = max(src.loaded_magazine.max_charge, src.current_projectile.cost * src.firemodes[1]["burst_count"])
+			var/batt_mult = 1
+			var/proj_cost = 1
+			/// Ensures it'll be able to fire at least one full burst of its most expensive projectile
+			for(var/datum/firemode/AFM in src.firemodes)
+				if(batt_mult < AFM.burst_count)
+				batt_mult = AFM.burst_count
+				if(proj_cost < AFM.projectile.cost)
+				proj_cost = AFM.projectile.cost
+			src.loaded_magazine.max_charge = max(src.loaded_magazine.max_charge, proj_cost * batt_mult)
 
 
 		src.setItemSpecial(null)
@@ -51,17 +57,22 @@
 			..()
 
 	set_firemode(mob/user)
+		var/curr_fm = src.firemode_index
 		src.firemode_index = rand(1, src.firemodes.len)
 		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
 			src.firemode_index = 1
-		src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
-		src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
-		src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
-		src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
-		src.current_projectile = src.firemodes[src.firemode_index]["projectile"]
-		var/datum/artifact/A = src.artifact
-		if(A.activated && user)
-			boutput(user, "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>")
+		var/datum/firemode/FM = src.firemodes[src.firemode_index]
+		if(curr_fm == src.firemode_index)
+			FM.switch_to_firemode(user, mode_changed = 0)
+			return
+		else
+			src.shoot_delay = FM.shoot_delay
+			src.burst_count = FM.burst_count
+			src.refire_delay = FM.refire_delay
+			src.spread_angle = FM.spread_angle
+			FM.switch_to_firemode(user)
+			if(istype(FM.projectile, /datum/projectile))
+				src.current_projectile = new FM.projectile
 
 	process_ammo(var/mob/user)
 		if(isrobot(user))
@@ -103,36 +114,14 @@
 	var/integrity = 100
 	var/integrity_loss = 5
 	var/list/artifact_firemodes = list()
-	var/list/artifact_bullets = list()
-	var/datum/projectile/artifact/bullet = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	module_research = list("weapons" = 8, "energy" = 8)
 	module_research_insight = 3
-#warn UNFUCK IT
 	New()
 		..()
 		var/bullet_num = rand(1,3)
-		src.artifact_bullets.len = bullet_num
-		src.artifact_firemodes.len = bullet_num
 		for(var/i in 1 to bullet_num)
-			var/burst_count = rand(1, 3)
-			var/refire_delay = rand(0.1, 10)
-			var/shoot_delay = rand(0.1, 10)
-			var/spread_angle = rand(0, 30)
-			var/number_mult = rand(2, 20)
-			var/mode_name = list(" lights", " things", " uncanny feelings")
-
-			var/datum/projectile/artifact/artbullet = new/datum/projectile/artifact
-			artbullet = new/datum/projectile/artifact
-			artbullet.randomise()
-			// artifact tweak buff, people said guns were useless compared to their cells
-			// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
-			artbullet.power = rand(15,35) / burst_count // randomise puts it between 2 and 50, let's make it less variable
-			artbullet.dissipation_rate = rand(1,artbullet.power)
-			artbullet.cost = rand(35,100) / burst_count // randomise puts it at 50-150
-			src.artifact_firemodes[i] += list("name" = "[burst_count * number_mult][pick(mode_name)]", "burst_count" = burst_count, "refire_delay" = refire_delay, "shoot_delay" = shoot_delay, "spread_angle" = spread_angle, "projectile" = artbullet)
-
-
+			src.artifact_firemodes += new/datum/firemode/artgun
 		integrity = rand(50, 100)
 		integrity_loss = rand(1, 3) // was rand(1,7)
 		react_xray[3] = integrity

@@ -689,14 +689,19 @@
 /obj/item/ammo/bullets/internal/slamgun
 	sname = "Metal Pipe"
 	name = "Metal Pipe"
-	icon_state = "357-2"
 	amount_left = 0
 	max_amount = 1
 	ammo_type = null
 	caliber = CALIBER_SHOTGUN
-	icon_dynamic = 1
-	icon_short = "357"
-	icon_empty = "357-0"
+	mag_type = AMMO_MAGAZINE
+
+/obj/item/ammo/bullets/internal/implanter
+	sname = "Implant Holder"
+	name = "Implant Holder"
+	amount_left = 0
+	max_amount = 1
+	ammo_type = null
+	caliber = CALIBER_IMPLANT
 	mag_type = AMMO_MAGAZINE
 
 /obj/item/ammo/bullets/internal/flintlock

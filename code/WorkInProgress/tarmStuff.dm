@@ -17,7 +17,7 @@
 	var/datum/projectile/bullet/g11/small/smallproj = new
 	ammo = /obj/item/ammo/bullets/g11
 	accepted_mag = AMMO_MAGAZINE
-	firemodes = list(/datum/firemode/null_proj/triple)
+	firemodes = list(new/datum/firemode/triple)
 
 	New()
 		current_projectile = new/datum/projectile/bullet/g11
@@ -171,7 +171,7 @@
 	caliber = CALIBER_PISTOL
 	accepted_mag = AMMO_MAGAZINE
 	ammo = /obj/item/ammo/bullets/bullet_9mm
-	firemodes = list(/datum/firemode/null_proj/single)
+	firemodes = list(new/datum/firemode/single)
 
 	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
@@ -187,7 +187,7 @@
 	caliber = CALIBER_PISTOL
 	accepted_mag = AMMO_MAGAZINE
 	ammo = /obj/item/ammo/bullets/bullet_9mm/smg
-	firemodes = list(/datum/firemode/null_proj/single)
+	firemodes = list(new/datum/firemode/single)
 
 	New()
 		..()
@@ -281,7 +281,7 @@
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/gyrojet
 	accepted_mag = AMMO_MAGAZINE
-	firemodes = list(/datum/firemode/null_proj/single)
+	firemodes = list(new/datum/firemode/single)
 
 
 /obj/item/ammo/bullets/gyrojet
@@ -332,7 +332,7 @@
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/deagle50cal
 	accepted_mag = AMMO_MAGAZINE
-	firemodes = list(/datum/firemode/null_proj/single)
+	firemodes = list(new/datum/firemode/single)
 
 
 	//gimmick deagle that decapitates

@@ -220,7 +220,7 @@ proc/Create_Tommyname()
 	force = 0.0
 	desc = "It smells of cheap cologne and..."
 	ammo = /obj/item/ammo/power_cell/high_power
-	firemodes = list(/datum/firemode/own_proj/tommy)
+	firemodes = list(new/datum/firemode/single(name = "fully autommatic", proj = /datum/projectile/tommy))
 
 	update_icon()
 		return
@@ -408,7 +408,7 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
 	ammo = /obj/item/ammo/power_cell/high_power
-	firemodes = list(/datum/firemode/own_proj/trump)
+	firemodes = list(new/datum/firemode/single(name = "violate rule 5", proj = /datum/projectile/tommy))
 
 ////////////////////////////// Power machine
 /obj/machinery/power/debug_generator

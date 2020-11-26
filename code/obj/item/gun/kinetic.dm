@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	m_amt = 2000
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	muzzle_flash = "muzzle_flash"
-	firemodes = (/datum/firemode/null_proj/single)
+	firemodes = (new/datum/firemode/single)
 
 	// Ammo caliber defines
 	// see \_std\defines\item.dm for caliber defines!
@@ -164,8 +164,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	two_handed = 1
 	w_class = 4
-	firemodes = list(/datum/firemode/null_proj/minigun_lowspeed,\
-	                 /datum/firemode/null_proj/minigun_highspeed)
+	firemodes = list(new/datum/firemode/minigun_lowspeed,\
+	                 new/datum/firemode/minigun_highspeed)
 
 
 	setupProperties()
@@ -196,8 +196,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = null
 	ammo = /obj/item/ammo/bullets/internal/derringer
 	w_class = 4
-	firemodes = list(/datum/firemode/null_proj/single,\
-	                 /datum/firemode/null_proj/double)
+	firemodes = list(new/datum/firemode/single,\
+	                 new/datum/firemode/double)
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	accepted_mag = AMMO_PILE // cus who doesnt love to reload during a battle?
 	caliber = CALIBER_REVOLVER_OLDTIMEY
 	spread_angle = 1
-	firemodes = list(/datum/firemode/null_proj/single/singleaction)
+	firemodes = list(new/datum/firemode/single/singleaction)
 	ammo = /obj/item/ammo/bullets/internal/revolver/oldtimey
 
 	detective
@@ -293,8 +293,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/nine_mm_NATO
-	firemodes = list(/datum/firemode/null_proj/single,\
-	                 /datum/firemode/null_proj/triple/pistol)
+	firemodes = list(new/datum/firemode/single,\
+	                 new/datum/firemode/triple(refire = 0.7))
 
 	New()
 		if (prob(70))
@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	throw_speed = 1
 	throw_return = 1
 	var/prob_clonk = 0
-	firemodes = list(list("name" = "single-shot", "burst_count" = 1, "refire_delay" = 0.7 DECI SECONDS, "shoot_delay" = 0, "spread_angle" = 0, "projectile" = null))
+	firemodes = list(new/datum/firemode/single)
 
 
 	throw_begin(atom/target)
@@ -402,7 +402,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/internal/shotgun/rubber
-	firemodes = list(/datum/firemode/single/singleaction/shotgun)
+	firemodes = list(new/datum/firemode/single/singleaction/shotgun)
 
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
@@ -419,8 +419,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	gildable = 1
 	ammo = /obj/item/ammo/bullets/ak47
-	firemodes = list(/datum/firemode/null_proj/single,\
-	                 /datum/firemode/null_proj/triple)
+	firemodes = list(new/datum/firemode/single,\
+	                 new/datum/firemode/triple)
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
@@ -466,8 +466,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/failure_chance = 6
 	var/failured = 0
 	ammo = /obj/item/ammo/bullets/internal/zipgun
-	firemodes = list(/datum/firemode/null_proj/single,\
-	                 /datum/firemode/null_proj/double)
+	firemodes = list(new/datum/firemode/single,\
+	                 new/datum/firemode/double)
 #if ASS_JAM
 	New()
 		var/turf/T = get_turf(src)
@@ -696,8 +696,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	spread_angle = 0
 	ammo = /obj/item/ammo/bullets/assault_rifle
-	firemodes = list(/datum/firemode/null_proj/single,\
-	                 /datum/firemode/null_proj/triple)
+	firemodes = list(new/datum/firemode/single,\
+	                 new/datum/firemode/triple)
 
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
@@ -726,8 +726,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = 4
 	ammo = /obj/item/ammo/bullets/lmg
-	firemodes = list(/datum/firemode/null_proj/single/lmg,\
-	                 /datum/firemode/null_proj/auto)
+	firemodes = list(new/datum/firemode/single(spread = 12.5),\
+	                 new/datum/firemode/auto)
 
 	New()
 		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)

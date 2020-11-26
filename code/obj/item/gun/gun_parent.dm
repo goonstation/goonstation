@@ -105,7 +105,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	/// If not 0, the bullet will shoot off course by between 0 and this number degrees
 	var/spread_angle = 0
 	/// Firemode datum, changes how the gun fires
-	var/list/firemodes = list(/datum/firemode)
+	var/list/firemodes = list(new/datum/firemode)
 	/// Our current firemode's index
 	var/firemode_index = 1
 
@@ -120,11 +120,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
 		lastTooltipContent = .
 
-	New()
+	New(var/list/firemodes, var/list/loaded_magazine)
+		src.firemodes = firemodes
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
 		if(!islist(src.accepted_mag))
 			src.accepted_mag = list(src.accepted_mag)
+		src.loaded_magazine = loaded_magazine
 		if(!src.loaded_magazine)
 			src.loaded_magazine = new src.ammo
 			src.loaded_magazine.loaded_in = src
@@ -270,26 +272,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (user)
 		boutput(user, "<span class='alert'>No lock to break!</span>")
 	return FALSE
-#warn MAKETHISWORK
+
 /obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
 	if(initialize)
-		if(!src.firemodes.len) // Not spawned with a list of firemodes? Generate one from the current settings
-			src.firemodes = list(list("name" = "single shot", "burst_count" = src.burst_count, "refire_delay" = src.refire_delay, "shoot_delay" = src.shoot_delay, "projectile" = src.current_projectile))
+		if(!src.firemodes.len) // Not spawned with a list of firemodes? Default to singleshot
+			src.firemodes = list(new/datum/firemode/single)
+		for(var/datum/firemode/F in src.firemodes)
+			if(F.gunmaster = src)
 		src.firemode_index = 1
 	else
 		src.firemode_index += 1
 		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)
 			src.firemode_index = 1
-	src.shoot_delay = src.firemodes[src.firemode_index]["shoot_delay"]
-	src.burst_count = src.firemodes[src.firemode_index]["burst_count"]
-	src.refire_delay = src.firemodes[src.firemode_index]["refire_delay"]
-	src.spread_angle = src.firemodes[src.firemode_index]["spread_angle"]
-	. = "<span class='notice'>you set [src] to [src.firemodes[src.firemode_index]["name"]].</span>"
-	if(istype(src.firemodes[src.firemode_index]["projectile"], /datum/projectile))
-		src.current_projectile = new src.firemodes[src.firemode_index]["projectile"]
-		. += "<span class='notice'>Each shot will use [src.current_projectile.cost] ammo units.</span>"
-	if(user)
-		boutput(user, .)
+	var/datum/firemode/FM = src.firemodes[src.firemode_index]
+	src.shoot_delay = FM.shoot_delay
+	src.burst_count = FM.burst_count
+	src.refire_delay = FM.refire_delay
+	src.spread_angle = FM.spread_angle
+	if(istype(FM.projectile, /datum/projectile))
+		src.current_projectile = new FM.projectile
+	FM.switch_to_firemode(user)
 
 /obj/item/gun/attackby(obj/item/ammo/b as obj, mob/user as mob)
 	if(istype(b, /obj/item/ammo/))
