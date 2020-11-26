@@ -9,6 +9,7 @@
 	anchored = 1
 	target = null
 	var/procpath = ""
+	var/arg = null
 	var/object_to_call = null
 
 	var/static/list/triggeracts = list("Trigger" = "trigger")
@@ -29,5 +30,5 @@
 	trigger(act)
 		switch(act)
 			if ("trigger")
-				call(object_to_call, procpath)() //want arguments? code it yourself
+				call(object_to_call, procpath)(arg) //want more arguments? code it yourself
 				return
