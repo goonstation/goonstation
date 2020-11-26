@@ -277,11 +277,11 @@
 	special_screen_loc = "NORTH-1,WEST"
 	targeted = 1
 	target_anything = 1
-	pointCost = 500
+	pointCost = 1 //500
 	cooldown = 300
 
 	cast(atom/target)
-
+		playsound(target.loc, "sound/voice/wraith/livingobject.ogg", 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -324,7 +324,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 27, 0)
+		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 20, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -397,11 +397,12 @@
 	desc = "Empower your hand-to-hand attacks for a short time, causing additional damage and knockdown."
 	icon_state = "eviltouch"
 	targeted = 0
-	pointCost = 1000
+	pointCost = 1 //1000
 	cooldown = 300
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
+		playsound(usr.loc, "sound/voice/wraith/wraithtouch.ogg", 85, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -417,11 +418,12 @@
 	icon_state = "push"
 	targeted = 1
 	target_anything = 1
-	pointCost = 50
+	pointCost = 1 //50
 	cooldown = 150
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/wraithpush[rand(1, 2)].ogg", 90, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -455,11 +457,12 @@
 	desc = "Channel your telekinetic abilities at a human target, causing damage as long as you stand still. Casting any other spell will interrupt this!"
 	icon_state = "crush"
 	targeted = 1
-	pointCost = 2500
+	pointCost = 1 //2500
 	cooldown = 600
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/wraithfocus.ogg", 100, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
