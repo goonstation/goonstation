@@ -1906,6 +1906,26 @@
 			bleed(mob, 10, 3, T)
 			T.react_all_cleanables()
 
+/datum/mutantrace/chicken
+	name = "Chicken"
+	icon_state = "chicken_m"
+	allow_fat = 0
+	human_compatible = 1
+	jerk = 0
+	race_mutation = /datum/bioEffect/mutantrace/chicken
+	mutant_folder = 'icons/mob/chicken.dmi'
+	special_head = HEAD_CHICKEN
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
+	mutant_appearance_flags = (IS_MUTANT | HAS_PARTIAL_SKINTONE| HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_color_flags = (HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE)
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (mob.emote_check(voluntary, 50))
+					. = "<B>[mob]</B> BWAHCAWCKs!"
+					playsound(get_turf(mob), "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, mob.get_age_pitch())
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

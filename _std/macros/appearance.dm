@@ -12,6 +12,7 @@
 #define HEAD_SHELTER 10
 #define HEAD_VAMPZOMBIE 11
 #define HEAD_RELI 12
+#define HEAD_CHICKEN 13
 
 //tail defines
 #define TAIL_NONE 0
@@ -34,38 +35,40 @@
 #define HAS_SPECIAL_SKINTONE		(1<<2)
 /// Please dont tint my mob it looks weird
 #define HAS_NO_SKINTONE					(1<<3)
+/// Some parts are skintoned, some are not. Define these with the color flags!
+#define HAS_PARTIAL_SKINTONE		(1<<4)
 
 /// used in appearance holder
 /// Hair sprites are roughly what you set in the prefs
-#define HAS_HUMAN_HAIR					(1<<4)
+#define HAS_HUMAN_HAIR					(1<<5)
 /// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_SPECIAL_HAIR				(1<<5)
+#define HAS_SPECIAL_HAIR				(1<<6)
 /// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_BODYDETAIL_HAIR			(1<<6)
+#define HAS_BODYDETAIL_HAIR			(1<<7)
 /// Please don't render hair on my wolves it looks too cute
-#define HAS_NO_HAIR							(1<<7)
+#define HAS_NO_HAIR							(1<<8)
 
 
 /// We have normal human eyes of human color where human eyes tend to be
-#define HAS_HUMAN_EYES					(1<<8)
+#define HAS_HUMAN_EYES					(1<<9)
 ///We have different eyes of different color probably somewhere else
-#define HAS_SPECIAL_EYES				(1<<9)
+#define HAS_SPECIAL_EYES				(1<<10)
 /// We have no eyes and yet must see (cus they're baked into the sprite or something)
-#define HAS_NO_EYES							(1<<10)
+#define HAS_NO_EYES							(1<<11)
 
 
 /// Don't show their head, its already baked into their icon override
-#define HAS_NO_HEAD							(1<<13)
+#define HAS_NO_HEAD							(1<<12)
 
 
 /// Use humanlike body rendering process, otherwise use a static icon or something
-#define BUILT_FROM_PIECES				(1<<14)
+#define BUILT_FROM_PIECES				(1<<13)
 /// Has a non-head something in their detail slot they want to show off, like lizard splotches. non-tail oversuits count!
-#define HAS_EXTRA_DETAILS				(1<<15)
+#define HAS_EXTRA_DETAILS				(1<<14)
 /// Draw underwear on them. can be overridden with human var underpants_override. dont actually do this though
-#define WEARS_UNDERPANTS				(1<<16)
+#define WEARS_UNDERPANTS				(1<<15)
 /// Mob's body is drawn using a single, flat image and not several flat images slapped together
-#define USES_STATIC_ICON				(1<<17)
+#define USES_STATIC_ICON				(1<<16)
 
 
 
@@ -102,3 +105,5 @@
 /// Our head has its own colors that would look weird if tinted
 #define	HEAD_HAS_OWN_COLORS						(1<<12)
 
+/// Apply the skintone to the torso, so chickens can have both gross human skin and gross chicken feathers
+#define	TORSO_HAS_SKINTONE						(1<<13)

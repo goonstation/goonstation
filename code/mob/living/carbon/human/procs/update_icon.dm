@@ -825,7 +825,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					gender_t = src.gender == FEMALE ? "f" : "m"
 
 				var/skin_tone = "#777777"
-				if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE)
+				if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE || AHOLD.mob_appearance_flags & HAS_PARTIAL_SKINTONE)
 					skin_tone = "#FFFFFF"	// Preserve their true coloration
 				else
 					skin_tone = AHOLD.s_tone
@@ -834,7 +834,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 				if (!src.decomp_stage)
 					human_image.icon_state = "chest_[gender_t]"
+					var/chest_color_before = skin_tone
+					if(AHOLD.mob_color_flags & TORSO_HAS_SKINTONE) // Torso is supposed to be skintoned, even if everything else isnt?
+						human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the chest if that's what its supposed to be
 					src.body_standing.overlays += human_image
+					human_image.color = chest_color_before
 
 					human_image.icon_state = "groin_[gender_t]"
 					src.body_standing.overlays += human_image
@@ -1011,7 +1015,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 								src.body_standing.overlays += human_decomp_image
 							else
 								human_image.icon_state = "[stump]"
+								var/old_skintone = human_image.color
+								if(AHOLD.mob_color_flags & TORSO_HAS_SKINTONE && (stump == "stump_arm_right" || stump == "stump_arm_left")) // Arm stumps look odd if the torso is skintoned, but they arent
+									human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the stumps if their torso is supposed to be skin-toned
 								src.body_standing.overlays += human_image
+								human_image.color = old_skintone
 
 				human_image.color = "#fff"
 

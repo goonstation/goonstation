@@ -134,10 +134,10 @@
 			AHead = src.donor_appearance
 
 		// setup skintone and mess with it as per appearance and color flags
-		if (AHead.mob_appearance_flags & HAS_HUMAN_SKINTONE)
-			src.skintone = AHead.s_tone
-		else if (AHead.mob_appearance_flags & HAS_NO_SKINTONE)
+		if (AHead.mob_color_flags & HEAD_HAS_OWN_COLORS)
 			src.skintone = "#FFFFFF"
+		else if (AHead.mob_appearance_flags & HAS_HUMAN_SKINTONE)
+			src.skintone = AHead.s_tone
 		else if (AHead.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
 			if (AHead.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
 				src.skintone = AHead.customization_first_color
@@ -416,5 +416,9 @@
 			if(HEAD_RELI)
 				src.name = "[src.donor_name]'s synthetic head"
 				src.desc = "Half stone, half tofu, all unfinished."
+
+			if(HEAD_CHICKEN)
+				src.name = "[src.donor_name]'s chicken head"
+				src.desc = "Mike would be proud."
 
 		src.update_icon(makeshitup = 0, initialize_head = 1)	// so our head actually looks like the thing its supposed to be

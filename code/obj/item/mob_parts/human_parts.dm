@@ -1883,3 +1883,47 @@ obj/item/parts/human_parts/arm/right/reliquary
 	side = "right"
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
+
+//// CHICKEN LIMBS ////
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/chicken
+	icon = 'icons/mob/chicken.dmi'
+	partIcon = 'icons/mob/chicken.dmi'
+	fits_monkey = 1
+
+/obj/item/parts/human_parts/leg/mutant/chicken
+	icon = 'icons/mob/chicken.dmi'
+	partIcon = 'icons/mob/chicken.dmi'
+	fits_monkey = 1
+
+
+//// LIMBS ////
+
+/obj/item/parts/human_parts/leg/mutant/chicken/left
+	name = "left chicken leg"
+	desc = "A chicken's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+	New(mob/new_holder)
+		. = ..()
+		if(prob(10))
+			src.desc = "A chicken's left drumstick."
+
+/obj/item/parts/human_parts/leg/mutant/chicken/right
+	name = "right chicken leg"
+	desc = "A chicken's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+	New(mob/new_holder)
+		. = ..()
+		if(prob(10))
+			src.desc = "A chicken's right drumstick."
