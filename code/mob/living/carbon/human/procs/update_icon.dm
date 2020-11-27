@@ -768,13 +768,13 @@
 
 /mob/living/carbon/human/proc/update_hair_layer()
 	if (src.wear_suit && src.wear_suit.over_hair && ( src.head && src.head.seal_hair || (src.wear_suit.body_parts_covered & HEAD) ) )
-		src.image_cust_one.layer = MOB_HAIR_LAYER1
-		src.image_cust_two.layer = MOB_HAIR_LAYER1
-		src.image_cust_three.layer = MOB_HAIR_LAYER1
+		src.image_cust_one?.layer = MOB_HAIR_LAYER1
+		src.image_cust_two?.layer = MOB_HAIR_LAYER1
+		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one.layer = MOB_HAIR_LAYER2
-		src.image_cust_two.layer = MOB_HAIR_LAYER2
-		src.image_cust_three.layer = MOB_HAIR_LAYER2
+		src.image_cust_one?.layer = MOB_HAIR_LAYER2
+		src.image_cust_two?.layer = MOB_HAIR_LAYER2
+		src.image_cust_three?.layer = MOB_HAIR_LAYER2
 
 
 var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left", "r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left")
