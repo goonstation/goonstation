@@ -246,10 +246,7 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
-				var/droptail = 1
-				if(ischangeling(H))
-					droptail = 0
-				organ_mutator(H, "reset", droptail)
+				organ_mutator(H, "reset")
 				AppearanceSetter(H, "reset")
 				LimbSetter(H, "reset")
 				qdel(src.limb_list)
