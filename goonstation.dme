@@ -1191,6 +1191,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\critter\pets_small_animals.dm"
 #include "code\obj\critter\plants.dm"
 #include "code\obj\critter\spider.dm"
+#include "code\obj\critter\sword.dm"
 #include "code\obj\critter\turtle.dm"
 #include "code\obj\critter\wendigo.dm"
 #include "code\obj\critter\zombie.dm"
