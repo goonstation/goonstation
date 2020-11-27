@@ -324,7 +324,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 20, 0)
+		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 30, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))

@@ -300,7 +300,7 @@
 		var/list/thrown = list()
 		var/current_prob = 100
 		if (ishuman(T))
-			playsound(T.loc, "sound/voice/wraith/wraithspook[rand(1, 3)]", 50, 0)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
@@ -584,6 +584,8 @@
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		else
 			boutput(usr, "<span class='alert'>It would be futile to attempt to force your voice to the consciousness of that.</span>")
 			return 1
