@@ -96,6 +96,7 @@
 				H.organHolder.tail.op_stage = 0.0
 			else
 				H.organHolder.tail.op_stage = 11.0
+			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)
 			return 1

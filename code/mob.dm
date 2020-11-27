@@ -971,6 +971,8 @@
 				continue
 			if (istype(W, /obj/item/organ/appendix) && src.organHolder.appendix == W)
 				continue
+			if (istype(W, /obj/item/organ/tail) && src.organHolder.tail == W)
+				continue
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
 			continue
