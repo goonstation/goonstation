@@ -409,7 +409,6 @@
 				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
 		else
 			..()
-#warn STUNBATON IS FUCKED
 	proc/log_cellswap(var/mob/user as mob, var/obj/item/ammo/power_cell/C)
 		if (!user || !src || !istype(src) || !C || !istype(C))
 			return

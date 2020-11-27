@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		caliber = CALIBER_REVOLVER
 		ammo = /obj/item/ammo/bullets/internal/revolver/stun
 
-	canshoot()
+/* 	canshoot()
 		if (hammer_cocked)
 			return ..()
 		else
@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			hammer_cocked = 1
 			icon_state = "colt_saa-c"
 			boutput(user, "<span class='alert'>You cock the hammer!</span>")
-			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1)
+			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1) */
 
 /obj/item/gun/kinetic/clock_188
 	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."

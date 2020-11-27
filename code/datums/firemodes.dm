@@ -11,7 +11,7 @@
 	/// Shots will be flung somewhere within this angle
 	var/spread_angle = 0
 	/// Projectile to shoot. If null, it'll shoot whatever's in the gun's magazine
-	var/projectile = null
+	var/datum/projectile/projectile = null
 	/// Override the gun's shoot sounds with this datum, if set
 	var/datum/shoot_sounds/sounds = null
 	/// Whether or not the firemode'll let the gun shoot this click, for things like a single-action revolver
@@ -32,7 +32,7 @@
 		return
 
 	/// Do this when switching to this firemode, like showing a message or playing a sound
-	proc/switch_to_firemode(var/mob/user)
+	proc/switch_to_firemode(var/mob/user, var/mode_changed = 1)
 		if(!user) return
 		user.visible_message("[user] switches [his_or_her(user)] [src.gunmaster] to [mode_name].")
 		playsound(user.loc, "sound/machines/click.ogg", 20, 1)
@@ -172,13 +172,14 @@
 		src.mode_name = "[pick(mode_prefix)] [pick(mode_suffix)]"
 
 		var/datum/projectile/artifact/artbullet = new/datum/projectile/artifact
-		src.projectile = new/datum/projectile/artifact
-		src.projectile.randomise()
+		artbullet = new/datum/projectile/artifact
+		artbullet.randomise()
 		// artifact tweak buff, people said guns were useless compared to their cells
 		// the next 3 lines override the randomize(). Doing this instead of editting randomize to avoid changing prismatic spray.
-		src.projectile.power = rand(15,35) / burst_count // randomise puts it between 2 and 50, let's make it less variable
-		src.projectile.dissipation_rate = rand(1,projectile.power)
-		src.projectile.cost = rand(35,100) / burst_count // randomise puts it at 50-150
+		artbullet.power = rand(15,35) / burst_count // randomise puts it between 2 and 50, let's make it less variable
+		artbullet.dissipation_rate = rand(1,artbullet.power)
+		artbullet.cost = rand(35,100) / burst_count // randomise puts it at 50-150
+		src.projectile = artbullet
 
 	switch_to_firemode(var/mob/user, var/mode_changed = 1)
 		if(!user) return

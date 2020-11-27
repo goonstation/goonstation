@@ -14,7 +14,6 @@
 		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
 		src.firemodes = AS.artifact_firemodes
-		src.art_projectiles = AS.artifact_bullets
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
@@ -27,15 +26,15 @@
 			var/datum/artifact/A = src.artifact
 			src.loaded_magazine = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
 			src.ArtifactDevelopFault(15)
-			src.set_firemode()
+			src.set_firemode(initialize = TRUE)
 			var/batt_mult = 1
 			var/proj_cost = 1
 			/// Ensures it'll be able to fire at least one full burst of its most expensive projectile
 			for(var/datum/firemode/AFM in src.firemodes)
 				if(batt_mult < AFM.burst_count)
-				batt_mult = AFM.burst_count
+					batt_mult = AFM.burst_count
 				if(proj_cost < AFM.projectile.cost)
-				proj_cost = AFM.projectile.cost
+					proj_cost = AFM.projectile.cost
 			src.loaded_magazine.max_charge = max(src.loaded_magazine.max_charge, proj_cost * batt_mult)
 
 
@@ -56,7 +55,12 @@
 		if (src.Artifact_attackby(W,user))
 			..()
 
-	set_firemode(mob/user)
+	set_firemode(mob/user, var/initialize)
+		if(!src.firemodes.len) return
+		if(initialize)
+			for(var/datum/firemode/F in src.firemodes)
+				if(F.gunmaster != src)
+					F.gunmaster = src
 		var/curr_fm = src.firemode_index
 		src.firemode_index = rand(1, src.firemodes.len)
 		if(src.firemode_index > round(src.firemodes.len) || src.firemode_index < 1)

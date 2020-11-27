@@ -1459,7 +1459,7 @@
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	module_research = list("tools" = 3, "engineering" = 1, "mining" = 1)
-#warn MINING TOOL IS FUCKED
+
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
@@ -1510,7 +1510,6 @@
 			src.overlays = null
 			signal_event("icon_updated")
 		return
-#warn MINING IS FUCKED
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/ammo/power_cell/))
 			var/obj/item/ammo/power_cell/pcell = b

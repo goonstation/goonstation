@@ -29,9 +29,9 @@
 
 	update_icon()
 		if (src.loaded_magazine)
-			inventory_counter.update_percent(src.loaded_magazine.charge, src.loaded_magazine.max_charge)
+			inventory_counter?.update_percent(src.loaded_magazine.charge, src.loaded_magazine.max_charge)
 		else
-			inventory_counter.update_text("-")
+			inventory_counter?.update_text("-")
 		return 0
 
 	attackby(obj/item/b as obj, mob/user as mob)
@@ -108,8 +108,8 @@
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
-	firemodes = list(new/datum/firemode/taser/single(name = "bouncy stun", proj = new/datum/projectile/energy_bolt/bouncy),\
-	                 new/datum/firemode/taser/triple(name = "bouncy burst-stun", proj = new/datum/projectile/energy_bolt/bouncy))
+	firemodes = list(new/datum/firemode/single(name = "bouncy stun", proj = new/datum/projectile/energy_bolt/bouncy),\
+	                 new/datum/firemode/triple(name = "bouncy burst-stun", proj = new/datum/projectile/energy_bolt/bouncy))
 
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
@@ -236,11 +236,11 @@
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			var/datum/firemode/F = src.firemodes[src.firemode_index]
-			if (F.name == "taser")
+			if (F.mode_name == "taser")
 				src.item_state = "egun"
 				src.icon_state = "energystun[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (F.name == "laser")
+			else if (F.mode_name == "laser")
 				src.item_state = "egun-kill"
 				src.icon_state = "energykill[ratio]"
 				muzzle_flash = "muzzle_flash_laser"
@@ -272,7 +272,7 @@
 	spread_angle = 6
 	ammo = /obj/item/ammo/power_cell/med_power
 	firemodes = list(new/datum/firemode/triple(name = "burst-taser", proj = new/datum/projectile/energy_bolt/ntburst),\
-	                 new/datum/firemode/triple(name = "burst-laser", proj = new/datum/projectile/laser/ntburst)
+	                 new/datum/firemode/triple(name = "burst-laser", proj = new/datum/projectile/laser/ntburst))
 
 	update_icon()
 		..()
@@ -280,9 +280,9 @@
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			var/datum/firemode/F = src.firemodes[src.firemode_index]
-			if (F.name == "burst-taser")
+			if (F.mode_name == "burst-taser")
 				src.icon_state = "ntstun[ratio]"
-			else if (F.name == "burst-laser")
+			else if (F.mode_name == "burst-laser")
 				src.icon_state = "ntlethal[ratio]"
 			else
 				src.icon_state = "ntneutral[ratio]"
@@ -407,11 +407,11 @@
 			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			var/datum/firemode/F = src.firemodes[src.firemode_index]
-			if (F.name == "transverse")
+			if (F.mode_name == "transverse")
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
 				muzzle_flash = "muzzle_flash_waveg"
-			else if (F.name == "electromagnetoverse")
+			else if (F.mode_name == "electromagnetoverse")
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
 				muzzle_flash = "muzzle_flash_waveb"
@@ -778,7 +778,7 @@
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	ammo = /obj/item/ammo/power_cell/med_power
-	firemodes = list(new/datum/firemode/owl)
+	firemodes = list(new/datum/firemode/single(name = "owl", proj = new/datum/projectile/owl))
 
 	update_icon()
 		..()
@@ -829,7 +829,7 @@
 	force = 0.0
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 	ammo = new/obj/item/ammo/power_cell/high_power
-	firemodes = list(new/datum/firemode/single(name = "boutput(usr, \[src.firemodes\[src.firemode_index\].mode_name\])", proj = new/datum/projectile/glitch/gun))
+	firemodes = list(new/datum/firemode/single(name = "boutput(usr, \[src.firemodes\[src.firemode_index\].mode_name\])", proj = new/datum/projectile/bullet/glitch/gun))
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
@@ -925,10 +925,11 @@
 		return ..()
 
 	attack(mob/M as mob, mob/user as mob)
-		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/steal) && heldItem)
+		var/datum/firemode/F = src.firemodes[src.firemode_index]
+		if (F.mode_name == "steal" && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
-		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/plant) && !heldItem)
+		if (F.mode_name == "plant" && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -944,10 +945,11 @@
 		return ..(M, user)
 
 	shoot(var/target, var/start, var/mob/user)
-		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/steal) && heldItem)
+		var/datum/firemode/F = src.firemodes[src.firemode_index]
+		if (F.mode_name == "steal" && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
-		if (istype(src.firemodes[src.firemode_index], new/datum/firemode/pickpocket/plant) && !heldItem)
+		if (F.mode_name == "plant" && !heldItem)
 			boutput(user, "Cannot plant item if gun is not holding anything!")
 			return
 
@@ -1041,7 +1043,7 @@
 			assign_name(user)
 		..()
 
-	set_firemode(var/mob/user)
+	set_firemode(var/mob/user, var/initialize)
 		var/datum/firemode/fmode = src.firemodes[src.firemode_index]
 		src.shoot_delay = fmode.shoot_delay
 		src.burst_count = fmode.burst_count

@@ -105,7 +105,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	/// If not 0, the bullet will shoot off course by between 0 and this number degrees
 	var/spread_angle = 0
 	/// Firemode datum, changes how the gun fires
-	var/list/firemodes = list(new/datum/firemode)
+	var/list/firemodes = list(new/datum/firemode/single)
 	/// Our current firemode's index
 	var/firemode_index = 1
 
@@ -120,8 +120,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
 		lastTooltipContent = .
 
-	New(var/list/firemodes, var/list/loaded_magazine)
-		src.firemodes = firemodes
+	New(var/loc, var/list/loaded_magazine)
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
 		if(!islist(src.accepted_mag))
@@ -130,7 +129,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if(!src.loaded_magazine)
 			src.loaded_magazine = new src.ammo
 			src.loaded_magazine.loaded_in = src
-		src.set_firemode(TRUE)
+		src.set_firemode(initialize = TRUE)
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		SPAWN_DBG(2 SECONDS)
@@ -275,10 +274,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/set_firemode(var/mob/user, var/initialize = 0)
 	if(initialize)
-		if(!src.firemodes.len) // Not spawned with a list of firemodes? Default to singleshot
-			src.firemodes = list(new/datum/firemode/single)
 		for(var/datum/firemode/F in src.firemodes)
-			if(F.gunmaster = src)
+			if(F.gunmaster != src)
+				F.gunmaster = src
 		src.firemode_index = 1
 	else
 		src.firemode_index += 1
@@ -1026,9 +1024,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/update_icon()
 	if (src.loaded_magazine)
-		inventory_counter.update_number(src.loaded_magazine.mag_contents.len)
+		inventory_counter?.update_number(src.loaded_magazine.mag_contents.len)
 	else
-		inventory_counter.update_text("-")
+		inventory_counter?.update_text("-")
 
 	if(src.has_empty_state)
 		if (src.loaded_magazine.mag_contents.len < 1 && !findtext(src.icon_state, "-empty")) //sanity check
@@ -1041,9 +1039,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Has a battery
 		if(!src.current_projectile?.name)
-			var/proj = src.firemodes[1]["projectile"]
-			if(ispath(proj, /datum/projectile))
-				src.current_projectile = new proj
+
+			var/datum/firemode/F = src.firemodes[src.firemode_index]
+			if(istype(F.projectile, /datum/projectile))
+				src.current_projectile = F.projectile
 			else
 				src.dry_fire(user)
 				return FALSE
