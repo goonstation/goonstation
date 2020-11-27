@@ -196,6 +196,7 @@
 
 	if (!bioHolder)
 		bioHolder = new/datum/bioHolder(src)
+		src.initializeBioholder()
 	if (!abilityHolder)
 		abilityHolder = new /datum/abilityHolder/composite(src)
 
