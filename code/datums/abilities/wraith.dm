@@ -141,7 +141,7 @@
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
-		playsound(M, "sound/voice/wraith/soulsucc[rand(1, 2)].ogg", 75, 0)
+		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 75, 0)
 		for (var/mob/living/V in viewers(7, holder.owner))
 			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
 		return 0
@@ -184,7 +184,7 @@
 			return 1
 
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/possesobject.ogg", 50, 0)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
 		SPAWN_DBG (450)
 			if (O)
@@ -192,7 +192,7 @@
 		SPAWN_DBG (600) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/leaveoject.ogg", 50, 0)
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
 				O.death(0)
 		return 0
 
@@ -225,7 +225,7 @@
 			var/mob/wraith/W = holder.owner
 			. = W.makeRevenant(T)		//return 0
 			if(!.)
-				playsound(W.loc, "sound/voice/wraith/posses1.ogg", 85, 0)
+				playsound(W.loc, "sound/voice/wraith/reventer.ogg", 85, 0)
 			return
 		else
 			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
@@ -266,7 +266,7 @@
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/staminadrain.ogg", 75, 0)
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 75, 0)
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
@@ -353,7 +353,7 @@
 			S.name = "[personname]'s skeleton"
 			S.health = 1
 			H.gib()
-			usr.playsound_local(usr.loc, "sound/voice/wraith/animate[rand(1, 3)].ogg", 50, 0)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
@@ -401,7 +401,7 @@
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)
-			usr.playsound_local(usr.loc, "sound/voice/wraith/livingobject.ogg", 50, 0)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
@@ -420,7 +420,7 @@
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
-		usr.playsound_local(usr.loc, "sound/voice/wraith/mortalrealm.ogg", 100, 0)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 100, 0)
 		return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -677,7 +677,7 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		usr.playsound_local(usr.loc, "sound/voice/wraith/portalmake1.ogg", 50, 0)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)

@@ -152,7 +152,7 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
-		playsound(owner.loc, "sound/voice/wraith/posses2.ogg", 100, 0)
+		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
@@ -201,7 +201,7 @@
 
 		if (owner.health < -50)
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/posses2.ogg", 100, 0)
+			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
 			owner.death(0) // todo: add custom death
 			return
 
@@ -281,7 +281,7 @@
 	cooldown = 300
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/livingobject.ogg", 70, 0)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -324,7 +324,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/wraithshock.ogg", 30, 0)
+		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -402,7 +402,7 @@
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/wraithtouch.ogg", 85, 0)
+		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 85, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -423,7 +423,7 @@
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithpush[rand(1, 2)].ogg", 90, 0)
+		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 90, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -462,7 +462,7 @@
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithfocus.ogg", 100, 0)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 100, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
