@@ -851,10 +851,11 @@
 	boutput(src, "Retrieving your medal information...")
 
 	SPAWN_DBG(0)
+		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
+			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
 		if (!medals)
@@ -864,10 +865,12 @@
 		medals = params2list(medals)
 		medals = sortList(medals)
 
-		boutput(src, "<b>Medals:</b>")
+		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			boutput(src, "&emsp;[medal]")
-		boutput(src, "<b>You have [length(medals)] medal\s.</b>")
+			output += "&emsp;[medal]"
+		output += "<b>You have [length(medals)] medal\s.</b>"
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
