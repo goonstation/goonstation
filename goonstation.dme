@@ -25,6 +25,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\macros\_appearance.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\base_lighting.dm"
@@ -1398,6 +1399,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\organs\skull.dm"
 #include "code\obj\item\organs\spleen.dm"
 #include "code\obj\item\organs\stomach.dm"
+#include "code\obj\item\organs\tail.dm"
 #include "code\obj\item\organs\torso.dm"
 #include "code\obj\item\storage\ammo_pouches.dm"
 #include "code\obj\item\storage\backpack_belt_etc.dm"

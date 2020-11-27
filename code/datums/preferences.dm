@@ -2418,11 +2418,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
 	SPAWN_DBG(1 DECI SECOND)
-		AH.UpdateMob()
-		if (H)
-			H.set_face_icon_dirty()
-			H.set_body_icon_dirty()
-
+		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.
 // it sucks but it's a bit more readable i guess.
