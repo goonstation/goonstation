@@ -277,6 +277,12 @@
 			if("set")	// upload everything, the appearance flags'll determine what gets used
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
+				AH.customization_first_color_original = AH.customization_first_color
+				AH.customization_second_color_original = AH.customization_second_color
+				AH.customization_third_color_original = AH.customization_third_color
+				AH.customization_first_original = AH.customization_first
+				AH.customization_second_original = AH.customization_second
+				AH.customization_third_original = AH.customization_third
 				AH.customization_first = src.special_hair_1
 				AH.customization_second = src.special_hair_2
 				AH.customization_third = src.special_hair_3
