@@ -78,7 +78,7 @@
 
 		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
-			return
+			return 1
 
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
@@ -107,7 +107,7 @@
 
 		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard))
 			boutput(L, "<span class='notice'>You're fresh out of chromatophores.</span>")
-			return
+			return 1
 
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
@@ -116,17 +116,15 @@
 
 			if (!which_region)
 				boutput(L, "<span class='notice'>You leave your pigmentation as-is.</span>")
-				return
+				return 1
 
 			var/coloration = input(L, "Please select skin color.", "Character Generation")  as null | color
 
 			if (!coloration)
 				boutput(L, "<span class='notice'>You think it looks fine the way it is.</span>")
-				return
+				return 1
 
 			actions.start(new/datum/action/bar/lizcolor(L, fix_colors(coloration), regions[which_region], which_region, AHs), L)
-			return
-
 
 
 /datum/action/bar/lizcolor

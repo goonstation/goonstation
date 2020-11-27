@@ -117,7 +117,7 @@ var/list/ai_move_scheduled = list()
 	proc/stop_move()
 		move_target = null
 		ai_move_scheduled -= src
-		walk(src,0)
+		walk(owner,0)
 
 	proc/move_step()
 		if (src.move_side)

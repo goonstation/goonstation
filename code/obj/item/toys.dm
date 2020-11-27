@@ -162,6 +162,10 @@
 	name = "assistant monkey plush toy"
 	icon_state = "monkey_assistant"
 
+/obj/item/toy/plush/small/monkey/george
+	name = "curious george monkey plush toy"
+	icon_state = "monkey_george"
+
 /obj/item/toy/plush/small/possum
 	name = "possum plush toy"
 	icon_state = "possum"
@@ -498,7 +502,9 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/fleur,
 /datum/figure_info/joaquinfry,
 /datum/figure_info/carolineaudibert,
-/datum/figure_info/helgergunnink
+/datum/figure_info/helgergunnink,
+/datum/figure_info/hex,
+/datum/figure_info/tray
 )
 
 /datum/figure_info
@@ -912,6 +918,14 @@ var/list/figure_patreon_rarity = list(\
 		name = "\improper Helger Gunnink"
 		icon_state = "helgergunnink"
 
+	hex
+		name = "\improper HEX"
+		icon_state = "hex"
+
+	tray
+		name = "\improper Tray"
+		icon_state = "tray"
+
 #ifdef XMAS
 	santa
 		name = "\improper Santa Claus"
@@ -1106,3 +1120,27 @@ var/list/figure_patreon_rarity = list(\
 
 /obj/item/toy/gooncode/attack()
 	return
+
+/obj/item/toy/cellphone
+	name = "flip phone"
+	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
+	icon = 'icons/obj/cellphone.dmi'
+	icon_state = "cellphone-on"
+	w_class = 2
+	var/datum/game/tetris
+	var/datum/mail
+
+	New()
+		src.contextLayout = new /datum/contextLayout/instrumental(16)
+		src.contextActions = childrentypesof(/datum/contextAction/cellphone)
+		..()
+		START_TRACKING
+		src.tetris = new /datum/game/tetris(src)
+
+	disposing()
+		..()
+		STOP_TRACKING
+
+	attack_self(mob/user as mob)
+		..()
+		user.showContextActions(contextActions, src)

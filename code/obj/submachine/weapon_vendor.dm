@@ -262,7 +262,7 @@
 //SYNDIE
 
 /datum/materiel/sidearm/pistol
-	name = "M1992 Pistol"
+	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/pistol
 	catagory = "Sidearm"
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
@@ -295,13 +295,13 @@
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/agent_rework
 	catagory = "Loadout"
-	description = "Tranquilizer pistol with a pouch of dart magazines, combat knife which increases run speed when held, five use cloaking device, electromagnetic card and night-vision goggles."
+	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
 
 /datum/materiel/loadout/medic
 	name = "Combat Medic"
 	path = /obj/storage/crate/classcrate/medic
 	catagory = "Loadout"
-	description = "Comprehensive medical supplies in a satchel, belt and pouch, including donk pockets and an experimental Juggernaut injector."
+	description = "Comprehensive medical supplies in a satchel, belt and pouch, including donk injector and an experimental Juggernaut injector."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"

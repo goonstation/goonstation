@@ -86,6 +86,7 @@ toxic - poisons
 	color_red = 0.2
 	color_green = 0.6
 	color_blue = 0.8
+	ie_type = "E"
 
 	on_hit(atom/hit)
 		if (isliving(hit))
@@ -93,7 +94,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
-		impact_image_effect("E", hit)
+		impact_image_effect(ie_type, hit)
 		return
 
 /datum/projectile/energy_bolt/robust
@@ -171,20 +172,21 @@ toxic - poisons
 	window_pass = 0
 
 	disruption = 0
+	ie_type = "T"
 
 //Any special things when it hits shit?
 	on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
 		if (isliving(hit))
 			var/mob/living/L = hit
 			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 80)
-			impact_image_effect("T", hit)
+			impact_image_effect(ie_type, hit)
 		return
 
  //purposefully keeping (some of) the pointblank double-dip,
  //because a staffie with a vuvu won't always have the option to follow up with a baton and cuffs, and this helps keep a guy down
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
-		impact_image_effect("T", M)
+		impact_image_effect(ie_type, M)
 
 //////////// Ghost Hunting for Halloween
 /datum/projectile/energy_bolt_antighost
@@ -359,3 +361,24 @@ toxic - poisons
 			var/mob/living/carbon/human/M = hit
 			M.changeStatus("slowed", 1.5 SECONDS)
 
+/datum/projectile/energy_bolt/signifer_tase
+	name = "signifer spark"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_tase"
+	shot_sound = 'sound/weapons/SigTase.ogg'
+	cost = 12
+	power = 10
+	ks_ratio = 0.1
+
+	sname = "non-lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 0
+	brightness = 1
+	color_red = 1
+	color_green = 1
+	color_blue = 0
+
+	disruption = 2
+	ie_type = "T"
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'

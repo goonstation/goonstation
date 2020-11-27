@@ -388,7 +388,8 @@
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
-	/obj/item/clothing/mask/gas/NTSO) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
+	/obj/item/clothing/mask/gas/NTSO,
+	/obj/item/gun/energy/signifer2) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -420,7 +421,7 @@
 			can_hold += /obj/item/gun/energy/tasershotgun //lol
 
 	ntso
-		spawn_contents = list(/obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/storage/pouch/clock) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch) //secbelt subtype that only spawns on NTSO, not in vendor
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

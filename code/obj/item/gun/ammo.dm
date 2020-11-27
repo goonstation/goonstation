@@ -815,6 +815,9 @@
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
 	caliber = 0.355
 
+	five_shots
+		amount_left = 5.0
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -1082,6 +1085,16 @@
 	max_charge = 150.0
 	cycle = 0
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	name = "Power Cell - NTSO D49"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 250.0
+	max_charge = 250.0
+	cycle = 0
+	recharge_rate = 6
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"

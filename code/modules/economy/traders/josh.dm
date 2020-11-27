@@ -22,7 +22,8 @@
 	/datum/commodity/trader/josh/tacos,
 	/datum/commodity/trader/josh/fingerless,
 	/datum/commodity/trader/josh/energydrink,
-	/datum/commodity/trader/josh/hoodie)
+	/datum/commodity/trader/josh/hoodie,
+	/datum/commodity/trader/josh/flyswatter)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -165,3 +166,10 @@
 	price_boundary = list(30,200)
 	possible_names = list("Want look stylish? Try this hoodie.",
 	"You seem a bit prone to scratches. Want some padding?")
+
+/datum/commodity/trader/josh/flyswatter
+	comname = "Radical Electrical Device"
+	comtype = /obj/item/device/flyswatter
+	price_boundary = list(500,1000)
+	possible_names = list("Bro this is out of the world. You can cook an omelette and play guitar on it at the same time!",
+	"Do you want to be the coolest on the block or nah?")

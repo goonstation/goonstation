@@ -1917,8 +1917,9 @@
 	special_head = HEAD_CHICKEN
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
-	mutant_appearance_flags = (IS_MUTANT | HAS_PARTIAL_SKINTONE| HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (IS_MUTANT | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES)
 	mutant_color_flags = (HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE)
+
 
 	emote(var/act, var/voluntary)
 		switch(act)

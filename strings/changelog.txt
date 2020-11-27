@@ -1,4 +1,100 @@
 
+(t)thu nov 26 20
+(u)pali
+(p)2738
+(e)⚖📄|balance, tgui
+(*)When using packets to hack airlocks you now need to provide access_code. You can either guess it or read it from the wire panel.
+(t)wed nov 25 20
+(u)Kubius
+(p)2827
+(e)🗺|mapping
+(+)Kondaru's research cargo endpoint is a little more spacious and now contains the artifact lab's cargo pad.
+(u)RSG250
+(p)2579
+(e)🆕|feature
+(+)you can now make shoes at the Nanofabricator.
+(u)BenLubar
+(p)2818
+(e)🆕|feature
+(+)The arrivals announcement computer can now be set to use pronouns in messages.
+(u)BatElite
+(p)2816
+(e)🎨|sprites
+(+)The pyro class fire axe has new sprites, so you now look menacing while you chop up the crew!
+(t)tue nov 24 20
+(u)Kubius
+(p)2823
+(e)⚖🆕|balance, feature
+(+)Potato batteries scale more with potency and endurance, and the trimmed-down gun versions can now recharge with sufficiently high endurance.
+(u)Kubius
+(p)2810
+(e)🆕🗺|feature, mapping
+(+)Further Ozymandias changes, most notably a more resilient AI upload and a LOT of electrification.
+(u)Azrun
+(p)2821
+(e)|
+(+)Special TEG variants should now produce power again.
+(u)TTerc
+(p)2815
+(e)🗺|mapping
+(+)Chicken equipment added to Donut 3.
+(u)Azrun
+(p)2520
+(e)🆕|feature
+(*)Circulators now hold "lubricant" (accessible by opening maintenance hatch with screwdriver). See what it likes!
+(*)Circulators and TEG now stamped with a serial number.  More experimental models to come!
+(+)Furnaces now slowly heat up and are more accepting of alternative fuel sources.
+(t)mon nov 23 20
+(u)Flourish
+(p)2801
+(e)🆕🎨|feature, sprites
+(+)Added an electric fly swatter that one-hit KOs player bugs. You can find it in locked crates or purchase it from Josh. Sprite stolen from Flaborized!
+(u)Kubius
+(p)2806
+(e)🆕🗺|feature, mapping
+(+)All active Kubius maps (Kondaru, Ozymandias, Fleet, and Icarus) are now chicken-enabled.
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Chickens will now let you know how they feel about the different foods they eat with helpful status bubbles!
+(*)New Chicken Breed! Sorta! You'll know what I mean when you see it
+(+)Some major chicken bugfixes in this patch
+(u)Flourish
+(p)2805
+(e)|
+(+)Fixed the bug where you could clone someone that was just cloned.
+(u)Kubius
+(p)2788
+(e)🆕🗺|feature, mapping
+(+)Small Kondaru upgrades: some bits of escape widened, a few things in Medbay shuffled about, and a new airlock in Mining.
+(u)adharainspace
+(p)2795
+(e)🆕|feature
+(*)new radio songs are now quieter. your ears may rest again....
+(t)sun nov 22 20
+(u)UrsulaMajor
+(e)🆕|feature
+(*)Two New Chicken Breeds! See if you can find them all! (Not Secret! Feel free to share with your friends what you find out!)
+(*)You can now make chicken feed out of any food! This statement is most certainly not related to the previous one!
+(u)Flaborized
+(p)2782
+(e)🎨|sprites
+(+)New scanner sprites!
+(u)Jawns
+(p)2704
+(e)|
+(+)Sleeper agents should only get achievable objectives now- please submit a bug report if your objectives seem impossible!
+(u)Erinexx
+(p)2780
+(e)🎨|sprites
+(+)Resprited some devices
+(u)Kyle, Enakai, & Virvatuli
+(e)🆕🎨|feature, sprites
+(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
+(t)sat nov 21 20
+(u)Gannets
+(p)2772
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a memorial to the Cairngorm that shows nuke ops win/loss values.
 (t)fri nov 20 20
 (u)TTerc
 (p)2726
