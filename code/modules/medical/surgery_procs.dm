@@ -718,7 +718,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			remove spleen = 	cut -> snip -> cut
 			remove kidneys = 	cut -> cut -> snip -> Right/Left hands for removing R/L kidneys
 			remove heart = 0.0 cut -> 5.0 saw -> 8.0 cut -> 9.0 saw
-			remove tail = disarm 0.0 snip -> 10.0 cut -> 11.0 snip
+			remove tail = 0.0 saw -> 10.0 cut -> 11.0 saw
 				except skeletons with bone tails, just disarm-poke em with some scissors
 			*note, for lungs/kidneys R/L hand use only matters for last cut
 		*/
