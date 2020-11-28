@@ -166,11 +166,11 @@ datum/pathogeneffects/benevolent/cleansing
 
 datum/pathogeneffects/benevolent/oxygenconversion
 	name = "Oxygen Conversion"
-	desc = "The pathogen converts organic tissue into oxygen."
-	rarity = RARITY_VERY_RARE
+	desc = "The pathogen converts organic tissue into oxygen when required by the host."
+	rarity = RARITY_RARE
 
 	may_react_to()
-		return "The pathogen appears to radiate a red bubble of oxygen."
+		return "The pathogen appears to radiate oxygen."
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -179,30 +179,33 @@ datum/pathogeneffects/benevolent/oxygenconversion
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (M:losebreath > 0)
-			M.TakeDamage("chest", M:losebreath * 2, 0)
-			M:losebreath = 0
-			if (prob(25))
-				M.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
-		if (M.get_oxygen_deprivation())
-			if (origin.stage != 0)
-				M.take_oxygen_deprivation(0 - (origin.stage / 2))
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			C.setStatus("patho_oxy_speed_bad", duration = INFINITE_STATUS, optional = origin.stage/2.5)
 
-datum/pathogeneffects/benevolent/oxygenproduction
-	name = "Oxygen Production"
-	desc = "The pathogen produces oxygen."
-	rarity = RARITY_VERY_RARE
+datum/pathogeneffects/benevolent/oxygenstorage
+	name = "Oxygen Storage"
+	desc = "The pathogen stores oxygen and releases it when needed by the host."
+	rarity = RARITY_RARE
 
 	may_react_to()
-		return "The pathogen appears to radiate a bubble of oxygen."
+		return "The pathogen appears to have a bubble of oxygen around it."
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
 			return
-		if (M:losebreath > 0)
-			M:losebreath = 0
-		if (M.get_oxygen_deprivation())
-			M.take_oxygen_deprivation(0 - origin.stage)
+		if(!origin.symptom_data["oxygen_storage"]) // if not yet set, initialize
+			origin.symptom_data["oxygen_storage"] = 0
+
+		var/mob/living/carbon/C = M
+		if (C.get_oxygen_deprivation())
+			if(origin.symptom_data["oxygen_storage"] > 10)
+				C.setStatus("patho_oxy_speed", duration = INFINITE_STATUS, optional = origin.symptom_data["oxygen_storage"])
+				origin.symptom_data["oxygen_storage"] = 0
+		else
+			// faster reserve replenishment at higher stages
+			origin.symptom_data["oxygen_storage"] = min(100, origin.symptom_data["oxygen_storage"] + origin.stage*2)
+
 
 datum/pathogeneffects/benevolent/resurrection
 	name = "Necrotic Resurrection"

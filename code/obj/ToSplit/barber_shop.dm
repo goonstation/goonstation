@@ -298,9 +298,7 @@
 				src.uses_left = 0
 				src.icon_state= "dye-e"
 
-		M.set_face_icon_dirty()
-		M.set_body_icon_dirty()
-		M.update_clothing()
+		M.update_colorful_parts()
 	return 1
 
 //////////////////////////////

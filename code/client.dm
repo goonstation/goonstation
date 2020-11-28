@@ -305,6 +305,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							</head>
 							<body>
 								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
 							</body>
 						</html>
 					"}
@@ -422,6 +423,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	SPAWN_DBG(0)
 		updateXpRewards()
 
+	//tg controls stuff
+
+	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
+	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
+
 	SPAWN_DBG(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 		var/is_newbie = 0
@@ -483,7 +489,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -523,6 +528,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					var/cur = volumes.len
 					volumes = json_decode(decoded)
 					volumes.len = cur
+
+		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -582,11 +589,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
 	// cursed darkmode end
-
-	//tg controls stuff
-
-	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
-	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	//tg controls end
 

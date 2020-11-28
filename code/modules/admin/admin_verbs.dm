@@ -174,7 +174,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_scale_type,
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
-		/client/proc/cmd_get_type
+		/client/proc/cmd_get_type,
+
+		/client/proc/vpn_whitelist_add,
+		/client/proc/vpn_whitelist_remove
 		),
 
 	4 = list(
@@ -901,7 +904,7 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -928,8 +931,8 @@ var/list/fun_images = list()
 			return
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new()
-	H.set_loc(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, src.preferences.AH)
+	//H.set_loc(mymob.loc)
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -1952,3 +1955,28 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 
 	src.update_cursor()
+
+
+/client/proc/vpn_whitelist_add(vpnckey as text)
+	set name = "VPN whitelist add"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	return 1
+
+/client/proc/vpn_whitelist_remove(vpnckey as text)
+	set name = "VPN whitelist remove"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	return 1

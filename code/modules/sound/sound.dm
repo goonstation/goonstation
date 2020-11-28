@@ -172,11 +172,14 @@ var/global/list/falloff_cache = list()
 			//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
 			if (dist > falloff_cache.len)
 				falloff_cache.len = dist
-			var/falloffmult = falloff_cache[dist]
+			var/falloffmult
+			if(extrarange == 0)
+				falloffmult = falloff_cache[dist]
 			if (falloffmult == null)
 				scaled_dist = clamp(dist/(MAX_SOUND_RANGE+extrarange),0,1)
 				falloffmult = (1 - ((1.0542 * (0.18**-1.7)) / ((scaled_dist**-1.7) + (0.18**-1.7))))
-				falloff_cache[dist] = falloffmult
+				if(extrarange == 0)
+					falloff_cache[dist] = falloffmult
 
 			ourvolume *= falloffmult
 
