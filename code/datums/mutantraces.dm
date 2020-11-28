@@ -9,6 +9,7 @@
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
 	var/datum/appearanceHolder/AH
+	var/datum/appearanceHolder/origAH
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -275,6 +276,8 @@
 
 		switch(mode)
 			if("set")	// upload everything, the appearance flags'll determine what gets used
+				origAH = new/datum/appearanceHolder
+				origAH.CopyOther(AH) // backup the old appearanceholder
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
 				AH.customization_first_color_original = AH.customization_first_color
@@ -304,37 +307,8 @@
 					AH.head_icon = src.mutant_folder
 				AH.UpdateMob()
 			if("reset")
-				AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
-				AH.mob_color_flags = null
-				AH.body_icon = 'icons/mob/human.dmi'
-				AH.body_icon_state = "skeleton"
-				AH.head_icon = 'icons/mob/human_head.dmi'
-				AH.head_icon_state = "head"
-				AH.s_tone = AH.s_tone_original
-				AH.customization_icon = 'icons/mob/human_hair.dmi'
-				AH.customization_first = AH.customization_first_original
-				AH.customization_second = AH.customization_second_original
-				AH.customization_third = AH.customization_third_original
-				AH.customization_first_color = AH.customization_first_color_original
-				AH.customization_second_color = AH.customization_second_color_original
-				AH.customization_third_color = AH.customization_third_color_original
-				AH.mob_detail_1 = null
-				AH.mob_detail_2 = null
-				AH.mob_detail_3 = null
-				AH.mob_oversuit_1 = null
-				AH.mob_oversuit_2 = null
-				AH.mob_oversuit_3 = null
-				AH.mutant_race = null
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit_1 = null
-				detail_over_suit_2 = null
-				detail_over_suit_3 = null
-				special_hair_1 = null
-				special_hair_2 = null
-				special_hair_3 = null
-				AH.UpdateMob()
+				AH.CopyOther(origAH)
+				qdel(origAH)
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
