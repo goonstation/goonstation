@@ -353,7 +353,7 @@
 			S.name = "[personname]'s skeleton"
 			S.health = 1
 			H.gib()
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 50, 0)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")

@@ -606,6 +606,7 @@
 		boutput(W, "<B>You are a wraith! Terrorize the mortals and drive them into releasing their life essence!</B>")
 		boutput(W, "Your astral powers enable you to survive one banishment. Beware of salt.")
 		boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
+		boutput(W, "please dm retkid#9135 for any sound-related feedback")
 
 		return W
 	return null

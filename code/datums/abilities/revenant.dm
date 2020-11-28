@@ -281,7 +281,7 @@
 	cooldown = 300
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 70, 0)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 90, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -462,7 +462,7 @@
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 100, 0)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 120, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
