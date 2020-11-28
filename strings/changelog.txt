@@ -1,6 +1,10 @@
 
 (t)fri nov 27 20
 (u)Gannets
+(p)2852
+(e)🆕|feature
+(+)Adds the main bridge to the cogmap1 nuke ops target location list.
+(u)Gannets
 (p)2849
 (e)⚖🆕🗺|balance, feature, mapping
 (*)Removed sarin grenades from the Cairngorm.
