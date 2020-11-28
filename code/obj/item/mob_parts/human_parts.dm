@@ -1310,17 +1310,12 @@ obj/item/parts/human_parts/arm/right/reliquary
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
-	decomp_affected = 0
 	skintoned = 0
 
 	New(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		src.standImage = image(src.partIcon, "[src.slot]")
-		return standImage
 
 /obj/item/parts/human_parts/leg/mutant
 	name = "left mutant leg!"
@@ -1338,10 +1333,6 @@ obj/item/parts/human_parts/arm/right/reliquary
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = 0)
-		src.standImage = image(src.partIcon, "[src.slot]")
-		return standImage
 
 //// COW LIMBS ////
 ///// PARENT  /////
