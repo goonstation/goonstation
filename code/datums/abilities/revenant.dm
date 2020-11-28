@@ -277,7 +277,7 @@
 	special_screen_loc = "NORTH-1,WEST"
 	targeted = 1
 	target_anything = 1
-	pointCost = 1 //500
+	pointCost = 500
 	cooldown = 300
 
 	cast(atom/target)
@@ -315,7 +315,7 @@
 	desc = "Emit a shockwave, breaking nearby lights and walls, and stunning nearby humans for a short time."
 	icon_state = "shockwave"
 	targeted = 0
-	pointCost = 1 //750
+	pointCost = 750
 	cooldown = 350 // 35s
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
@@ -397,7 +397,7 @@
 	desc = "Empower your hand-to-hand attacks for a short time, causing additional damage and knockdown."
 	icon_state = "eviltouch"
 	targeted = 0
-	pointCost = 1 //1000
+	pointCost = 1000
 	cooldown = 300
 	special_screen_loc = "NORTH-1,WEST+2"
 
@@ -418,7 +418,7 @@
 	icon_state = "push"
 	targeted = 1
 	target_anything = 1
-	pointCost = 1 //50
+	pointCost = 50
 	cooldown = 150
 	special_screen_loc = "NORTH-1,WEST+3"
 
@@ -457,7 +457,7 @@
 	desc = "Channel your telekinetic abilities at a human target, causing damage as long as you stand still. Casting any other spell will interrupt this!"
 	icon_state = "crush"
 	targeted = 1
-	pointCost = 1 //2500
+	pointCost = 2500
 	cooldown = 600
 	special_screen_loc = "NORTH-1,WEST+4"
 

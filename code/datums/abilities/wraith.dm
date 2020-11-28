@@ -203,8 +203,8 @@
 	desc = "Take control of an intact corpse as a powerful Revenant! You will not be able to absorb this corpse later. As a revenant, you gain increased point generation, but your revenant abilities cost much more points than normal."
 	targeted = 1
 	target_anything = 1
-	pointCost = 1 //1000 encause i forget
-	cooldown = 1 //5 minutes //5000 encause i forget
+	pointCost = 1000
+	cooldown = 5000
 
 	cast(atom/T)
 		if (..())
