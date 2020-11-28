@@ -935,6 +935,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		current_projectile = new/datum/projectile/bullet/bullet_9mm
 		..()
 
+/obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
 	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."

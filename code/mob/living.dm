@@ -45,7 +45,7 @@
 
 	var/canspeak = 1
 
-	var/datum/organHolder/organHolder = 0 //Not all living mobs will use organholder. Instantiate on New() if you want one.
+	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
 	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
@@ -1200,7 +1200,7 @@
 	var/checkpath = src.static_type_override ? src.static_type_override : src.type
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace) && H.mutantrace.icon_override_static)
+		if (istype(H.mutantrace))
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1

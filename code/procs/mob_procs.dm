@@ -1,3 +1,4 @@
+// if you're looking for something like find_in_active_hand(), you'll want /mob/proc/equipped()
 /mob/proc/find_in_hand(var/obj/item/I, var/this_hand) // for when you need to find a SPECIFIC THING and not just a type
 	if (!I) // did we not get passed a thing to look for?
 		return // fuck you

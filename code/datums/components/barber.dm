@@ -139,6 +139,8 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 
@@ -526,6 +528,8 @@
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		..()
 
 	onInterrupt()
@@ -625,6 +629,8 @@
 							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		..()
 
 	onInterrupt()

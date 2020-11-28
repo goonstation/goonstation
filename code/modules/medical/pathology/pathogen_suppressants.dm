@@ -233,11 +233,11 @@
 	color = "orange"
 	name = "Fat"
 	desc = "The pathogen is suppressed by fats."
-	cure_synthesis = list("bad_grease", "grease", "porktonium", "cholesterol")
+	cure_synthesis = list("badgrease", "grease", "porktonium", "cholesterol")
 	therapy = "gastronomical"
 
 	suppress_act(var/datum/pathogen/P)
-		if (P.infected.reagents.has_reagent("bad_grease", P.suppression_threshold) || P.infected.reagents.has_reagent("grease", P.suppression_threshold) || P.infected.reagents.has_reagent("porktonium", P.suppression_threshold) || P.infected.reagents.has_reagent("cholesterol", P.suppression_threshold))
+		if (P.infected.reagents.has_reagent("badgrease", P.suppression_threshold) || P.infected.reagents.has_reagent("grease", P.suppression_threshold) || P.infected.reagents.has_reagent("porktonium", P.suppression_threshold) || P.infected.reagents.has_reagent("cholesterol", P.suppression_threshold))
 			if (P.stage > 3 && prob(P.advance_speed * 2))
 				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--
@@ -281,10 +281,10 @@
 	desc = "The pathogen is suppressed by radiation."
 	therapy = "radioactive"
 
-	cure_synthesis = list("radium", "dna_mutagen")
+	cure_synthesis = list("radium", "mutagen", "uranium", "polonium")
 
 	suppress_act(var/datum/pathogen/P)
-		if (P.infected.reagents.has_reagent("radium", P.suppression_threshold) || P.infected.reagents.has_reagent("dna_mutagen", P.suppression_threshold) || P.infected.reagents.has_reagent("mutagen", P.suppression_threshold) || (P.infected.getStatusDuration("radiation")/10) > P.suppression_threshold * 0.1)
+		if ((P.infected.getStatusDuration("radiation")/10) > P.suppression_threshold * 0.1 || (P.infected.getStatusDuration("n_radiation")/10) > P.suppression_threshold * 0.05)
 			if (P.stage > 3 && prob(P.advance_speed * 2))
 				P.infected.show_message("<span class='notice'>You feel better.</span>")
 				P.stage--

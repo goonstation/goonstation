@@ -1560,3 +1560,69 @@
 		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
 		current_projectile = new/datum/projectile/special/howitzer
 		projectiles = list(new/datum/projectile/special/howitzer )
+
+/obj/item/gun/energy/signifer2
+	name = "Signifer II"
+	desc = "It's a handgun? Or an smg? You can't tell."
+	icon_state = "signifer2"
+	force = 8
+	two_handed = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	can_swap_cell = 0
+	var/shotcount = 0
+
+
+	New()
+		current_projectile = new/datum/projectile/energy_bolt/signifer_tase
+		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
+		..()
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+				src.icon_state = "signifer_2"
+				src.item_state = "signifer_2"
+				muzzle_flash = "muzzle_flash_elec"
+				shoot_delay = 2
+				spread_angle = 0
+				force = 9
+			else //if (current_projectile.type == /datum/projectile/laser)
+				src.item_state = "signifer_2-smg"
+				src.icon_state = "signifer_2-smg"
+				muzzle_flash = "muzzle_flash_bluezap"
+				force = 12
+				spread_angle = 3
+				shoot_delay = 5
+
+	attack_self(var/mob/M)
+		if (!src.two_handed)
+
+			if(M.l_hand == src)
+				if(M.r_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+			else if(M.r_hand == src)
+				if(M.l_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+		..()
+
+		setTwoHanded(!src.two_handed)
+		src.can_dual_wield = !src.two_handed
+		update_icon()
+
+		M.update_inhands()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(++shotcount == 2)
+			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
+
+	shoot()
+		shotcount = 0
+		. = ..()

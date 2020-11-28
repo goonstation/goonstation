@@ -27,6 +27,10 @@
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)
 
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (!pry_surgery(M, user))
+			return ..()
+
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
