@@ -21,14 +21,25 @@
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
-	edible = 1
+	edible = 1	// currently overridden by material settings
 	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
 	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
+	var/datum/appearanceHolder/donor_AH //
 	var/donor_name = null // so you don't get dumb "Unknown's skull mask" shit
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/list/organ_abilities = null
+
+	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
+	// if you're making a tail, you need to have at least organ_image_under_suit_1 defined, or else it wont work
+	var/organ_image_icon = null		// The icon group we'll be using, such as 'icons/effects/genetics.dmi'
+	var/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
+	var/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+
+	var/organ_color_1 = "#FFFFFF"		// Typically used to colorize the organ image
+	var/organ_color_2 = "#FFFFFF"		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
 
 	var/op_stage = 0.0
 	var/brute_dam = 0
@@ -92,6 +103,8 @@
 			src.holder = nholder
 			src.donor = nholder.donor
 		if (src.donor)
+			if (src.donor.bioHolder)
+				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
@@ -241,14 +254,7 @@
 	take_damage(brute, burn, tox, damage_type)
 		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
 			return //vampires are already dead inside
-#if ASS_JAM //timestop stuff
-		if (ishuman(donor))
-			var/mob/living/carbon/human/H = donor
-			if (H.paused)
-				H.pausedburn = max(0, H.pausedburn + burn)
-				H.pausedbrute = max(0, H.pausedbrute + brute)
-				return 0
-#endif
+
 		src.brute_dam += brute
 		src.burn_dam += burn
 		src.tox_dam += tox

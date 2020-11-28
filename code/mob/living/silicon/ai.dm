@@ -191,12 +191,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-#if ASS_JAM
-	var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
-	src.set_hat(new hat_type)
 	if(prob(5))
-		src.give_feet()
-#endif
+		var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
+		src.set_hat(new hat_type)
+
 
 	SPAWN_DBG(0)
 		src.botcard.access = get_all_accesses()
@@ -1719,11 +1717,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
 	return
-
-/mob/living/silicon/ai/proc/announce_arrival(var/name, var/rank)
-	var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", rank), "$NAME", name)
-	src.say( message )
-	logTheThing("say", src, null, "SAY: [message]")
 
 /mob/living/silicon/ai/proc/set_zeroth_law(var/law)
 	ticker.centralized_ai_laws.laws_sanity_check()

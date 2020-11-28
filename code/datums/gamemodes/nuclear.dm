@@ -11,11 +11,8 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-#if ASS_JAM
-	var/const/agents_possible = 30 // on ass jam theres up to 30 nukies to compensate for the warcrime of the kinetitech
-#else
 	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
-#endif
+
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -101,6 +98,7 @@
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
@@ -109,23 +107,7 @@
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
-#if ASS_JAM
-	var/station_only = prob(40)
-	target_locations = list()
-	for(var/area/A in world)
-		var/has_turfs = 0
-		for (var/turf/T in A)
-			has_turfs = 1
-			break
-		if(!has_turfs)
-			break
-		if(station_only && !istype(A, /area/station))
-			continue
-		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A.type)
-		else
-			target_locations[A.name].Add(A.type)
-#endif
+
 
 	target_location_name = pick(target_locations)
 	if (!target_location_name)
@@ -460,3 +442,47 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+/obj/cairngorm_stats/
+	name = "Mission Memorial"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+
+	attack_hand(var/mob/user as mob)
+		if (..(user))
+			return
+
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		var/dat = ""
+		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
+
+		src.add_dialog(user)
+		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		onclose(user, "cairngorm_stats_[src]")
+		return
+
+/obj/cairngorm_stats/left
+	icon_state = "memorial_left"
+
+/obj/cairngorm_stats/right
+	icon_state = "memorial_right"

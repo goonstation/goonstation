@@ -25763,7 +25763,7 @@
 /area/crew_quarters/kitchen)
 "aWb" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/machinery/camera{
 	c_tag = "Bar West";

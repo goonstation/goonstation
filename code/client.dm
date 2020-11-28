@@ -305,6 +305,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							</head>
 							<body>
 								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
 							</body>
 						</html>
 					"}
@@ -326,7 +327,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1, 1, 1)
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 
 				// Goonhub API error encountered
 				if (data["error"])
@@ -335,36 +336,41 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					data = json_decode(html_decode(data["response"]))
-
-					// VPN checker service returns error responses in a "message" property
-					if (data["message"])
-						// Yes, we're forcing a cache for a no-VPN response here on purpose
-						// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
-						//			  so we want to avoid spamming the goonhub API this round for literally no gain
+					if (data["whitelisted"])
+						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
-						logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
-						logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
-					// Successful VPN check
 					else
-						var/list/security_info = data["security"]
+						data = json_decode(html_decode(data["response"]))
 
-						// IP is a known VPN, cache locally and kick
-						if (security_info["vpn"] == true)
-							global.vpn_ip_checks["[src.address]"] = true
-							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-							sleep(3 SECONDS)
-							if (src)
-								del(src)
-							return
-
-						// IP is not a known VPN
-						else
+						// VPN checker service returns error responses in a "message" property
+						if (data["message"])
+							// Yes, we're forcing a cache for a no-VPN response here on purpose
+							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+							//			  so we want to avoid spamming the goonhub API this round for literally no gain
 							global.vpn_ip_checks["[src.address]"] = false
+							logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+
+						// Successful VPN check
+						else
+							var/list/security_info = data["security"]
+
+							// IP is a known VPN, cache locally and kick
+							if (security_info["vpn"] == true)
+								global.vpn_ip_checks["[src.address]"] = true
+								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+								sleep(3 SECONDS)
+								if (src)
+									del(src)
+								return
+
+							// IP is not a known VPN
+							else
+								global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
@@ -416,6 +422,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	SPAWN_DBG(0)
 		updateXpRewards()
+
+	//tg controls stuff
+
+	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
+	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	SPAWN_DBG(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
@@ -478,7 +489,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -518,6 +528,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					var/cur = volumes.len
 					volumes = json_decode(decoded)
 					volumes.len = cur
+
+		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -577,11 +589,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
 	// cursed darkmode end
-
-	//tg controls stuff
-
-	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
-	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	//tg controls end
 

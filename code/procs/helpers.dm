@@ -92,10 +92,10 @@ var/global/obj/flashDummy
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
-/proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
+/proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage, var/volume = 30)
 	var/obj/O = getFlashDummy()
 	O.set_loc(target)
-	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
+	playsound(target, "sound/effects/elec_bigzap.ogg", volume, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
