@@ -20,7 +20,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismobcritter(M))
 			var/mob/living/critter/MC = M
-			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach))
+			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach) || istype(MC, /mob/living/critter/small_animal/wasp))
 				SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 					return
