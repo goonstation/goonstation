@@ -9,6 +9,7 @@
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
 	var/datum/appearanceHolder/AH
+	var/datum/appearanceHolder/origAH
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -246,10 +247,7 @@
 				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
 				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
 				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
-				var/droptail = 1
-				if(ischangeling(H))
-					droptail = 0
-				organ_mutator(H, "reset", droptail)
+				organ_mutator(H, "reset")
 				AppearanceSetter(H, "reset")
 				LimbSetter(H, "reset")
 				qdel(src.limb_list)
@@ -278,8 +276,16 @@
 
 		switch(mode)
 			if("set")	// upload everything, the appearance flags'll determine what gets used
+				origAH = new/datum/appearanceHolder
+				origAH.CopyOther(AH) // backup the old appearanceholder
 				AH.mob_appearance_flags = src.mutant_appearance_flags
 				AH.mob_color_flags = src.mutant_color_flags
+				AH.customization_first_color_original = AH.customization_first_color
+				AH.customization_second_color_original = AH.customization_second_color
+				AH.customization_third_color_original = AH.customization_third_color
+				AH.customization_first_original = AH.customization_first
+				AH.customization_second_original = AH.customization_second
+				AH.customization_third_original = AH.customization_third
 				AH.customization_first = src.special_hair_1
 				AH.customization_second = src.special_hair_2
 				AH.customization_third = src.special_hair_3
@@ -301,37 +307,9 @@
 					AH.head_icon = src.mutant_folder
 				AH.UpdateMob()
 			if("reset")
-				AH.mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
-				AH.mob_color_flags = null
-				AH.body_icon = 'icons/mob/human.dmi'
-				AH.body_icon_state = "skeleton"
-				AH.head_icon = 'icons/mob/human_head.dmi'
-				AH.head_icon_state = "head"
-				AH.s_tone = AH.s_tone_original
-				AH.customization_icon = 'icons/mob/human_hair.dmi'
-				AH.customization_first = AH.customization_first_original
-				AH.customization_second = AH.customization_second_original
-				AH.customization_third = AH.customization_third_original
-				AH.customization_first_color = AH.customization_first_color_original
-				AH.customization_second_color = AH.customization_second_color_original
-				AH.customization_third_color = AH.customization_third_color_original
-				AH.mob_detail_1 = null
-				AH.mob_detail_2 = null
-				AH.mob_detail_3 = null
-				AH.mob_oversuit_1 = null
-				AH.mob_oversuit_2 = null
-				AH.mob_oversuit_3 = null
+				AH.CopyOther(origAH)
+				qdel(origAH)
 				AH.mutant_race = null
-				detail_1 = null
-				detail_2 = null
-				detail_3 = null
-				detail_over_suit_1 = null
-				detail_over_suit_2 = null
-				detail_over_suit_3 = null
-				special_hair_1 = null
-				special_hair_2 = null
-				special_hair_3 = null
-				AH.UpdateMob()
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
@@ -444,7 +422,8 @@
 					for(var/mutorgan in src.mutant_organs)
 						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
 							if (OHM.tail)
-								var/obj/organ_drop = OHM.tail
+								var/obj/item/organ/tail/organ_drop = OHM.tail
+								organ_drop.donor = null // Humanizing tail-havers made them clumsy otherwise
 								OHM.drop_organ("tail")
 								if (!drop_tail)
 									qdel(organ_drop)

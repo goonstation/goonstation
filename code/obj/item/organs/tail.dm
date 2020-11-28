@@ -8,10 +8,10 @@
 	organ_holder_name = "tail"
 	organ_holder_location = "chest"	// chest-ish
 	organ_holder_required_op_stage = 11.0
-	edible = 0	// doesn't seem to prevent people from eating organs. Might be cus they're made of meat?
+	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
-	made_from = "bone"	// clak clak stop eating my hack
+	made_from = "flesh"
 	var/tail_num = TAIL_NONE
 	var/colorful = 0 // if we need to colorize it
 	var/multipart_icon = 0 // if we need to run update_tail_icon
@@ -96,6 +96,7 @@
 				H.organHolder.tail.op_stage = 0.0
 			else
 				H.organHolder.tail.op_stage = 11.0
+			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)
 			return 1
@@ -114,7 +115,7 @@
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
-		if(probmult(2) && src.donor.mutantrace)
+		if(probmult(2) && src.donor.mutantrace && src.failure_ability && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
 
@@ -173,7 +174,6 @@
 	desc = "A long, slender tail."
 	icon_state = "tail-monkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
-	edible = 0
 	tail_num = TAIL_MONKEY
 	organ_image_under_suit_1 = "monkey_under_suit"
 	organ_image_under_suit_2 = null
@@ -198,7 +198,6 @@
 	desc = "A short, brush-like tail."
 	icon_state = "tail-cow"
 	organ_image_icon = 'icons/mob/cow.dmi'
-	edible = 0
 	tail_num = TAIL_COW
 	organ_image_under_suit_1 = "cow_under_suit"
 	organ_image_under_suit_2 = null
@@ -211,7 +210,6 @@
 	organ_image_icon = 'icons/mob/werewolf.dmi'
 	MAX_DAMAGE = 250	// Robust tail for a robust antag
 	FAIL_DAMAGE = 240
-	edible = 0
 	tail_num = TAIL_WEREWOLF
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null
@@ -225,6 +223,7 @@
 	created_decal = null	// just a piece of bone
 	tail_num = TAIL_SKELETON
 	edible = 0
+	made_from = "bone"
 	organ_image_under_suit_1 = null
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = null
@@ -235,7 +234,6 @@
 	icon_state = "tail-seamonkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
 	tail_num = TAIL_SEAMONKEY
-	edible = 0
 	organ_image_under_suit_1 = "seamonkey_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "seamonkey_over_suit"
@@ -246,7 +244,6 @@
 	icon_state = "tail-cat"
 	organ_image_icon = 'icons/mob/cat.dmi'
 	tail_num = TAIL_CAT
-	edible = 0
 	organ_image_under_suit_1 = "cat_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cat_over_suit"
@@ -257,7 +254,6 @@
 	icon_state = "tail-roach"
 	organ_image_icon = 'icons/mob/roach.dmi'
 	tail_num = TAIL_ROACH
-	made_from = "chitin"
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"

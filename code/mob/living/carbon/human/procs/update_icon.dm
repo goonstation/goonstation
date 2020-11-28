@@ -649,7 +649,7 @@
 	if (!src.bioHolder)
 		return // fuck u
 
-	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER1) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
 	src.hair_standing.overlays.len = 0
 
 	var/seal_hair = (src.head && src.head.seal_hair)

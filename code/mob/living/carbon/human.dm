@@ -2891,11 +2891,14 @@
 	else
 		return 0
 
-/mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
+/mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
+
+	if(istype(mutantrace_type, /datum/mutantrace)) // So it'll still work if passed an initialized datum
+		mutantrace_type = mutantrace_type.type
 
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)

@@ -193,7 +193,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
-		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
