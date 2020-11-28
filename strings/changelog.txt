@@ -1,5 +1,10 @@
 
 (t)fri nov 27 20
+(u)Gannets
+(p)2849
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Removed sarin grenades from the Cairngorm.
+(*)Added sarin grenade as a utility item purchased from the Syndicate Weapon Vendor.
 (u)Superlagg
 (p)1833
 (e)⚖🆕🔄🎨|balance, feature, rework, sprites
