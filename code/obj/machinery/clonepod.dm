@@ -225,6 +225,7 @@
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race.type)
 		else
 			logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 

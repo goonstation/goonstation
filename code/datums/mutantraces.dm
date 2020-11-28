@@ -309,6 +309,7 @@
 			if("reset")
 				AH.CopyOther(origAH)
 				qdel(origAH)
+				AH.mutant_race = null
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
