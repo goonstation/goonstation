@@ -146,8 +146,8 @@
 			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
 		return 0
 		doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
-		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
-			return
+			if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
+				return
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
