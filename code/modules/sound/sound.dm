@@ -199,7 +199,6 @@ var/global/list/falloff_cache = list()
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
 			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 			C.sound_playing[ S.channel ][1] = storedVolume
-			message_admins("[soundin]")
 			C.sound_playing[ S.channel ][2] = channel
 
 			S.volume = ourvolume
