@@ -458,9 +458,18 @@
 	var/const/history_max = 50
 
 	proc/generate_variants(a=null,b=null)
-		var/prepend_serial_num = "[pick(consonants_upper)][pick(consonants_upper)]"
+		// CIRC-122333-4-5
+		// 	1 - RNG (Fluff Family/Location of Assembly)
+		// 	2 - Variant A (Minor Variants to impact circulator)
+		// 	3 - RNG (Fluff unique identifier for QA and root cause analysis)
+		//  4 - L or R depending on circulator
+		// 	5 - Variant B (Major Variants "Experimental" to impact generator) these should only happen occasionally
+		var/prepend_serial_num = "[pick(consonants_upper)]" // Lore: Production facility identifier
 
-		if(is_null_or_space(a))	src.variant_a = rand(10,99)
+		if(is_null_or_space(a))
+			//Set initial value for standard variants
+			src.variant_a = rand(10,19)
+			//New Variant A to follow and are identifier numerically
 		else src.variant_a = a
 
 		if(is_null_or_space(b))
