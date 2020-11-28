@@ -8,10 +8,10 @@
 	organ_holder_name = "tail"
 	organ_holder_location = "chest"	// chest-ish
 	organ_holder_required_op_stage = 11.0
-	edible = 1	// doesn't seem to prevent people from eating organs. Might be cus they're made of meat?
+	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
-	made_from = "flesh"	// clak clak stop eating my hack
+	made_from = "flesh"
 	var/tail_num = TAIL_NONE
 	var/colorful = 0 // if we need to colorize it
 	var/multipart_icon = 0 // if we need to run update_tail_icon
@@ -115,7 +115,7 @@
 			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	on_broken(var/mult = 1)
-		if(probmult(2) && src.donor.mutantrace)
+		if(probmult(2) && src.donor.mutantrace && src.failure_ability && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
 			src.donor.change_misstep_chance(10)
 			src.donor.bioHolder.AddEffect(failure_ability)
 

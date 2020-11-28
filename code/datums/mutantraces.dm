@@ -422,7 +422,8 @@
 					for(var/mutorgan in src.mutant_organs)
 						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
 							if (OHM.tail)
-								var/obj/organ_drop = OHM.tail
+								var/obj/item/organ/tail/organ_drop = OHM.tail
+								organ_drop.donor = null // Humanizing tail-havers made them clumsy otherwise
 								OHM.drop_organ("tail")
 								if (!drop_tail)
 									qdel(organ_drop)
