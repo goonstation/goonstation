@@ -266,7 +266,8 @@
 
 	return
 
-/proc/get_alive_antags_percentage() // returns a decimal representing the percentage of alive crew that are also antags
+/// returns a decimal representing the percentage of alive crew that are also antags
+/proc/get_alive_antags_percentage()
 	var/alive = 0
 	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
 
@@ -292,7 +293,8 @@
 	else
 		return (alive_antags / alive)
 
-/proc/get_dead_crew_percentage() // returns a decimal representing the percentage of dead crew (non-observers) to all crew
+/// returns a decimal representing the percentage of dead crew (non-observers) to all crew
+/proc/get_dead_crew_percentage()
 	var/all = 0
 	var/dead = 0
 	var/observer = 0
