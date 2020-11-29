@@ -1,4 +1,3 @@
-
 var/list/bioUids = new/list() //Global list of all uids and their respective mobs
 
 var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
@@ -16,27 +15,93 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /// Holds all the appearance information.
 /datum/appearanceHolder
+	/** Mob Appearance Flags - used to modify how the mob is drawn
+	*
+	* These flags help define what features get drawn when the mob's sprite is assembled
+	*
+	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	*
+	* SEE: appearance.dm for more flags and details!
+	*/
+	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+	/** Mob Color Flags - used to modify how the mob's features are drawn
+	*
+	* SEE: appearance.dm for more flags and details!
+	*/
+	var/mob_color_flags = null
 
-	//_carry holds our "actual" color, in case it changes and we want the old one back
-	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
+	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
+	var/body_icon = 'icons/mob/human.dmi'
+	/// for mutant races that are rendered using a static icon. Ignored if BUILT_FROM_PIECES is set in mob_appearance_flags
+	var/body_icon_state = "skeleton"
+	/// What DMI holds the mob's head sprite
+	var/head_icon = 'icons/mob/human_head.dmi'
+	/// What icon state is our mob's head?
+	var/head_icon_state = "head"
 
-	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
+	/// What DMI holds the mob's hair sprites
+	var/customization_icon = 'icons/mob/human_hair.dmi'
+	/// What DMI holds any additional hair sprites that we need
+	var/customization_icon_special = 'icons/mob/human_hair.dmi'
+
+	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
+	/// The color that was set by the player's preferences
+	var/customization_first_color_original = "#101010"
+	/// The hair style / detail thing that gets displayed on your spaceperson
 	var/customization_first = "Trimmed"
+	/// The hair style / detail thing that was set by the player in their settings
+	var/customization_first_original = "None"
+	/// The Y offset to display this image
+	var/customization_first_offset_y = 0
 
 	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
+	var/customization_second_color_original = "#101010"
 	var/customization_second = "None"
+	var/customization_second_original = "None"
+	var/customization_second_offset_y = 0
+
 
 	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
+	var/customization_third_color_original = "#101010"
 	var/customization_third = "None"
+	var/customization_third_original = "None"
+	var/customization_third_offset_y = 0
+
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_1
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_2
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_3
+
+
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	/// Not to be used to define a tail oversuit, that's done by the tail organ.
+	/// This is for things like the cow having a muzzle that shows up over their outer-suit
+	var/mob_oversuit_1
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	var/mob_oversuit_2
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	var/mob_oversuit_3
+
+	/// Used by changelings to determine which type of limbs their victim had
+	var/datum/mutantrace/mutant_race = null
 
 	var/e_color = "#101010"
-	var/e_color_carry = "#101010"
+	var/e_color_original = "#101010"
+	/// Eye icon
+	var/e_icon = 'icons/mob/human_hair.dmi'
+	/// Eye icon state
+	var/e_state = "eyes"
+	/// How far up or down to move the eyes
+	var/e_offset_y = 0
 
-	var/s_tone_carry = "#FFCC99"
+	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
+
 	// Standard tone reference:
 	// FAD7D0 - Albino
 	// FFCC99 - White
@@ -55,8 +120,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
-
-	var/datum/mutantrace/mutant_race = null
 
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
@@ -92,31 +155,59 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
-		customization_first_color_carry = toCopy.customization_first_color_carry
-		customization_first_color = toCopy.customization_first_color
-		customization_first = toCopy.customization_first
-
-		customization_second_color_carry = toCopy.customization_second_color_carry
-		customization_second_color = toCopy.customization_second_color
-		customization_second = toCopy.customization_second
-
-		customization_third_color_carry = toCopy.customization_third_color_carry
-		customization_third_color = toCopy.customization_third_color
-		customization_third = toCopy.customization_third
-
+		mob_appearance_flags = toCopy.mob_appearance_flags
 		mob_color_flags = toCopy.mob_color_flags
 
+		body_icon = toCopy.body_icon
+		body_icon_state = toCopy.body_icon_state
+		head_icon = toCopy.head_icon
+		head_icon_state = toCopy.head_icon_state
+
+		customization_icon = toCopy.customization_icon
+		customization_icon_special = toCopy.customization_icon_special
+
+		customization_first_color_original = toCopy.customization_first_color_original
+		customization_first_color = toCopy.customization_first_color
+		customization_first = toCopy.customization_first
+		customization_first_offset_y = toCopy.customization_first_offset_y
+		customization_first_original = toCopy.customization_first_original
+
+		customization_second_color_original = toCopy.customization_second_color_original
+		customization_second_color = toCopy.customization_second_color
+		customization_second = toCopy.customization_second
+		customization_second_offset_y = toCopy.customization_second_offset_y
+		customization_second_original = toCopy.customization_second_original
+
+		customization_third_color_original = toCopy.customization_third_color_original
+		customization_third_color = toCopy.customization_third_color
+		customization_third = toCopy.customization_third
+		customization_third_offset_y = toCopy.customization_third_offset_y
+		customization_third_original = toCopy.customization_third_original
+
+		mob_detail_1 = toCopy.mob_detail_1
+		mob_detail_2 = toCopy.mob_detail_2
+		mob_detail_3 = toCopy.mob_detail_3
+
+		mob_oversuit_1 = toCopy.mob_oversuit_1
+		mob_oversuit_2 = toCopy.mob_oversuit_2
+		mob_oversuit_3 = toCopy.mob_oversuit_3
+
+		mutant_race = toCopy.mutant_race
+
 		e_color = toCopy.e_color
+		e_icon = toCopy.e_icon
+		e_state = toCopy.e_state
+		e_offset_y = toCopy.e_offset_y
+		e_color_original = toCopy.e_color_original
 
 		s_tone = toCopy.s_tone
-		s_tone_carry = toCopy.s_tone_carry
+		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
-		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
@@ -183,19 +274,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
 
-			var/list/hair_list = customization_styles + customization_styles_gimmick
-			H.cust_one_state = hair_list[customization_first]
+			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
 
-			var/list/beard_list = customization_styles + customization_styles_gimmick
-			H.cust_two_state = beard_list[customization_second]
-
-			var/list/detail_list = customization_styles + customization_styles_gimmick
-			H.cust_three_state = detail_list[customization_third]
+			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+					src.s_tone = src.customization_first_color
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+					src.s_tone = src.customization_second_color
+				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+					src.s_tone = src.customization_third_color
 
 			H.gender = src.gender
-			H.update_face()
+
+			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
 			H.update_body()
 			H.update_clothing()
 

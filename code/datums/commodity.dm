@@ -868,6 +868,15 @@
 	upperfluc = 5000
 	lowerfluc = -3000
 
+/datum/commodity/relics/bootlegfirework
+	comname = "Bootleg Firework (1x rocket)"
+	comtype = /obj/item/firework/bootleg
+	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
+	price = 60
+	baseprice = 60
+	upperfluc = 10
+	lowerfluc = -10
+
 ////////////////////////////////
 ///// syndicate trader /////////
 ////////////////////////////////
@@ -2166,7 +2175,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-#if ASS_JAM
+/*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
 	comtype = /obj/item/clothing/shoes/scream
@@ -2186,7 +2195,7 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-#endif
+*/
 
 /// pathology
 /datum/commodity/synthmodule

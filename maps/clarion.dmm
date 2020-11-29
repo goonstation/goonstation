@@ -1177,7 +1177,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1519,7 +1519,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1586,7 +1586,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1810,7 +1810,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1877,7 +1877,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2072,7 +2072,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2568,7 +2568,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2635,7 +2635,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2711,7 +2711,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3289,7 +3289,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3541,7 +3541,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3608,7 +3608,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3712,7 +3712,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3780,7 +3780,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3912,7 +3912,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4403,7 +4403,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4470,7 +4470,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4545,7 +4545,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5152,7 +5152,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5405,7 +5405,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5472,7 +5472,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5649,7 +5649,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5716,7 +5716,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5867,7 +5867,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6398,7 +6398,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6465,7 +6465,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6618,7 +6618,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6685,7 +6685,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7277,7 +7277,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7344,7 +7344,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7445,7 +7445,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7512,7 +7512,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -16543,7 +16543,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)

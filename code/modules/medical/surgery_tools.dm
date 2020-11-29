@@ -317,9 +317,7 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
-		#if ASS_JAM
-			//DISABLE ZIPGUN DURING ASSJAM
-		#else
+
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -337,7 +335,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
-		#endif
+
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -990,7 +988,7 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm and begins transferring blood.",\
+				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
 				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
 				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
 				src.in_use = 1

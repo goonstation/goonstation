@@ -326,7 +326,7 @@
 			return list(access_maint_tunnels, access_hydro)
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
-		if("Barman")
+		if("Bartender")
 			return list(access_bar)
 		if("Waiter")
 			return list(access_bar, access_kitchen)

@@ -1371,6 +1371,7 @@ var/global/list/soundCache = list(
  	"sound/voice/macho/macho_shout07.ogg" = 'sound/voice/macho/macho_shout07.ogg',\
  	"sound/voice/macho/macho_shout08.ogg" = 'sound/voice/macho/macho_shout08.ogg',\
  	"sound/voice/macho/macho_slimjim.ogg" = 'sound/voice/macho/macho_slimjim.ogg',\
+ 	"sound/voice/screams/chicken_bawk.ogg" = 'sound/voice/screams/chicken_bawk.ogg',\
  	"sound/voice/screams/female_scream.ogg" = 'sound/voice/screams/female_scream.ogg',\
  	"sound/voice/screams/fescream1.ogg" = 'sound/voice/screams/fescream1.ogg',\
  	"sound/voice/screams/fescream2.ogg" = 'sound/voice/screams/fescream2.ogg',\

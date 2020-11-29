@@ -4029,6 +4029,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/fitness)
+"aPo" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "aPw" = (
 /obj/cable{
 	d1 = 1;
@@ -10639,6 +10644,12 @@
 /obj/decal/garland,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
+"cNg" = (
+/obj/machinery/light/incandescent/netural,
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "cNh" = (
 /obj/cable{
 	d1 = 4;
@@ -39447,7 +39458,7 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -42536,6 +42547,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/plantpot{
+	anchored = 1
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
@@ -68632,6 +68646,9 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/plantpot{
+	anchored = 1
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
@@ -131756,7 +131773,7 @@ kHx
 mke
 mke
 mke
-kHx
+aPo
 wqJ
 vHl
 amI
@@ -132058,7 +132075,7 @@ rGc
 mru
 oqV
 eQI
-xNi
+cNg
 wqJ
 yjy
 yjy

@@ -366,7 +366,7 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 80, 1)
 		if (!owner.starter_buff)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -436,7 +436,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 60, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 80, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -475,7 +475,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("deploy", "attack")].ogg", 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("deploy", "attack")].ogg", 85, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))

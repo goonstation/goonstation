@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors_airless.dm
  */
 
@@ -1627,6 +1627,15 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwall"
 
+		junction
+			icon_state = "leadjunction"
+
+		junction_four
+			icon_state = "leadjunction_4way"
+
+		cap
+			icon_state = "leadcap"
+
 		gray
 			icon_state = "leadwall_gray"
 
@@ -1640,6 +1649,9 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwindow_1"
 		opacity = 0
+
+		full
+			icon_state = "leadwindow_2"
 
 		gray
 			icon_state = "leadwindow_gray_1"

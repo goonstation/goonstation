@@ -1735,6 +1735,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	mats = 12
+	var/range = 10
 
 	var/message = null
 	var/mailgroup = null
@@ -1766,7 +1767,7 @@
 		..()
 
 		SPAWN_DBG(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, range)
 		SPAWN_DBG(0.8 SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")

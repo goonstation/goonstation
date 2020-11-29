@@ -9,7 +9,7 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics

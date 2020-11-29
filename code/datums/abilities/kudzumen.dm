@@ -303,8 +303,8 @@
 			C.remove_ailments()
 			if (C.organHolder)
 				var/organ_const = heal_coef/3
-				C.organHolder.heal_organs(organ_const, organ_const, organ_const, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
-		
+				C.organHolder.heal_organs(organ_const, organ_const, organ_const, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
+
 			//remove all implants too
 			if (C.implant)
 				for (var/obj/item/implant/I in C.implant)

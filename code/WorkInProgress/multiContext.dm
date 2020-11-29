@@ -267,18 +267,19 @@ var/list/globalContextActions = null
 
 	proc/checkContextActions(var/atom/target)
 		var/list/applicable = list()
-		var/obj/item/W = src.equipped()
-		if(W && length(W.contextActions))
-			for(var/datum/contextAction/C in W.contextActions)
-				var/action = C.checkRequirements(target, src)
-				if(action) applicable.Add(C)
 
 		if(length(target?.contextActions))
 			for(var/datum/contextAction/C in target.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
 
-		if(length(src.contextActions))
+		var/obj/item/W = src.equipped()
+		if(W && W != target && length(W.contextActions))
+			for(var/datum/contextAction/C in W.contextActions)
+				var/action = C.checkRequirements(target, src)
+				if(action) applicable.Add(C)
+
+		if(src != target && length(src.contextActions))
 			for(var/datum/contextAction/C in src.contextActions)
 				var/action = C.checkRequirements(target, src)
 				if(action) applicable.Add(C)
@@ -1124,6 +1125,31 @@ var/list/globalContextActions = null
 				var/obj/machinery/vehicle/V = target
 				V.return_to_station()
 
+	cellphone
+		name = "Cellphone action"
+		desc = "You shouldn't see this, bug!"
+		icon_state = "wrench"
+
+		checkRequirements(var/atom/target, var/mob/user)
+			. = (target.loc == user && user.equipped() == target)
+
+		/*mail
+			name = "Check Mail"
+			desc = "Well aren't you popular?"
+			icon_state = "mail"*/
+
+		tetris
+			name = "Play Tetris"
+			desc = "The wonders of technology!"
+			icon_state = "tetris"
+
+			execute(var/atom/target, var/mob/user)
+				..()
+				var/obj/item/toy/cellphone/C = target
+				C.icon_state = "cellphone-tetris"
+				C.add_dialog(user)
+				C.tetris.new_game(user)
+				return
 
 	instrument
 		icon = 'icons/ui/context16x16.dmi'
