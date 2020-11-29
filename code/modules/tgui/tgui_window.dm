@@ -99,7 +99,7 @@
 				if(copytext(file, -4) == ".css")
 					inline_assets_str +="Byond.loadCss('[url]', true);\n"
 				else if(copytext(file, -3) == ".js")
-					inline_assets_str += "Byond.loadJs('[rl]', true);\n"
+					inline_assets_str += "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
@@ -108,7 +108,7 @@
 			if(copytext(name, -4) == ".css")
 				inline_assets_str +="Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_assets_str += "Byond.loadJs('[rl]', true);\n"
+				inline_assets_str += "Byond.loadJs('[url]', true);\n"
 
 /**
  * public
