@@ -48,13 +48,12 @@ obj/screen/compass_display
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
 		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
 
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = "HuD Compass",
 				"content" = "It points towards [target].",
-				"theme" = theme
+				"theme" = null
 			))
 
 	MouseExited()
