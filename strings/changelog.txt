@@ -1,5 +1,9 @@
 
 (t)sun nov 29 20
+(u)Gannets
+(p)2884
+(e)🎨|sprites
+(+)New bullet projectile icon.
 (u)BenLubar
 (p)2871
 (e)|
