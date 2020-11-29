@@ -814,6 +814,10 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		src.tail_standing_oversuit.overlays.len = 0
 		src.detail_standing_oversuit = SafeGetOverlayImage("detail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER2)
 		src.detail_standing_oversuit.overlays.len = 0
+		src.tailbelt_standing = SafeGetOverlayImage("tailbelt", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
+		src.tailbelt_standing.overlays.len = 0
+		src.tailbelt_standing_oversuit = SafeGetOverlayImage("tailbelt_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
+		src.tailbelt_standing_oversuit.overlays.len = 0
 
 
 		// if the image data can be stored in the thing it's trying to draw, store it there
@@ -880,6 +884,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 						human_head_image = our_head.head_image // head data is stored in the head
 						src.body_standing.overlays += human_head_image
 
+
 					if (src.organHolder?.tail)
 						var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
 						human_tail_image = our_tail.tail_image_1
@@ -893,6 +898,24 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					else
 						UpdateOverlays(null, "tail")
 						UpdateOverlays(null, "tail_oversuit")
+
+					var/tailbelt_ok
+					if (src.belt?.flags & ISTAIL && istype(src.belt, /obj/item/tail_belt)) // tailbelt!
+						var/obj/item/tail_belt/tbelt = src.belt
+						if(istype(tbelt.held_tail, /obj/item/organ/tail))
+							var/obj/item/organ/tail/our_other_tail = tbelt.held_tail // visual tail data is stored in the tail, even if its in a belt
+							human_tail_image = our_other_tail.tail_image_1
+							src.tailbelt_standing.overlays += human_tail_image
+
+							human_tail_image = our_other_tail.tail_image_2 // maybe our tailbelt's tail has multiple parts, like lizards
+							src.tailbelt_standing.overlays += human_tail_image
+
+							human_tail_image = our_other_tail.tail_image_oversuit // oversuit tailbelt, shown when facing north, for more seeable tails
+							src.tailbelt_standing_oversuit.overlays += human_tail_image // handles over suit
+							tailbelt_ok = 1
+					if(!tailbelt_ok)
+						UpdateOverlays(null, "tailbelt")
+						UpdateOverlays(null, "tailbelt_oversuit")
 
 				else
 					human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
@@ -1089,6 +1112,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 	src.UpdateOverlays(src.hands_standing, "hands", 1, 1)
 	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
+	src.UpdateOverlays(src.tailbelt_standing, "tailbelt", 1, 1)
+	src.UpdateOverlays(src.tailbelt_standing_oversuit, "tailbelt_oversuit", 1, 1)
 	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 

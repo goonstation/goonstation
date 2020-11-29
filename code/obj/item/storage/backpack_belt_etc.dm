@@ -559,3 +559,130 @@
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
+
+// Give your butt a fashionable blecktie
+/obj/item/tail_belt
+	name = "tail belt"
+	desc = "A severed tail, now with fasteners!"
+	icon = 'icons/obj/items/belts.dmi'
+	icon_state = "blank"
+	item_state = "blank"
+	flags = FPRINT | TABLEPASS | ONBELT | ISTAIL
+	w_class = 3.0
+	mats = 5
+	wear_image_icon = 'icons/mob/belt.dmi'
+	var/datum/material/cable_insulator
+	var/datum/material/cable_conductor
+	var/obj/item/organ/tail/held_tail
+	/// Colorful overlay part
+	var/item_part1_state
+	var/item_part1_color = "#FFFFFF"
+	/// Colorful overlay part 2
+	var/item_part2_state
+	var/item_part2_color = "#FFFFFF"
+	/// The cable stuff
+	var/cable_state
+	var/cable_color = "#FF0000" // synthrubber red
+
+	New(loc, held_tail, cable_insulator, cable_conductor)
+		. = ..()
+		src.held_tail = held_tail
+		src.cable_insulator = cable_insulator
+		src.cable_conductor = cable_conductor
+		if(ispath(src.held_tail, /obj/item/organ/tail))
+			src.held_tail = new src.held_tail
+			src.held_tail?.set_loc(src)
+			src.held_tail.name = "Some jerk's [initial(src.name)]"
+		if(!held_tail || !istype(src.held_tail, /obj/item/organ/tail))
+			src.held_tail = new/obj/item/organ/tail/lizard(src)
+		src.build_item_image()
+		src.build_item_desc()
+
+	proc/build_item_image()
+		if(!istype(src.held_tail, /obj/item/organ/tail))
+			return
+
+		src.icon_state = src.held_tail.icon_state
+		src.item_part1_state = src.held_tail.icon_piece_1
+		src.item_part2_state = src.held_tail.icon_piece_2
+		if(src.held_tail.colorful)
+			src.item_part1_color = src.held_tail.organ_color_1
+			src.item_part2_color = src.held_tail.organ_color_2
+		src.cable_state = "[icon_state]-coil"
+		if(istype(src.cable_insulator, /datum/material) && src.cable_insulator.color)
+			src.cable_color = src.cable_insulator.color
+
+		// now to build the image
+		src.overlays.len = 0
+		var/image/tempimg = image(icon = src.icon, icon_state = src.item_part1_state)
+		tempimg.color = src.item_part1_color
+		src.overlays += tempimg
+		tempimg = image(icon = src.icon, icon_state = src.item_part2_state)
+		tempimg.color = src.item_part2_color
+		src.overlays += tempimg
+		tempimg = image(icon = src.icon, icon_state = src.cable_state)
+		tempimg.color = src.cable_color
+		src.overlays += tempimg
+
+	proc/build_item_desc()
+		if(!istype(src.held_tail, /obj/item/organ/tail))
+			return
+
+		src.name = "[src.held_tail]-belt"
+
+	attackby(obj/item/W, mob/user, params)
+		if(issnippingtool(W))
+			boutput(user, "You snip the cables around [src.held_tail], allowing it to be reattached.")
+			src.held_tail.set_loc(get_turf(user))
+			var/obj/item/cable_coil/cables = new/obj/item/cable_coil(get_turf(user), length = 8)
+			cables.setInsulator(src.cable_insulator)
+			cables.setConductor(src.cable_conductor)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(src.held_tail)
+			src.held_tail = null
+			qdel(src)
+		else
+			. = ..()
+
+	equipped(var/mob/user)
+		..()
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(istype(src.held_tail, /obj/item/organ/tail/monkey)) // Darn monkey asses being in the wrong spot
+				if(ismonkey(H))
+					src.held_tail.build_mob_tail_image("default")
+				else
+					src.held_tail.build_mob_tail_image("human")
+			else
+				if(ismonkey(H))
+					src.held_tail.build_mob_tail_image("monkey")
+				else
+					src.held_tail.build_mob_tail_image("default")
+			user.update_body() // The tail part isnt handled through the clothes update thing
+
+	unequipped(var/mob/user)
+		..()
+		user.update_body()
+
+// Just so they can be spawned
+/obj/item/tail_belt/lizard
+	held_tail = /obj/item/organ/tail/lizard
+
+/obj/item/tail_belt/monkey
+	held_tail = /obj/item/organ/tail/monkey
+
+/obj/item/tail_belt/seamonkey
+	held_tail = /obj/item/organ/tail/monkey/seamonkey
+
+/obj/item/tail_belt/cat
+	held_tail = /obj/item/organ/tail/cat
+
+/obj/item/tail_belt/cow
+	held_tail = /obj/item/organ/tail/cow
+
+/obj/item/tail_belt/roach
+	held_tail = /obj/item/organ/tail/roach
+
+/obj/item/tail_belt/wolf
+	held_tail = /obj/item/organ/tail/wolf
+

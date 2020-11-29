@@ -42,6 +42,8 @@
 #define HAS_EQUIP_CLICK			 (1<<18)
 /// Has the possibility for a TGUI interface
 #define TGUI_INTERACTIVE		 (1<<19)
+/// Should show up on a different layer than normal
+#define ISTAIL							 (1<<20)
 
 //Item function flags
 

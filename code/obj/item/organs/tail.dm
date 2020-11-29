@@ -129,22 +129,39 @@
 
 
 	// builds the mob tail image, the one that gets displayed on the mob when attached
-	proc/build_mob_tail_image() // lets mash em all into one image with overlays n shit, like the head, but on the ass
-		var/humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_1, src.human_getting_monkeytail, src.monkey_getting_humantail)
+	proc/build_mob_tail_image(var/set_monkeyman_mode) // lets mash em all into one image with overlays n shit, like the head, but on the ass
+		var/human_get_monkey
+		var/monkey_get_human
+
+		switch(set_monkeyman_mode)
+			if("monkey")
+				human_get_monkey = 1
+				monkey_get_human = 0
+			if("human")
+				human_get_monkey = 0
+				monkey_get_human = 1
+			if("default")
+				human_get_monkey = 0
+				monkey_get_human = 0
+			else
+				human_get_monkey = src.human_getting_monkeytail
+				monkey_get_human = src.monkey_getting_humantail
+
+		var/humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_1, human_get_monkey, monkey_get_human)
 		var/image/tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_TAIL_LAYER1)
 		if (src.organ_color_1)
 			tail_temp_image.color = src.organ_color_1
 		src.tail_image_1 = tail_temp_image
 
 		if(src.organ_image_under_suit_2)
-			humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_2, src.human_getting_monkeytail, src.monkey_getting_humantail)
+			humonkey = src.human_monkey_tail_interchange(src.organ_image_under_suit_2, human_get_monkey, monkey_get_human)
 			tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_TAIL_LAYER2)
 			if (src.organ_color_2)
 				tail_temp_image.color = src.organ_color_2
 			src.tail_image_2 = tail_temp_image
 
 		if(src.organ_image_over_suit)
-			humonkey = src.human_monkey_tail_interchange(src.organ_image_over_suit, src.human_getting_monkeytail, src.monkey_getting_humantail)
+			humonkey = src.human_monkey_tail_interchange(src.organ_image_over_suit, human_get_monkey, monkey_get_human)
 			tail_temp_image = image(icon=src.organ_image_icon, icon_state=humonkey, layer = MOB_OVERSUIT_LAYER1)
 			if (src.organ_color_1)
 				tail_temp_image.color = src.organ_color_1
@@ -176,6 +193,19 @@
 			var/image/organ_piece_2 = image(src.icon, src.icon_piece_2)
 			organ_piece_2.color = src.organ_color_2
 			src.overlays += organ_piece_2
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/cable_coil))
+			var/obj/item/cable_coil/C = W
+			if (!C.use(10))
+				boutput(user, "You need a longer length of cable! A length of ten should be enough.")
+			else
+				var/obj/item/tail_belt/TB = new/obj/item/tail_belt(get_turf(user), held_tail = src, cable_insulator = C.insulator, cable_conductor = C.conductor)
+				src.set_loc(TB) // stick it inside the belt for safe keeping
+				user.u_equip(src)
+				user.put_in_hand_or_drop(TB)
+				boutput(user, "You tie the [C] around [W] nice and firm, forming it into a crude, but fashionable, belt.")
+		else ..()
 
 
 /obj/item/organ/tail/monkey
