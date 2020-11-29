@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const PnpPlugin = require('pnp-webpack-plugin');
 
 const createStats = verbose => ({
   assets: verbose,
@@ -25,25 +26,35 @@ const createStats = verbose => ({
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
-    context: path.resolve(__dirname, '../..'),
+    context: path.resolve(__dirname),
     entry: {
-      tgui: [
-        path.resolve(__dirname, './index.js'),
+      'tgui': [
+        './packages/tgui-polyfill',
+        './packages/tgui',
       ],
       'tgui-panel': [
-        path.resolve(__dirname, '../tgui-panel/index.js'),
+        './packages/tgui-polyfill',
+        './packages/tgui-panel',
       ],
     },
     output: {
       path: argv.useTmpFolder
-        ? path.resolve(__dirname, '../../../browserassets/tgui/.tmp')
-        : path.resolve(__dirname, '../../../browserassets/tgui'),
+        ? path.resolve(__dirname, '../browserassets/tgui/.tmp')
+        : path.resolve(__dirname, '../browserassets/tgui'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
     resolve: {
       extensions: ['.js', '.jsx'],
       alias: {},
+      plugins: [
+        PnpPlugin,
+      ],
+    },
+    resolveLoader: {
+      plugins: [
+        PnpPlugin.moduleLoader(module),
+      ],
     },
     module: {
       rules: [
