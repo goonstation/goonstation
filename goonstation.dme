@@ -360,6 +360,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gauntlet\podcolosseum.dm"
 #include "code\datums\hud\ai.dm"
 #include "code\datums\hud\cinematic.dm"
+#include "code\datums\hud\compass_display.dm"
 #include "code\datums\hud\critter.dm"
 #include "code\datums\hud\drone.dm"
 #include "code\datums\hud\flockdrone.dm"
