@@ -96,9 +96,9 @@
 		if (istype(asset, /datum/asset/basic))
 			var/datum/asset/basic/b = asset
 			for (var/url in b.local_assets)
-				if(copytext(file, -4) == ".css")
+				if(copytext(url, -4) == ".css")
 					inline_assets_str +="Byond.loadCss('[url]', true);\n"
-				else if(copytext(file, -3) == ".js")
+				else if(copytext(url, -3) == ".js")
 					inline_assets_str += "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
