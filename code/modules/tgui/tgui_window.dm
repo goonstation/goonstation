@@ -62,21 +62,21 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets |GOONSTATION-CHANGE|
-	var/list/inline_styles = list()
-	var/list/inline_scripts = list()
+	// Inject inline assets
+	var/inline_assets_str = ""
 
 	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
 	for(var/datum/asset/asset in inline_assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
-				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
+				handle_cdn_asset(get_assets(subasset), inline_assets_str)
 		else
-			handle_cdn_asset(get_assets(asset.type), inline_styles, inline_scripts)
+			handle_cdn_asset(get_assets(asset.type), inline_assets_str)
 
-	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
-	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
+	if(length(inline_assets_str))
+		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
+	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
 
 	// Open the window
 	client << browse(html, "window=[id];[options]")
@@ -89,26 +89,26 @@
  * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
  *
  */
-/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_styles, list/inline_scripts)
+/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_assets_str)
 	// Operating locally. Deliver what assets we can manually.
 	if (!cdn)
 		asset.deliver(client)
 		if (istype(asset, /datum/asset/basic))
 			var/datum/asset/basic/b = asset
-			for (var/file in b.local_assets)
+			for (var/url in b.local_assets)
 				if(copytext(file, -4) == ".css")
-					inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[file]\">\n"
+					inline_assets_str +="Byond.loadCss('[url]', true);\n"
 				else if(copytext(file, -3) == ".js")
-					inline_scripts += "<script type=\"text/javascript\" defer src=\"[file]\"></script>\n"
+					inline_assets_str += "Byond.loadJs('[rl]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
 			var/url = url_map[name]
-			// Not urlencoding since asset strings are considered safe
+			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+				inline_assets_str +="Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
+				inline_assets_str += "Byond.loadJs('[rl]', true);\n"
 
 /**
  * public
