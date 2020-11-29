@@ -4,18 +4,18 @@
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@ZeWaka/goondev)
 
-Want to get the code up and running? This guide is the place to go. ___Be sure to follow it exactly!___ If you need help, visit the #imcoder channel on our Discord.
+Want to get the code up and running? This guide is the place to go. <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
 
 ## COMMUNITY
 
 [<img src=".github/assets/discord.png" alt="Discord" width="150" align="left">](https://discord.gg/zd8t6pY)
-Discord is the place to talk to fellow players, admins, and developers in realtime. There's plenty of friendly people there, capable of answering most of your questions. We also post general community updates, and rule changes here.
+Discord is the place to talk to fellow players, admins, and devs in realtime. There's plenty of friendly people there, capable of answering most of your questions.
 
 [<img src=".github/assets/forums.png" alt="Forums" width="150" align="left">](https://discord.gg/zd8t6pY)
-The forums are where we get most of our player feedback, talk about things in a more longform format, and player suggestions! Stop on by and have a chat. This is also the place to appeal any bans or give admin feedback.
+The forums are where we get most of our player feedback/suggestions and talk about things in a more longform format. This is also the place to appeal any bans or give admin feedback.
 
 [<img src=".github/assets/wiki.png" alt="Goonhub" width="150" align="left">](https://wiki.ss13.co)
-Our wiki is the place to go for any information you seek on the various constructions, items, game modes, and more in-game. There's also guides for various jobs and mechanics on station!
+Our wiki is the place to go for any information you seek on the various constructions, items, game modes, and more in-game. There's also guides for various jobs on station!
 
 [<img src=".github/assets/goonhub.png" alt="Goonhub" width="150" align="left">](https://goonhub.com)
 Goonhub is the premier place for locating statistics, data about rounds, detailed game maps, and all other links pertaining to Goonstation!
@@ -29,14 +29,13 @@ Before opening a PR to this codebase, please read our contributor guidelines. It
 For our auto-generated code documentation, visit our code docs! There's some good guides for portions of our codebase, and you can familiarize yourself with our various helpers.
 
 [<img src=".github/assets/code.png" alt="Code Documentation" width="150" align="left">](https://hackmd.io/@ZeWaka/gooncode)
-
-To contribute code to the game, please read our code guide. It details specific DM syntax we encourage in our codebase, goes into useful things, and some performance-oriented technical discussion.
+To contribute code to the game, please read our code guide. It details specific DM syntax we encourage in our codebase, useful things, and some performance-oriented technical discussion.
 
 [<img src=".github/assets/sprites.png" alt="Spriting Guidelines" width="150" align="left">](https://hackmd.io/@ZeWaka/goonsprite)
-To contribute sprites to the game, please follow our spriting guidelines! It goes into detail about the various things we try to keep consistent across all of our sprites, such as perspective and outlining.
+To contribute sprites to the game, please follow our spriting guidelines! It details the various things we try to keep consistent in our sprites, such as perspective and outlining.
 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@ZeWaka/goonmap)
-To contribute maps to the game, please follow our mapping guidelines! This details the required pieces for a map submission. If you do not follow these, your map may be rejected and ineligible for resubmission for a month.
+To contribute maps to the game, please follow our mapping guidelines! This details the **required** pieces for a map submission.
 
 ## INFO
 
