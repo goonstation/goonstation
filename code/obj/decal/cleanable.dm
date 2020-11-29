@@ -49,7 +49,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 		src.real_name = src.name
 
-		if (viral_list && viral_list.len > 0)
+		if (length(viral_list))
 			for (var/datum/ailment_data/AD in viral_list)
 				src.diseases += AD
 		if (src.can_dry)
@@ -107,7 +107,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			pool(src)
 
 	Move(NewLoc, direct)
-		..()
+		. = ..()
 		if (last_turf && istype(last_turf))
 			last_turf.messy = max(last_turf.messy-1, 0)
 		last_turf = src.loc
@@ -371,7 +371,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				if (i > 0)
 					var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 					if (!b) continue //ZeWaka: fix for null.diseases
-					if (src && src.diseases)
+					if (src?.diseases)
 						b.diseases += src.diseases
 					if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
 						b.blood_DNA = src.blood_DNA
@@ -819,7 +819,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return
 			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (pen.uses_handwriting && user && user.mind && user.mind.handwriting)
+			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
 				src.webfont = 1
 			else if (pen.font)
@@ -1575,6 +1575,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		..()
 		updateSurroundingMagnesium(T)
+
+	pooled()
+		..()
+		src.sampled = 0 // stop fucking breaking butthead! >:(
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()

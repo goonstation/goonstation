@@ -795,10 +795,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
-	var/initial_angle_offset_mult = 0
+	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 

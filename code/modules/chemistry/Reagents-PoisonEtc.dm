@@ -1568,7 +1568,7 @@ datum
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						if (M.bioHolder?.mobAppearance?.mutant_race)
-							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
 
 				..()
@@ -1749,7 +1749,7 @@ datum
 
 				..()
 			on_remove()
-				if (holder && holder.my_atom && ishuman(holder.my_atom))
+				if (holder?.my_atom && ishuman(holder.my_atom))
 					var/mob/living/carbon/human/H = holder.my_atom
 					// moving the 'turn off the ai' part here because it failed
 					// to actually deactivate, leaving it on forever

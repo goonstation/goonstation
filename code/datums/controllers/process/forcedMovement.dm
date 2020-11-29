@@ -108,7 +108,7 @@ datum/controller/process/fMove
 					if(tmob.inertia_dir) //they keep moving the same direction
 						var/original_dir = tmob.dir
 						step(tmob, tmob.inertia_dir)
-						tmob.dir = original_dir
+						tmob.set_dir(original_dir)
 					else
 						tmob.inertia_dir = tmob.last_move
 						step(tmob, tmob.inertia_dir)

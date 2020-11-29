@@ -15,7 +15,7 @@
 
 	if (!(client && client.hellbanned))
 		armor_value_bullet = get_ranged_protection()
-	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -347,12 +347,7 @@
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		//tox = 0
-#if ASS_JAM //pausing damage in timestop
-	if (src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
+
 	brute = max(0, brute)
 	burn = max(0, burn)
 	//tox = max(0, burn)

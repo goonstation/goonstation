@@ -66,7 +66,7 @@
 				if(!king && iswerewolf(H))
 					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
 					step_away(src, H, 15)
-					src.dir = get_dir(src, H)
+					src.set_dir(get_dir(src, H))
 					continue
 
 			src.boredom_countdown = rand(2,5)
@@ -350,7 +350,7 @@
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0

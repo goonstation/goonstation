@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	event_handler_flags = IMMUNE_SINGULARITY
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)
@@ -139,7 +139,7 @@
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
-						src.dir = dir
+						src.set_dir(dir)
 						if (dir == EAST)
 							if (is_jen_wall)
 								src.pixel_x = 12
@@ -196,6 +196,9 @@
 	purpleish
 		name = "purpleish fluorescent light bulb"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light bulb"
+		light_type = /obj/item/light/bulb/emergency
 
 	warm
 		name = "fluorescent light bulb"

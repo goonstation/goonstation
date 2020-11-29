@@ -478,12 +478,7 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
-#if ASS_JAM
-		if(src.reagents)
-			SPAWN_DBG(3 SECONDS)
-				if(src.reagents)
-					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
-#endif
+
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -1016,7 +1011,7 @@
 		if (4.0) t = "bulky"
 		if (5.0 to INFINITY) t = "huge"
 		else
-	if (usr && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)
@@ -1470,7 +1465,7 @@
 
 /obj/item/proc/dropped(mob/user)
 	if (user)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif

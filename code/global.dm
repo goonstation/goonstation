@@ -25,6 +25,8 @@ var/global
 
 	lagcheck_enabled = 0
 
+	vpn_blacklist_enabled = TRUE
+
 	datum/datacore/data_core = null
 
 	obj/overlay/plmaster = null
@@ -391,7 +393,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goon Station 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + vcs_revision + ")"
 
 	master_mode = "traitor"
 

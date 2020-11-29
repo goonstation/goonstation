@@ -10,7 +10,7 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..()
-		if (H && H.owner) //Wire note: Fix for Cannot read null.real_name
+		if (H?.owner) //Wire note: Fix for Cannot read null.real_name
 			last_used_name = H.owner.real_name
 
 	cast(atom/target)
@@ -92,18 +92,19 @@
 			boutput(holder.owner, __blue("We change our mind."))
 			return 1
 
-		var/datum/bioHolder/D = H.absorbed_dna[target_name]
-
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner] transforms!</B></span>"))
 		logTheThing("combat", holder.owner, target_name, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
-		C.real_name = target_name
+		var/datum/bioHolder/D = H.absorbed_dna[target_name]
 		C.bioHolder.CopyOther(D)
+		C.real_name = target_name
 		C.bioHolder.RemoveEffect("husk")
+		C.organHolder.head.update_icon()
 		if (C.bioHolder?.mobAppearance?.mutant_race)
-			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race)
+			C.set_mutantrace(C.bioHolder.mobAppearance.mutant_race.type)
 		else
 			C.set_mutantrace(null)
+
 		C.update_face()
 		C.update_body()
 		C.update_clothing()

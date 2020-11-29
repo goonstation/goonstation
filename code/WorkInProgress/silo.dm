@@ -26,7 +26,7 @@
 		if (!A.phantom)
 			A.create_phantom()
 		A.phantom.loc = locate(src.x+16, src.y, src.z)
-		A.phantom.dir = A.dir
+		A.phantom.set_dir(A.dir)
 
 /turf/simulated/floor/phantom_test2
 	fullbright = 1

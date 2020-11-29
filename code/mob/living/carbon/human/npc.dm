@@ -15,6 +15,7 @@
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
+				src.organHolder.head.update_icon()
 		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN_DBG(2 SECONDS)
@@ -82,7 +83,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 				ticker.mode:agent_number++
 			else
@@ -149,7 +150,7 @@
 
 	var/action_delay = 0
 	delStatus("resting")
-	if(hud && hud.master) hud.update_resting()
+	if(hud?.master) hud.update_resting()
 
 	if (isdead(src))
 		ai_set_active(0)
@@ -410,7 +411,7 @@
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
-			dir = get_step_towards(src,ai_target)
+			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
 		else
 			//step_towards(src, ai_target)

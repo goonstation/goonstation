@@ -360,7 +360,7 @@ var/global/noir = 0
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
-				ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+				ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
 				ircbot.export("admin", ircmsg)
 			else
@@ -412,7 +412,7 @@ var/global/noir = 0
 
 							var/ircmsg[] = new()
 							ircmsg["key"] = src.owner:key
-							ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+							ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 							ircmsg["msg"] = "Deleted note [noteId] belonging to [player]"
 							ircbot.export("admin", ircmsg)
 
@@ -434,7 +434,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = src.owner:key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
 
@@ -758,7 +758,7 @@ var/global/noir = 0
 				if (current_state > GAME_STATE_PREGAME)
 					cmd = "c_mode_next"
 					addltext = " next round"
-				var/dat = {"
+				var/list/dat = list({"
 							<html><body><title>Select Round Mode</title>
 							<B>What mode do you wish to play[addltext]?</B><br>
 							Current mode is: <i>[master_mode]</i><br>
@@ -789,10 +789,12 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=football'>Football (this only works if built with FOOTBALL_MODE sorry too lazy to ifdef here)</A>
-							</body></html>
-						"}
-				usr.Browse(dat, "window=c_mode")
+							"})
+#if FOOTBALL_MODE
+				dat += "<A href='?src=\ref[src];action=[cmd];type=football'>Football</A>"
+#endif
+				dat += "</body></html>"
+				usr.Browse(dat.Join(), "window=c_mode")
 			else
 				alert("You need to be at least a Secondary Adminstrator to change the game mode.")
 
@@ -1410,7 +1412,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.AddEffect(pick, magical = 1)
@@ -1438,7 +1440,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
 						X.bioHolder.RemoveEffect(pick)
@@ -1537,7 +1539,7 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					var/string_version
 
 					for(pick in picklist)
@@ -1999,7 +2001,7 @@ var/global/noir = 0
 								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
-						if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang))
+						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += "Gang Leader"
 						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
 						switch(selection)
@@ -2088,7 +2090,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export("admin", ircmsg)
 
@@ -2103,7 +2105,7 @@ var/global/noir = 0
 
 					var/ircmsg[] = new()
 					ircmsg["key"] = usr.client.key
-					ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export("admin", ircmsg)
 
@@ -2159,14 +2161,14 @@ var/global/noir = 0
 							if ("absolute")
 								for (var/path in paths)
 									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.dir = direction ? direction : SOUTH
+									thing.set_dir(direction ? direction : SOUTH)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
 										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.dir = direction ? direction : SOUTH
+										thing.set_dir(direction ? direction : SOUTH)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -2575,7 +2577,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2643,7 +2645,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2679,7 +2681,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 								for(pick in picklist)
 									if (string_version)
@@ -2739,7 +2741,7 @@ var/global/noir = 0
 
 							var/list/picklist = params2list(pick)
 
-							if (picklist && picklist.len >= 1)
+							if (length(picklist))
 								var/string_version
 
 								for(pick in picklist)
@@ -2821,7 +2823,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 							message_admins("[key_name(usr)] began replacing all Z1 floors and walls with wooden ones.")
 							var/nornwalls = 0
-							if (map_settings && map_settings.walls == /turf/simulated/wall/auto/supernorn)
+							if (map_settings?.walls == /turf/simulated/wall/auto/supernorn)
 								nornwalls = 1
 							for (var/turf/simulated/wall/W in world)
 								if (atom_emergency_stop)
@@ -3133,7 +3135,7 @@ var/global/noir = 0
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L && L.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
+									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
@@ -3146,7 +3148,7 @@ var/global/noir = 0
 									do //More random
 										people_to_swap -= A
 										var/mob/B = pick(people_to_swap)
-										if(A && A.mind && B)
+										if(A?.mind && B)
 											A.mind.swap_with(B)
 										A = B
 										LAGCHECK(LAG_LOW)
@@ -3238,7 +3240,7 @@ var/global/noir = 0
 
 				switch(href_list["type"])
 					if("check_antagonist")
-						if (ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
+						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
@@ -4204,7 +4206,7 @@ var/global/noir = 0
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = usr.client.key
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export("admin", ircmsg)
 
@@ -4283,8 +4285,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] delayed the server restart.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export("admin", ircmsg)
 
@@ -4296,8 +4298,8 @@ var/global/noir = 0
 		message_admins("<span class='internal'>[usr.key] removed the restart delay.</span>")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr && usr.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr && usr.real_name) ? usr.real_name : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? usr.real_name : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export("admin", ircmsg)
 
@@ -4360,7 +4362,7 @@ var/global/noir = 0
 	if(checktraitor(M))
 		boutput(usr, "<span class='alert'>That person is already an antagonist.</span>")
 		return
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && traitor_type == "gang leader")
 		boutput(usr, "<span class='alert'>Gang Leaders are currently restricted to gang mode only.</span>")
 		return
 
@@ -5009,7 +5011,7 @@ var/global/noir = 0
 
 		if(NewLoc)
 			usr.set_loc(NewLoc)
-			src.mob.dir = direct
+			src.mob.set_dir(direct)
 			return
 
 		if((direct & NORTH) && usr.y < world.maxy)
@@ -5021,7 +5023,7 @@ var/global/noir = 0
 		if((direct & WEST) && usr.x > 1)
 			usr.x--
 
-		src.mob.dir = direct
+		src.mob.set_dir(direct)
 	else
 		..()
 

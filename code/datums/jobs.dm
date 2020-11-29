@@ -1,5 +1,6 @@
 /datum/job/
 	var/name = null
+	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
 	var/wages = 0
@@ -104,7 +105,7 @@
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
 
@@ -818,11 +819,12 @@
 		if (prob(20))
 			M.bioHolder.AddEffect("accent_swedish", do_stability=0)
 
-/datum/job/civilian/barman
-	name = "Barman"
+/datum/job/civilian/bartender
+	name = "Bartender"
+	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	slot_belt = /obj/item/device/pda2/barman
+	slot_belt = /obj/item/device/pda2/bartender
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -833,7 +835,7 @@
 
 	New()
 		..()
-		src.access = get_access("Barman")
+		src.access = get_access("Bartender")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1232,7 +1234,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
@@ -2149,7 +2151,7 @@
 		..()
 		if (!M)
 			return
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 			ticker.mode:agent_number++
 		else
@@ -2318,7 +2320,7 @@
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_access("Security Officer") + list(access_heads)
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2506,7 +2508,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 

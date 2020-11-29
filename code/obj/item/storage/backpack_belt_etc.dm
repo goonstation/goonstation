@@ -62,11 +62,7 @@
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(12, 7, 8, 8)
-#endif
+
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -95,11 +91,7 @@
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	icon_state = "satchel_medic"
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(8, 11, 7, 7)
-#endif
+
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru"
@@ -396,7 +388,8 @@
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
-	/obj/item/clothing/mask/gas/NTSO) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
+	/obj/item/clothing/mask/gas/NTSO,
+	/obj/item/gun/energy/signifer2) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -428,7 +421,7 @@
 			can_hold += /obj/item/gun/energy/tasershotgun //lol
 
 	ntso
-		spawn_contents = list(/obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/storage/pouch/clock) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch) //secbelt subtype that only spawns on NTSO, not in vendor
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //

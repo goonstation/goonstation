@@ -237,11 +237,11 @@
 				SPAWN_DBG(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					if(!src.water_need)
 						animate_bumble(src)
@@ -458,11 +458,11 @@
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))

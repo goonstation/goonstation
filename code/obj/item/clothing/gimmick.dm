@@ -1035,6 +1035,7 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
+ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
 	desc = "A little ring, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."
@@ -1402,6 +1403,11 @@
 /obj/item/clothing/head/werewolf/odd
 	name = "odd werewolf mask"
 	desc = "The mask of a peculiarly tinted wolfman getup with an outrageous price tag."
+	icon_state = "gwmask"
+
+/obj/item/clothing/head/werewolf/taxidermy
+	name = "werewolf mask"
+	desc = "The pelt of a flayed werewolf's head formed into a wearable taxidermy mask. Wonderful."
 	icon_state = "gwmask"
 
 /obj/item/clothing/suit/gimmick/abomination

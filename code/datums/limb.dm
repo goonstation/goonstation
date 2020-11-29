@@ -159,7 +159,7 @@
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
 			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
@@ -200,7 +200,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
-		arcFlashTurf(user, get_turf(target), 15000)
+		arcFlashTurf(user, get_turf(target), wattage)
 
 /datum/limb/gun
 	var/datum/projectile/proj = null
@@ -403,7 +403,7 @@
 
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
-		if (holder && holder.remove_object && istype(holder.remove_object))
+		if (holder?.remove_object && istype(holder.remove_object))
 			target.attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
@@ -726,7 +726,7 @@
 			target.changeStatus("weakened", (4 * quality)*10)
 		user.lastattacked = target
 
-#if ASS_JAM
+// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -799,7 +799,6 @@
 		user.lastattacked = target
 
 
-#endif
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
@@ -863,7 +862,7 @@
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 
@@ -1505,7 +1504,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 				playsound(user.loc, "punch", 25, 1, -1)
 
-			if (victim && victim.alive && victim.health <= 0)
+			if (victim?.alive && victim.health <= 0)
 				victim.CritterDeath()
 			return
 

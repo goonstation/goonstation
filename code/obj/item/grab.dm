@@ -181,7 +181,7 @@
 			src.affecting.pixel_y = src.assailant.pixel_y + pyo
 		src.affecting.set_loc(src.assailant.loc)
 		src.affecting.layer = src.assailant.layer + (src.assailant.dir == NORTH ? -0.1 : 0.1)
-		src.affecting.dir = src.assailant.dir
+		src.affecting.set_dir(src.assailant.dir)
 		src.affecting.set_density(0)
 
 	attack_self(mob/user)
@@ -352,7 +352,7 @@
 
 	proc/do_resist()
 		hit_twitch(src.assailant)
-		src.affecting.dir = pick(alldirs)
+		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
@@ -799,7 +799,7 @@
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I && I.reagents)
+			if(prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
 
@@ -882,7 +882,7 @@
 
 /obj/item/cable_coil/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && chokehold.state == GRAB_KILL)
+	if (src.chokehold?.state == GRAB_KILL)
 		if (ishuman(src.chokehold.affecting))
 			var/mob/living/carbon/human/H = src.chokehold.affecting
 			H.losebreath += (0.5 * mult)

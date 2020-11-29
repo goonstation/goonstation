@@ -49,7 +49,7 @@
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 		boutput(traitor_mob, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
 		SHOW_TRAITOR_HARDMODE_TIPS(traitor_mob)
 		return
@@ -241,6 +241,8 @@
 */
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
+	if(leader)
+		I = new /obj/item/card/id/syndicate/commander(synd_mob)
 	I.icon_state = "id"
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
@@ -251,7 +253,7 @@
 	M.implanted(synd_mob)
 
 	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		the_frequency = N.agent_radiofreq
 
@@ -263,3 +265,50 @@
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	return
+
+/// returns a decimal representing the percentage of alive crew that are also antags
+/proc/get_alive_antags_percentage()
+	var/alive = 0
+	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+
+	for (var/datum/mind/antag in ticker.mode.traitors)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+	for (var/datum/mind/antag in ticker.mode.Agimmicks)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M) continue
+		if (!isdead(M) && isliving(M))
+			alive++
+
+	if (!alive)
+		return 0
+	else
+		return (alive_antags / alive)
+
+/// returns a decimal representing the percentage of dead crew (non-observers) to all crew
+/proc/get_dead_crew_percentage()
+	var/all = 0
+	var/dead = 0
+	var/observer = 0
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M) continue
+		if (isdead(M) && !isliving(M))
+			dead++
+			if (M.mind?.joined_observer)
+				observer++
+		all++
+
+	if (!all)
+		return 0
+	else
+		return ((dead - observer) / all)

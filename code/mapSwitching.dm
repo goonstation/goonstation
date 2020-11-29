@@ -244,7 +244,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		for (var/client/C in clients)
 			C.verbs += /client/proc/mapVote
-			if(C && C.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
+			if(C?.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
 		//announce vote

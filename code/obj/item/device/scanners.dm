@@ -76,7 +76,7 @@ Contains:
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -111,7 +111,7 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -200,7 +200,7 @@ that cannot be itched
 			icon_state = "fs"
 			active = 0
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "fs_pindirect"

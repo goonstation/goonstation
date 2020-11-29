@@ -41,7 +41,7 @@
 		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
-	if (J && J.no_jobban_from_this_job)
+	if (J?.no_jobban_from_this_job)
 		return 0
 
 

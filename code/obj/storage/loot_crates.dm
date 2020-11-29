@@ -289,7 +289,7 @@
 							items += /obj/item/cigpacket/random
 							item_amounts += rand(2,4)
 				else
-					picker = rand(1,4)
+					picker = rand(1,5)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/shoes/moon
@@ -306,6 +306,11 @@
 							item_amounts += 5
 						if(4)
 							items += /obj/critter/cat
+							item_amounts += 1
+						if(5)
+							items += /obj/item/device/flyswatter
+							item_amounts += 1
+							items += /obj/item/storage/box/mousetraps
 							item_amounts += 1
 
 		var/trap_prob = 100
@@ -432,7 +437,7 @@
 		attempts_remaining--
 		if (attempts_remaining <= 0)
 			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
-			if (holder && holder.trap)
+			if (holder?.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()

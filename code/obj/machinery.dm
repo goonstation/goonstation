@@ -278,7 +278,7 @@
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
+	pulse2.set_dir(pick(cardinal))
 
 	SPAWN_DBG(1 SECOND)
 		qdel(pulse2)
@@ -368,6 +368,6 @@
 	var/area/A1 = get_area(src)
 	. = ..()
 	var/area/A2 = get_area(src)
-	if(A1 != A2)
+	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src

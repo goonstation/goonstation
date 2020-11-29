@@ -588,7 +588,7 @@
 					target_r = new/obj/railgun_trg_dummy(target)
 
 				playsound(src, "sound/weapons/railgun.ogg", 50, 1)
-				src.dir = get_dir(src, target)
+				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
@@ -801,7 +801,7 @@
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
-			if (A && A.virtual)
+			if (A?.virtual)
 				droploot = null
 			..()
 
@@ -815,7 +815,7 @@
 			if(target == start)
 				return
 
-			src.dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
 
 			if (!cardinal.Find(src.dir))
 				return //hell drone only shoots cardinals
@@ -929,12 +929,12 @@
 		A.target = target
 		A.yo = target:y - start:y
 		A.xo = target:x - start:x
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG( 0 )
 			A.process()
 		return */
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/P1 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
 		var/obj/projectile/P2 = initialize_projectile(src.loc, current_projectile, 0, 0, src)
@@ -1050,16 +1050,15 @@
 
 	New()
 		..()
-		#if ASS_JAM
-		name = "X Æ Y-[rand(10,15)]"
-		#else
+
+		//name = "X Æ Y-[rand(10,15)]" //lmfao
 		name = "Battledrone Y-[rand(1,5)]"
-		#endif
+
 
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual
 		else
 			new/obj/item/material_piece/iridiumalloy(src.loc)
@@ -1100,7 +1099,7 @@
 		if (prob(50))
 			elec_zap()
 
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 
 		var/obj/projectile/sphere = initialize_projectile(src.loc, sphere_projectile, 0, 0, src)
 
@@ -1230,7 +1229,7 @@
 	CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 		if(dying) return
 		var/area/A = get_area(src)
-		if (A && A.virtual)
+		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual //we don't want this loot in vr do we???
 		else
 			new/obj/item/instrument/fiddle(src.loc)

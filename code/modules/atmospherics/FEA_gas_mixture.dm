@@ -112,31 +112,31 @@ What are the archived variables for?
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 
-	if(length(trace_gases) > 0)
-		if(temperature > 900)
-			if(toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+	if(length(src.trace_gases) > 0)
+		if(src.temperature > 900)
+			if(src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
 				var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in trace_gases
 				if(trace_gas)
-					var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, trace_gas.moles*0.05)
+					var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
 
-					carbon_dioxide -= reaction_rate
-					oxygen += reaction_rate
+					src.carbon_dioxide -= reaction_rate
+					src.oxygen += reaction_rate
 
 					trace_gas.moles -= reaction_rate*0.05
 
-					temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+					src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
 
 					reacting = 1
 
-	if(temperature > 900 && farts && toxins > MINIMUM_HEAT_CAPACITY && carbon_dioxide > MINIMUM_HEAT_CAPACITY)
-		var/reaction_rate = min(carbon_dioxide*0.75, toxins*0.25, farts*0.05)
+	if(src.temperature > 900 && src.farts && src.toxins > MINIMUM_HEAT_CAPACITY && src.carbon_dioxide > MINIMUM_HEAT_CAPACITY)
+		var/reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
 
-		carbon_dioxide -= reaction_rate
-		toxins += reaction_rate
+		src.carbon_dioxide -= reaction_rate
+		src.toxins += reaction_rate
 
-		farts -= reaction_rate*0.05
+		src.farts -= reaction_rate*0.05
 
-		temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
+		src.temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
 
 		reacting = 1
 
@@ -151,18 +151,18 @@ What are the archived variables for?
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
 
-	if(length(trace_gases))
+	if(length(src.trace_gases))
 		var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
 		if(fuel_store) //General volatile gas burn
 			var/burned_fuel = 0
 
-			if(oxygen < fuel_store.moles)
-				burned_fuel = oxygen
+			if(src.oxygen < fuel_store.moles)
+				burned_fuel = src.oxygen
 				fuel_store.moles -= burned_fuel
-				oxygen = 0
+				src.oxygen = 0
 			else
 				burned_fuel = fuel_store.moles
-				oxygen -= fuel_store.moles
+				src.oxygen -= fuel_store.moles
 				//qdel(fuel_store)
 				trace_gases -= fuel_store
 				if(!trace_gases.len)
@@ -170,38 +170,38 @@ What are the archived variables for?
 				fuel_store = null
 
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
-			carbon_dioxide += burned_fuel
-			fuel_burnt += burned_fuel
+			src.carbon_dioxide += burned_fuel
+			src.fuel_burnt += burned_fuel
 
 	//Handle plasma burning
-	if(toxins > MINIMUM_HEAT_CAPACITY)
+	if(src.toxins > MINIMUM_HEAT_CAPACITY)
 		var/plasma_burn_rate = 0
 		var/oxygen_burn_rate = 0
-		//more plasma released at higher temperatures
+		//more energy released at higher temperatures
 		var/temperature_scale
-		if(temperature > PLASMA_UPPER_TEMPERATURE)
+		if(src.temperature > PLASMA_UPPER_TEMPERATURE)
 			temperature_scale = 1
 		else
-			temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
+			temperature_scale = (temperature - PLASMA_MINIMUM_BURN_TEMPERATURE) / (PLASMA_UPPER_TEMPERATURE - PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
 			oxygen_burn_rate = 1.4 - temperature_scale
-			if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (toxins*temperature_scale)/4
+			if(src.oxygen > src.toxins * PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (src.toxins * temperature_scale) / 4
 			else
-				plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
+				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-				toxins -= plasma_burn_rate/3
-				oxygen -= plasma_burn_rate*oxygen_burn_rate
-				carbon_dioxide += plasma_burn_rate/3
+				src.toxins -= plasma_burn_rate / 3
+				src.oxygen -= plasma_burn_rate * oxygen_burn_rate
+				src.carbon_dioxide += plasma_burn_rate / 3
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
-				fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+				src.fuel_burnt += (plasma_burn_rate) * ( 1 + oxygen_burn_rate)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = HEAT_CAPACITY(src)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+			src.temperature = (src.temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
 	return fuel_burnt
 
@@ -291,7 +291,7 @@ What are the archived variables for?
 	var/datum/gas_mixture/removed = unpool(/datum/gas_mixture)
 
 	#define _REMOVE_GAS(GAS, ...) \
-		removed.GAS = QUANTIZE((GAS/sum)*amount); \
+		removed.GAS = min(QUANTIZE((GAS/sum)*amount), GAS); \
 		GAS -= removed.GAS/group_multiplier;
 	APPLY_TO_GASES(_REMOVE_GAS)
 	#undef _REMOVE_GAS
@@ -584,7 +584,8 @@ What are the archived variables for?
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.10) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if((delta_temperature > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+	// Check that either threshold was met for pressure_difference calculations
+	if((abs(delta_temperature) > MINIMUM_TEMPERATURE_TO_MOVE) || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/delta_pressure = ARCHIVED(temperature)*(TOTAL_MOLES(src) + moved_moles) - sharer.ARCHIVED(temperature)*(TOTAL_MOLES(sharer) - moved_moles)
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 

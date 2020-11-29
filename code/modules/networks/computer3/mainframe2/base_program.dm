@@ -499,7 +499,7 @@
 			if(!data || !master)
 				return 1
 
-			if(useracc && useracc.user_file && ("id" in useracc.user_file.fields))
+			if(useracc?.user_file && ("id" in useracc.user_file.fields))
 				data["user"] = useracc.user_file.fields["id"]
 
 			return master.relay_progsignal(src, progid, data, file)

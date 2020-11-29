@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-//	barman
+//	bartender
 
 //	chef
 
@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 		medal_name = "We didn't start the fire"
 		check_completion()
-			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/chemistry, 0))
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
 				if(T.burnt == 1) return 0
 			return 1
 	hyper
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 		explanation_text = "Do not commit a violent act all round - punching someone, hitting them with a weapon or shooting them with a laser will all cause you to fail."
 		medal_name = "Primum non nocere"
 		check_completion()
-			if (owner && owner.violated_hippocratic_oath)
+			if (owner?.violated_hippocratic_oath)
 				return 0
 			else
 				return 1

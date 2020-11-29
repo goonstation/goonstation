@@ -335,8 +335,8 @@
 				src.frustration++
 
 			SPAWN_DBG (3)
-				if (src && src.path && src.path.len)
-					if (src.path.len > 8)
+				if (length(src?.path))
+					if (length(src.path) > 8)
 						src.frustration++
 					step_to(src, src.path[1])
 					if (src.loc == src.path[1])

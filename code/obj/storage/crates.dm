@@ -9,7 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -75,11 +75,7 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
-#if ASS_JAM
-	update_icon()
-		. = ..()
-		ADD_MORTY(14, 5, 5, 5)
-#endif
+
 
 /obj/storage/crate/medical/morgue
 	name = "morgue supplies crate"
@@ -264,7 +260,7 @@
 		if (islist(syndi_buylist_cache))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
-				if (ticker && ticker.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
 					for (var/V in S.blockedmode)
 						if (ispath(V) && istype(ticker.mode, V))
 							blocked = 1
@@ -413,9 +409,9 @@
 		name = "Class Crate - Combat Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, some poison and a syringe gun delivery system."
 		spawn_contents = list(/obj/item/gun/reagent/syringe,
-		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin,
+		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin = 2,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
-		/obj/item/storage/box/donkpocket_w_kit,
+		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
 		/obj/item/clothing/glasses/healthgoggles/upgraded,
 		/obj/item/device/analyzer/healthanalyzer/borg,
 		/obj/item/storage/medical_pouch,

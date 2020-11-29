@@ -16,6 +16,7 @@
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
 #define MAT_TRIGGER_LIFE 16384 //do some extra shit in life to trigger mats onlife
+#define SHOULD_HAVE_A_TAIL 32768 //Would we miss our tail if it comes off?
 
 //mob intent type defines
 #define INTENT_HARM "harm"

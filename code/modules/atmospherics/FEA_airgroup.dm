@@ -116,6 +116,7 @@
 
 
 /datum/air_group/proc/process_group(var/datum/controller/process/parent_controller)
+	var/abort_group = 0
 	current_cycle = air_master.current_cycle
 
 	if (spaced)
@@ -180,7 +181,6 @@
 
 			LAGCHECK(LAG_REALTIME)
 
-		var/abort_group = 0
 
 		// Process connections to adjacent groups
 		var/border_index = 1
@@ -198,7 +198,7 @@
 					var/connection_difference = 0
 					var/turf/simulated/floor/self_border
 					var/turf/simulated/floor/enemy_border
-					if(self_group_borders && self_group_borders.len)
+					if(length(self_group_borders))
 						self_border = self_group_borders[border_index]
 					if(enemy_border)
 						enemy_border = enemies[border_index]
@@ -297,7 +297,7 @@
 		if(abort_group)
 			suspend_group_processing()
 		else
-			if(air && air.check_tile_graphic())
+			if(air?.check_tile_graphic())
 				for(var/turf/simulated/member as() in members)
 					member.update_visuals(air)
 
@@ -307,8 +307,8 @@
 	// This logic is not inverted because group processing may have been
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
-		// space fastpath
-		if (members.len && length_space_border)
+		// space fastpath if we didn't revert (avoid regrouping tiles prior to processing individual cells)
+		if (!abort_group && members.len && length_space_border)
 			if (space_fastpath(parent_controller))
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
@@ -359,6 +359,10 @@
 				minDist = dist
 */
 		minDist = member.dist_to_space
+
+		// Don't space hotspots, it breaks them
+		if(member.active_hotspot)
+			return 0
 
 		if (member.air && !isnull(minDist))
 			var/datum/gas_mixture/member_air = member.air

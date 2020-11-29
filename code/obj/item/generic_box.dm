@@ -188,11 +188,7 @@
 		icon_open = "patchbox-med-open"
 		icon_empty = "patchbox-med-empty"
 
-#if ASS_JAM
-		New()
-			. = ..()
-			ADD_MORTY(13, 11, 7, 7)
-#endif
+
 
 		attack(mob/M as mob, mob/user as mob)
 			if (src.open)
@@ -262,6 +258,7 @@
 			src.inventory_counter.update_number(src.item_amount)
 		else
 			SPAWN_DBG(1 SECOND)
+				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
@@ -315,7 +312,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		if (usr && usr.is_in_hands(src))
+		if (usr?.is_in_hands(src))
 			if (!src.open)
 				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
 				return

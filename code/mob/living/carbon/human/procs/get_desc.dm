@@ -158,16 +158,51 @@
 		else
 			. += "<br><span class='alert'><B>[src.name] has been decapitated!</B></span>"
 
+
 		if (src.organHolder.chest)
-			if (src.organHolder.chest.op_stage >= 9.0)
-				if (src.organHolder.heart)
-					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
-				else
-					. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
-			else if(src.organHolder.chest.op_stage > 0.0)
-				. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+			if (src.organHolder.chest.op_stage > 0.0)
+				if (src.organHolder.chest.op_stage < 9.0)
+					. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+				if (src.organHolder.chest.op_stage >= 9.0 && src.organHolder.chest.op_stage < 10.0)
+					if (src.organHolder.heart)
+						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
+					else
+						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
+				else if(src.organHolder.chest.op_stage > 0.0)
+					. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
+
+			//tailstuff
+			if (src.organHolder.tail) // Has a tail?
+				// Comment if their tail deviates from the norm. And that tail isnt some wierd bone thing.
+				if (src.organHolder.tail && !istype(src.organHolder.tail, /obj/item/organ/tail/bone) && (!(src.mob_flags & SHOULD_HAVE_A_TAIL) || src.organHolder.tail?.donor_original != src))
+					if (!src.organHolder.butt) // no butt?
+						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above the spot where [t_his] butt should be.</span>"
+					else
+						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
+				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
+				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONER) // assive ass wound? and not a skeleton?
+					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
+
+			else // missing a tail?
+				if (src.mob_flags & IS_BONER) // They a skelly?
+					. += "<br><span class='alert'><B>[src.name]'s tailbone is missing!</B></span>" // ez, dont mention the wound, cus bone
+				else if (src.organHolder.chest.op_stage >= 10.0) // first person to call this a tailhole is getting dropkicked into the sun
+					if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
+						if (!src.organHolder.butt) // Also missing a butt?
+							. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B></span>"
+						else // has butt
+							. += "<br><span class='alert'><B>[src.name] has a large incision above [t_his] butt where [t_his] tail should be!</B></span>"
+					else // Do they normally not have a tail?
+						if (!src.organHolder.butt) // Also missing a butt?
+							. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back!</B></span>"
+						else // has butt
+							. += "<br><span class='alert'><B>[src.name] has a large incision above [t_his] butt!</B></span>"
+				else if (src.mob_flags & SHOULD_HAVE_A_TAIL) // No tail, no ass wound? Supposed to have a tail?
+					. += "<br><span class='alert'><B>[src.name] is missing their tail!</B></span>" // oh no my tails gone!!
+					// Commenting on someone not having a tail when they shouldnt have a tail will be left up to the player
 		else
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
+
 
 		if (src.butt_op_stage > 0)
 			if (src.butt_op_stage >= 4)
@@ -243,7 +278,7 @@
 
 	var/changeling_fakedeath = 0
 	var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-	if (C && C.in_fakedeath)
+	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
 	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.getStatusDuration("weakened")))

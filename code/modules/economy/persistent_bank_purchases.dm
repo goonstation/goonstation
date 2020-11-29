@@ -250,7 +250,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			Create(var/mob/living/M)
 				..(M)
-				if(M && M.mind)
+				if(M?.mind)
 					battle_pass_holders.Add(M.mind)
 				return 1
 
@@ -390,10 +390,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing(get_turf(M))
+				S = new /obj/storage/crate/packing()
 				M.set_loc(S)
-				shippingmarket.receive_crate(S)
-				return 1
+			shippingmarket.receive_crate(S)
+			return 1
 
 	missile_arrival
 		name = "Missile Arrival"

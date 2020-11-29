@@ -477,7 +477,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		B.add_volume(H.blood_color, H.blood_id, num_amount, vis_amount)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
-		if (B && B.reagents && H.reagents && H.reagents.total_volume)
+		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
 			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
 	else
@@ -670,7 +670,6 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (isliving(some_idiot))
 		var/mob/living/H = some_idiot
-		var/his_her = "[H.gender == "male" ? "his" : "her"]"
 
 		if (H.being_staunched)
 			src.show_text("[H == src ? "You're" : "Someone's"] already putting pressure on [H == src ? "your" : "[H]'s"] wounds!", "red")
@@ -684,7 +683,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_her]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
 		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
 		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
@@ -777,7 +776,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (5 to INFINITY)
 			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
-	if (some_jerk && some_jerk.zone_sel && some_jerk.zone_sel.selecting)
+	if (some_jerk?.zone_sel?.selecting)
 		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")
