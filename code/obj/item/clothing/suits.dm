@@ -415,18 +415,10 @@
 
 	attack_self()
 		..()
-		if (src.coat_style)
-			usr.set_clothing_icon_dirty()
-			if (buttoned)
-				src.icon_state = "[src.coat_style]_o"
-				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-				"You unbutton your [src.name].")
-			else
-				src.icon_state = src.coat_style
-				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-				"You button your [src.name].")
-
-		buttoned = !buttoned
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
 
 	proc/button()
 		if (src.coat_style)
@@ -434,6 +426,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
+		src.buttoned = TRUE
 
 	proc/unbutton()
 		if (src.coat_style)
@@ -441,6 +434,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
+		src.buttoned = FALSE
 
 
 /obj/item/clothing/suit/labcoat/genetics
