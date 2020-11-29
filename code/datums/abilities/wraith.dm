@@ -89,7 +89,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 20
-	cooldown = 450 //Starts at 45 seconds and scales upward exponentially
+	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 
 	cast(atom/T)
 		if (..())
@@ -155,7 +155,7 @@
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
-				cooldown = 450
+				cooldown = 45 SECONDS
 				W.corpsecount += 1
 			else
 				cooldown += W.corpsecount * 150
@@ -173,7 +173,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 300
-	cooldown = 1500 //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
+	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
 	cast(atom/T)
 		if (..())
@@ -208,7 +208,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 1000
-	cooldown = 5000
+	cooldown = 5 MINUTES
 
 	cast(atom/T)
 		if (..())
@@ -242,7 +242,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 30
-	cooldown = 600 //1 minute
+	cooldown = 1 MINUTE //1 minute
 
 	cast(atom/T)
 		if (..())
@@ -298,7 +298,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
-	cooldown = 200 // 20 seconds
+	cooldown = 20 SECONDS
 
 	cast(atom/T)
 		var/list/thrown = list()
@@ -334,7 +334,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 150
-	cooldown = 600 // 1 minute
+	cooldown = 1 MINUTE
 
 	cast(atom/T)
 		if (..())
@@ -370,7 +370,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 100
-	cooldown = 300 //30 seconds
+	cooldown = 30 SECONDS
 
 	cast(atom/T)
 		if (..())
@@ -417,7 +417,7 @@
 	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. You cannot use this ability while already corporeal."
 	targeted = 0
 	pointCost = 0
-	cooldown = 600 //1 minute
+	cooldown = 1 MINUTE
 
 	cast()
 		if (..())
@@ -433,7 +433,7 @@
 	desc = "Cause freaky, weird, creepy or spooky stuff to happen in an area around you. Use this ability to mark your current tile as the origin of these events, then activate it by using this ability again."
 	targeted = 0
 	pointCost = 0
-	cooldown = 200
+	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
 
 	var/datum/radio_frequency/pda_connection

@@ -278,7 +278,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 500
-	cooldown = 300
+	cooldown = 30 SECONDS
 
 	cast(atom/target)
 		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 90, 0)
@@ -316,7 +316,7 @@
 	icon_state = "shockwave"
 	targeted = 0
 	pointCost = 750
-	cooldown = 350 // 35s
+	cooldown = 35 SECONDS
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
 	special_screen_loc = "NORTH-1,WEST+1"
@@ -398,7 +398,7 @@
 	icon_state = "eviltouch"
 	targeted = 0
 	pointCost = 1000
-	cooldown = 300
+	cooldown = 30 SECONDS
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
@@ -419,7 +419,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
-	cooldown = 150
+	cooldown = 15 SECONDS
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
@@ -458,7 +458,7 @@
 	icon_state = "crush"
 	targeted = 1
 	pointCost = 2500
-	cooldown = 600
+	cooldown = 1 MINUTE
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
