@@ -74,7 +74,7 @@
 			if (currentRange > maxRange)
 				//if we have loops left, do so
 				if (currentLoop < maxLoops)
-					src.auto_spread(starter, maxRange, maxTurfs, maxLoops, 0, currentTurfs, currentLoop + 1)
+					src.auto_spread(starter, maxRange, maxTurfs, maxLoops, 1, currentTurfs, currentLoop + 1)
 				return
 
 			var/list/outerArea = orange(currentRange, starter)
@@ -243,7 +243,7 @@
 		owner.add_ability(/datum/blob_ability/build/firewall)
 		owner.add_ability(/datum/blob_ability/upgrade)
 		for (var/X in childrentypesof(/datum/blob_upgrade))
-			owner.add_upgrade(X, 0)
+			owner.add_upgrade(X, 1)
 
 		if (!owner.tutorial)
 			//do a little "blobsplosion"
@@ -268,7 +268,7 @@
 		var/g = hex2num(copytext(owner.color, 4, 6))
 		var/b = hex2num(copytext(owner.color, 6))
 		var/hsv = rgb2hsv(r,g,b)
-		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 0 )
+		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
 
 		owner.my_material.color = owner.color
 
