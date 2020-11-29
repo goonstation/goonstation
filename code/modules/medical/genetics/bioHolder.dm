@@ -52,18 +52,23 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_first = "Trimmed"
 	/// The hair style / detail thing that was set by the player in their settings
 	var/customization_first_original = "None"
+	/// The Y offset to display this image
+	var/customization_first_offset_y = 0
 
 	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second_color_original = "#101010"
 	var/customization_second = "None"
 	var/customization_second_original = "None"
+	var/customization_second_offset_y = 0
+
 
 	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
 	var/customization_third_color_original = "#101010"
 	var/customization_third = "None"
 	var/customization_third_original = "None"
+	var/customization_third_offset_y = 0
 
 	/// An image to be overlaid on the mob just above their skin
 	var/mob_detail_1
@@ -87,6 +92,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/e_color = "#101010"
 	var/e_color_original = "#101010"
+	/// Eye icon
+	var/e_icon = 'icons/mob/human_hair.dmi'
+	/// Eye icon state
+	var/e_state = "eyes"
+	/// How far up or down to move the eyes
+	var/e_offset_y = 0
 
 	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
@@ -158,16 +169,19 @@ var/list/datum/bioEffect/mutini_effects = list()
 		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
+		customization_first_offset_y = toCopy.customization_first_offset_y
 		customization_first_original = toCopy.customization_first_original
 
 		customization_second_color_original = toCopy.customization_second_color_original
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
+		customization_second_offset_y = toCopy.customization_second_offset_y
 		customization_second_original = toCopy.customization_second_original
 
 		customization_third_color_original = toCopy.customization_third_color_original
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+		customization_third_offset_y = toCopy.customization_third_offset_y
 		customization_third_original = toCopy.customization_third_original
 
 		mob_detail_1 = toCopy.mob_detail_1
@@ -180,9 +194,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		mutant_race = toCopy.mutant_race
 
-		mob_color_flags = toCopy.mob_color_flags
-
 		e_color = toCopy.e_color
+		e_icon = toCopy.e_icon
+		e_state = toCopy.e_state
+		e_offset_y = toCopy.e_offset_y
 		e_color_original = toCopy.e_color_original
 
 		s_tone = toCopy.s_tone

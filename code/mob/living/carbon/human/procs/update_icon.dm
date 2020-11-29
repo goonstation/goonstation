@@ -657,17 +657,21 @@
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 
-		image_eyes = my_head.head_image_eyes
+		src.image_eyes = my_head.head_image_eyes
 		src.hair_standing.overlays += image_eyes
 
-		if (!seal_hair)
-			image_cust_one = my_head.head_image_cust_one
+		src.image_cust_one = my_head.head_image_cust_one
+		src.cust_one_state = my_head.head_image_cust_one?.icon_state
+
+		src.image_cust_two = my_head.head_image_cust_two
+		src.cust_two_state = my_head.head_image_cust_two?.icon_state
+
+		src.image_cust_three = my_head.head_image_cust_three
+		src.cust_three_state = my_head.head_image_cust_three?.icon_state
+
+		if(!seal_hair)
 			src.hair_standing.overlays += image_cust_one
-
-			image_cust_two = my_head.head_image_cust_two
 			src.hair_standing.overlays += image_cust_two
-
-			image_cust_three = my_head.head_image_cust_three
 			src.hair_standing.overlays += image_cust_three
 
 		UpdateOverlays(hair_standing, "hair", 1, 1)

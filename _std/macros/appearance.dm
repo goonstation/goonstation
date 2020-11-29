@@ -51,8 +51,6 @@
 
 /// We have normal human eyes of human color where human eyes tend to be
 #define HAS_HUMAN_EYES					(1<<9)
-///We have different eyes of different color probably somewhere else
-#define HAS_SPECIAL_EYES				(1<<10)
 /// We have no eyes and yet must see (cus they're baked into the sprite or something)
 #define HAS_NO_EYES							(1<<11)
 

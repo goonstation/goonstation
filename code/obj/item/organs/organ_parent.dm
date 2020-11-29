@@ -25,6 +25,8 @@
 	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
 	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
+	/// Whoever had this organ first, the original owner
+	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
 	var/datum/appearanceHolder/donor_AH //
 	var/donor_name = null // so you don't get dumb "Unknown's skull mask" shit
 	var/donor_DNA = null
@@ -103,6 +105,7 @@
 			src.holder = nholder
 			src.donor = nholder.donor
 		if (src.donor)
+			src.donor_original = src.donor
 			if (src.donor.bioHolder)
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
@@ -152,7 +155,7 @@
 			return 0
 		return 1
 
-	//What should happen each life tick when an organ is broken.
+	/// What should happen each life tick when an organ is broken.
 	proc/on_broken(var/mult = 1)
 		//stupid check ikr? prolly remove.
 		if (broken)
@@ -174,6 +177,8 @@
 		var/mob/living/carbon/human/H = M
 		src.donor = H
 		src.holder = H.organHolder
+		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
+			src.donor_original = H
 
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
