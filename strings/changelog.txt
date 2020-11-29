@@ -1,4 +1,9 @@
 
+(t)sat nov 28 20
+(u)Superlagg
+(p)2868
+(e)⚖🐛🆕|balance, bug, feature
+(+)Severe drunkenness now helps counteract the loss of coordination and abject helplessness from losing a tail!
 (t)fri nov 27 20
 (u)Gannets
 (p)2852
