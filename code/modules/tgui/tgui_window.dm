@@ -70,9 +70,9 @@
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
-				handle_cdn_asset(get_assets(subasset), inline_assets_str)
+				inline_assets_str += handle_cdn_asset(get_assets(subasset))
 		else
-			handle_cdn_asset(get_assets(asset.type), inline_assets_str)
+			inline_assets_str += handle_cdn_asset(get_assets(asset.type))
 
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
@@ -83,13 +83,15 @@
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
 
-/** |GOONSTATION-ADD|
+// |GOONSTATION-ADD|
+/**
  * private
  *
- * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
+ * Parses our asset structures for the Goonstation CDN setup
  *
+ * return: the string to put in the html window
  */
-/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_assets_str)
+/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset)
 	// Operating locally. Deliver what assets we can manually.
 	if (!cdn)
 		asset.deliver(client)
@@ -97,18 +99,18 @@
 			var/datum/asset/basic/b = asset
 			for (var/url in b.local_assets)
 				if(copytext(url, -4) == ".css")
-					inline_assets_str +="Byond.loadCss('[url]', true);\n"
+					. = "Byond.loadCss('[url]', true);\n"
 				else if(copytext(url, -3) == ".js")
-					inline_assets_str += "Byond.loadJs('[url]', true);\n"
+					. = "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
 			var/url = url_map[name]
 			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				inline_assets_str +="Byond.loadCss('[url]', true);\n"
+				. = "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_assets_str += "Byond.loadJs('[url]', true);\n"
+				. = "Byond.loadJs('[url]', true);\n"
 
 /**
  * public
