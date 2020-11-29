@@ -709,20 +709,6 @@
 
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
-	// var/gender = MALE
-	// var/age = 30
-	// var/blType = "A+"
-	// var/flavor_text = null
-
-	// var/customization_first = "Short Hair"
-	// var/customization_second = "None"
-	// var/customization_third = "None"
-
-	// var/customization_first_color = "#FFFFFF"
-	// var/customization_second_color = "#FFFFFF"
-	// var/customization_third_color = "#FFFFFF"
-	// var/s_tone = "#FFFFFF"
-	// var/e_color = "#FFFFFF"
 	var/fat = 0
 	var/update_wearid = 0
 
@@ -904,31 +890,7 @@
 		src.tf_holder.CopyOther(H.bioHolder) // load their bioholder into ours
 
 		src.real_name = H.real_name
-		// src.gender = H.gender
-		// src.age = H.bioHolder.age
-		// src.blType = H.bioHolder.bloodType
-		// src.flavor_text = H.bioHolder.mobAppearance.flavor_text
-		// src.s_tone = H.bioHolder.mobAppearance.s_tone
 
-		// src.customization_first = H.bioHolder.mobAppearance.customization_first
-		// src.customization_first_color = H.bioHolder.mobAppearance.customization_first_color
-
-		// src.customization_second = H.bioHolder.mobAppearance.customization_second
-		// src.customization_second_color = H.bioHolder.mobAppearance.customization_second_color
-
-		// src.customization_third = H.bioHolder.mobAppearance.customization_third
-		// src.customization_third_color = H.bioHolder.mobAppearance.customization_third_color
-
-		// if(!(customization_styles[src.tf_holder.mobAppearance.customization_first] || customization_styles_gimmick[src.tf_holder.mobAppearance.customization_first]))
-		// 	src.customization_first = "None"
-
-		// if(!(customization_styles[src.tf_holder.mobAppearance.customization_second] || customization_styles_gimmick[src.tf_holder.mobAppearance.customization_second]))
-		// 	src.customization_second = "None"
-
-		// if(!(customization_styles[src.tf_holder.mobAppearance.customization_third] || customization_styles_gimmick[src.tf_holder.mobAppearance.customization_third]))
-		// 	src.customization_third = "None"
-
-		// src.e_color = H.bioHolder.mobAppearance.e_color
 		src.fat = (H.bioHolder.HasEffect("fat"))
 		if(H.mutantrace)
 			src.mutantrace = new H.mutantrace.type
@@ -993,43 +955,9 @@
 
 		var/old_name = target_mob.real_name
 		target_mob.real_name = real_name
-		// target_mob.bioHolder.mobAppearance.flavor_text = src.flavor_text
 
-		// target_mob.bioHolder.mobAppearance.gender = gender
-
-		// target_mob.bioHolder.age = age
-		// target_mob.bioHolder.bloodType = blType
-		// target_mob.bioHolder.ownerName = real_name
-
-		// target_mob.bioHolder.mobAppearance.e_color = e_color
-		// target_mob.bioHolder.mobAppearance.customization_first_color = customization_first_color
-		// target_mob.bioHolder.mobAppearance.customization_second_color = customization_second_color
-		// target_mob.bioHolder.mobAppearance.customization_third_color = customization_third_color
-		// target_mob.bioHolder.mobAppearance.s_tone = s_tone
 		if (target_mob.limbs)
 			target_mob.limbs.reset_stone()
-
-		// target_mob.bioHolder.mobAppearance.customization_first = customization_first
-		// target_mob.bioHolder.mobAppearance.customization_second = customization_second
-		// target_mob.bioHolder.mobAppearance.customization_third = customization_third
-
-		// target_mob.cust_one_state = customization_styles[customization_first]
-		// if(!target_mob.cust_one_state)
-		// 	target_mob.cust_one_state = customization_styles_gimmick[customization_first]
-		// 	if(!target_mob.cust_one_state)
-		// 		target_mob.cust_one_state = "None"
-
-		// target_mob.cust_two_state = customization_styles[customization_second]
-		// if(!target_mob.cust_two_state)
-		// 	target_mob.cust_two_state = customization_styles_gimmick[customization_second]
-		// 	if(!target_mob.cust_two_state)
-		// 		target_mob.cust_two_state = "None"
-
-		// target_mob.cust_three_state = customization_styles[customization_third]
-		// if(!target_mob.cust_three_state)
-		// 	target_mob.cust_three_state = customization_styles_gimmick[customization_third]
-		// 	if(!target_mob.cust_three_state)
-		// 		target_mob.cust_three_state = "None"
 
 		if(src.update_wearid && target_mob.wear_id)
 			target_mob.choose_name(1,1,target_mob.real_name, force_instead = 1)
@@ -1132,8 +1060,6 @@
 			// Skin tone
 			if (src.tf_holder.mobAppearance.s_tone)
 				src.preview_icon.Blend(src.tf_holder.mobAppearance.s_tone ? src.tf_holder.mobAppearance.s_tone : "#FFFFFF", ICON_MULTIPLY)
-		//if(!src.mutantrace)
-			//src.preview_icon.Blend(new /icon('icons/mob/human_underwear.dmi', "none"), ICON_OVERLAY) // why are you blending an empty icon state into the icon???
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes")
 
