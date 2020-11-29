@@ -1,6 +1,5 @@
 import { useBackend } from '../backend';
-import { Component, createPortal } from 'inferno';
-import { classes } from "common/react";
+import { Component } from 'inferno';
 import { Divider, Box, Section, Flex } from '../components';
 import { Window } from '../layouts';
 import { PaperSheetView } from './PaperSheet';
