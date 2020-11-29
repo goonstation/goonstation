@@ -1,4 +1,9 @@
 
+(t)sun nov 29 20
+(u)Flourish
+(p)2865
+(e)🐛|bug
+(+)You can now examine things while doing an action (such as uncuffing) without interrupting it.
 (t)sat nov 28 20
 (u)Superlagg
 (p)2868
