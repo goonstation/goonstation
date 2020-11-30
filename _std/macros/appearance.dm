@@ -33,11 +33,15 @@
 #define NO_CUST 0
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
-/// so far just makes fat mutants render as male
+/// We only have male torso/groin sprites, so only use those.
+/// Without this flag, your mutant race sprite *must* include a chest_m and groin_m state, or your women will be a bunch of floating limbs
 #define NOT_DIMORPHIC								(1<<0)
 
+/// Our model has fat states
+#define VISIBLY_FAT							(1<<1)
+
 /// Skin tone defined through the usual route
-#define HAS_HUMAN_SKINTONE			(1<<1)
+#define HAS_HUMAN_SKINTONE			(1<<2)
 /// Please dont tint my mob it looks weird
 #define HAS_NO_SKINTONE					(1<<3)
 /// Some parts are skintoned, some are not. Define these with the color flags!
@@ -86,4 +90,4 @@
 #define	TORSO_HAS_SKINTONE						(1<<21)
 
 /// Default normal standard human appearance flags
-#define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+#define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS | VISIBLY_FAT)

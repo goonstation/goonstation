@@ -835,11 +835,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		// if the image data can be stored in the thing it's trying to draw, store it there
 		// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
 		if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
-			if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & NOT_DIMORPHIC)) || src.decomp_stage)
+			if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && !(AHOLD.mob_appearance_flags & VISIBLY_FAT)) || src.decomp_stage)
 				human_image.icon = AHOLD.body_icon
 				human_image.layer = MOB_LIMB_LAYER // why was this never defined before
 				var/gender_t = null
-				if (AHOLD.mob_appearance_flags & NOT_DIMORPHIC) // So far, none of the mutants are terribly dimorphic
+				if (AHOLD.mob_appearance_flags & NOT_DIMORPHIC) // Most mutants arent dimorphic
 					gender_t = "m" // and i doubt they ever will be
 				else
 					gender_t = src.gender == FEMALE ? "f" : "m"
