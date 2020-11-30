@@ -522,7 +522,7 @@ that cannot be itched
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////
 
 /obj/item/device/prisoner_scanner
-	name = "Securotron-5000"
+	name = "security records scanner"
 	desc = "Used to scan in prisoners and update their security records."
 	icon_state = "securotron"
 	var/mode = 1
