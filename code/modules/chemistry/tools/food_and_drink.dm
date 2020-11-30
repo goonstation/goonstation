@@ -1057,7 +1057,7 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
-				if ((user.mind.assigned_role == "Bartender") && (prob(10)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
 					JOB_XP(user, "Bartender", 1)
 				return
 
@@ -1071,7 +1071,7 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
-			if ((user.mind.assigned_role == "Bartender") && (prob(10)))
+			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
 				JOB_XP(user, "Bartender", 1)
 			return
 
@@ -1117,7 +1117,7 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
-				if ((user.mind.assigned_role == "Bartender") && (prob(10)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
 					JOB_XP(user, "Bartender", 1)
 				return
 			else
@@ -1741,7 +1741,7 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
-			if ((user.mind.assigned_role == "Bartender") && (prob(5)))
+			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
 				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
