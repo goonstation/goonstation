@@ -9550,6 +9550,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/blue,
 /area/space)
+"yw" = (
+/obj/item/plant/herb/cannabis/spawnable,
+/turf/unsimulated/floor/grime,
+/area/space)
+"zL" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/sanitary/blue,
+/area/space)
 "AC" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
@@ -10065,15 +10074,87 @@
 /obj/critter/bat/hellbat,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
 /area/mantavault)
-"CG" = (
+"CD" = (
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/item/reagent_containers/ampoule/smelling_salts{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 3;
+	pixel_y = -9
+	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/space)
-"JD" = (
-/obj/stool/chair/couch/blue{
-	dir = 8;
-	icon_state = "chair_couch-blue"
+"CG" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/floor/sanitary/blue,
+/area/space)
+"Da" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/space)
+"Dn" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bucket,
+/turf/unsimulated/floor/grime,
+/area/space)
+"DY" = (
+/obj/rack,
+/obj/item/clothing/head/emerg,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Gg" = (
+/obj/decal/fakeobjects/creepytv{
+	desc = "There's a gummy layer of dust over the controls."
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Gm" = (
+/obj/item/reagent_containers/food/snacks/chips,
+/turf/unsimulated/floor/grime,
+/area/space)
+"HY" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/couch/purple{
+	dir = 9
 	},
 /turf/unsimulated/floor/grime,
+/area/space)
+"Jq" = (
+/obj/landmark{
+	name = "marjfall"
+	},
+/turf/space/fluid/noexplosion,
+/area/space)
+"Ju" = (
+/obj/item/seed/cannabis,
+/turf/unsimulated/floor/grime,
+/area/space)
+"JA" = (
+/obj/item/scissors,
+/obj/item/rubberduck{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/damaged3,
+/area/space)
+"JD" = (
+/obj/item/scrap,
+/turf/space/fluid/noexplosion,
 /area/space)
 "JF" = (
 /obj/machinery/door/airlock/pyro/glass/brig{
@@ -10081,19 +10162,136 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/space)
-"Pb" = (
-/obj/stool/chair/couch/blue{
-	dir = 4;
-	icon_state = "chair_couch-blue"
+"JL" = (
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/space/emerg,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Kl" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/unsimulated/floor/grime,
 /area/space)
+"Lh" = (
+/obj/reagent_dispensers/still,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Ly" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_y = 6
+	},
+/obj/decal/cleanable/vomit,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/space)
+"LR" = (
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"Mr" = (
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Mz" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/grime,
+/area/space)
+"MJ" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Oc" = (
+/obj/decal/cleanable/dirt,
+/obj/shrub/dead,
+/obj/item/reagent_containers/patch/LSD{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"ON" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "marjorama";
+	pixel_y = 24
+	},
+/turf/space/fluid/noexplosion,
+/area/space)
+"Pb" = (
+/obj/item/raw_material/rock,
+/turf/space/fluid/noexplosion,
+/area/space)
+"Pp" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"PA" = (
+/obj/item/device/light/glowstick{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/obj/item/plant/herb/catnip,
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -11
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"PK" = (
+/obj/stool/chair/couch/purple{
+	dir = 5
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"PS" = (
+/obj/item/device/light/flashlight{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/grime,
+/area/space)
 "Qs" = (
-/obj/machinery/door/airlock/pyro/glass/brig,
+/obj/machinery/plantpot,
+/turf/unsimulated/floor/grime,
+/area/space)
+"QN" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/item/game_kit,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray";
+	pixel_x = -7
+	},
+/turf/unsimulated/floor/grime,
+/area/space)
+"RJ" = (
+/obj/reagent_dispensers/watertank,
 /turf/unsimulated/floor/grime,
 /area/space)
 "UV" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/item/satchel/hydro,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Vh" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/unsimulated/floor/grime,
+/area/space)
+"Vl" = (
+/obj/stool/chair/comfy,
 /turf/unsimulated/floor/grime,
 /area/space)
 "Vx" = (
@@ -10101,6 +10299,16 @@
 /area/space)
 "VQ" = (
 /turf/unsimulated/floor/grime,
+/area/space)
+"YJ" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion,
+/area/space)
+"Zo" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
 /area/space)
 
 (1,1,1) = {"
@@ -24325,7 +24533,7 @@ ab
 ab
 ab
 ab
-gW
+ab
 gW
 gW
 gW
@@ -24625,9 +24833,9 @@ aS
 aS
 aS
 aS
+aS
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -24904,7 +25112,8 @@ gW
 (50,1,1) = {"
 ab
 aS
-aS
+aW
+gQ
 aS
 aS
 aS
@@ -24912,15 +25121,16 @@ aS
 aS
 aS
 aW
-gQ
-gQ
-gQ
-gQ
-gQ
+JD
 gQ
 aS
+aS
 aW
-gQ
+YJ
+aS
+aW
+JD
+aS
 aS
 aS
 aS
@@ -24928,8 +25138,6 @@ aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -25206,7 +25414,8 @@ gW
 (51,1,1) = {"
 ab
 aS
-aS
+aW
+JD
 aS
 aW
 gQ
@@ -25217,12 +25426,13 @@ gQ
 gQ
 gQ
 gQ
+aS
+aW
+JD
+Jq
 gQ
-gQ
-gQ
-gQ
-gQ
-gQ
+Pb
+aS
 aS
 aS
 aS
@@ -25230,8 +25440,6 @@ aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -25508,14 +25716,14 @@ gW
 (52,1,1) = {"
 ab
 aS
-aS
-aS
-aS
-aS
 aW
 gQ
 gQ
 gQ
+Pb
+aS
+aW
+YJ
 gQ
 gQ
 gQ
@@ -25526,14 +25734,14 @@ gQ
 gQ
 gQ
 gQ
+Jq
+aS
 aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -25811,7 +26019,8 @@ gW
 ab
 aS
 aS
-aS
+aW
+gQ
 aS
 aS
 aS
@@ -25819,6 +26028,7 @@ aS
 aS
 aS
 aW
+Pb
 gQ
 gQ
 gQ
@@ -25827,15 +26037,13 @@ gQ
 gQ
 gQ
 gQ
-gQ
-gQ
+Pb
+aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -26113,7 +26321,8 @@ gW
 ab
 aS
 aS
-aS
+aW
+gQ
 aS
 aS
 aS
@@ -26128,16 +26337,15 @@ Vx
 aS
 aW
 gQ
+Jq
 gQ
 gQ
-gQ
-gQ
+aS
+aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -26415,31 +26623,31 @@ gW
 ab
 aS
 aS
-aS
+aW
+gQ
 aS
 aS
 aS
 Vx
 CG
-CG
+Ly
 Vx
-JD
-VQ
-VQ
+Gg
+Gm
+HY
 Vx
 aS
 aS
 aW
+JD
 gQ
 gQ
 gQ
-gQ
+aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -26716,18 +26924,19 @@ gW
 (56,1,1) = {"
 ab
 aS
-aS
-aS
+aW
+gQ
+JD
 Vx
 Vx
 Vx
 Vx
-CG
-CG
+CD
+zL
 Vx
-Pb
-VQ
-VQ
+Oc
+PA
+PK
 Vx
 aS
 aS
@@ -26736,12 +26945,11 @@ gQ
 gQ
 gQ
 gQ
-gQ
+Jq
+aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -27018,32 +27226,32 @@ gW
 (57,1,1) = {"
 ab
 aS
-aS
-aS
+aW
+gQ
+gQ
+gK
+Qs
+RJ
 Vx
-VQ
-VQ
 Vx
-Vx
-CG
+Da
 Vx
 Vx
 JF
-JF
 Vx
 Vx
 Vx
 Vx
 Vx
+Vx
+Pb
+Jq
 gQ
-gQ
-gQ
-gQ
+JD
+aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -27320,22 +27528,23 @@ gW
 (58,1,1) = {"
 ab
 aS
-aS
-aS
-Vx
-VQ
-VQ
-VQ
+aW
+Pb
+gQ
 gK
 VQ
+Ju
+Lh
+gK
 VQ
+Dn
 VQ
 VQ
 VQ
 VQ
 Vx
-VQ
-VQ
+DY
+JL
 Vx
 gQ
 gQ
@@ -27343,9 +27552,8 @@ gQ
 gQ
 gQ
 aS
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -27623,31 +27831,31 @@ gW
 ab
 aS
 aW
-gL
-Vx
-VQ
-VQ
-VQ
-Qs
-VQ
-VQ
-VQ
-VQ
-VQ
-VQ
+JD
+gQ
+gK
 UV
 VQ
 VQ
-UV
+Vh
+MJ
+VQ
+VQ
+VQ
+MJ
+VQ
+Mz
+VQ
+VQ
+Mz
 gQ
 gQ
 gQ
 gQ
 gQ
 aS
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -27925,31 +28133,31 @@ gW
 ab
 aS
 aW
-gL
-gL
-VQ
-VQ
-VQ
+gQ
+gQ
+gK
+Ju
+yw
+Mr
 gK
 VQ
-VQ
-VQ
-VQ
+Vl
+QN
+LR
 VQ
 VQ
 Vx
-VQ
-VQ
+PS
+JA
 Vx
 gQ
 aS
 aW
-gQ
+ON
 gQ
 aS
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -28227,18 +28435,19 @@ gW
 ab
 aS
 aW
-gL
-Vx
-VQ
-VQ
-Vx
-Vx
-JF
-Vx
-Vx
+gQ
+gQ
 gK
-JF
-gK
+Qs
+Pp
+Vx
+Vx
+Kl
+Vx
+Vx
+Vx
+Kl
+Vx
 Vx
 Vx
 Vx
@@ -28247,11 +28456,10 @@ aS
 aS
 aS
 aW
+Jq
 gQ
-gQ
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -28528,8 +28736,9 @@ gW
 (62,1,1) = {"
 ab
 aS
+aS
 aW
-gL
+gQ
 Vx
 Vx
 Vx
@@ -28538,11 +28747,11 @@ VQ
 VQ
 VQ
 Vx
+MJ
 VQ
 VQ
 VQ
-VQ
-VQ
+MJ
 Vx
 aS
 aS
@@ -28551,9 +28760,8 @@ aS
 aW
 gQ
 gQ
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -28830,32 +29038,32 @@ gW
 (63,1,1) = {"
 ab
 aS
-aW
-gL
-gL
-aS
-aS
-Vx
-VQ
-VQ
-VQ
-Vx
-VQ
-VQ
-VQ
-VQ
-VQ
-Vx
-gL
-gL
-aS
-aS
 aS
 aW
 gQ
+aS
+aS
+aS
+Vx
+VQ
+VQ
+VQ
+Vx
+VQ
+VQ
+VQ
+MJ
+VQ
+Vx
+Zo
+gL
+aS
+aS
+aS
+aW
+JD
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -29134,8 +29342,9 @@ ab
 aS
 aS
 aW
-gL
-gL
+gQ
+JD
+aS
 aS
 Vx
 VQ
@@ -29143,7 +29352,7 @@ VQ
 VQ
 Vx
 VQ
-VQ
+MJ
 VQ
 VQ
 VQ
@@ -29151,13 +29360,12 @@ Vx
 gL
 gL
 gL
+aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -29436,30 +29644,30 @@ ab
 aS
 aS
 aS
+aW
+gQ
+gQ
+aS
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Kl
+Vx
+Vx
 gL
 gL
-gL
-Vx
-Vx
-Vx
-Vx
-Vx
-Vx
-Vx
-Vx
-gL
-Vx
-Vx
-gL
-gL
-gL
+Zo
+aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -29738,30 +29946,30 @@ ab
 aS
 aS
 aS
+aW
+Pb
+aS
+aS
+aS
+aS
+aS
+aS
 aS
 aW
 gL
 gL
 gL
 gL
+gL
+gL
+gL
 aS
-aS
-aW
-gL
-gL
-gL
-gL
-gL
-gL
-gL
 aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -30044,26 +30252,26 @@ aS
 aS
 aS
 aS
-aW
-gL
-gL
-gL
-gL
-gL
-aS
 aS
 aS
 aS
 aW
 gL
+gL
+gL
+aS
+aS
+aS
+aS
+aW
+Zo
+aS
 aS
 aS
 aS
 aS
 aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -30363,9 +30571,9 @@ aS
 aS
 aS
 aS
+aS
+aS
 ab
-gW
-gW
 gW
 gW
 gW
@@ -30666,8 +30874,8 @@ ab
 ab
 ab
 ab
-gW
-gW
+ab
+ab
 gW
 gW
 gW
