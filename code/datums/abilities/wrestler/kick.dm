@@ -42,7 +42,7 @@
 
 		M.emote("scream")
 		M.emote("flip")
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 
 		for (var/mob/C in oviewers(M))
 			shake_camera(C, 8, 24)

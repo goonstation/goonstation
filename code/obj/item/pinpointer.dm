@@ -40,7 +40,7 @@
 				active = 0
 				icon_state = "[src.icon_type]_pinonnull"
 				return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "[src.icon_type]_pinondirect"
@@ -118,7 +118,7 @@
 		if(!target)
 			icon_state = "id_pinonnull"
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "id_pinondirect"
@@ -217,7 +217,7 @@
 			active = 0
 			boutput(usr, "<span class='alert'>No target found!</span>")
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "blood_pinondirect"

@@ -8,4 +8,4 @@
 world
 	hub = "Exadv1.SpaceStation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
-	name = "Goon Station 13"
+	name = "Goonstation 13"

@@ -95,7 +95,7 @@
 			connected?.scanner?.pods -= src
 		connected = null
 		if(occupant)
-			occupant.set_loc(src.loc)
+			occupant.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -225,6 +225,10 @@
 		if (istype(oldholder))
 			oldholder.clone_generation++
 			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
+			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
+			if(ishuman(src.occupant))
+				var/mob/living/carbon/human/H = src.occupant
+				H.update_colorful_parts()
 		else
 			logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
@@ -235,7 +239,10 @@
 			src.occupant.abilityHolder.transferOwnership(src.occupant) //mbc : fixed clone removing abilities bug!
 			src.occupant.abilityHolder.remove_unlocks()
 
-		ghost.client.mob = src.occupant
+		ghost.mind.transfer_to(src.occupant)
+
+		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
+			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
 		if(src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
@@ -799,6 +806,13 @@
 		src.update_icon(1)
 		SPAWN_DBG(0)
 			src.find_pods()
+
+	disposing()
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+		occupant = null
+		..()
+
 
 	proc/find_pods()
 		if (!islist(src.pods))

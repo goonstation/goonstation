@@ -1091,10 +1091,7 @@
 				return 1
 		return 0
 
-	proc/collapse_to_pieces()
-		src.visible_message("<b>[src]</b> falls apart into a pile of components!")
-		. = get_turf(src)
-		for(var/obj/item/O in src.contents) O.set_loc( . )
+	proc/reset_frame()
 		src.chest = null
 		src.head = null
 		src.l_arm = null
@@ -1102,7 +1099,6 @@
 		src.l_leg = null
 		src.r_leg = null
 		src.updateicon()
-		return
 
 	proc/finish_cyborg()
 		var/mob/living/silicon/robot/O = null
@@ -1122,25 +1118,30 @@
 			else if (src.head.ai_interface)
 				O.ai_interface = src.head.ai_interface
 			else
-				src.collapse_to_pieces()
-				qdel(O)
+				O.collapse_to_pieces()
+				src.reset_frame()
 				return
 		else
 			// how the fuck did you even do this
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
-		if(O.brain && O.brain.owner && O.brain.owner.key)
+		if(O.brain?.owner?.key)
 			if(O.brain.owner.current)
 				O.gender = O.brain.owner.current.gender
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
-			if(istype(get_area(O.brain.owner.current),/area/afterlife/bar))
-				boutput("<span class='notice'>,You feel yourself being pulled out of the afterlife!</span>")
-				var/mob/old = O.brain.owner.current
-				O.brain.owner = O.brain.owner.current.ghostize().mind
-				qdel(old)
+			var/mob/M = find_ghost_by_key(O.brain.owner.ckey)
+			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
+				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
+				O.collapse_to_pieces()
+				src.reset_frame()
+				return
+			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+				O.brain.owner = M.ghostize()?.mind
+				qdel(M)
 			O.brain.owner.transfer_to(O)
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
@@ -1149,11 +1150,11 @@
 				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span> You activate the frame and a audible beep emanates from the head.</span>")
+			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(get_turf(src), "sound/weapons/radxbow.ogg", 40, 1)
 		else
-			src.collapse_to_pieces()
-			qdel(O)
+			O.collapse_to_pieces()
+			src.reset_frame()
 			return
 
 		if (src.chest && src.chest.cell)

@@ -26,6 +26,8 @@
 #define MOB_GLASSES_LAYER 	(MOB_OVERLAY_BASE-6)
 #define MOB_HAIR_LAYER2		(MOB_OVERLAY_BASE-7)
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)
+#define MOB_OVERSUIT_LAYER1 (MOB_LAYER_BASE-8.7)	// For mutant oversuit (de)tails when facing north
+#define MOB_OVERSUIT_LAYER2 (MOB_LAYER_BASE-8.8)	// If we have another one
 #define MOB_ARMOR_LAYER 	(MOB_OVERLAY_BASE-9)
 #define MOB_HAND_LAYER2 	(MOB_OVERLAY_BASE-10) 	// gloves
 #define MOB_HAND_LAYER1 	(MOB_OVERLAY_BASE-11)
@@ -35,7 +37,12 @@
 #define MOB_CLOTHING_LAYER 	(MOB_OVERLAY_BASE-15)
 #define MOB_UNDERWEAR_LAYER (MOB_OVERLAY_BASE-16)
 #define MOB_DAMAGE_LAYER 	(MOB_OVERLAY_BASE-17)
-#define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-18)
+#define MOB_BODYDETAIL_LAYER3 	(MOB_OVERLAY_BASE-18)
+#define MOB_BODYDETAIL_LAYER2 	(MOB_OVERLAY_BASE-19)	//
+#define MOB_BODYDETAIL_LAYER1 	(MOB_OVERLAY_BASE-20) // Mostly just for torso stuff
+#define MOB_LIMB_LAYER 		(MOB_OVERLAY_BASE-21)
+#define MOB_TAIL_LAYER2 		(MOB_OVERLAY_BASE-23) // Tail detail
+#define MOB_TAIL_LAYER1 		(MOB_OVERLAY_BASE-24) // Tail base
 
 // Some effects were defined on layer 10, some on layer 20... Lets unify this...
 // These are for effects that should display below lighting

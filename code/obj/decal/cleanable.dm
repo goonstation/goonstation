@@ -107,7 +107,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			pool(src)
 
 	Move(NewLoc, direct)
-		..()
+		. = ..()
 		if (last_turf && istype(last_turf))
 			last_turf.messy = max(last_turf.messy-1, 0)
 		last_turf = src.loc
@@ -1575,6 +1575,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		..()
 		updateSurroundingMagnesium(T)
+
+	pooled()
+		..()
+		src.sampled = 0 // stop fucking breaking butthead! >:(
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()

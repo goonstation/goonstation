@@ -28,7 +28,7 @@
 				var/icon/hud_style = hud_style_selection[get_hud_style(master)]
 				if (isicon(hud_style))
 					icon_hud = hud_style
-			if (master.client && master.client.tg_layout)
+			if (master?.client?.tg_layout)
 				slocation = tg_ui_zone_sel
 
 			background = create_screen("background", "Zone Selection", src.icon_hud, "zone_sel", src.slocation, HUD_LAYER)

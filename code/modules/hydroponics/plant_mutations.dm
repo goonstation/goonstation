@@ -125,13 +125,13 @@
 
 // Pear Mutations
 
-#if ASS_JAM
+/* This is cool and definitely does not belong in the trash, and should probably be legitimately attainable.
 /datum/plantmutation/pear/sickly
 	name = "Sickly Pear"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	assoc_reagents = list("too much")
 
-#endif
+*/
 
 // Melon Mutations
 
@@ -486,6 +486,7 @@
 	name_prefix = "White "
 	iconmod = "RadweedWhite"
 	special_proc_override = 1
+	assoc_reagents = list("penteticacid")
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -519,7 +520,7 @@
 	name = "Smoldering Radweed"
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
-	assoc_reagents = list("phlogiston")
+	assoc_reagents = list("infernite")
 
 // Slurrypod Mutations
 

@@ -23448,7 +23448,7 @@
 /area/station/crew_quarters/kitchen)
 "bbO" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)

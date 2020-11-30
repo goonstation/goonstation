@@ -270,10 +270,11 @@ turf
 			else
 				return ..()
 
-		update_air_properties()//OPTIMIZE
+		update_air_properties() //OPTIMIZE - yes this proc right here sir
 			air_check_directions = 0
 
 			for(var/direction in cardinal)
+				LAGCHECK(LAG_REALTIME)
 				if(CanPass(null, get_step(src,direction), 0, 0))
 					air_check_directions |= direction
 
@@ -286,7 +287,8 @@ turf
 
 				group_border = 0
 				for(var/direction in cardinal)
-					if(air_check_directions&direction)
+					LAGCHECK(LAG_REALTIME)
+					if(air_check_directions & direction)
 						var/turf/simulated/T = get_step(src,direction)
 
 						//See if actually a border

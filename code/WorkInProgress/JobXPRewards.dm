@@ -465,7 +465,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "You pull your rubber hamer out from your nose!")
+		boutput(C, "You pull your rubber hammer out from your nose!")
 		new /obj/item/rubber_hammer(get_turf(C.mob))
 		return
 

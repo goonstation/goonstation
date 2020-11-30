@@ -45,7 +45,7 @@
 
 			SPAWN_DBG (0)
 				for (var/i = 0, i < 4, i++)
-					M.dir = turn(M.dir, 90)
+					M.set_dir(turn(M.dir, 90))
 
 				M.set_loc(target.loc)
 				sleep(4)

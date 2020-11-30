@@ -70,10 +70,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 	for(var/_thr in thrown)
 		var/datum/thrown_thing/thr = _thr
 		var/atom/movable/thing = thr.thing
-#if ASS_JAM
-		if(thing.throwing_paused)//timestop effect
-			continue
-#endif
+
 		var/end_throwing = FALSE
 		var/int_speed = round(thr.speed + thr.speed_error)
 		thr.speed_error += thr.speed - int_speed

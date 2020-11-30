@@ -314,7 +314,7 @@
 
 		else if(istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
@@ -360,16 +360,14 @@
 					if (S.material)
 						WI.setMaterial(S.material)
 					if(win_thin)
-						WI.dir = win_dir
+						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
 					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([showCoords(usr.x, usr.y, usr.z)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
 
-				S.amount--
-				if (S.amount < 1)
-					qdel(S)
+				S.consume_sheets(2)
 				return
 			else
 				..()

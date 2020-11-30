@@ -389,6 +389,7 @@
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
+	critter_family = BUG
 	density = 1
 	health = 10
 	aggressive = 1
@@ -484,7 +485,7 @@
 
 	Move()
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
-		..()
+		. = ..()
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()

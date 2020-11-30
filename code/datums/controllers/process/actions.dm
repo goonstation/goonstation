@@ -10,14 +10,3 @@ datum/controller/process/actions
 
 	doWork()
 		actions.process()
-
-
-
-// handles timed player actions
-datum/controller/process/randomevents
-	setup()
-		name = "Random Events"
-		schedule_interval = 2.5 MINUTES
-
-	doWork()
-		random_events.process()

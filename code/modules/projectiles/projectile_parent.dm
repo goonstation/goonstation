@@ -55,9 +55,7 @@
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 	var/is_detonating = 0//to start modeling fuses
-#if ASS_JAM
-	var/projectile_paused = FALSE //for time stopping
-#endif
+
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -91,10 +89,7 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!disposed && !pooled)
-#if ASS_JAM //dont move while in timestop
-			while(src.projectile_paused)
-				sleep(1 SECOND)
-#endif
+
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -496,7 +491,7 @@
 				die()
 				return
 
-		dir = facing_dir
+		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
 
 		var/dx = loc.x - orig_turf.x
@@ -597,6 +592,7 @@ datum/projectile
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
+	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 	proc
@@ -626,8 +622,7 @@ datum/projectile
 			return
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-			if(ks_ratio == 0) //stun projectiles only
-				impact_image_effect("T", hit)
+			impact_image_effect(ie_type, hit)
 //				if (isliving(hit))
 //					var/mob/living/L = hit
 //					stun_bullet_hit(O,L)
@@ -654,10 +649,7 @@ datum/projectile
 
 datum/projectile/laser
 	impact_range = 16
-
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/laser/pred
 	impact_range = 2
@@ -694,9 +686,7 @@ datum/projectile/bfg
 
 datum/projectile/bullet
 	impact_range = 0
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("K", hit)
+	ie_type = "K"
 
 datum/projectile/bullet/autocannon
 	impact_range = 2
@@ -734,9 +724,7 @@ datum/projectile/owl
 
 datum/projectile/disruptor
 	impact_range = 4
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/disruptor/high
 	impact_range = 4
@@ -972,7 +960,7 @@ datum/projectile/snowball
 	P.yo = yo
 
 	if(DATA.dissipation_rate <= 0)
-		P.max_range = PROJ_INFINITE_RANGE
+		P.max_range = DATA.max_range
 	else
 		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 

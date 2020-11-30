@@ -16,14 +16,14 @@
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
 /datum/component/toggle_tool_use/proc/on_drop_or_pickup(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = 0
-	thing.dir = TOOLMODE_DEACTIVATED
+	thing.set_dir(TOOLMODE_DEACTIVATED)
 
 /datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = !thing.force_use_as_tool
 	if (thing.force_use_as_tool)
-		thing.dir = TOOLMODE_ACTIVATED // We're just flipping the tool around to we don't hurt anyone
+		thing.set_dir(TOOLMODE_ACTIVATED) // We're just flipping the tool around to we don't hurt anyone
 	else
-		thing.dir = TOOLMODE_DEACTIVATED // Flip it back around so we can actually hurt people if we want to
+		thing.set_dir(TOOLMODE_DEACTIVATED) // Flip it back around so we can actually hurt people if we want to
 
 	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
 	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
@@ -139,6 +139,8 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 
@@ -526,6 +528,8 @@
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		..()
 
 	onInterrupt()
@@ -625,6 +629,8 @@
 							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		..()
 
 	onInterrupt()

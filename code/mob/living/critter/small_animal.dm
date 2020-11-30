@@ -2114,7 +2114,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		abilityHolder.updateButtons()
 
 	Move()
-		..()
+		. = ..()
 		misstep_chance = 23
 
 	setup_hands()
@@ -2178,7 +2178,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		abilityHolder.updateButtons()
 
 	Move()
-		..()
+		. = ..()
 		misstep_chance = 23
 
 	setup_hands()

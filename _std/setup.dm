@@ -62,7 +62,7 @@
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-#define ASS_JAM 1
+//#define ASS_JAM 1 // ASS JAM DISABLED! FOR NOW! -warc
 #else
 #define ASS_JAM 0
 #endif
@@ -137,3 +137,6 @@ var/ZLOG_START_TIME
 #if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
 #endif
+
+//do we want to check incoming clients to see if theyre using a vpn?
+#define DO_VPN_CHECKS 1

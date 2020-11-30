@@ -33,6 +33,12 @@
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/synthburger
 
+/datum/cookingrecipe/spicychickensandwich_2
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+
 /datum/cookingrecipe/spicychickensandwich
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget

@@ -30,7 +30,7 @@
 		..()
 		gas = null
 		active = 0
-		dir = 0
+		set_dir(0)
 		count = initial(count)
 		has_fat_guy = 0
 		last_sound = 0
@@ -39,7 +39,7 @@
 	pooled()
 		gas = null
 		active = 0
-		dir = 0
+		set_dir(0)
 		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
@@ -76,7 +76,7 @@
 
 		set_loc(D.trunk)
 		active = 1
-		dir = DOWN
+		set_dir(DOWN)
 		SPAWN_DBG(1 DECI SECOND)
 			process()		// spawn off the movement process
 
@@ -251,7 +251,7 @@
 	//
 	proc/transfer(var/obj/disposalholder/H)
 		var/nextdir = nextdir(H.dir)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -356,7 +356,7 @@
 			for(var/D in cardinal)
 				if(D & dpdir)
 					var/obj/disposalpipe/broken/P = new(src.loc)
-					P.dir = D
+					P.set_dir(D)
 
 		src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
 		var/obj/disposalholder/H = locate() in src
@@ -474,7 +474,7 @@
 		if (user)
 			boutput(user, "You finish slicing [C].")
 
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -572,7 +572,7 @@
 		icon_state = "pipe-c"
 		for(var/d in list(1, 2, 4, 8))
 			if((d | turn(d, -90)) == dpdir)
-				dir = d
+				set_dir(d)
 				break
 	base_icon_state = icon_state
 	src.update()
@@ -734,7 +734,7 @@
 			same_group = 1
 
 		var/nextdir = nextdir(H.dir, same_group)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -816,7 +816,7 @@
 				break
 
 		var/nextdir = nextdir(H.dir, redirect)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -837,7 +837,7 @@
 
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = (src.icon_state == "pipe-sj1" ? 8 : 9)
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -1007,7 +1007,7 @@
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
 
 		var/nextdir = nextdir(H.dir)
-		H.dir = nextdir
+		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
 
@@ -1028,7 +1028,7 @@
 
 		/*var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 10
-		C.dir = dir
+		C.set_dir(dir)
 		C.update()
 
 		qdel(src)*/
@@ -1273,7 +1273,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 11
-		C.dir = dir
+		C.set_dir(dir)
 		C.update()
 		qdel(src)
 
@@ -1296,8 +1296,8 @@
 		var/otherdir = nextdir(origHolder.dir, 0)
 		var/biodir = nextdir(origHolder.dir, 1)
 
-		origHolder.dir = otherdir
-		bioHolder.dir = biodir
+		origHolder.set_dir(otherdir)
+		bioHolder.set_dir(biodir)
 
 		var/turf/nonBioTurf = origHolder.nextloc()
 		var/turf/bioTurf = bioHolder.nextloc()
@@ -1324,7 +1324,7 @@
 			boutput(world, "I found a bio pipe at [bioPipe.loc] with [bioHolder.loc]")
 
 		bioHolder.active = 1
-		bioHolder.dir = biodir
+		bioHolder.set_dir(biodir)
 		SPAWN_DBG(1 DECI SECOND)
 			bioHolder.process()
 
@@ -1333,7 +1333,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = (src.icon_state == "pipe-sj1" ? 8 : 9)
-		C.dir = dir
+		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
@@ -1573,7 +1573,7 @@
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 12
-		C.dir = dir
+		C.set_dir(dir)
 		C.update()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		qdel(src)
@@ -1735,6 +1735,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	mats = 12
+	var/range = 10
 
 	var/message = null
 	var/mailgroup = null
@@ -1766,7 +1767,7 @@
 		..()
 
 		SPAWN_DBG(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, range)
 		SPAWN_DBG(0.8 SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -1924,23 +1925,23 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 		if(istype(pipe, /obj/disposalpipe/trunk))
 			var/obj/disposalpipe/segment/segment = new(pipe.loc)
 			segment.dpdir = pipe.dpdir | new_dir
-			segment.dir = new_dir
+			segment.set_dir(new_dir)
 			qdel(pipe)
 			segment.fix_sprite()
 		else if(istype(pipe, /obj/disposalpipe/junction))
 			var/obj/disposalpipe/segment/horiz = new(pipe.loc)
 			horiz.dpdir = 1 | 2
-			horiz.dir = 1
+			horiz.set_dir(1)
 			horiz.fix_sprite()
 			var/obj/disposalpipe/segment/vert = new(pipe.loc)
 			vert.dpdir = 4 | 8
-			vert.dir = 4
+			vert.set_dir(4)
 			vert.fix_sprite()
 			qdel(pipe)
 		if(istype(pipe, /obj/disposalpipe/segment))
 			var/obj/disposalpipe/junction/junction = new(pipe.loc)
 			junction.dpdir = pipe.dpdir | new_dir
-			junction.dir = new_dir
+			junction.set_dir(new_dir)
 			qdel(pipe)
 			junction.fix_sprite()
 		return
@@ -1950,6 +1951,6 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				pipe.dpdir &= ~d
 				pipe.dpdir |= new_dir
 				if(!(pipe.dir & pipe.dpdir)) // if we lost our dir
-					pipe.dir = new_dir
+					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()

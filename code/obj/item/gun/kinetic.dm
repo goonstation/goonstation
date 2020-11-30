@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		src.pixel_y += rand(-12,12)
 		src.pixel_x += rand(-12,12)
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		return
 
 /obj/item/gun/kinetic/minigun
@@ -527,9 +527,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 5
+			spread_angle = 8
+			shoot_delay = 4
 		else
 			spread_angle = 0
+			shoot_delay = 2
 
 /obj/item/gun/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
@@ -710,18 +712,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/failured = 0
 
 	New()
-#if ASS_JAM
-		var/turf/T = get_turf(src)
-		playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-		new/obj/item/gun/kinetic/slamgun(T)
-		qdel(src)
-		return // Sorry! No zipguns during ASS JAM
-#else
+
 		ammo = new/obj/item/ammo/bullets/derringer
 		ammo.amount_left = 0 // start empty
 		current_projectile = new/datum/projectile/bullet/derringer
 		..()
-#endif
+
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
@@ -938,6 +934,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo = new/obj/item/ammo/bullets/bullet_9mm
 		current_projectile = new/datum/projectile/bullet/bullet_9mm
 		..()
+
+/obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"

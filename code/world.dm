@@ -778,19 +778,22 @@ var/f_color_selector_handler/F_Color_Selector
 	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
 
 	if (config?.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
-
-	if (ticker?.mode)
-		s += "<b>[istype(ticker.mode, /datum/game_mode/construction) ? "Construction Mode" : station_name()]</b>"
+		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>[station_name()]</b>"
+		s += "<b>SERVER NAME HERE &#8212; "
+
+	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
+
+	if (map_settings)
+		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
+		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
+		s += "Map:<b> [map_name]</b><br>"
 
 	var/list/features = list()
 
 	if (!ticker)
 		features += "<b>STARTING</b>"
-
-	if (ticker && master_mode)
+	else if (ticker && master_mode)
 		if (ticker.hide_mode)
 			features += "Mode: <b>secret</b>"
 		else
@@ -806,17 +809,8 @@ var/f_color_selector_handler/F_Color_Selector
 	features += "Ass Jam"
 #endif
 
-	var/n = length(clients)
-
-	if(n == 1)
-		features += "~[n] player"
-	else
-		features += "~[n] players"
-
 	if(features)
-		s += ": [jointext(features, ", ")]"
-
-	s += " (<a href=\"https://ss13.co\">Website</a>)"
+		s += "[jointext(features, ", ")]"
 
 	/* does this help? I do not know */
 	if (src.status != s)

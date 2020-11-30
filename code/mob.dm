@@ -12,6 +12,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
@@ -206,16 +207,7 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-//start of needed for timestop
-#if ASS_JAM
-	var/paused = FALSE
-	var/pausedbrute = 0
-	var/pausedburn = 0
-	var/pausedtox = 0
-	var/pausedoxy = 0
-	var/pausedbrain = 0
-#endif
-//end of needed for timestop
+
 	var/dir_locked = FALSE
 
 	var/list/mob_properties
@@ -231,7 +223,9 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New()
+/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+	src.AH_we_spawned_with = AH_passthru
+	src.loc = loc
 	hallucinations = new
 	organs = new
 	grabbed_by = new
@@ -242,6 +236,7 @@
 	traitHolder = new(src)
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
+		src.initializeBioholder()
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
@@ -249,12 +244,20 @@
 	render_target = "\ref[src]"
 	mob_properties = list()
 
+/// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
+/mob/proc/initializeBioholder()
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
 /mob/proc/is_spacefaring()
 	return 0
 
 /mob/Move(a, b, flag)
 	if (src.buckled && src.buckled.anchored)
 		return
+
+	if (src.dir_locked)
+		b = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -848,10 +851,11 @@
 	boutput(src, "Retrieving your medal information...")
 
 	SPAWN_DBG(0)
+		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
+			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
 		if (!medals)
@@ -861,10 +865,12 @@
 		medals = params2list(medals)
 		medals = sortList(medals)
 
-		boutput(src, "<b>Medals:</b>")
+		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			boutput(src, "&emsp;[medal]")
-		boutput(src, "<b>You have [length(medals)] medal\s.</b>")
+			output += "&emsp;[medal]"
+		output += "<b>You have [length(medals)] medal\s.</b>"
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -968,6 +974,8 @@
 				continue
 			if (istype(W, /obj/item/organ/appendix) && src.organHolder.appendix == W)
 				continue
+			if (istype(W, /obj/item/organ/tail) && src.organHolder.tail == W)
+				continue
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
 			continue
@@ -992,12 +1000,6 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
-#if ASS_JAM//pausing damage for timestop
-	if(src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
@@ -2831,6 +2833,15 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
+/mob/proc/add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma
+
+/mob/set_dir(var/new_dir)
+	if (!src.dir_locked)
+		..()
+		src.update_directional_lights()
+
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
@@ -2876,10 +2887,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
-
-/mob/proc/add_karma(how_much)
-	src.mind?.add_karma(how_much)
-	// TODO add NPC karma
 
 /mob/proc/can_eat(var/atom/A)
 	return 1

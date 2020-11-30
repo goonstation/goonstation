@@ -316,7 +316,7 @@
 //Prox sensor handling.
 
 	Move()
-		..()
+		. = ..()
 		if(istype(attached_device,/obj/item/device/prox_sensor))
 			var/obj/item/device/prox_sensor/A = attached_device
 			A.sense()
