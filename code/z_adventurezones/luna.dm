@@ -200,6 +200,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	desc = "More regolith, now in big solid chunk form!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "lunar"
+	plane = PLANE_NOSHADOW_ABOVE // shadow makes it look grody with current sprites that include the floor
 	carbon_dioxide = 0
 	nitrogen = 0
 	oxygen = 0

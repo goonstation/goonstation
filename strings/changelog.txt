@@ -1,4 +1,22 @@
 
+(t)sun nov 29 20
+(u)Gannets
+(p)2884
+(e)🎨|sprites
+(+)New bullet projectile icon.
+(u)BenLubar
+(p)2871
+(e)|
+(+)Unbuttoning a labcoat now results in the labcoat not being buttoned.
+(u)Flourish
+(p)2865
+(e)🐛|bug
+(+)You can now examine things while doing an action (such as uncuffing) without interrupting it.
+(t)sat nov 28 20
+(u)Superlagg
+(p)2868
+(e)⚖🐛🆕|balance, bug, feature
+(+)Severe drunkenness now helps counteract the loss of coordination and abject helplessness from losing a tail!
 (t)fri nov 27 20
 (u)Gannets
 (p)2852
@@ -12,9 +30,9 @@
 (u)Superlagg
 (p)1833
 (e)⚖🆕🔄🎨|balance, feature, rework, sprites
-(*)Dismembered mutants now show that they are missing limbs.
-(*)Mutant limbs now show up properly when attached to someone else.
 (*)Tails can now be cut off and reattached to just about anyone.
+(+)Dismembered mutants now show that they are missing limbs.
+(+)Mutant limbs now show up properly when attached to someone else.
 (t)thu nov 26 20
 (u)pali
 (p)2738
@@ -105,7 +123,7 @@
 (+)Resprited some devices
 (u)Kyle, Enakai, & Virvatuli
 (e)🆕🎨|feature, sprites
-(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
+(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun.
 (t)sat nov 21 20
 (u)Gannets
 (p)2772

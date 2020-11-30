@@ -17,6 +17,7 @@
 	name = "cockroach"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
+	critter_family = BUG
 	density = 0
 	health = 10
 	aggressive = 0

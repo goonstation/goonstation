@@ -469,6 +469,8 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
+	actions.interrupt(src, INTERRUPT_ACT)
+
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src

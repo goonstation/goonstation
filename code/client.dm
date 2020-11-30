@@ -87,9 +87,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/delete_state = DELETE_STOP
 
-	var/list/cloudsaves
-	var/list/clouddata
-
 	var/turf/stathover = null
 	var/turf/stathover_start = null//forgive me
 
@@ -504,25 +501,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 		//Cloud data
 		if (cdn)
-			// Fetch via HTTP from goonhub
-			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
-			request.begin_async()
-			UNTIL(request.is_complete())
-			var/datum/http_response/response = request.into_response()
+			if(!cloud_available())
+				src.player.cloud_fetch()
 
-			if (response.errored || !response.body)
-				logTheThing("debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-				return
-
-			var/list/ret = json_decode(response.body)
-			if(ret["status"] == "error")
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-			else
-				cloudsaves = ret["saves"]
-				clouddata = ret["cdata"]
-				load_antag_tokens()
-				load_persistent_bank()
+			if(cloud_available())
+				src.load_antag_tokens()
+				src.load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
 					var/cur = volumes.len
@@ -1113,27 +1097,17 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-
-//drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
-//Sets and uploads cloud data on the client
-//TODO: Pool puts, determine value of doing as such.
-/client/proc/cloud_put( var/key, var/value )
-	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining." //oh no
-	clouddata[key] = "[value]"
-
-	// Via rust-g HTTP
-	var/datum/http_request/request = new() //If it fails, oh well...
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-	request.begin_async()
+/// Sets a cloud key value pair and sends it to goonhub
+/client/proc/cloud_put(key, value)
+	return src.player.cloud_put(key, value)
 
 /// Returns some cloud data on the client
-/client/proc/cloud_get( var/key )
-	return clouddata ? clouddata[key] : null
+/client/proc/cloud_get(key)
+	return src.player.cloud_get(key)
 
 /// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
-	return !!clouddata
+	return src.player.cloud_available()
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
