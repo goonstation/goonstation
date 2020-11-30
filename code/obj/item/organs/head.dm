@@ -373,7 +373,7 @@
 		else
 			return 0
 
-	proc/MakeMutantHead(var/mutant_race as num, var/headicon)
+	proc/MakeMutantHead(var/mutant_race as num, var/headicon, var/headicon_state)
 		if(!src.transplanted) /// no altering a reattached head
 
 			// rebuild, start with a human head
@@ -389,8 +389,15 @@
 			else
 				src.head_icon = 'icons/mob/human_head.dmi'
 
+			// Then the state
+			if(headicon_state)
+				src.head_state = headicon_state
+			else
+				src.head_state = "head"
+
 			if(src.donor?.bioHolder.mobAppearance)
 				src.donor.bioHolder.mobAppearance.head_icon = src.head_icon
+				src.donor.bioHolder.mobAppearance.head_icon_state = src.head_state
 
 			switch(mutant_race)	// then overwrite everything that's supposed to be different
 				if(HEAD_HUMAN)

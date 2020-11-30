@@ -959,6 +959,7 @@
 		if(!target_mob || !ishuman(target_mob) || !target_mob.bioHolder)
 			return
 
+		target_mob.set_mutantrace(null) // It tries to overwrite the appearanceholder we're trying to overwrite, so we'll let it do that first
 		target_mob.bioHolder.CopyOther(src.tf_holder) // load our bioholder into theirs
 
 		var/old_name = target_mob.real_name
@@ -972,8 +973,6 @@
 
 		if(src.mutantrace)
 			target_mob.set_mutantrace(src.mutantrace.type)
-		else // setting a mutant race already does this, no need to do it again
-			target_mob.set_mutantrace(null)
 
 		switch(src.cinematic)
 			if("Changeling") //Heh

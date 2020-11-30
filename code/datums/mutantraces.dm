@@ -8,7 +8,9 @@
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
+	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
+	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
 	var/datum/appearanceHolder/origAH
 	var/override_eyes = 1
 	var/override_hair = 1
@@ -78,13 +80,19 @@
 
 	/// If the mutant uses a non-human head, this'll tell the head builder which head to build
 	var/special_head = null
+	/// If our mutant has a female variant, it'll use this head instead
+	var/special_head_f = null
 	/// The icon_state of the head we're using
 	var/special_head_state = "head"
+	/// If our mutant has a female variant, it'll use this head image instead
+	var/special_head_state_f = null
 	/// The icon of the head, body, and limbs we're using
 	var/mutant_folder = 'icons/effects/genetics.dmi'
 	/// Swaps out the entries in the mob's organ_holder with these (hopefully) organs
 	/// Format: ("entry_in_organholder's_organlist", /obj/item/organ/path)
 	var/list/mutant_organs = list()
+	/// If our mutant has a female variant that has different organs, these will be used instead
+	var/list/mutant_organs_f = null
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -99,6 +107,11 @@
 	var/l_limb_arm_type_mutantrace = null
 	var/r_limb_leg_type_mutantrace = null
 	var/l_limb_leg_type_mutantrace = null
+
+	var/r_limb_arm_type_mutantrace_f = null // Should we get custom arms? Dispose() replaces them with normal human arms.
+	var/l_limb_arm_type_mutantrace_f = null
+	var/r_limb_leg_type_mutantrace_f = null
+	var/l_limb_leg_type_mutantrace_f = null
 
 	//This stuff is for robot_parts, the stuff above is for human_parts
 	var/r_robolimb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
@@ -126,32 +139,48 @@
 	/// Can be anything, honestly. Used for lizard head things and cow horns
 	/// Will only show up if the mob's appearance flag includes HAS_SPECIAL_HAIR
 	var/special_hair_1_icon
+	/// The "_f" vars are applied for female variants, if the appearance flags don't have NOT_DIMORPHIC
+	var/special_hair_1_icon_f
 	/// State to be used. Human hairstyles must be defined by their icon state, not hairstyle name!
 	var/special_hair_1_state
+	var/special_hair_1_state_f
 	/// Which preference entry to colorize this from.
 	/// CUST_1 to use the appearanceholder's custom_first_color, and so on. NO_CUST for just "#FFFFFF"
 	var/special_hair_1_color = CUST_1
+	var/special_hair_1_color_f
 	/// The image to be inserted into the mob's appearanceholder's customization_second
 	var/special_hair_2_icon
+	var/special_hair_2_icon_f
 	var/special_hair_2_state
+	var/special_hair_2_state_f
 	var/special_hair_2_color = CUST_2
+	var/special_hair_2_color_f
 	/// The image to be inserted into the mob's appearanceholder's customization_third
 	var/special_hair_3_icon
+	var/special_hair_3_icon_f
 	var/special_hair_3_state
+	var/special_hair_3_state_f
 	var/special_hair_3_color = CUST_3
+	var/special_hair_3_color_f
 
 	/// These details will show up layered just in front of the mob's skin
 	/// The image to be inserted into the mob's appearanceholder's mob_detail_1
 	var/detail_1_icon
+	var/detail_1_icon_f
 	var/detail_1_state
+	var/detail_1_state_f
 	var/detail_1_color = CUST_1
+	var/detail_1_color_f
 
 	/// These details will show up layered between the backpack and the outer suit
 	/// The image to be inserted into the mob's appearanceholder's mob_oversuit_1
 	/// Will only show up if the mob's appearance flag includes HAS_O
 	var/detail_oversuit_1_icon
+	var/detail_oversuit_1_icon_f
 	var/detail_oversuit_1_state
+	var/detail_oversuit_1_state_f
 	var/detail_oversuit_1_color = CUST_1
+	var/detail_oversuit_1_color_f
 
 	var/datum/movement_modifier/movement_modifier
 
@@ -189,7 +218,10 @@
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 		if (!needs_oxy)
 			APPLY_MOB_PROPERTY(M, PROP_BREATHLESS, src.type)
-		if(ishuman(M))
+		if(ishuman(M) && M?.bioHolder?.mobAppearance)
+			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
+			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
+				Dimorphitize(M)
 			AppearanceSetter(M, "set")
 			LimbSetter(M, "set")
 			organ_mutator(M, "set")
@@ -268,10 +300,8 @@
 		return
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
-		if(!ishuman(H) || !(H?.bioHolder?.mobAppearance))
+		if(!ishuman(H) || !(H?.bioHolder?.mobAppearance) || !src.AH)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
-
-		src.AH = H.bioHolder.mobAppearance // i mean its called appearance holder for a reason
 
 		switch(mode)
 			if("set")	// upload everything, the appearance flags'll determine what gets used
@@ -392,7 +422,7 @@
 
 				//////////////HEAD//////////////////
 				if (src.special_head)
-					L.organHolder.head.MakeMutantHead(src.special_head, src.mutant_folder)
+					L.organHolder.head.MakeMutantHead(src.special_head, src.mutant_folder, src.special_head_state)
 
 			if ("reset")
 				// And the other way around (Convair880).
@@ -437,7 +467,7 @@
 							limb.holder = L
 							limb.remove_stage = 0
 				//////////////HEAD//////////////////
-				L.organHolder.head.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi')
+				L.organHolder.head.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
 
 	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
 		if(!ishuman(O) || !(O?.organHolder))
@@ -503,6 +533,62 @@
 			if ("reset")
 				if(H.bioHolder.HasEffect(initial(mr.id)))
 					H.bioHolder.RemoveEffect(initial(mr.id))
+
+	/// Copies over female variants of mutant heads and organs
+	proc/Dimorphitize(var/mob/living/carbon/human/H)
+		if(!src.AH || !ishuman(H)) return
+
+		if(src.AH.gender == FEMALE)
+			if(src.special_head_f)
+				src.special_head = src.special_head_f
+			if(src.special_head_state_f)
+				src.special_head_state = src.special_head_state_f
+			if(src.mutant_organs_f)
+				src.mutant_organs =  src.mutant_organs_f
+
+			if(src.r_limb_arm_type_mutantrace_f)
+				src.r_limb_arm_type_mutantrace = src.r_limb_arm_type_mutantrace_f
+			if(src.l_limb_arm_type_mutantrace_f)
+				src.l_limb_arm_type_mutantrace = src.l_limb_arm_type_mutantrace_f
+			if(src.r_limb_leg_type_mutantrace_f)
+				src.r_limb_leg_type_mutantrace = src.r_limb_leg_type_mutantrace_f
+			if(src.l_limb_leg_type_mutantrace_f)
+				src.l_limb_leg_type_mutantrace = src.l_limb_leg_type_mutantrace_f
+
+			if(src.special_hair_1_icon_f)
+				src.special_hair_1_icon = src.special_hair_1_icon_f
+			if(src.special_hair_1_state_f)
+				src.special_hair_1_state = src.special_hair_1_state_f
+			if(src.special_hair_1_color_f)
+				src.special_hair_1_color = src.special_hair_1_color_f
+
+			if(src.special_hair_2_icon_f)
+				src.special_hair_2_icon = src.special_hair_2_icon_f
+			if(src.special_hair_2_state_f)
+				src.special_hair_2_state = src.special_hair_2_state_f
+			if(src.special_hair_2_color_f)
+				src.special_hair_2_color = src.special_hair_2_color_f
+
+			if(src.special_hair_3_icon_f)
+				src.special_hair_3_icon = src.special_hair_3_icon_f
+			if(src.special_hair_3_state_f)
+				src.special_hair_3_state = src.special_hair_3_state_f
+			if(src.special_hair_3_color_f)
+				src.special_hair_3_color = src.special_hair_3_color_f
+
+			if(src.detail_1_icon_f)
+				src.detail_1_icon = src.detail_1_icon_f
+			if(src.detail_1_state_f)
+				src.detail_1_state = src.detail_1_state_f
+			if(src.detail_1_color_f)
+				src.detail_1_color = src.detail_1_color_f
+
+			if(src.detail_oversuit_1_icon_f)
+				src.detail_oversuit_1_icon = src.detail_oversuit_1_icon_f
+			if(src.detail_oversuit_1_state_f)
+				src.detail_oversuit_1_state = src.detail_oversuit_1_state_f
+			if(src.detail_oversuit_1_color_f)
+				src.detail_oversuit_1_color = src.detail_oversuit_1_color_f
 
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
@@ -645,6 +731,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR)
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
+	special_head_state = "head"
 	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'

@@ -2,6 +2,7 @@
 #define HEAD_HUMAN 0
 #define HEAD_MONKEY 1
 #define HEAD_LIZARD 2
+#define HEAD_LIZARD_FEMALE 2000
 #define HEAD_COW 3
 #define HEAD_WEREWOLF 4
 #define HEAD_SKELETON 5	// skullception *shrug*

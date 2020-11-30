@@ -2907,7 +2907,7 @@
 
 /mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
-	if(src.mutantrace != null)
+	if(src.mutantrace)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
 
@@ -2919,8 +2919,8 @@
 		. = 1
 
 	if(.)
-		/* src.set_face_icon_dirty()
-		src.set_body_icon_dirty() */
+		src.set_face_icon_dirty()
+		src.set_body_icon_dirty()
 		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
