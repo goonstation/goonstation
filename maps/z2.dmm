@@ -82771,14 +82771,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sord)
-"fxL" = (
-/obj/storage/secure/crate/gear/sarin_grenades,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "fCL" = (
 /obj/item/spacecash/twenty{
 	pixel_x = -12;
@@ -86762,6 +86754,10 @@
 "xoF" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/ladder{
+	id = "ballpit_sov_lab2";
+	layer = 2
 	},
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -117244,7 +117240,7 @@ btf
 btf
 btf
 dgK
-fxL
+btf
 dff
 aKf
 dhv

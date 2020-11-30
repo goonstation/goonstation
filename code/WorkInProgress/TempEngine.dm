@@ -605,7 +605,7 @@
 			// logTheThing("debug", null, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				// carnot efficiency * 65%
-				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(hot_air, cold_air) //controller expressed as a percentage
+				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(delta_temperature, hot_air_heat_capacity, cold_air_heat_capacity) //controller expressed as a percentage
 
 				// energy transfer required to bring the hot and cold loops to thermal equilibrium (accounting for the energy removed by the engine)
 				var/energy_transfer = delta_temperature * hot_air_heat_capacity * cold_air_heat_capacity / (hot_air_heat_capacity + cold_air_heat_capacity - hot_air_heat_capacity*efficiency)

@@ -1,5 +1,73 @@
 
+(t)sun nov 29 20
+(u)Gannets
+(p)2884
+(e)🎨|sprites
+(+)New bullet projectile icon.
+(u)BenLubar
+(p)2871
+(e)|
+(+)Unbuttoning a labcoat now results in the labcoat not being buttoned.
+(u)Flourish
+(p)2865
+(e)🐛|bug
+(+)You can now examine things while doing an action (such as uncuffing) without interrupting it.
+(t)sat nov 28 20
+(u)Superlagg
+(p)2868
+(e)⚖🐛🆕|balance, bug, feature
+(+)Severe drunkenness now helps counteract the loss of coordination and abject helplessness from losing a tail!
+(t)fri nov 27 20
+(u)Gannets
+(p)2852
+(e)🆕|feature
+(+)Adds the main bridge to the cogmap1 nuke ops target location list.
+(u)Gannets
+(p)2849
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Removed sarin grenades from the Cairngorm.
+(*)Added sarin grenade as a utility item purchased from the Syndicate Weapon Vendor.
+(u)Superlagg
+(p)1833
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Tails can now be cut off and reattached to just about anyone.
+(+)Dismembered mutants now show that they are missing limbs.
+(+)Mutant limbs now show up properly when attached to someone else.
+(t)thu nov 26 20
+(u)pali
+(p)2738
+(e)⚖📄|balance, tgui
+(*)When using packets to hack airlocks you now need to provide access_code. You can either guess it or read it from the wire panel.
+(t)wed nov 25 20
+(u)Kubius
+(p)2827
+(e)🗺|mapping
+(+)Kondaru's research cargo endpoint is a little more spacious and now contains the artifact lab's cargo pad.
+(u)RSG250
+(p)2579
+(e)🆕|feature
+(+)you can now make shoes at the Nanofabricator.
+(u)BenLubar
+(p)2818
+(e)🆕|feature
+(+)The arrivals announcement computer can now be set to use pronouns in messages.
+(u)BatElite
+(p)2816
+(e)🎨|sprites
+(+)The pyro class fire axe has new sprites, so you now look menacing while you chop up the crew!
 (t)tue nov 24 20
+(u)Kubius
+(p)2823
+(e)⚖🆕|balance, feature
+(+)Potato batteries scale more with potency and endurance, and the trimmed-down gun versions can now recharge with sufficiently high endurance.
+(u)Kubius
+(p)2810
+(e)🆕🗺|feature, mapping
+(+)Further Ozymandias changes, most notably a more resilient AI upload and a LOT of electrification.
+(u)Azrun
+(p)2821
+(e)|
+(+)Special TEG variants should now produce power again.
 (u)TTerc
 (p)2815
 (e)🗺|mapping
@@ -55,7 +123,7 @@
 (+)Resprited some devices
 (u)Kyle, Enakai, & Virvatuli
 (e)🆕🎨|feature, sprites
-(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun. 
+(*)Adds a new energy gun to the NTSO's kit, the Signifer II, and removes the clock ammo pouch. It can shoot both stun and lethal rounds, but is far weaker than the E-Gun.
 (t)sat nov 21 20
 (u)Gannets
 (p)2772

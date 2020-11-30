@@ -34320,8 +34320,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bAR" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -36652,9 +36653,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/science)
 "bGd" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -39769,7 +39767,6 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "bMF" = (
-/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/caution/westeast,
 /area/station/science/artifact)
 "bMG" = (
@@ -40489,12 +40486,14 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/white/grime,
 /area/station/maintenance/southwest)
 "bOf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -41862,8 +41861,8 @@
 /area/station/maintenance/southwest)
 "bQT" = (
 /obj/decal/cleanable/dirt,
-/obj/item/device/radio/intercom/cargo{
-	dir = 4
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -42574,21 +42573,7 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
-"bSp" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/southwest)
 "bSq" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"bSr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -42596,10 +42581,7 @@
 /area/station/maintenance/southwest)
 "bSs" = (
 /obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -42613,8 +42595,13 @@
 	name = "Research Router"
 	})
 "bSu" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk/west,
+/obj/machinery/computer/barcode{
+	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/orange/side{
 	dir = 9
 	},
@@ -42626,6 +42613,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/orange/side{
 	dir = 1
@@ -42641,11 +42631,7 @@
 	name = "Research Router"
 	})
 "bSx" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/orange/side{
 	dir = 5
 	},
@@ -43196,19 +43182,14 @@
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bTJ" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bTK" = (
-/obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -43217,17 +43198,22 @@
 	})
 "bTL" = (
 /obj/cable{
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
 "bTM" = (
+/obj/landmark/gps_waypoint,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
 	name = "Research Router"
@@ -43240,11 +43226,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/orange/side{
 	dir = 4
@@ -43714,21 +43695,21 @@
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)
 "bUN" = (
+/obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bUO" = (
-/obj/disposaloutlet/east,
-/obj/disposalpipe/trunk/west,
-/obj/machinery/conveyor{
-	dir = 4;
-	name = "cargo belt - east";
-	operating = 1
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/ordercomp{
+	dir = 4
 	},
 /turf/simulated/floor/orange/side{
 	dir = 8
@@ -43737,10 +43718,8 @@
 	name = "Research Router"
 	})
 "bUP" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	name = "cargo belt - east";
-	operating = 1
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
@@ -43752,9 +43731,6 @@
 	name = "Research Router"
 	})
 "bUR" = (
-/obj/machinery/computer/ordercomp,
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/light_switch/east,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43762,6 +43738,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/orange/side{
 	dir = 4
@@ -44335,8 +44314,11 @@
 /turf/space,
 /area/station/maintenance/southwest)
 "bVY" = (
-/obj/lattice,
-/turf/space,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/shieldgenerator/energy_shield,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bVZ" = (
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -44775,15 +44757,6 @@
 /area/station/maintenance/southeast)
 "bWW" = (
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/storage/closet/emergency,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"bWX" = (
-/obj/cable{
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -44794,20 +44767,40 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bWY" = (
+"bWX" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bWZ" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
+"bWY" = (
+/obj/disposaloutlet/east,
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "cargo belt - east";
+	operating = 1
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
+"bWZ" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "cargo belt - east";
+	operating = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "bXa" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
+/obj/machinery/light,
+/turf/simulated/floor/grey,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "bXb" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -45140,10 +45133,6 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/southeast)
 "bXN" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"bXO" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -45151,13 +45140,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"bXO" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "bXP" = (
 /obj/cable{
-	icon_state = "4-8"
+	d2 = 4;
+	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
+/obj/machinery/power/apc/autoname_west,
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bXQ" = (
@@ -54544,6 +54542,13 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
+"hTE" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/cargo,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "hVr" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
@@ -56809,9 +56814,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "vuD" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "vvI" = (
@@ -57180,7 +57183,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xQl" = (
@@ -57235,6 +57240,15 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"yhe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "ylQ" = (
 /obj/lattice{
 	dir = 4;
@@ -89466,12 +89480,12 @@ bMC
 bOc
 bPw
 bGc
-bSp
-bTJ
 bUN
-bVY
-afw
-aci
+bAO
+bUN
+bvo
+bvo
+bvo
 bYG
 fVI
 bYG
@@ -89768,12 +89782,12 @@ bGc
 bOd
 bGc
 bGc
-bSq
-bAO
-bSq
+hTE
+bAQ
+bVY
 bvo
-bvo
-bvo
+bXP
+vuD
 bYG
 bZv
 bYG
@@ -90068,12 +90082,12 @@ bws
 bws
 bzP
 bOe
-bAQ
+bTJ
 bQT
-bSr
-bAQ
 xMD
-bvo
+bTJ
+xMD
+bVZ
 bWW
 bXN
 bYG
@@ -90370,14 +90384,14 @@ qZZ
 qZZ
 qZZ
 bOf
-bAR
+bAQ
 bGd
 bSs
 bAR
-bSs
-bVZ
+bSq
+bvo
 bWX
-bXO
+bzR
 bYG
 bZx
 bYG
@@ -90674,11 +90688,11 @@ bIL
 bOg
 bIL
 bQU
-bSt
 bQV
 bSt
+bSt
 bQU
-bAQ
+bQU
 bzR
 bYG
 cbo
@@ -90979,9 +90993,9 @@ bQV
 bSu
 bTK
 bUO
-bQU
 bWY
-bzR
+bQU
+yhe
 bYG
 bZz
 can
@@ -91281,8 +91295,8 @@ bQV
 bSv
 bTL
 bUP
+bWZ
 bQU
-vuD
 bzU
 bYG
 bZA
@@ -91583,8 +91597,8 @@ bQW
 bSw
 bTM
 bUQ
+bXa
 bQU
-bAQ
 bzR
 bAP
 bYG
@@ -91881,13 +91895,13 @@ bLF
 bMF
 bOj
 bPA
-bQU
+bQV
 bSx
 bTN
 bUR
+bXO
 bQU
-bWZ
-bXP
+bzR
 bAQ
 bYG
 caq
@@ -92188,7 +92202,7 @@ bQV
 bTO
 bQU
 bQU
-bXa
+bQU
 bzR
 bAQ
 bYG

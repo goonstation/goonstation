@@ -21,14 +21,27 @@
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
-	edible = 1
+	edible = 1	// currently overridden by material settings
 	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
 	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
+	/// Whoever had this organ first, the original owner
+	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
+	var/datum/appearanceHolder/donor_AH //
 	var/donor_name = null // so you don't get dumb "Unknown's skull mask" shit
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/list/organ_abilities = null
+
+	// So we can have an organ have a visible counterpart while inside someone, like a tail or some kind of krang
+	// if you're making a tail, you need to have at least organ_image_under_suit_1 defined, or else it wont work
+	var/organ_image_icon = null		// The icon group we'll be using, such as 'icons/effects/genetics.dmi'
+	var/organ_image_over_suit = null		// Shows up over our suit, usually while the mob is facing north
+	var/organ_image_under_suit_1 = null	// Shows up under our suit, usually while the mob is facing anywhere else
+	var/organ_image_under_suit_2 = null	// If our organ needs another picture, usually for another coloration
+
+	var/organ_color_1 = "#FFFFFF"		// Typically used to colorize the organ image
+	var/organ_color_2 = "#FFFFFF"		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
 
 	var/op_stage = 0.0
 	var/brute_dam = 0
@@ -92,6 +105,9 @@
 			src.holder = nholder
 			src.donor = nholder.donor
 		if (src.donor)
+			src.donor_original = src.donor
+			if (src.donor.bioHolder)
+				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
@@ -139,7 +155,7 @@
 			return 0
 		return 1
 
-	//What should happen each life tick when an organ is broken.
+	/// What should happen each life tick when an organ is broken.
 	proc/on_broken(var/mult = 1)
 		//stupid check ikr? prolly remove.
 		if (broken)
@@ -161,6 +177,8 @@
 		var/mob/living/carbon/human/H = M
 		src.donor = H
 		src.holder = H.organHolder
+		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
+			src.donor_original = H
 
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP

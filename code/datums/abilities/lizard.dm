@@ -17,6 +17,34 @@
 			src.remove_ability_holder(/datum/abilityHolder/lizard)
 	else return
 
+/mob/living/carbon/human/proc/update_lizard_parts()
+	if (ishuman(src))
+		var/mob/living/carbon/human/liz = src
+		if(!liz?.limbs)
+			return
+		if (istype(liz.limbs.l_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/LA = liz.limbs.l_arm
+			LA.colorize_limb_icon()
+			LA.set_skin_tone()
+		if (istype(liz.limbs.r_arm, /obj/item/parts/human_parts/arm/mutant/lizard ))
+			var/obj/item/parts/human_parts/RA = liz.limbs.r_arm
+			RA.colorize_limb_icon()
+			RA.set_skin_tone()
+		if (istype(liz.limbs.l_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/LL = liz.limbs.l_leg
+			LL.colorize_limb_icon()
+			LL.set_skin_tone()
+		if (istype(liz.limbs.r_leg, /obj/item/parts/human_parts/leg/mutant/lizard ))
+			var/obj/item/parts/human_parts/RL = liz.limbs.r_leg
+			RL.colorize_limb_icon()
+			RL.set_skin_tone()
+		if (liz.organHolder?.head)
+			liz.organHolder.head.update_icon()
+		if (istype(liz?.organHolder.tail, /obj/item/organ/tail/lizard))
+			var/obj/item/organ/tail/T = liz.organHolder.tail
+			T.colorize_tail(liz.bioHolder.mobAppearance)
+		liz?.bioHolder?.mobAppearance.UpdateMob()
+
 /datum/abilityHolder/lizard
 	topBarRendered = 1
 	points = 0
@@ -37,16 +65,6 @@
 		if(ishuman(holder.owner))
 			L = holder.owner
 		return
-
-	/// Clamps each of the RGB values between 50 and 190
-	proc/fix_colors(var/hex)
-		var/list/L = hex_to_rgb_list(hex)
-		for (var/i in L)
-			L[i] = min(L[i], 190)
-			L[i] = max(L[i], 50)
-		if (L.len == 3)
-			return rgb(L["r"], L["g"], L["b"])
-		return rgb(22, 210, 22)
 
 /datum/targetable/lizardAbility/colorshift
 	name = "Chromatophore Shift"
@@ -74,7 +92,7 @@
 			AHs.customization_third_color = col2
 
 			L.visible_message("<span class='notice'><b>[L.name]</b> changes colors!</span>")
-			L.update_body()
+			L.update_lizard_parts()
 
 /datum/targetable/lizardAbility/colorchange
 	name = "Chromatophore Activation"
@@ -146,7 +164,7 @@
 				AHliz.customization_third_color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", "<span class='notice'>Your [region_name] changes color!</span>")
-		L.update_body()
+		L.update_lizard_parts()
 		..()
 
 	onInterrupt()

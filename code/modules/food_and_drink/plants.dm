@@ -1107,7 +1107,7 @@
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/ammo/power_cell/potato/P = new /obj/item/ammo/power_cell/potato(get_turf(src),DNA.potency)
+				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				W:amount -= 1

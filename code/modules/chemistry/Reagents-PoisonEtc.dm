@@ -1568,7 +1568,7 @@ datum
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						if (M.bioHolder?.mobAppearance?.mutant_race)
-							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
 
 				..()

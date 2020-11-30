@@ -98,6 +98,7 @@
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
@@ -460,6 +461,7 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
 
 	attack_hand(var/mob/user as mob)
 		if (..(user))
@@ -473,7 +475,6 @@ var/syndicate_name = null
 			losses = 0
 		var/dat = ""
 		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
-		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
 
 		src.add_dialog(user)
 		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")

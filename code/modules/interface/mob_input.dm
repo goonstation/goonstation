@@ -3,7 +3,7 @@
 /mob/proc/key_up(var/key)
 
 /mob/proc/click(atom/target, params)
-	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
+	//moved the 'actions.interrupt(src, INTERRUPT_ACT)' here to on mob/living
 
 	if (src.targeting_ability)
 		if (istype(src.targeting_ability, /datum/targetable))
