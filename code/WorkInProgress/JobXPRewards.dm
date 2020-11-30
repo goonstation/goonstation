@@ -500,12 +500,12 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(banana)
 		return
 
-/////////////Barman////////////////
+/////////////Bartender////////////////
 
-/datum/jobXpReward/barman/goldenshaker
+/datum/jobXpReward/bartender/goldenshaker
 	name = "Golden Cocktail Shaker"
 	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
-	required_levels = list("Barman"=0)
+	required_levels = list("Bartender"=20)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
