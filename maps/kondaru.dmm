@@ -55167,6 +55167,13 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
+"ivS" = (
+/obj/decal/tile_edge/stripe,
+/obj/stocking/ephemeral{
+	pixel_x = 22
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/cafeteria)
 "iyd" = (
 /obj/lattice,
 /turf/space,
@@ -117162,7 +117169,7 @@ bac
 bac
 aYS
 beB
-bfJ
+ivS
 bgO
 bhX
 bji

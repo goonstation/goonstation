@@ -1257,6 +1257,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				user.visible_message("<span class='notice'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='notice'>You take [gift] out of [src]!</span>")
 		return
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			..()
+			qdel(src)
+#endif
+
 /obj/decal/tile_edge/stripe/xmas
 	icon_state = "xmas"
 
