@@ -710,6 +710,7 @@
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
 	var/fat = 0
+	var/hair_override = 0
 	var/update_wearid = 0
 
 	var/datum/bioHolder/tf_holder
@@ -851,6 +852,9 @@
 		else if (href_list["fat"])
 			src.fat = !src.fat
 
+		else if (href_list["hair_override"])
+			src.hair_override = !src.hair_override
+
 		else if (href_list["updateid"])
 			src.update_wearid = !src.update_wearid
 
@@ -892,6 +896,9 @@
 		src.real_name = H.real_name
 
 		src.fat = (H.bioHolder.HasEffect("fat"))
+
+		src.hair_override = H.hair_override
+
 		if(H.mutantrace)
 			src.mutantrace = new H.mutantrace.type
 		return
@@ -917,6 +924,7 @@
 		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
 		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
+		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
 			dat += "Mutant Race: <a href='byond://?src=\ref[src];mutantrace=1'>[src.mutantrace ? capitalize(src.mutantrace.name) : "None"]</a><br>"
@@ -998,6 +1006,9 @@
 		sanitize_null_values(target_mob)
 		if(src.fat)
 			target_mob.bioHolder.AddEffect("fat")
+
+		target_mob.hair_override = src.hair_override
+
 		target_mob.bioHolder.mobAppearance.UpdateMob()
 		target_mob.update_colorful_parts()
 		return

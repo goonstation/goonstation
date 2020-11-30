@@ -241,7 +241,7 @@
 	name = "seamonkey tail"
 	desc = "A long, pink tail."
 	icon_state = "tail-seamonkey"
-	organ_image_icon = 'icons/mob/monkey.dmi'
+	organ_image_icon = 'icons/mob/seamonkey.dmi'
 	tail_num = TAIL_SEAMONKEY
 	organ_image_under_suit_1 = "seamonkey_under_suit"
 	organ_image_under_suit_2 = null

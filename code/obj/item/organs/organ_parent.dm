@@ -43,6 +43,9 @@
 	var/organ_color_1 = "#FFFFFF"		// Typically used to colorize the organ image
 	var/organ_color_2 = "#FFFFFF"		// Might also be usable to color organs if their owner has funky colored blood. Shrug.
 
+	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
+	var/transplanted = FALSE
+
 	var/op_stage = 0.0
 	var/brute_dam = 0
 	var/burn_dam = 0

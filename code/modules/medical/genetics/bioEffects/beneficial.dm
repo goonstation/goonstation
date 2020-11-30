@@ -429,15 +429,7 @@ var/list/radio_brains = list()
 				HAH.customization_first_color = "#4F7942" // a pleasant fern green
 				HAH.customization_second_color = "#3F704D" // a bold hunter green
 				HAH.customization_third_color = "#0B6623" // a vibrant forest green
-				if (HAH.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-					if (HAH.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-						HAH.customization_first_color = hulk_skin
-					else if (HAH.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-						HAH.customization_second_color = hulk_skin
-					else if (HAH.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-						HAH.customization_third_color = hulk_skin
-				else
-					HAH.s_tone = hulk_skin
+				HAH.s_tone = hulk_skin
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 		..()

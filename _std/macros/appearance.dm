@@ -25,6 +25,13 @@
 #define TAIL_CAT 7
 #define TAIL_ROACH 8
 
+/// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair color slot
+#define CUST_1 1
+#define CUST_2 2
+#define CUST_3 3
+/// Don't use any of the color vars, since it probably has its own colors
+#define NO_CUST 0
+
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 /// so far just makes fat mutants render as male
 #define IS_MUTANT								(1<<0)
@@ -43,65 +50,42 @@
 #define HAS_HUMAN_HAIR					(1<<5)
 /// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
 #define HAS_SPECIAL_HAIR				(1<<6)
-/// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
-#define HAS_BODYDETAIL_HAIR			(1<<7)
 /// Please don't render hair on my wolves it looks too cute
-#define HAS_NO_HAIR							(1<<8)
-
+#define HAS_NO_HAIR							(1<<7)
 
 /// We have normal human eyes of human color where human eyes tend to be
-#define HAS_HUMAN_EYES					(1<<9)
+#define HAS_HUMAN_EYES					(1<<8)
 /// We have no eyes and yet must see (cus they're baked into the sprite or something)
-#define HAS_NO_EYES							(1<<11)
-
+#define HAS_NO_EYES							(1<<9)
 
 /// Don't show their head, its already baked into their icon override
-#define HAS_NO_HEAD							(1<<12)
-
+#define HAS_NO_HEAD							(1<<10)
 
 /// Use humanlike body rendering process, otherwise use a static icon or something
-#define BUILT_FROM_PIECES				(1<<13)
+#define BUILT_FROM_PIECES				(1<<11)
 /// Has a non-head something in their detail slot they want to show off, like lizard splotches. non-tail oversuits count!
-#define HAS_EXTRA_DETAILS				(1<<14)
+#define HAS_EXTRA_DETAILS				(1<<12)
 /// Draw underwear on them. can be overridden with human var underpants_override. dont actually do this though
-#define WEARS_UNDERPANTS				(1<<15)
+#define WEARS_UNDERPANTS				(1<<13)
 /// Mob's body is drawn using a single, flat image and not several flat images slapped together
-#define USES_STATIC_ICON				(1<<16)
+#define USES_STATIC_ICON				(1<<14)
+/// Mob has some things that're supposed to show up over their outersuit, like a cute little cow muzzle
+#define HAS_OVERSUIT_DETAILS		(1<<15)
 
-
-
-///non-hairstyle body accessory bitflags
-
-///corresponds to the color settings in user prefs
-/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_1
-#define BODYDETAIL_1	(1<<1)
-/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_2
-#define BODYDETAIL_2	(1<<2)
-/// If HAS_EXTRA_DETAILS is set, render what's in the appearanceholder's mob_detail_3
-#define BODYDETAIL_3	(1<<3)
-
-/// Hair color is used to determine the color of certain non-hair things. Like horns or scales
-#define HAS_HAIR_COLORED_DETAILS	(1<<5)
-
-
-/// Has a non-tail detail that goes over the suit, like a cute little enormous cow muzzle
-#define BODYDETAIL_OVERSUIT_1		(1<<6)
-/// The oversuit is colorful, otherwise don't color it. Defaults to first customization color
-#define BODYDETAIL_OVERSUIT_IS_COLORFUL		(1<<7)
-
-
+/// Used primarilly by mutantraces when overwriting the skintone
 /// Skintone is determined by the character's first custom color
-#define SKINTONE_USES_PREF_COLOR_1		(1<<8)
+#define SKINTONE_USES_PREF_COLOR_1		(1<<16)
 /// Skintone is determined by the character's second custom color
-#define SKINTONE_USES_PREF_COLOR_2		(1<<9)
+#define SKINTONE_USES_PREF_COLOR_2		(1<<17)
 /// Skintone is determined by the character's third custom color
-#define SKINTONE_USES_PREF_COLOR_3		(1<<10)
-
+#define SKINTONE_USES_PREF_COLOR_3		(1<<18)
 
 /// Clamp customization RBG vals between 50 and 190, lizard-style
-#define FIX_COLORS										(1<<11)
+#define FIX_COLORS										(1<<19)
 /// Our head has its own colors that would look weird if tinted
-#define	HEAD_HAS_OWN_COLORS						(1<<12)
-
+#define	HEAD_HAS_OWN_COLORS						(1<<20)
 /// Apply the skintone to the torso, so chickens can have both gross human skin and gross chicken feathers
-#define	TORSO_HAS_SKINTONE						(1<<13)
+#define	TORSO_HAS_SKINTONE						(1<<21)
+
+/// Default normal standard human appearance flags
+#define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)

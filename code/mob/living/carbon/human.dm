@@ -54,6 +54,9 @@
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
 	var/image/image_cust_three = null
+	var/image/image_special_one = null
+	var/image/image_special_two = null
+	var/image/image_special_three = null
 
 	var/last_b_state = 1.0
 
@@ -65,6 +68,12 @@
 	var/cust_one_state = "short"
 	var/cust_two_state = "None"
 	var/cust_three_state = "none"
+	var/special_one_icon = 'icons/mob/human_hair.dmi'
+	var/special_one_state = "none"
+	var/special_two_icon = 'icons/mob/human_hair.dmi'
+	var/special_two_state = "none"
+	var/special_three_icon = 'icons/mob/human_hair.dmi'
+	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
@@ -142,7 +151,12 @@
 
 	var/datum/simsHolder/sims = null
 
-	var/underpants_override = 0 // forces the mob to wear underpants, even if their flags tell them not to
+	/// forces the mob to wear underpants, even if their flags tell them not to
+	var/underpants_override = 0
+	/// forces the mob to display human hair, even if their flags tell them not to
+	var/hair_override = 0 // only really works if they have hair. Barbering might help
+	/// forces the mob to display their special hair, even if their flags tell them not to
+	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
