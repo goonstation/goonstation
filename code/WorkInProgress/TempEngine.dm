@@ -138,7 +138,7 @@
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
 				if(src.reagents.has_reagent("voltagen", 1))
-					fan_power_draw = 0
+					fan_power_draw = max(0, 10*log(total_pressure))
 		else if(pressure_delta < 0)
 			gas_input = air2
 			gas_output = air1
