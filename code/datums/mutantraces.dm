@@ -35,13 +35,17 @@
 	*
 	* To make a dismemberable mutant, here's an example from lizard:
 	*
-	* IS_MUTANT | HAS_SPECIAL_SKINTONE | HAS_HUMAN_EYES | HAS_BODYDETAIL_HAIR | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS
+	* (IS_MUTANT | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR)
 	*
-	* HAS_SPECIAL_SKINTONE tells the renderer that the skintone will come from somewhere other than the client's preferences
+	* SKINTONE_USES_PREF_COLOR_1 tells the renderer that the skintone will come from the appearanceholder's first customization color
 	*
 	* HAS_HUMAN_EYES tells the head builder to render their eyes
 	*
-	* HAS_BODYDETAIL_HAIR tells the head builder that their "hair" will come from the mutant's icon, not from the hairstyle icon
+	* HAS_EXTRA_DETAILS tells the sprite builder to apply whatever's defined in their mob_detail_1 vars to their sprite
+	*
+	* FIX_COLORS clamps the RGB values of the customization colors betwen 50 and 190. Keeps them from getting too dark or oversaturated
+	*
+	* HAS_SPECIAL_HAIR tells the hair renderer to display the sprites stored iin the head's special hair, which can be defined here (through the appearanceholder)
 	*
 	* BUILT_FROM_PIECES is important, it tells the renderer to assemble the mutant from a set of separate pieces, like a human
 	* this allows them to apppear to be missing limbs when dismembered. Check out lizard.dmi for an example of how it should be set up.
