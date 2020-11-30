@@ -1,9 +1,9 @@
-#define MODE_READING 0
-#define MODE_WRITING 1
-#define MODE_STAMPING 2
-#define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30
-#define MAX_PAPER_STAMPS_OVERLAYS 4
+#define PAPER_MODE_READING 0
+#define PAPER_MODE_WRITING 1
+#define PAPER_MODE_STAMPING 2
+#define PAPER_MAX_LENGTH 5000
+#define PAPER_MAX_STAMPS 30
+#define PAPER_MAX_STAMPS_OVERLAYS 4
 
 #define STAMP_IDS list(\
 	"Clown" = "stamp-clown",\
@@ -66,8 +66,7 @@
 	stamina_crit_chance = 0
 
 	var/sealed = 0 //Can you write on this with a pen?
-	var/list/stamps = list()
-	var/list/stamped
+	var/list/stamps = null
 	var/list/form_fields = list()
 	var/field_counter = 1
 
@@ -215,8 +214,9 @@
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
 			var/stamp_icon_state = params["stamp_icon_state"]
 			var/stamp_class = params["stamp_class"]
-			if(stamps.len < MAX_PAPER_STAMPS)
-				stamps.Add(list(list(stamp_class, stamp_x, stamp_y, stamp_r)))
+			if(length(stamps) < PAPER_MAX_STAMPS)
+				var/list/stamp_info = list(list(stamp_class, stamp_x, stamp_y, stamp_r))
+				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
 				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp_icon_state]");
 				var/matrix/stamp_matrix = matrix()
@@ -224,7 +224,7 @@
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
 				stamp_overlay.transform = stamp_matrix
 
-				src.UpdateOverlays(stamp_overlay, "stamps_[stamps.len % MAX_PAPER_STAMPS_OVERLAYS]")
+				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
 				update_static_data(usr,ui)
 				var/obj/stamp = ui.user.equipped()
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
@@ -240,12 +240,12 @@
 
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
-			if(paper_len > MAX_PAPER_LENGTH)
+			if(paper_len > PAPER_MAX_LENGTH)
 				// Side note, the only way we should get here is if
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
+				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
@@ -262,7 +262,7 @@
 	.["sizeX"] = src.sizex
 	.["sizeY"] = src.sizey
 	.["text"] = src.info
-	.["max_length"] = MAX_PAPER_LENGTH
+	.["max_length"] = PAPER_MAX_LENGTH
 	.["paper_color"] = (color || "white")	// color might not be set
 	.["stamps"] = src.stamps
 	.["stampable"] = src.stampable
@@ -302,7 +302,7 @@
 		var/obj/item/pen/PEN = O
 		data["pen_font"] = PEN.font
 		data["pen_color"] = PEN.color
-		data["edit_mode"] = MODE_WRITING
+		data["edit_mode"] = PAPER_MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
@@ -310,12 +310,12 @@
 		var/obj/item/stamp/stamp = O
 		data["stamp_icon_state"] = stamp.current_mode
 		data["stamp_class"] = stamp_assets[stamp.current_mode]
-		data["edit_mode"] = MODE_STAMPING
+		data["edit_mode"] = PAPER_MODE_STAMPING
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
 		data["is_crayon"] = FALSE
 	else
-		data["edit_mode"] = MODE_READING
+		data["edit_mode"] = PAPER_MODE_READING
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
 		data["is_crayon"] = FALSE
@@ -328,7 +328,7 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
-		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
+		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
 			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
 		ui_interact(user)
