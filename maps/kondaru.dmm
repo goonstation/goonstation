@@ -13128,6 +13128,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
+/obj/item/paper/engine,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aEk" = (

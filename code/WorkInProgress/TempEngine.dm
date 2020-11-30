@@ -465,11 +465,12 @@
 		//  4 - L or R depending on circulator
 		// 	5 - Variant B (Major Variants "Experimental" to impact generator) these should only happen occasionally
 		var/prepend_serial_num = "[pick(consonants_upper)]" // Lore: Production facility identifier
+		var/instructions_footnote = ""
 
 		if(is_null_or_space(a))
 			//Set initial value for standard variants
 			src.variant_a = rand(10,19)
-			//New Variant A to follow and are identifier numerically
+			//New Variant A to follow and are identified by numerical ranges
 		else src.variant_a = a
 
 		if(is_null_or_space(b))
@@ -479,8 +480,10 @@
 		if(src.variant_b)
 			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
+				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</i><br>"}
 			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
+				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</i><br>"}
 			else
 				// Reassign variant_b to null so unsupported variants aren't shown to players
 				// to avoid confusion
@@ -488,6 +491,13 @@
 
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
+
+
+		SPAWN_DBG(0) // Offload this action...
+			for(var/obj/item/paper/engine/instructions in range(40,src))
+				if(istype(instructions))
+					instructions.info = initial(instructions.info) + instructions_footnote
+
 
 	New()
 		..()
