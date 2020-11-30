@@ -505,7 +505,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/barman/goldenshaker
 	name = "Golden Cocktail Shaker"
 	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
-	required_levels = list("Barman"=20)
+	required_levels = list("Barman"=0)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
@@ -517,6 +517,7 @@ mob/verb/checkrewards()
 		if (istype(shaker))
 			C.mob.remove_item(shaker)
 			qdel(shaker)
+		else return
 		var/obj/item/I = new path_to_spawn()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
