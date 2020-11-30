@@ -102,6 +102,10 @@ Contents:
 	Entered(atom/A as mob|obj)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(isobj(A))
+			var/obj/O = A
+			if(O.anchored)
+				return ..()
 
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
 		if(T)
