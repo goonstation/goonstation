@@ -38,9 +38,6 @@
 /// Without this flag, your mutant race sprite *must* include a chest_m and groin_m state, or your women will be a bunch of floating limbs
 #define NOT_DIMORPHIC								(1<<0)
 
-/// Our model has fat states
-#define VISIBLY_FAT							(1<<1)
-
 /// Skin tone defined through the usual route
 #define HAS_HUMAN_SKINTONE			(1<<2)
 /// Please dont tint my mob it looks weird
@@ -91,4 +88,4 @@
 #define	TORSO_HAS_SKINTONE						(1<<21)
 
 /// Default normal standard human appearance flags
-#define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS | VISIBLY_FAT)
+#define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS )
