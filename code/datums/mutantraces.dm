@@ -567,7 +567,7 @@
 
 /datum/mutantrace/flashy
 	name = "flashy"
-	icon_state = "epileptic"
+	icon_state = "psyche"
 	mutant_appearance_flags = (IS_MUTANT | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
 	override_attack = 0
 	race_mutation = /datum/bioEffect/mutantrace/flashy
