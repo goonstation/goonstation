@@ -524,12 +524,12 @@ that cannot be itched
 /obj/item/device/prisoner_scanner
 	name = "Securotron-5000"
 	desc = "Used to scan in prisoners and update their security records."
-	icon_state = "forensic0"
+	icon_state = "securotron"
 	var/mode = 1
 	var/datum/data/record/active1 = null
 	var/datum/data/record/active2 = null
 	w_class = 3.0
-	item_state = "electronic"
+	item_state = "securotron"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
