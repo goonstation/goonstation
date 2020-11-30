@@ -437,7 +437,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = PLANE_BLACKNESS + 1
+	plane = PLANE_DEFAULT + 2
 
 	density = 1
 	var/on_fire = 0
@@ -487,6 +487,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.UpdateOverlays(src.fire_image, "fire")
 		else
 			src.UpdateOverlays(null, "fire")
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			..()
+			qdel(src)
+#endif
 
 /obj/item/reagent_containers/food/snacks/snowball
 	name = "snowball"
@@ -571,6 +578,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	layer = 5
 	anchored = 1
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
 /obj/decal/tinsel
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
@@ -578,12 +592,26 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	layer = 5
 	anchored = 1
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
 /obj/decal/wreath
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
 	anchored = 1
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
 
 /obj/decal/mistletoe
 	name = "mistletoe"
@@ -628,6 +656,15 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
+
 
 // Grinch Stuff
 
