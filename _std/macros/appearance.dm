@@ -34,12 +34,10 @@
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 /// so far just makes fat mutants render as male
-#define IS_MUTANT								(1<<0)
+#define NOT_DIMORPHIC								(1<<0)
 
 /// Skin tone defined through the usual route
 #define HAS_HUMAN_SKINTONE			(1<<1)
-/// Skin tone defined some other way
-#define HAS_SPECIAL_SKINTONE		(1<<2)
 /// Please dont tint my mob it looks weird
 #define HAS_NO_SKINTONE					(1<<3)
 /// Some parts are skintoned, some are not. Define these with the color flags!
