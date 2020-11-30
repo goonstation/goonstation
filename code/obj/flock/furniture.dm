@@ -254,13 +254,35 @@
 	health = 50
 	health_max = 50
 	shock_when_entered = 0
+	auto = FALSE
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 
+	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+		if (ruined)
+			return
+
+		if (istext(special_icon_state))
+			icon_state = initial(src.icon_state) + "-" + special_icon_state
+			return
+
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 25)
+				icon_state = initial(src.icon_state) + "-3"
+			if(26 to 50)
+				icon_state = initial(src.icon_state) + "-2"
+			if(51 to 75)
+				icon_state = initial(src.icon_state) + "-1"
+			if(76 to INFINITY)
+				icon_state = initial(src.icon_state) + "-0"
+
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
+	src.update_icon()
+
 
 // flockdrones can always move through
 /obj/grille/flock/CanPass(atom/movable/mover, turf/target)

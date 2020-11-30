@@ -79,6 +79,7 @@
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
+	var/critter_family = null
 	var/generic = 1 // if yes, critter can be randomized a bit
 	var/max_quality = 100
 	var/min_quality = -100
@@ -269,6 +270,10 @@
 				else
 					damage_type = "brute"
 
+		if (istype(W, /obj/item/device/flyswatter))
+			var/obj/item/device/flyswatter/F = W
+			if (src.critter_family == BUG)
+				F.smack_bug(src, user)
 
 		//Simplified weapon properties for critters. Fuck this shit.
 		if(W.getProperty("searing"))

@@ -362,7 +362,7 @@ toxic - poisons
 			M.changeStatus("slowed", 1.5 SECONDS)
 
 /datum/projectile/energy_bolt/signifer_tase
-	name = "signifer_tase"
+	name = "signifer spark"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
@@ -382,57 +382,3 @@ toxic - poisons
 	ie_type = "T"
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
-/datum/projectile/laser/signifer_lethal
-	name = "signifer_lethal"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "lethal"
-	power = 15
-	cost = 25
-	sname = "signifer2_lethal"
-	shot_sound = 'sound/weapons/SigLethal.ogg'
-	damage_type = D_ENERGY
-	hit_ground_chance = 30
-	brightness = 1
-	color_red = 0.2
-	color_green = 0.2
-	color_blue = 0.8
-
-	disruption = 8
-
-	// shot_delay = 2
-	shot_number = 1
-	ie_type = "E"
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-	var/num = 1			//for doing the "two different projectiles in the burst" bit
-	var/pop = null
-
-	on_launch(var/obj/projectile/O)
-		if (num % 2)
-			num = 2
-			icon_state = "signifer2_burn"
-			damage_type = D_ENERGY
-			color_red = 0.1
-			color_green = 0.1
-			color_blue = 0.8
-
-		else 
-			num = 1
-			icon_state = "signifer2_brute"
-			damage_type = D_KINETIC
-			color_red = 0.8
-			color_green = 0.1
-			color_blue = 0.1
-
-		return ..()
-	
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		//first hit
-		if (num % 2)
-			if (pop == hit)
-				elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
-			pop = null
-
-		else
-			pop = hit
-

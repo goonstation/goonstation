@@ -34,6 +34,10 @@
 	var/clothing_dirty = 0
 
 	var/image/body_standing = null
+	var/image/hair_standing = null
+	var/image/tail_standing = null
+	var/image/tail_standing_oversuit = null
+	var/image/detail_standing_oversuit = null
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
@@ -57,6 +61,7 @@
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = 0			// Item is sewn in or is loose
 
+	var/cust_icon = 'icons/mob/human_hair.dmi'	// icon for hair, in case we want something else
 	var/cust_one_state = "short"
 	var/cust_two_state = "None"
 	var/cust_three_state = "none"
@@ -107,6 +112,9 @@
 
 	var/static/image/human_image = image('icons/mob/human.dmi')
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
+	var/static/image/human_detail_image = image('icons/mob/human.dmi', layer = MOB_OVERSUIT_LAYER2)
+	var/static/image/human_tail_image = image('icons/mob/human.dmi')
+	var/static/image/human_hair_image = image('icons/mob/human_hair.dmi')
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
@@ -133,6 +141,8 @@
 	var/list/immunities = list()
 
 	var/datum/simsHolder/sims = null
+
+	var/underpants_override = 0 // forces the mob to wear underpants, even if their flags tell them not to
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
@@ -186,6 +196,7 @@
 
 	if (!bioHolder)
 		bioHolder = new/datum/bioHolder(src)
+		src.initializeBioholder()
 	if (!abilityHolder)
 		abilityHolder = new /datum/abilityHolder/composite(src)
 
@@ -231,10 +242,10 @@
 	var/l_leg_bleed = 0
 	var/r_leg_bleed = 0
 
-	New(mob/new_holder)
+	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
-		if (holder) create()
+		if (holder && !ling) create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)
@@ -252,15 +263,15 @@
 		holder = null
 		..()
 
-	proc/create()
-		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder)
-		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder)
-		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder)
-		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder)
+	proc/create(var/datum/appearanceHolder/AHolLimb)
+		if (!l_arm) l_arm = new /obj/item/parts/human_parts/arm/left(holder, AHolLimb)
+		if (!r_arm) r_arm = new /obj/item/parts/human_parts/arm/right(holder, AHolLimb)
+		if (!l_leg) l_leg = new /obj/item/parts/human_parts/leg/left(holder, AHolLimb)
+		if (!r_leg) r_leg = new /obj/item/parts/human_parts/leg/right(holder, AHolLimb)
 		SPAWN_DBG(5 SECONDS)
 			if (holder && (!l_arm || !r_arm || !l_leg || !r_leg))
 				logTheThing("debug", holder, null, "<B>SpyGuy/Limbs:</B> [src] is missing limbs after creation for some reason - recreating.")
-				create()
+				create(AHolLimb)
 				if (holder)
 					// fix for "Cannot execute null.update body()".when mob is deleted too quickly after creation
 					holder.update_body()
@@ -435,6 +446,8 @@
 				src.holder.set_body_icon_dirty()
 			return
 		return 0
+
+
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
@@ -2265,7 +2278,7 @@
 			O.unbreakme()
 	if (!src.organHolder)
 		src.organHolder = new(src)
-	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye"))
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
 	src.organHolder.create_organs()
 	if (src.organHolder.chest)
@@ -2630,6 +2643,10 @@
 			processed += organHolder.intestines
 			if (prob(25) && organHolder.intestines.loc == src)
 				ret += organHolder.intestines
+		if (organHolder.tail)
+			processed += organHolder.tail
+			if (prob(75) && organHolder.tail.loc == src)
+				ret += organHolder.tail
 		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig()
 			if (W)
@@ -2874,34 +2891,26 @@
 	else
 		return 0
 
-/mob/living/carbon/human/set_mutantrace(var/mutantrace_type)
-
-	//Clean up the old mutantrace
-	if (src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-		src.organHolder.head.donor_mutantrace = null
+/mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
 	if(src.mutantrace != null)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
 
+	if(istype(mutantrace_type, /datum/mutantrace)) // So it'll still work if passed an initialized datum
+		mutantrace_type = mutantrace_type.type
+
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		. = 1
 
-	if(.) //If the mutantrace was changed do all the usual icon updates
-		if(src.organHolder && src.organHolder.head && src.organHolder.head.donor == src)
-			src.organHolder.head.donor_mutantrace = src.mutantrace
-			src.organHolder.head.update_icon()
-		src.set_face_icon_dirty()
-		src.set_body_icon_dirty()
+	if(.)
+		/* src.set_face_icon_dirty()
+		src.set_body_icon_dirty() */
 		src.get_static_image()
-
-
-		if (src.bioHolder && src.bioHolder.mobAppearance)
-			src.bioHolder.mobAppearance.UpdateMob()
-		else
-			src.update_body()
-			src.update_clothing()
+	else // updates are called by the mutantrace datum. lets not call it a million times
+		src.update_body()
+		src.update_clothing()
 
 /mob/living/carbon/human/verb/change_hud_style()
 	set name = "Change HUD Style"
@@ -3286,3 +3295,32 @@
 		if(AM.throwforce >= 40)
 			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
 			src.changeStatus("stunned", 3 SECONDS)
+
+/// Goes through all the things that can be recolored and updates their colors
+/mob/living/carbon/human/proc/update_colorful_parts()
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(!H?.limbs)
+			return
+		if (istype(H.limbs.l_arm, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/LA = H.limbs.l_arm
+			LA.colorize_limb_icon()
+			LA.set_skin_tone()
+		if (istype(H.limbs.r_arm, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/RA = H.limbs.r_arm
+			RA.colorize_limb_icon()
+			RA.set_skin_tone()
+		if (istype(H.limbs.l_leg, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/LL = H.limbs.l_leg
+			LL.colorize_limb_icon()
+			LL.set_skin_tone()
+		if (istype(H.limbs.r_leg, /obj/item/parts/human_parts ))
+			var/obj/item/parts/human_parts/RL = H.limbs.r_leg
+			RL.colorize_limb_icon()
+			RL.set_skin_tone()
+		if (H.organHolder?.head)
+			H.organHolder.head.update_icon()
+		if (H.organHolder?.tail)
+			var/obj/item/organ/tail/T = H.organHolder.tail
+			T.colorize_tail(H.bioHolder.mobAppearance)
+		H?.bioHolder?.mobAppearance.UpdateMob()

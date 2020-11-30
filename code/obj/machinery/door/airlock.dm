@@ -9,6 +9,9 @@
 #define AIRLOCK_WIRE_ELECTRIFY 9
 #define AIRLOCK_WIRE_SAFETY 10
 
+// how many possible network verification codes are there (i.e. how hard is it to bruteforce)
+#define NET_ACCESS_OPTIONS 32
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -196,6 +199,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 	var/hackMessage = ""
+	var/net_access_code = null
 
 	var/no_access = 0
 
@@ -209,6 +213,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if(!isrestrictedz(src.z))
 			var/area/station/A = get_area(src)
 			src.name = A.name
+		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
 	disposing()
@@ -795,6 +800,8 @@ About the new airlock wires panel:
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_AI_CONTROL)
+			if(prob(10))
+				src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 			if (src.aiControlDisabled == 0)
 				src.aiControlDisabled = 1
 			else if (src.aiControlDisabled == -1)
@@ -1279,7 +1286,7 @@ About the new airlock wires panel:
 	var/list/static_data = list()
 
 	static_data["wireColors"] = src.wire_colors
-	static_data["netId"] = src.net_id;
+	static_data["netId"] = src.net_id
 	static_data["name"] = src.name
 
 	return static_data
@@ -1520,7 +1527,10 @@ obj/machinery/door/airlock
 			else if (!id_tag || id_tag != signal.data["tag"])
 				return
 
-		if (aiControlDisabled > 0 || cant_emag)
+		var/sent_code = text2num(signal.data["access_code"])
+		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
+			if(prob(20))
+				src.play_deny()
 			var/datum/signal/rejectsignal = get_free_signal()
 			rejectsignal.source = src
 			rejectsignal.data["address_1"] = signal.data["sender"]
@@ -1769,6 +1779,7 @@ obj/machinery/door/airlock
 	data["hackMessage"] = hackMessage
 	data["aiControlVar"] = aiControlDisabled
 	data["noPower"] = (status & NOPOWER)
+	data["accessCode"] = src.net_access_code
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
@@ -1871,3 +1882,5 @@ obj/machinery/door/airlock
 					else
 						src.attach_signaler(which_wire+1, usr)
 						. = TRUE
+
+#undef NET_ACCESS_OPTIONS

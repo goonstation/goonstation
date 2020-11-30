@@ -50,6 +50,7 @@ datum/preferences
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
+	var/PDAcolor = "#6F7961"
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -232,11 +233,11 @@ datum/preferences
 		if (!data_cache)
 			data_cache = list("script" = null,"css" = null,"profile_name" = null,"character_name" = null,"gender" = null,"age_blood" = null,\
 								"bank" = null,"flavortext" = null,"security_note" = null,"medical_note" = null,"occupation" = null,"traits" = null,\
-								"fartsound" = null,"screamsound" = null,"chatsound" = null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
+								"fartsound" = null,"screamsound" = null,"chatsound" = null,"PDAcolor"=null,"skintone" = null,"eyecolor" = null,"hair_top" = null,"hair_mid" = null,"hair_bottom" = null,\
 								"underwear" = null,"randomize" = null,"font_size" = null,"messages" = null,"hud" = null,"tooltips" = null, "tgui" = null,"popups" = null,"controls" = null,"map"=null)
 			rebuild_data = list("script" = 1,"css" = 1,"profile_name" = 1,"character_name" = 1,"gender" = 1,"age_blood" = 1,\
 								"bank" = 1,"flavortext" = 1,"security_note" = 1,"medical_note" = 1,"occupation" = 1,"traits" = 1,\
-								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
+								"fartsound" = 1,"screamsound" = 1,"chatsound" = 1,"PDAcolor" = 1,"skintone" = 1,"eyecolor" = 1,"hair_top" = 1,"hair_mid" = 1,"hair_bottom" = 1,\
 								"underwear" = 1,"randomize" = 1,"font_size" = 1,"messages" = 1,"hud" = 1,"tooltips" = 1, "tgui" = 1, "popups" = 1,"controls" = 1,"map"=1)
 		if (!profile_cache)
 			profile_cache = list()
@@ -274,7 +275,7 @@ datum/preferences
 				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				for( var/name in client.cloudsaves )
+				for( var/name in client.player.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -611,6 +612,19 @@ $(function() {
 		</th>
 		<td colspan="2">
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
+		</td>
+	</tr>"}
+		LAGCHECK(80)
+		if (rebuild_data["PDAcolor"])
+			rebuild_data["PDAcolor"] = 0
+			data_cache["PDAcolor"] = {"
+	<tr>
+		<th>
+			PDA Backlight<span class="info-thing" title="Your character's default PDA background color.">?</span>
+		</th>
+		<td>
+			<a href='[pref_link]PDAcolor=input'>&#9998;</a>
+			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
 		</td>
 	</tr>"}
 		LAGCHECK(80)
@@ -1709,6 +1723,10 @@ $(function() {
 			src.use_azerty = !src.use_azerty
 			src.keybind_prefs_updated(user.client)
 
+		if (link_tags["PDAcolor"])
+			rebuild_data["PDAcolor"] = 1
+			src.PDAcolor = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+
 		if (link_tags["preferred_map"])
 			rebuild_data["map"] = 1
 			src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
@@ -1861,7 +1879,7 @@ $(function() {
 		*/
 
 		if (!isnull(user) && !IsGuestKey(user.key))
-			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
+			if (link_tags["cloudsave"] && user.client.player.cloudsaves[ link_tags["cloudsave"] ])
 				rebuild_profile = 1
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
@@ -1870,7 +1888,7 @@ $(function() {
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
@@ -1882,14 +1900,14 @@ $(function() {
 							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
 							boutput( user, "<span class='notice'>Savefile saved!</span>" )
-			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
+			else if( link_tags["clouddelete"] && user.client.player.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				rebuild_profile = 1
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
-			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+			else if (link_tags["cloudload"] && user.client.player.cloudsaves[ link_tags["cloudload"] ])
 				for (var/x in rebuild_data)
 					rebuild_data[x] = 1
 				rebuild_profile = 1
@@ -1964,6 +1982,7 @@ $(function() {
 			tooltip_option = TOOLTIP_ALWAYS
 			tgui_fancy = TRUE
 			tgui_lock = FALSE
+			PDAcolor = "#6F7961"
 			if (!force_random_names)
 				be_random_name = 0
 			else
@@ -2399,11 +2418,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
 	SPAWN_DBG(1 DECI SECOND)
-		AH.UpdateMob()
-		if (H)
-			H.set_face_icon_dirty()
-			H.set_body_icon_dirty()
-
+		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.
 // it sucks but it's a bit more readable i guess.
