@@ -164,10 +164,9 @@
 
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Resource repository"
-		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Resource repository
+		<br><span class='bold'>Resources:</span> [src.resources]
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
