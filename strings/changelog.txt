@@ -1,5 +1,10 @@
 
 (t)tue dec 01 20
+(u)Gannets
+(p)2903
+(e)🗺|mapping
+(+)Happy holidays, Spacemas is here! Thanks to TTerc for decorating Cog1 for us!
+(+)More maps will be decorated as the month continues. Feel free to contribute over on Github.
 (u)Kubius
 (p)2794
 (e)⚖|balance
