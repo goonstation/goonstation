@@ -1620,56 +1620,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-/datum/statusEffect/goo
-	id = "goo"
-	name = "Goo Covered"
-	desc = "Your feet are covered in a sticky goo! Yuck!"
-	icon_state = "goo_melt"
-	unique = TRUE
-	maxDuration = 2 SECONDS
-
-	onRemove()
-		if (istype(src.owner.loc, /turf/unsimulated/floor/green_goo))
-			if (ishuman(src.owner))
-				var/mob/living/carbon/human/H = owner
-				H.changeStatus("disorient", 1 SECONDS)
-				H.changeStatus("goo", 2 SECONDS)
-				H.visible_message("<span class='alert'>The goo rapidly bubbles around [owner] as they're slowly absorbed!</span>", "<span class='alert'>The goo rapidly bubbles around you as you are slowly absorbed!</span>", "<span class='alert'>You hear a rapid bubbling!</span>")
-				playsound(H.loc, "sound/effects/bubbles2.ogg", 20, 1)
-
-				var/obj/O = H.get_slot(SLOT_SHOES)
-				if (O)
-					H.visible_message("<span class='alert'>The goo melts [O] right off of [H]!</span>", "<span class='alert'>The goo melts [O] right off of your feet!</span>")
-					H.u_equip(O)
-					qdel(O)
-				else
-					H.reagents.add_reagent("lime_slime",2)
-					H.take_toxin_damage(5)
-
-			else if (isrobot(owner))
-				var/mob/living/silicon/robot/R = owner
-				R.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
-				playsound(R.loc, "sound/effects/bubbles2.ogg", 20, 1)
-				R.visible_message("<span class='alert'>The goo rapidly bubbles around [R] as they quickly melt away!</span>", "<span class='alert'>The goo rapidly bubbles around you as you quickly melt away!</span>", "<span class='alert'>You hear a rapid bubbling!</span>")
-				R.changeStatus("disorient", 1 SECONDS)
-				R.changeStatus("goo", 2 SECONDS)
-				R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
-				R.emote("scream")
-				R.part_leg_r.holder = null
-				qdel(R.part_leg_r)
-				if (R.part_leg_r.slot == "leg_both")
-					R.part_leg_l = null
-					R.update_bodypart("l_leg")
-				R.part_leg_r = null
-				R.update_bodypart("r_leg")
-				R.part_leg_l.holder = null
-				qdel(R.part_leg_l)
-				if (R.part_leg_l.slot == "leg_both")
-					R.part_leg_r = null
-					R.update_bodypart("r_leg")
-				R.part_leg_l = null
-				R.update_bodypart("l_leg")
-
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"
