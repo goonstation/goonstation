@@ -198,10 +198,10 @@
 			src.reagents.remove_reagent("hugs", 1)
 			src.audible_message("<span class='alert'>The [src] makes a fun gurgling sound.</span>")
 
-		if( src.reagents.has_reagent("love") && src.generator.grump && prob(5)  )
+		if( src.reagents.has_reagent("love") && src.generator.grump > 20 && prob(5)  )
 			src.reagents.remove_reagent("love", 1)
 			src.generator.grump -= 100
-			src.audible_message("<span class='alert'>A remarkable sound of contentment can be heard from [src]. How wonderful!</span>")
+			src.audible_message("<span class='alert'>A oddly distinctive sound of contentment can be heard from [src]. How wonderful!</span>")
 
 		// Interactions with transferred gas
 		if(gas_passed)
