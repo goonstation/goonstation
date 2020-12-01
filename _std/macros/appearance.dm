@@ -30,8 +30,6 @@
 #define CUST_1 1
 #define CUST_2 2
 #define CUST_3 3
-/// Don't use any of the color vars, since it probably has its own colors
-#define NO_CUST 0
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 /// We only have male torso/groin sprites, so only use those.

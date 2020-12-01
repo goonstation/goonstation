@@ -844,8 +844,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 
 					// all this shit goes on the torso anyway
 					if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
-						human_image.color = "#FFFFFF"
-
 						human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
 						switch(AHOLD.mob_detail_1_color_ref)
 							if(CUST_1)
@@ -854,7 +852,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 								human_image.color = AHOLD.customization_second_color
 							if(CUST_3)
 								human_image.color = AHOLD.customization_third_color
-							if(NO_CUST)
+							else
 								human_image.color = "#FFFFFF"
 						src.body_standing.overlays += human_image
 
@@ -867,7 +865,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 								human_detail_image.color = AHOLD.customization_second_color
 							if(CUST_3)
 								human_detail_image.color = AHOLD.customization_third_color
-							if(NO_CUST)
+							else
 								human_detail_image.color = "#FFFFFF"
 						src.detail_standing_oversuit.overlays += human_detail_image
 						UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit")

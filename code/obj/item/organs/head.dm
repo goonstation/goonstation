@@ -194,7 +194,7 @@
 				colorheck = AHead.customization_second_color
 			if(CUST_3)
 				colorheck = AHead.customization_third_color
-			if(NO_CUST)
+			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_one.color = colorheck
 		switch(AHead.special_hair_2_color_ref)
@@ -204,7 +204,7 @@
 				colorheck = AHead.customization_second_color
 			if(CUST_3)
 				colorheck = AHead.customization_third_color
-			if(NO_CUST)
+			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_two.color = colorheck
 		switch(AHead.special_hair_3_color_ref)
@@ -214,7 +214,7 @@
 				colorheck = AHead.customization_second_color
 			if(CUST_3)
 				colorheck = AHead.customization_third_color
-			if(NO_CUST)
+			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_three.color = colorheck
 

@@ -29,7 +29,7 @@
 	*
 	* (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	*
-	* NOT_DIMORPHIC prevents the renderer from trying to render a non-existent female sprite, since none of the mutants are dimorphic.
+	* NOT_DIMORPHIC tells the sprite builder not to use any female sprites or vars. If you remove this, make sure there's a torso_f and groin_f in the mutant's DMI!
 	*
 	* HAS_NO_SKINTONE, HAS_NO_HAIR, HAS_NO_EYES, HAS_NO_HEAD each prevent the renderer from trying to colorize the player's body or apply hair / eyes. They tend to be baked in.
 	*
@@ -145,7 +145,7 @@
 	var/special_hair_1_state
 	var/special_hair_1_state_f
 	/// Which preference entry to colorize this from.
-	/// CUST_1 to use the appearanceholder's custom_first_color, and so on. NO_CUST for just "#FFFFFF"
+	/// CUST_1 to use the appearanceholder's custom_first_color, and so on. Make null for just "#FFFFFF"
 	var/special_hair_1_color = CUST_1
 	var/special_hair_1_color_f
 	/// The image to be inserted into the mob's appearanceholder's customization_second
@@ -221,7 +221,7 @@
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
 			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
 			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
-				Dimorphitize(M)
+				MakeMutantDimorphic(M)
 			AppearanceSetter(M, "set")
 			LimbSetter(M, "set")
 			organ_mutator(M, "set")
@@ -535,7 +535,7 @@
 					H.bioHolder.RemoveEffect(initial(mr.id))
 
 	/// Copies over female variants of mutant heads and organs
-	proc/Dimorphitize(var/mob/living/carbon/human/H)
+	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
 		if(!src.AH || !ishuman(H)) return
 
 		if(src.AH.gender == FEMALE)
@@ -1928,7 +1928,7 @@
 	special_hair_1_color = CUST_1
 	detail_oversuit_1_icon = 'icons/mob/cow.dmi'
 	detail_oversuit_1_state = "cow_over_suit"
-	detail_oversuit_1_color = NO_CUST
+	detail_oversuit_1_color = null
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
