@@ -1,5 +1,9 @@
 
 (t)tue dec 01 20
+(u)Kubius
+(p)2824
+(e)⚖|balance
+(+)New arrivals after 20 minutes into the round will now always spawn with an O2 tank and crowbar.
 (u)Carbadox
 (p)2890
 (e)|
