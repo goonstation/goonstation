@@ -36,9 +36,7 @@
 	var/image/body_standing = null
 	var/image/hair_standing = null
 	var/image/tail_standing = null
-	var/image/tailbelt_standing = null
 	var/image/tail_standing_oversuit = null
-	var/image/tailbelt_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
 	var/image/fire_standing = null
 	//var/image/face_standing = null

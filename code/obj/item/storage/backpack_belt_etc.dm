@@ -566,7 +566,7 @@
 	desc = "A severed tail, now with fasteners!"
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "blank"
-	item_state = "blank"
+	item_state = "cables"
 	flags = FPRINT | TABLEPASS | ONBELT | ISTAIL
 	w_class = 3.0
 	mats = 5
@@ -574,6 +574,7 @@
 	var/datum/material/cable_insulator
 	var/datum/material/cable_conductor
 	var/obj/item/organ/tail/held_tail
+	var/list/beltimages = list()
 	/// Colorful overlay part
 	var/item_part1_state
 	var/item_part1_color = "#FFFFFF"
@@ -584,19 +585,35 @@
 	var/cable_state
 	var/cable_color = "#FF0000" // synthrubber red
 
-	New(loc, held_tail, cable_insulator, cable_conductor)
+	New(loc, tail = src.held_tail, insulator = /datum/material/fabric/synthrubber, conductor = /datum/material/metal/copper)
 		. = ..()
-		src.held_tail = held_tail
-		src.cable_insulator = cable_insulator
-		src.cable_conductor = cable_conductor
+		src.held_tail = tail
+		src.cable_insulator = insulator
+		src.cable_conductor = conductor
 		if(ispath(src.held_tail, /obj/item/organ/tail))
-			src.held_tail = new src.held_tail
-			src.held_tail?.set_loc(src)
-			src.held_tail.name = "Some jerk's [initial(src.name)]"
-		if(!held_tail || !istype(src.held_tail, /obj/item/organ/tail))
-			src.held_tail = new/obj/item/organ/tail/lizard(src)
+			var/mob/living/carbon/human/H
+
+			for(var/mob/living/carbon/human/M in range(2, src))
+				if(ishuman(M))
+					H = M
+					break
+
+			if(!istype(H))
+				var/list/allhumans = list()
+				for(var/mob/living/carbon/human/Hm in mobs)
+					if(ishuman(Hm) && Hm.organHolder)
+						allhumans += Hm
+				H = pick(allhumans) // I dunno just pick someone
+
+			var/obj/item/organ/tail/T = new src.held_tail(src, H.organHolder)
+
+			src.held_tail = T
+		// if(!held_tail || !istype(src.held_tail, /obj/item/organ/tail))
+		// 	src.held_tail = new/obj/item/organ/tail/lizard(src)
+		src.name = "[src.held_tail.donor.name]'s [initial(src.held_tail.name)] belt"
 		src.build_item_image()
 		src.build_item_desc()
+		src.build_item_onmob()
 
 	proc/build_item_image()
 		if(!istype(src.held_tail, /obj/item/organ/tail))
@@ -623,6 +640,22 @@
 		tempimg = image(icon = src.icon, icon_state = src.cable_state)
 		tempimg.color = src.cable_color
 		src.overlays += tempimg
+
+	proc/build_item_onmob()
+		// And now the stuff that'll be shown on the mob, courtesy of those neato experimental jumpsuits
+		var/image/tempmobimg
+		if(src.held_tail.tail_image_1)
+			tempmobimg = src.held_tail.tail_image_1
+			tempmobimg.layer = MOB_TAIL_LAYER1 + 0.1
+		src.beltimages += tempmobimg
+		if(src.held_tail.tail_image_2)
+			tempmobimg = src.held_tail.tail_image_2
+			tempmobimg.layer = MOB_TAIL_LAYER2 + 0.1
+		src.beltimages += tempmobimg
+		if(src.held_tail.tail_image_oversuit)
+			tempmobimg = src.held_tail.tail_image_oversuit
+			tempmobimg.layer = MOB_OVERSUIT_LAYER1 + 0.1
+		src.beltimages += tempmobimg
 
 	proc/build_item_desc()
 		if(!istype(src.held_tail, /obj/item/organ/tail))
@@ -658,11 +691,7 @@
 					src.held_tail.build_mob_tail_image("monkey")
 				else
 					src.held_tail.build_mob_tail_image("default")
-			user.update_body() // The tail part isnt handled through the clothes update thing
-
-	unequipped(var/mob/user)
-		..()
-		user.update_body()
+		src.build_item_onmob()
 
 // Just so they can be spawned
 /obj/item/tail_belt/lizard

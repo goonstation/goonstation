@@ -200,11 +200,11 @@
 			if (!C.use(10))
 				boutput(user, "You need a longer length of cable! A length of ten should be enough.")
 			else
-				var/obj/item/tail_belt/TB = new/obj/item/tail_belt(get_turf(user), held_tail = src, cable_insulator = C.insulator, cable_conductor = C.conductor)
+				var/obj/item/tail_belt/TB = new/obj/item/tail_belt(get_turf(user), tail = src, insulator = C.insulator, conductor = C.conductor)
 				src.set_loc(TB) // stick it inside the belt for safe keeping
 				user.u_equip(src)
 				user.put_in_hand_or_drop(TB)
-				boutput(user, "You tie the [C] around [W] nice and firm, forming it into a crude, but fashionable, belt.")
+				boutput(user, "You tie the [C] around [src] nice and firm, forming it into a crude, but fashionable, belt.")
 		else ..()
 
 
