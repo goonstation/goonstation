@@ -620,5 +620,4 @@
 /datum/clothingbooth_item/antlers
 	path = /obj/item/clothing/head/antlers
 	amount = 3
-	cost = 200
 	cost = PAY_TRADESMAN/2
