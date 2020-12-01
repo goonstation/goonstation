@@ -1,6 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/intact = 1
 	var/allows_vehicles = 1
 

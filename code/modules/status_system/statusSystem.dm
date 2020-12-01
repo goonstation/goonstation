@@ -1620,7 +1620,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"
