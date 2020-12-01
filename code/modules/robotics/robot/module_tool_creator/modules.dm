@@ -120,6 +120,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		/obj/item/reagent_containers/glass/oilcan/borg,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/medical
