@@ -1,5 +1,9 @@
 
 (t)tue dec 01 20
+(u)Carbadox and Gannets
+(p)2887
+(e)🎨|sprites
+(+)The Securotron-5000 (prisoner scanner) has been updated to use a new and shiny sprite and has been renamed to the Security RecordTrak. Sprites made by Gannets
 (u)Jan.antilles
 (p)2895
 (e)🆕🎨|feature, sprites
