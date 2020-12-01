@@ -1,5 +1,9 @@
 
 (t)tue dec 01 20
+(u)Carbadox
+(p)2890
+(e)|
+(*)Adjusted the code for Janitor job rewards, red bucket and orange mop, to require a regular mop and bucket respectively when claiming the rewards, instead of them just popping out from thin air.
 (u)Gannets
 (p)2903
 (e)🗺|mapping
