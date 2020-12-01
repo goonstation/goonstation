@@ -213,7 +213,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!usr.client)
 		return
 
-	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getMasterVolume() * 100) as num
+	var/vol = input("Goes from 0-100. Default is 100", "Alter Master Volume", usr.client.getMasterVolume() * 100) as num
 	vol = max(0,min(vol,100))
 	usr.client.setVolume( VOLUME_CHANNEL_MASTER, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed Master Volume to [vol].</span>")
