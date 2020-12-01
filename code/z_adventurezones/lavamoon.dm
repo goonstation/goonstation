@@ -1388,6 +1388,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		deactivate()
 
+	ex_act(severity)
+		return
+
+
 //ancient robot door
 /obj/iomoon_puzzle/ancient_robot_door
 	name = "sealed door"
