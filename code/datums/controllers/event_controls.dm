@@ -55,6 +55,11 @@ var/datum/event_controller/random_events
 			special_events += RE
 
 	proc/process()
+		if (emergency_shuttle.location > SHUTTLE_LOC_STATION)
+			// you have 60 seconds to respond if you want to be a ghost frog
+			// also the server is rebooting in 10 seconds
+			return
+
 		if (TIME >= major_events_begin)
 			if (TIME >= next_major_event)
 				event_cycle()
