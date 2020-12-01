@@ -86470,6 +86470,8 @@
 /area/space)
 "yhd" = (
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/kitchen,
+/obj/access_spawn/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "yhf" = (
