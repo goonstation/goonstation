@@ -1,4 +1,9 @@
 
+(t)tue dec 01 20
+(u)Jan.antilles
+(p)2895
+(e)🆕🎨|feature, sprites
+(+)Added antlers as a new hat, for Spacemas and beyond! The hat is available in the Clothing Booth.
 (t)sun nov 29 20
 (u)Gannets
 (p)2884
