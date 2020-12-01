@@ -229,9 +229,14 @@
 
 		src.overlays += src.head_image
 		src.overlays += src.head_image_eyes
-		src.overlays += src.head_image_cust_one
-		src.overlays += src.head_image_cust_two
-		src.overlays += src.head_image_cust_three
+		if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR)
+			src.overlays += src.head_image_cust_one
+			src.overlays += src.head_image_cust_two
+			src.overlays += src.head_image_cust_three
+		if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR)
+			src.overlays += src.head_image_special_one
+			src.overlays += src.head_image_special_two
+			src.overlays += src.head_image_special_three
 
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)
