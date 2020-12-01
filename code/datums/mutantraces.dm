@@ -368,6 +368,15 @@
 				AH.mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
 				AH.body_icon = 'icons/mob/human.dmi'
 				AH.mutant_race = null
+				AH.customization_first_offset_y = 0
+				AH.customization_second_offset_y = 0
+				AH.customization_third_offset_y = 0
+				AH.e_offset_y = 0 // Fun fact, monkey eyes are right at nipple height
+				AH.mob_oversuit_1_offset_y = 0
+				AH.mob_detail_1_offset_y = 0
+				AH.special_hair_3_offset_y = 0
+				AH.special_hair_2_offset_y = 0
+				AH.special_hair_1_offset_y = 0
 				AH.UpdateMob()
 				qdel(origAH)
 
