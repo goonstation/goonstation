@@ -1345,7 +1345,7 @@
 	body_offset = -7
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
-	special_head_state = "monkey"
+	special_head_state = "head"
 	exclusive_language = 1
 	voice_message = "chimpers"
 	voice_name = "monkey"
@@ -1548,6 +1548,8 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/seamonkey.dmi'
 	icon_state = "seamonkey"
+	special_head = HEAD_SEAMONKEY
+	special_head_state = "head"
 	aquatic = 1
 	race_mutation = /datum/bioEffect/mutantrace/seamonkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/seamonkey/right
