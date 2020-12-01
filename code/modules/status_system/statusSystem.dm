@@ -1643,7 +1643,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					H.u_equip(O)
 					qdel(O)
 				else
-					H.reagents.add_reagent("lime_slime",1)
+					H.reagents.add_reagent("lime_slime",2)
 					H.take_toxin_damage(5)
 
 			else if (isrobot(owner))
