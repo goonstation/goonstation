@@ -23,12 +23,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*
 	* SEE: appearance.dm for more flags and details!
 	*/
-	var/mob_appearance_flags = (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
-	/** Mob Color Flags - used to modify how the mob's features are drawn
-	*
-	* SEE: appearance.dm for more flags and details!
-	*/
-	var/mob_color_flags = null
+	var/mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
+
 
 	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
 	var/body_icon = 'icons/mob/human.dmi'
@@ -41,8 +37,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	/// What DMI holds the mob's hair sprites
 	var/customization_icon = 'icons/mob/human_hair.dmi'
-	/// What DMI holds any additional hair sprites that we need
-	var/customization_icon_special = 'icons/mob/human_hair.dmi'
 
 	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
@@ -55,37 +49,49 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// The Y offset to display this image
 	var/customization_first_offset_y = 0
 
-	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
 	var/customization_second_color_original = "#101010"
 	var/customization_second = "None"
 	var/customization_second_original = "None"
 	var/customization_second_offset_y = 0
 
-
-	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
 	var/customization_third_color_original = "#101010"
 	var/customization_third = "None"
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
 
-	/// An image to be overlaid on the mob just above their skin
-	var/mob_detail_1
-	/// An image to be overlaid on the mob just above their skin
-	var/mob_detail_2
-	/// An image to be overlaid on the mob just above their skin
-	var/mob_detail_3
+	/// Intended for extra head features that may or may not be hair
+	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/special_hair_1_color_ref = CUST_1
+	var/special_hair_1_offset_y = 0
+	var/special_hair_2_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_2_state = "none"
+	var/special_hair_2_color_ref = CUST_2
+	var/special_hair_2_offset_y = 0
+	var/special_hair_3_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_3_state = "none"
+	var/special_hair_3_color_ref = CUST_3
+	var/special_hair_3_offset_y = 0
 
+	/// Intended for extra, non-head body features that may or may not be hair (just not on their head)
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_1_icon = 'icons/mob/human_hair.dmi'
+	var/mob_detail_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/mob_detail_1_color_ref = CUST_1
+	var/mob_detail_1_offset_y = 0
 
 	/// An image to be overlaid on the mob between their outer-suit and backpack
 	/// Not to be used to define a tail oversuit, that's done by the tail organ.
 	/// This is for things like the cow having a muzzle that shows up over their outer-suit
-	var/mob_oversuit_1
-	/// An image to be overlaid on the mob between their outer-suit and backpack
-	var/mob_oversuit_2
-	/// An image to be overlaid on the mob between their outer-suit and backpack
-	var/mob_oversuit_3
+	var/mob_oversuit_1_icon = 'icons/mob/human_hair.dmi'
+	var/mob_oversuit_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/mob_oversuit_1_color_ref = CUST_1
+	var/mob_oversuit_1_offset_y = 0
 
 	/// Used by changelings to determine which type of limbs their victim had
 	var/datum/mutantrace/mutant_race = null
@@ -156,7 +162,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
-		mob_color_flags = toCopy.mob_color_flags
 
 		body_icon = toCopy.body_icon
 		body_icon_state = toCopy.body_icon_state
@@ -164,7 +169,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		head_icon_state = toCopy.head_icon_state
 
 		customization_icon = toCopy.customization_icon
-		customization_icon_special = toCopy.customization_icon_special
 
 		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
@@ -184,13 +188,30 @@ var/list/datum/bioEffect/mutini_effects = list()
 		customization_third_offset_y = toCopy.customization_third_offset_y
 		customization_third_original = toCopy.customization_third_original
 
-		mob_detail_1 = toCopy.mob_detail_1
-		mob_detail_2 = toCopy.mob_detail_2
-		mob_detail_3 = toCopy.mob_detail_3
+		special_hair_1_icon = toCopy.special_hair_1_icon
+		special_hair_1_state = toCopy.special_hair_1_state
+		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
+		special_hair_1_offset_y = toCopy.special_hair_1_offset_y
 
-		mob_oversuit_1 = toCopy.mob_oversuit_1
-		mob_oversuit_2 = toCopy.mob_oversuit_2
-		mob_oversuit_3 = toCopy.mob_oversuit_3
+		special_hair_2_icon = toCopy.special_hair_2_icon
+		special_hair_2_state = toCopy.special_hair_2_state
+		special_hair_2_color_ref = toCopy.special_hair_2_color_ref
+		special_hair_2_offset_y = toCopy.special_hair_2_offset_y
+
+		special_hair_3_icon = toCopy.special_hair_3_icon
+		special_hair_3_state = toCopy.special_hair_3_state
+		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
+		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
+
+		mob_detail_1_icon = toCopy.mob_detail_1_icon
+		mob_detail_1_state = toCopy.mob_detail_1_state
+		mob_detail_1_color_ref = toCopy.mob_detail_1_color_ref
+		mob_detail_1_offset_y = toCopy.mob_detail_1_offset_y
+
+		mob_oversuit_1_icon = toCopy.mob_oversuit_1_icon
+		mob_oversuit_1_state = toCopy.mob_oversuit_1_state
+		mob_oversuit_1_color_ref = toCopy.mob_oversuit_1_color_ref
+		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
 		mutant_race = toCopy.mutant_race
 
@@ -200,7 +221,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		e_offset_y = toCopy.e_offset_y
 		e_color_original = toCopy.e_color_original
 
-		s_tone = toCopy.s_tone
+		s_tone = toCopy.s_tone_original // *usually* we want to have a normal skintone by default. *usually*
 		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
@@ -276,14 +297,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (ishuman(owner))
 
 			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
-
-			if (src.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					src.s_tone = src.customization_first_color
-				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					src.s_tone = src.customization_second_color
-				if (src.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					src.s_tone = src.customization_third_color
 
 			H.gender = src.gender
 
