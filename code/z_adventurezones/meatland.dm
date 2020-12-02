@@ -146,6 +146,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "acid_depth"
 	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_ABOVE
 	mouse_opacity = 0
 	event_handler_flags = USE_HASENTERED
 

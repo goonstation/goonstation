@@ -158,7 +158,7 @@
 		// The rest of this shit gets sent to update_face
 		//get and install eyes, if any.
 		if (AHead.mob_appearance_flags & HAS_HUMAN_EYES)
-			src.head_image_eyes = image('icons/mob/human_hair.dmi', "eyes", layer = MOB_FACE_LAYER)
+			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, pixel_y = AHead.e_offset_y, layer = MOB_FACE_LAYER)
 		else if (AHead.mob_appearance_flags & HAS_NO_EYES)
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
@@ -171,9 +171,9 @@
 				our_hair_icon = AHead.customization_icon_special
 			else if (AHead.mob_appearance_flags & HAS_BODYDETAIL_HAIR) // or hair that isnt really hair but applied the same way
 				our_hair_icon = AHead.head_icon
-			src.head_image_cust_one = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
-			src.head_image_cust_two = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
-			src.head_image_cust_three = image(icon = our_hair_icon, layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_one = image(icon = our_hair_icon, pixel_y = AHead.customization_first_offset_y, layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_two = image(icon = our_hair_icon, pixel_y = AHead.customization_second_offset_y, layer = MOB_HAIR_LAYER2)
+			src.head_image_cust_three = image(icon = our_hair_icon, pixel_y = AHead.customization_third_offset_y, layer = MOB_HAIR_LAYER2)
 
 			// Set up the hair state
 			var/list/hair_list = customization_styles + customization_styles_gimmick

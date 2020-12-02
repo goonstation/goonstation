@@ -67,6 +67,7 @@
 #include "defines\watermap.dm"
 #include "defines\worldgen.dm"
 #include "defines\_frequency.dm"
+#include "macros\actions.dm"
 #include "macros\antag_popups.dm"
 #include "macros\antagchecks.dm"
 #include "macros\appearance.dm"

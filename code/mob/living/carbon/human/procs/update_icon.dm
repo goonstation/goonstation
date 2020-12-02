@@ -55,14 +55,6 @@
 
 	// Uniform
 	if (src.w_uniform)
-		if (src.bioHolder?.HasEffect("fat") && !(src.w_uniform.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span class='alert'>You burst out of the [src.w_uniform.name]!</span>")
-			var/obj/item/clothing/c = src.w_uniform
-			src.u_equip(c)
-			if (c)
-				c.set_loc(src.loc)
-				c.dropped(src)
-				c.layer = initial(c.layer)
 		if (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/experimental))
 			var/obj/item/clothing/under/experimental/worn_suit = src.w_uniform
 			wear_sanity_check(worn_suit)
@@ -83,12 +75,8 @@
 				UpdateOverlays(null, "suit_image_blood")
 		else if(src.w_uniform)
 			var/image/suit_image
-			if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-				if (!src.w_uniform.wear_image_fat) src.w_uniform.wear_image_fat = image(src.w_uniform.wear_image_fat_icon)
-				suit_image = src.w_uniform.wear_image_fat
-			else
-				wear_sanity_check(src.w_uniform)
-				suit_image = src.w_uniform.wear_image
+			wear_sanity_check(src.w_uniform)
+			suit_image = src.w_uniform.wear_image
 
 			if (islist(override_states) && override_states.Find("js-[src.w_uniform.icon_state]"))
 				suit_image.icon = src.mutantrace.clothing_icon_override
@@ -320,82 +308,73 @@
 		UpdateOverlays(null, "wear_shoes_r")
 
 	if (src.wear_suit)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat") && !(src.wear_suit.c_flags & ONESIZEFITSALL))
-			boutput(src, "<span class='alert'>You burst out of the [src.wear_suit.name]!</span>")
-			var/obj/item/clothing/c = src.wear_suit
-			src.u_equip(c)
-			if (c)
-				c.set_loc(src.loc)
-				c.dropped(src)
-				c.layer = initial(c.layer)
+		wear_sanity_check(src.wear_suit)
+		if (src.wear_suit.over_all)
+			src.wear_suit.wear_image.layer = MOB_OVERLAY_BASE
+		else if (src.wear_suit.over_back)
+			src.wear_suit.wear_image.layer = MOB_BACK_LAYER + 0.2
 		else
-			wear_sanity_check(src.wear_suit)
-			if (src.wear_suit.over_all)
-				src.wear_suit.wear_image.layer = MOB_OVERLAY_BASE
-			else if (src.wear_suit.over_back)
-				src.wear_suit.wear_image.layer = MOB_BACK_LAYER + 0.2
-			else
-				src.wear_suit.wear_image.layer = MOB_ARMOR_LAYER
+			src.wear_suit.wear_image.layer = MOB_ARMOR_LAYER
 
-			if (islist(override_states) && override_states.Find("suit-[src.wear_suit.icon_state]"))
-				src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_override
-				src.wear_suit.wear_image.icon_state = "suit-[src.wear_suit.icon_state]"
-			else
-				src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
-				src.wear_suit.wear_image.icon_state = src.wear_suit.icon_state
+		if (islist(override_states) && override_states.Find("suit-[src.wear_suit.icon_state]"))
+			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.wear_suit.wear_image.icon_state = "suit-[src.wear_suit.icon_state]"
+		else
+			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
+			src.wear_suit.wear_image.icon_state = src.wear_suit.icon_state
 
-			src.wear_suit.wear_image.color = src.wear_suit.color
-			src.wear_suit.wear_image.alpha = src.wear_suit.alpha
-			UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
+		src.wear_suit.wear_image.color = src.wear_suit.color
+		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
+		UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
 
-			if (src.wear_suit.worn_material_texture_image != null)
-				switch (src.wear_suit.wear_image.layer)
-					if (MOB_OVERLAY_BASE)
-						src.wear_suit.worn_material_texture_image.layer = MOB_OVERLAY_BASE + 0.1
-					if (MOB_BACK_LAYER)
-						src.wear_suit.worn_material_texture_image.layer = MOB_BACK_LAYER + 0.3
-					if (MOB_ARMOR_LAYER)
-						src.wear_suit.worn_material_texture_image.layer = MOB_ARMOR_LAYER + 0.1
-				UpdateOverlays(src.wear_suit.worn_material_texture_image, "material_armor")
-			else
-				UpdateOverlays(null, "material_armor")
+		if (src.wear_suit.worn_material_texture_image != null)
+			switch (src.wear_suit.wear_image.layer)
+				if (MOB_OVERLAY_BASE)
+					src.wear_suit.worn_material_texture_image.layer = MOB_OVERLAY_BASE + 0.1
+				if (MOB_BACK_LAYER)
+					src.wear_suit.worn_material_texture_image.layer = MOB_BACK_LAYER + 0.3
+				if (MOB_ARMOR_LAYER)
+					src.wear_suit.worn_material_texture_image.layer = MOB_ARMOR_LAYER + 0.1
+			UpdateOverlays(src.wear_suit.worn_material_texture_image, "material_armor")
+		else
+			UpdateOverlays(null, "material_armor")
 
-			if (src.wear_suit.blood_DNA)
-				if (src.wear_suit.bloodoverlayimage & SUITBLOOD_ARMOR)
-					if (src.wear_suit.blood_DNA == "--conductive_substance--")
-						blood_image.icon_state = "armorblood"
-					else
-						blood_image.icon_state = "armorblood_c"
-				else if (src.wear_suit.bloodoverlayimage & SUITBLOOD_COAT)
-					if (src.wear_suit.blood_DNA == "--conductive_substance--")
-						blood_image.icon_state = "coatblood"
-					else
-						blood_image.icon_state = "coatblood_c"
+		if (src.wear_suit.blood_DNA)
+			if (src.wear_suit.bloodoverlayimage & SUITBLOOD_ARMOR)
+				if (src.wear_suit.blood_DNA == "--conductive_substance--")
+					blood_image.icon_state = "armorblood"
 				else
-					if (src.wear_suit.blood_DNA == "--conductive_substance--")
-						blood_image.icon_state = "suitblood"
-					else
-						blood_image.icon_state = "suitblood_c"
-
-				switch (src.wear_suit.wear_image.layer)
-					if (MOB_OVERLAY_BASE)
-						blood_image.layer = MOB_OVERLAY_BASE + 0.1
-					if (MOB_ARMOR_LAYER)
-						blood_image.layer = MOB_ARMOR_LAYER + 0.1
-				UpdateOverlays(blood_image, "wear_suit_bloody")
+					blood_image.icon_state = "armorblood_c"
+			else if (src.wear_suit.bloodoverlayimage & SUITBLOOD_COAT)
+				if (src.wear_suit.blood_DNA == "--conductive_substance--")
+					blood_image.icon_state = "coatblood"
+				else
+					blood_image.icon_state = "coatblood_c"
 			else
-				UpdateOverlays(null, "wear_suit_bloody")
+				if (src.wear_suit.blood_DNA == "--conductive_substance--")
+					blood_image.icon_state = "suitblood"
+				else
+					blood_image.icon_state = "suitblood_c"
 
-			if (src.wear_suit.restrain_wearer)
-				if (src.hasStatus("handcuffed"))
-					src.handcuffs.drop_handcuffs(src)
-				if ((src.l_hand || src.r_hand))
-					var/h = src.hand
-					src.hand = 1
-					drop_item()
-					src.hand = 0
-					drop_item()
-					src.hand = h
+			switch (src.wear_suit.wear_image.layer)
+				if (MOB_OVERLAY_BASE)
+					blood_image.layer = MOB_OVERLAY_BASE + 0.1
+				if (MOB_ARMOR_LAYER)
+					blood_image.layer = MOB_ARMOR_LAYER + 0.1
+			UpdateOverlays(blood_image, "wear_suit_bloody")
+		else
+			UpdateOverlays(null, "wear_suit_bloody")
+
+		if (src.wear_suit.restrain_wearer)
+			if (src.hasStatus("handcuffed"))
+				src.handcuffs.drop_handcuffs(src)
+			if ((src.l_hand || src.r_hand))
+				var/h = src.hand
+				src.hand = 1
+				drop_item()
+				src.hand = 0
+				drop_item()
+				src.hand = h
 	else
 		UpdateOverlays(null, "wear_suit")
 		UpdateOverlays(null, "wear_suit_bloody")
@@ -657,17 +636,21 @@
 	if (src?.organHolder?.head)
 		my_head = src.organHolder.head
 
-		image_eyes = my_head.head_image_eyes
+		src.image_eyes = my_head.head_image_eyes
 		src.hair_standing.overlays += image_eyes
 
-		if (!seal_hair)
-			image_cust_one = my_head.head_image_cust_one
+		src.image_cust_one = my_head.head_image_cust_one
+		src.cust_one_state = my_head.head_image_cust_one?.icon_state
+
+		src.image_cust_two = my_head.head_image_cust_two
+		src.cust_two_state = my_head.head_image_cust_two?.icon_state
+
+		src.image_cust_three = my_head.head_image_cust_three
+		src.cust_three_state = my_head.head_image_cust_three?.icon_state
+
+		if(!seal_hair)
 			src.hair_standing.overlays += image_cust_one
-
-			image_cust_two = my_head.head_image_cust_two
 			src.hair_standing.overlays += image_cust_two
-
-			image_cust_three = my_head.head_image_cust_three
 			src.hair_standing.overlays += image_cust_three
 
 		UpdateOverlays(hair_standing, "hair", 1, 1)
@@ -815,7 +798,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		// if the image data can be stored in the thing it's trying to draw, store it there
 		// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
 		if (AHOLD.mob_appearance_flags & BUILT_FROM_PIECES) // Everyone who isnt a static_icon
-			if ((src.bioHolder && !src.bioHolder.HasEffect("fat")) || (src.bioHolder && src.bioHolder.HasEffect("fat") && (AHOLD.mob_appearance_flags & IS_MUTANT)) || src.decomp_stage)
+			if (src.bioHolder || src.decomp_stage)
 				human_image.icon = AHOLD.body_icon
 				human_image.layer = MOB_LIMB_LAYER // why was this never defined before
 				var/gender_t = null

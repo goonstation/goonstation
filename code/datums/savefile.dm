@@ -372,7 +372,7 @@
 
 
 	cloudsave_load( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 
 		if (IsGuestKey(user.key))
@@ -398,7 +398,7 @@
 		return src.savefile_load(user, 1, save)
 
 	cloudsave_save( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 		if (IsGuestKey( user.key ))
 			return 0
@@ -420,7 +420,7 @@
 		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
@@ -436,5 +436,5 @@
 			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
-		user.cloudsaves.Remove( name )
+		user.player.cloudsaves.Remove( name )
 		return 1

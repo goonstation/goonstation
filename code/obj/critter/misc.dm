@@ -389,6 +389,7 @@
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
+	critter_family = BUG
 	density = 1
 	health = 10
 	aggressive = 1

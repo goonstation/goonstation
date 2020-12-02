@@ -85,6 +85,10 @@
 	/// This is used for static icons if the mutant isn't built from pieces
 	var/icon = 'icons/effects/genetics.dmi'
 	var/icon_state = "blank_c"
+	/// The icon used to render their eyes
+	var/eye_icon = 'icons/mob/human_hair.dmi'
+	/// The state used to render their eyes
+	var/eye_state = "eyes"
 
 	/// If the mutant uses a non-human head, this'll tell the head builder which head to build
 	var/special_head = null
@@ -99,6 +103,10 @@
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
+	/// affects pixel_y of eyes if they're different from normal head-placement. darn anime monkey eyes
+	/// If 0, it inherits that of the head offset. Otherwise, it applies as normal
+	/// So, it should typically be something like head_offset +/- a few pixels
+	var/eye_offset = 0
 
 	var/list/limb_list = list()
 	var/r_limb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
@@ -204,10 +212,7 @@
 						W.set_loc(mob.loc)
 						W.dropped(mob)
 						W.layer = initial(W.layer)
-			M.image_eyes.pixel_y = src.head_offset
-			M.image_cust_one.pixel_y = src.head_offset
-			M.image_cust_two.pixel_y = src.head_offset
-			M.image_cust_three.pixel_y = src.head_offset
+
 
 			SPAWN_DBG (25) // Don't remove.
 				if (M?.organHolder?.skull)
@@ -243,10 +248,6 @@
 			if (ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				MutateMutant(H, "reset")
-				H.image_eyes.pixel_y = initial(H.image_eyes.pixel_y)
-				H.image_cust_one.pixel_y = initial(H.image_cust_one.pixel_y)
-				H.image_cust_two.pixel_y = initial(H.image_cust_two.pixel_y)
-				H.image_cust_three.pixel_y = initial(H.image_cust_three.pixel_y)
 				organ_mutator(H, "reset")
 				AppearanceSetter(H, "reset")
 				LimbSetter(H, "reset")
@@ -287,8 +288,11 @@
 				AH.customization_second_original = AH.customization_second
 				AH.customization_third_original = AH.customization_third
 				AH.customization_first = src.special_hair_1
+				AH.customization_first_offset_y = src.head_offset
 				AH.customization_second = src.special_hair_2
+				AH.customization_second_offset_y = src.head_offset
 				AH.customization_third = src.special_hair_3
+				AH.customization_third_offset_y = src.head_offset
 				AH.customization_icon_special = src.mutant_folder
 				if (src.mutant_color_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
 					AH.customization_first_color = fix_colors(AH.customization_first_color)
@@ -297,6 +301,9 @@
 				AH.mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
+				AH.e_icon = src.eye_icon
+				AH.e_state = src.eye_state
+				AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
 				AH.mob_detail_1 = detail_1
 				AH.mob_detail_2 = detail_2
 				AH.mob_detail_3 = detail_3
@@ -1211,12 +1218,12 @@
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
 	head_offset = -9
+	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
 	hand_offset = -5
 	body_offset = -7
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "monkey"
-	//	uses_human_clothes = 0 // Guess they can keep that ability for now (Convair880).
 	exclusive_language = 1
 	voice_message = "chimpers"
 	voice_name = "monkey"

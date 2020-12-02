@@ -1,6 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/intact = 1
 	var/allows_vehicles = 1
 
@@ -305,6 +306,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == Obj)
+				continue
 			// I Said No sanity check
 			if(i >= 50)
 				break
@@ -348,6 +351,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == M)
+				continue
 			// I Said No sanity check
 			if(i++ >= 50)
 				break

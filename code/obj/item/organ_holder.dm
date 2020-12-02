@@ -174,6 +174,11 @@
 			if ("right_kidney")
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
+			if ("tail")
+				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+					return
+				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
+					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
 			//Missing lungs is handled in it's own proc right now. I'll probably move it here eventually, but that's how I did it originally before I thought of a thing for handling missing organs in the organholder and I'm not rewriting such a tedious thing now.
 
 

@@ -7,7 +7,7 @@ var/datum/explosion_controller/explosions
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -25,7 +25,7 @@ var/datum/explosion_controller/explosions
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
 
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance)
+		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width)
 
 	proc/queue_damage(var/list/new_turfs)
 		for (var/turf/T in new_turfs)
@@ -130,13 +130,17 @@ var/datum/explosion_controller/explosions
 	var/turf/epicenter
 	var/power
 	var/brisance
+	var/angle
+	var/width
 
-	New(atom/source, turf/epicenter, power, brisance)
+	New(atom/source, turf/epicenter, power, brisance, angle, width)
 		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power
 		src.brisance = brisance
+		src.angle = angle
+		src.width = width
 
 	proc/logMe()
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
@@ -191,6 +195,8 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
+				if(width < 360 && abs(angledifference(get_angle(epicenter, target), angle)) > (width/2))
+					new_value = new_value / 3
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
