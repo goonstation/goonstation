@@ -6,24 +6,24 @@
 #define PAPER_MAX_STAMPS_OVERLAYS 4
 
 #define STAMP_IDS list(\
-	"Clown" = "stamp-clown",\
-	"Denied" = "stamp-deny" ,\
-	"Granted" = "stamp-ok",\
-	"Head of Personnel" = "stamp-hop",\
-	"Medical Director" = "stamp-md",\
-	"Chief Engineer" = "stamp-ce",\
-	"Head of Security" = "stamp-hos",\
-	"Research Director" = "stamp-rd",\
-	"Captain" = "stamp-cap",\
-	"Quartermaster" = "stamp-qm",\
-	"Security" = "stamp-law",\
-	"Chaplain" = "stamp-chap",\
-	"Mime" = "stamp-mime",\
-	"Centcom" = "stamp-centcom",\
-	"Syndicate" = "stamp-syndicate",\
-	"Void" = "stamp-void",\
-	"Your Name" = "stamp-name",\
-	"Current Time" = "stamp-time",)
+	"Clown" = "stamp-sprite-clown",\
+	"Denied" = "stamp-sprite-deny" ,\
+	"Granted" = "stamp-sprite-ok",\
+	"Head of Personnel" = "stamp-sprite-hop",\
+	"Medical Director" = "stamp-sprite-md",\
+	"Chief Engineer" = "stamp-sprite-ce",\
+	"Head of Security" = "stamp-sprite-hos",\
+	"Research Director" = "stamp-sprite-rd",\
+	"Captain" = "stamp-sprite-cap",\
+	"Quartermaster" = "stamp-sprite-qm",\
+	"Security" = "stamp-sprite-law",\
+	"Chaplain" = "stamp-sprite-chap",\
+	"Mime" = "stamp-sprite-mime",\
+	"Centcom" = "stamp-sprite-centcom",\
+	"Syndicate" = "stamp-sprite-syndicate",\
+	"Void" = "stamp-sprite-void",\
+	"Your Name" = "stamp-text-name",\
+	"Current Time" = "stamp-text-time",)
 
 /obj/item/paper
 	name = "paper"
@@ -212,13 +212,13 @@
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
-			var/stamp_icon_state = params["stamp_icon_state"]
+			var/stampAssetType = params["stampAssetType"]
 			var/stamp_class = params["stamp_class"]
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				var/list/stamp_info = list(list(stamp_class, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp_icon_state]");
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stampAssetType]");
 				var/matrix/stamp_matrix = matrix()
 				stamp_matrix.Scale(1, 1)
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
@@ -278,26 +278,28 @@
 	var/T = ""
 	T = time_type + ": [time2text(world.timeofday, "hh:mm:ss")]"
 
+	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
-		"stamp-clown" = "large_stamp-clown.png",
-		"stamp-deny" = "large_stamp-deny.png",
-		"stamp-ok" = "large_stamp-ok.png",
-		"stamp-hop" = "large_stamp-hop.png",
-		"stamp-md" = "large_stamp-md.png",
-		"stamp-ce" = "large_stamp-ce.png",
-		"stamp-hos" = "large_stamp-hos.png",
-		"stamp-rd" = "large_stamp-rd.png",
-		"stamp-cap" = "large_stamp-cap.png",
-		"stamp-qm" = "large_stamp-qm.png",
-		"stamp-law" = "large_stamp-law.png",
-		"stamp-chap" = "large_stamp-chap.png",
-		"stamp-mime" = "large_stamp-mime.png",
-		"stamp-centcom" = "large_stamp-centcom.png",
-		"stamp-syndicate" = "large_stamp-syndicate.png",
-		"stamp-void" = "large_stamp-void.png",
-		"stamp-time" =  T,
-		"stamp-name" = user.name
+		"stamp-sprite-clown" = "large_stamp-clown.png",
+		"stamp-sprite-deny" = "large_stamp-deny.png",
+		"stamp-sprite-ok" = "large_stamp-ok.png",
+		"stamp-sprite-hop" = "large_stamp-hop.png",
+		"stamp-sprite-md" = "large_stamp-md.png",
+		"stamp-sprite-ce" = "large_stamp-ce.png",
+		"stamp-sprite-hos" = "large_stamp-hos.png",
+		"stamp-sprite-rd" = "large_stamp-rd.png",
+		"stamp-sprite-cap" = "large_stamp-cap.png",
+		"stamp-sprite-qm" = "large_stamp-qm.png",
+		"stamp-sprite-law" = "large_stamp-law.png",
+		"stamp-sprite-chap" = "large_stamp-chap.png",
+		"stamp-sprite-mime" = "large_stamp-mime.png",
+		"stamp-sprite-centcom" = "large_stamp-centcom.png",
+		"stamp-sprite-syndicate" = "large_stamp-syndicate.png",
+		"stamp-sprite-void" = "large_stamp-void.png",
+		"stamp-text-time" =  T,
+		"stamp-text-name" = user.name
 	)
+
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		data["pen_font"] = PEN.font
@@ -305,10 +307,10 @@
 		data["edit_mode"] = PAPER_MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
-		data["stamp_icon_state"] = "FAKE"
+		data["stampAssetType"] = "FAKE"
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
-		data["stamp_icon_state"] = stamp.current_mode
+		data["stampAssetType"] = stamp.current_mode
 		data["stamp_class"] = stamp_assets[stamp.current_mode]
 		data["edit_mode"] = PAPER_MODE_STAMPING
 		data["pen_font"] = "FAKE"
@@ -319,7 +321,7 @@
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
 		data["is_crayon"] = FALSE
-		data["stamp_icon_state"] = "FAKE"
+		data["stampAssetType"] = "FAKE"
 		data["stamp_class"] = "FAKE"
 	data["field_counter"] = field_counter
 	data["form_fields"] = form_fields

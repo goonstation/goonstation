@@ -185,6 +185,8 @@ const pauseEvent = e => {
 };
 
 const Stamp = (props, context) => {
+  const { data } = useBackend(context);
+  const { stampAssetType } = data;
   const {
     image,
     opacity,
@@ -198,15 +200,16 @@ const Stamp = (props, context) => {
   };
   return (
     <Fragment>
-      {!image.sprite.includes(".png") && (
+      {stampAssetType.match("stamp-sprite-.*") ? (
         <Box
           id={active_stamp && "stamp"}
           style={stamp_transform}
           className="paper__stamp-text">
           {image.sprite}
         </Box>
-      )}
-      {image.sprite.includes(".png") && (
+      )
+      :
+      (
         <img
           id={active_stamp && "stamp"}
           style={stamp_transform}
@@ -285,7 +288,7 @@ class PaperSheetStamper extends Component {
       const stamp_obj = {
         x: this.state.x, y: this.state.y, r: this.state.rotate,
         stamp_class: this.props.stamp_class,
-        stamp_icon_state: data.stamp_icon_state,
+        stampAssetType: data.stampAssetType,
       };
       act("stamp", stamp_obj);
     };
