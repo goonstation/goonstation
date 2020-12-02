@@ -66,7 +66,10 @@
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
-		if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
+		if(src.hasStatus("shivering"))
+			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
+			src.changeStatus("shivering", -1 SECONDS)
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
 			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
@@ -82,6 +85,9 @@
 	else
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
+		else if(target.hasStatus("shivering"))
+			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
+			target.changeStatus("shivering", -1 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
