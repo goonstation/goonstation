@@ -124,6 +124,6 @@
 	for (var/i in L)
 		L[i] = min(L[i], 190)
 		L[i] = max(L[i], 50)
-	if (L.len == 3)
+	if (length(L) == 3)
 		return rgb(L["r"], L["g"], L["b"])
 	return rgb(22, 210, 22)
