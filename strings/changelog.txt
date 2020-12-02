@@ -1,5 +1,9 @@
 
 (t)tue dec 01 20
+(u)Carbadox
+(p)2899
+(e)🆕🗺|feature, mapping
+(*)Added departemental coffee machines to Clarion, Cog1, Cog2 and Horizon.
 (u)Kubius
 (p)2824
 (e)⚖|balance
