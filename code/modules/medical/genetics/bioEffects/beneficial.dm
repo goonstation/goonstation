@@ -443,6 +443,10 @@ var/list/radio_brains = list()
 				HAH.customization_second_color = HAH.customization_second_color_original
 				HAH.customization_third_color = HAH.customization_third_color_original
 				HAH.s_tone = HAH.s_tone_original
+				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
+					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
+					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
+					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)

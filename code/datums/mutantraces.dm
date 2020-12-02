@@ -344,9 +344,7 @@
 					AH.customization_third_color = fix_colors(AH.customization_third_color)
 
 				AH.s_tone_original = AH.s_tone
-				if(src.mutant_appearance_flags & HAS_NO_SKINTONE)
-					AH.s_tone = "#FFFFFF"
-				else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+				if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
 					AH.s_tone = AH.customization_first_color
 				else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
 					AH.s_tone = AH.customization_second_color
@@ -364,7 +362,12 @@
 
 				AH.UpdateMob()
 			if("reset")
+				var/still_should_have_this_funky_skintone = null // Hulk and such still require us to be a funky color
+				if(H.bioHolder.HasOneOfTheseEffects("hulk", "albinism", "blankman", "melanism", "achromia"))
+					still_should_have_this_funky_skintone = AH.s_tone
 				AH.CopyOther(src.origAH)
+				if(still_should_have_this_funky_skintone)
+					AH.s_tone = still_should_have_this_funky_skintone
 				AH.mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
 				AH.body_icon = 'icons/mob/human.dmi'
 				AH.mutant_race = null
@@ -737,7 +740,7 @@
 	icon_state = "lizard"
 	allow_fat = 1
 	override_attack = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE)
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"

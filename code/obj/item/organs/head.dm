@@ -154,6 +154,7 @@
 			else
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
+			src.name = "[src.donor_name]'s [src.organ_name]"
 
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
@@ -406,61 +407,61 @@
 
 			switch(mutant_race)	// then overwrite everything that's supposed to be different
 				if(HEAD_HUMAN)
-					src.name = "[src.donor_name]'s head"
+					src.organ_name = "head"
 
 				if(HEAD_MONKEY)
-					src.name = "[src.donor_name]'s monkey head"
+					src.organ_name = "monkey head"
 					src.desc = "The last thing a geneticist sees before they die."
 
 				if(HEAD_LIZARD)
-					src.name = "[src.donor_name]'s lizard head"
+					src.organ_name = "lizard head"
 					src.desc = "Well, sssshit."
 
 				if(HEAD_COW)
-					src.name = "[src.donor_name]'s cow head"
+					src.organ_name = "cow head"
 					src.desc = "They're not dead, they're just a really good roleplayer."
 
 				if(HEAD_WEREWOLF)
-					src.name = "[src.donor_name]'s wolf head"
+					src.organ_name = "wolf head"
 					src.desc = "Definitely not a good boy."
 					src.MAX_DAMAGE = 250	// Robust head for a robust antag
 					src.FAIL_DAMAGE = 240
 
 				if(HEAD_SKELETON)
-					src.name = "[src.donor_name]'s bony head"
+					src.organ_name = "bony head"
 					src.desc = "...does that skull have another skull inside it?"
 
 				if(HEAD_SEAMONKEY)
-					src.name = "[src.donor_name]'s seamonkey head"
+					src.organ_name = "seamonkey head"
 					src.desc = "The last thing an assistant sees when they fall into the trench. Aside from all the robots."
 
 				if(HEAD_CAT)
-					src.name = "[src.donor_name]'s cat head"
+					src.organ_name = "cat head"
 					src.desc = "Me-youch."
 
 				if(HEAD_ROACH)
-					src.name = "[src.donor_name]'s roach head"
+					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
 					src.made_from = "chitin"
 
 				if(HEAD_FROG)
-					src.name = "[src.donor_name]'s frog head"
+					src.organ_name = "frog head"
 					src.desc = "Croak."
 
 				if(HEAD_SHELTER)
-					src.name = "[src.donor_name]'s shelterfrog head"
+					src.organ_name = "shelterfrog head"
 					src.desc = "CroOoOoOooak."
 
 				if(HEAD_VAMPZOMBIE)
-					src.name = "[src.donor_name]'s zombie head"
+					src.organ_name = "zombie head"
 					src.desc = "Deader than undead."
 
 				if(HEAD_RELI)
-					src.name = "[src.donor_name]'s synthetic head"
+					src.organ_name = "synthetic head"
 					src.desc = "Half stone, half tofu, all unfinished."
 
 				if(HEAD_CHICKEN)
-					src.name = "[src.donor_name]'s chicken head"
+					src.organ_name = "chicken head"
 					src.desc = "Mike would be proud."
 
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be

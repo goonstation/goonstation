@@ -911,8 +911,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 							var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 							if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
 								limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
-							limb_pic.color = limb_skin_tone
-							src.body_standing.overlays += limb_pic
+							if(limb_pic)
+								limb_pic.color = limb_skin_tone
+								src.body_standing.overlays += limb_pic
 
 							var/hand_icon_s = limb.getHandIconState(0, src.decomp_stage)
 
@@ -985,8 +986,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									else
 										var/image/I = hand_icon_s
 										I.layer = MOB_LAYER_BASE
-										I.icon = handlimb_icon
-										I.icon_state = hand_icon_s
+										if(!limb.no_icon)
+											I.icon = handlimb_icon
+											I.icon_state = hand_icon_s
 										I.color = limb_skin_tone
 										src.hands_standing.layer = MOB_LAYER_BASE
 										src.hands_standing.overlays += I

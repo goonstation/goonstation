@@ -36,7 +36,7 @@
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
-				src.organ_color_1 = AHL.customization_first_color
+				src.organ_color_1 = AHL.s_tone
 				src.organ_color_2 = AHL.customization_second_color
 				src.donor_AH = AHL
 			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
