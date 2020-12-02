@@ -207,7 +207,7 @@ AI MODULES
 	lawNumber = 11
 
 	get_law_text()
-		return "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
+		return "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Department Emergency", "Which department's orders should be prioritized?", "security")

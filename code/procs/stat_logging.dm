@@ -234,6 +234,10 @@
 			if (ticker.centralized_ai_laws.zeroth)
 				laws["0"] = ticker.centralized_ai_laws.zeroth
 
+			for (var/i = 1, i <= ticker.centralized_ai_laws.default.len, i++)
+				if (ticker.centralized_ai_laws.default[i] != ticker.centralized_ai_laws.inherent[i])
+					laws["[i]"] = ticker.centralized_ai_laws.inherent[i]
+
 			var/list/suppliedLaws = ticker.centralized_ai_laws.supplied
 			var/count = 4
 			for (var/i = 1, i <= suppliedLaws.len, i++)
