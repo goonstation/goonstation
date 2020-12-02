@@ -39,6 +39,10 @@
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
 	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
 	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// If TRUE, it'll resist mutantraces trying to change them
+	var/limb_is_unnatural = FALSE
+	/// Limb is not attached to its original owner
+	var/limb_is_transplanted = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -289,7 +293,7 @@
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 
-		return
+		return TRUE
 
 	proc/surgery(var/obj/item/I) //placeholder
 		return
