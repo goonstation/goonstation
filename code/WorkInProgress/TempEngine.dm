@@ -37,6 +37,8 @@
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
+	var/target_pressure
+	var/target_pressure_enabled
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 	var/repairstate = 0
 	var/repair_desc = ""
@@ -44,11 +46,19 @@
 	anchored = 1.0
 	density = 1
 
+	var/datum/pump_ui/ui
+
+	initialize()
+		..()
+		ui = new/datum/pump_ui/circulator_ui(src)
+
 	New()
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
+		target_pressure = min_circ_pressure
+		target_pressure_enabled = FALSE
 
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
@@ -113,6 +123,8 @@
 			circulator_flags ^= LUBE_DRAIN_OPEN
 			open = circulator_flags & LUBE_DRAIN_OPEN
 			user.visible_message("<span class='notice'>[user] adjusts the [src] drain valve.</span>", "<span class='notice'>You [open ? "open" : "close"] the [src] drain valve.</span>")
+		else if(ispulsingtool(W))
+			ui.show_ui(user)
 		else
 			..()
 
@@ -120,6 +132,10 @@
 		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
 		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
 		var/fan_power_draw = 0
+		var/desired_pressure = 0
+
+		desired_pressure = src.min_circ_pressure
+		if(src.target_pressure_enabled) desired_pressure = src.target_pressure
 
 		if(!input_starting_pressure)
 			return null
@@ -132,8 +148,8 @@
 
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
-			if(input_starting_pressure < (output_starting_pressure+src.min_circ_pressure))
-				pressure_delta = src.min_circ_pressure
+			if(input_starting_pressure < (output_starting_pressure+desired_pressure))
+				pressure_delta = desired_pressure
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
@@ -284,6 +300,8 @@
 	process()
 		..()
 		src.lube_loss_check()
+		if(src.status & NOPOWER )	// Force off target pressure
+			src.target_pressure_enabled = FALSE
 		update_icon()
 
 	update_icon()
@@ -405,6 +423,35 @@
 			circ.repair_desc = ""
 			boutput(owner, "<span class='notice'>You finish welding the replacement lubrication system, the circulator is again in working condition.</span>")
 			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+
+datum/pump_ui/circulator_ui
+	value_name = "Target Transfer Pressure"
+	value_units = "Pa"
+	min_value = 0
+	max_value = 1e5
+	incr_sm = 10
+	incr_lg = 100
+	var/obj/machinery/atmospherics/binary/circulatorTemp/our_circ
+
+	New(obj/machinery/atmospherics/binary/circulatorTemp/C)
+		..()
+		src.our_circ = C
+		pump_name = "Blower Manual Override"
+
+	set_value(val)
+		our_circ.target_pressure = val
+
+	toggle_power()
+		our_circ.target_pressure_enabled = !our_circ.target_pressure_enabled
+
+	is_on()
+		return our_circ.target_pressure_enabled
+
+	get_value()
+		return our_circ.target_pressure
+
+	get_atom()
+		return our_circ
 
 
 /obj/machinery/power/monitor
