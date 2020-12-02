@@ -81314,7 +81314,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "sdx" = (
-/obj/decal/wreath,
+/obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "shS" = (

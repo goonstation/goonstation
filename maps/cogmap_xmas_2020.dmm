@@ -513,11 +513,17 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/decal/garland{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "abs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
+	},
+/obj/decal/garland{
+	dir = 8
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -1087,6 +1093,7 @@
 /area/station/hallway/secondary/entry)
 "acS" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "acT" = (
@@ -42554,6 +42561,7 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bJQ" = (
@@ -42587,17 +42595,14 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bJT" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/decal/garland{
+	dir = 4
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "bJU" = (
 /obj/cable{
 	d1 = 4;
@@ -48063,6 +48068,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "bUG" = (
@@ -48153,6 +48159,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bUU" = (
@@ -49945,6 +49952,9 @@
 	},
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
+/obj/decal/garland{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bYH" = (
@@ -50999,14 +51009,14 @@
 	},
 /area/station/mining/staff_room)
 "caU" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/mining/staff_room)
+/obj/decal/garland{
+	dir = 8
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/entry)
 "caV" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -52252,13 +52262,9 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "cdN" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/mining/staff_room)
+/obj/stocking,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/cafeteria)
 "cdO" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/cable,
@@ -55605,6 +55611,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "clf" = (
@@ -55753,6 +55760,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "clu" = (
@@ -56857,6 +56865,7 @@
 /area/station/hallway/secondary/exit)
 "cnL" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cnM" = (
@@ -63863,6 +63872,7 @@
 /obj/decal/poster/wallsign/stencil/right/r{
 	pixel_x = 17
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cCk" = (
@@ -63875,6 +63885,7 @@
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 9
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cCl" = (
@@ -65265,6 +65276,11 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"myR" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/refinery)
 "mKe" = (
 /obj/securearea,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -65367,6 +65383,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"nuX" = (
+/obj/grille/steel,
+/obj/window/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary{
+	name = "Tool Storage"
+	})
 "nvq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -93859,10 +93883,10 @@ bcX
 bdW
 beP
 aaa
+jJP
 bfN
 bfN
-bfN
-bfN
+jJP
 aah
 aaa
 aaa
@@ -94164,7 +94188,7 @@ aaa
 jJP
 bhs
 biz
-bfN
+jJP
 aah
 aaa
 blx
@@ -94466,7 +94490,7 @@ aaa
 jJP
 bgM
 biA
-bfN
+jJP
 bfN
 bfN
 blx
@@ -96577,7 +96601,7 @@ bdg
 bbd
 bbd
 bfN
-bfN
+jJP
 bht
 bgL
 hbr
@@ -96882,7 +96906,7 @@ bfO
 bgK
 bgL
 bgL
-bfN
+jJP
 bfN
 bfN
 bly
@@ -97184,7 +97208,7 @@ bfP
 bgL
 bgL
 bgL
-bfN
+jJP
 aah
 aaa
 bly
@@ -97791,13 +97815,13 @@ biA
 btI
 aah
 aaa
+cxx
 blz
 blz
 blz
 blz
 blz
-blz
-blz
+cxx
 aaa
 aah
 btI
@@ -98375,7 +98399,7 @@ aOa
 aOh
 aQd
 aQe
-aSe
+qTf
 aTc
 aUk
 aUk
@@ -98677,7 +98701,7 @@ aOa
 aOh
 aQe
 aQe
-aSe
+qTf
 aTd
 aUo
 aUk
@@ -98979,7 +99003,7 @@ aOa
 aOh
 aQf
 aQe
-aSe
+qTf
 aSe
 qTf
 aVC
@@ -98999,13 +99023,13 @@ biB
 bjE
 bfN
 bfN
-blz
+cxx
 bml
 bmQ
 boj
 boy
 bpa
-blz
+cxx
 bfN
 bfN
 bgL
@@ -104103,7 +104127,7 @@ ath
 aCS
 aEh
 aFy
-bUk
+jcw
 bUk
 aap
 acW
@@ -111015,7 +111039,7 @@ aaa
 aaa
 aaa
 aag
-ajU
+aGU
 ajU
 ajU
 ajU
@@ -111921,7 +111945,7 @@ aaP
 gcg
 aak
 aaq
-ajU
+aGU
 abr
 ajU
 ajU
@@ -112642,7 +112666,7 @@ chk
 cjL
 cmC
 cqb
-cdu
+kVW
 cdu
 cdu
 cdu
@@ -112944,7 +112968,7 @@ chU
 cjL
 cmE
 kVW
-cdu
+kVW
 coW
 coW
 coW
@@ -114036,7 +114060,7 @@ nvq
 aaW
 niO
 niO
-abs
+bJT
 niO
 fhL
 aaa
@@ -114056,7 +114080,7 @@ alc
 amb
 akb
 aon
-apw
+cdN
 aqP
 ash
 atz
@@ -114337,8 +114361,8 @@ aaP
 fhL
 aak
 aaw
-ajU
-abr
+aGU
+caU
 ajU
 ajU
 ajU
@@ -115243,7 +115267,7 @@ aaa
 aaa
 aaa
 aag
-ajU
+aGU
 ajU
 ajU
 ajU
@@ -115360,7 +115384,7 @@ ciw
 cjL
 cpb
 kVW
-cdu
+kVW
 coW
 coW
 coW
@@ -115662,7 +115686,7 @@ cix
 cjL
 cpc
 cqc
-cdu
+kVW
 cdu
 cdu
 cdu
@@ -120781,7 +120805,7 @@ bPh
 bQw
 bRX
 bTv
-bAV
+aoG
 bWb
 bXf
 bYB
@@ -121003,7 +121027,7 @@ apS
 bLI
 arc
 arq
-ara
+nuX
 asB
 atM
 ava
@@ -121305,7 +121329,7 @@ avH
 bLI
 arc
 arq
-ara
+nuX
 asC
 atM
 avb
@@ -124699,7 +124723,7 @@ lUc
 bGY
 bHP
 bIM
-bJT
+oRk
 bLa
 bMD
 bNZ
@@ -125327,7 +125351,7 @@ cki
 bUZ
 bXn
 cnY
-caU
+wxI
 aaG
 aaa
 csk
@@ -125629,7 +125653,7 @@ cki
 bUZ
 cmR
 cnZ
-cdN
+fwp
 aaG
 aaa
 csk
@@ -126438,7 +126462,7 @@ aaa
 aaa
 aaa
 aag
-avj
+sKB
 arl
 asK
 atW
@@ -126451,7 +126475,7 @@ avg
 wKg
 asK
 arl
-avj
+sKB
 aaG
 aaa
 aaa
@@ -126739,8 +126763,8 @@ aaa
 aaa
 aaa
 aaa
-avj
-avj
+sKB
+sKB
 arm
 arn
 atX
@@ -126753,8 +126777,8 @@ avj
 aDF
 arn
 arm
-avj
-avj
+sKB
+sKB
 aaa
 aaa
 aaa
@@ -128853,8 +128877,8 @@ aaa
 aaa
 aaa
 aaa
-avj
-avj
+sKB
+sKB
 arn
 arn
 arn
@@ -128867,8 +128891,8 @@ avl
 arn
 arn
 arn
-avj
-avj
+sKB
+sKB
 aaa
 aaa
 aaa
@@ -129156,7 +129180,7 @@ aaa
 aaa
 aaa
 aag
-avj
+sKB
 aro
 asL
 arn
@@ -129169,7 +129193,7 @@ arn
 arn
 asL
 aGq
-avj
+sKB
 aaG
 aaa
 aaa
@@ -130761,7 +130785,7 @@ hqQ
 cea
 cea
 clI
-bWn
+myR
 aaa
 aaa
 aaa
@@ -131050,7 +131074,7 @@ aaa
 aaa
 aaa
 aaa
-bWn
+myR
 bzQ
 bzR
 bXr
@@ -131063,7 +131087,7 @@ bCt
 cea
 bDF
 cea
-bWn
+myR
 aaa
 aaa
 aaa
@@ -131352,7 +131376,7 @@ aaa
 aaa
 aaa
 aaa
-bWn
+myR
 bXr
 bXr
 cab
@@ -131365,7 +131389,7 @@ bAM
 bDg
 bEq
 bEw
-bWn
+myR
 aaa
 aaa
 aaa
@@ -131654,7 +131678,7 @@ aaa
 aaa
 aaa
 aaa
-bWn
+myR
 bXr
 bXr
 bXr
@@ -131667,7 +131691,7 @@ bAM
 cea
 bEs
 cea
-bWn
+myR
 aaa
 aaa
 aaa
@@ -131956,7 +131980,7 @@ aaa
 aaa
 aaa
 aaa
-bWn
+myR
 bXr
 bXr
 bXr
@@ -131969,7 +131993,7 @@ bAM
 cea
 cea
 clJ
-bWn
+myR
 aaa
 aaa
 aaa
@@ -132271,7 +132295,7 @@ bAM
 ciV
 ckm
 clK
-bWn
+myR
 aaa
 aaa
 aaa
