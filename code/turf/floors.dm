@@ -1606,13 +1606,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon = 'icons/misc/racing.dmi';\
 	icon_state = "rainbow_road")
-
-DEFINE_FLOORS_SIMMED_UNSIMMED(racing/track,
-	icon = 'icons/misc/racing.dmi';\
-	icon_state = "track")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 
