@@ -48,12 +48,11 @@
 			return ..()
 
 		//shivering status chance
-		if (owner.bodytemperature < owner.base_body_temp - (owner.temp_tolerance * 2) && !owner.is_cold_resistant())
-			var/adjusted = (owner.bodytemperature + owner.temp_tolerance)
-			var/diff = min(adjusted - owner.base_body_temp,0)
-			var/from_zero = (owner.base_body_temp - T0C)
-			var/chance = round(-(diff/((from_zero*6)+1))*100)
-			chance = min(chance,100)
+		if (owner.bodytemperature + temp_tolerance < owner.base_body_temp && !owner.is_cold_resistant())
+			var/diff = owner.base_body_temp - (owner.bodytemperature + owner.temp_tolerance)
+			var/scaling_factor = max((owner.base_body_temp - T0C)*6,1)
+			var/chance = round((diff/scaling_factor)*100)
+			chance = clamp(chance,0,100)
 			if(prob(chance))
 				owner.setStatus("shivering", 4 SECONDS)
 
