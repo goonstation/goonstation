@@ -33,6 +33,7 @@
 	var/static/list/circulator_preferred_reagents
 	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
 	var/reagents_consumed = 0.5 //amount of reagents consumed
+	var/variant_description
 	var/lube_boost = 1.0
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
@@ -75,6 +76,11 @@
 		..()
 
 	get_desc(dist, mob/user)
+
+		if((variant_description || generator.variant_description) && user.traitHolder.hasTrait("training_engineer") )
+			. += variant_description
+			. += generator.variant_description
+			. += "The instruction manual should have more information."
 		if(dist <= 5)
 			. += "[repair_desc]"
 			. += "<br><span class='notice'>The maintenance panel is [src.is_open_container() ? "open" : "closed"].</span>"
@@ -93,21 +99,21 @@
 			switch(repairstate)
 				if(1)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(2)
 					if (istool(W, TOOL_PRYING))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(3)
 					if (istype(W, /obj/item/rods))
 						var/obj/item/rods/S = W
 						if (S.amount >= 5)
-							actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(4)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 
 		if(isscrewingtool(W))
@@ -337,8 +343,8 @@
 	name = "cold gas circulator"
 
 
-/datum/action/bar/icon/teg_circulator_fix
-	id = "teg_circulator_fix1"
+/datum/action/bar/icon/teg_circulator_repair
+	id = "teg_circulator_repair1"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -482,6 +488,7 @@ datum/pump_ui/circulator_ui
 	var/datum/light/light
 	var/variant_a = null
 	var/variant_b = null
+	var/variant_description
 	var/conductor_temp = T20C
 
 	var/boost = 0
@@ -528,13 +535,16 @@ datum/pump_ui/circulator_ui
 			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
 				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</i><br>"}
+				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be for extremely high temperatures. "
 			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
 				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</i><br>"}
+				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be designed for cooler temperatures. "
 			else
 				// Reassign variant_b to null so unsupported variants aren't shown to players
 				// to avoid confusion
 				src.variant_b = null
+				variant_description = null
 
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
