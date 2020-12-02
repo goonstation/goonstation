@@ -200,13 +200,6 @@
 		if (has_aH)
 			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
 				skin_tone = "#FFFFFF"
-			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
-				if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
-					skin_tone = AHLIMB.customization_first_color
-				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
-					skin_tone = AHLIMB.customization_second_color
-				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
-					skin_tone = AHLIMB.customization_third_color
 			else
 				skin_tone = AHLIMB.s_tone
 		else	// This is going to look *weird* if these somehow spawn on a mob

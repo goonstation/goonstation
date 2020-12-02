@@ -914,6 +914,7 @@ var/list/fun_images = list()
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.JobEquipSpawned("Staff Assistant", 1)
+	H.update_colorful_parts()
 
 
 /client/proc/respawn_as_self()
@@ -942,6 +943,7 @@ var/list/fun_images = list()
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+	H.update_colorful_parts()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
