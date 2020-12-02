@@ -11044,6 +11044,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/wrapping_paper,
 /obj/item/scissors,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -11051,10 +11052,10 @@
 /area/station/crew_quarters/cafeteria)
 "ayO" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/cakehat,
 /obj/window/reinforced{
 	dir = 2
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
