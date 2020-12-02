@@ -1,4 +1,9 @@
 
+(t)wed dec 02 20
+(u)UrsulaMajor
+(p)2909
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Replaced cold slowdown with "shivering" status; click yourself with help intent to reduce it!
 (t)tue dec 01 20
 (u)Carbadox
 (p)2899
