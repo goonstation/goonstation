@@ -56,8 +56,7 @@ var/datum/event_controller/random_events
 
 	proc/process()
 		if (emergency_shuttle.location > SHUTTLE_LOC_STATION)
-			// you have 60 seconds to respond if you want to be a ghost frog
-			// also the server is rebooting in 10 seconds
+			// prevent random events near round end
 			return
 
 		if (TIME >= major_events_begin)
