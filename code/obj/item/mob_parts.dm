@@ -225,6 +225,13 @@
 			if(!surgeryCheck(attachee, attacher))
 				return
 
+		if(src.fits_monkey && !ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
+			return ..()
+		else if (!src.fits_monkey && ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
+			return ..()
+
 		if(!both_legs)
 			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
 				return ..()
@@ -243,13 +250,6 @@
 
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
-
-		if(src.fits_monkey && !ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
-			return ..()
-		else if (!src.fits_monkey && ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
-			return ..()
 
 		src.holder = attachee
 		attacher.remove_item(src)
