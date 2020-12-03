@@ -57,7 +57,7 @@
 
 	Entered(atom/movable/O)
 		..()
-		if(src.deadly && !O.anchored)
+		if(src.deadly && O.anchored != 2)
 			if (istype(O, /obj/critter) && O:flying)
 				return
 
