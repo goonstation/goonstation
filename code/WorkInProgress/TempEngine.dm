@@ -274,13 +274,13 @@
 
 
 	proc/lube_loss_check()
-		if(reagents?.total_volume == 0) return
+		if(src.reagents?.total_volume == 0) return
 
-		if( circulator_flags & LUBE_DRAIN_OPEN )
+		if( src.circulator_flags & LUBE_DRAIN_OPEN )
 			var/datum/reagents/leaked = src.reagents.remove_any_to(reagents.maximum_volume * 0.25)
 			leaked.reaction(get_step(src, SOUTH))
 
-		if(!(circulator_flags & LEAKS_LUBE) || !reagents_consumed || !is_circulator_active() )
+		if(!(src.circulator_flags & LEAKS_LUBE) || !src.reagents_consumed || !src.is_circulator_active() )
 			return
 
 		// Skip off cycle consumption checks
@@ -288,8 +288,9 @@
 
 		if(lube_cycle <= 0)
 			src.lube_cycle = src.lube_cycle_duration
-			if( (circulator_flags & LEAKS_LUBE) && prob(20) )
-				var/datum/reagents/leaked = src.reagents.remove_any_to(reagents_consumed)
+			if( (src.circulator_flags & LEAKS_LUBE) && prob(80) )
+				playsound(get_turf(src), "sound/effects/spray.ogg", 40, 1)
+				var/datum/reagents/leaked = src.reagents.remove_any_to(src.reagents_consumed)
 				leaked.reaction(get_step(src, pick(alldirs)))
 
 	// Calculate an adjusted average reagent viscosity to determine boost for lube efficiency.
