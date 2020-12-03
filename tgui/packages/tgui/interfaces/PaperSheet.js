@@ -244,7 +244,7 @@ export const PaperSheetView = (props, context) => {
       className="paper__page"
       position="relative"
       backgroundColor={backgroundColor}
-      width={"100%"}
+      width="100%"
       height={"100%"} >
       <Box
         className="Paper__Page"
@@ -298,21 +298,21 @@ class PaperSheetStamper extends Component {
       rotating = true;
     }
 
-    if (document.getElementById("stamp"))
+    const stamp = document.getElementById("stamp");
+    if (stamp)
     {
-      const stamp = document.getElementById("stamp");
       const stampHeight = stamp.clientHeight;
       const stampWidth = stamp.clientWidth;
 
-      const currentHeight = rotating ? this.state.y : e.pageY
-      - windowRef.scrollTop - stampHeight;
+      const currentHeight = rotating
+          ? this.state.y
+          : e.pageY - windowRef.scrollTop - stampHeight;
       const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
 
       const widthMin = 0;
       const heightMin = 0;
 
-      const widthMax = (windowRef.clientWidth) - (
-        stampWidth);
+      const widthMax = windowRef.clientWidth - stampWidth;
       const heightMax = (windowRef.clientHeight - windowRef.scrollTop) - (
         stampHeight);
 
@@ -321,7 +321,8 @@ class PaperSheetStamper extends Component {
         e.pageY - currentHeight
       );
 
-      const rotate = rotating ? (radians * (180 / Math.PI) * -1)
+      const rotate = rotating
+        ? radians * (180 / Math.PI) * -1
         : this.state.rotate;
 
       const pos = [

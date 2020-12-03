@@ -197,7 +197,7 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/item/paper/ui_act(action, params,datum/tgui/ui)
+/obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
