@@ -271,14 +271,6 @@
 		..()
 		reagents.add_reagent("oil", 60)
 
-
-/obj/item/reagent_containers/glass/oilcan/borg
-	desc = "Contains oil intended for use by cyborgs and robots."
-	initial_volume = 60
-	incompatible_with_chem_dispensers = 1
-	amount_per_transfer_from_this = 5
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-
 /*
 Jucier container.
 By: SARazage
