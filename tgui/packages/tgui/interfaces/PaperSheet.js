@@ -199,25 +199,22 @@ const Stamp = (props, context) => {
     'opacity': opacity || 1.0,
   };
   return (
-    <Fragment>
-      {stampAssetType.match("stamp-sprite-.*") ? (
-        <Box
-          id={active_stamp && "stamp"}
-          style={stamp_transform}
-          className="paper__stamp-text">
-          {image.sprite}
-        </Box>
-      )
-      :
-      (
+    stampAssetType.match("stamp-sprite-.*") ? (
+      <Box
+        id={active_stamp && "stamp"}
+        style={stamp_transform}
+        className="paper__stamp-text">
+        {image.sprite}
+      </Box>
+    )
+      : (
         <img
           id={active_stamp && "stamp"}
           style={stamp_transform}
           className="paper__stamp"
           src={resolveAsset(image.sprite)}
         />
-      )}
-    </Fragment>
+      )
   );
 };
 
