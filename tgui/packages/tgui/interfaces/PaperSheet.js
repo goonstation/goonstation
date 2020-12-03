@@ -209,11 +209,11 @@ const Stamp = (props, context) => {
     )
       : (
         <Box
-        id={active_stamp && "stamp"}
-        style={stamp_transform}
-        className="paper__stamp-text">
-        {image.sprite}
-      </Box>
+          id={active_stamp && "stamp"}
+          style={stamp_transform}
+          className="paper__stamp-text">
+          {image.sprite}
+        </Box>
       )
   );
 };
@@ -305,8 +305,8 @@ class PaperSheetStamper extends Component {
       const stampWidth = stamp.clientWidth;
 
       const currentHeight = rotating
-          ? this.state.y
-          : e.pageY - windowRef.scrollTop - stampHeight;
+        ? this.state.y
+        : e.pageY - windowRef.scrollTop - stampHeight;
       const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
 
       const widthMin = 0;
