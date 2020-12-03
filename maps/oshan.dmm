@@ -2422,7 +2422,12 @@
 /area/station/hydroponics/bay)
 "aeW" = (
 /obj/machinery/light/incandescent/harsh,
-/obj/shrub,
+/obj/table/reinforced/auto,
+/obj/mug_rack{
+	pixel_x = 29;
+	pixel_y = 3
+	},
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -3940,7 +3945,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "aiv" = (
-/obj/vehicle/segway,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/medbay,
+/obj/mug_rack{
+	pixel_x = -28;
+	pixel_y = 3
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "aiw" = (
@@ -6212,6 +6222,7 @@
 /area/station/medical/medbay)
 "anu" = (
 /obj/machinery/light/incandescent/cool,
+/obj/vehicle/segway,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "anv" = (
@@ -9295,26 +9306,17 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "auD" = (
-/obj/table/glass/auto,
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 5;
-	pixel_y = 14
-	},
-/obj/item/decoration/ashtray{
-	pixel_x = -6
-	},
-/obj/item/clothing/mask/cigarette/propuffs{
-	pixel_x = -7;
-	pixel_y = 14
-	},
 /obj/machinery/light/incandescent/greenish,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/mug_rack{
+	pixel_x = 29;
+	pixel_y = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
@@ -9861,13 +9863,28 @@
 /area/station/crew_quarters/lounge)
 "avQ" = (
 /obj/machinery/light_switch/auto,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avR" = (
-/obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = -6
+	},
+/obj/item/clothing/mask/cigarette/propuffs{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "avS" = (
@@ -16153,6 +16170,12 @@
 /area/station/storage/tech)
 "aKq" = (
 /obj/machinery/light/incandescent/warm/very,
+/obj/mug_rack{
+	pixel_x = 28;
+	pixel_y = 3
+	},
+/obj/table/round,
+/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKr" = (
@@ -32462,6 +32485,11 @@
 /area/station/hallway/secondary/exit)
 "byr" = (
 /obj/machinery/light/incandescent/warm,
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/mug_rack{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bys" = (
@@ -40927,7 +40955,11 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bSU" = (
-/obj/machinery/vending/coffee,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/security,
+/obj/mug_rack{
+	pixel_y = 30
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bSV" = (
@@ -47611,16 +47643,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"hbh" = (
-/turf/simulated/floor/escape/corner{
-	dir = 8
-	},
-/area/station/hallway/secondary/exit)
-"ikm" = (
-/turf/simulated/floor/escape/corner{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47633,6 +47655,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"hbh" = (
+/turf/simulated/floor/escape/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"ikm" = (
+/turf/simulated/floor/escape/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -47865,24 +47897,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"vqP" = (
-/turf/simulated/floor/escape/corner,
-/area/station/hallway/secondary/exit)
-"vNf" = (
-/obj/item/storage/wall/emergency{
-	dir = 4;
-	pixel_x = -31
-	},
-/turf/simulated/floor/escape{
-	dir = 10
-	},
-/area/station/hallway/secondary/exit)
 "vcb" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"viE" = (
+/obj/table/wood/auto,
+/obj/machinery/coffeemaker,
+/obj/mug_rack{
+	pixel_y = 30
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
+"vqP" = (
+/turf/simulated/floor/escape/corner,
+/area/station/hallway/secondary/exit)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
@@ -47899,6 +47930,15 @@
 	dir = 1
 	},
 /area/station/ai_monitored/armory)
+"vNf" = (
+/obj/item/storage/wall/emergency{
+	dir = 4;
+	pixel_x = -31
+	},
+/turf/simulated/floor/escape{
+	dir = 10
+	},
+/area/station/hallway/secondary/exit)
 "wis" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
@@ -106704,7 +106744,7 @@ bzt
 bkr
 abI
 bge
-aON
+viE
 aON
 bmf
 aAy
