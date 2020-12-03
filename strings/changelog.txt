@@ -1,5 +1,9 @@
 
 (t)thu dec 03 20
+(u)BenLubar
+(p)2905
+(e)⚖|balance
+(+)Random events no longer occur once the shuttle departs from the station or the round ends.
 (u)Kubius
 (p)2889
 (e)🆕🗺|feature, mapping
