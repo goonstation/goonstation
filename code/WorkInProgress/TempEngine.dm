@@ -77,7 +77,7 @@
 
 	get_desc(dist, mob/user)
 
-		if((variant_description || generator.variant_description) && user.traitHolder.hasTrait("training_engineer") )
+		if(variant_description || generator.variant_description)
 			. += variant_description
 			. += generator.variant_description
 			. += "The instruction manual should have more information."
