@@ -85,7 +85,7 @@
 		make_cleanable( /obj/decal/cleanable/fungus,src)
 
 // Made this a proc to avoid duplicate code (Convair880).
-/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
 		return
 
@@ -107,18 +107,19 @@
 	if (!dir)
 		return //..(parts, user)
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 40))
+			user.show_text("You were interrupted!", "red")
+			return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
-		return
+		if (!parts) //ZeWaka: Fix for null.fixture_type
+			return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+		// if they didn't move, put it up
+		boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(source)
 	newlight.set_dir(dir)
