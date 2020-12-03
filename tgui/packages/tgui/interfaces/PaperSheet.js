@@ -200,20 +200,20 @@ const Stamp = (props, context) => {
   };
   return (
     stampAssetType.match("stamp-sprite-.*") ? (
-      <Box
+      <img
+        id={active_stamp && "stamp"}
+        style={stamp_transform}
+        className="paper__stamp"
+        src={resolveAsset(image.sprite)}
+      />
+    )
+      : (
+        <Box
         id={active_stamp && "stamp"}
         style={stamp_transform}
         className="paper__stamp-text">
         {image.sprite}
       </Box>
-    )
-      : (
-        <img
-          id={active_stamp && "stamp"}
-          style={stamp_transform}
-          className="paper__stamp"
-          src={resolveAsset(image.sprite)}
-        />
       )
   );
 };
