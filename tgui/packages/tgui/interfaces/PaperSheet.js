@@ -243,7 +243,7 @@ export const PaperSheetView = (props, context) => {
       className="paper__page"
       position="relative"
       backgroundColor={backgroundColor}
-      width={"100%"}
+      width="100%"
       height={"100%"} >
       <Box
         className="Paper__Page"
