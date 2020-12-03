@@ -39,6 +39,10 @@
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
 	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
 	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// If TRUE, it'll resist mutantraces trying to change them
+	var/limb_is_unnatural = FALSE
+	/// Limb is not attached to its original owner
+	var/limb_is_transplanted = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -221,6 +225,13 @@
 			if(!surgeryCheck(attachee, attacher))
 				return
 
+		if(src.fits_monkey && !ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
+			return ..()
+		else if (!src.fits_monkey && ismonkey(attachee))
+			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
+			return ..()
+
 		if(!both_legs)
 			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
 				return ..()
@@ -239,13 +250,6 @@
 
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
-
-		if(src.fits_monkey && !ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
-			return ..()
-		else if (!src.fits_monkey && ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
-			return ..()
 
 		src.holder = attachee
 		attacher.remove_item(src)
@@ -289,7 +293,7 @@
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 
-		return
+		return TRUE
 
 	proc/surgery(var/obj/item/I) //placeholder
 		return

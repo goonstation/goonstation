@@ -1335,10 +1335,10 @@
 	if (attacher.zone_sel.selecting == "l_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
 		attachee.limbs.l_arm = new_arm
-	else
+	else if (attacher.zone_sel.selecting == "r_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
 		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows
+	if (!new_arm) return //who knows - or they aren't targetting an arm!
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)

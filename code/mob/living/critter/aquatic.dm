@@ -85,6 +85,10 @@
 	. = ..()
 	src.update_water_status()
 
+/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
+	. = ..()
+	src.update_water_status()
+
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
 	src.update_water_status()

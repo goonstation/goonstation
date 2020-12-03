@@ -13394,10 +13394,10 @@
 /area/station/crew_quarters/kitchen)
 "aDF" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/cakehat,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple2"
@@ -13934,6 +13934,7 @@
 /obj/item/wrapping_paper,
 /obj/item/wrapping_paper,
 /obj/item/scissors,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple2"
@@ -81314,7 +81315,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "sdx" = (
-/obj/decal/wreath,
+/obj/stocking,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "shS" = (

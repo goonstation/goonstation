@@ -392,7 +392,7 @@
 			if("set")
 				//////////////ARMS//////////////////
 				if (src.r_limb_arm_type_mutantrace)
-					if (L.limbs.r_arm || src.ignore_missing_limbs == 1)
+					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/arm/limb = new src.r_limb_arm_type_mutantrace(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
@@ -402,7 +402,7 @@
 							limb.remove_stage = 0
 
 				if (src.l_limb_arm_type_mutantrace)
-					if (L.limbs.l_arm || src.ignore_missing_limbs == 1)
+					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/arm/limb = new src.l_limb_arm_type_mutantrace(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
@@ -413,7 +413,7 @@
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
-					if (L.limbs.r_leg || src.ignore_missing_limbs == 1)
+					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
@@ -423,7 +423,7 @@
 							limb.remove_stage = 0
 
 				if (src.l_limb_leg_type_mutantrace)
-					if (L.limbs.l_leg || src.ignore_missing_limbs == 1)
+					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new src.l_limb_leg_type_mutantrace(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
@@ -434,12 +434,12 @@
 
 				//////////////HEAD//////////////////
 				if (src.special_head)
-					L.organHolder.head.MakeMutantHead(src.special_head, src.mutant_folder, src.special_head_state)
+					L.organHolder?.head?.MakeMutantHead(src.special_head, src.mutant_folder, src.special_head_state)
 
 			if ("reset")
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
-					if (L.limbs.r_arm || src.ignore_missing_limbs == 1)
+					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
@@ -449,7 +449,7 @@
 							limb.remove_stage = 0
 
 				if (src.l_limb_arm_type_mutantrace)
-					if (L.limbs.l_arm || src.ignore_missing_limbs == 1)
+					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
@@ -460,7 +460,7 @@
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
-					if (L.limbs.r_leg || src.ignore_missing_limbs == 1)
+					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
@@ -470,7 +470,7 @@
 							limb.remove_stage = 0
 
 				if (src.l_limb_leg_type_mutantrace)
-					if (L.limbs.l_leg || src.ignore_missing_limbs == 1)
+					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
@@ -479,7 +479,7 @@
 							limb.holder = L
 							limb.remove_stage = 0
 				//////////////HEAD//////////////////
-				L.organHolder.head.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
+				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
 
 	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
 		if(!ishuman(O) || !(O?.organHolder))
@@ -794,7 +794,7 @@
 /datum/mutantrace/zombie
 	name = "zombie"
 	icon_state = "zombie"
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = 1
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
@@ -968,7 +968,7 @@
 /datum/mutantrace/vamp_zombie
 	name = "vampiric zombie"
 	icon_state = "vamp_zombie"
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vamp_zombie/right
@@ -1045,7 +1045,7 @@
 	icon_state = "skeleton"
 	voice_override = "skelly"
 	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
@@ -1183,7 +1183,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 0
 	var/old_client_color = null
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
@@ -1360,7 +1360,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
@@ -1662,7 +1662,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1695,7 +1695,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1737,7 +1737,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 
 	say_verb()
@@ -1806,7 +1806,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 
 	New()
