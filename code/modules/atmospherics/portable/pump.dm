@@ -171,7 +171,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 		on = 1
 		update_icon()
 
-	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrifically and violently!</b></span>")
+	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
