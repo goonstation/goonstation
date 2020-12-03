@@ -3,7 +3,7 @@
 //
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
-#define LUBE_CHECK_RATE 5
+#define BASE_LUBE_CHECK_RATE 5
 
 // Circulator variants
 /// no backflow
@@ -30,16 +30,17 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-	var/static/list/circulator_preferred_reagents
-	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
-	var/reagents_consumed = 0.5 //amount of reagents consumed
+	var/static/list/circulator_preferred_reagents // white list of prefferred reagents where viscocity should be ignored for special value
+	var/lube_cycle = 0 // current state in cycle
+	var/lube_cycle_duration = BASE_LUBE_CHECK_RATE //rate at which reagents are adjusted for leaks/consumption in atmos machinery processes
+	var/reagents_consumed = 0 //amount of reagents consumed by active leak or variant
 	var/variant_description
 	var/lube_boost = 1.0
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
-	var/target_pressure
-	var/target_pressure_enabled
+	var/target_pressure	// crew entered desired pressure for inlet to outlet
+	var/target_pressure_enabled	// crew desired pressure is active
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 	var/repairstate = 0
 	var/repair_desc = ""
@@ -205,8 +206,11 @@
 			&& ( src.reagents.has_reagent("pacid", 10)					\
 		    || src.reagents.has_reagent("clacid", 10)					\
 		    || src.reagents.has_reagent("nitric_acid", 10))		\
-		  && prob(2))
+		  && prob(10))
 			src.circulator_flags |= LEAKS_LUBE
+			// Circulator system has been damaged and will leak 1/5th the contents
+			src.reagents_consumed = src.reagents.maximum_volume / 5
+			src.lube_cycle_duration = 1
 			src.repairstate = 1
 			if(src.is_open_container() && src.reagents.total_volume )
 				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
@@ -283,11 +287,13 @@
 		if(src.lube_cycle-- > 0) return
 
 		if(lube_cycle <= 0)
-			src.lube_cycle = LUBE_CHECK_RATE
-			if( (circulator_flags & LEAKS_LUBE) && prob(5) )
+			src.lube_cycle = src.lube_cycle_duration
+			if( (circulator_flags & LEAKS_LUBE) && prob(20) )
 				var/datum/reagents/leaked = src.reagents.remove_any_to(reagents_consumed)
 				leaked.reaction(get_step(src, pick(alldirs)))
 
+	// Calculate an adjusted average reagent viscosity to determine boost for lube efficiency.
+	// Viscosity value is inconsistant in some cases so a white list is used to ensure high performance of specific reagents.
 	on_reagent_change(add)
 		. = ..()
 		var/lube_efficiency = 0.0
@@ -429,6 +435,8 @@
 		if (circ.repairstate == 4)
 			circ.repairstate = 0
 			circ.circulator_flags ^= LEAKS_LUBE
+			circ.reagents_consumed = initial(circ.reagents_consumed)
+			circ.lube_cycle_duration = initial(circ.lube_cycle_duration)
 			circ.repair_desc = ""
 			boutput(owner, "<span class='notice'>You finish welding the replacement lubrication system, the circulator is again in working condition.</span>")
 			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
@@ -1261,7 +1269,7 @@ datum/pump_ui/circulator_ui
 #undef PUMP_POWERLEVEL_5
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
-#undef LUBE_CHECK_RATE
+#undef BASE_LUBE_CHECK_RATE
 #undef BACKFLOW_PROTECTION
 #undef LEAKS_GAS
 #undef LEAKS_LUBE
