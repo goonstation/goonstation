@@ -301,37 +301,6 @@
 		cooldown = 40
 		reload_time = 300
 
-	minigun
-		proj = new/datum/projectile/energybolt/reliquary_burst
-		shots = 1
-		current_shots = 1
-		cooldown = 4
-		reload_time = 4
-
-		attack_range(atom/target, var/mob/user, params)
-			if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
-				boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
-				return
-			else if (current_shots <= 0)
-				current_shots = shots
-			if (next_shot_at > ticker.round_elapsed_ticks)
-				return
-			if (current_shots > 0)
-				current_shots--
-				var/pox = text2num(params["icon-x"]) - 16
-				var/poy = text2num(params["icon-y"]) - 16
-				var/spread_angle = 15
-				playsound(user.loc, "sound/misc/reliquary/Rel-vortex-firing.ogg", 70, 1)
-				flick("guardian_gunlift", user)
-				user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
-				next_shot_at = ticker.round_elapsed_ticks + cooldown
-				SPAWN_DBG (3)
-					shoot_projectile_ST_pixel_spread(user, proj, target, pox, poy, spread_angle)
-				if (!current_shots)
-					reloaded_at = ticker.round_elapsed_ticks + reload_time
-			else
-				reloaded_at = ticker.round_elapsed_ticks + reload_time
-
 	spike
 		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
 		shots = 1

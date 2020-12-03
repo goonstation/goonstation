@@ -145,7 +145,7 @@ var/datum/artifact_controller/artifact_controls
 			src.log_me(usr, null, "spawns", 0)
 
 		else if (href_list["Spawntype"])
-			spawner_type = input("What type of artifact?","Artifact Controls") as null|anything in list("ancient","martian","wizard","eldritch","precursor","reliquary")//,"bee","void","lattice","feather")
+			spawner_type = input("What type of artifact?","Artifact Controls") as null|anything in list("ancient","martian","wizard","eldritch","precursor")//,"bee","void","lattice","feather")
 
 		else if (href_list["Spawncine"])
 			spawner_cine = !spawner_cine
@@ -413,30 +413,4 @@ var/datum/artifact_controller/artifact_controls
 	max_sprites = 6
 
 
-/datum/artifact_origin/reliquary
-	name = "reliquary"
-	fault_types = list(/datum/artifact_fault/burn,/datum/artifact_fault/irradiate,/datum/artifact_fault/shutdown,
-	/datum/artifact_fault/murder,/datum/artifact_fault/zap)
-	activation_sounds = list('sound/misc/reliquary/artifact/Rel-artifact-activation.ogg')
-	instrument_sounds = list("sound/misc/reliquary/artifact/Rel-artifact-instrument1.ogg",
-		"sound/misc/reliquary/artifact/Rel-artifact-instrument2.ogg",
-		"sound/misc/reliquary/artifact/Rel-artifact-instrument3.ogg",
-		"sound/misc/reliquary/artifact/Rel-artifact-instrument4.ogg",
-		"sound/misc/reliquary/artifact/Rel-artifact-instrument5.ogg")
-	impact_reaction_one = 1
-	impact_reaction_two = 0.5
-	heat_reaction_one = 1.5
-	max_sprites = 4
-	fx_red_min = null
-	fx_red_max = null
-	fx_green_min = null
-	fx_green_max = null
-	fx_blue_min = null
-	fx_blue_max = null
-	nofx = 1
-	scramblechance = 0
-	adjectives = list("dark","cold","smooth","angular","humming","sharp-edged","droning")
-	nouns_large = list("monolith","slab","obelisk","pylon","menhir","machine","structure")
-	nouns_small = list("implement","device","instrument","apparatus","appliance","mechanism","tool")
-	touch_descriptors = list("It feels cold.","It feels smooth.","Touching it makes you feel uneasy.")
 */

@@ -14,7 +14,6 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"carbon",\
 	"ash",\
 	"blackpowder",\
-	"reliquary_blood",\
 	"leaves",\
 	"poo",\
 )
@@ -809,8 +808,8 @@ var/mutable_appearance/fluid_ma
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "reliquary_blood")
-		if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "reliquary_blood")
+	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
+		if (F.group.master_reagent_id == "blood")
 			//if (ishuman(M))
 			if (src.lying)
 				if (src.wear_suit)

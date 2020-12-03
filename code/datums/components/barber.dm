@@ -401,13 +401,6 @@
 				return 0
 			if("kudzu")
 				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
-			if("reliquary_soldier")
-				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s robot cyborg mechanical metal... head?")
-				return 0
 			if("cow")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)
