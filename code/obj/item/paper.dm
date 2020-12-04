@@ -1063,7 +1063,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
 
 /obj/item/stamp
-	name = "Rubber Stamp"
+	name = "rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
@@ -1150,91 +1150,91 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/stamp // static staff stamps
 	cap
-		name = "Captain's Rubber Stamp"
+		name = "\improper captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents."
 		icon_state = "stamp-cap"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
 	hop
-		name = "Head of Personnel's Rubber Stamp"
+		name = "\improper head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents."
 		icon_state = "stamp-hop"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
 	hos
-		name = "Head of Security's Rubber Stamp"
+		name = "\improper head of security's rubber stamp"
 		desc = "The Head of Security's rubber stamp for stamping important documents."
 		icon_state = "stamp-hos"
 		special_mode = "Head of Security"
 		is_reassignable = 0
 		assignment = "stamp-hos"
 	ce
-		name = "Chief engineer's Rubber Stamp"
+		name = "\improper chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents."
 		icon_state = "stamp-ce"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
 	md
-		name = "Medical Director's Rubber Stamp"
+		name = "\improper medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-md"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
 	rd
-		name = "Research Director's Rubber Stamp"
+		name = "\improper research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents."
 		icon_state = "stamp-rd"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
 	clown
-		name = "Clown's Rubber Stamp"
+		name = "\improper clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-honk"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
 	centcom
-		name = "Centcom Rubber Stamp"
-		desc = "Centcom rubber stamp for stamping whatever important documents they've gotten their hands on."
+		name = "\improper centcom rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this."
 		icon_state = "stamp-centcom"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
 	mime
-		name = "Mime's Rubber Stamp"
+		name = "\improper mime's rubber stamp"
 		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-mime"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
 	chap
-		name = "Chaplain's Rubber Stamp"
+		name = "\improper chaplain's rubber stamp"
 		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-chap"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
 	qm
-		name = "Quartermaster's Rubber Stamp"
+		name = "\improper quartermaster's rubber stamp"
 		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-qm"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
 	syndicate
-		name = "Syndicate Rubber Stamp"
+		name = "\improper syndicate rubber stamp"
 		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-syndicate"
 		special_mode = "Syndicate"
 		is_reassignable = 0
 		assignment = "stamp-syndicate"
 	law
-		name = "Security's Rubber Stamp"
+		name = "\improper security's rubber stamp"
 		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
 		icon_state = "stamp-syndicate"
 		special_mode = "Security"
