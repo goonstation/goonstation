@@ -62,53 +62,57 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets |GOONSTATION-CHANGE|
-	var/list/inline_styles = list()
-	var/list/inline_scripts = list()
+	// Inject inline assets
+	var/inline_assets_str = ""
 
 	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
 	for(var/datum/asset/asset in inline_assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
-				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
+				inline_assets_str += handle_cdn_asset(get_assets(subasset))
 		else
-			handle_cdn_asset(get_assets(asset.type), inline_styles, inline_scripts)
+			inline_assets_str += handle_cdn_asset(get_assets(asset.type))
 
-	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
-	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
+	if(length(inline_assets_str))
+		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
+	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
 
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Instruct the client to signal UI when the window is closed.
 	winset(client, id, "on-close=\"uiclose [id]\"")
 
-/** |GOONSTATION-ADD|
+// |GOONSTATION-ADD|
+/**
  * private
  *
- * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
+ * Parses our asset structures for the Goonstation CDN setup
  *
+ * return: the string to put in the html window
  */
-/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_styles, list/inline_scripts)
+/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset)
+	var/list/loadAssetStrings = list()
 	// Operating locally. Deliver what assets we can manually.
 	if (!cdn)
 		asset.deliver(client)
 		if (istype(asset, /datum/asset/basic))
 			var/datum/asset/basic/b = asset
-			for (var/file in b.local_assets)
-				if(copytext(file, -4) == ".css")
-					inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[file]\">\n"
-				else if(copytext(file, -3) == ".js")
-					inline_scripts += "<script type=\"text/javascript\" defer src=\"[file]\"></script>\n"
+			for (var/url in b.local_assets)
+				if(copytext(url, -4) == ".css")
+					loadAssetStrings += "Byond.loadCss('[url]', true);\n"
+				else if(copytext(url, -3) == ".js")
+					loadAssetStrings += "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
 			var/url = url_map[name]
-			// Not urlencoding since asset strings are considered safe
+			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+				loadAssetStrings += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
+				loadAssetStrings += "Byond.loadJs('[url]', true);\n"
+	. = loadAssetStrings.Join("")
 
 /**
  * public
