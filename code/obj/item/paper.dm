@@ -197,7 +197,7 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/item/paper/ui_act(action, params, datum/tgui/ui)
+/obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -213,9 +213,9 @@
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
 			var/stampAssetType = params["stampAssetType"]
-			var/stamp_class = params["stamp_class"]
+			var/stamp_class = params["stampClass"]
 			if(length(stamps) < PAPER_MAX_STAMPS)
-				var/list/stamp_info = list(list(stamp_class, stamp_x, stamp_y, stamp_r))
+				var/list/stamp_info = list(list(stampClass, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
 				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stampAssetType]");
@@ -238,7 +238,7 @@
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
 
-			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
+			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
 
 			if(paper_len > PAPER_MAX_LENGTH)
 				// Side note, the only way we should get here is if
@@ -263,7 +263,7 @@
 	.["sizeY"] = src.sizey
 	.["text"] = src.info
 	.["max_length"] = PAPER_MAX_LENGTH
-	.["paper_color"] = (color || "white")	// color might not be set
+	.["paperColor"] = src.color	// color might not be set
 	.["stamps"] = src.stamps
 	.["stampable"] = src.stampable
 	.["sealed"] = src.sealed
@@ -271,7 +271,7 @@
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
 
-	data["edit_usr"] = "[user]"
+	data["editUsr"] = "[user]"
 
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
@@ -302,29 +302,29 @@
 
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
-		data["pen_font"] = PEN.font
-		data["pen_color"] = PEN.color
-		data["edit_mode"] = PAPER_MODE_WRITING
-		data["is_crayon"] = FALSE
-		data["stamp_class"] = "FAKE"
+		data["penFont"] = PEN.font
+		data["penColor"] = PEN.color
+		data["editMode"] = PAPER_MODE_WRITING
+		data["isCrayon"] = FALSE
+		data["stampClass"] = "FAKE"
 		data["stampAssetType"] = "FAKE"
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
 		data["stampAssetType"] = stamp.current_mode
-		data["stamp_class"] = stamp_assets[stamp.current_mode]
-		data["edit_mode"] = PAPER_MODE_STAMPING
-		data["pen_font"] = "FAKE"
-		data["pen_color"] = "FAKE"
-		data["is_crayon"] = FALSE
+		data["stampClass"] = stamp_assets[stamp.current_mode]
+		data["editMode"] = PAPER_MODE_STAMPING
+		data["penFont"] = "FAKE"
+		data["penColor"] = "FAKE"
+		data["isCrayon"] = FALSE
 	else
-		data["edit_mode"] = PAPER_MODE_READING
-		data["pen_font"] = "FAKE"
-		data["pen_color"] = "FAKE"
-		data["is_crayon"] = FALSE
+		data["editMode"] = PAPER_MODE_READING
+		data["penFont"] = "FAKE"
+		data["penColor"] = "FAKE"
+		data["isCrayon"] = FALSE
 		data["stampAssetType"] = "FAKE"
-		data["stamp_class"] = "FAKE"
-	data["field_counter"] = field_counter
-	data["form_fields"] = form_fields
+		data["stampClass"] = "FAKE"
+	data["fieldCounter"] = field_counter
+	data["formFields"] = form_fields
 
 	return data
 
