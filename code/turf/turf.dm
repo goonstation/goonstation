@@ -379,8 +379,8 @@
 	if(vistarget)
 		vistarget.vis_contents += M
 	if(warptarget)
-		if(isnull(OldLoc)) return
-		M.set_loc(warptarget)
+		if(OldLoc)
+			M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
