@@ -2138,7 +2138,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "adY" = (
-/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -3663,7 +3662,6 @@
 	name = "Crew Quarters M03"
 	})
 "agz" = (
-/obj/storage/secure/closet/command/medical_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -5210,7 +5208,6 @@
 	name = "Crew Quarters M04"
 	})
 "aiI" = (
-/obj/storage/secure/closet/command/research_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -6827,7 +6824,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "akV" = (
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
