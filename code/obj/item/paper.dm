@@ -249,7 +249,7 @@
 			else
 				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name]")
 				if(info != in_paper)
-					boutput(ui.user, "You have added to your paper masterpiece!");
+					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
 					update_static_data(usr,ui)
 			. = TRUE
