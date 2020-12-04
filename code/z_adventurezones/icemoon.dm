@@ -104,7 +104,7 @@ Contents:
 			return ..()
 		if(isobj(A))
 			var/obj/O = A
-			if(isnull(old_loc) || O.anchored == 2)
+			if(isnull(old_loc) || O.anchored)
 				return ..()
 
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
