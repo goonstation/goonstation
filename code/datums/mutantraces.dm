@@ -776,7 +776,7 @@
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(human(H))
+		if(ishuman(H))
 			H.give_lizard_powers()
 			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
 			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
