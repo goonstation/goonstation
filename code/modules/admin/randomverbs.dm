@@ -1,6 +1,6 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	if(config.update_check_enabled)
 		world.installUpdate()
 	world.Reboot()
