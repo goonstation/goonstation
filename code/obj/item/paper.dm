@@ -204,21 +204,20 @@
 	if(src.sealed)
 		boutput(usr, "<span class='alert'>You can't write on [src].</span>")
 		return
-	if(!src.stampable)
-		boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
-		return
 	switch(action)
 		if("stamp")
+			if(!src.stampable)
+				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+				return
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
-			var/stampAssetType = params["stampAssetType"]
-			var/stamp_class = params["stampClass"]
+			var/obj/item/stamp/stamp = ui.user.equipped()
 			if(length(stamps) < PAPER_MAX_STAMPS)
-				var/list/stamp_info = list(list(stampClass, stamp_x, stamp_y, stamp_r))
+				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stampAssetType]");
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.current_mode]");
 				var/matrix/stamp_matrix = matrix()
 				stamp_matrix.Scale(1, 1)
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
@@ -226,7 +225,6 @@
 
 				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
 				update_static_data(usr,ui)
-				var/obj/stamp = ui.user.equipped()
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
 			else
 				boutput(usr, "There is no where else you can stamp!")
@@ -307,11 +305,10 @@
 		data["editMode"] = PAPER_MODE_WRITING
 		data["isCrayon"] = FALSE
 		data["stampClass"] = "FAKE"
-		data["stampAssetType"] = "FAKE"
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
-		data["stampAssetType"] = stamp.current_mode
 		data["stampClass"] = stamp_assets[stamp.current_mode]
+		stamp.current_state = stamp_assets[stamp.current_mode]
 		data["editMode"] = PAPER_MODE_STAMPING
 		data["penFont"] = "FAKE"
 		data["penColor"] = "FAKE"
@@ -321,7 +318,6 @@
 		data["penFont"] = "FAKE"
 		data["penColor"] = "FAKE"
 		data["isCrayon"] = FALSE
-		data["stampAssetType"] = "FAKE"
 		data["stampClass"] = "FAKE"
 	data["fieldCounter"] = field_counter
 	data["formFields"] = form_fields
@@ -1086,6 +1082,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	var/assignment = null
 	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
 	var/current_mode = "stamp-ok"
+	var/current_state = null
 
 /obj/item/stamp/New()
 	..()
