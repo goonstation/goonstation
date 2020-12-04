@@ -600,16 +600,15 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	var/list/color_matrix = COLOR_MATRIX_PROTANOPIA
 
 	OnAdd()
 		src.removed = 0
-		owner.apply_color_matrix(color_matrix, "protanopia")
+		owner.apply_color_matrix(COLOR_MATRIX_PROTANOPIA, COLOR_MATRIX_PROTANOPIA_LABEL)
 		return
 
 	OnRemove()
 		src.removed = 1
-		owner.remove_color_matrix(color_matrix, "protanopia")
+		owner.remove_color_matrix(COLOR_MATRIX_PROTANOPIA_LABEL)
 		return
 
 /datum/bioEffect/colorblindness/greenblind
@@ -622,16 +621,15 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	color_matrix = COLOR_MATRIX_DEUTERANOPIA
 
 	OnAdd()
 		src.removed = 0
-		owner.apply_color_matrix(color_matrix, "deuteranopia")
+		owner.apply_color_matrix(COLOR_MATRIX_DEUTERANOPIA, COLOR_MATRIX_DEUTERANOPIA_LABEL)
 		return
 
 	OnRemove()
 		src.removed = 1
-		owner.remove_color_matrix(color_matrix, "deuteranopia")
+		owner.remove_color_matrix(COLOR_MATRIX_DEUTERANOPIA_LABEL)
 		return
 
 /datum/bioEffect/colorblindness/blueblind
@@ -644,16 +642,15 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	color_matrix = COLOR_MATRIX_TRITANOPIA
 
 	OnAdd()
 		src.removed = 0
-		owner.apply_color_matrix(color_matrix, "tritanopia")
+		owner.apply_color_matrix(COLOR_MATRIX_TRITANOPIA, COLOR_MATRIX_TRITANOPIA_LABEL)
 		return
 
 	OnRemove()
 		src.removed = 1
-		owner.remove_color_matrix(color_matrix, "tritanopia")
+		owner.remove_color_matrix(COLOR_MATRIX_TRITANOPIA_LABEL)
 		return
 
 /datum/bioEffect/emoter/screamer

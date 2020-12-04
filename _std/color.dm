@@ -114,11 +114,6 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/// Takes two 16-length lists, turns them into 4x4 matrices, multiplies them together, and returns a 16-length list
-/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4 please
-	if (!Mat1.len || !Mat2.len || Mat1.len != 16 || Mat2.len != 16)
-		return 0
-
 // This proc converts a hex color value ("#420CAB") to an RGB list
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
@@ -129,6 +124,11 @@
 	if (length(L) == 3)
 		return rgb(L["r"], L["g"], L["b"])
 	return rgb(22, 210, 22)
+
+/// Takes two 16-length lists, turns them into 4x4 matrices, multiplies them together, and returns a 16-length list
+/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4 please
+	if (!Mat1.len || !Mat2.len || Mat1.len != 16 || Mat2.len != 16)
+		return 0
 
 	var/list/M1[4][4] // turn the input matrix lists into more matrix-y lists
 	var/list/M2[4][4] // both of em
@@ -151,31 +151,38 @@
 			indexout ++
 	return outlist
 
+#define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
 																		 0.55, 0.45, 0.00, 0.00,\
 																		 0.00, 0.25, 1.00, 0.00,\
 																		 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_DEUTERANOPIA_LABEL "deuteranopia"
 #define COLOR_MATRIX_DEUTERANOPIA list(0.63, 0.38, 0.00, 0.00,\
 																			 0.70, 0.30, 0.00, 0.00,\
 																			 0.00, 0.30, 0.70, 0.00,\
 																			 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_TRITANOPIA_LABEL "tritanopia"
 #define COLOR_MATRIX_TRITANOPIA list(0.95, 0.05, 0.00, 0.00,\
 																		 0.00, 0.43, 0.57, 0.00,\
 																		 0.00, 0.48, 0.53, 0.00,\
 																		 0.00, 0.00, 0.00, 1.00)
-#define COLOR_MATRIX_FLOCKMIND list(0.95, 0.05, 0.00, 0.00,\
-																		0.00, 0.43, 0.57, 0.00,\
-																		0.00, 0.48, 0.53, 0.00,\
-																		0.00, 0.00, 0.00, 1.00)
-#define COLOR_MATRIX_FLOCKMANGLED list(0.95, 0.05, 0.00, 0.00,\
-																			 0.00, 0.43, 0.57, 0.00,\
-																			 0.00, 0.48, 0.53, 0.00,\
-																			 0.00, 0.00, 0.00, 1.00)
-#define COLOR_MATRIX_IDENTITY list(1,0,0,0,\
-																	 0,1,0,0,\
-																	 0,0,1,0,\
-																	 0,0,0,1)
+#define COLOR_MATRIX_FLOCKMIND_LABEL "flockmind"
+#define COLOR_MATRIX_FLOCKMIND list(1.00, 0.00, 0.00, 0.00,\
+																		0.00, 1.00, 0.00, 0.00,\
+																		0.00, 0.00, 1.00, 0.00,\
+																		0.00, 0.10, 0.20, 1.00)
+#define COLOR_MATRIX_FLOCKMANGLED_LABEL "flockmind-fucked"
+#define COLOR_MATRIX_FLOCKMANGLED list(-0.3, -0.3, -0.3, 0.00,\
+																			 -0.3, -0.3, -0.3, 0.00,\
+																			 -0.3, -0.3, -0.3, 0.00,\
+																			 0.20, 0.80, 0.70, 1.00)
+#define COLOR_MATRIX_IDENTITY_LABEL "identity"
+#define COLOR_MATRIX_IDENTITY list(1.00, 0.00, 0.00, 0.00,\
+																	 0.00, 1.00, 0.00, 0.00,\
+																	 0.00, 0.00, 1.00, 0.00,\
+																	 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_GRAYSCALE_LABEL "grayscale"
 #define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0,\
 																		0.7152,0.7152,0.7152,0,\
 																		0.0722,0.0722,0.0722,0,\
-																		0,0,0,1)
+																		0.00 ,0.00 ,0.00 ,1.00)

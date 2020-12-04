@@ -2440,6 +2440,14 @@
 	upperfluc = 12500
 	lowerfluc = -12500
 
+/datum/commodity/flock/tech/flockglasses
+	comname = "Flockvision Spectacles"
+	comtype = /obj/item/clothing/glasses/flock
+	desc = "We are curious about the long-term effects of our mind and matter on human eyeballs. Stay away from magnets while you wear these."
+	price = 300
+	upperfluc = 150
+	lowerfluc = -150
+
 /////////////////////////////////
 ///////skeleton trader //////////
 /////////////////////////////////

@@ -179,6 +179,7 @@
 	src.goods_sell += new/datum/commodity/flock/tech/flockbrain(src)
 	src.goods_sell += new/datum/commodity/flock/tech/fluid(src)
 	src.goods_sell += new/datum/commodity/flock/tech/flockburger(src)
+	src.goods_sell += new/datum/commodity/flock/tech/flockglasses(src)
 	src.goods_sell += new/datum/commodity/flock/tech/flockblocker(src)
 	src.goods_sell += new/datum/commodity/flock/tech/incapacitor(src)
 

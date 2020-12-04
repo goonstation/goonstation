@@ -1540,6 +1540,8 @@
 		src.health = max_health
 		setalive(src)
 
+/// Adds a 16-length color matrix to the mob's list of color matrices
+/// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
 /mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
 	if (!cmatrix || !label)
 		return
@@ -1547,23 +1549,28 @@
 	if(label in src.color_matrices) // Do we already have this matrix?
 		return
 
-	var/list/matrix_2_add = list("[label]" = cmatrix)
-	src.color_matrices += matrix_2_add
+	src.color_matrices += label
+	src.color_matrices[label] = cmatrix
 
 	src.update_active_matrix()
 
-/mob/proc/remove_color_matrix(var/list/cmatrix, var/label)
-	if (!cmatrix || !label || !src.color_matrices.len)
+/// Removes a 16-length color matrix to the mob's list of color matrices
+/// Removes whichever matrix is associated with the label. Must be a string!
+/mob/proc/remove_color_matrix(var/label)
+	if (!label || !src.color_matrices.len)
 		return
 
-	if(!(label in src.color_matrices)) // Do we have this matrix?
+	if(label == "all")
+		src.color_matrices.len = 0
+	else if(!(label in src.color_matrices)) // Do we have this matrix?
 		return
-
-	var/list/matrix_2_remove = list("[label]" = cmatrix)
-	src.color_matrices -= matrix_2_remove
+	else
+		src.color_matrices -= label
 
 	src.update_active_matrix()
 
+/// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
+/// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
 /mob/proc/update_active_matrix()
 	if (!src.color_matrices.len)
 		src.active_color_matrix = null
