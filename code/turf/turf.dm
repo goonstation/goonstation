@@ -379,6 +379,7 @@
 	if(vistarget)
 		vistarget.vis_contents += M
 	if(warptarget)
+		if(isnull(OldLoc)) return
 		M.set_loc(warptarget)
 #endif
 
