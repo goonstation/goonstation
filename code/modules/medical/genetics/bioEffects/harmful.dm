@@ -634,11 +634,11 @@
 
 /datum/bioEffect/colorblindness/blueblind
 	name = "Tritanopia"
-	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing blue colorblindness."
 	id = "tritanopia"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
-	msgGain = "Everything starts looking a lot more yellow."
+	msgGain = "Everything starts looking a lot less blue."
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"

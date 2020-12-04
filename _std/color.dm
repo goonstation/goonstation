@@ -109,26 +109,32 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4
+/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 3x3
 	if (Mat1.len != Mat2.len)
 		return 0
 
-	var/list/M1[4][4] // turn the input matrix lists into more matrix-y lists
-	var/list/M2[4][4] // both of em
+	var/list/M1[3][3] // turn the input matrix lists into more matrix-y lists
+	var/list/M2[3][3] // both of em
 	var/index = 1
-	for(var/r in 1 to 4)
-		for(var/c in 1 to 4)
+	for(var/r in 1 to 3)
+		for(var/c in 1 to 3)
 			M1[c][r] = Mat1[index]
 			M2[c][r] = Mat2[index]
 			index ++
-	var/list/out[16] // get ready to deconvert the 4x4 into a 1x16 list
-	for(var/i in 1 to 16)	// output cell
-		for(var/ro in 1 to 4)
-			for(var/co in 1 to 4)
-				out[i] += (M1[ro][co]*M2[co][ro])
-	return out
+	var/list/out[3][3] // make a matrix to hold our result
+	for(var/i in 1 to 3) // i
+		for(var/ro in 1 to 3) // j
+			for(var/co in 1 to 3) // k
+				out[i][ro] += (M1[i][co]*M2[co][ro])
+	var/list/outlist[9] // and convert that matrix back into a 1-dimensional list
+	var/indexout = 1
+	for(var/r in 1 to 3)
+		for(var/c in 1 to 3)
+			outlist[indexout] = out[c][r]
+			indexout ++
+	return outlist
 
 //Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
-#define MATRIX_PROTANOPIA 0.55, 0.45, 0.00, 0.00, 0.55, 0.45, 0.00, 0.00, 0.00, 0.25, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00
-#define MATRIX_DEUTERANOPIA 0.63, 0.38, 0.00, 0.00, 0.70, 0.30, 0.00, 0.00, 0.00, 0.30, 0.70, 0.00, 0.00, 0.00, 0.00, 1.00
-#define MATRIX_TRITANOPIA 0.95, 0.05, 0.00, 0.00, 0.00, 0.43, 0.57, 0.00, 0.00, 0.48, 0.53, 0.00, 0.00, 0.00, 0.00, 1.00
+#define MATRIX_PROTANOPIA 0.55, 0.45, 0.00, 0.55, 0.45, 0.00, 0.00, 0.25, 1.00
+#define MATRIX_DEUTERANOPIA 0.63, 0.38, 0.00, 0.70, 0.30, 0.00, 0.00, 0.30, 0.70
+#define MATRIX_TRITANOPIA 0.95, 0.05, 0.00, 0.00, 0.43, 0.57, 0.00, 0.48, 0.53
