@@ -109,9 +109,10 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 3x3
-	if (Mat1.len != Mat2.len)
-		return 0
+/// Takes two 16-length lists, turns them into 4x4 matrices, multiplies them together, and returns a 16-length list
+/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4 please
+	if (!Mat1.len || !Mat2.len || Mat1.len != 16 || Mat2.len != 16)
+		return COLOR_MATRIX_IDENTITY
 
 	var/list/M1[3][3] // turn the input matrix lists into more matrix-y lists
 	var/list/M2[3][3] // both of em
@@ -135,6 +136,31 @@
 	return outlist
 
 //Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
-#define MATRIX_PROTANOPIA 0.55, 0.45, 0.00, 0.55, 0.45, 0.00, 0.00, 0.25, 1.00
-#define MATRIX_DEUTERANOPIA 0.63, 0.38, 0.00, 0.70, 0.30, 0.00, 0.00, 0.30, 0.70
-#define MATRIX_TRITANOPIA 0.95, 0.05, 0.00, 0.00, 0.43, 0.57, 0.00, 0.48, 0.53
+#define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
+																		 0.55, 0.45, 0.00, 0.00,\
+																		 0.00, 0.25, 1.00, 0.00,\
+																		 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_DEUTERANOPIA list(0.63, 0.38, 0.00, 0.00,\
+																			 0.70, 0.30, 0.00, 0.00,\
+																			 0.00, 0.30, 0.70, 0.00,\
+																			 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_TRITANOPIA list(0.95, 0.05, 0.00, 0.00,\
+																		 0.00, 0.43, 0.57, 0.00,\
+																		 0.00, 0.48, 0.53, 0.00,\
+																		 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_FLOCKMIND list(0.95, 0.05, 0.00, 0.00,\
+																		0.00, 0.43, 0.57, 0.00,\
+																		0.00, 0.48, 0.53, 0.00,\
+																		0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_FLOCKMANGLED list(0.95, 0.05, 0.00, 0.00,\
+																			 0.00, 0.43, 0.57, 0.00,\
+																			 0.00, 0.48, 0.53, 0.00,\
+																			 0.00, 0.00, 0.00, 1.00)
+#define COLOR_MATRIX_IDENTITY list(1,0,0,0,\
+																	 0,1,0,0,\
+																	 0,0,1,0,\
+																	 0,0,0,1)
+#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0,\
+																		0.7152,0.7152,0.7152,0,\
+																		0.0722,0.0722,0.0722,0,\
+																		0,0,0,1)

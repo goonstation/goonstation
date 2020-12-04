@@ -598,7 +598,7 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	var/list/color_matrix = list(MATRIX_PROTANOPIA)
+	var/list/color_matrix = COLOR_MATRIX_PROTANOPIA
 
 	OnAdd()
 		src.removed = 0
@@ -620,7 +620,7 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	color_matrix = list(MATRIX_DEUTERANOPIA)
+	color_matrix = COLOR_MATRIX_DEUTERANOPIA
 
 	OnAdd()
 		src.removed = 0
@@ -642,7 +642,7 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	color_matrix = list(MATRIX_TRITANOPIA)
+	color_matrix = COLOR_MATRIX_TRITANOPIA
 
 	OnAdd()
 		src.removed = 0

@@ -491,7 +491,7 @@
 	src.client?.color = src.active_color_matrix
 
 	/* if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		src.client?.color = list(MATRIX_PROTANOPIA) */
+		src.client?.color = list(COLOR_MATRIX_PROTANOPIA) */
 
 	return
 
