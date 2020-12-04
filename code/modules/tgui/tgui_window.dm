@@ -92,6 +92,7 @@
  * return: the string to put in the html window
  */
 /datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset)
+	var/list/loadAssetStrings = list()
 	// Operating locally. Deliver what assets we can manually.
 	if (!cdn)
 		asset.deliver(client)
@@ -99,18 +100,19 @@
 			var/datum/asset/basic/b = asset
 			for (var/url in b.local_assets)
 				if(copytext(url, -4) == ".css")
-					. = "Byond.loadCss('[url]', true);\n"
+					loadAssetStrings += "Byond.loadCss('[url]', true);\n"
 				else if(copytext(url, -3) == ".js")
-					. = "Byond.loadJs('[url]', true);\n"
+					loadAssetStrings += "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
 			var/url = url_map[name]
 			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				. = "Byond.loadCss('[url]', true);\n"
+				loadAssetStrings += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				. = "Byond.loadJs('[url]', true);\n"
+				loadAssetStrings += "Byond.loadJs('[url]', true);\n"
+	return loadAssetStrings.Join("")
 
 /**
  * public
