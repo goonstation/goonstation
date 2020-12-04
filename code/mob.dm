@@ -26,6 +26,9 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/list/active_color_matrix = list()
+	var/list/color_matrices = list()
+
 	var/last_resist = 0
 
 	//var/obj/screen/zone_sel/zone_sel = null
@@ -486,10 +489,9 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
-		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
-		src.client?.color = matrix_protanopia
+	src.client?.color = src.active_color_matrix
+
+	return
 
 /mob/Logout()
 
@@ -1537,6 +1539,47 @@
 	else
 		src.health = max_health
 		setalive(src)
+
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+	if (!cmatrix || !label)
+		return
+
+	if(label in src.color_matrices) // Do we already have this matrix?
+		return
+
+	var/list/matrix_2_add = list("[label]" = cmatrix)
+	src.color_matrices += matrix_2_add
+
+	src.update_active_matrix()
+
+/mob/proc/remove_color_matrix(var/list/cmatrix, var/label)
+	if (!cmatrix || !label || !src.color_matrices.len)
+		return
+
+	if(!(label in src.color_matrices)) // Do we have this matrix?
+		return
+
+	var/list/matrix_2_remove = list("[label]" = cmatrix)
+	src.color_matrices -= matrix_2_remove
+
+	src.update_active_matrix()
+
+/mob/proc/update_active_matrix()
+	if (!src.color_matrices.len)
+		src.active_color_matrix = null
+	else
+		var/first_entry = src.color_matrices[1]
+		if (src.color_matrices.len == 1) // Just one matrix?
+			src.active_color_matrix = src.color_matrices[first_entry]
+		else
+			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
+			for(var/cmatrix in src.color_matrices)
+				if (cmatrix == first_entry)
+					continue // dont multiply the first matrix by itself
+				else
+					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
+			src.active_color_matrix = color_matrix_2_apply
+	src.client?.color = src.active_color_matrix
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
