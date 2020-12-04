@@ -309,8 +309,9 @@ class PaperSheetStamper extends Component {
       const heightMin = 0;
 
       const widthMax = windowRef.clientWidth - stampWidth;
-      const heightMax = (windowRef.clientHeight - windowRef.scrollTop) - (
-        stampHeight);
+      const heightMax = (
+        windowRef.clientHeight - windowRef.scrollTop - stampHeight
+      );
 
       const radians = Math.atan2(
         e.pageX - currentWidth,
