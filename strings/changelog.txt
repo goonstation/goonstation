@@ -1,4 +1,9 @@
 
+(t)fri dec 04 20
+(u)Superlagg
+(p)2934
+(e)🐛🎨|bug, sprites
+(+)Kudzufolk can be visibly dismembered, and get gross synthorgans too.
 (t)thu dec 03 20
 (u)Retkid
 (p)2853
