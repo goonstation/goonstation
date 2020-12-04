@@ -610,8 +610,9 @@
 
 	OnRemove()
 		src.removed = 1
-		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = null
+		if (!owner.traitHolder.hasTrait("permcolorblind"))//Here to prevent wacky interactions with the trait that might happen, i am so sorry if this is hacky as fuck
+			REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
+			owner.client?.color = null
 		return
 
 /datum/bioEffect/emoter/screamer

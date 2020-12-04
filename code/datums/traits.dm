@@ -478,6 +478,26 @@
 			owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
 		return
 
+/obj/trait/colorblind
+	name = "Colorblind (+1)"
+	cleanName = "Colorblind"
+	desc = "Spawn with permanent protanopia."
+	id = "permcolorblind"
+	category = "vision"
+	points = 1
+	isPositive = 0
+
+	onAdd(var/mob/owner)
+		if(owner.bioHolder)
+			if(istype(owner, /mob/living/carbon/human))
+				owner.bioHolder.AddEffect("protanopia", 0, 0, 0, 1)
+		return
+
+	onLife(var/mob/owner) //Just to be super DUPER safe.
+		if(owner.bioHolder && !owner.bioHolder.HasEffect("protanopia"))
+			owner.bioHolder.AddEffect("protanopia", 0, 0, 0, 1)
+		return
+
 // GENETICS - Blue Border
 
 /obj/trait/robustgenetics
