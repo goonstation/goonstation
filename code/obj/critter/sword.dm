@@ -7,38 +7,52 @@
 	var/true_desc = "An automated miniature doomsday device constructed by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD/base.dmi'
 	icon_state = "beacon"
-	can_burn = 0
-	reagent_capacity = 0
-	can_implant = 0
 	death_text = "The Syndicate Weapon violently explodes, leaving wreckage in it's wake."
 	pet_text = "tries to get the attention of"
-	max_health = 6000
+	angertext = "focuses on"
+	atk_text = "bumps into"
+	chase_text = "chases after"
+	crit_text = "slams into"
+	atk_delay = 50
+	crit_chance = 25
 	health = 6000
 	bound_height = 96
 	bound_width = 96
 	layer = MOB_LAYER + 5
-	emote_allowed = 0
-	canmove = 0
-	innate_temp_resistance = 0
-	suicide_alert = 1
+	atkcarbon = 1
+	atksilicon = 1
+	aggressive = 1
+	seekrange = 256					//A perk of being a high-tech prototype - incredibly large detection range.
 	var/mode = 0					//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 	var/changing_modes = false		//Used to prevent some things during transformation sequences.
 	var/current_ability = null		//Used to keep track of what ability the SWORD is currently using.
 	var/previous_ability = null		//Used to prevent using the same ability twice in a row.
 	var/rotation_locked = false		//Used to lock the SWORD's rotation in place, for example during transformations or in the second stage of Linear Purge.
 	var/rotation_current = 0		//Used to keep track which of the 16 different orientations the SWORD is currently facing.
-	var/mob/living/carbon/target
 	var/image/glow
 
 	New()
 		..()
-		src.see_in_dark = SEE_DARK_FULL
-		src.nodamage = 1
+		mobile = 0
+		firevuln = 0
+		brutevuln = 0
+		miscvuln = 0
 		glow.plane = PLANE_SELFILLUM
+	
+	attackby(obj/item/W as obj, mob/living/user as mob)
+		..()
+		if(mode == 0 && !changing_modes)
+			spawn(2 MINUTES)
+				transformation(0)
+
 
 //-TRANSFORMATIONS-//
 	
-	proc/transformation(var/transformation_id)	//0 - Beacon. 1 - Unanchored. 2 - Anchored.
+	proc/transformation(var/transformation_id)	//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
+		mobile = 0
+		firevuln = 1.25
+		brutevuln = 1.25
+		miscvuln = 0.25
 		switch(transformation_id)
 			if(0)
 				rotation_locked = true
@@ -84,26 +98,15 @@
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
+
+		mobile = 1
+		firevuln = 1
+		brutevuln = 1
+		miscvuln = 0.2
 		return
 
-//-ABILITIES-//
 
-	proc/manual_rotation()
-		if(rotation_locked)
-			return
-		if(src.target.z == src.z)
-			if('bunch of fucking bullshit dude, like how do I even do this stuff')
-				rotation_current += 22.5
-				src.transform.turn(22.5)
-			else
-				rotation_current -= 22.5
-				src.transform.turn(-22.5)
-			if(rotation_current > 360)
-				rotation_current -= 360
-			if(rotation_current < 0)
-				rotation_current += 360
-		else
-			src.target = null
+//-ABILITIES-//
 
 	proc/configuration_swap()
 		if(mode == 0)
@@ -125,6 +128,8 @@
 
 
 	proc/stifling_vacuum()
-		//src.target something something
-
-//-PATHFINDING-//
+		walk_towards(src, src.target)
+		walk(src,0)
+		mobile = 0
+		spawn(5)
+			mobile = 1
