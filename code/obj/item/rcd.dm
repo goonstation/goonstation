@@ -66,7 +66,7 @@ Broken RCD + Effects
 
 	var/matter_create_floor = 1
 	var/matter_create_wall = 2
-	var/matter_create_wall_girder = 2
+	var/matter_create_wall_girder = 1
 	var/matter_create_door = 5
 	var/matter_create_window = 2
 	var/matter_create_light_fixture = 2
