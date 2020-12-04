@@ -1602,7 +1602,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 9
 	},
 /area/station/crew_quarters/quartersC)
@@ -1923,7 +1923,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
 	},
 /area/station/crew_quarters/quartersC)
@@ -13542,7 +13542,7 @@
 	},
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light/small/sticky,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 6
 	},
 /area/station/crew_quarters/quartersC)
@@ -30905,7 +30905,7 @@
 	pixel_y = 24
 	},
 /obj/disposalpipe/trunk/mail,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 1
 	},
 /area/station/crew_quarters/quartersC)
@@ -32782,7 +32782,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/trunk,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -34538,7 +34538,7 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 10
 	},
 /area/station/crew_quarters/quartersC)
@@ -34629,7 +34629,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "kmE" = (
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
 	},
 /area/station/crew_quarters/quartersC)
@@ -34829,7 +34829,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge,
+/turf/simulated/floor/carpet/green/standard/edge,
 /area/station/crew_quarters/quartersC)
 "kqU" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -61559,7 +61559,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -67058,7 +67058,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -67287,7 +67287,7 @@
 /area/station/engine/inner)
 "tXZ" = (
 /obj/disposalpipe/segment/mail,
-/turf/unsimulated/floor/carpet/green/standard,
+/turf/simulated/floor/carpet/green/standard,
 /area/station/crew_quarters/quartersC)
 "tYb" = (
 /obj/cable{
@@ -74384,7 +74384,7 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 5
 	},
 /area/station/crew_quarters/quartersC)
