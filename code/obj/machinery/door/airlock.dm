@@ -1812,7 +1812,8 @@ obj/machinery/door/airlock
 		return UI_UPDATE
 
 /obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)
