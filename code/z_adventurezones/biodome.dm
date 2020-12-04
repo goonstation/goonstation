@@ -198,7 +198,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(if(isnull(old_loc) || O.anchored == 2)))
+		if(src.deadly && !(isnull(old_loc) || O.anchored == 2))
 			if (istype(O, /obj/critter) && O:flying)
 				return
 
