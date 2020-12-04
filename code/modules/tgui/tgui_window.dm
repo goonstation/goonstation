@@ -112,7 +112,7 @@
 				loadAssetStrings += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
 				loadAssetStrings += "Byond.loadJs('[url]', true);\n"
-	return loadAssetStrings.Join("")
+	. = loadAssetStrings.Join("")
 
 /**
  * public
