@@ -1,5 +1,9 @@
 
 (t)thu dec 03 20
+(u)Retkid
+(p)2853
+(e)|
+(*)Added sounds for the Wraith antagonist.
 (u)BenLubar
 (p)2905
 (e)⚖|balance
