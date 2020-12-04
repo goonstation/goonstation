@@ -112,25 +112,25 @@
 /// Takes two 16-length lists, turns them into 4x4 matrices, multiplies them together, and returns a 16-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 4x4 please
 	if (!Mat1.len || !Mat2.len || Mat1.len != 16 || Mat2.len != 16)
-		return COLOR_MATRIX_IDENTITY
+		return 0
 
-	var/list/M1[3][3] // turn the input matrix lists into more matrix-y lists
-	var/list/M2[3][3] // both of em
+	var/list/M1[4][4] // turn the input matrix lists into more matrix-y lists
+	var/list/M2[4][4] // both of em
 	var/index = 1
-	for(var/r in 1 to 3)
-		for(var/c in 1 to 3)
+	for(var/r in 1 to 4)
+		for(var/c in 1 to 4)
 			M1[c][r] = Mat1[index]
 			M2[c][r] = Mat2[index]
 			index ++
-	var/list/out[3][3] // make a matrix to hold our result
-	for(var/i in 1 to 3) // i
-		for(var/ro in 1 to 3) // j
-			for(var/co in 1 to 3) // k
+	var/list/out[4][4] // make a matrix to hold our result
+	for(var/i in 1 to 4)
+		for(var/ro in 1 to 4)
+			for(var/co in 1 to 4)
 				out[i][ro] += (M1[i][co]*M2[co][ro])
-	var/list/outlist[9] // and convert that matrix back into a 1-dimensional list
+	var/list/outlist[16] // and convert that matrix back into a 1-dimensional list
 	var/indexout = 1
-	for(var/r in 1 to 3)
-		for(var/c in 1 to 3)
+	for(var/r in 1 to 4)
+		for(var/c in 1 to 4)
 			outlist[indexout] = out[c][r]
 			indexout ++
 	return outlist
