@@ -78,7 +78,7 @@
 		src.inherent.len = number
 
 	src.inherent[number] = law
-	statlog_ailaws(1, law, "Ion Storm")
+	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)
 	while (src.supplied.len < number + 1)
