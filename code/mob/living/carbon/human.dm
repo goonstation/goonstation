@@ -337,7 +337,6 @@
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
-			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
 			r_leg:original_holder = holder

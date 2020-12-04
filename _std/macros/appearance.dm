@@ -26,10 +26,11 @@
 #define TAIL_CAT 7
 #define TAIL_ROACH 8
 
-/// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair color slot
+/// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
 #define CUST_1 1
 #define CUST_2 2
 #define CUST_3 3
+#define SKIN_TONE 4
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should
 /// We only have male torso/groin sprites, so only use those.

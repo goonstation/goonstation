@@ -183,9 +183,9 @@
 		src.head_image_cust_two.color = AHead.customization_second_color
 		src.head_image_cust_three.color = AHead.customization_third_color
 
-		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, pixel_y = AHead.customization_first_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, pixel_y = AHead.customization_second_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, pixel_y = AHead.customization_third_offset_y, layer = MOB_HAIR_LAYER2)
+		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, pixel_y = AHead.customization_first_offset_y, layer = AHead.special_hair_1_layer)
+		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, pixel_y = AHead.customization_second_offset_y, layer = AHead.special_hair_2_layer)
+		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, pixel_y = AHead.customization_third_offset_y, layer = AHead.special_hair_3_layer)
 
 		var/colorheck = "#FFFFFF"
 		switch(AHead.special_hair_1_color_ref)
