@@ -362,7 +362,8 @@ class PaperSheetStamper extends Component {
           stamps={stampList} />
         <Stamp
           activeStamp
-          opacity={0.5} image={currentPos} />
+          opacity={0.5}
+          image={currentPos} />
       </Fragment>
     );
   }
