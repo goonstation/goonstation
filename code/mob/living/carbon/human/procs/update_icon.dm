@@ -930,6 +930,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_decomp_image.icon_state = hand_icon_s
 											src.hands_standing.layer = MOB_HAND_LAYER1
 											src.hands_standing.overlays += human_decomp_image
+											if(limb.handfoot_overlay_1)
+												human_decomp_image.icon = limb.handfoot_overlay_1?.icon
+												human_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
+												human_decomp_image.color = limb.handfoot_overlay_1?.color
+												human_decomp_image.layer = MOB_HAND_LAYER1
+												src.hands_standing.layer = MOB_HAND_LAYER1
+												src.hands_standing.overlays += human_decomp_image
 											human_decomp_image.layer = oldlayer
 										else
 											var/oldlayer = human_untoned_decomp_image.layer // ugh
@@ -937,6 +944,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_untoned_decomp_image.icon_state = hand_icon_s
 											src.hands_standing.layer = MOB_HAND_LAYER1
 											src.hands_standing.overlays += human_untoned_decomp_image
+											if(limb.handfoot_overlay_1)
+												human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
+												human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
+												human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
+												human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+												src.hands_standing.layer = MOB_HAND_LAYER1
+												src.hands_standing.overlays += human_untoned_decomp_image
 											human_untoned_decomp_image.layer = oldlayer
 									else
 										var/image/I = hand_icon_s
@@ -945,6 +959,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											I.color = human_decomp_image.color
 										src.hands_standing.layer = MOB_LAYER_BASE
 										src.hands_standing.overlays += I
+										if(limb.handfoot_overlay_1)
+											I = limb.handfoot_overlay_1
+											I.layer = MOB_LAYER_BASE
+											if (limb.skintoned)
+												I.color = human_decomp_image.color
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += I
 
 								if (part_icon_s)
 									if (istext(part_icon_s))
@@ -955,8 +976,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 												oldlayer = human_decomp_image.layer // ugh
 												human_decomp_image.layer = MOB_HAND_LAYER1
 											src.body_standing.overlays += human_decomp_image
+											if(limb.limb_overlay_1)
+												human_decomp_image.icon = limb.limb_overlay_1?.icon
+												human_decomp_image.icon_state = limb.limb_overlay_1?.icon_state
+												human_decomp_image.color = limb.limb_overlay_1?.color
+												human_decomp_image.layer = MOB_LAYER_BASE
+												src.hands_standing.layer = MOB_LAYER_BASE
+												src.hands_standing.overlays += human_untoned_decomp_image
 											if (oldlayer)
-												human_decomp_image.layer = oldlayer
+												human_untoned_decomp_image.layer = oldlayer
 										else
 											human_untoned_decomp_image.icon_state = part_icon_s
 											var/oldlayer
@@ -964,6 +992,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 												oldlayer = human_untoned_decomp_image.layer // ugh
 												human_untoned_decomp_image.layer = MOB_HAND_LAYER1
 											src.body_standing.overlays += human_untoned_decomp_image
+											if(limb.limb_overlay_1)
+												human_untoned_decomp_image.icon = limb.limb_overlay_1?.icon
+												human_untoned_decomp_image.icon_state = limb.limb_overlay_1?.icon_state
+												human_untoned_decomp_image.color = limb.limb_overlay_1?.color
+												human_untoned_decomp_image.layer = MOB_LAYER_BASE
+												src.hands_standing.layer = MOB_LAYER_BASE
+												src.hands_standing.overlays += human_untoned_decomp_image
 											if (oldlayer)
 												human_untoned_decomp_image.layer = oldlayer
 									else
@@ -972,6 +1007,14 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
 										src.body_standing.overlays += I
+										if(limb.limb_overlay_1)
+											I = limb.limb_overlay_1
+											I.layer = MOB_LAYER_BASE
+											if (limb.skintoned)
+												I.color = human_decomp_image.color
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += I
+
 							else
 								if (hand_icon_s)
 									if (istext(hand_icon_s))
@@ -982,7 +1025,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.color = limb_skin_tone
 										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_image
+										if(limb.handfoot_overlay_1)
+											human_image.icon = limb.handfoot_overlay_1?.icon
+											human_image.icon_state = limb.handfoot_overlay_1?.icon_state
+											human_image.color = limb.handfoot_overlay_1?.color
+											human_image.layer = MOB_LAYER_BASE
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += human_image
 										human_image.layer = oldlayer
+
 									else
 										var/image/I = hand_icon_s
 										I.layer = MOB_LAYER_BASE
@@ -992,6 +1043,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										I.color = limb_skin_tone
 										src.hands_standing.layer = MOB_LAYER_BASE
 										src.hands_standing.overlays += I
+										if(limb.handfoot_overlay_1)
+											I = limb.handfoot_overlay_1
+											I.layer = MOB_LAYER_BASE
+											if (limb.skintoned)
+												I.color = human_decomp_image.color
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += I
 
 								if (part_icon_s)
 									if (istext(part_icon_s))
@@ -1003,6 +1061,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											oldlayer = human_image.layer // ugh
 											human_image.layer = MOB_HAND_LAYER1
 										src.body_standing.overlays += human_image
+										if(limb.limb_overlay_1)
+											human_image.icon = limb.limb_overlay_1?.icon
+											human_image.icon_state = limb.limb_overlay_1?.icon_state
+											human_image.color = limb.limb_overlay_1?.color
+											human_image.layer = MOB_LAYER_BASE
+											if (limb.skintoned)
+												human_image.color = human_decomp_image.color
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += human_image
 										if (oldlayer)
 											human_image.layer = oldlayer
 									else
@@ -1010,6 +1077,14 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										I.layer = MOB_LAYER_BASE
 										I.color = limb_skin_tone
 										src.body_standing.overlays += I
+										if(limb.limb_overlay_1)
+											I = limb.limb_overlay_1
+											I.layer = MOB_LAYER_BASE
+											if (limb.skintoned)
+												I.color = human_decomp_image.color
+											src.hands_standing.layer = MOB_LAYER_BASE
+											src.hands_standing.overlays += I
+
 						else	// Handles stumps
 							var/stump = update_body_limbs[name]
 							if (src.decomp_stage)
