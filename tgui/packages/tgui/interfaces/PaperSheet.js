@@ -16,7 +16,7 @@ import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
-
+const WINDOW_TITLEBAR_HEIGHT = 30;
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
@@ -278,8 +278,8 @@ class PaperSheetStamper extends Component {
       this.setState({ x: pos[0], y: pos[1], rotate: pos[2] });
     };
     this.handleMouseClick = e => {
-      if (e.pageY <= 30) { return; }
-      const { act, data } = useBackend(this.context);
+      if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) { return; }
+      const { act } = useBackend(this.context);
       const stampObj = {
         x: this.state.x, y: this.state.y, r: this.state.rotate,
       };
