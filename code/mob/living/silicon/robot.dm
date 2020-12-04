@@ -81,7 +81,7 @@
 
 	// moved up to silicon.dm
 	killswitch = 0
-	killswitch_time = 60
+	killswitch_at = 0
 	weapon_lock = 0
 	weaponlock_time = 120
 	var/oil = 0
@@ -2407,8 +2407,7 @@
 
 	process_killswitch()
 		if(killswitch)
-			killswitch_time --
-			if(killswitch_time <= 0)
+			if(killswitch_at <= ticker.round_elapsed_ticks)
 				if(src.client)
 					boutput(src, "<span class='alert'><B>Killswitch Activated!</B></span>")
 				killswitch = 0
