@@ -711,7 +711,7 @@ This is basically useless for anyone but miners.
 	name = "Pizza Sharpener"
 	item = /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
 	cost = 5
-	desc = "Have you ever been making a piza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
+	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
 	job = list("Chef")
 
 /datum/syndicate_buylist/traitor/syndiesauce
