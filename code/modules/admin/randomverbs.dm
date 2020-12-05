@@ -2557,6 +2557,55 @@ var/global/night_mode_enabled = 0
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
+/client/proc/summon_office()
+	set name = "Summon Office"
+	set desc = "Expand your domain across dimensional planes."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	var/turf/src_turf = get_turf(src.mob)
+	if (!src_turf) return
+
+	var/list/areas = get_areas(/area/centcom/offices)
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (!length(turfs))
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+				return
+
+			//find the door
+			var/turf/office_entry = null
+			var/obj/machinery/door/unpowered/wood/O = locate(/obj/machinery/door/unpowered/wood) in office
+			if (O)
+				office_entry = get_turf(O)
+				turfs -= office_entry
+			else
+				//mark has a ladder
+				var/obj/ladder/L = locate(/obj/ladder) in office
+				if (L)
+					office_entry = get_turf(L)
+					turfs -= office_entry
+				else
+					boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
+					return
+
+			if (!office_entry) return
+			var/x_diff = src_turf.x - office_entry.x
+			var/y_diff = src_turf.y - office_entry.y
+
+			for (var/turf/T in turfs)
+				if (T.vistarget)
+					T.vistarget.vis_contents -= T.contents
+					T.vistarget = null
+				else
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
+
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")
+
 /client/proc/cmd_crusher_walls()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Crusher Walls"

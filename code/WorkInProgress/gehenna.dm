@@ -11,11 +11,14 @@
 	var/yOffset = 0 // use only for pushing to the same z-level
 	add_to_landmarks = FALSE
 
-	New()
-		var/turf/greasedupFrenchman = loc
-		greasedupFrenchman.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-		greasedupFrenchman.vistarget.warptarget = greasedupFrenchman
-		greasedupFrenchman.updateVis()
+	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/is_warp = TRUE)
+		if (man_xOffset) src.xOffset = man_xOffset
+		if (man_yOffset) src.yOffset = man_yOffset
+		if (man_targetZ) src.targetZ = man_targetZ
+		var/turf/T = loc
+		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+		if(is_warp) T.vistarget.warptarget = T
+		T.updateVis()
 		..()
 
 
@@ -38,7 +41,7 @@
 /turf/proc/updateVis()
 	if(vistarget)
 		vistarget.overlays.Cut()
-		vistarget.vis_contents = src
+		vistarget.vis_contents += src.contents
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
