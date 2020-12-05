@@ -1975,8 +1975,8 @@ var/list/fun_images = list()
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
-	vpnckey = ckey(vpnckey)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
 	catch(var/exception/e)
