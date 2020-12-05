@@ -1967,6 +1967,7 @@ var/list/fun_images = list()
 	catch(var/exception/e)
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
+	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
 	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
