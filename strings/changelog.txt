@@ -1,5 +1,9 @@
 
 (t)sat dec 05 20
+(u)zjdtmkhzt
+(p)2459
+(e)⚖🆕|balance, feature
+(*)Trying to claim an item in the wrong area as a spy thief will now try to use the GPS system to show the way to the correct area.
 (u)pali
 (p)2747
 (e)|
