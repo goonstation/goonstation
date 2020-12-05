@@ -1836,7 +1836,7 @@ var/list/zalgo_mid = list(
 	return P
 
 //A Dutch accent... Don't ask
-
+//Made by Bierkraan
 /proc/dutch_parse(var/datum/text_roamer/R)
 	var/new_string = ""
 	var/used = 0
@@ -1884,9 +1884,6 @@ var/list/zalgo_mid = list(
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(15))
-		modded += " dikes!"
 
 	return modded
 
