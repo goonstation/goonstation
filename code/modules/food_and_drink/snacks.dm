@@ -146,7 +146,7 @@
 
 	attack_self(var/mob/user as mob)
 		if (sharpened && prob(15))
-			boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+			boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
 			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -154,8 +154,8 @@
 			return
 		else
 			if (sharpened)
-				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
-				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
+				boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
 			..()
 
 	throw_impact(M)
