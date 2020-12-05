@@ -1599,8 +1599,8 @@
 			var/average_rgb = average.to_rgba()
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-carafe", -1)
-				src.fluid_image.color = average_rgb
-				src.UpdateOverlays(src.fluid_image, "fluid")
+			src.fluid_image.color = average_rgb
+			src.UpdateOverlays(src.fluid_image, "fluid")
 			if (istype(src.loc, /obj/machinery/coffeemaker))
 				var/obj/machinery/coffeemaker/CM = src.loc
 				CM.update(average_rgb)
