@@ -357,7 +357,7 @@
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
-  mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
+	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
