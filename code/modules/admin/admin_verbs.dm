@@ -1962,8 +1962,9 @@ var/list/fun_images = list()
 /client/proc/vpn_whitelist_add(vpnckey as text)
 	set name = "VPN whitelist add"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey(vpnckey), "akey" = src.ckey))
+		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
 	catch(var/exception/e)
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
@@ -1974,9 +1975,10 @@ var/list/fun_images = list()
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
+	vpnckey = ckey(vpnckey)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = ckey(vpnckey), "akey" = src.ckey))
+		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
 	catch(var/exception/e)
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
 		return 0
