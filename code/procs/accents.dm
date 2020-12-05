@@ -1843,7 +1843,7 @@ var/list/zalgo_mid = list(
 
 	switch(R.curr_char)
 
-		if("th")
+		if("th")//dutch have problems with th
 			if(R.prev_char == "")
 				new_string = "t"
 				used = 1
@@ -1859,7 +1859,7 @@ var/list/zalgo_mid = list(
 			if(R.prev_char == "")
 				new_string = "PH"
 				used = 2
-		if("eo")
+		if("eo")//and they have problems with eo, exp. phiepul(people)
 			if(R.prev_char == "")
 				new_string = "ie"
 				used = 2
@@ -1874,6 +1874,21 @@ var/list/zalgo_mid = list(
 	P.chars_used = used
 	return P
 
+/proc/dutchify(var/string)
+	var/modded = ""
+	var/datum/text_roamer/T = new/datum/text_roamer(string)
+
+	for(var/i = 0, i < length(string), i=i)
+		var/datum/parse_result/P = dutch_parse(T)
+		modded += P.string
+		i += P.chars_used
+		T.curr_char_pos = T.curr_char_pos + P.chars_used
+		T.update()
+
+	if(prob(15))
+		modded += " dikes!"
+
+	return modded
 
 //Yorkshire AKA Tyke accent, wrought by Avack
 //An amalgamation of a bunch of sources:
