@@ -1844,30 +1844,23 @@ var/list/zalgo_mid = list(
 	switch(R.curr_char)
 
 		if("th")//dutch have problems with th
-			if(R.prev_char == "")
-				new_string = "t"
-				used = 1
+			new_string = "t"
+			used = 1
 		if("TH")
-			if(R.prev_char == "")
-				new_string = "T"
-				used = 1
+			new_string = "T"
+			used = 1
 		if("p")//turn p into ph
-			if(R.prev_char == "")
-				new_string = "ph"
-				used = 2
+			new_string = "ph"
+			used = 2
 		if("P")
-			if(R.prev_char == "")
-				new_string = "PH"
-				used = 2
+			new_string = "PH"
+			used = 2
 		if("eo")//and they have problems with eo, exp. phiepul(people)
-			if(R.prev_char == "")
-				new_string = "ie"
-				used = 2
-
+			new_string = "ie"
+			used = 2
 		if("EO")
-			if(R.prev_char == "")
-				new_string = "IE"
-				used = 2
+			new_string = "IE"
+			used = 2
 
 	var/datum/parse_result/P = new/datum/parse_result
 	P.string = new_string
