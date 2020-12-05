@@ -454,7 +454,7 @@
 	switch (act)
 		if ("scream")
 			if (src.emote_check(voluntary, 300))
-				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
+				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7, channel=VOLUME_CHANNEL_EMOTE)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
 				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"

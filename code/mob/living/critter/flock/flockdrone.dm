@@ -289,7 +289,7 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
+				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh") //no good sound for it - moon
 			if (src.emote_check(voluntary, 50))
