@@ -54,15 +54,22 @@ WET FLOOR SIGN
 	desc = "A cleaner bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
 
-	New()
+	disposing()
 		..()
-		processing_items.Add(src)
+		processing_items.Remove(src)
+
+	afterattack(atom/A, mob/user)
+		. = ..()
+		if (src.reagents.total_volume < 25)
+			processing_items |= src
 
 	process()
 		..()
 		// starts with 100 cleaner but only autofills to 25. thanks, nanotrasen!
 		if (src.reagents.total_volume < 25)
 			src.reagents.add_reagent("cleaner", 1)
+		else
+			processing_items.Remove(src)
 		return 0
 
 /obj/janitorTsunamiWave

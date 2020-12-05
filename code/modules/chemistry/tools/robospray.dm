@@ -26,6 +26,10 @@
 		..()
 		processing_items.Add(src)
 
+	disposing()
+		..()
+		processing_items.Remove(src)
+
 	attack_self(mob/user as mob)
 		picker = picker % length(botreagents) + 1
 		currentreagent = botreagents[picker]
