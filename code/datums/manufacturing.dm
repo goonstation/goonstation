@@ -7,13 +7,15 @@ var/global/list/manufacturer_nice_mat_names = list(
 	"CON-1" = "Conductive Material",
 	"CON-2" = "High Energy Conductor",
 	"INS-1" = "Insulative Material",
+	"INS-2" = "Highly Insulative Material",
 	"FAB-1" = "Fabric",
 	"POW-1" = "Power Source",
 	"POW-2" = "Significant Power Source",
 	"POW-3" = "Extreme Power Source",
 	"DEN-1" = "High Density Crystalline Matter",
 	"DEN-2" = "Very High Density Crystalline Matter",
-	"DEN-3" = "Extraordinarily Dense Crystalline Matter"
+	"DEN-3" = "Extraordinarily Dense Crystalline Matter",
+	"REF-1" = "Reflective Material"
 )
 
 proc/get_nice_mat_name_for_manufacturers(mat)
