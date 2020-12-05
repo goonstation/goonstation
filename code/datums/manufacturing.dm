@@ -1,26 +1,6 @@
-var/global/list/manufacturer_nice_mat_names = list(
-	"ALL" = "Any Material",
-	"CON-1" = "Conductive Material",
-	"CON-2" = "High Energy Conductor",
-	"CRY-1" = "Crystal",
-	"DEN-1" = "High Density Crystalline Matter",
-	"DEN-2" = "Very High Density Crystalline Matter",
-	"DEN-3" = "Extraordinarily Dense Crystalline Matter",
-	"FAB-1" = "Fabric",
-	"INS-1" = "Insulative Material",
-	"INS-2" = "Highly Insulative Material",
-	"MET-1" = "Metal",
-	"MET-2" = "Sturdy Metal",
-	"MET-3" = "Dense Metal",
-	"POW-1" = "Power Source",
-	"POW-2" = "Significant Power Source",
-	"POW-3" = "Extreme Power Source",
-	"REF-1" = "Reflective Material"
-)
-
 proc/get_nice_mat_name_for_manufacturers(mat)
-	if(mat in manufacturer_nice_mat_names)
-		return manufacturer_nice_mat_names[mat]
+	if(mat in material_category_names)
+		return material_category_names[mat]
 	else
 		return capitalize(mat)
 
