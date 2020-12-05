@@ -106,6 +106,27 @@
 		message = scotify(message)
 		return message
 
+/datum/bioEffect/speech/dutch
+	name = "Frontal Gyrus Alteration Type-NL"
+	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a dike builder."
+	id = "accent_scots"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "You feel the need to build dikes!"
+	msgLose = "The dikes fell so did you accent."
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = dutchify(message)
+		return message
+
 /datum/bioEffect/speech/swedish
 	name = "Frontal Gyrus Alteration Type-B"
 	desc = "Forces the language center of the subject's brain to construct sentences in a vaguely norse manner."
