@@ -321,6 +321,21 @@
 			owner.bioHolder.AddEffect("accent_french", 0, 0, 0, 1)
 		return
 
+/obj/trait/dutch
+	name = "Dutch (0) \[Language\]"
+	cleanName = "Dutch"
+	desc = "You are Dutch wooden shoes, stroopwafels and so on."
+	id = "dutch"
+	icon_state = "hollandY"
+	points = 0
+	isPositive = 1
+	category = "language"
+
+	onAdd(var/mob/owner)
+		if(owner.bioHolder)
+			owner.bioHolder.AddEffect("accent_dutch", 0, 0, 0, 1)
+		return
+
 /obj/trait/scots
 	name = "Scots (0) \[Language\]"
 	cleanName = "Scottish"

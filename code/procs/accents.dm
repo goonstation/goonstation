@@ -1835,6 +1835,44 @@ var/list/zalgo_mid = list(
 	P.chars_used = used
 	return P
 
+//A Dutch accent... Don't ask
+
+/proc/dutch_parse(var/datum/text_roamer/R)
+	var/new_string = ""
+	var/used = 0
+
+	switch(R.curr_char)
+
+		if("th")
+			if(R.prev_char == "")
+				new_string = "t"
+				used = 1
+		if("TH")
+			if(R.prev_char == "")
+				new_string = "T"
+				used = 1
+		if("p")//turn p into ph
+			if(R.prev_char == "")
+				new_string = "ph"
+				used = 2
+		if("P")
+			if(R.prev_char == "")
+				new_string = "PH"
+				used = 2
+		if("eo")
+			if(R.prev_char == "")
+				new_string = "ie"
+				used = 2
+
+		if("EO")
+			if(R.prev_char == "")
+				new_string = "IE"
+				used = 2
+
+	var/datum/parse_result/P = new/datum/parse_result
+	P.string = new_string
+	P.chars_used = used
+	return P
 
 
 //Yorkshire AKA Tyke accent, wrought by Avack
