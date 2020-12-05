@@ -99,9 +99,13 @@ Contents:
 
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
-	Entered(atom/A as mob|obj)
+	Entered(atom/A as mob|obj, atom/old_loc)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(isobj(A))
+			var/obj/O = A
+			if(isnull(old_loc) || O.anchored)
+				return ..()
 
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
 		if(T)

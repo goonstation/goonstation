@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/datum/objective/miscreantrp)
 		explanation_text = "Through trade, sweet-talking, light extortion, blackmail, and other devilish, but non-violent means, secure and deep-fry as many shoes as possible."
 
 	bar
-		explanation_text = "Set up and aggressively market an illicit bar to compete with the Barman, try to draw as many customers away as possible!"
+		explanation_text = "Set up and aggressively market an illicit bar to compete with the Bartender, try to draw as many customers away as possible!"
 
 	kitchen
 		explanation_text = "Set up and aggressively market an illicit kitchen to compete with the Chef, try to draw as many customers away as possible!"

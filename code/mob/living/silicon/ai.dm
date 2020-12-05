@@ -1718,11 +1718,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/proc/set_face(var/emotion)
 	return
 
-/mob/living/silicon/ai/proc/announce_arrival(var/name, var/rank)
-	var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", rank), "$NAME", name)
-	src.say( message )
-	logTheThing("say", src, null, "SAY: [message]")
-
 /mob/living/silicon/ai/proc/set_zeroth_law(var/law)
 	ticker.centralized_ai_laws.laws_sanity_check()
 	ticker.centralized_ai_laws.set_zeroth_law(law)

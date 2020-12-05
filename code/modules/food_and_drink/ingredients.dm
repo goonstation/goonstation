@@ -134,6 +134,14 @@
 			icon_state = "nugget1"
 		return ..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	name = "Windy's spicy chicken nugget"
+	desc = "A breaded wad of poultry, far too processed to have a more specific label than 'nugget.' It's spicy. The ones from Windy's are the best."
+	color = "#FF6600"
+	food_color = "#FF6600"
+	heal_amt = 10
+	initial_reagents = list("capsaicin"=15)
+
 /obj/item/reagent_containers/food/snacks/ingredient/egg
 	name = "egg"
 	desc = "An egg!"

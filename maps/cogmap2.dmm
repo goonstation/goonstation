@@ -4057,7 +4057,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/decal/poster/wallsign/poster_rand{
 	pixel_y = 26
@@ -15596,6 +15596,11 @@
 	dir = 4;
 	pixel_x = 26;
 	pixel_y = 1
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/obj/mug_rack{
+	pixel_y = -26
 	},
 /turf/simulated/floor/green/side{
 	dir = 6
@@ -29657,6 +29662,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/bot,
 /area/station/engine/engineering)
 "bpJ" = (
@@ -32201,8 +32207,11 @@
 /area/station/engine/engineering)
 "bvf" = (
 /obj/table/auto,
-/obj/random_item_spawner/desk_stuff,
 /obj/machinery/light,
+/obj/machinery/coffeemaker,
+/obj/mug_rack{
+	pixel_y = -24
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bvg" = (
@@ -34520,7 +34529,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "bzL" = (
-/obj/machinery/vending/coffee,
+/obj/mug_rack{
+	pixel_y = -26
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/security,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -56894,7 +56907,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "ctd" = (
-/obj/machinery/vending/coffee,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/research,
+/obj/mug_rack{
+	pixel_y = 28
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -62857,6 +62874,9 @@
 	dir = 4;
 	name = "E APC";
 	pixel_x = 24
+	},
+/obj/mug_rack{
+	pixel_y = -24
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -69588,17 +69608,16 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cVj" = (
-/obj/stool/chair/couch{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
+/obj/table/auto,
+/obj/machinery/coffeemaker/medbay,
+/obj/mug_rack{
+	pixel_x = -26
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cVk" = (
 /obj/stool/chair/couch{
-	dir = 4
+	dir = 8
 	},
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -69608,7 +69627,12 @@
 	},
 /area/station/medical/medbay)
 "cVl" = (
-/obj/machinery/vending/coffee,
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},

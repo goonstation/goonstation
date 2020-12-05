@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
 	var/health = 100
@@ -464,8 +465,13 @@
 			var/list/material_count = 0
 			for (var/i in 1 to A.item_paths.len)
 				material_count += A.item_amounts[i]
+				var/mat_name
+				if(isnull(A.item_names) || isnull(A.item_names[i]))
+					mat_name = get_nice_mat_name_for_manufacturers(A.item_paths[i])
+				else
+					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -2181,6 +2187,7 @@
 	/datum/manufacture/powercell,
 	/datum/manufacture/powercellE,
 	/datum/manufacture/powercellC,
+	/datum/manufacture/ore_scoop,
 	/datum/manufacture/oresatchel,
 	/datum/manufacture/oresatchelL,
 	/datum/manufacture/jetpack,

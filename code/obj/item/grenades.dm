@@ -518,12 +518,11 @@ PIPE BOMBS + CONSTRUCTION
 	det_time = 50.0
 	org_det_time = 50
 	alt_det_time = 30
-	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "empar"
+	icon_state_armed = "emp1"
 
 	prime()
 		var/turf/T = ..()
@@ -896,22 +895,23 @@ PIPE BOMBS + CONSTRUCTION
 	var/slashed = FALSE // has it been emptied out? if so, better dud!
 	var/primer_burnt = FALSE // avoid priming a firework multiple times, that doesn't make sense!
 	var/primed = FALSE // cutting open lit fireworks is a BAD idea
+	var/bootleg_level = 0 // 0 = normal, 1 = unstable, 2 = unstable and you arm fall off
 
 	New()
 		..()
 		create_reagents(10)
 		reagents.add_reagent("magnesium", 10)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if (user.equipped() == src)
 			if (src.primer_burnt)
-				boutput(user, "<span class='alert'>You can't light a firework more than once!</span>")
+				boutput(user, "<span class='alert'>You accidentally strike the primer, but it's already burnt!</span>")
 				return
 
 			else if (src.slashed)
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				SPAWN_DBG( src.det_time )
-					boutput(user, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
+					boutput(user, "<span class='alert'>The firework probably should have exploded by now.</span>")
 					src.primer_burnt = TRUE
 					return
 
@@ -919,24 +919,35 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( 5 )
-					boom()
+					boom(user)
 					return
 
 			else
-				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You accidentally prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
-					boom()
+					boom(user)
 					return
 
-	proc/boom()
+	proc/boom(mob/user as mob)
 		var/turf/location = get_turf(src.loc)
+
 		if(location)
-			if(prob(10))
+			if((prob(10)) || (src.bootleg_level == 2))
 				explosion(src, location, 0, 0, 1, 1)
+
+				if ((src.bootleg_level == 2) && (ishuman(user)))
+					var/mob/living/carbon/human/H = user
+					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
+
 			else
 				elecflash(src,power = 2)
-				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+
+				if (src.bootleg_level == 0)
+					playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+				else
+					playsound(src.loc, "sound/effects/Explosion2.ogg", 75, 1)
+
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
 		qdel(src)
@@ -958,14 +969,14 @@ PIPE BOMBS + CONSTRUCTION
 				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( 5 )
-					boom()
+					boom(user)
 					return
 
 			else
 				boutput(user, "<span class='alert'>You prime the firework! [det_time/10] seconds!</span>")
 				src.primed = TRUE
 				SPAWN_DBG( src.det_time )
-					boom()
+					boom(user)
 					return
 
 	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
@@ -981,12 +992,57 @@ PIPE BOMBS + CONSTRUCTION
 
 		else if (iscuttingtool(A) && !(src.slashed) && (src.primed)) // cutting open a lit firework is a bad idea!
 			boutput(user, "<span class='alert'>You cut open [src], but the lit primer ignites the contents!</span>")
-			boom()
+			boom(user)
 			return
 
 		else if (iscuttingtool(A) && (src.slashed))
 			boutput(user, "[src] has already been cut open and emptied.")
 			return
+
+/obj/item/firework/bootleg
+	name = "bootleg firework"
+	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one seems to be missing a label, weird."
+
+	New()
+		..()
+		create_reagents(10)
+
+		if (prob(30))
+			reagents.add_reagent("flashpowder", 5) // must've been a mix-up!
+
+			if (prob(15))
+				reagents.add_reagent("blackpowder", 5) // thats one hell of a mix-up
+				src.bootleg_level = 2
+			else
+				reagents.add_reagent("flashpowder", 5) // this way every firework has 10u reagents
+				src.bootleg_level = 1
+
+		else
+			reagents.add_reagent("magnesium", 10)
+
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You accidentally prime the firework, and the contents ignite immediately!</span>")
+			boom(user)
+			return
+
+		..()
+
+	attack_self(mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You try to prime the firework, but the contents ignite immediately!</span>")
+			boom(user)
+			return
+
+		..()
+
+	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+		if (iscuttingtool(A) && !(src.slashed) && (src.bootleg_level > 0))
+			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
+			boom(user)
+			return
+
+		..()
 
 //////////////////////// Breaching charges //////////////////////////////////
 
@@ -1552,7 +1608,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			if (throw_objs.len && throw_objs.len > 0)
 				var/turf/T = get_turf(src.loc)
-				var/count = 6
+				var/count = 20
 				var/obj/spawn_item
 				for (var/mob/living/L in oview(5, src.loc))
 					spawn_item = pick(throw_objs)
@@ -1561,7 +1617,7 @@ PIPE BOMBS + CONSTRUCTION
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
 					O.throw_at(L,5,3)
-					count++
+					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,src.loc))
 						if (prob(4))
@@ -1571,7 +1627,7 @@ PIPE BOMBS + CONSTRUCTION
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
 							O.throw_at(target,4,3)
-							count++
+							count--
 						if (count <= 0)
 							break;
 

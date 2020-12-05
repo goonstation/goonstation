@@ -162,6 +162,11 @@
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
 						pool(O)
+
+		#ifdef SECRETS_ENABLED
+		send_to_brazil(sell_crate)
+		#endif
+
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")

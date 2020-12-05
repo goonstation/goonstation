@@ -15,6 +15,7 @@
 	/datum/matfab_recipe/jumpsuit,
 	/datum/matfab_recipe/glovesins,
 	/datum/matfab_recipe/glovearmor,
+	/datum/matfab_recipe/shoes,
 	/datum/matfab_recipe/flashlight,
 	/datum/matfab_recipe/lighttube,
 	/datum/matfab_recipe/lightbulb,

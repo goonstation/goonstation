@@ -454,7 +454,7 @@
 				owner.real_name = H.real_name
 				owner.name = H.name
 				if(owner.bioHolder?.mobAppearance?.mutant_race)
-					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
 				else
 					owner.set_mutantrace(null)
 		return

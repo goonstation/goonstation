@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors_airless.dm
  */
 
@@ -1606,7 +1606,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "rainbow_road")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 

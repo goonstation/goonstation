@@ -134,10 +134,7 @@
 			return ..()
 
 
-	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
-		if (istype(over_object,/obj/item/chem_pill_bottle)) //dont do our whole fancy pickup thjing
-			return
-		..()
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

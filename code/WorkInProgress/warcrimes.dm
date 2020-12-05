@@ -119,34 +119,35 @@ var/fartcount = 0
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_first = "Tramp"
-			bioHolder.mobAppearance.customization_first_color = "#281400"
-			bioHolder.mobAppearance.customization_second = "Pompadour"
-			bioHolder.mobAppearance.customization_second_color = "#241200"
-			bioHolder.mobAppearance.customization_third = "Tramp: Beard Stains"
-			bioHolder.mobAppearance.customization_third_color = "#663300"
-			bioHolder.age = 63
-			bioHolder.bloodType = "A+"
-			bioHolder.mobAppearance.gender = "male"
-			bioHolder.mobAppearance.underwear = "briefs"
-			bioHolder.mobAppearance.u_color = "#996633"
 
-			SPAWN_DBG(1 SECOND)
-				bioHolder.mobAppearance.UpdateMob()
+		src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
-
-			var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-			implant.implanted(src, src)
+		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
+		implant.implanted(src, src)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		..()
+
+	initializeBioholder()
+		. = ..()
+		bioHolder.mobAppearance.customization_first = "Tramp"
+		bioHolder.mobAppearance.customization_first_color = "#281400"
+		bioHolder.mobAppearance.customization_second = "Pompadour"
+		bioHolder.mobAppearance.customization_second_color = "#241200"
+		bioHolder.mobAppearance.customization_third = "Tramp: Beard Stains"
+		bioHolder.mobAppearance.customization_third_color = "#663300"
+		bioHolder.age = 63
+		bioHolder.bloodType = "A+"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "briefs"
+		bioHolder.mobAppearance.u_color = "#996633"
+
+		bioHolder.mobAppearance.UpdateMob()
 
 	// John Bill always goes to the afterlife bar.
 	death(gibbed)

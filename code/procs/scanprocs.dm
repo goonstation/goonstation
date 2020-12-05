@@ -1,4 +1,5 @@
 
+
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -161,6 +162,8 @@
 				organ_data1 += organ_health_scan("spleen", H, obfuscate)
 				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
+					organ_data1 += organ_health_scan("tail", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))

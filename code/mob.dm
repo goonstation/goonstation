@@ -12,6 +12,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
@@ -222,7 +223,9 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New()
+/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+	src.AH_we_spawned_with = AH_passthru
+	src.loc = loc
 	hallucinations = new
 	organs = new
 	grabbed_by = new
@@ -233,12 +236,18 @@
 	traitHolder = new(src)
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
+		src.initializeBioholder()
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
+
+/// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
+/mob/proc/initializeBioholder()
+	SHOULD_CALL_PARENT(TRUE)
+	return
 
 /mob/proc/is_spacefaring()
 	return 0
@@ -842,10 +851,11 @@
 	boutput(src, "Retrieving your medal information...")
 
 	SPAWN_DBG(0)
+		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
+			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
 		if (!medals)
@@ -855,10 +865,12 @@
 		medals = params2list(medals)
 		medals = sortList(medals)
 
-		boutput(src, "<b>Medals:</b>")
+		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			boutput(src, "&emsp;[medal]")
-		boutput(src, "<b>You have [length(medals)] medal\s.</b>")
+			output += "&emsp;[medal]"
+		output += "<b>You have [length(medals)] medal\s.</b>"
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -961,6 +973,8 @@
 			if (istype(W, /obj/item/organ/pancreas) && src.organHolder.pancreas == W)
 				continue
 			if (istype(W, /obj/item/organ/appendix) && src.organHolder.appendix == W)
+				continue
+			if (istype(W, /obj/item/organ/tail) && src.organHolder.tail == W)
 				continue
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))

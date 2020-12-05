@@ -1541,29 +1541,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	else
 		boutput(user, "<span class='alert'>The door has already been opened. It looks like the mechanism has jammed for good.</span>")
 
-/obj/machinery/reliquaryscout
-	name = "????"
-	desc = "What the fuck is that!?"
-	icon = null
-	icon_state = "scoutbot"
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
-		light.set_color(0.2, 0.7, 0.2)
-		light.attach(src)
-		light.enable()
-
-	process()
-		for(var/mob/living/carbon/human/H in oview(11,src))
-			src.visible_message("<span class='alert'>[src] spots [H], and rapidly speeds off into the trench.</span>")
-			playsound(src.loc, "sound/misc/ancientbot_beep1.ogg", 80, 1)
-			SPAWN_DBG(2 SECONDS)
-				flick("scoutbot_teleport", src)
-				qdel(src)
-
 
 /obj/item/storage/secure/ssafe/polaris
 	name = "captain's lockbox"

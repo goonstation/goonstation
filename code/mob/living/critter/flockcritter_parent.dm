@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

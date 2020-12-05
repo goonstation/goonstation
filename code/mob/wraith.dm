@@ -6,7 +6,7 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
-#ifdef XMAS
+#if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
 	icon_state = "wraith-love"
 #else
 	icon_state = "wraith"

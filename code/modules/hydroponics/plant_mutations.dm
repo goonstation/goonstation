@@ -486,6 +486,7 @@
 	name_prefix = "White "
 	iconmod = "RadweedWhite"
 	special_proc_override = 1
+	assoc_reagents = list("penteticacid")
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -519,7 +520,7 @@
 	name = "Smoldering Radweed"
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
-	assoc_reagents = list("phlogiston")
+	assoc_reagents = list("infernite")
 
 // Slurrypod Mutations
 

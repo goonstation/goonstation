@@ -167,7 +167,7 @@
 	// a turn-safe scale, for temporary anisotropic scales
 	proc/SafeScale(var/scalex = 1, var/scaley = 1)
 		var/rot = arctan(src.transform.b, src.transform.a)
-		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scalex, scaley, MATRIX_SCALE), rot, MATRIX_ROTATE)
+		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
@@ -388,6 +388,10 @@
 			T.checkinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+	if(!isnull(src.loc))
+		src.loc.Entered(src, null)
+		if(isturf(src.loc)) // call it on the area too
+			src.loc.loc.Entered(src, null)
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
@@ -798,7 +802,7 @@
   * there are lots of old places in the code that set loc directly.
 	* ignore them they'll be fixed later, please use this proc in the future
   */
-/atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+/atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
@@ -808,24 +812,23 @@
 			loc = src:client:player:shamecubed
 			return
 
-	if (isturf(loc))
-		loc.Exited(src, newloc)
-
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
 
-	if(my_area != new_area && my_area)
+	var/atom/oldloc = loc
+	loc = newloc
+
+	oldloc?.Exited(src, newloc)
+
+	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
-	var/oldloc = loc
-	loc = newloc
-	 //Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
-	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
-		new_area.Entered(src, oldloc)
+	newloc?.Entered(src, oldloc)
 
-	if(isturf(newloc))
-		var/turf/nloc = newloc
-		nloc.Entered(src, oldloc)
+	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
+		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
 		for (var/atom/movable/M in src.attached_objs)

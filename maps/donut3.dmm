@@ -1602,7 +1602,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 9
 	},
 /area/station/crew_quarters/quartersC)
@@ -1923,7 +1923,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
 	},
 /area/station/crew_quarters/quartersC)
@@ -7524,7 +7524,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
 	},
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -13542,7 +13542,7 @@
 	},
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light/small/sticky,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 6
 	},
 /area/station/crew_quarters/quartersC)
@@ -14675,6 +14675,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"ebq" = (
+/obj/machinery/light/incandescent/netural,
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "ebx" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -16765,7 +16771,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 8
 	},
 /area/station/medical/cdc)
@@ -26562,7 +26568,7 @@
 /area/station/bridge)
 "hIa" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 8
 	},
 /area/station/medical/cdc)
@@ -30790,7 +30796,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
 	},
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 8
 	},
 /area/station/medical/cdc)
@@ -30899,7 +30905,7 @@
 	pixel_y = 24
 	},
 /obj/disposalpipe/trunk/mail,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 1
 	},
 /area/station/crew_quarters/quartersC)
@@ -32776,7 +32782,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/trunk,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -34532,7 +34538,7 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 10
 	},
 /area/station/crew_quarters/quartersC)
@@ -34623,7 +34629,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "kmE" = (
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
 	},
 /area/station/crew_quarters/quartersC)
@@ -34823,7 +34829,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge,
+/turf/simulated/floor/carpet/green/standard/edge,
 /area/station/crew_quarters/quartersC)
 "kqU" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -38416,7 +38422,7 @@
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -41464,6 +41470,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "mrI" = (
@@ -44257,7 +44266,7 @@
 /area/station/hallway/primary/east)
 "nkZ" = (
 /obj/machinery/light/small/sticky/greenish,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 4
 	},
 /area/station/medical/cdc)
@@ -50291,7 +50300,7 @@
 /area/station/crew_quarters/bathroom)
 "pbi" = (
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -54819,7 +54828,7 @@
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "qnH" = (
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -55307,7 +55316,7 @@
 /area/space)
 "qtC" = (
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 4
 	},
 /area/station/medical/cdc)
@@ -56522,7 +56531,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip2b"
 	},
-/turf/unsimulated/floor/greenwhite/corner,
+/turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
 "qMP" = (
 /obj/machinery/disposal/cart_port,
@@ -61550,7 +61559,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -66278,6 +66287,11 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"tHH" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "tHN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -66891,6 +66905,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tRW" = (
@@ -67041,7 +67058,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 4
 	},
 /area/station/crew_quarters/quartersC)
@@ -67144,7 +67161,7 @@
 /area/station/engine/ptl)
 "tVH" = (
 /obj/machinery/light/small/sticky/greenish,
-/turf/unsimulated/floor/greenwhite/corner,
+/turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
 "tVX" = (
 /obj/cable{
@@ -67234,7 +67251,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "tXr" = (
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 8
 	},
 /area/station/medical/cdc)
@@ -67270,7 +67287,7 @@
 /area/station/engine/inner)
 "tXZ" = (
 /obj/disposalpipe/segment/mail,
-/turf/unsimulated/floor/carpet/green/standard,
+/turf/simulated/floor/carpet/green/standard,
 /area/station/crew_quarters/quartersC)
 "tYb" = (
 /obj/cable{
@@ -69653,7 +69670,7 @@
 "uJP" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/blood,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 4
 	},
 /area/station/medical/cdc)
@@ -74367,7 +74384,7 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/carpet/green/standard/edge{
+/turf/simulated/floor/carpet/green/standard/edge{
 	dir = 5
 	},
 /area/station/crew_quarters/quartersC)
@@ -74623,7 +74640,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/greenwhite/corner{
+/turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
 /area/station/medical/cdc)
@@ -80084,7 +80101,7 @@
 "xMH" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
-/turf/unsimulated/floor/greenwhite/corner,
+/turf/simulated/floor/greenwhite/corner,
 /area/station/medical/cdc)
 "xMW" = (
 /turf/simulated/wall/auto/reinforced/jen/green{
@@ -129671,7 +129688,7 @@ kHx
 mke
 mke
 mke
-kHx
+tHH
 wqJ
 vHl
 amI
@@ -129973,7 +129990,7 @@ rGc
 mru
 oqV
 eQI
-xNi
+ebq
 wqJ
 yjy
 yjy

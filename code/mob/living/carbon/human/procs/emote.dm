@@ -1012,19 +1012,7 @@
 
 			if ("tweak","tweaknipples","tweaknips","nippletweak")
 				if (!src.restrained())
-					var/M = null
-					if (param)
-						for (var/mob/A in view(1, src))
-							if (ckey(param) == ckey(A.name))
-								M = A
-								break
-					if (!M)
-						param = null
-
-					if (param)
-						message = "<B>[src]</B> tweaks [param]'s nipples."
-					else
-						message = "<B>[src]</b> tweaks [his_or_her(src)] nipples."
+					message = "<B>[src]</b> tweaks [his_or_her(src)] nipples."
 				m_type = 1
 
 			if ("flipoff","flipbird","middlefinger")
@@ -1889,7 +1877,7 @@
 						sleep(0.8 SECONDS)
 						src.say_verb("The Chef.")
 						sleep(0.8 SECONDS)
-						src.say_verb("The Barman.")
+						src.say_verb("The Bartender.")
 						sleep(0.8 SECONDS)
 						src.say_verb("But not me.")
 						sleep(0.5 SECONDS)
