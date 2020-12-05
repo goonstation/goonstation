@@ -113,7 +113,7 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel the need to build dikes!"
-	msgLose = "The dikes fell so did you accent."
+	msgLose = "The dikes fell and so did you accent."
 	reclaim_fail = 10
 	lockProb = 25
 	lockedGaps = 2
