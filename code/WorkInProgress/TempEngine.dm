@@ -561,11 +561,13 @@ datum/pump_ui/circulator_ui
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 
-
-		SPAWN_DBG(0) // Offload this action...
-			for(var/obj/item/paper/engine/instructions in range(40,src))
-				if(istype(instructions))
-					instructions.info = initial(instructions.info) + instructions_footnote
+		// Note:
+		// 	THIS WILL NEED TO BE UPDATE IFF WE HAVE MORE THAN 1 TEG PER dmm/zlevel...
+		//
+		// Iterate over TEG instructions on our current zlevel to account for prefabs.
+		for_by_tcl(instructions, /obj/item/paper/engine)
+			if(src.z == instructions.z) // Ensure instructions are only updated for relevant Z level.
+				instructions.info = initial(instructions.info) + instructions_footnote
 
 
 	New()

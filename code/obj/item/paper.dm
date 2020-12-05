@@ -565,6 +565,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 <HR>
 
 "}
+	// Provide tracking so training material can be updated by TEG.  This removes reliance on a search criteria that becomes
+	// a limitation on map design.  Performant for that one time...
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
