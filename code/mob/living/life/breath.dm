@@ -272,7 +272,7 @@
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)
-			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
 		else
 			owner.co2overloadtime = 0
