@@ -1,4 +1,6 @@
-
+(t)sat dec 05 20
+(u)kyle
+(+)Lawbringer and E-gun now require rarer materials if you want to build more copies
 (t)fri dec 04 20
 (u)Superlagg
 (p)2934
