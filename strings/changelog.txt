@@ -1,5 +1,9 @@
 
 (t)sat dec 05 20
+(u)pali
+(p)2747
+(e)|
+(*)You can now adjust volume of emotes in the audio tab in the top bar.
 (u)retkid
 (p)2690
 (e)|
