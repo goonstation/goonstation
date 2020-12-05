@@ -463,7 +463,7 @@ var/obj/item/dummy/click_dummy = new
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	. = new/list()
+	. = list()
 
 	for(var/area/R in world)
 		LAGCHECK(LAG_LOW)
