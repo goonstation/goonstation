@@ -2,22 +2,42 @@
 	name = "Portable Air Pump"
 
 	icon = 'icons/obj/atmospherics/atmos.dmi'
-	icon_state = "psiphon:0"
+	icon_state = "psiphon-off"
+	dir = NORTH //so it spawns with the fan side showing
 	density = 1
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
+	var/image/tank_hatch
+
+
 	desc = "A device which can siphon or release gasses."
 
 	volume = 750
 
+	New()
+		..()
+		tank_hatch = image('icons/obj/atmospherics/atmos.dmi', "")
+
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	if(on)
-		icon_state = "psiphon:1"
+		icon_state = "psiphon-on"
+
+		animate(src, pixel_x = 2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
+		animate(pixel_x = -2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
 	else
-		icon_state = "psiphon:0"
+		icon_state = "psiphon-off"
+		animate(src)
+		pixel_x = 0
+
+	if (holding)
+		tank_hatch.icon_state = "psiphon-T-overlay"
+	else
+		tank_hatch.icon_state = ""
+	src.UpdateOverlays(tank_hatch, "tankhatch")
+
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
