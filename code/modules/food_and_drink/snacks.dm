@@ -68,6 +68,7 @@
 	amount = 6
 	heal_amt = 3
 	var/topping_color = null
+	var/sharpened = 0
 	var/sliced = 0
 	var/topping = 0
 	var/num = 0
@@ -89,7 +90,13 @@
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor) && W:sharpener_mode)
+			if (src.sharpened == 1)
+				boutput(user, "<span class='alert'>This has already been sharpened.</span>")
+				return
+			boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
+			src.sharpened = 1
+		else if (istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if (src.sliced == 1)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
 				return
@@ -101,6 +108,7 @@
 				var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
 				P.topping_holder += src.topping_colors
 				P.overlays.len = 0
+				P.sharpened = src.sharpened
 				P.sliced = 1
 				P.amount = 1
 				P.icon_state = "pslice"
@@ -119,6 +127,9 @@
 			qdel (src)
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (sharpened && prob(15))
+			boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			if (user == M)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -128,7 +139,49 @@
 				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 				return
 		else
+			if (sharpened)
+				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
 			..()
+
+	attack_self(var/mob/user as mob)
+		if (sharpened && prob(15))
+			boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
+		if (!src.sliced)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			if (sharpened)
+				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
+			..()
+
+	throw_impact(M)
+		..()
+		if (!sharpened || M == null)
+			return
+		if (sliced)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.implant.Add(src)
+				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				H.changeStatus("weakened", 2 SECONDS)
+				src.set_loc(M)
+				src.transfer_all_reagents(M)
+			random_brute_damage(M, 11)
+			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
+		else
+			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.changeStatus("weakened", 5 SECONDS)
+				H.TakeDamage("chest", prob(5) ? 50 : 15, 0, 0, DAMAGE_CUT)
+			else
+				random_brute_damage(M, prob(5) ? 50 : 15)
+			take_bleeding_damage(M, null, 25, DAMAGE_CUT)
 
 	proc/add_topping(var/num)
 		var/icon/I
@@ -1576,7 +1629,7 @@
 					newdog = new /obj/item/reagent_containers/food/snacks/corndog/spooky(get_turf(src))
 				else
 					newdog = new /obj/item/reagent_containers/food/snacks/corndog(get_turf(src))
-			
+
 			// Consume a rod or stick
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
 			if(istype(W,/obj/item/stick)) W.amount--

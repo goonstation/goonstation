@@ -1581,10 +1581,21 @@
 	slogan_list = list("A revolution in the pizza industry!",
 	"Prepared in moments!",
 	"I'm a chef who works 24 hours a day!")
+	var/sharpen = 0
 
 	lr = 1
 	lg = 0.6
 	lb = 0.2
+
+	attackby(obj/item/W, mob/user)
+		if (!sharpen && istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
+			sharpen = 1
+			add_fingerprint(user)
+			boutput(user, "You jam the pizza sharpener inside the vending machine.")
+			user.u_equip(W)
+			qdel(W)
+			return
+		return ..()
 
 	generate_vending_HTML()
 		src.vending_HTML = "<TT><B>PizzaVend 0.5b</B></TT><BR>"
@@ -1622,13 +1633,17 @@
 					icon_state = "pizza-vend"
 					src.generate_HTML(1)
 					updateUsrDialog()
-					sleep(20 SECONDS)
+					if (!src.sharpen)
+						sleep(20 SECONDS)
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
 					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
 					P.quality = 0.6
 					P.heal_amt = 2
+					P.sharpened = src.sharpen
 					P.desc = "A typical [piztopping] pizza."
 					P.name = "[piztopping] pizza"
+					if (src.sharpen)
+						P.throw_at(usr, 16, 3)
 					sleep(0.2)
 					if(piztopping != "plain")
 						switch(piztopping)
