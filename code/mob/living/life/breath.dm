@@ -292,7 +292,7 @@
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						owner.sleeping = max(owner.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(20))
+					if (prob(percentmult(20, mult)))
 						owner.emote(pick("giggle", "laugh"))
 
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
