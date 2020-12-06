@@ -48,7 +48,7 @@
 			return ..()
 
 		//shivering status chance
-		if (owner.bodytemperature + owner.temp_tolerance < owner.base_body_temp && !owner.is_cold_resistant())
+		if (isalive(owner) && ((owner.bodytemperature + owner.temp_tolerance) < owner.base_body_temp) && !owner.is_cold_resistant())
 			var/diff = owner.base_body_temp - (owner.bodytemperature + owner.temp_tolerance)
 			var/scaling_factor = max((owner.base_body_temp - T0C)*6,1)
 			var/chance = round((diff/scaling_factor)*100)
@@ -96,4 +96,3 @@
 		if (ARMS)
 			TakeDamage("l_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
 			TakeDamage("r_arm", 0, 0.4*discomfort, 0, DAMAGE_BURN)
-
