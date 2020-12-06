@@ -204,8 +204,12 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
-				if(width < 360 && abs(angledifference(get_angle(epicenter, target), angle)) > (width/2))
-					new_value = new_value / 3
+				if(width < 360)
+					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+					if(diff > width)
+						continue
+					else if(diff > width/2)
+						new_value = new_value / 3 - 1
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
