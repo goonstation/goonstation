@@ -2579,19 +2579,19 @@ var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branc
 
 			//find the door
 			var/turf/office_entry = null
+			var/obj/stool/chair/chair = locate(/obj/stool/chair) in office
+			if (chair)
+				office_entry = get_turf(chair)
+				src.mob.dir = chair.dir
 			var/obj/machinery/door/unpowered/wood/O = locate(/obj/machinery/door/unpowered/wood) in office
 			if (O)
-				office_entry = get_turf(O)
-				turfs -= office_entry
-			else
-				//mark has a ladder
-				var/obj/ladder/L = locate(/obj/ladder) in office
-				if (L)
-					office_entry = get_turf(L)
-					turfs -= office_entry
-				else
-					boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
-					return
+				if (!office_entry)
+					office_entry = get_turf(O)
+				turfs -= get_turf(O)
+
+			if (!office_entry)
+				boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
+				return
 
 			if (!office_entry) return
 			var/x_diff = src_turf.x - office_entry.x
@@ -2608,6 +2608,7 @@ var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branc
 					summoning_office = TRUE
 
 			if (summoning_office)
+				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another!", "You skillfully manipulate spacetime to bring the space containing your office to yourself. Wow.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
 				if (!MIRRORED_PHYSICAL_ZONE_CREATED)
 					MIRRORED_PHYSICAL_ZONE_CREATED = TRUE
