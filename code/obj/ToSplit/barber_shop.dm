@@ -22,6 +22,13 @@
 	item_state = "baldcap"
 	seal_hair = 1
 
+/obj/item/clothing/head/bald_cap_5head
+	name = "strange bald cap"
+	desc = "You... can't tell the difference, I swear!"
+	icon_state = "baldcap-5head"
+	item_state = "baldcap"
+	seal_hair = 1
+
 /obj/item/scissors
 	name = "scissors"
 	desc = "Used to cut hair. Make sure you aim at the head, where the hair is."
