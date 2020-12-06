@@ -1,4 +1,9 @@
 
+(t)sun dec 06 20
+(u)Kubius
+(p)2900
+(e)🆕🗺|feature, mapping
+(+)Further small Ozymandias fixes/changes, primarily QM flow improvements and pod bay controls.
 (t)sat dec 05 20
 (u)pali
 (p)2955
