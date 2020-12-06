@@ -435,7 +435,6 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
