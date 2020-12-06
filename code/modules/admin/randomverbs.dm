@@ -2608,12 +2608,12 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.vistarget = null
 					summoning_office = FALSE
 					T.appearance_flags &= ~KEEP_TOGETHER
-					T.layer -= 0.01 //retore to normal
+					T.layer -= 0.1 //retore to normal
 
 				else
 					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
 					summoning_office = TRUE
-					T.layer += 0.01 //stop hiding my turfs!!
+					T.layer += 0.1 //stop hiding my turfs!!
 
 			if (summoning_office)
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
