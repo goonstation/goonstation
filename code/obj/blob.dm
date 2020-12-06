@@ -43,7 +43,7 @@ var/image/blob_icon_cache
 	New()
 		..()
 		if(!blob_icon_cache)
-			blob_icon_cache = image('icons/mob/new_blob.dmi')
+			blob_icon_cache = image('icons/mob/blob.dmi')
 			blob_icon_cache.appearance_flags |= RESET_COLOR
 			blob_icon_cache.plane = PLANE_SELFILLUM + 1
 		if (!poisoned_image)
@@ -560,7 +560,7 @@ var/image/blob_icon_cache
 
 /obj/blob/nucleus
 	name = "blob nucleus"
-	state_overlay = "new_nucleus"
+	state_overlay = "nucleus"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
 	armor = 3
@@ -651,7 +651,7 @@ var/image/blob_icon_cache
 
 /obj/blob/deposit
 	name = "reagent deposit"
-	state_overlay = "new_deposit-reagent"
+	state_overlay = "deposit-reagent"
 	special_icon = 1
 	desc = "It's a thick walled cell with reagents entrenched within."
 	armor = 1
@@ -665,7 +665,7 @@ var/image/blob_icon_cache
 	New()
 		..()
 		if (!overlay_image)
-			overlay_image = image('icons/mob/new_blob.dmi', "deposit-material")
+			overlay_image = image('icons/mob/blob.dmi', "deposit-material")
 
 	examine(mob/user)
 		if (disposed)
@@ -738,7 +738,7 @@ var/image/blob_icon_cache
 
 	replicator
 		name = "replicator"
-		state_overlay = "new_replicator"
+		state_overlay = "replicator"
 		runOnLife = 1
 		var/points_per_unit = 1
 		var/max_per_tick = 3
@@ -822,7 +822,7 @@ var/image/blob_icon_cache
 
 	reclaimer
 		name = "reclaimer"
-		state_overlay = "new_reclaimer"
+		state_overlay = "reclaimer"
 		runOnLife = 1
 		var/reagents_per_point = 5
 		var/max_per_tick = 3
@@ -848,7 +848,7 @@ var/image/blob_icon_cache
 
 /obj/blob/launcher
 	name = "slime launcher"
-	state_overlay = "new_cannon"
+	state_overlay = "cannon"
 
 	special_icon = 1
 	desc = "It's a slime ball launcher. The organic equivalent of a defense turret."
@@ -968,7 +968,7 @@ var/image/blob_icon_cache
 /datum/projectile/slime
 	name = "slime"
 	icon = 'icons/obj/projectiles.dmi'
-	//state_overlay = "new_slime"
+	//state_overlay = "slime"
 	color_red = 0
 	color_green = 0
 	color_blue = 0
@@ -1007,7 +1007,7 @@ var/image/blob_icon_cache
 
 /obj/blob/mitochondria
 	name = "mitochondria"
-	state_overlay = "new_mitochondria"
+	state_overlay = "mitochondria"
 	special_icon = 1
 	desc = "It's a giant energy converting cell. It seems to be knitting together nearby holes in the blob."
 	armor = 0
@@ -1026,7 +1026,7 @@ var/image/blob_icon_cache
 
 /obj/blob/reflective
 	name = "reflective membrane"
-	state_overlay = "new_reflective"
+	state_overlay = "reflective"
 	special_icon = 1
 	desc = "This cell seems to reflect light."
 	armor = 0
@@ -1045,7 +1045,7 @@ var/image/blob_icon_cache
 
 /obj/blob/ectothermid
 	name = "ectothermid"
-	state_overlay = "new_ectothermid"
+	state_overlay = "ectothermid"
 	special_icon = 1
 	desc = "It's a giant energy converting cell. It seems to disperse matter using heat energy."
 	armor = 0
@@ -1101,7 +1101,7 @@ var/image/blob_icon_cache
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"
-	state_overlay = "new_plasmaphyll"
+	state_overlay = "plasmaphyll"
 	special_icon = 1
 	desc = "It's a giant energy converting cell. It seems to feed on certain gases."
 	armor = 0
@@ -1129,7 +1129,7 @@ var/image/blob_icon_cache
 
 /obj/blob/lipid
 	name = "lipid"
-	state_overlay = "new_lipid"
+	state_overlay = "lipid"
 	special_icon = 1
 	desc = "It's an energy storage cell. It stores biopoints."
 	armor = 0
@@ -1153,7 +1153,7 @@ var/image/blob_icon_cache
 // TODO: REPLACE WITH SOMETHING COOLER - URS
 /obj/blob/ribosome
 	name = "ribosome"
-	state_overlay = "new_ribosome"
+	state_overlay = "ribosome"
 	special_icon = 1
 	desc = "It's a protein sequencing cell. It enhances the blob's ability to spread."
 	armor = 0
@@ -1179,7 +1179,7 @@ var/image/blob_icon_cache
 /obj/blob/wall
 	name = "thick membrane"
 	desc = "This blob is encased in a tough membrane. It'll be harder to get rid of."
-	state_overlay = "new_wall"
+	state_overlay = "wall"
 	opacity = 1
 	special_icon = 1
 	armor = 2
@@ -1202,7 +1202,7 @@ var/image/blob_icon_cache
 /obj/blob/firewall
 	name = "fire-resistant membrane"
 	desc = "This blob is encased in a fireproof membrane."
-	state_overlay = "new_firewall"
+	state_overlay = "firewall"
 	opacity = 1
 	special_icon = 1
 	armor = 1
@@ -1234,7 +1234,7 @@ var/image/blob_icon_cache
 		pixel_x = rand(-12, 12)
 		pixel_y = rand(-12, 12)
 		blob_icon_cache.color = overmind.organ_color
-		blob_icon_cache.icon_state = "new_deposit-material"
+		blob_icon_cache.icon_state = "deposit-material"
 		UpdateOverlays(blob_icon_cache,name)
 
 	onMaterialChanged()
