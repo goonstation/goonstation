@@ -1727,6 +1727,8 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
+	if (src.aiControlDisabled) return
+
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
 		user_toggle_open(user)
@@ -1812,7 +1814,8 @@ obj/machinery/door/airlock
 		return UI_UPDATE
 
 /obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)

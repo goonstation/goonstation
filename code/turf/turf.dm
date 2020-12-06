@@ -296,6 +296,28 @@
 
 						mover.Bump(obstacle,1)
 						return 0
+
+	if (MIRRORED_PHYSICAL_ZONE_CREATED) //checking visual mirrors for blockers if set
+		if (length(src.vis_contents))
+			var/turf/T = locate(/turf) in src.vis_contents
+			if (T)
+				for(var/thing in T)
+
+					var/atom/movable/obstacle = thing
+					if(obstacle == mover) continue
+					if(!mover)	return 0
+					if ((forget != obstacle))
+						if(obstacle.event_handler_flags & USE_CANPASS)
+							if(!obstacle.CanPass(mover, cturf, 1, 0))
+
+								mover.Bump(obstacle, 1)
+								return 0
+						else //cheaper, skip proc call lol lol
+							if (obstacle.density)
+
+								mover.Bump(obstacle,1)
+								return 0
+
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
@@ -379,7 +401,8 @@
 	if(vistarget)
 		vistarget.vis_contents += M
 	if(warptarget)
-		M.set_loc(warptarget)
+		if(OldLoc)
+			M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355

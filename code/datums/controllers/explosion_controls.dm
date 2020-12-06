@@ -93,13 +93,22 @@ var/datum/explosion_controller/explosions
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
+#ifdef EXPLOSION_MAPTEXT_DEBUGGING
+			if (p >= 6)
+				T.maptext = "<span style='color: #ff0000;' class='pixel c sh'>[p]</span>"
+			else if (p > 3)
+				T.maptext = "<span style='color: #ffff00;' class='pixel c sh'>[p]</span>"
+			else
+				T.maptext = "<span style='color: #00ff00;' class='pixel c sh'>[p]</span>"
+
+#else
 			if (p >= 6)
 				T.ex_act(1, last_touched)
 			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)
-
+#endif
 		LAGCHECK(LAG_HIGH)
 
 		queued_turfs.len = 0

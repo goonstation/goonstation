@@ -415,6 +415,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		var/image/I = globalImages[key]
 		src << I
 
+	src.volumes = default_channel_volumes.Copy()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
 	SPAWN_DBG(0)
@@ -509,9 +511,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				src.load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
-					var/cur = volumes.len
+					var/list/old_volumes = volumes.Copy()
 					volumes = json_decode(decoded)
-					volumes.len = cur
+					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+						else
+							volumes += old_volumes[i]
 
 		src.mob.reset_keymap()
 

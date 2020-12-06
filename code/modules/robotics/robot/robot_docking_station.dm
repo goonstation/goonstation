@@ -795,9 +795,9 @@
 						playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
 					SPAWN_DBG(0.6 SECONDS)
 						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
 
 			if (H.health <= 2)

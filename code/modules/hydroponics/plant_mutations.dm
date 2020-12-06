@@ -246,7 +246,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1)
+			playsound(POT.loc, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
