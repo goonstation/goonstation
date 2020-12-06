@@ -17,6 +17,7 @@
 		if (man_targetZ) src.targetZ = man_targetZ
 		var/turf/T = get_turf(src)
 		if (!T) return
+		T.appearance_flags |= KEEP_TOGETHER
 		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 		if(is_warp) T.vistarget.warptarget = T
 		T.updateVis()

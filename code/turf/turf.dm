@@ -345,10 +345,6 @@
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-#ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents -= Obj
-#endif
 
 	return ..(Obj, newloc)
 
@@ -398,8 +394,6 @@
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents += M
 	if(warptarget)
 		if(OldLoc)
 			M.set_loc(warptarget)
