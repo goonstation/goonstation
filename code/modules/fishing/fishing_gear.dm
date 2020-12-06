@@ -63,6 +63,8 @@
 		playsound(get_turf(src.user), "sound/items/fishing_rod_cast.ogg", 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
+		src.rod.update_icon()
+		src.user.update_inhands()
 
 	onUpdate()
 		..()
