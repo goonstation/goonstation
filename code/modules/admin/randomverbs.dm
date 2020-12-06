@@ -2557,6 +2557,7 @@ var/global/night_mode_enabled = 0
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
+var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
 /client/proc/summon_office()
 	set name = "Summon Office"
 	set desc = "Expand your domain across dimensional planes."
@@ -2596,13 +2597,22 @@ var/global/night_mode_enabled = 0
 			var/x_diff = src_turf.x - office_entry.x
 			var/y_diff = src_turf.y - office_entry.y
 
+			var/summoning_office = null //bleh
 			for (var/turf/T in turfs)
 				if (T.vistarget)
-					T.vistarget.vis_contents -= T.contents
+					T.vistarget.vis_contents = null
 					T.vistarget = null
+					summoning_office = FALSE
 				else
 					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
+					summoning_office = TRUE
 
+			if (summoning_office)
+				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
+				if (!MIRRORED_PHYSICAL_ZONE_CREATED)
+					MIRRORED_PHYSICAL_ZONE_CREATED = TRUE
+			else
+				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 

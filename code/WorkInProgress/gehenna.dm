@@ -15,7 +15,8 @@
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
-		var/turf/T = loc
+		var/turf/T = get_turf(src)
+		if (!T) return
 		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 		if(is_warp) T.vistarget.warptarget = T
 		T.updateVis()
@@ -41,7 +42,7 @@
 /turf/proc/updateVis()
 	if(vistarget)
 		vistarget.overlays.Cut()
-		vistarget.vis_contents += src.contents
+		vistarget.vis_contents += src
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
