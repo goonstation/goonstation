@@ -731,6 +731,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
 
+#ifdef SECRETS_ENABLED
+	for_by_tcl(S, /obj/santa_helper)
+		S.save_mail()
+#endif
+
 	logTheThing("debug", null, null, "Done with books")
 
 	award_archived_round_xp()
