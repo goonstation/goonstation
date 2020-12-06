@@ -297,7 +297,7 @@
 						mover.Bump(obstacle,1)
 						return 0
 
-	if (MIRRORED_PHYSICAL_ZONE_CREATED) //checking visual mirrors for blockers if set
+	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
 			var/turf/T = locate(/turf) in src.vis_contents
 			if (T)
