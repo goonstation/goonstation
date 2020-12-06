@@ -1837,6 +1837,8 @@ var/list/zalgo_mid = list(
 
 //A Dutch accent... Don't ask
 //Made by Bierkraan
+//sources:
+//https://www.taaltutor.nl/blog/dutch-causes-many-mistakes-in-english/
 /proc/dutch_parse(var/datum/text_roamer/R)
 	var/new_string = ""
 	var/used = 0
@@ -1864,6 +1866,14 @@ var/list/zalgo_mid = list(
 		if("E")
 			if(lowertext(R.next_char) == "O")
 				new_string = "IE"
+				used = 2
+		if("e")
+			if(lowertext(R.next_char) == "d")
+				new_string = "ud"
+				used = 2
+		if("E")
+			if(lowertext(R.next_char) == "D")
+				new_string = "UD"
 				used = 2
 
 	if(new_string == "")
