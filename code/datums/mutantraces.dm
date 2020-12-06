@@ -752,7 +752,6 @@
 /datum/mutantrace/lizard
 	name = "lizard"
 	icon_state = "lizard"
-	allow_fat = 1
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE)
 	voice_override = "lizard"
@@ -1326,7 +1325,6 @@
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
-	allow_fat = 1
 	jerk = 1
 	override_attack = 0
 	aquatic = 1
@@ -1690,7 +1688,6 @@
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
-	allow_fat = 1
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -1756,7 +1753,6 @@
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
 	// icon_state = "shelter"
-	allow_fat = 0
 	human_compatible = 1
 	jerk = 0
 	var/permanent = 0
@@ -1898,7 +1894,6 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
 	race_mutation = /datum/bioEffect/mutantrace/cow
@@ -1992,7 +1987,6 @@
 /datum/mutantrace/chicken
 	name = "Chicken"
 	icon_state = "chicken_m"
-	allow_fat = 0
 	human_compatible = 1
 	jerk = 0
 	race_mutation = /datum/bioEffect/mutantrace/chicken

@@ -1704,7 +1704,6 @@
 		if (disposed)
 			return
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		return
 
