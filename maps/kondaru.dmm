@@ -3963,6 +3963,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
 "ajo" = (
@@ -6101,6 +6104,9 @@
 "aon" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
 "aoo" = (
@@ -7415,6 +7421,9 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/machinery/light_switch/north,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/news_office)
 "arp" = (
@@ -7429,6 +7438,9 @@
 /area/station/crew_quarters/radio/news_office)
 "arr" = (
 /obj/blind_switch/area/north,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/news_office)
 "ars" = (
@@ -7643,6 +7655,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8;
+	pixel_x = 14
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "arR" = (
@@ -7717,6 +7733,10 @@
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4;
+	pixel_x = -14
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -8645,6 +8665,10 @@
 "aul" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4;
+	pixel_x = -14
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/north)
 "aum" = (
@@ -10676,6 +10700,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "ayJ" = (
@@ -10699,6 +10726,9 @@
 	pixel_x = 12
 	},
 /obj/machinery/vending/standard,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "ayN" = (
@@ -12040,6 +12070,9 @@
 "aBz" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "aBA" = (
@@ -12057,6 +12090,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "aBD" = (
@@ -15577,6 +15613,9 @@
 "aJL" = (
 /obj/table/wood/auto,
 /obj/bedsheetbin,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
 "aJM" = (
@@ -15601,6 +15640,9 @@
 	},
 /obj/landmark/start{
 	name = "Staff Assistant"
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
@@ -15635,6 +15677,9 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
 "aJR" = (
@@ -15654,6 +15699,9 @@
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
@@ -17406,6 +17454,9 @@
 "aOe" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
 "aOf" = (
@@ -17459,6 +17510,9 @@
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
 "aOl" = (
@@ -17496,6 +17550,9 @@
 /area/station/security/checkpoint/escape)
 "aOp" = (
 /obj/machinery/vending/cigarette,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -18038,6 +18095,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -18053,6 +18111,7 @@
 	dir = 1
 	},
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -19459,6 +19518,9 @@
 "aSk" = (
 /obj/table/wood/auto,
 /obj/item/storage/fanny,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
 "aSl" = (
@@ -19514,6 +19576,9 @@
 /obj/machinery/light/lamp{
 	pixel_x = 1;
 	pixel_y = 10
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_north)
@@ -20436,6 +20501,7 @@
 	},
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_east)
 "aUz" = (
@@ -20648,6 +20714,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -22410,6 +22479,7 @@
 	},
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/kitchen)
 "aYN" = (
@@ -22663,6 +22733,9 @@
 /obj/machinery/sleep_console{
 	dir = 4
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -22846,6 +22919,9 @@
 /area/station/crew_quarters/catering)
 "aZL" = (
 /obj/machinery/vending/kitchen,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aZM" = (
@@ -22886,6 +22962,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/deep_fryer,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aZQ" = (
@@ -23105,6 +23184,9 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/quarters_south)
 "baq" = (
@@ -23119,6 +23201,9 @@
 /obj/machinery/light/lamp{
 	pixel_x = 1;
 	pixel_y = 10
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
@@ -24520,6 +24605,9 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/quarters_south)
 "bdH" = (
@@ -24529,6 +24617,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/cola{
 	pixel_x = 8
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
@@ -24744,6 +24835,9 @@
 "bek" = (
 /obj/machinery/disposal/mail/autoname/kitchen,
 /obj/disposalpipe/trunk/mail/east,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bel" = (
@@ -24807,6 +24901,9 @@
 /area/station/crew_quarters/catering)
 "ber" = (
 /obj/submachine/foodprocessor,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bes" = (
@@ -25864,6 +25961,9 @@
 "bhb" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/medicine,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/quarters_south)
 "bhc" = (
@@ -28354,6 +28454,9 @@
 	dir = 1
 	},
 /obj/machinery/vending/medical,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -28384,6 +28487,9 @@
 /area/station/medical/medbay/lobby)
 "bmv" = (
 /obj/machinery/vending/medical,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bmw" = (
@@ -29696,6 +29802,9 @@
 "bpz" = (
 /obj/disposalpipe/segment/food,
 /obj/reagent_dispensers/watertank/big,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -29731,6 +29840,9 @@
 /area/station/hydroponics/bay)
 "bpE" = (
 /obj/submachine/chem_extractor,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -32737,6 +32849,9 @@
 /obj/item/storage/box/syringes,
 /obj/item/device/reagentscanner,
 /obj/item/clothing/glasses/spectro,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -32756,6 +32871,9 @@
 "bxa" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -32798,6 +32916,9 @@
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -34648,7 +34769,7 @@
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bBe" = (
-/obj/storage/crate,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bBf" = (
@@ -49814,6 +49935,9 @@
 /obj/item/reagent_containers/glass/oilcan,
 /obj/item/storage/toolbox/emergency,
 /obj/item/reagent_containers/glass/oilcan,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
 "cgZ" = (
@@ -49848,6 +49972,9 @@
 "chc" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chd" = (
@@ -49936,6 +50063,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chu" = (
@@ -50030,6 +50160,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chH" = (
@@ -53272,6 +53405,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
 /turf/simulated/floor/orange/side{
 	dir = 1
 	},
@@ -54780,6 +54916,12 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"ggG" = (
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "gih" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -54790,6 +54932,14 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/south)
+"goX" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8;
+	pixel_x = 14
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/hallway/primary/west)
 "gpl" = (
 /obj/iv_stand,
 /turf/simulated/floor/sanitary/white,
@@ -55567,6 +55717,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"kKi" = (
+/obj/table/wood/auto,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/news_office)
 "kKQ" = (
 /obj/stool/chair/office,
 /obj/landmark/start{
@@ -56552,6 +56709,13 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"pUl" = (
+/obj/machinery/plantpot,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "pUv" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -56987,6 +57151,16 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/medical)
+"scU" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/radio/news_office)
 "sdd" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light/emergency,
@@ -56996,6 +57170,13 @@
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"sfX" = (
+/obj/disposalpipe/segment/vertical,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "shz" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath/ephemeral,
@@ -57275,6 +57456,12 @@
 /obj/machinery/cargo_router/kd_sec_flap,
 /turf/simulated/floor/bot,
 /area/station/routing/security)
+"tuZ" = (
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "tvw" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -57771,6 +57958,13 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
+"wBr" = (
+/obj/stool/bench/blue/auto,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "wDk" = (
 /obj/lattice{
 	dir = 9;
@@ -57965,6 +58159,12 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"xGa" = (
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/red/standard/edge/nw,
+/area/station/crew_quarters/radio/news_office)
 "xIe" = (
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
@@ -96290,7 +96490,7 @@ akn
 alg
 ame
 anm
-ayv
+kKi
 aDM
 aqx
 aru
@@ -96894,7 +97094,7 @@ akp
 ali
 amg
 anm
-aol
+xGa
 apr
 aqz
 apr
@@ -97493,7 +97693,7 @@ afE
 afI
 aho
 ait
-ajr
+scU
 ajr
 ajr
 amh
@@ -98129,7 +98329,7 @@ aMC
 xmF
 aMC
 aPz
-aMC
+sfX
 aRL
 awR
 awR
@@ -104751,7 +104951,7 @@ apG
 aqM
 arQ
 asU
-aud
+goX
 jdV
 xQl
 axc
@@ -111741,7 +111941,7 @@ bja
 blD
 bja
 bja
-bpC
+pUl
 bqM
 bqM
 btz
@@ -125915,19 +126115,19 @@ aOq
 aOq
 aRl
 aNu
-aOr
+tuZ
 aOr
 aOr
 aVZ
 aOr
 aNu
-aOr
+tuZ
 aOr
 aOr
 aOr
 aOr
 aNu
-aOr
+tuZ
 aOr
 bii
 bjz
@@ -126212,7 +126412,7 @@ aJW
 aEP
 aMq
 aEP
-aOr
+tuZ
 aQd
 aQh
 aRm
@@ -127118,7 +127318,7 @@ aci
 aaO
 aad
 aNu
-aOt
+wBr
 aPf
 aQf
 doC
@@ -127722,7 +127922,7 @@ aci
 aaa
 aaa
 aNu
-aOt
+wBr
 aPf
 aQf
 aUe
@@ -128326,7 +128526,7 @@ aci
 aaa
 aaa
 aNu
-aOt
+wBr
 aPf
 aQf
 aNu
@@ -128344,7 +128544,7 @@ aTp
 aTp
 aaa
 aNu
-aQf
+ggG
 bik
 aOt
 aNu
@@ -128930,7 +129130,7 @@ aci
 aaa
 acb
 aNu
-aOt
+wBr
 aPf
 aQf
 aNu
@@ -128948,7 +129148,7 @@ aTp
 aaa
 acb
 aNu
-aQf
+ggG
 bik
 bRp
 aNu
