@@ -1727,6 +1727,8 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
+	if (src.aiControlDisabled) return
+
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
 		user_toggle_open(user)
