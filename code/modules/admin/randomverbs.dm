@@ -2557,6 +2557,66 @@ var/global/night_mode_enabled = 0
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
+var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
+/client/proc/summon_office()
+	set name = "Summon Office"
+	set desc = "Expand your domain across dimensional planes."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	var/turf/src_turf = get_turf(src.mob)
+	if (!src_turf) return
+
+	var/list/areas = get_areas(/area/centcom/offices)
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (!length(turfs))
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+				return
+
+			//find the door
+			var/turf/office_entry = null
+			var/obj/stool/chair/chair = locate(/obj/stool/chair) in office
+			if (chair)
+				office_entry = get_turf(chair)
+				src.mob.dir = chair.dir
+			var/obj/machinery/door/unpowered/wood/O = locate(/obj/machinery/door/unpowered/wood) in office
+			if (O)
+				if (!office_entry)
+					office_entry = get_turf(O)
+				turfs -= get_turf(O)
+
+			if (!office_entry)
+				boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
+				return
+
+			if (!office_entry) return
+			var/x_diff = src_turf.x - office_entry.x
+			var/y_diff = src_turf.y - office_entry.y
+
+			var/summoning_office = null //bleh
+			for (var/turf/T in turfs)
+				if (T.vistarget)
+					T.vistarget.vis_contents = null
+					T.vistarget = null
+					summoning_office = FALSE
+				else
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
+					summoning_office = TRUE
+
+			if (summoning_office)
+				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another!", "You skillfully manipulate spacetime to bring the space containing your office to yourself. Wow.", "You have no idea what's happening but it sure does sound cool!")
+				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
+				if (!MIRRORED_PHYSICAL_ZONE_CREATED)
+					MIRRORED_PHYSICAL_ZONE_CREATED = TRUE
+			else
+				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")
+
 /client/proc/cmd_crusher_walls()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Crusher Walls"

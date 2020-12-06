@@ -1,3 +1,6 @@
+(t)sun dec 06 20
+(u)Sovexe
+(*)Adds a new verb, Summon Office. Summons your fully interactable office to you through visual mirror magic. Objects placed on tables will be warped away when you dismiss the office. Use with caution if your office has dangerous stuff.
 (t)fri dec 04 20
 (u)Mordent
 (*)Removed "Emergency Restart" verb from the Server panel, still available on the command line if you need it for some reason.
