@@ -2548,7 +2548,7 @@ var/global/night_mode_enabled = 0
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
-var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
+var/global/mirrored_physical_zone_created = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
 /client/proc/summon_office()
 	set name = "Summon Office"
 	set desc = "Expand your domain across dimensional planes."
@@ -2560,6 +2560,10 @@ var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branc
 	if (!src_turf) return
 
 	var/list/areas = get_areas(/area/centcom/offices)
+	var/area/A = get_area(src.mob)
+	if (A.type in childrentypesof(/area/centcom/offices))
+		boutput(src, "In order to prevent a complete collapse of the known universe you resist the urge to manipulate spacetime within the office.")
+		return
 	for (var/area/centcom/offices/office in areas)
 		//search all offices for an office with the same ckey variable as the usr.
 		if (office.ckey == src.ckey)
@@ -2595,18 +2599,18 @@ var/global/MIRRORED_PHYSICAL_ZONE_CREATED = FALSE //enables secondary code branc
 					T.vistarget = null
 					summoning_office = FALSE
 					T.appearance_flags &= ~KEEP_TOGETHER
-					T.layer -= 0.01 //retore to normal
+					T.layer -= 0.1 //retore to normal
 
 				else
 					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
 					summoning_office = TRUE
-					T.layer += 0.01 //stop hiding my turfs!!
+					T.layer += 0.1 //stop hiding my turfs!!
 
 			if (summoning_office)
-				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to bring the space containing your office to yourself.", "You have no idea what's happening but it sure does sound cool!")
+				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
-				if (!MIRRORED_PHYSICAL_ZONE_CREATED)
-					MIRRORED_PHYSICAL_ZONE_CREATED = TRUE
+				if (!mirrored_physical_zone_created)
+					mirrored_physical_zone_created = TRUE
 			else
 				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")
 				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
