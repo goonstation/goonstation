@@ -1,10 +1,12 @@
 var/image/blob_icon_cache
+var/image/special_icon_cache
 /obj/blob
 	name = "blob"
 	desc = "A mysterious alien blob-like organism."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "15"
 	var/state_overlay = null
+	var/special_overlay = null // hack, there HAS to be a better way of doing this
 
 	color = "#FF0000"
 	var/original_color = "#FF0000"
@@ -46,6 +48,10 @@ var/image/blob_icon_cache
 			blob_icon_cache = image('icons/mob/blob.dmi')
 			blob_icon_cache.appearance_flags |= RESET_COLOR
 			blob_icon_cache.plane = PLANE_SELFILLUM + 1
+		if(!special_icon_cache)
+			special_icon_cache = image('icons/mob/blob.dmi')
+			special_icon_cache.appearance_flags |= RESET_COLOR
+			special_icon_cache.plane = PLANE_SELFILLUM + 2
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
 		src.update_icon()
@@ -109,6 +115,10 @@ var/image/blob_icon_cache
 				blob_icon_cache.color = O.organ_color
 				blob_icon_cache.icon_state = state_overlay
 				UpdateOverlays(blob_icon_cache,"overmind")
+			if ( special_overlay )
+				special_icon_cache.color = O.organ_color
+				special_icon_cache.icon_state = special_overlay
+				UpdateOverlays(special_icon_cache,"special_overlay")
 			if( O.hat && istype(src,/obj/blob/nucleus) )
 				UpdateOverlays(O.hat,"hat")
 
@@ -426,7 +436,7 @@ var/image/blob_icon_cache
 			if (34 to 66)
 				src.alpha *= 0.5
 			if (66 to 99)
-				src.alpha *= 0.75
+				src.alpha *= 0.8
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
@@ -561,6 +571,7 @@ var/image/blob_icon_cache
 /obj/blob/nucleus
 	name = "blob nucleus"
 	state_overlay = "nucleus"
+	special_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
 	armor = 3
@@ -571,6 +582,7 @@ var/image/blob_icon_cache
 	poison_coefficient = 0.5
 	poison_depletion = 3
 	var/nextAttackMsg = 0
+	var/blink_overlay
 
 	New()
 		. = ..()
