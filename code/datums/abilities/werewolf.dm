@@ -198,7 +198,7 @@
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
 					boutput(M, __blue("That tasted fantastic!"))
 					healing *= 2
-				else if (HH.nutrition > 100 || HH.bioHolder && HH.bioHolder.HasEffect("fat"))
+				else if (HH.nutrition > 100)
 					boutput(M, __blue("That tasted amazing!"))
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2

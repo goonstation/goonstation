@@ -21,8 +21,6 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	/// whether fat icons/disabilities are used
-	var/allow_fat = 0
 	/** Mutant Appearance Flags - used to modify how the mob is drawn
 	*
 	* For a purely static-icon mutantrace (drawn from a single, non-chunked image), use:
@@ -851,10 +849,9 @@
 			M.add_stam_mod_regen("zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
-		M.bioHolder.AddEffect("fat")
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
-		M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
+		M.Scale(1.15, 1.15) //Fat bioeffect doesn't exist anymore, so they're just bigger now.
 		M.max_health += 150
 		M.health = max(M.max_health, M.health)
 
@@ -1721,8 +1718,6 @@
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_chav")
-			if(allow_fat)
-				M.bioHolder.AddEffect("fat")
 
 
 	disposing()

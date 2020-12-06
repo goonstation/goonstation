@@ -319,12 +319,6 @@
 
 			usr.pixel_y = 0
 
-			if (owner.bioHolder.HasEffect("fat") && prob(66) && !linked_power.safety)
-				owner.visible_message("<span class='alert'><b>[owner]</b> crashes due to their heavy weight!</span>")
-				playsound(usr.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-				owner.changeStatus("weakened", 10 SECONDS)
-				owner.changeStatus("stunned", 50)
-
 			owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
@@ -1711,7 +1705,7 @@
 			return
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[H.bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		return
 
 	OnAdd()

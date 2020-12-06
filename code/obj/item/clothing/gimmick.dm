@@ -3,7 +3,6 @@
 /obj/item/clothing/under/virtual
 	name = "virtual jumpsuit"
 	desc = "These clothes are unreal."
-	wear_image_fat = "virtual"
 	icon_state = "virtual"
 	item_state = "virtual"
 
@@ -1063,16 +1062,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 			if (user.zone_sel.selecting == "l_arm" || user.zone_sel.selecting == "r_arm") // the ring always ends up on the left hand because I cba to let people dynamically choose the hand it goes on. yet. later, maybe.
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/fat = H.bioHolder && H.bioHolder.HasEffect("fat") // also honk
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
 						return
 					if (user == H) // is this some form of masturbation?? giving yourself a wedding ring???? or are you too lazy to just equip it like a normal person????????
-						user.visible_message("<b>[user]</b> [fat ? "squeezes" : "slips"] [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
-						"You [fat ? "squeeze" : "slip"] [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
+						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
+						"You slip [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
 					else
-						user.visible_message("<b>[user]</b> [fat ? "squeezes" : "slips"] [src] onto [H]'s finger.",\
-						"You [fat ? "squeeze" : "slip"] [src] onto [H]'s finger.")
+						user.visible_message("<b>[user]</b> slips [src] onto [H]'s finger.",\
+						"You slip [src] onto [H]'s finger.")
 					user.u_equip(src)
 					H.force_equip(src, H.slot_gloves)
 					return
