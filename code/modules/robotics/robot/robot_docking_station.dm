@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
-	event_handler_flags = NO_MOUSEDROP_QOL
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
