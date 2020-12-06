@@ -2159,7 +2159,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aHU" = (
-/obj/storage/cart/trash,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -2167,7 +2166,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/slag_shovel,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "aHX" = (
@@ -3219,8 +3218,8 @@
 	},
 /area/station/medical/staff)
 "aXk" = (
-/obj/random_item_spawner/junk/one_or_zero,
 /obj/disposalpipe/segment/horizontal,
+/obj/storage/cart/trash,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "aXB" = (
@@ -19003,7 +19002,7 @@
 /area/station/maintenance/disposal)
 "fHw" = (
 /obj/machinery/disposal,
-/obj/disposalpipe/trunk/north,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "fHT" = (
@@ -19532,6 +19531,12 @@
 	},
 /turf/space,
 /area/space)
+"fQI" = (
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/horizontal,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "fQJ" = (
 /obj/item/storage/toilet,
 /obj/machinery/light/small{
@@ -22098,8 +22103,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "gBU" = (
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/tools,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -22107,6 +22110,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "gBX" = (
@@ -24230,7 +24234,10 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/disposalpipe/segment/bent/south,
+/obj/storage/crate,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
 /turf/simulated/floor/black,
 /area/station/storage/warehouse)
 "hgr" = (
@@ -28864,7 +28871,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
 "iAh" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/black,
 /area/station/storage/warehouse)
 "iAk" = (
@@ -43149,11 +43156,8 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "myC" = (
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/storage/crate,
 /obj/machinery/light/small/harsh,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/black,
 /area/station/storage/warehouse)
 "myE" = (
@@ -47870,6 +47874,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
+"nRW" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/black,
+/area/station/storage/warehouse)
 "nRY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
@@ -71586,6 +71594,12 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
+"uuS" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/station/storage/warehouse)
 "uuU" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/northwest,
 /turf/simulated/floor/plating,
@@ -71939,8 +71953,8 @@
 	},
 /area/station/crew_quarters/data)
 "uzS" = (
-/obj/machinery/portable_reclaimer,
 /obj/machinery/light/small/harsh,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "uzV" = (
@@ -80046,7 +80060,7 @@
 /turf/space,
 /area/space)
 "wBK" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "wBP" = (
@@ -80821,6 +80835,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/item/slag_shovel,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "wLP" = (
@@ -119440,7 +119455,7 @@ aTC
 gxJ
 aks
 tKz
-utx
+fQI
 wvY
 tvo
 wfZ
@@ -146898,8 +146913,8 @@ thy
 xip
 fye
 cZG
-cMP
-tHA
+uuS
+nRW
 urn
 qjZ
 qjZ
