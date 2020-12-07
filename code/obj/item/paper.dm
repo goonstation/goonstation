@@ -261,7 +261,7 @@
 	.["sizeY"] = src.sizey
 	.["text"] = src.info
 	.["max_length"] = PAPER_MAX_LENGTH
-	.["paperColor"] = src.color	// color might not be set
+	.["paperColor"] = src.color || "white"	// color might not be set
 	.["stamps"] = src.stamps
 	.["stampable"] = src.stampable
 	.["sealed"] = src.sealed

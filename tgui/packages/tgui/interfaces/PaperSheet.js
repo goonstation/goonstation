@@ -245,8 +245,8 @@ export const PaperSheetView = (props, context) => {
       width="100%"
       height={"100%"} >
       <Box
-        className="Paper__Page"
         color="black"
+        backgroundColor={"white"}
         fillPositionedParent
         width="100%"
         height="100%"
@@ -549,7 +549,7 @@ class PaperSheetEdit extends Component {
               value={this.state.textAreaText}
               textColor={textColor}
               fontFamily={fontFamily}
-              height={(window.innerHeight - 80) + "px"}
+              height={(window.innerHeight - 60) + "px"}
               backgroundColor={backgroundColor}
               onInput={this.onInputHandler.bind(this)} />
           ) || (
