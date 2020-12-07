@@ -72,8 +72,10 @@
 	var/unusualCell = 0
 	var/self_charging = 0
 
-	New()
+	New(var/list/_ammo)
 		..()
+		if(islist(_ammo))
+			src.mag_contents = _ammo
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
 		SPAWN_DBG(1 SECONDS)

@@ -1049,7 +1049,7 @@
 		src.burst_count = fmode.burst_count
 		src.refire_delay = fmode.refire_delay
 		src.spread_angle = fmode.spread_angle
-		src.current_projectile = new fmode.projectile
+		src.current_projectile = fmode.projectile
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!

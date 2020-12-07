@@ -192,7 +192,7 @@
 				var/list/cap_firemodes = list(src.firemode_1)
 				if (!isnull(src.firemode_2))
 					cap_firemodes += src.firemode_2
-				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user), firemodes = cap_firemodes, loaded_magazine = src.our_cell)
+				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user), _firemodes = cap_firemodes, loaded_magazine = src.our_cell)
 				src.our_cell.set_loc(L)
 
 				// The man with the golden gun.

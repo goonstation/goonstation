@@ -13,7 +13,7 @@
 	/// Projectile to shoot. If null, it'll shoot whatever's in the gun's magazine
 	var/datum/projectile/projectile = null
 	/// Override the gun's shoot sounds with this datum, if set
-	var/datum/shoot_sounds/sounds = null
+	var/datum/shoot_sounds/sounds = new/datum/shoot_sounds/test
 	/// Whether or not the firemode'll let the gun shoot this click, for things like a single-action revolver
 	var/can_shoot = 1
 	/// The gun its attached to
@@ -21,11 +21,16 @@
 
 	New(var/obj/gun, name, spread, refire, proj)
 		. = ..()
-		src.gunmaster = gun
-		src.mode_name = name
-		src.spread_angle = spread
-		src.refire_delay = refire
-		src.projectile = proj
+		if(gun)
+			src.gunmaster = gun
+		if(name)
+			src.mode_name = name
+		if(spread)
+			src.spread_angle = spread
+		if(refire)
+			src.refire_delay = refire
+		if(proj)
+			src.projectile = proj
 
 	/// Do this after the gun shoots, for things like toggling can_shoot or playing a done-shooting sound or something
 	proc/after_shot(var/mob/user)
@@ -85,6 +90,7 @@
 	refire_delay = 1
 	shoot_delay = 1 SECOND
 	spread_angle = 12.5
+	sounds = new/datum/shoot_sounds/test2
 
 /datum/firemode/auto
 	mode_name = "fully automatic"

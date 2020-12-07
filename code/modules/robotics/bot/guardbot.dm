@@ -184,7 +184,9 @@
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
 	/// Ammofab will replicate the contents of this magazine into the gun its holding
-	var/obj/item/ammo/fab_mag
+	var/obj/item/ammo/ammoToDupe
+	/// The bullet the ammofab'll try to dupe
+	var/datum/projectile/top_shot
 	//
 	////////////////////// GUN STUFF -^
 
@@ -1020,6 +1022,12 @@
 				src.budgun.master = src
 				src.hasgun = 1
 				src.gun = budgun.name
+				qdel(src.ammoToDupe)
+				src.ammoToDupe = new budgun.loaded_magazine.type(_ammo = budgun.loaded_magazine.mag_contents)
+				if(src.ammoToDupe.mag_contents.len)
+					src.top_shot = src.ammoToDupe.mag_contents[1]
+				else
+					src.top_shot = src.ammoToDupe.ammo_type[1]
 				user.u_equip(Q)
 				update_icon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
@@ -1108,13 +1116,32 @@
 
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
-			var/datum/projectile/top_shot = src.fab_mag.mag_contents[1]
-			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-				cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (top_shot.power * top_shot.ks_ratio * 0.75))
-				qdel(shootgun.loaded_magazine)
-				shootgun.loaded_magazine = new src.fab_mag.type
-				return 1 // good2shoot!
-			else if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
+			if(shootgun.fixed_mag)
+				var/list/ammoToLoad = list()
+				while(shootgun.loaded_magazine.mag_contents.len < shootgun.loaded_magazine.max_amount)
+					if(src.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)
+						//cell.charge -= (top_shot.power * top_shot.ks_ratio * 0.75)
+						ammoToLoad += new top_shot
+					else
+						break
+				if(ammoToLoad.len >= 1)
+					SPAWN_DBG(0)
+						var/obj/item/ammo/bullets/pile/ammobullets = new/obj/item/ammo/bullets/pile(_ammo = ammoToLoad)
+						for(var/i in 1 to ammobullets.mag_contents.len)
+							if(!shootgun.load_gun(ammobullets, src))
+								break
+							sleep(5)
+						if(ammobullets || ammobullets.mag_contents.len)
+							ammobullets.set_loc(get_turf(src))
+
+			else
+				if ((shootgun.loaded_magazine.mag_contents.len <= 1) && src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
+					cell.charge -= ((shootgun.loaded_magazine.max_amount - shootgun.loaded_magazine.mag_contents.len) * (top_shot.power * top_shot.ks_ratio * 0.75))
+					var/obj/item/ammo/newmag = new src.ammoToDupe.type(src, _ammo = src.ammoToDupe.mag_contents)
+					shootgun.swap(newmag, src)
+					src.speak(pick("CHANGING MAGS!", "Reloading!", "Cover me while I reload!"))
+
+			if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
 				return 1 // still good2shoot!
 			else
 				return DischargeAndTakeANap()
@@ -1152,13 +1179,10 @@
 
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun
-			if (shootgun.ammo) // is our gun even loaded with anything?
-				if (shootgun.ammo.amount_left >= shootgun.current_projectile.cost)
-					return 1 // good2shoot!
-				else
-					return 0 // until we can fire an incomplete burst, our gun isnt good2shoot
-			else // no?
-				return 0 // huh
+			if (shootgun.loaded_magazine.mag_contents.len) // Does our gun have ammo in it?
+				return 1 // good2shoot!
+			else
+				return 0 // Guess not!
 
 		else if (istype(src.budgun, /obj/item/gun/energy))
 			var/obj/item/gun/energy/pewgun = src.budgun
@@ -1228,7 +1252,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			budgun.shoot(target_turf, my_turf, src)
+			budgun.shoot_manager(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up

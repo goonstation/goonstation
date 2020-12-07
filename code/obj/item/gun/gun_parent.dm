@@ -54,18 +54,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	/// Are we allowed to reload the gun at all?
 	var/can_reload = TRUE
 
-	/// List of sounds to play
-	/// format: list(GUN_SOUND_DEF = "sound") // DATUMIZE
-	var/list/gunsounds = list(LOAD_SINGLE = "sound/weapons/gun_cocked_colt45.ogg",\
-	                          LOAD_MULTIPLE = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          LOAD_MAGAZINE = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          UNLOAD_SINGLE = "sound/weapons/gun_cocked_colt45.ogg",\
-	                          UNLOAD_MULTIPLE = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          UNLOAD_MAGAZINE = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          SHOOT_SOUND = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          SHOOT_SILENCED_SOUND = "sound/musical_instruments/Airhorn_1.ogg",\
-	                          SHOOT_EMPTY = "sound/weapons/Gunclick.ogg")
-
+	/// List of sounds to play when messing with the gun (loading, unloading, pretty much just that)
+	var/datum/gun_sounds/gunsounds = new/datum/gun_sounds/test
+	/// List of sounds to play when shooting, if any
+	var/datum/shoot_sounds/shootsounds
 
 	/// Infinite Ammo -- Magazine list isnt changed on firing
 	/// Projectile Override -- Shoot default projectile instead of what's in the mag's list
@@ -120,7 +112,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
 		lastTooltipContent = .
 
-	New(var/loc, var/list/loaded_magazine)
+	New(var/loc, var/list/loaded_magazine, var/list/_firemodes)
+		if(_firemodes)
+			src.firemodes = _firemodes
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
 		if(!islist(src.accepted_mag))
@@ -260,13 +254,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		//user.bullet_act(current_projectile)
 		return FALSE
 	return TRUE
-/*
-/obj/item/gun/proc/emag(obj/item/A as obj, mob/user as mob)
-	if(istype(A, /obj/item/card/emag))
-		boutput(user, "<span class='alert'>No lock to break!</span>")
-		return TRUE
-	return FALSE
-*/
+
 /obj/item/gun/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
 		boutput(user, "<span class='alert'>No lock to break!</span>")
@@ -287,8 +275,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	src.burst_count = FM.burst_count
 	src.refire_delay = FM.refire_delay
 	src.spread_angle = FM.spread_angle
+	src.shootsounds = FM.sounds
 	if(istype(FM.projectile, /datum/projectile))
-		src.current_projectile = new FM.projectile
+		src.current_projectile = FM.projectile
 	FM.switch_to_firemode(user)
 
 /obj/item/gun/attackby(obj/item/ammo/b as obj, mob/user as mob)
@@ -424,9 +413,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if(src.fixed_mag && src.loaded_magazine)
 				var/loaded = src.loaded_magazine.load_ammo(A, user = user)
 				if(loaded == 1)
-					playsound(user, src.gunsounds[LOAD_SINGLE], 50)
+					playsound(user, src.gunsounds.soundLoadSingle, src.gunsounds.soundLoadSingleVolume)
 				else if (loaded > 1)
-					playsound(user, src.gunsounds[LOAD_MULTIPLE], 50)
+					playsound(user, src.gunsounds.soundLoadMultiple, src.gunsounds.soundLoadMultipleVolume)
 			else
 				boutput(user, "You can't load anything into [src.loaded_magazine] while it's inside \the [src]! Try removing the magazine first.")
 				return FALSE
@@ -457,9 +446,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			src.handle_casings(eject_stored = TRUE, user = user)
 			src.update_icon()
 			if(unloaded == 1)
-				playsound(user, src.gunsounds[UNLOAD_SINGLE], 50)
+				playsound(user, src.gunsounds.soundUnloadSingle, src.gunsounds.soundUnloadSingleVolume)
 			else if (unloaded > 1)
-				playsound(user, src.gunsounds[UNLOAD_MULTIPLE], 50)
+				playsound(user, src.gunsounds.soundUnloadMultiple, src.gunsounds.soundUnloadMultipleVolume)
 			return TRUE
 	else // Removable magazine, lets remove it!
 		var/obj/item/ammo/W = src.loaded_magazine
@@ -474,7 +463,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		src.update_icon()
 		src.add_fingerprint(user)
 		src.handle_casings(eject_stored = TRUE, user = user) // Some kind of gun that stores its casings in the mag, I guess
-		playsound(user, src.gunsounds[UNLOAD_MAGAZINE], 50)
+		playsound(user, src.gunsounds.soundUnloadMagazine, src.gunsounds.soundUnloadMagazineVolume)
 		boutput(user, "You unload \the [W] from \the [src]!")
 		if (put_it_here)
 			boutput(user, "You put [W] on \the [put_it_here].")
@@ -488,10 +477,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(user, "Wrong kind of thing to put into this thing!")
 		return 0
 
-
 	A.set_loc(src)
 	src.handle_casings(eject_stored = TRUE, user = user)
-	user.u_equip(A)
+	if(ismob(user))
+		user.u_equip(A)
 	if(src.loaded_magazine.is_null_mag)
 		qdel(src.loaded_magazine)
 	else
@@ -499,13 +488,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		old_mag.loaded_in = null
 		old_mag.update_bullet_manifest()
 		old_mag.update_icon()
-		playsound(user, src.gunsounds[UNLOAD_MAGAZINE], 50)
-		user.put_in_hand_or_drop(old_mag)
+		playsound(user, src.gunsounds.soundUnloadMagazine, src.gunsounds.soundUnloadMagazineVolume)
+		if(ismob(user))
+			user.put_in_hand_or_drop(old_mag)
+		else
+			old_mag.set_loc(get_turf(user))
 	src.loaded_magazine = A
 	src.loaded_magazine.loaded_in = src
 	src.loaded_magazine.update_bullet_manifest()
 	src.loaded_magazine.update_icon()
-	playsound(user, src.gunsounds[LOAD_MAGAZINE], 50)
+	SPAWN_DBG(0.5 SECONDS)
+		playsound(user, src.gunsounds.soundLoadMagazine, src.gunsounds.soundLoadMagazineVolume)
 	src.update_icon()
 
 	// // I tweaked this for improved user feedback and to support zip guns (Convair880).
@@ -738,7 +731,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!silenced)
 		if(point_blank)
 			user.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
-		playsound(user, src.gunsounds[SHOOT_EMPTY], 60, 1)
+		playsound(user, src.shootsounds.soundShootEmpty, src.shootsounds.soundShootEmptyVolume)
 	else
 		user.show_text("*click* *click*", "red")
 
@@ -770,7 +763,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/shoot_manager(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
 	if(src.shooting) return
 	if (isghostdrone(user))
-		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
+		user?.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
 	var/canshoot = src.canshoot()
 	if (!canshoot)
@@ -778,8 +771,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	else if (canshoot == GUN_IS_SHOOTING)
 		return
-	else if(canshoot == TRUE)
-		user.next_click = max(user.next_click, world.time + src.shoot_delay)
+	else if(canshoot == TRUE && ismob(user))
+		user?.next_click = max(user.next_click, world.time + src.shoot_delay)
 	SPAWN_DBG(0)
 		src.shooting = 1
 		for(var/burst in 1 to src.burst_count)
@@ -836,9 +829,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 	handle_casings(user = user)
 	if(silenced)
-		playsound(user, src.gunsounds[SHOOT_SILENCED_SOUND], 60, 1)
+		playsound(user, src.shootsounds.soundShootSilent, src.shootsounds.soundShootSilentVolume, 1)
 	else
-		playsound(user, src.gunsounds[SHOOT_SOUND], 60, 1)
+		playsound(user, src.shootsounds.soundShoot, src.shootsounds.soundShootVolume, 1)
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 	if (P)
 		P.forensic_ID = src.forensic_ID
@@ -943,9 +936,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		P.launch()
 	if(silenced)
-		playsound(user, src.gunsounds[SHOOT_SILENCED_SOUND], 60, 1)
+		playsound(user, src.shootsounds.soundShootSilent, src.shootsounds.soundShootSilentVolume, 1)
 	else
-		playsound(user, src.gunsounds[SHOOT_SOUND], 60, 1)
+		playsound(user, src.shootsounds.soundShoot, src.shootsounds.soundShootVolume, 1)
 	handle_casings(user = user)
 
 	var/mob/living/L = M
@@ -998,8 +991,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				C.set_loc(T)
 				src.casings_to_eject -= src.casings_to_eject[1]
 			return
-	else
-		if (!istype(src.current_projectile, /datum/projectile))
+	else // Trying to eject null casings makes runtimes. Looking at you, artguns!
+		if (!istype(src.current_projectile, /datum/projectile) || !src.current_projectile.casing)
 			return
 
 		if (src.auto_eject)
@@ -1035,16 +1028,16 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			src.icon_state = replacetext(src.icon_state, "-empty", "")
 	return FALSE
 
-/// Checks if it can shoot, then deducts ammo from the magazine
+/// Checks if it can shoot, loads the projectile into the chamber (src.current_projectile), then deducts it from the ammothing
+/// Same thing for energy weapons, but it only checks if it has enough energy, then eats the energy
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	if(src.loaded_magazine.mag_type == AMMO_ENERGY) // Has a battery
-		if(!src.current_projectile?.name)
-
+		if(!src.current_projectile?.name) // Firemode didnt set a projectile on an energy weapon? Lets fix that!
 			var/datum/firemode/F = src.firemodes[src.firemode_index]
-			if(istype(F.projectile, /datum/projectile))
+			if(istype(F.projectile, /datum/projectile)) // Does the firemode have a projectile associated?
 				src.current_projectile = F.projectile
-			else
-				src.dry_fire(user)
+			else // No?
+				src.dry_fire(user) // rip
 				return FALSE
 		if (src.loaded_magazine.charge >= src.current_projectile.cost)
 			src.loaded_magazine.charge -= src.current_projectile.cost

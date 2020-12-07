@@ -68,15 +68,14 @@
 		var/datum/firemode/FM = src.firemodes[src.firemode_index]
 		if(curr_fm == src.firemode_index)
 			FM.switch_to_firemode(user, mode_changed = 0)
-			return
 		else
-			src.shoot_delay = FM.shoot_delay
-			src.burst_count = FM.burst_count
-			src.refire_delay = FM.refire_delay
-			src.spread_angle = FM.spread_angle
 			FM.switch_to_firemode(user)
-			if(istype(FM.projectile, /datum/projectile))
-				src.current_projectile = new FM.projectile
+		src.shoot_delay = FM.shoot_delay
+		src.burst_count = FM.burst_count
+		src.refire_delay = FM.refire_delay
+		src.spread_angle = FM.spread_angle
+		if(istype(FM.projectile, /datum/projectile))
+			src.current_projectile = FM.projectile
 
 	process_ammo(var/mob/user)
 		if(isrobot(user))
