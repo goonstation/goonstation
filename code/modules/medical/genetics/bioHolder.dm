@@ -289,6 +289,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				owner.update_colorful_parts()
 		return
 
 	proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
