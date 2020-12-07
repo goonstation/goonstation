@@ -168,7 +168,7 @@
 	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
-	current_projectile = new/datum/projectile/bullet/a12
+	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"

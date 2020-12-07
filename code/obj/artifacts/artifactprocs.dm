@@ -352,18 +352,6 @@
 					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
-		if("reliquary") // fragile machinery so no smacking them too hard, also pretty vulnerable to electricity
-			if(stimtype == "force")
-				if (strength >= 20)
-					T.visible_message(pick("<span class='alert'>[src] cracks and splinters!</span>","<span class='alert'>[src] starts to split and break from the impact!</span>"))
-					playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
-					ArtifactDevelopFault(80)
-					src.ArtifactTakeDamage(strength * 1.5)
-			if(stimtype == "elec")
-				if (strength >= 3000) // max you can get from the electrobox is 5000
-					if (prob(10))
-						T.visible_message(pick("<span class='alert'>[src] buzzes angrily!</span>","<span class='alert'>[src] beeps grumpily!</span>"))
-						src.ArtifactTakeDamage(strength / 1000)
 
 	if (!src || !A)
 		return
@@ -449,8 +437,6 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
-			if("reliquary")
-				T.visible_message("<span class='alert'><B>[src] sparks violently before its internal circuitry falls apart and causes it to collapse!</B></span>")
 
 	qdel(src)
 	return

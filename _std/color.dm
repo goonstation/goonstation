@@ -102,7 +102,7 @@
 	return list(outh, outs, outv)
 
 /proc/hex_to_rgb_list(var/hex)
-	var/regex/R = new("^#?(\[a-f\\d\]{2})(\[a-f\\d\]{2})(\[a-f\\d\]{2})$", "gi")
+	var/regex/R = new("^#?(\[a-f\\d\]{2})(\[a-f\\d\]{2})(\[a-f\\d\]{2})", "gi")
 	var/list/L = list()
 	if (R.Find(hex))
 		L["r"] = hex2num(R.group[1])
@@ -116,3 +116,14 @@
 
 //Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
 #define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
+
+// This proc converts a hex color value ("#420CAB") to an RGB list
+// Clamps each of the RGB values between 50 and 190
+/proc/fix_colors(var/hex)
+	var/list/L = hex_to_rgb_list(hex)
+	for (var/i in L)
+		L[i] = min(L[i], 190)
+		L[i] = max(L[i], 50)
+	if (length(L) == 3)
+		return rgb(L["r"], L["g"], L["b"])
+	return rgb(22, 210, 22)

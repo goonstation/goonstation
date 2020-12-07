@@ -198,6 +198,7 @@
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
+		materiel_stock += new/datum/materiel/utility/sarin_grenade
 
 	accepted_token()
 		src.current_sidearm_credits++
@@ -368,6 +369,12 @@
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
 	catagory = "Utility"
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
+
+/datum/materiel/utility/sarin_grenade
+	name = "Sarin Grenade"
+	path = /obj/item/chem_grenade/sarin
+	catagory = "Utility"
+	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 // Requisition tokens
 

@@ -344,7 +344,7 @@
 						name = "malfunctioning robot"
 						src.speak("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
 						src.visible_message("The <b>[src]</b> points at [C.name]!")
-						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						startup = 0
 						wanderer = 1
 					src.visible_message("<span class='alert'>The <b>[src]</b> charges at [C:name]!</span>")
@@ -388,7 +388,7 @@
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
 /obj/mars_roverpuzzle

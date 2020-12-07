@@ -607,13 +607,16 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc)
+			new_character = new J.mob_type(src.loc, client.preferences.AH)
 		else
-			new_character = new /mob/living/carbon/human(src.loc) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
 
 		close_spawn_windows()
 
 		client.preferences.copy_to(new_character,src)
+		if(ishuman(new_character))
+			var/mob/living/carbon/human/H = new_character
+			H.update_colorful_parts()
 		var/client/C = client
 		mind.transfer_to(new_character)
 

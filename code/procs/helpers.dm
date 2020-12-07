@@ -2108,7 +2108,7 @@ var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space)
+		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2280,7 +2280,7 @@ var/regex/nameRegex = regex("\\xFF.","g")
 /proc/isadmin(person)
 	if (ismob(person))
 		var/mob/M = person
-		return M.client ? M.client.holder ? TRUE : FALSE : FALSE
+		return !!(M?.client?.holder)
 
 	else if (isclient(person))
 		var/client/C = person
@@ -2288,7 +2288,7 @@ var/regex/nameRegex = regex("\\xFF.","g")
 
 	else if (ismind(person))
 		var/datum/mind/M = person
-		return M.current ? M.current.client ? M.current.client.holder ? TRUE : FALSE : FALSE : FALSE
+		return !!(M?.current?.client?.holder)
 
 	return FALSE
 

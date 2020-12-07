@@ -819,5 +819,5 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = null
+	tool_flags = 0
 	w_class = 3.0

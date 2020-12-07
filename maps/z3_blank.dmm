@@ -2165,7 +2165,6 @@
 /area/wrecknsspolaris)
 "fK" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/reliquaryscout,
 /obj/item/parts/human_parts/arm/right/polaris,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
