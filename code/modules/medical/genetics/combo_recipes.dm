@@ -133,7 +133,7 @@
 	result = /datum/bioEffect/fire_aura
 
 /datum/geneticsrecipe/strong
-	required_effects = list("dead_scan","detox")
+	required_effects = list("fitness_debuff","detox")
 	result = /datum/bioEffect/strong
 
 /datum/geneticsrecipe/stinky
