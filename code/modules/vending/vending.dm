@@ -1581,7 +1581,7 @@
 	slogan_list = list("A revolution in the pizza industry!",
 	"Prepared in moments!",
 	"I'm a chef who works 24 hours a day!")
-	var/sharpen = 0
+	var/sharpen = FALSE
 
 	lr = 1
 	lg = 0.6
@@ -1589,7 +1589,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (!sharpen && istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
-			sharpen = 1
+			sharpen = TRUE
 			add_fingerprint(user)
 			boutput(user, "You jam the pizza sharpener inside the vending machine.")
 			user.u_equip(W)

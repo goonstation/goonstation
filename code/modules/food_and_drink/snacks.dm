@@ -68,9 +68,9 @@
 	amount = 6
 	heal_amt = 3
 	var/topping_color = null
-	var/sharpened = 0
-	var/sliced = 0
-	var/topping = 0
+	var/sharpened = FALSE
+	var/sliced = FALSE
+	var/topping = FALSE
 	var/num = 0
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
@@ -90,14 +90,17 @@
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor) && W:sharpener_mode)
-			if (src.sharpened == 1)
-				boutput(user, "<span class='alert'>This has already been sharpened.</span>")
+		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
+			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
+			if (cutter.sharpener_mode)
+				if (src.sharpened)
+					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
+					return
+				boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
+				src.sharpened = TRUE
 				return
-			boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
-			src.sharpened = 1
-		else if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.sliced == 1)
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+			if (src.sliced)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
 				return
 			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
@@ -109,7 +112,7 @@
 				P.topping_holder += src.topping_colors
 				P.overlays.len = 0
 				P.sharpened = src.sharpened
-				P.sliced = 1
+				P.sliced = TRUE
 				P.amount = 1
 				P.icon_state = "pslice"
 				P.quality = src.quality
@@ -117,7 +120,7 @@
 				if(topping)
 					P.name = src.name
 					P.desc = src.desc
-					P.topping = 1
+					P.topping = TRUE
 					P.num = src.num
 					P.add_topping(num)
 				src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
@@ -128,7 +131,7 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (sharpened && prob(15))
-			boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
+			boutput(M, "<span class='alert'>That pizza was sharp!</span>")
 			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			if (user == M)
@@ -146,7 +149,7 @@
 
 	attack_self(var/mob/user as mob)
 		if (sharpened && prob(15))
-			boutput(user, "<span class='alert'>The pizza was too pointy!</span>")
+			boutput(user, "<span class='alert'>The pizza was sharp!</span>")
 			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
 			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -160,7 +163,7 @@
 
 	throw_impact(M)
 		..()
-		if (!sharpened || M == null)
+		if (!sharpened || isnull(M))
 			return
 		if (sliced)
 			if (ishuman(M))
@@ -178,18 +181,18 @@
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.changeStatus("weakened", 5 SECONDS)
-				H.TakeDamage("chest", prob(5) ? 50 : 15, 0, 0, DAMAGE_CUT)
+				H.TakeDamage("chest", 35, 0, 0, DAMAGE_CUT)
 			else
-				random_brute_damage(M, prob(5) ? 50 : 15)
+				random_brute_damage(M, 35)
 			take_bleeding_damage(M, null, 25, DAMAGE_CUT)
 
 	proc/add_topping(var/num)
 		var/icon/I
-		if (sliced == 0)
+		if (!sliced)
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
-		else if (num == 0 & sliced == 1) // Bad, I know, sorry!
+		else if (num == 0 && sliced) // Bad, I know, sorry!
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
@@ -205,7 +208,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#C90E0E"
 
 	New()
@@ -215,7 +218,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/meatball
 	name = "meatball pizza"
 	desc = "A typical meatball pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#663300"
 
 	New()
@@ -225,7 +228,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "A typical mushroom pizza."
-	topping = 1
+	topping = TRUE
 	topping_color = "#CFCFCF"
 	food_effects = list("food_disease_resist")
 
@@ -236,7 +239,7 @@
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
-	topping = 1
+	topping = TRUE
 	topping_color = "#3CFF00"
 
 	New()

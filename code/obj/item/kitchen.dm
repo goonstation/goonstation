@@ -425,7 +425,7 @@ TRAYS
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
-	var/sharpener_mode = 0
+	var/sharpener_mode = FALSE
 
 	attack_self(mob/user as mob)
 		sharpener_mode = !sharpener_mode
