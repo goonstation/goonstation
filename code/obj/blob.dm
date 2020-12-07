@@ -586,6 +586,10 @@ var/image/special_icon_cache
 
 	New()
 		. = ..()
+		blob_icon_cache.pixel_y = 5
+		special_icon_cache.pixel_y = 5
+		//UpdateOverlays(blob_icon_cache,"overmind")
+		//UpdateOverlays(special_icon_cache,"special_overlay")
 		START_TRACKING
 
 	disposing()
