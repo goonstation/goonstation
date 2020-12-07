@@ -86568,13 +86568,8 @@
 	item_state = "sword1-R";
 	name = "Enakai's red cyalume saber"
 	},
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/east,
-/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2{
-	desc = "It's over Enakai";
-	name = "the high ground"
-	},
+/obj/cover/showcase,
+/turf/unsimulated/floor/wizard/showcase,
 /area/centcom/offices/enakai)
 "vFr" = (
 /obj/decal/fakeobjects/lightbulb_broken,
