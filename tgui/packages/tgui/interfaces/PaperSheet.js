@@ -401,8 +401,6 @@ class PaperSheetEdit extends Component {
     // into the fields
     value = value.trim();
     if (value.length > 0) {
-      // First lets make sure it ends in a new line
-      value += value[value.length] === "\n" ? " \n" : "\n \n";
       // Second, we sanitize the text of html
       const sanitizedText = sanitizeText(value);
       const signedText = signDocument(sanitizedText, penColor, editUsr);
