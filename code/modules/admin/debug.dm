@@ -564,7 +564,7 @@ var/global/debug_messages = 0
 	if (!esize)
 		return
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
-	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nLeave it on 0 if you have no idea what this does.", "Angle", 0) as num
+	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
 	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")

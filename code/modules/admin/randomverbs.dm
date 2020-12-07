@@ -2595,16 +2595,22 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			var/summoning_office = null //bleh
 			for (var/turf/T in turfs)
 				if (T.vistarget)
-					T.vistarget.vis_contents = null
+					T.vistarget.vis_contents -= T
+					T.vistarget.warptarget = null
 					T.vistarget = null
+					T.warptarget = null
 					summoning_office = FALSE
 					T.appearance_flags &= ~KEEP_TOGETHER
 					T.layer -= 0.1 //retore to normal
 
 				else
-					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, warptarget_modifier = LANDMARK_VM_WARP_NONE)
 					summoning_office = TRUE
 					T.layer += 0.1 //stop hiding my turfs!!
+
+					//anti-sneaky players breaking into centcom through summoned office code
+					T.warptarget = T.vistarget
+					T.warptarget_modifier = LANDMARK_VM_WARP_NON_ADMINS
 
 			if (summoning_office)
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")

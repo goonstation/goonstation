@@ -1,5 +1,12 @@
 
 (t)sun dec 06 20
+(u)Flourish
+(e)🆕|feature
+(*)You can now send letters to Santa! Find their helper under the Spacemas tree.
+(u)BatElite
+(p)2932
+(e)🆕|feature
+(+)Crewmembers looking for early retirement can now use portable air pumps for that purpose.
 (u)Kubius
 (p)2900
 (e)🆕🗺|feature, mapping

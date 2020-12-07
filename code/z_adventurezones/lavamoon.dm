@@ -1349,6 +1349,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/broken = FALSE
 
 	broken
+		name = "broken ladder"
+		desc = "it's too damaged to climb."
 		icon_state = "ladder_wall_broken"
 		broken = TRUE
 
