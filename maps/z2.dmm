@@ -76133,7 +76133,7 @@
 "dEw" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
+	lock_dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
@@ -82595,6 +82595,25 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"eAl" = (
+/obj/table/virtual{
+	dir = 6;
+	icon_state = "tabledir"
+	},
+/obj/item/item_box/medical_patches/mini_synthflesh{
+	name = "box of unmerged patches";
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/pill/sheltestgrog{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "eAt" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /turf/unsimulated/floor/shuttle{
@@ -82696,7 +82715,7 @@
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "fge" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -82993,7 +83012,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "gKo" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -83042,6 +83061,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"hag" = (
+/obj/item/strange_candle{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "hba" = (
 /obj/decal/fakeobjects/tallsmes{
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
@@ -83073,6 +83102,23 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"hnz" = (
+/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
+	pixel_x = 9;
+	pixel_y = -11
+	},
+/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "hnB" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
@@ -83176,7 +83222,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "hQa" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -83244,6 +83290,16 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"hVQ" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4;
+	locked = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -83387,6 +83443,18 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"iOu" = (
+/obj/maptext_spawner{
+	loc_maptext = "<span class='pixel c ol' style='#baff99'>WELCOME</span>";
+	loc_maptext_width = 96;
+	loc_maptext_x = 16;
+	loc_maptext_y = 16
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "iOJ" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -83755,9 +83823,20 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
+"kjV" = (
+/obj/admin_plaque{
+	name = "Pali's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kkw" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "kmt" = (
 /turf/unsimulated/floor/void/channel{
 	density = 1;
@@ -83971,7 +84050,7 @@
 "lkO" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "loc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -84020,7 +84099,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "lsA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -84122,7 +84201,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "lLo" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -84384,13 +84463,13 @@
 "ncn" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8;
-	locked = 1
+	lock_dir = 4
 	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "ncu" = (
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
@@ -85013,6 +85092,17 @@
 /turf/space,
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
+"pkO" = (
+/obj/fakeobjects{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "roach-dead";
+	name = "squashed bug"
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "plR" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -85070,6 +85160,20 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"pCx" = (
+/obj/table/virtual{
+	dir = 10;
+	icon_state = "tabledir"
+	},
+/obj/item/strange_candle{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "pEf" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 1
@@ -85294,6 +85398,16 @@
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"qvZ" = (
+/obj/pedestal,
+/obj/item/gun/kinetic/beepsky/one_bullet{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "qwk" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Compartment Access";
@@ -85364,7 +85478,7 @@
 	targetZ = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "qIQ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -85551,6 +85665,12 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"rqw" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "rst" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -85568,7 +85688,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -85629,7 +85749,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 1
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -85659,6 +85779,15 @@
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"rJI" = (
+/obj/critter/roach{
+	name = "unsquashed bug"
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "rJR" = (
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
@@ -85684,7 +85813,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 1
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rOb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -85714,6 +85843,15 @@
 /obj/fitness/stacklifter,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
+"rUf" = (
+/obj/critter/roach{
+	name = "\"feature\""
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor6"
+	},
+/area/centcom/offices/pali)
 "rVv" = (
 /obj/machinery/cruiser_destroyable/cruiser_pod/movement,
 /turf/space,
@@ -85946,12 +86084,12 @@
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "sTc" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap{
 	dir = 8
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "sTU" = (
 /obj/item/wirecutters,
 /turf/space,
@@ -86109,7 +86247,7 @@
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -86147,7 +86285,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "tZr" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -86230,7 +86368,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "uzz" = (
 /obj/table/wood/auto/desk,
 /obj/item/gun/kinetic/meowitzer/inert{
@@ -86326,7 +86464,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "vjH" = (
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "vlp" = (
 /obj/machinery/light{
 	dir = 1
@@ -86672,7 +86810,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "wYI" = (
 /turf/space,
 /turf/simulated/floor/caution/corner/sw,
@@ -86743,7 +86881,7 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "xky" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -160517,7 +160655,7 @@ dDP
 dDp
 dDP
 dvN
-dvV
+kjV
 ncn
 dDP
 dvN
@@ -160819,9 +160957,9 @@ dRO
 dCF
 eTm
 dvw
-dvW
-dvW
-dwZ
+pkO
+rJI
+iOu
 dvw
 wvy
 hnB
@@ -161121,9 +161259,9 @@ dCE
 dDq
 dCF
 dvw
-dvW
-dvW
-dvW
+rqw
+rUf
+rqw
 dvw
 fhy
 lNZ
@@ -161423,9 +161561,9 @@ dCC
 dCF
 dDN
 dvw
-dvX
-dvW
-dvW
+pCx
+qvZ
+hag
 dvw
 xoF
 tXu
@@ -161725,9 +161863,9 @@ dCD
 dDE
 dRQ
 dvw
-dvW
-dvW
-dvW
+eAl
+rqw
+hnz
 dvw
 dXN
 uTj
@@ -164452,7 +164590,7 @@ gPB
 dDP
 dvN
 dvV
-ncn
+hVQ
 dDP
 dvN
 lEG

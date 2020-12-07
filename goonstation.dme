@@ -1428,6 +1428,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\air_vendor.dm"
 #include "code\obj\machinery\airlock_sensor.dm"
 #include "code\obj\machinery\alarm.dm"
+#include "code\obj\machinery\arc_electroplater.dm"
 #include "code\obj\machinery\atmos_field.dm"
 #include "code\obj\machinery\camera.dm"
 #include "code\obj\machinery\cashreg.dm"

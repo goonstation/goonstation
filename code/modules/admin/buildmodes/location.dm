@@ -9,8 +9,8 @@ Right Mouse Button on mob/obj      = Select Target<br>
 	var/atom/movable/target = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
-		if (!src.target || !object)
-			return
+		if (!src.target || !object) return
+		if (!get_turf(object)) return
 
 		if (ctrl)
 			if (!ismob(object) && !isobj(object))

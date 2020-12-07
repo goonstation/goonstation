@@ -669,7 +669,8 @@ proc/find_ghost_by_key(var/find_key)
 				active_process = PROCESS_IDLE
 
 /obj/machinery/computer/cloning/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("delete")

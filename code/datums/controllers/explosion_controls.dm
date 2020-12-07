@@ -93,13 +93,22 @@ var/datum/explosion_controller/explosions
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
+#ifdef EXPLOSION_MAPTEXT_DEBUGGING
+			if (p >= 6)
+				T.maptext = "<span style='color: #ff0000;' class='pixel c sh'>[p]</span>"
+			else if (p > 3)
+				T.maptext = "<span style='color: #ffff00;' class='pixel c sh'>[p]</span>"
+			else
+				T.maptext = "<span style='color: #00ff00;' class='pixel c sh'>[p]</span>"
+
+#else
 			if (p >= 6)
 				T.ex_act(1, last_touched)
 			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)
-
+#endif
 		LAGCHECK(LAG_HIGH)
 
 		queued_turfs.len = 0
@@ -195,8 +204,12 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
-				if(width < 360 && abs(angledifference(get_angle(epicenter, target), angle)) > (width/2))
-					new_value = new_value / 3
+				if(width < 360)
+					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+					if(diff > width)
+						continue
+					else if(diff > width/2)
+						new_value = new_value / 3 - 1
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value

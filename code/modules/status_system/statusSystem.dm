@@ -1620,7 +1620,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
-
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
 	name = "Mentor Mouse"
@@ -1666,3 +1665,18 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	icon_state = null
 	duration = 0.5 SECONDS
 	visible = 0
+
+/datum/statusEffect/shivering
+	id = "shivering"
+	name = "Shivering"
+	desc = "You're very cold!"
+	icon_state = "shivering"
+	duration = 2 SECONDS
+	visible = 1
+	movement_modifier = /datum/movement_modifier/shiver
+
+	onAdd(var/optional=null)
+		var/mob/M = owner
+		if(istype(M))
+			M.emote("shiver")
+		. = ..()

@@ -90,7 +90,7 @@
 
 					for (var/mob/O in AIviewers(world.view, user))
 						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
-					src.reagents.reaction(target, TOUCH, -(src.reagents.total_volume - t)) // Modify it so that the reaction only happens with the actual transferred amount.
+					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)
 				SPAWN_DBG (5)

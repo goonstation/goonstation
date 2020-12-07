@@ -339,28 +339,6 @@ toxic - poisons
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 
-
-/datum/projectile/energybolt/reliquary_burst
-	name = "energy"
-	shot_sound = null
-	power = 1
-	cost = 2
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "relibullet"
-	shot_number = 16
-	shot_delay = 0.7
-	dissipation_delay = 8
-	damage_type = D_ENERGY
-	hit_ground_chance = 30
-	brightness = 1
-	disruption = 8
-	icon_turf_hit = "bhole-small"
-
-	on_hit(atom/hit, dirflag)
-		if(ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS)
-
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer spark"
 	icon = 'icons/obj/projectiles.dmi'
