@@ -428,7 +428,9 @@
 							if (1) boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
 							if (2) boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
 							if (3) boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
-							else boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
+							else
+								JOB_XP(usr, "Botanist", 3)
+								boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 						src.inserted.reagents.remove_reagent(R.id,10)
 						dialogue_open = 0
 
