@@ -668,8 +668,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 /client/proc/checkHiRes(list/params)
 	if(!length(params))
 		return
-	if(params["screenH"] > 1080)
-		winset(src, "info", "font-size=[8 * params["screenH"] / 1080]")
+	if(params["screenH"] > 1000)
+		winset(src, "info", "font-size=[6 * params["screenH"] / 1080]")
 
 /client/Command(command)
 	command = html_encode(command)
