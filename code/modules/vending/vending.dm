@@ -1653,6 +1653,9 @@
 						P.topping = 1
 						P.add_topping(0)
 
+					if (src.sharpen)
+						sleep(20 SECONDS)
+
 					if (!(status & (NOPOWER|BROKEN)))
 						icon_state = "pizza"
 
