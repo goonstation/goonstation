@@ -1,54 +1,5 @@
 #define GEHENNA_TIME 90
 
-//aw fuck he's doin it again
-
-
-/obj/landmark/viscontents_spawn
-	name = "visual mirror spawn"
-	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
-	var/targetZ = 1 // target z-level to push it's contents to
-	var/xOffset = 0 // use only for pushing to the same z-level
-	var/yOffset = 0 // use only for pushing to the same z-level
-	add_to_landmarks = FALSE
-
-	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/is_warp = TRUE)
-		if (man_xOffset) src.xOffset = man_xOffset
-		if (man_yOffset) src.yOffset = man_yOffset
-		if (man_targetZ) src.targetZ = man_targetZ
-		var/turf/T = get_turf(src)
-		if (!T) return
-		T.appearance_flags |= KEEP_TOGETHER
-		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-		if(is_warp) T.vistarget.warptarget = T
-		T.updateVis()
-		..()
-
-
-/turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere
-/turf/var/turf/warptarget = null // target turf for teleporting its contents elsewhere
-/*
-/turf/proc/updateVis() // locates all appropriate objects on this turf, and pushes them to the vis_contents of the target
-	if(vistarget)
-		vistarget.overlays.Cut()
-		vistarget.vis_contents = list()
-		for(var/atom/A in src.contents)
-			if (istype(A, (/obj/overlay)))
-				continue
-			if (istype(A, (/mob/dead)))
-				continue
-			if (istype(A, (/mob/living/intangible)))
-				continue
-			vistarget.vis_contents += A
-*/
-/turf/proc/updateVis()
-	if(vistarget)
-		vistarget.overlays.Cut()
-		vistarget.vis_contents += src
-		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
-		if(L)
-			vistarget.vis_contents -= L
-
-// No mor vis shit
 // Gehenna shit tho
 /turf/gehenna
 	name = "planet gehenna"

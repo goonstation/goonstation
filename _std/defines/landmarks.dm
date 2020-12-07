@@ -73,3 +73,8 @@
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+
+// Visual mirror warp modes
+#define LANDMARK_VM_WARP_NONE 0
+#define LANDMARK_VM_WARP_ALL 1
+#define LANDMARK_VM_WARP_NON_ADMINS 2
