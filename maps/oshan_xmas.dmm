@@ -3967,7 +3967,6 @@
 /area/station/medical/medbay/surgery)
 "aip" = (
 /obj/disposalpipe/segment,
-/obj/stocking,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "aiq" = (
@@ -14432,7 +14431,7 @@
 /area/station/crew_quarters/locker)
 "aFZ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aGa" = (
@@ -26391,6 +26390,7 @@
 /area/station/crew_quarters/bar)
 "bja" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjb" = (
@@ -27637,6 +27637,7 @@
 	pixel_x = -7
 	},
 /obj/item/shaker/pepper,
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "blS" = (
@@ -39746,11 +39747,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bPc" = (
-/obj/stocking,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/eggnog,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "bPd" = (
 /obj/cable{
 	d1 = 4;
@@ -48276,10 +48276,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
-"dLV" = (
-/obj/stocking,
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/jazz)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48289,10 +48285,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
-"fgE" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/research_director)
 "fhd" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -48394,10 +48386,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
-"iZJ" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
 "jfH" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/caution/east,
@@ -48493,7 +48481,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "lQX" = (
-/obj/stocking,
+/obj/decal/wreath,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "lUZ" = (
@@ -48505,10 +48493,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"mrn" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/main)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -48720,10 +48704,6 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"sec" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/engineering)
 "sjd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath,
@@ -48931,10 +48911,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
-"xUg" = (
-/obj/stocking,
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -82069,7 +82045,7 @@ bKO
 bqs
 buL
 btZ
-xUg
+bJA
 bxC
 bxC
 bzs
@@ -84498,7 +84474,7 @@ buS
 cgd
 bHU
 bIK
-dLV
+bJD
 bKt
 bLV
 bNa
@@ -95072,7 +95048,7 @@ bJR
 bKY
 bKY
 bKY
-mrn
+bJR
 aST
 bQM
 bRN
@@ -106537,7 +106513,7 @@ byf
 bzZ
 bBv
 bwu
-bDU
+bPc
 bDU
 bFS
 bwu
@@ -107078,7 +107054,7 @@ apd
 apd
 apd
 apd
-fgE
+apd
 awH
 axK
 ayR
@@ -107721,7 +107697,7 @@ bge
 bzt
 bkr
 abI
-sec
+bge
 aON
 aON
 bmf
@@ -109214,7 +109190,7 @@ bex
 aFl
 aJZ
 aJZ
-iZJ
+aJZ
 aJi
 aLZ
 aTa
@@ -111248,7 +111224,7 @@ bPE
 bPD
 bOo
 bPx
-bPc
+aUZ
 bOo
 bPz
 bPF

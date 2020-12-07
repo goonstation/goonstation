@@ -560,6 +560,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
+/obj/decal/tinsel,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "aaW" = (
@@ -5819,6 +5820,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/decal/tinsel,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "aoV" = (
@@ -9107,6 +9109,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/breakroom)
 "avX" = (
@@ -13156,6 +13159,7 @@
 /obj/machinery/light_switch/auto{
 	pixel_y = -24
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
 "aEi" = (
@@ -18404,6 +18408,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/clothing/head/rastacap,
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/snow,
 /area/station/hydroponics/bay)
 "aPE" = (
@@ -45424,12 +45429,24 @@
 /turf/simulated/floor/red,
 /area/station/hallway/portlowerhallway)
 "cBr" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/cable,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/stocking,
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/cargobay)
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/decal/tinsel,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
 "cFC" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -45502,9 +45519,14 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
 "dtD" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/brig/genpop)
+/obj/table/wood/round/auto,
+/obj/item/decoration/flower_vase,
+/obj/item/reagent_containers/food/drinks/eggnog,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "dtV" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -46897,10 +46919,6 @@
 	dir = 1
 	},
 /area/station/engine/inner)
-"oof" = (
-/obj/stocking,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai_upload_foyer)
 "orD" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -47402,7 +47420,7 @@
 /area/station/hangar/mining)
 "tFk" = (
 /obj/wingrille_spawn/auto,
-/obj/stocking,
+/obj/decal/tinsel,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "tHP" = (
@@ -47870,6 +47888,7 @@
 	pixel_x = -6;
 	pixel_y = 11
 	},
+/obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen/therustykrab)
 "xyw" = (
@@ -75958,7 +75977,7 @@ aNr
 aLJ
 vgB
 bpY
-cBr
+aKs
 bvk
 bvk
 bwO
@@ -90410,7 +90429,7 @@ aag
 aBz
 aag
 aag
-oof
+aBX
 aCg
 aPr
 aFB
@@ -91057,7 +91076,7 @@ blH
 aDd
 bpl
 bqx
-brK
+dtD
 aEN
 jmb
 bvI
@@ -91322,7 +91341,7 @@ aEb
 aBX
 aPI
 aPV
-abZ
+cBr
 abZ
 aoU
 aqO
@@ -91926,7 +91945,7 @@ aAF
 bNP
 gDn
 aPX
-abZ
+cBr
 abZ
 aoU
 aqO
@@ -94655,7 +94674,7 @@ paG
 aSY
 aSk
 aUn
-dtD
+aSk
 aVp
 aVG
 aWJ
@@ -97389,7 +97408,7 @@ bdl
 aVg
 bfw
 bgB
-bhq
+tFk
 aOA
 biq
 bjZ
@@ -97993,7 +98012,7 @@ bdn
 aVz
 bfy
 ags
-bhq
+tFk
 aOB
 biS
 bkb
