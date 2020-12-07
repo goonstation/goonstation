@@ -45347,21 +45347,11 @@
 	},
 /area/crunch)
 "ciY" = (
-/obj/item/paper{
-	icon_state = "paper";
-	info = "If you want to see Bubs ever again, pay up 100 THE MONSTERs. No, that's not just to offset the cost of feeding him while he's in our custody.";
-	name = "ransom note";
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/bubs)
-"ciZ" = (
 /obj/critter/domestic_bee/bubs{
 	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> KIDNAPPED!!!"
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/flourish)
+/area/centcom/offices/bubs)
 "cja" = (
 /obj/overlay{
 	anchored = 1;
@@ -74121,7 +74111,6 @@
 /obj/decal/cleanable/generic{
 	name = "rubbish"
 	},
-/mob/living/carbon/human/normal/securityofficer,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "dzz" = (
@@ -86726,20 +86715,6 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
-"wAW" = (
-/obj/decal/fakeobjects{
-	desc = "CRIME HAS HAPPENED!!";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "crime scene"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -164267,7 +164242,7 @@ dvy
 dvy
 dvy
 dCZ
-wAW
+dvy
 dxn
 dvy
 dvy
@@ -165174,7 +165149,7 @@ dzu
 dvw
 dzx
 dAe
-dAg
+ciY
 dvw
 dBl
 dBn
@@ -165475,7 +165450,7 @@ dzu
 dzu
 dvw
 dzy
-ciY
+dAg
 dAJ
 dvw
 dBm
@@ -166390,7 +166365,7 @@ dBr
 dvw
 dCL
 dDw
-ciZ
+dCO
 dvw
 aaa
 aaa
