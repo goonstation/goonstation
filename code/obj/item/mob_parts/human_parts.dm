@@ -1781,12 +1781,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1830,12 +1828,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1879,12 +1875,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////

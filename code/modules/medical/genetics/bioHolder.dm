@@ -111,6 +111,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
 
+	var/mob_head_offset = 0
+	var/mob_hand_offset = 0
+	var/mob_body_offset = 0
+	var/mob_arm_offset = 0
+	var/mob_leg_offset = 0
+
 	// Standard tone reference:
 	// FAD7D0 - Albino
 	// FFCC99 - White
@@ -229,6 +235,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
+
+		mob_head_offset = toCopy.mob_head_offset
+		mob_hand_offset = toCopy.mob_hand_offset
+		mob_body_offset = toCopy.mob_body_offset
+		mob_arm_offset = toCopy.mob_arm_offset
+		mob_leg_offset = toCopy.mob_leg_offset
 
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns

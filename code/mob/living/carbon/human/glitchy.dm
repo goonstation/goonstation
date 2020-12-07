@@ -16,7 +16,7 @@
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
 			sleep(1 SECOND)
-			bioHolder.mobAppearance.UpdateMob()
+			bioHolder.mobAppearance.update_colorful_parts()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
