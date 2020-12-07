@@ -47,7 +47,7 @@ const createIDHeader = index => {
 const fieldRegex = /\[(_+)\]/g;
 // TODO: regex needs documentation
 const fieldTagRegex = /\[<input\s+(?!disabled)(.*?)\s+id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
-const signRegex = /%s(?:ign)?(?=\\s|$)/igm;
+const signRegex = /%s(?:ign)?(?=\\s|$)?/igm;
 
 const createInputField = (length, width, font,
   fontsize, color, id) => {
