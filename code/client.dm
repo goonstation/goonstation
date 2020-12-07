@@ -656,7 +656,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 /client/proc/checkScreenAspect(list/params)
 	if (params.len)
-		if ((params["screenW"]/params["screenH"]) == (4/3))
+		if ((params["screenW"]/params["screenH"]) <= (4/3))
 			SPAWN_DBG(6 SECONDS)
 				if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
 					set_splitter_orientation(0)
