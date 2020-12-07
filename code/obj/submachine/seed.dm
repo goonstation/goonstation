@@ -591,6 +591,7 @@
 				P.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1.vars["endurance"],P2.vars["endurance"])
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
+				JOB_XP(usr, "Botanist", 5)
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
 				if (!src.seedoutput) src.seeds.Add(S)
 				else S.set_loc(src.loc)
