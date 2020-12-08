@@ -314,8 +314,8 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 
@@ -356,8 +356,8 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 
