@@ -1731,6 +1731,7 @@ obj/machinery/door/airlock
 
 	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
 		. = 1
+		// need to do it in the right order or nothing will happen
 		if (locked)
 			toggle_bolt(user)
 			user_toggle_open(user)
