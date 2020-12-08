@@ -231,7 +231,7 @@ export const PaperSheetView = (props, context) => {
     backgroundColor,
     readOnly,
   } = props;
-  const stampList = stamps;
+  const stampList = stamps || [];
   const textHtml = {
     __html: '<span class="paper-text">'
       + setInputReadonly(value, readOnly)
@@ -243,10 +243,10 @@ export const PaperSheetView = (props, context) => {
       position="relative"
       backgroundColor={backgroundColor}
       width="100%"
-      height={"100%"} >
+      height="100%">
       <Box
         color="black"
-        backgroundColor={"white"}
+        backgroundColor="white"
         fillPositionedParent
         width="100%"
         height="100%"
@@ -480,7 +480,7 @@ class PaperSheetEdit extends Component {
           <Tabs>
             <Tabs.Tab
               key="marked_edit"
-              textColor={'black'}
+              textColor='black'
               backgroundColor={this.state.previewSelected === "Edit"
                 ? "grey"
                 : "white"}
@@ -490,7 +490,7 @@ class PaperSheetEdit extends Component {
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_preview"
-              textColor={'black'}
+              textColor='black'
               backgroundColor={this.state.previewSelected === "Preview"
                 ? "grey"
                 : "white"}
@@ -508,7 +508,7 @@ class PaperSheetEdit extends Component {
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_done"
-              textColor={'black'}
+              textColor='black'
               backgroundColor={this.state.previewSelected === "confirm"
                 ? "red"
                 : this.state.previewSelected === "save"

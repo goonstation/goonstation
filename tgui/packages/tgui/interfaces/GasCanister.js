@@ -73,11 +73,11 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      width={(hasDetonator ? (hasPaper ? 880 : 550) : 400)}
+      width={(hasDetonator ? (hasPaper ? 870 : 470) : 400)}
       height={hasDetonator ? 680 : 370}>
       <Window.Content>
         <Flex>
-          <Flex.Item width={120}>
+          <Flex.Item width="460px">
             <PortableBasicInfo
               connected={connected}
               pressure={pressure}
@@ -122,7 +122,7 @@ export const GasCanister = (props, context) => {
             }
           </Flex.Item>
           {!!hasPaper && (
-            <Flex.Item width={100}>
+            <Flex.Item width="410px">
               <PaperView />
             </Flex.Item>
           )}
@@ -152,8 +152,6 @@ class PaperView extends Component {
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView
-          width="400"
-          height="500"
           value={value}
           stamps={stamps}
           readOnly />
