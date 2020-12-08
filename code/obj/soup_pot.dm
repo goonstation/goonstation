@@ -117,6 +117,11 @@
 				if(!pot.my_soup)
 					W.afterattack(pot,user) // ????
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (in_range(W, user) && in_range(src, user) && istype(W,/obj/item/soup_pot))
+			return src.attackby(W, user)
+		return ..()
+
 	attack_hand(mob/user as mob)
 		if(src.on)
 			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
@@ -126,6 +131,9 @@
 			src.pot.set_loc(src.loc)
 			user.put_in_hand_or_drop(src.pot)
 			src.pot = null
+
+	attack_ai(mob/user as mob)
+		return src.attack_hand(user)
 
 	proc/light(var/mob/user, var/message as text)
 		if(pot.my_soup)
@@ -351,6 +359,9 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W) && !istype(W,/obj/item/ladle))
+			if (W.cant_drop) // For borg held items
+				boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+				return ..()
 			if(src.my_soup)
 				boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")
 				return
@@ -403,6 +414,11 @@
 
 			return
 		..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if (usr.is_in_hands(src))

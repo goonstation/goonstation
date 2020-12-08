@@ -14,8 +14,9 @@
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/pen/crayon/random/robot,
 		/obj/item/coin_bot,
-		/obj/item/dice_bot,
+		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
@@ -55,16 +56,18 @@
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
+		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner,
+		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/kitchen/utensil/knife/bread,
+		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/glass/bottle/icing,
-		// TODO: portable oven
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -133,8 +136,6 @@
 		/obj/item/suture,
 		/obj/item/staple_gun,
 		/obj/item/reagent_containers/iv_drip/blood,
-		///obj/item/reagent_containers/patch/burn/medbot,
-		///obj/item/reagent_containers/patch/bruise/medbot,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version
