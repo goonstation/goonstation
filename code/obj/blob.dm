@@ -587,7 +587,6 @@ var/image/anim_icon_cache
 	poison_coefficient = 0.5
 	poison_depletion = 3
 	var/nextAttackMsg = 0
-	var/blink_overlay
 
 	New()
 		. = ..()
