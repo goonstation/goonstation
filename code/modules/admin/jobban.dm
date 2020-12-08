@@ -74,7 +74,7 @@
 	if (!ismob(M))
 		checkey = M
 		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=checkey), 1)[checkey]
-	if (M.ckey)
+	else if (M.ckey)
 		checkey = M.ckey
 		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
 		cache = player.cached_jobbans
