@@ -1,12 +1,12 @@
 var/image/blob_icon_cache
-var/image/special_icon_cache
+var/image/anim_icon_cache
 /obj/blob
 	name = "blob"
 	desc = "A mysterious alien blob-like organism."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "15"
 	var/state_overlay = null
-	var/special_overlay = null // hack, there HAS to be a better way of doing this
+	var/anim_overlay = null // hack, there HAS to be a better way of doing this
 
 	color = "#FF0000"
 	var/original_color = "#FF0000"
@@ -45,13 +45,16 @@ var/image/special_icon_cache
 	New()
 		..()
 		if(!blob_icon_cache)
-			blob_icon_cache = image('icons/mob/blob.dmi')
+			if (special_icon)
+				blob_icon_cache = image('icons/mob/blob_organs.dmi')
+			else
+				blob_icon_cache = image('icons/mob/blob.dmi')
 			blob_icon_cache.appearance_flags |= RESET_COLOR
 			blob_icon_cache.plane = PLANE_SELFILLUM + 1
-		if(!special_icon_cache)
-			special_icon_cache = image('icons/mob/blob.dmi')
-			special_icon_cache.appearance_flags |= RESET_COLOR
-			special_icon_cache.plane = PLANE_SELFILLUM + 2
+		if(!anim_icon_cache)
+			anim_icon_cache = image('icons/mob/blob_organs.dmi')
+			anim_icon_cache.appearance_flags |= RESET_COLOR
+			anim_icon_cache.plane = PLANE_SELFILLUM + 2
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
 		src.update_icon()
@@ -115,11 +118,12 @@ var/image/special_icon_cache
 				blob_icon_cache.color = O.organ_color
 				blob_icon_cache.icon_state = state_overlay
 				UpdateOverlays(blob_icon_cache,"overmind")
-			if ( special_overlay )
-				special_icon_cache.color = O.organ_color
-				special_icon_cache.icon_state = special_overlay
-				UpdateOverlays(special_icon_cache,"special_overlay")
-			if( O.hat && istype(src,/obj/blob/nucleus) )
+			if ( anim_overlay )
+				anim_icon_cache.color = O.organ_color
+				anim_icon_cache.icon_state = anim_overlay
+				UpdateOverlays(anim_icon_cache,"anim_overlay")
+			if ( O.hat && istype(src,/obj/blob/nucleus))
+			O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
 				UpdateOverlays(O.hat,"hat")
 
 	proc/onAttach(var/mob/living/intangible/blob_overmind/new_overmind)
@@ -411,7 +415,7 @@ var/image/special_icon_cache
 		if (!src)
 			return
 
-		if (!special_icon)
+		if (!special_icon || istype(src,/obj/blob/nucleus))
 			var/dirs = 0
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
@@ -422,6 +426,7 @@ var/image/special_icon_cache
 				if (B)
 					dirs |= dir
 			icon_state = num2text(dirs)
+
 		//else if(istext( special_icon ))
 		//	if(!BLOB_OVERLAYS[ special_icon ])
 		//		CRASH( "Invalid blob special icon [special_icon]." )
@@ -571,7 +576,7 @@ var/image/special_icon_cache
 /obj/blob/nucleus
 	name = "blob nucleus"
 	state_overlay = "nucleus"
-	special_overlay = "nucleus_blink"
+	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
 	armor = 3
@@ -586,10 +591,6 @@ var/image/special_icon_cache
 
 	New()
 		. = ..()
-		blob_icon_cache.pixel_y = 5
-		special_icon_cache.pixel_y = 5
-		//UpdateOverlays(blob_icon_cache,"overmind")
-		//UpdateOverlays(special_icon_cache,"special_overlay")
 		START_TRACKING
 
 	disposing()
@@ -1192,9 +1193,10 @@ var/image/special_icon_cache
 			added = 0
 
 
-/obj/blob/wall
+/obj/blob/wall // TODO: Add check for if theres a wall to the south, if so replace sprite to pseudo-tile
 	name = "thick membrane"
 	desc = "This blob is encased in a tough membrane. It'll be harder to get rid of."
+	//icon_state = null
 	state_overlay = "wall"
 	opacity = 1
 	special_icon = 1
