@@ -123,7 +123,7 @@ var/image/anim_icon_cache
 				anim_icon_cache.icon_state = anim_overlay
 				UpdateOverlays(anim_icon_cache,"anim_overlay")
 			if ( O.hat && istype(src,/obj/blob/nucleus))
-			O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
+				O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
 				UpdateOverlays(O.hat,"hat")
 
 	proc/onAttach(var/mob/living/intangible/blob_overmind/new_overmind)
