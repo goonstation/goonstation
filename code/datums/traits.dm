@@ -324,7 +324,7 @@
 /obj/trait/dutch
 	name = "Dutch (0) \[Language\]"
 	cleanName = "Dutch"
-	desc = "You are from Holland! Wooden clogs, stroopwafels, dikes and so on."
+	desc = "You are from Holland! You spawn with wooden clogs and love space dikes."
 	id = "dutch"
 	icon_state = "hollandY"
 	points = 0

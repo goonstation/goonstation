@@ -108,7 +108,7 @@
 
 /datum/bioEffect/speech/dutch
 	name = "Frontal Gyrus Alteration Type-NL"
-	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a dike builder."
+	desc = "Forces the language center of the subject's brain to construct sentences in the manner of a space dike builder."
 	id = "accent_dutch"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
