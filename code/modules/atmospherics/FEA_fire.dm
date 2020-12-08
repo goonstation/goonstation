@@ -178,27 +178,27 @@
 		if(!istype(location))
 			return 0
 
-		if(volume > CELL_VOLUME*0.95)
+		if(src.volume > CELL_VOLUME*0.95)
 			bypassing = 1
 		else
 			bypassing = 0
 
 		if(bypassing)
 			if(!just_spawned)
-				volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
+				src.volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
 				src.temperature = location.air.temperature
 		else
-			var/datum/gas_mixture/affected = location.air.remove_ratio(volume/max((location.air.volume/5),1))
+			var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
 
 			affected.temperature = src.temperature
 			affected.react()
 			src.temperature = affected.temperature
 
-			volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+			src.volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 
-			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots
-			//unless catalyst is present...
-			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.95 ))
+			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
+			//Scale volume at 40% of PLASMA_UPPER_TEMPERATURE to allow for hotspot icon to transition to 2nd state
+			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.4 ))
 
 				// Check for catalyst(s)
 				if(length(affected.trace_gases) > 0 )
@@ -207,14 +207,16 @@
 						trace_gas.moles -= MINIMUM_REACT_QUANTITY
 						hotspot_catalyst_found = 1
 
-				// Force volume as heat is sufficient...
+				// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
 				if(!hotspot_catalyst_found)
-					volume = max(volume, CELL_VOLUME)
+					// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
+					var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / PLASMA_UPPER_TEMPERATURE), 1, CELL_VOLUME)
+					src.volume = max(src.volume, temperature_scaled_volume)
 
 			location.assume_air(affected)
 
 			for(var/obj/object as() in location)
-				object.temperature_expose(null, temperature, volume)
+				object.temperature_expose(null, temperature, src.volume)
 
 		set_real_color()
 
