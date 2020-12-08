@@ -51,7 +51,7 @@
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_range(W, user) && in_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -218,7 +218,7 @@
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (in_range(W, user) && in_range(src, user) && (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -768,7 +768,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_range(W, user) && in_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -1094,7 +1094,7 @@ var/list/mixer_recipes = list()
 		return attack_hand(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_range(W, user) && in_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
