@@ -53,7 +53,6 @@
 			brute *=1.33
 		..()
 
-
 		if (brute > 5 && holder)
 			if(prob(60))
 				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), 30)
