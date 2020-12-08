@@ -1,6 +1,7 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
+ * @author Changes thepotato97
  * @license MIT
  */
 import { Component } from 'inferno';

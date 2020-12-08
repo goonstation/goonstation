@@ -128,19 +128,6 @@
 		qdel(src)
 		return
 
-	attack_hand(mob/user as mob)
-		return ui_interact(user)
-
-	ui_state(mob/user)
-		return tgui_default_state
-
-	ui_status(mob/user, datum/ui_state/state)
-		return min(
-			state.can_use_topic(src, user),
-			tgui_broken_state.can_use_topic(src, user),
-			tgui_not_incapacitated_state.can_use_topic(src, user)
-		)
-
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
