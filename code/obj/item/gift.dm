@@ -148,6 +148,13 @@
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
 
+		ephemeral //Disappears except on xmas
+#ifndef XMAS
+			New()
+				qdel(src)
+				..()
+#endif
+
 	easter
 		name = "easter egg"
 		icon_state = "easter_egg"

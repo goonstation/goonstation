@@ -1,5 +1,97 @@
 
+(t)mon dec 07 20
+(u)Camryn Buttes
+(p)2972
+(e)⚖⛔|balance, removal
+(*)Removed the obesity mutation
+(t)sun dec 06 20
+(u)Flourish
+(e)🆕|feature
+(*)You can now send letters to Santa! Find their helper under the Spacemas tree.
+(u)BatElite
+(p)2932
+(e)🆕|feature
+(+)Crewmembers looking for early retirement can now use portable air pumps for that purpose.
+(u)Kubius
+(p)2900
+(e)🆕🗺|feature, mapping
+(+)Further small Ozymandias fixes/changes, primarily QM flow improvements and pod bay controls.
+(t)sat dec 05 20
+(u)pali
+(p)2955
+(e)|
+(+)The music record spacebux purchase now has a wider variety of songs!
+(u)BatElite
+(p)2831
+(e)🆕🎨|feature, sprites
+(+)Updated portable air pumps, tank dispensers and the portable seed fabricator!
+(u)zjdtmkhzt
+(p)2459
+(e)⚖🆕|balance, feature
+(*)Trying to claim an item in the wrong area as a spy thief will now try to use the GPS system to show the way to the correct area.
+(u)pali
+(p)2747
+(e)|
+(*)You can now adjust volume of emotes in the audio tab in the top bar.
+(u)retkid
+(p)2690
+(e)|
+(*)Added a new song Dance On A Space Volcano to the collection of possible radio show host songs
+(u)kyle
+(+)Lawbringer and E-gun now require rarer materials if you want to build more copies
+(t)fri dec 04 20
+(u)Superlagg
+(p)2934
+(e)🐛🎨|bug, sprites
+(+)Kudzufolk can be visibly dismembered, and get gross synthorgans too.
+(t)thu dec 03 20
+(u)Retkid
+(p)2853
+(e)|
+(*)Added sounds for the Wraith antagonist.
+(u)BenLubar
+(p)2905
+(e)⚖|balance
+(+)Random events no longer occur once the shuttle departs from the station or the round ends.
+(u)Kubius
+(p)2889
+(e)🆕🗺|feature, mapping
+(+)Kondaru's ready for Spacemas cheer!
+(t)wed dec 02 20
+(u)UrsulaMajor
+(p)2909
+(e)⚖🆕🔄🎨|balance, feature, rework, sprites
+(*)Replaced cold slowdown with "shivering" status; click yourself with help intent to reduce it!
 (t)tue dec 01 20
+(u)Carbadox
+(p)2899
+(e)🆕🗺|feature, mapping
+(*)Added departemental coffee machines to Clarion, Cog1, Cog2 and Horizon.
+(u)Kubius
+(p)2824
+(e)⚖|balance
+(+)New arrivals after 20 minutes into the round will now always spawn with an O2 tank and crowbar.
+(u)Carbadox
+(p)2890
+(e)|
+(*)Adjusted the code for Janitor job rewards, red bucket and orange mop, to require a regular mop and bucket respectively when claiming the rewards, instead of them just popping out from thin air.
+(u)Gannets
+(p)2903
+(e)🗺|mapping
+(+)Happy holidays, Spacemas is here! Thanks to TTerc for decorating Cog1 for us!
+(+)More maps will be decorated as the month continues. Feel free to contribute over on Github.
+(u)Kubius
+(p)2794
+(e)⚖|balance
+(+)Adjusted the new wages to graduate more evenly. No more single dollars hanging around in your account, hopefully.
+(u)Gannets
+(p)2894
+(e)🎨|sprites
+(*)The spacemas tree is up again! Come contribute some new decorations over on the forums, there's 5 Byond memberships in it for ya!
+(u)Carbadox and Gannets
+(p)2887
+(e)🎨|sprites
+(+)The Securotron-5000 (prisoner scanner) has been updated to use a new and shiny sprite and has been renamed to the Security RecordTrak. Sprites made by Gannets
 (u)Jan.antilles
 (p)2895
 (e)🆕🎨|feature, sprites

@@ -39,7 +39,11 @@
 			RL.colorize_limb_icon()
 			RL.set_skin_tone()
 		if (liz.organHolder?.head)
-			liz.organHolder.head.update_icon()
+			var/obj/item/organ/head/hed = liz.organHolder.head
+			if(hed.head_type == HEAD_LIZARD)
+				hed.update_icon(ignore_transplant = 1) // Chromatophores are chromatophores
+			else
+				hed.update_icon(ignore_transplant = 0)
 		if (istype(liz?.organHolder.tail, /obj/item/organ/tail/lizard))
 			var/obj/item/organ/tail/T = liz.organHolder.tail
 			T.colorize_tail(liz.bioHolder.mobAppearance)

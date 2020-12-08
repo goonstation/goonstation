@@ -236,8 +236,8 @@
 											M, "[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
 									user, "You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
-	else if(!M.mutantrace)
-		return 1 // is human, not mutant, should be fine
+	else if(!M.mutantrace || M.hair_override)
+		return 1 // is human or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
@@ -401,13 +401,6 @@
 				return 0
 			if("kudzu")
 				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
-			if("reliquary_soldier")
-				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s robot cyborg mechanical metal... head?")
-				return 0
 			if("cow")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)

@@ -132,7 +132,10 @@
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
 			if(input_starting_pressure < (output_starting_pressure+src.min_circ_pressure))
-				pressure_delta = src.min_circ_pressure
+				// Use maximum of minimum circulator pressure OR calculated pressure required to ensure an amount that won't get rounded away by quantization
+				// Note - ( 5 * ATMOS_EPSILON ) used to allow for a ratio of multiple gas specific heats to be utilized in the mixture
+				pressure_delta = max( src.min_circ_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
+
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)

@@ -1415,7 +1415,8 @@
 		drop_stick(1)
 		qdel(src)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			if(icon_state == "snake_bee")
 				src.visible_message("[src] buzzes delightedly!")

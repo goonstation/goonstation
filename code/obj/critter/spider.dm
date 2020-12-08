@@ -255,7 +255,8 @@
 			if(!M.stat) M.emote("scream") // don't scream while dead or KOd
 		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
 		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
