@@ -1991,7 +1991,7 @@ var/global/noir = 0
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
 						var/list/traitor_types = list("Hard-mode traitor", "Wrestler", "Grinch")
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
+						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
 						switch (selection)
 							if ("Hard-mode traitor")
 								evilize(M, "traitor", "hardmode")
@@ -2003,7 +2003,7 @@ var/global/noir = 0
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += "Gang Leader"
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
+						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
 						switch(selection)
 							if("Traitor")
 								if (alert("Hard Mode?","Treachery","Yes","No") == "Yes")
