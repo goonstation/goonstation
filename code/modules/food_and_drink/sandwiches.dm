@@ -389,6 +389,7 @@
 	throwforce = 10
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)
+	unlock_medal_when_eaten = "That's no moon, that's a GOURMAND!"
 	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
 
 /obj/item/reagent_containers/food/snacks/burger/vr

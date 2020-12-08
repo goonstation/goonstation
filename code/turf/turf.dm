@@ -297,7 +297,7 @@
 						mover.Bump(obstacle,1)
 						return 0
 
-	if (MIRRORED_PHYSICAL_ZONE_CREATED) //checking visual mirrors for blockers if set
+	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
 			var/turf/T = locate(/turf) in src.vis_contents
 			if (T)
@@ -396,7 +396,16 @@
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
 		if(OldLoc)
-			M.set_loc(warptarget)
+			switch (warptarget_modifier)
+				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+					if (ismob(M))
+						var/mob/mob = M
+						if (!mob.client?.holder && mob.last_client)
+							M.set_loc(warptarget)
+						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+							M.set_loc(warptarget)
+				else
+					M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355

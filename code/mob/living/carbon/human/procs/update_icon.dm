@@ -1142,13 +1142,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					juggle_image.icon_state = "juggle"
 					src.body_standing.overlays += juggle_image
 
-			else // is fat
-				var/skin_tone = AHOLD.s_tone
-				human_image.color = skin_tone
-				human_image.icon_state = "fatbody"
-				src.body_standing.overlays += human_image
-				human_image.color = "#fff"
-
 #if ASS_JAM
 	src.maptext_y = 32
 	src.maptext_width = 64

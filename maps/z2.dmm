@@ -45347,21 +45347,11 @@
 	},
 /area/crunch)
 "ciY" = (
-/obj/item/paper{
-	icon_state = "paper";
-	info = "If you want to see Bubs ever again, pay up 100 THE MONSTERs. No, that's not just to offset the cost of feeding him while he's in our custody.";
-	name = "ransom note";
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/bubs)
-"ciZ" = (
 /obj/critter/domestic_bee/bubs{
 	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> KIDNAPPED!!!"
 	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/flourish)
+/area/centcom/offices/bubs)
 "cja" = (
 /obj/overlay{
 	anchored = 1;
@@ -74121,7 +74111,6 @@
 /obj/decal/cleanable/generic{
 	name = "rubbish"
 	},
-/mob/living/carbon/human/normal/securityofficer,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "dzz" = (
@@ -82715,7 +82704,7 @@
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "fge" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -83012,7 +83001,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "gKo" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -83222,7 +83211,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "hQa" = (
 /obj/table/wood/auto/desk,
 /obj/item/paper{
@@ -83836,7 +83825,7 @@
 	})
 "kkw" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "kmt" = (
 /turf/unsimulated/floor/void/channel{
 	density = 1;
@@ -84050,7 +84039,7 @@
 "lkO" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "loc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -84099,7 +84088,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "lsA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -84201,7 +84190,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "lLo" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -85478,7 +85467,7 @@
 	targetZ = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "qIQ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -85688,7 +85677,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -85749,7 +85738,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 1
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -85813,7 +85802,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 1
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "rOb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -86084,12 +86073,12 @@
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "sTc" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap{
 	dir = 8
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "sTU" = (
 /obj/item/wirecutters,
 /turf/space,
@@ -86247,7 +86236,7 @@
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -86285,7 +86274,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "tZr" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -86368,7 +86357,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "uzz" = (
 /obj/table/wood/auto/desk,
 /obj/item/gun/kinetic/meowitzer/inert{
@@ -86464,7 +86453,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "vjH" = (
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "vlp" = (
 /obj/machinery/light{
 	dir = 1
@@ -86568,13 +86557,8 @@
 	item_state = "sword1-R";
 	name = "Enakai's red cyalume saber"
 	},
-/obj/window/crystal/reinforced/south,
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/east,
-/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor2{
-	desc = "It's over Enakai";
-	name = "the high ground"
-	},
+/obj/cover/showcase,
+/turf/unsimulated/floor/wizard/showcase,
 /area/centcom/offices/enakai)
 "vFr" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -86731,20 +86715,6 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
-"wAW" = (
-/obj/decal/fakeobjects{
-	desc = "CRIME HAS HAPPENED!!";
-	dir = 1;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "constructionsign";
-	name = "crime scene"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -86810,7 +86780,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
 	},
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "wYI" = (
 /turf/space,
 /turf/simulated/floor/caution/corner/sw,
@@ -86881,7 +86851,7 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/plating,
-/area/centcom/retentioncenter)
+/area/retentioncenter)
 "xky" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -164272,7 +164242,7 @@ dvy
 dvy
 dvy
 dCZ
-wAW
+dvy
 dxn
 dvy
 dvy
@@ -165179,7 +165149,7 @@ dzu
 dvw
 dzx
 dAe
-dAg
+ciY
 dvw
 dBl
 dBn
@@ -165480,7 +165450,7 @@ dzu
 dzu
 dvw
 dzy
-ciY
+dAg
 dAJ
 dvw
 dBm
@@ -166395,7 +166365,7 @@ dBr
 dvw
 dCL
 dDw
-ciZ
+dCO
 dvw
 aaa
 aaa
