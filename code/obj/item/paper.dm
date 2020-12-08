@@ -121,17 +121,6 @@
 	. = ..()
 	ui_interact(user)
 
-//[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]
-/obj/item/paper/Map/examine(mob/user)
-	. = ..()
-	ui_interact(user)
-	if (!( ishuman(user) || isobserver(user) || issilicon(user) ))
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[stars(src.info)]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
-	else
-		user.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE></HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(user, "[src.name]")
-
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
