@@ -382,6 +382,25 @@
 		..()
 		setProperty("meleeprot", 1)
 
+/obj/item/clothing/shoes/clog
+	name = "Dutch clogs"
+	desc = "A pair of wooden clogs that people from Holland wear."
+	icon_state = "clog"
+	permeability_coefficient = 0.30
+	kick_bonus = 2 //kicking someone with wooden shoes has gotta hurt
+	step_sound = "step_wood"
+	step_priority = STEP_PRIORITY_LOW
+	setupProperties()
+		..()
+		setProperty("meleeprot", 1)
+
+	get_desc(var/dist, var/mob/user)
+		if (user.traitHolder.hasTrait("dutch"))
+			. = "Remembers you of the homeland."
+		else
+			. = "A pair of shoes from someone far under sea level."
+		. = ..()
+
 /obj/item/clothing/shoes/swat
 	name = "military boots"
 	desc = "Polished and very shiny military boots."

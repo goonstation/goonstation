@@ -335,7 +335,12 @@
 		if(owner.bioHolder)
 			owner.bioHolder.AddEffect("accent_dutch", 0, 0, 0, 1)
 		return
-
+	onAdd(var/mob/owner) //oh yes this is gonna be for ever language oh yes...
+		if(owner.bioHolder)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.equip_new_if_possible(/obj/item/clothing/shoes/clog, H.slot_shoes)
+		return
 /obj/trait/scots
 	name = "Scots (0) \[Language\]"
 	cleanName = "Scottish"
