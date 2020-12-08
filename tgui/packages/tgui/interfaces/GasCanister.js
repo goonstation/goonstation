@@ -139,7 +139,7 @@ class PaperView extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { data } = useBackend(this.context);
     const {
       value,
       stamps,
@@ -147,7 +147,8 @@ class PaperView extends Component {
     return (
       <Section
         scrollable
-        width={'400px'} height={'518px'}
+        width='400px'
+        height='518px'
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView
