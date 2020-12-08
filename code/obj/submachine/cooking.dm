@@ -188,6 +188,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.cant_drop) // For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
 			if(src.cone)
