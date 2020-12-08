@@ -65,6 +65,7 @@
 #define LANDMARK_FALL_MOON_HEMERA "moonfall_hemera" // Hemera lunar office elevator shaft
 #define LANDMARK_FALL_MOON_MUSEUM "moonfall_museum" // Lunar museum elevator shaft
 #define LANDMARK_FALL_SEA "seafall" // Oshan trench elevator
+#define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
 
