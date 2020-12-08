@@ -1405,6 +1405,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "The mask of a peculiarly tinted wolfman getup with an outrageous price tag."
 	icon_state = "gwmask"
 
+/obj/item/clothing/head/werewolf/taxidermy
+	name = "werewolf mask"
+	desc = "The pelt of a flayed werewolf's head formed into a wearable taxidermy mask. Wonderful."
+	icon_state = "gwmask"
+
 /obj/item/clothing/suit/gimmick/abomination
 	name = "abomination suit"
 	desc =  "The abomination suit straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"

@@ -454,7 +454,7 @@
 				owner.real_name = H.real_name
 				owner.name = H.name
 				if(owner.bioHolder?.mobAppearance?.mutant_race)
-					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
 				else
 					owner.set_mutantrace(null)
 		return
@@ -980,7 +980,7 @@
 			owner.visible_message("<span class='alert'><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
-				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
+				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
 				shake_camera(V,10,64)

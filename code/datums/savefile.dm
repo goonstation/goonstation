@@ -48,6 +48,7 @@
 		F["[profileNum]_fartsound"] << AH.fartsound
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
+		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -201,6 +202,7 @@
 		F["[profileNum]_fartsound"] >> AH.fartsound
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
+		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -219,12 +221,19 @@
 			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
+			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
 			F["[profileNum]_facial_color"] >> AH.customization_second_color
+			F["[profileNum]_facial_color"] >> AH.customization_second_color_original
 			F["[profileNum]_detail_color"] >> AH.customization_third_color
+			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
+			F["[profileNum]_skin_tone"] >> AH.s_tone_original
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
+			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
+			F["[profileNum]_facial_style_name"] >> AH.customization_second_original
 			F["[profileNum]_detail_style_name"] >> AH.customization_third
+			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
@@ -285,6 +294,9 @@
 			AH.screamsound = "male"
 		if (!AH.voicetype)
 			AH.voicetype = RANDOM_HUMAN_VOICE
+
+		if(!is_valid_color_string(src.PDAcolor)) //how?
+			src.PDAcolor = "#6F7961"
 
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
@@ -361,7 +373,7 @@
 
 
 	cloudsave_load( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 
 		if (IsGuestKey(user.key))
@@ -387,7 +399,7 @@
 		return src.savefile_load(user, 1, save)
 
 	cloudsave_save( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 		if (IsGuestKey( user.key ))
 			return 0
@@ -409,7 +421,7 @@
 		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
@@ -425,5 +437,5 @@
 			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
-		user.cloudsaves.Remove( name )
+		user.player.cloudsaves.Remove( name )
 		return 1

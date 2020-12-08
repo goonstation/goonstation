@@ -418,10 +418,10 @@ var/list/radio_brains = list()
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color_carry = HAH.customization_first_color
-				HAH.customization_second_color_carry = HAH.customization_second_color
-				HAH.customization_third_color_carry = HAH.customization_third_color
-				HAH.s_tone_carry = HAH.s_tone
+				HAH.customization_first_color_original = HAH.customization_first_color
+				HAH.customization_second_color_original = HAH.customization_second_color
+				HAH.customization_third_color_original = HAH.customization_third_color
+				HAH.s_tone_original = HAH.s_tone
 				var/hulk_skin = "#4CBB17" // a striking kelly green
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
@@ -430,6 +430,7 @@ var/list/radio_brains = list()
 				HAH.customization_second_color = "#3F704D" // a bold hunter green
 				HAH.customization_third_color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
+			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 		..()
 
@@ -438,10 +439,15 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = HAH.customization_first_color_carry
-				HAH.customization_second_color = HAH.customization_second_color_carry
-				HAH.customization_third_color = HAH.customization_third_color_carry
-				HAH.s_tone = HAH.s_tone_carry
+				HAH.customization_first_color = HAH.customization_first_color_original
+				HAH.customization_second_color = HAH.customization_second_color_original
+				HAH.customization_third_color = HAH.customization_third_color_original
+				HAH.s_tone = HAH.s_tone_original
+				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
+					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
+					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
+					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
+			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 

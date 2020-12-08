@@ -379,7 +379,8 @@
 	return data
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		//Input controls

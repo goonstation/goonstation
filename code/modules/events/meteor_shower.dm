@@ -227,7 +227,7 @@ var/global/meteor_shower_active = 0
 			if(NewLoc.Enter())
 				src.set_loc(NewLoc)
 				src.set_dir(Dir)
-				return TRUE
+				. = TRUE
 		else
 			hit_object = 0
 		check_hits()

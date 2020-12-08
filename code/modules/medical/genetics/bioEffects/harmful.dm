@@ -167,6 +167,7 @@
 			H.set_body_icon_dirty()
 			H.unlock_medal("Space Ham", 1)
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
+			H.SafeScale(1.75, 1)
 
 	OnRemove()
 		..()
@@ -174,6 +175,7 @@
 			var/mob/living/carbon/human/H = owner
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
+			H.SafeScale(1/1.75,1)
 
 	OnLife()
 		if(..()) return

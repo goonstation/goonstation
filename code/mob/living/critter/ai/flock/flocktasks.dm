@@ -540,7 +540,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc?.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
