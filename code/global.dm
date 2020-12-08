@@ -228,6 +228,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
