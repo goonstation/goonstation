@@ -173,6 +173,7 @@
 			light.enable(queued_run = 1)
 
 	proc/perform_exposure()
+		var/hotspot_catalyst_found = FALSE
 		var/turf/simulated/floor/location = loc
 		if(!istype(location))
 			return 0
@@ -189,12 +190,26 @@
 		else
 			var/datum/gas_mixture/affected = location.air.remove_ratio(volume/max((location.air.volume/5),1))
 
-			affected.temperature = temperature
-
+			affected.temperature = src.temperature
 			affected.react()
 			src.temperature = affected.temperature
 
 			volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+
+			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots
+			//unless catalyst is present...
+			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.95 ))
+
+				// Check for catalyst(s)
+				if(length(affected.trace_gases) > 0 )
+					var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in affected.trace_gases
+					if(istype(trace_gas) && trace_gas?.moles > MINIMUM_REACT_QUANTITY )
+						trace_gas.moles -= MINIMUM_REACT_QUANTITY
+						hotspot_catalyst_found = 1
+
+				// Force volume as heat is sufficient...
+				if(!hotspot_catalyst_found)
+					volume = max(volume, CELL_VOLUME)
 
 			location.assume_air(affected)
 
