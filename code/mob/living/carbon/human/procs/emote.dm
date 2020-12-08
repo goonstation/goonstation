@@ -1555,11 +1555,6 @@
 								src.changeStatus("weakened", 4 SECONDS)
 								src.TakeDamage("head", 8, 0, 0, DAMAGE_BLUNT)
 								JOB_XP(src, "Clown", 1)
-
-							if (src.bioHolder.HasEffect("fat"))
-								message = pick("<B>[src]</B> tries to flip, but stumbles!", "<B>[src]</B> collapses under [his_or_her(src)] own weight!")
-								src.changeStatus("weakened", 2 SECONDS)
-								src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 							else
 								message = "<B>[src]</B> does a flip!"
 							if (!src.reagents.has_reagent("fliptonium"))
@@ -1641,7 +1636,7 @@
 										if (istype(tabl, /obj/table/glass))
 											var/obj/table/glass/g_tabl = tabl
 											if (!g_tabl.glass_broken)
-												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))) || ((src.bioHolder.HasEffect("fat") || G.affecting.bioHolder.HasEffect("fat")) && (!g_tabl.reinforced || prob(90))))
+												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
 													SPAWN_DBG(0)
 														g_tabl.smash()
 														src.changeStatus("weakened", 7 SECONDS)
