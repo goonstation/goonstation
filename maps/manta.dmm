@@ -17778,7 +17778,6 @@
 /area/station/maintenance/upperstarboard)
 "aRb" = (
 /obj/storage/secure/closet/command/hos,
-/obj/item/gun/energy/tasershotgun,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/hos)
 "aRc" = (
