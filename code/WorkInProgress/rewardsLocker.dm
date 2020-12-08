@@ -318,12 +318,21 @@
 					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
-					M.item_state = "MDlabcoat"
-					M.coat_style = "MDlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-alt_o" : "MDlabcoat-alt"
+						M.item_state = "MDlabcoat-alt"
+						M.coat_style = "MDlabcoat-alt"
+						M.desc = "A protective laboratory coat with the blue markings of a fancy Medical Doctor. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
+						M.item_state = "MDlabcoat"
+						M.coat_style = "MDlabcoat"
+						M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
+
 					M.name = "doctor's labcoat"
 					M.real_name = "doctor's labcoat"
-					M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -351,12 +360,21 @@
 					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
-					M.item_state = "SCIlabcoat"
-					M.coat_style = "SCIlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt science jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat-alt_o" : "SCIlabcoat-alt"
+						M.item_state = "SCIlabcoat-alt"
+						M.coat_style = "SCIlabcoat-alt"
+						M.desc = "A protective laboratory coat with the green markings of a fancy Scientist. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
+						M.item_state = "SCIlabcoat"
+						M.coat_style = "SCIlabcoat"
+						M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
+
 					M.name = "scientist's labcoat"
 					M.real_name = "scientist's labcoat"
-					M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
