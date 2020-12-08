@@ -2604,7 +2604,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.layer -= 0.1 //retore to normal
 
 				else
-					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, warptarget_modifier = LANDMARK_VM_WARP_NONE)
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, man_warptarget_modifier = LANDMARK_VM_WARP_NONE)
 					summoning_office = TRUE
 					T.layer += 0.1 //stop hiding my turfs!!
 
