@@ -1193,10 +1193,9 @@ var/image/anim_icon_cache
 			added = 0
 
 
-/obj/blob/wall // TODO: Add check for if theres a wall to the south, if so replace sprite to pseudo-tile
+/obj/blob/wall
 	name = "thick membrane"
 	desc = "This blob is encased in a tough membrane. It'll be harder to get rid of."
-	//icon_state = null
 	state_overlay = "wall"
 	opacity = 1
 	special_icon = 1
