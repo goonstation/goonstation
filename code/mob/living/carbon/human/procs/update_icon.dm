@@ -814,6 +814,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 		var/body_offset = AHOLD.mob_body_offset // Monkey need human arms to hug good
 		var/leg_offset = AHOLD.mob_leg_offset
 		var/arm_offset = AHOLD.mob_arm_offset
+		var/head_offset = AHOLD.mob_head_offset
 
 		// if the image data can be stored in the thing it's trying to draw, store it there
 		// that way, we can make the thing look like the thing without a bunch of dynamic guesswork
@@ -878,6 +879,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 					var/obj/item/organ/head/our_head = src.organHolder.head
 					human_head_image = our_head.head_image // head data is stored in the head
+					human_head_image.pixel_y = head_offset // head position is stored in the body
 					src.body_standing.overlays += human_head_image
 
 				if (src.organHolder?.tail)
