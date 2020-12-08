@@ -387,7 +387,7 @@ ported and crapped up by: haine
 	proc/regenerate_reagents()
 		if (isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc // I'm not sure why it's src.loc and not src. (src is the hose, src.loc is where the hose is)
-			if (R && R.cell) // If the robot's alive and there's power.
+			if (R?.cell) // If the robot's alive and there's power.
 				var/full_tanks = 0 // to keep track of when we're good to remove ourselves from processing_items
 				for (var/obj/item/reagent_containers/borghose_tank/tank in src.tanks) // Regenerate all formulas at once.
 					var/tank_max = tank.reagents.maximum_volume // easier than writing tank.reagents.total_volume/etc over and over

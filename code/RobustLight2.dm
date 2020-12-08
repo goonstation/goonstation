@@ -590,12 +590,14 @@ proc
 
 /obj/overlay/tile_effect
 	event_handler_flags = IMMUNE_SINGULARITY
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /obj/overlay/tile_effect/lighting
 	icon = 'icons/effects/light_overlay.dmi'
 	blend_mode = BLEND_ADD
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
+	vis_flags = VIS_HIDE
 
 turf
 	var

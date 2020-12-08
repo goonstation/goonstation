@@ -37,9 +37,10 @@ export const ChemDispenser = (props, context) => {
     beakerContents,
   } = data;
   return (
-    <Window width={570}
+    <Window
+      width={570}
       height={705}
-      theme="science">
+      theme="ntos">
       <Window.Content scrollable>
         <Box>
           <ReagentDispenser />
@@ -216,8 +217,8 @@ export const Beaker = (props, context) => {
               }}
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
               name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
-            <Tooltip.Overflow width="305px"
-              content={" ( " + reagent.volume + "u ) " + titleCase(reagent.name) }
+            <Tooltip.Overflow width="225px"
+              content={" ( " + reagent.volume + "u ) " + titleCase(reagent.name)}
               style={{
                 "line-height": "15px",
               }}>

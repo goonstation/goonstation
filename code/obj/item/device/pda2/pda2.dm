@@ -191,7 +191,7 @@
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
-	barman
+	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	mechanic
@@ -227,6 +227,12 @@
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
+	var/mob/M = src.loc
+	if(istype(M) && M.client)
+		src.bg_color = M.client.preferences.PDAcolor
+		var/list/color_vals = hex_to_rgb_list(bg_color)
+		src.linkbg_color = rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8)
+
 	src.update_colors(src.bg_color, src.linkbg_color)
 
 	SPAWN_DBG(0.5 SECONDS)
@@ -356,7 +362,7 @@
 		ul, ol { margin: 0.5em; }
 		body {
 			background-color: [src.bg_color];
-			color: #000;
+			color: [src.link_color];
 			font-family: Tahoma, sans-serif;
 			font-size: [(user?.client?.preferences && user?.client?.preferences.font_size) ? "[user?.client?.preferences.font_size]%" : "10pt"];
 ;
@@ -641,6 +647,11 @@
 	proc/update_colors(bg, linkbg)
 		src.bg_color = bg
 		src.linkbg_color = linkbg
+		var/color_list = hex_to_rgb_list(src.linkbg_color)
+		if(max(color_list["r"], color_list["b"], color_list["g"]) <= 50)
+			src.link_color = "#dddddd"
+		else
+			src.link_color = initial(src.link_color)
 
 		if (!overlay_images)
 			src.overlay_images = list()

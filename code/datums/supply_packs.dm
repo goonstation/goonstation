@@ -1,7 +1,7 @@
 
 /proc/build_supply_pack_cache()
 	qm_supply_cache.Cut()
-	for(var/S in childrentypesof(/datum/supply_packs))
+	for(var/S in concrete_typesof(/datum/supply_packs))
 		qm_supply_cache += new S()
 
 /datum/supply_order
@@ -233,13 +233,18 @@
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
+ABSTRACT_TYPE (/datum/supply_packs/electrical)
 /datum/supply_packs/electrical
-	name = "Electrical Supplies Crate - 2 pack"
-	desc = "x2 Cabling Box (14 cable coils total)"
+	name = "cable crate"
+	desc = "Parent object for Electrical Cable crates, you shouldn't see this..."
 	category = "Basic Materials"
-	contains = list(/obj/item/storage/box/cablesbox = 2)
 	cost = 2000
 	containertype = /obj/storage/crate
+
+/datum/supply_packs/electrical/red
+	name = "Electrical Supplies Crate (red) - 2 pack"
+	desc = "x2 Cabling Box (14 cable coils total)"
+	contains = list(/obj/item/storage/box/cablesbox = 2)
 	containername = "Electrical Supplies Crate - 2 pack"
 
 /datum/supply_packs/engineering
@@ -492,7 +497,7 @@
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
-	cost = 2000
+	cost = 7500
 	containertype = /obj/storage/crate
 	containername = "Robotics Crate"
 
@@ -900,7 +905,8 @@
 	contains = list(/obj/item/clothing/suit/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
-					/obj/item/reagent_containers/emergency_injector/anti_rad = 4)
+					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
+					/obj/item/device/geiger = 2)
 	cost = 2000
 	containertype = /obj/storage/crate/wooden
 	containername = "Radiation Emergency Supplies"

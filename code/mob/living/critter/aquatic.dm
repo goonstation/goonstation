@@ -85,6 +85,10 @@
 	. = ..()
 	src.update_water_status()
 
+/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
+	. = ..()
+	src.update_water_status()
+
 /mob/living/critter/aquatic/Move(NewLoc, direct)
 	. = ..()
 	src.update_water_status()
@@ -237,11 +241,11 @@
 				SPAWN_DBG(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					if(!src.water_need)
 						animate_bumble(src)
@@ -450,7 +454,7 @@
 	switch (act)
 		if ("scream")
 			if (src.emote_check(voluntary, 300))
-				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
+				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7, channel=VOLUME_CHANNEL_EMOTE)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
 				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"
@@ -458,11 +462,11 @@
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))

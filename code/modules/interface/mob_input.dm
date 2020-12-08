@@ -3,7 +3,7 @@
 /mob/proc/key_up(var/key)
 
 /mob/proc/click(atom/target, params)
-	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
+	//moved the 'actions.interrupt(src, INTERRUPT_ACT)' here to on mob/living
 
 	if (src.targeting_ability)
 		if (istype(src.targeting_ability, /datum/targetable))
@@ -98,35 +98,28 @@
 	//if (istype(target, /obj/screen/ability))
 	//	target:clicked(params)
 	if (get_dist(src, target) > 0)
-		if(!dir_locked)
-			dir = get_dir(src, target)
+		if(!src.dir_locked)
+			set_dir(get_dir(src, target))
 			if(dir & (dir-1))
 				if (dir & EAST)
-					dir = EAST
+					set_dir(EAST)
 				else if (dir & WEST)
-					dir = WEST
-			src.update_directional_lights()
-			if (src.mdir_lights)
-				src.update_mdir_light_visibility(dir)
+					set_dir(WEST)
 
-/mob/proc/hotkey(name)
+/mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")
 			if(!dir_locked)
-				src.dir = NORTH
-				src.update_directional_lights()
+				src.set_dir(NORTH)
 		if ("look_s")
 			if(!dir_locked)
-				src.dir = SOUTH
-				src.update_directional_lights()
+				src.set_dir(SOUTH)
 		if ("look_e")
 			if(!dir_locked)
-				src.dir = EAST
-				src.update_directional_lights()
+				src.set_dir(EAST)
 		if ("look_w")
 			if(!dir_locked)
-				src.dir = WEST
-				src.update_directional_lights()
+				src.set_dir(WEST)
 		if ("admin_interact")
 			src.admin_interact_verb()
 		if ("stop_pull")

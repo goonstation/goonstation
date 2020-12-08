@@ -1,4 +1,4 @@
-"aa" = (/turf/space,/area)
+"aa" = (/turf/space,/area/space)
 "ab" = (/turf/simulated/wall/auto,/area/janitor_setpiece)
 "ac" = (/obj/machinery/door/poddoor/blast{dir = 4; icon_state = "bdoorleft1"; id = "jani_outpost"},/turf/simulated/floor/shuttlebay,/area/janitor_setpiece)
 "ad" = (/obj/machinery/door/poddoor/blast{dir = 4; icon_state = "bdoormid1"; id = "jani_outpost"},/turf/simulated/floor/shuttlebay,/area/janitor_setpiece)

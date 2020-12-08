@@ -76,7 +76,7 @@ Contains:
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -111,7 +111,7 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -200,7 +200,7 @@ that cannot be itched
 			icon_state = "fs"
 			active = 0
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "fs_pindirect"
@@ -522,14 +522,14 @@ that cannot be itched
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////
 
 /obj/item/device/prisoner_scanner
-	name = "Securotron-5000"
-	desc = "Used to scan in prisoners and update their security records."
-	icon_state = "forensic0"
+	name = "Security RecordTrak"
+	desc = "A device used to scan in prisoners and update their security records."
+	icon_state = "recordtrak"
 	var/mode = 1
 	var/datum/data/record/active1 = null
 	var/datum/data/record/active2 = null
 	w_class = 3.0
-	item_state = "electronic"
+	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 

@@ -334,6 +334,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
+							logTheThing("pdamsg", usr, null, "sets ringtone of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -581,6 +582,7 @@
 						if(src.master.uplink)
 							src.master.uplink.active = 0
 							src.note = src.master.uplink.orignote
+							usr.removeGpsPath(doText = 0)
 
 
 			else if(href_list["browse_func"]) //File browser specific topic junk

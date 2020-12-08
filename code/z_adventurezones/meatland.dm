@@ -137,7 +137,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon_state = "acid_floor"
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		set_dir(pick(NORTH,SOUTH))
 
 /obj/stomachacid
 	name = "acid"
@@ -146,6 +146,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "acid_depth"
 	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_NOSHADOW_ABOVE
 	mouse_opacity = 0
 	event_handler_flags = USE_HASENTERED
 
@@ -156,7 +157,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
-		reagents.reaction(A, TOUCH, 2)
+		if(!istype(A, /obj/item/skull))
+			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
 			boutput(A, pick("<span class='alert'>This stings!</span>", "<span class='alert'>Oh jesus this burns!!</span>", "<span class='alert'>ow ow OW OW OW OW</span>", "<span class='alert'>oh cripes this isn't the fun kind of acid</span>", "<span class='alert'>ow OW OUCH FUCK OW</span>"))
 			if (ishuman(A) && prob(80))
@@ -377,7 +379,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && dialog && dialog.len)
+			if (prob(10) && length(dialog))
 				speak(pick(dialog))
 			return ..()
 
@@ -1196,7 +1198,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			return
 
 		if (command == "key_auth")
-			if (signal && signal.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
+			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
 				if (knownKeys.len >= 2 && !inPasswordRequestMode)
@@ -1205,7 +1207,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 
 		else if (command == "key_deauth")
-			if (signal && signal.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
+			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
 				if (knownKeys.len < 2)

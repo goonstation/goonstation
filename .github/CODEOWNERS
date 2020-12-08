@@ -5,6 +5,11 @@
 # In the event that multiple members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
+# Flourish
+/code/obj/item/toys.dm @flrsh
+/maps/manta.dmm @flrsh
+/maps/oshan.dmm @flrsh
+
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
 /code/obj/item/organs/ @Kyle2143
@@ -16,6 +21,9 @@
 
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
+
+# Tarmunora
+/code/modules/projectiles/projectile_parent.dm @Tarmunora
 
 # ZeWaka
 *.md @ZeWaka

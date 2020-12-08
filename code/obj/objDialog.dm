@@ -54,7 +54,7 @@ var/global/list/objects_using_dialogs
 			.= O
 
 /obj/proc/updateUsrDialog()
-	if (clients_operating && clients_operating.len)
+	if (length(clients_operating))
 		var/client/C = null
 		for(var/x in clients_operating)
 			C = x
@@ -68,7 +68,7 @@ var/global/list/objects_using_dialogs
 						src.remove_dialog(C.mob)
 
 /obj/proc/updateDialog()
-	if (clients_operating && clients_operating.len)
+	if (length(clients_operating))
 		var/client/C = null
 		for(var/x in clients_operating)
 			C = x
@@ -81,7 +81,7 @@ var/global/list/objects_using_dialogs
 		AutoUpdateAI(src)
 
 /obj/item/proc/updateSelfDialogFromTurf()	//It's weird, yes. only used for spy stickers as of now
-	if (clients_operating?.len)
+	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob && get_dist(C.mob,src) <= 1)
 				src.attack_self(C.mob)
@@ -94,7 +94,7 @@ var/global/list/objects_using_dialogs
 				src.attack_self(AI)
 
 /obj/item/proc/updateSelfDialog()
-	if (clients_operating?.len)
+	if (length(clients_operating))
 		var/mob/M = src.loc
 		if(istype(M))
 			if (isAI(M)) //Eyecam handling
@@ -113,7 +113,7 @@ var/global/list/objects_using_dialogs
 		if (M.deployed_to_eyecam)
 			AI = M.eyecam
 
-		if (AI && AI.using_dialog_of(subject))
+		if (AI?.using_dialog_of(subject))
 			subject.attack_ai(AI)
 
 
@@ -146,7 +146,7 @@ var/global/list/objects_using_dialogs
 
 
 /obj/machinery/power/apc/updateUsrDialog()
-	if (clients_operating?.len)
+	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
 				if (get_dist(C.mob,src) <= 1)
@@ -157,7 +157,7 @@ var/global/list/objects_using_dialogs
 					src.remove_dialog(C.mob)
 
 /obj/machinery/power/apc/updateDialog()
-	if (clients_operating?.len)
+	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
 				if (get_dist(C.mob,src) <= 1)
@@ -169,7 +169,7 @@ var/global/list/objects_using_dialogs
 
 
 /obj/npc/trader/updateUsrDialog()
-	if (clients_operating?.len)
+	if (length(clients_operating))
 		for(var/client/C in clients_operating)
 			if (C.mob)
 				if (get_dist(C.mob,src) <= 1)

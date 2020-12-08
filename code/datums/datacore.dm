@@ -176,7 +176,7 @@
 	// Otherwise give them a default wage
 	else
 		var/datum/job/J = find_job_in_controller_by_string(G.fields["rank"])
-		if (J && J.wages)
+		if (J?.wages)
 			B.fields["wage"] = round(J.wages * wageMult)
 		else
 			B.fields["wage"] = 0

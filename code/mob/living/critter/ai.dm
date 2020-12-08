@@ -82,6 +82,7 @@ var/list/ai_move_scheduled = list()
 
 	proc/interrupt()
 		if(src.enabled)
+			current_task.reset()
 			current_task = default_task
 
 	proc/die()
@@ -116,7 +117,7 @@ var/list/ai_move_scheduled = list()
 	proc/stop_move()
 		move_target = null
 		ai_move_scheduled -= src
-		walk(src,0)
+		walk(owner,0)
 
 	proc/move_step()
 		if (src.move_side)
@@ -332,7 +333,7 @@ var/list/ai_move_scheduled = list()
 
 	reset()
 		..()
-		if(subtasks && subtasks.len >= 1)
+		if(length(subtasks))
 			current_subtask = subtasks[1]
 			current_subtask.reset()
 		subtask_index = 1
@@ -347,6 +348,7 @@ var/list/ai_move_scheduled = list()
 
 	// next task is not defined here, handled by sequence
 	proc/failed()
+		fails++
 		return fails >= max_fails
 
 	proc/succeeded()

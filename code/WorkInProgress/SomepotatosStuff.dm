@@ -49,12 +49,7 @@
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
 /mob/proc/DoGPS(var/ID)
-	if( client.GPS_Path )
-		client.GPS_Path = null
-		for( var/image/img in client.GPS_Images )
-			client.images -= img
-		client.GPS_Images = list()
-		boutput( usr, "Path removed!" )
+	if(removeGpsPath())
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
@@ -74,16 +69,22 @@
 	var/target = input("Choose a destination!") in wtfbyond|null
 	if(!target || !src.client) return
 	target = targets[target]
-	var/turf/dest = target
-	if(dest.z != OT.z)
-		boutput(usr, "You are on a different z-level!")
+	gpsToTurf(target, param = ID)
+
+/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, var/heuristic = /turf/proc/AllDirsTurfsWithAccess, param = null)
+	removeGpsPath(doText)
+	var/turf/start = get_turf(src)
+	if(dest.z != start.z)
+		if(doText)
+			boutput(usr, "You are on a different z-level!")
 		return
-	OT = get_turf(src)
-	client.GPS_Path = AStar( OT, dest, /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175 )
-	if( client.GPS_Path )
-		boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
+	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=175 )
+	if(client.GPS_Path)
+		if(doText)
+			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
 	else
-		boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
+		if(doText)
+			boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
 		return
 	client.GPS_Images = list()
 	SPAWN_DBG(0)
@@ -110,6 +111,17 @@
 			img.transform = xf/2
 			animate(img,alpha=255,transform=xf,time=2)
 			sleep(0.1 SECONDS)
+
+/mob/proc/removeGpsPath(doText = 1)
+	if( client.GPS_Path )
+		client.GPS_Path = null
+		for( var/image/img in client.GPS_Images )
+			client.images -= img
+		client.GPS_Images = list()
+		if(doText)
+			boutput( usr, "Path removed!" )
+		return 1
+	return 0
 
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
@@ -229,11 +241,11 @@ world/proc/updateCameraVisibility()
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 		else
 
-			dir = direct
+			set_dir(direct)
 			if((direct & NORTH) && src.y < world.maxy)
 				src.y++
 			if((direct & SOUTH) && src.y > 1)

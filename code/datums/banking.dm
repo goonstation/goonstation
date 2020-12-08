@@ -88,7 +88,7 @@
 		jobs["Roboticist"] = PAY_DOCTORATE
 //		jobs["Hangar Mechanic"]= PAY_TRADESMAN
 //		jobs["Elite Security"] = PAY_TRADESMAN
-		jobs["Barman"] = PAY_UNTRAINED
+		jobs["Bartender"] = PAY_UNTRAINED
 		jobs["Chef"] = PAY_UNTRAINED
 		jobs["Janitor"] = PAY_TRADESMAN
 		jobs["Clown"] = PAY_DUMBCLOWN

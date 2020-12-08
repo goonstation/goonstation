@@ -327,7 +327,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 2
 
 			else
@@ -339,7 +339,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 4
 
 			else
@@ -351,7 +351,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 8
 
 			else
@@ -363,7 +363,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 16
 
 			else
@@ -375,7 +375,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 32
 
 			else
@@ -387,7 +387,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 64
 
 			else
@@ -399,7 +399,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 128
 
 			else

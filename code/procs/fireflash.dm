@@ -22,9 +22,9 @@
 		hotspots += h
 
 		T.hotspot_expose(h.temperature, h.volume)
-#if ASS_JAM // experimental thing to let temporary hotspots affect atmos
+/*// experimental thing to let temporary hotspots affect atmos
 		h.perform_exposure()
-#endif
+*/
 		//SPAWN_DBG(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
@@ -123,9 +123,9 @@
 		affected[T] = existing_hotspot.temperature
 		if (need_expose && expose_temp)
 			T.hotspot_expose(expose_temp, existing_hotspot.volume)
-#if ASS_JAM // experimental thing to let temporary hotspots affect atmos
+/* // experimental thing to let temporary hotspots affect atmos
 			existing_hotspot.perform_exposure()
-#endif
+*/
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		for (var/mob/living/L in T)
 			L.update_burning(min(55, max(0, expose_temp - 100 / 550)))

@@ -40,7 +40,7 @@
 		return 0
 
 	get_desc()
-		if (usr && (usr.job == "Roboticist" || usr.job == "Medical Doctor" || usr.job == "Geneticist" || usr.job == "Medical Director"))
+		if (usr?.traitHolder?.hasTrait("training_medical"))
 			if (src.owner && src.owner.current)
 				. += "<br><span class='notice'>This brain is still warm.</span>"
 			else
@@ -151,9 +151,8 @@
 
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Computational core"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Computational core
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description

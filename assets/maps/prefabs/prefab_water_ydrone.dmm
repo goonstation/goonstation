@@ -1,4 +1,4 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/space)
 "b" = (/turf/variableTurf/clear,/area/noGenerate)
 "c" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 1},/turf/variableTurf/clear,/area/noGenerate)
 "d" = (/obj/item/raw_material/rock{icon_state = "rock2"},/turf/variableTurf/clear,/area/noGenerate)

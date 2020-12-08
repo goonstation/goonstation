@@ -564,37 +564,16 @@ var/global/debug_messages = 0
 	if (!esize)
 		return
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
+	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
+	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris)
+	explosion_new(null, T, esize, bris, angle, width)
 	return
-/*
-/client/proc/cmd_ultimategrife()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "ULTIMATE GRIFE"
 
-	switch(alert("Holy shit are you sure?! (also the server will lag for a few seconds)",,"Yes","No"))
-		if("Yes")
-			for(var/turf/simulated/wall/W in world)
-				new /obj/machinery/crusher(get_turf(W))
-				qdel(W)
-
-			for(var/turf/simulated/wall/r_wall/RW in world)
-				new /obj/machinery/crusher(get_turf(RW))
-				qdel(RW)
-
-			logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
-			logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
-			message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
-
-			alert("Uh oh.")
-
-		if("No")
-			alert("Thank god for that.")
-*/
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
 	set name = "Change Mutant Race"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -669,7 +648,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
 
-	if(!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)))
+	if(!(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)))
 		alert("It isn't gang mode, dummy!")
 		return
 

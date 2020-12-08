@@ -52,7 +52,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1)
+					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -83,7 +83,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/killme.ogg", 70, 1)
+					playsound(get_turf(src), "sound/voice/killme.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -164,7 +164,7 @@
 		switch (act)
 			if ("laugh")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/mechmonstrositylaugh.ogg" , 80, 1)
+					playsound(get_turf(src), "sound/voice/mechmonstrositylaugh.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 /datum/targetable/critter/inject
 	name = "Inject Corrupted Nanites"
@@ -274,7 +274,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && mechanimate && mechanimate.cooldowncheck())
+		if(ownerMob && target && IN_RANGE(owner, target, 1) && mechanimate?.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
@@ -453,7 +453,7 @@
 
 	Move()
 		playsound(src.loc, "sound/machines/glitch4.ogg", 50, 0)
-		..()
+		. = ..()
 
 	seek_target()
 
@@ -584,7 +584,7 @@
 		stepsound = pick(sounds_mechanicalfootstep)
 		if(dir != lastdir)
 			if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-				dir = lastdir
+				set_dir(lastdir)
 				changeIcon()
 			else
 				lastdir = dir

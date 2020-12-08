@@ -169,12 +169,13 @@ var/global/list/bible_contents = list()
 			return 0
 		else
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 			user.gib()
 			return 0
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
 
 	HasEntered(atom/movable/AM as mob)
 		..()

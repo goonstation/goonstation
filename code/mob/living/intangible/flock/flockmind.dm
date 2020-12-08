@@ -27,14 +27,13 @@
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-    special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]"
-    special_desc += "<br><span class='bold'>Resources:</span> [src.flock.total_resources()]"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%"
-    special_desc += "<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS"
-    special_desc += "<br>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> [src.real_name]
+    <br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
+    <br><span class='bold'>Resources:</span> [src.flock.total_resources()]
+    <br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
+    <br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS
+    <br>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -80,6 +79,7 @@
 	src.addAbility(/datum/targetable/flockmindAbility/doorsOpen)
 	src.addAbility(/datum/targetable/flockmindAbility/radioStun)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
+	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
 /mob/living/intangible/flock/flockmind/proc/addAbility(var/abilityType)
 	src.abilityHolder.addAbility(abilityType)
@@ -130,7 +130,7 @@
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
-		if(O && O.client)
+		if(O?.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
 		SPAWN_DBG (10)
@@ -148,3 +148,4 @@
 	// send out a request to ghosts
 	ghost_notifier.send_notification(src, src, /datum/ghost_notification/respawn/flockdrone)
 	boutput(src, "<span class='notice'>Partitioning initiated. Stand by.</span>")
+

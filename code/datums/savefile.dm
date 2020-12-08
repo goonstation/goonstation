@@ -48,6 +48,7 @@
 		F["[profileNum]_fartsound"] << AH.fartsound
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
+		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -201,6 +202,7 @@
 		F["[profileNum]_fartsound"] >> AH.fartsound
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
+		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -219,12 +221,19 @@
 			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
+			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
 			F["[profileNum]_facial_color"] >> AH.customization_second_color
+			F["[profileNum]_facial_color"] >> AH.customization_second_color_original
 			F["[profileNum]_detail_color"] >> AH.customization_third_color
+			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
+			F["[profileNum]_skin_tone"] >> AH.s_tone_original
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
+			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
+			F["[profileNum]_facial_style_name"] >> AH.customization_second_original
 			F["[profileNum]_detail_style_name"] >> AH.customization_third
+			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
@@ -286,6 +295,9 @@
 		if (!AH.voicetype)
 			AH.voicetype = RANDOM_HUMAN_VOICE
 
+		if(!is_valid_color_string(src.PDAcolor)) //how?
+			src.PDAcolor = "#6F7961"
+
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
 		if (!istext(src.target_cursor))
@@ -310,7 +322,7 @@
 			F["[profileNum]_radio_sounds"] << src.radio_music_volume
 
 		// Global pref validation
-		if (user && user.is_mentor())
+		if (user?.is_mentor())
 			if (isnull(src.see_mentor_pms))
 				src.see_mentor_pms = 1
 			if (src.see_mentor_pms == 0)
@@ -361,49 +373,69 @@
 
 
 	cloudsave_load( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 
 		if (IsGuestKey(user.key))
 			return 0
 
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]" )
-		if( !http )
-			return "Failed to contact Goonhub!"
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			return
+
+		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
 
 		var/savefile/save = new
 		save.ImportText( "/", ret["savedata"] )
-		//world << save
-		//world << "[ret["savedata"]]"
-		//world << "_[save["version"]]_"
 		return src.savefile_load(user, 1, save)
 
 	cloudsave_save( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 		if (IsGuestKey( user.key ))
 			return 0
 
 		var/savefile/save = src.savefile_save( user, 1, 1 )
 		var/exported = save.ExportText()
-		//world << "Exported: [exported]"
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]&data=[url_encode(exported)]" )
-		if( !http )
-			return "Failed to contact Goonhub!"
 
-		var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]&data=[url_encode(exported)]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			return
+
+		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
-		var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]" )
-		if( !http )
-			return "Failed to contact Goonhub!"
-		user.cloudsaves.Remove( name )
+
+		// Request deletion via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
+			return
+
+		user.player.cloudsaves.Remove( name )
 		return 1

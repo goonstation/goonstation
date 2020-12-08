@@ -15,6 +15,10 @@
 /obj/New()
 	..()
 	src.update_access_from_txt()
+/*
+ * Override all access requirements if user is an administrator
+ */
+/obj/var/admin_access_override = FALSE
 
 /*
  * Overrides the object's req_access var based on what's in req_access_txt (if set).
@@ -65,6 +69,10 @@
 	if (src.check_access(null))
 		return 1
 	if (M && ismob(M))
+		// check for admin access override
+		if (src.admin_access_override)
+			if (M.client?.holder?.level >= LEVEL_SA)
+				return 1
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 1
@@ -318,7 +326,7 @@
 			return list(access_maint_tunnels, access_hydro)
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
-		if("Barman")
+		if("Bartender")
 			return list(access_bar)
 		if("Waiter")
 			return list(access_bar, access_kitchen)

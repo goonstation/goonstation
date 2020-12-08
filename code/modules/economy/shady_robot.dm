@@ -20,7 +20,9 @@
 	var/list/failed_purchase_dialogue = null
 	var/pickupdialogue = null
 	var/pickupdialoguefailure = null
-	var/list/trader_areas = list(/area/station/maintenance/southsolar,/area/station/solar/south,/area/station/maintenance/east,/area/station/maintenance/SEmaint,/area/station/maintenance/eastsolar,/area/station/solar/east,/area/station/maintenance/south,/area/station/maintenance/disposal,/area/station/maintenance/SWmaint,/area/station/maintenance/westsolar,/area/station/solar/west,/area/station/hallway/secondary/construction,/area/station/maintenance/NWmaint,/area/station/crew_quarters/quartersA,/area/station/crew_quarters/quartersB,/area/station/crew_quarters/observatory,/area/station/wreckage,/area/station/maintenance/north,/area/station/maintenance/maintcentral)
+	var/list/trader_areas = list(/area/station/maintenance/solar/south,/area/station/solar/south,/area/station/maintenance/east,/area/station/maintenance/southeast,/area/station/maintenance/solar/east,/area/station/solar/east,/area/station/maintenance/south,/area/station/maintenance/disposal,/area/station/maintenance/southwest,/area/station/maintenance/solar/west,/area/station/solar/west,/area/station/hallway/secondary/construction,/area/station/maintenance/northwest
+,/area/station/crew_quarters/quartersA,/area/station/crew_quarters/quartersB,/area/station/crew_quarters/observatory,/area/station/wreckage,/area/station/maintenance/north,/area/station/maintenance/central
+)
 	var/doing_a_thing = 0
 
 		// This list is in a specific order!!

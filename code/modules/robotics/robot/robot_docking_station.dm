@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
@@ -26,6 +27,13 @@
 	src.create_reagents(500)
 	reagents.add_reagent("fuel", 250)
 	src.build_icon()
+
+/obj/machinery/recharge_station/disposing()
+	if(occupant)
+		occupant.set_loc(get_turf(src.loc))
+		occupant = null
+	..()
+
 
 /obj/machinery/recharge_station/process()
 	if (!(src.status & BROKEN))
@@ -307,7 +315,7 @@
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
 			if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
 				return
-			if (url_regex && url_regex.Find(newname))
+			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
@@ -787,9 +795,9 @@
 						playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
 					SPAWN_DBG(0.6 SECONDS)
 						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
 
 			if (H.health <= 2)

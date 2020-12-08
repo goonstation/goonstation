@@ -1,5 +1,6 @@
 /datum/job/
 	var/name = null
+	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
 	var/wages = 0
@@ -104,7 +105,7 @@
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
-				if (picklist && picklist.len >= 1)
+				if (length(picklist))
 					for(var/pick in picklist)
 						M.bioHolder.AddEffect(pick)
 
@@ -162,6 +163,9 @@
 	slot_ears = /obj/item/device/radio/headset/command/captain
 	slot_poc1 = /obj/item/disk/data/floppy/read_only/authentication
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
+#ifdef RP_MODE
+	rounds_needed_to_play = 20
+#endif
 
 	New()
 		..()
@@ -315,6 +319,12 @@
 	slot_ears = /obj/item/device/radio/headset/command/ce
 	slot_poc1 = /obj/item/paper/book/pocketguide/engineering
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
 
 	New()
 		..()
@@ -551,6 +561,7 @@
 	slot_suit = /obj/item/clothing/suit/labcoat/robotics
 	slot_glov = /obj/item/clothing/gloves/latex
 	slot_lhan = /obj/item/storage/toolbox/mechanical
+	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_ears = /obj/item/device/radio/headset/medical
 	items_in_backpack = list(/obj/item/crowbar)
 
@@ -662,6 +673,12 @@
 
 	items_in_backpack = list(/obj/item/rcd/construction/safe, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/caution, /obj/item/lamp_manufacturer/organic)
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
+
 	New()
 		..()
 		src.access = get_access("Construction Worker")
@@ -708,7 +725,7 @@
 			return
 		M.bioHolder.AddEffect("training_miner")
 		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf") // heh
+			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -745,6 +762,12 @@
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
 
 	New()
 		..()
@@ -794,13 +817,14 @@
 		if (!M)
 			return
 		if (prob(20))
-			M.bioHolder.AddEffect("accent_swedish")
+			M.bioHolder.AddEffect("accent_swedish", do_stability=0)
 
-/datum/job/civilian/barman
-	name = "Barman"
+/datum/job/civilian/bartender
+	name = "Bartender"
+	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	slot_belt = /obj/item/device/pda2/barman
+	slot_belt = /obj/item/device/pda2/bartender
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -811,7 +835,7 @@
 
 	New()
 		..()
-		src.access = get_access("Barman")
+		src.access = get_access("Bartender")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -917,10 +941,9 @@
 		..()
 		if (!M)
 			return
-		var/datum/bioEffect/incurableClowniness = M.bioHolder.AddEffect("clumsy")
-		incurableClowniness.curable_by_mutadone = 0
+		M.bioHolder.AddEffect("clumsy", magical=1)
 		if (prob(50))
-			M.bioHolder.AddEffect("accent_comic")
+			M.bioHolder.AddEffect("accent_comic", magical=1)
 
 // AI and Cyborgs
 
@@ -986,6 +1009,12 @@
 	slot_mask = /obj/item/clothing/mask/breath
 
 	items_in_backpack = list(/obj/item/rcd/construction, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/material_shaper,/obj/item/room_marker)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_engineer")
 
 	New()
 		..()
@@ -1205,7 +1234,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
@@ -1281,8 +1310,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("mute")
-		M.bioHolder.AddEffect("blankman")
+		M.bioHolder.AddEffect("mute", magical=1)
+		M.bioHolder.AddEffect("blankman", magical=1)
 
 // randomizd gimmick jobs
 
@@ -1537,7 +1566,7 @@
 			bee.name = pick_string("bee_names.txt", "beename")
 			bee.name = replacetext(bee.name, "larva", "bee")
 
-		M.bioHolder.AddEffect("bee") //They're one with the bees!
+		M.bioHolder.AddEffect("bee", magical=1) //They're one with the bees!
 
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
@@ -1643,7 +1672,10 @@
 		src.access = get_access("Psychologist")
 		return
 
-
+#ifdef HALLOWEEN
+/*
+ * Halloween jobs
+ */
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
@@ -1671,7 +1703,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("regenerator")
+		M.bioHolder.AddEffect("regenerator", magical=1)
 
 /datum/job/special/halloween/candy_salesman
 	name = "Candy Salesman"
@@ -1713,7 +1745,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("quiet_voice")
+		M.bioHolder.AddEffect("quiet_voice", magical=1)
 
 /datum/job/special/halloween/wanna_bee
 	name = "WannaBEE"
@@ -1737,7 +1769,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("drunk_bee")
+		M.bioHolder.AddEffect("drunk_bee", magical=1)
 
 /datum/job/special/halloween/dracula
 	name = "Discount Dracula"
@@ -1763,8 +1795,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("aura")
-		M.bioHolder.AddEffect("cloak_of_darkness")
+		M.bioHolder.AddEffect("aura", magical=1)
+		M.bioHolder.AddEffect("cloak_of_darkness", magical=1)
 
 /datum/job/special/halloween/werewolf
 	name = "Discount Werewolf"
@@ -1786,7 +1818,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("jumpy")
+		M.bioHolder.AddEffect("jumpy", magical=1)
 
 /datum/job/special/halloween/mummy
 	name = "Discount Mummy"
@@ -1807,8 +1839,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("aura")
-		M.bioHolder.AddEffect("midas")
+		M.bioHolder.AddEffect("aura", magical=1)
+		M.bioHolder.AddEffect("midas", magical=1)
 
 /datum/job/special/halloween/hotdog
 	name = "Hot Dog"
@@ -1850,8 +1882,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("lizard")
-		M.bioHolder.AddEffect("loud_voice")
+		M.bioHolder.AddEffect("lizard", magical=1)
+		M.bioHolder.AddEffect("loud_voice", magical=1)
 
 /datum/job/special/halloween/macho
 	name = "Discount Macho Man"
@@ -1876,7 +1908,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("accent_chav")
+		M.bioHolder.AddEffect("accent_chav", magical=1)
 
 /datum/job/special/halloween/ghost
 	name = "Ghost"
@@ -1891,7 +1923,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("chameleon")
+		M.bioHolder.AddEffect("chameleon", magical=1)
 
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
@@ -1937,8 +1969,8 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("shiny")
-		M.bioHolder.AddEffect("healing_touch")
+		M.bioHolder.AddEffect("shiny", magical=1)
+		M.bioHolder.AddEffect("healing_touch", magical=1)
 
 /datum/job/special/halloween/vendor
 	name = "Costume Vendor"
@@ -1978,7 +2010,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("hell_fire")
+		M.bioHolder.AddEffect("hell_fire", magical=1)
 
 /datum/job/special/halloween/superhero
 	name = "Discount Superhero"
@@ -2081,6 +2113,28 @@
 			return
 		M.critterize(/mob/living/critter/small_animal/bird/crow)
 
+// end halloween jobs
+#endif
+
+/*
+/datum/job/special/turkey
+	name = "Turkey"
+	linkcolor = "#FF7300"
+	wages = PAY_DUMBCLOWN
+	requires_whitelist = 1
+	limit = 1
+	allow_traitors = 0
+	slot_ears = null
+	slot_card = null
+	slot_back = null
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		var/type = pick(/mob/living/critter/small_animal/bird/turkey/gobbler, /mob/living/critter/small_animal/bird/turkey/hen)
+		M.critterize(type)
+*/
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
@@ -2099,7 +2153,7 @@
 		..()
 		if (!M)
 			return
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 			ticker.mode:agent_number++
 		else
@@ -2268,7 +2322,7 @@
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_access("Security Officer") + list(access_heads)
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2304,7 +2358,7 @@
 			return
 		M.bioHolder.AddEffect("training_miner")
 		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf") // heh
+			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -2432,7 +2486,7 @@
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("mute")
+		M.bioHolder.AddEffect("mute", magical=1)
 
 /datum/job/daily/tuesday
 	name = "Barber"
@@ -2456,7 +2510,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 

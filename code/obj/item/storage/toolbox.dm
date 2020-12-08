@@ -56,7 +56,7 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
-	spawn_contents = list(/obj/item/crowbar,\
+	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/device/radio)

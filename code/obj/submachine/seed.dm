@@ -727,6 +727,7 @@
 	density = 1
 	anchored = 1
 	mats = 6
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
@@ -1115,7 +1116,7 @@
 
 	New()
 		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
+		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 
 		/*for (var/datum/plant/P in src.available)
 			if (!P.vending || P.type == /datum/plant)

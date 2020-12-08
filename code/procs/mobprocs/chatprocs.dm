@@ -10,7 +10,7 @@
 
 	if (!message)
 		return
-	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
+	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -123,7 +123,7 @@
 /mob/verb/me_verb(message as text)
 	set name = "me"
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
+	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -134,7 +134,7 @@
 	set name = "me_hotkey"
 	set hidden = 1
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message)) //we still do this check just in case they access the hidden emote
+	if (src.client && !src.client.holder && url_regex?.Find(message)) //we still do this check just in case they access the hidden emote
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -395,6 +395,8 @@
 	var/loudness = 0
 	var/font_accent = null
 	var/style = ""
+	var/first_quote = " \""
+	var/second_quote = "\""
 
 	if (ending == "?")
 		speechverb = speechverb_ask
@@ -426,6 +428,57 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.speech_void)
+		text = voidSpeak(text)
+
+	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
+		// use note icons instead of normal quotes
+		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
+		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
+		if (src.singing & LOUD_SINGING)
+			first_quote = "[note_img][note_img]"
+			second_quote = first_quote
+		else
+			first_quote = note_img
+			second_quote = note_img
+		// select singing adverb
+		var/adverb = ""
+		if (src.singing & BAD_SINGING)
+			adverb = pick("dissonantly", "flatly", "unmelodically", "tunelessly")
+		else if (src.traitHolder?.hasTrait("nervous"))
+			adverb = pick("nervously", "tremblingly", "falteringly")
+		else if (src.singing & LOUD_SINGING && !src.traitHolder?.hasTrait("smoker"))
+			adverb = pick("loudly", "deafeningly", "noisily")
+		else if (src.singing & SOFT_SINGING)
+			adverb = pick("softly", "gently")
+		else if (src.mind?.assigned_role == "Musician")
+			adverb = pick("beautifully", "tunefully", "sweetly")
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			adverb = pick("sorrowfully", "sadly", "tearfully")
+		// select singing verb
+		if (src.traitHolder?.hasTrait("smoker"))
+			speechverb = "rasps"
+			if ((singing & LOUD_SINGING))
+				speechverb = "sings Tom Waits style"
+		else if (src.traitHolder?.hasTrait("french") && rand(2) < 1)
+			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
+		else if (src.bioHolder?.HasEffect("accent_swedish"))
+			speechverb = "sings disco style"
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			speechverb = pick("laments", "sings", "croons", "intones", "sobs", "bemoans")
+		else if (src.bioHolder?.HasEffect("accent_chav"))
+			speechverb = "raps"
+		else if (src.singing & SOFT_SINGING)
+			speechverb = pick("hums", "lullabies")
+		else
+			speechverb = pick("sings", pick("croons", "intones", "warbles"))
+		if (adverb != "")
+		// combine adverb and verb
+			speechverb = "[adverb] [speechverb]"
+		// add style for singing
+		text = "<i>[text]</i>"
+		style = "color:thistle;"
+
 	if (special)
 		if (special == "gasp_whisper")
 			speechverb = speechverb_gasp
@@ -444,17 +497,14 @@
 	if (text == "" || !text)
 		return speechverb
 
-	if (src.speech_void)
-		text = voidSpeak(text)
-
 	if(style)
 		style = " style=\"[style]\""
 	if (loudness > 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<big><strong><b>[text]</b></strong></big>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [style? style : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<small>[text]</small>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [style? style : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null][text][font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [style? style : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return
@@ -706,7 +756,7 @@
 		return 1
 	if (langname == "english" || !langname)
 		return 1
-	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder && bioHolder.HasEffect("monkey_speak"))))
+	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder?.HasEffect("monkey_speak"))))
 		return 1
 	return 0
 
@@ -903,6 +953,7 @@
 
 	var/rendered = ""
 	var/flockmindRendered = ""
+	var/siliconrendered = ""
 	var/class = "flocksay"
 	if(is_flockmind)
 		class = "flocksay flockmindsay"
@@ -912,7 +963,7 @@
 		class = "flocksay bold italics"
 		name = "\[SYSTEM\]"
 
-	if(C && C.holder && speak_as_admin) // for admin verb flocksay
+	if(C?.holder && speak_as_admin) // for admin verb flocksay
 		// admin mode go
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
@@ -922,6 +973,7 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
+		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -933,9 +985,11 @@
 
 		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
+		if(flock?.snooping && M.client && M.robot_talk_understand)
+			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
-		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker?.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 		if(thisR != "")
 			M.show_message(thisR, 2)

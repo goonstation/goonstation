@@ -53,7 +53,7 @@
 			if (!E.reagents || E.reagents.total_volume <= 0) break
 			var/obj/effects/spray/S = new/obj/effects/spray(theturf)
 			SPAWN_DBG(15 SECONDS) qdel(S)
-			S.dir = direction
+			S.set_dir(direction)
 			S.original_dir = direction
 			direction = turn(direction,45)
 			S.create_reagents(5)
@@ -84,7 +84,7 @@
 			var/obj/effects/spray/S = spraybits[1]
 			S.reagents.reaction(S.loc, TOUCH)
 			for(var/atom/A in S.loc)
-				if (S && S.reagents) //Wire: fix for: Cannot execute null.reaction()
+				if (S?.reagents) //Wire: fix for: Cannot execute null.reaction()
 					S.reagents.reaction(A, TOUCH,0,0)
 			if(is_blocked_turf(S.loc))
 				spraybits -= S
@@ -96,7 +96,7 @@
 					SP.set_loc(get_step(SP.loc, SP.original_dir))
 					SP.reagents.reaction(SP.loc, TOUCH)
 					for(var/atom/A in SP.loc)
-						if (SP && SP.reagents) //Wire: fix for: Cannot execute null.reaction()
+						if (SP?.reagents) //Wire: fix for: Cannot execute null.reaction()
 							SP.reagents.reaction(A, TOUCH,0,0)
 					if(is_blocked_turf(SP.loc))
 						spraybits -= SP

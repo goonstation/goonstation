@@ -53,7 +53,8 @@ toxic - poisons
 //Any special things when it hits shit?
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (ishuman(hit) && src.hit_type)
-			take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
+			if (hit_type != DAMAGE_BLUNT)
+				take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type) // oh god no why was the first var set to src what was I thinking
 			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		..()//uh, what the fuck, call your parent
 		//return // BULLETS CANNOT BLEED, HAINE
@@ -61,7 +62,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	power = 22
-	shot_sound = 'sound/weapons/9x19NATO.ogg' //quieter when fired from a silenced weapon!
+	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
@@ -120,7 +121,7 @@ toxic - poisons
 	name = "staple"
 	power = 5
 	damage_type = D_KINETIC // don't staple through armor
-	hit_type = DAMAGE_BLUNT
+	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/staple // HEH
 	shot_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	icon_turf_hit = "bhole-staple"
@@ -135,6 +136,9 @@ toxic - poisons
 	caliber = 0.38
 	icon_turf_hit = "bhole-small"
 	casing = /obj/item/casing/medium
+
+/datum/projectile/bullet/revolver_38/lb
+	shot_sound = 'sound/weapons/lb_execute.ogg'
 
 /datum/projectile/bullet/revolver_38/AP//traitor det revolver
 	power = 35
@@ -350,7 +354,7 @@ toxic - poisons
 			if (M.organHolder)
 				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
-					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
@@ -439,10 +443,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 6)
+			explosion_new(null, get_turf(hit), 4)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 6)
+			explosion_new(null, get_turf(O), 4)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
@@ -793,6 +797,7 @@ toxic - poisons
 		var/max_turn_rate = 20
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
+		disruption = INFINITY //distrupt every system at once
 		on_hit(atom/hit, angle, var/obj/projectile/P)
 			if (P.data || prob(10))
 				..()
@@ -847,6 +852,11 @@ toxic - poisons
 		pod_seeking
 			name = "pod-seeking grenade"
 			type_to_seek = /obj/machinery/vehicle
+			on_hit(atom/hit)
+				. = ..()
+				if(istype(hit, /obj/machinery/vehicle))
+					var/obj/machinery/vehicle/V = hit
+					V.health -= V.maxhealth / 4 //a little extra punch in the face
 
 		ghost
 			name = "pod-seeking grenade"

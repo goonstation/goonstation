@@ -40,12 +40,12 @@
 	New(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
-		dir = idir
+		set_dir(idir)
 		var/turf/Q = get_step(iloc, idir)
 		if (!Q)
 			qdel(src)
 			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.dir = get_dir(Q, iloc)
+			term.set_dir(get_dir(Q, iloc))
 		..()
 
 /obj/machinery/power/smes/emp_act()
@@ -70,7 +70,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if (term && term.dir == turn(d, 180))
+					if (term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -200,11 +200,11 @@
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal && terminal.powernet)
+//	if (terminal?.powernet)
 //		terminal.powernet.newavail += amount
 
 /obj/machinery/power/smes/add_load(var/amount)
-	if (terminal && terminal.powernet)
+	if (terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/smes/ui_state(mob/user)
@@ -239,7 +239,8 @@
 	return data
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-input")

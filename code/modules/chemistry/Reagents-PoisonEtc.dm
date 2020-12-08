@@ -379,10 +379,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				// Used to do exactly this back in 2012 or so (Convair880).
-				if (probmult(10) && M.bioHolder && M.bioHolder.HasEffect("fat"))
-					M.bioHolder.RemoveEffect("fat")
-
 				if (!M.nutrition)
 					switch(rand(1,3))
 						if (1)
@@ -1568,7 +1564,7 @@ datum
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						if (M.bioHolder?.mobAppearance?.mutant_race)
-							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
 
 				..()
@@ -1749,7 +1745,7 @@ datum
 
 				..()
 			on_remove()
-				if (holder && holder.my_atom && ishuman(holder.my_atom))
+				if (holder?.my_atom && ishuman(holder.my_atom))
 					var/mob/living/carbon/human/H = holder.my_atom
 					// moving the 'turn off the ai' part here because it failed
 					// to actually deactivate, leaving it on forever

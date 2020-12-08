@@ -50,7 +50,7 @@ Contains:
 	for(var/obj/item/device/infra/I in range(src.loc))
 		I.visible = 1
 		SPAWN_DBG( 0 )
-			if ((I && I.first))
+			if (I?.first)
 				I.first.vis_spread(1)
 			return
 	for(var/obj/item/assembly/rad_infra/I in range(src.loc))
@@ -125,7 +125,7 @@ Contains:
 		//boutput(world, "infra spawning beam : \ref[I]")
 		I.master = src
 		I.set_density(1)
-		I.dir = src.dir
+		I.set_dir(src.dir)
 		step(I, I.dir)
 		if (I)
 			//boutput(world, "infra: beam at [I.x] [I.y] [I.z]")
@@ -160,7 +160,7 @@ Contains:
 	user.u_equip(src)
 	src.set_loc(R)
 	R.part2 = src
-	R.dir = src.dir
+	R.set_dir(src.dir)
 	src.add_fingerprint(user)
 	return
 
@@ -220,7 +220,7 @@ Contains:
 /obj/item/device/infra/Move()
 	var/t = src.dir
 	..()
-	src.dir = t
+	src.set_dir(t)
 	//src.first = null
 	qdel(src.first)
 	return
@@ -228,7 +228,7 @@ Contains:
 /obj/item/device/infra/verb/rotate()
 	set src in usr
 
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return
 
 */
@@ -297,8 +297,8 @@ Contains:
 /obj/item/assembly/rad_infra/verb/rotate()
 	set src in usr
 
-	src.dir = turn(src.dir, 90)
-	src.part2.dir = src.dir
+	src.set_dir(turn(src.dir, 90))
+	src.part2.set_dir(src.dir)
 	src.add_fingerprint(usr)
 	return
 
@@ -306,7 +306,7 @@ Contains:
 
 	var/t = src.dir
 	..()
-	src.dir = t
+	src.set_dir(t)
 	//src.part2.first = null
 	qdel(src.part2.first)
 	return

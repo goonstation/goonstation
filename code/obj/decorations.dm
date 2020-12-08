@@ -220,7 +220,7 @@
 	// Added ex_act and meteorhit handling here (Convair880).
 	proc/update_icon()
 		if (!src) return
-		src.dir = NORTHEAST
+		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."

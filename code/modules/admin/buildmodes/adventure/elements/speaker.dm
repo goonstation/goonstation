@@ -27,7 +27,7 @@
 				speaker.name = speaker_name
 				speaker.speaker_type = speaker_type
 				speaker.icon_state = "speaker_[speaker_type]"
-				speaker.dir = holder.dir
+				speaker.set_dir(holder.dir)
 				speaker.anchored = speaker_anchored
 				speaker.message = message
 				if (speaker_type == "invisible")
@@ -45,8 +45,10 @@
 	anchored = 1
 	var/speaker_type
 	var/message
+	var/floating_text = FALSE
+	var/floating_text_style = ""
 
-	var/static/list/triggeracts = list("Do nothing" = "nop", "Speak message" = "speak")
+	var/static/list/triggeracts = list("Do nothing" = "nop", "Speak message" = "speak", "Toggle floating text" = "toggletext")
 
 	trigger_actions()
 		return triggeracts
@@ -55,13 +57,15 @@
 		switch (act)
 			if ("speak")
 				src.speak()
-			else
-				return
+			if ("toggletext")
+				src.floating_text = !src.floating_text
 
 	proc/speak()
+		var/chat_text = null
+		if (floating_text)
+			chat_text = make_chat_maptext(src, message, floating_text_style)
 		for (var/mob/O in all_hearers(5, src.loc))
-			O.show_message("<span class='game say bold'><span class='name'>[name]</span> says, <span class='message'>\"[message]\"</span></span>", 2)
-		return
+			O.show_message("<span class='game say bold'><span class='name'>[name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

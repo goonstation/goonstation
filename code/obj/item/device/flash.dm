@@ -188,7 +188,7 @@
 	if (src.l_time && world.time < src.l_time + 10)
 		return
 
-	if (user && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
 		JOB_XP(user, "Clown", 1)
@@ -256,7 +256,7 @@
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
 	.= 0
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
 			//playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
@@ -420,12 +420,12 @@
 
 	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
 		if (!convert)
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
 				if (M.mind && (M.mind in R.head_revolutionaries))
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
-		else if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
