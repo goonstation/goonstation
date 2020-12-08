@@ -13,7 +13,7 @@
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/pen/crayon/random/robot,
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
@@ -22,7 +22,7 @@
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
-		// TODO: nerfed/limited cuffs/zip-ties?
+		/obj/item/handcuffs/tape_roll,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
