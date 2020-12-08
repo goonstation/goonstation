@@ -144,11 +144,16 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200
 	amount = 10
-	delete_on_last_use = 1
+	delete_on_last_use = TRUE
+
+/obj/item/handcuffs/tape_roll/crappy
+	name = "masking tape"
+	delete_on_last_use = FALSE
 
 /obj/item/handcuffs/tape
 	desc = "These seem to be made of tape"
 	strength = 1
+	var/crappy = FALSE
 
 /obj/item/handcuffs/guardbot
 	name = "ziptie cuffs"
