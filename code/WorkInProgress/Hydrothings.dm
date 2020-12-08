@@ -531,7 +531,7 @@ obj/item/gnomechompski/elf
 /obj/item/poster/titled_photo/bee
 	name = "Er- Found? Poster"
 	desc = "A poster of a m------ Bee loved by all."
-	poster_image = 'icons/missingbee.png'
+	poster_image = 'icons/misc/missingbee.png'
 	line_b1 = "<center><b> THANK YOU </b></center>"
 	line_b2 = "<b>LAST SEEN:</b> New Store!"
 	line_b3 = "<b>NOTES:</b> Responds to being called Bombini"
