@@ -361,7 +361,7 @@
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
-					boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+					boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
 				return ..()
 			if(src.my_soup)
 				boutput(user,"<span class='alert'><b>There's still soup in the pot, dummy!</span>")

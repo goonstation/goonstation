@@ -318,9 +318,9 @@ WET FLOOR SIGN
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
 
-/obj/item/nop/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
 	if (user.intent == INTENT_HELP)
-		user.visible_message("[user] pokes [M] with the [src].", "You poke [M] with the [src].")
+		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
 		return
 	return ..()
 
