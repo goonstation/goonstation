@@ -1,5 +1,9 @@
 
 (t)tue dec 08 20
+(u)Nefarious6th
+(p)2918
+(e)🗺|mapping
+(+)Adds Spacemas variants of Atlas, Clarion, Horizon, Manta, and Oshan maps
 (u)virvatuli
 (p)2993
 (e)🗺|mapping
