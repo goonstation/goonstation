@@ -31,9 +31,12 @@
 		return
 	if(ismob(M))
 		var/mob/M2 = M
-		var/datum/player/player = make_player(M2.ckey) //Get the player so we can use their bancache.
-		if(player.cached_jobbans == null)//Shit they aren't cached.
-			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)[M2.ckey]
+		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
+		if(player.cached_jobbans == null) // Shit they aren't cached.
+			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
+			if(!length(api_response)) // API unavailable or something
+				return FALSE
+			player.cached_jobbans = api_response[M2.ckey]
 		cache = player.cached_jobbans
 	else if(islist(M))
 		cache = M
@@ -42,30 +45,30 @@
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
 	if (J?.no_jobban_from_this_job)
-		return 0
+		return FALSE
 
 
 
 	if(cache.Find("Everything Except Assistant"))
 		if(rank != "Staff Assistant" && rank != "Technical Assistant" && rank != "Medical Assistant")
-			return 1
+			return TRUE
 
 	if(cache.Find("Engineering Department"))
 		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-			return 1
+			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
 		if(rank in list("Security Officer","Vice Officer","Detective"))
-			return 1
+			return TRUE
 
 	if(cache.Find("Heads of Staff"))
 		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
-			return 1
+			return TRUE
 
 	if(cache.Find("[rank]"))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /proc/jobban_unban(mob/M, rank)//This is full of faff to try and account for raw ckeys and actual players.
 	var/checkey
