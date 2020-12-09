@@ -68,7 +68,11 @@
 
 /datum/geneticsrecipe/coprolalia
 	required_effects = list("accent_chav","accent_tommy")
-	result = /datum/bioEffect/coprolalia
+	result = /datum/bioEffect/speech/coprolalia
+
+/datum/geneticsrecipe/paraphasia
+	required_effects = list("coprolalia","tourettes")
+	result = /datum/bioEffect/speech/paraphasia
 
 /datum/geneticsrecipe/epilepsy
 	required_effects = list("bad_eyesight","flashy")

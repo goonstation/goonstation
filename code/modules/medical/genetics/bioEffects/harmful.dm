@@ -123,30 +123,6 @@
 	sleep_prob = 35
 	icon_state  = "bad"
 
-/datum/bioEffect/coprolalia
-	name = "Coprolalia"
-	desc = "Causes involuntary outbursts from the subject."
-	id = "coprolalia"
-	effectType = EFFECT_TYPE_DISABILITY
-	probability = 99
-	isBad = 1
-	msgGain = "You can't seem to shut up!"
-	msgLose = "You feel more in control."
-	reclaim_fail = 15
-	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
-	icon_state  = "bad"
-
-	OnLife()
-		if(..()) return
-		var/mob/living/L = owner
-		if (!L)
-			return
-		if (isdead(L))
-			return
-		if (prob(talk_prob))
-			L.say(pick(talk_strings))
-
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."

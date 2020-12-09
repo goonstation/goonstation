@@ -807,6 +807,57 @@
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
+
+/proc/swearify(var/string, var/moreshit = 0, var/evenmoreshit = 0) // yyyyyup
+	string = lowertext(string)
+	var/list/broken_string = splittext(string, " ")
+	for(var/i in 1 to broken_string.len)
+
+		if(prob(10) || (evenmoreshit && prob(80)))
+			if(prob(50)) // roll for pre/suffix
+				if(prob(50)) // prefix
+					broken_string[i] = swearify_swearifier(broken_string[i], moreshit, evenmoreshit, 1, 0)
+				else // suffix
+					broken_string[i] = swearify_swearifier(broken_string[i], moreshit, evenmoreshit, 0, 1)
+			else // just replace the word with a naughty cuss
+				broken_string[i] = swearify_swearifier(broken_string[i], moreshit, evenmoreshit, 0, 0)
+
+			var/numpasses = prob(15) ? rand(1,1+(moreshit*2)) : 0 // tack on extra words
+			if(numpasses)
+				for(var/p in 1 to numpasses)
+					broken_string[i] = swearify_swearifier(broken_string[i], moreshit, evenmoreshit, 0, 1)
+
+			if(prob(20)) // make it ALL CAPS
+				broken_string[i] = uppertext(broken_string[i])
+
+	return kText.list2text(broken_string)
+
+/proc/swearify_swearifier(var/broken_string_in, var/moreshit, var/evenmoreshit, var/prefix, var/suffix)
+	if(prefix)
+		prefix = broken_string_in
+	else
+		prefix = null
+	if(suffix)
+		suffix = broken_string_in
+	else
+		suffix = null
+	switch((moreshit || evenmoreshit) ? pick(99,100) : rand(1,100))
+		if(1 to 99)
+			return suffix + pick_smart_string("language/swears.txt", "swearwords") + prefix
+		else
+			if(evenmoreshit && prob(75))
+				switch(rand(1,4))
+					if(1)
+						return suffix + lowertext(pick_string("agent_callsigns.txt", "birds")) + prefix
+					if(2)
+						return suffix + lowertext(pick_string("agent_callsigns.txt", "mammals")) + prefix
+					if(3)
+						return suffix + lowertext(pick_string("descriptors.txt", "emag_self")) + prefix
+					if(4)
+						return suffix + lowertext(pick_string("shittybill.txt", "stories")) + prefix
+			else
+				return suffix + pick_smart_string("language/swears.txt", "notswearwords") + prefix
+
 /* nnnoooooope!
 /proc/wonk_parse(var/string)
 	string = lowertext(string)

@@ -744,3 +744,78 @@
 			return ""
 		message = scoobify(message, 1)
 		return message
+
+/datum/bioEffect/speech/coprolalia
+	name = "Coprolalia"
+	desc = "Causes involuntary outbursts from the subject."
+	id = "coprolalia"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 99
+	isBad = 1
+	msgGain = "You can't seem to shut up!"
+	msgLose = "You feel more in control."
+	reclaim_fail = 15
+	var/talk_prob = 10
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	icon_state  = "bad"
+
+	OnLife()
+		if(..()) return
+		var/mob/living/L = owner
+		if (!L)
+			return
+		if (isdead(L))
+			return
+		if (prob(talk_prob))
+			L.say(pick(talk_strings))
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = swearify(message)
+		return message
+
+/datum/bioEffect/speech/paraphasia
+	name = "Paraphasia"
+	desc = "Disrupts the language centers , causing them to say unintended words."
+	id = "paraphasia"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 20
+	isBad = 1
+	msgGain = "You pizza seem to heck guava!"
+	msgLose = "You feel more in control of your vocabulary."
+	reclaim_fail = 15
+	icon_state  = "bad"
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = swearify(message, moreshit = 1)
+		return message
+
+/datum/bioEffect/speech/paraphasia/spork
+	name = "Temerephasia"
+	desc = "Scrambles the subject's language centers, preventing any form of coherent speech."
+	id = "temerephasia"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 20
+	isBad = 1
+	msgGain = "Turkey pizza the time I found a box full of bees your hair stands on end! heck guava!"
+	msgLose = "You feel more in control of your vocabulary."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 1
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 1
+	icon_state  = "bad"
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = swearify(message, moreshit = 1, evenmoreshit = 1)
+		return message
