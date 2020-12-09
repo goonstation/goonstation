@@ -1101,6 +1101,28 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			pool(e)
 	return
 
+/proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(current_increment == 9)
+		if (locate(/obj/decal/purge_beam_end) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam_end)
+	else
+		if (locate(/obj/decal/purge_beam) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam)
+	e.set_loc(target_turf)
+	e.dir = sword_direction
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
 /proc/leavescan(var/atom/target, var/scan_type)
 	if (!target)
 		return

@@ -132,44 +132,37 @@
 		..()
 
 	proc/destruction_sds(var/point_x, var/point_y, var/point_z)
-		var/create_scan_decal = 0
+		var/create_scan_decal = false
 		var/window_step = 0
-		for (var/mob/M in locate(point_x,point_y,point_z))
-			create_scan_decal++
-			if (istype(M,/mob/living/silicon/robot))
-				random_burn_damage(M, 15)
-				M.changeStatus("stunned", 2 SECOND)
-			else
-				random_burn_damage(M, 30)
-				M.changeStatus("weakened", 2 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
 		var/turf/T = locate(point_x,point_y,point_z)
-		if(!isfloor(T))
-			create_scan_decal++
-			T.ex_act(1)
-			var/atom/new_floor
-			switch(rand(1, 3))
-				if(1)
-					new_floor = new /turf/simulated/floor/plating/damaged1(locate(point_x,point_y,point_z))
-				if(2)
-					new_floor = new /turf/simulated/floor/plating/damaged2(locate(point_x,point_y,point_z))
+		for (var/atom/scan_target in T)
+			if (ismob(scan_target))
+				create_scan_decal = true
+				if (isrobot(scan_target))
+					random_burn_damage(scan_target, 15)
+					scan_target.changeStatus("stunned", 2 SECOND)
 				else
-					new_floor = new /turf/simulated/floor/plating/damaged3(locate(point_x,point_y,point_z))
-		for (var/obj/structure/girder/S in locate(point_x,point_y,point_z))
-			create_scan_decal++
-			S.ex_act(1)
-		for (var/obj/grille/G in locate(point_x,point_y,point_z))
-			create_scan_decal++
-			window_step++
-			G.ex_act(1)
-		for (var/obj/window/W in locate(point_x,point_y,point_z))
-			if(window_step == 0)
-				create_scan_decal++
-				W.ex_act(1)
-		if(create_scan_decal != 0)
-			leavescan(locate(point_x,point_y,point_z), 1)
-			playsound(locate(point_x,point_y,point_z), 'sound/effects/smoke_tile_spread.ogg', 50, 1)
+					random_burn_damage(scan_target, 30)
+					scan_target.changeStatus("weakened", 2 SECOND)
+				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
+				playsound(scan_target.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			else if (istype(scan_target, /obj/structure/girder))
+				create_scan_decal = true
+				scan_target.ex_act(1)
+			else if (istype(scan_target, /obj/grille))
+				create_scan_decal = true
+				window_step++
+				scan_target.ex_act(1)
+			else if (istype(scan_target, /obj/window))
+				if(window_step == 0)
+					create_scan_decal = true
+					scan_target.ex_act(1)
+		if(istype(T, /turf/simulated/wall))
+			create_scan_decal = true
+			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
+		if(create_scan_decal)
+			leavescan(T, 1)
+			playsound(T, "sound/effects/smoke_tile_spread.ogg", 50, 1)
 		return
 
 /obj/decal/syndicate_destruction_scan_center
@@ -204,3 +197,35 @@
 		activation = image('icons/misc/retribution/SWORD_loot.dmi', "SDS_tile_scan")
 		activation.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(activation, "activation")
+
+/obj/decal/purge_beam
+	name = "Linear Purge Beam"
+	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	anchored = 1
+	density = 0
+	opacity = 0
+	icon = null
+	icon_state = null
+	var/image/beam
+
+	New()
+		..()
+		beam = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge_beamBody")
+		beam.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(beam, "beam")
+
+/obj/decal/purge_beam_end
+	name = "Linear Purge Beam"
+	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	anchored = 1
+	density = 0
+	opacity = 0
+	icon = null
+	icon_state = null
+	var/image/beam
+
+	New()
+		..()
+		beam = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge_beamEnd")
+		beam.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(beam, "beam")
