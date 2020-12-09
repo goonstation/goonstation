@@ -184,6 +184,9 @@
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
+	if(istype(src.loc, /obj/item/clipboard))
+		var/mob/living/M = user
+		return M.shared_living_ui_distance(src, viewcheck = FALSE)
 	return ..()
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
@@ -263,7 +266,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	T = time_type + ": [time2text(world.timeofday, "hh:mm:ss")]"
+	T = time_type + ": [time2text(ticker.round_elapsed_ticks, "hh:mm:ss")]"
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
