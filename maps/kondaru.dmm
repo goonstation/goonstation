@@ -38085,6 +38085,11 @@
 /area/station/security/brig)
 "bNo" = (
 /obj/submachine/slot_machine,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bNp" = (
@@ -41248,6 +41253,11 @@
 /obj/machinery/phone,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
@@ -53883,6 +53893,13 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -56278,6 +56295,18 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"rgP" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hydroponics/bay)
 "riF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -112104,7 +112133,7 @@ bqL
 bqL
 bqL
 bqL
-bqL
+rgP
 bqL
 bqL
 bzu
