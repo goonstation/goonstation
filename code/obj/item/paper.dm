@@ -184,6 +184,9 @@
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
+	if(istype(src.loc, /obj/item/clipboard))
+		var/mob/living/M = user
+		return M.shared_living_ui_distance(src, viewcheck = FALSE)
 	return ..()
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
