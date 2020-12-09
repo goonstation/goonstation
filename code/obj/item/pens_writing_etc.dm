@@ -316,7 +316,6 @@
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
-				JOB_XP(user, "Clown", 1)
 
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
@@ -328,7 +327,6 @@
 					src.color_name = hex2color_name(src.color)
 					src.name = "[src.color_name] crayon"
 					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
-					JOB_XP(user, "Clown", 1)
 					return
 
 				return ..()
