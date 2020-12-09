@@ -31374,7 +31374,7 @@
 "byt" = (
 /obj/decal/poster/wallsign/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "byu" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -39489,7 +39489,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bQs" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -39500,17 +39500,23 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -12
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bQt" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bQu" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -39524,7 +39530,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bQw" = (
 /obj/machinery/port_a_brig,
 /obj/machinery/light/small{
@@ -39537,7 +39543,7 @@
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bQx" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -40084,36 +40090,40 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bRI" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/space_law,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bRJ" = (
 /obj/stool/chair/red{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bRK" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bRL" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bRM" = (
 /obj/storage/secure/closet/personal,
 /turf/unsimulated/floor/sanitary,
@@ -40771,7 +40781,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/redblack,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bTm" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -40789,7 +40799,7 @@
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bTo" = (
 /obj/machinery/floorflusher/solitary,
 /obj/disposalpipe/trunk/south,
@@ -41218,7 +41228,7 @@
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bUm" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -41240,7 +41250,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/redblack,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bUp" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Secure Consultation";
@@ -41251,8 +41261,14 @@
 	},
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/red,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bUq" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "South Crew Quarters"
@@ -42367,7 +42383,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/redblack,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "bWN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51964,8 +51980,11 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "eQE" = (
 /obj/grille/catwalk,
 /obj/machinery/oreaccumulator,
@@ -52897,6 +52916,12 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"hhe" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/interrogation)
 "hhz" = (
 /obj/cable{
 	d1 = 1;
@@ -53088,6 +53113,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"hSz" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/interrogation)
 "hTE" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -53417,6 +53447,9 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"iZd" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/interrogation)
 "jaZ" = (
 /obj/table/auto,
 /obj/item/shipcomponent/secondary_system/tractor_beam,
@@ -53992,6 +54025,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"kZX" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/interrogation)
 "lan" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/light{
@@ -54996,7 +55035,7 @@
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
 /turf/simulated/floor/redblack,
-/area/station/security/brig)
+/area/station/security/interrogation)
 "nVE" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/power/apc/autoname_east,
@@ -55800,7 +55839,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "qex" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -55874,10 +55913,11 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/security/brig)
+/area/station/security/interrogation)
 "qmL" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
@@ -56359,6 +56399,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"rzU" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "rBS" = (
 /obj/machinery/light,
 /obj/machinery/r_door_control/podbay/security/new_walls/east,
@@ -56796,6 +56845,23 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"sME" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/brig)
 "sNg" = (
 /obj/stool/chair/office/blue{
 	dir = 1
@@ -57414,6 +57480,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"uqw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/security/brig)
 "urd" = (
 /turf/simulated/floor/red,
 /area/station/medical/medbay)
@@ -112643,11 +112724,11 @@ bFR
 bFR
 bIm
 bFR
-bFK
-bFK
-bFK
-bQi
-bFK
+iZd
+iZd
+iZd
+hhe
+iZd
 cot
 cou
 bGE
@@ -112945,7 +113026,7 @@ bJM
 bLc
 bMo
 bNt
-bFK
+iZd
 bQr
 qdz
 qmz
@@ -113247,11 +113328,11 @@ bLd
 bLd
 bLd
 bNu
-bFK
+iZd
 bQs
 bRH
 bTl
-bFK
+iZd
 bVD
 cou
 bXz
@@ -113549,11 +113630,11 @@ bMp
 bMp
 bMp
 svx
-bFK
+iZd
 bQt
 bRI
 bUo
-bFK
+iZd
 bVE
 bWK
 bXA
@@ -113852,10 +113933,10 @@ bLe
 bMq
 bNv
 byt
-rXp
+hSz
 bRJ
 bWL
-bFK
+rzU
 cot
 cou
 bXB
@@ -114158,8 +114239,8 @@ bQv
 bRK
 eOb
 bUp
-bVG
-bWN
+sME
+uqw
 bXC
 bFK
 bZr
@@ -114455,11 +114536,11 @@ bJN
 ceq
 bMr
 cgb
-bOW
+kZX
 bQw
 bRL
 bTn
-bOW
+kZX
 bVG
 bWN
 bXD
@@ -114757,11 +114838,11 @@ bJO
 bNy
 bMs
 chs
-bFK
-bFK
-bFK
-bQi
-bFK
+iZd
+iZd
+iZd
+hhe
+iZd
 bVH
 cou
 bXE
