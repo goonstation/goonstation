@@ -443,10 +443,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 4)
+			explosion_new(null, get_turf(hit), 6)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 4)
+			explosion_new(null, get_turf(O), 6)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"

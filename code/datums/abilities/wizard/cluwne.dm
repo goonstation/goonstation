@@ -1,6 +1,6 @@
 /datum/targetable/spell/cluwne
 	name = "Clown's Revenge"
-	desc = "Turns the target into a cursed clown."
+	desc = "Turns the target into a fat cursed clown."
 	icon_state = "clownrevenge"
 	targeted = 1
 	max_range = 1

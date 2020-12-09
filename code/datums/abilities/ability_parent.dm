@@ -1033,7 +1033,7 @@
 	layer = 61
 	var/x_offset = 0
 	var/y_offset = 0
-	appearance_flags = RESET_COLOR | LONG_GLIDE | PIXEL_SCALE
+	appearance_flags = RESET_COLOR
 	vis_flags = VIS_INHERIT_ID
 
 /datum/abilityHolder/composite

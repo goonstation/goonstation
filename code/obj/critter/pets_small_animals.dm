@@ -639,8 +639,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 4 SECONDS)
 			M.changeStatus("weakened", 4 SECONDS)
 
-	on_pet(mob/user)
-		..()
+	on_pet()
 		if(prob(10))
 			for(var/mob/O in hearers(src, null))
 				O.show_message("[src] purrs!",2)
@@ -803,8 +802,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	on_pet(mob/user)
-		..()
+	on_pet()
 		if(prob(10))
 			src.visible_message("<b>[src]</b> honks!",2)
 			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)

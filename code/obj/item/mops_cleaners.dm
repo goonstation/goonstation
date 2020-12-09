@@ -626,7 +626,7 @@ WET FLOOR SIGN
 		. = ..()
 
 /obj/item/caution/traitor
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_PROXIMITY
 	var/obj/item/reagent_containers/payload
 
 	New()

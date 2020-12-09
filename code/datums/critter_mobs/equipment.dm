@@ -110,9 +110,6 @@
 		bee
 			offset_y = -6
 
-		slime
-			offset_y = -15
-
 	suit
 		name = "suit"
 		type_filters = list(/obj/item/clothing/suit)

@@ -493,11 +493,11 @@ obj/item/gun/reagent/syringe/lovefilled
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
 	. = ..()
 
 

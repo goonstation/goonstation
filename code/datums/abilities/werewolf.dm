@@ -198,7 +198,7 @@
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
 					boutput(M, __blue("That tasted fantastic!"))
 					healing *= 2
-				else if (HH.nutrition > 100)
+				else if (HH.nutrition > 100 || HH.bioHolder && HH.bioHolder.HasEffect("fat"))
 					boutput(M, __blue("That tasted amazing!"))
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
@@ -207,7 +207,6 @@
 					M.unlock_medal("That tasted funny", 1)
 				else
 					boutput(M, __blue("That tasted good!"))
-					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 			M.werewolf_audio_effects(HH, "feast")

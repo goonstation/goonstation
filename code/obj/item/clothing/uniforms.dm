@@ -68,6 +68,7 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
+	c_flags = ONESIZEFITSALL
 	icon_state = "white"
 	item_state = "white"
 
@@ -76,6 +77,7 @@
 /obj/item/clothing/under/color
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
+	c_flags = ONESIZEFITSALL
 
 	grey
 		name = "grey jumpsuit"
@@ -747,6 +749,7 @@
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
 	compatible_species = list("human", "monkey")
+	c_flags = ONESIZEFITSALL
 
 	red
 		icon_state = "shortsR"
@@ -1337,6 +1340,7 @@
 		desc = "Christ, these things stink!"
 		icon_state = "wario"
 		item_state = "wario"
+		c_flags = ONESIZEFITSALL
 
 	waluigi
 		name = "total prick's overalls"

@@ -55,10 +55,6 @@ var/datum/event_controller/random_events
 			special_events += RE
 
 	proc/process()
-		// prevent random events near round end
-		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
-			return
-
 		if (TIME >= major_events_begin)
 			if (TIME >= next_major_event)
 				event_cycle()

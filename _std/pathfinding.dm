@@ -215,11 +215,6 @@
 				L.Add(T)
 	return L
 
-var/static/obj/item/card/id/AA = new /obj/item/card/id/captains_spare()
-
-/turf/proc/AllDirsTurfsWithAllAccess()
-	return AllDirsTurfsWithAccess(AA)
-
 /turf/proc/CardinalTurfsSpace()
 	var/L[] = new()
 

@@ -1,5 +1,5 @@
 #ifdef XMAS
-#include "..\horizon_xmas.dmm"
+#include "..\warwip\atlas_horizon_xmas_2019.dmm"
 #else
 #include "..\horizon.dmm"
 #endif

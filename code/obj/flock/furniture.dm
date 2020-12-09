@@ -21,9 +21,10 @@
 
 /obj/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Storage Surface
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Storage Surface"
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 
@@ -38,10 +39,11 @@
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Storage Surface, Deployable State
-    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Storage Surface, Deployable State"
+    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 
@@ -62,9 +64,10 @@
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Resting Chamber
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber"
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 
@@ -81,10 +84,11 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Resting Chamber, Deployable State
-    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber, Deployable State"
+    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 
@@ -165,9 +169,10 @@
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Containment Capsule
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Containment Capsule"
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 
@@ -198,9 +203,10 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-    <br><span class='bold'>ID:</span> Light Emitter
-    <br><span class='bold'>###=-</span></span>"}
+    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+    special_desc += "<br><span class='bold'>ID:</span> Light Emitter"
+    special_desc += "<br><span class='bold'>###=-</span></span>"
+    return special_desc
   else
     return null // give the standard description
 

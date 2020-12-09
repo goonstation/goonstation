@@ -26,6 +26,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
+	c_flags = ONESIZEFITSALL
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
 	New()
@@ -76,6 +77,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
+	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
@@ -378,6 +380,7 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
+	c_flags = ONESIZEFITSALL
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "NT-SO armor"
@@ -385,6 +388,7 @@
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
+	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)

@@ -10,8 +10,9 @@
 
 
 /obj/flock_structure/ghost/building_specific_info()
-	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%"
-	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
+	var/custominfo = "<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%"
+	custominfo += "<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"
+	return custominfo
 
 /obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
 	..(location, F)

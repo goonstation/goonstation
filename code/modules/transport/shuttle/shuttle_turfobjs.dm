@@ -153,7 +153,6 @@
 	density = 1
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE - 1
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"

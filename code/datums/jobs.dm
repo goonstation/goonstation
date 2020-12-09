@@ -2116,7 +2116,6 @@
 // end halloween jobs
 #endif
 
-/*
 /datum/job/special/turkey
 	name = "Turkey"
 	linkcolor = "#FF7300"
@@ -2134,7 +2133,6 @@
 			return
 		var/type = pick(/mob/living/critter/small_animal/bird/turkey/gobbler, /mob/living/critter/small_animal/bird/turkey/hen)
 		M.critterize(type)
-*/
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"

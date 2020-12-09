@@ -151,8 +151,9 @@
 
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
 	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Computational core
-		<br><span class='bold'>###=-</span></span>"}
+		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
+		special_desc += "<br><span class='bold'>ID:</span> Computational core"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
+		return special_desc
 	else
 		return null // give the standard description

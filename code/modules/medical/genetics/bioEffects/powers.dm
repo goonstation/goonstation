@@ -319,6 +319,12 @@
 
 			usr.pixel_y = 0
 
+			if (owner.bioHolder.HasEffect("fat") && prob(66) && !linked_power.safety)
+				owner.visible_message("<span class='alert'><b>[owner]</b> crashes due to their heavy weight!</span>")
+				playsound(usr.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
+				owner.changeStatus("weakened", 10 SECONDS)
+				owner.changeStatus("stunned", 50)
+
 			owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
@@ -974,7 +980,7 @@
 			owner.visible_message("<span class='alert'><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
-				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
 				shake_camera(V,10,64)
@@ -1704,7 +1710,8 @@
 		if (disposed)
 			return
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
+			var/mob/living/carbon/human/H = owner
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[H.bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
 		return
 
 	OnAdd()

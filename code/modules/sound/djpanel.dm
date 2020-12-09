@@ -56,8 +56,7 @@ client/proc/open_dj_panel()
 	return data
 
 /datum/dj_panel/ui_act(action, params)
-	. = ..()
-	if (.)
+	if(..())
 		return
 
 	if (!config.allow_admin_sounds)

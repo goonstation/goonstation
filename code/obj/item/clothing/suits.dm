@@ -237,6 +237,7 @@
 	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
+	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -247,6 +248,7 @@
 	desc = "An armored biosuit that protects against biological contamination and toolboxes."
 	icon_state = "ntbio"
 	item_state = "ntbio"
+	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -257,6 +259,7 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
+	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -284,7 +287,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hev"
 	item_state = "hev"
-	c_flags = SPACEWEAR
+	c_flags = ONESIZEFITSALL | SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
@@ -302,6 +305,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
@@ -1370,6 +1374,7 @@
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONESIZEFITSALL //allows for obese to wear
 	burn_possible = 1
 	burn_point = 450
 	burn_output = 800

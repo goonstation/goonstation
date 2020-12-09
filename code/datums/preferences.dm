@@ -1645,12 +1645,10 @@ $(function() {
 
 				if(new_tone)
 					AH.s_tone = new_tone
-					AH.s_tone_original = new_tone
 			else
 				new_tone = get_standard_skintone(user)
 				if(new_tone)
 					AH.s_tone = new_tone
-					AH.s_tone_original = new_tone
 
 		if (link_tags["underwear_color"])
 			rebuild_data["underwear"] = 1
@@ -1954,7 +1952,6 @@ $(function() {
 			AH.u_color = "#FEFEFE"
 
 			AH.s_tone = "#FAD7D0"
-			AH.s_tone_original = "#FAD7D0"
 
 			age = 30
 			pin = null
@@ -2252,7 +2249,6 @@ var/global/list/facial_hair = list("None" = "none",
 	"Puffy Beard" = "puffbeard",
 	"Long Beard" = "longbeard",
 	"Tramp" = "tramp",
-	"Motley" = "motley",
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir")
 
@@ -2341,7 +2337,6 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		stone = rand(34,-184)
 
 	AH.s_tone = blend_skintone(stone, stone, stone)
-	AH.s_tone_original = AH.s_tone
 
 	if (H)
 		if (H.limbs)

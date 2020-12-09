@@ -10381,9 +10381,8 @@
 "axW" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/item/device/reagentscanner,
 /obj/item/clothing/glasses/spectro,
+/obj/item/device/reagentscanner,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -11084,9 +11083,6 @@
 /obj/item/reagent_containers/glass/bottle/fruitful,
 /obj/item/reagent_containers/glass/bottle/topcrop,
 /obj/item/decoration/ashtray,
-/obj/item/reagent_containers/dropper,
-/obj/item/pen/marker/blue,
-/obj/item/pen/marker/red,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -11800,10 +11796,10 @@
 /area/station/hydroponics/lobby)
 "aAT" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
-	pixel_y = -26
-	},
+/obj/item/storage/box/beakerbox,
+/obj/item/reagent_containers/dropper,
+/obj/item/pen/marker/red,
+/obj/item/pen/marker/blue,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "aAU" = (
@@ -13368,7 +13364,9 @@
 /area/station/security/brig)
 "aDZ" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker/security,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038."
+	},
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "aEa" = (
@@ -15160,7 +15158,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -16998,12 +16995,7 @@
 "aLx" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box{
-	desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038.";
-	pixel_y = 5
-	},
-/obj/item/kitchen/food_box/donut_box{
-	desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038.";
-	pixel_y = -5
+	desc = "A box of Dunkin-Kreme donuts.  The brand name made a lot more sense before the companies merged in 2038."
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -32300,17 +32292,6 @@
 	can_rupture = 0
 	},
 /obj/machinery/phone,
-/obj/item/pen/marker{
-	pixel_x = -5;
-	pixel_y = -4
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 15
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 15
-	},
-/obj/machinery/light,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "brg" = (
@@ -41430,11 +41411,11 @@
 	},
 /area/station/science/lobby)
 "bJu" = (
+/obj/machinery/light,
 /obj/table/wood/auto,
-/obj/machinery/coffeemaker,
-/obj/mug_rack{
-	pixel_y = -26
-	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/pen/marker,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bJv" = (
@@ -45196,21 +45177,16 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bQY" = (
+/obj/noticeboard{
+	pixel_y = 28
+	},
 /obj/machinery/light{
 	dir = 8
-	},
-/obj/table/auto,
-/obj/machinery/coffeemaker/research,
-/obj/mug_rack{
-	pixel_y = 28
 	},
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "bQZ" = (
 /obj/disposalpipe/segment/mail,
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -51118,10 +51094,6 @@
 "cdP" = (
 /obj/table/auto,
 /obj/machinery/shieldgenerator/meteorshield,
-/obj/mug_rack{
-	pixel_x = -26
-	},
-/obj/machinery/coffeemaker,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -59221,11 +59193,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/medical/medbay)
 "cuV" = (
-/obj/table/wood/auto,
-/obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
-	pixel_y = 28
-	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "corner_east"
@@ -59480,7 +59448,6 @@
 	on = 0;
 	pixel_x = -24
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
@@ -63091,10 +63058,6 @@
 	dir = 1
 	},
 /area/station/janitor/office)
-"gki" = (
-/obj/mug_rack,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
 "glC" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -95339,7 +95302,7 @@ awP
 ayp
 aho
 aho
-gki
+aho
 aDZ
 aFi
 aGG

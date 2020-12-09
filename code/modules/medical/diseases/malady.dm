@@ -381,7 +381,7 @@
 			cureprob += 5
 		if (H.blood_pressure["total"] < 585) // high bp
 			cureprob += 5
-		if (!H.bioHolder)
+		if (!H.bioHolder || !H.bioHolder.HasEffect("fat"))
 			cureprob += 5
 		if (!H.reagents || !H.reagents.has_reagent("cholesterol"))
 			cureprob += 5

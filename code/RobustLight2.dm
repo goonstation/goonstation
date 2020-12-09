@@ -597,7 +597,6 @@ proc
 	blend_mode = BLEND_ADD
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
-	vis_flags = VIS_HIDE
 
 turf
 	var

@@ -405,33 +405,13 @@ menu "menu"
 		command = ""
 		saved-params = "is-checked"
 	elem
-		name = "&Adjust Master Volume"
-		command = "change-volume master"
-		category = "&Audio"
-		saved-params = "is-checked"
-	elem
-		name = "&Adjust Game Volume"
-		command = "change-volume game"
-		category = "&Audio"
-		saved-params = "is-checked"
-	elem
-		name = "&Adjust Ambient Volume"
-		command = "change-volume ambient"
-		category = "&Audio"
-		saved-params = "is-checked"
-	elem
 		name = "&Adjust Radio Music Volume"
-		command = "change-volume radio"
+		command = "Alter-Radio-Volume"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
 		name = "&Adjust Admin Music Volume"
-		command = "change-volume admin"
-		category = "&Audio"
-		saved-params = "is-checked"
-	elem
-		name = "&Adjust Emote Volume"
-		command = "change-volume emote"
+		command = "Alter-Music-Volume"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem

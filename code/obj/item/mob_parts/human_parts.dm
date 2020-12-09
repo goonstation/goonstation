@@ -105,8 +105,6 @@
 			else
 				colorize_limb_icon()
 				set_skin_tone()
-		if(limb_overlay_1_icon || handfoot_overlay_1_icon)
-			setup_limb_overlay()
 
 	disposing()
 		if(src.bones)
@@ -184,115 +182,53 @@
 				src.original_fprints = src.original_holder.bioHolder.uid_hash
 		return ..()
 
-	attach(mob/living/carbon/human/attachee, mob/attacher, both_legs)
-		if (..()) // A successful attachment
-			if(ismob(attachee) && attachee?.bioHolder) // Whose limb is this?
-				if(isnull(src.original_holder)) // Limb never had an original owner?
-					src.original_holder = attachee // Now it does
-					if (src.original_holder?.bioHolder)
-						src.original_DNA = src.original_holder.bioHolder.Uid
-						src.original_fprints = src.original_holder.bioHolder.uid_hash
-					return
-				if(src.original_DNA != attachee.bioHolder.Uid) // Limb isnt ours
-					src.limb_is_transplanted = TRUE
-				else // Maybe we got our old limb back?
-					src.limb_is_transplanted = FALSE
-
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
 		if (!src.skintoned) return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
-		var/datum/appearanceHolder/AHLIMB = src.get_owner_appearance_holder()
-		if (AHLIMB)
+		var/mob/living/carbon/human/M
+		if(ishuman(src.original_holder))
+			M = src.original_holder
+		var/blend_color = null
+		var/has_aH = 0
+		var/datum/appearanceHolder/AHLIMB
+		if (M?.bioHolder?.mobAppearance)
+			AHLIMB = M.bioHolder.mobAppearance
+			has_aH = 1
+		else if (istype(src.holder_ahol, /datum/appearanceHolder))
+			AHLIMB = src.holder_ahol
+			has_aH = 1
+		if (has_aH)
 			if (AHLIMB.mob_appearance_flags & HAS_NO_SKINTONE)
 				skin_tone = "#FFFFFF"
+			else if (AHLIMB.mob_appearance_flags & HAS_SPECIAL_SKINTONE)
+				if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_1)
+					skin_tone = AHLIMB.customization_first_color
+				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_2)
+					skin_tone = AHLIMB.customization_second_color
+				else if (AHLIMB.mob_color_flags & SKINTONE_USES_PREF_COLOR_3)
+					skin_tone = AHLIMB.customization_third_color
 			else
 				skin_tone = AHLIMB.s_tone
 		else	// This is going to look *weird* if these somehow spawn on a mob
 			if (istype(src, /obj/item/parts/human_parts/arm/mutant/lizard) || istype(src, /obj/item/parts/human_parts/arm/mutant/lizard))
 				src.skin_tone = rgb(rand(50,190), rand(50,190), rand(50,190))	// If lizlimbs havent been colored, color them
 			else
-				var/blend_color = null
 				blend_color = pick(standard_skintones)
 				src.skin_tone = standard_skintones[blend_color]
 		set_limb_icon_coloration()
 
-	/// Applies the correct (hopefully) colors to the severed limbs
+	/// Applies the correct (hopefully) colors to the limbs
 	proc/set_limb_icon_coloration()
 		if (!src.skintoned)
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
-
-		// All skintoned limbs also get a cool not-affected-by-coloration bloody stump!
+		// All skintoned limbs get a cool not-affected-by-coloration bloody stump!
 		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
 		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
-
-		// Extra bit? Throw it in!
-		if(severed_overlay_1_icon)
-			var/colorheck = "#FFFFFF"
-			var/datum/appearanceHolder/AH_piece = get_owner_appearance_holder()
-			if(istype(AH_piece, /datum/appearanceHolder))
-				switch(src.severed_overlay_1_color)
-					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
-					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
-					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
-					if (SKIN_TONE)
-						colorheck = src.skin_tone
-					else
-						colorheck = "#FFFFFF"
-			var/icon/limb_detail_icon = new /icon(src.severed_overlay_1_icon, "[src.severed_overlay_1_state]")	// Preferably just about anything
-			limb_detail_icon.Blend(colorheck, ICON_MULTIPLY)
-			limb_icon.Blend(limb_detail_icon, ICON_OVERLAY)
 
 		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
 		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
 
 		src.icon = limb_icon
-
-	/// Assembles the limb's overlays, if any
-	proc/setup_limb_overlay()
-		if(!limb_overlay_1_icon && !handfoot_overlay_1_icon) // Gotta have something
-			return
-
-		var/datum/appearanceHolder/AH_overlimb = src.get_owner_appearance_holder()
-		var/colorlimb_heck = "#FFFFFF"
-		if(istype(AH_overlimb, /datum/appearanceHolder))
-			switch(src.limb_overlay_1_color)
-				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
-				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
-				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
-				if (SKIN_TONE)
-					colorlimb_heck = src.skin_tone
-				else
-					colorlimb_heck = "#FFFFFF"
-		var/colorhandfoot_heck = "#FFFFFF"
-		if(istype(AH_overlimb, /datum/appearanceHolder))
-			switch(src.handfoot_overlay_1_color)
-				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
-				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
-				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
-				if (SKIN_TONE)
-					colorhandfoot_heck = src.skin_tone
-				else
-					colorhandfoot_heck = "#FFFFFF"
-		src.limb_overlay_1 = image(icon = src.limb_overlay_1_icon, icon_state = src.limb_overlay_1_state)
-		src.limb_overlay_1?.color = colorlimb_heck
-		src.handfoot_overlay_1 = image(icon = src.handfoot_overlay_1_icon, icon_state = src.handfoot_overlay_1_state)
-		src.handfoot_overlay_1?.color = colorhandfoot_heck
-
-	/// Gets an appearanceholder, either the owner's or the one in the limb
-	proc/get_owner_appearance_holder()
-		if (src.original_holder?.bioHolder?.mobAppearance)
-			. = src.original_holder.bioHolder.mobAppearance
-		else if (istype(src.holder_ahol, /datum/appearanceHolder))
-			. = src.holder_ahol
 
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
@@ -454,8 +390,6 @@
 	var/special_icons = 'icons/mob/human.dmi'
 	var/original_flags = 0
 	var/image/handimage = 0
-	/// No more yee eating csaber arms
-	limb_is_unnatural = TRUE
 
 	New(new_holder, var/obj/item/I)
 		..()
@@ -602,8 +536,6 @@
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
-	/// Also, item arms are supposedly junk jammed into a severed limb's socket
-	limb_is_unnatural = TRUE
 
 	New(new_holder, var/obj/item/I)
 		..()
@@ -726,8 +658,6 @@
 	limb_type = /datum/limb/wendigo
 	handlistPart = "l_hand_wendigo"
 	show_on_examine = 1
-	/// Wendigeese are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -753,8 +683,6 @@
 	limb_type = /datum/limb/wendigo
 	handlistPart = "r_hand_wendigo"
 	show_on_examine = 1
-	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -780,7 +708,6 @@
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -801,7 +728,6 @@
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -822,7 +748,6 @@
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -850,7 +775,6 @@
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -877,8 +801,6 @@
 	var/name_thing = "plant"
 	show_on_examine = 1
 	easy_attach = 1
-	/// Plants are pretty unnatural
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -904,7 +826,6 @@
 	var/name_thing = "plant"
 	show_on_examine = 1
 	easy_attach = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -930,7 +851,6 @@
 	var/name_thing = "plant"
 	show_on_examine = 1
 	easy_attach = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -956,7 +876,6 @@
 	var/name_thing = "plant"
 	show_on_examine = 1
 	easy_attach = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1008,8 +927,6 @@
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
 	show_on_examine = 1
-	/// About as unnatural as it gets
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1035,7 +952,6 @@
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1062,8 +978,6 @@
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
 	show_on_examine = 1
-	/// Supernatural if not abnormally gross
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1083,7 +997,6 @@
 	streak_descriptor = "undeadly"
 	override_attack_hand = 1
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1103,7 +1016,6 @@
 	limb_type = /datum/limb/hunter
 	handlistPart = "l_hand_hunter"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1129,7 +1041,6 @@
 	limb_type = /datum/limb/hunter
 	handlistPart = "r_hand_hunter"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1156,7 +1067,6 @@
 	handlistPart = "l_hand_wendigo"
 	siemens_coefficient = 0
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1183,7 +1093,6 @@
 	handlistPart = "r_hand_wendigo"
 	siemens_coefficient = 0
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1208,7 +1117,6 @@ obj/item/parts/human_parts/arm/right/stone
 	handlistPart = "r_hand_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1233,7 +1141,6 @@ obj/item/parts/human_parts/arm/right/stone
 	handlistPart = "l_hand_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1258,7 +1165,6 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "l_foot_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1283,7 +1189,6 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "r_foot_stone"
 	var/name_thing = "stone"
 	show_on_examine = 1
-	limb_is_unnatural = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1297,6 +1202,103 @@ obj/item/parts/human_parts/arm/right/stone
 		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
 		return standImage
 
+
+obj/item/parts/human_parts/arm/right/reliquary
+	name = "synthetic right arm"
+	desc = "A right arm. Looks like it's made out of stone. How is that even possible?"
+	icon_state = "r_arm"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	skintoned = 0
+	handlistPart = "hand_right"
+	var/name_thing = "reli"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
+		return standImage
+
+/obj/item/parts/human_parts/arm/left/reliquary
+	name = "synthetic left arm"
+	desc = "A left arm. Looks like a rope composed of vines. And tofu??"
+	icon_state = "l_arm"
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	skintoned = 0
+	handlistPart = "hand_left"
+	var/name_thing = "reli"
+	show_on_examine = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
+
+/obj/item/parts/human_parts/leg/right/reliquary
+	name = "synthetic right leg"
+	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
+	icon_state = "r_leg"
+	slot = "r_leg"
+	side = "right"
+	decomp_affected = 0
+	skintoned = 0
+	partlistPart = "foot_right"
+	var/name_thing = "reli"
+	show_on_examine = 1
+	easy_attach = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
+		return standImage
+
+/obj/item/parts/human_parts/leg/left/reliquary
+	name = "synthetic right leg"
+	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
+	icon_state = "l_leg"
+	slot = "l_leg"
+	side = "left"
+	decomp_affected = 0
+	skintoned = 0
+	partlistPart = "foot_left"
+	var/name_thing = "reli"
+	show_on_examine = 1
+	easy_attach = 1
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
+		return standImage
 
 ////// MUTANT PARENT PARTS //////
 /obj/item/parts/human_parts/arm/mutant
@@ -1916,74 +1918,3 @@ obj/item/parts/human_parts/arm/right/stone
 		. = ..()
 		if(prob(10))
 			src.desc = "A chicken's right drumstick."
-
-//// KUDZU LIMBS ////
-//////  PARENT  //////
-
-/obj/item/parts/human_parts/arm/mutant/kudzu
-	icon = 'icons/obj/items/human_parts.dmi'
-	partIcon = 'icons/mob/human.dmi'
-	skintoned = 1
-	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	limb_overlay_1_color = null
-	handfoot_overlay_1_color = null
-	severed_overlay_1_color = null
-
-	New()
-		limb_overlay_1_state = "[src.slot]_kudzu"
-		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
-		severed_overlay_1_state = "[src.icon_state]_kudzu"
-		. = ..()
-
-/obj/item/parts/human_parts/leg/mutant/kudzu
-	icon = 'icons/obj/items/human_parts.dmi'
-	partIcon = 'icons/mob/human.dmi'
-	skintoned = 1
-	limb_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	handfoot_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	severed_overlay_1_icon = 'icons/mob/kudzu.dmi'
-	limb_overlay_1_color = null
-	handfoot_overlay_1_color = null
-	severed_overlay_1_color = null
-
-	New()
-		limb_overlay_1_state = "[src.slot]_kudzu"
-		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
-		severed_overlay_1_state = "[src.icon_state]_kudzu"
-		. = ..()
-
-////// ACTUAL KUDZU LIMBS //////
-/obj/item/parts/human_parts/arm/mutant/kudzu/left
-	name = "left kudzu arm"
-	desc = "A kudzu'sss left arm."
-	icon_state = "arm_left"
-	slot = "l_arm"
-	side = "left"
-	handlistPart = "hand_left"
-/obj/item/parts/human_parts/arm/mutant/kudzu/right
-	name = "right kudzu arm"
-	desc = "A kudzu'ssss right arm."
-	icon_state = "arm_right"
-	slot = "r_arm"
-	side = "right"
-	handlistPart = "hand_right"
-
-/obj/item/parts/human_parts/leg/mutant/kudzu/left
-	name = "left kudzu leg"
-	desc = "A kudzu'ss left leg."
-	icon_state = "leg_left"
-	slot = "l_leg"
-	side = "left"
-	partlistPart = "foot_left"
-	step_image_state = "footprintsL"
-
-/obj/item/parts/human_parts/leg/mutant/kudzu/right
-	name = "right kudzu leg"
-	desc = "A kudzu'sssss right leg."
-	icon_state = "leg_right"
-	slot = "r_leg"
-	side = "right"
-	partlistPart = "foot_right"
-	step_image_state = "footprintsR"

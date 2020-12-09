@@ -911,7 +911,7 @@
 		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
-			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1 )
 		activator.gib()
 		return 1
 		/* This is dumb we just gibbed the mob

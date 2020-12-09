@@ -244,8 +244,7 @@ Contains:
 	return data
 
 /obj/item/tank/ui_act(action, params)
-	. = ..()
-	if (.)
+	if(..())
 		return
 	switch(action)
 		if("toggle-valve")

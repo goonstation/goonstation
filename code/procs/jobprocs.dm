@@ -496,7 +496,10 @@
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
 	if (JOB.slot_belt)
-		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
+		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
+			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
+		else
+			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -518,9 +521,15 @@
 	if (JOB.slot_head)
 		src.equip_new_if_possible(JOB.slot_head, slot_head)
 	if (JOB.slot_poc1)
-		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
+		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
+			src.equip_new_if_possible(JOB.slot_poc1, slot_in_backpack)
+		else
+			src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
 	if (JOB.slot_poc2)
-		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
+		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
+			src.equip_new_if_possible(JOB.slot_poc2, slot_in_backpack)
+		else
+			src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
 	if (JOB.slot_rhan)
 		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
 	if (JOB.slot_lhan)
@@ -613,7 +622,7 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if((src.mutantrace && !src.mutantrace.uses_human_clothes))
+		if((src.bioHolder && src.bioHolder.HasEffect("fat")) || (src.mutantrace && !src.mutantrace.uses_human_clothes))
 			src.equip_if_possible(C, slot_in_backpack)
 		else
 			src.equip_if_possible(C, slot_wear_id)

@@ -300,7 +300,7 @@
 	var/image/head
 	amount = 1
 	max_stack = 50
-	appearance_flags = RESET_COLOR | RESET_ALPHA | LONG_GLIDE | PIXEL_SCALE
+	appearance_flags = RESET_COLOR | RESET_ALPHA
 	move_triggered = 1
 
 	New()

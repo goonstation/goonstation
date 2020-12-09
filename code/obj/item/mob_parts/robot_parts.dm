@@ -12,8 +12,6 @@
 	module_research_type = /obj/item/parts/robot_parts
 	accepts_normal_human_overlays = 0
 	skintoned = 0
-	/// Robot limbs shouldn't get replaced through mutant race changes
-	limb_is_unnatural = TRUE
 
 	decomp_affected = 0
 	var/robot_movement_modifier

@@ -183,7 +183,7 @@
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
 	set category = "Spells"
 	set name = "Clown Jam"
-	set desc = "Jams the target into a cursed clown"
+	set desc = "Jams the target into a fat cursed clown"
 
 	var/mob/M = src
 
@@ -509,7 +509,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/clown_jam
-				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an idiotic, horrible, and useless clown."
+				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an obese, idiotic, horrible, and useless clown."
 		if (href_list["spell_spin"])
 			usr.verbs += /mob/proc/spin
 			src.temp = "This spell lets you do a 360 spin, knocking down any fools tailing you."

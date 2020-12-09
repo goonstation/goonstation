@@ -661,12 +661,8 @@ table#cooktime a#start {
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 							F.name = "[M.subjectname] [foodname]"
 							F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-							if(!isnull(F.unlock_medal_when_eaten))
-								continue
-							else if (M.subjectjob && M.subjectjob == "Clown")
+							if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
 								F.unlock_medal_when_eaten = "That tasted funny"
-							else
-								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -1145,12 +1141,8 @@ var/list/mixer_recipes = list()
 					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 						F.name = "[M.subjectname] [foodname]"
 						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if(!isnull(F.unlock_medal_when_eaten))
-							continue
-						else if (M.subjectjob && M.subjectjob == "Clown")
+						if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
 							F.unlock_medal_when_eaten = "That tasted funny"
-						else
-							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				for (var/obj/item/I in to_remove)
 					qdel(I)
 				to_remove.len = 0

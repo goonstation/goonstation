@@ -343,7 +343,7 @@ TRAYS
 	icon_state = "chop_open"
 	item_state = "chop"
 	rotatable = 0
-	tool_flags = 0
+	tool_flags = null
 
 	attack_self(mob/user as mob)
 		var/obj/item/kitchen/chopsticks_package/chop = new /obj/item/kitchen/chopsticks_package

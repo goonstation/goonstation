@@ -17,7 +17,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5)
 					return "<b><span class='alert'>[src] wails!</span></b>"
 
 		return null

@@ -18,8 +18,9 @@
 	..(location, F)
 
 /obj/flock_structure/collector/building_specific_info()
-	return {"<span class='bold'>Connections:</span> Currently Connected to [connected] tile[connected == 1 ? "" : "s"].
-	<br><span class='bold'>Power generation:</span> Currently generating [abs(poweruse)]."}
+	var/custominfo = "<span class='bold'>Connections:</span> Currently Connected to [connected] tile[connected == 1 ? "" : "s"]."
+	custominfo += "<br><span class='bold'>Power generation:</span> Currently generating [abs(poweruse)]."
+	return custominfo
 
 /obj/flock_structure/collector/process()
 	..()

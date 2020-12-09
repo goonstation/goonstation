@@ -1898,7 +1898,60 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, "<span class='alert'>Well, that was gross.</span>")
+/*
+		reliquary_blood
+			name = "blueish fluid"
+			id = "reliquary_blood"
+			description = "This substance contains thousands of nanometric machines, slowly withering away as the liquid continues to grow stagnant."
+			reagent_state = LIQUID
+			fluid_r = 11
+			fluid_b = 143
+			fluid_g = 31
+			transparency = 195
+			value = 2
+			hygiene_value = -2
+			viscosity = 0.4
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if(ismartian(M))
+					M.HealDamage("All", 2 * mult, 0)
+					M.take_oxygen_deprivation(-1 * mult)
+					M.take_toxin_damage(-1 * mult)
+					M.take_brain_damage(-1 * mult)
+					if(prob(10))
+						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
+						M.HealDamage("All", 4, 0)
+						M.take_oxygen_deprivation(-4 * mult)
+						M.take_brain_damage(-4 * mult)
+						M.changeStatus("stunned", -40 * mult)
+						M.changeStatus("weakened", -40 * mult)
+				else
+					M.take_toxin_damage(1 * mult)
+					if(prob(10))
+						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
+						M.take_toxin_damage(4 * mult)
+				M.UpdateDamageIcon()
+				..()
+				return
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				src = null
+				if(!volume_passed)
+					return
+				if(ismartian(M))
+					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
+					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
+					M.HealDamage("All", 5, 0)
+					M.UpdateDamageIcon()
+				else
+					if(method == INGEST)
+						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
+						M.emote("scream")
+					if(method == TOUCH)
+						boutput(M, "<span class='alert'>Well, that was gross.</span>")
+*/
 		flockdrone_fluid
 			name = "coagulated gnesis"
 			id = "flockdrone_fluid"
@@ -3625,8 +3678,8 @@ datum
 				if(probmult(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
-					if(M.bioHolder && !M.bioHolder.HasEffect("strong")) //was originally fat bioeffect, but that's been removed
-						M.bioHolder.AddEffect("strong")
+					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
+						M.bioHolder.AddEffect("fat")
 				for (var/obj/V in orange(clamp(our_amt / 5, 2,10),M))
 					if (V.anchored)
 						continue

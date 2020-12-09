@@ -13,16 +13,11 @@
 	blood_id = "methamphetamine"
 	burning_suffix = "humanoid"
 
-	on_pet(mob/user)
-		if (..())
-			return 1
-		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
-
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(src), "sound/voice/MEraaargh.ogg", 70, 1)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 

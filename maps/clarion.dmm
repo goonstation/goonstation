@@ -2138,6 +2138,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "adY" = (
+/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -3662,6 +3663,7 @@
 	name = "Crew Quarters M03"
 	})
 "agz" = (
+/obj/storage/secure/closet/command/medical_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -5208,6 +5210,7 @@
 	name = "Crew Quarters M04"
 	})
 "aiI" = (
+/obj/storage/secure/closet/command/research_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -6824,6 +6827,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "akV" = (
+/obj/storage/secure/closet/command/hos,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -11244,7 +11248,6 @@
 	},
 /obj/storage/closet/office,
 /obj/item/clothing/under/misc/hydroponics,
-/obj/item/paper/book/hydroponicsguide,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -11574,10 +11577,7 @@
 "atT" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/mug_rack{
-	pixel_x = -26
-	},
-/obj/machinery/coffeemaker/botany,
+/obj/item/paper/book/hydroponicsguide,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -18598,16 +18598,12 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname  - SS13"
 	},
-/obj/table/reinforced/auto,
-/obj/mug_rack{
-	pixel_y = 28
-	},
-/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -25554,7 +25550,6 @@
 /obj/item/gun/kinetic/riot40mm,
 /obj/item/wrench,
 /obj/item/clothing/head/helmet/camera/security,
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -27474,14 +27469,11 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/stool/bed/moveable,
+/obj/iv_stand,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
-	pixel_y = 28
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28151,6 +28143,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bae" = (
+/obj/stool/bed/moveable,
+/obj/iv_stand,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -28264,10 +28258,7 @@
 "baq" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/space_law,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor,
 /area/station/security/main)
 "bar" = (
@@ -29043,10 +29034,6 @@
 /obj/item/audio_tape,
 /obj/item/device/prisoner_scanner,
 /obj/disposalpipe/segment/brig,
-/obj/item/hand_labeler,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 11
-	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbB" = (
@@ -29063,10 +29050,12 @@
 "bbD" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/security,
-/obj/mug_rack{
-	pixel_y = -24
-	},
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/stamp,
+/obj/item/hand_labeler,
+/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbE" = (
@@ -39196,9 +39185,6 @@
 	name = "autoname  - SS13"
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 14
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btx" = (
@@ -39209,17 +39195,15 @@
 	pixel_y = 32
 	},
 /obj/item/hand_labeler,
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "bty" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker,
-/obj/mug_rack{
-	pixel_y = 28
+/obj/machinery/light/emergency{
+	dir = 1
 	},
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/random_item_spawner/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btz" = (

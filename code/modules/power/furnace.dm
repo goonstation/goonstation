@@ -12,7 +12,7 @@
 	var/genrate = 5000
 	var/stoked = 0 // engine ungrump
 	mats = 20
-	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	process()

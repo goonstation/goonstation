@@ -12,9 +12,9 @@
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
-			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1)
 		else
-			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1)
 		..()
 		return
 

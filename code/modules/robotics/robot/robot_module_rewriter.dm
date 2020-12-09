@@ -86,8 +86,7 @@
 	return data
 
 /obj/machinery/computer/robot_module_rewriter/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if (.)
+	if (..())
 		return
 
 	var/mob/user = ui.user

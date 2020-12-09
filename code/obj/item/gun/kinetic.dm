@@ -980,6 +980,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
+	name = "Oblivion"
+	New()
+		return
+
+*/ /////////////////////////////////////////////////////////////////////////////////////////
+
 // assault
 /obj/item/gun/kinetic/assault_rifle
 	name = "Sirius assault rifle"

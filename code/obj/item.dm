@@ -412,6 +412,9 @@
 		return 1
 
 	else
+		if(M.mob_flags & IS_RELIQUARY)
+			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
+			return 0
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
@@ -1332,10 +1335,10 @@
 	if (attacher.zone_sel.selecting == "l_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
 		attachee.limbs.l_arm = new_arm
-	else if (attacher.zone_sel.selecting == "r_arm")
+	else
 		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
 		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows - or they aren't targetting an arm!
+	if (!new_arm) return //who knows
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)

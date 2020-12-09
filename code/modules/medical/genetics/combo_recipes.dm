@@ -133,7 +133,7 @@
 	result = /datum/bioEffect/fire_aura
 
 /datum/geneticsrecipe/strong
-	required_effects = list("fitness_debuff","detox")
+	required_effects = list("fat","detox")
 	result = /datum/bioEffect/strong
 
 /datum/geneticsrecipe/stinky
@@ -283,11 +283,11 @@
 	// this one's just for comedy's sake =v
 
 /datum/geneticsrecipe/squid // Discovered
-	required_effects = list("chime_snaps","stinky")
+	required_effects = list("fat","stinky")
 	result = /datum/bioEffect/mutantrace/ithillid
 
 /datum/geneticsrecipe/squid_two
-	required_effects = list("strong","melt")
+	required_effects = list("fat","melt")
 	result = /datum/bioEffect/mutantrace/ithillid
 
 /datum/geneticsrecipe/roach // Discovered
@@ -327,7 +327,7 @@
 	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/dwarf_three // Discovered
-	required_effects = list("strong","stinky")
+	required_effects = list("strong","fat")
 	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/blank // Discovered

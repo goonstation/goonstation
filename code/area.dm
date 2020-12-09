@@ -35,9 +35,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
-	// some semi-random turf in the area to guide spy thieves
-	var/turf/spyturf = null
-
 	/// for escape checks
 	var/is_centcom = 0
 
