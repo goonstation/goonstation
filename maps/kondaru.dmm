@@ -23283,6 +23283,9 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "bek" = (
+/obj/item/device/reagentscanner{
+	pixel_x = -4
+	},
 /obj/stool/chair,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -23651,16 +23654,12 @@
 "bfr" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
-/obj/item/dice{
-	pixel_x = -8
+/obj/item/reagent_containers/dropper{
+	pixel_y = 7
 	},
-/obj/item/dice{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/coin{
-	pixel_x = -2;
-	pixel_y = 16
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
