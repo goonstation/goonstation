@@ -2042,7 +2042,7 @@ proc/countJob(rank)
 /proc/whodead()
 	var/list/found = new
 	for (var/mob/M in mobs)
-		if (isdead(M))
+		if (M.ckey && isdead(M))
 			found += M
 	return found
 
