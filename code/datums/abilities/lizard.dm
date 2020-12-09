@@ -51,7 +51,7 @@
 
 /datum/abilityHolder/lizard
 	topBarRendered = 1
-	points = 990
+	points = 0
 	regenRate = 0	// eat some kidneys or something
 	pointName = "Metachroitic Factor"
 
