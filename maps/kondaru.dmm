@@ -54891,15 +54891,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
-"nFv" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/grille/catwalk{
-	dir = 10
-	},
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
 "nGr" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -56086,6 +56077,15 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"qCC" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "qCQ" = (
 /obj/table/auto,
 /obj/item/paper/book/guardbot_guide{
@@ -58247,10 +58247,6 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"wEQ" = (
-/obj/lattice,
-/turf/space,
-/area/station/maintenance/southwest)
 "wEY" = (
 /obj/decal/garland/ephemeral{
 	dir = 4;
@@ -58272,6 +58268,10 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig)
+"wKe" = (
+/obj/lattice,
+/turf/space,
+/area/station/maintenance/southwest)
 "wLi" = (
 /obj/machinery/light/emergency,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -58747,7 +58747,7 @@
 	id = "shepardtone"
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
+/area/station/maintenance/southwest)
 "xYH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -90448,7 +90448,7 @@ bMB
 bOb
 bPu
 bNZ
-nFv
+qCC
 bTH
 sBH
 bVX
@@ -90751,7 +90751,7 @@ bOb
 bPv
 bGc
 bUM
-wEQ
+wKe
 bUM
 bVX
 aaa
