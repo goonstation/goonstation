@@ -73,11 +73,11 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      width={(hasDetonator ? (hasPaper ? 870 : 470) : 400)}
+      width={(hasDetonator ? (hasPaper ? 890 : 470) : 400)}
       height={hasDetonator ? 680 : 370}>
       <Window.Content>
         <Flex>
-          <Flex.Item width="460px">
+          <Flex.Item width="480px">
             <PortableBasicInfo
               connected={connected}
               pressure={pressure}
@@ -147,8 +147,8 @@ class PaperView extends Component {
     return (
       <Section
         scrollable
-        width='400px'
-        height='518px'
+        width="400px"
+        height="518px"
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView

@@ -480,7 +480,7 @@ class PaperSheetEdit extends Component {
           <Tabs>
             <Tabs.Tab
               key="marked_edit"
-              textColor='black'
+              textColor="black"
               backgroundColor={this.state.previewSelected === "Edit"
                 ? "grey"
                 : "white"}
@@ -490,7 +490,7 @@ class PaperSheetEdit extends Component {
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_preview"
-              textColor='black'
+              textColor="black"
               backgroundColor={this.state.previewSelected === "Preview"
                 ? "grey"
                 : "white"}
@@ -508,7 +508,7 @@ class PaperSheetEdit extends Component {
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_done"
-              textColor='black'
+              textColor="black"
               backgroundColor={this.state.previewSelected === "confirm"
                 ? "red"
                 : this.state.previewSelected === "save"
