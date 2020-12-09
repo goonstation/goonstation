@@ -46339,6 +46339,27 @@
 	},
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"iLn" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Door";
+	opacity = 0
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "iNI" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -47050,6 +47071,27 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"plX" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Door";
+	opacity = 0
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "pnh" = (
 /obj/machinery/door/airlock/pyro/medical,
 /obj/firedoor_spawn,
@@ -91040,7 +91082,7 @@ aaa
 aaa
 aaa
 act
-aah
+iLn
 aan
 aan
 aaJ
@@ -92248,7 +92290,7 @@ aaa
 aaa
 aaa
 act
-aaj
+plX
 aan
 aan
 aaJ
