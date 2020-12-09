@@ -81,11 +81,11 @@
   switch (act)
     if ("scream","hiss","chitter")
       if (src.emote_check(voluntary, 50))
-        playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1)
+        playsound(get_turf(src), "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<b>[src]</b> chitters!"
     if ("snap","clack","click","clak")
       if (src.emote_check(voluntary, 50))
-        playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1)
+        playsound(get_turf(src), "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<span class='alert'><b>[src]</b> claks!</span>"
   return null
 
