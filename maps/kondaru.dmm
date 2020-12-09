@@ -39033,7 +39033,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/maintenance/inner/central)
 "bPs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -39556,11 +39556,11 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/maintenance/inner/central)
 "bQz" = (
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/maintenance/inner/central)
 "bQA" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor/black,
@@ -51400,6 +51400,15 @@
 	dir = 8
 	},
 /area/station/bridge)
+"dju" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "djG" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/yellow/side{
@@ -53063,7 +53072,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/maintenance/inner/central)
 "hCR" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -54357,6 +54366,10 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
+"lVE" = (
+/obj/lattice,
+/turf/space,
+/area/station/maintenance/southwest)
 "lXB" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor,
@@ -56077,15 +56090,6 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"qCC" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/grille/catwalk{
-	dir = 10
-	},
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
 "qCQ" = (
 /obj/table/auto,
 /obj/item/paper/book/guardbot_guide{
@@ -58268,10 +58272,6 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig)
-"wKe" = (
-/obj/lattice,
-/turf/space,
-/area/station/maintenance/southwest)
 "wLi" = (
 /obj/machinery/light/emergency,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -90448,7 +90448,7 @@ bMB
 bOb
 bPu
 bNZ
-qCC
+dju
 bTH
 sBH
 bVX
@@ -90751,7 +90751,7 @@ bOb
 bPv
 bGc
 bUM
-wKe
+lVE
 bUM
 bVX
 aaa
@@ -107622,7 +107622,7 @@ aaa
 aci
 aaa
 aaa
-aIX
+aCr
 bPp
 acO
 aaa
