@@ -1,20 +1,8 @@
 
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { truncate } from "../format.js";
 import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
-
-export const titleCase = str => {
-  let splitStr = str.toLowerCase().split(" ");
-  for (let i = 0; i < splitStr.length; i++) {
-    splitStr[i] = splitStr[i].charAt(0).toUpperCase()
-    + splitStr[i].substring(1);
-  }
-  return splitStr.join(" ");
-};
-
-
 
 const stateMap = {
   1: {
@@ -179,9 +167,10 @@ export const Beaker = (props, context) => {
       fontSize="12px"
       title={
         <Button
+          className="ChemDispenser-buttons"
           icon="eject"
           onClick={() => act("eject")}>
-          {!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + titleCase(currentBeakerName) + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
+          {!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + currentBeakerName + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
         </Button>
       }
       buttons={(
@@ -218,11 +207,11 @@ export const Beaker = (props, context) => {
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
               name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
             <Tooltip.Overflow width="225px"
-              content={" ( " + reagent.volume + "u ) " + titleCase(reagent.name)}
+              content={" ( " + reagent.volume + "u ) " + reagent.name}
               style={{
                 "line-height": "15px",
               }}>
-              {" ( " + reagent.volume + "u ) " + titleCase(reagent.name) }
+              {" ( " + reagent.volume + "u ) " + reagent.name }
             </Tooltip.Overflow>
           </Table.Cell>
           <Table.Cell collapsing textAlign="left">
@@ -335,7 +324,7 @@ export const BeakerContentsGraph = (props, context) => {
             backgroundColor={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}>
             <Tooltip
               position="top"
-              content={titleCase(reagent.name) + " ( " + reagent.volume + "u )"} />
+              content={reagent.name + " ( " + reagent.volume + "u )"} />
           </Box>
         ))}
       <Box
@@ -372,6 +361,7 @@ export const ChemGroups = (props, context) => {
         buttons={
           <Box>
             <Button
+              className="ChemDispenser-buttons"
               icon="eject"
               onClick={() => act("card")}>
               {idCardInserted ? ("Eject ID: " + idCardName) : "Insert ID"}
@@ -381,7 +371,7 @@ export const ChemGroups = (props, context) => {
         <Box>
 
           <Box>
-            <Box pt={1} pr={9} as="span">
+            <Box pt={1} pr={7} as="span">
               {"Group Name:"}
             </Box>
             <Box pt={1} as="span">
