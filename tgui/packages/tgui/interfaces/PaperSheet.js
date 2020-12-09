@@ -302,7 +302,7 @@ class PaperSheetStamper extends Component {
 
       const currentHeight = rotating
         ? this.state.y
-        : e.pageY - windowRef.scrollTop - stampHeight;
+        : e.pageY + windowRef.scrollTop - stampHeight;
       const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
 
       const widthMin = 0;
@@ -310,7 +310,7 @@ class PaperSheetStamper extends Component {
 
       const widthMax = windowRef.clientWidth - stampWidth;
       const heightMax = (
-        windowRef.clientHeight - windowRef.scrollTop - stampHeight
+        windowRef.clientHeight + windowRef.scrollTop - stampHeight
       );
 
       const radians = Math.atan2(
