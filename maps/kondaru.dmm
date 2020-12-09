@@ -31372,6 +31372,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
+"byt" = (
+/obj/decal/poster/wallsign/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/brig)
 "byu" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -38168,7 +38172,8 @@
 "bNC" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Defendant's Stand"
+	name = "Defendant's Stand";
+	req_access = null
 	},
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
@@ -39493,6 +39498,9 @@
 /obj/item/device/detective_scanner{
 	pixel_x = 15
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -40098,6 +40106,10 @@
 "bRL" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -41201,8 +41213,11 @@
 /area/station/crew_quarters/barber_shop)
 "bUl" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Secure Consultation"
+	name = "Secure Consultation";
+	req_access = null
 	},
+/obj/access_spawn/brig,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bUm" = (
@@ -41229,11 +41244,14 @@
 /area/station/security/brig)
 "bUp" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Secure Consultation"
+	name = "Secure Consultation";
+	req_access = null
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/access_spawn/brig,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bUq" = (
@@ -54969,12 +54987,15 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "nVs" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Secure Consultation"
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/machinery/door/airlock/pyro/security{
+	name = "Secure Consultation";
+	req_access = null
+	},
+/obj/access_spawn/brig,
+/obj/firedoor_spawn,
 /turf/simulated/floor/redblack,
 /area/station/security/brig)
 "nVE" = (
@@ -55773,6 +55794,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"qdz" = (
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/brig)
 "qex" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -112919,7 +112948,7 @@ bMo
 bNt
 bFK
 bQr
-bRS
+qdz
 qmz
 bUl
 cot
@@ -113823,7 +113852,7 @@ tZJ
 bLe
 bMq
 bNv
-bFK
+byt
 rXp
 bRJ
 bWL
