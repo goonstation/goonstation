@@ -1,4 +1,9 @@
 
+(t)wed dec 09 20
+(u)ThePotato97
+(p)3008
+(e)🐛📄|bug, tgui
+(+)Fixed paper; stamp scrolling, shift time and clipboard interaction.
 (t)tue dec 08 20
 (u)ThePotato97
 (p)2775
