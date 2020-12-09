@@ -1,4 +1,18 @@
 
+(t)tue dec 08 20
+(u)ThePotato97
+(p)2775
+(e)🐛🆕🔄🎨📄|bug, feature, rework, sprites, tgui
+(*)Converted paper to tgui - This also means it now uses Markdown formatting!
+(+)Fixed note on canister bombs
+(u)Nefarious6th
+(p)2918
+(e)🗺|mapping
+(+)Adds Spacemas variants of Atlas, Clarion, Horizon, Manta, and Oshan maps
+(u)virvatuli
+(p)2993
+(e)🗺|mapping
+(+)Removed taser shotgun from HoS locker on Manta
 (t)mon dec 07 20
 (u)Camryn Buttes
 (p)2972

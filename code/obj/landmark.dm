@@ -218,7 +218,7 @@ var/global/list/job_start_locations = list()
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
-		if (man_warptarget_modifier) src.warptarget_modifier = man_warptarget_modifier
+		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
 		T.appearance_flags |= KEEP_TOGETHER
