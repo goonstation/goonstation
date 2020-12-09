@@ -204,15 +204,6 @@
 		SPAWN_DBG( 0 )
 			if ((!( yes ) || src.now_pushing))
 				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					src.visible_message("<span class='alert'><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-			src.now_pushing = 0
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -278,13 +269,13 @@
 				emote_sound = beeps_n_boops[5]
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
-				playsound(src.loc, pick(glitchy_noise), 50, 1)
+				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
 		if (emote_sound)
-			playsound(src.loc, emote_sound, 50, 1)
+			playsound(src.loc, emote_sound, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		if (message)
 			src.visible_message(message)
 		return

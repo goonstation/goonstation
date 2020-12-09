@@ -98,25 +98,6 @@
 			H.add_stam_mod_max("trait", -(STAMINA_MAX - 1))
 		return
 
-/obj/trait/fat
-	name = "Fat (-1)"
-	cleanName = "Fat"
-	desc = "You're a little ... pudgy. And there's nothing you can do about it."
-	id = "fat"
-	points = -1
-	isPositive = 1
-	unselectable = 1
-
-	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("fat")
-		return
-
-	onLife(var/mob/owner) //Just to be safe.
-		if(owner.bioHolder && !owner.bioHolder.HasEffect("fat"))
-			owner.bioHolder.AddEffect("fat")
-		return
-
 /obj/trait/soggy
 	name = "Overly soggy (-1)"
 	cleanName = "Overly soggy"

@@ -355,8 +355,8 @@
 /obj/item/seedplanter
 	name = "Portable Seed Fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "forensic0"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "portable_seed_fab"
 	var/datum/plant/selected = null
 
 
@@ -448,7 +448,7 @@
 	desc = "Used to water things. Obviously."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "wateringcan"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'	
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "wateringcan"
 	amount_per_transfer_from_this = 60
 	w_class = 3.0

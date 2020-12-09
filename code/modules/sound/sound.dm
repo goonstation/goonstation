@@ -59,18 +59,24 @@ var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
+//default volumes
+var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 //volumous hair with l'orial paris
-/client/var/list/volumes = list(1, 1, 0.1, 0.5, 0.5)
+/client/var/list/volumes
 /client/var/list/sound_playing = new/list(1024, 2)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote")
+
+/// Returns the default volume for a channel, unattenuated for the master channel (0-1)
+/client/proc/getDefaultVolume(channel)
+	return volumes[channel + 1]
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.")
+	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.")
 
 /// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)

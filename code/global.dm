@@ -228,6 +228,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
@@ -532,13 +533,6 @@ var/global
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
-
-	global_jobban_cache = ""		// once jobban list is ready this is set to a giant string of all the jobban data. the new panel chops it up for use client side with javascript
-	global_jobban_cache_rev = 0 	// increments every time the ban panel is built so clients know if they have the latest
-	global_jobban_cache_built = 0	// set to world.timeofday when the cache is built
-
-	building_jobbans = 0	// ditto
-	jobban_count = 0		// ditto
 
 	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
 	list/chemical_reactions_cache = list()
