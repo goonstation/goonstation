@@ -764,7 +764,7 @@
 		if (src.pen)
 			dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 		for(var/obj/item/paper/P in src)
-			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
+			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
 
 		for(var/obj/item/photo/P in src) //Todo: make it actually show the photo.  Currently, using [bicon()] just makes an egg image pop up (??)
 			dat += "<A href='?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
@@ -796,7 +796,13 @@
 
 		else if (href_list["read"])
 			var/obj/item/paper/P = locate(href_list["read"])
-			P.ui_interact(usr)
+			if ((P && P.loc == src))
+				if (!( ishuman(usr) ))
+					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
+					onclose(usr, "[P.name]")
+				else
+					usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
+					onclose(usr, "[P.name]")
 
 		else//Stuff that involves writing from here on down
 			if(!usr.literate)
