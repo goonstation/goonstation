@@ -101,7 +101,7 @@ export const ReagentDispenser = (props, context) => {
         {(!maximumBeakerVolume || maximumBeakerVolume
         === beakerTotalVolume) && (
           <Modal
-            className="ChemDispenser-labels"
+            className="chem-dispenser__labels"
             fontSize="20px"
             mr={2}
             p={3}>
@@ -115,7 +115,7 @@ export const ReagentDispenser = (props, context) => {
         {dispensableReagents.map((reagent, reagentIndex) => (
           <Button
             key={reagentIndex}
-            className="ChemDispenser-dispense-buttons"
+            className="chem-dispenser__dispense-buttons"
             position="relative"
             backgroundColor={""}
             align="left"
@@ -167,7 +167,7 @@ export const Beaker = (props, context) => {
       fontSize="12px"
       title={
         <Button
-          className="ChemDispenser-buttons"
+          className="chem-dispenser__buttons"
           icon="eject"
           onClick={() => act("eject")}>
           {!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + currentBeakerName + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
@@ -361,7 +361,7 @@ export const ChemGroups = (props, context) => {
         buttons={
           <Box>
             <Button
-              className="ChemDispenser-buttons"
+              className="chem-dispenser__buttons"
               icon="eject"
               onClick={() => act("card")}>
               {idCardInserted ? ("Eject ID: " + idCardName) : "Insert ID"}

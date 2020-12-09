@@ -2,20 +2,22 @@
 @use '../components/Button.scss';
 @use '../base.scss';
 
-.ChemDispenser-buttons {
-  text-transform: capitalize;
-}
+.chem-dispenser {
+  &__buttons {
+    text-transform: capitalize;
+  }
 
-.ChemDispenser-labels {
-  text-transform: capitalize;
-}
+  &__labels {
+    text-transform: capitalize;
+  }
 
-.ChemDispenser-dispense-buttons {
-  text-transform: capitalize;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+  &__dispense-buttons {
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    white-space: nowrap;
+  }
 
-.ChemDispenser-dispense:hover {
-  overflow: visible;
+  &-dispense:hover {
+    overflow: visible;
+  }
 }
