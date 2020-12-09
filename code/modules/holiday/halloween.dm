@@ -421,8 +421,8 @@
 			if(!(src.client && src.client.holder))
 				src.emote_allowed = 0
 
-			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91)
-			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9)
+			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
+			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
 			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"

@@ -379,10 +379,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				// Used to do exactly this back in 2012 or so (Convair880).
-				if (probmult(10) && M.bioHolder && M.bioHolder.HasEffect("fat"))
-					M.bioHolder.RemoveEffect("fat")
-
 				if (!M.nutrition)
 					switch(rand(1,3))
 						if (1)

@@ -38,11 +38,10 @@
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Conduit"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Conduit
+    <br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -259,11 +258,11 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Nanite Block"
-    special_desc += "<br><span class='bold'>System Integrity:</span> 100%" // todo: damageable walls
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Nanite Block
+    <br><span class='bold'>System Integrity:</span> 100%
+    <br><span class='bold'>###=-</span></span>"}
+    // todo: damageable walls
   else
     return null // give the standard description
 

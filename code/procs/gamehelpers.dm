@@ -130,6 +130,12 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 		else if (istype(source, /obj/machinery) && isAI(user))
 			return 1
 
+	if (mirrored_physical_zone_created) //checking for vistargets if true
+		var/turf/T = get_turf(source)
+		if (T.vistarget)
+			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
+				return 1
+
 	return 0 //not in range and not telekinetic
 
 
@@ -429,7 +435,6 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
@@ -451,6 +456,28 @@ var/obj/item/dummy/click_dummy = new
 			for (var/turf/T in R)
 				. += R
 				break
+
+/proc/get_areas_with_unblocked_turfs(var/areatype)
+	//Takes: Area type as text string or as typepath OR an instance of the area.
+	//Returns: A list of all areas of that type in the world that have at least one unblocked turf.
+	//Also sets an unblocked turf for each area for the spy thief mode.
+	//Notes: Simple!
+	if(!areatype) return null
+	if(istext(areatype)) areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	. = list()
+
+	for(var/area/R in world)
+		LAGCHECK(LAG_LOW)
+		if(istype(R, areatype))
+			for (var/turf/T in R)
+				if(!is_blocked_turf(T))
+					R.spyturf = T
+					. += R
+					break
 
 /proc/get_area_turfs(var/areatype, var/floors_only)
 	//Takes: Area type as text string or as typepath OR an instance of the area.

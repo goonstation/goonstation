@@ -721,6 +721,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		src.bioHolder.mobAppearance.s_tone = pick("#FAD7D0", "#BD8A57", "#935D37")
+		src.bioHolder.mobAppearance.s_tone_original = src.bioHolder.mobAppearance.s_tone
 		src.gender = "male"
 		src.real_name = "[pick(prob(150); "W", "V")][pick(prob(150); "a", "au", "o", "e")][pick(prob(150); "l", "ll")][pick(prob(150); "d", "t")][pick(prob(150); "o", "oh", "a", "e")]"
 
@@ -812,6 +813,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		bioHolder.mobAppearance.customization_first = "Dreadlocks"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.s_tone = "#FAD7D0"
+		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
 		bioHolder.AddEffect("accent_tommy")
 
 /mob/living/carbon/human/waiter

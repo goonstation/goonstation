@@ -147,44 +147,6 @@
 		if (prob(talk_prob))
 			L.say(pick(talk_strings))
 
-/datum/bioEffect/fat
-	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	id = "fat"
-	probability = 99
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	msgGain = "You feel blubbery and lethargic!"
-	msgLose = "You feel fit!"
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnAdd()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			H.unlock_medal("Space Ham", 1)
-			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-			H.SafeScale(1.75, 1)
-
-	OnRemove()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-			H.SafeScale(1/1.75,1)
-
-	OnLife()
-		if(..()) return
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (prob(1) && !H.find_ailment_by_type(/datum/ailment/malady/heartdisease))
-				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-		return
-
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."
