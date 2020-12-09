@@ -31372,10 +31372,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
-"byt" = (
-/obj/reagent_dispensers/compostbin,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "byu" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -54471,7 +54467,7 @@
 	},
 /area/station/maintenance/southeast)
 "mCe" = (
-/obj/reagent_dispensers/watertank/big,
+/obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "mCg" = (
@@ -114417,7 +114413,7 @@ bpC
 buR
 bvU
 bpC
-byt
+bpC
 mCe
 jJT
 boq
