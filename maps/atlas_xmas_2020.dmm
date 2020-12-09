@@ -11410,11 +11410,9 @@
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "Bc" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/garland,
 /obj/stocking,
-/turf/simulated/floor/plating,
-/area/station/hydroponics/bay)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/east)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -15473,6 +15471,7 @@
 /area/ghostdrone_factory)
 "Li" = (
 /obj/machinery/door/airlock/pyro/classic,
+/obj/decal/garland,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "Lj" = (
@@ -65184,7 +65183,7 @@ ba
 ba
 ba
 tV
-AD
+Bc
 Bo
 Rp
 vQ
@@ -66692,7 +66691,7 @@ xO
 rr
 ro
 qp
-Bc
+wL
 zP
 Si
 Bg
