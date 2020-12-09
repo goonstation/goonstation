@@ -1,5 +1,9 @@
 
 (t)wed dec 09 20
+(u)BatElite
+(p)2990
+(e)🆕🎨|feature, sprites
+(+)Redeeming the science and medical labcoats when you've bought the alternative jumpsuit now gives you matching labcoat colours!
 (u)ThePotato97
 (p)3008
 (e)🐛📄|bug, tgui
