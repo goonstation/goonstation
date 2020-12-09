@@ -19,6 +19,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
+		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/dsay,
