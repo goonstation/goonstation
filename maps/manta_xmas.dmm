@@ -40,6 +40,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aai" = (
@@ -66,6 +67,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aaj" = (
@@ -87,6 +89,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aak" = (
@@ -1173,6 +1176,7 @@
 /area/station/security/starboardtorpedoes)
 "acj" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/starboardtorpedoes)
 "ack" = (
@@ -4097,6 +4101,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "all" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/porttorpedoes)
 "alm" = (
@@ -6085,6 +6090,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
 "apt" = (
@@ -6629,6 +6635,8 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aqo" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/flower_vase,
 /obj/machinery/drainage/big,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -8276,6 +8284,7 @@
 /area/station/hallway/portupperhallway)
 "aug" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
 "auh" = (
@@ -12650,6 +12659,7 @@
 "aDb" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "aDc" = (
@@ -13542,6 +13552,7 @@
 "aFa" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "aFb" = (
@@ -14125,20 +14136,9 @@
 /area/station/crew_quarters/quarters)
 "aGk" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "scienceteleporter";
-	name = "Teleporter Pad Blast Shield";
-	opacity = 0
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/area/station/medical/medbay/surgery)
 "aGl" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/caution/south,
@@ -14260,15 +14260,9 @@
 /area/station/science/teleporter)
 "aGz" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/obj/decal/wreath,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "aGA" = (
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "Security Hallway"
@@ -17221,6 +17215,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "aMU" = (
@@ -17424,6 +17419,7 @@
 /area/station/crew_quarters/arcade)
 "aNs" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aNt" = (
@@ -23803,6 +23799,7 @@
 /area/station/medical/medbay/cloner)
 "bbm" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "bbn" = (
@@ -24570,7 +24567,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/flowers,
-/turf/simulated/floor/snow,
+/turf/simulated/floor/grass/random,
 /area/station/hallway/portlowerhallway)
 "bcU" = (
 /obj/potted_plant/potted_plant4{
@@ -24710,11 +24707,9 @@
 /turf/simulated/floor/red,
 /area/station/hallway/centralhallway)
 "bdg" = (
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+/obj/decal/tile_edge/flowers,
+/turf/simulated/floor/grass/random,
+/area/station/hallway/portlowerhallway)
 "bdi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25012,6 +25007,7 @@
 /area/station/medical/robotics)
 "bdF" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "bdG" = (
@@ -27520,6 +27516,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "biv" = (
@@ -29295,6 +29292,7 @@
 /area/station/medical/medbay/treatment1)
 "blY" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
 "blZ" = (
@@ -29326,6 +29324,7 @@
 /area/station/engine/monitoring)
 "bmc" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
 "bmd" = (
@@ -30863,6 +30862,7 @@
 /area/station/chapel/sanctuary)
 "boY" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "boZ" = (
@@ -31005,6 +31005,7 @@
 	dir = 1;
 	icon_state = "frug1"
 	},
+/obj/item/instrument/large/jukebox,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -31160,6 +31161,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "bpC" = (
@@ -31173,16 +31175,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "bpD" = (
-/obj/wingrille_spawn/auto,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/lobby)
+/obj/stocking,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bpE" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass,
@@ -31222,6 +31221,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
 "bpK" = (
@@ -31235,17 +31235,9 @@
 /area/station/medical/medbay/lobby)
 "bpL" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/decal/wreath,
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/lobby)
+/area/station/chapel/sanctuary)
 "bpM" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/medical,
@@ -31605,6 +31597,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bqp" = (
@@ -31693,6 +31686,24 @@
 /obj/stool/chair/wooden,
 /turf/simulated/floor/carpet{
 	dir = 1;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"bqy" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"bqz" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -32323,7 +32334,7 @@
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
-/obj/item/instrument/large/jukebox,
+/obj/loudspeaker,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "brI" = (
@@ -32359,7 +32370,9 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "brM" = (
-/obj/xmastree,
+/obj/stool/chair/wooden{
+	dir = 1
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -33746,8 +33759,9 @@
 /area/station/hallway/portlowerhallway)
 "buZ" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
-/area/station/hangar/mining)
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/hydroponics/bay)
 "bva" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/mining)
@@ -34342,6 +34356,7 @@
 /area/station/hangar/security)
 "bwo" = (
 /obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hangar/security)
 "bwp" = (
@@ -34584,6 +34599,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "bwU" = (
@@ -34599,6 +34615,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "bwV" = (
@@ -34607,6 +34624,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "bwW" = (
@@ -36209,6 +36227,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bAs" = (
@@ -37828,6 +37847,7 @@
 	layer = 2.9;
 	pixel_y = 13
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "bDJ" = (
@@ -38119,6 +38139,7 @@
 	layer = 2.9;
 	pixel_y = 13
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bEw" = (
@@ -38699,6 +38720,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "bFQ" = (
@@ -39256,6 +39278,7 @@
 	icon_state = "0-4"
 	},
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "bHq" = (
@@ -39268,6 +39291,7 @@
 	icon_state = "1-4"
 	},
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "bHr" = (
@@ -39277,6 +39301,7 @@
 	icon_state = "0-8"
 	},
 /obj/window_blinds/cog2/right,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "bHs" = (
@@ -45445,6 +45470,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "cLZ" = (
@@ -45846,6 +45872,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "fxo" = (
@@ -46032,6 +46059,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "hdq" = (
@@ -46055,6 +46083,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "hmg" = (
@@ -46218,6 +46247,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "ifM" = (
@@ -46309,6 +46339,27 @@
 	},
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"iLn" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Door";
+	opacity = 0
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "iNI" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -46548,6 +46599,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "lOW" = (
@@ -46745,6 +46797,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "naL" = (
@@ -47018,6 +47071,27 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"plX" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Door";
+	opacity = 0
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "pnh" = (
 /obj/machinery/door/airlock/pyro/medical,
 /obj/firedoor_spawn,
@@ -47192,6 +47266,11 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hallway/starboardlowerhallway)
+"rfr" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "rlZ" = (
 /obj/computerframe{
 	dir = 8
@@ -47566,6 +47645,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "vAD" = (
@@ -47756,15 +47836,16 @@
 /area/station/medical/medbay/lobby)
 "wJx" = (
 /obj/wingrille_spawn/auto,
-/obj/stocking,
+/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+/area/station/hangar/starboard)
 "wRO" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "wTP" = (
@@ -47793,6 +47874,11 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
+"wWf" = (
+/obj/decal/tile_edge/flowers,
+/obj/xmastree,
+/turf/simulated/floor/snow,
+/area/station/hallway/portlowerhallway)
 "wXw" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -68705,7 +68791,7 @@ bai
 bgN
 kly
 bqT
-buZ
+twd
 acq
 byo
 bCP
@@ -70253,7 +70339,7 @@ aaa
 aaa
 aaa
 aaa
-aix
+rfr
 aiy
 aiC
 aiK
@@ -70555,7 +70641,7 @@ aaa
 aaa
 aaa
 aaa
-aix
+rfr
 aiz
 aiD
 aiL
@@ -70857,7 +70943,7 @@ aaa
 aaa
 aaa
 aaa
-aix
+rfr
 aiA
 aiE
 aiM
@@ -80179,7 +80265,7 @@ bnL
 aJJ
 bfs
 ycZ
-acV
+hmg
 asf
 aHh
 buX
@@ -81988,7 +82074,7 @@ aEl
 aEJ
 aEl
 bnQ
-aNs
+bpL
 bif
 bqg
 brE
@@ -83800,7 +83886,7 @@ aKw
 aKw
 aKw
 bnS
-boY
+buZ
 bij
 bqh
 brS
@@ -86514,7 +86600,7 @@ aQu
 bie
 biN
 aNd
-aNt
+aGz
 aNt
 aNt
 aNt
@@ -88026,7 +88112,7 @@ aDd
 aGE
 aDd
 aIU
-aCM
+bpD
 aZa
 bcS
 qBo
@@ -88322,7 +88408,7 @@ bTH
 bea
 bcb
 bcb
-wJx
+fPR
 aua
 aGc
 aGE
@@ -88632,8 +88718,8 @@ aDd
 blG
 aCM
 aZM
-qBo
-qBo
+bdg
+wWf
 qBo
 aZM
 bte
@@ -88644,7 +88730,7 @@ lYV
 bBP
 lYV
 lYV
-ogC
+nDv
 gzs
 boc
 brV
@@ -89164,7 +89250,7 @@ aaa
 aaa
 aaa
 aaa
-aji
+hxU
 ajq
 ajA
 ajM
@@ -90996,7 +91082,7 @@ aaa
 aaa
 aaa
 act
-aah
+iLn
 aan
 aan
 aaJ
@@ -91340,7 +91426,7 @@ baZ
 bcb
 bda
 beh
-jmb
+fPR
 aJv
 aKZ
 aKZ
@@ -91351,8 +91437,8 @@ blJ
 blH
 aDd
 bpm
-bqw
-bdg
+bqy
+brL
 bsS
 fPR
 bvI
@@ -91642,7 +91728,7 @@ bba
 apH
 bdb
 apB
-fPR
+jmb
 arB
 aLc
 aLL
@@ -91944,7 +92030,7 @@ baZ
 bcb
 bda
 bei
-aNo
+fPR
 bgw
 aKZ
 aKZ
@@ -91955,8 +92041,8 @@ blL
 blH
 aDd
 bpm
-bqw
-bdg
+bqz
+brJ
 bsS
 fPR
 bvI
@@ -92204,7 +92290,7 @@ aaa
 aaa
 aaa
 act
-aaj
+plX
 aan
 aan
 aaJ
@@ -94358,7 +94444,7 @@ aXq
 baf
 bbg
 bcg
-aMU
+mEP
 exp
 bda
 exH
@@ -97394,7 +97480,7 @@ bhp
 bqE
 bqO
 bsi
-aGk
+orD
 bvP
 aJB
 byW
@@ -99206,7 +99292,7 @@ bpw
 mBy
 xpN
 bkN
-aGz
+eBq
 aIo
 aMj
 bzb
@@ -102212,7 +102298,7 @@ bbx
 bct
 bdA
 beI
-bfI
+aGk
 bfI
 bfI
 ygS
@@ -102222,7 +102308,7 @@ bkZ
 blV
 bmX
 boo
-bpD
+hyN
 bkN
 bsx
 aFt
@@ -102816,7 +102902,7 @@ bbz
 bcv
 bdC
 beK
-bfI
+aGk
 bgL
 bhB
 ygS
@@ -104027,7 +104113,7 @@ beN
 bfN
 bgO
 bhE
-bhq
+ygS
 bjg
 bkj
 acl
@@ -104329,7 +104415,7 @@ beO
 bfO
 bgP
 bhF
-bhq
+ygS
 bjh
 bkj
 bkq
@@ -104631,7 +104717,7 @@ beP
 bfO
 bgP
 bhF
-bhq
+ygS
 bji
 bkk
 bjn
@@ -107356,7 +107442,7 @@ biq
 bmh
 bni
 boy
-bpL
+wEq
 wsN
 brh
 aFM
@@ -116119,7 +116205,7 @@ aIt
 aKa
 bsr
 bjV
-but
+wJx
 bvF
 byj
 bzM
