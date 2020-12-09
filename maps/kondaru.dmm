@@ -39690,15 +39690,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"bQR" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/southwest)
 "bQS" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -40345,15 +40336,24 @@
 /area/station/maintenance/southeast)
 "bSm" = (
 /obj/machinery/launcher_loader/north,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/southwest)
-"bSn" = (
-/obj/disposaloutlet/south,
-/obj/disposalpipe/trunk/east,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
+"bSn" = (
+/obj/machinery/light/runway_light,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "bSo" = (
 /obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/grille/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/grey,
@@ -40927,13 +40927,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bTC" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "shepardtone"
-	},
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/southwest)
-"bTD" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)
@@ -40948,22 +40941,22 @@
 	operating = 1
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bTG" = (
 /obj/machinery/cargo_router/kd_sci_right,
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bTH" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk/east,
-/obj/machinery/light/small,
-/turf/simulated/floor/airless/grey,
-/area/station/maintenance/southwest)
-"bTI" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
+"bTI" = (
+/obj/machinery/cargo_router/kd_sci_eject,
+/obj/machinery/light/small,
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bTJ" = (
@@ -41449,7 +41442,7 @@
 /area/station/maintenance/southeast)
 "bUK" = (
 /obj/machinery/launcher_loader/south,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bUL" = (
 /obj/machinery/conveyor{
@@ -41464,10 +41457,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
+	dir = 4
 	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
 "bUN" = (
 /obj/wingrille_spawn/auto,
@@ -42039,10 +42031,6 @@
 	dir = 4;
 	name = "cargo belt - east";
 	operating = 1
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/southwest)
@@ -50517,7 +50505,7 @@
 /turf/space,
 /area/space)
 "cpo" = (
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/runway_light/delay4,
 /obj/lattice{
 	dir = 8;
 	icon_state = "lattice-dir"
@@ -50529,17 +50517,15 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
-/turf/space,
-/area/space)
-"cpq" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"cpq" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/southwest)
 "cpr" = (
 /obj/storage/secure/closet/medical/medicine,
 /obj/machinery/alarm{
@@ -52509,6 +52495,14 @@
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/cafeteria)
+"geV" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/space)
 "gga" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54897,6 +54891,15 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters_south)
+"nFv" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "nGr" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -56168,6 +56171,16 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
+"qSh" = (
+/obj/machinery/conveyor{
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "qTA" = (
 /obj/stool/chair{
 	dir = 1
@@ -56443,9 +56456,9 @@
 /turf/simulated/floor/engine,
 /area/station/routing/security)
 "rFS" = (
-/obj/machinery/light/runway_light,
+/obj/machinery/light/runway_light/delay5,
 /obj/lattice{
-	dir = 4;
+	dir = 8;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -56800,6 +56813,16 @@
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/hos)
+"sBH" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "sBO" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -57961,10 +57984,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "vRn" = (
-/obj/machinery/light/runway_light/delay4,
-/obj/lattice,
-/turf/space,
-/area/space)
+/obj/disposaloutlet/south,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "vRP" = (
 /obj/cable{
 	d1 = 1;
@@ -58224,6 +58247,10 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"wEQ" = (
+/obj/lattice,
+/turf/space,
+/area/station/maintenance/southwest)
 "wEY" = (
 /obj/decal/garland/ephemeral{
 	dir = 4;
@@ -58630,6 +58657,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
+"xOY" = (
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/light/small,
+/turf/simulated/floor/airless/grey,
+/area/station/maintenance/southwest)
 "xPt" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -58708,6 +58741,13 @@
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"xYr" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "shepardtone"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "xYH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -87992,9 +88032,9 @@ aaa
 cia
 aaa
 aaa
-aci
+bSn
 aaa
-aaa
+aNQ
 aaa
 aaa
 aaa
@@ -88295,8 +88335,8 @@ cia
 aaa
 aaa
 rFS
-aaa
-aNQ
+xYr
+geV
 aaa
 aaa
 aaa
@@ -88899,8 +88939,8 @@ cia
 abZ
 abZ
 vRn
-bTD
-cpq
+bTI
+bvo
 aaa
 aaa
 aaa
@@ -89501,8 +89541,8 @@ aaa
 aaa
 cia
 bNY
-bQR
-bvo
+bVW
+cpq
 bTF
 bvo
 bVW
@@ -89804,7 +89844,7 @@ bMA
 cib
 bGc
 bQS
-bNY
+qSh
 bTG
 bUL
 bUL
@@ -90106,8 +90146,8 @@ bMB
 bOa
 bGc
 bGc
-bSn
-bTG
+bSo
+xOY
 bvo
 bVX
 aaa
@@ -90408,9 +90448,9 @@ bMB
 bOb
 bPu
 bNZ
-bSo
+nFv
 bTH
-bvo
+sBH
 bVX
 aaa
 aci
@@ -90710,8 +90750,8 @@ bMB
 bOb
 bPv
 bGc
-bSo
-bTI
+bUM
+wEQ
 bUM
 bVX
 aaa

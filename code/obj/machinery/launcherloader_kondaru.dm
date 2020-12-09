@@ -30,6 +30,12 @@
 		default_direction = SOUTH
 		..()
 
+/obj/machinery/cargo_router/kd_sci_eject
+	New()
+		destinations = list("Catering" = EAST,"Disposal" = EAST,"Pod Bay" = EAST,"Medbay" = EAST,"Research" = EAST,"Export" = SOUTH,"Security" = EAST,"Mining" = EAST,"Engineering" = EAST,"QM" = EAST)
+		default_direction = WEST
+		..()
+
 /obj/machinery/cargo_router/kd_sci_right
 	New()
 		destinations = list("Research" = EAST)
