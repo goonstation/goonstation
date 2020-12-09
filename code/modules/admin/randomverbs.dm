@@ -709,7 +709,6 @@
 
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
-	var/fat = 0
 	var/hair_override = 0
 	var/update_wearid = 0
 
@@ -849,9 +848,6 @@
 			else
 				src.tf_holder.mobAppearance.gender = FEMALE
 
-		else if (href_list["fat"])
-			src.fat = !src.fat
-
 		else if (href_list["hair_override"])
 			src.hair_override = !src.hair_override
 
@@ -895,8 +891,6 @@
 
 		src.real_name = H.real_name
 
-		src.fat = (H.bioHolder.HasEffect("fat"))
-
 		src.hair_override = H.hair_override
 
 		if(H.mutantrace)
@@ -923,7 +917,6 @@
 		dat += "Blood Type: <a href='byond://?src=\ref[src];blType=input'>[src.tf_holder.bloodType]</a><br>"
 		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
-		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
@@ -1003,8 +996,6 @@
 				smoke.start()
 
 		sanitize_null_values(target_mob)
-		if(src.fat)
-			target_mob.bioHolder.AddEffect("fat")
 
 		target_mob.hair_override = src.hair_override
 
@@ -2604,16 +2595,22 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			var/summoning_office = null //bleh
 			for (var/turf/T in turfs)
 				if (T.vistarget)
-					T.vistarget.vis_contents = null
+					T.vistarget.vis_contents -= T
+					T.vistarget.warptarget = null
 					T.vistarget = null
+					T.warptarget = null
 					summoning_office = FALSE
 					T.appearance_flags &= ~KEEP_TOGETHER
 					T.layer -= 0.1 //retore to normal
 
 				else
-					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, is_warp = FALSE)
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, man_warptarget_modifier = LANDMARK_VM_WARP_NONE)
 					summoning_office = TRUE
 					T.layer += 0.1 //stop hiding my turfs!!
+
+					//anti-sneaky players breaking into centcom through summoned office code
+					T.warptarget = T.vistarget
+					T.warptarget_modifier = LANDMARK_VM_WARP_NON_ADMINS
 
 			if (summoning_office)
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")

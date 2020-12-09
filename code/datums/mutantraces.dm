@@ -21,8 +21,6 @@
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	/// whether fat icons/disabilities are used
-	var/allow_fat = 0
 	/** Mutant Appearance Flags - used to modify how the mob is drawn
 	*
 	* For a purely static-icon mutantrace (drawn from a single, non-chunked image), use:
@@ -768,7 +766,6 @@
 /datum/mutantrace/lizard
 	name = "lizard"
 	icon_state = "lizard"
-	allow_fat = 1
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE)
 	voice_override = "lizard"
@@ -865,10 +862,9 @@
 			M.add_stam_mod_regen("zombie", -5)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
-		M.bioHolder.AddEffect("fat")
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
-		M.Scale(1.15, 1.15) //Fat bioeffect wont work, so they're just bigger now.
+		M.Scale(1.15, 1.15) //Fat bioeffect doesn't exist anymore, so they're just bigger now.
 		M.max_health += 150
 		M.health = max(M.max_health, M.health)
 
@@ -1343,7 +1339,6 @@
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
-	allow_fat = 1
 	jerk = 1
 	override_attack = 0
 	aquatic = 1
@@ -1709,7 +1704,6 @@
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
-	allow_fat = 1
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -1737,8 +1731,6 @@
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
 			M.bioHolder.AddEffect("accent_chav")
-			if(allow_fat)
-				M.bioHolder.AddEffect("fat")
 
 
 	disposing()
@@ -1777,7 +1769,6 @@
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
 	// icon_state = "shelter"
-	allow_fat = 0
 	human_compatible = 1
 	jerk = 0
 	var/permanent = 0
@@ -1919,7 +1910,6 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	allow_fat = 1
 	override_attack = 0
 	voice_override = "cow"
 	race_mutation = /datum/bioEffect/mutantrace/cow
@@ -2013,7 +2003,6 @@
 /datum/mutantrace/chicken
 	name = "Chicken"
 	icon_state = "chicken_m"
-	allow_fat = 0
 	human_compatible = 1
 	jerk = 0
 	race_mutation = /datum/bioEffect/mutantrace/chicken

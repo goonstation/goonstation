@@ -3627,8 +3627,8 @@ datum
 				if(probmult(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
-					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
-						M.bioHolder.AddEffect("fat")
+					if(M.bioHolder && !M.bioHolder.HasEffect("strong")) //was originally fat bioeffect, but that's been removed
+						M.bioHolder.AddEffect("strong")
 				for (var/obj/V in orange(clamp(our_amt / 5, 2,10),M))
 					if (V.anchored)
 						continue

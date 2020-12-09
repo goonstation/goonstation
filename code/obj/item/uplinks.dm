@@ -967,7 +967,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/clownsrevenge
 	name = "Clown's Revenge"
 	eqtype = "Offensive"
-	desc = "This spell turns an adjacent target into an obese, idiotic, horrible, and useless clown."
+	desc = "This spell turns an adjacent target into an idiotic, horrible, and useless clown."
 	assoc_spell = /datum/targetable/spell/cluwne
 
 /datum/SWFuplinkspell/balefulpolymorph
