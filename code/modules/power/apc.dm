@@ -270,6 +270,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/emp_act()
 	..()
+	if(!src.lighting && !src.equipment && !src.environ ) return //avoid stacking apc emp effects
 	if(src.cell)
 		src.cell.charge -= 1000
 		if (src.cell.charge < 0)

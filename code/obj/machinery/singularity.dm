@@ -143,6 +143,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.active = 1
 			grav_pull = 8
 
+/obj/machinery/the_singularity/emp_act()
+	return // No action required this should be the one doing the EMPing
+
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
@@ -201,6 +204,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (!active)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
+
+	// Don't bump that which no longer exists
+	if(A.disposed)
+		return
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A

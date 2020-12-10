@@ -205,6 +205,7 @@
 
 /obj/machinery/camera/emp_act()
 	..()
+	if(!src.network) return //avoid stacking emp
 	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
 		src.icon_state = "cameraemp"
 	src.network = null                   //Not the best way but it will do. I think.
