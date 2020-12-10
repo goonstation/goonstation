@@ -109,7 +109,6 @@ turf
 
 		proc
 			process_cell()
-			update_air_properties()
 			archive()
 
 			mimic_air_with_tile(turf/model)
