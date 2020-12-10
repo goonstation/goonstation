@@ -195,6 +195,10 @@
 		name = "cavern"
 		fullbright = 0
 
+	//Allow for space tiles to gracefully fail process_group()
+	//when turf is spaced mid air_master process
+	var/const/group_border = 0
+
 /turf/space/no_replace
 
 /turf/space/New()

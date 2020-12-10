@@ -229,7 +229,7 @@
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 	SPAWN_DBG(5)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 /mob/var/last_interact_particle = 0
 

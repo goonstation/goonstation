@@ -284,7 +284,8 @@ datum/controller/air_system
 			turf_AG.members.len = 0
 		LAGCHECK(LAG_HIGH)
 
-		for(var/turf/simulated/S as() in turf_list) // Have old members try to form new groups
+		// Converted from typecheckless to avoid race condition with converted space turfs from LAGCHECK
+		for(var/turf/simulated/S in turf_list) // Have old members try to form new groups
 			if(!S.parent)
 				assemble_group_turf(S)
 		LAGCHECK(LAG_HIGH)
