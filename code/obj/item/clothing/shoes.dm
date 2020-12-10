@@ -395,11 +395,11 @@
 		setProperty("meleeprot", 1)
 
 	get_desc(var/dist, var/mob/user)
-		if (user.traitHolder.hasTrait("dutch")+=)
-			+= "Remembers you of the homeland."
+		if (user.traitHolder.hasTrait("dutch"))
+			. += "Remembers you of the homeland."
 		else
-			+= "A pair of shoes from someone far under sea level."
-		. = ..()
+			. += "A pair of shoes from someone far under sea level."
+		. += ..()
 
 /obj/item/clothing/shoes/swat
 	name = "military boots"
