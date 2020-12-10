@@ -607,8 +607,8 @@
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_poc1 = /obj/item/device/pda2/medical
-	slot_poc2 = /obj/item/storage/medical_pouch
-	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator, /obj/item/paper/book/pocketguide/medical) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	slot_poc2 = /obj/item/paper/book/pocketguide/medical
+	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()

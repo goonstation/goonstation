@@ -123,7 +123,7 @@
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
-/obj/item/storage/medical_pouch //used by nukies
+/obj/item/storage/medical_pouch
 	name = "trauma field kit"
 	icon_state = "ammopouch-medic"
 	w_class = 1.00
@@ -132,13 +132,6 @@
 	spawn_contents = list(/obj/item/bandage = 2,
 	/obj/item/item_box/medical_patches/mini_silver_sulf,
 	/obj/item/item_box/medical_patches/mini_synthflesh)
-
-/obj/item/storage/medical_pouch/medic //used by regular medical doctors
-	name = "medical pouch"
-	icon_state = "ammopouch-medic"
-	w_class = 1.00
-	slots = 4
-	does_not_open_in_pocket = 0
 
 /obj/item/storage/security_pouch
 	name = "security pouch"
