@@ -1540,7 +1540,7 @@
 		src.health = max_health
 		setalive(src)
 
-/// Adds a 16-length color matrix to the mob's list of color matrices
+/// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
 /mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
 	if (!cmatrix || !label)
@@ -1549,12 +1549,10 @@
 	if(label in src.color_matrices) // Do we already have this matrix?
 		return
 
-	src.color_matrices += label
 	src.color_matrices[label] = cmatrix
 
 	src.update_active_matrix()
 
-/// Removes a 16-length color matrix to the mob's list of color matrices
 /// Removes whichever matrix is associated with the label. Must be a string!
 /mob/proc/remove_color_matrix(var/label)
 	if (!label || !src.color_matrices.len)
