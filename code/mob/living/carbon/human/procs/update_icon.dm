@@ -879,7 +879,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 					var/obj/item/organ/head/our_head = src.organHolder.head
 					human_head_image = our_head.head_image // head data is stored in the head
-					human_head_image.pixel_y = head_offset // head position is stored in the body
+					human_head_image?.pixel_y = head_offset // head position is stored in the body
 					src.body_standing.overlays += human_head_image
 
 				if (src.organHolder?.tail)
