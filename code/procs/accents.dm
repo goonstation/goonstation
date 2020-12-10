@@ -1838,13 +1838,13 @@ var/list/zalgo_mid = list(
 //A Dutch accent... Don't ask
 //Made by Bierkraan
 //sources:
-//https://www.taaltutor.nl/blog/dutch-causes-many-mistakes-in-english/
+//https://www.taaltutor.nl/blog/dutch-causes-many-mistakes-in-english/ & http://esl.fis.edu/grammar/langdiff/dutch.htm
 /proc/dutch_parse(var/datum/text_roamer/R)
 	var/new_string = ""
 	var/used = 0
 
 	switch(R.curr_char)
-
+		//2 letter long
 		if("t")//dutch have problems with th
 			if(lowertext(R.next_char) == "h")
 				new_string = "t"
@@ -1857,13 +1857,7 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "h")
 				new_string = "T"
 				used = 2
-		if("p")//turn p into ph
-			new_string = "ph"
-			used = 1
-		if("P")
-			new_string = "PH"
-			used = 1
-		if("e")//and they have problems with eo, exp. pieple(people)
+		if("e")
 			if(lowertext(R.next_char) == "o")
 				new_string = "ie"
 				used = 2
@@ -1879,6 +1873,39 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "D")
 				new_string = "UD"
 				used = 2
+		if("e")
+			if(lowertext(R.next_char) == "a")
+				new_string = "i"
+				used = 2
+		if("E")
+			if(lowertext(R.next_char) == "A")
+				new_string = "I"
+				used = 2
+		//lone letters
+		if("p")
+			new_string = "ph"
+			used = 1
+		if("P")
+			new_string = "PH"
+			used = 1
+		if("o")
+			new_string = "u"
+			used = 1
+		if("O")
+			new_string = "U"
+			used = 1
+		if("b")
+			new_string = "p"
+			used = 1
+		if("B")
+			new_string = "P"
+			used = 1
+		if("w")
+			new_string = "v"
+			used = 1
+		if("W")
+			new_string = "V"
+			used = 1
 
 	if(new_string == "")
 		new_string = R.curr_char
