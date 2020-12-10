@@ -589,6 +589,7 @@
 	current_lamp = inserted_lamp
 	current_lamp.set_loc(null)
 	light.set_color(current_lamp.color_r, current_lamp.color_g, current_lamp.color_b)
+	brightness = initial(brightness)
 	on = has_power()
 	update()
 
@@ -625,10 +626,10 @@
 		else
 			L = new M.dispensing_bulb()
 		if(inserted_lamp)
-			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name) //name because I want this to be able to replace working lights with different colours
+			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name && brightness == initial(brightness) && current_lamp.color_r == L.color_r && current_lamp.color_g == L.color_g && current_lamp.color_b == L.color_b && on == has_power())
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
-				return //Stop borgs from making more sparks than necessary
+				return // Stop borgs from making more sparks than necessary.
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
