@@ -197,7 +197,7 @@ const Stamp = (props, context) => {
     'opacity': opacity || 1.0,
   };
   return (
-    image.sprite.match("large_stamp-.*") ? (
+    image.sprite.match("stamp-.*") ? (
       <img
         id={activeStamp && "stamp"}
         style={stampTransform}
