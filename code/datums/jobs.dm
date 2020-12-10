@@ -20,6 +20,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_security_disk = 0
 	var/receives_badge = 0
 	var/announce_on_join = 0 // that's the head of staff announcement thing
 	var/radio_announcement = 1 // that's the latejoin announcement thing
@@ -236,6 +237,7 @@
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
 
@@ -455,6 +457,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
