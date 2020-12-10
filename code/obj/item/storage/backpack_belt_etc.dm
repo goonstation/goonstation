@@ -591,28 +591,12 @@
 		src.cable_insulator = insulator
 		src.cable_conductor = conductor
 		if(ispath(src.held_tail, /obj/item/organ/tail))
-			var/mob/living/carbon/human/H
-
-			for(var/mob/living/carbon/human/M in range(2, src))
-				if(ishuman(M))
-					H = M
-					break
-
-			if(!istype(H))
-				var/list/allhumans = list()
-				for(var/mob/living/carbon/human/Hm in mobs)
-					if(ishuman(Hm) && Hm.organHolder)
-						allhumans += Hm
-				H = pick(allhumans) // I dunno just pick someone
-
-			var/obj/item/organ/tail/T = new src.held_tail(src, H.organHolder)
-
+			var/obj/item/organ/tail/T = new src.held_tail(src)
 			src.held_tail = T
-		// if(!held_tail || !istype(src.held_tail, /obj/item/organ/tail))
-		// 	src.held_tail = new/obj/item/organ/tail/lizard(src)
-		src.name = "[src.held_tail.donor.name]'s [initial(src.held_tail.name)] belt"
+		if(!istype(src.held_tail, /obj/item/organ/tail))
+			src.held_tail = new/obj/item/organ/tail/lizard(src)
+		src.name = "[src.held_tail.name] belt"
 		src.build_item_image()
-		src.build_item_desc()
 		src.build_item_onmob()
 
 	proc/build_item_image()
@@ -656,12 +640,6 @@
 			tempmobimg = src.held_tail.tail_image_oversuit
 			tempmobimg.layer = MOB_OVERSUIT_LAYER1 + 0.1
 		src.beltimages += tempmobimg
-
-	proc/build_item_desc()
-		if(!istype(src.held_tail, /obj/item/organ/tail))
-			return
-
-		src.name = "[src.held_tail]-belt"
 
 	attackby(obj/item/W, mob/user, params)
 		if(issnippingtool(W))
