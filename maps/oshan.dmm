@@ -1562,6 +1562,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adm" = (
@@ -40023,6 +40026,9 @@
 	d2 = 4;
 	icon_state = "5-10"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bQR" = (
@@ -40828,7 +40834,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Trainee"
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
@@ -40900,6 +40906,9 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -47611,16 +47620,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"hbh" = (
-/turf/simulated/floor/escape/corner{
-	dir = 8
-	},
-/area/station/hallway/secondary/exit)
-"ikm" = (
-/turf/simulated/floor/escape/corner{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47633,6 +47632,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"hbh" = (
+/turf/simulated/floor/escape/corner{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"ikm" = (
+/turf/simulated/floor/escape/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -47865,24 +47874,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"vqP" = (
-/turf/simulated/floor/escape/corner,
-/area/station/hallway/secondary/exit)
-"vNf" = (
-/obj/item/storage/wall/emergency{
-	dir = 4;
-	pixel_x = -31
-	},
-/turf/simulated/floor/escape{
-	dir = 10
-	},
-/area/station/hallway/secondary/exit)
 "vcb" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vqP" = (
+/turf/simulated/floor/escape/corner,
+/area/station/hallway/secondary/exit)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
@@ -47899,6 +47899,15 @@
 	dir = 1
 	},
 /area/station/ai_monitored/armory)
+"vNf" = (
+/obj/item/storage/wall/emergency{
+	dir = 4;
+	pixel_x = -31
+	},
+/turf/simulated/floor/escape{
+	dir = 10
+	},
+/area/station/hallway/secondary/exit)
 "wis" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,

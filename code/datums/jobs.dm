@@ -466,7 +466,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
-	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
+	rounds_needed_to_play = 20 //slightly higher  barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
 	New()
 		..()
@@ -497,6 +497,41 @@
 			if (!M)
 				return
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
+
+/datum/job/security/security_trainee
+	name = "Security Trainee"
+#ifdef MAP_OVERRIDE_MANTA
+	limit = 4
+#else
+	limit = 5
+#endif
+	wages = PAY_UNTRAINED
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	receives_disk = 0 //no life insurance for the interns
+	receives_badge = 1
+	slot_back = /obj/item/storage/backpack/withO2
+	slot_belt = /obj/item/device/pda2/security
+	slot_jump = /obj/item/clothing/under/misc/vice //placeholder jumpsuit until sec trainee jumpsuit gets finished
+	slot_glov = /obj/item/clothing/gloves/fingerless
+	slot_foot = /obj/item/clothing/shoes/brown
+	slot_ears =  /obj/item/device/radio/headset/security
+	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
+	slot_poc1 = /obj/item/paper/book/space_law
+	slot_poc2 = /obj/item/device/flash
+	items_in_backpack = list(/obj/item/device/detective_scanner, /obj/item/instrument/whistle,)
+	rounds_needed_to_play = 5 //very low barrier of entry, to encourage newer players to try out the role but not completely fresh meat
+
+/*
+	if (prob(20))
+		items_in_backpack = list(/obj/item/device/detective_scanner, /obj/item/instrument/whistle, /obj/item/clothing/head/helmet/siren)
+*/
+
+	New()
+		..()
+		src.access = get_access("Security Trainee")
+		return
 
 /datum/job/security/detective
 	name = "Detective"
@@ -1062,28 +1097,6 @@
 	New()
 		..()
 		src.access = get_access("Lawyer")
-		return
-
-/datum/job/special/vice_officer
-	name = "Vice Officer"
-	linkcolor = "#FF0000"
-	limit = 0
-	wages = PAY_TRADESMAN
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	receives_badge = 1
-	recieves_miranda = 1
-	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/security
-	slot_jump = /obj/item/clothing/under/misc/vice
-	slot_foot = /obj/item/clothing/shoes/brown
-	slot_ears =  /obj/item/device/radio/headset/security
-	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
-	slot_poc2 = /obj/item/requisition_token/security
-
-	New()
-		..()
-		src.access = get_access("Vice Officer")
 		return
 
 /datum/job/special/forensic_technician

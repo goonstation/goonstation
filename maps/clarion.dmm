@@ -24713,6 +24713,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aTN" = (
@@ -29058,6 +29061,9 @@
 	anchored = 0;
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbD" = (
@@ -31049,6 +31055,9 @@
 "bfg" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)

@@ -3181,9 +3181,6 @@
 /obj/stool/chair/office/red{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -3196,6 +3193,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -7245,7 +7245,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4

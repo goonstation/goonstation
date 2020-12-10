@@ -13505,7 +13505,7 @@
 	nostick = 1
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
@@ -19715,6 +19715,9 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -19742,6 +19745,9 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -43536,14 +43542,14 @@
 /area/station/hallway/portlowerhallway)
 "rWc" = (
 /obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)

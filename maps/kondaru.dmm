@@ -37289,6 +37289,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -39466,6 +39469,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/security/main)
 "bKX" = (
@@ -39983,6 +39989,9 @@
 /obj/stool/chair/office/red{
 	dir = 4;
 	tag = "icon-office_chair_red (EAST)"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/carpet/red/standard/edge/sw,
 /area/station/security/main)
@@ -45215,6 +45224,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)

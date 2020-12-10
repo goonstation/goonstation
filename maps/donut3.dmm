@@ -11365,6 +11365,9 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "dbj" = (
@@ -41568,6 +41571,9 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "msW" = (
@@ -54226,6 +54232,9 @@
 /area/station/hallway/primary/south)
 "qgO" = (
 /obj/stool/chair/comfy,
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "qgQ" = (
@@ -58667,6 +58676,9 @@
 "rrH" = (
 /obj/stool/chair/office/red{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -76840,6 +76852,9 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)

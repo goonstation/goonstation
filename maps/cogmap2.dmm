@@ -38692,6 +38692,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -40993,6 +40996,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -45958,6 +45964,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Trainee"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bUt" = (
@@ -48056,7 +48065,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Trainee"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
