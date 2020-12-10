@@ -318,9 +318,10 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
-		src.smoke = new /datum/effects/system/bad_smoke_spread/
-		src.smoke.attach(src)
-		src.smoke.set_up(10, 0, src.loc)
+		if (usr?.loc) //Wire: Fix for Cannot read null.loc
+			src.smoke = new /datum/effects/system/bad_smoke_spread/
+			src.smoke.attach(src)
+			src.smoke.set_up(10, 0, usr.loc)
 
 	prime()
 		var/turf/T = ..()
@@ -435,9 +436,10 @@ PIPE BOMBS + CONSTRUCTION
 
 	New()
 		..()
-		src.smoke = new /datum/effects/system/bad_smoke_spread/
-		src.smoke.attach(src)
-		src.smoke.set_up(7, 1, src.loc)
+		if (usr?.loc)
+			src.smoke = new /datum/effects/system/bad_smoke_spread/
+			src.smoke.attach(src)
+			src.smoke.set_up(7, 1, usr.loc)
 
 /obj/item/old_grenade/high_explosive
 	name = "HE grenade"
