@@ -39506,7 +39506,7 @@
 	pixel_y = 24
 	},
 /obj/blind_switch/area/north{
-	pixel_x = -12
+	pixel_x = -13
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -39563,6 +39563,9 @@
 /area/station/maintenance/inner/central)
 "bQA" = (
 /obj/item/storage/toilet,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "bQB" = (
@@ -39573,9 +39576,6 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
-	},
-/obj/machinery/alarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -41269,6 +41269,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
@@ -52883,6 +52886,15 @@
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"gYB" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "haO" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -53362,9 +53374,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/obj/machinery/alarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -56901,6 +56910,25 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"sMy" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/brig)
 "sME" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -58136,6 +58164,18 @@
 "whk" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"whJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/security/brig)
 "wio" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -58694,6 +58734,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"xRV" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "xSq" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -113401,9 +113450,9 @@ iZd
 bQs
 bRH
 bTl
-iZd
-bVD
-cou
+xRV
+sMy
+whJ
 bXz
 bFK
 caU
@@ -114609,7 +114658,7 @@ kZX
 bQw
 bRL
 bTn
-kZX
+gYB
 bVG
 bWN
 bXD
