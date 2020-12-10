@@ -1,4 +1,17 @@
 
+(t)thu dec 10 20
+(u)BenLubar
+(p)2929
+(e)🆕🎨|feature, sprites
+(*)Cyborg cleaner bottles now automatically synthesize space cleaner!
+(u)glassofmilk
+(p)2957
+(e)⚖🆕|balance, feature
+(*)Using packets to force open lockers now requires security authorization!
+(u)Carbadox
+(p)2985
+(e)⚖🆕|balance, feature
+(*)Medical doctors now start with medical belts.
 (t)wed dec 09 20
 (u)BatElite
 (p)2990
