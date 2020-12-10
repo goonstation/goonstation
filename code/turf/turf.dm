@@ -226,6 +226,12 @@
 /turf/space/ReplaceWithSpace()
 	return
 
+// provide update_air_properties to handle race condition when air_master
+// is in the middle of handling regrouping and one of the regrouped cells
+// is spaced but list has already been cached on the stack
+/turf/space/proc/update_air_properties()
+	return
+
 /turf/space/proc/process_cell()
 	return
 
