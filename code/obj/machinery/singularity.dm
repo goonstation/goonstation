@@ -202,10 +202,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
-	// Don't bump that which no longer exists
-	if(A.disposed)
-		return
-
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
 		L.set_loc(src.get_center())
