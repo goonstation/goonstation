@@ -190,7 +190,7 @@ turf
 			if(air_master)
 				if(parent)
 					air_master.groups_to_rebuild |= parent
-					parent.members.Remove(src)
+					parent.members?.Remove(src)
 				else
 					air_master.active_singletons.Remove(src)
 			if(active_hotspot)

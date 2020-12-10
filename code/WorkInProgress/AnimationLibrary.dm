@@ -532,7 +532,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
 	SPAWN_DBG(4)
-		if (M.sprint_particle.loc == T)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)

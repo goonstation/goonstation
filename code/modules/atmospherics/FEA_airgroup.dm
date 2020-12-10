@@ -346,7 +346,8 @@
 
 	var/totalPressure = 0
 
-	for(var/turf/simulated/member as() in members)
+	//Don't perform typecheckless to avoid processing space turfs that have changed mid-air_master process
+	for(var/turf/simulated/member in members)
 /* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
 		// find nearest space border tile

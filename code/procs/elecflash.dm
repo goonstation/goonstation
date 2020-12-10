@@ -83,7 +83,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		E.appearance = elecflash_ma
 		T.hotspot_expose(1000,100,usr, electric = power)
 		elecs += E
-		if (radius <= 0 && chain_to.len < 8)
+		if (radius <= 0 && chain_to.len < 8 && center_turf)
 			E.pixel_x = (center_turf.x - E.x) * 32
 			E.pixel_y = (center_turf.y - E.y) * 32
 			animate(E, transform = M, pixel_x = rand(-32,32), pixel_y = rand(-32,32), time = (0.66 SECONDS) + (power * (0.12 SECONDS)), easing = CUBIC_EASING | EASE_OUT)
