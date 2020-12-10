@@ -197,3 +197,8 @@
 
 /datum/movement_modifier/patho_oxygen
 	multiplicative_slowdown = 0.75
+
+// shivering
+
+/datum/movement_modifier/shiver
+	additive_slowdown = 2

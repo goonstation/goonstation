@@ -13,8 +13,8 @@ obj/decal/floor/displays/owlsign
 	icon_state = "postcard-owlery"
 	interesting = "There are traces of hydrocarbons, collagens, proteins, and sugars deposited in the cellulose of the card"
 
-	sizex = 1066
-	sizey = 735
+	sizex = 1040
+	sizey = 705
 
 	New()
 		..()
@@ -531,7 +531,7 @@ obj/item/gnomechompski/elf
 /obj/item/poster/titled_photo/bee
 	name = "Er- Found? Poster"
 	desc = "A poster of a m------ Bee loved by all."
-	poster_image = 'icons/missingbee.png'
+	poster_image = 'icons/misc/missingbee.png'
 	line_b1 = "<center><b> THANK YOU </b></center>"
 	line_b2 = "<b>LAST SEEN:</b> New Store!"
 	line_b3 = "<b>NOTES:</b> Responds to being called Bombini"

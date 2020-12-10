@@ -389,6 +389,7 @@
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
+	critter_family = BUG
 	density = 1
 	health = 10
 	aggressive = 1
@@ -1414,7 +1415,8 @@
 		drop_stick(1)
 		qdel(src)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			if(icon_state == "snake_bee")
 				src.visible_message("[src] buzzes delightedly!")

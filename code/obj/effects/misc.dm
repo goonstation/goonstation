@@ -5,6 +5,7 @@
 	icon_state = "light2"
 	pixel_x = -96
 	layer = EFFECTS_LAYER_4
+	plane = PLANE_NOSHADOW_ABOVE
 
 /obj/effects/lightshaft/blue
 	icon_state = "light"

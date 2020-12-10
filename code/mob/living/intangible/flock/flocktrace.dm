@@ -41,14 +41,13 @@
 
 /mob/living/intangible/flock/trace/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-    special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]"
-    special_desc += "<br><span class='bold'>Resources:</span> [src.flock.total_resources()]"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%"
-    special_desc += "<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS"
-    special_desc += "<br>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> [src.real_name]
+    <br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
+    <br><span class='bold'>Resources:</span> [src.flock.total_resources()]
+    <br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
+    <br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
+    <br>###=-</span></span>"}
   else
     return null // give the standard description
 

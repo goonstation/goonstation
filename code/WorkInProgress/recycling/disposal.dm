@@ -19,7 +19,6 @@
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/has_fat_guy = 0	// true if contains a fat person
 	var/last_sound = 0
 
 	var/slowed = 0 // when you move, slows you down
@@ -32,7 +31,6 @@
 		active = 0
 		set_dir(0)
 		count = initial(count)
-		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
 
@@ -40,7 +38,6 @@
 		gas = null
 		active = 0
 		set_dir(0)
-		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
 		..()
@@ -62,8 +59,6 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-				if(H.bioHolder.HasEffect("fat"))		// is a human and fat?
-					has_fat_guy = 1			// set flag on holder
 
 
 
@@ -86,14 +81,6 @@
 	proc/process()
 		var/obj/disposalpipe/last
 		while(active)
-			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
-				active = 0
-				// find the fat guys
-				for(var/mob/living/carbon/human/H in src)
-					if(H.bioHolder.HasEffect("fat"))
-						H.unlock_medal("Try jiggling the handle",1)
-
-				break
 			sleep(0.1 SECONDS)		// was 1
 			if(slowed > 0)
 				slowed--
@@ -134,8 +121,6 @@
 	proc/merge(var/obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
-		if(other.has_fat_guy)
-			has_fat_guy = 1
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
 		pool(other)
@@ -1735,6 +1720,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	mats = 12
+	var/range = 10
 
 	var/message = null
 	var/mailgroup = null
@@ -1766,7 +1752,7 @@
 		..()
 
 		SPAWN_DBG(1 DECI SECOND)
-			target = get_ranged_target_turf(src, dir, 10)
+			target = get_ranged_target_turf(src, dir, range)
 		SPAWN_DBG(0.8 SECONDS)
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, "[frequency]")

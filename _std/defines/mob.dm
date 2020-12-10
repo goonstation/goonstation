@@ -6,16 +6,17 @@
 #define SPEECH_BLOB 4		//yes
 #define SEE_THRU_CAMERAS 8	//for ai eye
 #define IS_BONER 16			//for skeletals
-#define IS_RELIQUARY 32 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_SOLDIER 64 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_GUARDIAN 128 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_TECHNICIAN 256 //for Azungar's reliquary stuff
-#define IS_RELIQUARY_CURATOR 512 //for Azungar's reliquary stuff
+#define UNUSED_32 32
+#define UNUSED_64 64
+#define UNUSED_128 128
+#define UNUSED_256 256
+#define UNUSED_512 512
 #define AT_GUNPOINT 1024 	//quick check for guns holding me at gunpoint
 #define IGNORE_SHIFT_CLICK_MODIFIER 2048 //shift+click doesn't retrigger a SHIFT keypress - use for mobs that sprint on shift and not on mobs that use shfit for bolting doors etc
 #define LIGHTWEIGHT_AI_MOB 4096		//not a part of the normal 'mobs' list so it wont show up in searches for observe admin etc, has its own slowed update rate on Life() etc
 #define USR_DIALOG_UPDATES_RANGE 8192	//updateusrdialog will consider this mob as being able to 'attack_ai' and update its ui at range
 #define MAT_TRIGGER_LIFE 16384 //do some extra shit in life to trigger mats onlife
+#define SHOULD_HAVE_A_TAIL 32768 //Would we miss our tail if it comes off?
 
 //mob intent type defines
 #define INTENT_HARM "harm"
