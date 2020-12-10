@@ -1853,6 +1853,10 @@ var/list/zalgo_mid = list(
 			if(lowertext(R.next_char) == "H")
 				new_string = "T"
 				used = 2
+		if("T")
+			if(lowertext(R.next_char) == "h")
+				new_string = "T"
+				used = 2
 		if("p")//turn p into ph
 			new_string = "ph"
 			used = 1

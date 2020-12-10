@@ -113,7 +113,7 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel like putting on some wooden clogs!"
-	msgLose = "You suddenly lose intrest in wooden clogs."
+	msgLose = "You suddenly lose interest in wooden clogs."
 	reclaim_fail = 10
 	lockProb = 25
 	lockedGaps = 2
