@@ -1,5 +1,8 @@
 
 (t)fri dec 11 20
+(u)Tarmunora
+(e)⚖|balance
+(+)sonic powder stamina damage and misstep will now fall off over distance
 (u)ThePotato97
 (p)3010
 (e)📄|tgui
