@@ -1,5 +1,9 @@
 
 (t)thu dec 10 20
+(u)Superlagg
+(p)2945
+(e)🆕🎨|feature, sprites
+(*)Added two new colorblindness mutations. Collect them all!
 (u)Azrun
 (p)2902
 (e)⚖🆕🗺|balance, feature, mapping
