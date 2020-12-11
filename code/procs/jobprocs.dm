@@ -155,7 +155,7 @@
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
-		if (!player.client.preferences || player.client.preferences.job_favorite == null)
+		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
