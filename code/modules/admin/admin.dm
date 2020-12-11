@@ -1998,7 +1998,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2013,7 +2013,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")

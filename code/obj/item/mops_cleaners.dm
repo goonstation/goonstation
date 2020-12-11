@@ -213,7 +213,7 @@ WET FLOOR SIGN
 	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
 			var/turf/theTurf = get_turf(D)
@@ -328,7 +328,7 @@ WET FLOOR SIGN
 
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src?.reagents)
 				src.reagents.clear_reagents()
 				mopcount = 0
@@ -357,7 +357,7 @@ WET FLOOR SIGN
 			user.visible_message("<span class='alert'><B>[user] begins to clean [A]</B></span>")
 			var/turf/U = get_turf(A)
 
-			if (do_after(user, 40))
+			if (do_after(user, 4 SECONDS))
 				if (get_dist(A, user) > 1)
 					user.show_text("You were interrupted.", "red")
 					return
@@ -389,7 +389,7 @@ WET FLOOR SIGN
 						T.overlays -= wetoverlay
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
@@ -406,7 +406,7 @@ WET FLOOR SIGN
 			mopcount++
 
 		if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0

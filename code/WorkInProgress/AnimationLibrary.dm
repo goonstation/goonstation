@@ -227,7 +227,7 @@
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
 		M.attack_particle?.alpha = 0
 
@@ -411,7 +411,7 @@
 	var/matrix/t_size = matrix()
 
 	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
 /proc/block_spark(var/mob/M, armor = 0)
@@ -437,11 +437,11 @@
 
 	M.attack_particle.transform.Turn(rand(0,360))
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		M.attack_particle.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		if (!M || !M.attack_particle) return
 		var/r = rand(0,360)
 		var/x = cos(r)
@@ -515,7 +515,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 
-	SPAWN_DBG(6)
+	SPAWN_DBG(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -531,7 +531,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
-	SPAWN_DBG(4)
+	SPAWN_DBG(0.4 SECONDS)
 		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
@@ -547,7 +547,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
-	SPAWN_DBG(3)
+	SPAWN_DBG(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 

@@ -840,7 +840,7 @@
 					reply.source = src
 					reply.transmission_method = TRANSMISSION_RADIO
 					reply.data = list("address_1" = sender, "command" = "lock=[locked]&open=[open]", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("lock")
@@ -858,7 +858,7 @@
 						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
 					else
 						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("unlock")

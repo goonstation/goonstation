@@ -1173,7 +1173,7 @@
 
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -1188,7 +1188,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else

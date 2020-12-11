@@ -47,7 +47,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				src.update_icon()
 		BLOCK_SETUP(BLOCK_ROD)
@@ -55,7 +55,7 @@
 
 	proc/check_health()
 		if (src.health <= 0 && src.takes_damage)
-			SPAWN_DBG (2)
+			SPAWN_DBG(0.2 SECONDS)
 				if (src)
 					usr.u_equip(src)
 					usr.update_inhands()

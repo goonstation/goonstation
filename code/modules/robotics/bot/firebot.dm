@@ -47,7 +47,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
 			// Firebots are used in multiple department, so I guess they get all-access instead of only engineering.
 			src.botcard = new /obj/item/card/id(src)

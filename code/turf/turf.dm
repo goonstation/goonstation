@@ -1078,7 +1078,7 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
 
@@ -1187,7 +1187,7 @@ Other Goonstation servers:[serverList]"}
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
 			//todo: A digging sound effect.
-			if (do_after(user, 40) && src.icon_state != "dirt-dug")
+			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
 				src.icon_state = "dirt-dug"
 				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
 				for (var/obj/tombstone/grave in orange(src, 1))

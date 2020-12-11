@@ -109,7 +109,7 @@
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to unscrew the maintenance panel.","You begin to unscrew the maintenance panel.")
 						playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
-						if (!do_after(user, 20) || repair_stage)
+						if (!do_after(user, 2 SECONDS) || repair_stage)
 							return
 						repair_stage = 1
 						user.visible_message("[user] finishes unscrewing the maintenance panel.")
@@ -122,7 +122,7 @@
 					if (ispryingtool(W))
 						user.visible_message("[user] begins to pry off the maintenance panel.","You begin to pry off the maintenance panel.")
 						playsound(user, "sound/items/Crowbar.ogg", 65, 1)
-						if (!do_after(user, 20) || (repair_stage != 1))
+						if (!do_after(user, 2 SECONDS) || (repair_stage != 1))
 							return
 						repair_stage = 2
 						user.visible_message("[user] pries open the maintenance panel, exposing the service module!")
@@ -139,7 +139,7 @@
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to loosen the service module bolts.","You begin to loosen the service module bolts.")
 						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
-						if (!do_after(user, 30) || (repair_stage != 2))
+						if (!do_after(user, 3 SECONDS) || (repair_stage != 2))
 							return
 						repair_stage = 3
 						user.visible_message("[user] looses the service module bolts, exposing the burnt wiring within.")
@@ -174,7 +174,7 @@
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to tighten the service module bolts.","You begin to tighten the service module bolts.")
 						playsound(user, "sound/items/Ratchet.ogg", 65, 1)
-						if (!do_after(user, 30) || (repair_stage != 5))
+						if (!do_after(user, 3 SECONDS) || (repair_stage != 5))
 							return
 						repair_stage = 6
 						user.visible_message("[user] tightens the service module bolts.")
@@ -192,7 +192,7 @@
 							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
-						if (!do_after(user, 50) || (repair_stage != 6))
+						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
 							return
 						repair_stage = 7
 						qdel(W)

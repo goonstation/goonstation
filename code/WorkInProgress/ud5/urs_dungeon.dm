@@ -13,7 +13,7 @@
 	New()
 		..()
 		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				src.initialize()
 
 	initialize()

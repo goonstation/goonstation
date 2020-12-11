@@ -119,7 +119,7 @@ file_save - Save file to local disk."}
 					newsig.data["assignment"] = "AI"
 					newsig.data["access"] = "34"
 
-					SPAWN_DBG (4)
+					SPAWN_DBG(0.4 SECONDS)
 						switch( src.receive_command(src.master, "card_authed", newsig) )
 							if ("nocard")
 								src.print_text("Please insert a card first.")

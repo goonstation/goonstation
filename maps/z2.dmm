@@ -86884,10 +86884,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/ladder{
-	id = "ballpit_sov_lab2";
-	layer = 2
-	},
 /obj/table/wood/auto/desk,
 /obj/item/paper{
 	icon_state = "paper";

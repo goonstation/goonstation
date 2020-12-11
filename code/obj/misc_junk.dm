@@ -363,7 +363,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(., 10, 1)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 
@@ -456,7 +456,7 @@
 			if (prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 		for(var/mob/living/carbon/L in viewers(user, null))
 			if (L == user)
 				continue
@@ -683,7 +683,7 @@
 			usr.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
-			SPAWN_DBG (0) //vape is just the best for not annoying crowds I swear
+			SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
 				sleep(1 SECOND)
 
