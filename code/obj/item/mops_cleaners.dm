@@ -357,7 +357,7 @@ WET FLOOR SIGN
 			user.visible_message("<span class='alert'><B>[user] begins to clean [A]</B></span>")
 			var/turf/U = get_turf(A)
 
-			if (do_after(user, 40))
+			if (do_after(user, 4 SECONDS))
 				if (get_dist(A, user) > 1)
 					user.show_text("You were interrupted.", "red")
 					return

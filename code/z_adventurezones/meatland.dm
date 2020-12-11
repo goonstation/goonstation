@@ -239,7 +239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 					gibs(src.loc)
 					if (src.loc)

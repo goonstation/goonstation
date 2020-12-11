@@ -803,7 +803,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 2 SECONDS))
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
@@ -1930,7 +1930,7 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 			// And these too (Convair880).
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
@@ -1992,7 +1992,7 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)

@@ -1336,7 +1336,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -1402,7 +1402,7 @@
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
 			var/obj/R1 = new /obj/item/rods(src)
@@ -1421,7 +1421,7 @@
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
