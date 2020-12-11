@@ -1,6 +1,3 @@
-#define COLOR_MATRIX_IDENTITY list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0, 0.7152,0.7152,0.7152,0, 0.0722,0.0722,0.0722,0, 0,0,0,1)
-
 /obj/screen/hud/robotstorage
 	MouseEntered(location, control, params)
 		if (src.name)

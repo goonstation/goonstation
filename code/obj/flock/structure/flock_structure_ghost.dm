@@ -19,7 +19,7 @@
 		var/atom/b = building
 		icon = initial(b.icon)
 		icon_state = initial(b.icon_state)
-		src.color = flockVisionColorMatrix
+		src.color = COLOR_MATRIX_FLOCKMIND
 		src.alpha = 104
 		src.goal = goal //???? wuh
 		src.building = building
