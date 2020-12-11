@@ -550,11 +550,11 @@ datum/pump_ui/circulator_ui
 		if(src.variant_b)
 			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
-				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</i><br>"}
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</b><br>"}
 				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be for extremely high temperatures. "
 			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
-				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</i><br>"}
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</b><br>"}
 				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be designed for cooler temperatures. "
 			else
 				// Reassign variant_b to null so unsupported variants aren't shown to players
