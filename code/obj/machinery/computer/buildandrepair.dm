@@ -141,12 +141,12 @@
 		if (0)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 					A.amount = 5
@@ -159,7 +159,7 @@
 		if (1)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
@@ -191,7 +191,7 @@
 			if (istype(P, /obj/item/cable_coil))
 				if (P:amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (do_after(user, 20) && P) //Wire: fix for Cannot read null.amount (&& P)
+					if (do_after(user, 2 SECONDS) && P) //Wire: fix for Cannot read null.amount (&& P)
 						//my_cable = P:take(5, src) // Haine: fix for Cannot execute null.set loc()
 						P:use(5)
 						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -216,7 +216,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if (do_after(user, 20))
+						if (do_after(user, 2 SECONDS))
 							if (S) S.amount -= 2
 							if (P && P.amount < 1)
 								qdel(P)

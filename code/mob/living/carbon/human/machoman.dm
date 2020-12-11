@@ -480,7 +480,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 					if(isfloor(T))
 						animate_buff_out(T)
-						SPAWN_DBG(10)
+						SPAWN_DBG(1 SECOND)
 							var/floor_type = T.type
 							var/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf = T.ReplaceWith("/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf", 1)
 							new_turf.previous_turf_type = floor_type
@@ -1142,13 +1142,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 			else //Uh?
 				src.show_text("Man, this poor sucker ain't even got a chest to punch, whatta chump.", "blue")
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (!src.stat)
 						src.emote("sigh")
 
 		else
 			src.show_text("You're not entirely sure where the heart is on this thing. Better leave it alone.", "blue")
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (!src.stat)
 					src.emote("sigh")
 

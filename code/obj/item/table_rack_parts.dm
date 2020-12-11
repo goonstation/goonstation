@@ -239,7 +239,7 @@ RACK PARTS
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/plank))
 			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)

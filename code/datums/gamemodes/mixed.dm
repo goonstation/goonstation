@@ -243,7 +243,7 @@
 				else
 					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
 
 					if (length(ckey(newname)) == 0)
@@ -274,7 +274,7 @@
 
 			if ("blob")
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)

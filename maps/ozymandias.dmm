@@ -63862,6 +63862,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/paper/engine,
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "suy" = (

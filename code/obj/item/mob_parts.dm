@@ -373,7 +373,7 @@
 		return
 
 /obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)

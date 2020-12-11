@@ -436,7 +436,7 @@
 			W.mind.current = W
 		qdel(src)
 
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (W) W.assign_gimmick_skull()
 
 		if(shitty)

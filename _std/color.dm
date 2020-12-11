@@ -114,9 +114,6 @@
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-//Color matrices		// vv Values modified from those obtained from https://gist.github.com/Lokno/df7c3bfdc9ad32558bb7
-#define MATRIX_PROTANOPIA 0.55,0.45,0.000,0.55,0.45,0.000,0.000,0.25,1.0,0.0,0.0,0.0
-
 // This proc converts a hex color value ("#420CAB") to an RGB list
 // Clamps each of the RGB values between 50 and 190
 /proc/fix_colors(var/hex)
@@ -127,3 +124,84 @@
 	if (length(L) == 3)
 		return rgb(L["r"], L["g"], L["b"])
 	return rgb(22, 210, 22)
+
+
+#define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
+#define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
+																		 0.55, 0.45, 0.00, 0.00,\
+																		 0.00, 0.25, 1.00, 0.00,\
+																		 0.00, 0.00, 0.00, 1.00,\
+																		 0.00, 0.00, 0.00, 0.00)
+#define COLOR_MATRIX_DEUTERANOPIA_LABEL "deuteranopia"
+#define COLOR_MATRIX_DEUTERANOPIA list(0.63, 0.38, 0.00, 0.00,\
+																			 0.70, 0.30, 0.00, 0.00,\
+																			 0.00, 0.30, 0.70, 0.00,\
+																			 0.00, 0.00, 0.00, 1.00,\
+																			 0.00, 0.00, 0.00, 0.00)
+#define COLOR_MATRIX_TRITANOPIA_LABEL "tritanopia"
+#define COLOR_MATRIX_TRITANOPIA list(0.95, 0.05, 0.00, 0.00,\
+																		 0.00, 0.43, 0.57, 0.00,\
+																		 0.00, 0.48, 0.53, 0.00,\
+																		 0.00, 0.00, 0.00, 1.00,\
+																		 0.00, 0.00, 0.00, 0.00)
+#define COLOR_MATRIX_FLOCKMIND_LABEL "flockmind"
+#define COLOR_MATRIX_FLOCKMIND list(1.00, 0.00, 0.00, 0.00,\
+																		0.00, 1.00, 0.00, 0.00,\
+																		0.00, 0.00, 1.00, 0.00,\
+																		0.00, 0.00, 0.00, 1.00,\
+																		0.00, 0.10, 0.20, 0.00)
+#define COLOR_MATRIX_FLOCKMANGLED_LABEL "flockmind-fucked"
+#define COLOR_MATRIX_FLOCKMANGLED list(-0.3, -0.3, -0.3, 0.00,\
+																			 -0.3, -0.3, -0.3, 0.00,\
+																			 -0.3, -0.3, -0.3, 0.00,\
+																			 0.00, 0.00, 0.00, 1.00,\
+																			 0.20, 0.80, 0.70, 0.00)
+#define COLOR_MATRIX_IDENTITY_LABEL "identity"
+#define COLOR_MATRIX_IDENTITY list(1.00, 0.00, 0.00, 0.00,\
+																	 0.00, 1.00, 0.00, 0.00,\
+																	 0.00, 0.00, 1.00, 0.00,\
+																	 0.00, 0.00, 0.00, 1.00,\
+																	 0.00, 0.00, 0.00, 0.00)
+#define COLOR_MATRIX_GRAYSCALE_LABEL "grayscale"
+#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0.00,\
+																		0.7152,0.7152,0.7152,0.00,\
+																		0.0722,0.0722,0.0722,0.00,\
+																		0.00,  0.00,  0.00,  1.00,\
+																		0.00,  0.00,  0.00,  0.00)
+
+/// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
+/proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
+	if (!Mat1.len || !Mat2.len || Mat1.len != 20 || Mat2.len != 20)
+		return COLOR_MATRIX_IDENTITY
+
+	var/list/M1[5][5] // turn the input matrix lists into more matrix-y lists
+	var/list/M2[5][5] // wait thats 5x5
+	var/index = 1
+	for(var/r in 1 to 5)
+		for(var/c in 1 to 4)
+			M1[r][c] = Mat1[index]
+			M2[r][c] = Mat2[index]
+			index ++
+
+	for(var/f in 1 to 5)
+		M1[f][5] = (f == 5)
+		M2[f][5] = (f == 5)
+
+	var/list/out[5][5] // make a matrix to hold our result
+
+	for(var/r1 in 1 to 5)
+		for(var/c2 in 1 to 5)
+			for(var/r2 in 1 to 5)
+				out[r1][c2] += (M1[r1][r2]*M2[r2][c2])
+
+	for(var/u in 1 to 5)
+		out[u].len = 4
+
+	var/list/outlist[20] // and convert that matrix back into a 1-dimensional list
+	var/indexout = 1
+	for(var/r in 1 to 5)
+		for(var/c in 1 to 4)
+			outlist[indexout] = out[r][c]
+			indexout ++
+	return outlist
+

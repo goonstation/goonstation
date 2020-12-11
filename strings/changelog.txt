@@ -1,5 +1,35 @@
 
+(t)thu dec 10 20
+(u)Tarmunora
+(+)reverted fullauto nukie LMG
+(u)Superlagg
+(p)2945
+(e)🆕🎨|feature, sprites
+(*)Added two new colorblindness mutations. Collect them all!
+(u)Azrun
+(p)2902
+(e)⚖🆕🗺|balance, feature, mapping
+(*)TEG instructions have been updated to capture latest changes.  Circulators description and instructions will provide an indication when the TEG is a special variant.  Circulators now have visual indication when maintenance hatch is open.  New less random serial number scheme.
+(*)TEG target circulator blower pressure differential can be adjusted with a multitool. Just like the majority of other ATMOS pumps/gates!
+(+)TEG circulators now support liquid electricity and hugs.  Show the circulators some TLC!
+(+)TEG instructions added to a few maps.
+(u)BenLubar
+(p)2929
+(e)🆕🎨|feature, sprites
+(*)Cyborg cleaner bottles now automatically synthesize space cleaner!
+(u)glassofmilk
+(p)2957
+(e)⚖🆕|balance, feature
+(*)Using packets to force open lockers now requires security authorization!
+(u)Carbadox
+(p)2985
+(e)⚖🆕|balance, feature
+(*)Medical doctors now start with medical belts.
 (t)wed dec 09 20
+(u)BatElite
+(p)2990
+(e)🆕🎨|feature, sprites
+(+)Redeeming the science and medical labcoats when you've bought the alternative jumpsuit now gives you matching labcoat colours!
 (u)ThePotato97
 (p)3008
 (e)🐛📄|bug, tgui

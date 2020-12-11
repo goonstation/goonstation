@@ -162,7 +162,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"

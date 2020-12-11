@@ -640,7 +640,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			..()
 			return
 		return
