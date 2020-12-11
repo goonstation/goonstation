@@ -1706,10 +1706,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		var/seconds = src.time % 60
 		var/minutes = (src.time - seconds) / 60
+		var/flick_seperator = (seconds % 2 == 0)  || !src.timing
 		minutes = minutes < 10 ? "0[minutes]" : "[minutes]"
 		seconds = seconds < 10 ? "0[seconds]" : "[seconds]"
 
-		return "[minutes][seconds % 2 == 0 ? ":" : " "][seconds]"
+		return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 /obj/machinery/the_singularitybomb/proc/get_interface()
 	return {"<html>
