@@ -65,6 +65,7 @@
 #define LANDMARK_FALL_MOON_HEMERA "moonfall_hemera" // Hemera lunar office elevator shaft
 #define LANDMARK_FALL_MOON_MUSEUM "moonfall_museum" // Lunar museum elevator shaft
 #define LANDMARK_FALL_SEA "seafall" // Oshan trench elevator
+#define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
 
@@ -73,3 +74,8 @@
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+
+// Visual mirror warp modes
+#define LANDMARK_VM_WARP_NONE 0
+#define LANDMARK_VM_WARP_ALL 1
+#define LANDMARK_VM_WARP_NON_ADMINS 2

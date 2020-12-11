@@ -1,5 +1,12 @@
 {
-
+	"eslint.nodePath": "tgui/.yarn/sdks",
+	"eslint.workingDirectories": [
+		"./tgui"
+	],
+	"search.exclude": {
+		"tgui/.yarn": true,
+		"tgui/.pnp.*": true
+	},
 	// Lets you preview .dmi files in the editor
 	"workbench.editorAssociations": [
 		{

@@ -21,7 +21,6 @@
     icon_state = "dou-tare"
     item_state = "dou-tare"
     body_parts_covered = TORSO | LEGS
-    c_flags = ONESIZEFITSALL
     bloodoverlayimage = SUITBLOOD_ARMOR
 
     setupProperties()

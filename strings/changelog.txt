@@ -1,5 +1,94 @@
 
+(t)thu dec 10 20
+(u)BenLubar
+(p)2929
+(e)🆕🎨|feature, sprites
+(*)Cyborg cleaner bottles now automatically synthesize space cleaner!
+(u)glassofmilk
+(p)2957
+(e)⚖🆕|balance, feature
+(*)Using packets to force open lockers now requires security authorization!
+(u)Carbadox
+(p)2985
+(e)⚖🆕|balance, feature
+(*)Medical doctors now start with medical belts.
+(t)wed dec 09 20
+(u)BatElite
+(p)2990
+(e)🆕🎨|feature, sprites
+(+)Redeeming the science and medical labcoats when you've bought the alternative jumpsuit now gives you matching labcoat colours!
+(u)ThePotato97
+(p)3008
+(e)🐛📄|bug, tgui
+(+)Fixed paper; stamp scrolling, shift time and clipboard interaction.
+(t)tue dec 08 20
+(u)ThePotato97
+(p)2775
+(e)🐛🆕🔄🎨📄|bug, feature, rework, sprites, tgui
+(*)Converted paper to tgui - This also means it now uses Markdown formatting!
+(+)Fixed note on canister bombs
+(u)Nefarious6th
+(p)2918
+(e)🗺|mapping
+(+)Adds Spacemas variants of Atlas, Clarion, Horizon, Manta, and Oshan maps
+(u)virvatuli
+(p)2993
+(e)🗺|mapping
+(+)Removed taser shotgun from HoS locker on Manta
+(t)mon dec 07 20
+(u)Camryn Buttes
+(p)2972
+(e)⚖⛔|balance, removal
+(*)Removed the obesity mutation
+(t)sun dec 06 20
+(u)Flourish
+(e)🆕|feature
+(*)You can now send letters to Santa! Find their helper under the Spacemas tree.
+(u)BatElite
+(p)2932
+(e)🆕|feature
+(+)Crewmembers looking for early retirement can now use portable air pumps for that purpose.
+(u)Kubius
+(p)2900
+(e)🆕🗺|feature, mapping
+(+)Further small Ozymandias fixes/changes, primarily QM flow improvements and pod bay controls.
+(t)sat dec 05 20
+(u)pali
+(p)2955
+(e)|
+(+)The music record spacebux purchase now has a wider variety of songs!
+(u)BatElite
+(p)2831
+(e)🆕🎨|feature, sprites
+(+)Updated portable air pumps, tank dispensers and the portable seed fabricator!
+(u)zjdtmkhzt
+(p)2459
+(e)⚖🆕|balance, feature
+(*)Trying to claim an item in the wrong area as a spy thief will now try to use the GPS system to show the way to the correct area.
+(u)pali
+(p)2747
+(e)|
+(*)You can now adjust volume of emotes in the audio tab in the top bar.
+(u)retkid
+(p)2690
+(e)|
+(*)Added a new song Dance On A Space Volcano to the collection of possible radio show host songs
+(u)kyle
+(+)Lawbringer and E-gun now require rarer materials if you want to build more copies
+(t)fri dec 04 20
+(u)Superlagg
+(p)2934
+(e)🐛🎨|bug, sprites
+(+)Kudzufolk can be visibly dismembered, and get gross synthorgans too.
 (t)thu dec 03 20
+(u)Retkid
+(p)2853
+(e)|
+(*)Added sounds for the Wraith antagonist.
+(u)BenLubar
+(p)2905
+(e)⚖|balance
+(+)Random events no longer occur once the shuttle departs from the station or the round ends.
 (u)Kubius
 (p)2889
 (e)🆕🗺|feature, mapping

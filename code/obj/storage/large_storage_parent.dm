@@ -154,7 +154,7 @@
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
-		if (get_dist(user, src) > 1)
+		if (!in_range(src, user))
 			return
 
 		interact_particle(user,src)
@@ -845,7 +845,7 @@
 
 				if ("lock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
@@ -863,7 +863,7 @@
 
 				if ("unlock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")

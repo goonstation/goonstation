@@ -19,6 +19,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
+		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/dsay,
@@ -64,6 +65,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
+		/client/proc/summon_office,
 
 		),
 
@@ -661,18 +663,11 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.s_respawn()
 	return
 
-/client/proc/jobbans()
+/client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if(src.holder)
-		src.holder.Jobbans()
-	return
-
-/client/proc/rebuild_jobbans_panel()
-	set name = "Rebuild Jobbans Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder)
-		src.holder.buildjobbanspanel()
+		src.holder.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
@@ -1962,11 +1957,13 @@ var/list/fun_images = list()
 /client/proc/vpn_whitelist_add(vpnckey as text)
 	set name = "VPN whitelist add"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
 	catch(var/exception/e)
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
+	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
 	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
@@ -1974,6 +1971,7 @@ var/list/fun_images = list()
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
 	try
 		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
 	catch(var/exception/e)

@@ -822,7 +822,7 @@ obj/trait/pilot
 	onLife(var/mob/owner)
 		allergen = allergic_players[owner]
 		if (owner?.reagents?.has_reagent(allergen))
-			owner.reagents.add_reagent("histamine", 1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1)) //1.4 units of histamine per life cycle? is that too much? Halved with antihistamine
+			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
 	name = "Medical Allergy (+1)"

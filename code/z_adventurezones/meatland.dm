@@ -157,7 +157,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
-		reagents.reaction(A, TOUCH, 2)
+		if(!istype(A, /obj/item/skull))
+			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
 			boutput(A, pick("<span class='alert'>This stings!</span>", "<span class='alert'>Oh jesus this burns!!</span>", "<span class='alert'>ow ow OW OW OW OW</span>", "<span class='alert'>oh cripes this isn't the fun kind of acid</span>", "<span class='alert'>ow OW OUCH FUCK OW</span>"))
 			if (ishuman(A) && prob(80))

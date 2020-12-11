@@ -243,6 +243,7 @@ It might happen that somewhere in the process of making a PR you see a message a
 
 Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
 
+0. This step is only necessary if you're doing this for the first time! Press **Ctrl + Shift + P** and type in "fetch from all remotes" and choose the relevant command.
 1. Checkout the master branch
     You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
     ![](https://i.imgur.com/z2o1Nw6.png)

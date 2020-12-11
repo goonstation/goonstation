@@ -345,6 +345,10 @@
 			src.UpdateOverlays(image(open_icon), "open")
 		else
 			src.UpdateOverlays(null, "open")
+		if(src.generator.variant_b)
+			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
+		else
+			UpdateOverlays(null, "variant")
 
 		return 1
 
@@ -561,6 +565,10 @@ datum/pump_ui/circulator_ui
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 
+		src.updateicon()
+		src.circ1?.update_icon()
+		src.circ2?.update_icon()
+
 		// Note:
 		// 	THIS WILL NEED TO BE UPDATE IFF WE HAVE MORE THAN 1 TEG PER dmm/zlevel...
 		//
@@ -568,7 +576,6 @@ datum/pump_ui/circulator_ui
 		for_by_tcl(instructions, /obj/item/paper/engine)
 			if(src.z == instructions.z) // Ensure instructions are only updated for relevant Z level.
 				instructions.info = initial(instructions.info) + instructions_footnote
-
 
 	New()
 		..()
@@ -612,10 +619,12 @@ datum/pump_ui/circulator_ui
 	proc/updateicon()
 
 		if(status & (NOPOWER|BROKEN))
-			UpdateOverlays(null, "power_level")
+			UpdateOverlays(null, "power")
 		else
 			if(lastgenlev != 0)
-				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power_level")
+				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
+			else
+				UpdateOverlays(null, "power")
 
 			switch (lastgenlev)
 				if(0)
@@ -647,6 +656,10 @@ datum/pump_ui/circulator_ui
 					light.set_brightness(1.5)
 					light.enable()
 					// this needs a safer lightbust proc
+		if(src.variant_b)
+			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+		else
+			UpdateOverlays(null, "variant")
 
 	process()
 		if(!src.circ1 || !src.circ2)
