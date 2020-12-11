@@ -401,6 +401,7 @@
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
 
 /obj/item/parts/robot_parts/chest
 	name = "standard cyborg chest"
