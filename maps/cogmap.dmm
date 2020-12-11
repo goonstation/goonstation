@@ -115,10 +115,6 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
 /area/station/solar/north)
 "aat" = (
 /obj/machinery/mass_driver{
@@ -366,7 +362,6 @@
 	},
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "abe" = (
 /obj/cable,
@@ -385,18 +380,12 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/station/solar/north)
 "abf" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -420,10 +409,6 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
 /area/station/solar/north)
 "abh" = (
 /obj/cable,
@@ -435,10 +420,6 @@
 	},
 /obj/grille/catwalk{
 	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
@@ -468,7 +449,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
-/turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "abn" = (
 /turf/simulated/floor/black,
@@ -635,10 +615,6 @@
 	},
 /obj/grille/catwalk/cross{
 	dir = 9;
-	tag = "icon-catwalk_cross (NORTHWEST)"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -662,17 +638,12 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
 /area/station/solar/north)
 "abP" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
 "abQ" = (
@@ -1431,9 +1402,7 @@
 /area/station/hallway/secondary/construction2)
 "adC" = (
 /turf/space,
-/turf/space,
 /area/space,
-/area/space)
 "adD" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/black,
@@ -1443,8 +1412,6 @@
 /area/station/security/armory)
 "adF" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/securearea{
@@ -1461,7 +1428,6 @@
 /obj/grille/steel,
 /obj/cable,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/window/reinforced{
@@ -1472,8 +1438,6 @@
 /area/space)
 "adI" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -1744,7 +1708,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -1785,7 +1748,6 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "aez" = (
@@ -1916,10 +1878,6 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
 /area/station/solar/north)
 "aeQ" = (
 /obj/cable{
@@ -1940,9 +1898,6 @@
 /obj/grille/catwalk/cross{
 	dir = 5;
 	tag = "icon-catwalk_cross (NORTHEAST)"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -1986,9 +1941,6 @@
 	},
 /obj/grille/catwalk{
 	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
@@ -2729,7 +2681,6 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
 "agG" = (
@@ -3832,7 +3783,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "ajk" = (
@@ -16415,7 +16365,6 @@
 	icon_state = "1-8"
 	},
 /obj/reagent_dispensers/fueltank,
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/central)
 "aLe" = (
@@ -26630,7 +26579,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27126,7 +27074,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27637,7 +27584,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27649,7 +27595,6 @@
 	name = "Supply Intercom"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27903,7 +27848,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/eva,
 /area/space)
@@ -27947,7 +27891,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27961,7 +27904,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -27986,7 +27928,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -28227,7 +28168,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -28244,7 +28184,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor/grime,
 /area/station/routing/depot,
 /area/space)
@@ -32757,7 +32696,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/central)
 "buz" = (
@@ -38579,7 +38517,6 @@
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
-/turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "bGE" = (
@@ -39761,7 +39698,6 @@
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "bIW" = (
@@ -39913,7 +39849,6 @@
 	name = "broken airlock"
 	},
 /obj/item/mine/radiation/armed,
-/turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "bJn" = (
@@ -40242,7 +40177,6 @@
 "bJQ" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/robot_debris,
-/turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "bJR" = (
@@ -43438,7 +43372,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/airbridge,
 /area/space)
@@ -43475,7 +43408,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/airbridge,
 /area/space)
@@ -43492,7 +43424,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/airbridge,
 /area/space)
@@ -43517,7 +43448,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/airbridge,
 /area/space)
@@ -44134,7 +44064,6 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/science/lobby,
 /area/space)
@@ -44148,7 +44077,6 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/science/lobby,
 /area/space)
@@ -44301,7 +44229,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central,
 /area/space)
@@ -44318,7 +44245,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central,
 /area/space)
@@ -44336,7 +44262,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central,
 /area/space)
@@ -45169,7 +45094,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/airbridge,
 /area/space)
@@ -46191,7 +46115,6 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/science/lobby,
 /area/space)
@@ -55197,7 +55120,6 @@
 	name = "autoname - SS13"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/science/lobby,
 /area/space)
@@ -55561,7 +55483,6 @@
 	target_pressure = 250
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/science/testchamber,
 /area/space)
@@ -57457,7 +57378,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
@@ -57817,7 +57737,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
@@ -57826,7 +57745,6 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/space,
 /turf/simulated/floor,
 /area/station/routing/medsci,
 /area/space)
@@ -59930,7 +59848,6 @@
 	},
 /area/space)
 "czd" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 1
 	},
@@ -60076,7 +59993,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czx" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 5
 	},
@@ -60116,7 +60032,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czE" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 8
 	},
@@ -60157,13 +60072,11 @@
 	},
 /area/listeningpost)
 "czK" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 4
 	},
 /area/space)
 "czL" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
@@ -60912,7 +60825,6 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "cBH" = (
-/turf/space,
 /turf/simulated/wall/asteroid{
 	dir = 6
 	},
@@ -60977,7 +60889,6 @@
 	},
 /area/station/medical/medbay)
 "cBQ" = (
-/turf/space,
 /turf/simulated/wall/asteroid,
 /area/space)
 "cBR" = (
@@ -62378,7 +62289,6 @@
 	},
 /area/shuttle/arrival/station)
 "nxc" = (
-/turf/space,
 /turf/space,
 /area/station/turret_protected/armory_outside,
 /area/space)
