@@ -1118,3 +1118,18 @@ obj/trait/pilot
 			var/mob/living/carbon/human/H = owner
 			H.set_mutantrace(/datum/mutantrace/roach)
 		return
+
+/obj/trait/squid
+	name = "Squid (-4) \[Species\]"
+	cleanName = "Squid"
+	desc = "You have tentacles on your face and can breathe underwater. The price? You have permanently wet socks and a deep terror of sushi resturants."
+	id = "squid"
+	points = -4
+	isPositive = 1
+	category = "species"
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(/datum/mutantrace/ithillid)
+		return
