@@ -957,7 +957,7 @@ obj/machinery/vehicle/miniputt/pilot
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)

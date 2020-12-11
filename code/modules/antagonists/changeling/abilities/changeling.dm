@@ -39,7 +39,7 @@
 	if (src.mind)
 		src.mind.is_changeling = C
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (src) src.assign_gimmick_skull()
 
 	return

@@ -59,7 +59,7 @@
 	relaymove(var/mob/user, direction)
 		if (can_move)
 			can_move = 0
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return

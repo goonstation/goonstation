@@ -401,7 +401,7 @@
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
 				return 0
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
@@ -437,7 +437,7 @@
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
 				return 0
 

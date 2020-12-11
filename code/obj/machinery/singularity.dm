@@ -187,7 +187,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if(!maxboom)
-		SPAWN_DBG(1)
+		SPAWN_DBG(0.1 SECONDS)
 			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
 				qdel(src)
 			maxboom = 0
@@ -367,7 +367,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	pulse.icon_state = "emppulse"
 	pulse.name = "emp pulse"
 	pulse.anchored = 1
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		if (pulse)
 			qdel(pulse)
 

@@ -275,7 +275,7 @@
 
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
 					if (!H.stat)
 						if (model_task)
@@ -2375,7 +2375,7 @@
 					announced = 2
 					src.secondary_targets = list()
 
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						if (src.secondary_targets.len)
 							master.reply_wait = 0
 							. = INFINITY
@@ -3598,7 +3598,7 @@
 					if (ckey(current_tour_text))
 						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
 							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
-							SPAWN_DBG (0)
+							SPAWN_DBG(0)
 								sleep(1 SECOND)
 								for (var/tour_line in tour_text_with_pauses)
 									if (!ckey(tour_line) || !master)
@@ -3697,7 +3697,7 @@
 						src.neat_things |= NT_GAFFE
 						src.master.speak("Ah! As you can see here--")
 
-						SPAWN_DBG (10)
+						SPAWN_DBG(1 SECOND)
 							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
@@ -3754,7 +3754,7 @@
 						src.master.speak(insultphrase)
 
 						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG (40)
+						SPAWN_DBG(4 SECONDS)
 							qdel(P)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
@@ -3808,7 +3808,7 @@
 					src.neat_things |= NT_AUTOMATON
 					src.master.speak("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
 					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG (20)
+					SPAWN_DBG(2 SECONDS)
 						src.master.speak(.)
 
 				else if (istype(AM, /obj/machinery/bot))

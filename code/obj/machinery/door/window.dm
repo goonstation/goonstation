@@ -168,7 +168,7 @@
 				else
 					src.operating = 0
 
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			if (src && !src.operating && !src.density && src.autoclose == 1)
 				src.close()
 
@@ -193,7 +193,7 @@
 				src.RL_SetOpacity(1)
 		src.update_nearby_tiles()
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src)
 				src.operating = 0
 
@@ -225,7 +225,7 @@
 			src.autoclose = 0
 		else
 			src.autoclose = 1
-			SPAWN_DBG (50)
+			SPAWN_DBG(5 SECONDS)
 				if (src && !src.density)
 					src.close()
 

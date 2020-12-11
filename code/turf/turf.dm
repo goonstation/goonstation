@@ -1078,7 +1078,7 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
 

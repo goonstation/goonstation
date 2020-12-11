@@ -24,7 +24,7 @@
 	New()
 		..()
 		update_overlays()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!opened)		// if closed, any item at src's loc is put in the contents
 				for (var/obj/item/I in src.loc)
 					if (I.density || I.anchored || I == src) continue
