@@ -456,7 +456,7 @@
 			if (prob(60))
 				G.howl()
 		src.add_fingerprint(user)
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 		for(var/mob/living/carbon/L in viewers(user, null))
 			if (L == user)
 				continue

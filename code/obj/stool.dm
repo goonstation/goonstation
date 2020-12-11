@@ -715,7 +715,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
@@ -723,7 +723,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)

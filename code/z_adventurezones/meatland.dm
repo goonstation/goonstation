@@ -462,7 +462,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				animate(src.hat, pixel_x = 13, pixel_y = 27, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 1, easing = SINE_EASING)
 				animate(pixel_x = 0, pixel_y = 0, transform = null, time = 30, loop = 3, easing = SINE_EASING)
 				var/obj/item/clothing/head/old_hat = src.hat
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					if (old_hat)
 						old_hat.layer = initial(old_hat.layer)
 

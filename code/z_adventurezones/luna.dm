@@ -1185,7 +1185,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		light.set_brightness(0.4)
 		light.enable()
 
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src.tag)
 				src.id_tag = src.tag
 				src.tag = null

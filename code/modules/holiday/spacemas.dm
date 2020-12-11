@@ -37,7 +37,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 #if defined(XMAS) && !defined(RP_MODE)
 		if (christmas_cheer <= 10 && !krampus_spawned)
 			SPAWN_DBG(0)
-				santa_krampus_spawn(1)
+				santa_krampus_SPAWN_DBG(0.1 SECONDS)
 #endif
 	return
 

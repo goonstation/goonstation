@@ -795,7 +795,7 @@
 				m_type = 1
 				src.add_karma(-3)
 
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					var/beeMax = 15
 					for (var/obj/critter/domestic_bee/responseBee in range(5, src))
 						if (!responseBee.alive)

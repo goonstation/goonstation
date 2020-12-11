@@ -328,7 +328,7 @@ WET FLOOR SIGN
 
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src?.reagents)
 				src.reagents.clear_reagents()
 				mopcount = 0
@@ -389,7 +389,7 @@ WET FLOOR SIGN
 						T.overlays -= wetoverlay
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
@@ -406,7 +406,7 @@ WET FLOOR SIGN
 			mopcount++
 
 		if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0

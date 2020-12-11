@@ -4642,7 +4642,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
 	attack_ai(mob/user as mob)

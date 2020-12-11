@@ -254,7 +254,7 @@ Nanotrasen, Inc.<br>
 		else
 			next_play = play_interval
 		next_warning = next_play - 300
-		SPAWN_DBG (200)
+		SPAWN_DBG(20 SECONDS)
 			apiHandler.queryAPI("numbers/get")
 
 	proc/gather_listeners()

@@ -1533,7 +1533,7 @@
 			if (!src.attacking)
 				src.attacking = 1
 				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!")
-				SPAWN_DBG (100)
+				SPAWN_DBG(10 SECONDS)
 					src.attacking = 0
 		else
 			return ..()
