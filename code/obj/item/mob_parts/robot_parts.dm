@@ -399,6 +399,7 @@
 	name = "cyborg screen head"
 	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
 	appearanceString = "screen"
+	icon_state = "head-screen"
 	max_health = 90
 
 /obj/item/parts/robot_parts/chest
