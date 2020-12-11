@@ -198,10 +198,9 @@
 		if (!src.alive)
 			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
 				src.on_revive()
-				SPAWN_DBG(0)
-					return ..(W, user)
+				. = ..()
 		else
-			return ..()
+			. = ..()
 
 /obj/critter/opossum/morty
 	name = "Morty"
