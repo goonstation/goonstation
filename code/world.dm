@@ -198,7 +198,6 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		enable_extools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
 #endif
@@ -398,6 +397,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
+	enable_auxtools_debugger()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
@@ -1669,9 +1669,6 @@ var/opt_inactive = null
 
 		sleep(10 SECONDS)
 
-
-
-
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
@@ -1679,3 +1676,9 @@ var/opt_inactive = null
 			del(C)
 
 /// EXPERIMENTAL STUFF
+
+/world/Del()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
+	. = ..()
