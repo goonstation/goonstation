@@ -278,7 +278,7 @@
 		"stamp-sprite-ce" = "stamp-ce.png",
 		"stamp-sprite-hos" = "stamp-hos.png",
 		"stamp-sprite-rd" = "stamp-rd.png",
-		"stamp-sprite-cap" = "stamp-cap.png",
+		"stamp-sprite-cap" = "[resource("images/tgui/stamp-cap.png")]",
 		"stamp-sprite-qm" = "stamp-qm.png",
 		"stamp-sprite-law" = "stamp-law.png",
 		"stamp-sprite-chap" = "stamp-chap.png",
