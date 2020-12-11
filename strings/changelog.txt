@@ -1,4 +1,9 @@
 
+(t)fri dec 11 20
+(u)ThePotato97
+(p)3010
+(e)📄|tgui
+(+)Added <u> to sanitization whitelist to allow for underlining text in paper
 (t)thu dec 10 20
 (u)Tarmunora
 (+)reverted fullauto nukie LMG
