@@ -1061,6 +1061,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/robo_head_screen
+	name = "Cyborg Screen Head"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(6,2,6)
+	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
+	time = 24 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
 	item_paths = list("MET-1")

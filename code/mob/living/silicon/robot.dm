@@ -2478,11 +2478,17 @@
 				i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
-					var/icon/eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					var/icon/eyesovl = null
+					var/image/eye_light = null
+					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+					else
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
 
-					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
