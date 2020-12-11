@@ -2037,6 +2037,16 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Finds whoever's dead.
+	*/
+/proc/whodead()
+	var/list/found = new
+	for (var/mob/M in mobs)
+		if (M.ckey && isdead(M))
+			found += M
+	return found
+
+/**
   * Returns random hex value of length given
   */
 /proc/random_hex(var/digits as num)

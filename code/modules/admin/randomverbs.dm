@@ -1216,6 +1216,26 @@
 	msg += "</span>"
 	boutput(src, msg)
 
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
+
+	msg += "</span>"
+	boutput(src, msg)
+
 /client/proc/debugreward()
 	set background = 1
 	set name = "Debug Rewards"

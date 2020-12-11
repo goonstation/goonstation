@@ -82478,7 +82478,8 @@
 	},
 /obj/item/plant/flower/rose{
 	burning = 0;
-	desc = "By any other name, would smell just as sweet. This one likes to be called Lily."
+	desc = "By any other name, would smell just as sweet. This one likes to be called Lily. Or ";
+	name = "extra-beautiful rose"
 	},
 /obj/machinery/light_area_manager{
 	last_process = 27277
@@ -83676,6 +83677,7 @@
 	l_move_time = 300876;
 	last_move = 4;
 	move_speed = 13;
+	name = "cosy chair";
 	p_class = 2
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_north,
@@ -83834,13 +83836,31 @@
 	},
 /area/adventure/channel)
 "koi" = (
-/obj/storage/closet/dresser{
-	dir = 8;
-	l_move_time = 27023;
-	move_speed = 8;
-	p_class = 4.5
+/obj/item/clothing/under/gimmick/princess{
+	color = "#8c0b0b"
 	},
-/turf/unsimulated/floor/wood/six,
+/obj/item/clothing/head/bigtex,
+/obj/item/clothing/head/crown,
+/obj/item/clothing/head/nyan/white,
+/obj/item/clothing/head/wizard/witch,
+/obj/item/clothing/head/laurels/gold,
+/obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/under/gimmick/chiefofficer,
+/obj/item/clothing/suit/armor/hopcoat,
+/obj/item/clothing/suit/jacket/plastic/random_color,
+/obj/item/clothing/head/sunhat/sunhatr,
+/obj/storage/closet/dresser{
+	desc = "A curated selection of the highest-grade couture";
+	name = "dresser of many things"
+	},
+/obj/item/clothing/head/sailormoon,
+/obj/item/clothing/under/gimmick/sailormoon,
+/obj/item/clothing/under/gimmick/birdman,
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/card_box/clow{
+	name = "Clow Book"
+	},
+/turf/simulated/floor/wood/six,
 /area/centcom/offices/rodney)
 "koF" = (
 /obj/item/sticker/gold_star{
@@ -84928,6 +84948,7 @@
 	spawn_chance = 32
 	},
 /obj/critter/snake{
+	aggressive = 0;
 	color = "#5cd14f";
 	desc = "An extremely illegal snake. Hiss!";
 	dir = 8;
@@ -85534,8 +85555,8 @@
 	pixel_y = 32;
 	real_name = "Weird poster"
 	},
-/obj/wizard_light/stand/ruby,
 /obj/item/wizard_crystal/emerald,
+/obj/wizard_light/stand/quartz,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
 "qQd" = (
