@@ -316,7 +316,7 @@
 			else
 				f.icon = 'icons/obj/zoldorf.dmi'
 				f.icon_state = "branded"
-				spawn(32)
+				SPAWN_DBG(3.2 SECONDS)
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz

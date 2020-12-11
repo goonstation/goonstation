@@ -634,7 +634,7 @@
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
@@ -819,5 +819,5 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = null
+	tool_flags = 0
 	w_class = 3.0

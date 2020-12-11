@@ -1,6 +1,6 @@
 /verb/restart_the_fucking_server_i_mean_it()
 	set name = "Emergency Restart"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	if(config.update_check_enabled)
 		world.installUpdate()
 	world.Reboot()
@@ -675,7 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -709,7 +709,6 @@
 
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
-	var/fat = 0
 	var/hair_override = 0
 	var/update_wearid = 0
 
@@ -849,9 +848,6 @@
 			else
 				src.tf_holder.mobAppearance.gender = FEMALE
 
-		else if (href_list["fat"])
-			src.fat = !src.fat
-
 		else if (href_list["hair_override"])
 			src.hair_override = !src.hair_override
 
@@ -895,8 +891,6 @@
 
 		src.real_name = H.real_name
 
-		src.fat = (H.bioHolder.HasEffect("fat"))
-
 		src.hair_override = H.hair_override
 
 		if(H.mutantrace)
@@ -923,7 +917,6 @@
 		dat += "Blood Type: <a href='byond://?src=\ref[src];blType=input'>[src.tf_holder.bloodType]</a><br>"
 		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
-		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
@@ -1003,8 +996,6 @@
 				smoke.start()
 
 		sanitize_null_values(target_mob)
-		if(src.fat)
-			target_mob.bioHolder.AddEffect("fat")
 
 		target_mob.hair_override = src.hair_override
 
@@ -1221,6 +1212,26 @@
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
 	else
 		msg += "No players found for '[target]'"
+
+	msg += "</span>"
+	boutput(src, msg)
+
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
 
 	msg += "</span>"
 	boutput(src, msg)
@@ -2554,6 +2565,81 @@ var/global/night_mode_enabled = 0
 				boutput(src, "<span class='alert'>Arrived at your office, but where's your chair? Maybe someone stole it!</span>")
 			else
 				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")
+
+var/global/mirrored_physical_zone_created = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
+/client/proc/summon_office()
+	set name = "Summon Office"
+	set desc = "Expand your domain across dimensional planes."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	var/turf/src_turf = get_turf(src.mob)
+	if (!src_turf) return
+
+	var/list/areas = get_areas(/area/centcom/offices)
+	var/area/A = get_area(src.mob)
+	if (A.type in childrentypesof(/area/centcom/offices))
+		boutput(src, "In order to prevent a complete collapse of the known universe you resist the urge to manipulate spacetime within the office.")
+		return
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (!length(turfs))
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+				return
+
+			//find the door
+			var/turf/office_entry = null
+			var/obj/stool/chair/chair = locate(/obj/stool/chair) in office
+			if (chair)
+				office_entry = get_turf(chair)
+				src.mob.dir = chair.dir
+			var/obj/machinery/door/unpowered/wood/O = locate(/obj/machinery/door/unpowered/wood) in office
+			if (O)
+				if (!office_entry)
+					office_entry = get_turf(O)
+				turfs -= get_turf(O)
+
+			if (!office_entry)
+				boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
+				return
+
+			if (!office_entry) return
+			var/x_diff = src_turf.x - office_entry.x
+			var/y_diff = src_turf.y - office_entry.y
+
+			var/summoning_office = null //bleh
+			for (var/turf/T in turfs)
+				if (T.vistarget)
+					T.vistarget.vis_contents -= T
+					T.vistarget.warptarget = null
+					T.vistarget = null
+					T.warptarget = null
+					summoning_office = FALSE
+					T.appearance_flags &= ~KEEP_TOGETHER
+					T.layer -= 0.1 //retore to normal
+
+				else
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, man_warptarget_modifier = LANDMARK_VM_WARP_NONE)
+					summoning_office = TRUE
+					T.layer += 0.1 //stop hiding my turfs!!
+
+					//anti-sneaky players breaking into centcom through summoned office code
+					T.warptarget = T.vistarget
+					T.warptarget_modifier = LANDMARK_VM_WARP_NON_ADMINS
+
+			if (summoning_office)
+				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
+				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
+				if (!mirrored_physical_zone_created)
+					mirrored_physical_zone_created = TRUE
+			else
+				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")
+				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 

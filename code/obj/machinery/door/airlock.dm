@@ -773,7 +773,7 @@ About the new airlock wires panel:
 			//Sending a pulse through this flashes the red light on the door (if the door has power).
 			if ((src.arePowerSystemsOn()) && (!(status & NOPOWER)))
 				play_deny()
-		if (AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if (AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -794,7 +794,7 @@ About the new airlock wires panel:
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -1475,7 +1475,7 @@ About the new airlock wires panel:
 
 	if (src.closeOtherId != null)
 		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
@@ -1681,7 +1681,7 @@ obj/machinery/door/airlock
 				else if (user.wear_id && user.wear_id:registered)
 					user_name = user.wear_id:registered
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
@@ -1727,7 +1727,20 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
-	if (user.client.check_key(KEY_OPEN))
+	if (src.aiControlDisabled) return
+
+	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
+		. = 1
+		// need to do it in the right order or nothing will happen
+		if (locked)
+			toggle_bolt(user)
+			user_toggle_open(user)
+		else
+			user_toggle_open(user)
+			toggle_bolt(user)
+		return
+
+	else if (user.client.check_key(KEY_OPEN))
 		. = 1
 		user_toggle_open(user)
 		return
@@ -1812,7 +1825,8 @@ obj/machinery/door/airlock
 		return UI_UPDATE
 
 /obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)

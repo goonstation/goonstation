@@ -157,7 +157,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		reagents.add_reagent("vomit",5)
 
 	HasEntered(atom/A)
-		reagents.reaction(A, TOUCH, 2)
+		if(!istype(A, /obj/item/skull))
+			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
 			boutput(A, pick("<span class='alert'>This stings!</span>", "<span class='alert'>Oh jesus this burns!!</span>", "<span class='alert'>ow ow OW OW OW OW</span>", "<span class='alert'>oh cripes this isn't the fun kind of acid</span>", "<span class='alert'>ow OW OUCH FUCK OW</span>"))
 			if (ishuman(A) && prob(80))
@@ -238,7 +239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 					gibs(src.loc)
 					if (src.loc)
@@ -449,7 +450,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			animate(O, pixel_x = 11 + (16 * (src.x - O.x)), pixel_y = (32 * (1 + src.y - O.y)), time = 2, loop = 1, easing = SINE_EASING)
 			animate(pixel_x = 11 + (32 * (src.x - O.x)), pixel_y = (32 * (src.y - O.y)) + 45, time = 3, loop = 1, easing = SINE_EASING)
 
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				if (O)
 					O.set_loc( src )
 					O.pixel_x = 11
@@ -461,7 +462,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				animate(src.hat, pixel_x = 13, pixel_y = 27, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 1, easing = SINE_EASING)
 				animate(pixel_x = 0, pixel_y = 0, transform = null, time = 30, loop = 3, easing = SINE_EASING)
 				var/obj/item/clothing/head/old_hat = src.hat
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					if (old_hat)
 						old_hat.layer = initial(old_hat.layer)
 

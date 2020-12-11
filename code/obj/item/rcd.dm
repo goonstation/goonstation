@@ -424,7 +424,7 @@ Broken RCD + Effects
 				if(N.client && N != user && N != H)
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
@@ -583,7 +583,7 @@ Broken RCD + Effects
 				if (findtext(B.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
 					playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
 							playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
@@ -599,7 +599,7 @@ Broken RCD + Effects
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
 					playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
 							playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
@@ -622,7 +622,7 @@ Broken RCD + Effects
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
 				playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-				if(do_after(user, 50))
+				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
 						playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 						src.shitSparks()
@@ -642,7 +642,7 @@ Broken RCD + Effects
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
 				playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-				if(do_after(user, 50))
+				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
 						playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 						src.shitSparks()
@@ -822,7 +822,7 @@ Broken RCD + Effects
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
 
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				if (src.broken)
 					return
 

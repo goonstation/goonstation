@@ -146,7 +146,7 @@
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
-			SPAWN_DBG (8)
+			SPAWN_DBG(0.8 SECONDS)
 				if (T) qdel(T)
 
 		else
@@ -170,7 +170,7 @@
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
-			SPAWN_DBG (8)
+			SPAWN_DBG(0.8 SECONDS)
 				if (T) qdel(T)
 
 		return

@@ -337,7 +337,6 @@
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
-			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
 			r_leg:original_holder = holder
@@ -734,7 +733,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -745,7 +744,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG (300)
+				SPAWN_DBG(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif

@@ -487,72 +487,84 @@ var/global/noir = 0
 		/////////////////////////////////////end ban stuff
 
 		if("jobbanpanel")
-			var/mob/M = locate(href_list["target"])
 			var/dat = ""
-			var/header = "<b>Pick Job to ban this guy from.<br>"
+			var/header = "<b>Pick Job to ban this guy from | <a href='?src=\ref[src];action=jobbanpanel;target=[href_list["target"]]'>Refresh</a><br>"
 			var/body
-	//		var/list/alljobs = get_all_jobs()
 			var/jobs = ""
+			var/target
+			var/action
+			var/M = href_list["target"]
+			var/mob/found = locate(href_list["target"])
+			if(found) //It's a textref, and not a key.
+				M = found
+				target = "\ref[M]"
+				action = "jobban"
+			else //It's a key. We need to cache it's ban history to not make 300 requests to the API.
+				target = M
+				action = "jobban_offline"
+				M = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+			if (!M)
+				return
 
-			if (!M) return
+			//Determine which system we're using.
 
 			for(var/job in uniquelist(occupations))
 				if(job in list("Tourist","Mining Supervisor","Atmospheric Technician","Vice Officer"))
 					continue
 				if(jobban_isbanned(M, job))
-					jobs += "<a href='?src=\ref[src];action=jobban;type=[job];target=\ref[M]'><font color=red>[replacetext(job, " ", "&nbsp")]</font></a> "
+					jobs += "<a href='?src=\ref[src];action=[action];type=[job];target=[target]'><font color=red>[replacetext(job, " ", "&nbsp")]</font></a> "
 				else
-					jobs += "<a href='?src=\ref[src];action=jobban;type=[job];target=\ref[M]'>[replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work
+					jobs += "<a href='?src=\ref[src];action=[action];type=[job];target=[target]'>[replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Captain"))
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'><font color=red>Captain</font></a> "
+				jobs += "<a href='?src=\ref[src];action=[action];type=Captain;target=[target]'><font color=red>Captain</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Captain;target=\ref[M]'>Captain</a> " //why doesn't this work
+				jobs += "<a href='?src=\ref[src];action=[action];type=Captain;target=[target]'>Captain</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Head of Security"))
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Head of Security;target=\ref[M]'><font color=red>Head of Security</font></a> "
+				jobs += "<a href='?src=\ref[src];action=[action];type=Head of Security;target=[target]'><font color=red>Head of Security</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];action=jobban;type=Head of Security;target=\ref[M]'>Head of Security</a> "
+				jobs += "<a href='?src=\ref[src];action=[action];type=Head of Security;target=[target]'>Head of Security</a> "
 
 			if(jobban_isbanned(M, "Syndicate"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Syndicate;target=[target]'><font color=red>[replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Syndicate;target=\ref[M]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Syndicate;target=[target]'>[replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work
 
 			if(jobban_isbanned(M, "Special Respawn"))
-				jobs += " <a href='?src=\ref[src];action=jobban;type=Special Respawn;target=\ref[M]'><font color=red>[replacetext("Special Respawn", " ", "&nbsp")]</font></a> "
+				jobs += " <a href='?src=\ref[src];action=[action];type=Special Respawn;target=[target]'><font color=red>[replacetext("Special Respawn", " ", "&nbsp")]</font></a> "
 			else
-				jobs += " <a href='?src=\ref[src];action=jobban;type=Special Respawn;target=\ref[M]'>[replacetext("Special Respawn", " ", "&nbsp")]</a> "
+				jobs += " <a href='?src=\ref[src];action=[action];type=Special Respawn;target=[target]'>[replacetext("Special Respawn", " ", "&nbsp")]</a> "
 
 			if(jobban_isbanned(M, "Engineering Department"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Engineering Department;target=\ref[M]'><font color=red>[replacetext("Engineering Department", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Engineering Department;target=[target]'><font color=red>[replacetext("Engineering Department", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Engineering Department;target=\ref[M]'>[replacetext("Engineering Department", " ", "&nbsp")]</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Engineering Department;target=[target]'>[replacetext("Engineering Department", " ", "&nbsp")]</a> "
 
 			if(jobban_isbanned(M, "Security Department"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Security Department;target=\ref[M]'><font color=red>[replacetext("Security Department", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Security Department;target=[target]'><font color=red>[replacetext("Security Department", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Security Department;target=\ref[M]'>[replacetext("Security Department", " ", "&nbsp")]</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Security Department;target=[target]'>[replacetext("Security Department", " ", "&nbsp")]</a> "
 
 			if(jobban_isbanned(M, "Heads of Staff"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Heads of Staff;target=\ref[M]'><font color=red>[replacetext("Heads of Staff", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Heads of Staff;target=[target]'><font color=red>[replacetext("Heads of Staff", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Heads of Staff;target=\ref[M]'>[replacetext("Heads of Staff", " ", "&nbsp")]</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Heads of Staff;target=[target]'>[replacetext("Heads of Staff", " ", "&nbsp")]</a> "
 
 			if(jobban_isbanned(M, "Everything Except Assistant"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Everything Except Assistant;target=\ref[M]'><font color=red>[replacetext("Everything Except Assistant", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Everything Except Assistant;target=[target]'><font color=red>[replacetext("Everything Except Assistant", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Everything Except Assistant;target=\ref[M]'>[replacetext("Everything Except Assistant", " ", "&nbsp")]</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Everything Except Assistant;target=[target]'>[replacetext("Everything Except Assistant", " ", "&nbsp")]</a> "
 
 			if(jobban_isbanned(M, "Ghostdrone"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Ghostdrone;target=\ref[M]'><font color=red>Ghostdrone</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Ghostdrone;target=[target]'><font color=red>Ghostdrone</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Ghostdrone;target=\ref[M]'>Ghostdrone</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Ghostdrone;target=[target]'>Ghostdrone</a> "
 
 			if(jobban_isbanned(M, "Custom Names"))
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Custom Names;target=\ref[M]'><font color=red>[replacetext("Having a Custom Name", " ", "&nbsp")]</font></a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Custom Names;target=[target]'><font color=red>[replacetext("Having a Custom Name", " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<BR><a href='?src=\ref[src];action=jobban;type=Custom Names;target=\ref[M]'>[replacetext("Having a Custom Name", " ", "&nbsp")]</a> "
+				jobs += "<BR><a href='?src=\ref[src];action=[action];type=Custom Names;target=[target]'>[replacetext("Having a Custom Name", " ", "&nbsp")]</a> "
 
 
 			body = "<br>[jobs]<br><br>"
@@ -567,20 +579,21 @@ var/global/noir = 0
 				if ((M.client && M.client.holder && (M.client.holder.level > src.level)))
 					alert("You cannot perform this action. You must be of a higher administrative rank!")
 					return
+				var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
 				if (jobban_isbanned(M, job))
-					if(jobban_keylist.Find(text("[M.ckey] - Everything Except Assistant")) && job != "Everything Except Assistant")
+					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
 					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
+						if(player.cached_jobbans.Find("Engineering Department"))
 							alert("This person is banned from Engineering Department. You must lift that ban first.")
 							return
 					if(job in list("Security Officer","Vice Officer","Detective"))
-						if(jobban_keylist.Find(text("[M.ckey] - Security Department")))
+						if(player.cached_jobbans.Find("Security Department"))
 							alert("This person is banned from Security Department. You must lift that ban first.")
 							return
 					if(job in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
-						if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
+						if(player.cached_jobbans.Find("Heads of Staff"))
 							alert("This person is banned from Heads of Staff. You must lift that ban first.")
 							return
 					logTheThing("admin", usr, M, "unbanned [constructTarget(M,"admin")] from [job]")
@@ -595,46 +608,94 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] banned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
-						if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
+						if(player.cached_jobbans.Find("Engineering Department"))
 							jobban_unban(M,"Engineering Department")
-						if(jobban_keylist.Find(text("[M.ckey] - Security Department")))
+						if(player.cached_jobbans.Find("Security Department"))
 							jobban_unban(M,"Security Department")
-						if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
+						if(player.cached_jobbans.Find("Heads of Staff"))
 							jobban_unban(M,"Heads of Staff")
 						for(var/Trank1 in uniquelist(occupations))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank1]")))
+							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
 						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank2]")))
+							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank3]")))
+							if(player.cached_jobbans.Find("[Trank3]"))
 								jobban_unban(M,Trank3)
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
-							if(jobban_keylist.Find(text("[M.ckey] - [Trank4]")))
+							if(player.cached_jobbans.Find("[Trank4]"))
 								jobban_unban(M,Trank4)
-					jobban_fullban(M, job)
+					jobban_fullban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
 			else
 				alert("You need to be at least a Secondary Administrator to work with job bans.")
 
+		if("jobban_offline")
+			if (src.level >= LEVEL_SA)
+				var/M = href_list["target"]
+				var/job = href_list["type"]
+				var/list/cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				if (!M) return
+				if (jobban_isbanned(cache, job))
+					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
+						alert("This person is banned from Everything Except Assistant. You must lift that ban first.")
+						return
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						if(cache.Find("Engineering Department"))
+							alert("This person is banned from Engineering Department. You must lift that ban first.")
+							return
+					if(job in list("Security Officer","Vice Officer","Detective"))
+						if(cache.Find("Security Department"))
+							alert("This person is banned from Security Department. You must lift that ban first.")
+							return
+					if(job in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
+						if(cache.Find("Heads of Staff"))
+							alert("This person is banned from Heads of Staff. You must lift that ban first.")
+							return
+					logTheThing("admin", usr, null, "unbanned [M](Offline) from [job]")
+					logTheThing("diary", usr, null, "unbanned [M](Offline) from [job]", "admin")
+					message_admins("<span class='internal'>[key_name(usr)] unbanned [M](Offline) from [job]</span>")
+					addPlayerNote(M, usr.ckey, "[usr.ckey] unbanned [M](Offline) from [job]")
+					jobban_unban(M, job)
+				else
+					logTheThing("admin", usr, M, "banned [M](Offline) from [job]")
+					logTheThing("diary", usr, M, "banned [M](Offline) from [job]", "admin")
+					message_admins("<span class='internal'>[key_name(usr)] banned [M](Offline) from [job]</span>")
+					addPlayerNote(M, usr.ckey, "[usr.ckey] banned [M](Offline) from [job]")
+					if(job == "Everything Except Assistant")
+						if(cache.Find("Engineering Department"))
+							jobban_unban(M,"Engineering Department")
+						if(cache.Find("Security Department"))
+							jobban_unban(M,"Security Department")
+						if(cache.Find("Heads of Staff"))
+							jobban_unban(M,"Heads of Staff")
+						for(var/Trank1 in uniquelist(occupations))
+							if(cache.Find("[Trank1]"))
+								jobban_unban(M,Trank1)
+					else if(job == "Engineering Department")
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+							if(cache.Find("[Trank2]"))
+								jobban_unban(M,Trank2)
+					else if(job == "Security Department")
+						for(var/Trank3 in list("Security Officer","Vice Officer","Detective"))
+							if(cache.Find("[Trank3]"))
+								jobban_unban(M,Trank3)
+					else if(job == "Heads of Staff")
+						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
+							if(cache.Find("[Trank4]"))
+								jobban_unban(M,Trank4)
+					jobban_fullban(M, job, usr.ckey)
+			else
+				alert("You need to be at least a Secondary Administrator to work with job bans.")
+
+
 		if ("boot")
 			var/mob/M = locate(href_list["target"])
 			usr.client.cmd_boot(M)
-
-		if ("removejobban")
-			if (src.level >= LEVEL_SA)
-				var/t = href_list["target"]
-				if(t)
-					logTheThing("admin", usr, null, "removed [t]")
-					logTheThing("diary", usr, null, "removed [t]", "admin")
-					message_admins("<span class='internal'>[key_name(usr)] removed [t]</span>")
-					jobban_remove(t)
-			else
-				alert("You need to be at least a Secondary Administrator to remove job bans.")
 
 		if ("mute")
 			if (src.level >= LEVEL_MOD)
@@ -1930,19 +1991,19 @@ var/global/noir = 0
 						// roles don't work for them, most can't wear clothes and some don't even have arms and/or can pick things up.
 						// That said, certain roles are mostly compatible and thus selectable.
 						var/list/traitor_types = list("Hard-mode traitor", "Wrestler", "Grinch")
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
+						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
 						switch (selection)
 							if ("Hard-mode traitor")
 								evilize(M, "traitor", "hardmode")
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += "Gang Leader"
-						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") in traitor_types
+						var/selection = input(usr, "Select traitor type.", "Traitorize", "Traitor") as null|anything in traitor_types
 						switch(selection)
 							if("Traitor")
 								if (alert("Hard Mode?","Treachery","Yes","No") == "Yes")
@@ -1952,7 +2013,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -3903,50 +3964,6 @@ var/global/noir = 0
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_commandos'>Spawn a force of commandos</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_turds'>Spawn a T.U.R.D.S. attack force</A><BR>
 	// <A href='?src=\ref[src];action=s_rez;type=spawn_smilingman'>Spawn a Smiling Man</A><BR>
-
-/datum/admins/proc/buildjobbanspanel()
-	set background = 1
-	if (building_jobbans != 0)
-		boutput(usr, "Rebuild in progress, please try again later.")
-		return
-
-	if (alert("Fix a corrupted local panel or force a complete rebuild of the server's panel?","Select Rebuild Type","Local Fix","Server Rebuild") == "Local Fix")
-		var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
-		usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
-		current_jobbans_rev = global_jobban_cache_rev
-		jobbans_last_cached = world.timeofday
-		boutput(usr, "Refresh complete, your panel now matches the server's. If you need to edit a ban that was created after the build time shown please do a server rebuild.")
-	else
-		boutput(usr, "Rebuilding server cache...")
-
-		building_jobbans = 1
-
-		var/buf = ""
-		jobban_count = 0
-		for(var/t in jobban_keylist) if (t)
-			jobban_count++
-			buf += text("[t];")
-
-		global_jobban_cache = buf
-		global_jobban_cache_rev++
-		global_jobban_cache_built = world.timeofday
-
-		building_jobbans = 0
-		boutput(usr, "Rebuild complete, everyone's job ban panel is now up to date with the latest job bans.")
-
-
-/datum/admins/var/current_jobbans_rev = 0
-/datum/admins/var/jobbans_last_cached = 0
-/datum/admins/proc/Jobbans()
-	set background = 1
-	if (src.level >= LEVEL_SA)
-		if (current_jobbans_rev == 0 || current_jobbans_rev < global_jobban_cache_rev) // the cache is newer than our panel
-			var/jobban_dialog_text = replacetext(grabResource("html/admin/jobbans_list.html"), "null /* raw_bans */", "\"[global_jobban_cache]\"");
-			usr.Browse(replacetext(jobban_dialog_text, "null /* ref_src */", "\"\ref[src]\""),"file=jobbans.html;display=0")
-			current_jobbans_rev = global_jobban_cache_rev
-			jobbans_last_cached = world.timeofday
-
-		usr.Browse("<html><head><title>Ban Management</title><style type=\"text/css\">body{font-size: 8pt; font-family: Verdana, sans-serif;}</style></head><body><iframe src=\"jobbans.html\"width=\"100%\" height=\"90%\"></iframe>[jobban_count] job bans. banlist built at [time2text(global_jobban_cache_built)] and downloaded at [time2text(jobbans_last_cached)]</body>", "window=jobbanp;size=400x800")
 
 /datum/admins/proc/Game()
 	if (!usr) // somehoooow

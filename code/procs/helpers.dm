@@ -1783,7 +1783,7 @@ proc/countJob(rank)
 				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
 
-				SPAWN_DBG (0) // Don't lock up the entire proc.
+				SPAWN_DBG(0) // Don't lock up the entire proc.
 					M.current << csound("sound/misc/lawnotify.ogg")
 					boutput(M.current, text_chat_alert)
 
@@ -2037,6 +2037,16 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Finds whoever's dead.
+	*/
+/proc/whodead()
+	var/list/found = new
+	for (var/mob/M in mobs)
+		if (M.ckey && isdead(M))
+			found += M
+	return found
+
+/**
   * Returns random hex value of length given
   */
 /proc/random_hex(var/digits as num)
@@ -2108,7 +2118,7 @@ var/global/list/allowed_restricted_z_areas
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space)
+		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M

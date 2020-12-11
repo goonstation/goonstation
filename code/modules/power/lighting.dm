@@ -53,7 +53,7 @@
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
 	#define LIGHTING_POWER_FACTOR 40
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = 100
 	var/area/my_area = null
 	var/list/lights = list()
@@ -671,7 +671,7 @@
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if (!do_after(user, 20))
+				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
 				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))

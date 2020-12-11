@@ -279,8 +279,8 @@
 		if (E.fields["name"] == patientname)
 			switch (M.stat)
 				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("fat"))
-						E.fields["p_stat"] = "Physically Unfit"
+					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+						E.fields["p_stat"] = "Very Active"
 					else
 						E.fields["p_stat"] = "Active"
 				if (1)

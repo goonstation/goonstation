@@ -13,7 +13,7 @@
 /obj/machinery/computer/robot_module_rewriter/attackby(obj/item/I as obj, mob/user as mob)
 	if (isscrewingtool(I))
 		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			var/obj/computerframe/computer = new /obj/computerframe(src.loc)
 			var/obj/item/circuitboard/robot_module_rewriter/circuitboard = new /obj/item/circuitboard/robot_module_rewriter(computer)
 			computer.circuit = circuitboard
@@ -86,7 +86,8 @@
 	return data
 
 /obj/machinery/computer/robot_module_rewriter/ui_act(action, list/params, datum/tgui/ui)
-	if (..())
+	. = ..()
+	if (.)
 		return
 
 	var/mob/user = ui.user

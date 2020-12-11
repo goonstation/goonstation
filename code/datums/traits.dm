@@ -129,8 +129,8 @@
 
 	proc/addTrait(id)
 		if(!traits.Find(id) && owner)
-			traits.Add(id)
 			var/obj/trait/T = traitList[id]
+			traits[id] = T
 			if(T.isMoveTrait)
 				moveTraits.Add(id)
 			T.onAdd(owner)
@@ -797,8 +797,6 @@ obj/trait/pilot
 	points = 0
 	isPositive = 0
 
-	var/allergen = ""
-	var/allergen_name = ""  //No idea what this var is doing, mind if someone explains?
 	var/list/allergic_players = list()
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -809,20 +807,11 @@ obj/trait/pilot
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
 	onAdd(var/mob/owner)
-		allergen = pick(allergen_id_list)
-		allergic_players[owner] = allergen
-		if (reagents_cache.len <= 0)
-			build_reagent_cache()
-		var/datum/reagent/R = reagents_cache[allergen]
-		if(R)
-			allergen_name = R.name
-		else
-			throw EXCEPTION("Could not find reagent for id:[allergen]")
+		allergic_players[owner] = pick(allergen_id_list)
 
 	onLife(var/mob/owner)
-		allergen = allergic_players[owner]
-		if (owner?.reagents?.has_reagent(allergen))
-			owner.reagents.add_reagent("histamine", 1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1)) //1.4 units of histamine per life cycle? is that too much? Halved with antihistamine
+		if (owner?.reagents?.has_reagent(allergic_players[owner]))
+			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
 	name = "Medical Allergy (+1)"

@@ -331,7 +331,7 @@ PIPE BOMBS + CONSTRUCTION
 				M = src
 			playsound(T, "sound/effects/smoke.ogg", 50, 1, -3)
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (src)
 					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
@@ -538,7 +538,7 @@ PIPE BOMBS + CONSTRUCTION
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
 			pulse.anchored = 1
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (pulse) qdel(pulse)
 
 			for (var/turf/tile in range(world.view-1, T))
@@ -642,7 +642,7 @@ PIPE BOMBS + CONSTRUCTION
 		if (src.state == 0)
 			..()
 		else
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 				if (old_light_grenade)
 					for (var/obj/item/W in user)
@@ -1082,7 +1082,7 @@ PIPE BOMBS + CONSTRUCTION
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1169,7 +1169,7 @@ PIPE BOMBS + CONSTRUCTION
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
 						return
@@ -1268,7 +1268,7 @@ PIPE BOMBS + CONSTRUCTION
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				if (src)
 					for (var/obj/overlay/O in range(src.expl_range, location))
 						if (O.name == "Thermite")
@@ -1522,11 +1522,11 @@ PIPE BOMBS + CONSTRUCTION
 					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
+					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3+butt,src.loc))
 						ass_explosion(M, 0, 5)
 				else
-					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
+					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3,src.loc))
 						ass_explosion(M, 0, 5)
 			if (confetti)

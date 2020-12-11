@@ -597,7 +597,7 @@
 		if (weeoo_in_progress)
 			return
 		weeoo_in_progress = 10
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 			light.enable()
 			src.icon_state = "siren1"

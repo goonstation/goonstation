@@ -299,9 +299,9 @@
 	spawn_contents = list(/obj/item/clothing/mask/breath)
 	make_my_stuff()
 		..()
-		if (prob(15) || ticker.round_elapsed_ticks > 20 MINUTES)
+		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES) //aaaaaa
 			new /obj/item/tank/emergency_oxygen(src)
-		if (ticker.round_elapsed_ticks > 20 MINUTES)
+		if (ticker?.round_elapsed_ticks > 20 MINUTES)
 			new /obj/item/crowbar/red(src)
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)

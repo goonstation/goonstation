@@ -207,7 +207,7 @@ datum/v_space
 			virtual_character.real_name = "Virtual [user.real_name]"
 		user.mind.virtual = virtual_character
 		user.mind.transfer_to(virtual_character)
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			if (virtual_character)
 				virtual_character.update_face()
 				virtual_character.update_body()

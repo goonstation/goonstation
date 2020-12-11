@@ -66,14 +66,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/special_hair_1_state = "none"
 	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
 	var/special_hair_1_color_ref = CUST_1
+	var/special_hair_1_layer = MOB_HAIR_LAYER2
 	var/special_hair_1_offset_y = 0
 	var/special_hair_2_icon = 'icons/mob/human_hair.dmi'
 	var/special_hair_2_state = "none"
 	var/special_hair_2_color_ref = CUST_2
+	var/special_hair_2_layer = MOB_HAIR_LAYER2
 	var/special_hair_2_offset_y = 0
 	var/special_hair_3_icon = 'icons/mob/human_hair.dmi'
 	var/special_hair_3_state = "none"
 	var/special_hair_3_color_ref = CUST_3
+	var/special_hair_3_layer = MOB_HAIR_LAYER2
 	var/special_hair_3_offset_y = 0
 
 	/// Intended for extra, non-head body features that may or may not be hair (just not on their head)

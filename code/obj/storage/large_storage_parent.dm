@@ -154,7 +154,7 @@
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
-		if (get_dist(user, src) > 1)
+		if (!in_range(src, user))
 			return
 
 		interact_particle(user,src)
@@ -840,12 +840,12 @@
 					reply.source = src
 					reply.transmission_method = TRANSMISSION_RADIO
 					reply.data = list("address_1" = sender, "command" = "lock=[locked]&open=[open]", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("lock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
@@ -858,12 +858,12 @@
 						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
 					else
 						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("unlock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")

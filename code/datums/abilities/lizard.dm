@@ -94,6 +94,7 @@
 			AHs.customization_first_color = col3
 			AHs.customization_second_color = col1
 			AHs.customization_third_color = col2
+			AHs.s_tone = AHs.customization_first_color
 
 			L.visible_message("<span class='notice'><b>[L.name]</b> changes colors!</span>")
 			L.update_lizard_parts()
@@ -160,6 +161,7 @@
 		switch(region)
 			if (1)
 				AHliz.customization_first_color = color
+				AHliz.s_tone = color
 				spot = "skin"
 			if (2)
 				AHliz.customization_second_color = color
