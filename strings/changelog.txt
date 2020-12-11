@@ -1,5 +1,7 @@
 
 (t)thu dec 10 20
+(u)Tarmunora
+(+)reverted fullauto nukie LMG
 (u)Superlagg
 (p)2945
 (e)🆕🎨|feature, sprites
