@@ -107,7 +107,7 @@ var/datum/event_controller/random_events
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
 				message_admins("<span class='internal'>Antag spawn event success!<br>[100 * aap]% of the alive crew were antags.</span>")
-			else if (dcp > dead_crew_threshold)
+			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
 				message_admins("<span class='internal'>Player spawn event success!<br>[100 * dcp]% of the entire crew were dead.</span>")
 			else
