@@ -2249,13 +2249,6 @@
 /obj/bedsheetbin,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
-"afQ" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/security/brig)
 "afR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26831,7 +26824,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor
+/turf/simulated/floor,
 /area/station/routing/eva)
 "biN" = (
 /obj/machinery/mass_driver{
@@ -26852,7 +26845,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor
+/turf/simulated/floor,
 /area/station/routing/eva)
 "biO" = (
 /obj/machinery/mass_driver{
@@ -26875,7 +26868,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor
+/turf/simulated/floor,
 /area/station/routing/eva)
 "biP" = (
 /obj/machinery/conveyor{
@@ -33307,7 +33300,7 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/space,)
+/area/space)
 "bwg" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -34098,12 +34091,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"bxR" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "bxS" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -43211,7 +43198,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/routing/airbridge,)
+/area/station/routing/airbridge)
 "bQb" = (
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/Zeta)
@@ -45402,7 +45389,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/science/lobby,)
+/area/station/science/lobby)
 "bUi" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -45414,7 +45401,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/science/lobby,)
+/area/station/science/lobby)
 "bUj" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -46457,12 +46444,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"bWH" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "bWI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46874,15 +46855,6 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bXK" = (
-/turf/simulated/floor,
-/area/station/science/bot_storage)
-"bXL" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bXM" = (
@@ -47420,12 +47392,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/storage)
-"bYX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "bYY" = (
 /obj/machinery/atmospherics/valve,
 /obj/cable{
@@ -47446,15 +47412,6 @@
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
-/area/station/science/lab)
-"bZc" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
 /area/station/science/lab)
 "bZd" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -52146,7 +52103,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/mining/staff_room,)
+/area/station/mining/staff_room)
 "ckk" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -52541,12 +52498,6 @@
 "ckX" = (
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/morgue)
-"ckY" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ckZ" = (
 /turf/simulated/floor/sanitary/white,
@@ -53535,13 +53486,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
-"cni" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/medbay)
 "cnj" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -55149,7 +55093,7 @@
 	dir = 6
 	},
 /turf/simulated/floor,
-/area/station/science/testchamber,)
+/area/station/science/testchamber)
 "cqn" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
@@ -55681,21 +55625,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"crz" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "crA" = (
 /obj/machinery/chem_master{
 	dir = 4;
@@ -57338,23 +57267,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
-"cuO" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/science/chemistry)
 "cuP" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -57384,7 +57296,7 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
-/area/station/routing/medsci,)
+/area/station/routing/medsci)
 "cuS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57393,7 +57305,7 @@
 	dir = 6
 	},
 /turf/simulated/floor,
-/area/station/routing/medsci,)
+/area/station/routing/medsci)
 "cuT" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -57708,14 +57620,6 @@
 	name = "W light switch";
 	on = 0;
 	pixel_x = -24
-	},
-/turf/simulated/floor/arrival{
-	dir = 6
-	},
-/area/station/medical/medbay)
-"cvy" = (
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/arrival{
 	dir = 6
@@ -91639,7 +91543,7 @@ nxc
 nxc
 aho
 aho
-afQ
+akk
 aho
 aho
 anz
@@ -91728,7 +91632,7 @@ bJY
 aap
 bHW
 bXy
-bYX
+jlC
 caq
 bHW
 ccW
@@ -92030,7 +91934,7 @@ bJY
 bVi
 bHW
 bXz
-bZc
+vqd
 car
 bHW
 ccX
@@ -93861,7 +93765,7 @@ crs
 cpu
 ctf
 crw
-cuO
+dwh
 aaG
 adC
 aah
@@ -96257,7 +96161,7 @@ bWx
 bUc
 bVj
 bWF
-bWH
+eCS
 eCS
 caA
 cbL
@@ -96573,7 +96477,7 @@ ckG
 ckG
 cne
 cne
-crz
+nOl
 cqz
 nOl
 cne
@@ -96860,7 +96764,7 @@ bRg
 bSL
 bUe
 bVv
-bWH
+eCS
 bXK
 bZj
 caC
@@ -96873,7 +96777,7 @@ chY
 xwZ
 ckH
 cmc
-cni
+xwZ
 cow
 cpx
 cqA
@@ -97163,7 +97067,7 @@ bSM
 bUf
 bVj
 bWI
-bXL
+sGz
 sGz
 caD
 cbO
@@ -97788,7 +97692,7 @@ cqB
 ctq
 cuf
 cuW
-cvy
+nIv
 cvU
 cwC
 ckG
@@ -98090,7 +97994,7 @@ cqC
 ctr
 cuf
 cuX
-cvy
+nIv
 cvV
 bEx
 cjk
@@ -105329,8 +105233,8 @@ cjG
 cjA
 cfX
 eOP
-ckY
-ckY
+eOP
+eOP
 clp
 cmw
 ckZ
@@ -116782,7 +116686,7 @@ bFV
 bFV
 bHG
 bFV
-bxR
+bGc
 bKQ
 bPg
 bNQ
