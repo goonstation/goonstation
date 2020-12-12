@@ -1075,14 +1075,14 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	attack_self(mob/user as mob)
 		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
-			if (src.next_generate < ticker.round_elapsed_ticks && prob(25))
+			if (src.next_generate < ticker.round_elapsed_ticks)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
 				src.amount++
 				src.update()
 				src.next_generate = ticker.round_elapsed_ticks + 5 SECONDS
 				return
 
-			boutput(user, "Nothing left in the [src]. Oh no!")
+			boutput(user, "Nothing left in the [src]. Maybe you should check again later.")
 			return
 
 		boutput(user, "You remove a piece of paper from the [src].")
