@@ -278,7 +278,7 @@ datum/controller/air_system
 		return 1
 
 	process_tiles_to_space()
-		if(length(tiles_to_space) > 0)
+		if(length(tiles_to_space))
 			for(var/turf/T as() in tiles_to_space)
 				T.ReplaceWithSpace()
 			tiles_to_space.len = 0
