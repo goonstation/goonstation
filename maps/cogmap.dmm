@@ -2,9 +2,6 @@
 "aab" = (
 /turf/simulated/wall/asteroid/ice,
 /area/space)
-"aac" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "aad" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -9387,17 +9384,6 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
-"awq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/solar/west)
 "awr" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -27972,15 +27958,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"bld" = (
-/obj/grille/catwalk/cross{
-	dir = 10;
-	tag = "icon-catwalk_cross (SOUTHWEST)"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/space)
 "ble" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -28708,9 +28685,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"bmN" = (
-/turf/simulated/floor/plating/airless,
-/area/space)
 "bmO" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -30613,17 +30587,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
-"bqw" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "bqx" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
@@ -31208,15 +31171,6 @@
 "brH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/ptl)
-"brI" = (
-/obj/grille/catwalk/cross{
-	dir = 10;
-	tag = "icon-catwalk_cross (SOUTHWEST)"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/space)
 "brJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59195,9 +59149,6 @@
 	icon_state = "wall3"
 	},
 /area/listeningpost)
-"czj" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "czk" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -59304,9 +59255,6 @@
 	dir = 5
 	},
 /area/space)
-"czy" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "czz" = (
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
@@ -59379,9 +59327,6 @@
 /turf/simulated/wall/asteroid{
 	dir = 10
 	},
-/area/space)
-"czM" = (
-/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "czN" = (
 /obj/machinery/light/small{
@@ -69796,7 +69741,7 @@ adC
 adC
 aab
 aab
-aac
+czU
 aad
 aab
 aab
@@ -70098,8 +70043,8 @@ adC
 aab
 aab
 aab
-aac
-aac
+czU
+czU
 aab
 aab
 aab
@@ -70401,10 +70346,10 @@ aab
 aab
 aab
 aab
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 aab
 adC
 adC
@@ -70700,14 +70645,14 @@ adC
 adC
 adC
 aab
-aac
+czU
 aab
 aab
 aab
-aac
+czU
 aab
-aac
-aac
+czU
+czU
 adC
 adC
 adC
@@ -71001,12 +70946,12 @@ adC
 adC
 adC
 adC
-aac
-aac
+czU
+czU
 aab
-aac
-aac
-aac
+czU
+czU
+czU
 aab
 aab
 aab
@@ -71304,10 +71249,10 @@ adC
 adC
 adC
 aab
-aac
+czU
 aab
 aab
-aac
+czU
 aab
 aab
 aab
@@ -71606,12 +71551,12 @@ adC
 adC
 adC
 aab
-aac
-aac
+czU
+czU
 aab
-aac
-aac
-aac
+czU
+czU
+czU
 aab
 aab
 aab
@@ -71909,12 +71854,12 @@ adC
 adC
 aab
 aab
-aac
-aac
-aac
+czU
+czU
+czU
 aab
-aac
-aac
+czU
+czU
 aab
 aab
 adC
@@ -72215,7 +72160,7 @@ aab
 aab
 aab
 aab
-aac
+czU
 aab
 aab
 adC
@@ -86185,7 +86130,7 @@ adC
 adC
 adC
 aag
-awq
+aBo
 aap
 aaw
 aaw
@@ -104942,7 +104887,7 @@ gfz
 gfz
 gfz
 gfz
-bld
+bxa
 aaG
 adC
 bgS
@@ -106463,7 +106408,7 @@ bln
 bRa
 bhU
 aap
-bqw
+bwg
 aaG
 adC
 adC
@@ -106765,7 +106710,7 @@ bln
 blS
 boM
 aap
-bqw
+bwg
 aaG
 adC
 adC
@@ -107067,7 +107012,7 @@ blp
 bgS
 boN
 aap
-bqw
+bwg
 aaG
 adC
 adC
@@ -107369,7 +107314,7 @@ blq
 biX
 boO
 aap
-bqw
+bwg
 aap
 aaw
 aar
@@ -107974,7 +107919,7 @@ blp
 bgS
 bgS
 bge
-bqw
+bwg
 aaG
 bpN
 bqm
@@ -108276,7 +108221,7 @@ blp
 biX
 biX
 bog
-bqw
+bwg
 aaG
 bpO
 bqn
@@ -108578,7 +108523,7 @@ blT
 bmI
 bno
 boh
-bqw
+bwg
 aaG
 bpP
 bqo
@@ -108880,7 +108825,7 @@ blp
 bgS
 bgS
 bge
-bqw
+bwg
 aaG
 bpN
 bqm
@@ -109483,7 +109428,7 @@ bge
 adC
 aag
 aap
-bqw
+bwg
 aap
 aaG
 adC
@@ -110381,7 +110326,7 @@ bkq
 boo
 boK
 aap
-bqw
+bwg
 aUg
 aaq
 aaq
@@ -110683,7 +110628,7 @@ aaq
 aaq
 aaq
 aap
-bqw
+bwg
 aUh
 adC
 adC
@@ -110985,7 +110930,7 @@ adC
 adC
 adC
 aag
-bqw
+bwg
 aUh
 adC
 adC
@@ -110993,7 +110938,7 @@ adC
 adC
 adC
 aag
-bqw
+bwg
 aaG
 adC
 adC
@@ -111287,7 +111232,7 @@ adC
 adC
 adC
 aag
-bqw
+bwg
 aUh
 adC
 adC
@@ -111295,7 +111240,7 @@ adC
 adC
 adC
 aag
-bqw
+bwg
 aaG
 adC
 adC
@@ -111597,7 +111542,7 @@ aal
 adC
 aal
 aag
-bqw
+bwg
 aaG
 adC
 adC
@@ -111892,14 +111837,14 @@ adC
 aag
 bpx
 brT
-bld
+bxa
 bdN
 bkS
 bgV
 blZ
 bdN
 aap
-bqw
+bwg
 aap
 azt
 adC
@@ -116133,7 +116078,7 @@ bpp
 bpm
 aaw
 bhH
-brI
+bxa
 aaG
 adC
 adC
@@ -129111,7 +129056,7 @@ aay
 aax
 aai
 aaB
-bmN
+czV
 aao
 aai
 aax
@@ -130445,7 +130390,7 @@ adC
 adC
 cBQ
 cBQ
-aac
+czU
 adC
 adC
 adC
@@ -130747,7 +130692,7 @@ adC
 adC
 cBQ
 cBQ
-aac
+czU
 adC
 adC
 adC
@@ -132875,7 +132820,7 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
 cBQ
@@ -133177,8 +133122,8 @@ cBQ
 cBQ
 cBQ
 cBT
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 adC
@@ -133475,13 +133420,13 @@ adC
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
 cBT
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 adC
 adC
@@ -133776,14 +133721,14 @@ adC
 adC
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 adC
 adC
@@ -134078,14 +134023,14 @@ adC
 adC
 cBQ
 cBQ
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 adC
@@ -134379,14 +134324,14 @@ adC
 adC
 adC
 cBQ
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -134682,12 +134627,12 @@ adC
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -134984,13 +134929,13 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -135284,14 +135229,14 @@ adC
 adC
 cBQ
 cBQ
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
 cBQ
@@ -135584,17 +135529,17 @@ cBQ
 cBQ
 adC
 adC
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
+czU
+czU
+czU
+czU
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -135887,17 +135832,17 @@ adC
 adC
 adC
 adC
-aac
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 adC
@@ -136189,16 +136134,16 @@ adC
 adC
 adC
 adC
-aac
+czU
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -136495,12 +136440,12 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 adC
@@ -136796,9 +136741,9 @@ adC
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -137098,13 +137043,13 @@ adC
 adC
 cBQ
 cBQ
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -137402,12 +137347,12 @@ adC
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -137703,12 +137648,12 @@ adC
 adC
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
-aac
-aac
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -138005,12 +137950,12 @@ adC
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -138311,7 +138256,7 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
 cBQ
@@ -138610,10 +138555,10 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -138912,10 +138857,10 @@ adC
 cBQ
 cBQ
 cBS
-aac
-aac
-aac
-aac
+czU
+czU
+czU
+czU
 cBU
 cBQ
 cBQ
@@ -139215,9 +139160,9 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
-aac
-aac
+czU
+czU
+czU
 cBQ
 cBQ
 cBQ
@@ -139518,7 +139463,7 @@ cBQ
 cBQ
 cBQ
 cBQ
-aac
+czU
 cBQ
 cBQ
 cBQ
@@ -140103,9 +140048,9 @@ adC
 adC
 adC
 aaf
-czy
+czU
 cBH
-czM
+czU
 cBQ
 czL
 czL
@@ -140408,7 +140353,7 @@ aag
 czz
 czz
 czz
-czM
+czU
 cBQ
 czL
 czL
@@ -141611,7 +141556,7 @@ adC
 czd
 cBQ
 cBQ
-czj
+cBQ
 czE
 czA
 czG
