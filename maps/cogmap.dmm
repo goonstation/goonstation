@@ -9657,7 +9657,6 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/turf/simulated/floor/caution/west,
 /area/station/hydroponics/bay,
 /area/space)
 "awG" = (
@@ -17196,7 +17195,6 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
-/turf/simulated/floor/caution/south,
 /area/station/routing/catering,
 /area/space)
 "aNa" = (
@@ -17205,7 +17203,6 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
-/turf/simulated/floor/caution/south,
 /area/station/routing/catering,
 /area/space)
 "aNb" = (
@@ -17891,7 +17888,6 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/turf/simulated/floor/caution/east,
 /area/station/routing/catering,
 /area/space)
 "aOr" = (
@@ -17924,7 +17920,6 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/turf/simulated/floor/caution/west,
 /area/station/routing/catering,
 /area/space)
 "aOu" = (
@@ -18353,7 +18348,6 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/turf/simulated/floor/caution/east,
 /area/station/routing/catering,
 /area/space)
 "aPq" = (
@@ -18378,7 +18372,6 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/turf/simulated/floor/caution/west,
 /area/station/routing/catering,
 /area/space)
 "aPs" = (
@@ -31938,7 +31931,6 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/caution/south,
 /turf/simulated/floor,
 /area/station/routing/engine,
 /area/space)
@@ -31953,7 +31945,6 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/caution/south,
 /turf/simulated/floor,
 /area/station/routing/engine,
 /area/space)
@@ -52452,7 +52443,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/caution/northsouth,
 /turf/simulated/floor,
 /area/station/mining/staff_room,
 /area/space)
@@ -52470,7 +52460,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/caution/northsouth,
 /turf/simulated/floor,
 /area/station/mining/staff_room,
 /area/space)
@@ -52491,7 +52480,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/caution/northsouth,
 /turf/simulated/floor,
 /area/station/mining/staff_room,
 /area/space)
