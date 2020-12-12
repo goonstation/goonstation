@@ -1,4 +1,8 @@
-
+(t)sat dec 12 20
+(u)UrsulaMejor
+(e)🆕🎨|feature, sprites
+(*)Added 3.5 new chicken types! Collect them all! Reminder that they are closed source but NOT SECRET! Tell your friends!
+(+)One chicken likes to honk, one chicken likes to get stoned, and one chicken is a bipedal theropod from the Cretaceous period. The 0.5 is a variant of one of those.
 (t)fri dec 11 20
 (u)Scaltra
 (p)2986
