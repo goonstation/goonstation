@@ -8963,7 +8963,6 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqn" = (
@@ -8972,6 +8971,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqo" = (
