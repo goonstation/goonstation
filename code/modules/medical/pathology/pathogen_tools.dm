@@ -446,7 +446,7 @@
 					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
-				SPAWN_DBG (30)
+				SPAWN_DBG(3 SECONDS)
 					if (used)
 						return
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)

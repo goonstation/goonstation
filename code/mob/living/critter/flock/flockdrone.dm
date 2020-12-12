@@ -170,11 +170,11 @@
 			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> controlling [src.real_name])"
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
-		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%"
-		special_desc += "<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
+		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+		<br><span class='bold'>Resources:</span> [src.resources]"
+		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
+		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
+		<br><span class='bold'>###=-</span></span>"}
 		return special_desc
 	else
 		return null // give the standard description
@@ -289,7 +289,7 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
+				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh") //no good sound for it - moon
 			if (src.emote_check(voluntary, 50))

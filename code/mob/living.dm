@@ -45,7 +45,7 @@
 
 	var/canspeak = 1
 
-	var/datum/organHolder/organHolder = 0 //Not all living mobs will use organholder. Instantiate on New() if you want one.
+	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
 	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
@@ -469,6 +469,8 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
+	actions.interrupt(src, INTERRUPT_ACT)
+
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src
@@ -619,7 +621,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bioHolder.mobAppearance.customization_first_color
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 
@@ -1200,7 +1202,7 @@
 	var/checkpath = src.static_type_override ? src.static_type_override : src.type
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace) && H.mutantrace.icon_override_static)
+		if (istype(H.mutantrace))
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1
@@ -1248,7 +1250,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set src in view(1)
 	set category = "Local"
 
-	SPAWN_DBG (7) //secret spawn delay, so you can't spam this during combat for a free "stun"
+	SPAWN_DBG(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
 			var/mob/living/L = usr
 			L.give_to(src)
@@ -1590,9 +1592,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
-
-	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 30), 2.2)
 
 	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 

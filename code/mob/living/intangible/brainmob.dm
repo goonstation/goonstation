@@ -84,7 +84,7 @@
 		if(!emote)
 			var/list/messages = process_language(message)
 			for (var/obj/O in (all_view(message_range, T)) | src.container.contents)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 

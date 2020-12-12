@@ -130,7 +130,7 @@
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
 					for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
-							A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
+							A.announce_arrival(thePerson)
 
 			sleep(0.9 SECONDS)
 			busy = 0

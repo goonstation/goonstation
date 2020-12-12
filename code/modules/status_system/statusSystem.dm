@@ -1522,6 +1522,67 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		getTooltip()
 			return "Your max stamina and stamina regen have been increased slightly."
 
+	patho_oxy_speed
+		id = "patho_oxy_speed"
+		name = "Oxygen Storage"
+		icon_state = "patho_oxy_speed"
+		unique = 1
+		movement_modifier = /datum/movement_modifier/patho_oxygen
+		var/oxygenAmount = 100
+		var/mob/living/carbon/human/H
+		var/endCount = 0
+
+		onAdd(optional)
+			src.oxygenAmount = optional
+			if(iscarbon(owner))
+				H = owner
+			else
+				owner.delStatus(src.id)
+
+		getTooltip()
+			return "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
+
+		onUpdate(timePassed)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
+				endCount += timePassed
+			else
+				endCount = 0
+			if(endCount > 8 SECONDS)
+				owner.delStatus(src.id)
+			if (H.oxyloss)
+				H.take_oxygen_deprivation(-oxy_damage)
+				oxygenAmount -= oxy_damage
+				H.losebreath = 0
+
+	patho_oxy_speed/bad
+		id = "patho_oxy_speed_bad"
+		name = "Oxygen Conversion"
+		icon_state = "patho_oxy_speed_bad"
+		var/efficiency = 1
+
+		onAdd(optional)
+			src.efficiency = optional
+			..()
+			if(H)
+				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
+
+		onUpdate(timePassed)
+			var/oxy_damage = min(20, H.get_oxygen_deprivation())
+			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
+				endCount += timePassed
+			else
+				endCount = 0
+			if(endCount > 8 SECONDS)
+				owner.delStatus(src.id)
+			if (H.oxyloss)
+				H.take_oxygen_deprivation(-oxy_damage)
+				H.TakeDamage("chest", oxy_damage/efficiency, 0)
+				H.losebreath = 0
+
+		getTooltip()
+			return "Your flesh is being converted into oxygen! But you are moving slightly faster."
+
 
 
 /datum/statusEffect/bloodcurse
@@ -1558,7 +1619,6 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
-
 
 /datum/statusEffect/mentor_mouse
 	id = "mentor_mouse"
@@ -1605,3 +1665,18 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	icon_state = null
 	duration = 0.5 SECONDS
 	visible = 0
+
+/datum/statusEffect/shivering
+	id = "shivering"
+	name = "Shivering"
+	desc = "You're very cold!"
+	icon_state = "shivering"
+	duration = 2 SECONDS
+	visible = 1
+	movement_modifier = /datum/movement_modifier/shiver
+
+	onAdd(var/optional=null)
+		var/mob/M = owner
+		if(istype(M))
+			M.emote("shiver")
+		. = ..()

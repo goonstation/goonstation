@@ -9,6 +9,7 @@
 #define HAS_BAD_SMOKE 16 				//atom has a bad smoke pointing to it right now - used for clean gc to clear refs to itself etc blah
 #define IS_LIMB_ITEM 32 				//im a limb
 #define HAS_KUDZU 64					//if a turf has kudzu.
+#define HAS_NBGG 128					//if a turf has NBGG.
 
 //event_handler_flags
 #define USE_PROXIMITY 1 	//Atom implements HasProximity() call in some way.

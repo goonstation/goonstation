@@ -354,7 +354,7 @@ toxic - poisons
 			if (M.organHolder)
 				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
-					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
@@ -443,10 +443,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 6)
+			explosion_new(null, get_turf(hit), 4)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 6)
+			explosion_new(null, get_turf(O), 4)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"

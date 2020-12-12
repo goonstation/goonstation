@@ -155,7 +155,7 @@
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
-		if (!player.client.preferences || player.client.preferences.job_favorite == null)
+		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
@@ -422,7 +422,7 @@
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
 						else
-							A.announce_arrival(src.real_name, src.mind.assigned_role)
+							A.announce_arrival(src)
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
 		if (possible_new_mob)
@@ -466,6 +466,12 @@
 				R.fields["mind"] = src.mind
 				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
+
+				if (JOB.receives_security_disk)
+					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+					authrec.fields = list("SEC"="[netpass_security]")
+					D.root.add_file( authrec )
+
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
@@ -496,10 +502,7 @@
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
 	if (JOB.slot_belt)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
+		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -521,15 +524,9 @@
 	if (JOB.slot_head)
 		src.equip_new_if_possible(JOB.slot_head, slot_head)
 	if (JOB.slot_poc1)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_poc1, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
+		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
 	if (JOB.slot_poc2)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_poc2, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
+		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
 	if (JOB.slot_rhan)
 		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
 	if (JOB.slot_lhan)
@@ -622,7 +619,7 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if((src.bioHolder && src.bioHolder.HasEffect("fat")) || (src.mutantrace && !src.mutantrace.uses_human_clothes))
+		if((src.mutantrace && !src.mutantrace.uses_human_clothes))
 			src.equip_if_possible(C, slot_in_backpack)
 		else
 			src.equip_if_possible(C, slot_wear_id)

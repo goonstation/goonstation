@@ -22,7 +22,7 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.

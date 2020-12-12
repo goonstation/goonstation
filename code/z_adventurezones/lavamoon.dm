@@ -107,7 +107,7 @@ var/sound/iomoon_alarm_sound = null
 		fxlist = iomoon_exterior_sounds
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -1210,7 +1210,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					src.zapMarker = null
 
 				end_iomoon_blowout()
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
 					E.set_up(8,0, src.loc)
 					E.start()
@@ -1346,6 +1346,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	anchored = 1
 	density = 0
 	var/id = null
+	var/broken = FALSE
+
+	broken
+		name = "broken ladder"
+		desc = "it's too damaged to climb."
+		icon_state = "ladder_wall_broken"
+		broken = TRUE
 
 	New()
 		..()
@@ -1355,6 +1362,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
 
 	attack_hand(mob/user as mob)
+		if (src.broken) return
 		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
 			return
 
@@ -1366,6 +1374,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		user.set_loc(get_turf(otherLadder))
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (src.broken) return
 		if (istype(W, /obj/item/grab))
 			if (!W:affecting) return
 			user.lastattacked = src
@@ -1380,6 +1389,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		activate()
 
 		deactivate()
+
+	ex_act(severity)
+		return
+
 
 //ancient robot door
 /obj/iomoon_puzzle/ancient_robot_door
@@ -1518,7 +1531,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		set_density(0)
 		invisibility = 100
 		light.disable()
-		SPAWN_DBG (13)
+		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
 
 		if (next && next != src)
@@ -1543,7 +1556,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (next && next != src)
 			next.close()
 
-		SPAWN_DBG (13)
+		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
 
 /obj/iomoon_puzzle/floor_pad

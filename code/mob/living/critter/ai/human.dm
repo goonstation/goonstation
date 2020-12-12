@@ -248,7 +248,9 @@
 #endif
 	New()
 		. = ..()
-		src.bioHolder.AddEffect("chicken", 0, 0, 1)
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
 
 /mob/living/carbon/human/chicken/ai_controlled
 	is_npc = TRUE

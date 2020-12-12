@@ -34,7 +34,7 @@
 		src.visible_message("<b>[src]</b> stops moving!")
 		animate_float(src, 1, 5)
 		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN_DBG (100) //Give time for people to butcher it if they want.
+		SPAWN_DBG(10 SECONDS) //Give time for people to butcher it if they want.
 			if (!src.disposed && src.loc && original_object)
 				original_object.set_loc(src.loc)
 				original_object = null
@@ -389,6 +389,7 @@
 	name = "space wasp"
 	desc = "A wasp in space."
 	icon_state = "spacebee"
+	critter_family = BUG
 	density = 1
 	health = 10
 	aggressive = 1
@@ -1414,7 +1415,8 @@
 		drop_stick(1)
 		qdel(src)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			if(icon_state == "snake_bee")
 				src.visible_message("[src] buzzes delightedly!")

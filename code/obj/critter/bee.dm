@@ -970,7 +970,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (time2text(world.realtime, "MM DD") == "10 31")
 				name = "Beezlebubs"
 				desc = "Oh no, a terrifying demon!!  Oh, wait, no, nevermind, it's just the fat and sassy space-bee.  Wow, really had me fooled for a moment...guess that's a Halloween trick...."
@@ -1448,7 +1448,7 @@
 		if (src.reagents)
 			src.reagents.maximum_volume = 50; // semi-arbitrarily chosen, the parent ..() creates a reagent holder with a max volume of 100, most bees only have 50 so I set it as such, special bees will raise the max if necessary
 		growth_timer += rand(-10,15)
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (!beeMom)
 				for (var/mob/living/M in range(2, src))
 					if (!isdead(M) && M.ckey)
@@ -1533,7 +1533,7 @@
 			if (!src.attacking)
 				src.attacking = 1
 				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!")
-				SPAWN_DBG (100)
+				SPAWN_DBG(10 SECONDS)
 					src.attacking = 0
 		else
 			return ..()
@@ -1721,7 +1721,7 @@
 
 		New()
 			..()
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (derelict_mode)
 					name = "sun egg"
 					desc = "DUMU UTU AK"
