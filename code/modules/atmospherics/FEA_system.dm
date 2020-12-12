@@ -318,12 +318,12 @@ datum/controller/air_system
 			LAGCHECK(LAG_HIGH)
 
 	process_singletons()
-		for(var/item in active_singletons)
-			item:process_cell()
+		for(var/turf/simulated/loner as() in active_singletons)
+			loner.process_cell()
 			LAGCHECK(LAG_HIGH)
 
 	process_super_conductivity()
-		for(var/turf/simulated/hot_potato in active_super_conductivity) //gets space tiles in here somehow -ZEWAKA/ATMOS
+		for(var/turf/simulated/hot_potato as() in active_super_conductivity)
 			hot_potato.super_conduct()
 			LAGCHECK(LAG_HIGH)
 
