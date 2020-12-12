@@ -234,7 +234,6 @@ Broken RCD + Effects
 
 				if (istype(A, /turf/simulated/floor))
 					if (do_thing(user, A, "building a wall", matter_create_wall, time_create_wall))
-						var/datum/material/M = A:material
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.inherit_area()
 						T.setMaterial(getMaterial(material_name))
@@ -245,7 +244,6 @@ Broken RCD + Effects
 					if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
 						return	// You can't go reinforcing stuff that's already reinforced you dope.
 					if (do_thing(user, A, "reinforcing the wall", matter_reinforce_wall, time_reinforce_wall))
-						var/datum/material/M = A:material
 						var/turf/simulated/wall/T = A:ReplaceWithRWall()
 						T.inherit_area()
 						T.setMaterial(getMaterial(material_name))
@@ -254,7 +252,6 @@ Broken RCD + Effects
 
 				if (istype(A, /obj/structure/girder) && !istype(A, /obj/structure/girder/displaced))
 					if (do_thing(user, A, "turning \the [A] into a wall", matter_create_wall_girder, time_create_wall_girder))
-						var/datum/material/M = A:material
 						var/turf/wallTurf = get_turf(A)
 
 						var/turf/simulated/wall/T
@@ -279,7 +276,6 @@ Broken RCD + Effects
 
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
 					if (do_thing(user, A, "removing the reinforcement from \the [A]", matter_unreinforce_wall, time_unreinforce_wall))
-						var/datum/material/M = A:material
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "deconstructs a reinforced wall into a normal wall ([T])")
@@ -289,7 +285,6 @@ Broken RCD + Effects
 					if (istype(A, /turf/simulated/wall/auto/shuttle))
 						return
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall))
-						var/datum/material/M = A:material
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						T.setMaterial(getMaterial(material_name))
 						log_construction(user, "deconstructs a wall ([A])")
@@ -363,9 +358,6 @@ Broken RCD + Effects
 						return
 					var/turf/simulated/wall/W = A
 					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/datum/material/M
-						if(W.material)
-							M = W.material
 						var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(get_turf(W))
 						LB.setMaterial(getMaterial(material_name))
 						W.attach_light_fixture_parts(user, LB, TRUE)
@@ -377,9 +369,6 @@ Broken RCD + Effects
 						return
 					var/turf/simulated/floor/F = A
 					if (do_thing(user, F, "building a floor lamp on \the [F]", matter_create_light_fixture, time_create_light_fixture))
-						var/datum/material/M
-						if(F.material)
-							M = F.material
 						var/obj/item/light_parts/floor/FL = new /obj/item/light_parts/floor(get_turf(F))
 						FL.setMaterial(getMaterial(material_name))
 						F.attach_light_fixture_parts(user, FL, TRUE)
@@ -400,9 +389,6 @@ Broken RCD + Effects
 						return
 					var/turf/simulated/wall/W = A
 					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/datum/material/M
-						if(W.material)
-							M = W.material
 						var/obj/item/light_parts/LB = new /obj/item/light_parts(get_turf(W))
 						LB.setMaterial(getMaterial(material_name))
 						W.attach_light_fixture_parts(user, LB, TRUE)
