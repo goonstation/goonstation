@@ -1,5 +1,9 @@
 
 (t)fri dec 11 20
+(u)Scaltra
+(p)2986
+(e)⚖|balance
+(*)Athletic trait now makes you take 33% more brute damage instead of reducing maximum health by 40 points
 (u)Tarmunora
 (e)⚖|balance
 (+)sonic powder stamina damage and misstep will now fall off over distance
