@@ -810,58 +810,17 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/armory_outside)
-"acr" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/armory_outside)
-"acs" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "act" = (
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/window/reinforced{
-	dir = 1
+/obj/cable{
+	icon_state = "0-8"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "acu" = (
@@ -1020,19 +979,7 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "acV" = (
@@ -1245,19 +1192,7 @@
 	detector_id = "AI Core";
 	dir = 8
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "adp" = (
@@ -1395,17 +1330,6 @@
 "adG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/observatory)
-"adH" = (
-/obj/grille/steel,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/armory_outside)
 "adJ" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -2257,13 +2181,10 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "afT" = (
@@ -2567,19 +2488,7 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "agE" = (
@@ -30122,39 +30031,10 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/AIbaseoutside)
-"bpF" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bpG" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -30163,48 +30043,30 @@
 	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/AIbaseoutside)
-"bpH" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bpI" = (
-/obj/grille/steel,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bpJ" = (
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/window/reinforced{
-	dir = 1
+/obj/cable{
+	icon_state = "0-8"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bpK" = (
@@ -30220,19 +30082,7 @@
 	detector_id = "AI Core";
 	dir = 8
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bpL" = (
@@ -30450,19 +30300,7 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bqi" = (
@@ -30704,17 +30542,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
-"bqI" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/AIbaseoutside)
 "bqJ" = (
 /obj/machinery/turret,
 /turf/simulated/floor/circuit,
@@ -30753,17 +30580,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"bqP" = (
-/obj/grille/steel,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/AIbaseoutside)
 "bqQ" = (
 /obj/lattice,
 /obj/grille/steel,
@@ -32665,10 +32481,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "buY" = (
@@ -33040,19 +32853,7 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "bvP" = (
@@ -61819,13 +61620,10 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "uxY" = (
@@ -61887,10 +61685,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
 "vli" = (
@@ -92116,7 +91911,7 @@ adC
 nxc
 wwh
 eFW
-acr
+act
 acV
 foS
 diC
@@ -92418,7 +92213,7 @@ adC
 nxc
 gsU
 nxc
-acr
+act
 acV
 acn
 adE
@@ -92720,7 +92515,7 @@ adC
 nxc
 gsU
 nxc
-acs
+act
 acV
 aco
 adE
@@ -93022,7 +92817,7 @@ adC
 nxc
 gsU
 nxc
-acs
+act
 acV
 aep
 aer
@@ -94232,10 +94027,10 @@ gsU
 nxc
 adF
 acU
-adH
-adH
-adH
-adH
+vjb
+vjb
+vjb
+vjb
 afS
 agD
 wfU
@@ -101846,13 +101641,13 @@ aGT
 aaG
 bpD
 bqh
-bqI
-bqI
-bqI
-bqI
-bqI
-bqI
-bqI
+buX
+buX
+buX
+buX
+buX
+buX
+buX
 bvO
 bwF
 aah
@@ -102448,7 +102243,7 @@ bnh
 aOk
 bdi
 aaG
-bpF
+bpJ
 bqi
 bqJ
 brn
@@ -103052,7 +102847,7 @@ bnj
 bnX
 aGT
 aVV
-bpH
+bpJ
 bqi
 bqK
 bro
@@ -103656,7 +103451,7 @@ aGT
 bnZ
 aGT
 aVV
-bpH
+bpJ
 bqi
 bqK
 brq
@@ -104866,12 +104661,12 @@ aaG
 adC
 bpL
 bqh
-bqP
-bqP
-bqP
-bqP
-bqP
-bqP
+buX
+buX
+buX
+buX
+buX
+buX
 buX
 bvO
 bwF
