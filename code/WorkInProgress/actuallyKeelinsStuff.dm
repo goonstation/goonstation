@@ -1546,6 +1546,7 @@ Returns:
 
 	New()
 		..()
+		setMaterial(getMaterial("gold"))
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
 
