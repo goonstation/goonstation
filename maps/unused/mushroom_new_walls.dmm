@@ -7130,6 +7130,11 @@
 	dir = 9
 	},
 /area/station/quartermaster/office)
+"aCg" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/quartermaster/office)
 "aCh" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -7153,6 +7158,9 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
+/area/station/quartermaster/office)
+"aCm" = (
+/turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
 "aCn" = (
 /obj/machinery/light{
@@ -7236,6 +7244,9 @@
 "aCD" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
+"aCH" = (
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "aCI" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -7514,6 +7525,11 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
+"aDJ" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "aDN" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -8577,6 +8593,9 @@
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/office)
+"aIG" = (
+/turf/simulated/floor/orangeblack/side,
+/area/station/quartermaster/office)
 "aIH" = (
 /obj/machinery/light{
 	dir = 4
@@ -8819,6 +8838,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"aJw" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "aJx" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
@@ -78229,7 +78251,7 @@ aCz
 aFA
 aCz
 aco
-acp
+aJw
 axD
 aLx
 aqE
@@ -78526,12 +78548,12 @@ aAV
 aCc
 aCe
 aCC
-aCy
-aCy
+aDJ
+aDJ
 aFD
 aHv
 aIC
-aBV
+aCm
 axD
 aLy
 aqE
@@ -78827,13 +78849,13 @@ apM
 aAW
 arb
 aCf
-apZ
-apZ
-apZ
+aCH
+aCH
+aCH
 aFE
-apZ
+aCH
 aID
-aBV
+aCm
 axD
 axD
 aqE
@@ -79128,14 +79150,14 @@ apM
 apM
 aAY
 arb
-auT
-apZ
-apZ
+aCg
+aCH
+aCH
 aEP
 aFE
-apZ
+aCH
 aIF
-aBV
+aCm
 axD
 axD
 aqE
@@ -79435,8 +79457,8 @@ iKJ
 iKJ
 iKJ
 aFG
-apZ
-aAU
+aCH
+aIG
 aJx
 axD
 axD
@@ -79732,14 +79754,14 @@ acp
 acp
 acp
 acp
-aBV
+aCm
 aCM
 aDP
 aEQ
 aFI
 aEQ
 aIH
-aBV
+aCm
 axD
 aLz
 aqE

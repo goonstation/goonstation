@@ -48864,6 +48864,40 @@
 /obj/machinery/vending/computer3,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
+"cdF" = (
+/obj/table/reinforced/auto,
+/obj/item/device/light/flashlight,
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/item/paper/book/medical_guide,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/supplylobby)
+"cdG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/supplylobby)
+"cdH" = (
+/obj/table/reinforced/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/cell_charger,
+/obj/item/storage/box/diskbox,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/supplylobby)
 "cdI" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -48989,6 +49023,12 @@
 /area/station/quartermaster/refinery)
 "cdX" = (
 /turf/simulated/floor/grime,
+/area/station/quartermaster/refinery)
+"cdY" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "cdZ" = (
 /obj/machinery/computer/barcode,
@@ -49313,6 +49353,18 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
+"cfc" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/obj/item/crowbar,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
 "cfd" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -49855,6 +49907,14 @@
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
+"cgs" = (
+/obj/table/auto,
+/obj/item/storage/box/cablesbox,
+/obj/item/weldingtool,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
 "cgt" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -51624,6 +51684,15 @@
 	dir = 4
 	},
 /area/space)
+"ckm" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/refinery)
 "ckn" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -52282,6 +52351,12 @@
 /area/station/quartermaster/refinery)
 "clJ" = (
 /obj/storage/crate,
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/refinery)
+"clK" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/paper/book/materials,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "clL" = (
@@ -60832,26 +60907,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"gRp" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/paper/book/medical_guide{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/turf/simulated/floor/bot,
-/area/station/crew_quarters/supplylobby)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -60906,27 +60961,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"hXA" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light,
-/obj/item/storage/box/diskbox{
-	pixel_x = 14;
-	pixel_y = 12
-	},
-/obj/item/device/multitool{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/kitchen/utensil/knife{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/turf/simulated/floor/bot,
-/area/station/crew_quarters/supplylobby)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -60939,23 +60973,6 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
-"iOS" = (
-/obj/table/auto,
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = 1;
-	pixel_y = 8
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 9;
-	pixel_y = -2
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -61079,19 +61096,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
-"kSz" = (
-/obj/table/reinforced/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/cell_charger{
-	pixel_y = 2
-	},
-/turf/simulated/floor/bot,
-/area/station/crew_quarters/supplylobby)
 "ltD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61184,24 +61188,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
-"mNB" = (
-/obj/table/auto,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/obj/machinery/recharger{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/crowbar{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/mining/staff_room)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -61401,17 +61387,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"pLV" = (
-/obj/table/auto,
-/obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/cargotele{
-	pixel_y = -1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
 "pQP" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -61448,26 +61423,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"pTp" = (
-/obj/table/auto,
-/obj/item/paper/book/materials{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/device/matanalyzer{
-	pixel_x = -6;
-	pixel_y = 12
-	},
-/obj/item/device/matanalyzer{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/device/matanalyzer{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/refinery)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -61502,20 +61457,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"rcL" = (
-/obj/table/auto,
-/obj/item/storage/box/cablesbox{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/weldingtool{
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/mining/staff_room)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -116233,7 +116174,7 @@ bYB
 bZO
 bTB
 cct
-gRp
+cdF
 ceU
 cgf
 chr
@@ -116535,7 +116476,7 @@ bYB
 bZO
 bTB
 ccu
-hXA
+cdG
 ceU
 cgm
 cht
@@ -116837,7 +116778,7 @@ bYB
 bZO
 bTB
 cct
-kSz
+cdH
 ceU
 cgf
 chu
@@ -120160,8 +120101,8 @@ bZV
 cbu
 ccC
 cdP
-mNB
-rcL
+cfc
+cgs
 chz
 bYJ
 ckf
@@ -128011,13 +127952,13 @@ bWn
 caa
 cbC
 ccK
-pLV
+cdY
 bWm
 bAQ
 gDG
 ciV
-iOS
-pTp
+ckm
+clK
 bWn
 adC
 adC
