@@ -59131,11 +59131,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
-"czd" = (
-/turf/simulated/wall/asteroid{
-	dir = 1
-	},
-/area/space)
 "cze" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59250,11 +59245,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost)
-"czx" = (
-/turf/simulated/wall/asteroid{
-	dir = 5
-	},
-/area/space)
 "czz" = (
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
@@ -59283,11 +59273,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost)
-"czE" = (
-/turf/simulated/wall/asteroid{
-	dir = 8
-	},
-/area/space)
 "czG" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -59318,16 +59303,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"czK" = (
-/turf/simulated/wall/asteroid{
-	dir = 4
-	},
-/area/space)
-"czL" = (
-/turf/simulated/wall/asteroid{
-	dir = 10
-	},
-/area/space)
 "czN" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -60059,11 +60034,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
-"cBH" = (
-/turf/simulated/wall/asteroid{
-	dir = 6
-	},
-/area/space)
 "cBI" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -65168,7 +65138,7 @@ adC
 adC
 cBQ
 cBQ
-czL
+cBQ
 adC
 adC
 adC
@@ -65470,7 +65440,7 @@ adC
 adC
 adC
 cBQ
-czL
+cBQ
 cBQ
 adC
 adC
@@ -65770,9 +65740,9 @@ adC
 adC
 adC
 adC
-czL
-czL
-czL
+cBQ
+cBQ
+cBQ
 cBQ
 adC
 adC
@@ -66073,8 +66043,8 @@ adC
 adC
 adC
 adC
-czL
-czL
+cBQ
+cBQ
 cBQ
 adC
 adC
@@ -66376,7 +66346,7 @@ adC
 adC
 adC
 adC
-czL
+cBQ
 cBQ
 adC
 adC
@@ -66678,7 +66648,7 @@ adC
 adC
 adC
 adC
-czL
+cBQ
 adC
 adC
 adC
@@ -68488,8 +68458,8 @@ adC
 adC
 adC
 adC
-czE
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -68789,10 +68759,10 @@ adC
 adC
 adC
 adC
-czd
 cBQ
-czL
-czL
+cBQ
+cBQ
+cBQ
 adC
 adC
 adC
@@ -69091,7 +69061,7 @@ adC
 adC
 adC
 cBx
-czd
+cBQ
 cBQ
 cBQ
 cBQ
@@ -69393,7 +69363,7 @@ cAU
 adC
 adC
 cAB
-czd
+cBQ
 cBQ
 cBQ
 cBQ
@@ -69695,11 +69665,11 @@ cAV
 adC
 cBs
 cBy
-czx
-czx
 cBQ
-czL
-czL
+cBQ
+cBQ
+cBQ
+cBQ
 adC
 adC
 adC
@@ -69998,10 +69968,10 @@ cAw
 cAw
 cBz
 cAw
-czx
-czK
-czK
-cBH
+cBQ
+cBQ
+cBQ
+cBQ
 adC
 adC
 aae
@@ -138236,7 +138206,7 @@ adC
 adC
 adC
 adC
-adC
+cBQ
 adC
 adC
 adC
@@ -139445,8 +139415,8 @@ adC
 adC
 adC
 adC
-czE
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -139746,11 +139716,11 @@ adC
 adC
 adC
 adC
-czd
 cBQ
-czL
-czE
-czL
+cBQ
+cBQ
+cBQ
+cBQ
 adC
 adC
 adC
@@ -140049,11 +140019,11 @@ adC
 adC
 aaf
 czU
-cBH
+cBQ
 czU
 cBQ
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -140355,8 +140325,8 @@ czz
 czz
 czU
 cBQ
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -140647,7 +140617,7 @@ cBQ
 cBQ
 adC
 adC
-czd
+cBQ
 cBQ
 aaf
 aaw
@@ -140658,9 +140628,9 @@ czz
 czU
 cBQ
 cBQ
-czL
-czE
-czL
+cBQ
+cBQ
+cBQ
 adC
 adC
 aae
@@ -140949,15 +140919,15 @@ cBQ
 adC
 adC
 adC
-czd
-czL
-czL
+cBQ
+cBQ
+cBQ
 aap
 aap
 czz
 czz
 czz
-czd
+cBQ
 czh
 czh
 czh
@@ -141251,10 +141221,10 @@ adC
 adC
 adC
 adC
-czd
 cBQ
-czL
-czL
+cBQ
+cBQ
+cBQ
 aap
 czz
 czz
@@ -141264,8 +141234,8 @@ czh
 cAj
 cAr
 czh
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -141553,11 +141523,11 @@ adC
 adC
 adC
 adC
-czd
 cBQ
 cBQ
 cBQ
-czE
+cBQ
+cBQ
 czA
 czG
 czA
@@ -141567,8 +141537,8 @@ cAk
 cAs
 czh
 cBQ
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -141855,7 +141825,7 @@ adC
 aak
 aaw
 aaw
-czd
+cBQ
 cBQ
 czh
 czh
@@ -141870,8 +141840,8 @@ cAt
 czh
 czh
 czh
-czL
-czL
+cBQ
+cBQ
 aae
 adC
 adC
@@ -142157,7 +142127,7 @@ adC
 cyZ
 cyZ
 cyZ
-czd
+cBQ
 cBQ
 czh
 czk
@@ -142761,7 +142731,7 @@ adC
 cyZ
 cyZ
 cyZ
-czd
+cBQ
 cBQ
 czh
 czm
@@ -142777,8 +142747,8 @@ czP
 czP
 czh
 cBQ
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -143063,7 +143033,7 @@ adC
 aak
 aaq
 aaq
-czd
+cBQ
 cBQ
 czh
 czn
@@ -143080,8 +143050,8 @@ czH
 czh
 czh
 czh
-czL
-czL
+cBQ
+cBQ
 adC
 adC
 adC
@@ -143365,7 +143335,7 @@ adC
 adC
 adC
 adC
-czd
+cBQ
 cBQ
 czh
 czo
@@ -143667,8 +143637,8 @@ adC
 adC
 adC
 adC
-czx
-czx
+cBQ
+cBQ
 czh
 czp
 czw
@@ -143970,7 +143940,7 @@ adC
 adC
 adC
 adC
-czd
+cBQ
 czh
 czh
 czh
@@ -144272,9 +144242,9 @@ adC
 adC
 adC
 adC
-czx
-czK
-czx
+cBQ
+cBQ
+cBQ
 cBQ
 cBQ
 czh
@@ -144576,9 +144546,9 @@ adC
 adC
 adC
 adC
-czx
 cBQ
 cBQ
+cBQ
 czh
 czh
 czh
@@ -144590,8 +144560,8 @@ cAR
 cAR
 cAR
 czh
-cBH
-cBH
+cBQ
+cBQ
 adC
 adC
 adC
@@ -144879,8 +144849,8 @@ adC
 adC
 aae
 adC
-czx
-czx
+cBQ
+cBQ
 cBQ
 cBQ
 cBQ
@@ -144892,7 +144862,7 @@ cAS
 cBh
 cBr
 czh
-cBH
+cBQ
 adC
 adC
 adC
@@ -145182,13 +145152,13 @@ adC
 adC
 adC
 adC
-czx
-czK
-czK
-czK
-czK
-czK
-czx
+cBQ
+cBQ
+cBQ
+cBQ
+cBQ
+cBQ
+cBQ
 czh
 cAT
 cAR
@@ -145490,7 +145460,7 @@ adC
 adC
 cBQ
 cBQ
-czx
+cBQ
 czh
 czh
 czh
