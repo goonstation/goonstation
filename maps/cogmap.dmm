@@ -16963,8 +16963,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aMJ" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -20256,11 +20255,10 @@
 	},
 /area/station/bridge)
 "aTY" = (
-/obj/grille/steel,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/window/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aTZ" = (
@@ -23627,11 +23625,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"bbK" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "bbL" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/emergency{
@@ -120255,7 +120248,7 @@ aXP
 aYV
 baL
 bdN
-bbK
+bVx
 bdN
 bdN
 aap
