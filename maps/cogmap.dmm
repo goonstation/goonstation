@@ -4880,22 +4880,32 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "alU" = (
-/turf/simulated/floor/caution/corner/nw{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "alV" = (
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "alW" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "alX" = (
-/turf/simulated/floor/caution/corner/ne,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "alY" = (
 /obj/fitness/speedbag,
@@ -5191,7 +5201,11 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "amK" = (
-/turf/simulated/floor/caution/west,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "amL" = (
 /obj/fitness/stacklifter,
@@ -5214,9 +5228,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "amP" = (
-/turf/simulated/floor/caution/east{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "amQ" = (
 /obj/fitness/speedbag/wizard,
@@ -6383,19 +6398,24 @@
 /area/station/crew_quarters/fitness)
 "aps" = (
 /obj/machinery/door/window/southright,
-/turf/simulated/floor/caution/corner/sw,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "apt" = (
 /obj/window/reinforced{
 	dir = 2
 	},
-/turf/simulated/floor/caution/south,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "apu" = (
 /obj/machinery/door/window/southleft,
-/turf/simulated/floor{
-	icon_state = "corner_east"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "apv" = (
 /obj/fitness/speedbag/captain,
@@ -16325,22 +16345,50 @@
 /area/station/bridge)
 "aLl" = (
 /obj/storage/crate,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/medical,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/security,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/research,
-/obj/item/device/radio/headset/research,
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -8
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/device/radio/headset/medical{
+	pixel_x = -3
+	},
+/obj/item/device/radio/headset/medical{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/device/radio/headset/security{
+	pixel_x = 2
+	},
+/obj/item/device/radio/headset/security{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = 7
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/item/device/radio/headset/research{
+	pixel_x = 12
+	},
+/obj/item/device/radio/headset/research{
+	pixel_x = 12;
+	pixel_y = -4
+	},
+/obj/item/storage/box/PDAbox{
+	pixel_x = -1;
+	pixel_y = 3
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	frequency = 1489;
 	name = "Brig Intercom"
 	},
-/obj/item/storage/box/PDAbox,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "aLm" = (
@@ -17448,21 +17496,47 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/table/auto,
+/obj/item/device/radio{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/device/radio{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/device/gps{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Medical Intercom"
 	},
-/obj/table/auto,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "aNK" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/table/auto,
+/obj/item/aiModule/reset{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 14;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -17470,16 +17544,20 @@
 	frequency = 1485;
 	name = "Security Intercom"
 	},
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/device/gps,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "aNL" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -17487,16 +17565,12 @@
 	frequency = 1441;
 	name = "Engineering Intercom"
 	},
-/obj/table/auto,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
 	frequency = 1455;
 	name = "Supply Intercom"
 	},
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "aNM" = (
@@ -40137,9 +40211,10 @@
 /obj/item/reagent_containers/food/snacks/sandwich/pb{
 	pixel_y = -3
 	},
-/turf/simulated/floor/caution/north{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
+/turf/simulated/floor,
 /area/station/science/teleporter)
 "bKe" = (
 /obj/rack,
