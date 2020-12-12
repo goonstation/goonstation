@@ -1,5 +1,9 @@
 
 (t)sat dec 12 20
+(u)Kubius
+(p)3009
+(e)🆕🗺|feature, mapping
+(*)Significant rework to Kondaru centered on the southeast region, improving the flow of the detention complex and considerably expanding Hydroponics.
 (u)Flourish
 (p)3031
 (e)🆕|feature
