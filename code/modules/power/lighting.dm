@@ -671,7 +671,7 @@
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if (!do_after(user, 20))
+				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
 				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))

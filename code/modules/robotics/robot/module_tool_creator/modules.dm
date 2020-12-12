@@ -58,7 +58,7 @@
 		/obj/item/satchel/hydro, // TODO: make more versatile version
 		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
-		/obj/item/spraybottle/cleaner,
+		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,

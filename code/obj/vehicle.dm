@@ -128,7 +128,7 @@ Contains:
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"

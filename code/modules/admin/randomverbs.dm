@@ -675,7 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -1212,6 +1212,26 @@
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
 	else
 		msg += "No players found for '[target]'"
+
+	msg += "</span>"
+	boutput(src, msg)
+
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
 
 	msg += "</span>"
 	boutput(src, msg)

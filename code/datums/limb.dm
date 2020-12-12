@@ -795,11 +795,11 @@
 			var/obj/critter/victim = target
 
 			if (src.weak == 1)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					step_away(victim, user, 15)
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-				SPAWN_DBG (1)
+				SPAWN_DBG(0.1 SECONDS)
 					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")

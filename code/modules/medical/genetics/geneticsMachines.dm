@@ -61,7 +61,7 @@
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)

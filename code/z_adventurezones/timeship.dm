@@ -26,7 +26,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		//fxlist =
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -273,7 +273,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 					src.master.speak("Oh no oh no oh no no no no")
 					src.master.visible_message( "<span class='alert'>[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
 					src.master.set_emotion("screaming")
-					SPAWN_DBG (40)
+					SPAWN_DBG(4 SECONDS)
 						if (src.master)
 							src.master.set_emotion("sad")
 					return
@@ -341,7 +341,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	dead_man_sleeping
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				src.occupant = new /mob/living/carbon/human/future (src)
 				src.icon_state = "sleeper"
 				src.update_icon()
