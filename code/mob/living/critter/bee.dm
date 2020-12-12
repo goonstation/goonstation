@@ -1,4 +1,4 @@
-#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) return src.make_critter(/mob/living/critter/small_animal/wasp)
+#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) {src.make_critter(/mob/living/critter/small_animal/wasp); return}
 
 /* ============================================= */
 /* -------------------- Bee -------------------- */

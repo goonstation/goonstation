@@ -41,13 +41,13 @@
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
-				return 1
+				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
 			if (!master)
-				return 1
+				return
 
 			master.path = thePath
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
@@ -60,7 +60,7 @@
 				//dispose()
 				master.mover = null
 				src.master = null
-				return 1
+				return
 
 			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
@@ -84,7 +84,6 @@
 				master.mover = null
 				src.master = null
 			//dispose()
-			return 0
 
 		return 0
 
