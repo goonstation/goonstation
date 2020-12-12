@@ -338,6 +338,9 @@
 		burn *= 2
 		//tox *= 2
 
+	if(src.traitHolder?.hasTrait("athletic"))
+		brute *=1.33
+
 	if (src.mutantrace)
 		brute *= src.mutantrace.brutevuln
 		burn *= src.mutantrace.firevuln
