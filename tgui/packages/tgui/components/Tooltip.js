@@ -52,16 +52,22 @@ class TooltipOverflow extends Component {
       className,
       content,
       children,
+      overrideLong = false,
+      position = 'bottom',
       ...rest
     } = this.props;
     const boxProps = computeBoxProps(rest);
     return (
       <span
         ref={ref => (this.span = ref)}
-        className="TooltipOverflow"
+        className={classes([
+          'TooltipOverflow',
+        ])}
         {...boxProps}>
         {!!this.overflowed && (
           <Tooltip
+            overrideLong={overrideLong}
+            position={position}
             content={content} />
         )}
         {children}
