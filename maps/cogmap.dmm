@@ -58944,24 +58944,27 @@
 /area/station/medical/research)
 "cxT" = (
 /obj/table/auto,
-/obj/bedsheetbin,
-/obj/item/clothing/glasses/spectro{
+/obj/bedsheetbin{
 	pixel_x = 6;
-	pixel_y = 7
+	pixel_y = 9
 	},
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr";
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr";
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr";
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/spectro{
 	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr";
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr";
-	pixel_x = 2;
 	pixel_y = -4
 	},
 /turf/simulated/floor/white,
@@ -59374,21 +59377,24 @@
 "cyP" = (
 /obj/table/auto,
 /obj/machinery/light,
-/obj/bedsheetbin,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr";
-	pixel_x = -4;
-	pixel_y = 10
+/obj/bedsheetbin{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr";
-	pixel_x = -1;
-	pixel_y = 3
+	pixel_x = -5;
+	pixel_y = 13
 	},
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr";
-	pixel_x = 2;
-	pixel_y = -4
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr";
+	pixel_x = -7;
+	pixel_y = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
