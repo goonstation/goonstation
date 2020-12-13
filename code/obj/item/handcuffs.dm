@@ -10,6 +10,9 @@
 	m_amt = 500
 	var/strength = 2
 	var/delete_on_last_use = 0 // Delete src when it's used up (e.g. tape roll)?
+	var/apply_multiplier = 1
+	var/remove_self_multiplier = 1
+	var/remove_other_multiplier = 1
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
@@ -149,11 +152,12 @@
 /obj/item/handcuffs/tape_roll/crappy
 	name = "masking tape"
 	delete_on_last_use = FALSE
+	apply_multiplier = 2
+	remove_self_multiplier = 0.125
 
 /obj/item/handcuffs/tape
 	desc = "These seem to be made of tape"
 	strength = 1
-	var/crappy = FALSE
 
 /obj/item/handcuffs/guardbot
 	name = "ziptie cuffs"

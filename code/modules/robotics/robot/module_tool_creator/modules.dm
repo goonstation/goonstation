@@ -8,6 +8,7 @@
  * - mining
  */
 
+// security officer. bartender. clown.
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/obj/item/noisemaker,
@@ -31,6 +32,7 @@
 		// TODO: make ticketting machine?
 	)
 
+// scientist.
 /datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
 		/obj/item/robot_chemaster,
@@ -47,6 +49,7 @@
 		/obj/item/extinguisher, // TODO: make large version?
 	)
 
+// botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
 		/obj/item/extinguisher, // TODO: make large version
@@ -107,6 +110,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
+// engineer. mechanic.
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
@@ -125,6 +129,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
+// medical doctor.
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/robodefibrillator,
@@ -147,6 +152,7 @@
 		/obj/item/reagent_containers/dropper,
 	)
 
+// miner.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)

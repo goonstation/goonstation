@@ -795,8 +795,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (istype(cuffs, /obj/item/handcuffs/tape_roll/crappy))
-			duration = duration * 2
+		duration *= cuffs.apply_multiplier
 
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
@@ -816,8 +815,9 @@ var/datum/action_controller/actions
 			if (initial(cuffs.amount) > 1)
 				if (cuffs.amount >= 1)
 					cuffs2 = new /obj/item/handcuffs/tape
-					if (istype(cuffs, /obj/item/handcuffs/tape_roll/crappy))
-						cuffs2.crappy = TRUE
+					cuffs2.apply_multiplier = cuffs.apply_multiplier
+					cuffs2.remove_self_multiplier = cuffs.remove_self_multiplier
+					cuffs2.remove_other_multiplier = cuffs.remove_other_multiplier
 					cuffs.amount--
 					if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 						ownerMob.u_equip(cuffs)
@@ -876,6 +876,10 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if(target != null && ishuman(target) && target.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = target
+			duration = round(duration * H.handcuffs.remove_other_multiplier)
+
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -902,9 +906,7 @@ var/datum/action_controller/actions
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			var/obj/item/handcuffs/tape/T = H.handcuffs
-			if (istype(T) && T.crappy)
-				duration = round(duration / 8)
+			duration = round(duration * H.handcuffs.remove_self_multiplier)
 
 		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
