@@ -49416,8 +49416,13 @@
 /area/station/quartermaster/refinery)
 "cdY" = (
 /obj/table/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
+/obj/machinery/recharger{
+	pixel_x = 5
+	},
+/obj/item/cargotele{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "cdZ" = (
