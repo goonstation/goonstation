@@ -266,23 +266,23 @@ export const BeakerContentsGraph = (props, context) => {
       id: 0,
       icon: "sort-amount-down",
       contents: "",
-      algorithm: (a, b) => b.volume - a.volume,
+      compareFunction: (a, b) => b.volume - a.volume,
     },
     {
       id: 1,
       icon: "sort-amount-up",
       contents: "",
-      algorithm: (a, b) => a.volume - b.volume,
+      compareFunction: (a, b) => a.volume - b.volume,
     },
     {
       id: 2,
       contents: "Density",
-      algorithm: (a, b) => a.state - b.state,
+      compareFunction: (a, b) => a.state - b.state,
     },
     {
       id: 3,
       contents: "Order Added",
-      algorithm: (a, b) => a.state,
+      compareFunction: (a, b) => a.state,
     },
   ];
   return (
@@ -314,7 +314,7 @@ export const BeakerContentsGraph = (props, context) => {
           position="top"
           content="Current Mixture Color" />
       </Box>
-      {beakerContents.slice().sort(sortMap[sort].algorithm).map(
+      {beakerContents.slice().sort(sortMap[sort].compareFunction).map(
         (reagent, index) => (
           <Box
             position="relative"
