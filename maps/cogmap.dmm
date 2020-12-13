@@ -37893,13 +37893,24 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/item/tile/steel,
+/obj/item/slag_shovel{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/material_piece/slag{
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
-	name = "caution sign"
+	name = "caution sign";
+	pixel_x = -5;
+	pixel_y = 12
 	},
-/obj/item/slag_shovel,
-/obj/item/material_piece/slag,
+/obj/item/tile/steel{
+	pixel_x = -3;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bFY" = (
@@ -37913,9 +37924,18 @@
 	pixel_y = -24
 	},
 /obj/table/reinforced/auto,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 9;
+	pixel_y = 7
+	},
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
