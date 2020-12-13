@@ -685,6 +685,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)

@@ -403,7 +403,7 @@
 		eat_twitch(M)
 		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -439,8 +439,7 @@
 		eat_twitch(M)
 		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)

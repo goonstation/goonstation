@@ -1,5 +1,22 @@
 
+(t)sat dec 12 20
+(u)Kubius
+(p)3009
+(e)🆕🗺|feature, mapping
+(*)Significant rework to Kondaru centered on the southeast region, improving the flow of the detention complex and considerably expanding Hydroponics.
+(u)Flourish
+(p)3031
+(e)🆕|feature
+(+)Brains once again carry the names of their owners so that you don't have to sit around and try to figure out who "human's brain" actually belongs to.
+(u)UrsulaMejor
+(e)🆕🎨|feature, sprites
+(*)Added 3.5 new chicken types! Collect them all! Reminder that they are closed source but NOT SECRET! Tell your friends!
+(+)One chicken likes to honk, one chicken likes to get stoned, and one chicken is a bipedal theropod from the Cretaceous period. The 0.5 is a variant of one of those.
 (t)fri dec 11 20
+(u)Scaltra
+(p)2986
+(e)⚖|balance
+(*)Athletic trait now makes you take 33% more brute damage instead of reducing maximum health by 40 points
 (u)Tarmunora
 (e)⚖|balance
 (+)sonic powder stamina damage and misstep will now fall off over distance
