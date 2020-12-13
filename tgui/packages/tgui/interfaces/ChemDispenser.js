@@ -4,17 +4,23 @@ import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
 
+const MatterState = {
+  Solid: 'solid',
+  Liquid: 'liquid',
+  Gas: 'gas',
+};
+
 const stateMap = {
-  1: {
-    icon: "square", // solid
+  [MatterState.Solid]: {
+    icon: 'square',
     pr: 0.5,
   },
-  2: {
-    icon: "tint", // liquid
+  [MatterState.Liquid]: {
+    icon: 'tint',
     pr: 0.9,
   },
-  3: {
-    icon: "wind", // gas
+  [MatterState.Gas]: {
+    icon: 'wind',
     pr: 0.5,
   },
 };
@@ -211,7 +217,7 @@ export const Beaker = (props, context) => {
               style={{
                 "line-height": "15px",
               }}>
-              {" ( " + reagent.volume + "u ) " + reagent.name }
+              {` ( ${reagent.volume}u ) ${reagent.name}`}
             </Tooltip.Overflow>
           </Table.Cell>
           <Table.Cell collapsing textAlign="left">
@@ -246,9 +252,6 @@ export const Beaker = (props, context) => {
     </Section>
   );
 };
-
-
-
 
 export const BeakerContentsGraph = (props, context) => {
   const { data } = useBackend(context);
