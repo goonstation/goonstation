@@ -125,7 +125,7 @@ export const ReagentDispenser = (props, context) => {
             position="relative"
             backgroundColor={""}
             align="left"
-            width="129.5px"
+            width="130px"
             onMouseEnter={() => setHoverOverId(reagent.id)}
             onMouseLeave={() => setHoverOverId("")}
             disabled={maximumBeakerVolume === beakerTotalVolume}
