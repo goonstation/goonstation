@@ -5,9 +5,9 @@ import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, M
 import { Window } from "../layouts";
 
 const MatterState = {
-  Solid: 'solid',
-  Liquid: 'liquid',
-  Gas: 'gas',
+  Solid: 1,
+  Liquid: 2,
+  Gas: 3,
 };
 
 const stateMap = {
