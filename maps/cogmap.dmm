@@ -44912,19 +44912,36 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/warehouse)
 "bTt" = (
-/obj/item/cable_coil/cut,
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
+/obj/item/cable_coil/cut,
 /obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/arm/left{
+	pixel_x = -12
+	},
+/obj/item/parts/robot_parts/leg/left{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/parts/robot_parts/arm/right{
+	pixel_x = 11
+	},
+/obj/item/parts/robot_parts/leg/right{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/parts/robot_parts/robot_frame{
+	pixel_y = 3
+	},
+/obj/item/parts/robot_parts/chest{
+	pixel_y = -5
+	},
+/obj/item/cable_coil/cut{
+	pixel_y = -3
+	},
 /obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bTu" = (
@@ -49061,16 +49078,6 @@
 /area/station/medical/robotics)
 "cdn" = (
 /obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/crowbar,
-/obj/item/cell/supercell/charged,
-/obj/item/device/prox_sensor,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/storage/belt/utility,
-/obj/item/staple_gun,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -49079,6 +49086,25 @@
 	pixel_y = 21
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/item/storage/belt/utility{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/machinery/cell_charger{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/cell/supercell/charged{
+	pixel_y = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cdo" = (
@@ -49104,13 +49130,19 @@
 /area/station/medical/robotics)
 "cdq" = (
 /obj/table/auto,
-/obj/item/staple_gun,
+/obj/decal/cleanable/cobweb,
 /obj/item/scalpel{
 	pixel_x = -4;
 	pixel_y = 11
 	},
-/obj/item/circular_saw,
-/obj/decal/cleanable/cobweb,
+/obj/item/circular_saw{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/staple_gun{
+	pixel_x = 8;
+	pixel_y = 1
+	},
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cdr" = (
@@ -49123,13 +49155,27 @@
 "cds" = (
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/arm/left{
+	pixel_x = -12
+	},
+/obj/item/parts/robot_parts/leg/left{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/parts/robot_parts/arm/right{
+	pixel_x = 11
+	},
+/obj/item/parts/robot_parts/leg/right{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/parts/robot_parts/robot_frame{
+	pixel_y = 3
+	},
+/obj/item/parts/robot_parts/chest{
+	pixel_y = -5
+	},
 /obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cdt" = (
@@ -50036,10 +50082,22 @@
 /area/station/medical/robotics)
 "cfP" = (
 /obj/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/glass/oilcan,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 9;
+	pixel_y = 1
+	},
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cfQ" = (
@@ -52394,13 +52452,29 @@
 /area/station/science/lab)
 "ckW" = (
 /obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/clothing/head/helmet/welding,
-/obj/item/weldingtool,
+/obj/item/device/prox_sensor{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = 9;
+	pixel_y = 19
+	},
+/obj/item/device/multitool{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/machinery/cell_charger{
+	pixel_y = 1
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -58166,21 +58240,29 @@
 	},
 /area/station/medical/medbay/surgery)
 "cwI" = (
-/obj/table/auto,
-/obj/item/scalpel,
-/obj/item/scalpel,
+/obj/surgery_tray,
 /obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+	pixel_y = 11
 	},
-/obj/item/circular_saw{
+/obj/item/scalpel{
 	pixel_x = 3;
-	pixel_y = 12
+	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/hemostat,
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
@@ -60805,17 +60887,41 @@
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/surgery)
 "cCZ" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 12;
+	pixel_y = 10
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/weldingtool{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/hand_labeler{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/crowbar{
+	pixel_x = 2;
+	pixel_y = 4
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/table/auto,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/toolbox/emergency,
-/obj/item/reagent_containers/glass/oilcan,
-/obj/item/hand_labeler,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cDc" = (
