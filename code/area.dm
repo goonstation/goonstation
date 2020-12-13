@@ -14,19 +14,18 @@
 
 #define SIMS_DETAILED_SCOREKEEPING
 
-
+ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space instead
 /**
   * # area
   *
   * A grouping of tiles into a logical space. The sworn enemy of mappers.
   */
-ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space instead
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
 	var/tmp/active = FALSE
 
-	//Who is here (ditto)
+	/// List of all dudes who are here
 	var/list/population = list()
 
 	var/tmp/fire = null
@@ -35,6 +34,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/skip_sims = 0
 	var/tmp/sims_score = 100
 	var/virtual = 0
+
+	// some semi-random turf in the area to guide spy thieves
+	var/turf/spyturf = null
 
 	/// for escape checks
 	var/is_centcom = 0
@@ -73,7 +75,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	/// space blowouts use this, should always be 0
 	var/irradiated = 0
 
-	// Blowouts don't set irradiated on this area back to zero.
+	/// Blowouts don't set irradiated on this area back to zero.
 	var/permarads = 0
 
 	/**
@@ -129,7 +131,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/blocked = 0
 
 	/// if set and a blocked person makes their way into here via Bad Ways, they'll be teleported here instead of nullspace. use a path!
-
 	var/blocked_waypoint
 	var/list/blockedTimers
 
@@ -681,7 +682,7 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			else
 				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
-		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod))
+		if (!isobserver(Obj) && !isintangible(Obj) && !iswraith(Obj) && !istype(Obj,/obj/machinery/vehicle/escape_pod) && !istype(Obj, /obj/machinery/vehicle/tank/minisub/escape_sub))
 			var/atom/target = get_edge_target_turf(src, src.throw_dir)
 			if (OldLoc && isturf(OldLoc))
 				if (target && Obj)
@@ -714,6 +715,7 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	proc/start_particles()
 		for (var/turf/T in src)
 			particleMaster.SpawnSystem(new /datum/particleSystem/warp_star(T, src.star_dir))
+
 /area/shuttle_particle_spawn/north
 	icon_state = "shuttle_transit_stars_n"
 	star_dir = "_n"
@@ -879,7 +881,7 @@ ABSTRACT_TYPE(/area/adventure)
 	New()
 		..()
 
-		SPAWN_DBG (60)
+		SPAWN_DBG(6 SECONDS)
 			if (!helldrone_awake_sound)
 				helldrone_awake_sound = new/sound()
 				helldrone_awake_sound.file = 'sound/machines/giantdrone_loop.ogg'
@@ -913,7 +915,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O) && !helldrone_awake)
 				helldrone_awake = 1
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					helldrone_wakeup()
 					src.process()
 
@@ -1091,12 +1093,13 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab
 	name = "Prefab"
 	icon_state = "orange"
+
 /area/prefab/discount_dans_asteroid
-	name = "Discount Dans delivery asteroid"
+	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
 
 /area/prefab/clown_nest
-	name = "Honky Gibbersons Clownspider farm"
+	name = "Honky Gibberson's Clownspider Farm"
 	icon_state = "orange"
 
 /area/prefab/drug_den
@@ -2960,12 +2963,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 // end station areas //
 
-/area/securityexternal
-	name = "External Security Perimeter"
-	icon_state = "secext"
-	sound_environment = 10
-	do_not_irradiate = 1
-
 /// Nukeops listening post
 /area/listeningpost
 	name = "Listening Post"
@@ -3034,7 +3031,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3090,7 +3087,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3190,7 +3187,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
-	icon_state = "red"
+	icon_state = "secext"
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 
@@ -4930,7 +4927,7 @@ area/station/security/visitation
 /area/station2/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -4978,7 +4975,7 @@ area/station/security/visitation
 /area/station2/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return

@@ -217,7 +217,7 @@
 				var/obj/item/cable_coil/C = O
 				if (C.amount >= 10)
 					user.show_text("You begin to rewire the gun's circuit board...", "blue")
-					if (do_after(user, 35))
+					if (do_after(user, 3.5 SECONDS))
 						user.show_text("You rewire the circuit board.", "blue")
 						src.repair_stage = 2
 						if (C.material)
@@ -232,7 +232,7 @@
 		else if (istype(O, /obj/item/coil/small))
 			if (src.repair_stage == 2)
 				user.show_text("You begin to install the coil...", "blue")
-				if (do_after(user, 35))
+				if (do_after(user, 3.5 SECONDS))
 					user.show_text("You install the coil.", "blue")
 					src.repair_stage = 3
 					if (O.material)
@@ -246,7 +246,7 @@
 		else if (istype(O, /obj/item/electronics/soldering))
 			if (src.repair_stage == 3)
 				user.show_text("You begin to solder the coil into place...", "blue")
-				if (do_after(user, 35))
+				if (do_after(user, 3.5 SECONDS))
 					user.show_text("You solder the coil into place.", "blue")
 					src.repair_stage = 4
 				else
@@ -256,7 +256,7 @@
 		else if (istype(O, /obj/item/lens))
 			if (src.repair_stage == 4)
 				user.show_text("You begin to install the lens...", "blue")
-				if (do_after(user, 35))
+				if (do_after(user, 3.5 SECONDS))
 					user.show_text("You install the lens.", "blue")
 					src.repair_stage = 5
 					if (O.material)
@@ -276,7 +276,7 @@
 			if (src.repair_stage == 6)
 				var/obj/item/ammo/power_cell/P = O
 				user.show_text("You begin to install the power cell...", "blue")
-				if (do_after(user, 35))
+				if (do_after(user, 3.5 SECONDS))
 					user.show_text("You install the power cell.", "blue")
 					src.repair_stage = 7
 					user.u_equip(P)

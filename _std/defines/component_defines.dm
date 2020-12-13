@@ -56,6 +56,9 @@
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
 // ---- atom signals ----
+
+/// when an atom changes dir (olddir, newdir)
+#define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 
@@ -63,7 +66,6 @@
 
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
-
 
 // ---- item signals ----
 

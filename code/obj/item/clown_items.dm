@@ -67,12 +67,12 @@ VUVUZELA
 		icon_state = "crushed-5"
 		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(0.5 SECONDS)
 			// Wow your joke sucks
 			if(prob(5))
 				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
 			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[pick("1","2","3","4")].ogg",50,0)
+				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
 
 /obj/item/storage/box/box_o_laughs
 	name = "Box o' Laughs"

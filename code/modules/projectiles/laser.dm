@@ -466,3 +466,43 @@ toxic - poisons
 			L.changeStatus("burning", 70)
 		else
 			L.changeStatus("burning", 35)
+
+/datum/projectile/laser/signifer_lethal
+	name = "signifer bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	power = 15
+	cost = 25
+	sname = "lethal"
+	shot_sound = 'sound/weapons/SigLethal.ogg'
+	hit_ground_chance = 30
+	brightness = 1
+	icon_state = "signifer2_burn"
+	damage_type = D_ENERGY
+	color_red = 0.1
+	color_green = 0.1
+	color_blue = 0.8
+
+	disruption = 8
+
+	shot_number = 2
+	ie_type = "E"
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		hit.setStatus("signified")
+		..()
+
+	brute
+		icon_state = "signifer2_brute"
+		damage_type = D_KINETIC
+		color_red = 0.8
+		color_green = 0.1
+		color_blue = 0.1
+
+		on_hit(var/atom/hit)
+			if(hit.hasStatus("signified"))
+				elecflash(get_turf(hit),radius=0, power=4, exclude_center = 0)
+				random_brute_damage(hit, rand(5,10), 0)
+				hit.delStatus("signified")
+			..()

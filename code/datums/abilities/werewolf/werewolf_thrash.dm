@@ -21,9 +21,9 @@
 				for (var/mob/T in range(1))
 					if (prob(40) && T.density)
 						M.werewolf_attack(T, "thrash")
-						M.dir = turn(M.dir, 90)
+						M.set_dir(turn(M.dir, 90))
 			if (M)
-				M.dir = turn(M.dir, 90)
+				M.set_dir(turn(M.dir, 90))
 				playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 10, 1, 0.1, 1.6)
 			else
 				return 0

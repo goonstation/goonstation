@@ -93,6 +93,7 @@
 /obj/item/reagent_containers/glass/bottle/syringe_canister
 	name = "poison canister"
 	desc = "A large fluid-filled canister designed to fill a syringe gun."
+	icon_state = "syringe_canister"
 	initial_volume = 90
 
 	curare
@@ -188,7 +189,7 @@
 	initial_reagents = "oculine"
 
 /obj/item/reagent_containers/glass/bottle/antirad
-	name = "potassium iodine bottle"
+	name = "potassium iodide bottle"
 	desc = "A small bottle of potassium iodide."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5

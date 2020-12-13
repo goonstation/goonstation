@@ -23,7 +23,7 @@
 			boutput(M, __red("You can't throw yourself."))
 			return 1
 		HH.set_loc(M.loc)
-		HH.dir = get_dir(HH, M)
+		HH.set_dir(get_dir(HH, M))
 		HH.changeStatus("stunned",40)
 		M.visible_message("<span class='alert'><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
 		M.emote("scream")
@@ -43,12 +43,12 @@
 				if (!isturf(M.loc) || !isturf(HH.loc))
 					boutput(M, __red("You can't throw [HH] from here!"))
 					return 0
-				M.dir = turn(M.dir, 90)
+				M.set_dir(turn(M.dir, 90))
 				var/turf/T = get_step(M, M.dir)
 				var/turf/S = HH.loc
 				if ((S && isturf(S) && S.Exit(HH)) && (T && isturf(T) && T.Enter(HH)))
 					HH.set_loc(T)
-					HH.dir = get_dir(HH, M)
+					HH.set_dir(get_dir(HH, M))
 			else
 				return 0
 			sleep (delay)

@@ -30,9 +30,7 @@
 
 		src.product_amount = amount
 		src.product_cost = round(cost)
-#if ASS_JAM
-		src.product_cost -= 0.01
-#endif
+
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
 
@@ -1097,12 +1095,7 @@
 	lg = 0.88
 	lb = 0.88
 
-#if ASS_JAM
-	New()
-		. = ..()
-		if(src.type == /obj/machinery/vending/medical)
-			ADD_MORTY(7, 8, 12, 12)
-#endif
+
 
 	create_products()
 		..()
@@ -1747,6 +1740,11 @@
 /obj/machinery/vending/hydroponics
 	name = "GardenGear"
 	desc = "A vendor for Hydroponics related equipment."
+	icon_state = "gardengear"
+	icon_panel = "standard-panel"
+	icon_off = "gardengear-off"
+	icon_broken = "gardengear-broken"
+	icon_fallen = "gardengear-fallen"
 	acceptcard = 0
 
 	lr = 0.5
@@ -2027,7 +2025,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=PAY_UNTRAINED/10)
@@ -2117,7 +2115,9 @@
 	desc = "One stop shop for all your custodial needs."
 	icon_state = "janitor"
 	icon_panel = "standard-panel"
-	icon_deny = "null"
+	icon_off = "janitor-off"
+	icon_broken = "janitor-broken"
+	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
 	mats = 10

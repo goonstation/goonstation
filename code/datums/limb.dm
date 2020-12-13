@@ -159,7 +159,7 @@
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
 			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
-			user.dir = get_dir(user, target)
+			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
@@ -300,37 +300,6 @@
 		current_shots = 1
 		cooldown = 40
 		reload_time = 300
-
-	minigun
-		proj = new/datum/projectile/energybolt/reliquary_burst
-		shots = 1
-		current_shots = 1
-		cooldown = 4
-		reload_time = 4
-
-		attack_range(atom/target, var/mob/user, params)
-			if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
-				boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
-				return
-			else if (current_shots <= 0)
-				current_shots = shots
-			if (next_shot_at > ticker.round_elapsed_ticks)
-				return
-			if (current_shots > 0)
-				current_shots--
-				var/pox = text2num(params["icon-x"]) - 16
-				var/poy = text2num(params["icon-y"]) - 16
-				var/spread_angle = 15
-				playsound(user.loc, "sound/misc/reliquary/Rel-vortex-firing.ogg", 70, 1)
-				flick("guardian_gunlift", user)
-				user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
-				next_shot_at = ticker.round_elapsed_ticks + cooldown
-				SPAWN_DBG (3)
-					shoot_projectile_ST_pixel_spread(user, proj, target, pox, poy, spread_angle)
-				if (!current_shots)
-					reloaded_at = ticker.round_elapsed_ticks + reload_time
-			else
-				reloaded_at = ticker.round_elapsed_ticks + reload_time
 
 	spike
 		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
@@ -726,7 +695,7 @@
 			target.changeStatus("weakened", (4 * quality)*10)
 		user.lastattacked = target
 
-#if ASS_JAM
+// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -799,7 +768,6 @@
 		user.lastattacked = target
 
 
-#endif
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
@@ -827,11 +795,11 @@
 			var/obj/critter/victim = target
 
 			if (src.weak == 1)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					step_away(victim, user, 15)
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-				SPAWN_DBG (1)
+				SPAWN_DBG(0.1 SECONDS)
 					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")
@@ -1479,241 +1447,3 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)
 
-/datum/limb/reliquary_guardian_melee
-	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
-		if (!holder)
-			return
-
-		if(check_target_immunity( target ))
-			return 0
-
-		if (!istype(user))
-			target.attack_hand(user, params, location, control)
-			return
-
-		if (istype(target, /obj/critter))
-			user.lastattacked = target
-			var/obj/critter/victim = target
-			var/turf/T = get_edge_target_turf(user, user.dir)
-			if (prob(66) && T && isturf(T))
-				user.visible_message("<span class='alert'><B>[user] savagely punches [victim], sending them flying!</B></span>")
-				victim.health -= 6 * victim.brutevuln
-				victim.throw_at(T, 10, 2)
-			else
-				user.visible_message("<span class='alert'><B>[user] punches [victim]!</span>")
-				victim.health -= 4 * victim.brutevuln
-
-				playsound(user.loc, "punch", 25, 1, -1)
-
-			if (victim?.alive && victim.health <= 0)
-				victim.CritterDeath()
-			return
-
-		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door")))
-				if (0)
-					target.attack_hand(user, params, location, control)
-					return
-				if (1)
-					user.lastattacked = target
-					return
-
-		if (ismob(target))
-			user.lastattacked = target
-			if (issilicon(target))
-				special_attack_silicon(target, user)
-				return
-			else
-				..()
-				return
-
-		..()
-		return
-
-	grab(mob/target, var/mob/living/user)
-		if (!holder)
-			return
-
-		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
-			return
-
-		if(check_target_immunity( target ))
-			return 0
-
-		if (issilicon(target))
-			special_attack_silicon(target, user)
-			return
-
-		user.grab_other(target, 1) // Use standard grab proc.
-
-		// Werewolves and shamblers grab aggressively by default.
-		var/obj/item/grab/GD = user.equipped()
-		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
-			target.changeStatus("stunned", 2 SECONDS)
-			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
-			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
-
-		return
-
-	disarm(mob/target, var/mob/living/user)
-		if (!holder)
-			return
-
-		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
-			return
-
-		if(check_target_immunity( target ))
-			return 0
-
-		if (target.melee_attack_test(user, null, null, 1) != 1) // Target.lying check is in there.
-			return
-
-		if (issilicon(target))
-			special_attack_silicon(target, user)
-			return
-
-		var/send_flying = 2 // 1: a little bit | 2: across the room
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/disarm/msgs = user.calculate_disarm_attack(target, affecting)
-
-		if (!msgs || !istype(msgs))
-			return
-
-		user.lastattacked = target
-
-		if (prob(25) && ishuman(target))
-			var/mob/living/carbon/human/HH = target
-			var/limb_name = "unknown limb"
-
-			if (!HH || !ishuman(HH))
-				..() // Something went very wrong, fall back to default disarm proc.
-				return
-
-			if (HH.l_hand)
-				HH.sever_limb("l_arm")
-				limb_name = "left arm"
-			else if (HH.r_hand)
-				HH.sever_limb("r_arm")
-				limb_name = "right arm"
-			else
-				var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
-				var/the_limb = pick(limbs)
-				if (!HH.has_limb(the_limb))
-					return 0
-				HH.sever_limb(the_limb)
-				switch (the_limb)
-					if ("l_arm")
-						limb_name = "left arm"
-					if ("r_arm")
-						limb_name = "right arm"
-					if ("l_leg")
-						limb_name = "left leg"
-					if ("r_leg")
-						limb_name = "right leg"
-
-			if (prob(50) && !isdead(HH))
-				HH.emote("scream")
-
-				msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-				msgs.base_attack_message = "<span class='alert'><B>[user] slams [HH] with the edge of their enormous claw, shearing off their [limb_name]!</span>"
-				msgs.damage_type = DAMAGE_CUT // We just lost a limb.
-
-				msgs.damage = rand(1,5)
-				HH.changeStatus("stunned", 2 SECONDS)
-
-			else
-				if (!target.anchored && prob(30))
-					send_flying = 1
-				else
-					target.drop_item() // Shamblers get a guaranteed disarm.
-
-				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.base_attack_message = "<span class='alert'><B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] attack[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
-				msgs.damage = rand(1,2)
-
-		logTheThing("combat", user, target, "disarms [constructTarget(target,"combat")] with Reliquary Guardian Fist at [log_loc(user)].")
-
-		if (send_flying == 2)
-			msgs.after_effects += /proc/wrestler_backfist
-		else if (send_flying == 1)
-			msgs.after_effects += /proc/wrestler_knockdown
-
-		msgs.flush(SUPPRESS_LOGS)
-
-		user.lastattacked = target
-		return
-
-	harm(mob/target, var/mob/living/user)
-		if (!holder)
-			return
-
-		if (!istype(user) || !ismob(target))
-			target.attack_hand(user)
-			return
-		if(check_target_immunity( target ))
-			return 0
-		if (target.melee_attack_test(user) != 1)
-			return
-
-		if (issilicon(target))
-			special_attack_silicon(target, user)
-			return
-
-		var/send_flying = 2 // 1: a little bit | 2: across the room
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting)
-
-		if (!msgs || !istype(msgs))
-			return
-
-		if (target.canmove && !target.anchored && !target.lying)
-			if (prob(50))
-				if (prob(60))
-					target.stuttering += 2
-					send_flying = 1
-				else
-					target.stuttering += 3
-					send_flying = 2
-			else
-				target.stuttering += 1
-				target.changeStatus("stunned", 2 SECONDS)
-		else
-			target.changeStatus("stunned", 2 SECONDS)
-			target.stuttering += 1
-
-
-		if (send_flying == 2)
-			msgs.base_attack_message = "<span class='alert'><B>[user] delivers a supernatural punch, sending [target] flying!</b></span>"
-		else
-			if (prob(25))
-				msgs.base_attack_message = "<span class='alert'><B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
-			else
-				msgs.base_attack_message = "<span class='alert'><B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
-				target.add_fingerprint(user)
-
-		if (prob(33) && !isdead(target) && !issilicon(target))
-			target.emote("scream")
-
-		if (send_flying == 2)
-			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
-		else
-			msgs.base_attack_message = "<span class='alert'><B>[user] punches [target] with their[pick("enormous", "giant", "gargantuan", "strong")] steel fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B></span>"
-
-			msgs.played_sound = pick(sounds_punch)
-			msgs.damage = rand(6, 13)
-			msgs.damage_type = DAMAGE_BLUNT
-
-		if (send_flying == 2)
-			msgs.after_effects += /proc/wrestler_backfist
-		else if (send_flying == 1)
-			msgs.after_effects += /proc/wrestler_knockdown
-
-		logTheThing("combat", user, target, "punches [constructTarget(target,"combat")] with Reliquary Guardian Fist at [log_loc(user)].")
-		user.attack_effects(target, affecting)
-		msgs.flush(SUPPRESS_LOGS)
-
-		user.lastattacked = target
-		return

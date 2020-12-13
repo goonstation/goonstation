@@ -22,6 +22,7 @@
 	var/obj/item/organ/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
+	var/obj/item/organ/tail = null
 	var/lungs_changed = 2				//for changing lung stamina debuffs if it has changed since last cycle. starts at 2 for having 2 working lungs
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
@@ -44,15 +45,16 @@
 		"stomach"="/obj/item/organ/stomach",
 		"intestines"="/obj/item/organ/intestines",
 		"appendix"="/obj/item/organ/appendix",
-		"butt"="/obj/item/clothing/head/butt")
+		"butt"="/obj/item/clothing/head/butt",
+		"tail"="/obj/item/organ/tail")
 
-	New(var/mob/living/L)
+	New(var/mob/living/L, var/ling)
 		..()
 		if (!ishuman(L))
 			return
 		if (istype(L))
 			src.donor = L
-		if (src.donor)
+		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
 
 	disposing()
@@ -115,6 +117,9 @@
 		if (appendix)
 			appendix.donor = null
 			appendix.holder = null
+		if (tail)
+			tail.donor = null
+			tail.holder = null
 
 		head = null
 		skull = null
@@ -134,6 +139,7 @@
 		spleen = null
 		pancreas = null
 		appendix = null
+		tail = null
 
 		donor = null
 		..()
@@ -168,6 +174,11 @@
 			if ("right_kidney")
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
+			if ("tail")
+				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+					return
+				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
+					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
 			//Missing lungs is handled in it's own proc right now. I'll probably move it here eventually, but that's how I did it originally before I thought of a thing for handling missing organs in the organholder and I'm not rewriting such a tedious thing now.
 
 
@@ -264,9 +275,9 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -331,6 +342,9 @@
 		if (!src.appendix)
 			src.appendix = new /obj/item/organ/appendix(src.donor, src)
 			organ_list["appendix"] = appendix
+		if (!src.tail)
+			src.tail = null	// Humans dont have tailbones, fun fact
+			organ_list["tail"] = tail
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
@@ -387,6 +401,8 @@
 				organ = "pancreas"
 			else if(organ == appendix)
 				organ = "appendix"
+			else if(organ == tail)
+				organ = "tail"
 			else
 				return 0 // what the fuck are you trying to remove
 
@@ -446,7 +462,7 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 				myHead.set_loc(location)
-				myHead.update_headgear_image()
+				myHead.update_head_image()
 				myHead.on_removal()
 				myHead.holder = null
 				src.head = null
@@ -682,6 +698,18 @@
 				src.donor.update_body()
 				src.organ_list["appendix"] = null
 				return myappendix
+
+			if ("tail")
+				if (!src.tail)
+					return 0
+				var/obj/item/organ/tail/mytail = src.tail
+				mytail.set_loc(location)
+				mytail.on_removal()
+				mytail.holder = null
+				src.tail = null
+				src.donor.update_body()
+				src.organ_list["tail"] = null
+				return mytail
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -1032,6 +1060,21 @@
 				organ_list["appendix"] = newappendix
 				success = 1
 
+			if ("tail")
+				if (src.tail)
+					if (force)
+						qdel(src.tail)
+					else
+						return 0
+				var/obj/item/organ/tail/newtail = I
+				newtail.op_stage = op_stage
+				src.tail = newtail
+				newtail.set_loc(src.donor)
+				newtail.holder = src
+				organ_list["tail"] = newtail
+				src.donor.update_body()
+				success = 1
+
 		if (success)
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
@@ -1141,8 +1184,6 @@
 /*---------- Critter Stuff --------*/
 /*=================================*/
 
-
-
 /datum/organHolder/critter //for the animals. same stuff as human, but with a brain as the only organ
 
 	New(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
@@ -1170,7 +1211,7 @@
 					src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
 					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1213,7 +1254,7 @@
 		if(!src.heart)
 			src.heart = new /obj/item/organ/heart/flock(src.donor, src)
 			organ_list["heart"] = heart
-			SPAWN_DBG (20) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
+			SPAWN_DBG(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
 				if (src.heart && src.donor)
 					src.heart.name = initial(src.heart.name)
 

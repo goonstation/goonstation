@@ -424,7 +424,7 @@
 				A:set_loc(src.loc)
 
 	src.set_density(src.item ? src.item.density : 0)
-	src.item.dir = src.dir
+	src.item.set_dir(src.dir)
 	src.icon = src.item.icon
 	src.icon_state = src.item.icon_state
 	src.color = src.item.color
@@ -611,8 +611,6 @@
 
 		// Resistance from Bio Effects
 		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("fat"))
-				thermal_protection += 10
 			if (src.bioHolder.HasEffect("dwarf"))
 				thermal_protection += 10
 

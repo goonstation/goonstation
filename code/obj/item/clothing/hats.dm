@@ -33,6 +33,16 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
+/obj/item/clothing/head/pink
+	desc = "A knit cap in pink."
+	icon_state = "pink"
+	item_state = "pgloves"
+
+/obj/item/clothing/head/orange
+	desc = "A knit cap in orange."
+	icon_state = "orange"
+	item_state = "ogloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
 	desc = "A plsing hat."
@@ -1202,3 +1212,13 @@
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
+
+/obj/item/clothing/head/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = 1.0
+	throwforce = 0

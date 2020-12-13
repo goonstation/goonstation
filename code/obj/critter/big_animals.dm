@@ -59,6 +59,11 @@
 		. += "-dead"
 		icon_state = .
 
+	on_pet(mob/user)
+		if (..())
+			return 1
+		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!src.alive)
 			// TODO: tie this into surgery()
@@ -510,7 +515,7 @@ obj/critter/bear/care
 	Move()
 		if(prob(15))
 			playsound(src.loc, "rustle", 10, 1)
-		..()
+		. = ..()
 
 /obj/critter/bat/doctor
 	name = "Dr. Acula"

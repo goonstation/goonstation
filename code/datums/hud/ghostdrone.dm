@@ -198,8 +198,8 @@
 		update_equipment()
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
-		if(!master) return
+	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
+		if(!master || user != master) return
 
 		if(scr.item)
 			if(dy < 0) items_screen++

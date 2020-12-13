@@ -16,17 +16,13 @@
 /*
 /obj/effects/harmless_smoke/New()
 	..()
-	SPAWN_DBG (100)
+	SPAWN_DBG(10 SECONDS)
 		pool(src)
 	return
 */
 /obj/effects/harmless_smoke/proc/kill(var/time)
 	SPAWN_DBG(time)
 		pool(src)
-
-/obj/effects/harmless_smoke/Move()
-	..()
-	return
 
 
 proc/harmless_smoke_puff(var/turf/location, var/duration = 100)

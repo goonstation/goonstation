@@ -1,5 +1,6 @@
 /datum/job/
 	var/name = null
+	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
 	var/wages = 0
@@ -19,6 +20,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_security_disk = 0
 	var/receives_badge = 0
 	var/announce_on_join = 0 // that's the head of staff announcement thing
 	var/radio_announcement = 1 // that's the latejoin announcement thing
@@ -235,6 +237,7 @@
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security
 
@@ -454,6 +457,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
@@ -598,14 +602,15 @@
 	limit = 5
 	wages = PAY_DOCTORATE
 	slot_back = /obj/item/storage/backpack/medic
-	slot_belt = /obj/item/device/pda2/medical
+	slot_belt = /obj/item/storage/belt/medical
 	slot_jump = /obj/item/clothing/under/rank/medical
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_foot = /obj/item/clothing/shoes/red
 	slot_lhan = /obj/item/storage/firstaid/regular/doctor_spawn
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
-	slot_poc1 = /obj/item/paper/book/pocketguide/medical
+	slot_poc1 = /obj/item/device/pda2/medical
+	slot_poc2 = /obj/item/paper/book/pocketguide/medical
 	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
@@ -818,11 +823,12 @@
 		if (prob(20))
 			M.bioHolder.AddEffect("accent_swedish", do_stability=0)
 
-/datum/job/civilian/barman
-	name = "Barman"
+/datum/job/civilian/bartender
+	name = "Bartender"
+	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	slot_belt = /obj/item/device/pda2/barman
+	slot_belt = /obj/item/device/pda2/bartender
 	slot_jump = /obj/item/clothing/under/rank/bartender
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
@@ -833,7 +839,7 @@
 
 	New()
 		..()
-		src.access = get_access("Barman")
+		src.access = get_access("Bartender")
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1232,7 +1238,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
@@ -2114,6 +2120,7 @@
 // end halloween jobs
 #endif
 
+/*
 /datum/job/special/turkey
 	name = "Turkey"
 	linkcolor = "#FF7300"
@@ -2131,6 +2138,7 @@
 			return
 		var/type = pick(/mob/living/critter/small_animal/bird/turkey/gobbler, /mob/living/critter/small_animal/bird/turkey/hen)
 		M.critterize(type)
+*/
 
 /datum/job/special/syndicate_operative
 	name = "Syndicate"
@@ -2318,7 +2326,7 @@
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_access("Security Officer") + list(access_heads)
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2506,7 +2514,7 @@
 	slot_head = /obj/item/clothing/head/mailcap
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_back = /obj/item/storage/backpack/satchel
-	slot_ears = /obj/item/device/radio/headset/command/ce
+	slot_ears = /obj/item/device/radio/headset/mail
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 

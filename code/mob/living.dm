@@ -27,9 +27,7 @@
 	var/ai_attacknpc = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
-#if ASS_JAM
-	var/ai_prefrozen //needed for timestop
-#endif
+
 
 	var/mob/living/ai_target = null
 	var/list/mob/living/ai_target_old = list()
@@ -47,7 +45,7 @@
 
 	var/canspeak = 1
 
-	var/datum/organHolder/organHolder = 0 //Not all living mobs will use organholder. Instantiate on New() if you want one.
+	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
 	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
@@ -182,16 +180,16 @@
 	..()
 
 /mob/living/death(gibbed)
+	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
-	if (src.key) statlog_death(src,gibbed)
-	if (src.client && (ticker.round_elapsed_ticks >= 12000))
+	if (src.key) statlog_death(src, gibbed)
+	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
 			if (!C.mob) continue
-			var/mob/players = C.mob
-			if (!isdead(players) && !isVRghost(players) && !isghostcritter(players) && !inafterlife(players))
+			var/mob/player = C.mob
+			if (!isdead(player) && VALID_MOB(player))
 				num_players++
-			LAGCHECK(LAG_HIGH)
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
@@ -200,6 +198,7 @@
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 				world << csound("sound/misc/shuttle_enroute.ogg")
+	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
 		src.deathConfetti()
@@ -470,6 +469,8 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
+	actions.interrupt(src, INTERRUPT_ACT)
+
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		if (target != src && ishuman(src))
 			var/mob/living/carbon/human/S = src
@@ -620,7 +621,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bioHolder.mobAppearance.customization_first_color
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 
@@ -714,11 +715,7 @@
 	if (src.wear_mask && src.wear_mask.is_muzzle)
 		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
 		return
-#if ASS_JAM //no speak in timestop
-	if(paused)
-		boutput(src, "<span class='alert'>Can't speak in stopped time dummy!.</span>")
-		return
-#endif
+
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
@@ -1167,10 +1164,7 @@
 			move_laying.move_callback(src, oldloc, NewLoc)
 
 /mob/living/Move(var/turf/NewLoc, direct)
-#if ASS_JAM //timestop moving when shouldnt bugfix. canmove doesnt work with keyspamming diagonals???
-	if(paused)
-		return
-#endif
+
 	var/oldloc = loc
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
@@ -1208,7 +1202,7 @@
 	var/checkpath = src.static_type_override ? src.static_type_override : src.type
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace) && H.mutantrace.icon_override_static)
+		if (istype(H.mutantrace))
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1
@@ -1256,7 +1250,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set src in view(1)
 	set category = "Local"
 
-	SPAWN_DBG (7) //secret spawn delay, so you can't spam this during combat for a free "stun"
+	SPAWN_DBG(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
 			var/mob/living/L = usr
 			L.give_to(src)
@@ -1598,9 +1592,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
-
-	if (src.bodytemperature < src.base_body_temp - (src.temp_tolerance * 2) && !src.is_cold_resistant())
-		. += min( (((src.base_body_temp - (src.temp_tolerance * 2)) - src.bodytemperature) / 30), 2.2)
 
 	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 

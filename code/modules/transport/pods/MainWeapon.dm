@@ -165,10 +165,10 @@
 	firerate = 25
 
 /obj/item/shipcomponent/mainweapon/gun
-	name = "SPK-12 Ballistic System"
+	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
-	current_projectile = new/datum/projectile/bullet/a12
+	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"
@@ -287,9 +287,9 @@
 				if(isfiring) return
 				isfiring = 1
 				var/obj/decal/D = new/obj/decal(ship.loc)
-				D.dir = ship.dir
+				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
-					D.dir = shot_dir_override
+					D.set_dir(shot_dir_override)
 
 				D.name = "metal foam spray"
 				D.icon = 'icons/obj/chemical.dmi'

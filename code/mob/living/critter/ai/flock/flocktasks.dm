@@ -166,7 +166,7 @@
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(F?.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(build_target)
 				has_started = 1
 
@@ -239,11 +239,80 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 
 /datum/aiTask/succeedable/repair/on_reset()
+	has_started = 0
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DEPOSIT GOAL
+// targets: ghost tealprints in the same flock
+// precondition: 10 resources
+/datum/aiTask/sequence/goalbased/deposit
+	name = "depositing"
+	weight = 4
+
+/datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/deposit, list(holder)))
+
+/datum/aiTask/sequence/goalbased/deposit/precondition()
+	. = 0
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F?.can_afford(10))
+		. = 1
+
+/datum/aiTask/sequence/goalbased/deposit/on_reset()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	if(F)
+		F.active_hand = 2 // nanite spray
+		sleep(0.1 SECONDS)
+		F.a_intent = INTENT_HELP
+		F.hud?.update_intent()
+		sleep(0.1 SECONDS)
+		F.hud?.update_hands() // for observers
+
+/datum/aiTask/sequence/goalbased/deposit/get_targets()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/list/targets = list()
+	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
+		if(S.flock == F.flock && S.goal > S.currentmats)
+			// if we can get a valid path to the target, include it for consideration
+			if(cirrAstar(get_turf(F), get_turf(S), 1, null, /proc/heuristic, 40))
+				targets += S
+	return targets
+
+////////
+
+/datum/aiTask/succeedable/deposit
+	name = "deposit subtask"
+	var/has_started = 0
+
+/datum/aiTask/succeedable/deposit/failed()
+	var/mob/living/critter/flock/drone/F = holder.owner
+	var/obj/flock_structure/ghost/T = holder.target
+	if(!F || !T || get_dist(T, F) > 1)
+		return 1
+	if(F && (!F.can_afford() || !F.abilityHolder))
+		return 1
+
+/datum/aiTask/succeedable/deposit/succeeded()
+	return (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+
+/datum/aiTask/succeedable/deposit/on_tick()
+	if(!has_started)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		var/obj/flock_structure/ghost/T = holder.target
+		if(F && T && get_dist(holder.owner, holder.target) <= 1)
+			if(F.set_hand(2)) // nanite spray
+				sleep(0.2 SECONDS)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
+				F.hand_attack(T)
+				has_started = 1
+
+/datum/aiTask/succeedable/deposit/on_reset()
 	has_started = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +366,7 @@
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.set_hand(1)) // grip tool
 			sleep(0.2 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target) // wooo
 	// tick up a fail counter so we don't try to open something we can't forever
 	fails++
@@ -360,7 +429,7 @@
 			// drop whatever we're holding
 			F.drop_item()
 			sleep(0.1 SECONDS)
-			F.dir = get_dir(F, container_target)
+			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target)
 			sleep(0.2 SECONDS)
 			if(F.equipped() == container_target)
@@ -470,7 +539,7 @@
 				F.empty_hand(1) // drop whatever we might be holding just in case
 				sleep(0.1 SECONDS)
 				// grab the item
-				F.dir = get_dir(F, harvest_target)
+				F.set_dir(get_dir(F, harvest_target))
 				F.hand_attack(harvest_target)
 			// if we have the item, equip it into our horrifying death chamber
 			if(F.is_in_hands(harvest_target))
@@ -523,7 +592,7 @@
 			if(owncritter.active_hand != 3) // stunner
 				owncritter.set_hand(3)
 				sleep(0.2 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				// RUN
@@ -540,7 +609,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
-			if(!istype(M.loc.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+			if(!istype(M.loc?.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
 					targets += M
@@ -592,7 +661,7 @@
 				owncritter.a_intent = INTENT_DISARM
 				owncritter.hud.update_intent()
 				sleep(0.1 SECONDS)
-			owncritter.dir = get_dir(owncritter, holder.target)
+			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
@@ -668,7 +737,7 @@
 		if(F && T && get_dist(holder.owner, holder.target) <= 1)
 			if(F.set_hand(2)) // nanite spray
 				sleep(0.2 SECONDS)
-				holder.owner.dir = get_dir(holder.owner, holder.target)
+				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
 				has_started = 1
 

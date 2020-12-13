@@ -12,6 +12,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
@@ -24,6 +25,9 @@
 	var/robot_talk_understand = 0
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
+
+	var/list/active_color_matrix = list()
+	var/list/color_matrices = list()
 
 	var/last_resist = 0
 
@@ -206,16 +210,7 @@
 
 	var/obj/use_movement_controller = null
 	var/next_spammable_chem_reaction_time = 0
-//start of needed for timestop
-#if ASS_JAM
-	var/paused = FALSE
-	var/pausedbrute = 0
-	var/pausedburn = 0
-	var/pausedtox = 0
-	var/pausedoxy = 0
-	var/pausedbrain = 0
-#endif
-//end of needed for timestop
+
 	var/dir_locked = FALSE
 
 	var/list/mob_properties
@@ -231,7 +226,9 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New()
+/mob/New(var/loc, var/datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+	src.AH_we_spawned_with = AH_passthru
+	src.loc = loc
 	hallucinations = new
 	organs = new
 	grabbed_by = new
@@ -242,6 +239,7 @@
 	traitHolder = new(src)
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder ( src )
+		src.initializeBioholder()
 	attach_hud(render_special)
 	. = ..()
 	mobs.Add(src)
@@ -249,12 +247,20 @@
 	render_target = "\ref[src]"
 	mob_properties = list()
 
+/// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
+/mob/proc/initializeBioholder()
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
 /mob/proc/is_spacefaring()
 	return 0
 
 /mob/Move(a, b, flag)
 	if (src.buckled && src.buckled.anchored)
 		return
+
+	if (src.dir_locked)
+		b = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -483,10 +489,9 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
-		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
-		src.client?.color = matrix_protanopia
+	src.client?.color = src.active_color_matrix
+
+	return
 
 /mob/Logout()
 
@@ -527,14 +532,6 @@
 		if (ishuman(tmob))
 			src:viral_transmission(AM,"Contact",1)
 
-			if (tmob.bioHolder.HasEffect("fat"))
-				if (prob(40) && !src.bioHolder.HasEffect("fat"))
-					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					deliver_move_trigger("bump")
-					tmob.deliver_move_trigger("bump")
-					return
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
@@ -796,7 +793,7 @@
 		return
 
 	var/key = src.key
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -848,10 +845,11 @@
 	boutput(src, "Retrieving your medal information...")
 
 	SPAWN_DBG(0)
+		var/list/output = list()
 		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
 
 		if (isnull(medals))
-			boutput(src, "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>")
+			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
 		if (!medals)
@@ -861,10 +859,12 @@
 		medals = params2list(medals)
 		medals = sortList(medals)
 
-		boutput(src, "<b>Medals:</b>")
+		output += "<b>Medals:</b>"
 		for (var/medal in medals)
-			boutput(src, "&emsp;[medal]")
-		boutput(src, "<b>You have [length(medals)] medal\s.</b>")
+			output += "&emsp;[medal]"
+		output += "<b>You have [length(medals)] medal\s.</b>"
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -968,6 +968,8 @@
 				continue
 			if (istype(W, /obj/item/organ/appendix) && src.organHolder.appendix == W)
 				continue
+			if (istype(W, /obj/item/organ/tail) && src.organHolder.tail == W)
+				continue
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
 			continue
@@ -992,12 +994,6 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	hit_twitch(src)
-#if ASS_JAM//pausing damage for timestop
-	if(src.paused)
-		src.pausedburn = max(0, src.pausedburn + burn)
-		src.pausedbrute = max(0, src.pausedbrute + brute)
-		return
-#endif
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)
@@ -1536,6 +1532,52 @@
 		src.health = max_health
 		setalive(src)
 
+/// Adds a 20-length color matrix to the mob's list of color matrices
+/// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+	if (!cmatrix || !label)
+		return
+
+	if(label in src.color_matrices) // Do we already have this matrix?
+		return
+
+	src.color_matrices[label] = cmatrix
+
+	src.update_active_matrix()
+
+/// Removes whichever matrix is associated with the label. Must be a string!
+/mob/proc/remove_color_matrix(var/label)
+	if (!label || !src.color_matrices.len)
+		return
+
+	if(label == "all")
+		src.color_matrices.len = 0
+	else if(!(label in src.color_matrices)) // Do we have this matrix?
+		return
+	else
+		src.color_matrices -= label
+
+	src.update_active_matrix()
+
+/// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
+/// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
+/mob/proc/update_active_matrix()
+	if (!src.color_matrices.len)
+		src.active_color_matrix = null
+	else
+		var/first_entry = src.color_matrices[1]
+		if (src.color_matrices.len == 1) // Just one matrix?
+			src.active_color_matrix = src.color_matrices[first_entry]
+		else
+			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
+			for(var/cmatrix in src.color_matrices)
+				if (cmatrix == first_entry)
+					continue // dont multiply the first matrix by itself
+				else
+					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
+			src.active_color_matrix = color_matrix_2_apply
+	src.client?.color = src.active_color_matrix
+
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
 	var/difference = abs(actual-desired)   // get difference
@@ -1980,7 +2022,7 @@
 	else
 		gibs(src.loc, virus, ejectables)
 
-	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1)
+	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
@@ -2831,6 +2873,15 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
+/mob/proc/add_karma(how_much)
+	src.mind?.add_karma(how_much)
+	// TODO add NPC karma
+
+/mob/set_dir(var/new_dir)
+	if (!src.dir_locked)
+		..()
+		src.update_directional_lights()
+
 // http://www.byond.com/forum/post/1326139&page=2
 //MOB VERBS ARE FASTER THAN OBJ VERBS, ELIMINATE ALL OBJ VERBS WHERE U CAN
 // ALSO EXCLUSIVE VERBS (LIKE ADMIN VERBS) ARE BAD FOR RCLICK TOO, TRY NOT TO USE THOSE OK
@@ -2876,10 +2927,6 @@
 	if (items.len)
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
-
-/mob/proc/add_karma(how_much)
-	src.mind?.add_karma(how_much)
-	// TODO add NPC karma
 
 /mob/proc/can_eat(var/atom/A)
 	return 1

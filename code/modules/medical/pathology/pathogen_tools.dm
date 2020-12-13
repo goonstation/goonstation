@@ -307,7 +307,7 @@
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -317,7 +317,7 @@
 	name = "Beaker of Eggs"
 	desc = "Eggs; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -327,7 +327,7 @@
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -337,7 +337,7 @@
 	name = "Beaker of Bacterial Growth Medium"
 	desc = "Bacterial Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -347,7 +347,7 @@
 	name = "Beaker of Fungal Growth Medium"
 	desc = "Fungal Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -357,7 +357,7 @@
 	name = "Beaker of Antiviral Agent"
 	desc = "A beaker of a weak anti-viral agent."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -367,7 +367,7 @@
 	name = "Beaker of Biocides"
 	desc = "A beaker of biocides. The label says 'do not feed to worms or mushrooms'. Curious."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -377,7 +377,7 @@
 	name = "Beaker of Spaceacillin"
 	desc = "It's penicillin in space."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -387,7 +387,7 @@
 	name = "Beaker of Inhibition Agent"
 	desc = "It's green, that's for sure."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -446,7 +446,7 @@
 					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
-				SPAWN_DBG (30)
+				SPAWN_DBG(3 SECONDS)
 					if (used)
 						return
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)

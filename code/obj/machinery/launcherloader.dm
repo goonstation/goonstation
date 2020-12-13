@@ -37,7 +37,7 @@
 				else
 					driver = pick(drivers)
 
-				src.dir = get_dir(src,driver)
+				src.set_dir(get_dir(src,driver))
 
 	proc/activate()
 		if(operating || !isturf(src.loc)) return
@@ -111,7 +111,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_HASENTERED
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
@@ -136,11 +136,11 @@
 					break
 
 		if(next_dest)
-			src.dir = next_dest
+			src.set_dir(next_dest)
 		else
 			if (!trigger_when_no_match)
 				operating = 0
-			src.dir = default_direction
+			src.set_dir(default_direction)
 
 		operating = 1
 

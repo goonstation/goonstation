@@ -202,11 +202,7 @@
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
-		#if ASS_JAM
-		src.emag_stages = 3
-		src.tacticool = 1
-		src.report_arrests = 1
-		#endif
+
 
 		if (src.tacticool)
 			make_tacticool()
@@ -316,14 +312,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			mode = SECBOT_IDLE
 			src.target = null
 
-			#if ASS_JAM
+
 			if(src.emagged >= 3)
 				src.stun_type = "harm_classic"
 				processing_bucket = 1
 				processing_tier = PROCESSING_FULL
 				current_processing_tier = PROCESSING_FULL
 				playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 99, 1, 0.1, 0.7)
-			#endif
+
 
 			if(user)
 				src.oldtarget_name = user.name
@@ -490,7 +486,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc && world.time != last_attack)
 				if (mode == SECBOT_HUNT && target)
@@ -1054,7 +1050,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.frustration = INFINITY
 				master.mover = null
 				master = null
-				return 1
+				return
 
 			master.moving = 1
 

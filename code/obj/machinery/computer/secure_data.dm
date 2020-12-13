@@ -33,7 +33,7 @@
 /obj/machinery/computer/secure_data/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -624,8 +624,8 @@
 			// 				src.active_record_general.fields["rank"] = "Head of Personnel"
 			// 			if ("captain")
 			// 				src.active_record_general.fields["rank"] = "Captain"
-			// 			if ("barman")
-			// 				src.active_record_general.fields["rank"] = "Barman"
+			// 			if ("bartender")
+			// 				src.active_record_general.fields["rank"] = "Bartender"
 			// 			if ("chemist")
 			// 				src.active_record_general.fields["rank"] = "Chemist"
 			// 			if ("janitor")

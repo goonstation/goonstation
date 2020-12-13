@@ -1177,7 +1177,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1519,7 +1519,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1586,7 +1586,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1810,7 +1810,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -1877,7 +1877,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2072,7 +2072,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2138,7 +2138,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "adY" = (
-/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -2568,7 +2567,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2635,7 +2634,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -2711,7 +2710,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3289,7 +3288,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3541,7 +3540,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3608,7 +3607,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3663,7 +3662,6 @@
 	name = "Crew Quarters M03"
 	})
 "agz" = (
-/obj/storage/secure/closet/command/medical_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -3712,7 +3710,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3780,7 +3778,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -3912,7 +3910,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4403,7 +4401,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4470,7 +4468,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -4545,7 +4543,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5152,7 +5150,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5210,7 +5208,6 @@
 	name = "Crew Quarters M04"
 	})
 "aiI" = (
-/obj/storage/secure/closet/command/research_director,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -5405,7 +5402,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5472,7 +5469,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5649,7 +5646,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5716,7 +5713,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -5867,7 +5864,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6398,7 +6395,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6465,7 +6462,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6618,7 +6615,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6685,7 +6682,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -6827,7 +6824,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "akV" = (
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -7236,6 +7232,12 @@
 	layer = 4;
 	name = "West Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7271,7 +7273,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7338,7 +7340,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7439,7 +7441,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7506,7 +7508,7 @@
 	name = "Staff Assistant"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/landmark/start{
 	name = "Botanist"
@@ -7582,6 +7584,12 @@
 	layer = 4;
 	name = "North Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7592,6 +7600,12 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -7745,6 +7759,12 @@
 	layer = 4;
 	name = "North Pod Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -7757,6 +7777,12 @@
 	id = "pod_port";
 	layer = 4;
 	name = "West Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -8122,6 +8148,12 @@
 	id = "pod_fore";
 	layer = 4;
 	name = "North Pod Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -11212,6 +11244,7 @@
 	},
 /obj/storage/closet/office,
 /obj/item/clothing/under/misc/hydroponics,
+/obj/item/paper/book/hydroponicsguide,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -11541,7 +11574,10 @@
 "atT" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/mug_rack{
+	pixel_x = -26
+	},
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -15218,6 +15254,12 @@
 	layer = 4;
 	name = "Disposals Vent"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -16501,7 +16543,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -18556,12 +18598,16 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/vending/coffee,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname  - SS13"
 	},
+/obj/table/reinforced/auto,
+/obj/mug_rack{
+	pixel_y = 28
+	},
+/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -25508,6 +25554,7 @@
 /obj/item/gun/kinetic/riot40mm,
 /obj/item/wrench,
 /obj/item/clothing/head/helmet/camera/security,
+/obj/item/device/detective_scanner,
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -27427,11 +27474,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/bed/moveable,
-/obj/iv_stand,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/medbay,
+/obj/mug_rack{
+	pixel_y = 28
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28101,8 +28151,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bae" = (
-/obj/stool/bed/moveable,
-/obj/iv_stand,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -28216,7 +28264,10 @@
 "baq" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/space_law,
-/obj/item/kitchen/food_box/donut_box,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/stamp,
+/obj/item/pen,
 /turf/simulated/floor,
 /area/station/security/main)
 "bar" = (
@@ -28992,6 +29043,10 @@
 /obj/item/audio_tape,
 /obj/item/device/prisoner_scanner,
 /obj/disposalpipe/segment/brig,
+/obj/item/hand_labeler,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 11
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbB" = (
@@ -29008,12 +29063,10 @@
 "bbD" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/stamp,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
+/obj/machinery/coffeemaker/security,
+/obj/mug_rack{
+	pixel_y = -24
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbE" = (
@@ -39143,6 +39196,9 @@
 	name = "autoname  - SS13"
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 14
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btx" = (
@@ -39153,15 +39209,17 @@
 	pixel_y = 32
 	},
 /obj/item/hand_labeler,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/storage)
-"bty" = (
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/storage)
+"bty" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/random_item_spawner/tools,
+/obj/machinery/coffeemaker,
+/obj/mug_rack{
+	pixel_y = 28
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btz" = (
@@ -39467,6 +39525,12 @@
 	id = "artlabgun";
 	layer = 4;
 	name = "Emergency Mass Driver"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	dir = 4;
@@ -40621,6 +40685,12 @@
 	id = "hangar_artlab";
 	name = "Research Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -40964,6 +41034,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/shield_generator,
+/obj/item/paper/engine{
+	pixel_x = 5
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwN" = (
@@ -41266,6 +41339,12 @@
 	dir = 1;
 	id = "hangar_artlab";
 	name = "Research Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -41835,6 +41914,12 @@
 	icon_state = "bdoorright1";
 	id = "hangar_artlab";
 	name = "Research Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
@@ -43929,6 +44014,11 @@
 	name = "Outbound Cargo Belt"
 	},
 /obj/plasticflaps,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCY" = (
@@ -43944,6 +44034,11 @@
 	name = "Inbound Cargo Belt"
 	},
 /obj/plasticflaps,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCZ" = (
@@ -46893,6 +46988,11 @@
 	layer = 4;
 	name = "Cargo Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)
 "bJn" = (
@@ -46948,6 +47048,11 @@
 	layer = 4;
 	name = "Cargo Hangar"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)
 "bJs" = (
@@ -46962,6 +47067,11 @@
 	id = "cargo_hangar";
 	layer = 4;
 	name = "Cargo Hangar"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/quartermaster/storage)

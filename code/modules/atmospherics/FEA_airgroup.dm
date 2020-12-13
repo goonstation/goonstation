@@ -360,6 +360,10 @@
 */
 		minDist = member.dist_to_space
 
+		// Don't space hotspots, it breaks them
+		if(member.active_hotspot)
+			return 0
+
 		if (member.air && !isnull(minDist))
 			var/datum/gas_mixture/member_air = member.air
 			// Todo - retain nearest space tile border and apply force proportional to amount

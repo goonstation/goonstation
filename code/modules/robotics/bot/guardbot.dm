@@ -41,13 +41,13 @@
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
-				return 1
+				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
 			if (!master)
-				return 1
+				return
 
 			master.path = thePath
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
@@ -60,7 +60,7 @@
 				//dispose()
 				master.mover = null
 				src.master = null
-				return 1
+				return
 
 			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
@@ -84,7 +84,6 @@
 				master.mover = null
 				src.master = null
 			//dispose()
-			return 0
 
 		return 0
 
@@ -182,11 +181,8 @@
 	var/gun_x_offset = -1 // gun pic x offset
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
-#if ASS_JAM
-	var/lawbringer_alwaysbigshot = 1
-#else
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-#endif
+
 	//
 	////////////////////// GUN STUFF -^
 
@@ -278,7 +274,7 @@
 
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
 					if (!H.stat)
 						if (model_task)
@@ -349,6 +345,16 @@
 		name = "Shockbuddy"
 		desc = "The PR-6MS Shockbuddy was remarketed under the Guardbuddy line following the establishment of stricter electroconvulsive therapy regulations."
 		setup_default_tool_path = /obj/item/device/guardbot_tool/tesla
+
+	pie
+		name = "Clownbuddy"
+		desc = "This guardbuddy doesn't look quite right..."
+		setup_default_tool_path = /obj/item/device/guardbot_tool/pie_launcher
+
+		New()
+			..()
+			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
+			src.update_icon()
 
 	bodyguard
 		setup_charge_percentage = 98
@@ -1935,6 +1941,40 @@
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
 
+	//pie launcher module
+	pie_launcher
+		name = "Shoddy Pie Launcher"
+		desc = "This pie launcher seems shoddily made, and doesn't have a handle. Why would anyone make this?"
+		icon_state = "tool_pie"
+		tool_id = "PIE"
+		is_gun = 1
+		is_stun = 1
+		var/datum/projectile/current_projectile = new /datum/projectile/pie
+		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
+			if (..()) return
+
+
+			if (ranged)
+				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+				if (!P)
+					return
+
+
+				user.visible_message("<span class='alert'><b>[master] throws a pie at [target]!</b></span>")
+
+			else
+				var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+				if (!P)
+					return
+
+				user.visible_message("<span class='alert'><b>[master] slaps [target] in the face with a pie!</b></span>")
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target)
+
+			src.last_use = world.time
+			return
+
+
 	//A syringe gun module. Mercy sakes.
 	medicator
 		name = "Medicator tool module"
@@ -2334,7 +2374,7 @@
 					announced = 2
 					src.secondary_targets = list()
 
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						if (src.secondary_targets.len)
 							master.reply_wait = 0
 							. = INFINITY
@@ -3557,7 +3597,7 @@
 					if (ckey(current_tour_text))
 						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
 							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
-							SPAWN_DBG (0)
+							SPAWN_DBG(0)
 								sleep(1 SECOND)
 								for (var/tour_line in tour_text_with_pauses)
 									if (!ckey(tour_line) || !master)
@@ -3656,7 +3696,7 @@
 						src.neat_things |= NT_GAFFE
 						src.master.speak("Ah! As you can see here--")
 
-						SPAWN_DBG (10)
+						SPAWN_DBG(1 SECOND)
 							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
@@ -3713,7 +3753,7 @@
 						src.master.speak(insultphrase)
 
 						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG (40)
+						SPAWN_DBG(4 SECONDS)
 							qdel(P)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
@@ -3767,7 +3807,7 @@
 					src.neat_things |= NT_AUTOMATON
 					src.master.speak("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
 					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG (20)
+					SPAWN_DBG(2 SECONDS)
 						src.master.speak(.)
 
 				else if (istype(AM, /obj/machinery/bot))
@@ -4601,7 +4641,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
 	attack_ai(mob/user as mob)

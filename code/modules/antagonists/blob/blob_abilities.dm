@@ -1,5 +1,4 @@
 // TODO: merge this with the new ability system.
-
 /datum/blob_ability
 	var/name = null
 	var/desc = null
@@ -250,11 +249,10 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
-
 
 /datum/blob_ability/set_color
 	name = "Set Color"
@@ -316,6 +314,7 @@
 	onUse(var/turf/T)
 		if (!owner.starter_buff && ..())
 			return 1
+
 		if (!T)
 			T = get_turf(owner)
 
@@ -367,6 +366,7 @@
 				B3.setOvermind(owner)
 				spreadability -= R
 
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobspread[rand(1, 6)].ogg", 80, 1)
 		if (!owner.starter_buff)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -407,6 +407,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -435,7 +436,7 @@
 			return
 		if (!tutorial_check("consume", T))
 			return
-		playsound(T, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 80, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
 		qdel(B)
 		src.deduct_bio_points()
@@ -474,7 +475,7 @@
 		if (!tutorial_check("attack", T))
 			return
 
-
+		owner.playsound_local(owner.loc, "sound/voice/blob/blob[pick("deploy", "attack")].ogg", 85, 1)
 		B.attack(T)
 		for (var/obj/blob/C in orange(B, 7))
 			if (prob(25))
@@ -505,6 +506,7 @@
 		if (B)
 			B.heal_damage(20)
 			B.update_icon()
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
 		else
@@ -625,7 +627,7 @@
 			blob_o.evo_points += 1
 		else
 			blob_o.evo_points += 4
-
+			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -685,9 +687,11 @@
 
 		B.visible_message("<span class='alert'><b>[B] reinforces using [reinforcing]!</b></span>")
 
+
 		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
 		qdel(reinforcing)
 
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobreinforce[rand(1, 2)].ogg", 50, 1)
 		src.deduct_bio_points()
 		src.do_cooldown()
 
@@ -963,6 +967,7 @@
 			owner.gen_rate_used++
 		src.deduct_bio_points()
 		src.do_cooldown()
+		owner.playsound_local(owner.loc, "sound/voice/blob/blobplace[rand(1, 6)].ogg", 75, 1)
 
 /datum/blob_ability/build/lipid
 	name = "Build Lipid Cell"
@@ -1108,6 +1113,7 @@
 		src.evo_point_cost = round(src.evo_point_cost * src.scaling_cost_mult)
 		src.evo_point_cost += scaling_cost_add
 
+
 	proc/take_upgrade()
 		if (!istype(owner))
 			return 1
@@ -1119,6 +1125,12 @@
 			repeatable--
 		if (repeatable == 0)
 			owner.available_upgrades -= src
+		if (prob(80))
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup1.ogg", 50, 1)
+		else if (prob(50))
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup2.ogg", 50, 1)
+		else
+			owner.playsound_local(owner.loc, "sound/voice/blob/blobup3.ogg", 50, 1)
 
 		owner.update_buttons()
 
@@ -1396,3 +1408,4 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/build/reflective)
+		

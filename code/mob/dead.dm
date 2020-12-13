@@ -23,7 +23,7 @@
 		..()
 	else
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
@@ -83,7 +83,7 @@
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
 				for (var/obj/item/storage/bible/B in src.loc)
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"

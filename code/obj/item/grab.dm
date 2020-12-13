@@ -181,7 +181,7 @@
 			src.affecting.pixel_y = src.assailant.pixel_y + pyo
 		src.affecting.set_loc(src.assailant.loc)
 		src.affecting.layer = src.assailant.layer + (src.assailant.dir == NORTH ? -0.1 : 0.1)
-		src.affecting.dir = src.assailant.dir
+		src.affecting.set_dir(src.assailant.dir)
 		src.affecting.set_density(0)
 
 	attack_self(mob/user)
@@ -215,9 +215,6 @@
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
-					if (H.bioHolder.HasEffect("fat"))
-						boutput(src.assailant, "<span class='notice'>You can't strangle [src.affecting] through all that fat!</span>")
-						return
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 						if (C.body_parts_covered & HEAD)
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
@@ -271,8 +268,6 @@
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 		//src.affecting.losebreath++
 		//if (src.affecting.paralysis < 2)
 		//	src.affecting.paralysis = 2
@@ -303,8 +298,6 @@
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
@@ -352,7 +345,7 @@
 
 	proc/do_resist()
 		hit_twitch(src.assailant)
-		src.affecting.dir = pick(alldirs)
+		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)

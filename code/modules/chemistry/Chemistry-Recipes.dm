@@ -2463,14 +2463,15 @@ datum
 
 						var/checkdist = get_dist(M, location)
 						var/weak = max(0, 2 * (3 - checkdist))
-						var/misstep = 40
+						var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
 						var/ear_damage = max(0, 2 * (3 - checkdist))
 						var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
 
 						if (issilicon(M))
 							M.apply_sonic_stun(weak, 0)
 						else
-							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf)
+							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
@@ -2493,14 +2494,15 @@ datum
 
 							var/checkdist = get_dist(M, location)
 							var/weak = max(0, 2 * (3 - checkdist))
-							var/misstep = 40
+							var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
 							var/ear_damage = max(0, 2 * (3 - checkdist))
 							var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+							var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
 
 							if (issilicon(M))
 								M.apply_sonic_stun(weak, 0)
 							else
-								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf)
+								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"
@@ -3915,8 +3917,8 @@ datum
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 
-		king_readsterium
-			name = "King Readsterium"
+		mimicillium
+			name = "Mimicillium"
 			id = "badmanjuice"
 			result = "badmanjuice"
 			required_reagents = list("transparium" = 1, "glitter" = 1, "port" = 1, "cholesterol" = 1 )

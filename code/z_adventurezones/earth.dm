@@ -287,6 +287,14 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Data Center"
 	icon_state = "pink"
 
+/area/retentioncenter
+	name = "NT Retention Center"
+	icon_state = "dk_yellow"
+
+/area/retentioncenter/substation
+	name = "NT Retention Center (substation)"
+	icon_state = "pink"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
@@ -296,13 +304,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "snow"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass"
 		dense
 			name = "dense grass"

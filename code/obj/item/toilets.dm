@@ -16,9 +16,7 @@ TOILET
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0
-#if ASS_JAM
-	var/timestopped = 0 // one time timstop for toilet fun in assday
-#endif
+
 /obj/item/storage/toilet/New()
 	..()
 	START_TRACKING
@@ -30,6 +28,7 @@ TOILET
 /obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
+		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
 	if (istype(W, /obj/item/storage))
 		return
@@ -62,7 +61,7 @@ TOILET
 			var/list/destinations = list()
 
 			for_by_tcl(T, /obj/item/storage/toilet)
-				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc,/area) && T.loc:teleport_blocked))
+				if (T == src || !isturf(T.loc) || T.z != src.z  || isrestrictedz(T.z) || (istype(T.loc.loc,/area) && T.loc.loc:teleport_blocked))
 					continue
 				destinations.Add(T)
 
@@ -85,14 +84,7 @@ TOILET
 	return
 
 /obj/item/storage/toilet/attack_hand(mob/user as mob)
-#if ASS_JAM //timestop toilets
-	if(timestopped == 1)
-		if(prob(20))
-			boutput(user, "Slow down buddy! Can't force the time stop toilet when it don't want to!")
-	else
-		timestop(null, 100, 5)
-		timestopped = 1
-#endif
+
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)

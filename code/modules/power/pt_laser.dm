@@ -257,7 +257,7 @@
 		T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.dir = dir
+		laser.set_dir(dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
@@ -379,7 +379,8 @@
 	return data
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		//Input controls

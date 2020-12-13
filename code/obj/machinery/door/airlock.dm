@@ -9,6 +9,9 @@
 #define AIRLOCK_WIRE_ELECTRIFY 9
 #define AIRLOCK_WIRE_SAFETY 10
 
+// how many possible network verification codes are there (i.e. how hard is it to bruteforce)
+#define NET_ACCESS_OPTIONS 32
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -196,6 +199,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/HTML = null
 	var/has_panel = 1
 	var/hackMessage = ""
+	var/net_access_code = null
 
 	var/no_access = 0
 
@@ -209,6 +213,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if(!isrestrictedz(src.z))
 			var/area/station/A = get_area(src)
 			src.name = A.name
+		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
 	disposing()
@@ -768,7 +773,7 @@ About the new airlock wires panel:
 			//Sending a pulse through this flashes the red light on the door (if the door has power).
 			if ((src.arePowerSystemsOn()) && (!(status & NOPOWER)))
 				play_deny()
-		if (AIRLOCK_WIRE_MAIN_POWER1 || AIRLOCK_WIRE_MAIN_POWER2)
+		if (AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
@@ -789,12 +794,14 @@ About the new airlock wires panel:
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
-		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
+		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 		if (AIRLOCK_WIRE_AI_CONTROL)
+			if(prob(10))
+				src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 			if (src.aiControlDisabled == 0)
 				src.aiControlDisabled = 1
 			else if (src.aiControlDisabled == -1)
@@ -1279,7 +1286,7 @@ About the new airlock wires panel:
 	var/list/static_data = list()
 
 	static_data["wireColors"] = src.wire_colors
-	static_data["netId"] = src.net_id;
+	static_data["netId"] = src.net_id
 	static_data["name"] = src.name
 
 	return static_data
@@ -1468,7 +1475,7 @@ About the new airlock wires panel:
 
 	if (src.closeOtherId != null)
 		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
@@ -1520,7 +1527,45 @@ obj/machinery/door/airlock
 			else if (!id_tag || id_tag != signal.data["tag"])
 				return
 
-		if (aiControlDisabled > 0 || cant_emag)
+		if (signal.data["command"] && signal.data["command"] == "help")
+			var/datum/signal/reply = get_free_signal()
+			reply.source = src
+			reply.transmission_method = 1
+			reply.data["sender"] = src.net_id
+			reply.data["address_1"] = signal.data["sender"]
+			if (!signal.data["topic"])
+				reply.data["description"] = "Airlock - requires an access code that can be found on the maintenance panel"
+				reply.data["topics"] = "open,close,lock,unlock,secure_close,secure_open"
+			else
+				reply.data["topic"] = signal.data["topic"]
+				switch (lowertext(signal.data["topic"]))
+					if ("open")
+						reply.data["description"] = "Opens the airlock. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("close")
+						reply.data["description"] = "Closes the airlock. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("lock")
+						reply.data["description"] = "Drops the airlocks bolts, securing it in place. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("unlock")
+						reply.data["description"] = "Lifts the airlocks bolts, unsecuring it. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("secure_close")
+						reply.data["description"] = "Closes the airlock and drops the bolts, securing it closed. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("secure_open")
+						reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
+						reply.data["args"] = "access_code"
+					else
+						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
+			radio_connection.post_signal(src, reply, radiorange)
+			return
+
+		var/sent_code = text2num(signal.data["access_code"])
+		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
+			if(prob(20))
+				src.play_deny()
 			var/datum/signal/rejectsignal = get_free_signal()
 			rejectsignal.source = src
 			rejectsignal.data["address_1"] = signal.data["sender"]
@@ -1579,9 +1624,6 @@ obj/machinery/door/airlock
 					update_icon()
 					sleep(src.operation_time)
 					send_status(,senderid)
-
-			else
-				return
 
 	proc/send_status(userid,target)
 		if(radio_connection)
@@ -1671,7 +1713,7 @@ obj/machinery/door/airlock
 				else if (user.wear_id && user.wear_id:registered)
 					user_name = user.wear_id:registered
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
@@ -1717,7 +1759,20 @@ obj/machinery/door/airlock
 	if (!isAI(user) && !issilicon(user))
 		return
 
-	if (user.client.check_key(KEY_OPEN))
+	if (src.aiControlDisabled) return
+
+	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
+		. = 1
+		// need to do it in the right order or nothing will happen
+		if (locked)
+			toggle_bolt(user)
+			user_toggle_open(user)
+		else
+			user_toggle_open(user)
+			toggle_bolt(user)
+		return
+
+	else if (user.client.check_key(KEY_OPEN))
 		. = 1
 		user_toggle_open(user)
 		return
@@ -1769,6 +1824,7 @@ obj/machinery/door/airlock
 	data["hackMessage"] = hackMessage
 	data["aiControlVar"] = aiControlDisabled
 	data["noPower"] = (status & NOPOWER)
+	data["accessCode"] = src.net_access_code
 	var/list/wire = list()
 	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
 	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
@@ -1801,7 +1857,8 @@ obj/machinery/door/airlock
 		return UI_UPDATE
 
 /obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	if(src.arePowerSystemsOn() && (ishivebot(usr) || isrobot(usr) || isAI(usr)))
 		switch(action)
@@ -1871,3 +1928,5 @@ obj/machinery/door/airlock
 					else
 						src.attach_signaler(which_wire+1, usr)
 						. = TRUE
+
+#undef NET_ACCESS_OPTIONS

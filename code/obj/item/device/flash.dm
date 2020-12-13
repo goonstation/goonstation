@@ -99,7 +99,7 @@
 			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 		if (src.cell)
@@ -210,7 +210,7 @@
 			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) qdel(src)
 			return
 

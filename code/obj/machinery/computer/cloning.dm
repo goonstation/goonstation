@@ -110,7 +110,7 @@
 
 	else if (isscrewingtool(W) && ((src.status & BROKEN) || !src.pod1 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.pod1.BE))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
@@ -418,7 +418,9 @@ proc/find_ghost_by_key(var/find_key)
 		connected?.scanner = null
 		connected = null
 		pods = null
-		occupant = null
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	MouseDrop_T(mob/living/target, mob/user)
@@ -667,7 +669,8 @@ proc/find_ghost_by_key(var/find_key)
 				active_process = PROCESS_IDLE
 
 /obj/machinery/computer/cloning/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("delete")

@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors_airless.dm
  */
 
@@ -30,7 +30,7 @@
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
 			SPAWN_DBG(0.5 SECONDS)
-				src.dir = pdir
+				src.set_dir(pdir)
 			qdel(P)
 
 
@@ -944,7 +944,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
 	var/last_gather_time
@@ -979,7 +979,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -1017,7 +1017,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1027,7 +1027,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1037,7 +1037,7 @@
 /turf/simulated/floor/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
@@ -1336,7 +1336,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -1402,7 +1402,9 @@
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 3 SECONDS))
+			if(!src.reinforced)
+				return
 			var/obj/R1 = new /obj/item/rods(src)
 			var/obj/R2 = new /obj/item/rods(src)
 			if (material)
@@ -1419,7 +1421,7 @@
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
@@ -1604,7 +1606,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "rainbow_road")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 
@@ -1625,6 +1637,15 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwall"
 
+		junction
+			icon_state = "leadjunction"
+
+		junction_four
+			icon_state = "leadjunction_4way"
+
+		cap
+			icon_state = "leadcap"
+
 		gray
 			icon_state = "leadwall_gray"
 
@@ -1638,6 +1659,9 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwindow_1"
 		opacity = 0
+
+		full
+			icon_state = "leadwindow_2"
 
 		gray
 			icon_state = "leadwindow_gray_1"
@@ -1694,8 +1718,8 @@
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)
@@ -1781,7 +1805,7 @@
 
 		New()
 			..()
-			dir = pick(1,2,4,8)
+			set_dir(pick(1,2,4,8))
 			return
 
 	swampgrass_edging

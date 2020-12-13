@@ -198,6 +198,8 @@ turf
 				if (active_hotspot)
 					pool(active_hotspot)
 					active_hotspot = null
+			if(being_superconductive)
+				air_master.active_super_conductivity.Remove(src)
 			if(blocks_air)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
@@ -270,10 +272,11 @@ turf
 			else
 				return ..()
 
-		update_air_properties()//OPTIMIZE
+		update_air_properties() //OPTIMIZE - yes this proc right here sir
 			air_check_directions = 0
 
 			for(var/direction in cardinal)
+				LAGCHECK(LAG_REALTIME)
 				if(CanPass(null, get_step(src,direction), 0, 0))
 					air_check_directions |= direction
 
@@ -286,7 +289,8 @@ turf
 
 				group_border = 0
 				for(var/direction in cardinal)
-					if(air_check_directions&direction)
+					LAGCHECK(LAG_REALTIME)
+					if(air_check_directions & direction)
 						var/turf/simulated/T = get_step(src,direction)
 
 						//See if actually a border
@@ -321,7 +325,7 @@ turf
 
 		process_cell()
 			var/list/turf/simulated/possible_fire_spreads
-			if(processing && air)
+			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
@@ -343,14 +347,14 @@ turf
 							if(sharegroup?.group_processing)
 								if(sharegroup.current_cycle < current_cycle)
 									if(sharegroup.air.check_gas_mixture(air))
-										connection_difference = air.share(sharegroup.air)
+										connection_difference = src.air.share(sharegroup.air)
 									else
 										sharegroup.suspend_group_processing()
-										connection_difference = air.share(enemy_tile.air)
+										connection_difference = src.air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
 							else
 								if(enemy_tile.current_cycle < current_cycle)
-									connection_difference = air.share(enemy_tile.air)
+									connection_difference = src.air.share(enemy_tile.air)
 							if(active_hotspot)
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
@@ -368,22 +372,23 @@ turf
 				air_master.active_singletons -= src //not active if not processing!
 				return
 
-			air.react()
 
-			if(active_hotspot && possible_fire_spreads)
-				active_hotspot.process(possible_fire_spreads)
+			src.air.react()
 
-			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+			if(src.active_hotspot && possible_fire_spreads)
+				src.active_hotspot.process(possible_fire_spreads)
+
+			if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 				consider_superconductivity(starting = 1)
 
-			if(air.check_tile_graphic())
+			if(src.air.check_tile_graphic())
 				update_visuals(air)
 
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(src.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
-					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				temperature_expose(air, air.temperature, CELL_VOLUME)
+					item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+				temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
 			return 1
 
@@ -527,7 +532,7 @@ turf
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
 			var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
-			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && src.heat_capacity)
 
 				var/heat = conduction_coefficient*delta_temperature* \
 					(src.heat_capacity*sharer.heat_capacity/(src.heat_capacity+sharer.heat_capacity))

@@ -19,6 +19,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
+		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/dsay,
@@ -64,6 +65,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_remove_all_labels,
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
+		/client/proc/summon_office,
 
 		),
 
@@ -174,7 +176,10 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_scale_type,
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
-		/client/proc/cmd_get_type
+		/client/proc/cmd_get_type,
+
+		/client/proc/vpn_whitelist_add,
+		/client/proc/vpn_whitelist_remove
 		),
 
 	4 = list(
@@ -235,6 +240,7 @@ var/list/admin_verbs = list(
 		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
+		/client/proc/toggle_vpn_blacklist,
 
 		// moved up from admin
 		//client/proc/cmd_admin_delete,
@@ -657,18 +663,11 @@ var/list/special_pa_observing_verbs = list(
 		src.holder.s_respawn()
 	return
 
-/client/proc/jobbans()
+/client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if(src.holder)
-		src.holder.Jobbans()
-	return
-
-/client/proc/rebuild_jobbans_panel()
-	set name = "Rebuild Jobbans Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder)
-		src.holder.buildjobbanspanel()
+		src.holder.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
@@ -900,7 +899,7 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -910,6 +909,7 @@ var/list/fun_images = list()
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.JobEquipSpawned("Staff Assistant", 1)
+	H.update_colorful_parts()
 
 
 /client/proc/respawn_as_self()
@@ -927,8 +927,8 @@ var/list/fun_images = list()
 			return
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new()
-	H.set_loc(mymob.loc)
+	var/mob/living/carbon/human/H = new(mymob.loc, src.preferences.AH)
+	//H.set_loc(mymob.loc)
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -938,6 +938,7 @@ var/list/fun_images = list()
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
 	H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+	H.update_colorful_parts()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
@@ -948,12 +949,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1803,7 +1804,7 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG (30)
+		SPAWN_DBG(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
@@ -1951,3 +1952,31 @@ var/list/fun_images = list()
 			C.cmd_emag_target(A)
 
 	src.update_cursor()
+
+
+/client/proc/vpn_whitelist_add(vpnckey as text)
+	set name = "VPN whitelist add"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
+		return 0
+	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
+	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	return 1
+
+/client/proc/vpn_whitelist_remove(vpnckey as text)
+	set name = "VPN whitelist remove"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	vpnckey = ckey(vpnckey)
+	try
+		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
+	catch(var/exception/e)
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
+		return 0
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
+	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	return 1

@@ -13,8 +13,8 @@ obj/decal/floor/displays/owlsign
 	icon_state = "postcard-owlery"
 	interesting = "There are traces of hydrocarbons, collagens, proteins, and sugars deposited in the cellulose of the card"
 
-	sizex = 1066
-	sizey = 735
+	sizex = 1040
+	sizey = 705
 
 	New()
 		..()
@@ -531,7 +531,7 @@ obj/item/gnomechompski/elf
 /obj/item/poster/titled_photo/bee
 	name = "Er- Found? Poster"
 	desc = "A poster of a m------ Bee loved by all."
-	poster_image = 'icons/missingbee.png'
+	poster_image = 'icons/misc/missingbee.png'
 	line_b1 = "<center><b> THANK YOU </b></center>"
 	line_b2 = "<b>LAST SEEN:</b> New Store!"
 	line_b3 = "<b>NOTES:</b> Responds to being called Bombini"
@@ -800,7 +800,7 @@ obj/item/gnomechompski/elf
 		if (prob(5))
 			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-			src.dir = pick(alldirs)
+			src.set_dir(pick(alldirs))
 
 obj/critter/madnessowl
 	name = "space owl"
@@ -1054,7 +1054,7 @@ obj/critter/madnessowl/switchblade
 				if(iswerewolf(H))
 					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
 					step_away(src, H, 15)
-					src.dir = get_dir(src, H)
+					src.set_dir(get_dir(src, H))
 					continue
 
 			src.boredom_countdown = rand(1,4)
@@ -1246,7 +1246,7 @@ obj/critter/madnessowl/switchblade
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
@@ -1405,7 +1405,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
@@ -1430,7 +1430,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	sleep(0.1 SECONDS)
 	siren.repeat = 0

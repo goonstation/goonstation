@@ -64,7 +64,7 @@ TRAYS
 	proc/rotate()
 		if(rotatable)
 			//set src in oview(1)
-			src.dir = turn(src.dir, -90)
+			src.set_dir(turn(src.dir, -90))
 		return
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
@@ -343,7 +343,7 @@ TRAYS
 	icon_state = "chop_open"
 	item_state = "chop"
 	rotatable = 0
-	tool_flags = null
+	tool_flags = 0
 
 	attack_self(mob/user as mob)
 		var/obj/item/kitchen/chopsticks_package/chop = new /obj/item/kitchen/chopsticks_package
@@ -1122,11 +1122,9 @@ TRAYS
 	item_state = "platestack1"
 	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
-#if ASS_JAM
-	var/platemax = 13
-#else
+
 	var/platemax = 8
-#endif
+
 
 	proc/update_icon(mob/user as mob)
 		src.icon_state = "platestack[src.platenum]"
@@ -1211,7 +1209,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(2)
+			SPAWN_DBG(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1239,7 +1237,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(2)
+		SPAWN_DBG(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))

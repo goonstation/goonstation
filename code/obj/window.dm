@@ -79,10 +79,10 @@
 		set_density(0) //mbc : icky but useful for fluids
 		update_nearby_tiles(need_rebuild=1, selfnotify = 1) //only selfnotify when density is 0, because i dont want windows to displace fluids every single move() step. would be slow probably
 		set_density(1)
-		..()
+		. = ..()
 
 
-		src.dir = src.ini_dir
+		src.set_dir(src.ini_dir)
 		update_nearby_tiles(need_rebuild=1)
 
 		return
@@ -391,14 +391,14 @@
 				if (!(src.dir in cardinal))
 					return
 				update_nearby_tiles(need_rebuild=1) //Compel updates before
-				src.dir = turn(src.dir, -90)
+				src.set_dir(turn(src.dir, -90))
 				/*var/action = input(usr,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
 				if (!action) return*/
 
 				/*switch(action)
-					if ("Clockwise ->") src.dir = turn(src.dir, -90)
-					if ("Anticlockwise <-") src.dir = turn(src.dir, 90)
-					if ("180 Degrees") src.dir = turn(src.dir, 180)*/
+					if ("Clockwise ->") src.set_dir(turn(src.dir, -90))
+					if ("Anticlockwise <-") src.set_dir(turn(src.dir, 90))
+					if ("180 Degrees") src.set_dir(turn(src.dir, 180))*/
 				update_nearby_tiles(need_rebuild=1)
 				src.ini_dir = src.dir
 				src.set_layer_from_settings()
@@ -765,7 +765,7 @@
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			ini_dir = 5//gurgle
-			dir = 5//grumble
+			set_dir(5)//grumble
 
 	smash(var/actuallysmash)
 		if(actuallysmash)
@@ -1020,11 +1020,11 @@
 
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Fibrewoven Window"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%" // todo: damageable walls
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Fibrewoven Window
+    <br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+    <br><span class='bold'>###=-</span></span>"}
+    // todo: damageable walls
   else
     return null // give the standard description
 

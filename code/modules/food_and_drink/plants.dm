@@ -58,7 +58,7 @@
 		..()
 
 	streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)
@@ -718,7 +718,8 @@
 	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
-#if ASS_JAM
+
+
 /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	name = "sickly pear"
 	desc = "You'd definitely become terribly ill if you ate this."
@@ -735,7 +736,8 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("too much",25)
-#endif
+
+
 /obj/item/reagent_containers/food/snacks/plant/peach/
 	name = "peach"
 	desc = "Feelin' peachy now, but after you eat it it's the pits."
@@ -772,19 +774,36 @@
 		M.take_brain_damage(0 - src.heal_amt)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/stick))
-			var/obj/item/stick/S = W
-			if(S.broken)
-				boutput(user, __red("You can't use a broken stick!"))
+		// Apple on a stick
+		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
+			// Fail if already an apple on a stick
+			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
+				boutput(user, __red("This apple already has a stick!"))
 				return
+
+			// Check for broken sticks
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, __red("You can't use a broken stick!"))
+					return
+
+			// Create apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
 				boutput(user, "<span class='notice'>You create an apple on a stick...</span>")
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
 			else
 				boutput(user, "<span class='notice'>You create a delicious apple on a stick...</span>")
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
-			W.amount--
+
+			// Consume a rod or stick
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+
+			// If no rods or sticks left, delete item
 			if(!W.amount) qdel(W)
+
+			// Consume apple
 			pool(src)
 		else ..()
 
@@ -1088,7 +1107,7 @@
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/ammo/power_cell/potato/P = new /obj/item/ammo/power_cell/potato(get_turf(src),DNA.potency)
+				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				W:amount -= 1
