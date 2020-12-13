@@ -17130,10 +17130,14 @@
 /area/station/maintenance/central)
 "aMT" = (
 /obj/table/auto,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/crowbar,
-/obj/item/device/multitool,
-/obj/item/storage/box/mousetraps,
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aMU" = (
@@ -19292,11 +19296,22 @@
 /area/station/hydroponics/lobby)
 "aRr" = (
 /obj/table/auto,
-/obj/item/device/multitool,
+/obj/item/device/multitool{
+	pixel_x = -8;
+	pixel_y = 7
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13"
+	},
+/obj/item/crowbar{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/device/multitool{
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -19670,16 +19685,34 @@
 	pixel_y = -24
 	},
 /obj/rack,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/crowbar,
-/obj/item/tank/air,
+/obj/item/crowbar{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/tank/air{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 5;
+	pixel_y = -6
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aSi" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/crowbar,
-/obj/item/tank/air,
+/obj/item/crowbar{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/tank/air{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 5;
+	pixel_y = -6
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aSj" = (
@@ -23286,8 +23319,14 @@
 "baH" = (
 /obj/table/auto,
 /obj/decal/cleanable/cobweb2,
-/obj/item/device/light/glowstick,
-/obj/item/gun/kinetic/zipgun,
+/obj/item/gun/kinetic/zipgun{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "baI" = (
@@ -24224,10 +24263,18 @@
 "bcM" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
-/obj/item/wrench,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 10
+	},
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/wrench{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /obj/machinery/light/small,
-/obj/item/extinguisher,
-/obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bcN" = (
@@ -24937,14 +24984,22 @@
 /area/station/hallway/primary/east)
 "bei" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/decal/cleanable/cobweb,
-/obj/item/device/radio,
+/obj/item/device/radio{
+	pixel_x = 11;
+	pixel_y = 9
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/device/multitool{
+	pixel_y = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bej" = (
@@ -25575,10 +25630,15 @@
 /area/station/maintenance/disposal)
 "bfD" = (
 /obj/table/auto,
-/obj/item/paper{
-	info = "I'm in your station... : )"
+/obj/item/clothing/under/misc/bandshirt{
+	pixel_x = 10;
+	pixel_y = 7
 	},
-/obj/item/clothing/under/misc/bandshirt,
+/obj/item/paper{
+	info = "I'm in your station... : )";
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bfE" = (
