@@ -49256,23 +49256,42 @@
 /area/station/crew_quarters/supplylobby)
 "cdF" = (
 /obj/table/reinforced/auto,
-/obj/item/device/light/flashlight,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/medical_guide{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "cdG" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/storage/box/diskbox{
+	pixel_x = 14;
+	pixel_y = 12
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/item/device/multitool{
+	pixel_x = -11;
+	pixel_y = 5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 5
+	},
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "cdH" = (
@@ -49284,8 +49303,6 @@
 	tag = ""
 	},
 /obj/machinery/cell_charger,
-/obj/item/storage/box/diskbox,
-/obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "cdI" = (
