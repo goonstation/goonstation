@@ -25534,6 +25534,10 @@
 	icon_state = "gangtag22";
 	pixel_x = 28
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "vrI" = (
