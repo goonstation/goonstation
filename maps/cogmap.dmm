@@ -26556,18 +26556,30 @@
 /area/station/routing/depot)
 "bhN" = (
 /obj/table/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/device/radio{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 7;
+	pixel_y = 13
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/storage/box/mousetraps,
-/obj/item/device/radio,
-/obj/item/device/light/glowstick,
-/obj/item/clothing/head/helmet/hardhat,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "bhO" = (
@@ -26613,10 +26625,6 @@
 /area/station/routing/depot)
 "bhS" = (
 /obj/table/auto,
-/obj/item/wrapping_paper,
-/obj/item/wirecutters,
-/obj/item/clothing/under/misc/mail,
-/obj/item/clothing/head/mailcap,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -26625,6 +26633,22 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/wirecutters{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/wrapping_paper{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/clothing/under/misc/mail{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/mailcap{
+	pixel_x = -7;
+	pixel_y = 16
 	},
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
@@ -34411,24 +34435,52 @@
 	desc = "Whoa! What will they think of next?";
 	name = "Boxes in a Box"
 	},
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/machinery/light{
-	dir = 4
+/obj/item/storage/box{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/storage/box{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/storage/box{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/storage/box{
+	pixel_y = -1
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
 	frequency = 1455;
 	name = "Supply Intercom"
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
@@ -43576,21 +43628,44 @@
 	},
 /area/station/science/lobby)
 "bRa" = (
-/obj/machinery/light/small,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
 /obj/storage/crate{
 	desc = "Whoa! What will they think of next?";
 	name = "Boxes in a Box"
 	},
-/obj/item/toy/gooncode,
+/obj/item/storage/box{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/toy/gooncode{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/grime,
-/area/station/routing/depot)
+/area/space)
 "bRc" = (
 /obj/cable{
 	icon_state = "0-4"
