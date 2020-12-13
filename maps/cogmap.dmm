@@ -37084,19 +37084,39 @@
 /area/station/solar/south)
 "bEX" = (
 /obj/table/auto,
-/obj/item/hand_labeler,
+/obj/item/hand_labeler{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 11;
+	pixel_y = 9
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 11;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_y = 3
+	},
+/obj/item/screwdriver{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 1;
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
-/obj/item/screwdriver,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/storage/box/patchbox,
-/obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bEY" = (
@@ -58321,30 +58341,73 @@
 /area/station/medical/cdc)
 "cxF" = (
 /obj/table/auto,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/item/bloodslide,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
+/obj/item/bloodslide{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/bloodslide{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/bloodslide{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/bloodslide{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/bloodslide{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/bloodslide{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/bloodslide{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/bloodslide{
+	pixel_x = 7;
+	pixel_y = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxG" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
-/obj/item/reagent_containers/glass/vial,
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxH" = (
@@ -58447,16 +58510,25 @@
 "cxT" = (
 /obj/table/auto,
 /obj/bedsheetbin,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 6;
+	pixel_y = 7
 	},
 /obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+	network = "arcadevr";
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+	network = "arcadevr";
+	pixel_x = -1;
+	pixel_y = 3
 	},
-/obj/item/clothing/glasses/spectro,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr";
+	pixel_x = 2;
+	pixel_y = -4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxU" = (
@@ -58568,17 +58640,49 @@
 /area/station/medical/cdc)
 "cyi" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/reagent_containers/glass/petridish,
-/obj/item/storage/box/beakerbox,
+/obj/item/storage/box/beakerbox{
+	pixel_x = -8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/petridish{
+	pixel_x = -7;
+	pixel_y = -1
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cyj" = (
@@ -58795,10 +58899,21 @@
 /area/station/medical/cdc)
 "cyK" = (
 /obj/table/auto,
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/glasses/spectro,
-/obj/item/device/light/flashlight/penlight,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/item/device/light/flashlight/penlight{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cyL" = (
@@ -58823,17 +58938,23 @@
 /area/station/medical/cdc)
 "cyP" = (
 /obj/table/auto,
+/obj/machinery/light,
 /obj/bedsheetbin,
 /obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+	network = "arcadevr";
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+	network = "arcadevr";
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /obj/item/clothing/glasses/vr{
-	network = "arcadevr"
+	network = "arcadevr";
+	pixel_x = 2;
+	pixel_y = -4
 	},
-/obj/machinery/light,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cyQ" = (
