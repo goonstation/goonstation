@@ -7676,11 +7676,26 @@
 /area/station/crew_quarters/catering)
 "asz" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/t_scanner,
-/obj/item/device/t_scanner,
+/obj/item/device/gps{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/device/gps{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = -6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -7719,13 +7734,28 @@
 	})
 "asD" = (
 /obj/rack,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 11;
+	pixel_y = -2
+	},
 /obj/machinery/shieldgenerator/meteorshield,
 /obj/machinery/shieldgenerator/meteorshield,
-/obj/item/extinguisher,
-/obj/item/reagent_containers/glass/oilcan,
+/obj/item/extinguisher{
+	pixel_x = 2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -8230,19 +8260,19 @@
 /area/station/crew_quarters/catering)
 "atK" = (
 /obj/table/auto,
-/obj/item/cable_coil,
+/obj/item/screwdriver{
+	pixel_x = -4;
+	pixel_y = 16
+	},
+/obj/item/wrench{
+	pixel_y = 12
+	},
 /obj/item/cable_coil{
-	pixel_x = 2;
-	pixel_y = -2
+	pixel_x = 5;
+	pixel_y = 4
 	},
-/obj/item/screwdriver,
-/obj/item/cell/supercell/charged,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/device/multitool{
-	pixel_x = -7;
+/obj/item/cable_coil{
+	pixel_x = 4;
 	pixel_y = 1
 	},
 /turf/simulated/floor/yellow/side{
@@ -8782,11 +8812,25 @@
 /area/station/security/brig)
 "auY" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/weldingtool,
 /obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/device/multitool{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/device/multitool{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -9354,8 +9398,14 @@
 /area/station/crew_quarters/catering)
 "awn" = (
 /obj/table/auto,
-/obj/item/wrench,
-/obj/item/device/analyzer/atmospheric,
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/weldingtool{
+	pixel_x = -3;
+	pixel_y = 12
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -9377,10 +9427,15 @@
 "awp" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -10666,16 +10721,22 @@
 	})
 "azc" = (
 /obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50;
+	pixel_x = -3
+	},
+/obj/item/sheet/steel{
+	amount = 50;
+	pixel_x = -1;
+	pixel_y = 2
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/item/sheet/steel{
-	amount = 50
+/obj/item/storage/box/cablesbox{
+	pixel_x = -2;
+	pixel_y = 3
 	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/box/cablesbox,
 /turf/simulated/floor,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
@@ -11507,11 +11568,11 @@
 	})
 "aAM" = (
 /obj/table/auto,
+/obj/machinery/cashreg,
 /obj/machinery/door/window/eastleft{
 	name = "Tool Storage";
 	req_access_txt = "12"
 	},
-/obj/machinery/cashreg,
 /turf/simulated/floor,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
@@ -12114,29 +12175,39 @@
 	})
 "aCh" = (
 /obj/table/auto,
-/obj/item/device/gps,
+/obj/item/paper/book/minerals{
+	pixel_x = -8;
+	pixel_y = 7
+	},
 /obj/machinery/door/window/southleft{
 	name = "Tool Storage";
 	req_access_txt = "12"
 	},
-/obj/item/paper/book/minerals,
+/obj/item/device/gps{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /turf/simulated/floor,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
 "aCi" = (
 /obj/table/auto,
+/obj/item/sheet/glass{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /obj/window/reinforced{
 	dir = 2
 	},
 /obj/window/reinforced{
 	dir = 4
-	},
-/obj/item/sheet/glass{
-	amount = 50
-	},
-/obj/item/sheet/glass{
-	amount = 50
 	},
 /turf/simulated/floor,
 /area/station/storage/auxillary{
