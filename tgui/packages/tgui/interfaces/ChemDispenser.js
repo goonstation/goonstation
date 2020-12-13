@@ -123,7 +123,6 @@ export const ReagentDispenser = (props, context) => {
             key={reagentIndex}
             className="chem-dispenser__dispense-buttons"
             position="relative"
-            backgroundColor={""}
             align="left"
             width="130px"
             onMouseEnter={() => setHoverOverId(reagent.id)}
