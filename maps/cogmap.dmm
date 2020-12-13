@@ -26040,14 +26040,37 @@
 /area/station/maintenance/west)
 "bgi" = (
 /obj/rack,
-/obj/item/mop,
-/obj/item/mop,
-/obj/item/storage/box/mousetraps,
-/obj/item/storage/box/biohazard_bags,
-/obj/item/storage/box/trash_bags,
-/obj/item/storage/box/trash_bags,
-/obj/item/spraybottle/cleaner,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/storage/box/trash_bags{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/storage/box/trash_bags{
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/obj/item/storage/box/biohazard_bags{
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/obj/item/storage/box/mousetraps{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bucket{
+	pixel_x = 10;
+	pixel_y = -7
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = 1;
+	pixel_y = -8
+	},
+/obj/item/mop{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/mop{
+	pixel_x = -3
+	},
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
@@ -27440,8 +27463,30 @@
 /area/station/maintenance/disposal)
 "bjo" = (
 /obj/table/auto,
-/obj/item/sponge,
-/obj/item/spraybottle,
+/obj/item/sponge{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/spraybottle{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/cleaner{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/chem_grenade/cleaner{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/chem_grenade/cleaner{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/chem_grenade/cleaner{
+	pixel_x = 7;
+	pixel_y = 1
+	},
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -29351,17 +29396,25 @@
 /area/station/maintenance/east)
 "bnr" = (
 /obj/table/auto,
-/obj/item/storage/box/lightbox/bulbs,
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
+/obj/item/storage/box/lightbox/bulbs{
+	pixel_x = -11;
+	pixel_y = 12
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = -3;
+	pixel_y = 12
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/device/radio{
+	pixel_x = 9;
+	pixel_y = 7
+	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/device/radio,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
