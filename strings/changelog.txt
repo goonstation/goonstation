@@ -1,4 +1,9 @@
 
+(t)sun dec 13 20
+(u)UrsulaMejor
+(p)3047
+(e)🆕🎨|feature, sprites
+(*)Add rods to railings to make reinforced railings that chickens can't pass through. Undo with wirecutters. Sprite by Varali.
 (t)sat dec 12 20
 (u)Kubius
 (p)3009
