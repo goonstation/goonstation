@@ -212,7 +212,7 @@
 	SPAWN_DBG(0)
 		for (var/obj/machinery/door/window/brigdoor/M in range(30, src))
 			if (M.id == src.id)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (M) M.close()
 			LAGCHECK(LAG_HIGH)
 

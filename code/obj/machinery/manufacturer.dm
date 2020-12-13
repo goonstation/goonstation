@@ -465,8 +465,13 @@
 			var/list/material_count = 0
 			for (var/i in 1 to A.item_paths.len)
 				material_count += A.item_amounts[i]
+				var/mat_name
+				if(isnull(A.item_names) || isnull(A.item_names[i]))
+					mat_name = get_nice_mat_name_for_manufacturers(A.item_paths[i])
+				else
+					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [A.item_names[i]]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -2472,7 +2477,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && MA.queue.len)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 
 

@@ -327,7 +327,7 @@
 		if (M == src.connected) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -599,6 +599,7 @@
 							H.set_body_icon_dirty()
 							if (H.limbs)
 								H.limbs.reset_stone()
+							H.update_colorful_parts()
 				if (emagged && isdead(M))
 					qdel(M)
 					make_cleanable( /obj/decal/cleanable/ash,src)

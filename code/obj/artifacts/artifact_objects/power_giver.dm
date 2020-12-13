@@ -19,7 +19,7 @@
 
 	New()
 		..()
-		power_granted = pick("blind","mute","clumsy","fat","dwarf","fire_resist","cold_resist","resist_electric",
+		power_granted = pick("blind","mute","clumsy","dwarf","fire_resist","cold_resist","resist_electric",
 		"psy_resist","glowy","hulk","xray","horns","stinky","monkey","mattereater","jumpy","telepathy","empath",
 		"immolate","eyebeams","melt")
 		power_time = rand(30,180)

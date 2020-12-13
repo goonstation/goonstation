@@ -439,6 +439,7 @@ var/list/genescanner_addresses = list()
 			target_mob.bioHolder.mobAppearance.customization_third_color = customization_third_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
+			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
 			if (target_mob.limbs)
 				target_mob.limbs.reset_stone()
 
@@ -464,6 +465,7 @@ var/list/genescanner_addresses = list()
 				if(!target_mob.cust_three_state)
 					target_mob.cust_three_state = "None"
 
+			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
 

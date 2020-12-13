@@ -1,7 +1,7 @@
 
 /datum/admins/var/datum/partmod_holder/part_modifier = null
 
-var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /obj/item/skull, "brain" = /obj/item/organ/brain, "left_eye" = /obj/item/organ/eye, "right_eye" = /obj/item/organ/eye, "chest" = /obj/item/organ/chest, "heart" = /obj/item/organ/heart, "left_lung" = /obj/item/organ/lung, "right_lung" = /obj/item/organ/lung, "butt" = /obj/item/clothing/head/butt, "liver" = /obj/item/organ/liver, "stomach" = /obj/item/organ/stomach, "intestines" = /obj/item/organ/intestines, "pancreas" = /obj/item/organ/pancreas, "spleen" = /obj/item/organ/spleen, "appendix" = /obj/item/organ/appendix, "left_kidney" = /obj/item/organ/kidney, "right_kidney" = /obj/item/organ/kidney)
+var/list/default_organ_paths = list("head" = /obj/item/organ/head, "skull" = /obj/item/skull, "brain" = /obj/item/organ/brain, "left_eye" = /obj/item/organ/eye, "right_eye" = /obj/item/organ/eye, "chest" = /obj/item/organ/chest, "heart" = /obj/item/organ/heart, "left_lung" = /obj/item/organ/lung, "right_lung" = /obj/item/organ/lung, "butt" = /obj/item/clothing/head/butt, "liver" = /obj/item/organ/liver, "stomach" = /obj/item/organ/stomach, "intestines" = /obj/item/organ/intestines, "pancreas" = /obj/item/organ/pancreas, "spleen" = /obj/item/organ/spleen, "appendix" = /obj/item/organ/appendix, "left_kidney" = /obj/item/organ/kidney, "right_kidney" = /obj/item/organ/kidney, "tail" = /obj/item/organ/tail)
 var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/left, "r_arm" = /obj/item/parts/human_parts/arm/right, "l_leg" = /obj/item/parts/human_parts/leg/left, "r_leg" = /obj/item/parts/human_parts/leg/right)
 
 /client/proc/modify_parts(var/mob/living/carbon/human/target as mob)
@@ -84,7 +84,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				if (!limbs || !limbs.holder)
 					boutput(usr, "Error: invalid target.")
 					return
-				limbs.create()
+				limbs.mend()
 				logTheThing("admin", usr, limbs.holder, "replaced all of [constructTarget(limbs.holder,"admin")]'s missing limbs")
 				message_admins("[key_name(usr)] replaced all of [key_name(limbs.holder)]'s missing limbs")
 				limbs.holder.set_body_icon_dirty()
@@ -454,6 +454,14 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				<td><a href='byond://?src=\ref[src];action=drop_organ;target=\ref[organs];part=appendix'>\[X\]</a></td>
 				<td><a href='byond://?src=\ref[src];action=replace_organ;target=\ref[organs];part=appendix'>\[X\]</a></td>
 				[(see_vars) ? "[organs.appendix ? "<td><a href='byond://?src=\ref[src];action=view_vars;target=\ref[organs.appendix]'>\[X\]</a></td>" : "<td>None</td>"]" : null]
+			</tr>
+			<tr>
+				<td>Tail</td>
+				<td>[organs.tail ? organs.tail : "None"]</td>
+				<td>[organs.tail ? organs.tail.type : "None"]</td>
+				<td><a href='byond://?src=\ref[src];action=drop_organ;target=\ref[organs];part=tail'>\[X\]</a></td>
+				<td><a href='byond://?src=\ref[src];action=replace_organ;target=\ref[organs];part=tail'>\[X\]</a></td>
+				[(see_vars) ? "[organs.tail ? "<td><a href='byond://?src=\ref[src];action=view_vars;target=\ref[organs.tail]'>\[X\]</a></td>" : "<td>None</td>"]" : null]
 			</tr>
 			------------------------------------
 			<tr>

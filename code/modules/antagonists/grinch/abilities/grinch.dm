@@ -16,7 +16,7 @@
 			G.addAbility(/datum/targetable/grinch/instakill)
 			G.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src))

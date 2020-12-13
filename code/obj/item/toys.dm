@@ -503,7 +503,8 @@ var/list/figure_patreon_rarity = list(\
 /datum/figure_info/joaquinfry,
 /datum/figure_info/carolineaudibert,
 /datum/figure_info/helgergunnink,
-/datum/figure_info/hex
+/datum/figure_info/hex,
+/datum/figure_info/tray
 )
 
 /datum/figure_info
@@ -920,6 +921,10 @@ var/list/figure_patreon_rarity = list(\
 	hex
 		name = "\improper HEX"
 		icon_state = "hex"
+
+	tray
+		name = "\improper Tray"
+		icon_state = "tray"
 
 #ifdef XMAS
 	santa

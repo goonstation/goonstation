@@ -1,6 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/intact = 1
 	var/allows_vehicles = 1
 
@@ -21,11 +22,12 @@
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
+
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for both
 	var/temperature = T20C
@@ -295,6 +297,28 @@
 
 						mover.Bump(obstacle,1)
 						return 0
+
+	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
+		if (length(src.vis_contents))
+			var/turf/T = locate(/turf) in src.vis_contents
+			if (T)
+				for(var/thing in T)
+
+					var/atom/movable/obstacle = thing
+					if(obstacle == mover) continue
+					if(!mover)	return 0
+					if ((forget != obstacle))
+						if(obstacle.event_handler_flags & USE_CANPASS)
+							if(!obstacle.CanPass(mover, cturf, 1, 0))
+
+								mover.Bump(obstacle, 1)
+								return 0
+						else //cheaper, skip proc call lol lol
+							if (obstacle.density)
+
+								mover.Bump(obstacle,1)
+								return 0
+
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
@@ -305,6 +329,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == Obj)
+				continue
 			// I Said No sanity check
 			if(i >= 50)
 				break
@@ -320,10 +346,6 @@
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-#ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents -= Obj
-#endif
 
 	return ..(Obj, newloc)
 
@@ -348,6 +370,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == M)
+				continue
 			// I Said No sanity check
 			if(i++ >= 50)
 				break
@@ -371,10 +395,18 @@
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents += M
 	if(warptarget)
-		M.set_loc(warptarget)
+		if(OldLoc)
+			switch (warptarget_modifier)
+				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+					if (ismob(M))
+						var/mob/mob = M
+						if (!mob.client?.holder && mob.last_client)
+							M.set_loc(warptarget)
+						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+							M.set_loc(warptarget)
+				else
+					M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -439,7 +471,6 @@
 	var/temp_old = null
 	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
 	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
-	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -450,9 +481,10 @@
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
 			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
-			#undef _OLD_GAS_VAR_ASSIGN
 			temp_old = src.temperature
+			#undef _OLD_GAS_VAR_ASSIGN
 
+	#undef _OLD_GAS_VAR_DEF
 
 	if (istype(src, /turf/simulated/floor))
 		icon_old = icon_state // a hack but OH WELL, leagues better than before
@@ -581,10 +613,12 @@
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
 					N.air.temperature = temp_old
+
+				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
@@ -651,6 +685,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -1044,7 +1082,7 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
 
@@ -1153,7 +1191,7 @@ Other Goonstation servers:[serverList]"}
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
 			//todo: A digging sound effect.
-			if (do_after(user, 40) && src.icon_state != "dirt-dug")
+			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
 				src.icon_state = "dirt-dug"
 				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
 				for (var/obj/tombstone/grave in orange(src, 1))

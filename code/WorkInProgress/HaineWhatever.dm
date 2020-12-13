@@ -182,7 +182,7 @@
 				src.spam_flag = src.spam_timer
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
-					SPAWN_DBG (0)
+					SPAWN_DBG(0)
 						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)

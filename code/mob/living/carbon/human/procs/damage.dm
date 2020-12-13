@@ -15,7 +15,7 @@
 
 	if (!(client && client.hellbanned))
 		armor_value_bullet = get_ranged_protection()
-	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -155,6 +155,7 @@
 
 	else if (isdead(src) && !src.client)
 		var/list/virus = src.ailments
+		var/atom/A = src.loc
 
 		var/bdna = null // For forensics (Convair880).
 		var/btype = null
@@ -162,7 +163,7 @@
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
 		SPAWN_DBG(0)
-			gibs(src.loc, virus, null, bdna, btype)
+			gibs(A, virus, null, bdna, btype)
 
 		qdel(src)
 		return
@@ -336,6 +337,9 @@
 		brute *= 2
 		burn *= 2
 		//tox *= 2
+
+	if(src.traitHolder?.hasTrait("athletic"))
+		brute *=1.33
 
 	if (src.mutantrace)
 		brute *= src.mutantrace.brutevuln

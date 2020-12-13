@@ -215,9 +215,6 @@
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
-					if (H.bioHolder.HasEffect("fat"))
-						boutput(src.assailant, "<span class='notice'>You can't strangle [src.affecting] through all that fat!</span>")
-						return
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 						if (C.body_parts_covered & HEAD)
 							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
@@ -271,8 +268,6 @@
 		src.affecting.lastattackertime = world.time
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 		//src.affecting.losebreath++
 		//if (src.affecting.paralysis < 2)
 		//	src.affecting.paralysis = 2
@@ -303,8 +298,6 @@
 		src.affecting.force_laydown_standup()
 		if (!src.affecting.buckled)
 			set_affected_loc()
-		if (src.assailant.bioHolder.HasEffect("fat"))
-			src.affecting.unlock_medal("Bear Hug", 1)
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant

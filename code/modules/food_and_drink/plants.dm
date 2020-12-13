@@ -58,7 +58,7 @@
 		..()
 
 	streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)
@@ -1107,7 +1107,7 @@
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/ammo/power_cell/potato/P = new /obj/item/ammo/power_cell/potato(get_turf(src),DNA.potency)
+				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				W:amount -= 1

@@ -98,7 +98,7 @@
 	P.invisibility = src.invisibility
 #endif
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 

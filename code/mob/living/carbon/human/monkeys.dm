@@ -1,6 +1,9 @@
 
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "monkey"
+#endif
 	static_type_override = /datum/mutantrace/monkey
 
 	New()
@@ -102,6 +105,9 @@
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "monkey"
+#endif
 	static_type_override = /datum/mutantrace/monkey
 	ai_aggressive = 0
 	ai_calm_down = 1
@@ -114,6 +120,7 @@
 		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
+				src.bioHolder.mobAppearance.gender = src.gender
 				src.bioHolder.mobAppearance.customization_first = "None"
 				src.cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")

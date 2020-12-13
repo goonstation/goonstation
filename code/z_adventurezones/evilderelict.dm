@@ -94,7 +94,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -115,7 +114,6 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)

@@ -531,7 +531,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, print, or subnet# to set subnet."
@@ -679,7 +678,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, mode_net, mode_free, mode_wire, print, ping, subnet# to set subnet, or 1000-1500 to set frequency in wireless modes."
@@ -880,7 +878,6 @@
 					P.name = "paper- '[print_title]'"
 
 				src.printing = 0
-				return 0
 		else if (command == "help")
 			return "Valid command: print, accompanied by a file to print."
 
