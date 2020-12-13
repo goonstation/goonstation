@@ -1034,6 +1034,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "acf" = (
@@ -4864,6 +4865,7 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -4877,6 +4879,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -4893,6 +4896,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5169,6 +5173,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5180,6 +5185,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5699,6 +5705,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/tech_outpost)
 "amm" = (
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5707,6 +5714,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5717,6 +5725,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/produce,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -6111,6 +6120,7 @@
 	name = "palm tree"
 	},
 /obj/machinery/light_switch/west,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -6126,6 +6136,7 @@
 /area/station/security/main)
 "ani" = (
 /obj/disposalpipe/segment/produce,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -30268,6 +30279,7 @@
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bth" = (
@@ -32748,17 +32760,20 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bzf" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 9
 	},
 /area/station/hallway/secondary/exit)
 "bzg" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
 "bzh" = (
 /obj/machinery/light/incandescent/netural,
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -32771,23 +32786,27 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
 "bzj" = (
 /obj/machinery/light/incandescent/cool,
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
 "bzk" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
 "bzl" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 5
 	},
@@ -33233,15 +33252,18 @@
 	},
 /area/station/hallway/secondary/exit)
 "bAn" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
 "bAo" = (
 /obj/machinery/drainage/big,
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bAp" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 4
 	},
@@ -34290,19 +34312,23 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bCL" = (
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
 "bCM" = (
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bCN" = (
 /obj/machinery/light/incandescent/netural,
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bCO" = (
 /obj/machinery/light/incandescent/cool,
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bCP" = (
@@ -34318,9 +34344,11 @@
 /area/station/security/main)
 "bCQ" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bCR" = (
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 6
 	},
@@ -34332,6 +34360,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -40169,15 +40198,18 @@
 	tag = ""
 	},
 /obj/machinery/plantpot,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bRj" = (
 /obj/shrub{
 	dir = 6
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bRk" = (
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bRl" = (
@@ -40186,10 +40218,12 @@
 	name = "space owl";
 	pixel_y = 4
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bRm" = (
 /obj/critter/parrot/random,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bRn" = (
@@ -41169,6 +41203,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTy" = (
@@ -41178,6 +41213,7 @@
 	icon_state = "4-8"
 	},
 /obj/critter/parrot/random,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTz" = (
@@ -41187,6 +41223,7 @@
 	icon_state = "4-8"
 	},
 /obj/tree1,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTA" = (
@@ -41200,6 +41237,7 @@
 	dir = 9;
 	name = "Rock Pile"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTB" = (
@@ -41208,6 +41246,7 @@
 	d2 = 4;
 	icon_state = "6-8"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTC" = (
@@ -41647,16 +41686,19 @@
 /area/station/crew_quarters/lounge/port)
 "bUJ" = (
 /obj/tree1,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUK" = (
 /obj/item/device/radio/beacon,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUL" = (
 /obj/shrub{
 	dir = 8
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUM" = (
@@ -41665,6 +41707,7 @@
 	d2 = 4;
 	icon_state = "4-9"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUN" = (
@@ -41673,6 +41716,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUO" = (
@@ -42346,6 +42390,7 @@
 /obj/stool/chair/pew/right{
 	name = "wooden bench"
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bWx" = (
@@ -42360,6 +42405,7 @@
 	dir = 10
 	},
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bWz" = (
@@ -42632,6 +42678,7 @@
 	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -42645,24 +42692,28 @@
 /area/station/crew_quarters/lounge/port)
 "bXc" = (
 /obj/stone,
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bXd" = (
 /obj/tree1{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bXe" = (
 /obj/stone{
 	dir = 10
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bXf" = (
 /obj/stone{
 	dir = 4
 	},
+/obj/xmas_ephemeral_turf/snow,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bXg" = (
@@ -47592,6 +47643,7 @@
 	dir = 4;
 	pixel_x = -31
 	},
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 9
 	},
@@ -47605,6 +47657,7 @@
 /area/station/hallway/secondary/exit)
 "cXC" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -47618,20 +47671,37 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dwy" = (
+/obj/machinery/drainage/big,
+/obj/xmas_ephemeral_turf/white,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "dCo" = (
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"dQp" = (
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"eLd" = (
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
+"dYc" = (
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"eHa" = (
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47645,11 +47715,23 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "hbh" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape/corner{
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"hnh" = (
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 9
+	},
+/area/station/hallway/secondary/exit)
+"hwp" = (
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "ikm" = (
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape/corner{
 	dir = 4
 	},
@@ -47706,6 +47788,10 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid,
 /area/space)
+"kmJ" = (
+/obj/xmas_ephemeral_turf/white,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47720,6 +47806,26 @@
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"lmA" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"lAK" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
+"mmh" = (
+/obj/xmas_ephemeral_turf/red,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -47747,6 +47853,7 @@
 	dir = 4;
 	pixel_x = -31
 	},
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -47779,6 +47886,11 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nMh" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/medical/medbay/restroom)
 "oox" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -47794,11 +47906,6 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"pMV" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/medical/medbay/restroom)
 "pRU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47857,6 +47964,10 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"tll" = (
+/obj/xmas_ephemeral_turf/white,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "toE" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -47898,6 +48009,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "vqP" = (
+/obj/xmas_ephemeral_turf/white,
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
 "vIJ" = (
@@ -47921,6 +48033,7 @@
 	dir = 4;
 	pixel_x = -31
 	},
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -47946,6 +48059,11 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xuK" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/xmas_ephemeral_turf/white,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -47979,6 +48097,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
 "yiS" = (
+/obj/xmas_ephemeral_turf/red,
 /turf/simulated/floor/escape/corner{
 	dir = 1
 	},
@@ -88263,7 +88382,7 @@ acP
 akr
 akv
 alj
-pMV
+nMh
 ayw
 ayw
 aqR
@@ -88936,7 +89055,7 @@ bzx
 bAQ
 bCb
 bDp
-eLd
+hwp
 bzx
 bGk
 bHb
@@ -109771,7 +109890,7 @@ aoj
 chS
 bzf
 bAn
-bAn
+dQp
 bCL
 byq
 aqn
@@ -110374,8 +110493,8 @@ aqn
 aqn
 byq
 bzh
-byY
-byY
+dYc
+dYc
 bCN
 byq
 aqn
@@ -110675,10 +110794,10 @@ aqn
 aqn
 aqn
 byq
-bzg
-byY
-byY
-bCM
+mmh
+dYc
+kmJ
+tll
 byq
 aqn
 bFU
@@ -110978,9 +111097,9 @@ aqn
 aqn
 byp
 bzi
-byY
-byY
-bCM
+kmJ
+kmJ
+tll
 byp
 aqn
 bFU
@@ -111280,8 +111399,8 @@ aqn
 aqn
 byp
 bzg
-byY
-byY
+kmJ
+kmJ
 bCM
 byp
 aqn
@@ -111582,8 +111701,8 @@ aqn
 aqn
 byp
 bzj
-byY
-byY
+kmJ
+dYc
 bCO
 byp
 aqn
@@ -111884,8 +112003,8 @@ aqn
 aqn
 byq
 bzg
-byY
-byY
+dYc
+dYc
 bCM
 byq
 aqn
@@ -112185,10 +112304,10 @@ aqn
 aqn
 aqn
 byq
-bzg
-byY
-byY
-bCM
+mmh
+dYc
+dYc
+tll
 byq
 aqn
 bFU
@@ -112488,9 +112607,9 @@ aqn
 aqn
 byq
 bWZ
-byY
-byY
-bCM
+dYc
+kmJ
+tll
 byo
 byq
 bFU
@@ -112789,10 +112908,10 @@ aqn
 aqn
 aqn
 byo
-bzg
-byY
-byY
-bCM
+mmh
+kmJ
+kmJ
+tll
 aRw
 aRx
 bFU
@@ -113092,8 +113211,8 @@ aqn
 aqn
 byq
 bzk
-byY
-byY
+kmJ
+kmJ
 bCQ
 byo
 byq
@@ -113395,7 +113514,7 @@ aqn
 byq
 bzl
 bAp
-bAp
+eHa
 bCR
 byq
 aqn
@@ -113997,9 +114116,9 @@ aqn
 aqn
 aqn
 byq
-bzf
-bAn
-bAn
+hnh
+dQp
+dQp
 bCS
 byq
 aqn
@@ -114299,10 +114418,10 @@ aqn
 aqn
 aqn
 bze
-bzk
+lAK
 bAo
-bAo
-bCQ
+dwy
+xuK
 bze
 aqn
 bFU
@@ -114601,10 +114720,10 @@ aqn
 aqn
 aqn
 bze
-bzg
-byY
-byY
-bCM
+mmh
+kmJ
+kmJ
+tll
 bze
 aqn
 aqn
@@ -114904,8 +115023,8 @@ aqn
 aqn
 bze
 bzg
-byY
-byY
+kmJ
+kmJ
 bCM
 bze
 aqn
@@ -115206,8 +115325,8 @@ aqn
 aqn
 byq
 bzg
-byY
-byY
+kmJ
+dYc
 bCM
 byq
 aqn
@@ -115508,8 +115627,8 @@ bze
 byq
 byq
 bzg
-byY
-byY
+dYc
+dYc
 bCM
 byq
 byq
@@ -115810,12 +115929,12 @@ cXC
 ngC
 bAn
 yiS
-byY
-byY
+dYc
+dYc
 hbh
 bAn
 ngC
-cXC
+lmA
 vNf
 bze
 aqn
@@ -116110,14 +116229,14 @@ bze
 bzl
 bAp
 bAp
-bAp
+eHa
 ikm
-byY
-byY
+dYc
+kmJ
 vqP
 bAp
-bAp
-bAp
+eHa
+eHa
 bCR
 bze
 aqn
@@ -116413,10 +116532,10 @@ cXB
 mEu
 cXB
 byq
-bzk
-bAo
-bAo
-bCQ
+lAK
+dwy
+dwy
+xuK
 byq
 cXB
 mEu
