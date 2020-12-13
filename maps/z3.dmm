@@ -2350,9 +2350,6 @@
 /obj/item/storage/toilet,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"agY" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/mining/mainasteroid)
 "aha" = (
 /turf/simulated/floor/black,
 /area/mining/quarters)
@@ -79650,7 +79647,7 @@ aff
 aff
 aff
 aff
-agY
+afZ
 afZ
 afZ
 ahM
