@@ -49699,7 +49699,10 @@
 /area/station/security/checkpoint/cargo)
 "cfc" = (
 /obj/table/auto,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -50253,8 +50256,14 @@
 /area/station/security/checkpoint/cargo)
 "cgs" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
-/obj/item/weldingtool,
+/obj/item/weldingtool{
+	pixel_x = 12;
+	pixel_y = 15
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -52030,11 +52039,17 @@
 /area/space)
 "ckm" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -7;
+	pixel_y = -2
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "ckn" = (
@@ -52699,9 +52714,23 @@
 /area/station/quartermaster/refinery)
 "clK" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
-/turf/simulated/floor/plating/airless,
+/obj/item/paper/book/materials{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/quartermaster/refinery)
 "clL" = (
 /obj/machinery/door/poddoor/blast/pyro{
