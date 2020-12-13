@@ -395,8 +395,8 @@
 		setProperty("meleeprot", 1)
 
 	get_desc(var/dist, var/mob/user)
+		. = ..()
 		if (user.traitHolder.hasTrait("dutch"))
-		. += ..()
 			. += "Reminds you of the beatiful space dikes back at home."
 		else
 			. += "A pair of shoes from someone far under sea level."
