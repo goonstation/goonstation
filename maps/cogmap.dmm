@@ -21269,13 +21269,33 @@
 /area/station/garden/owlery)
 "aVL" = (
 /obj/table/auto,
-/obj/item/clothing/under/gimmick/owl,
-/obj/item/clothing/mask/owl_mask,
-/obj/item/clothing/mask/owl_mask,
-/obj/item/clothing/mask/owl_mask,
-/obj/item/clothing/under/gimmick/owl,
-/obj/item/clothing/under/gimmick/owl,
-/obj/item/clothing/mask/owl_mask,
+/obj/item/clothing/under/gimmick/owl{
+	pixel_x = -9;
+	pixel_y = -1
+	},
+/obj/item/clothing/under/gimmick/owl{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/gimmick/owl{
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = 9;
+	pixel_y = 3
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVM" = (
