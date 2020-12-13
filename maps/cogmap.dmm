@@ -57387,50 +57387,42 @@
 /area/station/routing/medsci)
 "cuU" = (
 /obj/rack,
-/obj/item/storage/box/gl_kit{
-	pixel_x = -9;
-	pixel_y = 11
-	},
-/obj/item/device/radio/headset/medical{
-	pixel_x = 14;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 3;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/spraybottle/cleaner{
-	pixel_x = -1;
-	pixel_y = 12
-	},
-/obj/item/staple_gun{
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/obj/item/storage/box/health_upgrade_kit{
-	pixel_x = -7;
-	pixel_y = 2
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = 7;
-	pixel_y = -8
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = 8;
-	pixel_y = -6
-	},
-/obj/item/robodefibrillator{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/storage/wall/medical_wear,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/item/robodefibrillator{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/storage/box/gl_kit{
+	pixel_x = 8;
+	pixel_y = 14
+	},
+/obj/item/storage/box/health_upgrade_kit{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 9;
+	pixel_y = -8
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/item/staple_gun{
+	pixel_x = 12;
+	pixel_y = -4
+	},
+/obj/item/storage/wall/medical_wear,
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "cuV" = (
@@ -57438,9 +57430,16 @@
 	dir = 6
 	},
 /obj/table/wood/auto,
-/obj/machinery/coffeemaker/medbay,
+/obj/machinery/coffeemaker/medbay{
+	pixel_x = 3;
+	pixel_y = 4
+	},
 /obj/mug_rack{
 	pixel_y = 28
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -9;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay)
@@ -57894,16 +57893,20 @@
 	tag = ""
 	},
 /obj/item/item_box/medical_patches/styptic{
-	pixel_x = 10;
+	pixel_x = 9;
 	pixel_y = 7
 	},
+/obj/item/device/radio/headset/medical{
+	pixel_x = 11;
+	pixel_y = 5
+	},
 /obj/machinery/networked/printer{
-	pixel_x = -1;
-	pixel_y = 4;
+	pixel_x = -2;
+	pixel_y = 9;
 	print_id = "Medbay"
 	},
 /obj/item/device/light/flashlight/penlight{
-	pixel_x = 5;
+	pixel_x = -8;
 	pixel_y = -2
 	},
 /turf/simulated/floor/carpet{
