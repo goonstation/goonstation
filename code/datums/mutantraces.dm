@@ -1141,6 +1141,10 @@
 		if (drains_dna_on_life) //Do you continuously lose DNA points when in this form?
 			var/datum/abilityHolder/changeling/C = mob.get_ability_holder(/datum/abilityHolder/changeling)
 
+			if(!C)
+				mob.show_text("<I><B>You cannot hold this form!</B></I>", "red")
+				mob.revert_from_horror_form()
+
 			if (C?.points)
 				if (last_drain + 30 <= world.time)
 					C.points = max(0, C.points - (1 * mult))

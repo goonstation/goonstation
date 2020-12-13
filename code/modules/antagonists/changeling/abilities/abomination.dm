@@ -67,7 +67,7 @@
 		H.update_face()
 		H.update_body()
 		H.update_clothing()
-		C.transferOwnership(H)
+		C?.transferOwnership(H)
 		logTheThing("combat", H, null, "voluntarily leaves horror form as a changeling, [log_loc(H)].")
 		return 0
 
