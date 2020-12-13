@@ -32007,8 +32007,16 @@
 	icon_state = "4-8"
 	},
 /obj/table/wood/auto,
-/obj/deskclutter,
-/obj/machinery/light/lamp/green,
+/obj/deskclutter{
+	pixel_y = 1
+	},
+/obj/machinery/light/lamp/green{
+	pixel_y = 1
+	},
+/obj/item/clipboard{
+	pixel_x = 11;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/info)
 "bsB" = (
@@ -32631,17 +32639,26 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "btX" = (
+/obj/storage/crate,
 /obj/item/clothing/suit/johnny_coat{
 	desc = "This outfit just looks smug as hell.";
-	name = "overcoat and scarf"
+	name = "overcoat and scarf";
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
-	name = "fedora"
+	name = "fedora";
+	pixel_x = 7;
+	pixel_y = 11
 	},
-/obj/storage/crate,
-/obj/item/storage/fanny,
-/obj/item/storage/fanny,
+/obj/item/storage/fanny{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/storage/fanny{
+	pixel_x = -1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "btY" = (
@@ -57152,12 +57169,16 @@
 "ctN" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer{
-	pixel_x = -2;
-	pixel_y = 2
+	pixel_x = 6;
+	pixel_y = 8
 	},
 /obj/item/device/audio_log{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/luggable_computer{
+	pixel_x = -4;
+	pixel_y = -6
 	},
 /obj/machinery/light{
 	dir = 4
@@ -57871,24 +57892,21 @@
 	icon_state = "4-8"
 	},
 /obj/table/wood/auto,
-/obj/item/clipboard{
-	pixel_x = -7;
-	pixel_y = -1
-	},
 /obj/item/paper_bin{
 	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/item/pen{
-	pixel_y = -7
-	},
-/obj/item/pen/fancy{
-	pixel_x = -3;
-	pixel_y = -2
+	pixel_y = 2
 	},
 /obj/machinery/phone{
-	pixel_x = 5;
+	pixel_x = 8;
 	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/pen/fancy{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/info)
@@ -57931,14 +57949,13 @@
 /area/station/medical/research)
 "cvk" = (
 /obj/table/wood/auto,
-/obj/item/luggable_computer{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/camera_test,
 /obj/item/camera_test{
-	pixel_x = -2;
-	pixel_y = -6
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/camera_test{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
