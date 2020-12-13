@@ -1,5 +1,9 @@
 
 (t)sun dec 13 20
+(u)glassofmilk
+(p)3041
+(e)🆕|feature
+(*)Many wireless devices now respond to the command "help"
 (u)UrsulaMejor
 (p)3047
 (e)🆕🎨|feature, sprites
