@@ -36673,10 +36673,13 @@
 /obj/table/auto,
 /obj/item/disk/data/tape{
 	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
+	pixel_x = -3;
+	pixel_y = 6
 	},
-/obj/item/disk/data/tape/master/readonly,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_x = 1;
+	pixel_y = 2
+	},
 /turf/simulated/floor/bot,
 /area/station/turret_protected/Zeta)
 "bEa" = (
@@ -36711,14 +36714,17 @@
 /area/station/turret_protected/Zeta)
 "bEf" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/tapebox,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/item/storage/box/tapebox{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/device/multitool{
+	pixel_x = 7;
+	pixel_y = -2
 	},
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
@@ -36972,9 +36978,13 @@
 "bEJ" = (
 /obj/table/auto,
 /obj/item/paper/book/dwainedummies{
-	pixel_y = 6
+	pixel_x = -7;
+	pixel_y = 9
 	},
-/obj/item/device/multitool,
+/obj/item/paper/book/guardbot_guide{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/simulated/floor/green,
 /area/station/turret_protected/Zeta)
 "bEK" = (
@@ -38155,9 +38165,14 @@
 	icon_state = "1-8"
 	},
 /obj/table/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
-/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/circuitboard/robotics{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/circuitboard/aiupload{
+	pixel_x = 2;
+	pixel_y = -2
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bHe" = (
@@ -38184,8 +38199,18 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/item/circuitboard/robotics,
-/obj/item/disk/data/floppy/read_only/network_progs,
+/obj/item/aiModule/reset{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -1;
+	pixel_y = 10
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bHg" = (
