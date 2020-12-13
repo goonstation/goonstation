@@ -282,7 +282,7 @@ export const BeakerContentsGraph = (props, context) => {
     {
       id: 3,
       contents: "Order Added",
-      compareFunction: (a, b) => a.state,
+      compareFunction: () => 1,
     },
   ];
   return (
