@@ -1,4 +1,4 @@
-#include "..\oshan_xmas.dmm"
+#include "..\oshan.dmm"
 #include "..\z2.dmm"
 #include "..\z3_blank.dmm"
 #include "z4.dm"

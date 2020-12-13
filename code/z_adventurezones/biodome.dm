@@ -277,6 +277,13 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "snowbits"
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
 /obj/decal/runemarks
 	name = "runes"
 	desc = "A set of dimly glowing runes is carved into the rock here."
