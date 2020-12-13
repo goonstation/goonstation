@@ -576,6 +576,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			qdel(src)
 			return
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			..()
+			qdel(src)
+#endif
+
 /obj/decal/garland
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
@@ -624,6 +631,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	icon_state = "mistletoe"
 	layer = 9
 	anchored = 1
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
 
 /obj/decal/xmas_lights
 	name = "spacemas lights"
@@ -1274,3 +1288,28 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
 	icon_closed = "xmascrate"
+
+/obj/xmas_ephemeral_turf
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "floor"
+	var/replace_with = null
+
+	New()
+		..()
+#ifdef XMAS
+		var/turf/T = get_turf(src)
+		T.ReplaceWith(replace_with, 0)
+#endif
+		qdel(src)
+
+	white
+		icon_state = "white"
+		replace_with = "/turf/simulated/floor/white"
+
+	red
+		icon_state = "fullred"
+		replace_with = "/turf/simulated/floor/red"
+
+	snow
+		icon_state = "snow1"
+		replace_with = "/turf/simulated/floor/snow"

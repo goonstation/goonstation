@@ -313,16 +313,44 @@
 	desc = "A Spacemas ornament!"
 	icon_state = "ornament1"
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
 /obj/item/sticker/xmas_ornament/green
 	icon_state = "ornament2"
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
 
 /obj/item/sticker/xmas_ornament/snowflake
 	name = "snowflake ornament"
 	icon_state = "snowflake"
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
+
 /obj/item/sticker/xmas_ornament/holly
 	name = "holly ornament"
 	icon_state = "holly"
+
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			qdel(src)
+			..()
+#endif
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"

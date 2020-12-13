@@ -200,6 +200,13 @@
 	module_research = list("vice" = 5)
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
+	ephemeral //Disappears except on xmas
+#ifndef XMAS
+		New()
+			..()
+			qdel(src)
+#endif
+
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
