@@ -28200,15 +28200,24 @@
 /area/station/ai_monitored/storage/eva)
 "blg" = (
 /obj/table/auto,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/storage/box/lightbox/tubes,
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/storage/box/lightbox/tubes{
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -29044,15 +29053,24 @@
 /area/station/ai_monitored/storage/eva)
 "bnd" = (
 /obj/table/auto,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/t_scanner,
-/obj/item/device/prox_sensor,
-/obj/item/wrench,
-/obj/item/storage/box/cablesbox,
-/obj/item/chem_grenade/firefighting,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = -9;
+	pixel_y = 13
+	},
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/device/radio{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/wrench{
+	pixel_x = -3;
+	pixel_y = 9
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -29451,17 +29469,38 @@
 /area/station/ai_monitored/storage/eva)
 "bnQ" = (
 /obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/chem_grenade/metalfoam,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/device/t_scanner{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/extinguisher{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/extinguisher{
+	pixel_x = 13;
+	pixel_y = 5
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -29877,26 +29916,32 @@
 /area/station/ai_monitored/storage/eva)
 "boE" = (
 /obj/table/auto,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/extinguisher{
-	pixel_y = 8
-	},
-/obj/item/extinguisher{
-	pixel_y = 8
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_y = 14
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = 8;
+	pixel_y = 14
+	},
+/obj/machinery/cell_charger{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/cell/supercell{
+	pixel_x = 3
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -30155,16 +30200,28 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bpi" = (
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/weldingtool,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/weldingtool{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 3;
+	pixel_y = -4
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
@@ -30572,9 +30629,14 @@
 	amount = 50
 	},
 /obj/item/sheet/steel/reinforced{
-	amount = 50
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 1;
+	pixel_y = 1
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -30598,17 +30660,25 @@
 "bqg" = (
 /obj/table/auto,
 /obj/item/sheet/steel{
-	amount = 50
+	amount = 50;
+	pixel_x = -1
 	},
 /obj/item/sheet/glass/reinforced{
-	amount = 50
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/item/rods/steel{
-	amount = 50
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -6;
+	pixel_y = 8
 	},
-/obj/item/storage/toolbox/emergency,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = 9;
+	pixel_y = 2
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
