@@ -54552,8 +54552,6 @@
 /area/station/science/testchamber)
 "cpg" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/toxin,
-/obj/item/clothing/glasses/sunglasses,
 /obj/machinery/door_control{
 	id = "test_chamber2";
 	name = "Test Chamber Shutter Control";
@@ -54562,6 +54560,14 @@
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
@@ -55119,10 +55125,18 @@
 /area/mining/magnet)
 "cqj" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/fire,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/decoration/ashtray,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cqk" = (
