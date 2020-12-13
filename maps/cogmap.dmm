@@ -54396,14 +54396,25 @@
 	},
 /area/station/medical/medbay)
 "coS" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/brain{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/brain{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/machinery/cashreg{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
+	pixel_x = 4
+	},
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/table/auto,
-/obj/machinery/cashreg,
-/obj/item/storage/firstaid/brain,
-/obj/item/storage/firstaid/brain,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "coT" = (
@@ -57014,19 +57025,36 @@
 /area/station/medical/research)
 "cuq" = (
 /obj/table/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/hand_labeler,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "cur" = (
 /obj/table/auto,
-/obj/machinery/cashreg,
-/obj/item/storage/pill_bottle/mutadone,
+/obj/machinery/cashreg{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/hand_labeler{
+	pixel_x = -3
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
@@ -60939,9 +60967,17 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/storage/firstaid/brain,
-/obj/item/storage/firstaid/brain,
-/obj/item/clothing/glasses/spectro,
+/obj/item/storage/firstaid/brain{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/storage/firstaid/brain{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = -3
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
