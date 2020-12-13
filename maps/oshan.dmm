@@ -3388,7 +3388,6 @@
 	dir = 8
 	},
 /obj/access_spawn/security,
-/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/sec_foyer)
 "ahf" = (
@@ -7714,7 +7713,6 @@
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
 /obj/access_spawn/hydro,
-/obj/firedoor_spawn,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aqR" = (
@@ -11143,7 +11141,6 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/security,
-/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "ayK" = (
@@ -16796,7 +16793,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/security,
 /obj/machinery/cashreg,
-/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aLR" = (
@@ -17118,7 +17114,6 @@
 	dir = 4
 	},
 /obj/access_spawn/hydro,
-/obj/firedoor_spawn,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aMJ" = (
@@ -17549,7 +17544,6 @@
 	dir = 4
 	},
 /obj/access_spawn/hydro,
-/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "aNL" = (
@@ -19814,7 +19808,6 @@
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
 /obj/access_spawn/hydro,
-/obj/firedoor_spawn,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aTd" = (
@@ -29495,7 +29488,6 @@
 /obj/blind_switch/area/west,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/forensics,
-/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "brj" = (
@@ -29507,7 +29499,6 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/forensics,
-/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "brk" = (
@@ -29522,7 +29513,6 @@
 /obj/item/device/detective_scanner,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/forensics,
-/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "brl" = (
@@ -32453,7 +32443,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/security,
 /obj/disposalpipe/segment/brig,
-/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "byn" = (
@@ -35876,7 +35865,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/light/incandescent/cool,
 /obj/access_spawn/head_of_personnel,
-/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGv" = (
@@ -35886,14 +35874,12 @@
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/head_of_personnel,
-/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/head_of_personnel,
-/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGx" = (
@@ -46474,7 +46460,6 @@
 /area/station/maintenance/inner/central)
 "ciQ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/arcade)
 "ciR" = (
