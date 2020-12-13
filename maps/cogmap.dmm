@@ -27066,22 +27066,37 @@
 /area/station/crew_quarters/captain)
 "biv" = (
 /obj/table/auto,
-/obj/item/pen/fancy,
-/obj/item/pinpointer/disk,
-/obj/item/card/id/captains_spare,
-/obj/item/hand_tele,
+/obj/item/card/id/captains_spare{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/pinpointer/disk{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/obj/item/hand_tele{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "biw" = (
 /obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/light,
+/obj/item/storage/photo_album{
+	pixel_y = -6
+	},
+/obj/item/camera_test{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/pen/fancy{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "bix" = (
@@ -27089,9 +27104,17 @@
 	icon_state = "4-8"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/suit/space/captain,
+/obj/item/tank/jetpack{
+	pixel_x = -7
+	},
+/obj/item/clothing/suit/space/captain{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "biy" = (
