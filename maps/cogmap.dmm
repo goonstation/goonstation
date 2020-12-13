@@ -18086,16 +18086,18 @@
 /area/station/chapel/sanctuary)
 "aOH" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = 4;
-	pixel_y = 9
+	pixel_x = -4;
+	pixel_y = 10
 	},
-/obj/machinery/phone,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = -2;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -20935,10 +20937,16 @@
 /area/station/bridge)
 "aVl" = (
 /obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/item/reagent_containers/food/drinks/tea,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
@@ -20946,11 +20954,19 @@
 /area/station/bridge)
 "aVm" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/crowbar,
-/obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/item/device/radio/beacon{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/crowbar{
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
@@ -20963,12 +20979,17 @@
 	on = 1
 	},
 /obj/table/wood/round/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -4;
+	pixel_y = 10
 	},
-/obj/item/device/light/zippo,
+/obj/item/device/light/zippo{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/device/multitool{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -21085,7 +21106,14 @@
 /area/station/crew_quarters/courtroom)
 "aVz" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/machinery/phone{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -21498,9 +21526,18 @@
 /area/station/chapel/sanctuary)
 "aWz" = (
 /obj/table/wood/round/auto,
-/obj/item/device/infra,
-/obj/item/wrapping_paper,
-/obj/item/wirecutters,
+/obj/item/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/wirecutters{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/item/device/infra{
+	pixel_x = 11;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -21530,9 +21567,18 @@
 /area/station/maintenance/east)
 "aWC" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/gloves/yellow/unsulated,
-/obj/item/handcuffs,
-/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/gloves/yellow/unsulated{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/handcuffs{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/blindfold{
+	pixel_x = -1;
+	pixel_y = -5
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
