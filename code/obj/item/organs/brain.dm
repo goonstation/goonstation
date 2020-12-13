@@ -89,7 +89,7 @@
 			return
 		if(inafterlifebar(mind.current)) // No changing owners af this is happening in the afterlife
 			return
-		if (mind.brain)
+		if (mind.brain && mind.brain != src)
 			var/obj/item/organ/brain/brain = mind.brain
 			brain.owner = null
 		mind.brain = src
