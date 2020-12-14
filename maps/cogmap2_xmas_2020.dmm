@@ -80809,6 +80809,9 @@
 /obj/stool/chair/green{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gBm" = (
@@ -80978,12 +80981,10 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "jCd" = (
-/obj/railing/orange/reinforced,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "jFv" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -81355,10 +81356,6 @@
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
-"pKi" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "pQk" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -102814,7 +102811,7 @@ tWd
 tWd
 tIQ
 jsR
-jCd
+eLJ
 gzF
 eLO
 pRl
@@ -103116,8 +103113,8 @@ tWd
 fig
 tPo
 tPo
-pKi
-fVT
+tPo
+jCd
 fVT
 iWY
 tPo
@@ -103418,8 +103415,8 @@ wSt
 uYn
 tPo
 tPo
-pKi
-fVT
+tPo
+jCd
 fVT
 iWY
 tPo
@@ -103720,8 +103717,8 @@ wSt
 aEI
 kgf
 tPo
-pKi
-fVT
+tPo
+jCd
 fVT
 iWY
 tPo

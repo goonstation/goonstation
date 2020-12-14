@@ -15989,12 +15989,10 @@
 	},
 /area/shuttle/arrival/station)
 "aKt" = (
-/obj/railing/orange/reinforced,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "aKu" = (
 /obj/submachine/chicken_incubator,
@@ -79045,6 +79043,9 @@
 /obj/stool/chair/green{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gor" = (
@@ -79302,10 +79303,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"vTx" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "wcj" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
@@ -100364,7 +100361,7 @@ xfw
 xfw
 wSb
 aHr
-aKt
+qfX
 fVc
 iRa
 rBI
@@ -100666,8 +100663,8 @@ xfw
 vNO
 saK
 saK
-vTx
-mBI
+saK
+aKt
 mBI
 wcj
 saK
@@ -100968,8 +100965,8 @@ xTc
 vlP
 saK
 saK
-vTx
-mBI
+saK
+aKt
 mBI
 wcj
 saK
@@ -101270,8 +101267,8 @@ xTc
 aKu
 viA
 saK
-vTx
-mBI
+saK
+aKt
 mBI
 wcj
 saK
