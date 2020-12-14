@@ -15291,13 +15291,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aIb" = (
-/obj/disposalpipe/segment/mail,
-/obj/window_blinds/cog2/right{
-	dir = 8;
-	icon_state = "blinds_cog2-L-o";
-	pixel_x = 32
+/obj/disposalpipe/segment/morgue,
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
 /area/station/hallway/primary/west)
 "aIc" = (
 /obj/table/glass/reinforced/auto,
@@ -16683,6 +16684,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/neutral/side{
 	dir = 6
 	},
@@ -17091,18 +17093,20 @@
 	name = "Catering Hangar"
 	})
 "aMe" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "mining_podbay"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24;
-	pixel_y = -8
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/r_door_control{
+	id = "mining_podbay";
+	pixel_x = -32
 	},
 /turf/simulated/floor/shuttlebay,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/area/station/mining/staff_room)
 "aMf" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -48272,21 +48276,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"fgJ" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	id = "mining_podbay"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/decal/tile_edge/floorguide/arrow_n{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/r_door_control{
-	id = "mining_podbay";
-	pixel_x = -32
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/mining/staff_room)
 "fhd" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -48390,7 +48379,8 @@
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment/morgue,
 /obj/disposalpipe/segment{
-	dir = 4
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -77108,7 +77098,7 @@ aqn
 aqn
 aKe
 aKg
-aMe
+aMF
 aMF
 aOX
 aME
@@ -81633,9 +81623,9 @@ aDS
 pWJ
 aDS
 aDS
-aDS
+aIb
 hFU
-aDS
+pWJ
 pWJ
 aDS
 aLf
@@ -81934,10 +81924,10 @@ aDT
 aDT
 aOd
 aDT
-aIb
+aDT
 aDT
 pUp
-aDT
+oTd
 oTd
 aDT
 aLg
@@ -82239,7 +82229,7 @@ aDU
 aEI
 aIU
 aJw
-aEI
+mnx
 mnx
 aDU
 aLi
@@ -86501,7 +86491,7 @@ aDr
 aDr
 abs
 cjP
-fgJ
+aMe
 bvw
 bwe
 bwK
