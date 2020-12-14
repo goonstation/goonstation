@@ -218,12 +218,12 @@
 
 	/// Applies the correct (hopefully) colors to the severed limbs
 	proc/set_limb_icon_coloration()
-		if (!src.skintoned || !isicon(src.icon)) // why does this keep happening?
+		if (!src.skintoned || !isicon(src.icon))
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 
 		// All skintoned limbs also get a cool not-affected-by-coloration bloody stump!
-		var/image/limb_icon = image(src.icon, "[src.icon_state]")	// Preferably a grayscale image
-		limb_icon.color = src.skin_tone
+		var/icon/limb_icon = new /icon(src.icon, "[src.icon_state]")	// Preferably a grayscale image
+		limb_icon.Blend(src.skin_tone, ICON_MULTIPLY)
 
 		// Extra bit? Throw it in!
 		if(severed_overlay_1_icon)
@@ -241,15 +241,14 @@
 						colorheck = src.skin_tone
 					else
 						colorheck = "#FFFFFF"
-			var/image/limb_detail_icon = image(src.severed_overlay_1_icon, "[src.severed_overlay_1_state]")	// Preferably just about anything
-			limb_detail_icon.color = colorheck
-			limb_icon.overlays += limb_detail_icon
+			var/icon/limb_detail_icon = new /icon(src.severed_overlay_1_icon, "[src.severed_overlay_1_state]")	// Preferably just about anything
+			limb_detail_icon.Blend(colorheck, ICON_MULTIPLY)
+			limb_icon.Blend(limb_detail_icon, ICON_OVERLAY)
 
-		var/image/limb_icon_overlay = image(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
-		limb_icon.overlays += limb_icon_overlay
+		var/icon/limb_icon_overlay = new /icon(src.icon, "[src.icon_state]_blood") // Preferably blood-colored
+		limb_icon.Blend(limb_icon_overlay, ICON_OVERLAY)
 
-		src.icon_state = "blank"
-		src.overlays += limb_icon
+		src.icon = limb_icon
 
 	/// Assembles the limb's overlays, if any
 	proc/setup_limb_overlay()
