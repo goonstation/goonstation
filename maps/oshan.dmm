@@ -15742,7 +15742,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/auto,
 /obj/disposalpipe/junction/left,
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -16447,6 +16446,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/neutral/side{
 	dir = 6
 	},
@@ -47606,14 +47606,21 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"elc" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+"erc" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "mining_podbay"
 	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/observatory)
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/r_door_control{
+	id = "mining_podbay";
+	pixel_x = -32
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "exU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47631,13 +47638,12 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"fGQ" = (
+"eOF" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "fQs" = (
@@ -47789,6 +47795,12 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kQy" = (
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
@@ -47801,7 +47813,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "mAL" = (
 /obj/table/auto,
@@ -47881,6 +47893,14 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nSD" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "nYa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47900,20 +47920,22 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"oKZ" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
 "oXf" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"pid" = (
+/obj/rack,
+/obj/item/furniture_parts/table/wood,
+/obj/item/furniture_parts/table/wood,
+/obj/item/furniture_parts/table/wood,
+/obj/item/furniture_parts/bench/wooden,
+/obj/item/furniture_parts/bench/wooden,
+/obj/item/furniture_parts/bench/wooden,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "pvB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48012,12 +48034,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
-"rTz" = (
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -48052,14 +48068,14 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"tge" = (
-/obj/machinery/power/apc/autoname_west,
+"tjI" = (
 /obj/cable{
+	d1 = 1;
 	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
+/turf/simulated/floor/black,
+/area/station/crew_quarters/observatory)
 "toE" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -48125,16 +48141,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"vdR" = (
-/obj/rack,
-/obj/item/furniture_parts/table/wood,
-/obj/item/furniture_parts/table/wood,
-/obj/item/furniture_parts/table/wood,
-/obj/item/furniture_parts/bench/wooden,
-/obj/item/furniture_parts/bench/wooden,
-/obj/item/furniture_parts/bench/wooden,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
 "vqP" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
@@ -48191,6 +48197,15 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"ycH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -74974,9 +74989,9 @@ aNA
 aNA
 nAo
 boV
-rTz
-tge
-vdR
+kQy
+nSD
+pid
 boV
 brH
 brH
@@ -75279,8 +75294,8 @@ tbh
 aNA
 bpv
 bqh
-oKZ
-elc
+eOF
+tjI
 brH
 brH
 aqn
@@ -76484,7 +76499,7 @@ bmq
 bmR
 bnB
 bil
-fGQ
+ycH
 boT
 bql
 boV
@@ -85251,7 +85266,7 @@ aDr
 aDr
 bng
 bng
-buQ
+buS
 buS
 bwd
 bwd
@@ -85553,7 +85568,7 @@ aDr
 aDr
 abs
 cjP
-cjb
+erc
 bvw
 bwe
 bwK

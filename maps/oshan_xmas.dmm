@@ -15962,7 +15962,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/auto,
 /obj/disposalpipe/junction/left,
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -48273,6 +48272,21 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fgJ" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "mining_podbay"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/decal/tile_edge/floorguide/arrow_n{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/r_door_control{
+	id = "mining_podbay";
+	pixel_x = -32
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/mining/staff_room)
 "fhd" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -48298,7 +48312,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "fNe" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -86185,7 +86199,7 @@ aDr
 aDr
 bng
 bng
-buQ
+buS
 buS
 bwd
 bwd
@@ -86487,7 +86501,7 @@ aDr
 aDr
 abs
 cjP
-cjb
+fgJ
 bvw
 bwe
 bwK
