@@ -81557,6 +81557,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"rLA" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "rLQ" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -128890,7 +128896,7 @@ cgk
 cgJ
 chG
 ciI
-ciK
+rLA
 ciK
 ciK
 ciK

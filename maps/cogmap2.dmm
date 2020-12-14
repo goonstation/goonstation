@@ -79223,6 +79223,12 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"lBA" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "mgV" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -126446,7 +126452,7 @@ cgk
 cgJ
 chG
 ciI
-ciK
+lBA
 ciK
 ciK
 ciK

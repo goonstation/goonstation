@@ -39846,6 +39846,7 @@
 "bPy" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bPz" = (

@@ -45254,6 +45254,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "nyq" = (
