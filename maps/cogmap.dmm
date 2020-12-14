@@ -38304,8 +38304,14 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/obj/item/tank/air,
-/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/tank/air{
+	pixel_x = 6;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "bFF" = (
@@ -39197,18 +39203,27 @@
 /area/station/engine/power)
 "bHp" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/deskclutter{
+	pixel_x = 1
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/paper/engine,
-/obj/item/clipboard,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/clipboard{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/paper/engine{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -62755,6 +62770,14 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"rng" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -109300,7 +109323,7 @@ bDv
 bEl
 chH
 bFF
-bGw
+rng
 bHo
 bIl
 bHo
