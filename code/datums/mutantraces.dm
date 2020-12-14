@@ -95,6 +95,9 @@
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
+	var/arm_offset = 0
+	/// affects pixel_y of the legs and stump, in case the mutant has a non-human length torsocrotch
+	var/leg_offset = 0
 	/// affects pixel_y of eyes if they're different from normal head-placement. darn anime monkey eyes
 	/// If 0, it inherits that of the head offset. Otherwise, it applies as normal
 	/// So, it should typically be something like head_offset +/- a few pixels
@@ -346,6 +349,12 @@
 				AH.mob_oversuit_1_color_ref = src.detail_oversuit_1_color
 				AH.mob_oversuit_1_offset_y = src.body_offset
 
+				AH.mob_head_offset = src.head_offset
+				AH.mob_hand_offset = src.hand_offset
+				AH.mob_body_offset = src.body_offset
+				AH.mob_leg_offset = src.leg_offset
+				AH.mob_arm_offset = src.arm_offset
+
 				if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
 					AH.customization_first_color = fix_colors(AH.customization_first_color)
 					AH.customization_second_color = fix_colors(AH.customization_second_color)
@@ -382,6 +391,11 @@
 				AH.customization_first_offset_y = 0
 				AH.customization_second_offset_y = 0
 				AH.customization_third_offset_y = 0
+				AH.mob_head_offset = 0
+				AH.mob_hand_offset = 0
+				AH.mob_body_offset = 0
+				AH.mob_arm_offset = 0
+				AH.mob_leg_offset = 0
 				AH.e_offset_y = 0 // Fun fact, monkey eyes are right at nipple height
 				AH.mob_oversuit_1_offset_y = 0
 				AH.mob_detail_1_offset_y = 0
@@ -1355,10 +1369,12 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -9
+	head_offset = -8
 	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
 	hand_offset = -5
 	body_offset = -7
+	leg_offset = -4
+	arm_offset = -8
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "head"

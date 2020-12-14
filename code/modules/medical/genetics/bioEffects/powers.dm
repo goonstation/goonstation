@@ -451,6 +451,9 @@
 					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
 				else
 					owner.set_mutantrace(null)
+				if(ishuman(owner))
+					var/mob/living/carbon/human/O = owner
+					O.update_colorful_parts()
 		return
 
 	cast_misfire(atom/target)
@@ -530,9 +533,7 @@
 			AHs.customization_third_color = col2
 
 			H.visible_message("<span class='notice'><b>[H.name]</b>'s hair changes colors!</span>")
-			H.update_clothing()
-			H.update_body()
-			H.update_face()
+			H.update_colorful_parts()
 
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
