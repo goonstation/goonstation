@@ -6237,12 +6237,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
-"aqo" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aqp" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -28962,22 +28956,20 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bpl" = (
+/obj/decal/tile_edge/carpet/fancy{
+	dir = 1;
+	icon_state = "frug1"
+	},
+/obj/item/instrument/large/jukebox,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
-	icon_state = "fblue2"
+	icon_state = "fblue6"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bpm" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/wood/seven,
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bpn" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -28986,12 +28978,7 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bpo" = (
-/obj/decal/tile_edge/carpet/fancy{
-	dir = 1;
-	icon_state = "frug1"
-	},
-/obj/item/instrument/large/jukebox,
+"bpn" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29008,8 +28995,8 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue6"
+	dir = 5;
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bpq" = (
@@ -29577,6 +29564,15 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bqw" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"bqx" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase,
 /obj/machinery/drainage/big,
@@ -29585,7 +29581,13 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqx" = (
+"bqy" = (
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"bqz" = (
 /obj/stool/chair/wooden{
 	dir = 4
 	},
@@ -29594,25 +29596,10 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqy" = (
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fblue2"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqz" = (
+"bqA" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/carpet{
 	dir = 1;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqA" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -30138,6 +30125,15 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "brJ" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"brN" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase,
 /turf/simulated/floor/carpet{
@@ -30145,27 +30141,12 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"brL" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue6"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"brN" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "brO" = (
 /obj/stool/chair/wooden{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor/carpet{
-	dir = 1;
+	dir = 8;
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -30582,22 +30563,15 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bsS" = (
-/obj/decoration/decorativeplant,
+"bsV" = (
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet{
-	dir = 10;
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bsV" = (
-/turf/simulated/floor/carpet{
-	icon_state = "fblue6"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bsW" = (
-/obj/decoration/decorativeplant,
 /turf/simulated/floor/carpet{
-	dir = 6;
+	dir = 9;
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -42389,8 +42363,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
+"etW" = (
 /turf/simulated/floor/carpet{
-	dir = 5;
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -42802,8 +42779,8 @@
 /area/station/science/chemistry)
 "iGZ" = (
 /turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue6"
+	dir = 5;
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "iIQ" = (
@@ -42826,8 +42803,8 @@
 /area/mantaSpace)
 "iOr" = (
 /turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fblue2"
+	dir = 8;
+	icon_state = "fblue6"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "jmo" = (
@@ -42899,6 +42876,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"klK" = (
+/obj/decoration/decorativeplant,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "krO" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -43384,11 +43368,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
-"pxI" = (
-/turf/simulated/floor/carpet{
-	icon_state = "fblue2"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "pyg" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grime,
@@ -43678,10 +43657,10 @@
 /area/listeningpost/syndicateassaultvessel)
 "tWX" = (
 /obj/stool/chair/wooden{
-	dir = 1
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
-	dir = 8;
+	dir = 1;
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -43787,6 +43766,12 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space/fluid/manta,
 /area/mantaSpace)
+"vyg" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "vzA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -43835,9 +43820,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
 "vYN" = (
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet{
-	icon_state = "fblue2"
+	icon_state = "fblue6"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "wdi" = (
@@ -43972,6 +43956,13 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
+"wXh" = (
+/obj/decoration/decorativeplant,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -44119,7 +44110,7 @@
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
-	icon_state = "fblue6"
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 
@@ -87173,10 +87164,10 @@ aDS
 blI
 blH
 aDd
-aGE
-aDd
-aDd
-aDd
+epj
+bsW
+iOr
+klK
 aNo
 bvI
 bxp
@@ -87477,8 +87468,8 @@ blH
 aDd
 bpm
 bqy
-brL
-bsS
+tWX
+vYN
 aNo
 bvI
 bxp
@@ -87778,7 +87769,7 @@ blK
 blH
 aDd
 bpn
-aqo
+bqA
 brN
 bsV
 aNo
@@ -88384,7 +88375,7 @@ aDd
 bpl
 bqx
 brO
-bsV
+etW
 aNo
 bvI
 bxp
@@ -88683,10 +88674,10 @@ oOr
 blH
 aDd
 gWd
-bpo
+ylm
 bqw
 tWX
-pxI
+vYN
 aNo
 bvI
 bxp
@@ -88985,7 +88976,7 @@ aDd
 aDh
 aDd
 aDd
-bpl
+bpn
 bqA
 brN
 bsV
@@ -89288,7 +89279,7 @@ aGo
 aGo
 aGo
 bpp
-bqz
+bqy
 brJ
 vYN
 aCM
@@ -89588,11 +89579,11 @@ aDa
 aDa
 blN
 bmJ
-aDd
+aGc
 epj
-aqo
-brO
-bsV
+iGZ
+vyg
+wXh
 aCM
 apE
 axF
@@ -89890,11 +89881,11 @@ bjQ
 aDa
 blO
 bmK
+bob
+aGE
 aDd
-bpm
-iOr
-iGZ
-bsW
+aDd
+aDd
 aCM
 arx
 arx
