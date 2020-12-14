@@ -2909,21 +2909,47 @@
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "ahw" = (
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/storage/crate{
 	desc = "Whoa! What will they think of next?";
 	name = "Boxes in a Box"
 	},
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/storage/box{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/box{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/storage/box{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/storage/box{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/storage/box{
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -3341,15 +3367,31 @@
 /area/station/maintenance/northwest)
 "ais" = (
 /obj/rack,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
-/obj/item/extinguisher,
-/obj/item/crowbar,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ait" = (
@@ -62019,6 +62061,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"dFl" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "dGz" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -62956,14 +63006,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"qVF" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -109509,7 +109551,7 @@ bDv
 bEl
 chH
 bFF
-qVF
+dFl
 bHo
 bIl
 bHo
