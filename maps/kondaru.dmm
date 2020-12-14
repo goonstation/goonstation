@@ -46940,7 +46940,9 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "cgn" = (
-/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "cgo" = (
@@ -53227,6 +53229,12 @@
 	},
 /turf/space,
 /area/space)
+"hck" = (
+/obj/machinery/atmospherics/pipe/tank/east,
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/station/science/lab)
 "heG" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -56188,12 +56196,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"pus" = (
-/obj/machinery/atmospherics/pipe/tank/east,
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
-/area/station/science/lab)
 "pvj" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox,
@@ -92100,7 +92102,7 @@ ccS
 cdG
 ceN
 cfA
-pus
+hck
 ceM
 aaa
 aaa
