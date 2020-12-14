@@ -59457,6 +59457,15 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"ygq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "ygw" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -114938,7 +114947,7 @@ buR
 cXY
 iGQ
 stX
-fBk
+ygq
 dzX
 hxq
 fSI
