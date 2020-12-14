@@ -23042,7 +23042,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "bcU" = (
 /obj/potted_plant/potted_plant4{
@@ -23185,7 +23186,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "bdh" = (
 /obj/cable{
@@ -28918,7 +28920,8 @@
 /obj/stool/chair/green{
 	dir = 8
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "bpg" = (
 /obj/item/chicken_feed_bag{
@@ -29547,12 +29550,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
-"bqt" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "bqu" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood,
@@ -43034,7 +43031,8 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "mrf" = (
 /obj/cable{
@@ -84146,8 +84144,8 @@ aGE
 aDd
 aIU
 aCM
-aZa
 bcS
+aZa
 aZa
 aZa
 aZa
@@ -84450,7 +84448,7 @@ aNC
 aCM
 aZn
 bcT
-bqt
+brF
 brF
 bse
 bte
@@ -84752,7 +84750,7 @@ blG
 aCM
 aZM
 bdg
-bqt
+brF
 brF
 uBN
 bte
@@ -85054,7 +85052,7 @@ aDd
 aCM
 bpg
 mqs
-bqt
+brF
 brF
 qdY
 bte
@@ -85356,7 +85354,7 @@ aDd
 aCM
 bnY
 bpf
-bqt
+brF
 xWQ
 aEL
 bte

@@ -17368,6 +17368,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -50615,6 +50618,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "oJP" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -74745,7 +74751,6 @@
 	},
 /area/station/science/lobby)
 "vFa" = (
-/obj/railing/orange/reinforced,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -81033,6 +81038,9 @@
 /obj/machinery/camera{
 	dir = 5
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -81483,10 +81491,6 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
-"xBy" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "xBA" = (
 /obj/cable{
 	d1 = 2;
@@ -131008,7 +131012,7 @@ xmA
 sJC
 bEi
 nzI
-xBy
+mBB
 xup
 nnO
 sJC
@@ -131310,7 +131314,7 @@ lTE
 sJC
 mBB
 vvk
-xBy
+mBB
 oJP
 rct
 sJC
@@ -131612,7 +131616,7 @@ sqz
 sJC
 mBB
 mBB
-xBy
+mBB
 oJP
 nku
 jLx
@@ -131914,7 +131918,7 @@ bRk
 sJC
 mBB
 mBB
-xBy
+mBB
 oJP
 nku
 sJC
@@ -132216,7 +132220,7 @@ vzn
 mfs
 klf
 vvk
-xBy
+mBB
 oJP
 ylv
 sJC

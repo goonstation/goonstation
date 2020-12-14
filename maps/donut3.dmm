@@ -15047,6 +15047,9 @@
 /obj/machinery/camera{
 	dir = 5
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -16961,6 +16964,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -23932,10 +23938,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
-"gSt" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "gSu" = (
 /obj/cable{
 	d1 = 1;
@@ -31829,7 +31831,6 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "jqW" = (
-/obj/railing/orange/reinforced,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -49415,6 +49416,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "oJP" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -128919,7 +128923,7 @@ xmA
 sJC
 bEi
 nzI
-gSt
+mBB
 egd
 fjz
 sJC
@@ -129221,7 +129225,7 @@ lTE
 sJC
 mBB
 vvk
-gSt
+mBB
 oJP
 cQf
 sJC
@@ -129523,7 +129527,7 @@ sqz
 sJC
 mBB
 mBB
-gSt
+mBB
 oJP
 orn
 jLx
@@ -129825,7 +129829,7 @@ bRk
 sJC
 mBB
 mBB
-gSt
+mBB
 oJP
 orn
 sJC
@@ -130127,7 +130131,7 @@ vzn
 mfs
 nAO
 vvk
-gSt
+mBB
 oJP
 ggs
 sJC

@@ -24504,7 +24504,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "bcU" = (
 /obj/potted_plant/potted_plant4{
@@ -30818,7 +30819,8 @@
 /obj/stool/chair/green{
 	dir = 8
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "bph" = (
 /obj/stool/bench/wooden/auto,
@@ -31499,12 +31501,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hallway/starboardlowerhallway)
-"bqt" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "bqu" = (
 /obj/decal/tile_edge/stripe,
 /turf/simulated/floor/wood,
@@ -47050,7 +47046,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "qHY" = (
 /obj/lattice{
@@ -47793,7 +47790,8 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "wVU" = (
 /obj/machinery/power/apc/autoname_east,
@@ -88061,8 +88059,8 @@ bpl
 aDd
 aIU
 aCM
-aZa
 bcS
+aZa
 aZa
 aZa
 aZa
@@ -88365,7 +88363,7 @@ aNC
 aCM
 aZn
 bcT
-bqt
+brF
 brF
 bse
 bte
@@ -88667,7 +88665,7 @@ blG
 aCM
 aZM
 qBo
-bqt
+brF
 brF
 fiA
 bte
@@ -88969,7 +88967,7 @@ bsW
 aCM
 aNo
 wVj
-bqt
+brF
 brF
 tMF
 bte
@@ -89271,7 +89269,7 @@ aDd
 aCM
 bnY
 bpf
-bqt
+brF
 fCa
 aEL
 bte
