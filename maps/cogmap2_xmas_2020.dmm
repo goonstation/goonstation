@@ -13877,10 +13877,11 @@
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "aEI" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aEJ" = (
 /obj/disposalpipe/segment,
@@ -17284,12 +17285,6 @@
 	dir = 10
 	},
 /area/station/hydroponics/bay)
-"aNb" = (
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "aNc" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -80674,9 +80669,18 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/ranch)
-"eLO" = (
-/obj/chicken_nesting_box,
+"eLJ" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
 /turf/simulated/floor/grass/leafy,
+/area/station/ranch)
+"eLO" = (
+/obj/table/wood/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "eNz" = (
 /obj/window/auto/reinforced,
@@ -80802,13 +80806,10 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "gzF" = (
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
+/obj/stool/chair/green{
+	dir = 4
 	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "gBm" = (
 /obj/window/auto/reinforced,
@@ -80817,9 +80818,11 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "haY" = (
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -80950,6 +80953,10 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/hotloop)
+"iWY" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "jeV" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -80971,9 +80978,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "jCd" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
+/obj/railing/orange/reinforced,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "jFv" = (
@@ -81041,10 +81050,8 @@
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
 "kgf" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/dirt,
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kjc" = (
 /obj/machinery/light,
@@ -81192,10 +81199,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/storage/eva)
 "mDE" = (
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
 /obj/machinery/light_switch/east,
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "mEK" = (
@@ -81325,6 +81333,12 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
+"puN" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "puU" = (
 /obj/cable{
 	d1 = 1;
@@ -81342,10 +81356,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "pKi" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "pQk" = (
@@ -81355,11 +81366,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "pRl" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
+/obj/railing/orange/reinforced,
+/obj/stool/chair/green{
+	dir = 4
 	},
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "pTS" = (
 /obj/item/storage/wall/random,
@@ -102807,7 +102818,7 @@ jCd
 gzF
 eLO
 pRl
-jCd
+eLJ
 tOc
 nnB
 tWd
@@ -103106,10 +103117,10 @@ fig
 tPo
 tPo
 pKi
+fVT
+fVT
+iWY
 tPo
-tPo
-tPo
-pKi
 tPo
 tPo
 fig
@@ -103407,10 +103418,10 @@ wSt
 uYn
 tPo
 tPo
-tPo
-tPo
-tPo
-tPo
+pKi
+fVT
+fVT
+iWY
 tPo
 tPo
 tPo
@@ -103706,17 +103717,17 @@ aaa
 acq
 aaa
 wSt
+aEI
+kgf
+tPo
+pKi
+fVT
+fVT
+iWY
 tPo
 tPo
-tPo
-tPo
-tPo
-tPo
-tPo
-tPo
-tPo
-tPo
-tPo
+kgf
+aEI
 wSt
 aaa
 acq
@@ -104012,10 +104023,10 @@ riR
 riR
 riR
 riR
-riR
-riR
-riR
-riR
+fVT
+fVT
+fVT
+puN
 riR
 riR
 riR
@@ -104615,11 +104626,11 @@ tWd
 aCb
 fVT
 fVT
-kgf
-aNb
+fVT
+haY
 mDE
 haY
-kgf
+fVT
 fVT
 wmK
 dsQ
@@ -104916,13 +104927,13 @@ tWd
 nqQ
 nqQ
 aDo
-aEI
+nqQ
 tWd
 aOp
 tWd
 aOp
 tWd
-aEI
+nqQ
 eDP
 nqQ
 nqQ
