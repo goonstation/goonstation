@@ -345,9 +345,12 @@
 
 	/// Spawns a specified shot of ammo to the magazine
 	proc/add_ammo(var/datum/projectile/ammo, var/override_max)
-		if(!istype(ammo, /datum/projectile)) return FALSE
 		if(length(src.mag_contents) >= src.max_amount && !override_max) return FALSE
-		src.mag_contents.Add(new ammo(src))
+		if(ispath(ammo, /datum/projectile))
+			ammo = new ammo
+		if(!istype(ammo, /datum/projectile))
+			return FALSE
+		src.mag_contents.Add(ammo)
 		src.update_bullet_manifest()
 		return TRUE
 
@@ -407,13 +410,11 @@
 				return
 
 		if(isturf(over_object)) // Drag this ammo-thing to that turf? Unload it to there!
-			boutput(usr, "Unloading [src] to [over_object] via clickdragon.")
 			var/mob/user = usr
 			if(src.unload_magazine(user = user, put_that_here = over_object))
 				return
 
 		else if(istype(over_object, /obj/item/ammo)) // Drag this ammo-thing to other ammo? Try to merge em!
-			boutput(usr, "Transferring [src] to [over_object] via clickdragon.")
 			var/obj/item/ammo/A = over_object
 			var/mob/user = usr
 			if(A.load_ammo(src, user = user))
@@ -569,13 +570,16 @@
 						ammostate_temp = "medium"
 					if("bullet_3006_rifle", "bullet_3006_sniper", "bullet_lmg", "bullet_ak", "bullet_ar", "bullet_ar_ap", "bullet_vr")
 						ammoicon_temp = 'icons/obj/items/ammo.dmi'
-						ammostate_temp = "large"
+						ammostate_temp = "rifle"
 					if("bullet_grenade_he", "bullet_autocannon_fusion", "bullet_autocannon_huge", "bullet_grenade_droneseeker", "bullet_grenade_podseeker", "bullet_grenade_hedp", "bullet_grenade_he2")
 						ammoicon_temp = 'icons/obj/items/ammo.dmi'
 						ammostate_temp = "40mmR-ammo"
 					if("bullet_grenade_breaching", "bullet_grenade_ghostseeker", "bullet_grenade_nonexplosive", "bullet_grenade_smoke", "bullet_grenade_baton", "bullet_grenade_conversion")
 						ammoicon_temp = 'icons/obj/items/ammo.dmi'
 						ammostate_temp = "40mmB-ammo"
+					else
+						ammoicon_temp = 'icons/obj/items/ammo.dmi'
+						ammostate_temp = "medium"
 				if(ammoicon_temp && ammostate_temp)
 					var/num_bullets = min(src.mag_manifest[I]["count"], 10)
 					if(num_bullets < 1) continue // shrug

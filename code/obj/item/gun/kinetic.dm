@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	m_amt = 2000
 	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	muzzle_flash = "muzzle_flash"
-	firemodes = (new/datum/firemode/single)
+	firemodes = list(new/datum/firemode/single)
 
 	// Ammo caliber defines
 	// see \_std\defines\item.dm for caliber defines!
