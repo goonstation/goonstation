@@ -183,8 +183,10 @@
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-	/// Ammofab will replicate the contents of this magazine into the gun its holding
-	var/obj/item/ammo/ammoToDupe
+	/// Ammofab will replicate this kind of magazine
+	var/obj/item/ammo/magToDupe
+	/// Ammofab will insert these bullets into the gun
+	var/list/bulletsToDupe
 	/// The bullet the ammofab'll try to dupe
 	var/datum/projectile/top_shot
 	//
@@ -1022,12 +1024,7 @@
 				src.budgun.master = src
 				src.hasgun = 1
 				src.gun = budgun.name
-				qdel(src.ammoToDupe)
-				src.ammoToDupe = new budgun.loaded_magazine.type(_ammo = budgun.loaded_magazine.mag_contents)
-				if(src.ammoToDupe.mag_contents.len)
-					src.top_shot = src.ammoToDupe.mag_contents[1]
-				else
-					src.top_shot = src.ammoToDupe.ammo_type[1]
+				SetupAmmofabAmmo()
 				user.u_equip(Q)
 				update_icon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
@@ -1073,6 +1070,23 @@
 					user.u_equip(Q)
 		return
 
+	proc/SetupAmmofabAmmo()
+		qdel(src.top_shot)
+		src.magToDupe = budgun.loaded_magazine.type
+		if(budgun.loaded_magazine.mag_contents.len)
+			for(var/datum/projectile/bullet in src.budgun.loaded_magazine)
+				src.bulletsToDupe.Add(bullet.type)
+		if(length(src.bulletsToDupe))
+			src.top_shot = new src.bulletsToDupe[1]
+		else if(length(src.budgun.loaded_magazine.mag_contents))
+			var/atom/ammunition = src.budgun.loaded_magazine.mag_contents[1]
+			src.top_shot = new ammunition.type(src)
+		else if(length(src.budgun.loaded_magazine.ammo_type))
+			src.top_shot = new src.budgun.loaded_magazine.ammo_type[1]
+		else
+			src.top_shot = new/datum/projectile/bullet/revolver_357 // We need *something*
+
+
 	proc/BarGun()
 		if (!istype(src.budgun, /obj/item/gun/russianrevolver))
 			return // silly suicide shooters only
@@ -1116,35 +1130,27 @@
 
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
-			if(shootgun.fixed_mag)
-				var/list/ammoToLoad = list()
-				while(shootgun.loaded_magazine.mag_contents.len < shootgun.loaded_magazine.max_amount)
-					if(src.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)
-						//cell.charge -= (top_shot.power * top_shot.ks_ratio * 0.75)
-						ammoToLoad += new top_shot
+			var/datum/firemode/currFM = shootgun.firemodes[shootgun.firemode_index]
+			if(length(shootgun.loaded_magazine.mag_contents) <= currFM.burst_count)
+				if(shootgun.fixed_mag) // fixed magazine? load individual bullets into it
+					while(shootgun.loaded_magazine.mag_contents.len < shootgun.loaded_magazine.max_amount)
+						if(src.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)
+							cell.charge -= (top_shot.power * top_shot.ks_ratio * 0.75)
+							shootgun.loaded_magazine.add_ammo(top_shot.type)
+							playsound(get_turf(src), shootgun.gunsounds.soundLoadSingle, 100, 1)
+						else
+							DischargeAndTakeANap()
+							break
+
+				else
+					if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
+						cell.charge -= ((shootgun.loaded_magazine.max_amount - shootgun.loaded_magazine.mag_contents.len) * (top_shot.power * top_shot.ks_ratio * 0.75))
+						var/obj/item/ammo/newmag = new src.magToDupe(src, _ammopaths = src.bulletsToDupe)
+						shootgun.swap(newmag, src)
+						src.speak(pick("CHANGING MAGS!", "Reloading!", "Cover me while I reload!"))
 					else
-						break
-				if(ammoToLoad.len >= 1)
-					SPAWN_DBG(0)
-						var/obj/item/ammo/bullets/pile/ammobullets = new/obj/item/ammo/bullets/pile(_ammo = ammoToLoad)
-						for(var/i in 1 to ammobullets.mag_contents.len)
-							if(!shootgun.load_gun(ammobullets, src))
-								break
-							sleep(5)
-						if(ammobullets || ammobullets.mag_contents.len)
-							ammobullets.set_loc(get_turf(src))
+						DischargeAndTakeANap()
 
-			else
-				if ((shootgun.loaded_magazine.mag_contents.len <= 1) && src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-					cell.charge -= ((shootgun.loaded_magazine.max_amount - shootgun.loaded_magazine.mag_contents.len) * (top_shot.power * top_shot.ks_ratio * 0.75))
-					var/obj/item/ammo/newmag = new src.ammoToDupe.type(src, _ammo = src.ammoToDupe.mag_contents)
-					shootgun.swap(newmag, src)
-					src.speak(pick("CHANGING MAGS!", "Reloading!", "Cover me while I reload!"))
-
-			if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
-				return 1 // still good2shoot!
-			else
-				return DischargeAndTakeANap()
 		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
 			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
 			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this

@@ -731,7 +731,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!silenced)
 		if(point_blank)
 			user.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
-		playsound(user, src.shootsounds.soundShootEmpty, src.shootsounds.soundShootEmptyVolume)
+		playsound(user, src.shootsounds?.soundShootEmpty, src.shootsounds?.soundShootEmptyVolume)
 	else
 		user.show_text("*click* *click*", "red")
 
@@ -829,9 +829,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 	handle_casings(user = user)
 	if(silenced)
-		playsound(user, src.shootsounds.soundShootSilent, src.shootsounds.soundShootSilentVolume, 1)
+		playsound(user, src.shootsounds?.soundShootSilent, src.shootsounds?.soundShootSilentVolume, 1)
 	else
-		playsound(user, src.shootsounds.soundShoot, src.shootsounds.soundShootVolume, 1)
+		playsound(user, src.shootsounds?.soundShoot, src.shootsounds?.soundShootVolume, 1)
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
 	if (P)
 		P.forensic_ID = src.forensic_ID
@@ -936,9 +936,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		P.launch()
 	if(silenced)
-		playsound(user, src.shootsounds.soundShootSilent, src.shootsounds.soundShootSilentVolume, 1)
+		playsound(user, src.shootsounds?.soundShootSilent, src.shootsounds?.soundShootSilentVolume, 1)
 	else
-		playsound(user, src.shootsounds.soundShoot, src.shootsounds.soundShootVolume, 1)
+		playsound(user, src.shootsounds?.soundShoot, src.shootsounds?.soundShootVolume, 1)
 	handle_casings(user = user)
 
 	var/mob/living/L = M

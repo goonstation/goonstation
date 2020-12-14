@@ -72,10 +72,12 @@
 	var/unusualCell = 0
 	var/self_charging = 0
 
-	New(var/list/_ammo)
+	New(var/list/_ammoinit, var/list/_ammopaths)
 		..()
-		if(islist(_ammo))
-			src.mag_contents = _ammo
+		if(islist(_ammoinit))
+			src.mag_contents = _ammoinit
+		if(islist(_ammopaths))
+			src.ammo_type = _ammopaths
 		if(!islist(src.caliber))
 			src.caliber = list(src.caliber)
 		SPAWN_DBG(1 SECONDS)
@@ -98,7 +100,7 @@
 			var/load_bullet = src.ammo_type[(load_slot % src.ammo_type.len) + 1]
 			if(!ispath(load_bullet, /datum/projectile))
 				continue
-			src.mag_contents.Add(new load_bullet)
+			src.mag_contents.Add(new load_bullet(src))
 
 	attack_self(var/mob/user)
 		src.cycle_top_bullet(user = user)
@@ -340,6 +342,14 @@
 		else
 			boutput(user, "Never mind.")
 			return FALSE
+
+	/// Spawns a specified shot of ammo to the magazine
+	proc/add_ammo(var/datum/projectile/ammo, var/override_max)
+		if(!istype(ammo, /datum/projectile)) return FALSE
+		if(length(src.mag_contents) >= src.max_amount && !override_max) return FALSE
+		src.mag_contents.Add(new ammo(src))
+		src.update_bullet_manifest()
+		return TRUE
 
 	/// Generate an associated list of all the unique bullets and their amounts
 	proc/make_bullet_manifest(var/list/other_list)
