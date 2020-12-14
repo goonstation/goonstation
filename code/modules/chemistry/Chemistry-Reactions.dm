@@ -149,7 +149,7 @@
 	H.bioHolder.mobAppearance.customization_second_color = random_saturated_hex_color()
 	H.bioHolder.mobAppearance.customization_third = pick(possible_hairstyles)
 	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
-	H.bioHolder.mobAppearance.UpdateMob()
+	H.update_colorful_parts()
 	boutput(H, "<span class='notice'>Your entire head feels extremely itchy!</span>")
 
 /proc/omega_hairgrownium_drop_hair(var/mob/living/carbon/human/H)
@@ -164,4 +164,4 @@
 	H.cust_two_state = customization_styles["None"]
 	H.bioHolder.mobAppearance.customization_third = "None"
 	H.cust_three_state = customization_styles["None"]
-	H.bioHolder.mobAppearance.UpdateMob()
+	H.update_colorful_parts()

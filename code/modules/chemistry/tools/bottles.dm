@@ -78,8 +78,8 @@
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
 /obj/item/reagent_containers/glass/bottle/poison
-	name = "poison bottle"
-	desc = "There is a little skull and crossbones on the label. Yikes."
+	name = "chemical bottle"
+	desc = "A reagent storage bottle. The label seems to have been torn off."
 	initial_volume = 40
 	amount_per_transfer_from_this = 5
 

@@ -1242,8 +1242,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
-	SPAWN_DBG(1 SECOND)
-		src.bioHolder.mobAppearance.UpdateMob()
+		src.update_colorful_parts()
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-+MISCSTUFF+-=-=-=-=-=-=-=-=-=-=-=-=-*/

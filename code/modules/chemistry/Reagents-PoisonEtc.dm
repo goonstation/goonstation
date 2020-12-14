@@ -1566,6 +1566,9 @@ datum
 						if (M.bioHolder?.mobAppearance?.mutant_race)
 							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.update_colorful_parts()
 
 				..()
 				return

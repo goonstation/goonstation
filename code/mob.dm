@@ -250,6 +250,7 @@
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
 	SHOULD_CALL_PARENT(TRUE)
+	src.bioHolder?.mobAppearance.gender = src.gender
 	return
 
 /mob/proc/is_spacefaring()

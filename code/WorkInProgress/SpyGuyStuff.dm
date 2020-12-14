@@ -164,8 +164,7 @@ proc/Create_Tommyname()
 	if(src.bioHolder)
 		src.bioHolder.mobAppearance = AH
 		src.bioHolder.AddEffect("accent_tommy")
-	SPAWN_DBG(1 SECOND)
-		src.bioHolder.mobAppearance.UpdateMob()
+	src.update_colorful_parts()
 
 //////////////////////////////
 //Tommy gun
@@ -401,7 +400,7 @@ proc/Create_Tommyname()
 				H.cust_one_state = customization_styles["None"]
 				H.drop_from_slot(H.head)
 				H.force_equip(W, H.slot_head)
-				H.set_clothing_icon_dirty()
+				H.update_colorful_parts()
 
 /obj/item/gun/energy/dtrumpet
 	name = "Donald Trumpet"
