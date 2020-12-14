@@ -19065,7 +19065,10 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/toy/judge_block,
-/obj/item/toy/judge_gavel,
+/obj/item/toy/judge_gavel{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -19113,13 +19116,16 @@
 "aQj" = (
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -7;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 6
+	pixel_x = 9;
+	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "aQk" = (
@@ -19883,15 +19889,23 @@
 /area/station/crew_quarters/courtroom)
 "aRZ" = (
 /obj/table/glass/auto,
-/obj/item/paper_bin,
+/obj/item/paper_bin{
+	pixel_y = 2
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
 /area/station/crew_quarters/courtroom)
 "aSa" = (
 /obj/table/glass/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
+/obj/item/clipboard{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -19904,8 +19918,14 @@
 /obj/noticeboard{
 	pixel_y = 28
 	},
-/obj/item/pen,
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -19923,10 +19943,13 @@
 "aSd" = (
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -7;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vintage,
+/obj/item/reagent_containers/food/drinks/bottle/vintage{
+	pixel_x = 4;
+	pixel_y = 8
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aSe" = (
@@ -20837,10 +20860,22 @@
 /area/station/crew_quarters/courtroom)
 "aUn" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clipboard{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/stamp{
+	pixel_x = 9;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -20848,8 +20883,13 @@
 /area/station/crew_quarters/courtroom)
 "aUo" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clipboard,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = -1;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aUp" = (
@@ -62028,6 +62068,14 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"ePq" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "ePs" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62287,6 +62335,14 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"gNF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -62966,14 +63022,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"tGM" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
@@ -63261,14 +63309,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"xyl" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_y = -2
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -94565,7 +94605,7 @@ beU
 bcc
 bdg
 bed
-xyl
+gNF
 bfP
 bgL
 bgL
@@ -109398,7 +109438,7 @@ bDv
 bEl
 chH
 bFF
-tGM
+ePq
 bHo
 bIl
 bHo
