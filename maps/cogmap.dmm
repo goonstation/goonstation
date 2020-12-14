@@ -20997,12 +20997,13 @@
 	},
 /area/station/crew_quarters/pool)
 "aUD" = (
-/obj/stool/chair/comfy{
-	dir = 4
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
 	},
-/obj/item/card_box/suit,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
+/area/station/security/checkpoint)
 "aUE" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
@@ -22288,7 +22289,6 @@
 /area/station/hallway/primary/central)
 "aXq" = (
 /obj/table/wood/auto,
-/obj/item/instrument/saxophone,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -22299,11 +22299,17 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/clothing/head/flatcap,
-/obj/item/clothing/head/flatcap,
-/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
-/obj/item/dice,
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/obj/item/instrument/saxophone{
+	pixel_y = 2
+	},
+/obj/item/clothing/head/flatcap{
+	pixel_x = 5;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aXr" = (
@@ -22786,10 +22792,22 @@
 /area/station/maintenance/central)
 "aYv" = (
 /obj/table/wood/auto,
-/obj/item/instrument/harmonica,
-/obj/item/device/light/zippo,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/instrument/harmonica{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/device/light/zippo{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "aYw" = (
@@ -22927,14 +22945,39 @@
 /area/station/medical/crematorium)
 "aYK" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/dice,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/dice{
+	pixel_x = 2;
+	pixel_y = 13
+	},
+/obj/item/dice{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/obj/item/card_box/suit{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/flatcap{
+	pixel_x = 6;
+	pixel_y = -8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
@@ -62068,14 +62111,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"ePq" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "ePs" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62335,14 +62370,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"gNF" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_y = -2
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -62893,6 +62920,14 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"rfc" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -94605,7 +94640,7 @@ beU
 bcc
 bdg
 bed
-gNF
+aUD
 bfP
 bgL
 bgL
@@ -109438,7 +109473,7 @@ bDv
 bEl
 chH
 bFF
-ePq
+rfc
 bHo
 bIl
 bHo
@@ -110299,7 +110334,7 @@ adC
 adC
 aWc
 aWc
-aUD
+aZt
 aYK
 aXq
 aYv
