@@ -378,7 +378,7 @@
 			var/assoc = 0
 			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
 				try
-					assoc = !isnum(L[1]) && L[L[1]]
+					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
 					DEBUG_MESSAGE("bad assoc list var [name] [L] [1] [L[1]]")
 			for (var/index = 1, index <= min(L.len, max_list_len), index++)
