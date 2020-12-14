@@ -7691,12 +7691,17 @@
 "ash" = (
 /obj/table/wood/auto,
 /obj/item/plate{
+	pixel_x = 1;
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_y = 6
+	pixel_x = 1;
+	pixel_y = 11
 	},
-/obj/item/matchbook,
+/obj/item/matchbook{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -8306,11 +8311,22 @@
 /area/station/crew_quarters/cafeteria)
 "aty" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/salad{
-	pixel_y = 5
+/obj/item/plate{
+	pixel_x = 1;
+	pixel_y = 7
 	},
-/obj/item/kitchen/utensil/fork,
-/obj/item/device/light/candle/small,
+/obj/item/reagent_containers/food/snacks/salad{
+	pixel_y = 8
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "atz" = (
@@ -8318,14 +8334,18 @@
 /obj/item/plate{
 	pixel_y = 7
 	},
-/obj/item/shaker/ketchup{
-	pixel_x = -5;
-	pixel_y = 3
+/obj/item/device/light/candle/small{
+	pixel_x = -9;
+	pixel_y = -2
 	},
 /obj/item/shaker/mustard{
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 5
 	},
-/obj/item/device/light/candle/small,
+/obj/item/shaker/ketchup{
+	pixel_x = 8;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "atA" = (
@@ -8857,14 +8877,16 @@
 "auL" = (
 /obj/table/wood/auto,
 /obj/item/plate{
+	pixel_x = 1;
 	pixel_y = 7
 	},
-/obj/item/shaker/pepper{
-	pixel_x = 8;
-	pixel_y = 3
-	},
 /obj/item/shaker/salt{
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/shaker/pepper{
+	pixel_x = 3;
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
@@ -8874,7 +8896,7 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 6
+	pixel_y = 15
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
@@ -9425,10 +9447,12 @@
 "avY" = (
 /obj/table/wood/auto,
 /obj/item/plate{
+	pixel_x = 1;
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_y = 6
+	pixel_x = 1;
+	pixel_y = 11
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -9445,7 +9469,13 @@
 /area/station/crew_quarters/cafeteria)
 "awa" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/microwave,
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
+/obj/item/storage/box/glassbox{
+	pixel_x = -4;
+	pixel_y = -11
+	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5
 	},
@@ -10121,10 +10151,8 @@
 "axq" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler{
-	density = 1
-	},
-/obj/item/storage/box/glassbox{
-	pixel_y = 6
+	density = 1;
+	pixel_y = 2
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5
@@ -10756,7 +10784,10 @@
 "ayN" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/wrapping_paper,
-/obj/item/scissors,
+/obj/item/scissors{
+	pixel_x = -5;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -10764,10 +10795,10 @@
 /area/station/crew_quarters/cafeteria)
 "ayO" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/head/cakehat,
 /obj/window/reinforced{
 	dir = 2
 	},
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -11493,30 +11524,30 @@
 /area/station/crew_quarters/cafeteria)
 "aAr" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/implant/projectile/bardart{
-	pixel_x = -3;
-	pixel_y = 8
+/obj/item/plate{
+	pixel_y = 2
 	},
 /obj/item/implant/projectile/bardart{
-	pixel_x = -3;
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/implant/projectile/bardart{
+	pixel_x = -4;
 	pixel_y = 6
 	},
 /obj/item/implant/projectile/bardart{
-	pixel_x = -1;
-	pixel_y = 8
+	pixel_x = -9;
+	pixel_y = 5
 	},
 /obj/item/implant/projectile/bardart{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/implant/projectile/bardart{
-	pixel_x = 3;
+	pixel_x = 2;
 	pixel_y = 6
+	},
+/obj/item/implant/projectile/bardart{
+	pixel_x = -6
+	},
+/obj/item/implant/projectile/bardart{
+	pixel_x = 4
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 1
@@ -11524,12 +11555,12 @@
 /area/station/crew_quarters/cafeteria)
 "aAs" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
@@ -12200,9 +12231,23 @@
 	on = 1
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/decoration/ashtray,
-/obj/item/kitchen/utensil/fork,
+/obj/item/plate{
+	pixel_y = 2
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 4;
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_x = -1;
+	pixel_y = -7
+	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/station/crew_quarters/cafeteria)
 "aBU" = (
@@ -12775,9 +12820,14 @@
 /area/station/crew_quarters/cafeteria)
 "aDc" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/kitchen/utensil/spoon,
-/obj/item/card_box/suit,
+/obj/item/plate{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/card_box/suit{
+	pixel_x = 7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/station/crew_quarters/cafeteria)
 "aDd" = (
@@ -13565,20 +13615,21 @@
 /area/station/crew_quarters/cafeteria)
 "aEB" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/shaker/pepper{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/item/shaker/salt{
+	pixel_x = -5;
+	pixel_y = 8
+	},
 /obj/item/shaker/mustard{
-	pixel_x = -1;
+	pixel_x = 3;
 	pixel_y = 8
 	},
 /obj/item/shaker/ketchup{
 	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/shaker/pepper{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/shaker/salt{
-	pixel_x = 3
+	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 8
@@ -21075,13 +21126,23 @@
 	},
 /area/station/crew_quarters/pool)
 "aUD" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_y = -2
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 7
 	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/obj/item/matchbook{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/cafeteria)
 "aUE" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
@@ -62045,6 +62106,19 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cKD" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/cafeteria)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62501,6 +62575,14 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"gIz" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -62716,14 +62798,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
-"luZ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "lwT" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -63188,6 +63262,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tHe" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
@@ -94771,7 +94853,7 @@ beU
 bcc
 bdg
 bed
-aUD
+tHe
 bfP
 bgL
 bgL
@@ -109604,7 +109686,7 @@ bDv
 bEl
 chH
 bFF
-luZ
+gIz
 bHo
 bIl
 bHo
@@ -111348,10 +111430,10 @@ akb
 aon
 apw
 aqP
-ash
+aUD
 atz
 auM
-avY
+cKD
 aqP
 ayN
 aAr
