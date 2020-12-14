@@ -41,13 +41,13 @@
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
-				return 1
+				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
 			if (!master)
-				return 1
+				return
 
 			master.path = thePath
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
@@ -60,7 +60,7 @@
 				//dispose()
 				master.mover = null
 				src.master = null
-				return 1
+				return
 
 			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
@@ -84,7 +84,6 @@
 				master.mover = null
 				src.master = null
 			//dispose()
-			return 0
 
 		return 0
 
@@ -275,7 +274,7 @@
 
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
 					if (!H.stat)
 						if (model_task)
@@ -2375,7 +2374,7 @@
 					announced = 2
 					src.secondary_targets = list()
 
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						if (src.secondary_targets.len)
 							master.reply_wait = 0
 							. = INFINITY
@@ -3598,7 +3597,7 @@
 					if (ckey(current_tour_text))
 						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
 							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
-							SPAWN_DBG (0)
+							SPAWN_DBG(0)
 								sleep(1 SECOND)
 								for (var/tour_line in tour_text_with_pauses)
 									if (!ckey(tour_line) || !master)
@@ -3697,7 +3696,7 @@
 						src.neat_things |= NT_GAFFE
 						src.master.speak("Ah! As you can see here--")
 
-						SPAWN_DBG (10)
+						SPAWN_DBG(1 SECOND)
 							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
@@ -3754,7 +3753,7 @@
 						src.master.speak(insultphrase)
 
 						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG (40)
+						SPAWN_DBG(4 SECONDS)
 							qdel(P)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
@@ -3808,7 +3807,7 @@
 					src.neat_things |= NT_AUTOMATON
 					src.master.speak("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
 					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG (20)
+					SPAWN_DBG(2 SECONDS)
 						src.master.speak(.)
 
 				else if (istype(AM, /obj/machinery/bot))
@@ -4642,7 +4641,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
 	attack_ai(mob/user as mob)

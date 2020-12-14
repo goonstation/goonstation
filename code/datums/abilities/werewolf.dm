@@ -72,7 +72,7 @@
 
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
@@ -288,7 +288,7 @@
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) playsound(src.loc, "swing_hit", 50, 1)
 
 		if ("swipe")
@@ -297,21 +297,21 @@
 			else
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
 			if (sound_playing == 0) // It's a long audio clip.
 				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 				sound_playing = 1
-				SPAWN_DBG (60)
+				SPAWN_DBG(6 SECONDS)
 					sound_playing = 0
 
 			playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				if (src && ishuman(src) && prob(50))
 					src.emote("burp")
 

@@ -1783,7 +1783,7 @@ proc/countJob(rank)
 				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
 
-				SPAWN_DBG (0) // Don't lock up the entire proc.
+				SPAWN_DBG(0) // Don't lock up the entire proc.
 					M.current << csound("sound/misc/lawnotify.ogg")
 					boutput(M.current, text_chat_alert)
 
@@ -2042,7 +2042,7 @@ proc/countJob(rank)
 /proc/whodead()
 	var/list/found = new
 	for (var/mob/M in mobs)
-		if (isdead(M))
+		if (M.ckey && isdead(M))
 			found += M
 	return found
 

@@ -52112,7 +52112,7 @@
 /obj/rack/lunar{
 	icon_state = "aisleshelfend"
 	},
-/obj/item/dice_bot/d100{
+/obj/item/dice/robot/d100{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/carpet{
@@ -86883,10 +86883,6 @@
 "xoF" = (
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/ladder{
-	id = "ballpit_sov_lab2";
-	layer = 2
 	},
 /obj/table/wood/auto/desk,
 /obj/item/paper{

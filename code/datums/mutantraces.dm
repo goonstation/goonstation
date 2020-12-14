@@ -95,6 +95,9 @@
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
+	var/arm_offset = 0
+	/// affects pixel_y of the legs and stump, in case the mutant has a non-human length torsocrotch
+	var/leg_offset = 0
 	/// affects pixel_y of eyes if they're different from normal head-placement. darn anime monkey eyes
 	/// If 0, it inherits that of the head offset. Otherwise, it applies as normal
 	/// So, it should typically be something like head_offset +/- a few pixels
@@ -248,7 +251,7 @@
 
 
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (M?.organHolder?.skull)
 					M.assign_gimmick_skull() // For hunters (Convair880).
 			if (movement_modifier) // down here cus it causes runtimes
@@ -291,7 +294,7 @@
 				H.set_body_icon_dirty()
 				H.update_colorful_parts()
 
-				SPAWN_DBG (25) // Don't remove.
+				SPAWN_DBG(2.5 SECONDS) // Don't remove.
 					if (H?.organHolder?.skull) // check for H.organHolder as well so we don't get null.skull runtimes
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
@@ -346,6 +349,12 @@
 				AH.mob_oversuit_1_color_ref = src.detail_oversuit_1_color
 				AH.mob_oversuit_1_offset_y = src.body_offset
 
+				AH.mob_head_offset = src.head_offset
+				AH.mob_hand_offset = src.hand_offset
+				AH.mob_body_offset = src.body_offset
+				AH.mob_leg_offset = src.leg_offset
+				AH.mob_arm_offset = src.arm_offset
+
 				if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
 					AH.customization_first_color = fix_colors(AH.customization_first_color)
 					AH.customization_second_color = fix_colors(AH.customization_second_color)
@@ -382,6 +391,11 @@
 				AH.customization_first_offset_y = 0
 				AH.customization_second_offset_y = 0
 				AH.customization_third_offset_y = 0
+				AH.mob_head_offset = 0
+				AH.mob_hand_offset = 0
+				AH.mob_body_offset = 0
+				AH.mob_arm_offset = 0
+				AH.mob_leg_offset = 0
 				AH.e_offset_y = 0 // Fun fact, monkey eyes are right at nipple height
 				AH.mob_oversuit_1_offset_y = 0
 				AH.mob_detail_1_offset_y = 0
@@ -1141,6 +1155,10 @@
 		if (drains_dna_on_life) //Do you continuously lose DNA points when in this form?
 			var/datum/abilityHolder/changeling/C = mob.get_ability_holder(/datum/abilityHolder/changeling)
 
+			if(!C)
+				mob.show_text("<I><B>You cannot hold this form!</B></I>", "red")
+				mob.revert_from_horror_form()
+
 			if (C?.points)
 				if (last_drain + 30 <= world.time)
 					C.points = max(0, C.points - (1 * mult))
@@ -1169,7 +1187,7 @@
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] screeches!</B></span>"
 					playsound(get_turf(mob), "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG (30)
+					SPAWN_DBG(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
 		return message
 
@@ -1351,10 +1369,12 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -9
+	head_offset = -8
 	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
 	hand_offset = -5
 	body_offset = -7
+	leg_offset = -4
+	arm_offset = -8
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
@@ -1736,7 +1756,7 @@
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] makes an awful noise!</B></span>"
 					playsound(get_turf(mob), pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN_DBG (30)
+					SPAWN_DBG(3 SECONDS)
 						if (mob) mob.emote_allowed = 1
 					return message
 

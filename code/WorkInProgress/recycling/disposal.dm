@@ -1220,7 +1220,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			switch_dir = turn(dir, 90)
 			dpdir = dir | switch_dir | turn(dir,180)
 
@@ -1345,7 +1345,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1412,7 +1412,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()

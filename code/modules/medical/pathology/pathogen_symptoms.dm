@@ -1545,7 +1545,7 @@ datum/pathogeneffects/malevolent/seriouschills
 	proc/create_icing(var/mob/M)
 		var/obj/decal/icefloor/I = unpool(/obj/decal/icefloor)
 		I.set_loc(get_turf(M))
-		SPAWN_DBG (300)
+		SPAWN_DBG(30 SECONDS)
 			pool(I)
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)

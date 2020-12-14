@@ -317,7 +317,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			openup()
 
 	Crossed(atom/movable/AM)

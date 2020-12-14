@@ -157,7 +157,7 @@
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (disposed)
 					return
 				if (!src.reagents)

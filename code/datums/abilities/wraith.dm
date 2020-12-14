@@ -190,10 +190,10 @@
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-		SPAWN_DBG (450)
+		SPAWN_DBG(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN_DBG (600) //time limit on possession: 1 minute
+		SPAWN_DBG(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)

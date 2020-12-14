@@ -31,12 +31,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	if (!xmas_respawn_lock)
 		if (christmas_cheer >= 80 && !santa_spawned)
-			SPAWN_DBG (0) // Might have been responsible for locking up the mob loop via human Life() -> death() -> modify_christmas_cheer() -> santa_krampus_spawn().
+			SPAWN_DBG(0) // Might have been responsible for locking up the mob loop via human Life() -> death() -> modify_christmas_cheer() -> santa_krampus_spawn().
 				santa_krampus_spawn(0)
 #endif
 #if defined(XMAS) && !defined(RP_MODE)
 		if (christmas_cheer <= 10 && !krampus_spawned)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				santa_krampus_spawn(1)
 #endif
 	return
@@ -101,7 +101,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
 		santa_spawned = 1
 
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			L.choose_name(3, "Santa Claus", "Santa Claus")
 
 	else
@@ -693,37 +693,36 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /mob/living/carbon/human/santa
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_first = "Balding"
-			bioHolder.mobAppearance.customization_second = "Full Beard"
-			bioHolder.mobAppearance.customization_third = "Eyebrows"
-			bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
-			bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-			bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
+		real_name = "Santa Claus"
+		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
+		gender = "male"
 
-			real_name = "Santa Claus"
-			desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
-			gender = "male"
+		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
 
-			src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-			src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
+		HS.addAbility(/datum/targetable/santa/heal)
+		HS.addAbility(/datum/targetable/santa/gifts)
+		HS.addAbility(/datum/targetable/santa/food)
+		HS.addAbility(/datum/targetable/santa/warmth)
+		HS.addAbility(/datum/targetable/santa/teleport)
+		HS.addAbility(/datum/targetable/santa/banish)
 
-			var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
-			HS.addAbility(/datum/targetable/santa/heal)
-			HS.addAbility(/datum/targetable/santa/gifts)
-			HS.addAbility(/datum/targetable/santa/food)
-			HS.addAbility(/datum/targetable/santa/warmth)
-			HS.addAbility(/datum/targetable/santa/teleport)
-			HS.addAbility(/datum/targetable/santa/banish)
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_first = "Balding"
+		bioHolder.mobAppearance.customization_second = "Full Beard"
+		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
+		bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
+		bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
+		. = ..()
 
-			sleep(1 SECOND)
-			bioHolder.mobAppearance.UpdateMob()
 
 	death()
 		modify_christmas_cheer(-60)
@@ -910,27 +909,25 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /mob/living/carbon/human/krampus
 	New()
 		..()
-		SPAWN_DBG(0)
+		src.mind = new
+		real_name = "Krampus"
+		desc = "Oh shit! Have you been naughty?!"
 
-			bioHolder.mobAppearance.customization_first = "None"
-			bioHolder.mobAppearance.customization_second = "None"
-			bioHolder.mobAppearance.customization_third = "None"
+		if(!src.reagents)
+			src.create_reagents(1000)
 
-			src.mind = new
-			real_name = "Krampus"
-			desc = "Oh shit! Have you been naughty?!"
+		src.set_mutantrace(/datum/mutantrace/krampus)
+		src.reagents.add_reagent("stimulants", 50)
+		src.gender = "male"
+		bioHolder.AddEffect("loud_voice")
+		bioHolder.AddEffect("cold_resist")
 
-			if(!src.reagents)
-				src.create_reagents(1000)
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_first = "None"
+		bioHolder.mobAppearance.customization_second = "None"
+		bioHolder.mobAppearance.customization_third = "None"
+		. = ..()
 
-			src.set_mutantrace(/datum/mutantrace/krampus)
-			src.reagents.add_reagent("stimulants", 50)
-			src.gender = "male"
-			bioHolder.AddEffect("loud_voice")
-			bioHolder.AddEffect("cold_resist")
-
-			sleep(1 SECOND)
-			bioHolder.mobAppearance.UpdateMob()
 
 	Bump(atom/movable/AM, yes)
 		if(src.stance == "krampage")

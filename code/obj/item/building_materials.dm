@@ -781,9 +781,16 @@ MATERIAL
 		return
 
 	proc/consume_rods(var/use_amount)
+		. = 0
 		if (!isnum(amount))
-			return
-		src.amount = max(0,amount - use_amount)
+			return 0
+		if(amount < 1)
+			return 0
+		if(amount < use_amount)
+			. = 0
+		else
+			src.amount = max(0,amount - use_amount)
+			. = 1
 		if (amount < 1)
 			if (isliving(src.loc))
 				var/mob/living/L = src.loc
@@ -791,7 +798,6 @@ MATERIAL
 			qdel(src)
 		else
 			update_icon()
-		return
 
 /obj/head_on_spike
 	name = "head on a spike"

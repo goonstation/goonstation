@@ -259,7 +259,7 @@
 				arguments += " -- [bash_sanitize(filter_name)]"
 			var/data = list2params(list("command"="record_query","query"="[arguments]"))
 			src.post_status(src.host_id, "command", "term_message", "data", data, "netid", "[net_id]", "device", device_tag)
-			SPAWN_DBG (300)
+			SPAWN_DBG(30 SECONDS)
 				if (refresh_id == my_refresh_id && refreshing)
 					timed_out = 1
 					refreshing = 0

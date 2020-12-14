@@ -675,7 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)

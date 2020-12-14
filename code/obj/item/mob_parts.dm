@@ -44,7 +44,6 @@
 	var/handfoot_overlay_1_color
 
 	var/easy_attach = 0 //Attachable without surgery?
-	var/fits_monkey = 0 // Most limbs look just awful on a monkey, and those limbs even worse on a human
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
 	var/current_decomp_stage_l = -1
@@ -252,13 +251,6 @@
 			if(!surgeryCheck(attachee, attacher))
 				return
 
-		if(src.fits_monkey && !ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
-			return ..()
-		else if (!src.fits_monkey && ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
-			return ..()
-
 		if(!both_legs)
 			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
 				return ..()
@@ -373,7 +365,7 @@
 		return
 
 /obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)

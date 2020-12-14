@@ -89,9 +89,6 @@
 						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 							continue
 						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-					return 1
-				else
-					return 0
 
 /obj/machinery/bot/examine()
 	. = ..()

@@ -50194,10 +50194,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "xEd" = (
-/obj/wingrille_spawn,
 /obj/stocking,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/bar)
+/turf/simulated/wall/auto/gannets,
+/area/station/crew_quarters/bathroom{
+	name = "Locker Room"
+	})
 "xEn" = (
 /obj/wingrille_spawn,
 /obj/decal/wreath,
@@ -81416,7 +81417,7 @@ aot
 aoW
 apA
 aqh
-ajZ
+xEd
 ari
 arR
 asy
@@ -84010,7 +84011,7 @@ aGs
 aHx
 aIy
 aAu
-xEd
+ayV
 aMp
 aNs
 aOE

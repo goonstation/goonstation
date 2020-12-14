@@ -171,12 +171,12 @@
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
 
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			if (!src.dependent && !src.shell)
 				boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 				src.syndicate = syndie
 				src.emagged = frame_emagged
-		SPAWN_DBG (4)
+		SPAWN_DBG(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
@@ -195,7 +195,7 @@
 			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 
-		SPAWN_DBG (15)
+		SPAWN_DBG(1.5 SECONDS)
 			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
@@ -2093,7 +2093,7 @@
 		else if (!src.locked && !src.opened && !src.wiresexposed && !src.brainexposed && !src.locking)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking interface...</span>")
-			SPAWN_DBG (120)
+			SPAWN_DBG(12 SECONDS)
 				if (!src.locking)
 					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
 				else
