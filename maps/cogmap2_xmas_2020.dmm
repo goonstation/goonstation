@@ -80619,16 +80619,6 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"dJQ" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "dLw" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -80723,7 +80713,6 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "fig" = (
-/obj/machinery/light,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
 	},
@@ -81056,6 +81045,10 @@
 /obj/window/auto/reinforced,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/dirt,
+/area/station/ranch)
+"kjc" = (
+/obj/machinery/light,
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kkr" = (
 /obj/disposalpipe/segment/transport{
@@ -81678,6 +81671,13 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
+"uYn" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "uZE" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -103102,7 +103102,7 @@ aaa
 aaa
 aaa
 tWd
-dJQ
+fig
 tPo
 tPo
 pKi
@@ -103404,6 +103404,7 @@ aaa
 aaa
 aaa
 wSt
+uYn
 tPo
 tPo
 tPo
@@ -103413,8 +103414,7 @@ tPo
 tPo
 tPo
 tPo
-tPo
-tPo
+kjc
 wSt
 aaa
 aaa

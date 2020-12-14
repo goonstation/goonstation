@@ -11871,16 +11871,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
-"aAG" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
-	},
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aAH" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -79033,6 +79023,10 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"eQI" = (
+/obj/machinery/light,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fHh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -79259,6 +79253,13 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"vlP" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -79270,7 +79271,6 @@
 	},
 /area/station/hydroponics/bay)
 "vNO" = (
-/obj/machinery/light,
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4
 	},
@@ -100644,7 +100644,7 @@ aaa
 aaa
 aaa
 xfw
-aAG
+vNO
 saK
 saK
 vTx
@@ -100946,6 +100946,7 @@ aaa
 aaa
 aaa
 xTc
+vlP
 saK
 saK
 saK
@@ -100955,8 +100956,7 @@ saK
 saK
 saK
 saK
-saK
-saK
+eQI
 xTc
 aaa
 aaa
