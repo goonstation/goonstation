@@ -64322,18 +64322,6 @@
 /area/station/engine/core)
 "cOr" = (
 /obj/table/auto,
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
@@ -65049,11 +65037,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"hHS" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "hUW" = (
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -65370,6 +65353,11 @@
 /obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"mar" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -65849,6 +65837,13 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"rdm" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "rfS" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -66318,13 +66313,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
-"vVa" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
 	desc = "freezer bypass valve";
@@ -131267,10 +131255,10 @@ aaa
 jPv
 rlS
 fqU
-vVa
+rdm
 cOr
 eyq
-hHS
+mar
 fqU
 pbV
 jPv

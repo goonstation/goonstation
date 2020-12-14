@@ -62962,10 +62962,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"eNh" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt,
-/area/station/hydroponics/bay)
 "ePs" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63336,6 +63332,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"iVL" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt,
+/area/station/hydroponics/bay)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -63429,6 +63429,12 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"kMU" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "kOz" = (
 /obj/railing/orange/reinforced,
 /obj/machinery/light/small{
@@ -63666,12 +63672,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"onw" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "opf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -63929,18 +63929,6 @@
 /area/station/hydroponics/bay)
 "tkX" = (
 /obj/table/auto,
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
@@ -129098,10 +129086,10 @@ aaa
 atV
 uxX
 qlh
-onw
+kMU
 tkX
 hPW
-eNh
+iVL
 qlh
 nNK
 atV
