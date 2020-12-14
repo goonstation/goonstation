@@ -2270,19 +2270,27 @@
 	},
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
-/obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aga" = (
 /obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/item_box/assorted/stickers/stickers_limited{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/pen/marker{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/machinery/light/emergency{
 	dir = 4
-	},
-/obj/item/pen/marker,
-/obj/item/camera_test{
-	pixel_y = -10
 	},
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -2645,18 +2653,31 @@
 /area/station/crew_quarters/quarters)
 "agM" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+/obj/item/football{
+	pixel_x = 9;
+	pixel_y = 11
 	},
-/obj/item/football,
-/obj/item/football,
+/obj/item/football{
+	pixel_x = 14;
+	pixel_y = 3
+	},
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_x = -3;
+	pixel_y = 9
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "agN" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
+	name = "Robust Donuts";
+	pixel_x = -2;
+	pixel_y = 17
+	},
+/obj/item/camera_test{
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -3353,14 +3374,24 @@
 /area/station/crew_quarters/quartersA)
 "aiw" = (
 /obj/table/auto,
-/obj/item/item_box/medical_patches/mini_styptic,
+/obj/item/item_box/medical_patches/mini_styptic{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/cereal_box{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
 /area/station/crew_quarters/quarters)
 "aix" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = -9;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aiy" = (
@@ -3845,8 +3876,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/storage/box/diskbox,
-/obj/item/decoration/ashtray,
+/obj/item/storage/box/diskbox{
+	pixel_x = -3;
+	pixel_y = 12
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -3858,7 +3895,6 @@
 	},
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
-/obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "ajE" = (
@@ -62920,7 +62956,7 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"rfc" = (
+"qVF" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -109473,7 +109509,7 @@ bDv
 bEl
 chH
 bFF
-rfc
+qVF
 bHo
 bIl
 bHo
