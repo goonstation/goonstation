@@ -80624,12 +80624,8 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -80728,11 +80724,8 @@
 /area/station/hydroponics/bay)
 "fig" = (
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -81235,6 +81228,15 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"nnB" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "nqk" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood{
@@ -81599,6 +81601,14 @@
 /obj/window/auto/reinforced,
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
+/area/station/ranch)
+"tIQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tOc" = (
 /obj/shrub{
@@ -102791,7 +102801,7 @@ aaa
 aaa
 tWd
 tWd
-tPo
+tIQ
 jsR
 jCd
 gzF
@@ -102799,7 +102809,7 @@ eLO
 pRl
 jCd
 tOc
-tPo
+nnB
 tWd
 tWd
 aaa

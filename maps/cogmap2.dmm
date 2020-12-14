@@ -11876,12 +11876,8 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -79037,6 +79033,15 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"fHh" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fVc" = (
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
@@ -79266,11 +79271,8 @@
 /area/station/hydroponics/bay)
 "vNO" = (
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -79285,6 +79287,14 @@
 "vTx" = (
 /obj/machinery/light{
 	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
+"wSb" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname - SS13";
 	tag = ""
 	},
 /turf/simulated/floor/grass/leafy,
@@ -100333,7 +100343,7 @@ aaa
 aaa
 xfw
 xfw
-saK
+wSb
 aHr
 aKt
 fVc
@@ -100341,7 +100351,7 @@ iRa
 rBI
 aKt
 ybe
-saK
+fHh
 xfw
 xfw
 aaa

@@ -73975,10 +73975,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
-"vvk" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "vvy" = (
 /turf/simulated/floor/stairs/medical/wide,
 /area/station/medical/cdc)
@@ -131313,7 +131309,7 @@ tgd
 lTE
 sJC
 mBB
-vvk
+mBB
 mBB
 oJP
 rct
@@ -132219,7 +132215,7 @@ xPC
 vzn
 mfs
 klf
-vvk
+mBB
 mBB
 oJP
 ylv
