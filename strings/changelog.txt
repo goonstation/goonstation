@@ -1,5 +1,9 @@
 
 (t)sun dec 13 20
+(u)virvatuli
+(p)3045
+(e)|
+(+)Changed the Syndicate poison bottle to be more believable when examined
 (u)Superlagg
 (p)2975
 (e)🐛🆕|bug, feature
