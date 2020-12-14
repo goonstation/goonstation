@@ -33823,9 +33823,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
+/obj/grille/catwalk/cross{
 	dir = 5;
-	icon_state = "catwalk_cross"
+	tag = "icon-catwalk_cross (NORTHEAST)"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
