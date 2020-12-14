@@ -11033,7 +11033,6 @@
 	},
 /area/station/hallway/primary/north)
 "aAD" = (
-/obj/railing/orange/reinforced,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24;
@@ -52520,6 +52519,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -54093,9 +54095,15 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
+/obj/table/reinforced/auto,
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -54982,15 +54990,12 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/table/reinforced/auto,
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -57264,10 +57269,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/security)
-"stX" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "sun" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/storage/box/beakerbox,
@@ -59475,6 +59476,9 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -114355,7 +114359,7 @@ bpC
 buR
 jna
 iGQ
-stX
+iGQ
 fBk
 fqR
 iOg
@@ -114657,7 +114661,7 @@ bpC
 buR
 fkY
 iGQ
-stX
+iGQ
 fBk
 dzX
 buR
@@ -114959,7 +114963,7 @@ bpC
 buR
 cXY
 iGQ
-stX
+iGQ
 ygq
 dzX
 hxq
