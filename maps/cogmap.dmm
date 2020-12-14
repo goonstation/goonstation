@@ -24276,10 +24276,21 @@
 /area/station/security/checkpoint)
 "bbZ" = (
 /obj/table/auto,
-/obj/bedsheetbin,
-/obj/item/clothing/suit/judgerobe,
-/obj/item/clothing/head/powdered_wig,
-/obj/item/pen/marker/red,
+/obj/bedsheetbin{
+	pixel_x = 4
+	},
+/obj/item/clothing/suit/judgerobe{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/powdered_wig{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/pen/marker/red{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bca" = (
@@ -24732,8 +24743,14 @@
 	icon_state = "4-8"
 	},
 /obj/table/wood/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen2"
@@ -25221,39 +25238,54 @@
 /area/station/crew_quarters/heads)
 "bdY" = (
 /obj/table/wood/auto,
-/obj/item/spacecash,
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
+/obj/item/spacecash{
+	pixel_x = -7;
+	pixel_y = 3
 	},
 /obj/item/coin{
-	pixel_x = -5;
-	pixel_y = 9
+	pixel_x = -3;
+	pixel_y = 13
+	},
+/obj/item/coin{
+	pixel_x = -10;
+	pixel_y = 12
 	},
 /obj/machinery/light,
+/obj/item/stamp/hop{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
 "bdZ" = (
 /obj/table/wood/auto,
-/obj/machinery/recharger{
-	pixel_y = 3
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = 4;
+	pixel_y = 10
 	},
 /obj/item/storage/firstaid/regular{
-	pixel_x = -6;
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
 "bea" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/stamp/hop,
+/obj/machinery/recharger{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clipboard{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/item/pen/fancy{
+	pixel_x = -8;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
@@ -25692,20 +25724,30 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/stamp,
-/obj/item/postit_stack,
+/obj/item/postit_stack{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/stamp{
+	pixel_x = 4
+	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "beU" = (
 /obj/table/reinforced/auto,
-/obj/machinery/cashreg,
+/obj/machinery/cashreg{
+	pixel_y = 5
+	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "beV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
@@ -61778,6 +61820,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cRA" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "cVL" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -61887,6 +61937,14 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"ejb" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "eln" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -62770,14 +62828,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"rng" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -94490,7 +94540,7 @@ beU
 bcc
 bdg
 bed
-beU
+cRA
 bfP
 bgL
 bgL
@@ -109323,7 +109373,7 @@ bDv
 bEl
 chH
 bFF
-rng
+ejb
 bHo
 bIl
 bHo
