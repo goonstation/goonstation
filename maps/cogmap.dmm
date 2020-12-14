@@ -879,7 +879,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/item/wrench,
 /turf/simulated/floor/plating,
@@ -4623,7 +4622,6 @@
 "alh" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -5457,7 +5455,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -5528,7 +5525,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -5665,7 +5661,6 @@
 "anx" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -7014,7 +7009,6 @@
 "aqA" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -8942,7 +8936,6 @@
 /obj/stool,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/carpet/grime,
@@ -10495,7 +10488,6 @@
 /obj/stool/chair,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -10691,7 +10683,6 @@
 /obj/submachine/laundry_machine,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -11636,7 +11627,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
@@ -12761,7 +12751,6 @@
 "aCS" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -12828,7 +12817,6 @@
 "aDa" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13218,7 +13206,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -14335,7 +14322,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/vending/medical_public,
 /obj/machinery/light/emergency{
@@ -15188,7 +15174,6 @@
 "aHU" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16795,7 +16780,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
@@ -19245,7 +19229,6 @@
 /obj/stool/chair,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
@@ -19836,7 +19819,6 @@
 "aRA" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -20611,7 +20593,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/stool/chair/couch{
 	dir = 4
@@ -21660,9 +21641,7 @@
 	name = "autoname - SS13"
 	},
 /obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
+	pixel_y = 24;
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -23799,7 +23778,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
@@ -23923,7 +23901,6 @@
 "baB" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
@@ -24549,7 +24526,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/vehicle/segway,
 /turf/simulated/floor/black,
@@ -24640,7 +24616,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -25860,7 +25835,6 @@
 "beE" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -25875,7 +25849,6 @@
 "beF" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/stool/chair/couch{
 	dir = 4;
@@ -26232,7 +26205,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -26466,7 +26438,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/light/emergency{
 	dir = 4
@@ -26754,7 +26725,6 @@
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -33934,7 +33904,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -35968,7 +35937,6 @@
 "bzV" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -39645,7 +39613,6 @@
 "bHy" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -41124,7 +41091,6 @@
 "bKo" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -42419,7 +42385,6 @@
 /obj/item/device/radio/beacon,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -43035,7 +43000,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -46453,7 +46417,6 @@
 "bUC" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -46913,7 +46876,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -47614,7 +47576,6 @@
 "bXo" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -49204,7 +49165,6 @@
 "cbg" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/atmospherics/valve{
 	high_risk = 1;
@@ -55283,7 +55243,6 @@
 "coG" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -57355,7 +57314,6 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -57666,7 +57624,6 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -62268,14 +62225,24 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"eda" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	name = "factory pipe"
+"dTC" = (
+/obj/machinery/light,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
+"ela" = (
+/obj/table/auto,
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
 	},
-/obj/cable{
-	icon_state = "2-8"
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -62290,6 +62257,12 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
+"ept" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -62334,15 +62307,12 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"eHy" = (
-/obj/railing/orange/reinforced,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
+"eJO" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "eJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -62378,6 +62348,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"eYx" = (
+/obj/stool,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "fhr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -62410,8 +62384,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
-"flc" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+"fnq" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "foS" = (
 /obj/rack,
@@ -62461,6 +62439,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"fzr" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Biodome";
+	req_access_txt = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/turf/simulated/floor,
+/area/station/ranch)
 "fBo" = (
 /obj/cable,
 /obj/cable{
@@ -62601,6 +62589,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"gpQ" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/station/ranch)
 "gsU" = (
 /obj/lattice{
 	dir = 4;
@@ -62617,6 +62609,12 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
+"gAO" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "gDG" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -62633,6 +62631,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
+"gJj" = (
+/obj/stool,
+/turf/simulated/floor/green/corner{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "gVk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -62699,25 +62703,11 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
-"isE" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
-"iPX" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"iVs" = (
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "jaC" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -62742,37 +62732,28 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"jDF" = (
-/obj/railing/orange/reinforced{
-	dir = 1
+"jvO" = (
+/turf/simulated/floor/green/corner{
+	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/disposal/small{
-	dir = 4
-	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
+/area/station/hydroponics/bay)
 "jNc" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/cobweb,
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"jNz" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "jOP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62789,16 +62770,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"jWX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Biodome";
-	req_access_txt = null
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/rancher,
-/turf/simulated/floor,
-/area/station/ranch)
 "klV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -62852,11 +62823,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
-"kON" = (
-/turf/simulated/floor/green/corner{
-	dir = 8
-	},
-/area/station/hydroponics/bay)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62870,12 +62836,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
-"lmE" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
+"kTc" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Biodome";
+	req_access_txt = null
 	},
-/turf/simulated/floor/grass/leafy,
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
 /area/station/ranch)
 "ltD" = (
 /obj/cable{
@@ -62930,6 +62905,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"lRe" = (
+/obj/railing/orange/reinforced,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "lUw" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -62950,12 +62935,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
-"mgb" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "msz" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -62968,6 +62947,9 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"mCe" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "mKe" = (
 /obj/securearea,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -62975,20 +62957,29 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
-"mNF" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
-"mRe" = (
-/obj/stool,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"ncB" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/disposal/small{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "ndn" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -63065,23 +63056,6 @@
 "nxc" = (
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"nBJ" = (
-/obj/table/auto,
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "nIv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63131,17 +63105,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"nSN" = (
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
-"nWM" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "opf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -63170,10 +63133,9 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"oxm" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+"oyc" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -63185,6 +63147,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"oLV" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "oQg" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -63205,6 +63173,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"pvz" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "pDV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63214,10 +63186,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"pEK" = (
-/obj/machinery/light,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "pIX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/disposalpipe/segment,
@@ -63250,12 +63218,6 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"pRM" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "pSb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63271,13 +63233,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"qxp" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/ranch)
-"qyY" = (
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "qIA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63296,10 +63251,6 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"qTD" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "qTU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -63316,6 +63267,23 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"rBy" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -63323,6 +63291,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"rFl" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rNK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63357,6 +63332,12 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"swx" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 16
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63399,7 +63380,6 @@
 "sLP" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
-	text = "NF"
 	},
 /obj/machinery/atmospherics/valve{
 	desc = "cold reserve tank valve";
@@ -63408,12 +63388,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"tqc" = (
-/obj/stool,
-/turf/simulated/floor/green/corner{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -63456,12 +63430,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
-"tOT" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 1
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
@@ -63491,27 +63459,8 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
-"uip" = (
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 16
-	},
+"ugu" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch)
-"unr" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Biodome";
-	req_access_txt = null
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/rancher,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/station/ranch)
 "uvz" = (
 /obj/cable{
@@ -63569,6 +63518,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"veg" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vfr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63700,23 +63654,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"wrA" = (
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -63725,6 +63662,17 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"wzu" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "wKE" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -63784,6 +63732,9 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
+"xpg" = (
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "xuC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
@@ -63816,6 +63767,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/quartermaster/refinery)
+"xOW" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "xPv" = (
 /obj/lattice{
 	dir = 8;
@@ -126770,10 +126725,10 @@ aro
 asL
 arn
 atX
-tqc
+gJj
 awG
 azr
-kON
+jvO
 aDF
 arn
 asL
@@ -127373,12 +127328,12 @@ aaq
 aap
 axV
 axV
-flc
-flc
-jWX
-unr
-flc
-flc
+mCe
+mCe
+fzr
+kTc
+mCe
+mCe
 axV
 axV
 aap
@@ -127673,16 +127628,16 @@ adC
 adC
 adC
 aag
-qxp
-nWM
-lmE
-eHy
-qyY
-eda
-jDF
-isE
-nWM
-qxp
+gpQ
+fnq
+rFl
+lRe
+xpg
+wzu
+ncB
+veg
+fnq
+gpQ
 aaG
 adC
 adC
@@ -127975,16 +127930,16 @@ adC
 adC
 adC
 aag
-qxp
-nSN
-iVs
-iPX
-qyY
-qyY
-mgb
-iVs
-nSN
-qxp
+gpQ
+pvz
+ugu
+jNz
+xpg
+xpg
+gAO
+ugu
+pvz
+gpQ
 aaG
 adC
 adC
@@ -128277,16 +128232,16 @@ adC
 adC
 adC
 aam
-flc
-oxm
-iVs
-iPX
-mRe
-qyY
-mgb
-iVs
-pEK
-flc
+mCe
+eJO
+ugu
+jNz
+eYx
+xpg
+gAO
+ugu
+dTC
+mCe
 acW
 adC
 adC
@@ -128579,16 +128534,16 @@ adC
 adC
 adC
 adC
-flc
-uip
-pRM
-mNF
-nBJ
-wrA
-qTD
-pRM
-tOT
-flc
+mCe
+swx
+oLV
+ept
+ela
+rBy
+xOW
+oLV
+oyc
+mCe
 adC
 adC
 adC
@@ -128881,16 +128836,16 @@ adC
 adC
 adC
 adC
-flc
-qxp
-qxp
-flc
-flc
-flc
-flc
-qxp
-qxp
-flc
+mCe
+gpQ
+gpQ
+mCe
+mCe
+mCe
+mCe
+gpQ
+gpQ
+mCe
 adC
 adC
 adC
