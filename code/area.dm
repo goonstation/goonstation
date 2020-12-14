@@ -2856,6 +2856,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hydroponics Lobby"
 	icon_state = "green"
 
+/area/station/ranch
+	name = "Ranch"
+	icon_state = "ranch"
+
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
 	name = "Garden"
