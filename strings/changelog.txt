@@ -1,5 +1,9 @@
 
 (t)sun dec 13 20
+(u)Superlagg
+(p)2975
+(e)🐛🆕|bug, feature
+(+)Monkeys and non-monkeys can now share limbs.
 (u)BenLubar
 (p)2980
 (e)⚖🆕🗺|balance, feature, mapping
