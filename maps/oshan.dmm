@@ -16099,6 +16099,7 @@
 /area/station/storage/tech)
 "aKq" = (
 /obj/machinery/light/incandescent/warm/very,
+/obj/machinery/photocopier,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKr" = (
@@ -32417,6 +32418,7 @@
 /area/station/hallway/secondary/exit)
 "byr" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/photocopier,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bys" = (
@@ -32778,6 +32780,7 @@
 	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -47634,6 +47637,18 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"eJt" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/photocopier,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "eLd" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/circuit,
@@ -47646,6 +47661,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"ftc" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/carpet{
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47855,6 +47876,11 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"nrs" = (
+/obj/disposalpipe/segment,
+/obj/machinery/photocopier,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nAo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48184,6 +48210,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"wZm" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/darkblue{
+	dir = 10
+	},
+/area/station/crew_quarters/info)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/door_control{
@@ -94877,7 +94909,7 @@ arg
 asq
 atG
 auY
-ajg
+nrs
 axt
 atx
 ben
@@ -95256,7 +95288,7 @@ bOD
 aSV
 aSX
 aSZ
-bSO
+eJt
 adn
 bJR
 anh
@@ -95540,7 +95572,7 @@ bvE
 bvI
 bvI
 bvI
-bzE
+ftc
 btK
 bCr
 bDG
@@ -103695,7 +103727,7 @@ bxj
 byb
 byR
 bzV
-bBq
+wZm
 bBq
 bBq
 bBq
