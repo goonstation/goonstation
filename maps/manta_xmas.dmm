@@ -47790,6 +47790,9 @@
 	},
 /area/station/engine/inner)
 "wVj" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "wVU" = (

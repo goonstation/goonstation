@@ -10613,6 +10613,12 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
+"cQf" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "cQh" = (
 /obj/storage/closet{
 	name = "light bulb closet"
@@ -129217,7 +129223,7 @@ mBB
 vvk
 gSt
 oJP
-orn
+cQf
 sJC
 mwk
 iba

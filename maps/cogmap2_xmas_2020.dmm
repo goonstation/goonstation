@@ -80863,6 +80863,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"gJd" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "haY" = (
 /obj/machinery/light,
 /obj/cable{
@@ -104071,7 +104077,7 @@ tPo
 tPo
 iOH
 fVT
-fVT
+gJd
 wSt
 oRt
 aaa

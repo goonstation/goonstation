@@ -59204,6 +59204,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/brig/south_side)
+"rct" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rcv" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/escape{
@@ -131306,7 +131312,7 @@ mBB
 vvk
 xBy
 oJP
-nku
+rct
 sJC
 mwk
 iba

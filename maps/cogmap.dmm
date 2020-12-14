@@ -63242,6 +63242,12 @@
 	dir = 5
 	},
 /area/station/storage/warehouse)
+"hly" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -128526,7 +128532,7 @@ fCy
 tva
 vEZ
 vcM
-vec
+hly
 vec
 fxH
 vEZ

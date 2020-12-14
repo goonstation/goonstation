@@ -79373,6 +79373,12 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"vrU" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "vRi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -101627,7 +101633,7 @@ saK
 saK
 xRN
 mBI
-mBI
+vrU
 vdG
 ybe
 aaa

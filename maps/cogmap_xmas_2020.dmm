@@ -65379,6 +65379,12 @@
 /obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"lUz" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -130693,7 +130699,7 @@ eVq
 qrh
 xXc
 tPW
-smw
+lUz
 smw
 gji
 xXc
