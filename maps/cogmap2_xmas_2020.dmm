@@ -81319,6 +81319,11 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"oNi" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/station/ranch)
 "oRt" = (
 /obj/lattice{
 	dir = 9;
@@ -81557,6 +81562,11 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
+"tbY" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
+/area/station/ranch)
 "tfV" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -104018,9 +104028,9 @@ riR
 riR
 riR
 riR
+oNi
 fVT
-fVT
-fVT
+tbY
 riR
 riR
 riR

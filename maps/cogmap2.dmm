@@ -79190,6 +79190,16 @@
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"nMJ" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
+/area/station/ranch)
+"oxp" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/station/ranch)
 "pdE" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -101568,9 +101578,9 @@ aDm
 aDm
 aDm
 aDm
+oxp
 mBI
-mBI
-mBI
+nMJ
 aDm
 aDm
 aDm
