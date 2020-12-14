@@ -1408,12 +1408,24 @@
 /area/station/crew_quarters/clown)
 "adV" = (
 /obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/breaching_charge{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/obj/item/breaching_charge{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
@@ -2274,18 +2286,48 @@
 /area/station/crew_quarters/quartersB)
 "agc" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = -8
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = 7;
+	pixel_y = 11
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
@@ -3715,12 +3757,20 @@
 	desc = "A crate of confiscated items.";
 	name = "Contraband"
 	},
-/obj/item/instrument/vuvuzela,
-/obj/item/bananapeel,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/item_box/no,
+/obj/item/item_box/no{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/instrument/vuvuzela{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/bananapeel{
+	pixel_x = 4
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -4608,10 +4658,22 @@
 /area/station/security/brig)
 "aly" = (
 /obj/table/auto,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/brig)
 "alz" = (
@@ -13539,27 +13601,35 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aEQ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
 /obj/cable,
-/obj/rack,
-/obj/machinery/shieldgenerator/meteorshield,
-/obj/machinery/shieldgenerator/meteorshield,
-/obj/item/device/radio,
-/obj/item/wrench,
-/obj/item/device/light/glowstick,
 /obj/machinery/power/apc{
 	areastring = "Security";
 	dir = 4;
 	name = "Security APC";
 	pixel_x = 24
+	},
+/obj/rack,
+/obj/item/device/radio{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/wrench{
+	pixel_y = 6
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/machinery/shieldgenerator/meteorshield,
+/obj/machinery/shieldgenerator/meteorshield,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
@@ -14356,10 +14426,21 @@
 /area/station/security/main)
 "aGD" = (
 /obj/table/auto,
-/obj/machinery/recharger,
-/obj/item/pen/marker/red,
-/obj/item/pen/marker/blue,
-/obj/item/clothing/head/helmet/camera/security,
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/clothing/head/helmet/camera/security{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/pen/marker/red{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -6
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -14914,7 +14995,10 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/auto,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /obj/noticeboard{
 	pixel_y = 28
 	},
@@ -14935,8 +15019,18 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/stamp{
+	pixel_x = -11;
+	pixel_y = 5
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -16076,7 +16170,6 @@
 	name = "Security Office";
 	req_access_txt = "1"
 	},
-/obj/item/stamp,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -19639,23 +19732,35 @@
 /area/station/security/hos)
 "aRV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
+	pixel_x = 11;
+	pixel_y = 5
 	},
 /obj/machinery/light,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRX" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer,
+/obj/item/device/camera_viewer{
+	pixel_x = 1;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRY" = (
@@ -61762,16 +61867,40 @@
 /area/station/turret_protected/armory_outside)
 "foS" = (
 /obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -13;
+	pixel_y = -1
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -15;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 12;
+	pixel_y = 8
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
