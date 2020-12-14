@@ -258,6 +258,27 @@
 		. = ..()
 		src.transplanted = 1
 
+	///Taking items off a head
+	attack_self(mob/user as mob)
+		var/list/headwear = list(head, ears, wear_mask, glasses)
+		if (!length(headwear))
+			return
+		var/obj/selection = input("Which item do you want to remove","Looting the dead") as null|obj in headwear
+		if (!selection)
+			return
+		user.put_in_hand_or_drop(selection)
+		//switch(selection)
+		if (selection == head)
+			head = null
+		if (selection == ears)
+			ears = null
+		if (selection == wear_mask)
+			wear_mask = null
+		if (selection == glasses)
+			glasses = null
+		update_head_image()
+
+
 	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
 		if (src.skull || src.brain)
 
