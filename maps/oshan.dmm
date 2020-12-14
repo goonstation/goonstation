@@ -48210,12 +48210,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"wZm" = (
-/obj/machinery/photocopier,
-/turf/simulated/floor/darkblue{
-	dir = 10
-	},
-/area/station/crew_quarters/info)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/door_control{
@@ -103727,7 +103721,7 @@ bxj
 byb
 byR
 bzV
-wZm
+bBq
 bBq
 bBq
 bBq
