@@ -18895,16 +18895,24 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular,
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/item/postit_stack,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/postit_stack{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aPN" = (
 /obj/table/wood/round/auto,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -25193,11 +25201,17 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
-/obj/item/stamp/cap,
+/obj/machinery/light/lamp{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/stamp/cap{
+	pixel_x = -7;
+	pixel_y = 5
+	},
 /obj/item/item_box/gold_star{
-	pixel_x = -5;
-	pixel_y = 7
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -26101,7 +26115,8 @@
 "bfL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
-	pixel_y = 3
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -62326,14 +62341,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"hYm" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_y = -2
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -62456,14 +62463,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
-"kMU" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62967,6 +62966,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tGM" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
@@ -63254,6 +63261,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"xyl" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -94550,7 +94565,7 @@ beU
 bcc
 bdg
 bed
-hYm
+xyl
 bfP
 bgL
 bgL
@@ -109383,7 +109398,7 @@ bDv
 bEl
 chH
 bFF
-kMU
+tGM
 bHo
 bIl
 bHo
