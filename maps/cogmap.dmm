@@ -62803,10 +62803,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cGU" = (
-/obj/lattice,
-/obj/railing/orange/reinforced,
-/turf/space,
-/area/space)
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62895,7 +62894,7 @@
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "egd" = (
 /obj/cable{
 	d1 = 2;
@@ -62908,7 +62907,7 @@
 	name = "factory pipe"
 	},
 /turf/simulated/floor/dirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "ezG" = (
 /obj/window/reinforced{
 	dir = 4
@@ -63031,7 +63030,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grasstodirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "fBo" = (
 /obj/cable,
 /obj/cable{
@@ -63043,7 +63042,7 @@
 "fCy" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "fFs" = (
 /obj/landmark/start{
 	name = "Mechanic"
@@ -63299,7 +63298,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/dirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "iix" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external{
@@ -63345,7 +63344,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "jNc" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/cobweb,
@@ -63377,7 +63376,7 @@
 "klF" = (
 /obj/stool,
 /turf/simulated/floor/dirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "klV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63436,7 +63435,10 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/hydroponics/bay)
+/area/station/ranch)
+"kPF" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "kRC" = (
 /obj/cable{
 	d1 = 1;
@@ -63458,7 +63460,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "ltD" = (
 /obj/cable{
 	d1 = 4;
@@ -63587,7 +63589,7 @@
 "nks" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/grasstodirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "nlN" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -63640,13 +63642,13 @@
 "nEs" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "nNK" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "nPH" = (
 /obj/cable{
 	d2 = 2;
@@ -63790,7 +63792,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "qIA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63839,7 +63841,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grasstodirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63876,7 +63878,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "svZ" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -63952,11 +63954,11 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/dirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "tva" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -64035,7 +64037,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -64075,10 +64077,10 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "vec" = (
 /turf/simulated/floor/dirt,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "vfr" = (
 /obj/cable{
 	d1 = 4;
@@ -64176,7 +64178,7 @@
 /area/station/engine/core)
 "vEZ" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "vSl" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -64197,7 +64199,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
 	desc = "freezer bypass valve";
@@ -64259,7 +64261,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "wSv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64310,7 +64312,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
 /turf/simulated/floor,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "xKG" = (
 /obj/machinery/light{
 	dir = 8
@@ -123963,7 +123965,7 @@ aaa
 aaa
 aaa
 aag
-cGU
+aap
 aaw
 aaw
 aap
@@ -127891,16 +127893,16 @@ aaa
 aam
 aaq
 aap
-avj
-avj
-atV
-atV
+cGU
+cGU
+kPF
+kPF
 xzc
 wNn
-atV
-atV
-avj
-avj
+kPF
+kPF
+cGU
+cGU
 aap
 aaq
 acW
@@ -128797,7 +128799,7 @@ aaa
 aaa
 aaa
 aam
-atV
+kPF
 wdF
 vEZ
 vcM
@@ -128806,7 +128808,7 @@ vec
 fxH
 vEZ
 nEs
-atV
+kPF
 acW
 aaa
 aaa
@@ -129099,7 +129101,7 @@ aaa
 aaa
 aaa
 aaa
-atV
+kPF
 uxX
 qlh
 skj
@@ -129108,7 +129110,7 @@ hPW
 nks
 qlh
 nNK
-atV
+kPF
 aaa
 aaa
 aaa
@@ -129401,16 +129403,16 @@ aaa
 aaa
 aaa
 aaa
-atV
+kPF
 fCy
 fCy
-atV
-atV
-atV
-atV
+kPF
+kPF
+kPF
+kPF
 fCy
 fCy
-atV
+kPF
 aaa
 aaa
 aaa
