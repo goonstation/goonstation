@@ -29904,6 +29904,12 @@
 /area/station/hydroponics/bay)
 "buO" = (
 /obj/machinery/light,
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/obj/stool/chair/green{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "buP" = (
@@ -32357,7 +32363,8 @@
 	pixel_y = 4
 	},
 /obj/item/paper/book/hydroponicsguide{
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -51448,7 +51455,10 @@
 /turf/space,
 /area/station/ai_monitored/armory)
 "cSO" = (
-/obj/stool/bench/green/auto,
+/obj/disposalpipe/segment/food,
+/obj/stool/chair/green{
+	dir = 4
+	},
 /obj/landmark/start{
 	name = "Botanist"
 	},
@@ -52423,6 +52433,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -112224,7 +112237,7 @@ bor
 bpz
 bqJ
 jvK
-bse
+cSO
 buN
 bvQ
 bxe
@@ -112526,7 +112539,7 @@ boo
 bpA
 bqK
 bqK
-cSO
+bqK
 buO
 boq
 boq
