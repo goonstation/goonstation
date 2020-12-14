@@ -21866,8 +21866,18 @@
 /area/station/medical/crematorium)
 "aWp" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/beacon,
-/obj/item/storage/bible,
+/obj/item/device/radio/beacon{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/storage/bible{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/screwdriver{
+	pixel_x = 12;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -21875,7 +21885,10 @@
 /area/station/chapel/office)
 "aWq" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/glass/bottle/holywater,
+/obj/item/reagent_containers/glass/bottle/holywater{
+	pixel_x = 7;
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -22566,11 +22579,26 @@
 /area/station/medical/crematorium)
 "aXI" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/formaldehyde{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aXJ" = (
@@ -22598,11 +22626,16 @@
 "aXM" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
+	pixel_x = 5;
+	pixel_y = 2
 	},
-/obj/item/pen,
-/obj/item/pen/fancy,
+/obj/item/pen{
+	pixel_x = 3
+	},
+/obj/item/pen/fancy{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -22989,18 +23022,39 @@
 /area/station/maintenance/east)
 "aYI" = (
 /obj/table/auto,
-/obj/item/paper_bin{
+/obj/item/storage/box/evidence{
 	pixel_x = -7;
-	pixel_y = 6
+	pixel_y = 15
 	},
-/obj/item/spraybottle/cleaner,
-/obj/item/pen,
-/obj/item/hand_labeler,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
+/obj/item/spraybottle/cleaner{
+	pixel_x = 10;
+	pixel_y = 13
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = -1;
+	pixel_y = 15
+	},
+/obj/item/paper_bin{
+	pixel_x = 8
+	},
+/obj/item/pen{
+	pixel_x = 8
+	},
+/obj/item/body_bag{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/body_bag{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/body_bag{
+	pixel_x = -6
+	},
+/obj/item/hand_labeler{
+	pixel_x = -2;
+	pixel_y = -1
+	},
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -23064,7 +23118,6 @@
 	dir = 1;
 	name = "old piano"
 	},
-/obj/item/screwdriver,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -62061,14 +62114,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
-"dFl" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "dGz" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -62671,6 +62716,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"luZ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "lwT" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -109551,7 +109604,7 @@ bDv
 bEl
 chH
 bFF
-dFl
+luZ
 bHo
 bIl
 bHo
