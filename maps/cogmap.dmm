@@ -15815,21 +15815,47 @@
 /area/station/medical/medbooth)
 "aJK" = (
 /obj/disposalpipe/segment/mail,
+/obj/table/reinforced/auto,
+/obj/item/storage/box/iv_box{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 6
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/paper/book/medical_guide,
-/obj/item/storage/box/patchbox,
-/obj/item/clipboard,
-/obj/item/hand_labeler,
-/obj/item/storage/box/iv_box,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
 "aJL" = (
 /obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = 7
+	},
+/obj/item/pen{
+	pixel_x = 7
+	},
+/obj/item/stamp{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -3;
+	pixel_y = -5
+	},
 /obj/machinery/door/window/westright{
 	dir = 1;
 	name = "Medical Booth";
@@ -15838,9 +15864,6 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/cashreg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/pen,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
 "aJM" = (
@@ -16333,12 +16356,28 @@
 /area/station/medical/medbooth)
 "aKS" = (
 /obj/table/auto,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/body_bag,
-/obj/item/reagent_containers/iv_drip/saline,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/item/paper/book/medical_guide{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/bandage{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/bandage{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/body_bag{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/iv_drip/saline{
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -17436,7 +17475,22 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/optable,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/suture{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/scalpel{
+	pixel_x = 4;
+	pixel_y = -11
+	},
+/obj/item/reagent_containers/iv_drip/blood{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -18185,18 +18239,32 @@
 /area/station/hallway/primary/central)
 "aOA" = (
 /obj/disposalpipe/segment,
+/obj/table/auto,
+/obj/item/hemostat{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 6
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_y = 2
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/staple_gun{
+	pixel_x = 9;
+	pixel_y = -2
+	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
 	frequency = 1445;
 	name = "Medical Intercom"
 	},
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 6
-	},
-/obj/table/auto,
-/obj/machinery/defib_mount,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -18629,24 +18697,36 @@
 /area/station/medical/medbooth)
 "aPw" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_surgery_guide,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-/obj/item/reagent_containers/glass/beaker/large/burn,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/reagent_containers/hypospray,
-/obj/machinery/light/emergency,
-/obj/item/scalpel,
 /obj/disposalpipe/segment/mail,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -11;
+	pixel_y = 11
 	},
-/obj/item/suture,
-/obj/item/staple_gun,
-/obj/item/hemostat,
-/obj/item/scissors/surgical_scissors,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/paper/book/medical_surgery_guide{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = 1;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "aPx" = (
