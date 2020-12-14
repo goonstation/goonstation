@@ -9873,9 +9873,8 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "awc" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/turf/simulated/floor/plating,
+/obj/shrub,
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "awd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -10414,16 +10413,6 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axt" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
 "axu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -10432,8 +10421,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "axv" = (
@@ -11982,7 +11969,6 @@
 /turf/space,
 /area/space)
 "aAG" = (
-/obj/shrub,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -17304,6 +17290,11 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -18957,6 +18948,11 @@
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aQY" = (
@@ -19895,6 +19891,11 @@
 	},
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue5"
@@ -20589,6 +20590,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -80660,6 +80664,10 @@
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"dJQ" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "dLw" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -80704,6 +80712,32 @@
 /obj/tree1,
 /turf/simulated/floor/snow/snowball,
 /area/station/medical/dome)
+"euc" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"eDP" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"eLO" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "eNz" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80725,6 +80759,15 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"fig" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "fpH" = (
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -80735,6 +80778,11 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
+"fDx" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "fOd" = (
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
@@ -80753,6 +80801,9 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/solar/small_backup2)
+"fVT" = (
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "ggx" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80787,24 +80838,54 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/inner)
+"gmY" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "gzB" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"gzF" = (
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gBm" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"haY" = (
+/obj/machinery/light,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "hhj" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
+"hlb" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/turf/simulated/floor/delivery,
+/area/station/ranch)
 "hoL" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80833,6 +80914,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"hLZ" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "hMg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -80865,6 +80952,18 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
+"iqZ" = (
+/obj/machinery/light,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "iuu" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80903,6 +81002,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"iOH" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "iSI" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80927,12 +81032,25 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/entry)
+"jsR" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/shrub,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "juO" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"jCd" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "jFv" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -80962,6 +81080,12 @@
 /obj/decal/wreath,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"jLY" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "jMl" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80974,6 +81098,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"jNX" = (
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "jPj" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -80981,12 +81111,35 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"jYE" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kaH" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
+"kgf" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kkr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -81134,6 +81287,14 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersB)
+"nkd" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "nqk" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor/wood{
@@ -81146,10 +81307,50 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
+"nqQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"nup" = (
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"nDB" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"nKw" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/delivery,
+/area/station/ranch)
+"nQM" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "nSG" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81159,6 +81360,12 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"nUM" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "nVb" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81184,6 +81391,12 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"oRt" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "phA" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81195,16 +81408,30 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
+"pDV" = (
+/obj/stool/chair/green,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
+"pKi" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "pQk" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
+"pRl" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "pTS" = (
 /obj/item/storage/wall/random,
 /obj/machinery/vending/janitor,
@@ -81251,6 +81478,23 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"qkH" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
+"qzQ" = (
+/obj/landmark/halloween,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "qGG" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81281,6 +81525,12 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"riR" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "rll" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81307,6 +81557,18 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"rLQ" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rSc" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81314,6 +81576,17 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"scP" = (
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/obj/decal/xmas_lights,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "sdx" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -81389,12 +81662,33 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics)
+"tHI" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/decal/wreath,
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"tOc" = (
+/obj/railing/orange/reinforced,
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
+"tPo" = (
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "tSI" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/maintenance/central)
+"tWd" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "udR" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81506,6 +81800,14 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
+"wmK" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/space,
+/area/space)
 "woH" = (
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -81516,6 +81818,20 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
+"wSt" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"wVv" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "xec" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81554,6 +81870,15 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"xKO" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/shrub{
+	dir = 10
+	},
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "xQi" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -100714,9 +101039,9 @@ aaa
 aaa
 aaa
 aaa
+acq
 aaa
-aaa
-aaa
+acq
 aaa
 aaa
 aaa
@@ -101016,9 +101341,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aam
+aaS
+aaI
 aaa
 aaa
 aaa
@@ -101318,9 +101643,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aam
+aan
+aaI
 aaa
 aaa
 aaa
@@ -101613,23 +101938,23 @@ aaa
 aaa
 aaa
 aaa
+acq
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
+aam
+aaB
+aaI
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acq
 aaa
 aaa
 aaa
@@ -101915,23 +102240,23 @@ aaa
 aaa
 aaa
 aaa
+aam
+wmK
 aaa
 aaa
+acq
 aaa
 aaa
+aao
+aaa
+aao
 aaa
 aaa
+acq
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abB
+aaI
 aaa
 aaa
 aaa
@@ -102217,23 +102542,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aam
+aaF
+tWd
+fDx
+fDx
+fDx
+tWd
+fDx
+tHI
+fDx
+tWd
+fDx
+fDx
+fDx
+tWd
+aaF
+aaI
 aaa
 aaa
 aaa
@@ -102519,23 +102844,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aam
+aaF
+tWd
+kgf
+wVv
+jsR
+jCd
+gzF
+eLO
+pRl
+jCd
+tOc
+wVv
+nDB
+tWd
+aaF
+aaI
 aaa
 aaa
 aaa
@@ -102821,23 +103146,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abC
+tWd
+tWd
+dJQ
+fVT
+riR
+pKi
+tPo
+tPo
+tPo
+pKi
+iOH
+fVT
+fig
+tWd
+tWd
+ani
 aaa
 aaa
 aaa
@@ -103124,21 +103449,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+tWd
+jYE
+fVT
+pDV
+riR
+tPo
+tPo
+tPo
+tPo
+tPo
+iOH
+jLY
+fVT
+rLQ
+tWd
 aaa
 aaa
 aaa
@@ -103426,21 +103751,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-acq
-aaa
-acq
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oRt
+nQM
+fVT
+fVT
+riR
+tPo
+tPo
+tPo
+tPo
+tPo
+iOH
+fVT
+fVT
+iqZ
+oRt
 aaa
 aaa
 aaa
@@ -103728,21 +104053,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aam
-aaS
-aaI
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oRt
+fVT
+fVT
+fVT
+riR
+tPo
+tPo
+tPo
+tPo
+tPo
+iOH
+fVT
+fVT
+wSt
+oRt
 aaa
 aaa
 aaa
@@ -104030,21 +104355,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aam
-aan
-aaI
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oRt
+fVT
+fVT
+fVT
+riR
+nUM
+tPo
+tPo
+tPo
+nUM
+iOH
+fVT
+fVT
+wSt
+oRt
 aaa
 aaa
 aaa
@@ -104332,21 +104657,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-acq
-aaa
-aam
-aaF
-aaI
-aaa
-acq
-aaa
-aaa
-aaa
-aaa
+oRt
+gmY
+fVT
+fVT
+xKO
+jCd
+gzF
+eLO
+pRl
+jCd
+tOc
+fVT
+fVT
+haY
+oRt
 aaa
 aaa
 aaa
@@ -104633,11 +104958,11 @@ aaa
 aaa
 aaa
 aaa
-acq
 aaa
-aaa
-aaa
-aaa
+tWd
+hLZ
+fVT
+fVT
 gzB
 awd
 awf
@@ -104645,11 +104970,11 @@ qcC
 awf
 awd
 gzB
+eDP
+nqQ
+euc
+tWd
 aaa
-aaa
-aaa
-aaa
-acq
 aaa
 aaa
 aaa
@@ -104935,11 +105260,11 @@ aaa
 aaa
 aaa
 aaa
-aam
-aaS
-awc
-awc
-awc
+aaa
+tWd
+nup
+nup
+hlb
 gzB
 aED
 aFC
@@ -104947,11 +105272,11 @@ aHp
 aIT
 aKt
 gzB
-awc
-awc
-awc
-aaS
-aaI
+nKw
+nup
+jNX
+tWd
+aaa
 aaa
 aaa
 aaa
@@ -105249,7 +105574,7 @@ aHq
 aIX
 aIX
 aIX
-aIX
+qkH
 aAG
 awc
 gzB
@@ -105551,7 +105876,7 @@ aIX
 aIX
 aIX
 aAH
-aIX
+qkH
 aIX
 aIX
 gzB
@@ -105853,7 +106178,7 @@ aIX
 aIV
 aIX
 aAH
-aIX
+qkH
 aAH
 aPA
 gzB
@@ -106155,7 +106480,7 @@ aIX
 aIW
 aIX
 aAH
-aCb
+qzQ
 aAH
 aIX
 aQT
@@ -106457,7 +106782,7 @@ aIX
 aIX
 aIX
 aAH
-aIX
+qkH
 aAH
 aIX
 aQU
@@ -106748,7 +107073,7 @@ arT
 aeX
 auF
 awe
-axt
+azo
 aIX
 aAH
 aCc
@@ -106759,7 +107084,7 @@ aHr
 aIX
 aIX
 aIX
-aIX
+qkH
 aAH
 aIX
 aQV
@@ -107061,7 +107386,7 @@ aHs
 aIY
 aKu
 axz
-aIX
+qkH
 aIX
 aIX
 aIX
@@ -107363,7 +107688,7 @@ qcC
 awf
 gzB
 axr
-aIX
+qkH
 aIX
 aIX
 aQW
@@ -107666,10 +107991,10 @@ aFG
 gzB
 awd
 aMZ
-aIX
-aIX
+nkd
+nkd
 aQX
-aSk
+scP
 aTm
 aUJ
 aWe
