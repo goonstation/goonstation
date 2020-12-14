@@ -30385,15 +30385,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bvU" = (
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk/south,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 8;
+	dir = 6;
 	name = "autoname - SS13";
-	pixel_x = 10;
+	pixel_y = 20;
 	tag = ""
-	},
-/obj/shrub{
-	dir = 8
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -51767,6 +51766,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dDe" = (
@@ -52630,7 +52630,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "fSI" = (
-/obj/disposalpipe/segment/bent/east,
+/obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -53364,6 +53364,7 @@
 	},
 /obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "hzD" = (
@@ -54637,6 +54638,10 @@
 /obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
+"lqC" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "lqO" = (
 /obj/cable{
 	d1 = 2;
@@ -55957,6 +55962,10 @@
 	dir = 4
 	},
 /area/station/security/brig)
+"oWq" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "oZc" = (
 /obj/cable{
 	d1 = 1;
@@ -59479,6 +59488,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -59495,6 +59505,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"yiL" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ylQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -114962,10 +114976,10 @@ bqM
 bpC
 buR
 cXY
-iGQ
-iGQ
+oWq
+yiL
 ygq
-dzX
+lqC
 hxq
 fSI
 bDF
