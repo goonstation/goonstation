@@ -1,4 +1,9 @@
 
+(t)mon dec 14 20
+(u)UrsulaMejor
+(p)3053
+(e)🆕🎨|feature, sprites
+(*)Adds a rancher job to the jobs list; be sure to update your preferences! Uniform sprite by virvatuli
 (t)sun dec 13 20
 (u)virvatuli
 (p)3045
