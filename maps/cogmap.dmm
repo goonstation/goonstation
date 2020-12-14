@@ -1948,15 +1948,26 @@
 /area/station/crew_quarters/clown)
 "afk" = (
 /obj/table/auto,
-/obj/deskclutter,
 /obj/decal/cleanable/dirt,
-/obj/item/instrument/bikehorn,
-/obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24
 	},
-/obj/item/stamp/clown,
+/obj/deskclutter{
+	pixel_y = -1
+	},
+/obj/item/stamp/clown{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/pie/cream{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/instrument/bikehorn{
+	pixel_x = -4;
+	pixel_y = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "afl" = (
@@ -2335,9 +2346,18 @@
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "age" = (
