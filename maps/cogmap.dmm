@@ -63332,10 +63332,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"iVL" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt,
-/area/station/hydroponics/bay)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -63345,7 +63341,9 @@
 /area/station/engine/inner)
 "jxt" = (
 /obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/hydroponics/bay)
 "jNc" = (
@@ -63429,12 +63427,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
-"kMU" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "kOz" = (
 /obj/railing/orange/reinforced,
 /obj/machinery/light/small{
@@ -63837,6 +63829,12 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/hydroponics/bay)
+"rpL" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63868,6 +63866,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"sdX" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt,
+/area/station/hydroponics/bay)
 "svZ" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -63934,6 +63936,15 @@
 	dir = 8;
 	frequency = 1446;
 	name = "Botany Intercom"
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/hydroponics/bay)
@@ -129086,10 +129097,10 @@ aaa
 atV
 uxX
 qlh
-kMU
+rpL
 tkX
 hPW
-iVL
+sdX
 qlh
 nNK
 atV

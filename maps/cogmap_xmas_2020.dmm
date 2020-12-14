@@ -64328,6 +64328,15 @@
 	frequency = 1446;
 	name = "Botany Intercom"
 	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/chicken_feed_bag{
+	rand_pos = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "cVo" = (
@@ -64458,6 +64467,11 @@
 /obj/item/sticker/xmas_ornament/holly,
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
+"dTf" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "emQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -65353,11 +65367,6 @@
 /obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
-"mar" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -65524,7 +65533,9 @@
 	})
 "nvf" = (
 /obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "nvq" = (
@@ -65837,13 +65848,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"rdm" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "rfS" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -66361,6 +66365,13 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"wFy" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "wKg" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/snow/snowball,
@@ -131255,10 +131266,10 @@ aaa
 jPv
 rlS
 fqU
-rdm
+wFy
 cOr
 eyq
-mar
+dTf
 fqU
 pbV
 jPv
