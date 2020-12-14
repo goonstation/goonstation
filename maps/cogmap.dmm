@@ -43077,10 +43077,22 @@
 /area/station/engine/engineering/ce)
 "bOV" = (
 /obj/table/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/device/radio/headset/engineer,
-/obj/item/device/radio/headset/engineer,
-/obj/item/postit_stack,
+/obj/item/clipboard{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/postit_stack{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = -3;
+	pixel_y = 8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -43792,7 +43804,13 @@
 /area/station/engine/engineering/ce)
 "bQn" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp/green,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/deconstructor{
+	pixel_y = 3
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -44644,15 +44662,25 @@
 /area/station/engine/elect)
 "bRK" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/deskclutter{
+	pixel_x = 1
+	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/deconstructor,
-/obj/item/stamp/ce,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/stamp/ce{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
