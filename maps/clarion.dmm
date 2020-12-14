@@ -11147,14 +11147,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "ate" = (
+/obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
 	dir = 6;
-	icon_state = "line2"
-	},
-/obj/shrub,
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -11505,7 +11501,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/plantpot,
+/obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "atS" = (
@@ -11538,9 +11534,7 @@
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
+/turf/simulated/floor/dirt,
 /area/station/ranch)
 "atW" = (
 /obj/disposalpipe/segment/mail,
@@ -11783,6 +11777,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "auy" = (
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/shrub,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
+"auz" = (
 /obj/machinery/plantpot,
 /obj/decal/tile_edge/line/green{
 	dir = 9;
@@ -11790,18 +11792,7 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"auz" = (
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "auA" = (
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -11809,16 +11800,13 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "auB" = (
-/obj/shrub{
-	dir = 10
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line2"
-	},
 /obj/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -12117,13 +12105,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "avg" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/plantpot,
 /obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -12135,8 +12124,9 @@
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/central)
 "avi" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -12453,16 +12443,11 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "avU" = (
-/obj/decal/tile_edge/line/green{
-	dir = 6;
-	icon_state = "line1"
+/obj/landmark/spawner{
+	name = "monkeyspawn_krimpus"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "avV" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -12482,11 +12467,17 @@
 	},
 /area/station/hydroponics/bay)
 "avW" = (
-/obj/decal/tile_edge/line/green{
-	icon_state = "line1"
+/obj/table/reinforced/auto,
+/obj/item/satchel/hydro,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
 	},
+/obj/item/bee_egg_carton,
+/obj/item/wrench,
+/obj/item/plantanalyzer,
+/obj/item/reagent_containers/glass/bottle/powerplant,
+/obj/item/reagent_containers/glass/bottle/topcrop,
 /obj/window/reinforced/south,
-/obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "avX" = (
@@ -12770,6 +12761,19 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/fitness)
 "awD" = (
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/switch_junction{
+	dir = 2;
+	icon_state = "pipe-sj2";
+	mail_tag = "hydroponics";
+	name = "hydroponics mail router"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
+"awE" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -12785,22 +12789,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"awE" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/stool/chair/office/green{
-	dir = 8
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "awF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -12809,16 +12797,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
-/obj/item/satchel/hydro,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
-/obj/item/bee_egg_carton,
-/obj/item/wrench,
-/obj/item/plantanalyzer,
-/obj/item/reagent_containers/glass/bottle/powerplant,
-/obj/item/reagent_containers/glass/bottle/topcrop,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "awG" = (
@@ -13187,6 +13165,22 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
+"axt" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/westleft{
@@ -13198,27 +13192,6 @@
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /turf/simulated/floor/green,
-/area/station/hydroponics/bay)
-"axt" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/stool/chair/office/green{
-	dir = 8
-	},
-/obj/stool/chair/office/green{
-	dir = 8
-	},
-/turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "axu" = (
 /obj/disposalpipe/segment{
@@ -13508,6 +13481,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "ayf" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
+"ayg" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass{
 	name = "glass airlock-'Hydroponics'";
@@ -13515,17 +13496,10 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"ayg" = (
+"ayh" = (
 /obj/decal/tile_edge/line/green{
 	dir = 10;
 	icon_state = "line2"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
-"ayh" = (
-/obj/decal/tile_edge/line/green{
-	icon_state = "line1"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -14055,14 +14029,7 @@
 /area/station/crew_quarters/fitness)
 "azv" = (
 /obj/stool/chair/green,
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/decal/tile_edge/line/green{
-	dir = 1;
-	icon_state = "line1"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "azw" = (
@@ -49055,16 +49022,16 @@
 	},
 /area/listeningpost/solars)
 "bXY" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
+/obj/machinery/plantpot,
 /obj/decal/tile_edge/line/green{
-	dir = 5;
+	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -49109,6 +49076,7 @@
 /obj/item/device/radio/intercom/catering{
 	dir = 8
 	},
+/obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "hZx" = (
@@ -49119,27 +49087,27 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ipm" = (
-/obj/disposalpipe/segment{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
-	dir = 4;
+	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
 /obj/window/reinforced/south,
-/obj/reagent_dispensers/watertank/big,
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "jgt" = (
@@ -49204,13 +49172,26 @@
 /turf/simulated/floor/black,
 /area/station/ranch)
 "mBl" = (
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/decal/tile_edge/line/green{
-	dir = 4;
+	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "mFQ" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
@@ -49226,6 +49207,14 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nUT" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/tile_edge/line/green{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 "oCF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49324,7 +49313,10 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tdg" = (
-/obj/machinery/vending/hydroponics,
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "uuk" = (
@@ -49341,17 +49333,11 @@
 /area/station/hydroponics/bay)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
-	dir = 4;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/switch_junction{
-	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "hydroponics";
-	name = "hydroponics mail router"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/central)
+/obj/machinery/light,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 
 (1,1,1) = {"
 aaa
@@ -81595,16 +81581,16 @@ aow
 arn
 arX
 arl
-avU
-mBl
-mBl
-mBl
-mBl
-wrD
-ipm
-mBl
-mBl
-bXY
+arq
+arq
+arq
+arq
+arq
+arq
+arM
+arq
+arq
+arq
 arq
 arq
 aCo
@@ -81853,14 +81839,14 @@ aro
 arY
 auA
 ate
-atj
-atj
-atj
-atj
+ayf
+ayf
+ayf
+ayf
 awD
 axs
 ayf
-atj
+nUT
 azv
 aAp
 aBh
@@ -82109,11 +82095,11 @@ aqO
 arp
 atL
 auB
-atj
-atj
 auy
-avg
-avT
+atj
+atj
+atj
+atj
 awE
 axt
 ayg
@@ -82367,12 +82353,12 @@ arq
 asb
 asF
 atj
-auy
+atj
 auz
-auC
-auC
-gXP
-rQt
+avT
+bXY
+ipm
+mBl
 ayh
 atj
 azw
@@ -82624,13 +82610,13 @@ arq
 asb
 asF
 atj
-atQ
-auC
+avg
 avi
+auC
 auC
 gXP
 rQt
-ayh
+wrD
 atj
 azx
 aAr
@@ -82883,7 +82869,7 @@ asD
 atj
 atP
 auC
-auC
+avU
 tdg
 awF
 axu
