@@ -2076,7 +2076,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_pink
-	name = "Hotink Scrubs"
+	name = "Hot Pink Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
