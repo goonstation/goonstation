@@ -29372,8 +29372,12 @@
 /area/station/maintenance/east)
 "bmO" = (
 /obj/table/auto,
-/obj/item/clipboard,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -30313,8 +30317,14 @@
 /area/space)
 "box" = (
 /obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/stamp,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/stamp{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -61820,14 +61830,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"cRA" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg{
-	pixel_y = -2
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "cVL" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -61937,14 +61939,6 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
-"ejb" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "eln" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -62332,6 +62326,14 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
+"hYm" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "iix" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -62454,6 +62456,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"kMU" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94540,7 +94550,7 @@ beU
 bcc
 bdg
 bed
-cRA
+hYm
 bfP
 bgL
 bgL
@@ -109373,7 +109383,7 @@ bDv
 bEl
 chH
 bFF
-ejb
+kMU
 bHo
 bIl
 bHo
