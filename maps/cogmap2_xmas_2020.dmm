@@ -80812,7 +80812,9 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/ranch)
 "gBm" = (
 /obj/window/auto/reinforced,
@@ -80984,7 +80986,9 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/ranch)
 "jFv" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -81334,12 +81338,6 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
-"puN" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "puU" = (
 /obj/cable{
 	d1 = 1;
@@ -81367,7 +81365,7 @@
 /obj/stool/chair/green{
 	dir = 4
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "pTS" = (
 /obj/item/storage/wall/random,
@@ -104023,7 +104021,7 @@ riR
 fVT
 fVT
 fVT
-puN
+riR
 riR
 riR
 riR

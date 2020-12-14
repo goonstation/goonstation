@@ -15992,7 +15992,9 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/ranch)
 "aKu" = (
 /obj/submachine/chicken_incubator,
@@ -79046,19 +79048,15 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/ranch)
 "gor" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /obj/stool/chair/green{
 	dir = 1
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
-"hKF" = (
-/obj/railing/orange/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -79229,7 +79227,7 @@
 /obj/stool/chair/green{
 	dir = 4
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "saK" = (
 /turf/simulated/floor/grass/leafy,
@@ -101573,7 +101571,7 @@ aDm
 mBI
 mBI
 mBI
-hKF
+aDm
 aDm
 aDm
 aDm
