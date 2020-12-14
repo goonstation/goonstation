@@ -64322,12 +64322,6 @@
 /area/station/engine/core)
 "cOr" = (
 /obj/table/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1446;
-	name = "Botany Intercom"
-	},
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -64336,6 +64330,10 @@
 	},
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -64467,11 +64465,6 @@
 /obj/item/sticker/xmas_ornament/holly,
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
-"dTf" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt,
-/area/station/ranch)
 "emQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -65578,6 +65571,13 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"nWf" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ogX" = (
 /obj/cable,
 /obj/cable{
@@ -65944,6 +65944,11 @@
 	dir = 5
 	},
 /area/station/hydroponics)
+"swS" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -66365,13 +66370,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"wFy" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "wKg" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/snow/snowball,
@@ -66489,6 +66487,13 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"xUr" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "xXc" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -130359,7 +130364,7 @@ aaa
 aag
 eVq
 nvf
-xXc
+nWf
 mBk
 smw
 dti
@@ -131266,10 +131271,10 @@ aaa
 jPv
 rlS
 fqU
-wFy
+xUr
 cOr
 eyq
-dTf
+swS
 fqU
 pbV
 jPv

@@ -63452,6 +63452,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"lpN" = (
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/hydroponics/bay)
 "ltD" = (
 /obj/cable{
 	d1 = 4;
@@ -63577,6 +63584,10 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
+"nks" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/grasstodirt,
+/area/station/hydroponics/bay)
 "nlN" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -63829,12 +63840,6 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/hydroponics/bay)
-"rpL" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63866,9 +63871,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"sdX" = (
+"skj" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/grasstodirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/hydroponics/bay)
 "svZ" = (
 /obj/table/auto,
@@ -63931,12 +63938,6 @@
 /area/station/hydroponics/bay)
 "tkX" = (
 /obj/table/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1446;
-	name = "Botany Intercom"
-	},
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -63945,6 +63946,10 @@
 	},
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/dirt,
 /area/station/hydroponics/bay)
@@ -128190,7 +128195,7 @@ aaa
 aag
 fCy
 jxt
-vEZ
+lpN
 kOz
 vec
 egd
@@ -129097,10 +129102,10 @@ aaa
 atV
 uxX
 qlh
-rpL
+skj
 tkX
 hPW
-sdX
+nks
 qlh
 nNK
 atV
