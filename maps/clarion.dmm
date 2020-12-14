@@ -49339,6 +49339,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"wrD" = (
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/switch_junction{
+	dir = 2;
+	icon_state = "pipe-sj2";
+	mail_tag = "hydroponics";
+	name = "hydroponics mail router"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/central)
 
 (1,1,1) = {"
 aaa
@@ -81587,7 +81600,7 @@ mBl
 mBl
 mBl
 mBl
-mBl
+wrD
 ipm
 mBl
 mBl
