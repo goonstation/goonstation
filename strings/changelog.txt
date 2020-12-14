@@ -1,4 +1,33 @@
 
+(t)mon dec 14 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Roach mutantrace is now raditaion resistant, but more vulnerable to blunt force trauma
+(u)UrsulaMejor
+(p)3053
+(e)🆕🎨|feature, sprites
+(*)Adds a rancher job to the jobs list; be sure to update your preferences! Uniform sprite by virvatuli
+(t)sun dec 13 20
+(u)virvatuli
+(p)3045
+(e)|
+(+)Changed the Syndicate poison bottle to be more believable when examined
+(u)Superlagg
+(p)2975
+(e)🐛🆕|bug, feature
+(+)Monkeys and non-monkeys can now share limbs.
+(u)BenLubar
+(p)2980
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Civilian and Brobocop cyborgs have some new toys to play with!
+(u)glassofmilk
+(p)3041
+(e)🆕|feature
+(*)Many wireless devices now respond to the command "help"
+(u)UrsulaMejor
+(p)3047
+(e)🆕🎨|feature, sprites
+(*)Add rods to railings to make reinforced railings that chickens can't pass through. Undo with wirecutters. Sprite by Varali.
 (t)sat dec 12 20
 (u)Kubius
 (p)3009

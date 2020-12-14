@@ -1042,6 +1042,16 @@
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+
+/turf/simulated/floor/dirt
+	name = "Dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+
 /////////////////////////////////////////
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */

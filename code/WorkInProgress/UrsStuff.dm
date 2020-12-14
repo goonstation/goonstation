@@ -6,3 +6,5 @@
 /obj/chicken_nesting_box
 
 /mob/living/critter/small_animal/chicken
+
+/obj/item/chicken_feed_bag
