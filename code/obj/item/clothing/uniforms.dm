@@ -1087,12 +1087,12 @@
 		icon_state = "scrub-m"
 		item_state = "darkred"
 
-	blue
-		icon_state = "scrub-b"
+	navy
+		icon_state = "scrub-n"
 		item_state = "darkblue"
 
-	purple
-		icon_state = "scrub-p"
+	violet
+		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
 		New()
