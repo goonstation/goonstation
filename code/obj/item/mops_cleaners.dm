@@ -325,8 +325,6 @@ WET FLOOR SIGN
 		//A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
-
-
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN_DBG(0.5 SECONDS)
 			if (src?.reagents)
@@ -342,6 +340,12 @@ WET FLOOR SIGN
 		else // Lances up!
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
+
+/obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
+	if (user.intent == INTENT_HELP)
+		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
+		return
+	return ..()
 
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old

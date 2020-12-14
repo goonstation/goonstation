@@ -1,5 +1,9 @@
 
 (t)sun dec 13 20
+(u)BenLubar
+(p)2980
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Civilian and Brobocop cyborgs have some new toys to play with!
 (u)glassofmilk
 (p)3041
 (e)🆕|feature
