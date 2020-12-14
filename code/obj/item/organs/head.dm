@@ -261,13 +261,10 @@
 	///Taking items off a head
 	attack_self(mob/user as mob)
 		var/list/headwear = list(head, ears, wear_mask, glasses)
-		if (!length(headwear))
-			return
 		var/obj/selection = input("Which item do you want to remove","Looting the dead") as null|obj in headwear
 		if (!selection)
 			return
 		user.put_in_hand_or_drop(selection)
-		//switch(selection)
 		if (selection == head)
 			head = null
 		if (selection == ears)
@@ -289,28 +286,36 @@
 				head = W
 				head.set_loc(src)
 				update_head_image()
-			else boutput(user, "<span class='alert'>[src.name] is already wearing [src.head.name]!</span>")
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.head.name]!</span>")
+			return
 		if (istype(W, /obj/item/clothing/ears) || istype(W, /obj/item/device/radio/headset))
 			if (!ears)
 				user.drop_item(W)
 				ears = W
 				ears.set_loc(src)
 				update_head_image()
-			else boutput(user, "<span class='alert'>[src.name] is already wearing [src.ears.name]!</span>")
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.ears.name]!</span>")
+			return
 		if (istype(W, /obj/item/clothing/mask))
 			if (!wear_mask)
 				user.drop_item(W)
 				wear_mask = W
 				wear_mask.set_loc(src)
 				update_head_image()
-			else boutput(user, "<span class='alert'>[src.name] is already wearing [src.wear_mask.name]!</span>")
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.wear_mask.name]!</span>")
+			return
 		if (istype(W, /obj/item/clothing/glasses))
 			if (!glasses)
 				user.drop_item(W)
 				glasses = W
 				glasses.set_loc(src)
 				update_head_image()
-			else boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
+			return
 
 
 		if (src.skull || src.brain)
