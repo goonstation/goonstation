@@ -9875,9 +9875,10 @@
 "awc" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/space)
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "awd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hydroponics/bay)
@@ -9892,10 +9893,8 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "awg" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/decal/xmas_lights,
-/turf/simulated/floor,
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "awh" = (
 /turf/simulated/wall/auto/supernorn,
@@ -9903,7 +9902,6 @@
 "awi" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -10398,7 +10396,7 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
-"axr" = (
+"axs" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/reagent_containers/glass/wateringcan{
@@ -10414,21 +10412,23 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axs" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
+"axu" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axu" = (
+"axv" = (
 /obj/shrub{
 	dir = 1
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axv" = (
+"axw" = (
 /obj/stool/chair/couch{
 	dir = 8;
 	icon_state = "chair_couch-blue";
@@ -10439,7 +10439,7 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axw" = (
+"axx" = (
 /obj/stool/chair/couch{
 	dir = 4;
 	icon_state = "chair_couch-blue";
@@ -10451,7 +10451,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axx" = (
+"axy" = (
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -10461,15 +10461,18 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"axy" = (
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/bay)
 "axz" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "axA" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/bay)
+"axB" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
 	layer = 4;
@@ -10482,11 +10485,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/hydroponics/bay)
-"axB" = (
-/obj/submachine/seed_vendor,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
+/area/station/crew_quarters/catering)
 "axC" = (
 /obj/machinery/hydro_growlamp,
 /obj/disposalpipe/segment{
@@ -11310,29 +11309,14 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "azo" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "azp" = (
-/obj/table/wood/auto,
-/obj/item/device/light/lava_lamp,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
-"azq" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics/bay)
-"azr" = (
 /obj/table/wood/auto,
 /obj/item/device/light/candle/small{
 	desc = "Ugh, is that patchouli?";
@@ -11340,6 +11324,25 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
+"azq" = (
+/obj/table/wood/auto,
+/obj/item/device/light/lava_lamp,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
+"azr" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	areastring = "Hydroponics";
+	dir = 8;
+	name = "Hydroponics APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "azs" = (
 /obj/cable{
 	d1 = 4;
@@ -11965,9 +11968,11 @@
 /turf/space,
 /area/space)
 "aAG" = (
-/obj/storage/secure/closet/civilian/hydro,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/catering)
 "aAH" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -11975,6 +11980,13 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aAJ" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
+"aAK" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
 	name = "Catering Storage";
@@ -11988,24 +12000,9 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
-"aAK" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/hydroponics/bay)
 "aAL" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	areastring = "Hydroponics";
-	dir = 8;
-	name = "Hydroponics APC";
-	pixel_x = -24
-	},
-/turf/simulated/floor/plating,
+/obj/landmark/halloween,
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aAM" = (
 /obj/disposalpipe/segment/produce{
@@ -12671,26 +12668,20 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aCe" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/turf/simulated/floor/green/side{
+	dir = 9
+	},
+/area/station/hydroponics/bay)
+"aCf" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
 /area/station/hydroponics/bay)
-"aCf" = (
+"aCg" = (
 /turf/simulated/floor/green/side{
 	dir = 1
-	},
-/area/station/hydroponics/bay)
-"aCg" = (
-/obj/submachine/chef_sink{
-	desc = "A common utility sink.";
-	dir = 8;
-	name = "utility sink"
-	},
-/obj/machinery/light,
-/obj/disposalpipe/segment/produce,
-/turf/simulated/floor/green/side{
-	dir = 5
 	},
 /area/station/hydroponics/bay)
 "aCh" = (
@@ -12702,11 +12693,16 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aCi" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/submachine/chef_sink{
+	desc = "A common utility sink.";
+	dir = 8;
+	name = "utility sink"
 	},
-/turf/simulated/floor/snow/snowball,
+/obj/machinery/light,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/green/side{
+	dir = 5
+	},
 /area/station/hydroponics/bay)
 "aCj" = (
 /obj/machinery/plantpot{
@@ -13199,14 +13195,23 @@
 	},
 /area/station/hydroponics/bay)
 "aDm" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/station/hydroponics/bay)
+"aDn" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
 	},
-/area/station/hydroponics/bay)
-"aDn" = (
-/obj/disposalpipe/segment/produce,
-/turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "aDo" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -13217,9 +13222,11 @@
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "aDp" = (
-/obj/landmark/halloween,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "aDq" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -13847,6 +13854,15 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEG" = (
+/obj/machinery/disposal{
+	name = "Produce Chute - Kitchen"
+	},
+/obj/disposalpipe/trunk/produce{
+	dir = 1
+	},
+/turf/simulated/floor/bot,
+/area/station/hydroponics/bay)
+"aEH" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
 /obj/item/device/radio/intercom/catering,
@@ -13860,21 +13876,12 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
-"aEH" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food{
-	dir = 1
-	},
-/turf/simulated/floor/bot,
-/area/station/hydroponics/bay)
 "aEI" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/turf/simulated/floor/green/side{
-	dir = 9
-	},
-/area/station/hydroponics/bay)
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "aEJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
@@ -14286,24 +14293,20 @@
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "aFH" = (
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
 /area/station/hydroponics/bay)
 "aFI" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/navbeacon/mule/hydroponics_north/east,
-/obj/decal/mule/beacon,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
 /area/station/hydroponics/bay)
 "aFJ" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/plating,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "aFK" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -15035,20 +15038,24 @@
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "aHu" = (
-/obj/disposalpipe/segment/mail/vertical,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aHv" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
-"aHw" = (
 /obj/disposalpipe/segment/food{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/bay)
+"aHw" = (
+/obj/machinery/disposal{
+	name = "Lay-Z Chef Prison Food Chute"
+	},
+/obj/disposalpipe/trunk/food{
+	dir = 1
+	},
+/turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "aHx" = (
 /obj/disposalpipe/segment{
@@ -15640,22 +15647,12 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aJa" = (
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aJb" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
-	pixel_y = -26
-	},
-/turf/simulated/floor/green/side{
-	dir = 6
-	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aJc" = (
 /obj/machinery/firealarm{
@@ -16176,6 +16173,11 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aKv" = (
+/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/bot,
+/area/station/hydroponics/bay)
+"aKw" = (
 /obj/machinery/power/data_terminal,
 /obj/table/auto,
 /obj/machinery/networked/printer{
@@ -16187,13 +16189,6 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
-	},
-/turf/simulated/floor/bot,
-/area/station/hydroponics/bay)
-"aKw" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 1
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
@@ -16643,28 +16638,16 @@
 /area/shuttle/arrival/station)
 "aLI" = (
 /turf/simulated/floor/stairs{
-	icon_state = "Stairs2_wide"
+	icon_state = "Stairs_wide"
 	},
 /area/station/hydroponics/bay)
 "aLJ" = (
-/obj/machinery/disposal{
-	name = "Produce Chute - Kitchen"
-	},
-/obj/disposalpipe/trunk/produce{
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/navbeacon/mule/hydroponics_north/east,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/green/side{
 	dir = 1
 	},
-/turf/simulated/floor/bot,
-/area/station/hydroponics/bay)
-"aLK" = (
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 28
-	},
-/obj/machinery/computer/arcade{
-	icon_state = "arcadeb";
-	status = 1
-	},
-/obj/decal/cleanable/vomit,
-/turf/simulated/floor/carpet/arcade,
 /area/station/hydroponics/bay)
 "aLL" = (
 /obj/machinery/vending/cards,
@@ -17288,12 +17271,18 @@
 	},
 /area/shuttle/arrival/station)
 "aMZ" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
 	},
-/turf/simulated/floor/green/side,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/green/side{
+	dir = 10
+	},
 /area/station/hydroponics/bay)
 "aNb" = (
 /obj/item/chicken_feed_bag{
@@ -18336,16 +18325,7 @@
 /turf/simulated/shuttle/wall/corner,
 /area/shuttle/arrival/station)
 "aPA" = (
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
-/obj/storage/crate,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
+/obj/machinery/light,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "aPC" = (
@@ -18889,6 +18869,10 @@
 	},
 /area/shuttle/arrival/station)
 "aQT" = (
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
+"aQU" = (
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/sandwich/meat_m{
@@ -18896,27 +18880,26 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"aQU" = (
-/obj/shrub{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
 "aQV" = (
-/obj/disposalpipe/segment/mail/bent/east,
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aQW" = (
+/obj/stool/chair/comfy/blue{
+	desc = "It's all ripped and grimy. Gross.";
+	dir = 4;
+	name = "grody blue chair"
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
+"aQX" = (
 /obj/table/wood/auto,
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"aQX" = (
+"aQY" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/fruitful,
 /obj/item/reagent_containers/glass/bottle/topcrop,
@@ -18931,17 +18914,20 @@
 	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
-"aQY" = (
-/obj/machinery/light,
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
 "aQZ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/submachine/chef_sink{
+	desc = "A common utility sink.";
+	dir = 8;
+	name = "utility sink"
 	},
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/green/side{
+	dir = 6
+	},
 /area/station/hydroponics/bay)
 "aRb" = (
 /obj/stool/chair{
@@ -19446,7 +19432,10 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aSk" = (
-/obj/item/device/radio/beacon,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aSl" = (
@@ -19849,11 +19838,6 @@
 	},
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue5"
@@ -19865,6 +19849,11 @@
 	},
 /obj/item/storage/goodybag,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "blue5"
@@ -20549,9 +20538,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue1"
@@ -20564,6 +20550,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -80724,6 +80713,19 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"fbf" = (
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/turf/simulated/floor/snow/snowball,
+/area/station/hydroponics/bay)
 "fig" = (
 /obj/machinery/light,
 /obj/machinery/camera{
@@ -80805,11 +80807,11 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/inner)
 "gmY" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
 "gzB" = (
 /obj/window/auto/reinforced,
@@ -80845,24 +80847,10 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
-"hiJ" = (
-/obj/submachine/chef_sink{
-	desc = "A common utility sink.";
-	dir = 8;
-	name = "utility sink"
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/green/side{
-	dir = 6
-	},
-/area/station/hydroponics/bay)
 "hlb" = (
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/green/side,
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs2_wide"
+	},
 /area/station/hydroponics/bay)
 "hoL" = (
 /obj/window/auto/reinforced,
@@ -81036,7 +81024,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "jLY" = (
-/obj/disposalpipe/segment,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "jMl" = (
@@ -81052,9 +81039,10 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "jNo" = (
-/obj/storage/crate,
-/obj/item/bee_egg_carton,
-/obj/item/bee_egg_carton,
+/obj/landmark/halloween,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "jPj" = (
@@ -81192,6 +81180,17 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
+"mkT" = (
+/obj/window/auto/reinforced,
+/obj/grille/steel,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/xmas_lights,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "mvY" = (
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -81232,11 +81231,9 @@
 /area/station/crew_quarters/quartersB)
 "nkd" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/snow/snowball,
+/turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "nqk" = (
 /obj/machinery/photocopier,
@@ -81260,10 +81257,16 @@
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "nDB" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
-/obj/disposalpipe/trunk/mail/north,
-/turf/simulated/floor/bot,
-/area/station/hydroponics/bay)
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 28
+	},
+/obj/machinery/computer/arcade{
+	icon_state = "arcadeb";
+	status = 1
+	},
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "nKf" = (
 /obj/machinery/incubator,
 /turf/simulated/floor/white,
@@ -81328,16 +81331,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "puU" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/black,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "pDV" = (
 /obj/submachine/seed_vendor,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "pFA" = (
 /obj/submachine/weapon_vendor/security,
@@ -81485,11 +81488,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"rQo" = (
-/obj/stool,
-/obj/machinery/light,
-/turf/simulated/floor/carpet/arcade,
-/area/station/hydroponics/bay)
 "rSc" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81500,11 +81498,6 @@
 "scP" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/decal/xmas_lights,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
@@ -81545,18 +81538,10 @@
 	},
 /area/shuttle/arrival/station)
 "swV" = (
-/obj/stool/chair/comfy/blue{
-	desc = "It's all ripped and grimy. Gross.";
-	dir = 4;
-	name = "grody blue chair"
-	},
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
-"sBu" = (
 /obj/stool,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/arcade,
-/area/station/hydroponics/bay)
+/area/station/crew_quarters/arcade)
 "sEX" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81600,10 +81585,13 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "tyQ" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/storage/secure/closet/civilian/hydro,
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics)
 "tHn" = (
-/obj/reagent_dispensers/watertank/big,
+/obj/storage/crate,
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "tHI" = (
@@ -81699,6 +81687,11 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/gas)
+"vMK" = (
+/obj/stool,
+/obj/machinery/light,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "vNw" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81760,6 +81753,20 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "wNW" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/bay)
+"wSt" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/decal/xmas_lights,
+/turf/simulated/floor/plating,
+/area/station/ranch)
+"wVv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -81769,20 +81776,7 @@
 	},
 /obj/submachine/claw_machine,
 /turf/simulated/floor/carpet/arcade,
-/area/station/hydroponics/bay)
-"wSt" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/ranch)
-"wVv" = (
-/obj/landmark/halloween,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/snow/snowball,
-/area/station/hydroponics/bay)
+/area/station/crew_quarters/arcade)
 "xec" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -81822,18 +81816,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "xKO" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
+/obj/shrub{
+	dir = 1
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/green/side{
-	dir = 10
-	},
+/obj/machinery/light,
+/turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "xQi" = (
 /obj/window/auto/reinforced,
@@ -104914,23 +104901,23 @@ aaa
 aaa
 aaa
 aaa
-abC
+aam
 tWd
 nqQ
 nqQ
 aDo
-nqQ
+aEI
 tWd
 aOp
 tWd
 aOp
 tWd
-nqQ
+aEI
 eDP
 nqQ
 nqQ
 tWd
-ani
+aaI
 aaa
 aaa
 aaa
@@ -105216,23 +105203,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aam
 gzB
 nup
 aCh
 aIX
-aHv
+gzB
 aED
 aFC
 aHp
 aIT
 aKt
-aHv
+gzB
 qzQ
 aCh
 nup
 gzB
-aaa
+aaI
 aaa
 aaa
 aaa
@@ -105518,7 +105505,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aam
 gzB
 aIX
 aIX
@@ -105534,7 +105521,7 @@ qzQ
 aIX
 aIX
 gzB
-aaa
+aaI
 aaa
 aaa
 acq
@@ -105820,10 +105807,10 @@ aoj
 apq
 ate
 aaa
-awc
+aam
 gzB
-axs
-aAH
+aIX
+aIX
 aIX
 aAH
 aIX
@@ -105833,10 +105820,10 @@ aIX
 aIX
 aAH
 qzQ
-aAH
-aQY
+aIX
+aIX
 gzB
-awc
+aaI
 aaa
 aaa
 aam
@@ -106123,10 +106110,10 @@ apr
 atf
 aaa
 gzB
-axB
-aIX
+gzB
+azo
 aAH
-aDp
+aIX
 aAH
 aIX
 aIX
@@ -106134,10 +106121,10 @@ aIX
 aIV
 aIX
 aAH
-wVv
+qzQ
 aAH
-aIX
-tHn
+aPA
+gzB
 gzB
 aaa
 aaa
@@ -106424,11 +106411,11 @@ aps
 amc
 ann
 aaS
-awd
-axr
+gzB
+pDV
 aIX
 aAH
-aIX
+aAL
 aAH
 aIX
 aIX
@@ -106436,11 +106423,11 @@ aIX
 aIW
 aIX
 aAH
-qzQ
+jNo
 aAH
 aIX
 aQT
-awd
+gzB
 aaa
 aaa
 aam
@@ -106726,7 +106713,7 @@ aqK
 arS
 ann
 amc
-awe
+awd
 axs
 aIX
 aAH
@@ -107031,7 +107018,7 @@ auF
 awe
 azo
 aIX
-aIX
+aAH
 aCc
 aFE
 aFE
@@ -107041,10 +107028,10 @@ aIX
 aIX
 aIX
 qzQ
+aAH
 aIX
-aIX
-aIX
-awe
+xKO
+awd
 aQx
 aQx
 aUN
@@ -107330,7 +107317,7 @@ aqM
 arU
 ath
 auF
-awd
+awe
 axu
 aIX
 aIX
@@ -107345,7 +107332,7 @@ axz
 qzQ
 aIX
 aIX
-swV
+aIX
 awe
 aTk
 aTr
@@ -107632,11 +107619,11 @@ amf
 amd
 ati
 amd
-awg
+awd
 axv
-azr
 aIX
-aEI
+aIX
+aCd
 aDl
 aKx
 awf
@@ -107644,11 +107631,11 @@ qcC
 awf
 aKx
 pDV
-xKO
+qzQ
 aIX
 aIX
 aQW
-puU
+awe
 aTl
 aUI
 aWd
@@ -107937,7 +107924,7 @@ auG
 awi
 axw
 azp
-aFE
+aIX
 aCe
 awd
 aKx
@@ -107947,8 +107934,8 @@ aFG
 aKx
 awd
 aMZ
-nkd
-nkd
+aIX
+aIX
 aQX
 scP
 aTm
@@ -108236,23 +108223,23 @@ aqO
 arW
 arX
 auH
-awh
+awc
 axx
-aIX
-aIX
+azq
+aFE
 aCf
 aDm
 aEF
 aEF
-aSk
+aEF
 aEF
 aEF
 aLI
-aJa
-aIX
-aIX
+nkd
+puU
+puU
 aQY
-awh
+mkT
 aTn
 aUK
 aWf
@@ -108539,20 +108526,20 @@ arX
 atj
 auI
 awh
-axz
-aAG
-aCi
+axy
+aIX
+aIX
 aCg
 aDn
-aLJ
-aQV
+aEF
+aEF
 aHu
+aEF
+aEF
 hlb
-nDB
-awh
-hiJ
-sqz
-jNo
+jLY
+aIX
+aIX
 aPA
 awh
 aTo
@@ -108840,23 +108827,23 @@ apw
 apw
 atk
 apw
-axy
-azq
+awh
+axz
 tyQ
 aAJ
-awh
-awh
+aCi
+aFJ
 aEG
 aFH
-aEF
+aQV
 aJa
 aKv
+awh
 aQZ
-aQZ
-aQZ
-aQZ
-aQZ
-aQZ
+sqz
+tHn
+fbf
+awh
 aTp
 aUM
 aWh
@@ -109142,23 +109129,23 @@ aqQ
 arY
 atl
 auJ
-awh
+awg
 axA
-aAL
+awh
 aAK
-aFJ
-aHw
+awh
+awh
 aEH
 aFI
-gmY
+aEF
 jLY
 aKw
-awh
-aLK
-sBu
 wNW
-rQo
-awh
+wNW
+wNW
+wNW
+wNW
+wNW
 aTq
 aUN
 aWi
@@ -109445,22 +109432,22 @@ arZ
 atm
 apw
 alc
-axC
-azs
-aAM
-aCj
-aDq
-awh
-aFK
-aHx
+axB
+azr
+aAG
+aDp
+aHv
+aHw
+aLJ
+aSk
 aJb
+gmY
 awh
-awh
-aNc
-aOq
-aPD
-aOq
-aSl
+nDB
+swV
+wVv
+vMK
+aKy
 aTs
 aUP
 aKy
