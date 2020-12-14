@@ -46263,10 +46263,6 @@
 	},
 /area/station/science/lab)
 "ceO" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
 /obj/decal/tile_edge/line/red{
 	dir = 5;
 	icon_state = "line1"
@@ -46281,17 +46277,20 @@
 	pixel_x = 9;
 	pixel_y = 24
 	},
+/obj/machinery/atmospherics/valve{
+	name = "Heat Sink Loop"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/lab)
 "ceP" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
 /obj/decal/tile_edge/line/red{
 	dir = 9;
 	icon_state = "line1"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	name = "Mixing Port"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -46608,7 +46607,7 @@
 	name = "Heat Sink Purge"
 	},
 /turf/simulated/floor/purplewhite{
-	dir = 10
+	dir = 8
 	},
 /area/station/science/lab)
 "cfB" = (
@@ -46616,13 +46615,12 @@
 	dir = 4;
 	level = 2
 	},
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
-	},
+/obj/machinery/meter,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cfC" = (
 /obj/machinery/atmospherics/valve{
-	name = "Heat Sink Pressure Tank"
+	name = "Heat Sink Hookup"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -46942,20 +46940,18 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "cgn" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/manifold,
+/turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "cgo" = (
-/obj/machinery/atmospherics/pipe/tank/north,
 /obj/machinery/light/small,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
@@ -56192,6 +56188,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"pus" = (
+/obj/machinery/atmospherics/pipe/tank/east,
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/station/science/lab)
 "pvj" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox,
@@ -91797,7 +91799,7 @@ bYG
 ceM
 cfz
 ceM
-acO
+ceM
 aaa
 aaa
 aaa
@@ -92098,7 +92100,7 @@ ccS
 cdG
 ceN
 cfA
-ceM
+pus
 ceM
 aaa
 aaa
