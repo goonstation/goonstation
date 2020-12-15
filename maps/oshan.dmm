@@ -16540,7 +16540,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -47594,13 +47594,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"coV" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "csG" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -47608,6 +47601,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cQI" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -47678,6 +47678,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"dWT" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "exU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48234,6 +48240,13 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"uBm" = (
+/obj/item/crowbar,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "uHb" = (
 /obj/cable{
 	d1 = 1;
@@ -48260,6 +48273,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"vlS" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "vqP" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
@@ -48306,7 +48326,7 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"wBh" = (
+"wLA" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -90767,7 +90787,7 @@ agH
 afs
 bOH
 ahy
-wBh
+wLA
 anP
 alf
 alg
@@ -101672,8 +101692,8 @@ aII
 aIY
 chB
 chB
-aDr
-aDr
+cQI
+dWT
 aDr
 ckL
 aDr
@@ -101975,8 +101995,8 @@ aIZ
 aJA
 chB
 chB
-aDr
-bXl
+brX
+uBm
 aDr
 aDr
 ckX
@@ -108955,7 +108975,7 @@ btU
 avB
 bvp
 bvW
-coV
+vlS
 yaB
 byl
 sqa

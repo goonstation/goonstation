@@ -16773,9 +16773,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -48333,17 +48332,23 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"dYm" = (
+"dXK" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/lab)
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "ebW" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
+"eqe" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "esm" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -48354,13 +48359,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"eza" = (
-/obj/machinery/light/incandescent/netural,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "fhd" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -48388,15 +48386,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"fJT" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "fNe" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48421,6 +48410,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
+"gfe" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -48445,13 +48440,6 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
-"gUk" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "hat" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48512,12 +48500,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"hSR" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "iGI" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -48563,14 +48545,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"jBD" = (
-/obj/decal/cleanable/paper,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/sanitary,
-/area/station/science/restroom)
 "jCk" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48580,18 +48554,6 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
-"jCw" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
-"jKy" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "jLI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48745,6 +48707,15 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/south)
+"neV" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "ngC" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -48818,6 +48789,20 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"oba" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/radio/lab)
+"ofE" = (
+/obj/decal/cleanable/paper,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/sanitary,
+/area/station/science/restroom)
 "okv" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
@@ -48879,6 +48864,13 @@
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
+/area/station/hallway/secondary/exit)
+"pyw" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "pIo" = (
 /obj/machinery/light/incandescent/greenish,
@@ -48964,6 +48956,13 @@
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"rdL" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "reS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48984,20 +48983,6 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"sbU" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "sjd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath,
@@ -49167,10 +49152,30 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hallway/secondary/exit)
+"vUh" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
+"whg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "wis" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
+"wmO" = (
+/obj/item/crowbar,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "wnn" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/garland{
@@ -49179,6 +49184,20 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"wnR" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "wzL" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -89602,10 +89621,10 @@ ayw
 aqR
 ayw
 ayw
-hSR
+eqe
 nMH
-fJT
-sbU
+neV
+wnR
 aAD
 acM
 aCs
@@ -102608,8 +102627,8 @@ aII
 aIY
 chB
 chB
-aDr
-aDr
+rdL
+gfe
 aDr
 ckL
 aDr
@@ -102911,8 +102930,8 @@ aIZ
 aJA
 chB
 chB
-aDr
-bXl
+brX
+wmO
 aDr
 aDr
 ckX
@@ -107799,7 +107818,7 @@ aSz
 bPZ
 bQY
 bSf
-dYm
+oba
 aHd
 aHe
 aPb
@@ -109592,7 +109611,7 @@ avB
 avB
 avB
 avB
-eza
+pyw
 bAi
 bBE
 bCJ
@@ -109891,10 +109910,10 @@ btU
 avB
 bvp
 bvW
-gUk
-jKy
+vUh
+whg
 byl
-jCw
+dXK
 bAj
 bBF
 bCK
@@ -111052,7 +111071,7 @@ aEx
 aCb
 awP
 aEC
-jBD
+ofE
 aFl
 asC
 aGr
