@@ -16368,6 +16368,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/stool/chair/green{
+	dir = 8
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aKZ" = (
@@ -28973,6 +28976,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/blueish,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bql" = (
@@ -33923,16 +33927,12 @@
 /turf/simulated/floor/red,
 /area/space)
 "bBY" = (
-/obj/table/auto,
-/obj/machinery/networked/storage/scanner{
-	bank_id = "security";
-	pixel_y = 4
-	},
 /obj/machinery/light/incandescent/warm/very,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -46630,6 +46630,7 @@
 "cjv" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/central)
 "cjw" = (
@@ -46785,8 +46786,6 @@
 /area/shuttle/sea_elevator_room)
 "cjU" = (
 /obj/critter/roach,
-/obj/item/reagent_containers/food/snacks/burger/moldy,
-/obj/item/trench_map,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cjV" = (
@@ -47300,6 +47299,11 @@
 /area/station/storage/tools)
 "cly" = (
 /obj/storage/crate,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clz" = (
@@ -47602,6 +47606,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"euR" = (
+/obj/item/pen/crayon/rainbow,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "exU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47696,6 +47704,14 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"hkL" = (
+/obj/item/device/flyswatter,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
+"hmf" = (
+/obj/item/trench_map,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -47807,6 +47823,10 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kCx" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
@@ -48101,6 +48121,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"tZH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/item/furniture_parts/bench/green,
+/obj/item/furniture_parts/bench/green,
+/obj/item/furniture_parts/bench/blue,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "ubH" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/hydro,
@@ -48163,7 +48192,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "wis" = (
-/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "wqE" = (
@@ -80090,7 +80118,7 @@ bWp
 aKE
 aLL
 aPl
-aMf
+kCx
 aMf
 aNJ
 aeW
@@ -85520,7 +85548,7 @@ aBz
 aDr
 atc
 atQ
-aID
+hkL
 aHC
 cjF
 ckY
@@ -86157,7 +86185,7 @@ cjR
 ciW
 ciW
 cjR
-ciW
+hmf
 ciW
 cjb
 api
@@ -86749,7 +86777,7 @@ cjg
 cji
 cjj
 cjj
-cjj
+tZH
 cjn
 aCD
 aCD
@@ -90342,7 +90370,7 @@ atr
 aBn
 aDr
 aDr
-aDr
+euR
 aDr
 clc
 aCD

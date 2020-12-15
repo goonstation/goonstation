@@ -16423,6 +16423,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/stool/chair/green{
+	dir = 8
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aKE" = (
@@ -29361,6 +29364,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/blueish,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bql" = (
@@ -47403,8 +47407,6 @@
 /area/shuttle/sea_elevator_room)
 "cjU" = (
 /obj/critter/roach,
-/obj/item/reagent_containers/food/snacks/burger/moldy,
-/obj/item/trench_map,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cjV" = (
@@ -47924,6 +47926,11 @@
 /area/station/storage/tools)
 "cly" = (
 /obj/storage/crate,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clz" = (
@@ -48344,6 +48351,15 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"gJG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/item/furniture_parts/bench/green,
+/obj/item/furniture_parts/bench/green,
+/obj/item/furniture_parts/bench/blue,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "gPV" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/hydro,
@@ -48360,6 +48376,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"hBo" = (
+/obj/item/pen/crayon/rainbow,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "hBL" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/garland{
@@ -48581,6 +48601,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"mpc" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -48750,6 +48774,10 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
+"pyr" = (
+/obj/item/trench_map,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "pIo" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
@@ -49024,7 +49052,6 @@
 /turf/simulated/floor/red,
 /area/station/hallway/secondary/exit)
 "wis" = (
-/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "wnn" = (
@@ -49043,6 +49070,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"wGx" = (
+/obj/item/device/flyswatter,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
 "wPM" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/xmas_lights,
@@ -81026,7 +81057,7 @@ bWp
 aKE
 aLL
 aPl
-aMf
+mpc
 aMf
 aNJ
 aeW
@@ -86456,7 +86487,7 @@ aBz
 aDr
 atc
 atQ
-aID
+wGx
 aHC
 cjF
 ckY
@@ -87395,7 +87426,7 @@ ciM
 cla
 cjz
 ciW
-ciW
+pyr
 ciW
 cjb
 bvz
@@ -87685,7 +87716,7 @@ cjg
 cji
 cjj
 cjj
-cjj
+gJG
 cjn
 aCD
 aCD
@@ -91278,7 +91309,7 @@ atr
 aBn
 aDr
 aDr
-aDr
+hBo
 aDr
 clc
 aCD
