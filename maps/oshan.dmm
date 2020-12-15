@@ -169,6 +169,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor/blue/checker{
 	dir = 4
 	},
@@ -8788,6 +8790,9 @@
 "atu" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
 "atv" = (
@@ -13850,6 +13855,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/restroom)
 "aFk" = (
@@ -14662,10 +14670,16 @@
 /area/station/crew_quarters/locker)
 "aHd" = (
 /obj/machinery/door/unpowered/wood/stall,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom)
 "aHe" = (
 /obj/machinery/light_switch/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom)
 "aHf" = (
@@ -18031,6 +18045,8 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/radio/bathroom)
 "aPc" = (
@@ -29199,6 +29215,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "bqI" = (
@@ -31334,6 +31354,10 @@
 /area/station/maintenance/east)
 "bvW" = (
 /obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bvX" = (
@@ -32382,6 +32406,9 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bym" = (
@@ -32662,10 +32689,16 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bzb" = (
 /obj/machinery/light_switch/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bzc" = (
@@ -32675,6 +32708,9 @@
 	text = "NF"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bzd" = (
@@ -40558,6 +40594,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bSg" = (
@@ -42036,23 +42075,16 @@
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "4-6"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "6-9"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bVO" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "bVP" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -43510,6 +43542,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bZL" = (
@@ -43520,11 +43555,17 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bZM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -43533,6 +43574,9 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "bZO" = (
@@ -44954,6 +44998,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -47450,6 +47497,10 @@
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "clU" = (
@@ -47658,6 +47709,20 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gaU" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47727,6 +47792,14 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"iqM" = (
+/obj/decal/cleanable/paper,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/sanitary,
+/area/station/science/restroom)
 "iAL" = (
 /obj/submachine/chef_oven{
 	dir = 4
@@ -47851,6 +47924,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"mDM" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "mEu" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48070,6 +48152,12 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"sqa" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -48125,6 +48213,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
+"urg" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "uAB" = (
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
@@ -48140,6 +48235,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uSO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/radio/lab)
 "uTy" = (
 /obj/submachine/cargopad{
 	name = "Security Pod Bay Pad"
@@ -48211,6 +48312,12 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"yaB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -88540,10 +88647,10 @@ ayw
 aqR
 ayw
 ayw
-ayw
+bVO
 atu
-ayt
-azt
+mDM
+gaU
 aAD
 acM
 aCs
@@ -88922,7 +89029,7 @@ bRy
 bQu
 bQu
 bQu
-bVO
+bWB
 bWC
 bWB
 bYa
@@ -106737,7 +106844,7 @@ aSz
 bPZ
 bQY
 bSf
-bMK
+uSO
 aHd
 aHe
 aPb
@@ -108530,7 +108637,7 @@ avB
 cdi
 avB
 avB
-byZ
+urg
 bAi
 bBE
 bCJ
@@ -108829,10 +108936,10 @@ btU
 avB
 bvp
 bvW
-bwA
-bwA
+yaB
+yaB
 byl
-byY
+sqa
 bAj
 bBF
 bCK
@@ -109990,7 +110097,7 @@ aEx
 aCb
 awP
 aEC
-bah
+iqM
 aFl
 asC
 aGr
