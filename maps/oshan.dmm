@@ -16538,6 +16538,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aLr" = (
@@ -31354,10 +31358,6 @@
 /area/station/maintenance/east)
 "bvW" = (
 /obj/machinery/light/incandescent/netural,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bvX" = (
@@ -48235,6 +48235,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uMn" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "uSO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -108936,7 +108943,7 @@ btU
 avB
 bvp
 bvW
-yaB
+uMn
 yaB
 byl
 sqa
