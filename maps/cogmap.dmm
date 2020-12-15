@@ -37891,6 +37891,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bDJ" = (
@@ -50536,7 +50537,9 @@
 	},
 /area/station/mining/staff_room)
 "cdT" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "cdU" = (
@@ -62893,6 +62896,20 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"jst" = (
+/obj/table/auto,
+/obj/item/plantanalyzer{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -62905,6 +62922,29 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"jFT" = (
+/obj/table/wood/auto,
+/obj/item/device/light/candle{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = 14;
+	pixel_y = 4
+	},
+/obj/item/pen/fancy{
+	pixel_x = 14;
+	pixel_y = 9
+	},
+/obj/item/pen{
+	pixel_x = 13;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/chapel/sanctuary)
 "jNc" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/cobweb,
@@ -63321,6 +63361,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"oNB" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "oQg" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'COLLISION HAZARD'";
@@ -63518,29 +63564,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"sxW" = (
-/obj/table/wood/auto,
-/obj/item/device/light/candle{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/paper_bin{
-	pixel_x = 14;
-	pixel_y = 4
-	},
-/obj/item/pen/fancy{
-	pixel_x = 14;
-	pixel_y = 9
-	},
-/obj/item/pen{
-	pixel_x = 13;
-	pixel_y = 3
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/station/chapel/sanctuary)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63591,6 +63614,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"sNs" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -63857,20 +63886,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"wrH" = (
-/obj/table/auto,
-/obj/item/plantanalyzer{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/bee_egg_carton{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -122446,7 +122461,7 @@ aJX
 aLg
 aMq
 aNB
-sxW
+jFT
 aPE
 aQI
 aMm
@@ -124251,7 +124266,7 @@ aAY
 avg
 atW
 asK
-wrH
+jst
 avj
 aaG
 adC
@@ -128171,7 +128186,7 @@ gpQ
 pvz
 ugu
 jNz
-xpg
+oNB
 xpg
 gAO
 ugu
@@ -128854,7 +128869,7 @@ adC
 bWn
 bzQ
 bzR
-bXr
+sNs
 cbz
 cdX
 cdU
