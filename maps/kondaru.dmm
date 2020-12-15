@@ -8492,7 +8492,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engine Core"
+	name = "Engine Core";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -8516,7 +8517,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room"
+	name = "Power Room";
+	req_access = null
 	},
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
@@ -9991,7 +9993,8 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Primary Engineering Storage"
+	name = "Primary Engineering Storage";
+	req_access = null
 	},
 /obj/access_spawn/engineering_storage,
 /obj/cable{
@@ -10766,7 +10769,8 @@
 /area/station/engine/core)
 "azV" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engine Core"
+	name = "Engine Core";
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -10790,7 +10794,8 @@
 /area/station/engine/power)
 "azY" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room"
+	name = "Power Room";
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -12633,7 +12638,8 @@
 "aEe" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
-	name = "Hot Loop"
+	name = "Hot Loop";
+	req_access = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -12720,7 +12726,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
-	name = "Cold Loop"
+	name = "Cold Loop";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -14785,7 +14792,8 @@
 "aJj" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Engine Gas Storage"
+	name = "Engine Gas Storage";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/cable{
@@ -15293,7 +15301,8 @@
 "aKq" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Engine Gas Storage"
+	name = "Engine Gas Storage";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -15739,7 +15748,8 @@
 /area/station/engine/gas)
 "aLH" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engine Core"
+	name = "Engine Core";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/cable{
@@ -16865,7 +16875,8 @@
 /area/station/maintenance/east)
 "aOO" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Hangar"
+	name = "Engineering Hangar";
+	req_access = null
 	},
 /obj/access_spawn/engineering_storage,
 /obj/cable{
@@ -17703,7 +17714,8 @@
 "aQR" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Technical Storage"
+	name = "Technical Storage";
+	req_access = null
 	},
 /obj/access_spawn/tech_storage,
 /obj/cable{
