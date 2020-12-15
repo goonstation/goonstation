@@ -38583,6 +38583,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bDI" = (
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/caution/east,
 /area/station/storage/warehouse)
 "bDJ" = (
@@ -51174,7 +51175,7 @@
 	},
 /area/station/mining/staff_room)
 "cdT" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "cdU" = (
@@ -63241,6 +63242,12 @@
 	dir = 5
 	},
 /area/station/storage/warehouse)
+"hly" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -63377,6 +63384,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kaA" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "klF" = (
 /obj/stool,
 /turf/simulated/floor/dirt,
@@ -128519,7 +128532,7 @@ fCy
 tva
 vEZ
 vcM
-vec
+hly
 vec
 fxH
 vEZ
@@ -129202,7 +129215,7 @@ aaa
 bWn
 bzQ
 bzR
-bXr
+kaA
 cbz
 cdX
 cdU
