@@ -38957,6 +38957,9 @@
 /obj/disposalpipe/junction/left/east{
 	name = "ejection pipe"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bOz" = (
@@ -38965,6 +38968,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bOA" = (
@@ -39375,6 +39381,9 @@
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -39855,6 +39864,9 @@
 /area/station/security/main)
 "bQF" = (
 /obj/disposalpipe/segment/ejection,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQG" = (
@@ -40331,6 +40343,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -41031,6 +41046,9 @@
 /area/station/medical/staff)
 "bTo" = (
 /obj/item/storage/box/lightbox/tubes,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/damaged2,
 /area/station/storage/warehouse)
 "bTp" = (
