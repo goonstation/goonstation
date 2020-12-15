@@ -17306,7 +17306,10 @@
 /area/station/chapel/sanctuary)
 "aMq" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/storage/bible{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -17478,13 +17481,10 @@
 /area/station/security/main)
 "aMI" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
+/obj/machinery/phone{
+	pixel_x = 5;
+	pixel_y = -1
 	},
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -17938,7 +17938,10 @@
 /area/station/chapel/sanctuary)
 "aNB" = (
 /obj/table/wood/auto,
-/obj/item/device/light/candle,
+/obj/item/device/light/candle{
+	pixel_x = -6;
+	pixel_y = 19
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -21422,7 +21425,9 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/item/card_box/tarot,
+/obj/item/card_box/tarot{
+	pixel_y = 3
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aVa" = (
@@ -21467,13 +21472,22 @@
 /area/station/chapel/sanctuary)
 "aVe" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/cola,
-/obj/item/dice/magic8ball,
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = 7;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aVf" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/storage/box/nerd_kit{
+	pixel_x = -2;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aVg" = (
@@ -22074,14 +22088,25 @@
 	},
 /area/station/chapel/office)
 "aWs" = (
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
+/obj/item/device/light/candle{
+	pixel_x = 7
+	},
+/obj/item/device/light/candle{
+	pixel_x = -5;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aWt" = (
 /obj/machinery/light/small,
-/obj/item/device/light/candle/small,
-/obj/item/device/light/candle/small,
+/obj/item/device/light/candle/small{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -6;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aWu" = (
@@ -22114,19 +22139,34 @@
 /area/station/chapel/sanctuary)
 "aWx" = (
 /obj/table/wood/auto,
-/obj/item/clothing/mask/skull,
+/obj/item/clothing/mask/skull{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aWy" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
-	pixel_x = -7;
+	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/item/pen/marker/red,
-/obj/item/pen/marker/blue,
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/pen/fancy{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/pen/marker/red{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = 6;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aWz" = (
@@ -22818,7 +22858,10 @@
 /area/station/chapel/sanctuary)
 "aXO" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aXP" = (
@@ -23367,7 +23410,13 @@
 "aYV" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist/nerd,
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 7
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -9;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -25549,18 +25598,34 @@
 /area/station/crew_quarters/captain)
 "bdS" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/clothing/head/apprentice,
+/obj/item/clipboard{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -63018,20 +63083,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"lSx" = (
-/obj/table/auto,
-/obj/item/plantanalyzer{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/bee_egg_carton{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "lUw" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -63467,6 +63518,29 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"sxW" = (
+/obj/table/wood/auto,
+/obj/item/device/light/candle{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = 14;
+	pixel_y = 4
+	},
+/obj/item/pen/fancy{
+	pixel_x = 14;
+	pixel_y = 9
+	},
+/obj/item/pen{
+	pixel_x = 13;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/chapel/sanctuary)
 "sEn" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -63783,6 +63857,20 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"wrH" = (
+/obj/table/auto,
+/obj/item/plantanalyzer{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -122358,7 +122446,7 @@ aJX
 aLg
 aMq
 aNB
-aNB
+sxW
 aPE
 aQI
 aMm
@@ -124163,7 +124251,7 @@ aAY
 avg
 atW
 asK
-lSx
+wrH
 avj
 aaG
 adC
