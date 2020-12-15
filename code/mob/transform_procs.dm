@@ -846,7 +846,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// src.abilityHolder = null
 
 
-	newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(target_turf)
 
