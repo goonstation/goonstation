@@ -878,7 +878,7 @@
 	level = 2
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/item/wrench,
 /turf/simulated/floor/plating,
@@ -4621,7 +4621,7 @@
 /area/station/crew_quarters/kitchen)
 "alh" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -5454,7 +5454,7 @@
 	pixel_y = 8
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -5524,7 +5524,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -5660,7 +5660,7 @@
 /area/station/hangar/sec)
 "anx" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -6759,8 +6759,14 @@
 /area/station/hydroponics/lobby)
 "apY" = (
 /obj/table/auto,
-/obj/item/wrench,
-/obj/item/reagent_containers/glass/bottle/mutriant,
+/obj/item/reagent_containers/glass/bottle/mutriant{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/wrench{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -7008,7 +7014,7 @@
 	})
 "aqA" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -7293,8 +7299,14 @@
 /area/station/hydroponics/lobby)
 "arl" = (
 /obj/table/auto,
-/obj/item/bee_egg_carton,
-/obj/item/plantanalyzer,
+/obj/item/plantanalyzer{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = 2;
+	pixel_y = 4
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -7314,8 +7326,14 @@
 /area/station/hydroponics/bay)
 "aro" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/item_box/medical_patches/mini_styptic,
+/obj/item/paper/book/hydroponicsguide{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/item_box/medical_patches/mini_styptic{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -8935,7 +8953,7 @@
 "auS" = (
 /obj/stool,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/item/clothing/head/helmet/space/santahat,
 /turf/simulated/floor/carpet/grime,
@@ -8969,9 +8987,18 @@
 /area/station/crew_quarters/catering)
 "auW" = (
 /obj/table/auto,
-/obj/item/satchel/hydro,
-/obj/item/satchel/hydro,
-/obj/machinery/phone,
+/obj/machinery/phone{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/satchel/hydro{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/obj/item/satchel/hydro{
+	pixel_x = 7;
+	pixel_y = 2
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -9759,9 +9786,14 @@
 /area/station/hydroponics/bay)
 "awC" = (
 /obj/table/auto,
-/obj/item/plate,
+/obj/item/plate{
+	pixel_x = -1;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/food/snacks/sandwich/meat_m{
-	name = "100% synthetic freerange monkey sandwich"
+	name = "100% synthetic freerange monkey sandwich";
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -9777,18 +9809,20 @@
 "awD" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = 18
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
+	pixel_x = 8;
+	pixel_y = 9
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	frequency = 1446;
 	name = "Botany Intercom"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -10487,7 +10521,7 @@
 	},
 /obj/stool/chair,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -10682,7 +10716,7 @@
 "ayB" = (
 /obj/submachine/laundry_machine,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -11626,7 +11660,7 @@
 "aAy" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
@@ -12750,7 +12784,7 @@
 /area/station/hallway/primary/central)
 "aCS" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -12816,7 +12850,7 @@
 /area/station/hallway/primary/central)
 "aDa" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13205,7 +13239,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -14321,7 +14355,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/vending/medical_public,
 /obj/machinery/light/emergency{
@@ -14908,8 +14942,14 @@
 /area/station/chapel/sanctuary)
 "aHv" = (
 /obj/table/auto,
-/obj/item/wrench,
-/obj/item/reagent_containers/glass/bottle/weedkiller,
+/obj/item/reagent_containers/glass/bottle/weedkiller{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/wrench{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -15173,7 +15213,7 @@
 /area/station/security/secwing)
 "aHU" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16779,7 +16819,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
@@ -19228,7 +19268,7 @@
 "aQf" = (
 /obj/stool/chair,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
@@ -19818,7 +19858,7 @@
 /area/station/security/detectives_office)
 "aRA" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
@@ -20592,7 +20632,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/stool/chair/couch{
 	dir = 4
@@ -21641,7 +21681,7 @@
 	name = "autoname - SS13"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -23777,7 +23817,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
@@ -23900,7 +23940,7 @@
 /area/station/maintenance/east)
 "baB" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
@@ -24525,7 +24565,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/vehicle/segway,
 /turf/simulated/floor/black,
@@ -24615,7 +24655,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -25834,7 +25874,7 @@
 /area/station/janitor/office)
 "beE" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -25848,7 +25888,7 @@
 /area/station/janitor/office)
 "beF" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/stool/chair/couch{
 	dir = 4;
@@ -26204,7 +26244,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -26437,7 +26477,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/light/emergency{
 	dir = 4
@@ -26724,7 +26764,7 @@
 "bgs" = (
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -33903,7 +33943,7 @@
 	name = "autoname - SS13"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -35936,7 +35976,7 @@
 /area/station/quartermaster/refinery)
 "bzV" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -39612,7 +39652,7 @@
 /area/station/engine/engineering)
 "bHy" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -41090,7 +41130,7 @@
 /area/station/hallway/primary/south)
 "bKo" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -42384,7 +42424,7 @@
 "bMV" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -42999,7 +43039,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -46416,7 +46456,7 @@
 /area/station/hallway/primary/south)
 "bUC" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -46875,7 +46915,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -47575,7 +47615,7 @@
 /area/station/mining/staff_room)
 "bXo" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -49164,7 +49204,7 @@
 /area/station/atmos/hookups/east)
 "cbg" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/valve{
 	high_risk = 1;
@@ -55242,7 +55282,7 @@
 /area/station/medical/medbay)
 "coG" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -57313,7 +57353,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -57623,7 +57663,7 @@
 	name = "ratty blue couch"
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -62741,7 +62781,7 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/cleanable/cobweb,
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63284,6 +63324,20 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"rDl" = (
+/obj/table/auto,
+/obj/item/plantanalyzer{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -63324,10 +63378,22 @@
 /area/station/engine/core)
 "svZ" = (
 /obj/table/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/storage/box/beakerbox,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 5;
+	pixel_y = -3
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -63379,7 +63445,7 @@
 /area/shuttle/arrival/station)
 "sLP" = (
 /obj/machinery/firealarm{
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/valve{
 	desc = "cold reserve tank valve";
@@ -63721,13 +63787,33 @@
 /area/station/quartermaster/office)
 "xdC" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/powerplant,
-/obj/item/reagent_containers/glass/bottle/fruitful,
-/obj/item/reagent_containers/glass/bottle/topcrop,
-/obj/item/decoration/ashtray,
-/obj/item/reagent_containers/dropper,
-/obj/item/pen/marker/blue,
-/obj/item/pen/marker/red,
+/obj/item/reagent_containers/glass/bottle/powerplant{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/topcrop{
+	pixel_x = -1;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/fruitful{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -4
+	},
+/obj/item/pen/marker/red{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -124014,7 +124100,7 @@ aAY
 avg
 atW
 asK
-arl
+rDl
 avj
 aaG
 adC
