@@ -367,7 +367,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 							H.limbs.l_leg.delete()
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
-						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on</b></span>" )
+						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
 				return 1
 			return 0
 
@@ -596,5 +596,4 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-
 
