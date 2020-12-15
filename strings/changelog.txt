@@ -2,7 +2,7 @@
 (t)tue dec 15 20
 (u)Tarmunora
 (e)⚖|balance
-(*)fluorosurfactant recipe now uses oil instead of carbon
+(*)fluorosurfactant recipe changed to [1 oil, 1 fluorine, 1 sulferic acid -> 3 fluorosurfactant]
 (u)TTerc
 (p)3055
 (e)🗺|mapping
