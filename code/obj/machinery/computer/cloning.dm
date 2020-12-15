@@ -466,7 +466,7 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M)
-		if (!can_operate(M)) return
+		if (!can_operate(M) || !ishuman(M)) return
 
 		M.pulling = null
 		M.set_loc(src)
