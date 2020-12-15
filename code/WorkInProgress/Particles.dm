@@ -1467,17 +1467,16 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				continue
 			if(A in affected) continue
 			affected += A
-			if(!can_line(location, A, 4)) continue
-
+			if(!can_line(location, A, smoke_size)) continue
+			var/divisor = max((get_dist(A, location)+1)/2, 1)**2
 			if(!istype(A,/obj/particle) && !istype(A,/obj/effects/foam))
-				copied.reaction(A, TOUCH, 0, 0)
-
+				copied.reaction(A, TOUCH, copied.total_volume / divisor, 0)
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!issmokeimmune(L))
 					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1)
+						copied.copy_to(L.reagents, 1 / divisor)
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
