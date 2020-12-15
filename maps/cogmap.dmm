@@ -10905,13 +10905,34 @@
 /obj/storage/crate{
 	name = "Cone Crate"
 	},
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/condiment/chocchips,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/condiment/chocchips{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aza" = (
@@ -12389,24 +12410,66 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/fish/bass{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/fish/bass{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/fish/carp{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/fish/carp{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/fish/salmon{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/fish/salmon{
+	pixel_x = -4;
+	pixel_y = -6
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aCe" = (
 /obj/storage/crate/freezer,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/storage/box/donkpocket_kit,
-/obj/item/storage/box/donkpocket_kit,
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen{
+	pixel_x = 9;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aCf" = (
@@ -62955,6 +63018,20 @@
 	dir = 1
 	},
 /area/station/ranch)
+"lSx" = (
+/obj/table/auto,
+/obj/item/plantanalyzer{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "lUw" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -63324,20 +63401,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"rDl" = (
-/obj/table/auto,
-/obj/item/plantanalyzer{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/bee_egg_carton{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "rEe" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -124100,7 +124163,7 @@ aAY
 avg
 atW
 asK
-rDl
+lSx
 avj
 aaG
 adC
