@@ -1566,6 +1566,8 @@ obj/machinery/door/airlock
 		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()
+			if(signal.data["command"] && signal.data["command"] == "nack")
+				return
 			var/datum/signal/rejectsignal = get_free_signal()
 			rejectsignal.source = src
 			rejectsignal.data["address_1"] = signal.data["sender"]
