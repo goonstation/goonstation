@@ -30,9 +30,9 @@
 	if(!M)
 		return FALSE
 	if(ismob(M))
-		if(isnull(M.client))
-			return FALSE
 		var/mob/M2 = M
+		if(isnull(M2.client))
+			return FALSE
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
 			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
