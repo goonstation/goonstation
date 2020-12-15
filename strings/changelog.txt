@@ -1,5 +1,8 @@
 
 (t)tue dec 15 20
+(u)Tarmunora
+(e)⚖|balance
+(*)fluorosurfactant recipe now uses oil instead of carbon
 (u)TTerc
 (p)3055
 (e)🗺|mapping
