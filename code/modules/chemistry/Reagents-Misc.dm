@@ -547,15 +547,14 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
 						G = find_ghost_by_key(B?.owner?.ckey)
-						if (came_back_wrong || H.decomp_stage != 0 || (H.mind && H.mind.dnr)) //Wire: added the dnr condition here
+						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
-							if (H.mind && H.mind.dnr)
+							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
-						else
-							H.visible_message("<span class='alert'><b>[H]</b> seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.ckey)
 					if (G)
