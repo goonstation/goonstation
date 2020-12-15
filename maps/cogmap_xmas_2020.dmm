@@ -39362,6 +39362,7 @@
 /obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/caution/east,
 /area/station/storage/warehouse)
 "bDJ" = (
@@ -52347,7 +52348,7 @@
 	},
 /area/station/mining/staff_room)
 "cdT" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "cdU" = (
@@ -65378,6 +65379,12 @@
 /obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"lUz" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -65873,6 +65880,12 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"rkJ" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "rlS" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
@@ -130686,7 +130699,7 @@ eVq
 qrh
 xXc
 tPW
-smw
+lUz
 smw
 gji
 xXc
@@ -131369,7 +131382,7 @@ aaa
 myR
 bzQ
 bzR
-bXr
+rkJ
 cbz
 cdX
 cdU

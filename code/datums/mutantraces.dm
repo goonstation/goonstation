@@ -643,6 +643,8 @@
 	hand_offset = -1
 	body_offset = -8
 	voice_override = "bloop"
+	firevuln = 1.5
+	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")

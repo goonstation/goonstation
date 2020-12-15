@@ -1,5 +1,17 @@
 
+(t)tue dec 15 20
+(u)Tarmunora
+(e)⚖|balance
+(*)fluorosurfactant recipe changed to [1 oil, 1 fluorine, 1 sulferic acid -> 3 fluorosurfactant]
+(u)TTerc
+(p)3055
+(e)🗺|mapping
+(+)Donut 3, Cogmap 2 and Horizon have ranches and electroplaters now. Cog1 also has electroplaters.
 (t)mon dec 14 20
+(u)Nefarious6th
+(p)3043
+(e)🗺|mapping
+(+)Adds a bathroom and cargo transporter to the old mining station in the debris field
 (u)Tarmunora
 (e)⚖🆕|balance, feature
 (*)Roach mutantrace is now raditaion resistant, but more vulnerable to blunt force trauma
