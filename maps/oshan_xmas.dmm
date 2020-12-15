@@ -668,7 +668,7 @@
 	interesting = "Smells kinda minty. There's some leaves stuck underneath it, too."
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/south)
 "abD" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "engineering_storage";
@@ -11312,7 +11312,7 @@
 "ayN" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/north)
 "ayO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
@@ -42622,10 +42622,16 @@
 /area/station/maintenance/disposal)
 "bVO" = (
 /obj/cable{
-	icon_state = "2-8"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/staff)
 "bVP" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -48228,20 +48234,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"cwB" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "czH" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -48337,16 +48329,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
-"dKy" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"dYm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/radio/lab)
 "ebW" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/xmas_lights,
@@ -48362,6 +48354,13 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"eza" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "fhd" = (
 /obj/stocking,
 /turf/simulated/wall/auto/supernorn,
@@ -48389,6 +48388,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"fJT" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "fNe" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48437,6 +48445,13 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
+"gUk" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "hat" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48497,6 +48512,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"hSR" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/restroom)
 "iGI" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -48542,6 +48563,14 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"jBD" = (
+/obj/decal/cleanable/paper,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/sanitary,
+/area/station/science/restroom)
 "jCk" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48551,6 +48580,18 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
+"jCw" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"jKy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "jLI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48628,13 +48669,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"lkc" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "lyu" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -48738,15 +48772,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"nzm" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -48793,12 +48818,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"obF" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/lab)
 "okv" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
@@ -48953,13 +48972,6 @@
 	dir = 1
 	},
 /area/station/ranch)
-"rzi" = (
-/obj/machinery/light/incandescent/netural,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "rBz" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -48972,6 +48984,20 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"sbU" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "sjd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath,
@@ -49077,12 +49103,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"viV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "voz" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/wreath,
@@ -49151,14 +49171,6 @@
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
-"wkU" = (
-/obj/decal/cleanable/paper,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/sanitary,
-/area/station/science/restroom)
 "wnn" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/garland{
@@ -89590,10 +89602,10 @@ ayw
 aqR
 ayw
 ayw
-bVO
+hSR
 nMH
-nzm
-cwB
+fJT
+sbU
 aAD
 acM
 aCs
@@ -91691,7 +91703,7 @@ agH
 afs
 bOH
 ahy
-aiQ
+bVO
 anP
 alf
 alg
@@ -107787,7 +107799,7 @@ aSz
 bPZ
 bQY
 bSf
-obF
+dYm
 aHd
 aHe
 aPb
@@ -109580,7 +109592,7 @@ avB
 avB
 avB
 avB
-rzi
+eza
 bAi
 bBE
 bCJ
@@ -109879,10 +109891,10 @@ btU
 avB
 bvp
 bvW
-lkc
-viV
+gUk
+jKy
 byl
-dKy
+jCw
 bAj
 bBF
 bCK
@@ -111040,7 +111052,7 @@ aEx
 aCb
 awP
 aEC
-wkU
+jBD
 aFl
 asC
 aGr

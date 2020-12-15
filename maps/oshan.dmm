@@ -660,7 +660,7 @@
 	interesting = "Smells kinda minty. There's some leaves stuck underneath it, too."
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/south)
 "abD" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "engineering_storage";
@@ -11174,7 +11174,7 @@
 "ayN" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/north)
 "ayO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
@@ -47594,6 +47594,13 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
+"coV" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "csG" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -48235,13 +48242,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-"uMn" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
 "uSO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48306,6 +48306,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"wBh" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/staff)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/door_control{
@@ -90755,7 +90767,7 @@ agH
 afs
 bOH
 ahy
-aiQ
+wBh
 anP
 alf
 alg
@@ -108943,7 +108955,7 @@ btU
 avB
 bvp
 bvW
-uMn
+coV
 yaB
 byl
 sqa
