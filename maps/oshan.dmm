@@ -32418,7 +32418,6 @@
 /area/station/hallway/secondary/exit)
 "byr" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/photocopier,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bys" = (
@@ -32780,7 +32779,6 @@
 	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
 	pixel_y = 32
 	},
-/obj/machinery/photocopier,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -47637,18 +47635,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"eJt" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/photocopier,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "eLd" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/circuit,
@@ -47876,11 +47862,6 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"nrs" = (
-/obj/disposalpipe/segment,
-/obj/machinery/photocopier,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "nAo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -94903,7 +94884,7 @@ arg
 asq
 atG
 auY
-nrs
+ajg
 axt
 atx
 ben
@@ -95282,7 +95263,7 @@ bOD
 aSV
 aSX
 aSZ
-eJt
+bSO
 adn
 bJR
 anh
