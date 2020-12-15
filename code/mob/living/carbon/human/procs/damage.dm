@@ -342,7 +342,9 @@
 		brute *=1.33
 
 	if (src.mutantrace)
-		var/typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
+		var/typemult
+		if(islist(src.mutantrace.typevulns))
+			typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
 		if(!typemult)
 			typemult = 1
 		if(damage_type == DAMAGE_BURN)
