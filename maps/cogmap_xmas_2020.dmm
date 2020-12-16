@@ -39362,6 +39362,7 @@
 /obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/caution/east,
 /area/station/storage/warehouse)
 "bDJ" = (
@@ -51077,9 +51078,11 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay Lobby"
+	},
 /turf/simulated/floor/plating,
-/area/station/medical/medbay/lobby)
+/area/station/maintenance/southwest)
 "caY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/toilets)
@@ -51490,7 +51493,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cbW" = (
@@ -52343,7 +52348,7 @@
 	},
 /area/station/mining/staff_room)
 "cdT" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "cdU" = (
@@ -65101,6 +65106,20 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
+"jBp" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay Operating Theater"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "jJP" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -65360,6 +65379,12 @@
 /obj/decal/tile_edge/stripe/xmas,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
+"lUz" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "meu" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -65855,6 +65880,12 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"rkJ" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "rlS" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
@@ -105079,7 +105110,7 @@ bXb
 bUL
 bZJ
 bMg
-cbV
+jBp
 cbQ
 cbQ
 cfI
@@ -130668,7 +130699,7 @@ eVq
 qrh
 xXc
 tPW
-smw
+lUz
 smw
 gji
 xXc
@@ -131351,7 +131382,7 @@ aaa
 myR
 bzQ
 bzR
-bXr
+rkJ
 cbz
 cdX
 cdU

@@ -1,4 +1,40 @@
 
+(t)wed dec 16 20
+(u)Carbadox
+(p)2410
+(e)🆕🎨|feature, sprites
+(*)Added ways to earn Job XP for Bartender and Chaplain.
+(+)For Chaplain, you can earn it by innately resisting Wizards spells and Vampire abilities as well as using your Bible to heal (or smite) people.
+(+)For Bartender, you can earn it by shaking your cocktail shaker and applying garnishes to glasses.
+(+)Added a Golden Cocktail Shaker reward for the bartender
+(u)Erinexx
+(p)2973
+(e)🎨|sprites
+(+)New, jigglier blob sprites.
+(u)Kubius
+(p)3061
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Installed a ranch into Clarion's base variant. Due to space constraints, avid tabletop gamers will need to head up to the Aviary.
+(t)tue dec 15 20
+(u)Tarmunora
+(e)⚖|balance
+(*)fluorosurfactant recipe changed to [1 oil, 1 fluorine, 1 sulferic acid -> 3 fluorosurfactant]
+(u)TTerc
+(p)3055
+(e)🗺|mapping
+(+)Donut 3, Cogmap 2 and Horizon have ranches and electroplaters now. Cog1 also has electroplaters.
+(t)mon dec 14 20
+(u)Nefarious6th
+(p)3043
+(e)🗺|mapping
+(+)Adds a bathroom and cargo transporter to the old mining station in the debris field
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Roach mutantrace is now raditaion resistant, but more vulnerable to blunt force trauma
+(u)UrsulaMejor
+(p)3053
+(e)🆕🎨|feature, sprites
+(*)Adds a rancher job to the jobs list; be sure to update your preferences! Uniform sprite by virvatuli
 (t)sun dec 13 20
 (u)virvatuli
 (p)3045

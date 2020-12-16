@@ -1143,7 +1143,9 @@
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
 				O.brain.owner = M.ghostize()?.mind
-				qdel(M)
+			else
+				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+			qdel(M)
 			O.brain.owner.transfer_to(O)
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))

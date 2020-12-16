@@ -542,6 +542,13 @@
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
 
+/obj/item/clothing/under/rank/rancher
+	name = "rancher's overalls"
+	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
+	icon_state = "rancher"
+	item_state = "rancher"
+	permeability_coefficient = 0.50
+
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
 	desc = "You don't really want to think about what those stains are from."
