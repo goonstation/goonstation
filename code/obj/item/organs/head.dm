@@ -245,7 +245,7 @@
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
 
 		if(!(src.head && src.head.seal_hair))
-			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor.hair_override)
+			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
 				src.head_image_cust_one.pixel_x = 0
 				src.head_image_cust_one.pixel_y = 0
 				src.head_image_cust_two.pixel_x = 0
@@ -255,7 +255,7 @@
 				src.overlays += src.head_image_cust_one
 				src.overlays += src.head_image_cust_two
 				src.overlays += src.head_image_cust_three
-			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor.special_hair_override)
+			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor?.special_hair_override)
 				src.head_image_special_one.pixel_x = 0
 				src.head_image_special_one.pixel_y = 0
 				src.head_image_special_two.pixel_x = 0
