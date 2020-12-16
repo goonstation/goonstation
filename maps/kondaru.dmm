@@ -27364,7 +27364,7 @@
 /obj/plasticflaps{
 	layer = 3.1
 	},
-/turf/space,
+/turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "boj" = (
 /obj/machinery/conveyor{
