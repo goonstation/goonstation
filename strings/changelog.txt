@@ -1,4 +1,20 @@
 
+(t)wed dec 16 20
+(u)Carbadox
+(p)2410
+(e)🆕🎨|feature, sprites
+(*)Added ways to earn Job XP for Bartender and Chaplain.
+(+)For Chaplain, you can earn it by innately resisting Wizards spells and Vampire abilities as well as using your Bible to heal (or smite) people.
+(+)For Bartender, you can earn it by shaking your cocktail shaker and applying garnishes to glasses.
+(+)Added a Golden Cocktail Shaker reward for the bartender
+(u)Erinexx
+(p)2973
+(e)🎨|sprites
+(+)New, jigglier blob sprites.
+(u)Kubius
+(p)3061
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Installed a ranch into Clarion's base variant. Due to space constraints, avid tabletop gamers will need to head up to the Aviary.
 (t)tue dec 15 20
 (u)Tarmunora
 (e)⚖|balance
