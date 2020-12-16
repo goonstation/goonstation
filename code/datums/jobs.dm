@@ -867,6 +867,22 @@
 		src.access = get_access("Botanist")
 		return
 
+/datum/job/civilian/rancher
+	name = "Rancher"
+	limit = 1
+	wages = PAY_TRADESMAN
+	slot_belt = /obj/item/device/pda2/botanist
+	slot_jump = /obj/item/clothing/under/rank/rancher
+	slot_head = /obj/item/clothing/head/cowboy
+	slot_foot = /obj/item/clothing/shoes/brown
+	slot_glov = /obj/item/clothing/gloves/black
+	slot_ears = /obj/item/device/radio/headset/civilian
+
+	New()
+		..()
+		src.access = get_access("Rancher")
+		return
+
 /datum/job/civilian/janitor
 	name = "Janitor"
 	limit = 2

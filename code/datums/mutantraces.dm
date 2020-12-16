@@ -126,6 +126,9 @@
 	var/firevuln = 1 //Scales damage, just like critters.
 	var/brutevuln = 1
 	var/toxvuln = 1
+
+	var/list/typevulns
+
 	/// ignores suffocation from being underwater + moves at full speed underwater
 	var/aquatic = 0
 	var/needs_oxy = 1
@@ -640,6 +643,8 @@
 	hand_offset = -1
 	body_offset = -8
 	voice_override = "bloop"
+	firevuln = 1.5
+	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -1643,11 +1648,13 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	typevulns = list("blunt" = 1.66, "crush" = 1.66)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+		APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
 
 	say_verb()
 		return "clicks"
@@ -1659,6 +1666,8 @@
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if(mob)
+			REMOVE_MOB_PROPERTY(mob, PROP_RADPROT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)

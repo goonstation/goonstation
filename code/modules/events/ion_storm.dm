@@ -204,6 +204,8 @@
 			for (var/obj/machinery/light/foundLight in stationLights)
 				if (foundLight.z != 1)
 					continue
+				if (!foundLight.removable_bulb)
+					continue
 				T = get_turf(foundLight)
 				if (!istype(T.loc,/area/station/))
 					continue

@@ -38583,6 +38583,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bDI" = (
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/caution/east,
 /area/station/storage/warehouse)
 "bDJ" = (
@@ -49928,7 +49929,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay Lobby"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "caY" = (
@@ -50333,7 +50336,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_south,
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cbW" = (
@@ -51170,7 +51175,7 @@
 	},
 /area/station/mining/staff_room)
 "cdT" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "cdU" = (
@@ -63237,6 +63242,12 @@
 	dir = 5
 	},
 /area/station/storage/warehouse)
+"hly" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -63373,6 +63384,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kaA" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "klF" = (
 /obj/stool,
 /turf/simulated/floor/dirt,
@@ -64016,6 +64033,20 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"uvg" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south{
+	areastring = "Medbay Operating Theater"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "uvz" = (
 /obj/cable{
 	d2 = 2;
@@ -102912,7 +102943,7 @@ bXb
 bUL
 bZJ
 bMg
-cbV
+uvg
 cbQ
 cbQ
 cfI
@@ -128501,7 +128532,7 @@ fCy
 tva
 vEZ
 vcM
-vec
+hly
 vec
 fxH
 vEZ
@@ -129184,7 +129215,7 @@ aaa
 bWn
 bzQ
 bzR
-bXr
+kaA
 cbz
 cdX
 cdU
