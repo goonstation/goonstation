@@ -2049,19 +2049,19 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_blue
-	name = "Blue Scrubs"
+	name = "Navy Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/scrub/blue)
+	item_outputs = list(/obj/item/clothing/under/scrub/navy)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
 
 /datum/manufacture/scrubs_purple
-	name = "Purple Scrubs"
+	name = "Violet Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/under/scrub/purple)
+	item_outputs = list(/obj/item/clothing/under/scrub/violet)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2076,7 +2076,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_pink
-	name = "Pink Scrubs"
+	name = "Hot Pink Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
