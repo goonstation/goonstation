@@ -1475,7 +1475,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				if(!issmokeimmune(L))
 					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((get_dist(A, location)+1)/2, 1)**2)
+						copied.copy_to(L.reagents, 1 / max((get_dist(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
