@@ -928,6 +928,8 @@
 					O.set_loc(H)
 					LAGCHECK(LAG_MED)
 
+				sleep(length(new_nuggets))
+
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
 
