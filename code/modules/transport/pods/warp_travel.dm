@@ -202,13 +202,13 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/wrench) && !src.deploying)
 			if (!(istype(get_turf(src.loc),/turf/space)))
-				boutput(usr,"The beacon doesn't have a clear vector to an entry point.")
+				boutput(usr,"<span style=\"color:red\">The beacon doesn't have a clear vector to an entry point.</span>")
 				return
 			if (isrestrictedz(src.z))
-				boutput(usr, "The beacon can't connect to the warp network.")
+				boutput(usr, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
 			for (var/area/station/a in orange(1,src))
-				boutput(user,"Interference from nearby electrical fields is preventing this beacon's deployment.")
+				boutput(user,"<span style=\"color:red\">Interference from nearby electrical fields is preventing this beacon's deployment.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
 			src.deploying = 1
@@ -259,7 +259,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 			src.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 
-		if(istype(W, /obj/item/cable_coil) && state == 2)
+		else if(istype(W, /obj/item/cable_coil) && state == 2)
 			boutput(user, "<span style=\"color:blue\">You loosely link the control circuitry to the bulb and struts.</span>")
 			src.state = 3
 			src.icon_state = "beaconunit"
@@ -271,7 +271,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 			src.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
 
-		if(istype(W, /obj/item/electronics/soldering) && state == 3)
+		else if(istype(W, /obj/item/electronics/soldering) && state == 3)
 			boutput(user, "<span style=\"color:blue\">You secure the buoy's wires firmly into position. It's now ready to deploy.</span>")
 			var/turf/T = get_turf(src)
 			new /obj/beacon_deployer(T)
