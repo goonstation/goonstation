@@ -632,6 +632,8 @@
 	src.hair_standing.overlays.len = 0
 	src.hair_special_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2)
 	src.hair_special_standing.overlays.len = 0
+	src.hair_standing.pixel_y = 0
+	src.hair_special_standing.pixel_y = 0
 
 
 	var/seal_hair = (src.head && src.head.seal_hair)
@@ -639,8 +641,11 @@
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
+		src.hair_standing.pixel_y = AHH.customization_first_offset_y
+		src.hair_special_standing.pixel_y = AHH.customization_first_offset_y
 
 		src.image_eyes = my_head.head_image_eyes
+		src.image_eyes.pixel_y = AHH.e_offset_y
 		src.hair_standing.overlays += image_eyes
 
 		src.image_cust_one = my_head.head_image_cust_one

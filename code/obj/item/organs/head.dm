@@ -159,7 +159,7 @@
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
 		if (src.head_appearance_flags & HAS_HUMAN_EYES)
-			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, pixel_y = AHead.e_offset_y, layer = MOB_FACE_LAYER)
+			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, layer = MOB_FACE_LAYER)
 		else if (src.head_appearance_flags & HAS_NO_EYES)
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
@@ -175,17 +175,17 @@
 		// Then apply whatever hair things they should have
 		var/list/hair_list = customization_styles + customization_styles_gimmick
 
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_first], pixel_y = AHead.customization_first_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_second], pixel_y = AHead.customization_second_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_third], pixel_y = AHead.customization_third_offset_y, layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_first], layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_second], layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_third], layer = MOB_HAIR_LAYER2)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
 		src.head_image_cust_three.color = AHead.customization_third_color
 
-		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, pixel_y = AHead.customization_first_offset_y, layer = AHead.special_hair_1_layer)
-		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, pixel_y = AHead.customization_second_offset_y, layer = AHead.special_hair_2_layer)
-		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, pixel_y = AHead.customization_third_offset_y, layer = AHead.special_hair_3_layer)
+		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, layer = AHead.special_hair_1_layer)
+		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, layer = AHead.special_hair_2_layer)
+		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, layer = AHead.special_hair_3_layer)
 
 		var/colorheck = "#FFFFFF"
 		switch(AHead.special_hair_1_color_ref)
