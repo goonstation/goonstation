@@ -66,6 +66,32 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		name = "Mining outpost beacon"
 	sea_turtle
 		name = "Sea Turtle beacon"
+	deployed
+		packable = 1
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/wrench))
+			if (!packable)
+				boutput(usr,"This beacon's retraction hardware is locked into place and can't be altered.")
+				return
+			src.visible_message("<b>[user.name]</b> undeploys [src].")
+			src.startpack()
+		else if (istype(W, /obj/item/device/multitool))
+			if (!packable)
+				boutput(usr,"This beacon's designation circuits are hard-wired and can't be altered.")
+				return
+			var/str = input(usr,"Set designation","Re-Designate Buoy","") as null|text
+			if (!str || !length(str))
+				boutput(usr, "<span style=\"color:red\">No valid input detected.</span>")
+				return
+			if (length(str) > 30)
+				boutput(usr, "<span style=\"color:red\">Text too long.</span>")
+				return
+			src.beaconid = "[str]"
+			src.name = "Buoy [beaconid]"
+			boutput(usr, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+		else
+			..()
 
 /obj/warp_beacon/New()
 	..()
@@ -144,4 +170,112 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
 		do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
 
+/obj/warp_beacon/proc/startpack()
+	src.packable = 0
+	src.icon_state = "beaconpack"
+	SPAWN_DBG(15)
+		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
+		if(src.beaconid)
+			packitup.beaconid = src.beaconid
+			packitup.name = "warp buoy unit [beaconid]"
+		SPAWN_DBG(0)
+			qdel(src)
+
+//deployable warp beacon
+
+/obj/beacon_deployer
+	name = "warp buoy unit"
+	desc = "A compact anchor for teleportation technology, held together by cut-rate construction supplies. What could possibly go wrong?"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "beaconunit"
+	density = 1
+	var/deploying = null
+	var/beaconid = null
+
+	New()
+		src.beaconid = rand(1000,9999)
+		src.name = "warp buoy unit [beaconid]"
+		..()
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/wrench) && !src.deploying)
+			if (!(istype(get_turf(src.loc),/turf/space)))
+				boutput(usr,"The beacon doesn't have a clear vector to an entry point.")
+				return
+			if (isrestrictedz(src.z))
+				boutput(usr, "The beacon can't connect to the warp network.")
+				return
+			for (var/area/station/a in orange(1,src))
+				boutput(user,"Interference from nearby electrical fields is preventing this beacon's deployment.")
+				return
+			src.visible_message("<b>[user.name]</b> deploys [src].")
+			src.deploying = 1
+			src.deploybeacon()
+
+		if (istype(W, /obj/item/device/multitool/) && !src.deploying)
+			var/str = input(usr,"Set designation","Re-Designate Buoy","") as null|text
+			if (!str || !length(str))
+				boutput(usr, "<span style=\"color:red\">No valid input detected.</span>")
+				return
+			if (length(str) > 30)
+				boutput(usr, "<span style=\"color:red\">Text too long.</span>")
+				return
+			src.beaconid = "[str]"
+			src.name = "warp buoy unit [beaconid]"
+			boutput(usr, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+		else
+			..()
+
+/obj/beacon_deployer/proc/deploybeacon()
+	src.icon_state = "beacondeploy"
+	src.anchored = 1
+	SPAWN_DBG(20)
+		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
+		depbeac.name = "Buoy [src.beaconid]"
+		depbeac.beaconid = src.beaconid
+		SPAWN_DBG(0)
+			qdel(src)
+
+/obj/beaconkit
+	name = "warp buoy frame"
+	desc = "A partially completed frame for a deployable warp buoy. It's missing some folding struts."
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "beacframe_1"
+	density = 1
+	var/state = 1
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/rods) && state == 1)
+			boutput(user, "<span style=\"color:blue\">You install some metal rods to act as struts.</span>")
+			src.state = 2
+			src.icon_state = "beacframe_2"
+
+			W.amount--
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
+
+			src.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
+
+		if(istype(W, /obj/item/cable_coil) && state == 2)
+			boutput(user, "<span style=\"color:blue\">You loosely link the control circuitry to the bulb and struts.</span>")
+			src.state = 3
+			src.icon_state = "beaconunit"
+
+			W.amount--
+			if (W.amount < 1)
+				user.u_equip(W)
+				qdel(W)
+
+			src.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
+
+		if(istype(W, /obj/item/electronics/soldering) && state == 3)
+			boutput(user, "<span style=\"color:blue\">You secure the buoy's wires firmly into position. It's now ready to deploy.</span>")
+			var/turf/T = get_turf(src)
+			new /obj/beacon_deployer(T)
+			qdel(src)
+
+		else
+			..()
+			return
 
