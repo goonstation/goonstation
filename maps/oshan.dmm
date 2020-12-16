@@ -41818,20 +41818,7 @@
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "4-6"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "6-9"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
-"bVO" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -88866,7 +88853,7 @@ bRy
 bQu
 bQu
 bQu
-bVO
+bWB
 bWC
 bWB
 bYa
