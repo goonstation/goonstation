@@ -6802,7 +6802,7 @@
 "fKw" = (/obj/grille/steel,/obj/window/auto/reinforced,/obj/decal/xmas_lights,/turf/simulated/floor/plating,/area/station/quartermaster/storage)
 "fNv" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/dirt,/area/station/ranch)
 "gdn" = (/obj/window/auto/reinforced,/obj/decal/xmas_lights,/turf/simulated/floor/shuttle,/area/shuttle/arrival/station)
-"gkJ" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/ranch,/obj/decal/garland,/obj/decal/wreath,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/ranch)
+"gkJ" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/rancher,/obj/decal/garland,/obj/decal/wreath,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/ranch)
 "gRc" = (/obj/decal/tile_edge/line/green{icon_state = "line1"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/snow,/area/station/hydroponics/bay)
 "gSl" = (/obj/machinery/camera{c_tag = "Aft Cargo Router A"; dir = 9; name = "Aft Cargo Router A"; network = "Cargo"; pixel_x = 10; tag = ""},/turf/space,/area/space)
 "gTH" = (/obj/grille/steel,/obj/window/auto/reinforced,/obj/cable{d2 = 4; icon_state = "0-4"},/obj/cable{d2 = 8; icon_state = "0-8"},/obj/decal/xmas_lights,/turf/simulated/floor/plating,/area/station/medical/dome)

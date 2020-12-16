@@ -65713,7 +65713,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/ranch,
+/obj/access_spawn/rancher,
 /obj/decal/garland{
 	dir = 8
 	},
@@ -65736,7 +65736,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/ranch,
+/obj/access_spawn/rancher,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;

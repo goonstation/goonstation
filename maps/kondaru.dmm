@@ -53362,7 +53362,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Ranch Division"
 	},
-/obj/access_spawn/ranch,
+/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/dirt,
@@ -53765,7 +53765,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/ranch,
+/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -54503,7 +54503,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/ranch,
+/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
