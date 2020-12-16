@@ -62475,6 +62475,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/brig/cell_block)
+"rVl" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rVr" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle,
@@ -64414,6 +64418,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/south)
+"swu" = (
+/obj/disposalpipe/switch_junction/right/south{
+	mail_tag = "ranch";
+	name = "ranch mail junction"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "swC" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -67356,6 +67367,13 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"tjp" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "tjs" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -71113,6 +71131,11 @@
 /area/station/routing/catering{
 	name = "Catering Router"
 	})
+"ujY" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "ukb" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
@@ -77468,6 +77491,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"vOp" = (
+/obj/disposalpipe/segment/mail/bent/south,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vOv" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -82607,6 +82634,12 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/disposal/mail{
+	mail_tag = "ranch";
+	mailgroup = "botany";
+	name = "Ranch"
+	},
+/obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -147546,7 +147579,7 @@ iQq
 ljC
 xzg
 xzg
-xzg
+swu
 tBL
 tTc
 xqO
@@ -147848,7 +147881,7 @@ efo
 iwb
 xrO
 wVM
-wVM
+ujY
 wVM
 wVM
 xrO
@@ -148150,9 +148183,9 @@ bVm
 lxg
 xrO
 iPc
-xsQ
-xsQ
-iPc
+vOp
+rVl
+tjp
 xed
 pFk
 xeA
