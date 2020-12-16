@@ -498,7 +498,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10) //sorry, some race condition i couldt figure out
+		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
 				var/mob/living/carbon/human/H = owner?.owner
 				H.hud?.update_ability_hotbar()

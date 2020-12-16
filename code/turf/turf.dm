@@ -22,11 +22,12 @@
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
+
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for both
 	var/temperature = T20C
@@ -470,7 +471,6 @@
 	var/temp_old = null
 	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
 	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
-	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -481,9 +481,10 @@
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
 			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
-			#undef _OLD_GAS_VAR_ASSIGN
 			temp_old = src.temperature
+			#undef _OLD_GAS_VAR_ASSIGN
 
+	#undef _OLD_GAS_VAR_DEF
 
 	if (istype(src, /turf/simulated/floor))
 		icon_old = icon_state // a hack but OH WELL, leagues better than before
@@ -612,10 +613,12 @@
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
 					N.air.temperature = temp_old
+
+				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
@@ -682,6 +685,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -1075,7 +1082,7 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
 
@@ -1184,7 +1191,7 @@ Other Goonstation servers:[serverList]"}
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
 			//todo: A digging sound effect.
-			if (do_after(user, 40) && src.icon_state != "dirt-dug")
+			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
 				src.icon_state = "dirt-dug"
 				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
 				for (var/obj/tombstone/grave in orange(src, 1))

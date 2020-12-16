@@ -795,7 +795,7 @@
 				m_type = 1
 				src.add_karma(-3)
 
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					var/beeMax = 15
 					for (var/obj/critter/domestic_bee/responseBee in range(5, src))
 						if (!responseBee.alive)
@@ -2174,7 +2174,7 @@
 	left_arm.loc = get_turf(O)*/
 	animate(left_arm, transform = turn(left_arm.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
 	animate(right_arm, transform = turn(right_arm.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)

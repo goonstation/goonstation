@@ -18,6 +18,9 @@
 	var/show_on_examine = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
+		if	(src.original_holder?.traitHolder?.hasTrait("athletic"))
+			brute *=1.33
+
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
 			return 0
 
@@ -218,7 +221,7 @@
 
 	/// Applies the correct (hopefully) colors to the severed limbs
 	proc/set_limb_icon_coloration()
-		if (!src.skintoned)
+		if (!src.skintoned || !isicon(src.icon))
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 
 		// All skintoned limbs also get a cool not-affected-by-coloration bloody stump!
@@ -1781,12 +1784,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1830,12 +1831,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1879,12 +1878,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////

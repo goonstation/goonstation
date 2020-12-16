@@ -667,24 +667,20 @@
 		return in_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
-		SPAWN_DBG(0)
-			LAGCHECK(LAG_REALTIME)
-			if(!signal)
-				return
-			var/freq = newfreq
-			if(!freq)
-				freq = src.frequency
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
 
-			signal.source = src
-			signal.data["sender"] = src.net_id
+		signal.source = src
+		signal.data["sender"] = src.net_id
 
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
 
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(frequency)
-				return frequency.post_signal(src, signal)
-			//else
-				//qdel(signal)
+		signal.transmission_method = TRANSMISSION_RADIO
+		if(frequency)
+			return frequency.post_signal(src, signal)
 
 	proc/eject_cartridge(var/mob/user as mob)
 		if (src.cartridge && src.ejectable_cartridge)

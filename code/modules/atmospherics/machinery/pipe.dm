@@ -373,7 +373,7 @@ obj/machinery/atmospherics/pipe
 
 				boutput(user, "You start to repair the [src.name].")
 
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					ruptured --
 				else
 					boutput(user, "<span class='alert'>You were interrupted!</span>")

@@ -658,7 +658,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else

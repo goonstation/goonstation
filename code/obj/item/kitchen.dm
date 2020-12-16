@@ -1209,7 +1209,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(2)
+			SPAWN_DBG(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1237,7 +1237,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(2)
+		SPAWN_DBG(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))

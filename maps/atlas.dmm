@@ -8071,6 +8071,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/paper/engine{
+	pixel_x = 5
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "to" = (
@@ -8120,6 +8123,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/paper/engine,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ts" = (

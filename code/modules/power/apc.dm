@@ -403,7 +403,7 @@ var/zapLimiter = 0
 					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					if (!do_after(user, 60))
+					if (!do_after(user, 6 SECONDS))
 						return
 					boutput(user, "You tune the autotransformer.")
 					playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)

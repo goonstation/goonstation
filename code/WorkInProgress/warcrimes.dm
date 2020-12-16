@@ -134,7 +134,6 @@ var/fartcount = 0
 		..()
 
 	initializeBioholder()
-		. = ..()
 		bioHolder.mobAppearance.customization_first = "Tramp"
 		bioHolder.mobAppearance.customization_first_color = "#281400"
 		bioHolder.mobAppearance.customization_second = "Pompadour"
@@ -146,8 +145,7 @@ var/fartcount = 0
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.mobAppearance.u_color = "#996633"
-
-		bioHolder.mobAppearance.UpdateMob()
+		. = ..()
 
 	// John Bill always goes to the afterlife bar.
 	death(gibbed)

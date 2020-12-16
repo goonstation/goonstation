@@ -396,7 +396,7 @@
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
 						src.contributors += user
-					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
+					if(do_after(user, 3 SECONDS)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
 							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
@@ -408,7 +408,7 @@
 								qdel(C)
 							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if(src)
 									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 							return

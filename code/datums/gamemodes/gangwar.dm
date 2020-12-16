@@ -337,7 +337,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 

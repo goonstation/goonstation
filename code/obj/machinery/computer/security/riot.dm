@@ -5,6 +5,10 @@
 	var/auth_need = 3.0
 	var/list/authorized
 	var/list/authorized_registered
+	var/datum/radio_frequency/radio_connection = null
+	var/net_id = null
+	var/datum/radio_frequency/control_frequency = "1461"
+	var/radiorange = 3
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
 	lr = 1
@@ -19,11 +23,72 @@
 		if (!armory_area || armory_area.contents.len <= 1)
 			armory_area = get_area_by_type(/area/station/security/armory)
 
+		src.net_id = generate_net_id(src)
+		SPAWN_DBG(0.5 SECONDS)
+			if (radio_controller)
+				radio_connection = radio_controller.add_object(src, "[control_frequency]")
+
 		/*for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
 		..()
+
+	disposing()
+		if (radio_controller)
+			radio_controller.remove_object(src, "[control_frequency]")
+		. = ..()
+
+	receive_signal(datum/signal/signal)
+		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
+			return
+
+		var/target = signal.data["sender"]
+		if (!target) return
+
+		if (signal.data["address_1"] != src.net_id)
+			if (signal.data["address_1"] == "ping")
+				var/datum/signal/pingsignal = get_free_signal()
+				pingsignal.source = src
+				pingsignal.data["device"] = "ARM_AUTH"
+				pingsignal.data["netid"] = src.net_id
+				pingsignal.data["sender"] = src.net_id
+				pingsignal.data["address_1"] = target
+				pingsignal.data["command"] = "ping_reply"
+				pingsignal.transmission_method = TRANSMISSION_RADIO
+
+				radio_connection.post_signal(src, pingsignal, radiorange)
+			return
+
+		var/datum/signal/returnsignal = get_free_signal()
+		returnsignal.source = src
+		returnsignal.data["sender"] = src.net_id
+		returnsignal.data["address_1"] = target
+		switch(signal.data["command"])
+			if ("help")
+				if (!signal.data["topic"])
+					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
+					returnsignal.data["topics"] = "authorize"
+				else
+					returnsignal.data["topic"] = signal.data["topic"]
+					switch (lowertext(signal.data["topic"]))
+						if ("authorize")
+							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS"
+							returnsignal.data["args"] = "acc_code"
+						else
+							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
+			if ("authorize")
+				if (signal.data["acc_code"] == netpass_heads)
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["acc_code"] = netpass_security
+					returnsignal.data["data"] = "authorize"
+					authorize()
+				else
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "badpass"
+			else
+				return //COMMAND NOT RECOGNIZED
+		radio_connection.post_signal(src, returnsignal, radiorange)
 
 
 	proc/authorize()

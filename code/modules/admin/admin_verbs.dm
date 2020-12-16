@@ -267,6 +267,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
+		/client/proc/respawn_heavenly,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -883,6 +884,19 @@ var/list/fun_images = list()
 	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
 	return
 
+/client/proc/respawn_heavenly()
+	set name = "Respawn Heavenly"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc = "Respawn yourself from the heavens"
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/M = src.mob
+	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	heavenly_spawn(M)
+
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
 	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
@@ -949,12 +963,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1804,7 +1818,7 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG (30)
+		SPAWN_DBG(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")

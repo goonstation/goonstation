@@ -1,5 +1,101 @@
 
+(t)tue dec 15 20
+(u)Tarmunora
+(e)⚖|balance
+(*)fluorosurfactant recipe changed to [1 oil, 1 fluorine, 1 sulferic acid -> 3 fluorosurfactant]
+(u)TTerc
+(p)3055
+(e)🗺|mapping
+(+)Donut 3, Cogmap 2 and Horizon have ranches and electroplaters now. Cog1 also has electroplaters.
+(t)mon dec 14 20
+(u)Nefarious6th
+(p)3043
+(e)🗺|mapping
+(+)Adds a bathroom and cargo transporter to the old mining station in the debris field
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Roach mutantrace is now raditaion resistant, but more vulnerable to blunt force trauma
+(u)UrsulaMejor
+(p)3053
+(e)🆕🎨|feature, sprites
+(*)Adds a rancher job to the jobs list; be sure to update your preferences! Uniform sprite by virvatuli
+(t)sun dec 13 20
+(u)virvatuli
+(p)3045
+(e)|
+(+)Changed the Syndicate poison bottle to be more believable when examined
+(u)Superlagg
+(p)2975
+(e)🐛🆕|bug, feature
+(+)Monkeys and non-monkeys can now share limbs.
+(u)BenLubar
+(p)2980
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Civilian and Brobocop cyborgs have some new toys to play with!
+(u)glassofmilk
+(p)3041
+(e)🆕|feature
+(*)Many wireless devices now respond to the command "help"
+(u)UrsulaMejor
+(p)3047
+(e)🆕🎨|feature, sprites
+(*)Add rods to railings to make reinforced railings that chickens can't pass through. Undo with wirecutters. Sprite by Varali.
+(t)sat dec 12 20
+(u)Kubius
+(p)3009
+(e)🆕🗺|feature, mapping
+(*)Significant rework to Kondaru centered on the southeast region, improving the flow of the detention complex and considerably expanding Hydroponics.
+(u)Flourish
+(p)3031
+(e)🆕|feature
+(+)Brains once again carry the names of their owners so that you don't have to sit around and try to figure out who "human's brain" actually belongs to.
+(u)UrsulaMejor
+(e)🆕🎨|feature, sprites
+(*)Added 3.5 new chicken types! Collect them all! Reminder that they are closed source but NOT SECRET! Tell your friends!
+(+)One chicken likes to honk, one chicken likes to get stoned, and one chicken is a bipedal theropod from the Cretaceous period. The 0.5 is a variant of one of those.
+(t)fri dec 11 20
+(u)Scaltra
+(p)2986
+(e)⚖|balance
+(*)Athletic trait now makes you take 33% more brute damage instead of reducing maximum health by 40 points
+(u)Tarmunora
+(e)⚖|balance
+(+)sonic powder stamina damage and misstep will now fall off over distance
+(u)ThePotato97
+(p)3010
+(e)📄|tgui
+(+)Added &lt;u&gt; to sanitization whitelist to allow for underlining text in paper
+(t)thu dec 10 20
+(u)Tarmunora
+(+)reverted fullauto nukie LMG
+(u)Superlagg
+(p)2945
+(e)🆕🎨|feature, sprites
+(*)Added two new colorblindness mutations. Collect them all!
+(u)Azrun
+(p)2902
+(e)⚖🆕🗺|balance, feature, mapping
+(*)TEG instructions have been updated to capture latest changes.  Circulators description and instructions will provide an indication when the TEG is a special variant.  Circulators now have visual indication when maintenance hatch is open.  New less random serial number scheme.
+(*)TEG target circulator blower pressure differential can be adjusted with a multitool. Just like the majority of other ATMOS pumps/gates!
+(+)TEG circulators now support liquid electricity and hugs.  Show the circulators some TLC!
+(+)TEG instructions added to a few maps.
+(u)BenLubar
+(p)2929
+(e)🆕🎨|feature, sprites
+(*)Cyborg cleaner bottles now automatically synthesize space cleaner!
+(u)glassofmilk
+(p)2957
+(e)⚖🆕|balance, feature
+(*)Using packets to force open lockers now requires security authorization!
+(u)Carbadox
+(p)2985
+(e)⚖🆕|balance, feature
+(*)Medical doctors now start with medical belts.
 (t)wed dec 09 20
+(u)BatElite
+(p)2990
+(e)🆕🎨|feature, sprites
+(+)Redeeming the science and medical labcoats when you've bought the alternative jumpsuit now gives you matching labcoat colours!
 (u)ThePotato97
 (p)3008
 (e)🐛📄|bug, tgui

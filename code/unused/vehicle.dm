@@ -44,7 +44,7 @@
 
 /obj/machinery/vehicle/Bump(var/atom/A)
 	//boutput(world, "[src] bumped into [A]")
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		..()
 		src.speed = 0
 		return

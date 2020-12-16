@@ -344,15 +344,7 @@
 	msgs.disarm = 1
 
 	var/def_zone = null
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		def_zone = O.organ_name
-		msgs.affecting = affecting
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		def_zone = P.slot
-		msgs.affecting = affecting
-	else if (zone_sel)
+	if (zone_sel)
 		def_zone = zone_sel.selecting
 		msgs.affecting = def_zone
 	else
@@ -1121,11 +1113,8 @@
 	else if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
 	var/r_zone = ran_zone(t)
-	var/obj/item/affecting = organs["chest"]
 
-	if (organs[text("[]", r_zone)])
-		affecting = organs[text("[]", r_zone)]
-	return affecting
+	return r_zone
 
 /mob/proc/check_target_zone(var/def_zone)
 	return def_zone

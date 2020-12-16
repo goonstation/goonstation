@@ -1475,7 +1475,7 @@ About the new airlock wires panel:
 
 	if (src.closeOtherId != null)
 		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
@@ -1527,16 +1527,54 @@ obj/machinery/door/airlock
 			else if (!id_tag || id_tag != signal.data["tag"])
 				return
 
+		if (signal.data["command"] && signal.data["command"] == "help")
+			var/datum/signal/reply = get_free_signal()
+			reply.source = src
+			reply.transmission_method = TRANSMISSION_RADIO
+			reply.data["sender"] = src.net_id
+			reply.data["address_1"] = signal.data["sender"]
+			if (!signal.data["topic"])
+				reply.data["description"] = "Airlock - requires an access code that can be found on the maintenance panel"
+				reply.data["topics"] = "open,close,lock,unlock,secure_close,secure_open"
+			else
+				reply.data["topic"] = signal.data["topic"]
+				switch (lowertext(signal.data["topic"]))
+					if ("open")
+						reply.data["description"] = "Opens the airlock. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("close")
+						reply.data["description"] = "Closes the airlock. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("lock")
+						reply.data["description"] = "Drops the airlocks bolts, securing it in place. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("unlock")
+						reply.data["description"] = "Lifts the airlocks bolts, unsecuring it. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("secure_close")
+						reply.data["description"] = "Closes the airlock and drops the bolts, securing it closed. Requires access code"
+						reply.data["args"] = "access_code"
+					if ("secure_open")
+						reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
+						reply.data["args"] = "access_code"
+					else
+						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
+			radio_connection.post_signal(src, reply, radiorange)
+			return
+
 		var/sent_code = text2num(signal.data["access_code"])
 		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()
+			if(signal.data["command"] && signal.data["command"] == "nack")
+				return
 			var/datum/signal/rejectsignal = get_free_signal()
 			rejectsignal.source = src
 			rejectsignal.data["address_1"] = signal.data["sender"]
 			rejectsignal.data["command"] = "nack"
 			rejectsignal.data["data"] = "badpass"
 			rejectsignal.data["sender"] = src.net_id
+			rejectsignal.transmission_method = TRANSMISSION_RADIO
 
 			radio_connection.post_signal(src, rejectsignal, radiorange)
 			return
@@ -1589,9 +1627,6 @@ obj/machinery/door/airlock
 					update_icon()
 					sleep(src.operation_time)
 					send_status(,senderid)
-
-			else
-				return
 
 	proc/send_status(userid,target)
 		if(radio_connection)
@@ -1681,7 +1716,7 @@ obj/machinery/door/airlock
 				else if (user.wear_id && user.wear_id:registered)
 					user_name = user.wear_id:registered
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
