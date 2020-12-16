@@ -192,6 +192,17 @@
 		src.setMaterial(getMaterial("molitz"), appearance = 0, setname = 0)
 		return ..()
 
+/obj/item/raw_material/molitz_beta
+	name = "molitz crystal"
+	desc = "An unusual crystal of Molitz."
+	icon_state = "molitz"
+	material_name = "Molitz"
+	crystal = 1
+
+	setup_material()
+		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		return ..()
+
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
 	desc = "A chunk of Pharosium, a conductive metal."

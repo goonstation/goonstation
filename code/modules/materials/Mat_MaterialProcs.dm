@@ -355,6 +355,53 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				target.air.merge(payload)
 		return
 
+/datum/materialProc/moltiz_temp
+	var/total_oxygen = 200
+
+	execute(var/atom/location, var/temp, var/agent_b=FALSE)
+		if(total_oxygen <= 0) return
+		var/turf/target = get_turf(location)
+		if(ON_COOLDOWN(target, "moltiz_oxy_generate", 8 SECONDS)) return
+
+		var/datum/gas_mixture/air = target.return_air()
+		if(!air) return
+
+		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		payload.temperature = T20C
+		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+
+		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+			var/datum/gas/oxygen_agent_b/trace_gas = new
+
+			payload.temperature = T0C // Lower temperature to simulate an endothermic reaction to from this gas
+			payload.trace_gases = list()
+			payload.trace_gases += trace_gas
+
+			trace_gas.moles += min(total_oxygen/32,5)
+			total_oxygen -= min(trace_gas.moles*32,total_oxygen)
+
+		payload.oxygen = min(total_oxygen,10)
+		total_oxygen -= payload.oxygen
+
+		target.assume_air(payload)
+		return
+
+/datum/materialProc/moltiz_temp/agent_b
+	execute(var/atom/location, var/temp)
+		..(location, temp, TRUE)
+		return
+
+/datum/materialProc/moltiz_exp
+
+	execute(var/atom/location, var/sev)
+		var/turf/target = get_turf(location)
+		if(sev > 0 && sev < 4)
+			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+			payload.oxygen = 25
+			payload.temperature = T20C
+			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			target.assume_air(payload)
+
 /datum/materialProc/miracle_add
 	execute(var/location)
 		animate_rainbow_glow(location)

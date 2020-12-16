@@ -309,6 +309,22 @@
 			else
 				return 0
 
+	telAstRareMolitz
+		linkText = "... Molitz!"
+		nodeText = "I'm sure more is better? ... Saved."
+		nodeImage = "asteroidcrystal.png"
+
+		onActivate(var/client/C)
+			master.setFlagGlobal(C, "asteroidsSeen", null)
+			mining_controls.add_selectable_encounter(mining_controls.get_encounter_by_name("Molitz asteroid"))
+			return
+
+		canShow(var/client/C)
+			if(master.getFlagGlobal(C, "asteroidsSeen") >= 5)
+				return 1
+			else
+				return 0
+
 	telAstRareKoshmarite
 		linkText = "... Koshmarite!"
 		nodeText = "Well I'm sure it's good for ... something. Saving it."
