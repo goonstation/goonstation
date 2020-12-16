@@ -1,5 +1,9 @@
 
 (t)wed dec 16 20
+(u)Erinexx
+(p)2973
+(e)🎨|sprites
+(+)New, jigglier blob sprites.
 (u)Kubius
 (p)3061
 (e)🆕🗺🔄|feature, mapping, rework
