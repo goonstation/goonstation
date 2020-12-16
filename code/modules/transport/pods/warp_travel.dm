@@ -10,6 +10,8 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	icon_state = "beacon"
 	anchored = 1
 	density = 1
+	var/packable = 0
+	var/beaconid //created by kits
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
