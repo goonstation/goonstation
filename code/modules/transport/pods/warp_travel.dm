@@ -263,6 +263,8 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			if (W.amount < 1)
 				user.u_equip(W)
 				qdel(W)
+			else
+				W.inventory_counter.update_number(amount)
 
 			src.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 
@@ -276,6 +278,8 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			if (W.amount < 1)
 				user.u_equip(W)
 				qdel(W)
+			else
+				W.inventory_counter.update_number(amount)
 
 			src.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
 
