@@ -60,30 +60,28 @@ export const PortableHoldingTank = props => {
           onClick={() => onEjectTank()} />
       )}>
       {holding ? (
-        <Fragment>
-          <LabeledList>
-            <LabeledList.Item
-              label="Pressure">
-              <RoundGauge
-                size={1.75}
-                value={holding.pressure}
-                minValue={0}
-                maxValue={holding.maxPressure}
-                alertAfter={holding.maxPressure * 0.70}
-                ranges={{
-                  "good": [0, holding.maxPressure * 0.70],
-                  "average": [holding.maxPressure * 0.70, holding.maxPressure * 0.85],
-                  "bad": [holding.maxPressure * 0.85, holding.maxPressure],
-                }}
-                format={formatPressure}
-              />
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Label">
-              {holding.name}
-            </LabeledList.Item>
-          </LabeledList>
-        </Fragment>
+        <LabeledList>
+          <LabeledList.Item
+            label="Pressure">
+            <RoundGauge
+              size={1.75}
+              value={holding.pressure}
+              minValue={0}
+              maxValue={holding.maxPressure}
+              alertAfter={holding.maxPressure * 0.70}
+              ranges={{
+                "good": [0, holding.maxPressure * 0.70],
+                "average": [holding.maxPressure * 0.70, holding.maxPressure * 0.85],
+                "bad": [holding.maxPressure * 0.85, holding.maxPressure],
+              }}
+              format={formatPressure}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Label">
+            {holding.name}
+          </LabeledList.Item>
+        </LabeledList>
       ) : (
         <Box
           color="average">

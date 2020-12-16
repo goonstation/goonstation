@@ -1,6 +1,5 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Section, AnimatedNumber, RoundGauge, LabeledList } from '../components';
+import { Section, RoundGauge, LabeledList } from '../components';
 import { Window } from '../layouts';
 import { formatPressure } from '../format';
 import { ReleaseValve } from './common/ReleaseValve';
@@ -58,25 +57,23 @@ export const GasTankInfo = props => {
   } = props;
 
   return (
-    <Fragment>
-      <LabeledList>
-        <LabeledList.Item
-          label="Pressure">
-          <RoundGauge
-            size={1.75}
-            value={pressure}
-            minValue={0}
-            maxValue={maxPressure}
-            alertAfter={maxPressure * 0.70}
-            ranges={{
-              "good": [0, maxPressure * 0.70],
-              "average": [maxPressure * 0.70, maxPressure * 0.85],
-              "bad": [maxPressure * 0.85, maxPressure],
-            }}
-            format={formatPressure}
-          />
-        </LabeledList.Item>
-      </LabeledList>
-    </Fragment>
+    <LabeledList>
+      <LabeledList.Item
+        label="Pressure">
+        <RoundGauge
+          size={1.75}
+          value={pressure}
+          minValue={0}
+          maxValue={maxPressure}
+          alertAfter={maxPressure * 0.70}
+          ranges={{
+            "good": [0, maxPressure * 0.70],
+            "average": [maxPressure * 0.70, maxPressure * 0.85],
+            "bad": [maxPressure * 0.85, maxPressure],
+          }}
+          format={formatPressure}
+        />
+      </LabeledList.Item>
+    </LabeledList>
   );
 };
