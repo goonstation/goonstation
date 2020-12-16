@@ -67,8 +67,6 @@
 					src.update_icon(makeshitup = 1)
 			else
 				src.update_icon(makeshitup = 1)
-			src.pixel_y = rand(-20,-8)
-			src.pixel_x = rand(-8,8)
 
 	disposing()
 		if (holder)
@@ -227,17 +225,12 @@
 
 	proc/update_head_image() // The thing that actually shows up when dropped
 		src.overlays = null
-
+		src.head_image.pixel_x = 0
+		src.head_image.pixel_y = 0
 		src.overlays += src.head_image
+		src.head_image_eyes.pixel_x = 0
+		src.head_image_eyes.pixel_y = 0
 		src.overlays += src.head_image_eyes
-		if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR)
-			src.overlays += src.head_image_cust_one
-			src.overlays += src.head_image_cust_two
-			src.overlays += src.head_image_cust_three
-		if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR)
-			src.overlays += src.head_image_special_one
-			src.overlays += src.head_image_special_two
-			src.overlays += src.head_image_special_three
 
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)
@@ -250,6 +243,31 @@
 
 		if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
+
+		if(!(src.head && src.head.seal_hair))
+			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor.hair_override)
+				src.head_image_cust_one.pixel_x = 0
+				src.head_image_cust_one.pixel_y = 0
+				src.head_image_cust_two.pixel_x = 0
+				src.head_image_cust_two.pixel_y = 0
+				src.head_image_cust_three.pixel_x = 0
+				src.head_image_cust_three.pixel_y = 0
+				src.overlays += src.head_image_cust_one
+				src.overlays += src.head_image_cust_two
+				src.overlays += src.head_image_cust_three
+			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor.special_hair_override)
+				src.head_image_special_one.pixel_x = 0
+				src.head_image_special_one.pixel_y = 0
+				src.head_image_special_two.pixel_x = 0
+				src.head_image_special_two.pixel_y = 0
+				src.head_image_special_three.pixel_x = 0
+				src.head_image_special_three.pixel_y = 0
+				src.overlays += src.head_image_special_one
+				src.overlays += src.head_image_special_two
+				src.overlays += src.head_image_special_three
+
+		src.pixel_y = rand(-20,-8)
+		src.pixel_x = rand(-8,8)
 
 	do_missing()
 		..()

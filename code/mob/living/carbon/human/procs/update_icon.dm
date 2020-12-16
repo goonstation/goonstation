@@ -667,7 +667,7 @@
 		src.special_three_state = my_head.head_image_special_three?.icon_state
 
 		if(!seal_hair)
-			if ((!(AHH.mob_appearance_flags & HAS_NO_HAIR)) && (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override))
+			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
 				src.hair_standing.overlays += image_cust_one
 				src.hair_standing.overlays += image_cust_two
 				src.hair_standing.overlays += image_cust_three

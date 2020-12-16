@@ -49,8 +49,6 @@
 #define HAS_HUMAN_HAIR					(1<<5)
 /// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
 #define HAS_SPECIAL_HAIR				(1<<6)
-/// Please don't render hair on my wolves it looks too cute
-#define HAS_NO_HAIR							(1<<7)
 
 /// We have normal human eyes of human color where human eyes tend to be
 #define HAS_HUMAN_EYES					(1<<8)
