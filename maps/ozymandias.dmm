@@ -9239,7 +9239,7 @@
 	},
 /obj/lattice,
 /turf/space,
-/area/space)
+/area/station/hydroponics/bay)
 "cNx" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -28203,7 +28203,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/quartersA)
 "ilv" = (
-/obj/machinery/light_switch/east,
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green/side{
 	dir = 4
@@ -31109,6 +31108,15 @@
 	dir = 4
 	},
 /area/station/medical/medbay/pharmacy)
+"jeg" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/station/hydroponics/bay)
 "jen" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/orangeblack,
@@ -150027,7 +150035,7 @@ iYG
 kKj
 ldd
 bDY
-sqU
+jeg
 nTu
 sZv
 iRg
