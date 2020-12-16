@@ -27360,8 +27360,11 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "boi" = (
-/obj/machinery/cargo_router/kd_mining_exoflap,
-/turf/simulated/floor/caution/northsouth,
+/obj/machinery/cargo_router/kd_mining,
+/obj/plasticflaps{
+	layer = 3.1
+	},
+/turf/space,
 /area/station/routing/depot)
 "boj" = (
 /obj/machinery/conveyor{
@@ -27372,8 +27375,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/routing/depot)
 "bok" = (
-/obj/machinery/cargo_router/kd_depot_south,
-/turf/simulated/floor/caution/westeast,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/routing/depot)
 "bol" = (
 /obj/machinery/conveyor{
@@ -27833,6 +27835,10 @@
 	},
 /area/station/mining/staff_room)
 "bpt" = (
+/obj/machinery/cargo_router/kd_mining_exoflap,
+/turf/simulated/floor/caution/northsouth,
+/area/station/routing/depot)
+"bpu" = (
 /obj/disposaloutlet/west,
 /obj/disposalpipe/trunk/south,
 /obj/machinery/conveyor{
@@ -27840,12 +27846,6 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
-"bpu" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk/south,
-/obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "bpv" = (
@@ -28302,11 +28302,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
 "bqA" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
+/obj/machinery/cargo_router/kd_depot_south,
+/turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
 "bqB" = (
-/obj/storage/closet/emergency,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bqC" = (
@@ -28812,14 +28812,13 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brU" = (
 /obj/disposalpipe/segment/transport{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brV" = (
@@ -28834,6 +28833,10 @@
 	},
 /obj/landmark{
 	name = "blobstart"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -28867,7 +28870,7 @@
 /area/station/routing/depot)
 "bsa" = (
 /obj/decal/cleanable/dirt,
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bsb" = (
@@ -29319,9 +29322,12 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "btm" = (
-/obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -29330,6 +29336,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "5-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -53665,6 +53675,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"iuI" = (
+/obj/machinery/floorflusher/industrial,
+/obj/disposalpipe/trunk/south,
+/obj/machinery/light/small,
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "ivn" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass,
@@ -107506,10 +107522,10 @@ aaa
 abl
 bfn
 gSr
-biS
+bok
 boi
-bkk
-bca
+bok
+bok
 brS
 btl
 btl
@@ -107809,9 +107825,9 @@ arv
 bfn
 mOF
 biS
-boj
 bpt
-bqz
+bkk
+bca
 brT
 btm
 buG
@@ -108111,7 +108127,7 @@ aad
 bfn
 blr
 biS
-bok
+boj
 bpu
 bqz
 brU
@@ -108413,9 +108429,9 @@ aaa
 bkj
 bls
 biS
-boj
-bca
-bca
+bqA
+iuI
+bqz
 brV
 brW
 buH
@@ -108717,7 +108733,7 @@ blt
 bmI
 bol
 bca
-bqA
+bca
 brW
 bto
 buH
