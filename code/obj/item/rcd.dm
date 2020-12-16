@@ -346,7 +346,7 @@ Broken RCD + Effects
 			if (RCD_MODE_LIGHTBULBS)
 				if (istype(A, /turf/simulated/wall))
 					if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-						boutput(user, "There's already a light there!") // stacking lights simply can't be good for the environment
+						boutput(user, "There's already a lamp there!") // stacking lights simply can't be good for the environment
 						return
 					var/dir
 					for (var/d in cardinal)
@@ -376,7 +376,7 @@ Broken RCD + Effects
 
 			if (RCD_MODE_LIGHTTUBES)
 				if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-					boutput(user, "There's already a light there!")
+					boutput(user, "There's already a lamp there!")
 					return
 				if (istype(A, /turf/simulated/wall))
 					var/dir
