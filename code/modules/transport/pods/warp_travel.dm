@@ -253,13 +253,13 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	var/state = 1
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/rods) && W.amount >= 2 && state == 1)
+		if(istype(W, /obj/item/rods) && W.amount >= 4 && state == 1)
 			boutput(user, "<span style=\"color:blue\">You install some metal rods to act as struts.</span>")
 			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			src.state = 2
 			src.icon_state = "beacframe_2"
 
-			W.amount -= 2
+			W.amount -= 4
 			if (W.amount < 1)
 				user.u_equip(W)
 				qdel(W)
