@@ -431,8 +431,8 @@
 		for(var/obj/item/I in src.det.attachments)
 			static_data["detonatorAttachments"] += I.name
 		var/has_paper = false
-		for(var/obj/item/paper in src.det.attachments)
-			static_data["paperData"] = paper.ui_static_data()
+		for(var/obj/item/paper/sheet in src.det.attachments)
+			static_data["paperData"] = sheet.ui_static_data()
 			has_paper = true
 		static_data["hasPaper"] = has_paper
 
