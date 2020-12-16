@@ -675,7 +675,7 @@
 	interesting = "Smells kinda minty. There's some leaves stuck underneath it, too."
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/south)
 "abD" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "engineering_storage";
@@ -10909,7 +10909,7 @@
 "ayN" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/north)
 "ayO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
@@ -46150,7 +46150,7 @@
 "cix" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
-/area/station/turret_protected/Zeta)
+/area/station/hallway/primary/north)
 "ciy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -47157,7 +47157,7 @@
 "clD" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/station/turret_protected/Zeta)
+/area/station/hallway/primary/north)
 "clE" = (
 /obj/table/reinforced/auto,
 /obj/item/wrapping_paper,
@@ -101761,7 +101761,7 @@ arz
 avs
 awu
 cis
-aBn
+arz
 azQ
 aAY
 ayp
@@ -102063,7 +102063,7 @@ arz
 awv
 awv
 arz
-aBn
+arz
 azQ
 aAY
 ayd

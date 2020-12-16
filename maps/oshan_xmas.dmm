@@ -668,7 +668,7 @@
 	interesting = "Smells kinda minty. There's some leaves stuck underneath it, too."
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/south)
 "abD" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "engineering_storage";
@@ -11312,7 +11312,7 @@
 "ayN" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/north)
 "ayO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
