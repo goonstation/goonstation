@@ -141,7 +141,7 @@ class PaperView extends Component {
   render() {
     const { data } = useBackend(this.context);
     const {
-      value,
+      text,
       stamps,
     } = data.paperData;
     return (
@@ -152,7 +152,7 @@ class PaperView extends Component {
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView
-          value={value}
+          value={text ? text : ""}
           stamps={stamps}
           readOnly />
       </Section>
