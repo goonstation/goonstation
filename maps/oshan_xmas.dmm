@@ -17287,6 +17287,10 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aMA" = (
@@ -19218,7 +19222,7 @@
 /obj/access_spawn/research,
 /obj/decal/garland,
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "aRd" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -19248,6 +19252,9 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
 /obj/decal/garland,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/research_outpost/maint)
 "aRg" = (
@@ -23979,6 +23986,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor,
 /area/research_outpost)
 "bcT" = (
@@ -24087,6 +24097,9 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bdj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/caution/south,
 /area/research_outpost)
 "bdk" = (
@@ -24266,6 +24279,10 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bdN" = (
@@ -49322,6 +49339,12 @@
 /obj/decal/xmas_lights,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
+"xUa" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -134333,7 +134356,7 @@ azm
 aGq
 aKs
 aLm
-bbg
+afh
 bcz
 bcR
 bYy
@@ -134640,7 +134663,7 @@ bcA
 bcS
 bdj
 aRf
-bdN
+xUa
 bdN
 bdN
 bel
@@ -134937,7 +134960,7 @@ bca
 aAo
 awC
 aMz
-bbg
+afh
 bYr
 bcT
 bdk
@@ -135239,7 +135262,7 @@ awG
 aAp
 aKZ
 bcn
-bbg
+afh
 bbg
 bbg
 bbg

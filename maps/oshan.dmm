@@ -13584,6 +13584,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/restroom)
 "aFk" = (
@@ -16772,6 +16775,10 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aMA" = (
@@ -18654,7 +18661,7 @@
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "aRd" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -18678,6 +18685,9 @@
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/research_outpost/maint)
 "aRg" = (
@@ -23387,6 +23397,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor,
 /area/research_outpost)
 "bcT" = (
@@ -23492,6 +23505,9 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bdj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/caution/south,
 /area/research_outpost)
 "bdk" = (
@@ -23670,6 +23686,10 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bdN" = (
@@ -28946,6 +28966,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "bqI" = (
@@ -43279,6 +43302,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bZL" = (
@@ -43289,11 +43315,17 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bZM" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -43302,6 +43334,9 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "bZO" = (
@@ -44723,6 +44758,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -47436,6 +47474,9 @@
 "dLb" = (
 /obj/decal/cleanable/paper,
 /obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "dWG" = (
@@ -47626,6 +47667,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"jxG" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "jCs" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -133156,7 +133203,7 @@ azm
 aGq
 aKs
 aLm
-bbg
+afh
 bcz
 bcR
 bYy
@@ -133463,7 +133510,7 @@ bcA
 bcS
 bdj
 aRf
-bdN
+jxG
 bdN
 bdN
 bel
@@ -133760,7 +133807,7 @@ bca
 aAo
 awC
 aMz
-bbg
+afh
 bYr
 bcT
 bdk
@@ -134062,7 +134109,7 @@ awG
 aAp
 aKZ
 bcn
-bbg
+afh
 bbg
 bbg
 bbg
