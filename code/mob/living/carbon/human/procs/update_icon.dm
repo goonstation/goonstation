@@ -628,8 +628,10 @@
 	if (!src.bioHolder)
 		return // fuck u
 
-	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
+	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2)
 	src.hair_standing.overlays.len = 0
+	src.hair_special_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2)
+	src.hair_special_standing.overlays.len = 0
 
 
 	var/seal_hair = (src.head && src.head.seal_hair)
@@ -659,20 +661,28 @@
 		src.image_special_three = my_head.head_image_special_three
 		src.special_three_state = my_head.head_image_special_three?.icon_state
 
-		if(!seal_hair || (!(AHH.mob_appearance_flags & HAS_NO_HAIR) && (!src.hair_override || !src.special_hair_override)))
-			if (AHH.mob_appearance_flags & HAS_SPECIAL_HAIR || src.special_hair_override)
-				src.hair_standing.overlays += image_special_one
-				src.hair_standing.overlays += image_special_two
-				src.hair_standing.overlays += image_special_three
-			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
+		if(!seal_hair)
+			if ((!(AHH.mob_appearance_flags & HAS_NO_HAIR)) && (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override))
 				src.hair_standing.overlays += image_cust_one
 				src.hair_standing.overlays += image_cust_two
 				src.hair_standing.overlays += image_cust_three
+				UpdateOverlays(hair_standing, "hair", 1, 1)
+			else
+				UpdateOverlays(null, "hair", 1, 1)
 
-		UpdateOverlays(hair_standing, "hair", 1, 1)
-
+			if (AHH.mob_appearance_flags & HAS_SPECIAL_HAIR || src.special_hair_override)
+				src.hair_special_standing.overlays += image_special_one
+				src.hair_special_standing.overlays += image_special_two
+				src.hair_special_standing.overlays += image_special_three
+				UpdateOverlays(hair_special_standing, "hair_special", 1, 1)
+			else
+				UpdateOverlays(null, "hair_special", 1, 1)
+		else
+			UpdateOverlays(null, "hair", 1, 1)
+			UpdateOverlays(null, "hair_special", 1, 1)
 	else
 		UpdateOverlays(null, "hair", 1, 1)
+		UpdateOverlays(null, "hair_special", 1, 1)
 
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
