@@ -73,8 +73,8 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      width={(hasDetonator ? (hasPaper ? 890 : 470) : 400)}
-      height={hasDetonator ? 680 : 370}>
+      width={(hasDetonator ? (hasPaper ? 860 : 470) : 305)}
+      height={hasDetonator ? 685 : 340}>
       <Window.Content>
         <Flex>
           <Flex.Item width="480px">
