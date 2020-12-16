@@ -215,7 +215,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			src.deploying = 1
 			src.deploybeacon()
 
-		if (istype(W, /obj/item/device/multitool/) && !src.deploying)
+		else if (istype(W, /obj/item/device/multitool/) && !src.deploying)
 			var/str = input(usr,"Set designation","Re-Designate Buoy","") as null|text
 			if (!str || !length(str))
 				boutput(usr, "<span style=\"color:red\">No valid input detected.</span>")
@@ -248,12 +248,13 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	var/state = 1
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/rods) && state == 1)
+		if(istype(W, /obj/item/rods) && W.amount >= 2 && state == 1)
 			boutput(user, "<span style=\"color:blue\">You install some metal rods to act as struts.</span>")
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			src.state = 2
 			src.icon_state = "beacframe_2"
 
-			W.amount--
+			W.amount -= 2
 			if (W.amount < 1)
 				user.u_equip(W)
 				qdel(W)
@@ -262,6 +263,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 		else if(istype(W, /obj/item/cable_coil) && state == 2)
 			boutput(user, "<span style=\"color:blue\">You loosely link the control circuitry to the bulb and struts.</span>")
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			src.state = 3
 			src.icon_state = "beaconunit"
 
@@ -274,6 +276,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 		else if(istype(W, /obj/item/electronics/soldering) && state == 3)
 			boutput(user, "<span style=\"color:blue\">You secure the buoy's wires firmly into position. It's now ready to deploy with a wrench.</span>")
+			playsound(get_turf(src), "sound/effects/zzzt.ogg", 40, 1)
 			var/turf/T = get_turf(src)
 			new /obj/beacon_deployer(T)
 			qdel(src)
