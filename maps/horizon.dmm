@@ -6806,7 +6806,7 @@
 "gSl" = (/obj/machinery/camera{c_tag = "Aft Cargo Router A"; dir = 9; name = "Aft Cargo Router A"; network = "Cargo"; pixel_x = 10; tag = ""},/turf/space,/area/space)
 "hhi" = (/obj/shrub{dir = 1},/obj/machinery/light,/turf/simulated/floor/grass/leafy,/area/station/ranch)
 "hFx" = (/obj/railing/orange/reinforced,/turf/simulated/floor/grasstodirt,/area/station/ranch)
-"jxG" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/rancher,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/ranch)
+"jxG" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/ranch,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/ranch)
 "lbd" = (/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/grass,/area/station/hydroponics/bay)
 "lja" = (/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/grass,/area/station/hydroponics/bay)
 "lVM" = (/obj/cable{icon_state = "1-8"},/turf/simulated/floor/dirt,/area/station/ranch)

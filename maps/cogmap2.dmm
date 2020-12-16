@@ -13728,7 +13728,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "aEF" = (
@@ -79261,7 +79261,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /obj/cable{
 	icon_state = "4-8"
 	},

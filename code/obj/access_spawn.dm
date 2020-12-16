@@ -215,9 +215,9 @@
 	req_access = list(access_hydro)
 	color = MAINTENANCE
 
-/obj/access_spawn/rancher
-	name = "rancher access spawn"
-	req_access = list(access_rancher)
+/obj/access_spawn/ranch
+	name = "ranch access spawn"
+	req_access = list(access_ranch)
 	color = MAINTENANCE
 
 /obj/access_spawn/hos

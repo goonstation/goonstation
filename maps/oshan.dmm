@@ -16040,7 +16040,7 @@
 	dir = 1;
 	name = "Ranch"
 	},
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /obj/firedoor_spawn,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -16359,7 +16359,7 @@
 /obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "aKY" = (
@@ -16411,7 +16411,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "aLe" = (

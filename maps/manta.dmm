@@ -31174,7 +31174,7 @@
 "bul" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;

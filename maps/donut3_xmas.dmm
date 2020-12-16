@@ -13232,7 +13232,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "dzz" = (
@@ -33938,7 +33938,7 @@
 "jLx" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/access_spawn/rancher,
+/obj/access_spawn/ranch,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/ranch)
