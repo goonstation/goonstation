@@ -387,41 +387,44 @@
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(src.air_contents)
-	data["maxPressure"] = src.maximum_pressure
-	data["connected"] = src.connected_port ? TRUE : FALSE
-	data["releasePressure"] = src.release_pressure
-	data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
-	data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = src.valve_open
-	data["hasValve"] = src.has_valve ? TRUE : FALSE
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = src.maximum_pressure,
+		"connected" = src.connected_port ? TRUE : FALSE,
+		"releasePressure" = src.release_pressure,
+		"valveIsOpen" = src.valve_open,
+		"hasValve" = src.has_valve ? TRUE : FALSE,
+		"holding" = null, // need to explicitly tell the client it doesn't exist so it renders properly
+		"detonator" = null,
+	)
 
-	data["holding"] = null // need to explicitly tell the client it doesn't exist so it renders properly
 	if(src.holding)
-		data["holding"] = list()
-		data["holding"]["name"] = src.holding.name
-		data["holding"]["pressure"] = MIXTURE_PRESSURE(src.holding.air_contents)
-		data["holding"]["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
+		. += list(
+			"holding"= list(
+				"name" = src.holding.name,
+				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
+				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+			)
+		)
 
-	data["detonator"] = null
 	if(src.det)
-		data["detonator"] = list()
-		data["detonator"]["wireNames"] = src.det.WireNames
-		data["detonator"]["wireStatus"] = src.det.WireStatus
-		data["detonator"]["safetyIsOn"] = src.det.safety
-		data["detonator"]["isAnchored"] = src.anchored
-		data["detonator"]["isPrimed"] = src.det.part_fs.timing ? TRUE : FALSE
-		data["detonator"]["time"] = src.det.part_fs.time * 10 // using tenths of a second on the client
-
-		data["detonator"]["trigger"] = null
-		if(src.det.trigger)
-			data["detonator"]["trigger"] = src.det.trigger.name
-
-	return data
+		. += list(
+			"detonator" = list(
+				"wireNames" = src.det.WireNames,
+				"wireStatus" = src.det.WireStatus,
+				"safetyIsOn" = src.det.safety,
+				"isAnchored" = src.anchored,
+				"isPrimed" = src.det.part_fs.timing ? TRUE : FALSE,
+				"time" = src.det.part_fs.time * 10, // using tenths of a second on the client
+				"trigger" = src.det.trigger ? src.det.trigger.name : null,
+			)
+		)
 
 /obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
 	var/list/static_data = list()
+
+	static_data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
+	static_data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
 
 	if(src?.det?.attachments)
 		static_data["detonatorAttachments"] = list()
