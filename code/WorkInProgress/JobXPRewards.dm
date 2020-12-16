@@ -514,10 +514,10 @@ mob/verb/checkrewards()
 	activate(var/client/C)
 		var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = locate(/obj/item/reagent_containers/food/drinks/cocktailshaker) in C.mob.contents
 
-		if (istype(shaker))
-			C.mob.remove_item(shaker)
-			qdel(shaker)
-		else return
+		if(!istype(shaker))
+			return
+		C.mob.remove_item(shaker)
+		qdel(shaker)
 		var/obj/item/I = new path_to_spawn()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
