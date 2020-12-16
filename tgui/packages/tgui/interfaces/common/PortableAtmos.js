@@ -1,5 +1,5 @@
 import { Fragment } from 'inferno';
-import { Box, Section, LabeledList, Button, AnimatedNumber } from '../../components';
+import { Box, Section, LabeledList, Button, AnimatedNumber, RoundGauge } from '../../components';
 import { PressureBar } from './PressureBar';
 
 export const PortableBasicInfo = props => {
@@ -26,6 +26,20 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
+      <RoundGauge
+        size={1.75}
+        value={pressure}
+        minValue={0}
+        maxValue={maxPressure}
+        alertAfter={maxPressure * 0.70}
+        ranges={{
+          "good": [0, maxPressure * 0.70],
+          "average": [maxPressure * 0.70, maxPressure * 0.85],
+          "bad": [maxPressure * 0.85, maxPressure],
+        }}
+        //format={formatPressure}
+      />
+
       <Box
         maxWidth="400px"
         mt={1}>
