@@ -77,6 +77,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 				boutput(usr,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
+			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
 			src.startpack()
 		else if (istype(W, /obj/item/device/multitool))
 			if (!packable)
@@ -175,8 +176,9 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/warp_beacon/proc/startpack()
 	src.packable = 0
 	src.icon_state = "beaconpack"
-	SPAWN_DBG(15)
+	SPAWN_DBG(14)
 		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
+		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
@@ -203,7 +205,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		if (istype(W, /obj/item/wrench) && !src.deploying)
 			for (var/turf/a in range(2,src))
 				if (!a.allows_vehicles)
-					boutput(usr,"<span style=\"color:red\">The area surrounding the beacon is insufficiently navigable for vehicles.</span>")
+					boutput(usr,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
 			if (isrestrictedz(src.z))
 				boutput(usr, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
@@ -213,6 +215,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 //				boutput(user,"<span style=\"color:red\">Interference from nearby electrical fields is preventing this beacon's deployment.</span>")
 //				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
+			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
 			src.deploying = 1
 			src.deploybeacon()
 
@@ -233,8 +236,9 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
 	src.anchored = 1
-	SPAWN_DBG(20)
+	SPAWN_DBG(16)
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
+		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		SPAWN_DBG(0)
