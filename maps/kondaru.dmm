@@ -208,13 +208,14 @@
 /area/space)
 "aaH" = (
 /obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
+	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
 	},
 /area/station/hangar/main)
 "aaI" = (
@@ -1320,28 +1321,17 @@
 	name = "Router Cabinet"
 	})
 "adi" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "kd_podout";
-	name = "Cargo Routing Door"
-	},
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "kd_podout"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/main)
 "adj" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "kd_podout"
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4;
+	name = "Loading Chute Cover"
 	},
-/obj/machinery/door/window/eastleft,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/main)
 "adk" = (
@@ -27358,14 +27348,16 @@
 /turf/simulated/floor/orangeblack/corner,
 /area/station/mining/staff_room)
 "bog" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
 /obj/access_spawn/mining,
-/turf/simulated/floor/delivery,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
 /area/station/mining/staff_room)
 "boh" = (
-/obj/plasticflaps,
-/obj/machinery/cargo_router/kd_mining,
-/turf/simulated/floor/bot,
+/turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "boi" = (
 /obj/machinery/cargo_router/kd_mining_exoflap,
@@ -40608,6 +40600,13 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
+	name = "printed card";
+	pixel_x = 10;
+	pixel_y = -2
+	},
 /turf/simulated/floor/orange/side{
 	dir = 9
 	},
@@ -40622,12 +40621,6 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/item/paper{
-	info = "CAUTION: At the direction of [], research cargo node will directly eject all objects inserted into flusher without a label. The Ejection label continues to function as well.";
-	name = "wrinkled paper";
-	pixel_x = -10;
-	pixel_y = 7
 	},
 /obj/stool/chair/office{
 	dir = 8
@@ -41195,6 +41188,10 @@
 "bTK" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4;
+	name = "Loading Chute Cover"
+	},
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -53370,6 +53367,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/routing/security)
+"hrU" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/hangar/main)
 "hvz" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -58550,6 +58555,15 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crew_quarters/quarters_south)
+"vqs" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/station/hangar/main)
 "vrz" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark{
@@ -59070,6 +59084,23 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"xcP" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "kd_podout";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "kd_podout"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/hangar/main)
 "xdq" = (
 /obj/storage/crate{
 	desc = "Various supplies for the bar.";
@@ -99263,7 +99294,7 @@ aaa
 aaa
 aaa
 aci
-aaa
+vqs
 aeL
 afF
 afI
@@ -99562,10 +99593,10 @@ aaa
 aaa
 aci
 aaa
-aaa
-aaa
-aci
-aaa
+acj
+xcP
+acj
+hrU
 aeK
 vrz
 afI
@@ -99864,9 +99895,9 @@ aaa
 aaa
 ach
 aay
-acj
+ack
 adi
-acj
+ack
 aaH
 aeK
 afH
