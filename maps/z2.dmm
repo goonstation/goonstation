@@ -16990,10 +16990,7 @@
 /area/crater/biodome/research)
 "aQz" = (
 /obj/storage/cart,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
+/obj/random_item_spawner/furniture_parts/few,
 /turf/unsimulated/floor/black/grime,
 /area/syndicate_station/battlecruiser)
 "aQA" = (
@@ -67311,7 +67308,7 @@
 /area/syndicate_station/battlecruiser)
 "dgO" = (
 /obj/storage/crate/wooden,
-/obj/item/caution,
+/obj/random_item_spawner/furniture_parts/few,
 /turf/unsimulated/floor/black/grime,
 /area/syndicate_station/battlecruiser)
 "dgP" = (
@@ -67369,7 +67366,8 @@
 /area/iomoon)
 "dgW" = (
 /obj/storage/crate/packing,
-/obj/item/football,
+/obj/item/paint_can/random,
+/obj/item/pen/crayon/random,
 /turf/unsimulated/floor/black/grime,
 /area/syndicate_station/battlecruiser)
 "dgX" = (
@@ -67380,7 +67378,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dgY" = (
 /obj/storage/crate/wooden,
-/obj/item/emeter,
+/obj/random_item_spawner/junk/some,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgZ" = (
@@ -67397,11 +67395,13 @@
 "dhb" = (
 /obj/storage/crate/wooden,
 /obj/item/device/light/zippo,
+/obj/item/cigpacket/random,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dhc" = (
 /obj/storage/crate/packing,
-/obj/item/beach_ball,
+/obj/item/inner_tube/random,
+/obj/item/pen/crayon/chalk/random,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dhd" = (
@@ -67457,9 +67457,12 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing"
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing"
+	},
 /obj/item/tool/omnitool/syndicate{
 	icon_state = "syndicate-omnitool-screwing"
 	},
@@ -68014,6 +68017,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/item/storage/toolbox/emergency,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "diw" = (
@@ -68023,9 +68029,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dix" = (
@@ -85240,6 +85247,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"pNn" = (
+/obj/storage/crate/medical{
+	name = "Atropine"
+	},
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/turf/unsimulated/floor/redwhite,
+/area/syndicate_station/battlecruiser)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -113446,7 +113463,7 @@ dhr
 dhE
 dhQ
 dgx
-dim
+pNn
 aKf
 cfO
 cuz
