@@ -466,7 +466,7 @@
 
 /obj/item/reagent_containers/food/snacks/brainespoon
   name = "spoonful of brain"
-  desc = "An enucleation spoon with brain schlorped into it"
+  desc = "An enucleation spoon with brain schlorped into it."
   icon = 'icons/obj/foodNdrink/food_snacks.dmi'
   icon_state = "brainespoon"
   amount = 1
@@ -477,7 +477,7 @@
 
 /obj/item/reagent_containers/food/snacks/brainspoon
   name = "spoonful of brain"
-  desc = "A spoon with brain schlorped into it"
+  desc = "A spoon with brain schlorped into it."
   icon = 'icons/obj/foodNdrink/food_snacks.dmi'
   icon_state = "brainspoon"
   amount = 1
