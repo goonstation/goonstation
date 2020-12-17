@@ -377,8 +377,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.trace_gases = list()
 			payload.trace_gases += trace_gas
 
-			trace_gas.moles += min(total_oxygen/32,5)
-			total_oxygen -= min(trace_gas.moles*32,total_oxygen)
+			// 200/1024=0.19moles  0.19moles/12cells=0.0162moles per cell
+			// At 0.162 moles per cell it will take 21 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
+			// Providing 1.4 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			trace_gas.moles += min(total_oxygen/1024,5)
+			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
+			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+		else
+			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
 
 		payload.oxygen = min(total_oxygen,10)
 		total_oxygen -= payload.oxygen
@@ -392,7 +398,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/moltiz_exp
-
 	execute(var/atom/location, var/sev)
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4)
