@@ -1,4 +1,9 @@
 
+(t)thu dec 17 20
+(u)Kubius
+(p)3065
+(e)🗺|mapping
+(*)Kondaru QoL: more multitools, Toxins heat exchanger adjustment, and "ingame documentation" of Research ejection and QM operation. Make sure to check out previous updates to see what else has changed!
 (t)wed dec 16 20
 (u)UrsulaMejor
 (e)🐛🆕|bug, feature
