@@ -503,7 +503,7 @@
 
 	beta
 		mat_id = "molitz_b"
-		name = "molitz"
+		name = "molitz beta"
 		color = "#ff2288"
 		desc = "A rare form of Molitz an otherwise common crystalline substance."
 
