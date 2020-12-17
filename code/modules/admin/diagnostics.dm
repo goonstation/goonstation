@@ -802,11 +802,11 @@ proc/debug_color_of(var/thing)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
 
-	checkingproximity
-		name = "checkingproximity"
+	checkinghasproximity
+		name = "checkinghasproximity"
 		help = "Green = yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingproximity ? "#0f0" : "#f00"
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
 
 	blood_owner/no_items
 		name = "blood owner - no items"
