@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { Box, Section, Button, RoundGauge, LabeledList } from '../../components';
 import { formatPressure } from '../../format';
 
