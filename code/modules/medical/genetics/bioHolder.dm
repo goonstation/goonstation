@@ -111,6 +111,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
 
+	var/mob_head_offset = 0
+	var/mob_hand_offset = 0
+	var/mob_body_offset = 0
+	var/mob_arm_offset = 0
+	var/mob_leg_offset = 0
+
 	// Standard tone reference:
 	// FAD7D0 - Albino
 	// FFCC99 - White
@@ -230,6 +236,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
+		mob_head_offset = toCopy.mob_head_offset
+		mob_hand_offset = toCopy.mob_hand_offset
+		mob_body_offset = toCopy.mob_body_offset
+		mob_arm_offset = toCopy.mob_arm_offset
+		mob_leg_offset = toCopy.mob_leg_offset
+
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
 
@@ -238,6 +250,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		voicetype = toCopy.voicetype
 
 		flavor_text = toCopy.flavor_text
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_colorful_parts()
 		return src
 
 	disposing()
@@ -253,7 +268,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
-		//customization_first_color += (toCopy.customization_first_color - customization_first_color) / adjust_denominator
 		customization_first_color = StaggeredCopyHex(customization_first_color, toCopy.customization_first_color, adjust_denominator)
 
 		if (progress >= 9 || prob(progress * 10))
@@ -261,11 +275,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			customization_second = toCopy.customization_second
 			customization_third = toCopy.customization_third
 
-		//customization_second_color += (toCopy.customization_second_color - customization_second_color) / adjust_denominator
 		customization_second_color = StaggeredCopyHex(customization_second_color, toCopy.customization_second_color, adjust_denominator)
-		//customization_third_color += (toCopy.customization_third_color - customization_third_color) / adjust_denominator
 		customization_third_color = StaggeredCopyHex(customization_third_color, toCopy.customization_third_color, adjust_denominator)
-		//e_color += (toCopy.e_color - e_color) / adjust_denominator
 		e_color = StaggeredCopyHex(e_color, toCopy.e_color, adjust_denominator)
 
 		s_tone = StaggeredCopyHex(s_tone, toCopy.s_tone, adjust_denominator)
@@ -277,11 +288,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_colorful_parts()
 		return
 
 	proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
 
-		if(adjust_denominator < 1) adjust_denominator = 1
+		adjust_denominator = clamp(adjust_denominator, 1, 10)
 
 		. = "#"
 		for(var/i = 0, i < 3, i++)
@@ -606,7 +620,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
-			return CopyOther(toCopy)
+			src.CopyOther(toCopy)
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)

@@ -796,7 +796,7 @@
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return null
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)

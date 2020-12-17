@@ -1603,6 +1603,8 @@
 										src.remove_stamina(STAMINA_FLIP_COST)
 										src.stamina_stun()
 
+									G.affecting.was_harmed(src)
+
 									src.emote("scream")
 									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
 									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")

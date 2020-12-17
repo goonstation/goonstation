@@ -1145,7 +1145,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/obj/A)
+/proc/heavenly_spawn(var/atom/movable/A)
 	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
@@ -1155,17 +1155,23 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.alpha = 0
 	A.pixel_y = 176
 	lightbeam.alpha = 0
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
-	SPAWN_DBG(45)
-		animate(A, pixel_y = 0, time = 120, easing = SINE_EASING)
-		sleep(12 SECONDS)
-		A.anchored = was_anchored
-		A.layer = oldlayer
-		animate(lightbeam,alpha = 0, time=15)
-		sleep(1.5 SECONDS)
-		qdel(lightbeam)
+	sleep(4.5 SECONDS)
+	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	sleep(12 SECONDS)
+	A.anchored = was_anchored
+	A.layer = oldlayer
+	animate(lightbeam,alpha = 0, time=15)
+	sleep(1.5 SECONDS)
+	qdel(lightbeam)
+	if (ismob(A))
+		var/mob/M = A
+		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
 	icon = 'icons/obj/32x192.dmi'

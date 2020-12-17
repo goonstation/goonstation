@@ -550,11 +550,11 @@ datum/pump_ui/circulator_ui
 		if(src.variant_b)
 			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
-				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</i><br>"}
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</b><br>"}
 				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be for extremely high temperatures. "
 			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
-				instructions_footnote += {"<i>Note: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</i><br>"}
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</b><br>"}
 				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be designed for cooler temperatures. "
 			else
 				// Reassign variant_b to null so unsupported variants aren't shown to players
@@ -940,34 +940,42 @@ datum/pump_ui/circulator_ui
 		ui.open()
 
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
-	var/list/data = list()
-	data["output"] = src.lastgen
-	data["history"] = src.history
+	. = list(
+		"output" = src.lastgen,
+		"history" = src.history,
+	)
 	if(src.circ1)
-		data["hotCircStatus"] = src.circ1
-		data["hotInletTemp"] = src.circ1.air1.temperature
-		data["hotOutletTemp"] = src.circ1.air2.temperature
-		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
-		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
+		. += list(
+			"hotCircStatus" = src.circ1,
+			"hotInletTemp" = src.circ1.air1.temperature,
+			"hotOutletTemp" = src.circ1.air2.temperature,
+			"hotInletPres" = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS,
+			"hotOutletPres" = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS,
+		)
 	else
-		data["hotCircStatus"] = null
-		data["hotInletTemp"] = 0
-		data["hotOutletTemp"] = 0
-		data["hotInletPres"] = 0
-		data["hotOutletPres"] = 0
+		. += list(
+			"hotCircStatus" = null,
+			"hotInletTemp" = 0,
+			"hotOutletTemp" = 0,
+			"hotInletPres" = 0,
+			"hotOutletPres" = 0,
+		)
 	if(src.circ2)
-		data["coldCircStatus"] = src.circ2
-		data["coldInletTemp"] = src.circ2.air1.temperature
-		data["coldOutletTemp"] = src.circ2.air2.temperature
-		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
-		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
+		. += list(
+			"coldCircStatus" = src.circ2,
+			"coldInletTemp" = src.circ2.air1.temperature,
+			"coldOutletTemp" = src.circ2.air2.temperature,
+			"coldInletPres" = MIXTURE_PRESSURE(src.circ2.air1) KILO PASCALS,
+			"coldOutletPres" = MIXTURE_PRESSURE(src.circ2.air2) KILO PASCALS,
+		)
 	else
-		data["coldCircStatus"] = null
-		data["coldInletTemp"] = 0
-		data["coldOutletTemp"] = 0
-		data["coldInletPres"] = 0
-		data["coldOutletPres"] = 0
-	return data
+		. += list(
+			"coldCircStatus" = null,
+			"coldInletTemp" = 0,
+			"coldOutletTemp" = 0,
+			"coldInletPres" = 0,
+			"coldOutletPres" = 0,
+		)
 
 /obj/machinery/atmospherics/unary/furnace_connector
 

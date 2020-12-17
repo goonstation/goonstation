@@ -773,6 +773,12 @@ obj/item/contract/hair
 					continue
 				else
 					H.bioHolder.mobAppearance.customization_first = "None"
+					H.bioHolder.mobAppearance.customization_first_original = "None"
+					H.bioHolder.mobAppearance.customization_second = "None"
+					H.bioHolder.mobAppearance.customization_second_original = "None"
+					H.bioHolder.mobAppearance.customization_third = "None"
+					H.bioHolder.mobAppearance.customization_third_original = "None"
+					H.update_colorful_parts()
 			if (src.limiteduse == 1)
 				src.used++
 				tooltip_rebuild = 1
