@@ -1,5 +1,9 @@
 
 (t)wed dec 16 20
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken aging and hunger should now be lag-compensated
+(*)You can now grab chickens without upsetting them
 (u)Carbadox
 (p)2410
 (e)🆕🎨|feature, sprites

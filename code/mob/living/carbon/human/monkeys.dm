@@ -150,7 +150,7 @@
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
 			..()
 
-	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src))
 			return ..()
