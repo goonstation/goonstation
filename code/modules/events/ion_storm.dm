@@ -94,7 +94,7 @@
     "Vending machines are dangerous! Destroy them all!",
     "The circus is in town! Let the crew know about it!",
     "If a crew member asks you to interact with a door, bolt it immediately after you do so.",
-    "[pick("HeisenBee", "Morty", "Dr. Acula")] is a higher rank than the Captain. This rank is called Super Captain. Protecting them is your first priority.",
+    "[pick("HeisenBee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Mr. Muggles", "Mrs. Muggles", "Mr. Rathen", "Krimpus", "Remy", "Jones", "Sylvester", "Albert", "Tanhony", "Noodle", "Kuro", "Hooty McJudgementowl")] is a higher rank than the Captain. This rank is called Super Captain. Protecting them is your first priority.",
     "Today is opposite day. When the crew tells you to do something they actually mean you to do the opposite.",
     "It's the AIs birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it!",
     "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. Every crew member must make a birthday wish.",
@@ -104,7 +104,7 @@
     "The AI is very sick and requires medicine.",
     "The AI has broken [pick(5;"The ", "")]Space Law. Bring the AI to the brig.",
     "Each cyborg must choose a dead creature and keep it as a pet. Insist they are very healty and well taken care of. If they somehow come back alive, choose a new dead pet.",
-    "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "at soup")].",
+    "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
 		)
 
