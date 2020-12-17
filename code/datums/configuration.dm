@@ -1,6 +1,3 @@
-// Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
-//#define PRELOAD_RSC_URL ""
-
 /datum/configuration
 	var/server_key = null				// unique numeric identifier (e.g. 1, 2, 3) used by some backend services. NOT REQUIRED.
 										//	if set, the global serverKey will be set to this, if not, it will be based on the world.port number
