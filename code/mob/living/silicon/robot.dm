@@ -3212,7 +3212,7 @@
 	New()
 		..(usr.loc, null, 1)
 
-	update_bodypart()
+	update_bodypart(var/part)
 		return
 	update_appearance()
 		return
