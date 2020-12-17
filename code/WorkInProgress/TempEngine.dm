@@ -940,34 +940,42 @@ datum/pump_ui/circulator_ui
 		ui.open()
 
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
-	var/list/data = list()
-	data["output"] = src.lastgen
-	data["history"] = src.history
+	. = list(
+		"output" = src.lastgen,
+		"history" = src.history,
+	)
 	if(src.circ1)
-		data["hotCircStatus"] = src.circ1
-		data["hotInletTemp"] = src.circ1.air1.temperature
-		data["hotOutletTemp"] = src.circ1.air2.temperature
-		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
-		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
+		. += list(
+			"hotCircStatus" = src.circ1,
+			"hotInletTemp" = src.circ1.air1.temperature,
+			"hotOutletTemp" = src.circ1.air2.temperature,
+			"hotInletPres" = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS,
+			"hotOutletPres" = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS,
+		)
 	else
-		data["hotCircStatus"] = null
-		data["hotInletTemp"] = 0
-		data["hotOutletTemp"] = 0
-		data["hotInletPres"] = 0
-		data["hotOutletPres"] = 0
+		. += list(
+			"hotCircStatus" = null,
+			"hotInletTemp" = 0,
+			"hotOutletTemp" = 0,
+			"hotInletPres" = 0,
+			"hotOutletPres" = 0,
+		)
 	if(src.circ2)
-		data["coldCircStatus"] = src.circ2
-		data["coldInletTemp"] = src.circ2.air1.temperature
-		data["coldOutletTemp"] = src.circ2.air2.temperature
-		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
-		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
+		. += list(
+			"coldCircStatus" = src.circ2,
+			"coldInletTemp" = src.circ2.air1.temperature,
+			"coldOutletTemp" = src.circ2.air2.temperature,
+			"coldInletPres" = MIXTURE_PRESSURE(src.circ2.air1) KILO PASCALS,
+			"coldOutletPres" = MIXTURE_PRESSURE(src.circ2.air2) KILO PASCALS,
+		)
 	else
-		data["coldCircStatus"] = null
-		data["coldInletTemp"] = 0
-		data["coldOutletTemp"] = 0
-		data["coldInletPres"] = 0
-		data["coldOutletPres"] = 0
-	return data
+		. += list(
+			"coldCircStatus" = null,
+			"coldInletTemp" = 0,
+			"coldOutletTemp" = 0,
+			"coldInletPres" = 0,
+			"coldOutletPres" = 0,
+		)
 
 /obj/machinery/atmospherics/unary/furnace_connector
 

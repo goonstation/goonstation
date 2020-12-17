@@ -25,13 +25,12 @@
 		ui.open()
 
 /obj/submachine/slot_machine/ui_data(mob/user)
-	var/list/data = list()
-	data["busy"] = working
-	data["scannedCard"] = src.scan
-	data["money"] = src.scan?.money
-	data["plays"] = plays
-
-	return data
+	. = list(
+		"busy" = working,
+		"scannedCard" = src.scan,
+		"money" = src.scan?.money,
+		"plays" = plays,
+	)
 
 /obj/submachine/slot_machine/ui_state(mob/user)
 	return tgui_physical_state
