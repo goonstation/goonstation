@@ -70,6 +70,11 @@
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
 
+//Gas Reaction Flags
+#define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
+#define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
+#define CATALYST_ACTIVE (1<<2)	//! Hotspot Catalyst is Active
+
 // tank properties
 
 /// Tank starts leaking

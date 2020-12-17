@@ -87,10 +87,9 @@
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-
 	var/just_spawned = 1
-
 	var/bypassing = 0
+	var/catalyst_active = FALSE
 
 	New()
 		..()
@@ -173,7 +172,6 @@
 			light.enable(queued_run = 1)
 
 	proc/perform_exposure()
-		var/hotspot_catalyst_found = FALSE
 		var/turf/simulated/floor/location = loc
 		if(!istype(location))
 			return 0
@@ -199,16 +197,8 @@
 			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
 			//Scale volume at 40% of PLASMA_UPPER_TEMPERATURE to allow for hotspot icon to transition to 2nd state
 			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.4 ))
-
-				// Check for catalyst(s)
-				if(length(affected.trace_gases) > 0 )
-					var/datum/gas/oxygen_agent_b/trace_gas = locate(/datum/gas/oxygen_agent_b/) in affected.trace_gases
-					if(istype(trace_gas) && trace_gas?.moles > MINIMUM_REACT_QUANTITY )
-						trace_gas.moles -= MINIMUM_REACT_QUANTITY
-						hotspot_catalyst_found = 1
-
 				// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
-				if(!hotspot_catalyst_found)
+				if(!src.catalyst_active)
 					// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
 					var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / PLASMA_UPPER_TEMPERATURE), 1, CELL_VOLUME)
 					src.volume = max(src.volume, temperature_scaled_volume)
@@ -250,6 +240,7 @@
 
 		perform_exposure()
 
+		if (catalyst_active) catalyst_active = FALSE
 		if (location.wet) location.wet = 0
 
 		if (bypassing)
