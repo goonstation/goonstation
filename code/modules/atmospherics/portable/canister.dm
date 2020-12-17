@@ -421,22 +421,21 @@
 		)
 
 /obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
-	var/list/static_data = list()
-
-	static_data["minRelease"] = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE
-	static_data["maxRelease"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-
+	. = list(
+	"minRelease" = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE,
+	"maxRelease" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
 	if(src?.det?.attachments)
-		static_data["detonatorAttachments"] = list()
-		for(var/obj/item/I in src.det.attachments)
-			static_data["detonatorAttachments"] += I.name
+		var/list/attach_names = list()
+		for(var/obj/item/I as() in src.det.attachments)
+			attach_names += I.name
+		. += list("detonatorAttachments" = attach_names)
+
 		var/has_paper = false
 		for(var/obj/item/paper/sheet in src.det.attachments)
-			static_data["paperData"] = sheet.ui_static_data()
+			. += list("paperData" = sheet.ui_static_data())
 			has_paper = true
-		static_data["hasPaper"] = has_paper
-
-	return static_data
+		. += list("hasPaper" = has_paper)
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return tgui_physical_state
