@@ -246,51 +246,113 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 /obj/beaconkit
 	name = "warp buoy frame"
-	desc = "A partially completed frame for a deployable warp buoy. It's missing some folding struts."
+	desc = "A partially completed frame for a deployable warp buoy. It's missing rods for its stand."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacframe_1"
 	density = 1
 	var/state = 1
 
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/rods) && W.amount >= 4 && state == 1)
-			boutput(user, "<span style=\"color:blue\">You install some metal rods to act as struts.</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-			src.state = 2
-			src.icon_state = "beacframe_2"
+	attackby(var/obj/item/I as obj, var/mob/user as mob)
+		switch(state)
+			if(1)
+				if (I.amount < 4)
+					boutput(user, "<span style=\"color:red\">You don't have enough rods to complete the stand (4 required).</span>")
+				else if (istype(I, /obj/item/rods))
+					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
+			if(2)
+				if (istype(I, /obj/item/cable_coil))
+					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
+			if(3)
+				if (istype(I, /obj/item/electronics/soldering))
+					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
-			W.amount -= 4
-			if (W.amount < 1)
-				user.u_equip(W)
-				qdel(W)
-			else if(W.inventory_counter)
-				W.inventory_counter.update_number(W.amount)
+/datum/action/bar/icon/warp_beacon_assembly
+	id = "warp_beacon_assembly"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 2 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
 
-			src.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
+	var/obj/beaconkit/beacon
+	var/obj/item/the_tool
 
-		else if(istype(W, /obj/item/cable_coil) && state == 2)
-			boutput(user, "<span style=\"color:blue\">You loosely link the control circuitry to the bulb and struts.</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-			src.state = 3
-			src.icon_state = "beaconunit"
+	New(var/obj/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			beacon = O
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.mind.assigned_role == "Chief Engineer")
+				duration = round(duration / 2)
+			if (H.mind.assigned_role == "Engineer")
+				duration = round(duration / 2)
+			if (H.mind.assigned_role == "Mechanic")
+				duration = round(duration / 2)
 
-			W.amount--
-			if (W.amount < 1)
-				user.u_equip(W)
-				qdel(W)
-			else if(W.inventory_counter)
-				W.inventory_counter.update_number(W.amount)
-
-			src.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
-
-		else if(istype(W, /obj/item/electronics/soldering) && state == 3)
-			boutput(user, "<span style=\"color:blue\">You secure the buoy's wires firmly into position. It's now ready to deploy with a wrench.</span>")
-			playsound(get_turf(src), "sound/effects/zzzt.ogg", 40, 1)
-			var/turf/T = get_turf(src)
-			new /obj/beacon_deployer(T)
-			qdel(src)
-
-		else
-			..()
+	onUpdate()
+		..()
+		if (beacon == null || the_tool == null || owner == null || get_dist(owner, beacon) > 1)
+			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
 
+	onStart()
+		..()
+		if (beacon.state == 1)
+			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			owner.visible_message("<span class='notice'>[owner] begins installing rods onto \the [beacon].</span>")
+		if (beacon.state == 2)
+			playsound(get_turf(beacon), "sound/items/Deconstruct.ogg", 40, 1)
+			owner.visible_message("<span class='notice'>[owner] begins connecting \the [beacon]'s electrical systems.</span>")
+		if (beacon.state == 3)
+			playsound(get_turf(beacon), "sound/effects/zzzt.ogg", 30, 1)
+			owner.visible_message("<span class='notice'>[owner] begins soldering \the [beacon]'s wiring into place.</span>")
+	onEnd()
+		..()
+		if (beacon.state == 1)
+			beacon.state = 2
+			beacon.icon_state = "beacframe_2"
+			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
+			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+
+			the_tool.amount -= 4
+			if (the_tool.amount < 1)
+				var/mob/source = owner
+				source.u_equip(the_tool)
+				qdel(the_tool)
+			else if(the_tool.inventory_counter)
+				the_tool.inventory_counter.update_number(the_tool.amount)
+
+			beacon.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
+			return
+		if (beacon.state == 2)
+			beacon.state = 3
+			beacon.icon_state = "beaconunit"
+			boutput(owner, "<span class='notice'>You finish wiring together the beacon's electronics.</span>")
+			playsound(get_turf(beacon), "sound/items/Deconstruct.ogg", 40, 1)
+
+			the_tool.amount -= 1
+			if (the_tool.amount < 1)
+				var/mob/source = owner
+				source.u_equip(the_tool)
+				qdel(the_tool)
+			else if(the_tool.inventory_counter)
+				the_tool.inventory_counter.update_number(the_tool.amount)
+
+			beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
+			return
+		if (beacon.state == 3)
+			boutput(owner, "<span class='notice'>You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench.</span>")
+			playsound(get_turf(beacon), "sound/effects/zzzt.ogg", 40, 1)
+			var/turf/T = get_turf(beacon)
+			new /obj/beacon_deployer(T)
+			qdel(beacon)
+			return
