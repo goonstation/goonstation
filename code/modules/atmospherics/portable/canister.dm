@@ -400,7 +400,7 @@
 
 	if(src.holding)
 		. += list(
-			"holding"= list(
+			"holding" = list(
 				"name" = src.holding.name,
 				"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
 				"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
@@ -422,8 +422,8 @@
 
 /obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
 	. = list(
-	"minRelease" = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE,
-	"maxRelease" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"minRelease" = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE,
+		"maxRelease" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
 	)
 	if(src?.det?.attachments)
 		var/list/attach_names = list()
