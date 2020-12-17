@@ -1,4 +1,4 @@
-import { Box, Section, Button, RoundGauge, LabeledList } from '../../components';
+import { Box, Button, LabeledList, RoundGauge, Section } from '../../components';
 import { formatPressure } from '../../format';
 
 export const PortableBasicInfo = props => {
