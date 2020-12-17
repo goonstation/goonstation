@@ -573,18 +573,16 @@
 					return
 				if(isabomination(H))
 					return
-				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right))
-					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
-					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					playsound(src.loc, src.sound_stepped, 50, 1)
-					var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-					H.changeStatus("weakened", 3 SECONDS)
-					H.force_laydown_standup()
-					var/shard_damage = force
-					affecting.take_damage(shard_damage, 0)
-					H.UpdateDamageIcon()
+				if(H.lying)
+					boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+					step_on(H)
+				else
+					//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+					if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right))
+						return
+					if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
+						boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
+						step_on(H)
 		..()
 
 	custom_suicide = 1
@@ -610,6 +608,16 @@
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
+
+/obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
+	playsound(src.loc, src.sound_stepped, 50, 1)
+	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
+	H.changeStatus("weakened", 3 SECONDS)
+	H.force_laydown_standup()
+	var/shard_damage = force
+	affecting.take_damage(shard_damage, 0)
+	H.UpdateDamageIcon()
+
 
 /obj/item/raw_material/chitin
 	name = "chitin chunk"
