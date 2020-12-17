@@ -373,14 +373,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = new
 
-			payload.temperature = T0C // Lower temperature to simulate an endothermic reaction to from this gas
+			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 			payload.trace_gases = list()
 			payload.trace_gases += trace_gas
 
-			// 200/1024=0.19moles  0.19moles/12cells=0.0162moles per cell
-			// At 0.162 moles per cell it will take 21 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 1.4 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
-			trace_gas.moles += min(total_oxygen/1024,5)
+			// Itr 1: 0.125 Agent B, 10 Oxy
+			// Itr 2: 0.0605 Agent B
+			// 0.1855moles/12cells=0.0155moles per cell
+			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
+			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			trace_gas.moles += min(total_oxygen/1024,0.125)
 			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
 			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
 		else
