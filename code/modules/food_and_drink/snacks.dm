@@ -464,6 +464,28 @@
 	initial_reagents = list("el_diablo"=90)
 	food_effects = list("food_warm", "food_fireburp_big")
 
+/obj/item/reagent_containers/food/snacks/brainespoon
+  name = "spoonful of brain"
+  desc = "An enucleation spoon with brain schlorped into it"
+  icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+  icon_state = "brainespoon"
+  amount = 1
+  heal_amt = 2
+  initial_reagents = list("prions"=2)
+  food_effects = list("food_refreshed")
+  dropped_item = /obj/item/surgical_spoon
+
+/obj/item/reagent_containers/food/snacks/brainspoon
+  name = "spoonful of brain"
+  desc = "A spoon with brain schlorped into it"
+  icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+  icon_state = "brainspoon"
+  amount = 1
+  heal_amt = 2
+  initial_reagents = list("prions"=2)
+  food_effects = list("food_refreshed")
+  dropped_item = /obj/item/kitchen/utensil/spoon
+
 /obj/item/reagent_containers/food/snacks/soup/gruel
 	name = "gruel"
 	desc = "Asking if you can have more is probably ill-advised."
@@ -1576,7 +1598,7 @@
 					newdog = new /obj/item/reagent_containers/food/snacks/corndog/spooky(get_turf(src))
 				else
 					newdog = new /obj/item/reagent_containers/food/snacks/corndog(get_turf(src))
-			
+
 			// Consume a rod or stick
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
 			if(istype(W,/obj/item/stick)) W.amount--
