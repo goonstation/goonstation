@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, RoundGauge, LabeledList } from '../components';
+import { LabeledList, RoundGauge, Section } from '../components';
 import { Window } from '../layouts';
 import { formatPressure } from '../format';
 import { ReleaseValve } from './common/ReleaseValve';
