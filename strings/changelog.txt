@@ -1,6 +1,10 @@
 
 (t)thu dec 17 20
 (u)Kubius
+(p)3064
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Ranch, and Owlery, installed into Atlas.
+(u)Kubius
 (p)3065
 (e)🗺|mapping
 (*)Kondaru QoL: more multitools, Toxins heat exchanger adjustment, and "ingame documentation" of Research ejection and QM operation. Make sure to check out previous updates to see what else has changed!
