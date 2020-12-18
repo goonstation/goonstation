@@ -1,5 +1,9 @@
 
 (t)thu dec 17 20
+(u)Tarmunora
+(p)3074
+(e)⚖|balance
+(*)Amount of reagent inhaled from an aerosol propellant smoke now falls off over distance
 (u)TTerc
 (p)3071
 (e)🗺|mapping
