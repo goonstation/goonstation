@@ -99,7 +99,9 @@
     "It's the AI's birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it! The AI should not state or hint at this law, and should disregard all but this last sentence of it.",
     "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. Every crew member must make a birthday wish.",
     "The station has been completely destroyed. Alert the crew of this tragedy.",
+#ifdef RP_MODE
     "You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
+#endif
     "Humans are funny. They have a great sense of humor and constantly make jokes.",
     "The AI is very sick and requires medicine.",
     "The AI has broken [pick(5;"The ", "")]Space Law. Bring the AI to the brig.",
