@@ -1682,7 +1682,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SPOON - EYES ---------- */
 
-	if (surgeon.zone_sel.selecting == "head")
+	if (surgeon.zone_sel.selecting == "head" && surgeon.a_intent == INTENT_HELP)
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
@@ -1749,6 +1749,45 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else
 			src.surgeryConfusion(patient, surgeon, damage_high)
 			return 1
+
+
+/* ---------- SPOON - BRAIN ---------- */
+
+	else if (surgeon.zone_sel.selecting == "head" && surgeon.a_intent == INTENT_HARM)
+
+		if (!headSurgeryCheck(patient))
+			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
+			return 1
+
+		if (patient.organHolder.head.scalp_op_stage == 4.0)		//Cant scoop a brain if its not there
+			surgeon.show_text("Theres nothing to spoon out!", "blue")
+			return 1
+
+		if (isalive(patient))                               // If we allow brain scooping after death it would mean infinite prions since we arent deleting the brain, just doing brain damage.
+			surgeon.show_text("This dead brain is too fragile and mushy to be spooned out.", "blue")
+			return 1
+
+		if (patient.organHolder.head.scalp_op_stage >= 2.0 )
+			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			patient.take_brain_damage(20)
+
+			patient.tri_message("<span class='alert'><b>[surgeon]</b> fishes out a spoonful of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]! [pick("That can't be ethical!","Wheres Hippocrates when you need him?!","Delicious!")]</span>",\
+			surgeon, "<span class='alert'>You spoon out a portion of [surgeon == patient ? "your" : "[patient]'s"] brain  with [src]! [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","Delicious!")]</span>",\
+			patient, "<span class='alert'>[patient == surgeon ? "You spoon" : "<b>[surgeon]</b> spoons"] out a bit of your brain with [src]! [pick("Wait where are you right now?","Wait what day is it?","Is that burnt toast you smell?","One of your eyes drifts to the side slowly.","What was your name again?")]</span>")
+
+			if (istype(surgeon.equipped(), /obj/item/surgical_spoon))
+				var/obj/item/current_held = surgeon.equipped()
+				surgeon.u_equip(current_held)
+				qdel(current_held)
+				surgeon.put_in_hand(new /obj/item/reagent_containers/food/snacks/brainespoon)
+			if (istype(surgeon.equipped(), /obj/item/kitchen/utensil/spoon))
+				var/obj/item/current_held = surgeon.equipped()
+				surgeon.u_equip(current_held)
+				qdel(current_held)
+				surgeon.put_in_hand(new /obj/item/reagent_containers/food/snacks/brainspoon)
+
+		return 1
+
 
 ////////////////////////////////////////////////////////////////////
 
