@@ -1123,6 +1123,8 @@
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
+		else
+			..()
 
 	frosted
 		name = "frosted donut"
