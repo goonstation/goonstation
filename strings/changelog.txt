@@ -1,4 +1,9 @@
 
+(t)fri dec 18 20
+(u)virvatuli
+(p)3088
+(e)🗺|mapping
+(+)The Salyut derelict now has an appropriately Soviet space suit.
 (t)thu dec 17 20
 (u)Tarmunora
 (p)3074
