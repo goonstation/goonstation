@@ -16,30 +16,27 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	var/list/macho_arena_turfs
 	New()
 		..()
-		SPAWN_DBG(0)
-			if(src.bioHolder && src.bioHolder.mobAppearance)
-				src.bioHolder.mobAppearance.customization_first = "Dreadlocks"
-				src.bioHolder.mobAppearance.customization_second = "Full Beard"
+		//src.mind = new
+		src.gender = "male"
+		src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
-				SPAWN_DBG(1 SECOND)
-					src.bioHolder.mobAppearance.UpdateMob()
+		if (!src.reagents)
+			src.create_reagents(1000)
 
-			//src.mind = new
-			src.gender = "male"
-			src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
+		src.reagents.add_reagent("stimulants", 200)
 
-			if (!src.reagents)
-				src.create_reagents(1000)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/macho, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 
-			src.reagents.add_reagent("stimulants", 200)
-
-			src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/macho, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
-			src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+	initializeBioholder()
+		src.bioHolder.mobAppearance.customization_first = "Dreadlocks"
+		src.bioHolder.mobAppearance.customization_second = "Full Beard"
+		. = ..()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

@@ -215,6 +215,11 @@
 	req_access = list(access_hydro)
 	color = MAINTENANCE
 
+/obj/access_spawn/rancher
+	name = "ranch access spawn"
+	req_access = list(access_ranch)
+	color = MAINTENANCE
+
 /obj/access_spawn/hos
 	name = "HOS access spawn"
 	req_access = list(access_maxsec)

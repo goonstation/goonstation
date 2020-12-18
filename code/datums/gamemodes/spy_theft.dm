@@ -577,7 +577,7 @@
 			choice = pick(S)
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
-			if (item_existing && T.z == 1)
+			if (item_existing && T?.z == 1)
 				break
 			else
 				item_existing = 0

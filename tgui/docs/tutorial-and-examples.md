@@ -60,11 +60,10 @@ data for our object to use. Let's imagine our object has a few vars:
 
 ```dm
 /obj/machinery/my_machine/ui_data(mob/user)
-  var/list/data = list()
-  data["health"] = health
-  data["color"] = color
-
-  return data
+  . = list(
+    "health" = health,
+    "color" = color,
+  )
 ```
 
 The `ui_data` proc is what people often find the hardest about tgui, but its
@@ -300,9 +299,9 @@ upon code review):
     ui.open()
 
 /obj/copypasta/ui_data(mob/user)
-  var/list/data = list()
-  data["var"] = var
-  return data
+  . = list(
+    "var" = var
+  )
 
 /obj/copypasta/ui_act(action, params)
   . = ..()

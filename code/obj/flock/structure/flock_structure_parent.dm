@@ -116,8 +116,7 @@
 				B.setMaterial(getMaterial("gnesisglass"))
 		if(prob(30))
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	qdel(src)
 
 /obj/flock_structure/attack_hand(var/mob/user)

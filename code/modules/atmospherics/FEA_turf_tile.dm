@@ -198,6 +198,8 @@ turf
 				if (active_hotspot)
 					pool(active_hotspot)
 					active_hotspot = null
+			if(being_superconductive)
+				air_master.active_super_conductivity.Remove(src)
 			if(blocks_air)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
@@ -530,7 +532,7 @@ turf
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
 			var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
-			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && src.heat_capacity)
 
 				var/heat = conduction_coefficient*delta_temperature* \
 					(src.heat_capacity*sharer.heat_capacity/(src.heat_capacity+sharer.heat_capacity))

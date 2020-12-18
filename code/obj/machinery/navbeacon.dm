@@ -33,8 +33,7 @@
 		hide(T.intact)
 
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[freq]")
+			radio_controller?.add_object(src, "[freq]")
 
 			if(!net_id)
 				net_id = generate_net_id(src)
@@ -97,6 +96,33 @@
 			return
 
 		switch (signal.data["command"])
+			if ("help")
+				var/datum/signal/reply = get_free_signal()
+				reply.source = src
+				reply.transmission_method = 1
+				reply.data["sender"] = net_id
+				reply.data["address_1"] = signal.data["sender"]
+				if (!signal.data["topic"])
+					reply.data["description"] = "Nav Beacon - provides navigation data for bots"
+					reply.data["topics"] = "status,set_location,set_code"
+				else
+					reply.data["topic"] = signal.data["topic"]
+					switch (lowertext(signal.data["topic"]))
+						if ("status")
+							reply.data["description"] = {"Returns the status of the nav beacon. This includes the beacon
+								location and all of the configurable transponder codes.
+								Please consult your internal documentation for information about these codes"}
+						if ("set_location")
+							reply.data["description"] = "Sets the beacon location name"
+							reply.data["args"] = "location"
+						if ("set_code")
+							reply.data["description"] = "Sets the value of a configurable transponder code"
+							reply.data["args"] = "code_key,code_value"
+						else
+							reply.data["description"] = "ERROR: UNKNOWN TOPIC"
+				var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+				if(!frequency) return
+				frequency.post_signal(src, reply)
 			if ("status")
 				post_status(signal.data["sender"])
 			if ("set_location")

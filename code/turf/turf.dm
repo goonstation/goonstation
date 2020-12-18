@@ -356,8 +356,7 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	if(src.material)
-		src.material.triggerOnEntered(src, M)
+	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -685,6 +684,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)

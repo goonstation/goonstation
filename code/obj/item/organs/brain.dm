@@ -49,8 +49,11 @@
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))
-			if (src.owner && src.owner.current)
-				. += "<br><span class='notice'>This brain is still warm.</span>"
+			if (src.owner?.ckey)
+				if (!find_ghost_by_key(src.owner?.ckey))
+					. += "<br><span class='notice'>This brain is slimy.</span>"
+				else
+					. += "<br><span class='notice'>This brain is still warm.</span>"
 			else
 				. += "<br><span class='alert'>This brain has gone cold.</span>"
 
@@ -94,7 +97,7 @@
 			return
 		if(inafterlifebar(mind.current)) // No changing owners af this is happening in the afterlife
 			return
-		if (mind.brain)
+		if (mind.brain && mind.brain != src)
 			var/obj/item/organ/brain/brain = mind.brain
 			brain.owner = null
 		mind.brain = src

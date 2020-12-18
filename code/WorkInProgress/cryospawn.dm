@@ -20,8 +20,12 @@
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32
-	pixel_x = -32
 	bound_height = 64
+#ifdef IN_MAP_EDITOR
+	pixel_x = 0
+#else
+	pixel_x = -32
+#endif
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
@@ -109,7 +113,7 @@
 		SPAWN_DBG(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
 				busy = 0
-				return (folks_to_spawn.len != 0)
+				return
 			var/turf/firstLoc = locate(src.x, src.y, src.z)
 			thePerson.set_loc( firstLoc )
 			playsound(src, 'sound/vox/decompression.ogg',be_loud ? 50 : 2)
@@ -119,7 +123,7 @@
 			sleep(1 SECOND)
 			if (!thePerson)
 				busy = 0
-				return (folks_to_spawn.len != 0)
+				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
 			src.icon_state = "cryotron_up"
@@ -134,7 +138,7 @@
 
 			sleep(0.9 SECONDS)
 			busy = 0
-			return (folks_to_spawn.len != 0)
+			return
 
 //#ifdef MAP_OVERRIDE_DESTINY
 	proc/add_person_to_storage(var/mob/living/L as mob, var/voluntary = 1)

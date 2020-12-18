@@ -2856,6 +2856,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hydroponics Lobby"
 	icon_state = "green"
 
+/area/station/ranch
+	name = "Ranch"
+	icon_state = "ranch"
+
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
 	name = "Garden"
@@ -3109,8 +3113,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
@@ -4996,8 +4999,7 @@ area/station/security/visitation
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O

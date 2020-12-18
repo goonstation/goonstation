@@ -45,8 +45,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE)
 			return
 
-		if(src.master)
-			src.master.receive_signal(signal)
+		src.master?.receive_signal(signal)
 
 		return
 

@@ -585,8 +585,7 @@ datum
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
 									H.equip_if_possible(E,H.slot_glasses)
-						H.set_face_icon_dirty()
-						H.set_body_icon_dirty()
+					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
 

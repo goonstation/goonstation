@@ -1042,6 +1042,22 @@
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
+/turf/simulated/floor/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
 /////////////////////////////////////////
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */

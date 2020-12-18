@@ -338,7 +338,7 @@
 
 	relaymove(mob/user, direction)
 		if (direction != eject_dir)
-			if (direction & WEST || direction & EAST)
+			if (direction == WEST || direction == EAST)
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
