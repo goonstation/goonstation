@@ -2511,6 +2511,10 @@
 /obj/map/light/green,
 /turf/space/fluid/manta,
 /area/mantavault)
+"gN" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "gP" = (
 /obj/indestructible/invisible_block/opaque,
 /turf/unsimulated/floor/longtile/black,
@@ -2539,6 +2543,16 @@
 	dir = 4
 	},
 /area/space)
+"gV" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "gW" = (
 /turf/space,
 /area/space)
@@ -9549,15 +9563,43 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/blue,
 /area/space)
+"yi" = (
+/obj/landmark{
+	name = "marjfall"
+	},
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
 "yw" = (
 /obj/item/plant/herb/cannabis/spawnable,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"zl" = (
+/obj/machinery/vending/snack{
+	credit = 43
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"zz" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/hydro_growlamp,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "zL" = (
 /obj/decal/cleanable/dirt,
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/drainage,
 /turf/unsimulated/floor/sanitary/blue,
-/area/space)
+/area/dank_trench)
+"AA" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "AC" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor/underwalls,
 /turf/unsimulated/wall/setpieces/Azarak/cavewall/edges{
@@ -10073,6 +10115,22 @@
 /obj/critter/bat/hellbat,
 /turf/unsimulated/floor/setpieces/Azarak/rockyfloor,
 /area/mantavault)
+"CB" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/manufacturer/general{
+	desc = "It's covered top to bottom in a thin layer of sticky gunk. You are absolutely certain it has never been cleaned.";
+	free_resource_amt = 0;
+	free_resources = null;
+	malfunction = 1;
+	name = "grody manufacturer";
+	wires = 11
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "CD" = (
 /obj/decoration/toiletholder{
 	pixel_y = 32
@@ -10091,125 +10149,355 @@
 	pixel_y = -9
 	},
 /turf/unsimulated/floor/sanitary/blue,
-/area/space)
+/area/dank_trench)
+"CE" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "CG" = (
 /obj/item/storage/toilet{
 	dir = 4
 	},
 /obj/decal/cleanable/fungus,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/unsimulated/floor/sanitary/blue,
-/area/space)
+/area/dank_trench)
+"CR" = (
+/obj/item/furniture_parts/office_chair/green,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"CU" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "Da" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/sanitary/blue,
-/area/space)
+/area/dank_trench)
 "Dn" = (
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Dr" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "DY" = (
 /obj/rack,
 /obj/item/clothing/head/emerg,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"EK" = (
+/obj/item/cable_coil,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Fh" = (
+/obj/item/scrap,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"FH" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"FZ" = (
+/obj/decal/cleanable/oil,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Gc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/bluntwrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/bluntwrap{
+	pixel_y = -3
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "Gg" = (
 /obj/decal/fakeobjects/creepytv{
 	desc = "There's a gummy layer of dust over the controls."
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "Gm" = (
 /obj/item/reagent_containers/food/snacks/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Gq" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Gt" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "HY" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/couch/purple{
 	dir = 9
 	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Id" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Il" = (
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Ip" = (
+/turf/unsimulated/wall/trench,
+/area/dank_trench)
+"IF" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"IY" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/weldingtool{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert{
+	req_access = null;
+	start_charge = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Jq" = (
 /obj/landmark{
 	name = "marjfall"
 	},
 /turf/space/fluid/noexplosion,
-/area/space)
+/area/dank_trench)
 "Ju" = (
 /obj/item/seed/cannabis,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Jx" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "JA" = (
 /obj/item/scissors,
 /obj/item/rubberduck{
 	pixel_x = -7;
 	pixel_y = 8
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/unsimulated/floor/damaged3,
-/area/space)
+/area/dank_trench)
 "JD" = (
 /obj/item/scrap,
 /turf/space/fluid/noexplosion,
-/area/space)
+/area/dank_trench)
 "JF" = (
 /obj/machinery/door/airlock/pyro/glass/brig{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"JK" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/obj/decal/cleanable/generic{
+	desc = "Smells vaguely of eggs and mint.";
+	name = "weird flakes"
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "JL" = (
 /obj/decal/cleanable/dirt,
 /obj/rack,
 /obj/item/tank/air,
 /obj/item/clothing/suit/space/emerg,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Ki" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Kl" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"KD" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "Lh" = (
 /obj/reagent_dispensers/still,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
-"Ly" = (
-/obj/machinery/shower{
-	dir = 8;
-	icon_state = "showerhead";
-	pixel_y = 6
+/area/dank_trench)
+"Ll" = (
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"Lq" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/swedish_bag{
+	icon_state = "swedishfisk-open";
+	item_amount = 4;
+	name = "dirty bag of swedish fisk";
+	open = 1
 	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Lr" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/storage/crate,
+/obj/item/rods/steel/fullstack,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Lv" = (
+/obj/decal/cleanable/paper,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "1-9"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Ly" = (
 /obj/decal/cleanable/vomit,
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = 8
+	},
 /turf/unsimulated/floor/sanitary/blue,
-/area/space)
+/area/dank_trench)
+"LN" = (
+/obj/rack,
+/obj/item/sheet/steel{
+	amount = 10
+	},
+/obj/item/sheet/glass{
+	amount = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "LR" = (
 /obj/stool/chair/comfy{
 	dir = 1;
 	icon_state = "chair_comfy"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"LU" = (
+/obj/storage/crate/furnacefuel,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "Mr" = (
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "Mz" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "MJ" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"NS" = (
+/obj/submachine/seed_manipulator{
+	desc = "A seed manipulation machine. It's seen a lot of use.";
+	name = "gummed-up PlantMaster"
+	},
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_y = 28
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "Oc" = (
 /obj/decal/cleanable/dirt,
 /obj/shrub/dead,
@@ -10217,25 +10505,36 @@
 	pixel_x = 5
 	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "ON" = (
 /obj/ladder{
 	icon_state = "ladder_wall";
-	id = "marjorama";
+	id = "bluntcliff";
 	pixel_y = 24
 	},
 /turf/space/fluid/noexplosion,
-/area/space)
+/area/dank_trench)
 "Pb" = (
 /obj/item/raw_material/rock,
 /turf/space/fluid/noexplosion,
-/area/space)
+/area/dank_trench)
+"Pc" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
 "Pp" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "PA" = (
 /obj/item/device/light/glowstick{
 	pixel_x = -13;
@@ -10246,26 +10545,78 @@
 	pixel_x = -13;
 	pixel_y = -11
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"PB" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "PK" = (
 /obj/stool/chair/couch/purple{
 	dir = 5
 	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "PS" = (
 /obj/item/device/light/flashlight{
 	pixel_x = 4;
 	pixel_y = -8
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"PX" = (
+/obj/table/auto,
+/obj/item/device/reagentscanner{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Qr" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Qs" = (
 /obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Qx" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "QN" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
@@ -10275,40 +10626,230 @@
 	name = "grubby old ashtray";
 	pixel_x = -7
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"QX" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/ammonia{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/topcrop{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/bottle/powerplant{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -2;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Rc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Rd" = (
+/obj/storage/crate/trench_loot/drug,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Rs" = (
+/obj/storage/crate,
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/comfy_chair{
+	pixel_y = 6
+	},
+/obj/item/furniture_parts/comfy_chair/yellow,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "RJ" = (
 /obj/reagent_dispensers/watertank,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"RX" = (
+/obj/machinery/power/monitor{
+	color = "#DDDDDD";
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Sb" = (
+/obj/storage/crate/wooden/instruments,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Sg" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Sm" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"TQ" = (
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"Ug" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "UV" = (
 /obj/item/satchel/hydro,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Vg" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Vh" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "Vl" = (
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
 "Vx" = (
 /turf/unsimulated/wall/auto/supernorn,
-/area/space)
+/area/dank_trench)
+"Vy" = (
+/obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"VA" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
 "VQ" = (
 /turf/unsimulated/floor/grime,
-/area/space)
+/area/dank_trench)
+"Wh" = (
+/obj/machinery/chem_master,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Ws" = (
+/turf/unsimulated/wall/trench/side,
+/area/dank_trench)
+"WG" = (
+/obj/item/paper{
+	info = "rico\nyou remember the marijuana trench back on earth, man? this is just like that. marijuana trench 2/ncarl";
+	name = "odd note"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"WU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/pen,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Xt" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/obj/item/hand_labeler{
+	pixel_y = -3
+	},
+/obj/item/hand_labeler,
+/obj/item/hand_labeler{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Xx" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 "YJ" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
 /turf/space/fluid/noexplosion,
-/area/space)
+/area/dank_trench)
+"Za" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Zn" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Zo" = (
 /obj/decal/cleanable/dirt,
+/obj/machinery/vending/standard,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/unsimulated/floor/plating,
-/area/space)
+/area/dank_trench)
+"ZN" = (
+/obj/decal/cleanable/rust,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"ZU" = (
+/obj/storage/crate{
+	name = "furnace fuel crate"
+	},
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/spawnable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"ZX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
 
 (1,1,1) = {"
 ab
@@ -24808,32 +25349,32 @@ gW
 "}
 (49,1,1) = {"
 ab
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -25110,32 +25651,32 @@ gW
 "}
 (50,1,1) = {"
 ab
-aS
-aW
-gQ
-aS
-aS
-aS
-aS
-aS
-aS
-aW
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
 JD
-gQ
-aS
-aS
-aW
+Il
+Ip
+Ip
+Ws
 YJ
-aS
-aW
-JD
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ws
+Fh
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -25412,32 +25953,32 @@ gW
 "}
 (51,1,1) = {"
 ab
-aS
-aW
+Ip
+Ws
 JD
-aS
-aW
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-aS
-aW
-JD
+Ip
+Ws
+TQ
+TQ
+Il
+TQ
+TQ
+TQ
+TQ
+TQ
+Ip
+Ws
+Fh
 Jq
-gQ
+TQ
 Pb
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -25714,32 +26255,32 @@ gW
 "}
 (52,1,1) = {"
 ab
-aS
-aW
-gQ
-gQ
-gQ
+Ip
+Ws
+TQ
+Il
+TQ
 Pb
-aS
-aW
+Ip
+Ws
 YJ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
+Il
+TQ
+TQ
+Il
+TQ
+TQ
+TQ
+TQ
+Il
+TQ
 Jq
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -26016,32 +26557,32 @@ gW
 "}
 (53,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
-aS
-aS
-aS
-aS
-aS
-aS
-aW
+Ip
+Ip
+Ws
+TQ
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
 Pb
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
-gQ
+TQ
+TQ
+Il
+TQ
+TQ
+TQ
+TQ
+Il
 Pb
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -26318,32 +26859,32 @@ gW
 "}
 (54,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
-aS
-aS
-aS
+Ip
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
 Vx
 Vx
 Vx
 Vx
-gK
-gK
-gK
+PB
+PB
+PB
 Vx
-aS
-aW
-gQ
+Ip
+Ws
+TQ
 Jq
-gQ
-gQ
-aS
-aS
-aS
-aS
-aS
+TQ
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -26620,13 +27161,13 @@ gW
 "}
 (55,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
-aS
-aS
-aS
+Ip
+Ip
+Ws
+TQ
+Ip
+Ip
+Ip
 Vx
 CG
 Ly
@@ -26635,17 +27176,17 @@ Gg
 Gm
 HY
 Vx
-aS
-aS
-aW
-JD
-gQ
-gQ
-gQ
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ws
+Fh
+TQ
+TQ
+TQ
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -26922,9 +27463,9 @@ gW
 "}
 (56,1,1) = {"
 ab
-aS
-aW
-gQ
+Ip
+Ws
+Il
 JD
 Vx
 Vx
@@ -26937,17 +27478,17 @@ Oc
 PA
 PK
 Vx
-aS
-aS
-aW
-gQ
-gQ
-gQ
-gQ
-Jq
-aS
-aS
-aS
+Ip
+Ip
+Ws
+TQ
+TQ
+TQ
+TQ
+yi
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -27224,11 +27765,11 @@ gW
 "}
 (57,1,1) = {"
 ab
-aS
-aW
-gQ
-gQ
-gK
+Ip
+Ws
+TQ
+Il
+PB
 Qs
 RJ
 Vx
@@ -27245,11 +27786,11 @@ Vx
 Vx
 Pb
 Jq
-gQ
+Il
 JD
-aS
-aS
-aS
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -27526,32 +28067,32 @@ gW
 "}
 (58,1,1) = {"
 ab
-aS
-aW
+Ip
+Ws
 Pb
-gQ
-gK
-VQ
+TQ
+PB
+Zn
 Ju
 Lh
-gK
-VQ
+PB
+KD
 Dn
+Za
 VQ
-VQ
-VQ
-VQ
+Id
+gV
 Vx
 DY
 JL
 Vx
-gQ
-gQ
-gQ
-gQ
-gQ
-aS
-aS
+VA
+TQ
+TQ
+TQ
+Il
+Ip
+Ip
 ab
 gW
 gW
@@ -27828,32 +28369,32 @@ gW
 "}
 (59,1,1) = {"
 ab
-aS
-aW
+Ip
+Ws
 JD
-gQ
-gK
+Il
+PB
 UV
-VQ
-VQ
+Zn
+Zn
 Vh
 MJ
 VQ
-VQ
-VQ
+Zn
+Zn
 MJ
-VQ
+Zn
 Mz
-VQ
-VQ
-Mz
-gQ
-gQ
-gQ
-gQ
-gQ
-aS
-aS
+CE
+Zn
+IF
+TQ
+TQ
+TQ
+TQ
+TQ
+Ip
+Ip
 ab
 gW
 gW
@@ -28130,32 +28671,32 @@ gW
 "}
 (60,1,1) = {"
 ab
-aS
-aW
-gQ
-gQ
-gK
+Ip
+Ws
+TQ
+TQ
+PB
 Ju
 yw
 Mr
-gK
-VQ
+PB
+Zn
 Vl
 QN
 LR
 VQ
-VQ
+zl
 Vx
 PS
 JA
 Vx
-gQ
-aS
-aW
+Il
+Ip
+Ws
 ON
-gQ
-aS
-aS
+TQ
+Ip
+Ip
 ab
 gW
 gW
@@ -28432,12 +28973,12 @@ gW
 "}
 (61,1,1) = {"
 ab
-aS
-aW
-gQ
-gQ
-gK
-Qs
+Ip
+Ws
+Il
+TQ
+PB
+Vy
 Pp
 Vx
 Vx
@@ -28445,19 +28986,19 @@ Kl
 Vx
 Vx
 Vx
-Kl
+Gt
 Vx
 Vx
 Vx
 Vx
 Vx
-aS
-aS
-aS
-aW
+Ip
+Ip
+Ip
+Ws
 Jq
-gQ
-aS
+Il
+Ip
 ab
 gW
 gW
@@ -28734,32 +29275,32 @@ gW
 "}
 (62,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
+Ip
+Ip
+Ws
+TQ
 Vx
 Vx
 Vx
 Vx
-VQ
-VQ
-VQ
+Wh
+gN
+Lq
 Vx
-MJ
-VQ
-VQ
-VQ
-MJ
+CB
+Zn
+RX
+ZU
+Gq
 Vx
-aS
-aS
-aS
-aS
-aW
-gQ
-gQ
-aS
+Ip
+Ip
+Ip
+Ip
+Ws
+TQ
+TQ
+Ip
 ab
 gW
 gW
@@ -29036,32 +29577,32 @@ gW
 "}
 (63,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
-aS
-aS
-aS
+Ip
+Ip
+Ws
+TQ
+Ip
+Ip
+Ip
 Vx
-VQ
-VQ
-VQ
-Vx
-VQ
-VQ
-VQ
-MJ
-VQ
+NS
+JK
+AA
+Ll
+IY
+Dr
+WU
+Qr
+Ug
 Vx
 Zo
-gL
-aS
-aS
-aS
-aW
+Xx
+Ip
+Ip
+Ip
+Ws
 JD
-aS
+Ip
 ab
 gW
 gW
@@ -29338,32 +29879,32 @@ gW
 "}
 (64,1,1) = {"
 ab
-aS
-aS
-aW
-gQ
+Ip
+Ip
+Ws
+Il
 JD
-aS
-aS
+Ip
+Ip
+ZN
+QX
+PX
+Pc
 Vx
-VQ
-VQ
-VQ
+Sg
+FH
+EK
+Vg
+Ki
 Vx
-VQ
-MJ
-VQ
-VQ
-VQ
-Vx
-gL
-gL
-gL
-aS
-aS
-aS
-aS
-aS
+CU
+Qx
+LN
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -29640,13 +30181,13 @@ gW
 "}
 (65,1,1) = {"
 ab
-aS
-aS
-aS
-aW
-gQ
-gQ
-aS
+Ip
+Ip
+Ip
+Ws
+TQ
+Rd
+Ip
 Vx
 Vx
 Vx
@@ -29655,17 +30196,17 @@ Vx
 Vx
 Vx
 Vx
-Kl
+Jx
 Vx
 Vx
-gL
-gL
-Zo
-aS
-aS
-aS
-aS
-aS
+Gc
+Lv
+Xt
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -29942,32 +30483,32 @@ gW
 "}
 (66,1,1) = {"
 ab
-aS
-aS
-aS
-aW
-Pb
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aW
-gL
-gL
-gL
-gL
-gL
-gL
-gL
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ws
+Il
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+zz
+CR
+ZX
+FZ
+Sm
+WG
+Rc
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -30244,32 +30785,32 @@ gW
 "}
 (67,1,1) = {"
 ab
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aW
-gL
-gL
-gL
-aS
-aS
-aS
-aS
-aW
-Zo
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ws
+LU
+Sb
+Rs
+Ip
+Ip
+Ip
+Ip
+Ws
+Lr
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
@@ -30546,32 +31087,32 @@ gW
 "}
 (68,1,1) = {"
 ab
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
+Ip
 ab
 gW
 gW
