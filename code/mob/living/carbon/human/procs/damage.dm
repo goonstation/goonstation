@@ -697,7 +697,7 @@
 		else
 			src.organHolder.heal_organ(abs(amount), 0, 0, "brain")
 
-	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= src.organHolder.brain.MAX_DAMAGE && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
 		return

@@ -677,20 +677,11 @@
 	category = "stats"
 	points = -1
 	isPositive = 1
-
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.max_health = 150
-			H.health = 150
+			H.organHolder.brain.amount_spooned_out = 3
 			H.take_brain_damage(60)
-		return
-
-	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.get_brain_damage() < 60)
-				H.take_brain_damage(60-H.get_brain_damage())
 		return
 
 /obj/trait/athletic

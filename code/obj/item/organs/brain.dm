@@ -11,12 +11,20 @@
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
+	var/amount_spooned_out = 0
 	edible = 0
 	module_research = list("medicine" = 1, "efficiency" = 10)
 	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
+
+	on_life() //Just to be safe.
+		if(ishuman(holder.donor))
+			var/mob/living/carbon/human/H = holder.donor
+			if(H.get_brain_damage() < H.organHolder.brain.amount_spooned_out * 20)
+				H.take_brain_damage((H.organHolder.brain.amount_spooned_out * 20)-H.get_brain_damage())
+		return
 
 	disposing()
 		if (owner && owner.brain == src)
