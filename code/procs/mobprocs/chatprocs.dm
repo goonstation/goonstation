@@ -694,6 +694,8 @@
 			else
 				display_name += " (as [src.client.fakekey])"
 
+		display_name += " ([src.get_heard_name()])"
+
 		if (src.client.holder && (!src.client.stealth || C.holder))
 			if (src.client.holder.level == LEVEL_BABBY)
 				looc_class = "gfartlooc"
