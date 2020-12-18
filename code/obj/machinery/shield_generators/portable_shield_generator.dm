@@ -40,8 +40,7 @@
 
 	disposing()
 		shield_off(1)
-		if(PCEL)
-			PCEL.dispose()
+		PCEL?.dispose()
 		PCEL = null
 		display_active = null
 		display_battery = null

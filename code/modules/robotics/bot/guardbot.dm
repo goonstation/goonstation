@@ -53,8 +53,7 @@
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
-				if(master.task)
-					master.task.task_input("path_error")
+				master.task?.task_input("path_error")
 
 				master.moving = 0
 				//dispose()
@@ -68,8 +67,7 @@
 				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
-					if(master.task)
-						master.task.task_input("path_blocked")
+					master.task?.task_input("path_blocked")
 					break
 				step_to(master, master.path[1])
 				if(master.loc != master.path[1])
@@ -1253,8 +1251,7 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
-			if(src.task)
-				src.task.task_input("hugged")
+			src.task?.task_input("hugged")
 			return
 
 		if(get_dist(user, src) > 1)
@@ -1313,8 +1310,7 @@
 				speak("SO SAYETH THE WIZARD!")
 				return
 
-		if(src.task)
-			src.task.receive_signal(signal, is_beacon)
+		src.task?.receive_signal(signal, is_beacon)
 
 		return
 
@@ -1476,8 +1472,7 @@
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
 				new /obj/item/parts/robot_parts/arm/left(T)
-			if(src.hat)
-				src.hat.set_loc(T)
+			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
 			var/obj/item/guardbot_core/core = new /obj/item/guardbot_core(T)
@@ -4528,11 +4523,9 @@
 		return
 
 	disposing()
-		if(src.current)
-			src.current.wakeup()
+		src.current?.wakeup()
 		current = null
-		if(radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
+		radio_controller?.remove_object(src, "[frequency]")
 		radio_connection = null
 		if (link)
 			link.master = null
@@ -4775,8 +4768,7 @@
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)
-		if(src.hat)
-			src.hat.set_loc(T)
+		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
 		core.created_name = src.name

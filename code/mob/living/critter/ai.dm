@@ -39,11 +39,9 @@ var/list/ai_move_scheduled = list()
 			ownhuman = null
 
 		target = null
-		if(current_task)
-			current_task.dispose()
+		current_task?.dispose()
 		current_task = null
-		if(default_task)
-			default_task.dispose()
+		default_task?.dispose()
 		default_task = null
 		if(task_cache)
 			for(var/key in task_cache)
