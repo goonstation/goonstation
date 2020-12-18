@@ -843,6 +843,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Observatory";
+	dir = 1;
 	name = "Observatory APC";
 	pixel_y = 24
 	},
@@ -7037,6 +7038,7 @@
 /obj/cable,
 /obj/machinery/power/apc{
 	areastring = "Bathroom";
+	dir = 8;
 	name = "Bathroom APC";
 	pixel_x = -24
 	},
@@ -18403,6 +18405,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Pool Room";
+	dir = 4;
 	name = "Pool Room APC";
 	pixel_x = 24
 	},
@@ -18541,6 +18544,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Medical Booth";
+	dir = 8;
 	name = "Medical Booth APC";
 	pixel_x = -24
 	},
@@ -19744,6 +19748,7 @@
 /obj/cable,
 /obj/machinery/power/apc{
 	areastring = "Central Primary Hallway";
+	dir = 4;
 	name = "Central Primary Hallway APC";
 	pixel_x = 24
 	},
@@ -23374,6 +23379,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Detective's Office";
+	dir = 1;
 	name = "Detective's Office APC";
 	pixel_y = 24
 	},
@@ -24012,6 +24018,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Crematorium";
+	dir = 1;
 	name = "Crematorium APC";
 	pixel_y = 24
 	},
@@ -24806,6 +24813,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Courtroom";
+	dir = 1;
 	name = "Courtroom APC";
 	pixel_y = 24
 	},
@@ -26705,6 +26713,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Public Market";
+	dir = 8;
 	name = "Public Market APC";
 	pixel_x = -24
 	},
@@ -49205,6 +49214,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "South Primary Hallway";
+	dir = 1;
 	name = "South Primary Hallway APC";
 	pixel_y = 24
 	},
@@ -51424,6 +51434,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Supply Lobby";
+	dir = 1;
 	name = "Supply Lobby  APC";
 	pixel_y = 24
 	},
@@ -52698,6 +52709,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Research Storage";
+	dir = 1;
 	name = "Research Storage APC";
 	pixel_y = 24
 	},
@@ -58255,6 +58267,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "Medical Research";
+	dir = 8;
 	name = "Medical Research APC";
 	pixel_x = -24
 	},
