@@ -46029,21 +46029,21 @@
 "bTq" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment,
-/obj/firedoor_spawn,
-/obj/machinery/door/window/southleft{
-	name = "Engineering Storage";
-	req_access_txt = "44"
-	},
 /obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	name = "Engineering Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
 "bTr" = (
 /obj/table/reinforced/auto,
-/obj/firedoor_spawn,
-/obj/machinery/door/window/southright{
-	name = "Engineering Storage";
-	req_access_txt = "44"
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	name = "Engineering Storage"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
 "bTs" = (
