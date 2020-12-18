@@ -2488,7 +2488,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/caution/east,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahv" = (
 /obj/cable{
@@ -2558,7 +2558,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/miningoutpost)
 "ahE" = (
-/turf/simulated/floor/airless/caution/east,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahF" = (
 /obj/machinery/light/emergency{
