@@ -288,11 +288,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.mind.assigned_role == "Chief Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
