@@ -10094,6 +10094,7 @@
 /obj/cable,
 /obj/machinery/power/apc{
 	areastring = "Locker Room";
+	dir = 8;
 	name = "Locker Room APC";
 	pixel_x = -24
 	},
