@@ -25,13 +25,12 @@
 		ui.open()
 
 /obj/submachine/slot_machine/ui_data(mob/user)
-	var/list/data = list()
-	data["busy"] = working
-	data["scannedCard"] = src.scan
-	data["money"] = src.scan?.money
-	data["plays"] = plays
-
-	return data
+	. = list(
+		"busy" = working,
+		"scannedCard" = src.scan,
+		"money" = src.scan?.money,
+		"plays" = plays,
+	)
 
 /obj/submachine/slot_machine/ui_state(mob/user)
 	return tgui_physical_state
@@ -43,7 +42,8 @@
 	)
 
 /obj/submachine/slot_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if ("insert_card")

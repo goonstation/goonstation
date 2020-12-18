@@ -343,9 +343,11 @@
 		return
 
 
-	proc/on_pet()
+	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
 			registered_area.wake_critters()
+		if (!user)
+			return 1 // so things can do if (..())
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -387,7 +389,7 @@
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
 			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
-			on_pet()
+			on_pet(user)
 
 	proc/patrol_step()
 		if (!mobile)

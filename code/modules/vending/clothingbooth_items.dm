@@ -616,3 +616,8 @@
 	name = "Green Visor"
 	category = "Accessories"
 	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/antlers
+	path = /obj/item/clothing/head/antlers
+	amount = 3
+	cost = PAY_TRADESMAN/2

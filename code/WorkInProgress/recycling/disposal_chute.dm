@@ -255,15 +255,16 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/data = list()
-		data["flush"] = src.flush
-		data["mode"] = src.mode
-		data["name"] = src.name
-		data["pressure"] = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
-		return data
+		. = list(
+			"flush" = src.flush,
+			"mode" = src.mode,
+			"name" = src.name,
+			"pressure" = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE),
+		)
 
 	ui_act(action, params)
-		if(..())
+		. = ..()
+		if (.)
 			return
 		switch(action)
 			if("eject")

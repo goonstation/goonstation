@@ -19,9 +19,6 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.bioHolder && src.bioHolder.HasEffect("fat") && src.m_intent == "run")
-			src.bodytemperature += 2
-
 		//SLIP handling
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc

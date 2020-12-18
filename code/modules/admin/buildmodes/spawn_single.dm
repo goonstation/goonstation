@@ -6,6 +6,7 @@ Ctrl-RMB on buildmode button = Set cinematic effect<br>
 
 Left Mouse Button on turf/mob/obj      = Place objects<br>
 Right Mouse Button                     = Delete objects<br>
+Right Mouse Button + Shift             = Set object type to selected mob/obj type<br>
 <br>
 Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
@@ -99,5 +100,10 @@ change the direction of created objects.<br>
 						A.onVarChanged("dir", SOUTH, A.dir)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		if(isobj(object))
-			qdel(object)
+		if (shift)
+			if (ismob(object) || isobj(object))
+				objpath = object.type
+				update_button_text(objpath)
+		else
+			if(isobj(object))
+				qdel(object)

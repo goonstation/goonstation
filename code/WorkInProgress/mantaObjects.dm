@@ -18,8 +18,9 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 1
+	anchored = 2
 	layer =  EFFECTS_LAYER_4
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -946,6 +947,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 
 	Entered(atom/movable/Obj,atom/OldLoc)
+		if(isnull(OldLoc)) // hack, remove later pls thx
+			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
 			if (!L || L.len == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
@@ -1359,7 +1362,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING))
+			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
 				mantaPushList.Add(Obj)
 				Obj.temp_flags |= MANTA_PUSHING
 		return
@@ -1540,29 +1543,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
 	else
 		boutput(user, "<span class='alert'>The door has already been opened. It looks like the mechanism has jammed for good.</span>")
-
-/obj/machinery/reliquaryscout
-	name = "????"
-	desc = "What the fuck is that!?"
-	icon = null
-	icon_state = "scoutbot"
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
-		light.set_color(0.2, 0.7, 0.2)
-		light.attach(src)
-		light.enable()
-
-	process()
-		for(var/mob/living/carbon/human/H in oview(11,src))
-			src.visible_message("<span class='alert'>[src] spots [H], and rapidly speeds off into the trench.</span>")
-			playsound(src.loc, "sound/misc/ancientbot_beep1.ogg", 80, 1)
-			SPAWN_DBG(2 SECONDS)
-				flick("scoutbot_teleport", src)
-				qdel(src)
 
 
 /obj/item/storage/secure/ssafe/polaris

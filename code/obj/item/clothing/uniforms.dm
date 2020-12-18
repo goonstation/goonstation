@@ -68,7 +68,6 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 	icon_state = "white"
 	item_state = "white"
 
@@ -77,7 +76,6 @@
 /obj/item/clothing/under/color
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 
 	grey
 		name = "grey jumpsuit"
@@ -544,6 +542,13 @@
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
 
+/obj/item/clothing/under/rank/rancher
+	name = "rancher's overalls"
+	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
+	icon_state = "rancher"
+	item_state = "rancher"
+	permeability_coefficient = 0.50
+
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
 	desc = "You don't really want to think about what those stains are from."
@@ -749,7 +754,6 @@
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
 	compatible_species = list("human", "monkey")
-	c_flags = ONESIZEFITSALL
 
 	red
 		icon_state = "shortsR"
@@ -1176,7 +1180,7 @@
 
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -1191,7 +1195,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else
@@ -1340,7 +1344,6 @@
 		desc = "Christ, these things stink!"
 		icon_state = "wario"
 		item_state = "wario"
-		c_flags = ONESIZEFITSALL
 
 	waluigi
 		name = "total prick's overalls"

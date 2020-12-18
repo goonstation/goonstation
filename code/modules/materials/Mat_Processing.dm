@@ -8,7 +8,7 @@
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	mats = 20
-	event_handler_flags = NO_MOUSEDROP_QOL
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/atom/output_location = null

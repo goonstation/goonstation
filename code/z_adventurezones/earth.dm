@@ -287,13 +287,25 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Data Center"
 	icon_state = "pink"
 
-/area/centcom/retentioncenter
+/area/retentioncenter
 	name = "NT Retention Center"
 	icon_state = "dk_yellow"
 
-/area/centcom/retentioncenter/substation
+/area/retentioncenter/depot
+	name = "NT Retention Center (depot)"
+	icon_state = "green"
+
+/area/retentioncenter/disposals
+	name = "NT Retention Center (disposals)"
+	icon_state = "red"
+
+/area/retentioncenter/substation
 	name = "NT Retention Center (substation)"
 	icon_state = "pink"
+
+/area/retentioncenter/office
+	name = "NT Retention Center (office)"
+	icon_state = "orange"
 
 ////////////////////////////
 

@@ -36,7 +36,7 @@
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
-	SPAWN_DBG (10)
+	SPAWN_DBG(1 SECOND)
 		frequency = radio_controller.return_frequency(alarm_frequency)
 
 /obj/machinery/firealarm/disposing()

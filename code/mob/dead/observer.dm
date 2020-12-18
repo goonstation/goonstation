@@ -98,7 +98,7 @@
 	P.invisibility = src.invisibility
 #endif
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 
@@ -156,7 +156,7 @@
 /mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
-		if (proj.proj_data.hits_ghosts)
+		if (proj.proj_data?.hits_ghosts)
 			return 0
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))

@@ -26,6 +26,9 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/list/active_color_matrix = list()
+	var/list/color_matrices = list()
+
 	var/last_resist = 0
 
 	//var/obj/screen/zone_sel/zone_sel = null
@@ -247,6 +250,7 @@
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
 	SHOULD_CALL_PARENT(TRUE)
+	src.bioHolder?.mobAppearance.gender = src.gender
 	return
 
 /mob/proc/is_spacefaring()
@@ -486,10 +490,9 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
-		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
-		src.client?.color = matrix_protanopia
+	src.client?.color = src.active_color_matrix
+
+	return
 
 /mob/Logout()
 
@@ -530,14 +533,6 @@
 		if (ishuman(tmob))
 			src:viral_transmission(AM,"Contact",1)
 
-			if (tmob.bioHolder.HasEffect("fat"))
-				if (prob(40) && !src.bioHolder.HasEffect("fat"))
-					src.visible_message("<span class='alert'><B>[src] fails to push [tmob] out of the way.</B></span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					deliver_move_trigger("bump")
-					tmob.deliver_move_trigger("bump")
-					return
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
 				var/datum/bioEffect/hidden/magnetic/tmob_effect = tmob.bioHolder.GetEffect("magnets_pos")
@@ -799,7 +794,7 @@
 		return
 
 	var/key = src.key
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -1538,6 +1533,52 @@
 		src.health = max_health
 		setalive(src)
 
+/// Adds a 20-length color matrix to the mob's list of color matrices
+/// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+	if (!cmatrix || !label)
+		return
+
+	if(label in src.color_matrices) // Do we already have this matrix?
+		return
+
+	src.color_matrices[label] = cmatrix
+
+	src.update_active_matrix()
+
+/// Removes whichever matrix is associated with the label. Must be a string!
+/mob/proc/remove_color_matrix(var/label)
+	if (!label || !src.color_matrices.len)
+		return
+
+	if(label == "all")
+		src.color_matrices.len = 0
+	else if(!(label in src.color_matrices)) // Do we have this matrix?
+		return
+	else
+		src.color_matrices -= label
+
+	src.update_active_matrix()
+
+/// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
+/// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
+/mob/proc/update_active_matrix()
+	if (!src.color_matrices.len)
+		src.active_color_matrix = null
+	else
+		var/first_entry = src.color_matrices[1]
+		if (src.color_matrices.len == 1) // Just one matrix?
+			src.active_color_matrix = src.color_matrices[first_entry]
+		else
+			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
+			for(var/cmatrix in src.color_matrices)
+				if (cmatrix == first_entry)
+					continue // dont multiply the first matrix by itself
+				else
+					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
+			src.active_color_matrix = color_matrix_2_apply
+	src.client?.color = src.active_color_matrix
+
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
 	var/difference = abs(actual-desired)   // get difference
@@ -1982,7 +2023,7 @@
 	else
 		gibs(src.loc, virus, ejectables)
 
-	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1)
+	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)

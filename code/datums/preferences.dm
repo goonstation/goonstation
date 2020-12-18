@@ -1645,10 +1645,12 @@ $(function() {
 
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 			else
 				new_tone = get_standard_skintone(user)
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 
 		if (link_tags["underwear_color"])
 			rebuild_data["underwear"] = 1
@@ -1952,6 +1954,7 @@ $(function() {
 			AH.u_color = "#FEFEFE"
 
 			AH.s_tone = "#FAD7D0"
+			AH.s_tone_original = "#FAD7D0"
 
 			age = 30
 			pin = null
@@ -2249,6 +2252,7 @@ var/global/list/facial_hair = list("None" = "none",
 	"Puffy Beard" = "puffbeard",
 	"Long Beard" = "longbeard",
 	"Tramp" = "tramp",
+	"Motley" = "motley",
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir")
 
@@ -2320,15 +2324,21 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
-	var/hair_color
+	var/hair_color1
+	var/hair_color2
+	var/hair_color3
 	if (prob(75))
-		hair_color = randomize_hair_color(pick(hair_colors))
+		hair_color1 = randomize_hair_color(pick(hair_colors))
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
 	else
-		hair_color = randomize_hair_color(random_saturated_hex_color())
+		hair_color1 = randomize_hair_color(random_saturated_hex_color())
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
 
-	AH.customization_first_color = hair_color
-	AH.customization_second_color = hair_color
-	AH.customization_third_color = hair_color
+	AH.customization_first_color = hair_color1
+	AH.customization_second_color = hair_color2
+	AH.customization_third_color = hair_color3
 
 	var/stone = rand(34,-184)
 	if (stone < -30)
@@ -2337,6 +2347,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		stone = rand(34,-184)
 
 	AH.s_tone = blend_skintone(stone, stone, stone)
+	AH.s_tone_original = AH.s_tone
 
 	if (H)
 		if (H.limbs)

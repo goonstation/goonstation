@@ -269,7 +269,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
 		if (src.item)
 			src.item.set_dir(src.dir)

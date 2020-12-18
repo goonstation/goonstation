@@ -3637,13 +3637,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fg-loadcss@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "fg-loadcss@npm:2.1.0"
-  checksum: 5672a437bd51ba418ffa3c304394a4f85d6b53ae2bbcec2ef54d6498642af4e2c11a9902a55bf95cd96e7e787483c2087f56569484a3120a4228d880ffec6309
-  languageName: node
-  linkType: hard
-
 "figgy-pudding@npm:^3.5.1":
   version: 3.5.2
   resolution: "figgy-pudding@npm:3.5.2"
@@ -8086,7 +8079,6 @@ fsevents@~2.1.2:
   dependencies:
     common: "workspace:*"
     dompurify: ^2.0.11
-    fg-loadcss: ^2.1.0
     inferno: ^7.4.2
     inferno-vnode-flags: ^7.4.2
     marked: ^1.1.0

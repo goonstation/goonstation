@@ -110,6 +110,8 @@
 	Entered(var/mob/M)
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
+		if(!ismob(M))
+			return
 		return_if_overlay_or_effect(M)
 
 
@@ -1310,21 +1312,3 @@
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
 		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
-
-
-/obj/decal/fakeobjects/unfinished
-	name = "never-to-be-finished robot"
-	desc = "There was always enormous passion for things. But sadly sometimes those passions clash in such a way where conflict and painful resolutions are in order. For some, that becomes too much."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "unfinished"
-	anchored = 1
-	density = 1
-
-/obj/decal/fakeobjects/trophy
-	name = "dusty meaningless trophy"
-	desc = "A fleeting reminder of times of old when a dumb number was the biggest worry in the world. Those times are now long gone."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "trophyfucked"
-	anchored = 1
-	density = 1
-	pixel_y = 14

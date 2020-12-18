@@ -17,9 +17,11 @@ var/datum/event_controller/random_events
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
+	var/alive_antags_threshold = 0.06
 	var/list/player_spawn_events = list()
+	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 7 MINUTES
+	var/time_between_spawn_events = 8 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -55,6 +57,10 @@ var/datum/event_controller/random_events
 			special_events += RE
 
 	proc/process()
+		// prevent random events near round end
+		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
+			return
+
 		if (TIME >= major_events_begin)
 			if (TIME >= next_major_event)
 				event_cycle()
@@ -98,10 +104,10 @@ var/datum/event_controller/random_events
 		if (do_event)
 			var/aap = get_alive_antags_percentage()
 			var/dcp = get_dead_crew_percentage()
-			if (aap < 0.1 && (ticker?.mode?.do_antag_random_spawns))
+			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
 				message_admins("<span class='internal'>Antag spawn event success!<br>[100 * aap]% of the alive crew were antags.</span>")
-			else if (dcp > 0.25)
+			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
 				message_admins("<span class='internal'>Player spawn event success!<br>[100 * dcp]% of the entire crew were dead.</span>")
 			else

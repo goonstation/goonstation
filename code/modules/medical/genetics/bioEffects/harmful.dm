@@ -147,42 +147,6 @@
 		if (prob(talk_prob))
 			L.say(pick(talk_strings))
 
-/datum/bioEffect/fat
-	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	id = "fat"
-	probability = 99
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = 1
-	msgGain = "You feel blubbery and lethargic!"
-	msgLose = "You feel fit!"
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnAdd()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			H.unlock_medal("Space Ham", 1)
-			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-
-	OnRemove()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
-			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/spaceham, src.type)
-
-	OnLife()
-		if(..()) return
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (prob(1) && !H.find_ailment_by_type(/datum/ailment/malady/heartdisease))
-				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-		return
-
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."
@@ -350,7 +314,7 @@
 			return
 		if ((prob(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				owner:emote("cough")
 				return
 		return
@@ -598,18 +562,57 @@
 	msgLose = "You notice a few extra colors."
 	probability = 99
 	icon_state  = "bad"
-	var/list/protanopia_matrix = list(MATRIX_PROTANOPIA)
 
 	OnAdd()
 		src.removed = 0
-		APPLY_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = protanopia_matrix
+		owner.apply_color_matrix(COLOR_MATRIX_PROTANOPIA, COLOR_MATRIX_PROTANOPIA_LABEL)
 		return
 
 	OnRemove()
 		src.removed = 1
-		REMOVE_MOB_PROPERTY(owner, PROP_PROTANOPIA, src)
-		owner.client?.color = null
+		owner.remove_color_matrix(COLOR_MATRIX_PROTANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/greenblind
+	name = "Deuteranopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing green to be indistinguishable from red."
+	id = "deuteranopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less green."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_DEUTERANOPIA, COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/blueblind
+	name = "Tritanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing blue colorblindness."
+	id = "tritanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less blue."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_TRITANOPIA, COLOR_MATRIX_TRITANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_TRITANOPIA_LABEL)
 		return
 
 /datum/bioEffect/emoter/screamer
@@ -722,7 +725,7 @@
 		pulse.icon_state = "emppulse"
 		pulse.name = "emp pulse"
 		pulse.anchored = 1
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (pulse) qdel(pulse)
 
 		//maybe have this only emp some things on the tile.

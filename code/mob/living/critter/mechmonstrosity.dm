@@ -52,7 +52,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1)
+					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -83,7 +83,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/killme.ogg", 70, 1)
+					playsound(get_turf(src), "sound/voice/killme.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -164,7 +164,7 @@
 		switch (act)
 			if ("laugh")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/mechmonstrositylaugh.ogg" , 80, 1)
+					playsound(get_turf(src), "sound/voice/mechmonstrositylaugh.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 /datum/targetable/critter/inject
 	name = "Inject Corrupted Nanites"

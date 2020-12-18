@@ -443,10 +443,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 6)
+			explosion_new(null, get_turf(hit), 4)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 6)
+			explosion_new(null, get_turf(O), 4)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
@@ -923,7 +923,7 @@ toxic - poisons
 						M.emote("scream")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 30, 0.5)
+			explosion_new(null, T, 36, 0.45)
 		return
 
 /obj/smokeDummy

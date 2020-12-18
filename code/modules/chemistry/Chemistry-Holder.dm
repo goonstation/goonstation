@@ -865,7 +865,7 @@ datum
 
 		proc/get_exact_description(mob/user)
 
-			if(!reagent_list.len)
+			if(!length(reagent_list))
 				return
 
 			// check to see if user wearing the spectoscopic glasses (or similar)

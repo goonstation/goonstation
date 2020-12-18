@@ -167,7 +167,7 @@
 	// a turn-safe scale, for temporary anisotropic scales
 	proc/SafeScale(var/scalex = 1, var/scaley = 1)
 		var/rot = arctan(src.transform.b, src.transform.a)
-		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scalex, scaley, MATRIX_SCALE), rot, MATRIX_ROTATE)
+		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)

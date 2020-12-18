@@ -662,7 +662,7 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if(!ispath(setup_frame_type, /obj/computer3frame))
 				src.setup_frame_type = /obj/computer3frame
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
