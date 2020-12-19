@@ -6787,11 +6787,7 @@
 	},
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	icon_state = "cosmonaut"
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

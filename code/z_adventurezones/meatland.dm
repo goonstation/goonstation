@@ -936,6 +936,12 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon_state = "sovspace"
 	item_state = "sov_suit"
 
+/obj/item/clothing/head/helmet/space/soviet
+	name = "cosmonaut helmet"
+	desc = "Korolyov's pride."
+	icon_state = "cosmonaut"
+	item_state = "cosmonaut"
+
 /obj/item/luggable_computer/cheget
 	name = "important-looking briefcase"
 	desc = "A lockable briefcase that looks really important.  It has insignias with cyrillic lettering on them."
