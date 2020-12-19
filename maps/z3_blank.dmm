@@ -9573,6 +9573,7 @@
 "yw" = (
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/glass/wateringcan,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "yY" = (
@@ -10187,6 +10188,7 @@
 	icon_state = "6-8"
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/paper,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Da" = (
@@ -10258,13 +10260,6 @@
 /area/dank_trench)
 "Gc" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/bluntwrap{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/bluntwrap{
-	pixel_y = -3
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -10314,6 +10309,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
+/obj/machinery/light_switch/west,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Il" = (
@@ -10412,6 +10408,13 @@
 /obj/item/clothing/suit/space/emerg,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
+"JX" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/glass/bottle/diethylamine{
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
 "Ki" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -10455,16 +10458,22 @@
 "Lr" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
-/obj/item/satchel/hydro,
-/obj/item/satchel/hydro,
+/obj/item/bee_egg_carton,
+/obj/item/hand_labeler,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Lv" = (
-/obj/decal/cleanable/paper,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "1-9"
+	},
+/obj/item/bluntwrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/bluntwrap{
+	pixel_y = -3
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
@@ -10473,11 +10482,6 @@
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = 6;
 	pixel_y = 6
-	},
-/obj/machinery/shower{
-	dir = 8;
-	pixel_x = -8;
-	pixel_y = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/dank_trench)
@@ -10505,7 +10509,9 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Mr" = (
-/obj/item/reagent_containers/glass/wateringcan,
+/obj/stool/chair{
+	dir = 8
+	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "My" = (
@@ -10563,9 +10569,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
 "Pp" = (
-/obj/stool/chair{
-	dir = 8
-	},
+/obj/machinery/plantpot,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "PA" = (
@@ -10643,6 +10647,7 @@
 /area/dank_trench)
 "Qx" = (
 /obj/decal/cleanable/dirt,
+/obj/item/mop,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Qz" = (
@@ -10711,8 +10716,8 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "Sb" = (
-/obj/storage/crate/wooden/instruments,
 /obj/decal/cleanable/dirt/jen,
+/obj/mopbucket,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Sg" = (
@@ -10804,7 +10809,7 @@
 /area/dank_trench)
 "WG" = (
 /obj/item/paper{
-	info = "rico\nyou remember the marijuana trench back on earth, man? this is just like that. marijuana trench 2/ncarl";
+	info = "rico you remember the marijuana trench back on earth this is just like that. marijuana trench 2. carl";
 	name = "odd note"
 	},
 /obj/cable{
@@ -10847,7 +10852,6 @@
 /area/dank_trench)
 "Za" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light_switch/west,
 /obj/item/reagent_containers/food/snacks/cookie{
 	desc = "Covered in a thick layer of dust, yet seems to be perfectly preserved. The finest of food chemistry at work.";
 	name = "very old sugar cookie";
@@ -10856,6 +10860,11 @@
 	},
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce{
 	pixel_x = -5
+	},
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
@@ -28114,7 +28123,7 @@ Ws
 Pb
 TQ
 PB
-Zn
+JX
 Ju
 Lh
 PB
