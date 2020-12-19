@@ -533,7 +533,9 @@
 				var/obj/item/item_box/medical_patches/B = new /obj/item/item_box/medical_patches(src.output_target)
 				B.name = "box of [patchname] [patchvol <= 15 ? "mini-" : null]patches"
 				patchloc = B
-				if (!med) // dangerrr
+				if (med)
+					B.build_overlay(average = R.get_average_color())
+				else // dangerrr
 					B.icon_state = "patchbox" // change icon
 					B.icon_closed = "patchbox"
 					B.icon_open = "patchbox-open"
