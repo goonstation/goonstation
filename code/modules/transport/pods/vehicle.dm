@@ -1007,6 +1007,10 @@
 	logTheThing("vehicle", M, src.name, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
+	if(isghostdrone(usr))
+		boutput(usr, "<span class='alert'>Your laws don't permit you to do that!</span>")
+		return
+
 	if(locked)
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
@@ -1173,6 +1177,10 @@
 ////////Open Part Panel									////////////
 ////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/open_parts_panel(mob/user as mob)
+	if(isghostdrone(user))
+		boutput(user, "<span class='alert'>Pods are only for the living, so quit trying to mess with them!</span>")
+		return
+
 	if (passengers)
 		boutput(user, "<span class='alert'>You can't modify parts with somebody inside.</span>")
 		return

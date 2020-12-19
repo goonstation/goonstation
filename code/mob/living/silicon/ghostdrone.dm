@@ -76,6 +76,7 @@
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
+			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
 			new /obj/item/device/light/flashlight(src)
 		)
