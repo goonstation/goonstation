@@ -6808,7 +6808,7 @@
 "hhi" = (/obj/decal/poster/wallsign/stencil{pixel_x = -20},/obj/decal/poster/wallsign/stencil/left/n,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/ranch)
 "hDT" = (/obj/landmark/start{name = "Rancher"},/turf/simulated/floor/dirt,/area/station/ranch)
 "igR" = (/obj/machinery/door/airlock/pyro/glass,/obj/access_spawn/rancher,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/ranch)
-"jxd" = (/obj/item/chicken_feed_bag{rand_pos = 1},/obj/item/chicken_feed_bag{rand_pos = 1},/obj/item/chicken_feed_bag{rand_pos = 1},/turf/simulated/floor/dirt,/area/station/ranch)
+"jxd" = (/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/turf/simulated/floor/dirt,/area/station/ranch)
 "jxG" = (/obj/machinery/door/airlock/pyro/external,/obj/access_spawn/rancher,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/green,/area/station/hydroponics/bay)
 "jUq" = (/obj/shrub,/turf/simulated/floor/grass/leafy,/area/station/ranch)
 "kdU" = (/obj/machinery/power/apc/autoname_north/nopoweralert,/obj/cable{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/grass/leafy,/area/station/ranch)

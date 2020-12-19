@@ -1,4 +1,10 @@
 
+(t)sat dec 19 20
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken Feed is now a snack you can monch on (and hand-feed to chickens)
+(*)Chickens now only show heart status for their favorite food
+(+)Bunch of changes to how chickens determine enemies/friends, please report any bugs!
 (t)fri dec 18 20
 (u)virvatuli
 (p)3088

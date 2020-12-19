@@ -80823,10 +80823,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "haY" = (
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,

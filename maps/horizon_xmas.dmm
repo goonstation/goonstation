@@ -6793,7 +6793,7 @@
 "cEW" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/decal/cleanable/cobweb{icon_state = "cobweb2"},/obj/decal/cleanable/rust,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "This teller is incredibly broken.  Look at how broken it is!  And someone took the cash..."; icon = 'icons/obj/computer.dmi'; icon_state = "offbroken"; name = "broken cash register"},/turf/simulated/floor/airless{icon_state = "floorscorched1"},/area/space)
 "cEX" = (/obj/disposalpipe/segment{dir = 4; name = "food pipe"},/obj/item/hell_horn,/turf/simulated/floor/airless{icon_state = "floorscorched1"},/area/space)
 "cMC" = (/obj/decal/poster/wallsign/stencil/left/r,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/ranch)
-"cQe" = (/obj/item/chicken_feed_bag{rand_pos = 1},/obj/item/chicken_feed_bag{rand_pos = 1},/obj/item/chicken_feed_bag{rand_pos = 1},/turf/simulated/floor/dirt,/area/station/ranch)
+"cQe" = (/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/obj/item/reagent_containers/food/snacks/chicken_feed_bag{rand_pos = 1},/turf/simulated/floor/dirt,/area/station/ranch)
 "cRX" = (/obj/grille/steel,/obj/window/auto/reinforced,/obj/decal/xmas_lights,/turf/simulated/floor/plating,/area/station/maintenance/southeast)
 "djx" = (/obj/machinery/camera{c_tag = "Fore Cargo Router B"; dir = 6; name = "Fore Cargo Router B"; network = "Cargo"; pixel_y = 20; tag = ""},/turf/space,/area/space)
 "dzg" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/machinery/camera{c_tag = "Fore Cargo Router A"; dir = 4; name = "Fore Cargo Router A"; network = "Cargo"; tag = ""},/turf/space,/area/space)
