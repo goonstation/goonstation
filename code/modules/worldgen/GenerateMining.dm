@@ -722,7 +722,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 34
 		prefabSizeY = 19
 
-	danktrench
+	danktrench //the marijuana trench
 		underwater = 1
 		maxNum = 1
 		probability = 35

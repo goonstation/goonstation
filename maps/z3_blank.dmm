@@ -9568,16 +9568,25 @@
 	name = "marjfall"
 	},
 /obj/sea_plant/seaweed,
-/turf/space/fluid/noexplosion,
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "yw" = (
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
+"yY" = (
+/obj/sea_plant/seaweed,
+/obj/item/crowbar/red,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
 "zl" = (
 /obj/machinery/vending/snack{
 	credit = 43
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
@@ -9586,8 +9595,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/hydro_growlamp,
 /obj/decal/cleanable/dirt/jen,
+/obj/item/furniture_parts/office_chair/green,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "zL" = (
@@ -10166,7 +10175,7 @@
 /turf/unsimulated/floor/sanitary/blue,
 /area/dank_trench)
 "CR" = (
-/obj/item/furniture_parts/office_chair/green,
+/obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "CU" = (
@@ -10174,10 +10183,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/decal/cleanable/dirt,
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Da" = (
@@ -10190,6 +10199,10 @@
 "Dn" = (
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Dr" = (
@@ -10198,6 +10211,10 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/grime,
+/area/dank_trench)
+"DF" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space/fluid/noexplosion,
 /area/dank_trench)
 "DY" = (
 /obj/rack,
@@ -10213,23 +10230,30 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
+"EM" = (
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
 "Fh" = (
 /obj/item/scrap,
 /obj/sea_plant/seaweed,
-/turf/space/fluid/noexplosion,
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "FH" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "FZ" = (
-/obj/decal/cleanable/oil,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Gc" = (
@@ -10279,8 +10303,9 @@
 /area/dank_trench)
 "HY" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/chair/couch/purple{
-	dir = 9
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
@@ -10293,7 +10318,7 @@
 /area/dank_trench)
 "Il" = (
 /obj/sea_plant/seaweed,
-/turf/space/fluid/noexplosion,
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "Ip" = (
 /turf/unsimulated/wall/trench,
@@ -10315,8 +10340,12 @@
 	pixel_y = 6
 	},
 /obj/machinery/power/apc/autoname_north/nopoweralert{
-	req_access = null;
-	start_charge = 0
+	environ = 2;
+	equipment = 2;
+	lighting = 2;
+	locked = 0;
+	operating = 0;
+	start_charge = 23
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -10360,10 +10389,10 @@
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "JF" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "JK" = (
@@ -10410,8 +10439,8 @@
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Ll" = (
-/obj/decal/cleanable/fungus,
-/turf/unsimulated/wall/auto/supernorn,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion,
 /area/dank_trench)
 "Lq" = (
 /obj/decal/cleanable/dirt/jen,
@@ -10425,9 +10454,9 @@
 /area/dank_trench)
 "Lr" = (
 /obj/decal/cleanable/dirt,
-/obj/item/storage/pill_bottle/cyberpunk,
 /obj/storage/crate,
-/obj/item/rods/steel/fullstack,
+/obj/item/satchel/hydro,
+/obj/item/satchel/hydro,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "Lv" = (
@@ -10478,6 +10507,10 @@
 "Mr" = (
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/unsimulated/floor/grime,
+/area/dank_trench)
+"My" = (
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/wall/auto/supernorn,
 /area/dank_trench)
 "Mz" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -10553,8 +10586,9 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "PK" = (
-/obj/stool/chair/couch/purple{
-	dir = 5
+/obj/storage/crate/bin,
+/obj/item/reagent_containers/food/snacks/pickle/trash{
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
@@ -10582,6 +10616,10 @@
 	pixel_y = 11
 	},
 /obj/item/reagent_containers/syringe,
+/obj/item/shaker/salt{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
 "Qr" = (
@@ -10604,18 +10642,17 @@
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Qx" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/glass/bottle/ammonia/janitors{
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/glass/bottle/eyedrops{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = -6;
-	pixel_y = -4
-	},
+/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Qz" = (
+/obj/item/raw_material/rock,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/space/fluid/noexplosion,
 /area/dank_trench)
 "QN" = (
 /obj/decal/cleanable/dirt,
@@ -10659,16 +10696,10 @@
 /area/dank_trench)
 "Rd" = (
 /obj/storage/crate/trench_loot/drug,
-/turf/space/fluid/noexplosion,
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "Rs" = (
-/obj/storage/crate,
-/obj/item/furniture_parts/table,
-/obj/item/furniture_parts/table,
-/obj/item/furniture_parts/comfy_chair{
-	pixel_y = 6
-	},
-/obj/item/furniture_parts/comfy_chair/yellow,
+/obj/machinery/hydro_growlamp,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "RJ" = (
@@ -10676,11 +10707,8 @@
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "RX" = (
-/obj/machinery/power/monitor{
-	color = "#DDDDDD";
-	dir = 4
-	},
-/turf/unsimulated/floor/grime,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "Sb" = (
 /obj/storage/crate/wooden/instruments,
@@ -10703,6 +10731,12 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Tu" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
 "TQ" = (
 /turf/space/fluid/noexplosion,
@@ -10782,22 +10816,21 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/item/pen,
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Xt" = (
-/obj/decal/cleanable/dirt,
 /obj/storage/crate,
-/obj/item/hand_labeler{
-	pixel_y = -3
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors{
+	pixel_x = 4
 	},
-/obj/item/hand_labeler,
-/obj/item/hand_labeler{
-	pixel_y = 3
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
@@ -10813,8 +10846,17 @@
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "Za" = (
-/obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/light_switch/west,
+/obj/item/reagent_containers/food/snacks/cookie{
+	desc = "Covered in a thick layer of dust, yet seems to be perfectly preserved. The finest of food chemistry at work.";
+	name = "very old sugar cookie";
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce{
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "Zn" = (
@@ -25666,7 +25708,7 @@ Il
 Ip
 Ip
 Ws
-YJ
+Tu
 Ip
 Ws
 Fh
@@ -25961,10 +26003,10 @@ Ws
 TQ
 TQ
 Il
+RX
 TQ
 TQ
-TQ
-TQ
+Ll
 TQ
 Ip
 Ws
@@ -26268,7 +26310,7 @@ Il
 TQ
 TQ
 Il
-TQ
+Ll
 TQ
 TQ
 TQ
@@ -26569,12 +26611,12 @@ Ip
 Ip
 Ws
 Pb
-TQ
+Ll
 TQ
 Il
 TQ
 TQ
-TQ
+Ll
 TQ
 Il
 Pb
@@ -27164,7 +27206,7 @@ ab
 Ip
 Ip
 Ws
-TQ
+Ll
 Ip
 Ip
 Ip
@@ -27181,7 +27223,7 @@ Ip
 Ws
 Fh
 TQ
-TQ
+Ll
 TQ
 Ip
 Ip
@@ -27481,7 +27523,7 @@ Vx
 Ip
 Ip
 Ws
-TQ
+Tu
 TQ
 TQ
 TQ
@@ -27767,7 +27809,7 @@ gW
 ab
 Ip
 Ws
-TQ
+Ll
 Il
 PB
 Qs
@@ -27784,7 +27826,7 @@ Vx
 Vx
 Vx
 Vx
-Pb
+Qz
 Jq
 Il
 JD
@@ -28088,9 +28130,9 @@ JL
 Vx
 VA
 TQ
+Ll
 TQ
-TQ
-Il
+yY
 Ip
 Ip
 ab
@@ -28380,19 +28422,19 @@ Zn
 Vh
 MJ
 VQ
-Zn
-Zn
-MJ
+VQ
+VQ
+VQ
 Zn
 Mz
 CE
 Zn
 IF
+EM
 TQ
 TQ
 TQ
-TQ
-TQ
+DF
 Ip
 Ip
 ab
@@ -28674,7 +28716,7 @@ ab
 Ip
 Ws
 TQ
-TQ
+Ll
 PB
 Ju
 yw
@@ -29286,10 +29328,10 @@ Vx
 Wh
 gN
 Lq
-Vx
+My
 CB
+VQ
 Zn
-RX
 ZU
 Gq
 Vx
@@ -29580,7 +29622,7 @@ ab
 Ip
 Ip
 Ws
-TQ
+Ll
 Ip
 Ip
 Ip
@@ -29588,7 +29630,7 @@ Vx
 NS
 JK
 AA
-Ll
+Vx
 IY
 Dr
 WU
