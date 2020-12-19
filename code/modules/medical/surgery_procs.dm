@@ -1763,29 +1763,51 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			surgeon.show_text("Theres nothing to spoon out!", "blue")
 			return 1
 
-		if (isalive(patient))                               // If we allow brain scooping after death it would mean infinite prions since we arent deleting the brain, just doing brain damage.
+		if (isdead(patient))                               // If we allow brain scooping after death it would mean infinite prions since we arent deleting the brain, just doing brain damage.
 			surgeon.show_text("This dead brain is too fragile and mushy to be spooned out.", "blue")
 			return 1
 
 		if (patient.organHolder.head.scalp_op_stage >= 2.0 )
 			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-			patient.take_brain_damage(20)
-
-			patient.tri_message("<span class='alert'><b>[surgeon]</b> fishes out a spoonful of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]! [pick("That can't be ethical!","Wheres Hippocrates when you need him?!","Delicious!")]</span>",\
-			surgeon, "<span class='alert'>You spoon out a portion of [surgeon == patient ? "your" : "[patient]'s"] brain  with [src]! [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","Delicious!")]</span>",\
-			patient, "<span class='alert'>[patient == surgeon ? "You spoon" : "<b>[surgeon]</b> spoons"] out a bit of your brain with [src]! [pick("Wait where are you right now?","Wait what day is it?","Is that burnt toast you smell?","One of your eyes drifts to the side slowly.","What was your name again?")]</span>")
-
 			if (istype(surgeon.equipped(), /obj/item/surgical_spoon))
+				patient.organHolder.brain.amount_spooned_out += 1
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> fishes out a spoonful of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]! [pick("That can't be ethical!","Wheres Hippocrates when you need him?!","Delicious!")]</span>",\
+				surgeon, "<span class='alert'>You spoon out a portion of [surgeon == patient ? "your" : "[patient]'s"] brain  with [src]! [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","Delicious!")]</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You spoon" : "<b>[surgeon]</b> spoons"] out a bit of your brain with [src]! [pick("Wait where are you right now?","Wait what day is it?","Is that burnt toast you smell?","One of your eyes drifts to the side slowly.","What was your name again?")]</span>")
+
 				var/obj/item/current_held = surgeon.equipped()
 				surgeon.u_equip(current_held)
 				qdel(current_held)
 				surgeon.put_in_hand(new /obj/item/reagent_containers/food/snacks/brainespoon)
-			if (istype(surgeon.equipped(), /obj/item/kitchen/utensil/spoon))
+			else if (istype(surgeon.equipped(), /obj/item/kitchen/utensil/spoon))
+				patient.organHolder.brain.amount_spooned_out += 1
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> fishes out a spoonful of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]! [pick("That can't be ethical!","Wheres Hippocrates when you need him?!","Delicious!")]</span>",\
+				surgeon, "<span class='alert'>You spoon out a portion of [surgeon == patient ? "your" : "[patient]'s"] brain  with [src]! [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","Delicious!")]</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You spoon" : "<b>[surgeon]</b> spoons"] out a bit of your brain with [src]! [pick("Wait where are you right now?","Wait what day is it?","Is that burnt toast you smell?","One of your eyes drifts to the side slowly.","What was your name again?")]</span>")
+
 				var/obj/item/current_held = surgeon.equipped()
 				surgeon.u_equip(current_held)
 				qdel(current_held)
 				surgeon.put_in_hand(new /obj/item/reagent_containers/food/snacks/brainspoon)
-
+//putting brains back in
+			else if (istype(surgeon.equipped(), /obj/item/brainespoon))
+				patient.organHolder.brain.amount_spooned_out--
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> shoves a spoonful of brains into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+				surgeon, "<span class='alert'>You schlorp some gray matter into [surgeon == patient ? "your" : "[patient]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You squidge" : "<b>[surgeon]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+				var/obj/item/current_held = surgeon.equipped()
+				surgeon.u_equip(current_held)
+				qdel(current_held)
+				surgeon.put_in_hand(new /obj/item/surgical_spoon)
+			else if (istype(surgeon.equipped(), /obj/item/brainspoon))
+				patient.organHolder.brain.amount_spooned_out -= 1
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> shoves a spoonful of brains into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+				surgeon, "<span class='alert'>You schlorp some gray matter into [surgeon == patient ? "your" : "[patient]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You squidge" : "<b>[surgeon]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+				var/obj/item/current_held = surgeon.equipped()
+				surgeon.u_equip(current_held)
+				qdel(current_held)
+				surgeon.put_in_hand(new /obj/item/kitchen/utensil/spoon)
 		return 1
 
 

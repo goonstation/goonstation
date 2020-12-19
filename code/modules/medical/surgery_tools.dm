@@ -160,6 +160,128 @@ CONTAINS:
 /* -------------------- Enucleation Spoon -------------------- */
 /* =========================================================== */
 
+/obj/item/brainespoon
+	name = "enucleation spoon of brain"
+	desc = "An enucleation spoon with brain schlorped into it."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "brainespoon"
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "scalpel"
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	force = 5.0
+	w_class = 1.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	g_amt = 5000
+	stamina_damage = 5
+	stamina_cost = 5
+	stamina_crit_chance = 35
+	var/mob/Poisoner = null
+	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
+
+	New()
+		..()
+		src.create_reagents(5)
+		AddComponent(/datum/component/transfer_on_attack)
+		setProperty("piercing", 80)
+
+
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (src.reagents && src.reagents.total_volume)
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		else
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!spoon_surgery(M, user))
+			return ..()
+		else
+			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+				src.reagents.trans_to(M,5)
+			return
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		var/hisher = his_or_her(user)
+		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		blood_slash(user, 25)
+		playsound(user.loc, src.hitsound, 50, 1)
+		user.TakeDamage("head", 150, 0)
+		SPAWN_DBG(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
+/obj/item/brainspoon
+	name = "spoonful of brain"
+	desc = "A spoon with brain schlorped into it."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "brainspoon"
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "scalpel"
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	force = 5.0
+	w_class = 1.0
+	throwforce = 5.0
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	g_amt = 5000
+	stamina_damage = 5
+	stamina_cost = 5
+	stamina_crit_chance = 35
+	var/mob/Poisoner = null
+	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
+	move_triggered = 1
+
+	New()
+		..()
+		src.create_reagents(5)
+		AddComponent(/datum/component/transfer_on_attack)
+		setProperty("piercing", 80)
+
+
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (src.reagents && src.reagents.total_volume)
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		else
+			logTheThing("combat", user, M, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!spoon_surgery(M, user))
+			return ..()
+		else
+			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
+				src.reagents.trans_to(M,5)
+			return
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		var/hisher = his_or_her(user)
+		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		blood_slash(user, 25)
+		playsound(user.loc, src.hitsound, 50, 1)
+		user.TakeDamage("head", 150, 0)
+		SPAWN_DBG(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
+
 /obj/item/surgical_spoon
 	name = "enucleation spoon"
 	desc = "A surgeon's tool, used to protect the globe of the eye during eye removal surgery, and to lift the eye out of the socket. You could eat food with it too, I guess."
