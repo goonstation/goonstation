@@ -6,7 +6,6 @@
 	item_state = "syringe_0"
 	icon_state = "hypoborg"
 	var/inj_amount = 5
-	var/picker = 1
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	var/botreagents = list(
 		"epinephrine" = 25,
@@ -18,6 +17,9 @@
 	)
 	var/currentreagent = "epinephrine"
 	var/propername = "Epinephrine"
+	var/image/fluid_image
+	var/last_refill = -1
+	var/extra_refill = 0
 
 	hide_attack = 2
 	inventory_counter_enabled = 1
@@ -25,22 +27,38 @@
 	New()
 		..()
 		processing_items.Add(src)
+		src.update_icon()
 
 	disposing()
 		..()
 		processing_items.Remove(src)
 
+	proc/update_icon()
+		if (botreagents[currentreagent] >= 1)
+			if (!src.fluid_image)
+				src.fluid_image = image(src.icon, "hypoover", -1)
+			var/datum/reagent/R = reagents_cache[src.currentreagent]
+			src.fluid_image.color = rgb(R.fluid_r, R.fluid_g, R.fluid_b, 255)
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
+		src.inventory_counter.update_number(botreagents[currentreagent])
+		signal_event("icon_updated")
+
 	attack_self(mob/user as mob)
-		picker = picker % length(botreagents) + 1
-		currentreagent = botreagents[picker]
-		var/datum/reagent/temp_reagent = reagents_cache[currentreagent]
-		propername = temp_reagent.name
+		var/available_chems = list()
+		for (var/reagent in botreagents)
+			available_chems += reagents_cache[reagent]
+		var/datum/reagent/pick = input(usr, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
+		currentreagent = pick.id
+		propername = pick.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
+		update_icon()
 		tooltip_rebuild = 1
 		return
 
 	get_desc(dist)
-		. += "It is injecting [propername]. There are [botreagents[currentreagent]] left."
+		. += "It is injecting [propername]. There are [botreagents[currentreagent]] units left."
 		return
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -69,19 +87,33 @@
 		"<span class='notice'>You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
 		logTheThing("combat", user, M, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
 
-		M.reagents.add_reagent(botreagents[picker], amt_prop)
+		M.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 		tooltip_rebuild = 1
+		update_icon()
 		playsound(get_turf(M), src.sound_inject, 80, 0)
 		return 0
 
 	process()
 		..()
+		var/refill_amount = (ticker.round_elapsed_ticks - last_refill) / 29
+		if (last_refill < 0)
+			refill_amount = 1
+		last_refill = ticker.round_elapsed_ticks
+
+		refill_amount += extra_refill
+		extra_refill = refill_amount - round(refill_amount)
+		refill_amount = round(refill_amount)
+
 		for(var/reagent in botreagents)
 			var/amt = botreagents[reagent]
 			if(amt >= 25)
 				continue
-			botreagents[reagent] += 1
-			tooltip_rebuild = 1
+
+			botreagents[reagent] = min(amt + refill_amount, 25)
+			if (reagent == currentreagent)
+				tooltip_rebuild = 1
+				update_icon()
+
 		return 0
 
