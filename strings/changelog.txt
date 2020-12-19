@@ -1,5 +1,9 @@
 
 (t)sat dec 19 20
+(u)BatElite
+(p)3075
+(e)🆕|feature
+(*)Ghostdrones can now use deconstruction devices, and also have one in their inventory.
 (u)UrsulaMejor
 (e)🐛🆕|bug, feature
 (*)Chicken Feed is now a snack you can monch on (and hand-feed to chickens)
