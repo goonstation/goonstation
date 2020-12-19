@@ -582,6 +582,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	beebo
 		name = "\improper Beebo"
 		icon_state = "beebo"
+		ckey = "scaltra"
 
 	romillybartlesby
 		name = "\improper Romilly Bartlesby"
@@ -665,6 +666,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	smellstosee
 		name = "\improper Smells to See"
 		icon_state = "smellstosee"
+		ckey = "zergspower"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
