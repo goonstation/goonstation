@@ -10516,6 +10516,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "zi" = (
@@ -18708,6 +18709,7 @@
 	light_type = /obj/item/light/tube/blueish
 	},
 /obj/item/robot_module/brobocop,
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "Wr" = (
