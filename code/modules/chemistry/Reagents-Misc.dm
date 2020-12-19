@@ -339,7 +339,9 @@ datum
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.bioHolder.mobAppearance.customization_first = pick(feminine_hstyles + masculine_hstyles)
-					H.bioHolder.mobAppearance.UpdateMob()
+					H.bioHolder.mobAppearance.customization_second = pick(feminine_hstyles + masculine_hstyles)
+					H.bioHolder.mobAppearance.customization_third = pick(feminine_hstyles + masculine_hstyles)
+					H.update_colorful_parts()
 					boutput(H, "<span class='notice'>Your scalp feels itchy!</span>")
 				..()
 				return
@@ -368,7 +370,6 @@ datum
 					if (H.gender == MALE && H.cust_two_state != "longbeard")
 						H.cust_two_state = "longbeard"
 						somethingchanged = 1
-					H.set_face_icon_dirty()
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
 						somethingchanged = 1
 						for (var/obj/item/clothing/O in H)
@@ -383,6 +384,7 @@ datum
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
+					H.update_colorful_parts()
 				..()
 				return
 
@@ -540,23 +542,32 @@ datum
 						M.take_toxin_damage(rand(0,15))
 						M.TakeDamage("chest", rand(0,15), rand(0,15), 0, DAMAGE_CRUSH)
 						setalive(M)
-					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
-						M.ghost.mind.transfer_to(M)
-						qdel(M.ghost)
-					if (ishuman(M))
+					var/mob/G
+					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
-						if (came_back_wrong || H.decomp_stage != 0 || (H.mind && H.mind.dnr)) //Wire: added the dnr condition here
+						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
+						G = find_ghost_by_key(B?.owner?.ckey)
+						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
-							if (H.mind && H.mind.dnr)
+							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
+							return
+					else // else just get whoever's the mind
+						G = find_ghost_by_key(M.mind?.ckey)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(M)
 						else
-							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(M)
+						qdel(G)
+						M.visible_message("<span class='alert'><b>[M]</b> seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 					else
-						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+						M.visible_message("<span class='alert'><b>[M]</b> shudders and stares vacantly.</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -1898,60 +1909,7 @@ datum
 						M.emote("scream")
 					if(method == TOUCH)
 						boutput(M, "<span class='alert'>Well, that was gross.</span>")
-/*
-		reliquary_blood
-			name = "blueish fluid"
-			id = "reliquary_blood"
-			description = "This substance contains thousands of nanometric machines, slowly withering away as the liquid continues to grow stagnant."
-			reagent_state = LIQUID
-			fluid_r = 11
-			fluid_b = 143
-			fluid_g = 31
-			transparency = 195
-			value = 2
-			hygiene_value = -2
-			viscosity = 0.4
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(ismartian(M))
-					M.HealDamage("All", 2 * mult, 0)
-					M.take_oxygen_deprivation(-1 * mult)
-					M.take_toxin_damage(-1 * mult)
-					M.take_brain_damage(-1 * mult)
-					if(prob(10))
-						boutput(M, "<span class='notice'>A burst of vitality flows through you as the martian flesh assimilates into your body.</span>")
-						M.HealDamage("All", 4, 0)
-						M.take_oxygen_deprivation(-4 * mult)
-						M.take_brain_damage(-4 * mult)
-						M.changeStatus("stunned", -40 * mult)
-						M.changeStatus("weakened", -40 * mult)
-				else
-					M.take_toxin_damage(1 * mult)
-					if(prob(10))
-						boutput(M, "<span class='alert'>[pick("You can feel your insides squirming, oh god!", "You feel horribly queasy.", "You can feel something climbing up and down your throat.", "Urgh, you feel really gross!", "It feels like something is crawling inside your skin!")]</span>")
-						M.take_toxin_damage(4 * mult)
-				M.UpdateDamageIcon()
-				..()
-				return
-
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
-				src = null
-				if(!volume_passed)
-					return
-				if(ismartian(M))
-					// no matter what the method is, it's just gonna start doing weird freaky alien melding so whatever
-					boutput(M, "<span class='notice'>The martian flesh begins to merge into your body, repairing tissue damage as it does so.</span>")
-					M.HealDamage("All", 5, 0)
-					M.UpdateDamageIcon()
-				else
-					if(method == INGEST)
-						boutput(M, "<span class='alert bold'>OH FUCK [pick("IT'S MOVING IN YOUR INSIDES", "IT TASTES LIKE ANGRY MUTANT BROCCOLI", "IT HURTS IT HURTS", "THIS WAS A BAD IDEA", "IT'S LIKE ALIEN GENOCIDE IN YOUR MOUTH AND EVERYONE'S DEAD", "IT'S BITING BACK", "IT'S CRAWLING INTO YOUR THROAT", "IT'S PULLING AT YOUR TEETH")]!!</span>")
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
-						M.emote("scream")
-					if(method == TOUCH)
-						boutput(M, "<span class='alert'>Well, that was gross.</span>")
-*/
 		flockdrone_fluid
 			name = "coagulated gnesis"
 			id = "flockdrone_fluid"
@@ -3678,8 +3636,8 @@ datum
 				if(probmult(3) && ishuman(M))
 					M.say("Hm!")
 				if(M && our_amt > 20)
-					if(M.bioHolder && !M.bioHolder.HasEffect("fat"))
-						M.bioHolder.AddEffect("fat")
+					if(M.bioHolder && !M.bioHolder.HasEffect("strong")) //was originally fat bioeffect, but that's been removed
+						M.bioHolder.AddEffect("strong")
 				for (var/obj/V in orange(clamp(our_amt / 5, 2,10),M))
 					if (V.anchored)
 						continue

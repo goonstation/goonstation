@@ -275,7 +275,7 @@ datum/preferences
 				rebuild_data["profile_name"] = 1
 				profile_cache.len = 0
 				profile_cache += "<div id='cloudsaves'><strong>Cloud Saves</strong><hr>"
-				for( var/name in client.cloudsaves )
+				for( var/name in client.player.cloudsaves )
 					profile_cache += "<a href='[pref_link]cloudload=[url_encode(name)]'>[html_encode(name)]</a> (<a href='[pref_link]cloudsave=[url_encode(name)]'>Save</a> - <a href='[pref_link]clouddelete=[url_encode(name)]'>Delete</a>)<br>"
 					LAGCHECK(LAG_REALTIME)
 				profile_cache += "<a href='[pref_link]cloudnew=1'>Create new save</a></div>"
@@ -1645,10 +1645,12 @@ $(function() {
 
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 			else
 				new_tone = get_standard_skintone(user)
 				if(new_tone)
 					AH.s_tone = new_tone
+					AH.s_tone_original = new_tone
 
 		if (link_tags["underwear_color"])
 			rebuild_data["underwear"] = 1
@@ -1879,7 +1881,7 @@ $(function() {
 		*/
 
 		if (!isnull(user) && !IsGuestKey(user.key))
-			if (link_tags["cloudsave"] && user.client.cloudsaves[ link_tags["cloudsave"] ])
+			if (link_tags["cloudsave"] && user.client.player.cloudsaves[ link_tags["cloudsave"] ])
 				rebuild_profile = 1
 				var/ret = src.cloudsave_save( user.client, link_tags["cloudsave"] )
 				if( istext( ret ) )
@@ -1888,7 +1890,7 @@ $(function() {
 					boutput( user, "<span class='notice'>Savefile saved!</span>" )
 			else if (link_tags["cloudnew"])
 				rebuild_profile = 1
-				if( user.client.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
+				if( user.client.player.cloudsaves.len >= SAVEFILE_PROFILES_MAX )
 					alert( user, "You have hit your cloud save limit. Please write over an existing save." )
 				else
 					var/newname = input( user, "What would you like to name the save?", "Save Name" ) as text
@@ -1900,14 +1902,14 @@ $(function() {
 							boutput( user, "<span class='alert'>Failed to save savefile: [ret]</span>" )
 						else
 							boutput( user, "<span class='notice'>Savefile saved!</span>" )
-			else if( link_tags["clouddelete"] && user.client.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
+			else if( link_tags["clouddelete"] && user.client.player.cloudsaves[ link_tags["clouddelete"] ] && alert( user, "Are you sure you want to delete [link_tags["clouddelete"]]?", "Uhm!", "Yes", "No" ) == "Yes" )
 				rebuild_profile = 1
 				var/ret = src.cloudsave_delete( user.client, link_tags["clouddelete"] )
 				if( istext( ret ) )
 					boutput( user, "<span class='alert'>Failed to delete savefile: [ret]</span>" )
 				else
 					boutput( user, "<span class='notice'>Savefile deleted!</span>" )
-			else if (link_tags["cloudload"] && user.client.cloudsaves[ link_tags["cloudload"] ])
+			else if (link_tags["cloudload"] && user.client.player.cloudsaves[ link_tags["cloudload"] ])
 				for (var/x in rebuild_data)
 					rebuild_data[x] = 1
 				rebuild_profile = 1
@@ -1952,6 +1954,7 @@ $(function() {
 			AH.u_color = "#FEFEFE"
 
 			AH.s_tone = "#FAD7D0"
+			AH.s_tone_original = "#FAD7D0"
 
 			age = 30
 			pin = null
@@ -2249,6 +2252,7 @@ var/global/list/facial_hair = list("None" = "none",
 	"Puffy Beard" = "puffbeard",
 	"Long Beard" = "longbeard",
 	"Tramp" = "tramp",
+	"Motley" = "motley",
 	"Eyebrows" = "eyebrows",
 	"Huge Eyebrows" = "thufir")
 
@@ -2320,15 +2324,21 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
-	var/hair_color
+	var/hair_color1
+	var/hair_color2
+	var/hair_color3
 	if (prob(75))
-		hair_color = randomize_hair_color(pick(hair_colors))
+		hair_color1 = randomize_hair_color(pick(hair_colors))
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(pick(hair_colors))
 	else
-		hair_color = randomize_hair_color(random_saturated_hex_color())
+		hair_color1 = randomize_hair_color(random_saturated_hex_color())
+		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
+		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
 
-	AH.customization_first_color = hair_color
-	AH.customization_second_color = hair_color
-	AH.customization_third_color = hair_color
+	AH.customization_first_color = hair_color1
+	AH.customization_second_color = hair_color2
+	AH.customization_third_color = hair_color3
 
 	var/stone = rand(34,-184)
 	if (stone < -30)
@@ -2337,6 +2347,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		stone = rand(34,-184)
 
 	AH.s_tone = blend_skintone(stone, stone, stone)
+	AH.s_tone_original = AH.s_tone
 
 	if (H)
 		if (H.limbs)

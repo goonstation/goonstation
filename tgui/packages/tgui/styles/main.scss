@@ -23,7 +23,6 @@
 @include meta.load-css('./components/Dimmer.scss');
 @include meta.load-css('./components/Divider.scss');
 @include meta.load-css('./components/Dropdown.scss');
-@include meta.load-css('./components/FatalError.scss');
 @include meta.load-css('./components/Flex.scss');
 @include meta.load-css('./components/Icon.scss');
 @include meta.load-css('./components/Input.scss');
@@ -42,10 +41,10 @@
 
 // Interfaces
 @include meta.load-css('./interfaces/Airlock.scss');
-@include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');
+@include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/PortableAtmos.scss');
 
 // Layouts

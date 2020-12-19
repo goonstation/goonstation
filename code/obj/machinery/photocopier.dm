@@ -103,9 +103,14 @@
 
 				else if (istype(w, /obj/item/paper))
 					var/obj/item/paper/P = w
-					src.paper_info += P.name
-					src.paper_info += P.desc
-					src.paper_info += P.info
+					src.paper_info["name"] = P.name
+					src.paper_info["desc"] = P.desc
+					src.paper_info["info"] = P.info
+					src.paper_info["stamps"] = P.stamps
+					src.paper_info["form_fields"] = P.form_fields
+					src.paper_info["field_counter"] = P.field_counter
+					src.paper_info["icon_state"] = P.icon_state
+					src.paper_info["overlays"] = P.overlays
 
 				else if (istype(w, /obj/item/clothing/head/butt))
 					src.butt_stuff = 1
@@ -210,10 +215,14 @@
 	proc/print_stuff() //handles printing photos, papers
 		if (src.paper_info.len)
 			var/obj/item/paper/P = new(get_turf(src))
-			P.name = src.paper_info[1]
-			P.desc = src.paper_info[2]
-			P.info = src.paper_info[3]
-			P.icon_state = "paper" //bugfix for blank sheets being printed
+			P.name = src.paper_info["name"]
+			P.desc = src.paper_info["desc"]
+			P.info = src.paper_info["info"]
+			P.stamps = src.paper_info["stamps"]
+			P.form_fields = src.paper_info["form_fields"]
+			P.field_counter = src.paper_info["field_counter"]
+			P.icon_state = src.paper_info["icon_state"]
+			P.overlays = src.paper_info["overlays"]
 
 		else if (src.photo_info.len)
 			var/obj/item/photo/P = new(get_turf(src))

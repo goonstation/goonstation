@@ -265,3 +265,50 @@
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	return
+
+/// returns a decimal representing the percentage of alive crew that are also antags
+/proc/get_alive_antags_percentage()
+	var/alive = 0
+	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+
+	for (var/datum/mind/antag in ticker.mode.traitors)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+	for (var/datum/mind/antag in ticker.mode.Agimmicks)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M) continue
+		if (!isdead(M) && isliving(M))
+			alive++
+
+	if (!alive)
+		return 0
+	else
+		return (alive_antags / alive)
+
+/// returns a decimal representing the percentage of dead crew (non-observers) to all crew
+/proc/get_dead_crew_percentage()
+	var/all = 0
+	var/dead = 0
+	var/observer = 0
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M) continue
+		if (isdead(M) && !isliving(M))
+			dead++
+			if (M.mind?.joined_observer)
+				observer++
+		all++
+
+	if (!all)
+		return 0
+	else
+		return ((dead - observer) / all)

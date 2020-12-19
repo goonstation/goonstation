@@ -23,8 +23,8 @@
 	var/overlay_state = null
 	var/dialog_update_enabled = 1 //For preventing the DAMNABLE window taking focus when manually inputting pressure
 
-	var/global/image/atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	var/global/image/bomb_dmi = image('icons/obj/canisterbomb.dmi')
+	var/image/atmos_dmi
+	var/image/bomb_dmi
 
 	onMaterialChanged()
 		..()
@@ -82,6 +82,8 @@
 
 /obj/machinery/portable_atmospherics/canister/New()
 	..()
+	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 
@@ -425,6 +427,11 @@
 		static_data["detonatorAttachments"] = list()
 		for(var/obj/item/I in src.det.attachments)
 			static_data["detonatorAttachments"] += I.name
+		var/has_paper = false
+		for(var/obj/item/paper in src.det.attachments)
+			static_data["paperData"] = paper.ui_static_data()
+			has_paper = true
+		static_data["hasPaper"] = has_paper
 
 	return static_data
 
@@ -438,7 +445,8 @@
 	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")

@@ -796,7 +796,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					if(1 to 2) //Hilarious accident
 						for(var/mob/living/carbon/human/M in src.contents)
 							M.set_mutantrace(/datum/mutantrace/roach)
-							M.bioHolder.mobAppearance.UpdateMob()
 							M.show_text("You feel different...", "red")
 
 

@@ -98,7 +98,7 @@
 	P.invisibility = src.invisibility
 #endif
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 
@@ -156,7 +156,7 @@
 /mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
-		if (proj.proj_data.hits_ghosts)
+		if (proj.proj_data?.hits_ghosts)
 			return 0
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
@@ -296,9 +296,7 @@
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client)
-			client.color = null  //needed for mesons dont kill me thx - ZeWaka
-			O.apply_looks_of(client)
+		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
 		if (src.client && src.client.holder && src.stat !=2)
 			// genuinely not sure what this is here for since we're setting the
 			// alive/dead status of the *ghost*.

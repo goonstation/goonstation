@@ -194,8 +194,7 @@
 
 	commissar_cap
 		name = "commander's cap"
-		wear_image_icon = 'icons/mob/fruithat.dmi'
-		icon_state = "commissar_cap"
+		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
@@ -260,8 +259,8 @@
 
 		medic
 			name = "specialist health monitor"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			icon_state = "syndie_specialist-medic"
+			item_state = "syndie_specialist-medic"
 			var/client/assigned = null
 
 			process()
@@ -597,7 +596,7 @@
 		if (weeoo_in_progress)
 			return
 		weeoo_in_progress = 10
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 			light.enable()
 			src.icon_state = "siren1"

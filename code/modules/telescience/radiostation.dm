@@ -283,6 +283,11 @@
 
 ABSTRACT_TYPE(/obj/item/record/random)
 
+/obj/item/record/random/dance_on_a_space_volcano
+	name = "record - \"Dance On A Space Volcano\""
+	record_name = "Dance On A Space Volcano"
+	song = "sound/radio_station/dance_on_a_space_volcano.ogg"
+
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
 	record_name = "adventure track #1"
@@ -443,14 +448,13 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/record/spacebux/New()
 	..()
-	var/pick_song = rand(1,3)
-	switch(pick_song)
-		if(1)
-			src.song = "sound/radio_station/buttris.ogg"
-		if(2)
-			src.song = "sound/radio_station/fart_elise.ogg"
-		if(3)
-			src.song = "sound/radio_station/we_are_number_two.ogg" // poo, more like, hah.
+	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
+	src.name = initial(record_type.name)
+	src.record_name = initial(record_type.record_name)
+	src.name = initial(record_type.name)
+	src.song = initial(record_type.song)
+	if(src.record_name)
+		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
 /obj/item/record/poo
 	desc = "A fairly large record. It has a scratch on one side."

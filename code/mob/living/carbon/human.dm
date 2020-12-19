@@ -54,6 +54,9 @@
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
 	var/image/image_cust_three = null
+	var/image/image_special_one = null
+	var/image/image_special_two = null
+	var/image/image_special_three = null
 
 	var/last_b_state = 1.0
 
@@ -65,6 +68,12 @@
 	var/cust_one_state = "short"
 	var/cust_two_state = "None"
 	var/cust_three_state = "none"
+	var/special_one_icon = 'icons/mob/human_hair.dmi'
+	var/special_one_state = "none"
+	var/special_two_icon = 'icons/mob/human_hair.dmi'
+	var/special_two_state = "none"
+	var/special_three_icon = 'icons/mob/human_hair.dmi'
+	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
@@ -142,7 +151,12 @@
 
 	var/datum/simsHolder/sims = null
 
-	var/underpants_override = 0 // forces the mob to wear underpants, even if their flags tell them not to
+	/// forces the mob to wear underpants, even if their flags tell them not to
+	var/underpants_override = 0
+	/// forces the mob to display human hair, even if their flags tell them not to
+	var/hair_override = 0 // only really works if they have hair. Barbering might help
+	/// forces the mob to display their special hair, even if their flags tell them not to
+	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
@@ -228,6 +242,7 @@
 			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
+	src.update_colorful_parts()
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -323,7 +338,6 @@
 				r_leg = new holder.mutantrace.r_limb_leg_type_mutantrace(holder)
 			else
 				r_leg = new /obj/item/parts/human_parts/leg/right(holder)
-			r_leg = new /obj/item/parts/human_parts/leg/right(holder)
 			r_leg.holder = holder
 			boutput(holder, "<span class='notice'>Your right leg regrows!</span>")
 			r_leg:original_holder = holder
@@ -720,7 +734,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -731,7 +745,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG (300)
+				SPAWN_DBG(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
@@ -2670,8 +2684,11 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
+	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
+	W.icon = 'icons/mob/human_hair.dmi'
+	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 /* commenting this out and making it an overlay to fix issues with colors stacking
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = cust_one_state
@@ -2680,23 +2697,31 @@
 	W.wear_image = image(W.wear_image_icon, W.icon_state)
 	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (src.bioHolder.mobAppearance.customization_first != "None")
+	if (src.bioHolder.mobAppearance.customization_first != "None" || src.bioHolder.mobAppearance.customization_first != "Bald" )
 		var/image/h_image = image('icons/mob/human_hair.dmi', cust_one_state)
 		h_image.color = src.bioHolder.mobAppearance.customization_first_color
 		W.overlays += h_image
 		W.wear_image.overlays += h_image
+		actuallyHasHair = 1
 
-	if (src.bioHolder.mobAppearance.customization_second != "None")
+	if (src.bioHolder.mobAppearance.customization_second != "None" || src.bioHolder.mobAppearance.customization_second != "Bald" )
 		var/image/f_image = image('icons/mob/human_hair.dmi', cust_two_state)
 		f_image.color = src.bioHolder.mobAppearance.customization_second_color
 		W.overlays += f_image
 		W.wear_image.overlays += f_image
+		actuallyHasHair = 1
 
-	if (src.bioHolder.mobAppearance.customization_third != "None")
+
+	if (src.bioHolder.mobAppearance.customization_third != "None" || src.bioHolder.mobAppearance.customization_third != "Bald" )
 		var/image/d_image = image('icons/mob/human_hair.dmi', cust_three_state)
 		d_image.color = src.bioHolder.mobAppearance.customization_third_color
 		W.overlays += d_image
 		W.wear_image.overlays += d_image
+		actuallyHasHair = 1
+
+	if(!actuallyHasHair) // Guess they didnt have any, ah well
+		W.icon_state = "short"
+
 	return W
 
 
@@ -2893,7 +2918,7 @@
 
 /mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
-	if(src.mutantrace != null)
+	if(src.mutantrace)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
 
@@ -2905,8 +2930,8 @@
 		. = 1
 
 	if(.)
-		/* src.set_face_icon_dirty()
-		src.set_body_icon_dirty() */
+		src.set_face_icon_dirty()
+		src.set_body_icon_dirty()
 		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()

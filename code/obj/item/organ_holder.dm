@@ -174,6 +174,11 @@
 			if ("right_kidney")
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
+			if ("tail")
+				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+					return
+				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
+					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
 			//Missing lungs is handled in it's own proc right now. I'll probably move it here eventually, but that's how I did it originally before I thought of a thing for handling missing organs in the organholder and I'm not rewriting such a tedious thing now.
 
 
@@ -270,9 +275,9 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -1206,7 +1211,7 @@
 					src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
 					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1249,7 +1254,7 @@
 		if(!src.heart)
 			src.heart = new /obj/item/organ/heart/flock(src.donor, src)
 			organ_list["heart"] = heart
-			SPAWN_DBG (20) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
+			SPAWN_DBG(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
 				if (src.heart && src.donor)
 					src.heart.name = initial(src.heart.name)
 

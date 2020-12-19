@@ -11125,9 +11125,9 @@
 /area/station/hydroponics/bay)
 "auu" = (
 /obj/machinery/power/apc{
-	areastring = "Hydroponics";
+	areastring = "Hydroponics Bay";
 	dir = 8;
-	name = "Hydroponics APC";
+	name = "Hydroponics Bay APC";
 	pixel_x = -24
 	},
 /obj/cable,
@@ -35384,9 +35384,9 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Research Sector";
+	areastring = "Science Lobby";
 	dir = 1;
-	name = "Research Sector APC";
+	name = "Science Lobby APC";
 	pixel_y = 24
 	},
 /obj/cable{
@@ -36373,7 +36373,6 @@
 	},
 /obj/machinery/computer/riotgear{
 	dir = 8;
-	icon_state = "drawbr0";
 	pixel_x = 28
 	},
 /obj/submachine/weapon_vendor/security,

@@ -283,7 +283,7 @@ THROWING DARTS
 			if (he_or_she(src.owner) == "they")
 				src.message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
 			else
-				src.message += "[he_or_she(src.owner)] [has_record ? "has a record in the cloner at [has_record]" : "does not have a cloning record."]"
+				src.message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
 		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message()

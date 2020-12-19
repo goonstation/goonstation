@@ -40,7 +40,7 @@
 	anchored = 1
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null

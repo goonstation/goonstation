@@ -564,12 +564,14 @@ var/global/debug_messages = 0
 	if (!esize)
 		return
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
+	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
+	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris)
+	explosion_new(null, T, esize, bris, angle, width)
 	return
 
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
@@ -659,7 +661,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -691,6 +693,15 @@ body
 				LAGCHECK(LAG_LOW)
 				if ((T.x*T.y) % 10 == 0)
 					gibs(T)
+		if ("Brighter Bonanza")
+			var/list/obj/item/device/light/zippo/brighter/brighters = list()
+			for(var/i in 1 to 1000)
+				brighters += new /obj/item/device/light/zippo/brighter
+				brighters[i].light.enable()
+			while(TRUE)
+				for(var/obj/brighter in brighters)
+					brighter.set_loc(locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION))
+				sleep(0.2 SECONDS)
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

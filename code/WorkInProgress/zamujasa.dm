@@ -582,7 +582,7 @@
 
 		Entered(atom/movable/O)
 			..()
-			if (isobserver(O) || !istype(ticker.mode, /datum/game_mode/football))
+			if (isobserver(O) || !istype(ticker?.mode, /datum/game_mode/football))
 				return
 			var/datum/game_mode/football/F = ticker.mode
 			if (ismob(O))

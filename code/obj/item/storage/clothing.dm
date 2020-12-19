@@ -77,6 +77,13 @@
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist)
 
+/obj/item/storage/box/clothing/rancher
+	name = "\improper Rancher's equipment"
+	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
+	/obj/item/clothing/shoes/brown,\
+	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/pda2/botanist)
+
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/chef,\

@@ -394,14 +394,12 @@
 /obj/item/clothing/head/that
 	name = "hat"
 	desc = "An stylish looking hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
 	desc = "A purple tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ptophat"
 	item_state = "pthat"
 	c_flags = SPACEWEAR
@@ -415,7 +413,6 @@
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "gtophat"
 	item_state = "gthat"
 	c_flags = SPACEWEAR
@@ -435,7 +432,6 @@
 /obj/item/clothing/head/longtophat
 	name = "Long tophat"
 	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ltophat"
 	item_state = "lthat"
 
@@ -444,7 +440,6 @@
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/souschefhat
@@ -455,7 +450,6 @@
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 	c_flags = SPACEWEAR
@@ -477,7 +471,6 @@
 /obj/item/clothing/head/plunger
 	name = "plunger"
 	desc = "get dat fukken clog"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
@@ -785,7 +778,6 @@
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
 	desc = "A recreation of the late Big Tex's hat, commisioned by Ol' Harner."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "bigtex"
 	item_state = "bigtex"
 	setupProperties()
@@ -853,7 +845,7 @@
 	icon_state = "purplebutt"
 	c_flags = COVERSEYES
 
-// BIGHATS - taller than normal hats! Like fruithat.dmi but bigger! To a max icon size of 64px
+// BIGHATS - taller than normal hats! To a max icon size of 64px
 
 /obj/item/clothing/head/bighat
 	name = "large hat"
@@ -1212,3 +1204,13 @@
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
+
+/obj/item/clothing/head/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = 1.0
+	throwforce = 0

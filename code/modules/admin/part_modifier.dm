@@ -84,7 +84,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				if (!limbs || !limbs.holder)
 					boutput(usr, "Error: invalid target.")
 					return
-				limbs.create()
+				limbs.mend()
 				logTheThing("admin", usr, limbs.holder, "replaced all of [constructTarget(limbs.holder,"admin")]'s missing limbs")
 				message_admins("[key_name(usr)] replaced all of [key_name(limbs.holder)]'s missing limbs")
 				limbs.holder.set_body_icon_dirty()

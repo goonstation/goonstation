@@ -500,7 +500,7 @@
 	stun_normal_stuttering = 8
 	instant_harmbaton_stun = 1
 	stamina_based_stun_amount = 90
-	item_function_flags = null
+	item_function_flags = 0
 
 	New()
 		..()
@@ -525,7 +525,7 @@
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
-	item_function_flags = null
+	item_function_flags = 0
 	//bascially overriding status, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
 

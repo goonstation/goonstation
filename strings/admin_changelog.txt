@@ -1,3 +1,12 @@
+(t)wed dec 09 20
+(u)Flourish
+(*)Adds a new verb, whodead. Gives you a list of everyone who's dead so you don't have to manually go through the player panel.
+(t)sun dec 06 20
+(u)Sovexe
+(*)Adds a new verb, Summon Office. Summons your fully interactable office to you through visual mirror magic. Objects placed on tables will be warped away when you dismiss the office. Use with caution if your office has dangerous stuff.
+(t)fri dec 04 20
+(u)Mordent
+(*)Removed "Emergency Restart" verb from the Server panel, still available on the command line if you need it for some reason.
 (t)tue nov 24 20
 (u)Sovexe
 (*)Added a new buildmode tool, Location. Let's you easily warp around mobs and objects, and easily put things inside of other things.

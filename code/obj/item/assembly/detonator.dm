@@ -209,9 +209,10 @@
 					setDescription()
 			else if (istype(W, /obj/item/paper))
 				src.note = W:info
-				W.set_loc(null)
-				W.master = null
-				W.layer = null
+				W.set_loc(src)
+				W.master = src
+				W.layer = initial(W.layer)
+				src.attachments += W
 				user.u_equip(W)
 				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
 				pool(W)

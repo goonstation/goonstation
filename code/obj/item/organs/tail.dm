@@ -1,7 +1,7 @@
-// Severed tail images go in 'icons/obj/surgery.dmi'
-// on-mob tail images are defined by organ_image_icon
-// both severed and on-mob tail icon_states are defined by just icon_state
-// try to keep the names the same, or everything breaks
+/// Severed tail images go in 'icons/obj/surgery.dmi'
+/// on-mob tail images are defined by organ_image_icon
+/// both severed and on-mob tail icon_states are defined by just icon_state
+/// try to keep the names the same, or everything breaks
 /obj/item/organ/tail
 	name = "tail"
 	organ_name = "tail"
@@ -34,16 +34,17 @@
 			update_tail_icon()
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
-		if (AHL && istype(AHL, /datum/appearanceHolder))
-			src.organ_color_1 = AHL.customization_first_color
-			src.organ_color_2 = AHL.customization_second_color
-			src.donor_AH = AHL
-		else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-			src.organ_color_1 = fix_colors(src.donor_AH.customization_first_color)
-			src.organ_color_2 = fix_colors(src.donor_AH.customization_second_color)
-		else	// Just throw some colors in there or something
-			src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
-			src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
+		if(src.colorful)
+			if (AHL && istype(AHL, /datum/appearanceHolder))
+				src.organ_color_1 = AHL.s_tone
+				src.organ_color_2 = AHL.customization_second_color
+				src.donor_AH = AHL
+			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
+				src.organ_color_1 = fix_colors(src.donor_AH.customization_first_color)
+				src.organ_color_2 = fix_colors(src.donor_AH.customization_second_color)
+			else	// Just throw some colors in there or something
+				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
+				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))
 		build_mob_tail_image()
 		update_tail_icon()
 
@@ -102,22 +103,30 @@
 			return 1
 
 		return 0
-
+	// Tail-loss clumsy-giving is handled in organ_holder's handle_missing
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor)) // Humans dont need tails to not be clumsy idiots
-			donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
+		if (src.get_damage() >= FAIL_DAMAGE && probmult(src.get_damage() * 0.2))
+			src.breakme()
 		return 1
 
-	on_removal()
-		if (src.failure_ability && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
-			src.donor.bioHolder.AddEffect(src.failure_ability, 0, 0, 0, 1)
-
 	on_broken(var/mult = 1)
-		if(probmult(2) && src.donor.mutantrace && src.failure_ability && src.donor?.mob_flags & SHOULD_HAVE_A_TAIL && !ischangeling(src.donor))
-			src.donor.change_misstep_chance(10)
-			src.donor.bioHolder.AddEffect(failure_ability)
+		if(src.get_damage() < FAIL_DAMAGE)
+			src.unbreakme()
+		if(ischangeling(src.holder.donor))
+			return
+		else if(src.failure_ability && src.holder?.donor?.mob_flags & SHOULD_HAVE_A_TAIL)
+			if(src.holder?.donor?.reagents?.get_reagent_amount("ethanol") > 50) // Drunkenness counteracts un-tailedness
+				src.holder?.donor?.bioHolder?.RemoveEffect(src.failure_ability)
+			else
+				src.holder?.donor?.change_misstep_chance(10)
+				src.holder?.donor?.bioHolder?.AddEffect(src.failure_ability, 0, 0, 0, 1)
+
+	unbreakme()
+		. = ..()
+		src.holder?.donor?.bioHolder?.RemoveEffect(src.failure_ability)
+
 
 	// builds the mob tail image, the one that gets displayed on the mob when attached
 	proc/build_mob_tail_image() // lets mash em all into one image with overlays n shit, like the head, but on the ass
@@ -232,7 +241,7 @@
 	name = "seamonkey tail"
 	desc = "A long, pink tail."
 	icon_state = "tail-seamonkey"
-	organ_image_icon = 'icons/mob/monkey.dmi'
+	organ_image_icon = 'icons/mob/seamonkey.dmi'
 	tail_num = TAIL_SEAMONKEY
 	organ_image_under_suit_1 = "seamonkey_under_suit"
 	organ_image_under_suit_2 = null

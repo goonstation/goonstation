@@ -577,7 +577,7 @@
 			choice = pick(S)
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
-			if (item_existing && T.z == 1)
+			if (item_existing && T?.z == 1)
 				break
 			else
 				item_existing = 0
@@ -599,12 +599,12 @@
 
 
 	//Set delivery areas
-	possible_areas = get_areas_with_turfs(/area/station)
-	possible_areas += get_areas_with_turfs(/area/diner)
-	possible_areas -= get_areas_with_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_turfs(/area/station/maintenance)
-	possible_areas -= get_areas_with_turfs(/area/station/hallway)
-	possible_areas -= get_areas_with_turfs(/area/station/engine/substation)
+	possible_areas = get_areas_with_unblocked_turfs(/area/station)
+	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)

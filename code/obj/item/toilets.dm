@@ -28,6 +28,7 @@ TOILET
 /obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
+		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
 	if (istype(W, /obj/item/storage))
 		return

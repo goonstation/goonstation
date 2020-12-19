@@ -24,13 +24,12 @@
 
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%"
-		special_desc += "<br><span class='bold'>Cognition:</span> PREDEFINED"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> [src.real_name]
+		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
+		<br><span class='bold'>Cognition:</span> PREDEFINED
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
 

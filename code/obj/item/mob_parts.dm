@@ -16,8 +16,34 @@
 	var/remove_stage = 0 //2 will fall off, 3 is removed
 	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
 	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+
+	/// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
+	/// The icon of this overlay
+	var/severed_overlay_1_icon
+	/// The state of this overlay
+	var/severed_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/severed_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this limb, like kudzu vines. Only handles the limb, not the hand/foot!
+	var/image/limb_overlay_1
+	/// The icon of this overlay
+	var/limb_overlay_1_icon
+	/// The state of this overlay
+	var/limb_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/limb_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this hand/foot, like kudzu vines. Only handles the hand/foot, not the limb!
+	var/image/handfoot_overlay_1
+	/// The icon of this overlay
+	var/handfoot_overlay_1_icon
+	/// The state of this overlay
+	var/handfoot_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/handfoot_overlay_1_color
+
 	var/easy_attach = 0 //Attachable without surgery?
-	var/fits_monkey = 0 // Most limbs look just awful on a monkey, and those limbs even worse on a human
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
 	var/current_decomp_stage_l = -1
@@ -39,6 +65,10 @@
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
 	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
 	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// If TRUE, it'll resist mutantraces trying to change them
+	var/limb_is_unnatural = FALSE
+	/// Limb is not attached to its original owner
+	var/limb_is_transplanted = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -240,13 +270,6 @@
 			attachee.limbs.l_leg = src
 			attachee.limbs.r_leg = src
 
-		if(src.fits_monkey && !ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is far too small to fit on [attachee.name]!</span>")
-			return ..()
-		else if (!src.fits_monkey && ismonkey(attachee))
-			boutput(attacher, "<span class='alert'>[src] is way too big to fit on [attachee.name]!</span>")
-			return ..()
-
 		src.holder = attachee
 		attacher.remove_item(src)
 		src.layer = initial(src.layer)
@@ -289,7 +312,7 @@
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 
-		return
+		return TRUE
 
 	proc/surgery(var/obj/item/I) //placeholder
 		return
@@ -342,7 +365,7 @@
 		return
 
 /obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)

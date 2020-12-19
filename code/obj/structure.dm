@@ -326,12 +326,14 @@ obj/structure/ex_act(severity)
 	opacity = 1
 	var/health = 30
 	var/builtby = null
+	var/anti_z = 0
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
 
 	anti_zombie
 		name = "anti-zombie wooden barricade"
+		anti_z = 1
 		get_desc()
 			..()
 			. += "Looks like normal spacemen can easily pull themselves over it."
@@ -356,7 +358,7 @@ obj/structure/ex_act(severity)
 	attack_hand(mob/user as mob)
 		if (ishuman(user) && !user.is_zombie)
 			var/mob/living/carbon/human/H = user
-			if (H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
+			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
 				H.set_loc(get_turf(src))
 				H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
 				boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
