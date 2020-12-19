@@ -24,6 +24,8 @@
 			var/mob/living/carbon/human/H = holder.donor
 			if(H.get_brain_damage() < H.organHolder.brain.amount_spooned_out * 20)
 				H.take_brain_damage((H.organHolder.brain.amount_spooned_out * 20)-H.get_brain_damage())
+			if(H.organHolder.brain.MAX_DAMAGE < 120 + (-H.organHolder.brain.amount_spooned_out * 20))
+				H.organHolder.brain.MAX_DAMAGE = 120 + (-H.organHolder.brain.amount_spooned_out * 20)
 		return
 
 	disposing()
