@@ -7,14 +7,16 @@
 	icon_state = "hypoborg"
 	var/inj_amount = 5
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
-	var/botreagents = list(
-		"epinephrine" = 25,
-		"salbutamol" = 25,
-		"mannitol" = 25,
-		"saline" = 25,
-		"charcoal" = 25,
-		"anti_rad" = 25
+	var/max_fill_amount = 25
+	var/list/botreagents = list(
+		"charcoal" = max_fill_amount,
+		"epinephrine" = max_fill_amount,
+		"mannitol" = max_fill_amount,
+		"anti_rad" = max_fill_amount,
+		"salbutamol" = max_fill_amount,
+		"saline" = max_fill_amount
 	)
+	var/list/available_chems = null
 	var/currentreagent = "epinephrine"
 	var/propername = "Epinephrine"
 	var/image/fluid_image
@@ -46,9 +48,10 @@
 		signal_event("icon_updated")
 
 	attack_self(mob/user as mob)
-		var/available_chems = list()
-		for (var/reagent in botreagents)
-			available_chems += reagents_cache[reagent]
+		if (available_chems == null)
+			available_chems = list()
+			for (var/reagent in botreagents)
+				available_chems += reagents_cache[reagent]
 		var/datum/reagent/pick = input(usr, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
 		currentreagent = pick.id
 		propername = pick.name
@@ -96,21 +99,16 @@
 
 	process()
 		..()
-		var/refill_amount = (ticker.round_elapsed_ticks - last_refill) / 29
-		if (last_refill < 0)
-			refill_amount = 1
-		last_refill = ticker.round_elapsed_ticks
-
-		refill_amount += extra_refill
+		var/refill_amount = last_tick_duration + extra_refill
 		extra_refill = refill_amount - round(refill_amount)
 		refill_amount = round(refill_amount)
 
 		for(var/reagent in botreagents)
 			var/amt = botreagents[reagent]
-			if(amt >= 25)
+			if(amt >= max_fill_amount)
 				continue
 
-			botreagents[reagent] = min(amt + refill_amount, 25)
+			botreagents[reagent] = min(amt + refill_amount, max_fill_amount)
 			if (reagent == currentreagent)
 				tooltip_rebuild = 1
 				update_icon()
