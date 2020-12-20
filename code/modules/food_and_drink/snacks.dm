@@ -476,6 +476,7 @@
   dropped_item = /obj/item/surgical_spoon
   Eat(mob/living/carbon/human/M, mob/user, bypass_utensils)
     if (user.zone_sel.selecting == "head" && user.a_intent == INTENT_HARM)
+
       if (M.organHolder.head.scalp_op_stage == 4.0)        //Cant scoop a brain if its not there
         user.show_text("Theres no existing brain to schlorp it into!", "blue")
         return 1
@@ -493,9 +494,9 @@
         M.tri_message("<span class='alert'><b>[user]</b> awkwardly nudges the spoon against [M == user ? "[his_or_her(M)]" : "[M]'s"] head. Grody.</span>",\
         user, "<span class='alert'>You try to shove the brains into [user == M ? "your" : "[M]'s"] skull but there's no hole there, dummy!</span>",\
         M, "<span class='alert'>[M == user ? "You bonk" : "<b>[user]</b> bonks"] the [src] against your head! [pick("Why.","That's just bizzare.","That's not what that's for!","Shameful.")]</span>")
+
     else
       ..()
-
 /obj/item/reagent_containers/food/snacks/brainspoon
   name = "spoonful of brain"
   desc = "A spoon with brain schlorped into it."
@@ -525,8 +526,10 @@
         M.tri_message("<span class='alert'><b>[user]</b> awkwardly nudges the spoon against [M == user ? "[his_or_her(M)]" : "[M]'s"] head. Grody.</span>",\
         user, "<span class='alert'>You try to shove the brains into [user == M ? "your" : "[M]'s"] skull but there's no hole there, dummy!</span>",\
         M, "<span class='alert'>[M == user ? "You bonk" : "<b>[user]</b> bonks"] the [src] against your head! [pick("Why.","That's just bizzare.","That's not what that's for!","Shameful.")]</span>")
+
     else
       ..()
+
 
 /obj/item/reagent_containers/food/snacks/soup/gruel
 	name = "gruel"
