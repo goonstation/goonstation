@@ -161,8 +161,7 @@
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
-				if(src.material)
-					src.material.triggerTemp(src, W.force * 1000)
+				src.material?.triggerTemp(src, W.force * 1000)
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
@@ -447,8 +446,7 @@
 				src.health -= damage/2
 				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
 			if(D_BURNING)
-				if(src.material)
-					src.material.triggerTemp(src, 5000)
+				src.material?.triggerTemp(src, 5000)
 				src.health -= damage/3
 				hitsound = 'sound/items/Welder.ogg'
 			if(D_SPECIAL) //blob
@@ -640,7 +638,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			..()
 			return
 		return

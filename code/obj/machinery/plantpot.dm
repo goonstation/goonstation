@@ -133,8 +133,7 @@
 		update_icon()
 
 		SPAWN_DBG(0.5 SECONDS)
-			if(radio_controller)
-				radio_controller.add_object(src, "[report_freq]")
+			radio_controller?.add_object(src, "[report_freq]")
 
 			if(!net_id)
 				net_id = generate_net_id(src)
@@ -301,8 +300,7 @@
 				for (var/datum/plant_gene_strain/X in DNA.commuts)
 					X.on_process(src)
 
-		if(src.reagents)
-			src.reagents.remove_any_except(drink_rate, "nectar")
+		src.reagents?.remove_any_except(drink_rate, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 
@@ -396,7 +394,7 @@
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
 						src.contributors += user
-					if(do_after(user, 30)) // Same as the gibber and reclaimer. Was 20 (Convair880).
+					if(do_after(user, 3 SECONDS)) // Same as the gibber and reclaimer. Was 20 (Convair880).
 						if(src && W && W.loc == user && C)
 							user.visible_message("<span class='alert'>[src.name] grabs [C] and devours them ravenously!</span>")
 							logTheThing("combat", user, (C), "feeds [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].")
@@ -408,7 +406,7 @@
 								qdel(C)
 							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if(src)
 									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
 							return

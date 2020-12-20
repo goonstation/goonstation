@@ -155,7 +155,7 @@
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
-		if (!player.client.preferences || player.client.preferences.job_favorite == null)
+		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
@@ -466,6 +466,12 @@
 				R.fields["mind"] = src.mind
 				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
+
+				if (JOB.receives_security_disk)
+					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+					authrec.fields = list("SEC"="[netpass_security]")
+					D.root.add_file( authrec )
+
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)

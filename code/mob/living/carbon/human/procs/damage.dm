@@ -338,7 +338,20 @@
 		burn *= 2
 		//tox *= 2
 
+	if(src.traitHolder?.hasTrait("athletic"))
+		brute *=1.33
+
 	if (src.mutantrace)
+		var/typemult
+		if(islist(src.mutantrace.typevulns))
+			typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
+		if(!typemult)
+			typemult = 1
+		if(damage_type == DAMAGE_BURN)
+			burn *= typemult
+		else
+			brute *= typemult
+
 		brute *= src.mutantrace.brutevuln
 		burn *= src.mutantrace.firevuln
 		tox *= src.mutantrace.toxvuln
@@ -697,7 +710,7 @@
 		else
 			src.organHolder.heal_organ(abs(amount), 0, 0, "brain")
 
-	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
+	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= src.organHolder.brain.MAX_DAMAGE && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
 		src.death()
 		return

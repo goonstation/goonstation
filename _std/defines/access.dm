@@ -99,3 +99,6 @@
 #define access_retention_orange 80
 #define access_retention_red 81
 #define access_retention_black 82
+
+//rancher job
+#define access_ranch 83

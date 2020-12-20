@@ -71,6 +71,7 @@
 				continue
 			if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
 				boutput(HH, __blue("[M]'s scream only strengthens your resolve!"))
+				JOB_XP(HH, "Chaplain", 2)
 				continue
 
 			HH.apply_sonic_stun(0, 0, 40, 0, 50, 8, 12)

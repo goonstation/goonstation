@@ -32,8 +32,7 @@
 
 	disposing()
 		observers -= src
-		if(hivemind_owner)
-			hivemind_owner.hivemind -= src
+		hivemind_owner?.hivemind -= src
 		..()
 
 	click(atom/target, params)

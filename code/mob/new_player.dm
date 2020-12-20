@@ -383,7 +383,7 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				qdel(src)
 
 		else

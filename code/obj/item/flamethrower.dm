@@ -151,8 +151,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			boutput(usr, "<span class='alert'>There's nothing inside to drain!</span>")
 
 	disposing()
-		if(linkedflamer)
-			linkedflamer.gastank = null
+		linkedflamer?.gastank = null
 		..()
 
 /obj/item/flamethrower/backtank

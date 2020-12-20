@@ -72,7 +72,7 @@
 		if (prob(40))
 			if (src.secondsElectrified == 0)
 				src.secondsElectrified = -1
-				SPAWN_DBG (300)
+				SPAWN_DBG(30 SECONDS)
 					if (src)
 						src.secondsElectrified = 0
 		return
@@ -80,7 +80,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.density && src.cant_emag != 1 && src.isblocked() != 1)
 			flick(text("[]spark", src.base_state), src)
-			SPAWN_DBG (6)
+			SPAWN_DBG(0.6 SECONDS)
 				if (src)
 					src.open(1)
 			return 1
@@ -155,7 +155,7 @@
 		playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
 		src.icon_state = text("[]open", src.base_state)
 
-		SPAWN_DBG (8)
+		SPAWN_DBG(0.8 SECONDS)
 			if (src)
 				src.set_density(0)
 				if (ignore_light_or_cam_opacity)
@@ -168,7 +168,7 @@
 				else
 					src.operating = 0
 
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			if (src && !src.operating && !src.density && src.autoclose == 1)
 				src.close()
 
@@ -193,7 +193,7 @@
 				src.RL_SetOpacity(1)
 		src.update_nearby_tiles()
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src)
 				src.operating = 0
 
@@ -225,7 +225,7 @@
 			src.autoclose = 0
 		else
 			src.autoclose = 1
-			SPAWN_DBG (50)
+			SPAWN_DBG(5 SECONDS)
 				if (src && !src.density)
 					src.close()
 

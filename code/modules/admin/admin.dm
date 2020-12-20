@@ -1998,7 +1998,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2013,7 +2013,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -2914,8 +2914,7 @@ var/global/noir = 0
 								setdir = SOUTH
 						if (src.level >= LEVEL_ADMIN)
 							for(var/mob/M in mobs)
-								if(M.client)
-									M.client.dir = setdir
+								M.client?.dir = setdir
 								LAGCHECK(LAG_LOW)
 							message_admins("[key_name(usr)] set station direction to [direction].")
 							logTheThing("admin", src, null, "set station direction to [direction].")
@@ -3024,8 +3023,7 @@ var/global/noir = 0
 								logTheThing("diary", usr, null, "used the Emag Everything secret.", "admin")
 								//DO IT!
 								for(var/atom/A as mob|obj in world)
-									if(A)
-										A.emag_act(null,null)
+									A?.emag_act(null,null)
 									LAGCHECK(LAG_LOW)
 								message_admins("[key_name(usr)] has emagged everything!")
 							else

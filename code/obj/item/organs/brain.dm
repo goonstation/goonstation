@@ -11,12 +11,22 @@
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
+	var/amount_spooned_out = 0
 	edible = 0
 	module_research = list("medicine" = 1, "efficiency" = 10)
 	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
+
+	on_life() //Just to be safe.
+		if(ishuman(holder.donor))
+			var/mob/living/carbon/human/H = holder.donor
+			if(H.get_brain_damage() < H.organHolder.brain.amount_spooned_out * 20)
+				H.take_brain_damage((H.organHolder.brain.amount_spooned_out * 20)-H.get_brain_damage())
+			if(H.organHolder.brain.MAX_DAMAGE < 120 + (-H.organHolder.brain.amount_spooned_out * 20))
+				H.organHolder.brain.MAX_DAMAGE = 120 + (-H.organHolder.brain.amount_spooned_out * 20)
+		return
 
 	disposing()
 		if (owner && owner.brain == src)
@@ -41,8 +51,11 @@
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))
-			if (src.owner && src.owner.current)
-				. += "<br><span class='notice'>This brain is still warm.</span>"
+			if (src.owner?.ckey)
+				if (!find_ghost_by_key(src.owner?.ckey))
+					. += "<br><span class='notice'>This brain is slimy.</span>"
+				else
+					. += "<br><span class='notice'>This brain is still warm.</span>"
 			else
 				. += "<br><span class='alert'>This brain has gone cold.</span>"
 
@@ -86,7 +99,7 @@
 			return
 		if(inafterlifebar(mind.current)) // No changing owners af this is happening in the afterlife
 			return
-		if (mind.brain)
+		if (mind.brain && mind.brain != src)
 			var/obj/item/organ/brain/brain = mind.brain
 			brain.owner = null
 		mind.brain = src
@@ -139,7 +152,7 @@
 		if(!M || !ishuman(M)) // flockdrones shouldn't have these problems
 			return
 		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF"))
-			animate(M.client, color=fuckedUpFlockVisionColorMatrix, time=900, easing=SINE_EASING) // ~ 1.5 minutes to complete
+			animate(M.client, color=COLOR_MATRIX_FLOCKMANGLED, time=900, easing=SINE_EASING) // ~ 1.5 minutes to complete
 		if(prob(3))
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 				"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",

@@ -53,8 +53,7 @@
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
-		if(MT.reagents)
-			MT.reagents.add_reagent(venom_id, inject_amount)
+		MT.reagents?.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")

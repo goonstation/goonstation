@@ -2477,7 +2477,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && MA.queue.len)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 
 

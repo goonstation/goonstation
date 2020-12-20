@@ -258,7 +258,7 @@
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 30))
+				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
 					src.anchored = 0
 					return
@@ -270,7 +270,7 @@
 				else
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 30))
+					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
 						src.anchored = 1
 						return

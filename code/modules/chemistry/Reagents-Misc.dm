@@ -339,7 +339,9 @@ datum
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.bioHolder.mobAppearance.customization_first = pick(feminine_hstyles + masculine_hstyles)
-					H.bioHolder.mobAppearance.UpdateMob()
+					H.bioHolder.mobAppearance.customization_second = pick(feminine_hstyles + masculine_hstyles)
+					H.bioHolder.mobAppearance.customization_third = pick(feminine_hstyles + masculine_hstyles)
+					H.update_colorful_parts()
 					boutput(H, "<span class='notice'>Your scalp feels itchy!</span>")
 				..()
 				return
@@ -368,7 +370,6 @@ datum
 					if (H.gender == MALE && H.cust_two_state != "longbeard")
 						H.cust_two_state = "longbeard"
 						somethingchanged = 1
-					H.set_face_icon_dirty()
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
 						somethingchanged = 1
 						for (var/obj/item/clothing/O in H)
@@ -383,6 +384,7 @@ datum
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
+					H.update_colorful_parts()
 				..()
 				return
 
@@ -540,23 +542,32 @@ datum
 						M.take_toxin_damage(rand(0,15))
 						M.TakeDamage("chest", rand(0,15), rand(0,15), 0, DAMAGE_CRUSH)
 						setalive(M)
-					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
-						M.ghost.mind.transfer_to(M)
-						qdel(M.ghost)
-					if (ishuman(M))
+					var/mob/G
+					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
-						if (came_back_wrong || H.decomp_stage != 0 || (H.mind && H.mind.dnr)) //Wire: added the dnr condition here
+						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
+						G = find_ghost_by_key(B?.owner?.ckey)
+						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
-							if (H.mind && H.mind.dnr)
+							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
+							return
+					else // else just get whoever's the mind
+						G = find_ghost_by_key(M.mind?.ckey)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(M)
 						else
-							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(M)
+						qdel(G)
+						M.visible_message("<span class='alert'><b>[M]</b> seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 					else
-						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+						M.visible_message("<span class='alert'><b>[M]</b> shudders and stares vacantly.</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)

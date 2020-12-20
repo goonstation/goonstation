@@ -539,7 +539,7 @@
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

@@ -579,7 +579,7 @@
 				return
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -611,7 +611,7 @@
 			switch (action)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else

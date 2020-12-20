@@ -100,8 +100,7 @@
 			sleep(recently_time)
 			recently_dead -= key
 */
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 

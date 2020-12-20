@@ -242,6 +242,7 @@
 			INVOKE_ASYNC(MB, /obj/item/implant/microbomb.proc/implanted, src)
 
 	src.text = "<font color=#[random_hex(3)]>@"
+	src.update_colorful_parts()
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -733,7 +734,7 @@
 			break
 
 	if (!cancel && !abandon_allowed)
-		SPAWN_DBG (50)
+		SPAWN_DBG(5 SECONDS)
 			cancel = 0
 			for (var/client/C)
 				if (!C.mob) continue
@@ -744,7 +745,7 @@
 			if (!cancel && !abandon_allowed)
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
-				SPAWN_DBG (300)
+				SPAWN_DBG(30 SECONDS)
 					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
@@ -1136,8 +1137,7 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
-	if(reagents)
-		reagents.move_trigger(src, ev)
+	reagents?.move_trigger(src, ev)
 	for (var/datum/statusEffect/S as() in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
@@ -2683,8 +2683,11 @@
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
+	var/actuallyHasHair = 0
 	W.name = "[real_name]'s hair"
 	W.real_name = "[real_name]'s hair" // The clothing parent setting real_name is probably good for other stuff so I'll just do this
+	W.icon = 'icons/mob/human_hair.dmi'
+	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 /* commenting this out and making it an overlay to fix issues with colors stacking
 	W.icon = 'icons/mob/human_hair.dmi'
 	W.icon_state = cust_one_state
@@ -2693,23 +2696,31 @@
 	W.wear_image = image(W.wear_image_icon, W.icon_state)
 	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (src.bioHolder.mobAppearance.customization_first != "None")
+	if (src.bioHolder.mobAppearance.customization_first != "None" || src.bioHolder.mobAppearance.customization_first != "Bald" )
 		var/image/h_image = image('icons/mob/human_hair.dmi', cust_one_state)
 		h_image.color = src.bioHolder.mobAppearance.customization_first_color
 		W.overlays += h_image
 		W.wear_image.overlays += h_image
+		actuallyHasHair = 1
 
-	if (src.bioHolder.mobAppearance.customization_second != "None")
+	if (src.bioHolder.mobAppearance.customization_second != "None" || src.bioHolder.mobAppearance.customization_second != "Bald" )
 		var/image/f_image = image('icons/mob/human_hair.dmi', cust_two_state)
 		f_image.color = src.bioHolder.mobAppearance.customization_second_color
 		W.overlays += f_image
 		W.wear_image.overlays += f_image
+		actuallyHasHair = 1
 
-	if (src.bioHolder.mobAppearance.customization_third != "None")
+
+	if (src.bioHolder.mobAppearance.customization_third != "None" || src.bioHolder.mobAppearance.customization_third != "Bald" )
 		var/image/d_image = image('icons/mob/human_hair.dmi', cust_three_state)
 		d_image.color = src.bioHolder.mobAppearance.customization_third_color
 		W.overlays += d_image
 		W.wear_image.overlays += d_image
+		actuallyHasHair = 1
+
+	if(!actuallyHasHair) // Guess they didnt have any, ah well
+		W.icon_state = "short"
+
 	return W
 
 
