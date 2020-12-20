@@ -1763,7 +1763,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			surgeon.show_text("Theres nothing to spoon out!", "blue")
 			return 1
 
+braindamage
 		if (isdead(patient))                               // If we allow brain scooping after death it would mean infinite prions since we arent deleting the brain, just doing brain damage.
+                            
+brainspooning-2
 			surgeon.show_text("This dead brain is too fragile and mushy to be spooned out.", "blue")
 			return 1
 
