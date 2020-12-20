@@ -16437,6 +16437,9 @@
 /obj/stool/chair/green{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Rancher"
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aKE" = (
