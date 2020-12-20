@@ -476,15 +476,23 @@
   dropped_item = /obj/item/surgical_spoon
   Eat(mob/living/carbon/human/M, mob/user, bypass_utensils)
     if (user.zone_sel.selecting == "head" && user.a_intent == INTENT_HARM)
-      M.organHolder.brain.amount_spooned_out--
-      M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
-      user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
-      M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
-      var/obj/item/current_held = user.equipped()
-      user.u_equip(current_held)
-      qdel(current_held)
-      user.put_in_hand(new /obj/item/surgical_spoon)
-      return 1
+      if (M.organHolder.head.scalp_op_stage == 4.0)        //Cant scoop a brain if its not there
+        user.show_text("Theres no existing brain to schlorp it into!", "blue")
+        return 1
+      if (M.organHolder.head.scalp_op_stage >= 2.0 )
+        M.organHolder.brain.amount_spooned_out--
+        M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+        user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+        M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+        var/obj/item/current_held = user.equipped()
+        user.u_equip(current_held)
+        qdel(current_held)
+        user.put_in_hand(new /obj/item/surgical_spoon)
+        return 1
+      else
+        M.tri_message("<span class='alert'><b>[user]</b> awkwardly nudges the spoon against [M == user ? "[his_or_her(M)]" : "[M]'s"] head. Grody.</span>",\
+        user, "<span class='alert'>You try to shove the brains into [user == M ? "your" : "[M]'s"] skull but there's no hole there, dummy!</span>",\
+        M, "<span class='alert'>[M == user ? "You bonk" : "<b>[user]</b> bonks"] the [src] against your head! [pick("Why.","That's just bizzare.","That's not what that's for!","Shameful.")]</span>")
     else
       ..()
 
@@ -500,15 +508,23 @@
   dropped_item = /obj/item/kitchen/utensil/spoon
   Eat(mob/living/carbon/human/M, mob/user, bypass_utensils)
     if (user.zone_sel.selecting == "head" && user.a_intent == INTENT_HARM)
-      M.organHolder.brain.amount_spooned_out--
-      M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
-      user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
-      M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
-      var/obj/item/current_held = user.equipped()
-      user.u_equip(current_held)
-      qdel(current_held)
-      user.put_in_hand(new /obj/item/kitchen/utensil/spoon)
-      return 1
+      if (M.organHolder.head.scalp_op_stage == 4.0)        //Cant scoop a brain if its not there
+        user.show_text("Theres no existing brain to schlorp it into!", "blue")
+        return 1
+      if (M.organHolder.head.scalp_op_stage >= 2.0 )
+        M.organHolder.brain.amount_spooned_out--
+        M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+        user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+        M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+        var/obj/item/current_held = user.equipped()
+        user.u_equip(current_held)
+        qdel(current_held)
+        user.put_in_hand(new /obj/item/surgical_spoon)
+        return 1
+      else
+        M.tri_message("<span class='alert'><b>[user]</b> awkwardly nudges the spoon against [M == user ? "[his_or_her(M)]" : "[M]'s"] head. Grody.</span>",\
+        user, "<span class='alert'>You try to shove the brains into [user == M ? "your" : "[M]'s"] skull but there's no hole there, dummy!</span>",\
+        M, "<span class='alert'>[M == user ? "You bonk" : "<b>[user]</b> bonks"] the [src] against your head! [pick("Why.","That's just bizzare.","That's not what that's for!","Shameful.")]</span>")
     else
       ..()
 
