@@ -37,7 +37,7 @@
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
 				for (var/datum/figure_info/patreon/fig as() in concrete_typesof(/datum/figure_info/patreon))
-					if (fig.ckey == potential_donator_ckey)
+					if (initial(fig.ckey) == potential_donator_ckey)
 						donator_figtype = fig
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
 			if (prob(src.patreon_prob))
@@ -635,6 +635,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	whitneystingray
 		name = "\improper Whitney Stingray"
 		icon_state = "whitneystingray"
+		ckey = "anguishedenglish"
 
 	fleur
 		name = "\improper Fleur DeLaCreme"
