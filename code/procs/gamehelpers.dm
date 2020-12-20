@@ -127,7 +127,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					qdel(O)
 
 				return 1
-		else if (istype(source, /obj/machinery) && isAI(user))
+		else if (istype(source, /obj/machinery) && (isAI(user) || issilicon(user)))
 			return 1
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true

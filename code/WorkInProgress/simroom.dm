@@ -414,11 +414,10 @@
 
 
 /obj/machinery/sim/programcomp/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=mm")
-			return
+	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=mm")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"

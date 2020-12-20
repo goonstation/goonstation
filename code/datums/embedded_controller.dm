@@ -653,7 +653,7 @@ obj/machinery/embedded_controller/radio/department_controller
 			icon_state = "access_control_off"
 
 	Topic(href, href_list)
-		if (src.locked && !issilicon(usr))
+		if (src.locked && !issilicon(usr) && !isAI(usr))
 			return
 
 		if(program)

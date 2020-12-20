@@ -133,7 +133,7 @@
 			return 1
 		if(user.lying || user.stat)
 			return 1
-		if ((get_dist(src, user) > 1 || !(isturf(src.loc) || istype(src.loc, /obj/machinery/sleeper))) && (!issilicon(user) && !isAI(user)))
+		if (!in_range(src, user) || !(isturf(src.loc) || istype(src.loc, /obj/machinery/sleeper)))
 			return 1
 		if (ishuman(user))
 			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))

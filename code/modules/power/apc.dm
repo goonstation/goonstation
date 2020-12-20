@@ -550,15 +550,14 @@ var/zapLimiter = 0
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user) && !isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=apc")
-			return
-		else if ((issilicon(user) || isAI(user)) && src.aidisabled)
-			boutput(user, "AI control for this APC interface has been disabled.")
-			user.Browse(null, "window=apc")
-			return
+	if (!in_range(src, user))
+		src.remove_dialog(user)
+		user.Browse(null, "window=apc")
+		return
+	else if ((issilicon(user) || isAI(user)) && src.aidisabled)
+		boutput(user, "AI control for this APC interface has been disabled.")
+		user.Browse(null, "window=apc")
+		return
 	if(wiresexposed && (!isAI(user)))
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
