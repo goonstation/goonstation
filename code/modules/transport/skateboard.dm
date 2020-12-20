@@ -208,8 +208,7 @@
 		SPAWN_DBG(0.4 SECONDS)
 			input_lockout -= 1
 
-	if(runningAction)
-		runningAction.sCurr = sickness
+	runningAction?.sCurr = sickness
 
 	update()
 	in_bump = 0

@@ -242,7 +242,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG (50)
+	SPAWN_DBG(5 SECONDS)
 		if (src)
 			src.can_use = 1
 

@@ -69,8 +69,7 @@
 
 /mob/living/critter/flock/bit/death(var/gibbed)
 	walk(src, 0)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	flockdronegibs(get_turf(src))
 	qdel(src)
@@ -78,8 +77,7 @@
 // okay so this might be fun for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
-	if(src.client)
-		src.client.color = null
+	src.client?.color = null
 	walk(src, 0)
 	src.is_npc = 0
 

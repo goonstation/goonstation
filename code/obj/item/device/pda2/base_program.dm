@@ -91,8 +91,7 @@
 
 
 		post_signal(datum/signal/signal, newfreq)
-			if(master)
-				master.post_signal(signal, newfreq)
+			master?.post_signal(signal, newfreq)
 			//else
 				//qdel(signal)
 

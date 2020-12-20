@@ -597,8 +597,7 @@
 	.= 0
 	if(!chokehold && istype(target) && istype(user))
 		src.chokehold = user.grab_other(target, hide_attack, src)
-		if(chokehold)
-			chokehold.post_item_setup()
+		chokehold?.post_item_setup()
 		.= 1
 
 /obj/item/proc/drop_grab()

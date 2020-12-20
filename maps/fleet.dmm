@@ -25397,6 +25397,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/paper/engine,
 /turf/simulated/floor/darkpurple,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"

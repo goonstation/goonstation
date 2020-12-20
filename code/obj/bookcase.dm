@@ -203,7 +203,7 @@
 				boutput(user, "You can't take apart \the [src] if there's still books on it.")
 				return
 			user.visible_message("[user] starts to take apart \the [src].", "You start to take apart \the [src].")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] takes \the [src] apart.", "You take \the [src] apart.")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)

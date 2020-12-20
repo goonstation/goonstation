@@ -256,8 +256,7 @@
 
 		src.net_id = format_net_id("\ref[src]")
 
-		if(radio_controller)
-			radio_controller.add_object(src, "[frequency]")
+		radio_controller?.add_object(src, "[frequency]")
 
 		if (src.setup_default_cartridge)
 			src.cartridge = new src.setup_default_cartridge(src)
@@ -527,8 +526,7 @@
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
 
-	if(src.host_program)
-		src.host_program.network_hook(signal, rx_method, rx_freq)
+	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
@@ -554,8 +552,7 @@
 			if (!("ai" in src.mailgroups) || !signal.data["group"])
 				return
 
-	if(src.host_program)
-		src.host_program.receive_signal(signal, rx_method, rx_freq)
+	src.host_program?.receive_signal(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.receive_signal(signal, rx_method, rx_freq)
@@ -667,24 +664,20 @@
 		return in_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
-		SPAWN_DBG(0)
-			LAGCHECK(LAG_REALTIME)
-			if(!signal)
-				return
-			var/freq = newfreq
-			if(!freq)
-				freq = src.frequency
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
 
-			signal.source = src
-			signal.data["sender"] = src.net_id
+		signal.source = src
+		signal.data["sender"] = src.net_id
 
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
 
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(frequency)
-				return frequency.post_signal(src, signal)
-			//else
-				//qdel(signal)
+		signal.transmission_method = TRANSMISSION_RADIO
+		if(frequency)
+			return frequency.post_signal(src, signal)
 
 	proc/eject_cartridge(var/mob/user as mob)
 		if (src.cartridge && src.ejectable_cartridge)

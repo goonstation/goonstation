@@ -136,7 +136,7 @@
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
-		else if (num == 0 & sliced == 1) // Bad, I know, sorry!
+		else if (num == 0 && sliced == 1) // Bad, I know, sorry!
 			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s1")
 			I.Blend(topping_color, ICON_ADD)
 			src.overlays += I
@@ -474,6 +474,19 @@
   initial_reagents = list("prions"=2)
   food_effects = list("food_refreshed")
   dropped_item = /obj/item/surgical_spoon
+  Eat(mob/living/carbon/human/M, mob/user, bypass_utensils)
+    if (user.zone_sel.selecting == "head" && user.a_intent == INTENT_HARM)
+      M.organHolder.brain.amount_spooned_out--
+      M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+      user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+      M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+      var/obj/item/current_held = user.equipped()
+      user.u_equip(current_held)
+      qdel(current_held)
+      user.put_in_hand(new /obj/item/surgical_spoon)
+      return 1
+    else ()
+      ..()
 
 /obj/item/reagent_containers/food/snacks/brainspoon
   name = "spoonful of brain"
@@ -485,6 +498,19 @@
   initial_reagents = list("prions"=2)
   food_effects = list("food_refreshed")
   dropped_item = /obj/item/kitchen/utensil/spoon
+  Eat(mob/living/carbon/human/M, mob/user, bypass_utensils)
+    if (user.zone_sel.selecting == "head" && user.a_intent == INTENT_HARM)
+      M.organHolder.brain.amount_spooned_out--
+      M.tri_message("<span class='alert'><b>[user]</b> shoves a spoonful of brains into [M == user ? "[his_or_her(M)]" : "[M]'s"] skull! [pick("They look brainier.","What the fuck?","Someone call a real doctor!")]</span>",\
+      user, "<span class='alert'>You schlorp some gray matter into [user == M ? "your" : "[M]'s"] skull. [pick("Was that the equivalent of a tablespoon or a teaspoon? Oh well!","Holy fuck!","Mother of god!","What hath science wrought!")]</span>",\
+      M, "<span class='alert'>[M == user ? "You squidge" : "<b>[user]</b> squidges"] a bit of brains off the [src] into your head! [pick("You feel smarter somehow.","Two plus two IS four!","Your cranium bulges intelligently.","You know kung fu!","Huh, that felt weird.")]</span>")
+      var/obj/item/current_held = user.equipped()
+      user.u_equip(current_held)
+      qdel(current_held)
+      user.put_in_hand(new /obj/item/kitchen/utensil/spoon)
+      return 1
+    else ()
+      ..()
 
 /obj/item/reagent_containers/food/snacks/soup/gruel
 	name = "gruel"
@@ -1145,6 +1171,8 @@
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
+		else
+			..()
 
 	frosted
 		name = "frosted donut"

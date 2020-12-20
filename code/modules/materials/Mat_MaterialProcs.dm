@@ -67,8 +67,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(M)
-			M.bodytemperature = 310
+		M?.bodytemperature = 310
 		return
 
 /datum/materialProc/fail_explosive

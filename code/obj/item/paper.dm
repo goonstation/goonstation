@@ -259,9 +259,11 @@
 	.["sealed"] = src.sealed
 
 /obj/item/paper/ui_data(mob/user)
-	var/list/data = list()
-
-	data["editUsr"] = "[user]"
+	. = list(
+		"editUsr" = "[user]",
+		"fieldCounter" = field_counter,
+		"formFields" = form_fields,
+	)
 
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
@@ -270,51 +272,53 @@
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
-		"stamp-sprite-clown" = "large_stamp-clown.png",
-		"stamp-sprite-deny" = "large_stamp-deny.png",
-		"stamp-sprite-ok" = "large_stamp-ok.png",
-		"stamp-sprite-hop" = "large_stamp-hop.png",
-		"stamp-sprite-md" = "large_stamp-md.png",
-		"stamp-sprite-ce" = "large_stamp-ce.png",
-		"stamp-sprite-hos" = "large_stamp-hos.png",
-		"stamp-sprite-rd" = "large_stamp-rd.png",
-		"stamp-sprite-cap" = "large_stamp-cap.png",
-		"stamp-sprite-qm" = "large_stamp-qm.png",
-		"stamp-sprite-law" = "large_stamp-law.png",
-		"stamp-sprite-chap" = "large_stamp-chap.png",
-		"stamp-sprite-mime" = "large_stamp-mime.png",
-		"stamp-sprite-centcom" = "large_stamp-centcom.png",
-		"stamp-sprite-syndicate" = "large_stamp-syndicate.png",
-		"stamp-sprite-void" = "large_stamp-void.png",
+		"stamp-sprite-clown" = "[resource("images/tgui/stamp_icons/stamp-clown.png")]",
+		"stamp-sprite-deny" = "[resource("images/tgui/stamp_icons/stamp-deny.png")]",
+		"stamp-sprite-ok" = "[resource("images/tgui/stamp_icons/stamp-ok.png")]",
+		"stamp-sprite-hop" = "[resource("images/tgui/stamp_icons/stamp-hop.png")]",
+		"stamp-sprite-md" = "[resource("images/tgui/stamp_icons/stamp-md.png")]",
+		"stamp-sprite-ce" = "[resource("images/tgui/stamp_icons/stamp-ce.png")]",
+		"stamp-sprite-hos" = "[resource("images/tgui/stamp_icons/stamp-hos.png")]",
+		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
+		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
+		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
+		"stamp-sprite-law" = "[resource("images/tgui/stamp_icons/stamp-law.png")]",
+		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
+		"stamp-sprite-mime" = "[resource("images/tgui/stamp_icons/stamp-mime.png")]",
+		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
+		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
+		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
 
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
-		data["penFont"] = PEN.font
-		data["penColor"] = PEN.color
-		data["editMode"] = PAPER_MODE_WRITING
-		data["isCrayon"] = FALSE
-		data["stampClass"] = "FAKE"
+		. += list(
+			"penFont" = PEN.font,
+			"penColor" = PEN.color,
+			"editMode" = PAPER_MODE_WRITING,
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
-		data["stampClass"] = stamp_assets[stamp.current_mode]
 		stamp.current_state = stamp_assets[stamp.current_mode]
-		data["editMode"] = PAPER_MODE_STAMPING
-		data["penFont"] = "FAKE"
-		data["penColor"] = "FAKE"
-		data["isCrayon"] = FALSE
+		. += list(
+			"stampClass" = stamp_assets[stamp.current_mode],
+			"editMode" = PAPER_MODE_STAMPING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+		)
 	else
-		data["editMode"] = PAPER_MODE_READING
-		data["penFont"] = "FAKE"
-		data["penColor"] = "FAKE"
-		data["isCrayon"] = FALSE
-		data["stampClass"] = "FAKE"
-	data["fieldCounter"] = field_counter
-	data["formFields"] = form_fields
-
-	return data
+		. += list(
+			"editMode" = PAPER_MODE_READING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
@@ -508,6 +512,12 @@ Standard checklist for thermo-electric generator cold-start:
 <b>*Direct combustion of internal coolant may void your engine warranty and result in: fire, explosion, death, and/or property damage.</b><BR>
 <li>In the event of hazardous coolant pressure buildup, use the vent valves in maintenance above the engine core to drain line pressure. If the engine is not functioning properly, check your line pressure.
 <li>Generator efficiency may suffer if the pressure differential between loops becomes too high. This may be rectified by adding more gas pressure to the low side or draining the high side.
+<li>The circulator includes a blower system to help ensure a minimum pressure can be provided to the circulator.  A multitool can be used to override the default setting if additional pressure is required.<BR>
+<b>*Power required is proportional to the pressure differential to overcome. Ensure ample power is provided by SMES system, this is critical when an override is active.</b><BR>
+<li>Circulator efficiency will suffer if the pressure of the outlet exceeds the inlet*. This issue may also be mitigated by cycling gas from outlet near via auxilary ports or draining line pressure depending on loop configuration.<BR>
+<b>*Failure to provide sufficient pressure will inhibit energy production until the problem can be rectified.</b><BR>
+<li>Circulators are equipped with a lubrication system to aid with overall efficiency and longevity. Only lubricants with sufficiently high viscosity should be utilized. System should arrive pre-lubricated with a proprietary synthetic heavy hydrocarbon oil blend from the factory. Should additional lubricant be required or need changing carefully unscrew the maintenance panel to gain access.<BR>
+<b>*Operation without sufficient lubricant may void your engine warranty but is unlikely to cause fire, explosion or death.</b><BR>
 <li>With the power generation rate stable, engage charging of the superconducting magnetic energy storage (SMES) devices in the Power Room. Total charging input rates between all connected SMES cells must not exceed the available generator output.</ol>
 <HR>
 <i>Warning!</i> Improper engine and generator operation may cause exposure to hazardous gasses, extremes of heat and cold, and dangerous electrical voltages.
@@ -515,6 +525,15 @@ Only trained personnel should operate station systems. Follow all procedures car
 <HR>
 
 "}
+	// Provide tracking so training material can be updated by TEG.  This removes reliance on a search criteria that becomes
+	// a limitation on map design.  Performant for that one time...
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
@@ -1053,6 +1072,25 @@ Only trained personnel should operate station systems. Follow all procedures car
 	for(var/obj/item/paper/P in src)
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
+
+/obj/item/paper_bin/robot
+	name = "semi-automatic paper bin"
+	var/next_generate = 0
+
+	attack_self(mob/user as mob)
+		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+			if (src.next_generate < ticker.round_elapsed_ticks)
+				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
+				src.amount++
+				src.update()
+				src.next_generate = ticker.round_elapsed_ticks + 5 SECONDS
+				return
+
+			boutput(user, "Nothing left in the [src]. Maybe you should check again later.")
+			return
+
+		boutput(user, "You remove a piece of paper from the [src].")
+		return attack_hand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"

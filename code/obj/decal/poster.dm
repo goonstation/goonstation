@@ -522,7 +522,7 @@
 			icon_state = "ptoe"
 
 		poster_y4nt
-			name = "\improper NanoTrasen poster"
+			name = "\improper NanoTrasen recruitment poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"

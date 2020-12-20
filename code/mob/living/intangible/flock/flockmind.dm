@@ -90,8 +90,7 @@
 /mob/living/intangible/flock/flockmind/death(gibbed)
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
-	if(src.flock)
-		src.flock.perish()
+	src.flock?.perish()
 	src.invisibility = 0
 	src.icon_state = "blank"
 	src.canmove = 0
@@ -133,7 +132,7 @@
 		if(O?.client)
 			valid_ghosts |= O
 	if(valid_ghosts.len <= 0)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	// pick a random ghost

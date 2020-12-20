@@ -50,6 +50,11 @@
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
 		user.lastattacked = src
@@ -181,6 +186,10 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.cant_drop) // For borg held items
+			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
+			return
+
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
 			if(src.cone)
 				boutput(user, "There is already a cone loaded.")
@@ -207,6 +216,11 @@
 			src.update_icon()
 			src.updateUsrDialog()
 		else ..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/update_icon()
 		if(src.beaker)
@@ -466,7 +480,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
-			src.recipes += new /datum/cookingrecipe/cake_downs(src)
 			src.recipes += new /datum/cookingrecipe/cake_meat(src)
 			src.recipes += new /datum/cookingrecipe/cake_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/cake_cream(src)
@@ -752,6 +765,11 @@ table#cooktime a#start {
 		W.set_loc(src)
 		W.dropped()
 		src.updateUsrDialog()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return 0
@@ -1073,6 +1091,11 @@ var/list/mixer_recipes = list()
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
