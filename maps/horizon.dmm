@@ -6833,7 +6833,7 @@
 "rxZ" = (/turf/simulated/floor/grass/leafy,/area/station/ranch)
 "rHh" = (/turf/simulated/shuttle/wall{icon_state = "wall_space"},/area/station/ranch)
 "rWE" = (/obj/machinery/shuttle/engine/propulsion{dir = 8; icon_state = "alt_propulsion"},/turf/space,/area/station/ranch)
-"tVk" = (/obj/decal/fakeobjects/console_radar,/turf/simulated/floor/dirt,/area/station/ranch)
+"tVk" = (/obj/decal/fakeobjects/console_radar{anchored = 1},/turf/simulated/floor/dirt,/area/station/ranch)
 "ucf" = (/turf/space,/turf/simulated/floor/grass/leafy,/area/station/ranch)
 "viZ" = (/obj/machinery/camera{c_tag = "autotag"; dir = 10; name = "autoname - SS13"; tag = ""},/turf/simulated/floor/grass/leafy,/area/station/ranch)
 "vpa" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall_space"},/area/station/ranch)
