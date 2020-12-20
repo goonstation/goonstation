@@ -340,16 +340,6 @@
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
 		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
-/obj/machinery/power/pt_laser/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/pt_laser/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)

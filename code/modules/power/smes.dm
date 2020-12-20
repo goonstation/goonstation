@@ -207,16 +207,6 @@
 	if (terminal?.powernet)
 		terminal.powernet.newload += amount
 
-/obj/machinery/power/smes/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/smes/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)

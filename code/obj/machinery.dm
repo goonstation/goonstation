@@ -169,12 +169,12 @@
 	return 0
 
 /obj/machinery/ui_state(mob/user)
-	return tgui_physical_state
+	return tgui_default_state
 
-/obj/machinery/ui_status(mob/user)
+/obj/machinery/ui_status(mob/user, datum/ui_state/state)
   return min(
+		state.can_use_topic(src, user),
 		tgui_broken_state.can_use_topic(src, user),
-		tgui_physical_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 

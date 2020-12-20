@@ -83,6 +83,15 @@
 		ui = new(user, src, "TankDispenser", name)
 		ui.open()
 
+/obj/machinery/dispenser/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/machinery/dispenser/ui_status(mob/user)
+  return min(
+		tgui_physical_state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
 /obj/machinery/dispenser/ui_data(mob/user)
 	. = list(
 		"oxygen" = o2tanks,
