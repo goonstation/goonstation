@@ -485,8 +485,10 @@
       qdel(current_held)
       user.put_in_hand(new /obj/item/surgical_spoon)
       return 1
-    else ()
-    ..()
+
+    else
+      ..()
+>>>>>>> master
 
 /obj/item/reagent_containers/food/snacks/brainspoon
   name = "spoonful of brain"
@@ -509,8 +511,13 @@
       qdel(current_held)
       user.put_in_hand(new /obj/item/kitchen/utensil/spoon)
       return 1
+<<<<<<< HEAD
     else ()
     ..()
+=======
+    else
+      ..()
+>>>>>>> master
 
 /obj/item/reagent_containers/food/snacks/soup/gruel
 	name = "gruel"
