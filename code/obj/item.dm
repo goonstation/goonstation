@@ -124,7 +124,7 @@
 
 	// amount of time spent between previous tick and this one (1 = normal)
 	var/last_tick_duration = 1
-	var/last_tick = -1
+	var/last_processing_tick = -1
 
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
@@ -773,11 +773,11 @@
 		..(W, user)
 
 /obj/item/proc/process()
-	if (src.last_tick < 0)
+	if (src.last_processing_tick < 0)
 		src.last_tick_duration = 1
 	else
-		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_tick) / (2.9 SECONDS)
-	src.last_tick = ticker.round_elapsed_ticks
+		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
+	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
 		if (src.material)
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))

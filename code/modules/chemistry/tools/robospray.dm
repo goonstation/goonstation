@@ -9,18 +9,17 @@
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	var/max_fill_amount = 25
 	var/list/botreagents = list(
-		"charcoal" = max_fill_amount,
-		"epinephrine" = max_fill_amount,
-		"mannitol" = max_fill_amount,
-		"anti_rad" = max_fill_amount,
-		"salbutamol" = max_fill_amount,
-		"saline" = max_fill_amount
+		"charcoal" = 25,
+		"epinephrine" = 25,
+		"mannitol" = 25,
+		"anti_rad" = 25,
+		"salbutamol" = 25,
+		"saline" = 25
 	)
 	var/list/available_chems = null
 	var/currentreagent = "epinephrine"
 	var/propername = "Epinephrine"
 	var/image/fluid_image
-	var/last_refill = -1
 	var/extra_refill = 0
 
 	hide_attack = 2
