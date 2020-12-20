@@ -488,8 +488,6 @@
 
     else
       ..()
->>>>>>> master
-
 /obj/item/reagent_containers/food/snacks/brainspoon
   name = "spoonful of brain"
   desc = "A spoon with brain schlorped into it."
@@ -511,13 +509,10 @@
       qdel(current_held)
       user.put_in_hand(new /obj/item/kitchen/utensil/spoon)
       return 1
-<<<<<<< HEAD
-    else ()
-    ..()
-=======
+
     else
       ..()
->>>>>>> master
+
 
 /obj/item/reagent_containers/food/snacks/soup/gruel
 	name = "gruel"
