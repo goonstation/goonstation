@@ -18,7 +18,8 @@
 	/datum/commodity/trader/generic/rcd_ammo,
 	/datum/commodity/trader/generic/fabric,
 	/datum/commodity/trader/generic/telecrystal,
-	/datum/commodity/trader/generic/glowstick)
+	/datum/commodity/trader/generic/glowstick,
+	/datum/commodity/trader/ringtone_dogs)
 	/*
 	/datum/commodity/trader/synthmodule/bacteria,
 	/datum/commodity/trader/synthmodule/virii,
