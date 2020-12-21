@@ -57464,13 +57464,13 @@
 /area/station/turret_protected/ai)
 "qCJ" = (
 /obj/table/wood/auto,
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /obj/item/instrument/fiddle,
@@ -86007,13 +86007,13 @@
 /area/station/maintenance/inner/south)
 "xVx" = (
 /obj/table/reinforced/auto,
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,

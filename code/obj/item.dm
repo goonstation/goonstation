@@ -836,8 +836,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
-	if(chokehold)
-		chokehold.attack_self(user)
+	chokehold?.attack_self(user)
 
 	return
 
@@ -1479,8 +1478,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	if(src.material)
-		src.material.triggerPickup(user, src)
+	src.material?.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

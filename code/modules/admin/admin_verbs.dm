@@ -609,8 +609,7 @@ var/list/special_pa_observing_verbs = list(
 
 	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		if(src.mob.mind)
-			src.mob.mind.damned = 0
+		src.mob.mind?.damned = 0
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -667,8 +666,7 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if(src.holder)
-		src.holder.Topic(null, list("action"="jobbanpanel","target"=key))
+	src.holder?.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()

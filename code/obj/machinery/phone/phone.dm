@@ -210,8 +210,7 @@
 	proc/call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
@@ -322,8 +321,7 @@
 	call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())

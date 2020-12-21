@@ -30,6 +30,10 @@ var/list/globalContextActions = null
 			var/mob/living/silicon/robot/robot = target
 			robot.hud.add_screen(C)
 
+		if (isghostdrone(target))
+			var/mob/living/silicon/ghostdrone/drone = target
+			drone.hud.add_screen(C)
+
 		if (isAI(target))
 			var/mob/living/silicon/ai/A = null
 			if (isAIeye(target))
@@ -325,6 +329,10 @@ var/list/globalContextActions = null
 				var/mob/living/silicon/robot/robot = src
 				robot.hud.remove_screen(C)
 
+			if (isghostdrone(src))
+				var/mob/living/silicon/ghostdrone/drone = src
+				drone.hud.remove_screen(C)
+
 			var/mob/living/silicon/ai/A = null
 			if (isAI(src))
 				if (isAIeye(src))
@@ -467,6 +475,9 @@ var/list/globalContextActions = null
 		if (isrobot(user))
 			var/mob/living/silicon/robot/robot = user
 			robot.hud.remove_screen(src)
+		if (isghostdrone(user))
+			var/mob/living/silicon/ghostdrone/drone = user
+			drone.hud.remove_screen(src)
 		if (ishivebot(user))
 			var/mob/living/silicon/hivebot/hivebot = user
 			hivebot.hud.remove_screen(src)
@@ -892,6 +903,9 @@ var/list/globalContextActions = null
 
 		checkRequirements(var/atom/target, var/mob/user)
 			.= 0
+			//I don't think drones have hands technically but they can only hold one item anyway
+			if(isghostdrone(user))
+				return 1
 			if(user.find_type_in_hand(/obj/item/deconstructor/))
 				return 1
 

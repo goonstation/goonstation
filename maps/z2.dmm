@@ -8640,10 +8640,7 @@
 /area/hospital)
 "awp" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -69375,7 +69372,7 @@
 /area/shuttle/escape/centcom/manta)
 "dmF" = (
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/manta)
 "dmG" = (
 /obj/indestructible/shuttle_corner,
@@ -69446,10 +69443,7 @@
 	},
 /area/shuttle/escape/centcom/manta)
 "dmT" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	opacity = 0
-	},
+/obj/machinery/door/airlock/pyro/command,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/manta)
 "dmU" = (
@@ -69564,12 +69558,6 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/manta)
-"dnl" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/space/fluid/manta,
-/area/shuttle/escape/centcom/manta)
 "dnm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -69602,12 +69590,6 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/manta)
-"dnr" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/space/fluid/manta,
-/area/shuttle/escape/centcom/manta)
 "dns" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -69634,7 +69616,7 @@
 /area/centcom)
 "dnw" = (
 /obj/machinery/shuttle/engine/heater/seaheater_middle,
-/turf/space/fluid/manta,
+/turf/space/fluid,
 /area/shuttle/escape/centcom/manta)
 "dnx" = (
 /turf/unsimulated/floor/orangeblack/corner{
@@ -69661,21 +69643,21 @@
 	icon_state = "alt_heater-L"
 	},
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/manta)
 "dnC" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/manta)
 "dnD" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/plating/random,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/manta)
 "dnE" = (
 /obj/indestructible/shuttle_corner{
@@ -145802,7 +145784,7 @@ dmK
 dna
 dmW
 dmK
-dnl
+dnA
 dkJ
 dkK
 dkK
@@ -146105,7 +146087,7 @@ dmN
 dmS
 dnf
 dnm
-dnl
+dnA
 dmC
 dmC
 dmy
@@ -148521,7 +148503,7 @@ dmN
 dmS
 dnk
 dnq
-dnr
+dnE
 dmC
 dmC
 dmy
@@ -148822,7 +148804,7 @@ dmK
 dna
 dmU
 dmK
-dnr
+dnE
 djo
 dkK
 dkK

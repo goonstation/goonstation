@@ -1,4 +1,24 @@
 
+(t)mon dec 21 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Tweaked shivering status to proc a little more often and last a little longer. @ me on discord if it's too much
+(*)Changed lizard mutantrace to no longer naturally thermoregulate. Keep some hot cocoa or a space heater handy!
+(t)sat dec 19 20
+(u)BatElite
+(p)3075
+(e)🆕|feature
+(*)Ghostdrones can now use deconstruction devices, and also have one in their inventory.
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken Feed is now a snack you can monch on (and hand-feed to chickens)
+(*)Chickens now only show heart status for their favorite food
+(+)Bunch of changes to how chickens determine enemies/friends, please report any bugs!
+(t)fri dec 18 20
+(u)virvatuli
+(p)3088
+(e)🗺|mapping
+(+)The Salyut derelict now has an appropriately Soviet space suit.
 (t)thu dec 17 20
 (u)Tarmunora
 (p)3074

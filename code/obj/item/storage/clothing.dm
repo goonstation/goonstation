@@ -75,14 +75,16 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/hydroponics,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/botanist)
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
 
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/botanist)
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
@@ -129,7 +131,7 @@
 /obj/item/storage/box/clothing/security
 	name = "\improper Security Officer's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/security,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/swat,\
 	/obj/item/device/radio/headset/security,\
 	/obj/item/device/pda2/security)
 
@@ -167,7 +169,8 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/labcoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/medical/robotics)
+	/obj/item/device/pda2/medical/robotics,\
+	/obj/item/clothing/gloves/latex)
 
 // Research Equipment
 
@@ -208,7 +211,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/cargo,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/shipping,\
 	/obj/item/device/pda2/quartermaster)
 
 /obj/item/storage/box/clothing/wedding_dress

@@ -1,7 +1,11 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
 /client
+#ifdef PRELOAD_RSC_URL
+	preload_rsc = PRELOAD_RSC_URL
+#else
 	preload_rsc = 1
+#endif
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null

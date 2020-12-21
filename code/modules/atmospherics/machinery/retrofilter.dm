@@ -302,8 +302,7 @@ obj/machinery/atmospherics/retrofilter
 			network_in.merge(network_out2)
 			network_out2 = network_in
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
 		if(network_out2)
 			network_out2.update = 1

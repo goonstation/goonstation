@@ -13527,6 +13527,7 @@
 /area/station/communications/bedroom)
 "aEX" = (
 /obj/table/auto,
+/obj/item/game_kit,
 /obj/item/storage/box/donkpocket_kit,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -18970,7 +18971,6 @@
 /area/station/maintenance/upperstarboard)
 "aRb" = (
 /obj/storage/secure/closet/command/hos,
-/obj/item/gun/energy/tasershotgun,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/hos)
 "aRc" = (
@@ -19888,6 +19888,7 @@
 /area/station/security/brig/cell_block_control)
 "aSW" = (
 /obj/storage/secure/closet/brig,
+/obj/item/game_kit,
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
 "aSX" = (
@@ -32825,7 +32826,7 @@
 "bsY" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/emergency,
-/obj/item/card_box/suit,
+/obj/item/game_kit,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -33390,13 +33391,13 @@
 	pixel_y = 16
 	},
 /obj/table/auto,
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/dirt,
@@ -33946,6 +33947,12 @@
 "bvx" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)

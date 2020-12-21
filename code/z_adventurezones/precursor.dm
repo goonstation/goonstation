@@ -701,8 +701,7 @@
 
 	proc
 		update_controller()
-			if(src.linked_controller)
-				src.linked_controller.update()
+			src.linked_controller?.update()
 			return
 
 

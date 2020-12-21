@@ -872,7 +872,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_escape-sealab"
 	manta
 		icon_state = "shuttle_escape-manta"
-		filler_turf = "/turf/space/fluid/manta"
+		filler_turf = "/turf/space/fluid"
 	donut3
 		icon_state = "shuttle_escape-dnt3"
 

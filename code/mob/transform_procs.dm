@@ -286,8 +286,7 @@
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
 	O.dna = src.dna
-	if(src.mind)
-		src.mind.transfer_to(O)
+	src.mind?.transfer_to(O)
 	src.dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
@@ -320,8 +319,7 @@
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"
 	O.dna = src.dna
-	if(src.mind)
-		src.mind.transfer_to(O)
+	src.mind?.transfer_to(O)
 	src.dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
@@ -355,8 +353,7 @@
 		O.lastKnownIP = src.client.address
 		if (src.client)
 			src.client.mob = O
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		O.set_loc(src.loc)
 		boutput(O, "<B>You are a Robot.</B>")
 		boutput(O, "<B>You're more or less a Cyborg but have no organic parts.</B>")
@@ -377,8 +374,7 @@
 		O.lastKnownIP = src.client.address
 		if (src.client)
 			src.client.mob = O
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		O.Namepick()
 		O.set_loc(src.loc)
 		boutput(O, "<B>You are a Mainframe Unit.</B>")

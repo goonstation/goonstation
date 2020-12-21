@@ -31,8 +31,7 @@
 
 /mob/living/intangible/flock/Login()
 	..()
-	if(src.flock)
-		src.flock.showAnnotations(src)
+	src.flock?.showAnnotations(src)
 	if(src.client)
 		// where we're going we don't need shadows or light
 		var/atom/plane = src.client.get_plane(PLANE_LIGHTING)
@@ -46,8 +45,7 @@
 			plane.alpha = 255
 
 /mob/living/intangible/flock/Logout()
-	if(src.flock)
-		src.flock.hideAnnotations(src)
+	src.flock?.hideAnnotations(src)
 	if(src.client)
 		var/atom/plane = src.client.get_plane(PLANE_LIGHTING)
 		if (plane)

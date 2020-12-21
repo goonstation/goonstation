@@ -16416,13 +16416,13 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /obj/access_spawn/rancher,
@@ -16436,6 +16436,9 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/stool/chair/green{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
