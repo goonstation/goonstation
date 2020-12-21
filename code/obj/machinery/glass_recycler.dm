@@ -41,17 +41,12 @@
 			user.u_equip(W)
 			qdel(W)
 			return 1
-		else if (istype(W, /obj/item/material_piece))
-			var/obj/item/material_piece/M = W
-			if (istype(M) && M.material && M.crystal > 0)
-				glass_amt += W.amount * 10
-				user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-				user.u_equip(W)
-				qdel(W)
-				return 1
-			else
-				boutput(user, "<span class='alert'>[src] only accepts crystalline materials!</span>")
-				return
+		else if (istype(W, /obj/item/material_piece) && W.material != null && W.material.material_flags & MATERIAL_CRYSTAL)
+			glass_amt += W.amount * 10
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			qdel(W)
+			return 1
 		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (istype(W,/obj/item/reagent_containers/food/drinks))
 				var/obj/item/reagent_containers/food/drinks/D = W
