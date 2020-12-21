@@ -210,10 +210,6 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			if (isrestrictedz(src.z))
 				boutput(usr, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
-//additional check, for if this thing gets used terribly somehow
-//			for (var/area/station/a in orange(1,src))
-//				boutput(user,"<span style=\"color:red\">Interference from nearby electrical fields is preventing this beacon's deployment.</span>")
-//				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
 			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
 			src.deploying = 1
