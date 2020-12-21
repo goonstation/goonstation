@@ -801,6 +801,8 @@
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
+			H.thermoregulation_mult = 0
+			H.base_body_temp = T0C + 38
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -818,6 +820,8 @@
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			L.remove_lizard_powers()
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.thermoregulation_mult = initial(mob.thermoregulation_mult)
+			mob.base_body_temp = initial(mob.base_body_temp)
 		. = ..()
 
 	say_verb()
