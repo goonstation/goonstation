@@ -278,6 +278,7 @@
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/honk_synth(src))
 			src.root.add_file( new /datum/computer/file/pda_program/arcade(src))
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/clown(src))
 			src.read_only = 1
 
 	janitor
@@ -365,4 +366,44 @@
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/codebreaker(src))
+			src.read_only = 1
+
+	ringtone
+		name = "\improper Thinktronic Sound System Backup cartridge"
+		desc = "Perfect for restoring default audio settings to any Thinktronic Systems handheld device."
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone(src))
+			src.read_only = 1
+
+	ringtone_dogs
+		name = "\improper WOLF PACK ULTIMATE PRO ringtone cartridge"
+		desc = "RIDE OR DIE WE HOWL TOGETHER AND PROWL TOGETHER"
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/dogs(src))
+			src.read_only = 1
+
+	ringtone_numbers
+		name = "\improper Leaptronics Learning System cartridge"
+		desc = "Blossom into brilliance! For ages 4-6."
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/numbers(src))
+			src.read_only = 1
+
+	ringtone_syndie
+		name = "\improper SounDreamS PRO cartridge"
+		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/syndie(src))
 			src.read_only = 1

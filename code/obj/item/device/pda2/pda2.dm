@@ -55,6 +55,13 @@
 	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
+	/// Syndie sound programs can blow out the speakers and render it forever *silent*
+	var/speaker_busted = 0
+
+	/// The PDA's currently loaded ringtone set
+	var/datum/ringtone/r_tone = /datum/ringtone
+	/// A temporary ringtone set for preview purposed
+	var/datum/ringtone/r_tone_temp
 
 	registered_owner()
 		.= registered
@@ -228,6 +235,8 @@
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
 	var/mob/M = src.loc
+	if(ispath(src.r_tone))
+		src.r_tone = new r_tone(src)
 	if(istype(M) && M.client)
 		src.bg_color = M.client.preferences.PDAcolor
 		var/list/color_vals = hex_to_rgb_list(bg_color)
@@ -280,6 +289,10 @@
 	src.active_program = null
 	src.host_program = null
 	src.scan_program = null
+	qdel(src.r_tone)
+	qdel(src.r_tone_temp)
+	src.r_tone = null
+	src.r_tone_temp = null
 
 	if (src.hd)
 		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
@@ -753,10 +766,48 @@
 		src.overlays = null
 		src.overlays += src.overlay_images[src.current_overlay]
 
+	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0)
+		if(!istype(RT)) // Invalid ringtone? use the default
+			qdel(src.r_tone)
+			qdel(src.r_tone_temp)
+			src.r_tone = new/datum/ringtone(src)
+			src.r_tone_temp = new/datum/ringtone(src)
+			if (ismob(src.loc))
+				var/mob/B = src.loc
+				B.show_message("<span class='alert'>FATAL RINGTONE ERROR! Please call 1-800-IM-CODER.</span>", 1)
+				B.show_message("<span class='alert'>Restoring backup ringtone...</span>", 1)
+			return
+		else
+			if(temp)
+				qdel(src.r_tone_temp)
+				src.r_tone_temp = RT
+				src.r_tone_temp.holder = src
+				if(overrideAlert)
+					src.r_tone_temp.overrideAlert = overrideAlert
+			else
+				qdel(src.r_tone)
+				src.r_tone = RT
+				src.r_tone.holder = src
+				if(overrideAlert)
+					src.r_tone.overrideAlert = overrideAlert
+				if (ismob(src.loc))
+					var/mob/M = src.loc
+					M.show_message("[r_tone?.succText]")
 
-	proc/display_alert(var/alert_message) //Add alert overlay and beep
-		if (alert_message)
-			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
+	proc/bust_speaker()
+		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
+		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		elecflash(src, radius=1, power=1, exclude_center = 0)
+		src.speaker_busted = 1
+
+	proc/display_alert(var/alert_message, var/previewRing) //Add alert overlay and beep
+		if (alert_message && !src.speaker_busted)
+			if(previewRing && istype(src.r_tone_temp))
+				. = src.r_tone_temp?.PlayRingtone()
+			else
+				. = src.r_tone?.PlayRingtone()
+			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
+				alert_message = .
 
 			for (var/atom in mobs)
 				if (!atom) continue

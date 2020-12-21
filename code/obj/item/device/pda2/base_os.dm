@@ -32,7 +32,7 @@
 		var/message_on = 1
 		var/message_silent = 0 //To beep or not to beep, that is the question
 		var/message_mode = 0 //0 for pda list, 1 for messages
-		var/message_tone = "beep" //Custom ringtone
+		var/message_tone = "beep" //Custom ring message
 		var/message_note = null //Current messages in memory (Store as separate file only later??)
 		var/message_last = 0 //world.time of last send for both messages and file sending.
 		var/last_filereq_id = null //net id of last dude to request a file transfer
@@ -40,6 +40,7 @@
 		//File browser vars
 		var/datum/computer/folder/browse_folder = null
 		var/datum/computer/file/clipboard = null //Current file to copy
+		var/list/cooldowns = list()
 
 
 		mess_off //Same as regular but with messaging off
@@ -143,7 +144,7 @@
 
 						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
 						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
-						<a href='byond://?src=\ref[src];input=tone'>Set Ringtone</a><br>
+						<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>
 						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
 						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
 
@@ -318,7 +319,7 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/t = input(usr, "Please enter new ringtone", src.name, src.message_tone) as text
+						var/t = input(usr, "Please enter new ring message", src.name, src.message_tone) as text
 						if (!t)
 							return
 
@@ -334,7 +335,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, null, "sets ringtone of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing("pdamsg", usr, null, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -721,7 +722,14 @@
 							if (src.master)
 								src.master.explode()
 
-					src.master.display_alert(alert_beep)
+					var/previewtext = (signal.data["tag"] == "preview_message")
+					if(previewtext && ON_COOLDOWN(src, "preview_cooldown", 15 SECONDS))
+						return
+
+					if(src.master.r_tone?.readMessages)
+						src.master.r_tone.MessageAction(signal.data["message"])
+
+					src.master.display_alert(alert_beep, previewtext)
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"
