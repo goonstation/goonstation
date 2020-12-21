@@ -176,7 +176,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/warp_beacon/proc/startpack()
 	src.packable = 0
 	src.icon_state = "beaconpack"
-	SPAWN_DBG(14)
+	SPAWN_DBG(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
 		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
@@ -232,7 +232,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
 	src.anchored = 1
-	SPAWN_DBG(16)
+	SPAWN_DBG(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
 		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
@@ -251,10 +251,11 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		switch(state)
 			if(1)
-				if (I.amount < 4)
-					boutput(user, "<span style=\"color:red\">You don't have enough rods to complete the stand (4 required).</span>")
-				else if (istype(I, /obj/item/rods))
-					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
+				if (istype(I, /obj/item/rods))
+					if (I.amount < 4)
+						boutput(user, "<span style=\"color:red\">You don't have enough rods to complete the stand (4 required).</span>")
+					else
+						actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(2)
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
