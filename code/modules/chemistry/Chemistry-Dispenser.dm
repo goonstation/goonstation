@@ -361,6 +361,8 @@
 			doing_a_thing = 1
 			var/nadd = input(usr, "Set custom dispense amount:", "New Dispense Amount", src.user_dispense_amt) as null|num
 			if (isnull(nadd) || get_dist(src,usr) > 1)
+				if(issilicon(usr) || isAI(usr))
+					boutput(usr, "<span class='alert'>You can not adjust dispenser amount remotely. Stupid physical knobs!</span>")
 				doing_a_thing = 0
 				return
 			src.user_dispense_amt = clamp(round(nadd), 1, 100)
@@ -372,6 +374,8 @@
 			doing_a_thing = 1
 			var/nremove = input(usr, "Set custom removal amount:", "New Removal Amount", src.user_remove_amt) as null|num
 			if (isnull(nremove) || get_dist(src,usr) > 1)
+				if(issilicon(usr) || isAI(usr))
+					boutput(usr, "<span class='alert'>You can not adjust dispenser amount remotely. Stupid physical knobs!</span>")
 				doing_a_thing = 0
 				return
 			src.user_remove_amt = clamp(round(nremove), 1, 100)

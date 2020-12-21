@@ -6,6 +6,7 @@
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
+	status = REQ_PHYSICAL_ACCESS
 
 	var/has_valve = 1
 	var/valve_open = 0

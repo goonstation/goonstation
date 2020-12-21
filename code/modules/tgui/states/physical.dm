@@ -25,7 +25,6 @@ var/global/datum/ui_state/tgui_physical_state/tgui_physical_state = new /datum/u
 /mob/dead/aieye/physical_can_use_topic(src_object)
 	return UI_UPDATE // AIs are not physical.
 
-
 /**
  * tgui state: physical_obscured_state
  *
