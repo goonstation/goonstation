@@ -1994,6 +1994,87 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pride_ace
+	name = "Asexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/ace)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_aro
+	name = "Aromantic Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/aro)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_bi
+	name = "Bisexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/bi)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_inter
+	name = "Intersex Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/inter)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_lesb
+	name = "Lesbian Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/lesb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_nb
+	name = "Non-binary Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/nb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_pan
+	name = "Pansexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/pan)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_poly
+	name = "Polyamorous Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/poly)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_trans
+	name = "Trans Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/trans)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
 	item_paths = list("FAB-1")
