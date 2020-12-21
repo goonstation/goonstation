@@ -41,7 +41,7 @@
 			user.u_equip(W)
 			qdel(W)
 			return 1
-		else if (istype(W, /obj/item/material_piece) && W.material != null && W.material.material_flags & MATERIAL_CRYSTAL)
+		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL)
 			glass_amt += W.amount * 10
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
