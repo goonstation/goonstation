@@ -1,4 +1,9 @@
 
+(t)mon dec 21 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Tweaked shivering status to proc a little more often and last a little longer. @ me on discord if it's too much
+(*)Changed lizard mutantrace to no longer naturally thermoregulte. Keep some hot cocoa or a space heater handy!
 (t)sat dec 19 20
 (u)BatElite
 (p)3075
