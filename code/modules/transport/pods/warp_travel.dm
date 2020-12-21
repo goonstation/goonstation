@@ -182,8 +182,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
-		SPAWN_DBG(0)
-			qdel(src)
+		qdel(src)
 
 //deployable warp beacon
 
@@ -237,8 +236,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
-		SPAWN_DBG(0)
-			qdel(src)
+		qdel(src)
 
 /obj/beaconkit
 	name = "warp buoy frame"
