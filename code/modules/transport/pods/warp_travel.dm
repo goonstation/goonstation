@@ -203,8 +203,8 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/wrench) && !src.deploying)
-			for (var/turf/a in range(2,src))
-				if (!a.allows_vehicles)
+			for (var/turf/T in range(2,src))
+				if (!T.allows_vehicles)
 					boutput(usr,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
 			if (isrestrictedz(src.z))
