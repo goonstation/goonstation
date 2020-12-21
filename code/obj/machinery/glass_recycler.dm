@@ -41,17 +41,22 @@
 			user.u_equip(W)
 			qdel(W)
 			return 1
-		else if (istype(W, /obj/item/material_piece) && W.material && W.crystal > 0)
-			glass_amt += W.amount * 10
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
-			user.u_equip(W)
-			qdel(W)
-			return 1
+		else if (istype(W, /obj/item/material_piece))
+			var/obj/item/material_piece/M = W
+			if (istype(M) && M.material && M.crystal > 0)
+				glass_amt += W.amount * 10
+				user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+				user.u_equip(W)
+				qdel(W)
+				return 1
+			else
+				boutput(user, "<span class='alert'>[src] only accepts crystalline materials!</span>")
+				return
 		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (istype(W,/obj/item/reagent_containers/food/drinks))
 				var/obj/item/reagent_containers/food/drinks/D = W
 				if (!D.can_recycle)
-					boutput(user, "<span class='alert'>[src] only accepts molitz cubes, glass shards or glassware!</span>")
+					boutput(user, "<span class='alert'>[src] only accepts crystals, glass shards or glassware!</span>")
 					return
 				if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 					var/obj/item/reagent_containers/food/drinks/bottle/B = W
