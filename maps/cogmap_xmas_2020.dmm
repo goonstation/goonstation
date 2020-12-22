@@ -8778,12 +8778,6 @@
 "atV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hydroponics/bay)
-"atW" = (
-/obj/reagent_dispensers/compostbin,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "atX" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -64326,7 +64320,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cOr" = (
-/obj/table/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -64339,6 +64332,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -64391,6 +64387,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "dGz" = (
@@ -64511,6 +64508,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ezG" = (
@@ -64613,6 +64611,9 @@
 /area/station/ranch)
 "fcX" = (
 /obj/stool,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "fgq" = (
@@ -64836,9 +64837,6 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "gji" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "gjs" = (
@@ -65383,6 +65381,9 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "meu" = (
@@ -65430,7 +65431,6 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "mBk" = (
-/obj/railing/orange/reinforced,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -65942,12 +65942,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "smw" = (
-/turf/simulated/floor/dirt,
-/area/station/ranch)
-"srf" = (
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
+"srf" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -65977,7 +65977,6 @@
 /area/station/hydroponics)
 "swS" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "sEn" = (
@@ -66097,7 +66096,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "tPW" = (
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -66323,6 +66321,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"vGT" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "vQM" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -66520,7 +66522,6 @@
 /area/station/hydroponics/bay)
 "xUr" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -126770,7 +126771,7 @@ aag
 sKB
 arl
 asK
-atW
+wKg
 avg
 awD
 axQ
@@ -130700,7 +130701,7 @@ qrh
 xXc
 tPW
 lUz
-smw
+vGT
 gji
 xXc
 qrh
@@ -131002,7 +131003,7 @@ kTy
 xXc
 tPW
 fcX
-smw
+vGT
 gji
 xXc
 oAN
