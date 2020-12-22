@@ -142,6 +142,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				playsound(src.loc, pick(snd_macho_rage), 60, 0, 0, src.get_age_pitch())
 		return
 
+	/datum/targetable/macho
+
 	verb/macho_offense()
 		set name = "Stance - Offensive"
 		set desc = "Take an offensive stance and tackle people in your way"

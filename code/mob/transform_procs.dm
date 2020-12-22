@@ -402,6 +402,9 @@
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
 			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src)
+		for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+			W.abilityHolder.addAbility(A)
+		W.abilityHolder.updateButtons()
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
