@@ -10940,15 +10940,17 @@
 	name = "Community Center Storage"
 	})
 "ass" = (
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Community Center Storage'";
-	req_access_txt = "12"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Community Center Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary{
 	name = "Community Center Storage"
@@ -11188,15 +11190,15 @@
 	name = "Chaplain's Office"
 	})
 "asY" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Chaplain's Office'";
-	req_access_txt = "22"
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Chaplain's Office"
 	},
+/obj/access_spawn/chapel_office,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -11216,10 +11218,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "atb" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Crew Lounge'"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Crew Lounge"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "atc" = (
@@ -11702,9 +11705,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Funeral Parlor'"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	name = "Funeral Parlor"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
@@ -11723,10 +11729,12 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "auj" = (
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crematorium'";
-	req_access_txt = "27"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Crematorium"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/crematorium,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "auk" = (
@@ -12066,11 +12074,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crematorium'";
-	req_access_txt = "27"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Crematorium"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/crematorium,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "auU" = (
@@ -13521,13 +13530,13 @@
 	name = "Chaplain's Office"
 	})
 "axZ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Chaplain's Office'";
-	req_access_txt = "22"
+/obj/disposalpipe/segment,
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Chaplain's Office"
 	},
-/obj/disposalpipe/segment,
-/obj/disposalpipe/segment,
+/obj/access_spawn/chapel_office,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -15730,10 +15739,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "aCR" = (
@@ -15790,14 +15800,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Janitors Office'";
-	req_access_txt = "26"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Janitor's Office"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/janitor,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "aCY" = (
@@ -16495,6 +16506,12 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Community Center"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary{
 	name = "Community Center"
@@ -16779,10 +16796,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "West Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aFn" = (
@@ -17204,18 +17223,19 @@
 /area/station/maintenance/west)
 "aGd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	req_access_txt = "5"
-	},
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/machinery/door/poddoor/blast{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 4;
+	doordir = "right";
+	icon_state = "bdoorright0";
 	id = "pharmacylock";
 	layer = 4;
 	name = "Pharmacy Shutter";
 	opacity = 0
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aGe" = (
@@ -18934,11 +18954,12 @@
 	},
 /area/station/medical/medbay/treatment2)
 "aJH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Bar'"
-	},
 /obj/disposalpipe/segment/food,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Bar"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aJI" = (
@@ -18954,10 +18975,11 @@
 	},
 /area/station/medical/medbay/treatment2)
 "aJJ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Bar'"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Bar"
 	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aJK" = (
@@ -19387,11 +19409,12 @@
 	name = "Community Center"
 	})
 "aKN" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Community Center'"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Community Center"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -19399,27 +19422,31 @@
 	name = "Community Center"
 	})
 "aKO" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Community Center'"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Community Center"
 	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
 "aKP" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Crew Lounge'"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Crew Lounge"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aKQ" = (
-/obj/machinery/door/airlock/gannets/medical{
-	name = "airlock-'Treatment Room Two'"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	name = "Treatment Room Two"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker{
 	dir = 1
 	},
@@ -19436,9 +19463,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aKS" = (
-/obj/machinery/door/airlock/gannets/medical{
-	name = "airlock-'Treatment Room One'"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	name = "Treatment Room One"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment1)
 "aKT" = (
@@ -19869,10 +19898,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aLH" = (
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Pharmacy'";
-	req_access_txt = "5"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -19885,6 +19910,11 @@
 	name = "Pharmacy Shutter";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Pharmacy"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker{
 	dir = 8
 	},
@@ -19911,10 +19941,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aLJ" = (
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Pharmacy'";
-	req_access_txt = "5"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	d1 = 2;
@@ -19931,6 +19957,11 @@
 	name = "Pharmacy Shutter";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Pharmacy"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker{
 	dir = 8
 	},
@@ -20023,8 +20054,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
@@ -20736,9 +20768,9 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/station/medical/cdc)
 "aMV" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aMW" = (
@@ -21464,13 +21496,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aOj" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets,
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
@@ -21479,7 +21509,11 @@
 	name = "Pathology Quarantine";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "aOk" = (
@@ -22501,15 +22535,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "aQv" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aQw" = (
@@ -22678,11 +22712,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "medbay_hall";
-	name = "glass airlock-'Medbay'"
+/obj/machinery/door/airlock/pyro/glass/med{
+	name = "Medbay"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker{
 	dir = 1
 	},
@@ -23094,20 +23128,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	id = "medirecdoor";
-	name = "airlock-'Medical Director's Office'";
-	req_access_txt = "53"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Medical Director's Office"
+	},
+/obj/access_spawn/medical_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -24526,6 +24557,11 @@
 	id = "medbay_hall";
 	name = "glass airlock-'Medbay'"
 	},
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white/checker{
 	dir = 1
 	},
@@ -26635,14 +26671,14 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "aXF" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "cryo_door";
-	name = "glass airlock-'Cryogenics'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/med{
+	name = "Cryogenics"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "aXG" = (
@@ -27094,7 +27130,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -27103,14 +27138,16 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "medbay_door";
-	name = "glass airlock-'Medbay'"
-	},
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	name = "Medbay"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aYq" = (
@@ -27389,10 +27426,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "aYO" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/security{
-	req_access_txt = "5"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -27401,6 +27434,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "aYP" = (
@@ -28065,11 +28103,11 @@
 	},
 /area/station/medical/cdc)
 "baa" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/security{
-	name = "airlock-'Operating Theater'";
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	name = "Operating Theater"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "bab" = (
@@ -28415,11 +28453,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/security{
-	name = "airlock-'Blood Storage'";
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	name = "Blood Storage"
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
 "baE" = (
@@ -28848,17 +28886,18 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bbo" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "medbay_hall";
-	name = "glass airlock-'Medbay'"
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	name = "Medbay"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bbp" = (
@@ -30226,9 +30265,11 @@
 	},
 /area/station/medical/cdc)
 "bdH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/cdc)
 "bdI" = (
@@ -31554,9 +31595,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4;
+	name = "Medbay"
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bgf" = (
@@ -32656,9 +32700,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay)
 "big" = (
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Medbay Restroom'"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Medbay Restroom";
+	tag = "icon-generic2_closed (EAST)"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay)
 "bih" = (
@@ -34731,14 +34779,15 @@
 	},
 /area/station/science/chemistry)
 "blC" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Medbay'";
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	dir = 4;
+	name = "Medbay"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "blD" = (
@@ -35693,17 +35742,18 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bnq" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/medical{
-	name = "glass airlock-'Robotics'";
-	req_access_txt = "29"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	name = "Robotics"
+	},
+/obj/access_spawn/robotics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
@@ -35733,11 +35783,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bnt" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Cloning'";
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/glass/botany{
+	dir = 8;
+	name = "Cloning"
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/medbay)
 "bnu" = (
@@ -35759,12 +35810,12 @@
 	},
 /area/station/medical/medbay/cloner)
 "bny" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	id = "Cloning_Door";
-	name = "airlock-'Cloning'";
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Cloning"
 	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/medbay/cloner)
 "bnz" = (
@@ -36102,10 +36153,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	req_access_txt = "29"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	dir = 4;
+	name = "Robotics"
 	},
+/obj/access_spawn/robotics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "boi" = (
@@ -36220,13 +36273,14 @@
 	name = "Genetic Research"
 	})
 "bos" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets/glass{
-	req_access_txt = "9"
+/obj/machinery/door/airlock/pyro/glass/botany{
+	name = "Genetics"
 	},
+/obj/access_spawn/medlab,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery/white,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -36874,13 +36928,15 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Technical Storage'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Technical Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bpG" = (
@@ -37769,14 +37825,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
-	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
 	name = "Central Maintenance"
 	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "brb" = (
@@ -38311,15 +38365,16 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
 "brY" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/medical{
-	name = "airlock-'Morgue'";
-	req_access_txt = "6"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	color = null;
+	name = "Morgue"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "brZ" = (
@@ -38337,13 +38392,14 @@
 	name = "Genetic Research"
 	})
 "bsa" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets/glass{
-	req_access_txt = "9"
+/obj/machinery/door/airlock/pyro/glass/botany{
+	name = "Genetics"
 	},
+/obj/access_spawn/medlab,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -39527,14 +39583,16 @@
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "btY" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "btZ" = (
@@ -40025,8 +40083,9 @@
 /turf/space,
 /area/space)
 "bvc" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bvd" = (
@@ -40715,10 +40774,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	req_access_txt = "5"
+/obj/machinery/door/airlock/pyro/medical/alt2{
+	dir = 4;
+	name = "Morgue"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bwp" = (
@@ -41360,10 +41421,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "West Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bxy" = (
@@ -42418,8 +42480,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bzG" = (
@@ -46665,11 +46728,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
 "bIv" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Genetics'";
-	req_access_txt = "9"
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Genetics"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bIw" = (
@@ -46951,10 +47014,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "South West Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bJf" = (
@@ -49240,17 +49305,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"els" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	name = "East SMES"
-	},
-/obj/access_spawn/engineering,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/east)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -49272,6 +49326,19 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"fkL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "fqA" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -49309,13 +49376,6 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"ifZ" = (
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Disposals"
-	},
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "ipm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -49442,6 +49502,13 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nlk" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Disposals"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49547,12 +49614,17 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"sqA" = (
-/obj/machinery/door/airlock/pyro/external,
+"scs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "East SMES"
+	},
+/obj/access_spawn/engineering,
 /obj/firedoor_spawn,
-/obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/engine/substation/east)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -49572,6 +49644,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"wbd" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/firedoor_spawn,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -74407,7 +74485,7 @@ bcB
 aLA
 beT
 bge
-bge
+fkL
 bin
 bjH
 bkP
@@ -87535,7 +87613,7 @@ bBN
 bCW
 bEc
 bEP
-sqA
+wbd
 abH
 abH
 abH
@@ -90315,7 +90393,7 @@ avz
 azW
 awj
 aBF
-ifZ
+nlk
 aDO
 aEQ
 asm
@@ -91900,7 +91978,7 @@ bwi
 byz
 bzD
 bAM
-els
+scs
 bDj
 bEj
 bET
