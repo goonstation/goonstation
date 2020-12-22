@@ -8096,7 +8096,8 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "asm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -23192,10 +23193,7 @@
 	name = "Mounted Igniter";
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_corners"
 	},
@@ -47845,6 +47843,10 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nMp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
 "nYa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -133198,7 +133200,7 @@ aqn
 afh
 afh
 asm
-aDx
+nMp
 anK
 bZn
 bZE
@@ -134709,7 +134711,7 @@ asg
 ase
 aun
 bcr
-afm
+nMp
 bbF
 bZn
 awB
