@@ -349,7 +349,9 @@
 		SPAWN_DBG(9)
 			for (var/mob/M in range(3,src.loc))
 				random_brute_damage(M, 60)
-				tile_purge(src.loc.x,src.loc.y,1)
+			tile_purge(src.loc.x,src.loc.y,1)
+			for (var/mob/M in src.loc)
+				M.gib()
 
 		SPAWN_DBG(10)
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
