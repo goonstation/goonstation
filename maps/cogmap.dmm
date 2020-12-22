@@ -63612,7 +63612,9 @@
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "nks" = (
-/obj/wingrille_spawn/auto,
+/obj/shrub{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "nlN" = (
@@ -63812,12 +63814,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"qlh" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "qIA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63896,7 +63892,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "skj" = (
-/obj/wingrille_spawn/auto,
+/obj/shrub{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -129143,12 +129141,12 @@ aaa
 aaa
 kPF
 uxX
-qlh
+vEZ
 skj
 tkX
 hPW
 nks
-qlh
+vEZ
 nNK
 kPF
 aaa

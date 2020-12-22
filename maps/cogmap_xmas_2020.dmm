@@ -64679,12 +64679,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
-"fqU" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -65976,7 +65970,9 @@
 	},
 /area/station/hydroponics)
 "swS" = (
-/obj/wingrille_spawn/auto,
+/obj/shrub{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "sEn" = (
@@ -66521,7 +66517,9 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "xUr" = (
-/obj/wingrille_spawn/auto,
+/obj/shrub{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -131302,12 +131300,12 @@ aaa
 aaa
 jPv
 rlS
-fqU
+xXc
 xUr
 cOr
 eyq
 swS
-fqU
+xXc
 pbV
 jPv
 aaa
