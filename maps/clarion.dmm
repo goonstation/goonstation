@@ -446,6 +446,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "abj" = (
@@ -1097,15 +1098,17 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "acH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P01'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P01"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P01"
@@ -1367,15 +1370,17 @@
 	name = "Crew Quarters S01"
 	})
 "acZ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters S01'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters S01"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S01"
@@ -1704,14 +1709,17 @@
 	name = "Crew Quarters M01"
 	})
 "adv" = (
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters M01'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters M01"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M01"
@@ -2300,15 +2308,17 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "aen" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P02'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P02"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P02"
@@ -3014,15 +3024,17 @@
 	name = "Crew Quarters M02"
 	})
 "afA" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters M02'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters M02"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M02"
@@ -3231,13 +3243,15 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "afX" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P03'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P03"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P03"
@@ -3495,15 +3509,17 @@
 	name = "Crew Quarters S02"
 	})
 "agm" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters S02'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters S02"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S02"
@@ -4178,15 +4194,17 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "ahg" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P04'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P04"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P04"
@@ -4292,15 +4310,17 @@
 	name = "Crew Quarters M03"
 	})
 "ahn" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters M03'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters M03"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M03"
@@ -5091,15 +5111,17 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "aiB" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P05'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P05"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P05"
@@ -5328,13 +5350,15 @@
 	name = "Crew Quarters S03"
 	})
 "aiO" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters S03'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters S03"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S03"
@@ -5609,15 +5633,17 @@
 	name = "Crew Quarters M04"
 	})
 "ajj" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters M04'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters M04"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M04"
@@ -6075,13 +6101,15 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "ajV" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P06'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P06"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P06"
@@ -6241,15 +6269,17 @@
 	name = "Crew Quarters S04"
 	})
 "akh" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters S04'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters S04"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S04"
@@ -6302,15 +6332,17 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Pod Bay Storage'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Pod Bay Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/black,
 /area/station/storage/primary)
 "akm" = (
@@ -6926,10 +6958,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
 "alc" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Pod Bay Storage'"
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Pod Bay Storage"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "ald" = (
@@ -7013,13 +7046,15 @@
 	},
 /area/station/hangar/sec)
 "alq" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters P07'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters P07"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P07"
@@ -7179,15 +7214,17 @@
 	name = "Crew Quarters S05"
 	})
 "alD" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Quarters S05'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4;
+	name = "Crew Quarters S05"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S05"
@@ -9219,10 +9256,11 @@
 	name = "Entry Hallway"
 	})
 "apj" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "apk" = (
@@ -10044,8 +10082,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "aqO" = (
@@ -10120,14 +10159,14 @@
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "aqY" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Tool Storage'";
-	req_access_txt = "12"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Tool Storage"
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
 "aqZ" = (
@@ -49016,13 +49055,6 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"eDu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "fqA" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -49076,12 +49108,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"izo" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -49138,6 +49164,12 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"lEW" = (
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
+/area/station/engine/hotloop)
 "mkf" = (
 /obj/disposalpipe/segment/mail,
 /obj/landmark/start{
@@ -49187,6 +49219,12 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nQl" = (
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
+/area/station/engine/core)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49234,6 +49272,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"qdP" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
+/area/station/engine/core)
 "qer" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -49261,12 +49306,6 @@
 	dir = 1
 	},
 /area/station/engine/substation/east)
-"qwR" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/hotloop)
 "qDe" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
@@ -49298,6 +49337,23 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"sqP" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -78288,11 +78344,11 @@ bEx
 bJk
 bFL
 bGo
-qwR
+lEW
 bHl
-qwR
-qwR
-qwR
+lEW
+bGi
+bGi
 bNy
 aay
 aaa
@@ -78547,7 +78603,7 @@ bFM
 bGp
 bGp
 bHm
-izo
+nQl
 aac
 abH
 aaT
@@ -78804,7 +78860,7 @@ bCt
 bGq
 bJw
 bHn
-izo
+nQl
 bNh
 bIy
 bII
@@ -79061,7 +79117,7 @@ bFN
 bGr
 bGQ
 byU
-izo
+nQl
 bNi
 bIz
 bIJ
@@ -79318,7 +79374,7 @@ bFN
 bGs
 bGR
 bHo
-izo
+nQl
 bNi
 bIA
 bIR
@@ -79575,7 +79631,7 @@ bAi
 bGt
 bAi
 bHp
-eDu
+qdP
 bNj
 bIz
 bIQ
@@ -79832,7 +79888,7 @@ bFO
 bGu
 bGS
 byT
-izo
+nQl
 aaH
 bIA
 bIP
@@ -80089,7 +80145,7 @@ bFO
 bGv
 bGT
 bHq
-izo
+nQl
 bNk
 bIz
 bIQ
@@ -80346,7 +80402,7 @@ bAi
 bGw
 bGU
 bHr
-izo
+nQl
 aaH
 bIA
 bIP
@@ -85159,7 +85215,7 @@ ald
 ald
 ald
 alb
-apL
+sqP
 aqu
 aqu
 arv
