@@ -79268,6 +79268,7 @@
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "tTd" = (
+/obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
