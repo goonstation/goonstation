@@ -1,4 +1,9 @@
 
+(t)tue dec 22 20
+(u)Efi
+(p)3127
+(e)|
+(+)Added pride jumpsuits to the Uniform Manufacturer. They can now be obtained OUT OF THE CLOSET.
 (t)mon dec 21 20
 (u)Tarmunora
 (e)⚖🆕|balance, feature
