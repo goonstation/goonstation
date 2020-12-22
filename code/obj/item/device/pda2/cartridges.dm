@@ -398,6 +398,16 @@
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/numbers(src))
 			src.read_only = 1
 
+	ringtone_basic
+		name = "\improper Celestial Soultones ringtone cartridge"
+		desc = "Take flight with these enlightening soultones..."
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/basic(src))
+			src.read_only = 1
+
 	ringtone_syndie
 		name = "\improper SounDreamS PRO cartridge"
 		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"

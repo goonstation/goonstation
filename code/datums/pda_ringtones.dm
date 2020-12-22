@@ -271,6 +271,204 @@ bathing in her ennui and showering her with money.
 	nameText = "Role:"
 	descText = "Motivation:"
 
+/datum/ringtone/basic
+	name = "Retrospection"
+	desc = "Seek inwards within."
+	ringList = list('sound/machinery/phones/ringtones/ringtone1_short.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short.AU\"*</span>"
+	previewMessage = "Set your sights skyward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring1
+	name = "Introspection"
+	desc = "Seek within inwards."
+	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_01.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_01.AU\"*</span>"
+	previewMessage = "Set your sights skyward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring2
+	name = "Perspection"
+	desc = "Seek outwards within."
+	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_02.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_02.AU\"*</span>"
+	previewMessage = "Set your sights skyward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring3
+	name = "Inspection"
+	desc = "Seek outwards without."
+	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_03.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_03.AU\"*</span>"
+	previewMessage = "Set your sights skyward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring4
+	name = "Spectrum"
+	desc = "Love boundless forwards beyond."
+	ringList = list('sound/machinery/phones/ringtones/ringtone2_short.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring5
+	name = "Spectral"
+	desc = "Love around sentwards forever."
+	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_01.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_01.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring6
+	name = "Refraction"
+	desc = "Starward abound."
+	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_02.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_02.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring7
+	name = "Reboundance"
+	desc = "Skybound around."
+	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_03.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_03.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring8
+	name = "Reflection"
+	desc = "Stalwart abound."
+	ringList = list('sound/machinery/phones/ringtones/ringtone3_short.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone3_short.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring9
+	name = "Relaxation"
+	desc = "Float along."
+	ringList = list('sound/machinery/phones/ringtones/ringtone4_short.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone4_short.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
+/datum/ringtone/basic/ring9
+	name = "Stance"
+	desc = "Ever again."
+	ringList = list('sound/machinery/phones/ringtones/ringtone5_short.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*starkle*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	succText = "<span class='notice'>*Ringtone set to \"ringtone5_short.AU\"*</span>"
+	previewMessage = "Set your sky sightward!"
+	previewSender = "Stars Above"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Idea:"
+	descText = "Inspiration:"
+
 /datum/ringtone/syndie
 	name = "KABLAMMO - Realistic Explosion FX"
 	desc = "HIT THE DECKS, DUCK AND COVER! Is what they'll say when they hear these 100% AUTHENTIC REALISTIC explosion effects! For licensing information, contact Ted."

@@ -211,6 +211,19 @@
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
 
+/datum/computer/file/pda_program/ringtone/basic
+	name = "Soultones"
+	size = 10
+	ring_list = list("ring1" = new/datum/ringtone/clown, "ring2" = new/datum/ringtone/clown/horn, "ring3" = new/datum/ringtone/clown/harmonica)
+	topText = "<h4>Celestial Soultones</h4>"
+	bottomText = "A collection of bold PDA ringtones to set your spirit at ease..."
+	selectText = "Discover your destiny..."
+	dividerThing = "<center>~~become your dreams~~~"
+	overrideAlertAllowed = 1
+	overrideAlertText = "Starkle?"
+	overrideAlertYesText = "Yes"
+	overrideAlertNoText = "No"
+
 /datum/computer/file/pda_program/ringtone/syndie
 	name = "SounDreamS PRO"
 	size = 28
