@@ -20007,6 +20007,7 @@
 	name = "Pharmacy Shutter";
 	opacity = 0
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "aLM" = (
@@ -49328,6 +49329,19 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"ele" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -49526,17 +49540,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"oHX" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	name = "East SMES"
-	},
-/obj/access_spawn/engineering,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/east)
 "oKd" = (
 /obj/submachine/cargopad{
 	name = "Botany Pad"
@@ -49553,6 +49556,12 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"oYI" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/firedoor_spawn,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "pFT" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/seed_manipulator{
@@ -49563,19 +49572,6 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
-"pMw" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass/mining{
-	dir = 4
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "pNt" = (
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -49583,6 +49579,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"qaf" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Disposals"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "qer" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -49641,6 +49644,17 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"szt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "East SMES"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/east)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -49648,19 +49662,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"tKF" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/firedoor_spawn,
-/obj/access_spawn/cargo,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
-"ujJ" = (
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Disposals"
-	},
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "uuk" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -74508,7 +74509,7 @@ bcB
 aLA
 beT
 bge
-pMw
+ele
 bin
 bjH
 bkP
@@ -87636,7 +87637,7 @@ bBN
 bCW
 bEc
 bEP
-tKF
+oYI
 abH
 abH
 abH
@@ -90416,7 +90417,7 @@ avz
 azW
 awj
 aBF
-ujJ
+qaf
 aDO
 aEQ
 asm
@@ -92001,7 +92002,7 @@ bwi
 byz
 bzD
 bAM
-oHX
+szt
 bDj
 bEj
 bET
