@@ -242,7 +242,7 @@
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x,src.loc.y + increment,0)
 
 			if (4)	//E
@@ -250,7 +250,7 @@
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + increment,src.loc.y,0)
 
 			if (2)	//S
@@ -258,7 +258,7 @@
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x,src.loc.y - increment,0)
 
 			if (8)	//W
@@ -266,7 +266,7 @@
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x - increment,src.loc.y,0)
 
 		SPAWN_DBG(10)
@@ -340,7 +340,7 @@
 		SPAWN_DBG(2)
 			for(var/i=0, i < 6, i++)
 				step(src, src.dir)
-				if(i < jump_tiles / 2)
+				if(i < 3)
 					src.pixel_y += 4
 				else
 					src.pixel_y -= 4
