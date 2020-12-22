@@ -18,7 +18,7 @@
 	)
 	var/list/available_chems = null
 	var/currentreagent = "epinephrine"
-	var/propername = "Epinephrine"
+	var/propername = "epinephrine"
 	var/image/fluid_image
 	var/extra_refill = 0
 
@@ -51,7 +51,10 @@
 			available_chems = list()
 			for (var/reagent in botreagents)
 				available_chems += reagents_cache[reagent]
+		var/holder = src.loc
 		var/datum/reagent/pick = input(usr, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
+		if (src.loc != holder)
+			return
 		currentreagent = pick.id
 		propername = pick.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
