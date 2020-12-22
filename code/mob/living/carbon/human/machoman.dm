@@ -12,6 +12,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 'sound/voice/macho/macho_idle_breath_01.ogg', 'sound/voice/macho/macho_mumbling04.ogg', 'sound/voice/macho/macho_moan03.ogg',\
 'sound/voice/macho/macho_mumbling05.ogg', 'sound/voice/macho/macho_mumbling07.ogg', 'sound/voice/macho/macho_shout08.ogg')
 
+/datum/targetable/macho
+
 /mob/living/carbon/human/machoman
 	var/list/macho_arena_turfs
 	New()
@@ -141,8 +143,6 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			SPAWN_DBG(2 SECONDS)
 				playsound(src.loc, pick(snd_macho_rage), 60, 0, 0, src.get_age_pitch())
 		return
-
-	/datum/targetable/macho
 
 	verb/macho_offense()
 		set name = "Stance - Offensive"
