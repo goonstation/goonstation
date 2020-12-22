@@ -10865,10 +10865,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "asl" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
 	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "asm" = (
@@ -11111,12 +11113,15 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "asL" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/security/alt,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "asM" = (
@@ -12508,13 +12513,15 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "avS" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass,
-/obj/access_spawn/hydro,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Ranch"
+	},
+/obj/access_spawn/rancher,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/ranch)
 "avT" = (
@@ -12860,7 +12867,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/westright{
 	req_access_txt = "35"
@@ -12870,6 +12876,7 @@
 /obj/item/stamp,
 /obj/item/pen,
 /obj/window/reinforced/north,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "awF" = (
@@ -12990,8 +12997,11 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "awR" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/security/alt,
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Detective's Office"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "awS" = (
@@ -13264,7 +13274,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/westleft{
 	req_access_txt = "35"
@@ -13274,6 +13283,7 @@
 /obj/item/device/light/zippo,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "axu" = (
@@ -13341,11 +13351,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Hydroponics'";
-	req_access_txt = "35"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Hydroponics"
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "axz" = (
@@ -13424,10 +13435,12 @@
 	},
 /area/station/security/detectives_office)
 "axM" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	req_access_txt = "1"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
 	},
+/obj/access_spawn/forensics,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "axN" = (
@@ -13572,11 +13585,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "ayg" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Hydroponics'";
-	req_access_txt = "35"
+/obj/machinery/door/airlock/pyro/glass/botany{
+	dir = 8;
+	name = "Hydroponics"
 	},
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "ayh" = (
@@ -13723,9 +13737,11 @@
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/east)
 "ayz" = (
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Disposals'"
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	name = "Disposals"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ayA" = (
@@ -13922,17 +13938,16 @@
 /area/station/crew_quarters/kitchen)
 "ayY" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/west,
 /obj/machinery/door/window/southleft,
 /obj/machinery/door/window/northleft{
 	req_access_txt = "35"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "ayZ" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/east,
 /obj/machinery/door/window/southright,
@@ -13943,6 +13958,7 @@
 /obj/item/reagent_containers/food/snacks/sandwich/meat_m{
 	name = "100% synthetic freerange monkey sandwich"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aza" = (
@@ -14176,7 +14192,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "azC" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
@@ -14185,6 +14200,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "azD" = (
@@ -14578,8 +14594,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aAv" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aAw" = (
@@ -14599,11 +14615,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Kitchen'";
-	req_access_txt = "28"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Kitchen"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aAz" = (
@@ -14647,11 +14664,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Freezer'";
-	req_access_txt = "28"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Freezer"
 	},
+/obj/access_spawn/kitchen,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aAG" = (
@@ -14975,11 +14993,12 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Kitchen'";
-	req_access_txt = "28"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	name = "Kitchen"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aBo" = (
@@ -15540,14 +15559,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "aCy" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Barkeeper'";
-	req_access_txt = "25"
-	},
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Barkeeper"
+	},
+/obj/access_spawn/bar,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aCz" = (
@@ -15639,15 +15658,17 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aCJ" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets/maintenance{
-	req_access_txt = "28"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "aCK" = (
@@ -15895,10 +15916,12 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "aDk" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Crew Lounge'"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	name = "Crew Lounge"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDl" = (
@@ -16117,8 +16140,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aDQ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aDR" = (
@@ -17274,10 +17300,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Bar'"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	name = "Bar"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aGp" = (
@@ -17382,13 +17410,15 @@
 	},
 /area/station/storage/tools)
 "aGB" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
+	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aGC" = (
@@ -17585,7 +17615,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment1)
 "aGY" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aGZ" = (
@@ -18959,7 +18989,6 @@
 	name = "interior door-'Bar'";
 	req_access_txt = "25"
 	},
-/obj/window/reinforced/north,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aJP" = (
@@ -19076,11 +19105,12 @@
 	},
 /area/station/crew_quarters/hor)
 "aKd" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Research Director's Office'";
-	req_access_txt = "11"
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Research Director's Office"
 	},
+/obj/access_spawn/research_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/hor)
 "aKe" = (
@@ -19101,10 +19131,12 @@
 	},
 /area/station/solar/west)
 "aKg" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Research Restroom'"
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Research Restroom"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred6"
@@ -19433,10 +19465,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass{
-	name = "glass airlock-'Bar'"
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Bar"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aKX" = (
@@ -19450,7 +19483,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "aKY" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/southleft,
 /obj/machinery/cashreg,
@@ -19458,14 +19490,15 @@
 /obj/item/stamp,
 /obj/item/pen,
 /obj/window/reinforced/west,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aKZ" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/southright,
 /obj/machinery/glass_recycler,
 /obj/window/reinforced/east,
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aLa" = (
@@ -19506,11 +19539,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Tool Storage'";
-	req_access_txt = "12|24"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -19519,6 +19547,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Tool Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/tools)
 "aLe" = (
@@ -20497,11 +20530,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Research Director's Office'";
-	req_access_txt = "11"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -20510,6 +20538,12 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Research Director's Office"
+	},
+/obj/access_spawn/research_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/hor)
 "aMF" = (
@@ -20550,10 +20584,6 @@
 	},
 /area/station/science/lobby)
 "aMH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Research'"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -20564,6 +20594,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Research"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred6"
@@ -21702,11 +21738,11 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Research Director's Office'";
-	req_access_txt = "11"
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Research Director's Office"
 	},
+/obj/access_spawn/research_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -21785,12 +21821,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aOV" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/toxins{
-	name = "airlock-'Test Chamber'";
-	req_access_txt = "8"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/toxins_alt{
+	name = "Test Chamber"
+	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aOW" = (
@@ -23179,10 +23215,12 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Research'"
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Research"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aRz" = (
@@ -23272,13 +23310,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Research'"
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Research"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aRG" = (
@@ -23315,14 +23355,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/toxins{
-	name = "glass airlock-'Toxins'";
-	req_access_txt = "7"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	dir = 4;
+	name = "Toxins"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "aRJ" = (
@@ -25042,13 +25083,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
 "aUw" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Teleporter Pad'"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Teleporter Pad"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "aUx" = (
@@ -25099,11 +25141,6 @@
 /area/station/science/bot_storage)
 "aUC" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Guardbot Depot'";
-	req_access_txt = "33"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -25115,6 +25152,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Guardbot Depot"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aUD" = (
@@ -25140,11 +25182,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lab)
 "aUH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/toxins{
-	name = "glass airlock-'Toxins'";
-	req_access_txt = "7"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -25154,6 +25191,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	name = "Toxins"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aUI" = (
@@ -28558,13 +28600,15 @@
 	},
 /area/station/science/teleporter)
 "baR" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Teleporter Pad'"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Teleporter Pad"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "baS" = (
@@ -28574,11 +28618,12 @@
 	},
 /area/station/science/lobby)
 "baT" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Guardbot Depot'";
-	req_access_txt = "33"
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Guardbot Depot"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "baU" = (
@@ -29174,10 +29219,6 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "bbX" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Teleporter Pad'"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29200,6 +29241,11 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Teleporter Pad"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "bbY" = (
@@ -30453,11 +30499,17 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bem" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/ai)
 "ben" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/ai)
 "beo" = (
 /obj/machinery/door/airlock/gannets/command/alt{
@@ -31073,7 +31125,10 @@
 	pixel_x = -8;
 	req_access_txt = "19"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/ai)
 "bfs" = (
 /obj/machinery/light{
@@ -32270,7 +32325,10 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bhF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/teleporter)
 "bhG" = (
 /obj/disposalpipe/segment,
@@ -33203,7 +33261,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/Zeta)
 "bjb" = (
 /obj/disposalpipe/segment/mail{
@@ -33252,7 +33313,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bje" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/north,
 /obj/machinery/door/window/westright{
@@ -33272,6 +33332,7 @@
 	opacity = 0;
 	tag = "icon-bdoormidc1"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -33297,11 +33358,6 @@
 /area/station/science/chemistry)
 "bjj" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Chemistry'";
-	req_access_txt = "33"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -33314,6 +33370,12 @@
 	opacity = 0;
 	tag = "icon-bdoormidc1"
 	},
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Chemistry"
+	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "bjk" = (
@@ -33332,14 +33394,15 @@
 	},
 /area/station/science/lobby)
 "bjm" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Artifact Lab'";
-	req_access_txt = "8"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Artifact Lab"
+	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "bjn" = (
@@ -33882,7 +33945,10 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bkl" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/Zeta)
 "bkm" = (
 /obj/stool/chair,
@@ -33903,7 +33969,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bkp" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
 /obj/window/reinforced/south,
 /obj/machinery/door/window/westleft{
@@ -33926,6 +33991,7 @@
 	opacity = 0;
 	tag = "icon-bdoormidc1"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -35946,12 +36012,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bnZ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/toxins{
-	name = "glass airlock-'Chamber Access'";
-	req_access_txt = "7"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	name = "Chamber Access"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "boa" = (
@@ -37343,11 +37409,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lobby)
 "bqx" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Artifact Lab'";
-	req_access_txt = "8"
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Artifact Lab"
 	},
+/obj/access_spawn/research,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "bqy" = (
@@ -38148,11 +38214,12 @@
 	},
 /area/station/science/lab)
 "brQ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/toxins{
-	name = "glass airlock-'Chamber Access'";
-	req_access_txt = "7"
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	dir = 4;
+	name = "Chamber Access"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "brR" = (
@@ -38506,10 +38573,11 @@
 /area/station/hangar/science)
 "bsC" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Research Hangar'"
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Research Hangar"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "bsD" = (
@@ -39397,7 +39465,12 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "btU" = (
-/obj/machinery/door/airlock/gannets/glass/chemistry,
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Artifact Flusher"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_misc"
@@ -40828,7 +40901,10 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bwF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/crew_quarters/ce)
 "bwG" = (
 /obj/disposalpipe/trunk{
@@ -40908,7 +40984,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/crew_quarters/ce)
 "bwM" = (
 /obj/machinery/power/apc{
@@ -41442,7 +41521,10 @@
 	},
 /area/station/engine/elect)
 "bxP" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bxQ" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
@@ -41592,20 +41674,29 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "byb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "byc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 10
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "byd" = (
 /obj/machinery/firealarm{
@@ -41924,7 +42015,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "byQ" = (
 /obj/cable{
@@ -42152,7 +42246,10 @@
 /area/station/engine/core)
 "bzj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bzk" = (
 /obj/machinery/light/emergency{
@@ -42283,11 +42380,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
 "bzD" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/gannets/chemistry{
-	name = "airlock-'Research Hangar'"
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Research Hangar"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "bzE" = (
@@ -42930,8 +43028,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "bAO" = (
@@ -43094,7 +43194,10 @@
 	layer = 2.5;
 	name = "FIRE HAZARD"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bBj" = (
 /obj/machinery/light{
@@ -43785,7 +43888,10 @@
 	name = "FIRE HAZARD"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bCK" = (
 /obj/machinery/light{
@@ -44125,7 +44231,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bDx" = (
 /obj/cable{
@@ -44618,7 +44727,10 @@
 /area/station/engine/gas)
 "bEt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bEu" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -44921,7 +45033,10 @@
 	dir = 6
 	},
 /obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bFj" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
@@ -44999,7 +45114,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bFo" = (
 /turf/simulated/wall/auto/supernorn,
@@ -45257,7 +45375,10 @@
 "bFT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/mining/staff_room)
 "bFU" = (
 /obj/disposalpipe/trunk{
@@ -45413,12 +45534,18 @@
 /turf/simulated/floor/engine,
 /area/station/engine/gas)
 "bGi" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bGj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bGk" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
@@ -45485,7 +45612,7 @@
 /area/station/engine/hotloop)
 "bGo" = (
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+/turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
@@ -45494,7 +45621,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+/turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
@@ -45602,7 +45729,10 @@
 	name = "Danger: High Voltage"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/mining/staff_room)
 "bGB" = (
 /obj/machinery/disposal/mail/small{
@@ -45693,13 +45823,19 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bGK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bGL" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -45788,7 +45924,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bGV" = (
 /obj/machinery/door/firedoor/border_only,
@@ -45817,11 +45956,17 @@
 "bGY" = (
 /obj/decal/poster/wallsign/space,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/core)
 "bGZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/mining/staff_room)
 "bHa" = (
 /obj/machinery/firealarm{
@@ -45916,7 +46061,7 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+/turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
@@ -45926,7 +46071,7 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
+/turf/simulated/wall/auto/reinforced/gannets{
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
@@ -46285,13 +46430,19 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bId" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/turf/simulated/wall/auto/reinforced/gannets{
+	explosion_resistance = 20;
+	name = "very reinforced wall"
+	},
 /area/station/engine/hotloop)
 "bIe" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -49034,6 +49185,9 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"dzx" = (
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/area/station/engine/core)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -49108,6 +49262,23 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"iJs" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Maintenance"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -49164,12 +49335,6 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
-"lEW" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/hotloop)
 "mkf" = (
 /obj/disposalpipe/segment/mail,
 /obj/landmark/start{
@@ -49180,7 +49345,12 @@
 "mxe" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass/botany{
+	dir = 8;
+	name = "Ranch"
+	},
 /obj/access_spawn/hydro,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/ranch)
 "mBl" = (
@@ -49219,12 +49389,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"nQl" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49272,13 +49436,6 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"qdP" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff{
-	explosion_resistance = 20;
-	name = "very reinforced wall"
-	},
-/area/station/engine/core)
 "qer" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -49337,23 +49494,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"sqP" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	name = "Maintenance"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -49373,6 +49513,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"vEW" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Disposals"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -78344,9 +78491,9 @@ bEx
 bJk
 bFL
 bGo
-lEW
+bGi
 bHl
-lEW
+bGi
 bGi
 bGi
 bNy
@@ -78603,7 +78750,7 @@ bFM
 bGp
 bGp
 bHm
-nQl
+bxP
 aac
 abH
 aaT
@@ -78860,7 +79007,7 @@ bCt
 bGq
 bJw
 bHn
-nQl
+bxP
 bNh
 bIy
 bII
@@ -79117,7 +79264,7 @@ bFN
 bGr
 bGQ
 byU
-nQl
+bxP
 bNi
 bIz
 bIJ
@@ -79374,7 +79521,7 @@ bFN
 bGs
 bGR
 bHo
-nQl
+dzx
 bNi
 bIA
 bIR
@@ -79631,7 +79778,7 @@ bAi
 bGt
 bAi
 bHp
-qdP
+bzj
 bNj
 bIz
 bIQ
@@ -79888,7 +80035,7 @@ bFO
 bGu
 bGS
 byT
-nQl
+bxP
 aaH
 bIA
 bIP
@@ -80145,7 +80292,7 @@ bFO
 bGv
 bGT
 bHq
-nQl
+bxP
 bNk
 bIz
 bIQ
@@ -80402,7 +80549,7 @@ bAi
 bGw
 bGU
 bHr
-nQl
+bxP
 aaH
 bIA
 bIP
@@ -85215,7 +85362,7 @@ ald
 ald
 ald
 alb
-sqP
+iJs
 aqu
 aqu
 arv
@@ -90116,7 +90263,7 @@ avz
 azW
 awj
 aBF
-ayz
+vEW
 aDO
 aEQ
 asm
