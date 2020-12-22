@@ -65686,10 +65686,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"ddC" = (
-/obj/submachine/claw_machine,
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar/sanctuary)
 "ddD" = (
 /obj/table/wood/round/auto,
 /obj/item/wrench/monkey,
@@ -110085,7 +110081,7 @@ dcq
 dTj
 daZ
 daZ
-ddC
+daZ
 ddd
 dSd
 ddQ
