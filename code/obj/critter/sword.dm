@@ -22,6 +22,7 @@
 	atkcarbon = 1
 	atksilicon = 1
 	aggressive = 1
+	flying = 1
 	seekrange = 256					//A perk of being a high-tech prototype - incredibly large detection range.
 	var/mode = 0					//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 	var/changing_modes = false		//Used to prevent some things during transformation sequences.
@@ -49,7 +50,7 @@
 
 //-TRANSFORMATIONS-//
 	
-	proc/transformation(var/transformation_id)		//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
+	proc/transformation(var/transformation_id)				//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
 		mobile = 0
 		firevuln = 1.25
 		brutevuln = 1.25
@@ -111,7 +112,7 @@
 
 //-GENERAL ABILITIES-//
 
-	proc/configuration_swap()						//Swaps between anchored and unanchored forms, if possible.
+	proc/configuration_swap()								//Swaps between anchored and unanchored forms, if possible.
 		if(mode == 0)
 			return
 
@@ -130,7 +131,7 @@
 				return
 
 
-	proc/stifling_vacuum()							//In a T-shape in front of it, trips and attracts closer all mobs affected.
+	proc/stifling_vacuum()									//In a T-shape in front of it, trips and attracts closer all mobs affected.
 		walk_towards(src, src.target)
 		walk(src,0)
 		mobile = 0
@@ -194,15 +195,40 @@
 
 
 //-ANCHORED ABILITIES-//
+		
+	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge and Destructive Leap.
+		for (var/mob/M in locate(point_x,point_y,src.z))
+			if(!dam_type)
+				if (isrobot(M))
+					M.health = M.health * rand(0.10, 0.20)
+				else
+					random_burn_damage(M, 80)
+				playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			else
+				if (isrobot(M))
+					M.health = M.health * rand(0.10, 0.20)
+				else
+					random_brute_damage(M, 80)
+			M.changeStatus("weakened", 4 SECOND)
+			M.changeStatus("stunned", 1 SECOND)
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+		var/turf/simulated/T = locate(point_x,point_y,src.z)
+		if(T && prob(90))
+			T.ex_act(1)
+		for (var/obj/S in locate(point_x,point_y,src.z))
+			if(prob(45))
+				S.ex_act(1)
+		return
 
-	proc/linear_purge()								//After 1.5 seconds, unleashes a destructive beam.
-		mobile = 0
+
+	proc/linear_purge()										//After 1.5 seconds, unleashes a destructive beam.
 		firevuln = 1.5
 		brutevuln = 1.5
 		miscvuln = 0.4
 
 		walk_towards(src, src.target)
 		walk(src,0)
+		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
 		mobile = 0
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge")
 		src.UpdateOverlays(glow, "glow")
@@ -216,76 +242,136 @@
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						tile_purge(src.loc.x,src.loc.y + increment)
+						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x,src.loc.y + increment,0)
 
 			if (4)	//E
 				for(increment = 2; increment <= 9; increment++)
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						tile_purge(src.loc.x + increment,src.loc.y)
+						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x + increment,src.loc.y,0)
 
 			if (2)	//S
 				for(increment = 2; increment <= 9; increment++)
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						tile_purge(src.loc.x,src.loc.y - increment)
+						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x,src.loc.y - increment,0)
 
 			if (8)	//W
 				for(increment = 2; increment <= 9; increment++)
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						tile_purge(src.loc.x - increment,src.loc.y)
+						playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x - increment,src.loc.y,0)
 
 		SPAWN_DBG(10)
 			rotation_locked = true
 
 		SPAWN_DBG(20)
 			mobile = 1
-			if(mode == 1)
-				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
-			else
-				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			mobile = 1
 			firevuln = 1
 			brutevuln = 1
-			miscvuln = 0.2	
-		
-	proc/tile_purge(var/point_x, var/point_y)	//A helper proc for Linear Purge.
-		for (var/mob/M in locate(point_x,point_y,src.z))
-			if (isrobot(M))
-				M.health = M.health * rand(0.10, 0.20)
-			else
-				random_burn_damage(M, 80)
-			M.changeStatus("weakened", 4 SECOND)
-			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
-		var/turf/simulated/T = locate(point_x,point_y,src.z)
-		if(T && prob(90))
-			T.ex_act(1)
-		for (var/obj/S in locate(point_x,point_y,src.z))
-			if(prob(45))
-				S.ex_act(1)
-		return
+			miscvuln = 0.2
 
 
-//	proc/gyrating_edge()
+	proc/gyrating_edge()
+		rotation_locked = true
+		mobile = 0
+		firevuln = 0.5
+		brutevuln = 0.5
+		miscvuln = 0.1
+
+		var/spin_dir = prob(50) ? "L" : "R"
+		animate_spin(src, spin_dir, 5, 0)
+		playsound(src.loc, "sound/effects/flameswoosh.ogg", 60, 1)
+		if(spin_dir == "L")
+			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_L")
+		else
+			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_R")
+		src.UpdateOverlays(glow, "glow")
+
+		SPAWN_DBG(1)
+			for (var/mob/M in range(5,src.loc))
+				random_brute_damage(M, 32)
+				random_burn_damage(M, 16)
+
+		SPAWN_DBG(5)
+			animate_spin(src, spin_dir, 5, 0)
+
+		SPAWN_DBG(6)
+			for (var/mob/M in range(5,src.loc))
+				random_brute_damage(M, 16)
+				random_burn_damage(M, 32)
+
+		SPAWN_DBG(10)
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			src.UpdateOverlays(glow, "glow")
+			rotation_locked = false
+			mobile = 1
+			firevuln = 1
+			brutevuln = 1
+			miscvuln = 0.2
 
 
-//	proc/destructive_leap()
+	proc/destructive_leap()
+		walk_towards(src, src.target)
+		walk(src,0)
+		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
+		icon_state = "destructiveLeap"
+		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
+		src.UpdateOverlays(glow, "glow")
+		rotation_locked = true
+		mobile = 0
+		firevuln = 0.75
+		brutevuln = 0.75
+		miscvuln = 0.15
+		animate_float(src, -1, 5, 1)
+		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)
+
+		SPAWN_DBG(2)
+			for(var/i=0, i < 6, i++)
+				step(src, src.dir)
+				if(i < jump_tiles / 2)
+					src.pixel_y += 4
+				else
+					src.pixel_y -= 4
+				sleep(1)
+
+		SPAWN_DBG(9)
+			for (var/mob/M in range(3,src.loc))
+				random_brute_damage(M, 60)
+				tile_purge(src.loc.x,src.loc.y,1)
+
+		SPAWN_DBG(10)
+			icon = 'icons/misc/retribution/SWORD/base.dmi'
+			icon_state = "anchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			src.UpdateOverlays(glow, "glow")
+			rotation_locked = false
+			mobile = 1
+			firevuln = 1
+			brutevuln = 1
+			miscvuln = 0.2
 
 
 //-UNANCHORED ABILITIES-//
 
 //	proc/heat_reallocation()
+//		playsound(src.loc, "sound/effects/gust.ogg", 60, 1)
 
 
 //	proc/energy_absorption()
+//		playsound(src.loc, "sound/effects/shieldup.ogg", 80, 1)
 
 
 //	proc/destructive_flight()
+//		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)

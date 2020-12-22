@@ -435,7 +435,7 @@
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 				
-				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is currently unsupported.</B></span>")
+				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
 
 
 			SPAWN_DBG(firerate)
