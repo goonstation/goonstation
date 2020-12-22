@@ -42859,6 +42859,10 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"jBB" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/industrial,
+/area/station/mining/staff_room)
 "jLO" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -123830,7 +123834,7 @@ bOd
 bOm
 bOq
 bxa
-bxa
+jBB
 bOb
 bPd
 bPq

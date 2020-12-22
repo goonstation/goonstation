@@ -1844,6 +1844,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/stairs/wide,
 /area/station/mining/refinery)
 "eE" = (
