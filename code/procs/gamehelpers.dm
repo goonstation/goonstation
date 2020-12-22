@@ -129,7 +129,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 				return 1
 		else if (istype(source, /obj/machinery) && (isAI(user) || issilicon(user)))
 			var/obj/machinery/M = source
-			if(!(source.flags & REQ_PHYSICAL_ACCESS)) //check if physical access is required
+			if(!(M.status & REQ_PHYSICAL_ACCESS)) //check if physical access is required
 				return 1
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true

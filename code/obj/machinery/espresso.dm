@@ -224,7 +224,7 @@
 								C.reagents.add_reagent("coffee_fresh",40)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
-							if (!src.my_carafe)
+							if (!src.my_carafe || isAI(src))
 								return
 							src.my_carafe.set_loc(src.loc)
 							src.my_carafe = null
