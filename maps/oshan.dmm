@@ -316,6 +316,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aaM" = (
@@ -4862,6 +4863,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "akV" = (
@@ -11075,10 +11077,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "azf" = (
-/obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -11086,6 +11090,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/medbay,
+/obj/decal/tile_edge/floorguide/command{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -11109,6 +11117,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "azh" = (
@@ -11663,9 +11672,13 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/north)
 "aAn" = (
-/turf/simulated/floor/yellow/corner{
-	dir = 8
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 4
 	},
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aAo" = (
 /obj/cable{
@@ -11689,6 +11702,10 @@
 /obj/disposalpipe/junction/right,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -11716,12 +11733,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aAu" = (
-/obj/disposalpipe/segment{
+/obj/disposalpipe/segment/brig,
+/obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/yellow/corner,
-/area/station/hallway/primary/north)
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "aAv" = (
 /obj/machinery/light/incandescent/netural,
 /obj/disposalpipe/segment{
@@ -12110,16 +12127,23 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/sauna)
 "aBq" = (
-/turf/simulated/floor/green/side{
-	dir = 10
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 1
 	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBr" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/blue/side,
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/security{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBs" = (
 /obj/disposalpipe/segment,
@@ -12129,27 +12153,41 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/purple/side,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBt" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "crew quarters";
 	name = "crew quarters mail router"
 	},
-/turf/simulated/floor/red/side,
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBu" = (
-/obj/disposalpipe/segment/mail{
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/medbay,
+/obj/decal/tile_edge/floorguide/command{
 	dir = 4
 	},
-/turf/simulated/floor/yellow/side,
-/area/station/hallway/primary/north)
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "aBv" = (
-/obj/disposalpipe/segment/mail{
+/obj/disposalpipe/segment/brig,
+/obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
 	},
-/turf/simulated/floor/green/side,
-/area/station/hallway/primary/north)
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "aBw" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "chapel office";
@@ -12158,22 +12196,24 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blue/side,
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBx" = (
-/obj/disposalpipe/segment/mail{
+/obj/disposalpipe/segment/mail,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
+/turf/simulated/floor/purple/side{
 	dir = 4
 	},
-/turf/simulated/floor/purple/side,
-/area/station/hallway/primary/north)
+/area/station/hallway/primary/east)
 "aBy" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aBz" = (
 /turf/simulated/wall/auto/supernorn,
@@ -13260,6 +13300,7 @@
 	mail_tag = "artlab";
 	name = "artlab mail router"
 	},
+/obj/decal/tile_edge/floorguide/arrow_s,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -23884,9 +23925,17 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon/tour/oshan/tour15,
-/turf/simulated/floor/purple/side{
+/obj/decal/tile_edge/floorguide/qm,
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/science{
 	dir = 4
 	},
+/obj/decal/tile_edge/floorguide/engineering{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bev" = (
 /obj/cable{
@@ -24608,6 +24657,7 @@
 "bgn" = (
 /obj/disposalpipe/trunk/east,
 /obj/machinery/disposal,
+/obj/decal/tile_edge/flowers,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bgo" = (
@@ -30763,6 +30813,7 @@
 	name = "Pod Bay Blast Door Control";
 	pixel_x = -22
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvh" = (
@@ -35672,12 +35723,19 @@
 	mail_tag = "escape";
 	name = "escape mail router"
 	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bGN" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/floorguide/medbay,
+/obj/decal/tile_edge/floorguide/command{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -35770,6 +35828,9 @@
 /area/station/hallway/primary/south)
 "bGZ" = (
 /obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -35779,6 +35840,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bHb" = (
@@ -36219,6 +36281,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 1
+	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bHY" = (
@@ -36233,7 +36301,16 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/drainage/big,
+/obj/decal/tile_edge/floorguide/qm,
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/science{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/engineering{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bHZ" = (
@@ -36448,6 +36525,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bIq" = (
@@ -36459,6 +36539,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -36600,25 +36683,27 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bIK" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/black/side{
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/security{
 	dir = 1
 	},
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bIL" = (
-/obj/machinery/light/incandescent/netural,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
+/obj/machinery/drainage/big,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 "bIM" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -40347,6 +40432,7 @@
 /area/station/storage/warehouse)
 "bSo" = (
 /obj/decal/cleanable/dirt,
+/obj/machinery/space_heater,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -45140,7 +45226,16 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "cfF" = (
-/obj/machinery/drainage/big,
+/obj/decal/tile_edge/floorguide/qm,
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/science{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/engineering{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "cfG" = (
@@ -47400,6 +47495,23 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"eEu" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/security{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "eLd" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/circuit,
@@ -47425,6 +47537,19 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gfB" = (
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 1
+	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47481,6 +47606,11 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"hWy" = (
+/obj/disposalpipe/segment/brig,
+/obj/decal/tile_edge/floorguide/arrow_w,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -47498,6 +47628,19 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"ilv" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/medbay,
+/obj/decal/tile_edge/floorguide/command{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "ixM" = (
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
@@ -47594,6 +47737,15 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space/fluid,
 /area/space)
+"kud" = (
+/obj/disposalpipe/segment/mail,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47604,10 +47756,34 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kKh" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"lwF" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "lTa" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -47620,6 +47796,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"mwM" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/security{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "myo" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -47821,6 +48012,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"qkZ" = (
+/obj/disposalpipe/segment/brig,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "qqR" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -47861,6 +48059,27 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"rbg" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
+"rgW" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/floorguide/qm,
+/obj/decal/tile_edge/floorguide/botany{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/science{
+	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/engineering{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "rBz" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -47900,6 +48119,17 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"tvQ" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/disposalpipe/segment/brig,
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_n,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "tGH" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -47953,6 +48183,13 @@
 "vqP" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
+"vxM" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/purple/side,
+/area/station/crew_quarters/market)
 "vCx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -77857,7 +78094,7 @@ aNw
 bJx
 bJx
 bJx
-bJx
+rbg
 bJw
 aqn
 aqn
@@ -79882,7 +80119,7 @@ aiB
 aaF
 aiz
 alJ
-amD
+bIL
 amD
 aos
 apm
@@ -81707,7 +81944,7 @@ amG
 ayi
 azc
 aAs
-aBu
+azQ
 aCk
 ajd
 akW
@@ -82009,7 +82246,7 @@ atj
 atj
 azi
 aAs
-aBv
+azQ
 aCk
 aje
 aCX
@@ -82071,7 +82308,7 @@ bEp
 bDa
 bDa
 bGV
-bHU
+cfH
 bII
 bLX
 bII
@@ -82613,7 +82850,7 @@ atj
 ahK
 azn
 aAs
-aBx
+azQ
 aCk
 ajL
 aCX
@@ -82674,7 +82911,7 @@ bvt
 bEr
 bvt
 bvt
-bvt
+ilv
 bHY
 bIK
 bJD
@@ -82914,7 +83151,7 @@ avQ
 atj
 ayk
 aym
-aAu
+aAr
 aBy
 aCk
 ajd
@@ -82977,8 +83214,8 @@ aSr
 bFl
 bGc
 bHa
-bHU
-bIK
+lwF
+kKh
 bJD
 bKs
 bKt
@@ -83280,7 +83517,7 @@ buS
 buS
 bHb
 bHU
-bIL
+bIO
 bJD
 bKt
 bLU
@@ -83582,7 +83819,7 @@ bxH
 buS
 cgd
 bHU
-bIK
+bIM
 bJD
 bKt
 bLV
@@ -83884,7 +84121,7 @@ bwH
 buS
 bHb
 bHU
-bIK
+bIM
 bJD
 bKu
 bLW
@@ -84186,7 +84423,7 @@ bwI
 buS
 bHc
 bHU
-bIK
+bIM
 bJD
 bKv
 bKt
@@ -104418,7 +104655,7 @@ bCC
 bCC
 byf
 bGM
-bHC
+gfB
 bIp
 bJq
 bJZ
@@ -104720,9 +104957,9 @@ byS
 byS
 cfE
 bGN
-bHD
-bIm
-bJk
+rgW
+eEu
+vxM
 bKa
 bLw
 bLw
@@ -105021,8 +105258,8 @@ bCD
 bCD
 bCD
 bCD
-bCD
-bBt
+hWy
+tvQ
 bIq
 bJr
 bKb
@@ -106172,9 +106409,9 @@ aBd
 aBW
 aBW
 aBW
-aBW
-aBW
-aBW
+aAu
+aBv
+qkZ
 aGm
 aBW
 aHt
@@ -106474,9 +106711,9 @@ aBe
 aBX
 aCM
 aDF
-aEv
+aBu
 beu
-aEv
+mwM
 aGn
 aEv
 aFi
@@ -106777,8 +107014,8 @@ aBY
 aCN
 aDG
 aEw
-aCN
-aCN
+aBx
+kud
 aCN
 aGS
 aHu
