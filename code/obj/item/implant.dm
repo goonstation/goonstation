@@ -320,9 +320,9 @@ THROWING DARTS
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "HEALTH-MAILBOT"
 			newsignal.data["message"] = "[src.message]"
-
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
+			newsignal.data["tag"] = PDA_MEDICAL_ALERT_TAG
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)

@@ -146,7 +146,8 @@
 						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
 						<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>
 						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
-						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a><br>
+						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a> |
+						<a href='byond://?src=\ref[src];mode=5'>Ringtones</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
 						<b>Detected PDAs</b><br>"}
@@ -288,6 +289,36 @@
 
 					. += "<br>"
 
+				if(5) // ringtones
+					. += "<h4>LoudBlaster v1.01b Auditory Alert System</h4><br>"
+					. += "<hr><br>"
+					. += "<b>Primary Ringtone</b>"
+					. += "<table cellspacing=5>"
+					. += "<tr><td>[src.master.r_tone ? "[src.master.r_tone.name]</td><td><a href='byond://?src=\ref[src];delTone=1'>Reset</a></td></tr>" : "</td><td>-ERR-</td></tr>"]"
+					. += "</table>"
+					var/has_alert_set
+					for(var/alert in src.master.alert_ringtones)
+						if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
+							var/datum/ringtone/rt = src.master.alert_ringtones[alert]
+							if(!has_alert_set)
+								has_alert_set = 1
+								. += "<hr><br>"
+								. += "<b>Alert Ringtones</b>"
+								. += "<table cellspacing=5>"
+							. += "<tr><td>[alert]</td><td>[rt.name]:</td><td><a href='byond://?src=\ref[src];delATone=[alert]'>Reset</a></td></tr>"
+					if(has_alert_set)
+						. += "</table>"
+					if(length(src.master.mailgroups))
+						. += "<hr><br>"
+						. += "<b>Mailgroup Ringtones</b>"
+						. += "<table cellspacing=5>"
+						for(var/mailgrp in src.master.mailgroups)
+							var/datum/ringtone/rt = null
+							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
+								rt = src.master.mailgroup_ringtones[mailgrp]
+							. += "<tr><td>[mailgrp]:</td><td>[rt ? "[rt.name]</td><td><a href='byond://?src=\ref[src];delMGTone=[mailgrp]'>Reset</a></td></tr>" : "</td><td>Default</td></tr>"]"
+						. += "</table>"
+
 		Topic(href, href_list)
 			if(..())
 				return
@@ -295,6 +326,18 @@
 			if(href_list["mode"])
 				var/newmode = text2num(href_list["mode"])
 				src.mode = max(newmode, 0)
+
+			if(href_list["delTone"])
+				qdel(src.master.r_tone)
+				src.master.r_tone = new/datum/ringtone(src.master)
+
+			if(href_list["delATone"])
+				qdel(src.master.alert_ringtones[href_list["delATone"]])
+				src.master.alert_ringtones[href_list["delATone"]] = null
+
+			if(href_list["delMGTone"])
+				qdel(src.master.mailgroup_ringtones[href_list["delMGTone"]])
+				src.master.mailgroup_ringtones[href_list["delMGTone"]] = null
 
 //			else if(href_list["flight"])
 //				src.master.toggle_light()
@@ -729,7 +772,7 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					src.master.display_alert(alert_beep, previewtext)
+					src.master.display_alert(alert_beep, previewtext, signal.data["tag"], groupAddress)
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"

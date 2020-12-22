@@ -62,6 +62,18 @@
 	var/datum/ringtone/r_tone = /datum/ringtone
 	/// A temporary ringtone set for preview purposed
 	var/datum/ringtone/r_tone_temp
+	/// A list of ringtones tied to an alert -- Overrides whatever settings set for their mailgroup. Typically remains static in length
+	var/list/alert_ringtones = list(PDA_CRISIS_ALERT_TAG = null,\
+																	PDA_SEC_ALERT_TAG = null,\
+																	PDA_CARGO_ALERT_TAG = null,\
+																	PDA_MEDICAL_ALERT_TAG = null,\
+																	PDA_ENGINEER_ALERT_TAG = null,\
+																	PDA_MECHANICS_ALERT_TAG = null,\
+																	PDA_GENETICS_ALERT_TAG = null,\
+																	PDA_MINING_ALERT_TAG = null,\
+																	PDA_CHUTE_ALERT_TAG = null)
+	/// mailgroup-specific ringtones, added on the fly!
+	var/list/mailgroup_ringtones = list()
 
 	registered_owner()
 		.= registered
@@ -293,6 +305,15 @@
 	qdel(src.r_tone_temp)
 	src.r_tone = null
 	src.r_tone_temp = null
+	for(var/R in src.mailgroup_ringtones)
+		if(src.mailgroup_ringtones[R])
+			qdel(src.mailgroup_ringtones[R])
+			src.mailgroup_ringtones[R] = null
+
+	for(var/T in src.alert_ringtones)
+		if(src.alert_ringtones[T])
+			qdel(src.alert_ringtones[T])
+			src.alert_ringtones[T] = null
 
 	if (src.hd)
 		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
@@ -766,7 +787,7 @@
 		src.overlays = null
 		src.overlays += src.overlay_images[src.current_overlay]
 
-	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0)
+	proc/set_ringtone(var/datum/ringtone/RT, var/temp = 0, var/overrideAlert = 0, var/groupType, var/groupName)
 		if(!istype(RT)) // Invalid ringtone? use the default
 			qdel(src.r_tone)
 			qdel(src.r_tone_temp)
@@ -785,14 +806,33 @@
 				if(overrideAlert)
 					src.r_tone_temp.overrideAlert = overrideAlert
 			else
-				qdel(src.r_tone)
-				src.r_tone = RT
-				src.r_tone.holder = src
-				if(overrideAlert)
-					src.r_tone.overrideAlert = overrideAlert
+				switch(groupType)
+					if("main")
+						qdel(src.r_tone)
+						src.r_tone = RT
+						src.r_tone.holder = src
+						if(overrideAlert)
+							src.r_tone.overrideAlert = overrideAlert
+					if("alert")
+						if(groupName in src.alert_ringtones)
+							qdel(src.alert_ringtones[groupName])
+							src.alert_ringtones[groupName] = RT
+							var/datum/ringtone/RTone = src.alert_ringtones[groupName]
+							RTone.holder = src
+							if(overrideAlert)
+								RTone.overrideAlert = overrideAlert
+					if("mailgroup")
+						if(groupName in src.mailgroup_ringtones)
+							qdel(src.mailgroup_ringtones[groupName])
+							src.mailgroup_ringtones[groupName] = null
+						src.mailgroup_ringtones[groupName] = RT
+						var/datum/ringtone/RTone = src.mailgroup_ringtones[groupName]
+						RTone.holder = src
+						if(overrideAlert)
+							RTone.overrideAlert = overrideAlert
 				if (ismob(src.loc))
 					var/mob/M = src.loc
-					M.show_message("[r_tone?.succText]")
+					M.show_message("[bicon(src)] [RT?.succText]")
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
@@ -800,12 +840,25 @@
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
-	proc/display_alert(var/alert_message, var/previewRing) //Add alert overlay and beep
+	proc/route_ringtone(var/msgtag, var/groupID)
+		if(msgtag in src.alert_ringtones)
+			if(istype(src.alert_ringtones[msgtag], /datum/ringtone))
+				var/datum/ringtone/rtone = src.alert_ringtones[msgtag]
+				. = rtone.PlayRingtone()
+		else if(groupID in src.mailgroup_ringtones)
+			if(istype(src.mailgroup_ringtones[groupID], /datum/ringtone))
+				var/datum/ringtone/rtone = src.mailgroup_ringtones[groupID]
+				. = rtone.PlayRingtone()
+
+		if(!.)
+			return src.r_tone?.PlayRingtone()
+
+	proc/display_alert(var/alert_message, var/previewRing, var/msgtag, var/groupID) //Add alert overlay and beep
 		if (alert_message && !src.speaker_busted)
 			if(previewRing && istype(src.r_tone_temp))
 				. = src.r_tone_temp?.PlayRingtone()
 			else
-				. = src.r_tone?.PlayRingtone()
+				. = src.route_ringtone(msgtag, groupID)
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 

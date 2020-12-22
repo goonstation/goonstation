@@ -530,7 +530,7 @@
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "RKIT-MAILBOT"
 				newsignal.data["message"] = "Notice: Item already in database."
-
+				newsignal.data["tag"] = PDA_MECHANICS_ALERT_TAG
 				newsignal.data["address_1"] = target
 				newsignal.data["sender"] = src.net_id
 
@@ -546,7 +546,7 @@
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = "Notice: Item entered into database."
-
+		newsignal.data["tag"] = PDA_MECHANICS_ALERT_TAG
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 

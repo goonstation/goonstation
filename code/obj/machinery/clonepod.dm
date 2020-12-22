@@ -117,7 +117,7 @@
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
 			newsignal.data["message"] = "[msg]"
-
+			newsignal.data["tag"] = PDA_MEDICAL_ALERT_TAG
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup
 			newsignal.data["sender"] = src.net_id

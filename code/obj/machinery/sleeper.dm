@@ -773,7 +773,7 @@
 	for(var/mailgroup in mailgroups)
 		var/datum/signal/PDAsignal = get_free_signal()
 
-		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
+		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT", "tag" = PDA_MEDICAL_ALERT_TAG, "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
 		PDAsignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(src, PDAsignal)
 

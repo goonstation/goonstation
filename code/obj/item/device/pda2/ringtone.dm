@@ -22,7 +22,17 @@
 	var/overrideAlertYesText = "Yes"
 	/// The text that indicates a negative for overriding the alert text
 	var/overrideAlertNoText = "No"
-
+	/// Which menu should we be in?
+	var/subMenu = null
+	/// Which ringtone index are we dealing with right now?
+	var/selectedRT = null
+	/// Which general slot should this ringtone be placed? "alert" or "mailgroup", please. Defaults to main
+	var/ringToneGenSlot = null
+	/// Where should this ringtone be placed?
+	var/ringToneDestSlot = null
+	/// The valid types of alert slots
+	var/list/alertSlots = list(PDA_CRISIS_ALERT_TAG,PDA_SEC_ALERT_TAG,PDA_CARGO_ALERT_TAG,PDA_MEDICAL_ALERT_TAG,PDA_ENGINEER_ALERT_TAG,\
+														PDA_MECHANICS_ALERT_TAG,PDA_GENETICS_ALERT_TAG,PDA_MINING_ALERT_TAG,PDA_CHUTE_ALERT_TAG)
 
 	return_text()
 		if(..())
@@ -37,16 +47,60 @@
 
 		dat += "[src.dividerThing]<br><br>"
 
-		for(var/RiTo in src.ring_list)
-			var/datum/ringtone/ring_tone_temp = src.ring_list[RiTo]
-			var/applyLink = "<a href='?src=\ref[src];applyTone=[RiTo]'>[ring_tone_temp.applyText]</a>"
-			var/previewLink = "<a href='?src=\ref[src];previewTone=[RiTo]'>[ring_tone_temp.previewText]</a>"
-			dat += "[ring_tone_temp.nameText] [ring_tone_temp.name]<br>"
-			dat += "[ring_tone_temp.descText] [ring_tone_temp.desc]<br>"
-			dat += "[applyLink] | [previewLink]<br><br>"
-			dat += "[src.dividerThing]<br><br>"
+		switch(src.subMenu)
+			if(null)
+				src.ringToneGenSlot = null
+				src.ringToneDestSlot = null
+				src.selectedRT = null
+				for(var/RiTo in src.ring_list)
+					var/datum/ringtone/ring_tone_temp = src.ring_list[RiTo]
+					var/applyLink = "<a href='?src=\ref[src];setSelectedRT=[RiTo]'>[ring_tone_temp.applyText]</a>"
+					var/previewLink = "<a href='?src=\ref[src];previewTone=[RiTo]'>[ring_tone_temp.previewText]</a>"
+					dat += "[ring_tone_temp.nameText] [ring_tone_temp.name]<br>"
+					dat += "[ring_tone_temp.descText] [ring_tone_temp.desc]<br>"
+					dat += "[applyLink] | [previewLink]<br><br>"
+					dat += "[src.dividerThing]<br><br>"
+				dat += "<br><br>"
 
-		dat += "<br><br>"
+			if("main_alert_or_mailgroup")
+				if(!src.selectedRT)
+					src.selectedRT = "ring1"
+				var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
+				var/applyLink = "<a href='?src=\ref[src];applyTone=[src.selectedRT]'>Primary</a>"
+				var/alertLink = "<a href='?src=\ref[src];setToneGenSlot=["alert"]'>Alert</a>"
+				var/mailLink = "<a href='?src=\ref[src];setToneGenSlot=["mailgroup"]'>Mailgroup</a>"
+				dat += "Set [ring_tone_temp] as which ringtone?<br>"
+				dat += "[applyLink] | [alertLink] | [mailLink]<br><br>"
+				dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+				dat += "[src.dividerThing]<br><br>"
+
+			if("alert")
+				if(!src.selectedRT)
+					src.selectedRT = "ring1"
+				if(!length(src.alertSlots) || !length(src.master.alert_ringtones))
+					src.subMenu = null
+					dat += "Error retrieving alert types. Please refresh the page and contact customer support at 1-800-IMC-ODER."
+				else
+					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
+					dat += "Please select an alert type to use [ring_tone_temp].<br><br>"
+					for(var/alert in src.alertSlots)
+						dat += "<a href='?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
+					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+					dat += "[src.dividerThing]<br><br>"
+
+			if("mailgroup")
+				if(!src.selectedRT)
+					src.selectedRT = "ring1"
+				if(!length(src.master?.mailgroups))
+					src.subMenu = null
+					dat += "Error retrieving mailgroups. Please be a part of at least one mailgroup and try again. If this error persists, please contact customer support at 1-800-IMC-ODER."
+				else
+					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
+					dat += "Please select a mailgroup to use [ring_tone_temp].<br><br>"
+					for(var/mailgroup in src.master.mailgroups)
+						dat += "<a href='?src=\ref[src];applyTone=[mailgroup]'>[mailgroup]</a><br>"
+					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+					dat += "[src.dividerThing]<br><br>"
 
 		if(src.overrideAlertAllowed)
 			/// just a shorter var for selection purposes
@@ -65,9 +119,33 @@
 		if (href_list["overrideAlertSet"])
 			src.overrideAlertMessage = !src.overrideAlertMessage
 
+		else if (href_list["resetMenu"])
+			src.ResetTheMenu()
+
+		else if (href_list["setSelectedRT"]) // goto first submenu
+			src.selectedRT = href_list["setSelectedRT"]
+			src.subMenu = "main_alert_or_mailgroup"
+
+		else if (href_list["setToneGenSlot"]) // from first submenu
+			switch(href_list["setToneGenSlot"])
+				if("alert")
+					src.ringToneGenSlot = "alert"
+					src.subMenu = "alert"
+				if("mailgroup")
+					src.ringToneGenSlot = "mailgroup"
+					src.subMenu = "mailgroup"
+				else
+					src.ResetTheMenu()
+
 		else if (href_list["applyTone"])
-			var/datum/ringtone/Rtone = src.ring_list[href_list["applyTone"]]
-			src.master.set_ringtone(Rtone, 0, src.overrideAlertMessage)
+			if(!src.selectedRT)
+				src.selectedRT = "ring1"
+			if(!src.ringToneGenSlot)
+				src.ringToneGenSlot = "main"
+			src.ringToneDestSlot = href_list["applyTone"]
+			var/datum/ringtone/Rtone = src.ring_list[src.selectedRT]
+			src.master.set_ringtone(Rtone, 0, src.overrideAlertMessage, src.ringToneGenSlot, src.ringToneDestSlot)
+			src.ResetTheMenu()
 
 		else if(href_list["previewTone"])
 			var/datum/ringtone/Rtone = src.ring_list[href_list["previewTone"]]
@@ -82,10 +160,17 @@
 			signal.data["address_1"] = src.master.net_id
 			signal.transmission_method = TRANSMISSION_RADIO
 			transmit_connection.post_signal(null, signal)
+			src.ResetTheMenu()
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+	proc/ResetTheMenu()
+		src.ringToneGenSlot = null
+		src.ringToneDestSlot = null
+		src.selectedRT = null
+		src.subMenu = null
 
 /datum/computer/file/pda_program/ringtone/dogs
 	name = "WOLF PACK"

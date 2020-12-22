@@ -268,6 +268,7 @@
 			signal.data["address_1"] = "00000000"
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "ENGINE-MAILBOT"
+			signal.data["tag"] = PDA_ENGINEER_ALERT_TAG
 			signal.data["group"] = src.setup_mailgroup //Only engineer PDAs should be informed.
 			signal.data["message"] = "Notice: [event_string]"
 
