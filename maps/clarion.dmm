@@ -25202,8 +25202,8 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aUD" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/plasticflaps,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aUE" = (
