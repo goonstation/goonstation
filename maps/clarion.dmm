@@ -16296,6 +16296,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aEh" = (
@@ -22957,10 +22958,6 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aRc" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Bridge'"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -22980,6 +22977,11 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge"
+	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "aRd" = (
@@ -23071,11 +23073,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Personnel's Office'";
-	req_access_txt = "55"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -23086,6 +23083,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Personnel's Office"
+	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "aRk" = (
@@ -23145,11 +23147,6 @@
 /area/station/crew_quarters/md)
 "aRp" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command{
-	name = "airlock-'E.V.A.'";
-	req_access_txt = "18"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -23163,6 +23160,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "E.V.A."
+	},
+/obj/access_spawn/eva,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "aRq" = (
@@ -25682,11 +25684,12 @@
 	},
 /area/station/bridge/hos)
 "aVG" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Personnel's Office'";
-	req_access_txt = "55"
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Head of Personnel's Office"
 	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "aVH" = (
@@ -26339,11 +26342,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Personnel's Office'";
-	req_access_txt = "55"
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Personnel's Office"
 	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -26363,11 +26366,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
 "aWU" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Captain's Office'";
-	req_access_txt = "20"
+/obj/machinery/door/airlock/pyro/command{
+	name = "Captain's Office"
 	},
+/obj/access_spawn/captain,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "aWV" = (
@@ -27072,14 +27075,15 @@
 	},
 /area/station/bridge/captain)
 "aYl" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Captain's Office'";
-	req_access_txt = "20"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Captain's Office"
+	},
+/obj/access_spawn/captain,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -27875,14 +27879,15 @@
 	},
 /area/station/bridge/captain)
 "aZB" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Captain's Restroom'"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Captain's Restroom"
+	},
+/obj/access_spawn/captain,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -28435,14 +28440,15 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Personnel's Office'";
-	req_access_txt = "55"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Head of Personnel's Office"
+	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -29166,11 +29172,11 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bbN" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Personnel's Office'";
-	req_access_txt = "55"
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Personnel's Office"
 	},
+/obj/access_spawn/head_of_personnel,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/heads{
 	name = "Head of Personnel's Quarters"
@@ -29896,10 +29902,6 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bdc" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Bridge'"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -29915,6 +29917,12 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Bridge"
+	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -30018,17 +30026,18 @@
 	},
 /area/station/bridge/captain)
 "bdk" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Captain's Office'";
-	req_access_txt = "20"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Captain's Office"
+	},
+/obj/access_spawn/captain,
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/captain)
 "bdl" = (
@@ -30555,11 +30564,11 @@
 	},
 /area/station/turret_protected/ai)
 "beo" = (
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Captain's Office'";
-	req_access_txt = "20"
+/obj/machinery/door/airlock/pyro/command{
+	name = "Captain's Office"
 	},
-/obj/machinery/door/firedoor/border_only,
+/obj/firedoor_spawn,
+/obj/access_spawn/teleporter,
 /turf/simulated/floor/plating,
 /area/station/teleporter)
 "bep" = (
@@ -31782,11 +31791,6 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bgB" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'AI Core'";
-	req_access_txt = "19"
-	},
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 1;
@@ -31801,6 +31805,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "AI Core"
+	},
+/obj/access_spawn/ai_upload,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "bgC" = (
@@ -31904,16 +31914,17 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Teleporter'";
-	req_access_txt = "17"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Teleporter"
+	},
+/obj/access_spawn/teleporter,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bgN" = (
@@ -32232,11 +32243,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hos)
 "bht" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Security's Office'";
-	req_access_txt = "37"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -32247,15 +32253,15 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Security's Office"
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/hos)
 "bhu" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Head of Security's Office'";
-	req_access_txt = "37"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -32270,6 +32276,11 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Security's Office"
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/crew_quarters/hos)
 "bhv" = (
@@ -32303,10 +32314,6 @@
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bhy" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Bridge'"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -32319,6 +32326,11 @@
 	name = "Bridge Lockdown Door";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge"
+	},
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "bhz" = (
@@ -33195,11 +33207,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "biU" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'AI Core'";
-	req_access_txt = "19"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -33208,6 +33215,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "AI Core"
+	},
+/obj/access_spawn/ai_upload,
+/obj/firedoor_spawn,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -34522,12 +34535,6 @@
 	},
 /area/station/crew_quarters/hos)
 "blj" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/command/alt{
-	aiControlDisabled = 1;
-	name = "glass airlock-'Armory'";
-	req_access_txt = "37"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34536,6 +34543,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4;
+	name = "Armory"
+	},
+/obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/armory)
 "blk" = (
@@ -35861,11 +35874,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Chief Engineer's Office'";
-	req_access_txt = "49"
-	},
+/obj/machinery/door/airlock/pyro/command,
+/obj/access_spawn/heads,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bnG" = (
@@ -49326,19 +49337,6 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"fkL" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass/mining{
-	dir = 4
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "fqA" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -49502,13 +49500,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"nlk" = (
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Disposals"
-	},
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49614,17 +49605,19 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"scs" = (
+"soA" = (
 /obj/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	name = "East SMES"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
 	},
-/obj/access_spawn/engineering,
+/obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/east)
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -49644,7 +49637,7 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"wbd" = (
+"vhS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /obj/access_spawn/cargo,
@@ -49657,6 +49650,24 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"wTD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "East SMES"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/east)
+"xKF" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Disposals"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 
 (1,1,1) = {"
 aaa
@@ -74485,7 +74496,7 @@ bcB
 aLA
 beT
 bge
-fkL
+soA
 bin
 bjH
 bkP
@@ -87613,7 +87624,7 @@ bBN
 bCW
 bEc
 bEP
-wbd
+vhS
 abH
 abH
 abH
@@ -90393,7 +90404,7 @@ avz
 azW
 awj
 aBF
-nlk
+xKF
 aDO
 aEQ
 asm
@@ -91978,7 +91989,7 @@ bwi
 byz
 bzD
 bAM
-scs
+wTD
 bDj
 bEj
 bET
