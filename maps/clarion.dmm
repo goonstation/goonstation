@@ -14611,6 +14611,7 @@
 /area/station/crew_quarters/kitchen)
 "aAK" = (
 /obj/machinery/power/apc{
+	areastring = "Waste Disposal";
 	dir = 8;
 	name = "Waste Disposal APC";
 	pixel_x = -24
