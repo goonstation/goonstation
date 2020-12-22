@@ -9534,10 +9534,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "East Maintenance"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "apM" = (
@@ -10867,7 +10869,7 @@
 "asl" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Maintenance"
+	name = "East Maintenance"
 	},
 /obj/access_spawn/maint,
 /obj/firedoor_spawn,
@@ -13437,7 +13439,7 @@
 "axM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Maintenance"
+	name = "Detective's Office"
 	},
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -15665,10 +15667,10 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Maintenance"
+	name = "Kitchen"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "aCK" = (
@@ -17415,7 +17417,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Maintenance"
+	name = "East Maintenance"
 	},
 /obj/access_spawn/maint,
 /obj/firedoor_spawn,
@@ -30499,15 +30501,15 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bem" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/turret_protected/ai)
 "ben" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/turret_protected/ai)
@@ -31125,8 +31127,8 @@
 	pixel_x = -8;
 	req_access_txt = "19"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/turret_protected/ai)
@@ -32325,8 +32327,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bhF" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/teleporter)
@@ -33158,7 +33160,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
 /area/station/turret_protected/ai)
 "biV" = (
 /obj/machinery/disposal/small{
@@ -33261,8 +33266,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/turret_protected/Zeta)
@@ -33945,8 +33950,8 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bkl" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/turret_protected/Zeta)
@@ -37768,6 +37773,10 @@
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'Maintenance'"
 	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Central Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "brb" = (
@@ -37917,15 +37926,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bru" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Maintenance'"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	name = "Central Maintenance"
 	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "brv" = (
@@ -38435,11 +38446,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "bsk" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'Mechanics'";
-	req_access_txt = "45"
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Mechanics"
 	},
+/obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bsl" = (
@@ -38453,10 +38464,11 @@
 /area/station/crew_quarters/ce)
 "bsn" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Chief Engineer's Office'";
-	req_access_txt = "49"
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Chief Engineer's Office"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_chief,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "bso" = (
@@ -38476,23 +38488,25 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "bss" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/storage)
 "bst" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'Cargo'";
-	req_access_txt = "31|50"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/mining{
+	name = "Cargo"
+	},
+/obj/access_spawn/cargo,
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bsu" = (
@@ -38541,11 +38555,11 @@
 	},
 /area/station/quartermaster/office)
 "bsy" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	name = "Quartermaster's Office"
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bsz" = (
@@ -38945,14 +38959,15 @@
 	},
 /area/station/crew_quarters/ce)
 "bti" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Chief Engineer's Office'";
-	req_access_txt = "49"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Chief Engineer's Office"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_chief,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue3"
@@ -39742,11 +39757,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Chief Engineer's Office'";
-	req_access_txt = "49"
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Chief Engineer's Office"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_chief,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue3"
@@ -39842,8 +39858,11 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
 "buF" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "buG" = (
@@ -40225,14 +40244,15 @@
 	},
 /area/station/hallway/primary/west)
 "bvu" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'Mechanics'";
-	req_access_txt = "45"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "Mechanics"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bvv" = (
@@ -40458,11 +40478,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4;
+	name = "Quartermaster's Office"
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bvS" = (
@@ -40901,8 +40922,8 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bwF" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/crew_quarters/ce)
@@ -40984,8 +41005,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/crew_quarters/ce)
@@ -41521,8 +41542,8 @@
 	},
 /area/station/engine/elect)
 "bxP" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -41556,10 +41577,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "bxS" = (
-/obj/machinery/door/airlock/gannets/command/alt{
-	name = "airlock-'Chief Engineer's Office'";
-	req_access_txt = "49"
+/obj/machinery/door/airlock/pyro/command/alt{
+	name = "Chief Engineer's Office"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_chief,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "bxT" = (
@@ -41662,11 +41684,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Engine Room"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/core)
 "bya" = (
@@ -41674,8 +41699,8 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -41683,8 +41708,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -41693,8 +41718,8 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -41911,8 +41936,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/obj/access_spawn,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "byE" = (
@@ -41938,17 +41966,6 @@
 "byG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/west)
-"byH" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'West SMES'";
-	req_access_txt = "44"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
 "byI" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41964,16 +41981,18 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "byL" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "byM" = (
@@ -42015,8 +42034,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -42246,8 +42265,8 @@
 /area/station/engine/core)
 "bzj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -42368,11 +42387,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'East SMES'";
-	req_access_txt = "44"
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "East SMES"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "bzC" = (
@@ -42412,14 +42431,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzH" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'West SMES'";
-	req_access_txt = "44"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "West SMES"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzI" = (
@@ -42537,11 +42556,12 @@
 	},
 /area/station/engine/substation/west)
 "bzR" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'West SMES'";
-	req_access_txt = "44"
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "West SMES"
 	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzS" = (
@@ -42551,8 +42571,11 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzT" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzU" = (
@@ -42736,11 +42759,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	name = "Quartermaster's Office"
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bAt" = (
@@ -42764,15 +42787,15 @@
 	},
 /area/station/quartermaster/office)
 "bAv" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/door/airlock/pyro/glass/mining{
+	name = "Quartermaster's Office"
+	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bAw" = (
@@ -42814,14 +42837,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'East SMES'";
-	req_access_txt = "44"
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "East SMES"
 	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
 "bAB" = (
@@ -43194,8 +43218,8 @@
 	layer = 2.5;
 	name = "FIRE HAZARD"
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -43728,14 +43752,18 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "bCr" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "Engine Room"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor,
 /area/station/engine/core)
 "bCs" = (
@@ -43888,8 +43916,8 @@
 	name = "FIRE HAZARD"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -43959,11 +43987,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31|50"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4;
+	name = "Quartermaster's Office"
 	},
+/obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bCW" = (
@@ -44231,8 +44260,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -44517,11 +44546,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "Engine Room"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/core)
 "bDS" = (
@@ -44727,8 +44760,8 @@
 /area/station/engine/gas)
 "bEt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -44820,8 +44853,12 @@
 	},
 /area/station/engine/core)
 "bEF" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "Engine Room"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/core)
 "bEG" = (
@@ -44870,11 +44907,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Quartermaster's Office'";
-	req_access_txt = "31|50"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	name = "Quartermaster's Office"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/cargo,
+/obj/access_spawn/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "bEN" = (
@@ -44892,8 +44930,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bEQ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bER" = (
@@ -45033,8 +45074,8 @@
 	dir = 6
 	},
 /obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -45114,8 +45155,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -45135,17 +45176,17 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "bFs" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/engineering{
-	name = "glass airlock-'Mining'";
-	req_access_txt = "50"
+/obj/machinery/door/airlock/pyro/glass/mining{
+	name = "Mining"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "bFt" = (
@@ -45375,8 +45416,8 @@
 "bFT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/meter,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/mining/staff_room)
@@ -45524,26 +45565,29 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "bGh" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Engineering Gas Storage"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/gas)
 "bGi" = (
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
 "bGj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -45612,8 +45656,8 @@
 /area/station/engine/hotloop)
 "bGo" = (
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -45621,8 +45665,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -45729,8 +45773,8 @@
 	name = "Danger: High Voltage"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/mining/staff_room)
@@ -45823,8 +45867,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -45832,8 +45876,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -45924,17 +45968,20 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
 "bGV" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Engine Room"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "bGW" = (
@@ -45956,15 +46003,15 @@
 "bGY" = (
 /obj/decal/poster/wallsign/space,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
 "bGZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/mining/staff_room)
@@ -46061,8 +46108,8 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -46071,8 +46118,8 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/core)
@@ -46272,13 +46319,17 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "bHL" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "Combustion Chamber"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "bHM" = (
@@ -46327,11 +46378,12 @@
 	},
 /area/station/engine/combustion_chamber)
 "bHQ" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/external,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "bHR" = (
@@ -46359,14 +46411,14 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "bHV" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/engineering{
-	name = "airlock-'Mining'";
-	req_access_txt = "50"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/external{
+	name = "Mining"
+	},
+/obj/access_spawn/mining,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "bHW" = (
@@ -46430,8 +46482,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -46439,8 +46491,8 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/gannets{
-	explosion_resistance = 20;
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
 /area/station/engine/hotloop)
@@ -46888,7 +46940,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
 "bJe" = (
@@ -47004,10 +47058,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/glass/engineering/alt{
-	name = "glass airlock-'Engine Room'";
-	req_access_txt = "44"
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Power Transmission Laser"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
 "bJr" = (
@@ -49185,9 +49240,17 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"dzx" = (
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/engine/core)
+"els" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "East SMES"
+	},
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/east)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -49246,6 +49309,13 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"ifZ" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Disposals"
+	},
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "ipm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -49262,23 +49332,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"iJs" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	name = "Maintenance"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -49494,6 +49547,12 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"sqA" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/firedoor_spawn,
+/obj/access_spawn/cargo,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "tdg" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -49513,13 +49572,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"vEW" = (
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Disposals"
-	},
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -74113,7 +74165,7 @@ buj
 bvm
 bIu
 bIH
-byH
+bzH
 bzQ
 bAX
 bCk
@@ -79521,7 +79573,7 @@ bFN
 bGs
 bGR
 bHo
-dzx
+bxP
 bNi
 bIA
 bIR
@@ -85362,7 +85414,7 @@ ald
 ald
 ald
 alb
-iJs
+apL
 aqu
 aqu
 arv
@@ -87483,7 +87535,7 @@ bBN
 bCW
 bEc
 bEP
-bEQ
+sqA
 abH
 abH
 abH
@@ -90263,7 +90315,7 @@ avz
 azW
 awj
 aBF
-vEW
+ifZ
 aDO
 aEQ
 asm
@@ -91848,7 +91900,7 @@ bwi
 byz
 bzD
 bAM
-bzB
+els
 bDj
 bEj
 bET
