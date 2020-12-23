@@ -97,10 +97,10 @@
 
 /obj/item/storage/box/clothing/souschef
 	name = "\improper Sous-Chef's equipment"
-	spawn_contents = list(/obj/item/clothing/under/rank/chef,\
+	spawn_contents = list(/obj/item/clothing/under/misc/souschef,\
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/souschefhat,\
-	/obj/item/clothing/suit/chef,\
+	/obj/item/clothing/suit/apron,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/chef)
 
