@@ -274,7 +274,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic
 	name = "Retrospection"
 	desc = "Seek inwards within."
-	ringList = list('sound/machinery/phones/ringtones/ringtone1_short.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone1_short.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -292,7 +292,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring1
 	name = "Introspection"
 	desc = "Seek within inwards."
-	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_01.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone1_short_01.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -310,7 +310,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring2
 	name = "Perspection"
 	desc = "Seek outwards within."
-	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_02.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone1_short_02.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -328,7 +328,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring3
 	name = "Inspection"
 	desc = "Seek outwards without."
-	ringList = list('sound/machinery/phones/ringtones/ringtone1_short_03.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone1_short_03.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -346,7 +346,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring4
 	name = "Spectrum"
 	desc = "Love boundless forwards beyond."
-	ringList = list('sound/machinery/phones/ringtones/ringtone2_short.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone2_short.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -364,7 +364,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring5
 	name = "Spectral"
 	desc = "Love around sentwards forever."
-	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_01.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone2_short_01.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -382,7 +382,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring6
 	name = "Refraction"
 	desc = "Starward abound."
-	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_02.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone2_short_02.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -400,7 +400,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring7
 	name = "Reboundance"
 	desc = "Skybound around."
-	ringList = list('sound/machinery/phones/ringtones/ringtone2_short_03.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone2_short_03.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -418,7 +418,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring8
 	name = "Reflection"
 	desc = "Stalwart abound."
-	ringList = list('sound/machinery/phones/ringtones/ringtone3_short.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone3_short.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -436,7 +436,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring9
 	name = "Relaxation"
 	desc = "Float along."
-	ringList = list('sound/machinery/phones/ringtones/ringtone4_short.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone4_short.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
@@ -454,7 +454,7 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/basic/ring9
 	name = "Stance"
 	desc = "Ever again."
-	ringList = list('sound/machinery/phones/ringtones/ringtone5_short.ogg')
+	ringList = list('sound/machines/phones/ringtones/ringtone5_short.ogg')
 	volList = list(35)
 	varyList = list(1)
 	pitchList = list(1)
