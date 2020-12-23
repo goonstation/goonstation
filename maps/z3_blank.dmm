@@ -10410,6 +10410,7 @@
 /area/dank_trench)
 "JX" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/item/plant/herb/cannabis/spawnable,
 /obj/item/reagent_containers/glass/bottle/diethylamine{
 	pixel_x = 6
 	},
@@ -10619,10 +10620,16 @@
 	pixel_x = 6;
 	pixel_y = 11
 	},
-/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe{
+	pixel_y = -3
+	},
 /obj/item/shaker/salt{
 	pixel_x = 8;
 	pixel_y = 5
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
@@ -10888,10 +10895,10 @@
 /obj/storage/crate{
 	name = "furnace fuel crate"
 	},
-/obj/item/plant/herb/cannabis/spawnable,
-/obj/item/plant/herb/cannabis/spawnable,
-/obj/item/plant/herb/cannabis/spawnable,
-/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "ZX" = (
