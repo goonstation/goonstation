@@ -65475,6 +65475,9 @@
 "dcV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/brighterwhite,
+/obj/cup_rack{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcW" = (
