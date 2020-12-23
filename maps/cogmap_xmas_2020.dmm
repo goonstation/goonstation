@@ -64320,6 +64320,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "cOr" = (
+/obj/table/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -64332,9 +64333,6 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
-	},
-/obj/railing/orange/reinforced{
-	dir = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -64387,7 +64385,6 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "dGz" = (
@@ -64508,7 +64505,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ezG" = (
@@ -64611,9 +64607,6 @@
 /area/station/ranch)
 "fcX" = (
 /obj/stool,
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "fgq" = (
@@ -64831,6 +64824,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "gji" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "gjs" = (
@@ -65375,9 +65371,6 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "meu" = (
@@ -65425,6 +65418,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "mBk" = (
+/obj/railing/orange/reinforced,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -65886,6 +65880,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rqk" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rvo" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -65935,13 +65935,10 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
-"smw" = (
+"srf" = (
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
-"srf" = (
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -65970,9 +65967,7 @@
 	},
 /area/station/hydroponics)
 "swS" = (
-/obj/shrub{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "sEn" = (
@@ -66092,6 +66087,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "tPW" = (
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -66318,7 +66314,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vGT" = (
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "vQM" = (
@@ -66517,9 +66512,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "xUr" = (
-/obj/shrub{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -130396,7 +130389,7 @@ eVq
 nvf
 nWf
 mBk
-smw
+vGT
 dti
 srf
 gsy
@@ -131300,12 +131293,12 @@ aaa
 aaa
 jPv
 rlS
-xXc
+rqk
 xUr
 cOr
 eyq
 swS
-xXc
+rqk
 pbV
 jPv
 aaa

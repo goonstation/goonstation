@@ -62911,7 +62911,6 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ezG" = (
@@ -63032,6 +63031,9 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "fxH" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "fBo" = (
@@ -63244,9 +63246,6 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "hmN" = (
@@ -63294,10 +63293,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/refinery)
-"hCt" = (
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "hPW" = (
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
@@ -63313,7 +63308,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "iix" = (
@@ -63398,9 +63392,6 @@
 /area/station/quartermaster/refinery)
 "klF" = (
 /obj/stool,
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "klV" = (
@@ -63453,6 +63444,7 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "kOz" = (
+/obj/railing/orange/reinforced,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -63612,9 +63604,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "nks" = (
-/obj/shrub{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "nlN" = (
@@ -63843,6 +63833,9 @@
 	},
 /area/station/chapel/sanctuary)
 "rdw" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -63892,9 +63885,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "skj" = (
-/obj/shrub{
-	dir = 8
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -63959,6 +63950,7 @@
 	},
 /area/station/hydroponics/bay)
 "tkX" = (
+/obj/table/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -63971,9 +63963,6 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
-	},
-/obj/railing/orange/reinforced{
-	dir = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -64109,14 +64098,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vcM" = (
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
 /area/station/ranch)
 "vec" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "vfr" = (
@@ -64338,6 +64325,12 @@
 	dir = 6
 	},
 /area/station/hydroponics)
+"xpS" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "xuC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
@@ -128540,7 +128533,7 @@ tva
 vEZ
 vcM
 hly
-hCt
+vec
 fxH
 vEZ
 tva
@@ -128842,7 +128835,7 @@ wdF
 vEZ
 vcM
 klF
-hCt
+vec
 fxH
 vEZ
 nEs
@@ -129141,12 +129134,12 @@ aaa
 aaa
 kPF
 uxX
-vEZ
+xpS
 skj
 tkX
 hPW
 nks
-vEZ
+xpS
 nNK
 kPF
 aaa
