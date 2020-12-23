@@ -107,8 +107,17 @@
 	var/mob/living/critter/flock/F = holder.owner
 	if (!F)
 		return
-	if (!F.pays_to_construct || F.can_afford(20))
+	if (F.can_afford(20))
 		. = 1
+
+/datum/aiTask/sequence/goalbased/build/on_tick()
+	var/had_target = holder.target
+	. = ..()
+	if (!had_target && holder.target)
+		var/turf/simulated/T = get_turf(holder.target)
+		var/mob/living/critter/flock/F = holder.owner
+		if (F.flock?.isTurfFree(T, F.real_name))
+			F.flock.reserveTurf(T, F.real_name)
 
 /datum/aiTask/sequence/goalbased/build/get_targets()
 	var/list/targets = list()
@@ -148,12 +157,12 @@
 
 /datum/aiTask/succeedable/build/failed()
 	var/turf/simulated/floor/build_target = holder.target
-	if(!build_target || get_dist(holder.owner, build_target) > 1)
+	if(!build_target || (has_started && get_dist(holder.owner, build_target) > 1))
 		return 1
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
 		return 1
-	if(F.pays_to_construct && !F.can_afford(20))
+	if(!F.can_afford(20))
 		return 1
 	if(F.flock && !F.flock.isTurfFree(build_target, F.real_name)) // oh no, someone else claimed this tile before we got to it
 		return 1
