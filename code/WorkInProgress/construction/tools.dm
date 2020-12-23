@@ -121,7 +121,7 @@
 		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
-		if(src.locked && !issilicon(user) && !isAI(user))
+		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
 			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
@@ -134,7 +134,7 @@
 
 	Topic(href, href_list)
 		if (src.locked)
-			if (!issilicon(usr) && !isAI(usr))
+			if (!can_access_remotely(usr))
 				boutput(usr, "Control panel is locked!")
 				return
 		if (href_list["rescan"])

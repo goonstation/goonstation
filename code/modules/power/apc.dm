@@ -554,7 +554,7 @@ var/zapLimiter = 0
 		src.remove_dialog(user)
 		user.Browse(null, "window=apc")
 		return
-	else if ((issilicon(user) || isAI(user)) && src.aidisabled)
+	else if (can_access_remotely(user) && src.aidisabled)
 		boutput(user, "AI control for this APC interface has been disabled.")
 		user.Browse(null, "window=apc")
 		return

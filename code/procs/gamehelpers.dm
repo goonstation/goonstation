@@ -127,7 +127,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					qdel(O)
 
 				return 1
-		else if (istype(source, /obj/machinery) && (isAI(user) || issilicon(user)))
+		else if (istype(source, /obj/machinery) && (can_access_remotely(user)))
 			var/obj/machinery/M = source
 			if(!(M.status & REQ_PHYSICAL_ACCESS)) //check if physical access is required
 				return 1
@@ -248,6 +248,13 @@ var/obj/item/dummy/click_dummy = new
 		Depth = newDepth
 
 	return viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+
+/**
+* Determines whether or not the user can remote access devices.
+* This is typically limited to Borgs and AI things
+*/
+/proc/can_access_remotely(mob/user)
+	return issilicon(user) || isAIeye(user)
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
