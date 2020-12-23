@@ -65,7 +65,7 @@
 		chargelevel = -1
 		updateicon()
 
-/obj/machinery/cell_charger/process()
+/obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
 		return
 	if (charging)
@@ -82,7 +82,7 @@
 		src.updateicon()
 		return
 
-	var/added = charging.give(src.chargerate)
+	var/added = charging.give(src.chargerate * mult)
 	use_power(added / CELLRATE)
 
 	src.updateicon()
