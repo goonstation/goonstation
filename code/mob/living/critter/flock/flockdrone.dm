@@ -587,10 +587,10 @@
 		src.flock?.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
-	sleep(0.1 SECONDS) // make sure the animation finishes
-	// finally, away with us
-	src.ghostize()
-	qdel(src)
+	SPAWN_DBG(0.1 SECONDS) // make sure the animation finishes
+		// finally, away with us
+		src.ghostize()
+		qdel(src)
 
 
 /mob/living/critter/flock/drone/update_inhands()
