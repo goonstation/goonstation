@@ -65311,6 +65311,7 @@
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/plates,
 /obj/item/storage/box/fruit_wedges,
+/obj/item/storage/box/glassbox,
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcz" = (
@@ -65373,18 +65374,17 @@
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
 "dcH" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcI" = (
-/obj/machinery/disposal,
 /obj/map/light/white,
-/obj/disposalpipe/trunk/east,
-/turf/unsimulated/floor/wood/two,
+/obj/disposalpipe/segment/horizontal,
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
 /area/afterlife/bar)
 "dcJ" = (
 /obj/disposalpipe/segment/vertical,
@@ -65473,20 +65473,12 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcV" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 666
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fred1"
+/obj/cup_rack{
+	pixel_y = 32
 	},
+/turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcW" = (
 /turf/unsimulated/floor/plating,
@@ -65676,10 +65668,17 @@
 /turf/unsimulated/wall/other,
 /area/afterlife/bar)
 "ddA" = (
-/obj/stool/bench/blue,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/espressocup{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "ddB" = (
@@ -65690,18 +65689,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"ddC" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/device/light/candle/small,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fred1"
-	},
-/area/afterlife/bar)
 "ddD" = (
 /obj/table/wood/round/auto,
 /obj/item/wrench/monkey,
@@ -65736,11 +65723,11 @@
 "ddI" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/matchbook,
+/obj/map/light/brighterwhite,
 /obj/decal/tile_edge/line/black{
-	dir = 5;
+	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -66468,10 +66455,16 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dfj" = (
-/obj/stool/bench/green,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/item/device/light/candle/small,
+/obj/item/device/light/candle/small,
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "dfk" = (
@@ -66939,7 +66932,10 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/device/light/candle/small,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -66965,7 +66961,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/item/storage/box/glassbox,
+/obj/machinery/espresso_machine,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -72040,7 +72036,6 @@
 /area/hospital/underground)
 "dur" = (
 /turf/unsimulated/floor/carpet{
-	dir = 10;
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
@@ -72690,8 +72685,9 @@
 	icon_state = "blue"
 	})
 "dvY" = (
-/obj/submachine/slot_machine/cash,
 /obj/map/light/brightwhite,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dvZ" = (
@@ -81605,11 +81601,22 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSg" = (
-/obj/stool/bench/blue,
 /obj/disposalpipe/junction/right/east,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/machinery/glass_recycler{
+	glass_amt = 666
+	},
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "dSh" = (
@@ -82873,6 +82880,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"gbs" = (
+/obj/submachine/slot_machine/cash,
+/obj/map/light/white,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "gbA" = (
 /obj/storage/crate,
 /obj/machinery/light,
@@ -83081,6 +83093,13 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"hkk" = (
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "hnz" = (
 /obj/item/reagent_containers/food/snacks/plant/melon/bowling{
 	pixel_x = 9;
@@ -84237,6 +84256,12 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"lZf" = (
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -85398,6 +85423,13 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
+"qrE" = (
+/obj/stool/bench/green,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "qsP" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
@@ -85629,6 +85661,10 @@
 	icon_state = "floor"
 	},
 /area/hospital/samostrel)
+"rlN" = (
+/obj/submachine/claw_machine,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "rma" = (
 /obj/machinery/light_area_manager,
 /obj/table/wood/auto/desk{
@@ -107336,7 +107372,7 @@ daM
 daM
 dcW
 cvH
-cwC
+rlN
 cwC
 dSn
 dTd
@@ -107638,7 +107674,7 @@ dcW
 dcW
 dSe
 cvH
-dSY
+gbs
 cwC
 dSA
 cwf
@@ -110655,7 +110691,7 @@ daI
 dcR
 ddi
 dvY
-dRw
+cwC
 cwC
 cwC
 duH
@@ -110957,9 +110993,9 @@ dbX
 dda
 ddz
 dcI
-cwC
-cwC
-cwC
+hkk
+qrE
+lZf
 cwC
 dSa
 dSj
@@ -111561,7 +111597,7 @@ daE
 cvH
 cvH
 dcV
-ddC
+daK
 ddI
 dcL
 cwC
