@@ -1,4 +1,9 @@
 
+(t)thu dec 24 20
+(u)Nefarious6th
+(p)3129
+(e)🗺|mapping
+(+)Adds an ice cream machine, espresso machine, and claw machine to the Afterlife Bar
 (t)tue dec 22 20
 (u)Efi
 (p)3127
