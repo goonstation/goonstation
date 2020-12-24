@@ -157,7 +157,7 @@
 
 /datum/aiTask/succeedable/build/failed()
 	var/turf/simulated/floor/build_target = holder.target
-	if(!build_target || (has_started && get_dist(holder.owner, build_target) > 1))
+	if(!build_target || get_dist(holder.owner, build_target) > 1)
 		return 1
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
@@ -168,7 +168,7 @@
 		return 1
 
 /datum/aiTask/succeedable/build/succeeded()
-	return isfeathertile(holder.target)
+	return isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, "flock_convert"))
 
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
