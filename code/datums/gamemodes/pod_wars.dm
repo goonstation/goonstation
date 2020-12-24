@@ -987,17 +987,17 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		/datum/manufacture/pod/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
 		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/armor_light,
-		/datum/manufacture/pod/armor_heavy,
-		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/pod/control,
 		/datum/manufacture/pod/parts,
+		/datum/manufacture/pod/engine,
+		/datum/manufacture/engine2,
+		/datum/manufacture/engine3,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
@@ -1005,13 +1005,29 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
-		/datum/manufacture/engine2,
-		/datum/manufacture/engine3,
-		/datum/manufacture/pod/lock
 	)
 
-/datum/manufacture/pod_wars/lock	//
-	name = "Cleaver"
+	New()
+		add_team_armor()
+		..()
+
+	proc/add_team_armor()
+	
+/obj/machinery/manufacturer/pod_wars/nanotrasen
+	add_team_armor()
+		available += list(
+		/datum/manufacture/pod/armor_industrial
+		)
+/obj/machinery/manufacturer/pod_wars/syndicate
+	add_team_armor()
+		available += list(
+		/datum/manufacture/pod/armor_industrial
+		)
+
+
+//It's cheap, use it!
+/datum/manufacture/pod_wars/lock
+	name = "Pod Lock (ID Card)"
 	item_paths = list("MET-1")
 	item_names = list("Metal")
 	item_amounts = list(1)
