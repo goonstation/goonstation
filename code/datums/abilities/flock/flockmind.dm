@@ -159,10 +159,12 @@
 		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F?.flock)
-		if(F.flock.getComplexDroneCount() == 1)
-			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
-			return 1
+	if(!F?.flock || F.flock != target.flock)
+		boutput(holder.owner, "<span class='notice'>The drone does not respond to your command.</span>")
+		return 1
+	if(F.flock.getComplexDroneCount() == 1)
+		boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
+		return 1
 	boutput(holder.owner, "<span class='notice'>You diffract the drone.</span>")
 	target.split_into_bits()
 
