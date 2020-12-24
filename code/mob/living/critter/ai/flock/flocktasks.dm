@@ -568,7 +568,7 @@
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
 		var/mob/living/M = holder.target
-		if(M && !istype(M.loc.type, /obj/icecube/flockdrone) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+		if(M && !istype(M.loc, /obj/icecube/flockdrone) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 			// target is down or in a cage, we don't care about this target now
 			// fetch a new one if we can
 			holder.target = get_best_target(get_targets())
