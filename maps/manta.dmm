@@ -30980,11 +30980,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btL" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/pocketguide/quartermaster,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btM" = (
@@ -32967,6 +32966,9 @@
 /area/station/quartermaster/cargobay)
 "byC" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/book/pocketguide/quartermaster{
+	pixel_y = 10
+	},
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -43994,10 +43996,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"wtj" = (
-/obj/storage/secure/closet/engineering/cargo,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "wxu" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/tile_edge/line/black{
@@ -72193,7 +72191,7 @@ aLJ
 bgr
 bpY
 aKs
-wtj
+bvk
 bvk
 bwO
 byy
