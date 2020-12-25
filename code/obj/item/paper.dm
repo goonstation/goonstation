@@ -292,6 +292,11 @@
 		"stamp-text-name" = user.name
 	)
 
+	if(!istype(O, /obj/item/pen))
+		if(istype(src.loc, /obj/item/clipboard))
+			var/obj/item/clipboard/C = src.loc
+			if(istype(C.pen, /obj/item/pen))
+				O = C.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		. += list(
