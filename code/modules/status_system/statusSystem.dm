@@ -803,6 +803,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				counter = optional
 
 			switchStage(getStage())
+			owner.delStatus("shivering")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
