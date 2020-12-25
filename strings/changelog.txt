@@ -1,5 +1,7 @@
 
 (t)thu dec 24 20
+(u)kyle
+(+)Prayers are somewhat more noticable when sent from the chapel.
 (u)Nefarious6th
 (p)3129
 (e)🗺|mapping
