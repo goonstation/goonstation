@@ -30976,6 +30976,7 @@
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btL" = (
@@ -43993,6 +43994,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"wtj" = (
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "wxu" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/tile_edge/line/black{
@@ -72188,7 +72193,7 @@ aLJ
 bgr
 bpY
 aKs
-bvk
+wtj
 bvk
 bwO
 byy
