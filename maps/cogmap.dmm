@@ -45923,23 +45923,23 @@
 "bTc" = (
 /obj/table/reinforced/auto,
 /obj/firedoor_spawn,
-/obj/machinery/door/window/southleft{
-	name = "Electronics Lab";
-	req_access_txt = "45"
-	},
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	name = "Mechanics Lab"
+	},
+/obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bTd" = (
 /obj/table/reinforced/auto,
 /obj/firedoor_spawn,
-/obj/machinery/door/window/southright{
-	name = "Electronics Lab";
-	req_access_txt = "45"
-	},
 /obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	name = "Mechanics Lab"
+	},
+/obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bTe" = (
@@ -62432,13 +62432,13 @@
 /area/station/ranch)
 "ela" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/chicken_feed_bag{
 	rand_pos = 1
 	},
 /obj/machinery/firealarm{
