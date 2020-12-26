@@ -6948,6 +6948,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aqS" = (
@@ -46914,6 +46919,10 @@
 "oIR" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oJe" = (
