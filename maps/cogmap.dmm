@@ -31967,7 +31967,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Engineering Hangar";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/access_spawn/engineering_storage,
 /turf/simulated/floor/plating,
@@ -32563,7 +32563,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	req_access_txt = null
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/plating,
@@ -33888,7 +33888,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Generator Core"
+	name = "Generator Core";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -33917,7 +33918,8 @@
 "bvj" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Gas Storage"
+	name = "Gas Storage";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -33960,7 +33962,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Power Transmission Laser";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -35600,7 +35602,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Gas Storage";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -37763,7 +37765,8 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Hot Loop Equipment Room"
+	name = "Hot Loop Equipment Room";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -37807,7 +37810,8 @@
 	can_rupture = 0
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Core Access"
+	name = "Core Access";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -37825,7 +37829,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Core Access"
+	name = "Core Access";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -37855,7 +37860,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Cold Loop Equipment Room";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -38858,10 +38863,10 @@
 "bFJ" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
-	req_access_txt = null
+	req_access = null
 	},
-/obj/access_spawn/engineering_control,
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFK" = (
@@ -38870,10 +38875,10 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
-	req_access_txt = null
+	req_access = null
 	},
-/obj/access_spawn/engineering_control,
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "bFL" = (
@@ -38947,7 +38952,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Ore Processing";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39258,7 +39263,8 @@
 /area/station/engine/power)
 "bGy" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room"
+	name = "Power Room";
+	req_access = null
 	},
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
@@ -40172,7 +40178,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
 	name = "Power Room";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
@@ -40318,7 +40324,8 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Cold Loop Equipment Room"
+	name = "Cold Loop Equipment Room";
+	req_access = null
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -41303,7 +41310,7 @@
 "bKr" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Power Room";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -41408,7 +41415,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Engineering Storage";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -42071,12 +42078,13 @@
 /area/station/engine/elect)
 "bLX" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "bLY" = (
@@ -42085,10 +42093,11 @@
 /area/station/hallway/primary/south)
 "bLZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	req_access_txt = null
+	req_access = null
 	},
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "bMa" = (
@@ -44422,7 +44431,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Engineering Storage";
-	req_access_txt = null
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -45958,8 +45967,9 @@
 /area/station/engine/elect)
 "bTh" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Electronics Lab";
-	req_access_txt = "45"
+	name = "Mechanics Lab";
+	req_access = null;
+	req_access_txt = null
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -45976,11 +45986,14 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bTj" = (
-/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	req_access = null
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "bTk" = (
@@ -45988,9 +46001,12 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "bTl" = (
-/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	req_access = null
+	},
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "bTm" = (
