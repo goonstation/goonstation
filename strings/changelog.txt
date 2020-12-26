@@ -1,4 +1,9 @@
 
+(t)sat dec 26 20
+(u)MatheusIsNotAvailable
+(p)3142
+(e)⚖🆕|balance, feature
+(+)Added both the golden and the clown's IDs to the agent card's color choosing option.
 (t)thu dec 24 20
 (u)kyle
 (+)Prayers are somewhat more noticable when sent from the chapel.

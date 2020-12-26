@@ -722,6 +722,14 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 34
 		prefabSizeY = 19
 
+	danktrench //the marijuana trench
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_danktrench.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 9
+
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner
 		underwater = 1
