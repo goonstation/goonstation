@@ -32956,16 +32956,11 @@
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "bsX" = (
+/obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "pt_laser";
 	name = "PTL Door"
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
