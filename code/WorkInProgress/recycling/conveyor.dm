@@ -237,8 +237,7 @@
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	if(C)
-		C.set_operable(basedir, id, 0)
+	C?.set_operable(basedir, id, 0)
 
 	C = locate() in get_step(src, turn(basedir,180))
 	if(C)

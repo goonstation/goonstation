@@ -54,8 +54,7 @@
 		if(!connected_device)
 			on = 0
 			return
-		if(network)
-			network.update = 1
+		network?.update = 1
 		return 1
 
 // Housekeeping and pipe network stuff below
@@ -72,8 +71,7 @@
 
 	disposing()
 
-		if(connected_device)
-			connected_device.disconnect()
+		connected_device?.disconnect()
 
 		if(node)
 			node.disconnect(src)

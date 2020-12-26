@@ -230,7 +230,7 @@
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "forensic0"
+	icon_state = "securotronOld"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))

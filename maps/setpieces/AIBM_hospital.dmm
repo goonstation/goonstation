@@ -8211,10 +8211,7 @@
 /area/hospital/samostrel)
 "sI" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor{
 	name = "plating"
 	},

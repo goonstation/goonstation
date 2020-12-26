@@ -256,8 +256,7 @@
 
 		src.net_id = format_net_id("\ref[src]")
 
-		if(radio_controller)
-			radio_controller.add_object(src, "[frequency]")
+		radio_controller?.add_object(src, "[frequency]")
 
 		if (src.setup_default_cartridge)
 			src.cartridge = new src.setup_default_cartridge(src)
@@ -527,8 +526,7 @@
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
 
-	if(src.host_program)
-		src.host_program.network_hook(signal, rx_method, rx_freq)
+	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
@@ -554,8 +552,7 @@
 			if (!("ai" in src.mailgroups) || !signal.data["group"])
 				return
 
-	if(src.host_program)
-		src.host_program.receive_signal(signal, rx_method, rx_freq)
+	src.host_program?.receive_signal(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.receive_signal(signal, rx_method, rx_freq)

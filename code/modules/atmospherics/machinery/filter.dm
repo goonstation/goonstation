@@ -209,14 +209,11 @@ Filter types:
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
-		if(network_out2)
-			network_out2.update = 1
+		network_out2?.update = 1
 
-		if(network_in)
-			network_in.update = 1
+		network_in?.update = 1
 		return 1
 
 // Housekeeping and pipe network stuff below

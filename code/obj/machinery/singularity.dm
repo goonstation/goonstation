@@ -1202,16 +1202,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn off the collector array.")
 		return
 
 	if(src.active==0)
 		src.active = 1
 		icon_state = "ca_active"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn on the collector array.")
 		return
 
@@ -1236,8 +1234,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.P = W
 		W.set_loc(src)
 		user.u_equip(W)
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else if (ispryingtool(W))
 		if(!P)
@@ -1246,8 +1243,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.set_loc(get_turf(src))
 		Z.layer = initial(Z.layer)
 		src.P = null
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else
 		src.add_fingerprint(user)

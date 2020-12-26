@@ -1544,8 +1544,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if (get_dist(src, usr) > 1 && !issilicon(usr))
 			return
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
 		src.add_dialog(usr)
 

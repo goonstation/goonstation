@@ -1,4 +1,78 @@
 
+(t)sat dec 26 20
+(u)MatheusIsNotAvailable
+(p)3142
+(e)⚖🆕|balance, feature
+(+)Added both the golden and the clown's IDs to the agent card's color choosing option.
+(t)thu dec 24 20
+(u)kyle
+(+)Prayers are somewhat more noticable when sent from the chapel.
+(u)Nefarious6th
+(p)3129
+(e)🗺|mapping
+(+)Adds an ice cream machine, espresso machine, and claw machine to the Afterlife Bar
+(t)tue dec 22 20
+(u)Efi
+(p)3127
+(e)|
+(+)Added pride jumpsuits to the Uniform Manufacturer. They can now be obtained OUT OF THE CLOSET.
+(t)mon dec 21 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Tweaked shivering status to proc a little more often and last a little longer. @ me on discord if it's too much
+(*)Changed lizard mutantrace to no longer naturally thermoregulate. Keep some hot cocoa or a space heater handy!
+(t)sat dec 19 20
+(u)BatElite
+(p)3075
+(e)🆕|feature
+(*)Ghostdrones can now use deconstruction devices, and also have one in their inventory.
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken Feed is now a snack you can monch on (and hand-feed to chickens)
+(*)Chickens now only show heart status for their favorite food
+(+)Bunch of changes to how chickens determine enemies/friends, please report any bugs!
+(t)fri dec 18 20
+(u)virvatuli
+(p)3088
+(e)🗺|mapping
+(+)The Salyut derelict now has an appropriately Soviet space suit.
+(t)thu dec 17 20
+(u)Tarmunora
+(p)3074
+(e)⚖|balance
+(*)Amount of reagent inhaled from an aerosol propellant smoke now falls off over distance
+(u)TTerc
+(p)3071
+(e)🗺|mapping
+(+)A ranch ship has docked at NSS Horizon!
+(u)Kubius
+(p)3064
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Ranch, and Owlery, installed into Atlas.
+(u)Kubius
+(p)3065
+(e)🗺|mapping
+(*)Kondaru QoL: more multitools, Toxins heat exchanger adjustment, and "ingame documentation" of Research ejection and QM operation. Make sure to check out previous updates to see what else has changed!
+(t)wed dec 16 20
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken aging and hunger should now be lag-compensated
+(*)You can now grab chickens without upsetting them
+(u)Carbadox
+(p)2410
+(e)🆕🎨|feature, sprites
+(*)Added ways to earn Job XP for Bartender and Chaplain.
+(+)For Chaplain, you can earn it by innately resisting Wizards spells and Vampire abilities as well as using your Bible to heal (or smite) people.
+(+)For Bartender, you can earn it by shaking your cocktail shaker and applying garnishes to glasses.
+(+)Added a Golden Cocktail Shaker reward for the bartender
+(u)Erinexx
+(p)2973
+(e)🎨|sprites
+(+)New, jigglier blob sprites.
+(u)Kubius
+(p)3061
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Installed a ranch into Clarion's base variant. Due to space constraints, avid tabletop gamers will need to head up to the Aviary.
 (t)tue dec 15 20
 (u)Tarmunora
 (e)⚖|balance

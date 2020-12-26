@@ -259,9 +259,11 @@
 	.["sealed"] = src.sealed
 
 /obj/item/paper/ui_data(mob/user)
-	var/list/data = list()
-
-	data["editUsr"] = "[user]"
+	. = list(
+		"editUsr" = "[user]",
+		"fieldCounter" = field_counter,
+		"formFields" = form_fields,
+	)
 
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
@@ -290,31 +292,38 @@
 		"stamp-text-name" = user.name
 	)
 
+	if(!istype(O, /obj/item/pen))
+		if(istype(src.loc, /obj/item/clipboard))
+			var/obj/item/clipboard/C = src.loc
+			if(istype(C.pen, /obj/item/pen))
+				O = C.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
-		data["penFont"] = PEN.font
-		data["penColor"] = PEN.color
-		data["editMode"] = PAPER_MODE_WRITING
-		data["isCrayon"] = FALSE
-		data["stampClass"] = "FAKE"
+		. += list(
+			"penFont" = PEN.font,
+			"penColor" = PEN.color,
+			"editMode" = PAPER_MODE_WRITING,
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
-		data["stampClass"] = stamp_assets[stamp.current_mode]
 		stamp.current_state = stamp_assets[stamp.current_mode]
-		data["editMode"] = PAPER_MODE_STAMPING
-		data["penFont"] = "FAKE"
-		data["penColor"] = "FAKE"
-		data["isCrayon"] = FALSE
+		. += list(
+			"stampClass" = stamp_assets[stamp.current_mode],
+			"editMode" = PAPER_MODE_STAMPING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+		)
 	else
-		data["editMode"] = PAPER_MODE_READING
-		data["penFont"] = "FAKE"
-		data["penColor"] = "FAKE"
-		data["isCrayon"] = FALSE
-		data["stampClass"] = "FAKE"
-	data["fieldCounter"] = field_counter
-	data["formFields"] = form_fields
-
-	return data
+		. += list(
+			"editMode" = PAPER_MODE_READING,
+			"penFont" = "FAKE",
+			"penColor" = "FAKE",
+			"isCrayon" = FALSE,
+			"stampClass" = "FAKE",
+		)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))

@@ -38,11 +38,15 @@ CONTENTS:
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "darkvoid"
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
 	mat_appearances_to_ignore = list("steel")
+#ifdef IN_MAP_EDITOR
+	icon_state = "darkvoid-map" //so we can actually the walls from the floor
+#else
+	icon_state = "darkvoid"
+#endif
 
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0

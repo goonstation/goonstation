@@ -267,6 +267,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
+		/client/proc/respawn_heavenly,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -608,8 +609,7 @@ var/list/special_pa_observing_verbs = list(
 
 	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		if(src.mob.mind)
-			src.mob.mind.damned = 0
+		src.mob.mind?.damned = 0
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -666,8 +666,7 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if(src.holder)
-		src.holder.Topic(null, list("action"="jobbanpanel","target"=key))
+	src.holder?.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
@@ -882,6 +881,19 @@ var/list/fun_images = list()
 
 	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
 	return
+
+/client/proc/respawn_heavenly()
+	set name = "Respawn Heavenly"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc = "Respawn yourself from the heavens"
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/M = src.mob
+	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	heavenly_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"

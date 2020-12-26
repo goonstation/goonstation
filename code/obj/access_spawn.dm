@@ -216,8 +216,8 @@
 	color = MAINTENANCE
 
 /obj/access_spawn/rancher
-	name = "rancher access spawn"
-	req_access = list(access_rancher)
+	name = "ranch access spawn"
+	req_access = list(access_ranch)
 	color = MAINTENANCE
 
 /obj/access_spawn/hos
