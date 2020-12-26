@@ -22446,7 +22446,7 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10;
-	pixel_y = 7
+	pixel_y = 9
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purpleblack{
@@ -22741,7 +22741,7 @@
 	},
 /obj/stool/bench/auto,
 /obj/item/device/radio/intercom/science{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
@@ -39553,7 +39553,8 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
-	name = "autoname  - SS13"
+	name = "autoname  - SS13";
+	pixel_x = 10
 	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -40996,7 +40997,7 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10;
-	pixel_y = -5
+	pixel_y = -8
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 8;
