@@ -86,6 +86,7 @@
 /obj/item/paper/pooled()
 
 	..()
+	name = "paper"
 	info = 0
 	src.icon_state = "paper_blank"
 	health = 10
@@ -93,6 +94,7 @@
 /obj/item/paper/unpooled()
 
 	..()
+	name = initial(name)
 	info = initial(info)
 	icon_state = initial(icon_state)
 	health = initial(health)
