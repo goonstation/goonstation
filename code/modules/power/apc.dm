@@ -586,7 +586,7 @@ var/zapLimiter = 0
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
-	if((locked || (setup_networkapc > 1)) && (!issilicon(user) && !isAI(user)))
+	if((locked || (setup_networkapc > 1)) && !can_access_remotely(user))
 		if (setup_networkapc < 2)
 			t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
 		else
@@ -610,7 +610,7 @@ var/zapLimiter = 0
 		t += "<HR>Cover lock: <B>[coverlocked ? "Engaged" : "Disengaged"]</B>"
 
 	else
-		if (!issilicon(user) && !isAI(user))
+		if (!can_access_remotely(user))
 			t += "<I>(Swipe ID card to lock interface.)</I><BR>"
 		t += "Main breaker: [operating ? "<B>On</B> <A href='?src=\ref[src];breaker=1'>Off</A>" : "<A href='?src=\ref[src];breaker=1'>On</A> <B>Off</B>" ]<BR>"
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
@@ -668,7 +668,7 @@ var/zapLimiter = 0
 		t += "<HR>Cover lock: [coverlocked ? "<B><A href='?src=\ref[src];lock=1'>Engaged</A></B>" : "<B><A href='?src=\ref[src];lock=1'>Disengaged</A></B>"]"
 
 
-		if (issilicon(user) || isAI(user))
+		if (can_access_remotely(user))
 			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
 
 
