@@ -76,9 +76,9 @@ export const CloningConsole = (props, context) => {
 
   return (
     <Window
-      theme={cloneSlave ? "syndicate" : "ntos"}
+      theme={cloneSlave.some(Boolean) ? "syndicate" : "ntos"}
       width={540}
-      height={700}>
+      height={595}>
       <Window.Content>
         {(deletionTarget && (
           <Modal
@@ -130,15 +130,23 @@ export const CloningConsole = (props, context) => {
               icon="list"
               textColor={tab === "checkRecords"
               && "white"}
-              selected={tab === "Records"}
+              selected={tab === "checkRecords"}
               onClick={() => setTab("checkRecords")}>
               Records
+            </Tabs.Tab>
+            <Tabs.Tab
+              icon="box"
+              textColor={tab === "checkPods"
+              && "white"}
+              selected={tab === "checkPods"}
+              onClick={() => setTab("checkPods")}>
+              Pods
             </Tabs.Tab>
             <Tabs.Tab
               icon="wrench"
               textColor={tab === "checkFunctions"
               && "white"}
-              selected={tab === "Functions"}
+              selected={tab === "checkFunctions"}
               onClick={() => setTab("checkFunctions")}>
               Functions
             </Tabs.Tab>
@@ -153,6 +161,9 @@ export const CloningConsole = (props, context) => {
         <StatusSection />
         {tab === "checkRecords" && (
           <Records />
+        )}
+        {tab === "checkPods" && (
+          <Pods />
         )}
         {tab === "checkFunctions" && (
           <Functions />
@@ -254,13 +265,10 @@ const Functions = (props, context) => {
 const StatusSection = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    completion,
-    meatLevels,
     scannerLocked,
     occupantScanned,
     scannerOccupied,
     scannerGone,
-    podGone,
   } = data;
 
   const message = data.message || { text: "", status: "" };
@@ -289,42 +297,6 @@ const StatusSection = (props, context) => {
             </Box>
           </TypedNoticeBox>
         )}
-      </Section>
-      <Section title="Cloning Pod Status">
-        <LabeledList>
-          <LabeledList.Item label="Completion">
-            {!podGone && (
-              <ProgressBar
-                value={completion}
-                maxValue={100}
-                minValue={0}
-                ranges={{
-                  good: [90, Infinity],
-                  average: [25, 90],
-                  bad: [-Infinity, 25],
-                }} />
-            )}
-            {!!podGone && (
-              "No Pod Detected"
-            )}
-          </LabeledList.Item>
-          <LabeledList.Item label="Bio-Matter">
-            {!podGone && (
-              <ProgressBar
-                value={meatLevels}
-                maxValue={100}
-                minValue={0}
-                ranges={{
-                  good: [50, 100],
-                  average: [25, 50],
-                  bad: [0, 25],
-                }} />
-            )}
-            {!!podGone && (
-              "No Pod Detected"
-            )}
-          </LabeledList.Item>
-        </LabeledList>
       </Section>
       <Section title="Scanner Controls"
         buttons={
@@ -366,9 +338,9 @@ const Records = (props, context) => {
   const records = data.cloneRecords || [];
   const {
     disk,
-    podGone,
     diskReadOnly,
     allowedToDelete,
+    meatLevels,
   } = data;
   const [,
     setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
@@ -478,7 +450,7 @@ const Records = (props, context) => {
                     <Button
                       icon="dna"
                       color={"good"}
-                      disabled={podGone}
+                      disabled={!meatLevels.length}
                       onClick={() => act("clone", { ckey: record.ckey })}>
                       Clone
                     </Button>
@@ -491,4 +463,54 @@ const Records = (props, context) => {
       </Section>
     </Fragment>
   );
+};
+
+const Pods = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    completion,
+    meatLevels,
+    podNames,
+  } = data;
+
+  if (!meatLevels.length) {
+    return (
+      <Section title="Cloning Pod Status">
+        <Box>
+          <Icon color="bad"
+            name="times" />
+          {" No Pod Detected"}
+        </Box>
+      </Section>
+    );
+  }
+
+  return meatLevels.map((meat, i) => (
+    <Section key={"pod" + i} title={podNames[i].replace(/cloning pod/, "Cloning Pod") + " Status"}>
+      <LabeledList>
+        <LabeledList.Item label="Completion">
+          <ProgressBar
+            value={completion[i]}
+            maxValue={100}
+            minValue={0}
+            ranges={{
+              good: [90, Infinity],
+              average: [25, 90],
+              bad: [-Infinity, 25],
+            }} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Bio-Matter">
+          <ProgressBar
+            value={meat}
+            maxValue={100}
+            minValue={0}
+            ranges={{
+              good: [50, 100],
+              average: [25, 50],
+              bad: [0, 25],
+            }} />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  ));
 };
