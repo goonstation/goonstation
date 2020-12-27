@@ -83,8 +83,6 @@
 		if (abilityHolder.topBarRendered)
 			if (abilityHolder.click(target, params))
 				return 100
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, target, params) & RETURN_CANCEL_CLICK)
-		return 100
 	//Pull cancel 'hotkey'
 	if (src.pulling && get_dist(src,target) > 1)
 		if (!islist(params))

@@ -123,12 +123,11 @@
 
 #define COMSIG_MOB_DROPPED "mob_drop"
 
-#define COMSIG_MOB_CLICK "mob_click"
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+/// on mouseup
+#define COMSIG_MOUSEUP "mouseup"
 // ---- mob/living signals ----
-/// when start sprinting
-#define COMSIG_LIVING_SPRINT_START "living_sprint_start"
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 
@@ -193,12 +192,6 @@
 // When an obj/critter dies
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
 
-/// general return values //
-// it is a mystery
-
-/// ---- signal specific return values ----
-
-// COMSIG_LIVING_SPRINT_START
-#define RETURN_SPRINT_OVERRIDDEN 0x001000
-// COMSIG_MOB_CLICK
-#define RETURN_CANCEL_CLICK 0x001000
+// ---- fullauto UI thingy signals ----
+#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
+#define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"

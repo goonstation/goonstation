@@ -1678,8 +1678,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
-	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
-		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
