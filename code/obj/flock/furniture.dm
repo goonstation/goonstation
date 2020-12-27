@@ -296,7 +296,7 @@
 /obj/grille/flock/special_desc(dist, mob/user)
 	if(isflock(user))
 		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Reinforced Conduit
+		<br><span class='bold'>ID:</span> Reinforced Barricade
 		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description
