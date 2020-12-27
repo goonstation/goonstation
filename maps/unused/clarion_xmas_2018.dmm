@@ -36141,7 +36141,9 @@
 /area/station/medical/medbay/cloner)
 "blk" = (
 /obj/machinery/light_switch/north,
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	gen_analysis = 0
+	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -36156,9 +36158,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "bll" = (
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
+/obj/machinery/clonepod,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"

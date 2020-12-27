@@ -5153,9 +5153,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
+/obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "kT" = (
@@ -5310,7 +5308,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	gen_analysis = 0
+	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lg" = (

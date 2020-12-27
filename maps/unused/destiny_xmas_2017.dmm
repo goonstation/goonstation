@@ -33341,7 +33341,8 @@
 /area/station/medical/medbay/cloner)
 "bei" = (
 /obj/machinery/computer/cloning{
-	dir = 8
+	dir = 8;
+	gen_analysis = 0
 	},
 /obj/cable{
 	d2 = 8;
@@ -34976,9 +34977,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "bha" = (
-/obj/machinery/clonepod{
-	gen_analysis = 0
-	},
+/obj/machinery/clonepod,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
