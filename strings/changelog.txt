@@ -1,4 +1,9 @@
 
+(t)sun dec 27 20
+(u)Kubius
+(p)3085
+(e)🆕🎨|feature, sprites
+(*)Deployable warp beacons can now be manufactured in ship component fabricators. Some assembly required.
 (t)sat dec 26 20
 (u)MatheusIsNotAvailable
 (p)3142
