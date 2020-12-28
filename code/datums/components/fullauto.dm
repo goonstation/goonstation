@@ -69,12 +69,12 @@
 		user.update_cursor()
 		. = ..()
 
-/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, location, control, params)
+/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
 	if(!stopped)
 		var/obj/item/gun/G = parent
 		G.current_projectile.shot_number = 1
 		G.current_projectile.cost = 1
-		src.retarget(user, location, control, params)
+		src.retarget(user, object, location, control, params)
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
