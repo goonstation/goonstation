@@ -1,5 +1,8 @@
 
 (t)sun dec 27 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Cyberorgans can now have their safeties disabled when exposed to certain (randomly determined per round) damage thresholds. Science is the art of hitting things until they break the way you wanted them to, right?
 (u)Kubius
 (p)3085
 (e)🆕🎨|feature, sprites
