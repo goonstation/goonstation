@@ -5,13 +5,15 @@
 	flags = NOSPLASH
 	alpha = 0
 	mouse_opacity = 2
+	var/xOffset
+	var/yOffset
 
 	MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
-		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDRAG, over_location, over_control, params)
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDRAG, over_object, over_location, over_control, params)
 
-	MouseDown(location, control, params)
+	MouseDown(object, location, control, params)
 		. = ..()
-		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, location, control, params)
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, object, location, control, params)
 
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -37,6 +39,8 @@
 				for(var/y in 1 to 15)
 					var/obj/screen/fullautoAimHUD/hudSquare = new /obj/screen/fullautoAimHUD
 					hudSquare.screen_loc = "[x],[y]"
+					hudSquare.xOffset = x
+					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
 
 			if(ismob(G.loc))
@@ -80,20 +84,17 @@
 	if(src.target)
 		src.target = get_step(src.target, direct)
 
-/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, location, control, params)
+/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, object, location, control, params)
 
-	var/object
-	var/list/l2 = splittext(params2list(params)["screen-loc"],",")
-	if (l2.len >= 2)
-		var/list/lx = splittext(l2[1],":")
-		var/list/ly = splittext(l2[2],":")
+	var/turf/T
+	var/obj/screen/fullautoAimHUD/F = object
+	if(istype(F))
+		T = locate(M.x + (F.xOffset + -1 - ((istext(M.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							M.y + (F.yOffset + -1 - 7),\
+							M.z)
 
-		object = locate(M.x + (text2num(lx[1]) + -1 - ((istext(M.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-						M.y + (text2num(ly[1]) + -1 - 7),\
-						M.z)
-
-	if(get_turf(object) != get_turf(parent))
-		src.target = get_turf(object)
+		if(T)
+			src.target = T
 
 /datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
 	set waitfor = 0
