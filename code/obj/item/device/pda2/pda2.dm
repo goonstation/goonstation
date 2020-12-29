@@ -50,9 +50,9 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
+	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
 	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
-	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,MGO_AI,MGO_SILICON,MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,MGO_JANITOR,MGD_SPIRITUALAFFAIRS,MGO_ENGINEER,MGO_MINING,MGD_KITCHEN,MGO_MECHANIC,MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -94,7 +94,7 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("ai") //"special" mailgroup, just recieves everything
+		mailgroups = list(MGO_AI) //"special" mailgroup, just recieves everything
 
 	cyborg
 		icon_state = "pda-h"
@@ -102,7 +102,7 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("silicon",MGD_PARTY)
+		mailgroups = list(MGO_SILICON,MGD_PARTY)
 
 	research_director
 		icon_state = "pda-rd"
@@ -169,7 +169,7 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_JANITOR,MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
@@ -182,11 +182,11 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list("mining",MGD_PARTY)
+		mailgroups = list(MGO_MINING,MGD_PARTY)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
@@ -198,7 +198,7 @@
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -549,7 +549,7 @@
 			return
 
 		else if(!src.mailgroups || !(signal.data["group"] in src.mailgroups))
-			if (!("ai" in src.mailgroups) || !signal.data["group"])
+			if (!(MGO_AI in src.mailgroups) || !signal.data["group"])
 				return
 
 	src.host_program?.receive_signal(signal, rx_method, rx_freq)

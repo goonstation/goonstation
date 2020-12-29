@@ -718,7 +718,7 @@ Code:
 			if (-INFINITY to 1)
 				mailgroup = MGD_MEDBAY
 			if (2)
-				mailgroup = "engineer"
+				mailgroup = MGO_ENGINEER
 			if (3 to INFINITY)
 				mailgroup = MGD_SECURITY
 

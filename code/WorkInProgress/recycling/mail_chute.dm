@@ -245,17 +245,17 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_MECHANIC
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGO_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -520,7 +520,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -536,7 +536,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_MECHANIC
 		message = 1
 
 		north
@@ -552,7 +552,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGO_MINING
 		message = 1
 
 		north

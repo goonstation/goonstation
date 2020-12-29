@@ -10,3 +10,12 @@
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
 #define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
+
+// Mail Groups (Other)
+#define MGO_STAFF "staff"
+#define MGO_AI "ai"
+#define MGO_SILICON "silicon"
+#define MGO_JANITOR "janitor"
+#define MGO_ENGINEER "engineer"
+#define MGO_MINING "mining"
+#define MGO_MECHANIC "mechanic"
