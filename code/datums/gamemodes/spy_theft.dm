@@ -53,6 +53,15 @@
 		game_mode = ST
 		..()
 
+	proc/estimate_target_difficulty(var/job)
+	// Adjust reward based off target job to estimate risk level
+		if (p.job == "Head of Security" || p.job == "Nanotrasen Special Operative")
+			return 4
+		else if (p.job == "Medical Director" || p.job == "Head of Personnel" || p.job == "Chief Engineer" || p.job == "Research Director" || p.job == "Captain" || p.job == "Security Officer" || p.job == "Detective")
+			return 3
+		else
+			return pick(1,3)
+
 	//1 to 4
 	proc/pick_reward_tier(var/val)
 		switch(val)
@@ -495,10 +504,6 @@
 		B.organ = 1
 		O -= B.item
 
-		if (prob(7))
-			B.pick_reward_tier(3)
-		else
-			B.pick_reward_tier(2)
 
 		active_bounties += B
 
@@ -511,10 +516,9 @@
 		B.reveal_area = 1
 		P -= B.item
 
-		if (prob(10))
-			B.pick_reward_tier(4)
-		else
-			B.pick_reward_tier(pick(1,3))
+		// Adjust reward based off target job to estimate risk level
+		var/target_difficulty = estimate_target_difficulty(p.job)
+		B.pick_reward_tier(target_difficulty)
 
 		active_bounties += B
 
@@ -522,6 +526,31 @@
 	var/list/BS = big_station_bounties.Copy()
 	var/big_choice = 0
 	var/obj/obj_existing = 0
+	var/list/big_obj_medium
+	var/list/big_obj_hard
+	// Medium difficulty big objects
+	big_obj_medium += /obj/machinery/chem_dispenser
+	big_obj_medium += /obj/machinery/computer/announcement
+	big_obj_medium += /obj/machinery/computer/card
+	big_obj_medium += /obj/machinery/computer/genetics
+	big_obj_medium += /obj/machinery/computer/supplycomp
+	big_obj_medium += /obj/machinery/computer/robotics
+	big_obj_medium += /obj/machinery/power/reactor_stats
+	big_obj_medium += /obj/machinery/vending/security
+	big_obj_medium += /obj/machinery/flasher/portable
+	big_obj_medium += /obj/machinery/computer/cloning
+	big_obj_medium += /obj/machinery/clonepod
+	big_obj_medium += /obj/machinery/clonegrinder
+	big_obj_medium += /obj/machinery/genetics_scanner
+	big_obj_medium += /obj/storage/closet/port_a_sci
+	big_obj_medium += /obj/machinery/gibber
+	big_obj_medium += /obj/reagent_dispensers
+	big_obj_medium += /obj/machinery/crusher
+	big_obj_medium += /obj/machinery/communications_dish
+	// Hard difficulty big objedcts
+	big_obj_hard += /obj/machinery/computer/aiupload
+	big_obj_hard += /obj/machinery/port_a_brig
+
 	for(var/i=1, i<=big_station_bounty_amt, i++)
 		big_choice = 0
 		obj_existing = 0
@@ -542,7 +571,11 @@
 			B.item = obj_existing
 			B.name = obj_existing.name
 
-			if (prob(15))
+			if (big_obj_hard.Find(big_choice)
+				B.pick_reward_tier(pick(2,3))
+			if (big_obj_medium.Find(big_choice)
+				B.pick_reward_tier(pick(1,2))
+			else if (prob(15)) // 20+ items are easy, avoid them all being tier 1
 				B.pick_reward_tier(pick(1,2))
 			else
 				B.pick_reward_tier(1)
@@ -567,6 +600,8 @@
 	var/list/S = station_bounties.Copy()
 	var/choice = 0
 	var/obj/item/item_existing = 0
+
+
 	for(var/i=1, i<=station_bounty_amt, i++)
 		choice = 0
 		item_existing = 0
