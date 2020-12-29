@@ -1,4 +1,8 @@
 
+(t)mon dec 28 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted nitroglycerin stability.
 (t)sun dec 27 20
 (u)Tarmunora
 (e)⚖🆕|balance, feature
