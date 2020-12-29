@@ -143,6 +143,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.active = 1
 			grav_pull = 8
 
+/obj/machinery/the_singularity/emp_act()
+	return // No action required this should be the one doing the EMPing
+
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
@@ -201,6 +204,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (!active)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
+
+	// Don't bump that which no longer exists
+	if(A.disposed)
+		return
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -1202,16 +1209,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn off the collector array.")
 		return
 
 	if(src.active==0)
 		src.active = 1
 		icon_state = "ca_active"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn on the collector array.")
 		return
 
@@ -1236,8 +1241,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.P = W
 		W.set_loc(src)
 		user.u_equip(W)
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else if (ispryingtool(W))
 		if(!P)
@@ -1246,8 +1250,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.set_loc(get_turf(src))
 		Z.layer = initial(Z.layer)
 		src.P = null
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else
 		src.add_fingerprint(user)

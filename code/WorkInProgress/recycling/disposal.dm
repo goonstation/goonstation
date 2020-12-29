@@ -835,6 +835,7 @@
 	var/nugget_mode = 0
 	mats = 100
 	is_syndicate = 1
+	var/is_doing_stuff = FALSE
 
 	horizontal
 		dir = EAST
@@ -853,6 +854,9 @@
 		update()
 
 	transfer(var/obj/disposalholder/H)
+		while(src.is_doing_stuff)
+			sleep(1 SECOND)
+		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
 			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
@@ -923,6 +927,8 @@
 				for (var/obj/O in new_nuggets)
 					O.set_loc(H)
 					LAGCHECK(LAG_MED)
+
+				sleep(length(new_nuggets))
 
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
@@ -995,6 +1001,8 @@
 		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
+
+		src.is_doing_stuff = FALSE
 
 		if(P)
 			// find other holder in next loc, if inactive merge it with current

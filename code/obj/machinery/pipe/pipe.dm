@@ -57,10 +57,8 @@ var/linenums = 0
 	P = nodes[nodes.len]						// last node in list
 	vnode2 = P.node2							// n2 points to last machine
 
-	if(vnode1)
-		vnode1.buildnodes()
-	if(vnode2)
-		vnode2.buildnodes()
+	vnode1?.buildnodes()
+	vnode2?.buildnodes()
 
 	return
 

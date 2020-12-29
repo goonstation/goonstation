@@ -921,8 +921,7 @@
 	temperature_expose(null, temp, volume)
 		var/Fshield = 0
 
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)

@@ -159,7 +159,6 @@
 
 	src.dont_spam = 1
 	SPAWN_DBG(5 SECONDS)
-	if(src)
 		src.dont_spam = 0
 
 	return

@@ -198,19 +198,6 @@
 		M.nutrition += 500
 		return
 
-/obj/item/reagent_containers/food/snacks/cake/downs
-	name = "droopy cake"
-	desc = "This cake looks all weird and droopy."
-	icon_state = "cake_downs"
-	amount = 12
-	heal_amt = 4
-	initial_volume = 250
-	initial_reagents = "downbrosia"
-
-	heal(var/mob/M)
-		M.nutrition += 500
-		return
-
 /obj/item/cake_item
 	name = "cream sponge cake"
 	desc = "Mmm! A delicious-looking cream sponge cake! There's a lump in it..."

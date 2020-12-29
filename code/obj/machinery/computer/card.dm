@@ -80,7 +80,7 @@
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
-			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Chaplain", "Janitor", "Clown")
+			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist")
 			var/list/securityjobs = list("Security Officer", "Detective")
@@ -112,7 +112,7 @@
 
 			//Organised into sections
 			var/civilian_access = list("<br>Staff:")
-			var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro)
+			var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 			var/engineering_access = list("<br>Engineering:")
 			/* Conor12: I removed some unused accesses as the page is large enough, add these if they ever get used:
 			3 (access_armory). Replaced by HoS-exclusive access_maxsec.

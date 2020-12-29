@@ -784,6 +784,30 @@ proc/debug_color_of(var/thing)
 		proc/is_ok(atom/A)
 			return TRUE
 
+	checkingcanpass
+		name = "checkingcanpass"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkingcanpass ? "#0f0" : "#f00"
+
+	checkingexit
+		name = "checkingexit"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
+
+	checkinghasentered
+		name = "checkinghasentered"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
+
+	checkinghasproximity
+		name = "checkinghasproximity"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
+
 	blood_owner/no_items
 		name = "blood owner - no items"
 		is_ok(atom/A)
@@ -895,8 +919,7 @@ proc/debug_color_of(var/thing)
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
 	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
-	if(activeOverlay)
-		activeOverlay.OnDisabled(src)
+	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)

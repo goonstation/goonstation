@@ -197,8 +197,7 @@
 	category = "race"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("cough")
+		owner.bioHolder?.AddEffect("cough")
 		return
 
 /obj/trait/testTrait3
@@ -209,8 +208,7 @@
 	isPositive = 1
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_swedish")
+		owner.bioHolder?.AddEffect("accent_swedish")
 		return
 */
 

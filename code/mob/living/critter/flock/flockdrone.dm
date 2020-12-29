@@ -74,8 +74,7 @@
 
 /mob/living/critter/flock/drone/Login()
 	..()
-	if(src.client)
-		src.client.color = null
+	src.client?.color = null
 	if(isnull(controller)) // finally i can just use swap bodies again
 		// make a new controller
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -107,13 +106,11 @@
 	// move controller into ourselves
 	pilot.set_loc(src)
 	controller = pilot
-	if(src.client)
-		src.client.color = null // stop being all fucked up and weird aaaagh
+	src.client?.color = null // stop being all fucked up and weird aaaagh
 	boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
 /mob/living/critter/flock/drone/proc/release_control()
-	if(src.flock)
-		src.flock.hideAnnotations(src)
+	src.flock?.hideAnnotations(src)
 	src.is_npc = 1
 	emote("beep")
 	say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
@@ -171,7 +168,7 @@
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
 		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>Resources:</span> [src.resources]"
+		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
 		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
 		<br><span class='bold'>###=-</span></span>"}
@@ -180,13 +177,11 @@
 		return null // give the standard description
 
 /mob/living/critter/flock/drone/proc/changeFlock(var/flockName)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	if(flocks[flockName])
 		src.flock = flocks[flockName]
 		src.flock.registerUnit(src) // for the sake of the flockmind
-	if(controller)
-		controller.flock = flocks[flockName]
+	controller?.flock = flocks[flockName]
 	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
 
 /mob/living/critter/flock/drone/Login()
@@ -530,8 +525,7 @@
 		src.resources = 0 // just in case any weirdness happens let's pre-empt the dupe bug
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	..()
 	src.icon_state = "drone-dead"
 	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
@@ -576,14 +570,12 @@
 	walk(src, 0)
 	if(src.floorrunning)
 		src.end_floorrunning()
-	if(src.ai)
-		src.ai.die()
+	src.ai?.die()
 	emote("scream")
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	// create the flockbits
 	animate_flock_drone_split(src)
 	var/mob/living/critter/flock/bit/B
@@ -592,8 +584,7 @@
 	var/list/candidate_turfs = getNeighbors(T, alldirs)
 	for(var/i=1 to num_bits)
 		B = new(get_turf(src), F = src.flock)
-		if(src.flock)
-			src.flock.registerUnit(B)
+		src.flock?.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
 	sleep(0.1 SECONDS) // make sure the animation finishes

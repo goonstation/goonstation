@@ -1,4 +1,136 @@
 
+(t)mon dec 28 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted nitroglycerin stability.
+(u)kyle
+(+)Lower gang mode probability.
+(t)sun dec 27 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweaked the way napalm interacts with humans (causes some direct damage on touch, and will make people burn more when inside of them as opposed to making people into ticking firebombs), and made it no longer melt floors (use ClF3 or something for that)
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Cyberorgans can now have their safeties disabled when exposed to certain (randomly determined per round) damage thresholds. Science is the art of hitting things until they break the way you wanted them to, right?
+(u)Kubius
+(p)3085
+(e)🆕🎨|feature, sprites
+(*)Deployable warp beacons can now be manufactured in ship component fabricators. Some assembly required.
+(t)sat dec 26 20
+(u)MatheusIsNotAvailable
+(p)3142
+(e)⚖🆕|balance, feature
+(+)Added both the golden and the clown's IDs to the agent card's color choosing option.
+(t)thu dec 24 20
+(u)kyle
+(+)Prayers are somewhat more noticable when sent from the chapel.
+(u)Nefarious6th
+(p)3129
+(e)🗺|mapping
+(+)Adds an ice cream machine, espresso machine, and claw machine to the Afterlife Bar
+(t)tue dec 22 20
+(u)Efi
+(p)3127
+(e)|
+(+)Added pride jumpsuits to the Uniform Manufacturer. They can now be obtained OUT OF THE CLOSET.
+(t)mon dec 21 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Tweaked shivering status to proc a little more often and last a little longer. @ me on discord if it's too much
+(*)Changed lizard mutantrace to no longer naturally thermoregulate. Keep some hot cocoa or a space heater handy!
+(t)sat dec 19 20
+(u)BatElite
+(p)3075
+(e)🆕|feature
+(*)Ghostdrones can now use deconstruction devices, and also have one in their inventory.
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken Feed is now a snack you can monch on (and hand-feed to chickens)
+(*)Chickens now only show heart status for their favorite food
+(+)Bunch of changes to how chickens determine enemies/friends, please report any bugs!
+(t)fri dec 18 20
+(u)virvatuli
+(p)3088
+(e)🗺|mapping
+(+)The Salyut derelict now has an appropriately Soviet space suit.
+(t)thu dec 17 20
+(u)Tarmunora
+(p)3074
+(e)⚖|balance
+(*)Amount of reagent inhaled from an aerosol propellant smoke now falls off over distance
+(u)TTerc
+(p)3071
+(e)🗺|mapping
+(+)A ranch ship has docked at NSS Horizon!
+(u)Kubius
+(p)3064
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Ranch, and Owlery, installed into Atlas.
+(u)Kubius
+(p)3065
+(e)🗺|mapping
+(*)Kondaru QoL: more multitools, Toxins heat exchanger adjustment, and "ingame documentation" of Research ejection and QM operation. Make sure to check out previous updates to see what else has changed!
+(t)wed dec 16 20
+(u)UrsulaMejor
+(e)🐛🆕|bug, feature
+(*)Chicken aging and hunger should now be lag-compensated
+(*)You can now grab chickens without upsetting them
+(u)Carbadox
+(p)2410
+(e)🆕🎨|feature, sprites
+(*)Added ways to earn Job XP for Bartender and Chaplain.
+(+)For Chaplain, you can earn it by innately resisting Wizards spells and Vampire abilities as well as using your Bible to heal (or smite) people.
+(+)For Bartender, you can earn it by shaking your cocktail shaker and applying garnishes to glasses.
+(+)Added a Golden Cocktail Shaker reward for the bartender
+(u)Erinexx
+(p)2973
+(e)🎨|sprites
+(+)New, jigglier blob sprites.
+(u)Kubius
+(p)3061
+(e)🆕🗺🔄|feature, mapping, rework
+(+)Installed a ranch into Clarion's base variant. Due to space constraints, avid tabletop gamers will need to head up to the Aviary.
+(t)tue dec 15 20
+(u)Tarmunora
+(e)⚖|balance
+(*)fluorosurfactant recipe changed to [1 oil, 1 fluorine, 1 sulferic acid -> 3 fluorosurfactant]
+(u)TTerc
+(p)3055
+(e)🗺|mapping
+(+)Donut 3, Cogmap 2 and Horizon have ranches and electroplaters now. Cog1 also has electroplaters.
+(t)mon dec 14 20
+(u)Nefarious6th
+(p)3043
+(e)🗺|mapping
+(+)Adds a bathroom and cargo transporter to the old mining station in the debris field
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Roach mutantrace is now raditaion resistant, but more vulnerable to blunt force trauma
+(u)UrsulaMejor
+(p)3053
+(e)🆕🎨|feature, sprites
+(*)Adds a rancher job to the jobs list; be sure to update your preferences! Uniform sprite by virvatuli
+(t)sun dec 13 20
+(u)virvatuli
+(p)3045
+(e)|
+(+)Changed the Syndicate poison bottle to be more believable when examined
+(u)Superlagg
+(p)2975
+(e)🐛🆕|bug, feature
+(+)Monkeys and non-monkeys can now share limbs.
+(u)BenLubar
+(p)2980
+(e)⚖🆕🗺|balance, feature, mapping
+(*)Civilian and Brobocop cyborgs have some new toys to play with!
+(u)glassofmilk
+(p)3041
+(e)🆕|feature
+(*)Many wireless devices now respond to the command "help"
+(u)UrsulaMejor
+(p)3047
+(e)🆕🎨|feature, sprites
+(*)Add rods to railings to make reinforced railings that chickens can't pass through. Undo with wirecutters. Sprite by Varali.
 (t)sat dec 12 20
 (u)Kubius
 (p)3009
