@@ -324,6 +324,8 @@
 			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Botanist", "Apiculturist")
 			return list(access_maint_tunnels, access_hydro)
+		if("Rancher")
+			return list(access_maint_tunnels, access_hydro, access_ranch)
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
 		if("Bartender")
@@ -361,7 +363,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -465,6 +467,8 @@ var/list/access_name_lookup //Generated at round start.
 			return "Kitchen"
 		if(access_hydro)
 			return "Hydroponics"
+		if(access_ranch)
+			return "Ranch"
 		if(access_mail)
 			return "Mailroom"
 		if(access_research)

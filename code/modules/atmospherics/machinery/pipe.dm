@@ -373,7 +373,7 @@ obj/machinery/atmospherics/pipe
 
 				boutput(user, "You start to repair the [src.name].")
 
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					ruptured --
 				else
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
@@ -386,10 +386,8 @@ obj/machinery/atmospherics/pipe
 
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
 			parent = null
 			..()
 
@@ -810,8 +808,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -879,8 +876,7 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 250)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -993,12 +989,9 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 70)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
-			if(node3)
-				node3.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			node3?.disconnect(src)
 			parent = null
 			..()
 

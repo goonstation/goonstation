@@ -915,7 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			processing_items |= src
+			processing_items |= T
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.

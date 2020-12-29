@@ -176,7 +176,7 @@ JONES CITY TURFS
 /obj/item/hairball/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/hairball) && !istype(W, /obj/item/hairball/inert)) //in case we have a decorative hairball??
 		boutput(user, "<span class='notice'>You begin adding \the [W.name] to \the [src.name].</span>")
-		if (!do_after(user, 30))
+		if (!do_after(user, 3 SECONDS))
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else

@@ -161,8 +161,7 @@
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
-				if(src.material)
-					src.material.triggerTemp(src, W.force * 1000)
+				src.material?.triggerTemp(src, W.force * 1000)
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
@@ -447,8 +446,7 @@
 				src.health -= damage/2
 				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
 			if(D_BURNING)
-				if(src.material)
-					src.material.triggerTemp(src, 5000)
+				src.material?.triggerTemp(src, 5000)
 				src.health -= damage/3
 				hitsound = 'sound/items/Welder.ogg'
 			if(D_SPECIAL) //blob
@@ -640,7 +638,7 @@
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
 				if (sec_system:crashable)
 					sec_system:crashtime2(target)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			..()
 			return
 		return
@@ -696,7 +694,7 @@
 		return
 
 	proc/checkhealth()
-		myhud.update_health()
+		myhud?.update_health()
 		if(istype(src, /obj/machinery/vehicle/pod_smooth)) // check to see if it's one of the new pods
 			// sanitize values
 			if(health > maxhealth)
@@ -1009,6 +1007,10 @@
 	logTheThing("vehicle", M, src.name, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
+	if(isghostdrone(usr))
+		boutput(usr, "<span class='alert'>Your laws don't permit you to do that!</span>")
+		return
+
 	if(locked)
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
@@ -1175,6 +1177,10 @@
 ////////Open Part Panel									////////////
 ////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/open_parts_panel(mob/user as mob)
+	if(isghostdrone(user))
+		boutput(user, "<span class='alert'>Pods are only for the living, so quit trying to mess with them!</span>")
+		return
+
 	if (passengers)
 		boutput(user, "<span class='alert'>You can't modify parts with somebody inside.</span>")
 		return

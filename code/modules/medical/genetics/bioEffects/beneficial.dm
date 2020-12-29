@@ -88,7 +88,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_EFFECT_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec", layer = MOB_EFFECT_LAYER)
 		..()
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
@@ -408,7 +408,7 @@ var/list/radio_brains = list()
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
 	stability_loss = 25
-	degrade_to = "fat"
+	degrade_to = "strong"
 	icon_state  = "hulk"
 
 	OnAdd()
@@ -590,7 +590,7 @@ var/list/radio_brains = list()
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		..()
 
 /datum/bioEffect/uncontrollable_cloak

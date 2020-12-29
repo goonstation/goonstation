@@ -358,6 +358,7 @@
 				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
+		eater.on_eat(src)
 
 	proc/on_finish(mob/eater)
 		return
@@ -515,7 +516,7 @@
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
@@ -1045,6 +1046,8 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1057,6 +1060,8 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
+			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				JOB_XP(user, "Bartender", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1101,6 +1106,8 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1707,7 +1714,7 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "GannetsCocktailer"
+	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
 
@@ -1723,5 +1730,12 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
+				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+	name = "golden cocktail shaker"
+	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	icon_state = "golden_cocktailshaker"

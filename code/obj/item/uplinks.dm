@@ -35,7 +35,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
 
@@ -369,7 +369,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				if (src)
 					src.explode()
 
@@ -967,7 +967,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/clownsrevenge
 	name = "Clown's Revenge"
 	eqtype = "Offensive"
-	desc = "This spell turns an adjacent target into an obese, idiotic, horrible, and useless clown."
+	desc = "This spell turns an adjacent target into an idiotic, horrible, and useless clown."
 	assoc_spell = /datum/targetable/spell/cluwne
 
 /datum/SWFuplinkspell/balefulpolymorph
@@ -1225,7 +1225,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

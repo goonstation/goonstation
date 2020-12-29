@@ -228,6 +228,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
@@ -453,6 +454,11 @@ var/global
 	netpass_syndicate = null //Detomatix
 
 	///////////////
+	//cyberorgan damage thresholds for emagging without emag
+	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+
+	///////////////
 	list/logs = list ( //Loooooooooogs
 		"admin_help" = list (  ),
 		"speech" = list (  ),
@@ -532,13 +538,6 @@ var/global
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
-
-	global_jobban_cache = ""		// once jobban list is ready this is set to a giant string of all the jobban data. the new panel chops it up for use client side with javascript
-	global_jobban_cache_rev = 0 	// increments every time the ban panel is built so clients know if they have the latest
-	global_jobban_cache_built = 0	// set to world.timeofday when the cache is built
-
-	building_jobbans = 0	// ditto
-	jobban_count = 0		// ditto
 
 	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
 	list/chemical_reactions_cache = list()

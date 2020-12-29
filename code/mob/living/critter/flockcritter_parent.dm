@@ -303,8 +303,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F)
-			F.canmove = 0
+		F?.canmove = 0
 		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()

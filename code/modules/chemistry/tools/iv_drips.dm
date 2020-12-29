@@ -115,7 +115,7 @@
 				if (!do_mob(user, H, 50))
 					user.show_text("You were interrupted!", "red")
 					return
-			else if (!do_after(H, 15))
+			else if (!do_after(H, 1.5 SECONDS))
 				H.show_text("You were interrupted!", "red")
 				return
 

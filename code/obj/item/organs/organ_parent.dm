@@ -97,7 +97,18 @@
 				return
 
 		else
-			src.take_damage(W.force, 0, 0, W.hit_type)
+			user.lastattacked = src
+			attack_particle(user,src)
+			hit_twitch(src)
+			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			if (istype(src.loc, /turf) && !src.decal_done && ispath(src.created_decal))
+				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				make_cleanable(src.created_decal, get_turf(src))
+				src.decal_done = 1
+			if(W.hit_type == DAMAGE_BURN)
+				src.take_damage(0, W.force, 0, W.hit_type)
+			else
+				src.take_damage(W.force, 0, 0, W.hit_type)
 
 		..()
 
@@ -266,6 +277,9 @@
 		src.brute_dam += brute
 		src.burn_dam += burn
 		src.tox_dam += tox
+
+		if(src.robotic && (src.organ_name in cyberorgan_brute_threshold) && abs(src.brute_dam - cyberorgan_brute_threshold[src.organ_name]) < 2 && abs(src.burn_dam - cyberorgan_burn_threshold[src.organ_name]) < 2)
+			src.emag_act(null)
 
 		//I don't think this is used at all, but I'm afraid to get rid of it - Kyle
 		if (ishuman(donor))

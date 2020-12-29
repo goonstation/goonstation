@@ -121,8 +121,7 @@
 			src.removeOverlaysClient(src.client)
 		if(src.my_mouse)
 			src.my_mouse.set_loc(get_turf(src))
-			if(src.mind)
-				src.mind.transfer_to(src.my_mouse)
+			src.mind?.transfer_to(src.my_mouse)
 			if(!get_turf(src))
 				src.my_mouse.gib()
 		src.the_guy = null
@@ -132,8 +131,7 @@
 	proc/boot()
 		if(!src.my_mouse)
 			src.my_mouse = new
-		if(src.target)
-			src.target.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
+		src.target?.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
 		if(src.client)
 			src.removeOverlaysClient(src.client)
 		src.my_mouse.set_loc(get_turf(src))

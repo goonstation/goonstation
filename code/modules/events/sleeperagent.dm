@@ -86,7 +86,7 @@
 			cleanup_event()
 			return
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
 			play_all_numbers()
 			broadcast_sound(signal_intro)

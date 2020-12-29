@@ -102,7 +102,7 @@
 			B = new /obj/item/clothing/head/butt/cyberbutt(T)
 			B.donor = H
 
-		if (H.get_organ("tail"))	// Got a tail? Throw it *too*
+		if (!is_bot && H.get_organ("tail"))	// Got a tail? Throw it *too*
 			J = H.drop_organ("tail", T)
 
 		if (B)

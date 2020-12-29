@@ -2237,7 +2237,8 @@
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
-		/datum/manufacture/pod/lock
+		/datum/manufacture/pod/lock,
+		/datum/manufacture/beaconkit
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
@@ -2261,6 +2262,15 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_ace,
+	/datum/manufacture/pride_aro,
+	/datum/manufacture/pride_bi,
+	/datum/manufacture/pride_inter,
+	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_nb,
+	/datum/manufacture/pride_pan,
+	/datum/manufacture/pride_poly,
+	/datum/manufacture/pride_trans,
 	/datum/manufacture/suit_black,
 	/datum/manufacture/dress_black,
 	/datum/manufacture/hat_black,
@@ -2349,6 +2359,15 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_ace,
+	/datum/manufacture/pride_aro,
+	/datum/manufacture/pride_bi,
+	/datum/manufacture/pride_inter,
+	/datum/manufacture/pride_lesb,
+	/datum/manufacture/pride_nb,
+	/datum/manufacture/pride_pan,
+	/datum/manufacture/pride_poly,
+	/datum/manufacture/pride_trans,
 	/datum/manufacture/suit_black,
 	/datum/manufacture/hat_black,
 	/datum/manufacture/hat_white,
@@ -2477,7 +2496,7 @@
 		..()
 		MA.action_bar = null
 		if (src.completed && MA.queue.len)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 
 

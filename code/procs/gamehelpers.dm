@@ -585,7 +585,7 @@ var/obj/item/dummy/click_dummy = new
 		if(T?.loc != A) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
-		T.density = S.density
+		T.set_density(S.density)
 		T.set_dir(S.dir)
 
 	for (var/turf/S in turfs_src)

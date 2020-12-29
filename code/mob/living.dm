@@ -621,7 +621,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bioHolder.mobAppearance.customization_first_color
 	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		P.invisibility = 101
 		qdel(P)
 
@@ -1250,7 +1250,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	set src in view(1)
 	set category = "Local"
 
-	SPAWN_DBG (7) //secret spawn delay, so you can't spam this during combat for a free "stun"
+	SPAWN_DBG(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && get_dist(src,usr) <= 1)
 			var/mob/living/L = usr
 			L.give_to(src)
@@ -1371,8 +1371,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.vis_contents += src.chat_text
 		else
 			var/atom/movable/A = src
-			while(!istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A.vis_contents += src.chat_text
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 
 /mob/living/proc/empty_hands()
@@ -1410,7 +1410,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
-		src.was_harmed(M)
+		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
@@ -1718,11 +1718,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(M)
 
 
-/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	.= 0
 
 //left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	if (src.ai)
 		src.ai.was_harmed(weapon,M)
 	..()
@@ -1798,7 +1798,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+				src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
 
@@ -1807,7 +1807,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, DAMAGE_STAB)
+				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
 
@@ -1817,9 +1817,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				if (rangedprot > 1)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 				else
-					src.TakeDamage("chest", (damage*2), 0, 0, DAMAGE_CUT)
+					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
 			if (D_ENERGY)
 				if (stun > 0)
@@ -1830,7 +1830,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.stuttering < stun)
 					src.stuttering = stun
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1841,7 +1841,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					// fire resistance should probably not let you get hurt by welders
 					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
 					return 0
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot)
 
 			if (D_RADIOACTIVE)
@@ -1860,7 +1860,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_STAB)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 					if (isalive(src))
 						lastgasp()
 					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)

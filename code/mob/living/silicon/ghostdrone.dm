@@ -76,6 +76,7 @@
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
+			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
 			new /obj/item/device/light/flashlight(src)
 		)
@@ -404,16 +405,6 @@
 		SPAWN_DBG( 0 )
 			if ((!( yes ) || src.now_pushing))
 				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					if(prob(20))
-						src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
-						src.now_pushing = 0
-						src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-						return
-			src.now_pushing = 0
 			//..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -1162,8 +1153,7 @@
 			src.TakeDamage(null, round(src.max_health / 2, 1.0))
 
 	temperature_expose(null, temp, volume)
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)

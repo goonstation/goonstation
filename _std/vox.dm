@@ -2582,7 +2582,7 @@ proc/init_vox()
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
 
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		for(var/id in voxsounds)
 			var/datum/VOXsound/vox = voxsounds[id]
 			vox.ogg = file(vox.ogg)
