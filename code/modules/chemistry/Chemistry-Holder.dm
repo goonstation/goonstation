@@ -1003,6 +1003,8 @@ datum
 		proc/move_trigger(var/mob/M, kindof)
 			var/shock = 0
 			switch (kindof)
+				if ("sprint")
+					shock = rand(8, 16)
 				if ("run")
 					shock = rand(5, 12)
 				if ("walk", "swap")
