@@ -288,8 +288,9 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			generator.semiconductor_state = 3
 			boutput(owner, "<span class='notice'>You snip the last piece of the electrical system connected to the semiconductor.</span>")
 			playsound(get_turf(generator), "sound/items/Scissor.ogg", 80, 1)
-			generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or with additional cable."
+			generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 			generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
+			generator.updateicon()
 			return
 
 		if (generator.semiconductor_state == 3)
@@ -366,14 +367,14 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor_state = 3
 				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
 				owner.visible_message("<span class='notice'>[owner] places [the_tool] inside [generator].</span>", "<span class='notice'>You successfully place semiconductor inside \the [generator].</span>")
-				generator.semiconductor_repair = "The semiconductor is visible and needs to be disconnected from the TEG with some wirecutters."
+				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 
 			return
 		if (generator.semiconductor_state == 3)
 			generator.semiconductor_state = 2
 			boutput(owner, "<span class='notice'>You wire up the semicondoctor to \the [generator].</span>")
 			playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
-			generator.semiconductor_repair = "The semiconductor has been wired in but has excess cabling that must be removed."
+			generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
 			if (the_tool != null)
 				the_tool.amount -= 4
 				if(the_tool.amount <= 0)
@@ -382,6 +383,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 					var/obj/item/cable_coil/C = the_tool
 					C.updateicon()
 			generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
+			generator.updateicon()
 			return
 		if (generator.semiconductor_state == 2)
 			generator.semiconductor_state = 1
@@ -394,14 +396,14 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			generator.semiconductor_state = 0
 			owner.visible_message("<span class='notice'>[owner] closes up access to the semiconductor in \the [generator].</span>", "<span class='notice'>You successfully replaced the semiconductor.</span>")
 			playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
-			generator.semiconductor_repair = ""
+			generator.semiconductor_repair = null
 			return
 
 
 /obj/item/teg_semiconductor
 	name = "TEG Semiconductor"
 	desc = "A large rectangulr plate stamped with Prototype Thermo-Electric Generator.  Property of NanoTrasen do not steal."
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "bigdrain"
+	icon = 'icons/obj/power.dmi'
+	icon_state = "semi"
 
 

@@ -77,7 +77,6 @@
 		..()
 
 	get_desc(dist, mob/user)
-
 		if(variant_description || generator.variant_description)
 			. += variant_description
 			. += generator.variant_description
@@ -513,7 +512,7 @@ datum/pump_ui/circulator_ui
 	var/variant_description
 	var/conductor_temp = T20C
 	var/semiconductor_state = 0
-	var/semiconductor_repair = ""
+	var/semiconductor_repair
 
 	var/boost = 0
 	var/generator_flags = 0
@@ -631,10 +630,17 @@ datum/pump_ui/circulator_ui
 		src.active_form = null
 		..()
 
+	get_desc(dist, mob/user)
+
+		if(dist <= 5 && semiconductor_repair)
+			. += "<br>[semiconductor_repair]"
+
 	proc/updateicon()
 
-		if(status & (NOPOWER|BROKEN))
+		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
+		else if(status & (BROKEN))
+			UpdateOverlays(image('icons/obj/power.dmi', "teg-err"), "power")
 		else
 			if(lastgenlev != 0)
 				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
@@ -693,7 +699,7 @@ datum/pump_ui/circulator_ui
 
 		lastgen = 0
 
-		if(cold_air && hot_air)
+		if(!(src.status & BROKEN) && cold_air && hot_air)
 			var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
 			var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
