@@ -763,19 +763,20 @@
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	var/alertgroup = MGA_MEDCRIT
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."
+		alertgroup = MGA_DEATH
 	else if (occupant.health < 0)
 		PDAalert += "patient in critical condition - respond and treat immediately."
 	else
 		PDAalert += "patient - please check in on the occupant."
 
-	for(var/mailgroup in mailgroups)
-		var/datum/signal/PDAsignal = get_free_signal()
+	var/datum/signal/PDAsignal = get_free_signal()
 
-		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
-		PDAsignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(src, PDAsignal)
+	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
+	PDAsignal.transmission_method = TRANSMISSION_RADIO
+	transmit_connection.post_signal(src, PDAsignal)
 
 
 /obj/machinery/sleeper/compact

@@ -583,7 +583,7 @@
 			newsignal.data["message"] = "[message]"
 
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
