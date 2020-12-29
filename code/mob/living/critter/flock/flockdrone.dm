@@ -168,7 +168,7 @@
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
 		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>Resources:</span> [src.resources]"
+		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
 		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
 		<br><span class='bold'>###=-</span></span>"}

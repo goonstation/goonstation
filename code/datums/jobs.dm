@@ -1592,10 +1592,10 @@
 	name = "Sous-Chef"
 	wages = PAY_UNTRAINED
 	slot_belt = /obj/item/device/pda2/chef
-	slot_jump = /obj/item/clothing/under/rank/chef
+	slot_jump = /obj/item/clothing/under/misc/souschef
 	slot_foot = /obj/item/clothing/shoes/chef
 	slot_head = /obj/item/clothing/head/souschefhat
-	slot_suit = /obj/item/clothing/suit/chef
+	slot_suit = /obj/item/clothing/suit/apron
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()

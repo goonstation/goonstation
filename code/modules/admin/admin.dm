@@ -4588,7 +4588,7 @@ var/global/noir = 0
 	return chosen
 
 /proc/get_matches(var/object, var/base = /atom)
-	var/list/types = typesof(base)
+	var/list/types = concrete_typesof(base)
 
 	var/list/matches = new()
 

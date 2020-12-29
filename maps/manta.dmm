@@ -6526,6 +6526,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aqS" = (
@@ -42859,6 +42862,10 @@
 "jtU" = (
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
+"jBB" = (
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/industrial,
+/area/station/mining/staff_room)
 "jLO" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -43336,6 +43343,9 @@
 "oIR" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oJe" = (
@@ -123830,7 +123840,7 @@ bOd
 bOm
 bOq
 bxa
-bxa
+jBB
 bOb
 bPd
 bPq

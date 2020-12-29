@@ -47522,6 +47522,13 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fVJ" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -84973,7 +84980,7 @@ bvS
 bKw
 bNd
 bOl
-bOl
+fVJ
 bQo
 bRn
 bJE

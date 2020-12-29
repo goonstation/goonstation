@@ -1,4 +1,38 @@
 
+(t)mon dec 28 20
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted nitroglycerin stability.
+(u)kyle
+(+)Lower gang mode probability.
+(t)sun dec 27 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweaked the way napalm interacts with humans (causes some direct damage on touch, and will make people burn more when inside of them as opposed to making people into ticking firebombs), and made it no longer melt floors (use ClF3 or something for that)
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Cyberorgans can now have their safeties disabled when exposed to certain (randomly determined per round) damage thresholds. Science is the art of hitting things until they break the way you wanted them to, right?
+(u)Kubius
+(p)3085
+(e)🆕🎨|feature, sprites
+(*)Deployable warp beacons can now be manufactured in ship component fabricators. Some assembly required.
+(t)sat dec 26 20
+(u)MatheusIsNotAvailable
+(p)3142
+(e)⚖🆕|balance, feature
+(+)Added both the golden and the clown's IDs to the agent card's color choosing option.
+(t)thu dec 24 20
+(u)kyle
+(+)Prayers are somewhat more noticable when sent from the chapel.
+(u)Nefarious6th
+(p)3129
+(e)🗺|mapping
+(+)Adds an ice cream machine, espresso machine, and claw machine to the Afterlife Bar
+(t)tue dec 22 20
+(u)Efi
+(p)3127
+(e)|
+(+)Added pride jumpsuits to the Uniform Manufacturer. They can now be obtained OUT OF THE CLOSET.
 (t)mon dec 21 20
 (u)Tarmunora
 (e)⚖🆕|balance, feature

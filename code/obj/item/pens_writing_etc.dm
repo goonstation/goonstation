@@ -902,6 +902,7 @@
 	New()
 		..()
 		src.pen = new /obj/item/pen(src)
+		src.update()
 		return
 
 /* =============== FOLDERS (wip) =============== */

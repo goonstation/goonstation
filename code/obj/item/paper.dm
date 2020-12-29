@@ -86,6 +86,7 @@
 /obj/item/paper/pooled()
 
 	..()
+	name = "paper"
 	info = 0
 	src.icon_state = "paper_blank"
 	health = 10
@@ -93,6 +94,7 @@
 /obj/item/paper/unpooled()
 
 	..()
+	name = initial(name)
 	info = initial(info)
 	icon_state = initial(icon_state)
 	health = initial(health)
@@ -292,6 +294,11 @@
 		"stamp-text-name" = user.name
 	)
 
+	if(!istype(O, /obj/item/pen))
+		if(istype(src.loc, /obj/item/clipboard))
+			var/obj/item/clipboard/C = src.loc
+			if(istype(C.pen, /obj/item/pen))
+				O = C.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		. += list(
