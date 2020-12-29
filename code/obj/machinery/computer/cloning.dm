@@ -265,6 +265,7 @@
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
+	playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
