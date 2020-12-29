@@ -38,6 +38,8 @@ AI MODULES
 		if (!user)
 			return
 		var/answer = input(user, text, title, default) as null|text
+		if (findtext(answer, "override"))
+			boutput(user, "<b>You hear a voice in your head... <i>Hey, moron! You do know that 'override' means it removes the other law, right? Like, entirely? Just checking.</i></b>")
 		lawTarget = copytext(adminscrub(answer), 1, MAX_MESSAGE_LEN)
 		tooltip_rebuild = 1
 		boutput(user, "\The [src] now reads, \"[get_law_text()]\".")
