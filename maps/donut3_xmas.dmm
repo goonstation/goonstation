@@ -9099,7 +9099,7 @@
 "cou" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /obj/item/plate{
 	pixel_y = -1
 	},
