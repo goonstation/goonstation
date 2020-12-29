@@ -66,19 +66,19 @@ datum
 					explode(holder.covered_turf(), "temperature change to gaseous form")
 
 			reaction_turf(var/turf/T, var/volume)
-				if(reagent_state == LIQUID || prob(2 * volume - (14 + T0C - holder.total_temperature) * 0.1))
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(T), "splash on turf")
 
 			reaction_mob(var/mob/M, var/volume)
-				if(reagent_state == LIQUID || prob(2 * volume - (14 + T0C - holder.total_temperature) * 0.1))
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
-				if(reagent_state == LIQUID || prob(2 * volume - (14 + T0C - holder.total_temperature) * 0.1))
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
 			physical_shock(var/force)
-				if (reagent_state == SOLID && force >= 4 && prob(force - (14 + T0C - holder.total_temperature) * 0.1))
+				if (reagent_state == SOLID && force >= 4 && prob(force - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in solid state")
 				else if (reagent_state == LIQUID && prob(force * 6))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in liquid state")
