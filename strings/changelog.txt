@@ -1,4 +1,15 @@
 
+(t)sun dec 27 20
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweaked the way napalm interacts with humans (causes some direct damage on touch, and will make people burn more when inside of them as opposed to making people into ticking firebombs), and made it no longer melt floors (use ClF3 or something for that)
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Cyberorgans can now have their safeties disabled when exposed to certain (randomly determined per round) damage thresholds. Science is the art of hitting things until they break the way you wanted them to, right?
+(u)Kubius
+(p)3085
+(e)🆕🎨|feature, sprites
+(*)Deployable warp beacons can now be manufactured in ship component fabricators. Some assembly required.
 (t)sat dec 26 20
 (u)MatheusIsNotAvailable
 (p)3142

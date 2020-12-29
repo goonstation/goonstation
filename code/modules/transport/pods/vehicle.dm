@@ -694,7 +694,7 @@
 		return
 
 	proc/checkhealth()
-		myhud.update_health()
+		myhud?.update_health()
 		if(istype(src, /obj/machinery/vehicle/pod_smooth)) // check to see if it's one of the new pods
 			// sanitize values
 			if(health > maxhealth)

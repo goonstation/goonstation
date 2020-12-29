@@ -2358,6 +2358,18 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
+//// deployable warp beacon
+
+/datum/manufacture/beaconkit
+	name = "Warp Beacon Frame"
+	item_paths = list("CRY-1","CON-1","MET-2")
+	item_names = list("Crystal","Conductive Material","Sturdy Metal")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/beaconkit)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
 
 /******************** HOP *******************/
 

@@ -314,10 +314,9 @@
 
 	New()
 		..()
-		if (usr?.loc)
-			src.smoke = new /datum/effects/system/bad_smoke_spread/
-			src.smoke.attach(src)
-			src.smoke.set_up(1, 0, usr.loc)
+		src.smoke = new /datum/effects/system/bad_smoke_spread/
+		src.smoke.attach(src)
+		src.smoke.set_up(1, 0, src.loc)
 		if (prob(5))
 			src.reagents.clear_reagents()
 			src.reagents.add_reagent("THC", 50) //blaze it
