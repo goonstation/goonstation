@@ -3,6 +3,8 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Adjusted nitroglycerin stability.
+(u)kyle
+(+)Lower gang mode probability.
 (t)sun dec 27 20
 (u)Tarmunora
 (e)⚖🆕|balance, feature
