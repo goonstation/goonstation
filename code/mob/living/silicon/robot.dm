@@ -203,6 +203,7 @@
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
 					var/datum/mind/newmind = new
+					newmind.ckey = ckey
 					newmind.key = src.key
 					newmind.current = src
 					B.owner = newmind

@@ -199,6 +199,7 @@
 			selfmob.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 
@@ -428,6 +429,7 @@
 				src.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 		qdel(src)
@@ -507,6 +509,7 @@
 			src.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 	SPAWN_DBG(1 DECI SECOND)
@@ -930,6 +933,7 @@ var/respawn_arena_enabled = 0
 		if (src.client)
 			src.client.mob = O
 		O.mind = new /datum/mind()
+		O.mind.ckey = ckey
 		O.mind.key = key
 		O.mind.current = O
 		ticker.minds += O.mind
@@ -955,6 +959,7 @@ var/respawn_arena_enabled = 0
 			if (src.client)
 				src.client.mob = O
 			O.mind = new /datum/mind()
+			O.mind.ckey = ckey
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind

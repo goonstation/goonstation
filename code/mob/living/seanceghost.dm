@@ -187,6 +187,7 @@
 				src.client.mob = Z
 			Z.originalmob = originalg
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind
