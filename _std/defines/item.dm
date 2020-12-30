@@ -42,6 +42,8 @@
 #define HAS_EQUIP_CLICK			 (1<<18)
 /// Has the possibility for a TGUI interface
 #define TGUI_INTERACTIVE		 (1<<19)
+/// Should always have 0 density, even if something tries to change it temporarily
+#define NO_DENSITY					 (1<<20)
 
 //Item function flags
 

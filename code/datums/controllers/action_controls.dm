@@ -573,7 +573,7 @@ var/datum/action_controller/actions
 	var/hidden
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
+	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0, var/DurationOverride = 0)
 		source = Source
 		target = Target
 		item = Item
@@ -597,6 +597,8 @@ var/datum/action_controller/actions
 
 		if(source.reagents && source.reagents.has_reagent("crime"))
 			duration /= 5
+		if(DurationOverride > 0)
+			duration = DurationOverride
 		..()
 
 	onStart()
