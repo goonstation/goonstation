@@ -1720,7 +1720,7 @@ var/global/noir = 0
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind(  )
-					mind.ckey = ckey
+					mind.ckey = M.ckey
 					mind.key = M.key
 					mind.current = M
 					ticker.minds += mind
@@ -1864,7 +1864,7 @@ var/global/noir = 0
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind()
-					mind.ckey = ckey
+					mind.ckey = M.ckey
 					mind.key = M.key
 					mind.current = M
 					ticker.minds += mind
