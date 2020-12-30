@@ -915,6 +915,7 @@ var/list/fun_images = list()
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
@@ -944,6 +945,7 @@ var/list/fun_images = list()
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind

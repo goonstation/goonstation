@@ -15971,9 +15971,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/recharger/wall/sticky{
-	dir = 8
-	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKG" = (
@@ -15984,6 +15981,9 @@
 /area/station/security/checkpoint/west)
 "aKH" = (
 /obj/submachine/weapon_vendor/security,
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
 "aKI" = (

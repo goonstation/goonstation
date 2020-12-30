@@ -476,8 +476,11 @@
 	if (!src.mind)
 		src.mind = new (src)
 
-	if (src.mind && !src.mind.key)
-		src.mind.key = src.key
+	if (src.mind)
+		if (!src.mind.ckey)
+			src.mind.ckey = src.ckey
+		if (!src.mind.key)
+			src.mind.key = src.key
 
 	if (isobj(src.loc))
 		var/obj/O = src.loc

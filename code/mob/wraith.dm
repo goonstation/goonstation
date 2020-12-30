@@ -597,6 +597,7 @@
 			if (src.client)
 				src.client.mob = W
 			W.mind = new /datum/mind()
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind
