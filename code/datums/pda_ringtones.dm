@@ -11,6 +11,8 @@
 	var/desc = "The default alert tone used in nearly every Thinktronic Systems device ever built. A keen ear may recognize this classic tune as an excerpt from Frédéric Chopin's ‘Grande Valse’, but in fact it's based on a remix of Dimmy Spuud's minimalist reimagining ‘BEEP’, used with permission and possibly on a dare."
 	/// List of sounds
 	var/list/ringList = list("sound/machines/twobeep.ogg")
+	/// List of alternate sounds
+	var/list/ringShortList = list("sound/machines/twobeep.ogg")
 	/// What volume to play the sound at this index -- keep all these lists at the same length as ringlist!
 	var/list/volList = list(35)
 	/// Whether or not to vary the sound at this index
@@ -27,6 +29,8 @@
 	var/overrideAlert = 0
 	/// Sets how to change the index whenever the sound gets played
 	var/listCycleType = RINGLIST_STATIC
+	/// Does this ringtone have short versions of their tones?
+	var/has_short = 0
 	/// The PDA this happens to be attached to
 	var/obj/item/device/pda2/holder
 	/// The success message when this ringtone gets applied
@@ -57,10 +61,10 @@
 		. = ..()
 
 	/// Plays the sound at the current index, then change the index
-	proc/PlayRingtone()
+	proc/PlayRingtone(var/use_short = 0)
 		if(!istype(holder))
 			return // we havent been put in a PDA yet!
-		playsound(get_turf(src.holder), src.ringList[src.ringListIndex], src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
+		playsound(get_turf(src.holder), ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
 		src.DoSpecialThing(src.ringListIndex)
 		if(src.alertList[ringListIndex])
 			. = src.alertList[ringListIndex]
@@ -69,6 +73,8 @@
 				src.ringListIndex += 1
 			if(RINGLIST_RANDOM)
 				src.ringListIndex = rand(1, length(src.ringList))
+			else
+				src.ringListIndex = 1
 		if(src.ringListIndex > length(src.ringList))
 			src.ringListIndex = 1
 
@@ -196,6 +202,7 @@
 				SPAWN_DBG(1 SECOND)
 					src.holder.explode()
 
+/// Clown ringtones
 /datum/ringtone/clown
 	name = "Nooty's Tooter"
 	desc = "Imagine, you're in the middle of terrorizing your audience into raucous fits of laughter when disaster strikes! Someone sends you a message, and you forgot to silence your PDA! Oh no, you'll be the laughing stock of the crew! Just kidding, you cleverly disguised your ringtone to sound like a bike horn, turning your carelessness into careletunity!"
@@ -271,6 +278,7 @@ bathing in her ennui and showering her with money.
 	nameText = "Role:"
 	descText = "Motivation:"
 
+/// basic-ass ringtones for basic-ass spacepeople
 /datum/ringtone/basic
 	name = "Retrospection"
 	desc = "Seek inwards within."
@@ -469,6 +477,120 @@ bathing in her ennui and showering her with money.
 	nameText = "Idea:"
 	descText = "Inspiration:"
 
+/// Ringtones with Shorts
+/datum/ringtone/retkid
+	name = "BEEP 2: The Fourth"
+	desc = "An intricate remix of Dimmy Spuud's ‘BEEP’."
+	ringList = list('sound/machines/phones/ringtones/ringers1.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort1.ogg')
+	volList = list(35)
+	varyList = list(1)
+	pitchList = list(1)
+	alertList = list("*beedleebeep*")
+	rangeList = list(0)
+	listCycleType = RINGLIST_STATIC
+	has_short = TRUE
+	succText = "<span class='notice'>*Ringtone set to \"ringlord1.SND\"*</span>"
+	previewMessage = "A modernized classic, remodernized!"
+	previewSender = "Rhettifort 'Ret' Kid"
+	applyText = "Apply"
+	previewText = "Preview"
+	nameText = "Ringer:"
+	descText = "Descriptor:"
+
+/datum/ringtone/retkid/ring1
+	name = "Spacechimes"
+	desc = "Just some holochimes jangling in the spacewind."
+	ringList = list('sound/machines/phones/ringtones/ringers2.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort2.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord2.SND\"*</span>"
+	previewMessage = "Always listen to your space meteorologist!"
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring2
+	name = "Shy Spacechimes"
+	desc = "Just some anxious holochimes uncomfortable about jangling in the spacewind."
+	ringList = list('sound/machines/phones/ringtones/ringers3.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort3.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord3.SND\"*</span>"
+	previewMessage = "All spacechimes are worthy of love, no matter how they express themselves."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring3
+	name = "Perky Spacechimes"
+	desc = "Just some enthusiastic holochimes overjoyed to jangle in the spacewind."
+	ringList = list('sound/machines/phones/ringtones/ringers4.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort4.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord4.SND\"*</span>"
+	previewMessage = "Every new day is a cause for celebration."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring4
+	name = "Moonlit Peahen"
+	desc = "The classic tag-jingle of the Space Broadcasting Company."
+	ringList = list('sound/machines/phones/ringtones/ringers5.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort5.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord5.SND\"*</span>"
+	previewMessage = "Used with permission (please don't sue)"
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring5
+	name = "Plinkoe's Journey"
+	desc = "A winding adventure through a space kalimba."
+	ringList = list('sound/machines/phones/ringtones/ringers6.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort6.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord6.SND\"*</span>"
+	previewMessage = "Honestly, it's a beautiful instrument."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring6
+	name = "Sedate Spacechimes"
+	desc = "Just some laid-back holochimes jangling at their own pace in the spacewind."
+	ringList = list('sound/machines/phones/ringtones/ringers7.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort6.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord7.SND\"*</span>"
+	previewMessage = "It's good to slow down every now and then."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring7
+	name = "Focused Spacechimes"
+	desc = "Just some forthright holochimes straightforward about jangling in the spacewind."
+	ringList = list('sound/machines/phones/ringtones/ringers8.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort8.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord8.SND\"*</span>"
+	previewMessage = "Many people appreciate getting right to the point."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/datum/ringtone/retkid/ring8
+	name = "ringtone.dm,59: Cannot read null.name"
+	desc = "piss"
+	ringList = list('sound/machines/phones/ringtones/ringers9.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort9.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"null.SND\"*</span>"
+	previewMessage = "pda_ringtone.dm,570: Cannot read null.previewMessage"
+	previewSender = "pda_ringtone.dm,571: Cannot read null.previewSender"
+
+	New(obj/item/device/pda2/thisPDA)
+		. = ..()
+		src.desc = {"proc name: return text (/datum/computer/file/pda_program/ringtone/return_text)<br>
+  source file: ringtone.dm,59<br>
+  usr: null<br>
+  src: ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8)<br>
+  src.loc: null<br>
+  call stack:<br>
+ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_text()<br>
+"}
+
+/datum/ringtone/retkid/ring9
+	name = "Fweeuweeu"
+	desc = "Flweeuweeuweeuweeuweeuweeuweeuweeu"
+	ringList = list('sound/machines/phones/ringtones/ringers10.ogg')
+	ringShortList = list('sound/machines/phones/ringtones/ringershort10.ogg')
+	succText = "<span class='notice'>*Ringtone set to \"ringlord10.SND\"*</span>"
+	previewMessage = "Flweeuweeuweeuweeuweeuweeuweeuweeu."
+	previewSender = "Rhettifort 'Ret' Kid"
+
+/// Syndicate Distracto-tones
 /datum/ringtone/syndie
 	name = "KABLAMMO - Realistic Explosion FX"
 	desc = "HIT THE DECKS, DUCK AND COVER! Is what they'll say when they hear these 100% AUTHENTIC REALISTIC explosion effects! For licensing information, contact Ted."

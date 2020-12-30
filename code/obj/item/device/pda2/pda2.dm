@@ -74,6 +74,8 @@
 																	PDA_CHUTE_ALERT_TAG = null)
 	/// mailgroup-specific ringtones, added on the fly!
 	var/list/mailgroup_ringtones = list()
+	/// List of recent callers, so you get the long sound for the first message, and a shorter one for that same person after that
+	var/list/recent_callers = list()
 
 	registered_owner()
 		.= registered
@@ -840,25 +842,35 @@
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
-	proc/route_ringtone(var/msgtag, var/groupID)
+	proc/route_ringtone(var/msgtag, var/groupID, var/sender)
 		if(msgtag in src.alert_ringtones)
 			if(istype(src.alert_ringtones[msgtag], /datum/ringtone))
 				var/datum/ringtone/rtone = src.alert_ringtones[msgtag]
-				. = rtone.PlayRingtone()
+				. = rtone.PlayRingtone(src.manage_recent_callers(sender))
 		else if(groupID in src.mailgroup_ringtones)
 			if(istype(src.mailgroup_ringtones[groupID], /datum/ringtone))
 				var/datum/ringtone/rtone = src.mailgroup_ringtones[groupID]
-				. = rtone.PlayRingtone()
+				. = rtone.PlayRingtone(src.manage_recent_callers(sender))
 
 		if(!.)
-			return src.r_tone?.PlayRingtone()
+			return src.r_tone?.PlayRingtone(src.manage_recent_callers(sender))
 
-	proc/display_alert(var/alert_message, var/previewRing, var/msgtag, var/groupID) //Add alert overlay and beep
+	/// Reads list of recent callers and adds them if they're not there
+	/// Returns TRUE if they're on the list
+	proc/manage_recent_callers(var/sender)
+		if(!sender) return 0
+		if(sender in src.recent_callers)
+			return 1
+		else
+			src.recent_callers.Add(sender)
+			return 0
+
+	proc/display_alert(var/alert_message, var/previewRing, var/msgtag, var/groupID, var/sender) //Add alert overlay and beep
 		if (alert_message && !src.speaker_busted)
 			if(previewRing && istype(src.r_tone_temp))
 				. = src.r_tone_temp?.PlayRingtone()
 			else
-				. = src.route_ringtone(msgtag, groupID)
+				. = src.route_ringtone(msgtag, groupID, sender)
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 

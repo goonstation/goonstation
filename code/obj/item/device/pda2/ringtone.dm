@@ -1,7 +1,7 @@
 /// Ringtone Programs
 /datum/computer/file/pda_program/ringtone
 	name = "Ringtone"
-	size = 10
+	size = 4
 	/// The list of ringtone datii included in this program. Assoc'd list, "ringtone_ID" = new/datum/ringtone/urtone
 	var/list/ring_list = list("ring1" = new/datum/ringtone)
 	/// The text that goes at the top
@@ -174,7 +174,7 @@
 
 /datum/computer/file/pda_program/ringtone/dogs
 	name = "WOLF PACK"
-	size = 10
+	size = 4
 	ring_list = list("ring1" = new/datum/ringtone/dogs, "ring2" = new/datum/ringtone/dogs/lessdogs)
 	topText = "<h1>THE WOLF PACK HOWLTONE PACK</h1>"
 	bottomText = "<h3>FOR THE CRANKEST TURBO ULTRA LORDS EVER.</h3>"
@@ -187,7 +187,7 @@
 
 /datum/computer/file/pda_program/ringtone/numbers
 	name = "Leaptronics Pro"
-	size = 10
+	size = 4
 	ring_list = list("ring1" = new/datum/ringtone/numbers)
 	topText = "<h4>Leaptronics PDA Learning System</h4>"
 	bottomText = "Dream it. Believe it. Achieve it. For ages 4-6."
@@ -200,7 +200,7 @@
 
 /datum/computer/file/pda_program/ringtone/clown
 	name = "PDA Clowncentials"
-	size = 10
+	size = 4
 	ring_list = list("ring1" = new/datum/ringtone/clown, "ring2" = new/datum/ringtone/clown/horn, "ring3" = new/datum/ringtone/clown/harmonica)
 	topText = "<h4>Nooty Tooter's Merrymaker Medley</h4>"
 	bottomText = "A collection of ringtones for aspiring ringmasters and ringmistresses."
@@ -213,14 +213,56 @@
 
 /datum/computer/file/pda_program/ringtone/basic
 	name = "Soultones"
-	size = 10
-	ring_list = list("ring1" = new/datum/ringtone/clown, "ring2" = new/datum/ringtone/clown/horn, "ring3" = new/datum/ringtone/clown/harmonica)
+	size = 4
+	ring_list = list("ring1" = new/datum/ringtone/basic/ring1,\
+									 "ring2" = new/datum/ringtone/basic/ring2,\
+									 "ring3" = new/datum/ringtone/basic/ring3,\
+									 "ring4" = new/datum/ringtone/basic/ring4,\
+									 "ring5" = new/datum/ringtone/basic/ring5,\
+									 "ring6" = new/datum/ringtone/basic/ring6,\
+									 "ring7" = new/datum/ringtone/basic/ring7,\
+									 "ring8" = new/datum/ringtone/basic/ring8,\
+									 "ring9" = new/datum/ringtone/basic/ring9)
 	topText = "<h4>Celestial Soultones</h4>"
 	bottomText = "A collection of bold PDA ringtones to set your spirit at ease..."
 	selectText = "Discover your destiny..."
-	dividerThing = "<center>~~become your dreams~~~"
+	dividerThing = "<center>~~become your dreams~~~</center>"
 	overrideAlertAllowed = 1
 	overrideAlertText = "Starkle?"
+	overrideAlertYesText = "Yes"
+	overrideAlertNoText = "No"
+
+/datum/computer/file/pda_program/ringtone/chimes
+	name = "Spacechimes"
+	size = 4
+	ring_list = list("ring1" = new/datum/ringtone/retkid/ring1,\
+									 "ring2" = new/datum/ringtone/retkid/ring2,\
+									 "ring3" = new/datum/ringtone/retkid/ring3,\
+									 "ring4" = new/datum/ringtone/retkid/ring6,\
+									 "ring5" = new/datum/ringtone/retkid/ring7)
+	topText = "<h4>Spacechime Family</h4>"
+	bottomText = "A diverse family of spacechimes ."
+	selectText = "Choose a set of spacechimes"
+	dividerThing = "<hr>"
+	overrideAlertAllowed = 1
+	overrideAlertText = "Encouragement?"
+	overrideAlertYesText = "Yes"
+	overrideAlertNoText = "No"
+
+/datum/computer/file/pda_program/ringtone/beepy
+	name = "Blipous"
+	size = 4
+	ring_list = list("ring1" = new/datum/ringtone/retkid,\
+									 "ring2" = new/datum/ringtone/retkid/ring4,\
+									 "ring3" = new/datum/ringtone/retkid/ring5,\
+									 "ring4" = new/datum/ringtone/retkid/ring8,\
+									 "ring5" = new/datum/ringtone/retkid/ring9)
+	topText = "<h4>Blipous Family Spaceblips</h4>"
+	bottomText = "A collection of Blipous family heirloom Spaceblips."
+	selectText = "Choose a Spaceblip"
+	dividerThing = "<hr>"
+	overrideAlertAllowed = 1
+	overrideAlertText = "Spacequips?"
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
 

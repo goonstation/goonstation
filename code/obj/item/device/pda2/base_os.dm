@@ -772,7 +772,7 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					src.master.display_alert(alert_beep, previewtext, signal.data["tag"], groupAddress)
+					src.master.display_alert(alert_beep, previewtext, signal.data["tag"], groupAddress, sender)
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"

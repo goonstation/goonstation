@@ -408,6 +408,26 @@
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/basic(src))
 			src.read_only = 1
 
+	ringtone_chimes
+		name = "\improper Jangle Spacechimes ringtone cartridge"
+		desc = "Jangle with us in the spacewind, together."
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/chimes(src))
+			src.read_only = 1
+
+	ringtone_beepy
+		name = "\improper Blipous Family Heirloom Spaceblips cartridge"
+		desc = "Blipous family heirloom Spaceblips."
+		icon_state = "cart-c"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/ringtone/beepy(src))
+			src.read_only = 1
+
 	ringtone_syndie
 		name = "\improper SounDreamS PRO cartridge"
 		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"
