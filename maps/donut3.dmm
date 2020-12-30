@@ -15619,11 +15619,10 @@
 	dir = 1;
 	layer = 4
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "erY" = (
@@ -24451,7 +24450,8 @@
 /area/station/hangar/main)
 "hao" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/wall/auto/jen,
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "hat" = (
 /obj/cable{
@@ -53342,11 +53342,9 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "pSs" = (
@@ -117174,7 +117172,7 @@ jyv
 tJK
 nBj
 brP
-mmy
+wEG
 wbM
 vxt
 edK
@@ -117778,7 +117776,7 @@ mRC
 tJK
 nBj
 etc
-wEG
+mSM
 cYk
 wax
 ogT
@@ -118983,7 +118981,7 @@ qCT
 qCT
 geL
 gba
-pSq
+suy
 nln
 kwi
 osx
