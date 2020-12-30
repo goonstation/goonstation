@@ -1,15 +1,38 @@
 /mob/proc/make_floor_goblin()
-	if(ishuman(src) && src.bioHolder)
-		var/datum/abilityHolder/floor_goblin/abilityHolder = src.add_ability_holder(/datum/abilityHolder/floor_goblin)
-		src.bioHolder.age = -200
-		src.Scale(0.5, 0.5)
-		src.real_name = "Floor Goblin"
-		src.bioHolder.AddEffect("master_thief", 0, 0, 0, 0)
-		src.bioHolder.AddEffect("breathless", 0, 0, 0, 0)
-		abilityHolder.addAbility(/datum/targetable/steal_shoes)
-		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
-		abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
-		abilityHolder.addAbility(/datum/targetable/ankle_bite)
+	if (!(ishuman(src) && src.bioHolder && src.mind))
+		return
+	var/mob/living/carbon/human/H = src
+
+	message_admins("[key_name(usr)] made [key_name(H)] a macho man.")
+	logTheThing("admin", usr, H, "made [constructTarget(H,"admin")] a macho man.")
+
+	var/datum/abilityHolder/floor_goblin/abilityHolder = H.add_ability_holder(/datum/abilityHolder/floor_goblin)
+	H.bioHolder.age = -200
+	H.Scale(0.5, 0.5)
+	H.real_name = "Floor Goblin"
+	H.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
+	H.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
+	H.bioHolder.mobAppearance.s_tone = "#00FF1B"
+	H.bioHolder.mobAppearance.s_tone_original = "#00FF1B"
+	H.bioHolder.mobAppearance.UpdateMob()
+	H.update_colorful_parts()
+
+	abilityHolder.addAbility(/datum/targetable/steal_shoes)
+	abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+	abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
+	abilityHolder.addAbility(/datum/targetable/ankle_bite)
+	ticker.mode.Agimmicks.Add(H)
+
+	H.unequip_all()
+	H.equip_new_if_possible(/obj/item/clothing/shoes/sandal, SLOT_SHOES)
+	H.equip_new_if_possible(/obj/item/clothing/under/gimmick/viking, SLOT_W_UNIFORM)
+	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
+	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
+	H.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
+	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+	H.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
+	H.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
+	H.equip_new_if_possible(/obj/item/shoethief_bag, SLOT_IN_BELT)
 
 
 /obj/item/shoethief_bag

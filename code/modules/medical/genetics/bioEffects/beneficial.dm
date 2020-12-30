@@ -622,19 +622,3 @@ var/list/radio_brains = list()
 		if (src.active)
 			owner.invisibility = 1
 		return
-
-
-/datum/bioEffect/hidden/master_thief
-	name = "Master Thief"
-	desc = "A master at stealing worn items."
-	id = "master_thief"
-	cooldown = 0
-	occur_in_genepools = 0
-	probability = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
