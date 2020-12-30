@@ -1114,6 +1114,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Drug Den"
 	icon_state = "purple"
 
+/area/prefab/von_ricken
+	name ="Von Ricken"
+	icon_state = "blue"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

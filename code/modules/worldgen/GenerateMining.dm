@@ -532,6 +532,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 27
+
+	von_ricken // One way or another - an expensive space vavaction for a physical toll.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_von_ricken.dmm"
+		prefabSizeX = 42
+		prefabSizeY = 40
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
