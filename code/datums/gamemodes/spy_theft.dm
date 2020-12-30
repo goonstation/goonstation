@@ -471,6 +471,7 @@
 		big_station_bounties += /obj/reagent_dispensers
 		big_station_bounties += /obj/machinery/crusher
 		big_station_bounties += /obj/machinery/communications_dish
+		big_station_bounties += /obj/item/teg_semiconductor
 		big_station_bounties += /obj/decal/poster/wallsign/poster_y4nt
 
 	active_bounties.len = 0

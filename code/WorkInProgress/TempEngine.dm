@@ -617,7 +617,7 @@ datum/pump_ui/circulator_ui
 			src.generate_variants()
 
 			if(!src.semiconductor)
-				semiconductor = new
+				semiconductor = new(src)
 
 			updateicon()
 

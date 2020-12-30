@@ -401,8 +401,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 
 /obj/item/teg_semiconductor
-	name = "TEG Semiconductor"
-	desc = "A large rectangulr plate stamped with Prototype Thermo-Electric Generator.  Property of NanoTrasen do not steal."
+	name = "Prototype Semiconductor"
+	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
 
