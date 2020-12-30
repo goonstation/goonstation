@@ -116,8 +116,8 @@
 					"<span class='combat'><b>You bite at [target_human]'s ankles!</b></span>")
 					REMOVE_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
 				sleep(0.4 SECONDS)
-					if(floorturf)
-						animate_slide(floorturf, 0, 0, 4)
+				if(floorturf)
+					animate_slide(floorturf, 0, 0, 4)
 		else
 			playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
 			target_human.changeStatus("weakened", 2 SECONDS)
