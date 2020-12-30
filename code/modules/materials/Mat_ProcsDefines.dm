@@ -112,8 +112,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.color = initial(src.color)
 
 	if(src.material?.owner_hasentered_added)
-		var/turf/T = src.loc
-		if (T)
+		if (isturf(src.loc))
+			var/turf/T = src.loc
 			T.checkinghasentered = max(T.checkinghasentered-1, 0)
 		src.event_handler_flags &= ~USE_HASENTERED
 
