@@ -41,8 +41,8 @@
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))
-			if (src.owner?.ckey)
-				if (!find_ghost_by_key(src.owner?.ckey))
+			if (src.owner?.key)
+				if (!find_ghost_by_key(src.owner?.key))
 					. += "<br><span class='notice'>This brain is slimy.</span>"
 				else
 					. += "<br><span class='notice'>This brain is still warm.</span>"

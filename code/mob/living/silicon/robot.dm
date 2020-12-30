@@ -1126,7 +1126,7 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					var/mob/M = find_ghost_by_key(B.owner.key)
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 						return
