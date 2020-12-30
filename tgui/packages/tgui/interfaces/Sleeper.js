@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020
+ * @author BenLubar (https://github.com/BenLubar)
+ * @license ISC
+ */
+
 import { useBackend } from "../backend";
 import { Box, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, HealthStat } from "../components";
 import { Window } from "../layouts";
