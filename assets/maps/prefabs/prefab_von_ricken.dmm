@@ -83,6 +83,14 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
+"di" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "dp" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -339,6 +347,10 @@
 "mK" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/item/kitchen/utensil/fork/chopsticks{
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
@@ -636,6 +648,9 @@
 /area/prefab/von_ricken)
 "yb" = (
 /obj/machinery/light/small/sticky,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "ye" = (
@@ -1241,6 +1256,16 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
+"QW" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "Rf" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -1265,7 +1290,7 @@
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent/netural,
 /obj/item/clothing/suit/gimmick/light_borg{
-	pixel_y = 1
+	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
@@ -1307,6 +1332,15 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
+"RO" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "RP" = (
 /obj/table/wood/auto,
 /obj/item/canned_laughter{
@@ -1341,6 +1375,9 @@
 /area/prefab/von_ricken)
 "SZ" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "Tr" = (
@@ -1420,6 +1457,13 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"VA" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "VD" = (
 /turf/simulated/floor/black,
@@ -1523,6 +1567,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Zh" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "ZE" = (
 /obj/machinery/manufacturer/hangar,
@@ -2072,7 +2123,7 @@ zm
 jm
 jm
 jm
-np
+RO
 WZ
 Ms
 mA
@@ -2112,9 +2163,9 @@ zm
 zm
 zm
 jm
-Gp
-iM
-iM
+QW
+VA
+di
 jm
 jm
 jm
@@ -2196,7 +2247,7 @@ zm
 zm
 zm
 jm
-iM
+Zh
 jm
 zm
 zm
@@ -2280,7 +2331,7 @@ Xl
 PG
 AI
 jm
-Gp
+Qy
 jm
 zm
 zm
