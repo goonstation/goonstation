@@ -196,7 +196,7 @@
 	if(.)
 		return
 	if(src.sealed)
-		boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
 		return
 	switch(action)
 		if("stamp")
@@ -211,7 +211,7 @@
 				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.current_mode]");
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
 				var/matrix/stamp_matrix = matrix()
 				stamp_matrix.Scale(1, 1)
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
@@ -329,12 +329,18 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
+		if(src.sealed)
+			boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+			return
 		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
 			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
+		if(src.sealed)
+			boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+			return
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
