@@ -64,6 +64,8 @@
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
 	var/edible = 0
 
+	var/owner_hasentered_added = FALSE
+
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
