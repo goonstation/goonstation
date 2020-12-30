@@ -12,6 +12,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 'sound/voice/macho/macho_idle_breath_01.ogg', 'sound/voice/macho/macho_mumbling04.ogg', 'sound/voice/macho/macho_moan03.ogg',\
 'sound/voice/macho/macho_mumbling05.ogg', 'sound/voice/macho/macho_mumbling07.ogg', 'sound/voice/macho/macho_shout08.ogg')
 
+/datum/targetable/macho
+
 /mob/living/carbon/human/machoman
 	var/list/macho_arena_turfs
 	New()
@@ -32,6 +34,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
 		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+
+		for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+			src.abilityHolder.addAbility(A)
+		src.abilityHolder.updateButtons()
 
 	initializeBioholder()
 		src.bioHolder.mobAppearance.customization_first = "Dreadlocks"

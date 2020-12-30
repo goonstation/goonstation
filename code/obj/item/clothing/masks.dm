@@ -250,8 +250,7 @@
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			if(user)
-				user.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0

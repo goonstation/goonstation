@@ -65,8 +65,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -325,8 +324,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)

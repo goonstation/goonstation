@@ -6781,16 +6781,13 @@
 /area/salyut)
 "asd" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
+/obj/item/clothing/suit/space/soviet{
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

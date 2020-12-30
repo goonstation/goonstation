@@ -20,6 +20,11 @@ WET FLOOR SIGN
 	throw_speed = 2
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
+	move_triggered = 1
+
+/obj/item/spraybottle/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
 
 /obj/item/spraybottle/pixelaction(atom/target, params, mob/user, reach)
 	..()

@@ -2046,8 +2046,7 @@
 							H.emote("scream")
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
-						if(dab_id)
-							dab_id.brain_damage_count += 10
+						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
 				else

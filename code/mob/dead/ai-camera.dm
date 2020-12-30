@@ -399,8 +399,7 @@
 		set name = "Cancel Camera View"
 
 		..()
-		if(mainframe)
-			mainframe.cancel_camera()
+		mainframe?.cancel_camera()
 		SPAWN_DBG(1 DECI SECOND)
 			src.return_mainframe()
 

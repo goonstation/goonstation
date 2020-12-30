@@ -1,5 +1,3 @@
-var/image/blob_icon_cache
-var/image/anim_icon_cache
 /obj/blob
 	name = "blob"
 	desc = "A mysterious alien blob-like organism."
@@ -44,17 +42,6 @@ var/image/anim_icon_cache
 
 	New()
 		..()
-		if(!blob_icon_cache)
-			if (special_icon)
-				blob_icon_cache = image('icons/mob/blob_organs.dmi')
-			else
-				blob_icon_cache = image('icons/mob/blob.dmi')
-			blob_icon_cache.appearance_flags |= RESET_COLOR
-			blob_icon_cache.plane = PLANE_SELFILLUM + 1
-		if(!anim_icon_cache)
-			anim_icon_cache = image('icons/mob/blob_organs.dmi')
-			anim_icon_cache.appearance_flags |= RESET_COLOR
-			anim_icon_cache.plane = PLANE_SELFILLUM + 2
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
 		src.update_icon()
@@ -115,13 +102,25 @@ var/image/anim_icon_cache
 			O.blobs |= src
 			onAttach(O)
 			if( state_overlay )
-				blob_icon_cache.color = O.organ_color
-				blob_icon_cache.icon_state = state_overlay
-				UpdateOverlays(blob_icon_cache,"overmind")
+				var/image/blob_image
+				if (special_icon)
+					blob_image = image('icons/mob/blob_organs.dmi')
+				else
+					blob_image = image('icons/mob/blob.dmi')
+				blob_image.appearance_flags |= RESET_COLOR
+				blob_image.plane = PLANE_SELFILLUM + 1
+
+				blob_image.color = O.organ_color
+				blob_image.icon_state = state_overlay
+				UpdateOverlays(blob_image,"overmind")
 			if ( anim_overlay )
-				anim_icon_cache.color = O.organ_color
-				anim_icon_cache.icon_state = anim_overlay
-				UpdateOverlays(anim_icon_cache,"anim_overlay")
+				var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
+				blob_anim_image.appearance_flags |= RESET_COLOR
+				blob_anim_image.plane = PLANE_SELFILLUM + 2
+
+				blob_anim_image.color = O.organ_color
+				blob_anim_image.icon_state = anim_overlay
+				UpdateOverlays(blob_anim_image,"anim_overlay")
 			if ( O.hat && istype(src,/obj/blob/nucleus))
 				O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
 				UpdateOverlays(O.hat,"hat")
@@ -1249,9 +1248,13 @@ var/image/anim_icon_cache
 		setMaterial(copyMaterial(mat))
 		pixel_x = rand(-12, 12)
 		pixel_y = rand(-12, 12)
-		blob_icon_cache.color = overmind.organ_color
-		blob_icon_cache.icon_state = "deposit-material"
-		UpdateOverlays(blob_icon_cache,name)
+
+		var/image/ov = image('icons/mob/blob_organs.dmi')
+		ov.appearance_flags |= RESET_COLOR
+		ov.plane = PLANE_SELFILLUM + 1
+		ov.color = overmind.organ_color
+		ov.icon_state = "deposit-material"
+		UpdateOverlays(ov, name)
 
 	onMaterialChanged()
 		pixel_x = rand(-12, 12)

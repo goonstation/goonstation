@@ -542,3 +542,25 @@ obj/item/gun/reagent/syringe/lovefilled
 				flick("geiger-2", src)
 			if(5)
 				flick("geiger-3", src)
+
+
+/obj/decal/fireplace  //for Jan's chrismas event
+	name = "fireplace"
+	desc = "Looks pretty toasty."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	color = "#b74909"
+
+	New()
+		. = ..()
+		processing_items += src
+
+	disposing()
+		processing_items -= src
+		. = ..()
+
+	proc/process()
+		if(!PROC_ON_COOLDOWN(30 SECONDS))
+			for (var/mob/living/M in view(src, 5))
+				if (M.bioHolder)
+					M.bioHolder.AddEffect("cold_resist", 0, 45)

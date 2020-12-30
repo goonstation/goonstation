@@ -270,6 +270,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/emp_act()
 	..()
+	if(!src.lighting && !src.equipment && !src.environ ) return //avoid stacking apc emp effects
 	if(src.cell)
 		src.cell.charge -= 1000
 		if (src.cell.charge < 0)
@@ -457,9 +458,7 @@ var/zapLimiter = 0
 
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
-			if (!istype(user, /mob/living/silicon/robot))
-				return
-			var/mob/living/silicon/robot/S = user
+			var/mob/living/silicon/S = user
 			var/obj/item/robojumper/jumper = W
 			var/obj/item/cell/donor_cell = null
 			var/obj/item/cell/recipient_cell = null

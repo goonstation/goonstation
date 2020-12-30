@@ -103,13 +103,11 @@
 /obj/item/proc/setItemSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.special)
-				src.special.onRemove()
+			src.special?.onRemove()
 			src.special = null
 		return null
 
-	if(src.special)
-		src.special.onRemove()
+	src.special?.onRemove()
 
 	var/datum/item_special/S = new type
 	S.master = src
@@ -120,13 +118,11 @@
 /datum/limb/proc/setDisarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.disarm_special)
-				src.disarm_special.onRemove()
+			src.disarm_special?.onRemove()
 			src.disarm_special = null
 		return null
 
-	if(src.disarm_special)
-		src.disarm_special.onRemove()
+	src.disarm_special?.onRemove()
 
 	src.disarm_special = new type
 	src.disarm_special.onAdd()
@@ -135,13 +131,11 @@
 /datum/limb/proc/setHarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.harm_special)
-				src.harm_special.onRemove()
+			src.harm_special?.onRemove()
 			src.harm_special = null
 		return null
 
-	if(src.harm_special)
-		src.harm_special.onRemove()
+	src.harm_special?.onRemove()
 
 	src.harm_special = new type
 	src.harm_special.onAdd()

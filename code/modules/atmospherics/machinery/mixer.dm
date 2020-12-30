@@ -275,8 +275,7 @@ obj/machinery/atmospherics/mixer
 		if(network_in2 && transfer_moles2)
 			network_in2.update = 1
 
-		if(network_out)
-			network_out.update = 1
+		network_out?.update = 1
 
 		return 1
 

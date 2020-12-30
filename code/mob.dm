@@ -381,6 +381,7 @@
 	cooldowns = null
 	lastattacked = null
 	lastattacker = null
+	health_update_queue -= src
 	..()
 
 /mob/Login()
@@ -2931,3 +2932,6 @@
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
+
+/mob/proc/on_eat(var/atom/A)
+	return

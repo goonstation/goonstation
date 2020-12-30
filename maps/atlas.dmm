@@ -1844,6 +1844,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/stairs/wide,
 /area/station/mining/refinery)
 "eE" = (
@@ -10516,6 +10517,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "zi" = (
@@ -18708,6 +18710,7 @@
 	light_type = /obj/item/light/tube/blueish
 	},
 /obj/item/robot_module/brobocop,
+/obj/machinery/drainage,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "Wr" = (
@@ -19728,13 +19731,13 @@
 	icon_state = "0-8"
 	},
 /obj/table/reinforced/auto,
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/grasstodirt{

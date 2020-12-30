@@ -90,8 +90,7 @@
 /mob/living/intangible/flock/flockmind/death(gibbed)
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
-	if(src.flock)
-		src.flock.perish()
+	src.flock?.perish()
 	src.invisibility = 0
 	src.icon_state = "blank"
 	src.canmove = 0

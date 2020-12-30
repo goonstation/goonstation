@@ -16100,13 +16100,13 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
 /obj/access_spawn/rancher,
@@ -16120,6 +16120,9 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/stool/chair/green{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Rancher"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -47521,6 +47524,13 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fVJ" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/arc_electroplater,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -84968,7 +84978,7 @@ bvS
 bKw
 bNd
 bOl
-bOl
+fVJ
 bQo
 bRn
 bJE
