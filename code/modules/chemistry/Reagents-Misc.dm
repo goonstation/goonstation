@@ -66,16 +66,19 @@ datum
 					explode(holder.covered_turf(), "temperature change to gaseous form")
 
 			reaction_turf(var/turf/T, var/volume)
-				explode(list(T), "splash on turf")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(T), "splash on turf")
 
 			reaction_mob(var/mob/M, var/volume)
-				explode(list(get_turf(M)), "splash on [key_name(M)]")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
-				explode(list(get_turf(O)), "splash on [key_name(O)]")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
 			physical_shock(var/force)
-				if (reagent_state == SOLID && force >= 4 && prob(force - (14 - holder.total_temperature) * 0.1))
+				if (reagent_state == SOLID && force >= 4 && prob(force - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in solid state")
 				else if (reagent_state == LIQUID && prob(force * 6))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in liquid state")
@@ -84,11 +87,11 @@ datum
 				var/datum/reagent/nitroglycerin/target_ng = target.get_reagent("nitroglycerin")
 				logTheThing("combat", usr, null, "caused physical shock to nitroglycerin by transferring [trans_volume]u from [source.my_atom] to [target.my_atom].")
 				// mechanical dropper transfer (1u): solid at 14°C: 0%, liquid: 0%
-				// classic dropper transfer (5u): solid at 14°C: 0% (due to min force cap), liquid: 20%
+				// classic dropper transfer (5u): solid at 14°C: 0% (due to min force cap), liquid: 15%
 				// beaker transfer (10u): solid at -36°C: 0%, solid: 5%, liquid: 30%
 				// the only safe way to transfer nitroglycerin is by freezing it
 				// thenagain, it may explode when being thawed unless heated *very* slowly
-				target_ng.physical_shock(round(0.45 * trans_volume))
+				target_ng.physical_shock(0.5 * trans_volume)
 
 		copper_nitrate
 			name = "copper nitrate"
@@ -546,7 +549,7 @@ datum
 					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
-						G = find_ghost_by_key(B?.owner?.ckey)
+						G = find_ghost_by_key(B?.owner?.key)
 						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (G?.mind?.dnr)
@@ -556,7 +559,7 @@ datum
 								H.gib()
 							return
 					else // else just get whoever's the mind
-						G = find_ghost_by_key(M.mind?.ckey)
+						G = find_ghost_by_key(M.mind?.key)
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")

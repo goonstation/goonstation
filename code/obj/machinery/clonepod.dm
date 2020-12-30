@@ -294,6 +294,7 @@
 		else //welp
 			logTheThing("debug", null, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
+			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind

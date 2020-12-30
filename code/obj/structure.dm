@@ -282,7 +282,9 @@ obj/structure/ex_act(severity)
 		var/FloorName = T.name
 		var/oldmat = src.material
 
-		T.ReplaceWith(/turf/simulated/wall/false_wall, FALSE, FALSE, FALSE)
+		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
+
+		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
 		if(oldmat)
 			A.setMaterial(oldmat)
@@ -295,8 +297,6 @@ obj/structure/ex_act(severity)
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
 		FW.known_by += user
-		if (S.reinforcement)
-			FW.icon_state = "rdoor1"
 		S.consume_sheets(1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")

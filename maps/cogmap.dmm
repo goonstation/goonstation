@@ -2999,12 +2999,6 @@
 	anchored = 1;
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/item/reagent_containers/bath_bomb,
 /obj/item/reagent_containers/bath_bomb,
 /turf/simulated/floor/sanitary,
@@ -4707,6 +4701,11 @@
 /obj/item/clothing/gloves/kote,
 /obj/item/shinai_bag,
 /obj/item/storage/box/kendo_box/hakama,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "akV" = (
@@ -7412,15 +7411,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"arp" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/showers)
 "arq" = (
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
@@ -10702,6 +10692,12 @@
 /area/station/crew_quarters/locker)
 "ayD" = (
 /obj/storage/closet/wardrobe/grey,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -53332,12 +53328,6 @@
 "ciZ" = (
 /obj/table/auto,
 /obj/item/paper_bin,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cja" = (
@@ -106778,7 +106768,7 @@ agR
 ahJ
 aiH
 ajP
-arp
+akP
 akP
 amG
 aog
