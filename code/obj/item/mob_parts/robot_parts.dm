@@ -1134,7 +1134,7 @@
 				O.gender = O.brain.owner.current.gender
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(O.brain.owner.ckey)
+			var/mob/M = find_ghost_by_key(O.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 				O.collapse_to_pieces()
