@@ -1,31 +1,9 @@
 import { useBackend } from "../backend";
-import { Box, ColorBox, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, HealthStat } from "../components";
+import { Box, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, HealthStat } from "../components";
 import { Window } from "../layouts";
 import { formatTime } from "../format";
-import { clamp } from 'common/math';
 
-const Suffixes = ["", "k", "M", "B", "T"];
-
-export const shortenNumber = (value, minimumTier = 0) => {
-  const tier = Math.log10(Math.abs(value)) / 3 | 0;
-  return (tier === minimumTier) ? value
-    : `${Math.round(value / Math.pow(10, tier * 3))}${Suffixes[tier]}`;
-};
-
-const healthColorByLevel = [
-  "#17d568",
-  "#2ecc71",
-  "#e67e22",
-  "#ed5100",
-  "#e74c3c",
-  "#ed2814",
-];
-
-const healthToColor = (oxy, tox, burn, brute) => {
-  const healthSum = oxy + tox + burn + brute;
-  const level = clamp(Math.ceil(healthSum / 25), 0, 5);
-  return healthColorByLevel[level];
-};
+const damageNum = num => num <= 0 ? "0" : num.toFixed(1);
 
 export const Sleeper = (props, context) => {
   const { data, act } = useBackend(context);
@@ -72,7 +50,7 @@ export const Sleeper = (props, context) => {
           {!!hasOccupant && (
             <LabeledList>
               <LabeledList.Item label="Status">
-                <Icon color={occupantStat > 1 ? "bad" : "good"}
+                <Icon color={occupantStat > 1 ? "bad" : occupantStat === 1 ? "average" : "good"}
                   name={occupantStat === 0 ? "check" : occupantStat === 1 ? "bed" : "skull"} />
                 {
                   occupantStat === 0 ? " Conscious"
@@ -94,19 +72,19 @@ export const Sleeper = (props, context) => {
               </LabeledList.Item>
               <LabeledList.Item label="Damage Breakdown">
                 <HealthStat inline align="center" type="oxy" width={5}>
-                  {shortenNumber(oxyDamage)}
+                  {damageNum(oxyDamage)}
                 </HealthStat>
                 {"/"}
                 <HealthStat inline align="center" type="toxin" width={5}>
-                  {shortenNumber(toxDamage)}
+                  {damageNum(toxDamage)}
                 </HealthStat>
                 {"/"}
                 <HealthStat inline align="center" type="burn" width={5}>
-                  {shortenNumber(burnDamage)}
+                  {damageNum(burnDamage)}
                 </HealthStat>
                 {"/"}
                 <HealthStat inline align="center" type="brute" width={5}>
-                  {shortenNumber(bruteDamage)}
+                  {damageNum(bruteDamage)}
                 </HealthStat>
               </LabeledList.Item>
             </LabeledList>
