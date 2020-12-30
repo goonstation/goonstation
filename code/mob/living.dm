@@ -685,10 +685,6 @@
 		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
-	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
-		return
-
 	if (isdead(src))
 		if (dd_hasprefix(message, "*")) // no dead emote spam
 			return
@@ -719,7 +715,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4) // Perfluorodecalin cap - normal life() depletion - buffer.
+		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && (H.hasStatus("resting") || H.getStatusDuration("weakened")))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message)
 			return
 
