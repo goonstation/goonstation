@@ -296,7 +296,7 @@
 
 		if(usr.plane == PLANE_UNDERFLOOR)
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
-			usr.mob_flags &= ~NO_MOVEMENT_PUFFS
+			usr.mob_flags &= ~(NO_MOVEMENT_PUFFS | NO_DENSITY)
 			usr.set_density(initial(usr.density))
 			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
@@ -315,7 +315,7 @@
 				if(usr)
 					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
-					usr.mob_flags |= NO_MOVEMENT_PUFFS
+					usr.mob_flags |= NO_MOVEMENT_PUFFS | NO_DENSITY
 					usr.set_density(0)
 					usr.layer = 4
 					usr.plane = PLANE_UNDERFLOOR
