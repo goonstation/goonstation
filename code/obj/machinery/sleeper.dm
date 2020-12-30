@@ -163,7 +163,8 @@
 	ui_data(mob/user)
 		if (!src.our_sleeper)
 			return list(
-				"sleeperGone" = TRUE
+				"sleeperGone" = TRUE,
+				"hasOccupant" = FALSE,
 			)
 
 		. = list(
@@ -395,6 +396,8 @@
 			if (M.get_toxin_damage() >= 15 && M.reagents.get_reagent_amount(src.med_tox) == 0)
 				M.reagents.add_reagent(src.med_tox, 2)
 
+		playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
+
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
 		return
 
@@ -458,7 +461,7 @@
 
 			src.no_med_spam = world.time
 
-			playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 75 : 50, 1)
+			playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
 
 		return
 

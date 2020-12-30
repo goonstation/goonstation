@@ -1,8 +1,31 @@
 import { useBackend } from "../backend";
-import { Box, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay } from "../components";
+import { Box, ColorBox, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, HealthStat } from "../components";
 import { Window } from "../layouts";
-import { COLORS } from "../constants";
 import { formatTime } from "../format";
+import { clamp } from 'common/math';
+
+const Suffixes = ["", "k", "M", "B", "T"];
+
+export const shortenNumber = (value, minimumTier = 0) => {
+  const tier = Math.log10(Math.abs(value)) / 3 | 0;
+  return (tier === minimumTier) ? value
+    : `${Math.round(value / Math.pow(10, tier * 3))}${Suffixes[tier]}`;
+};
+
+const healthColorByLevel = [
+  "#17d568",
+  "#2ecc71",
+  "#e67e22",
+  "#ed5100",
+  "#e74c3c",
+  "#ed2814",
+];
+
+const healthToColor = (oxy, tox, burn, brute) => {
+  const healthSum = oxy + tox + burn + brute;
+  const level = clamp(Math.ceil(healthSum / 25), 0, 5);
+  return healthColorByLevel[level];
+};
 
 export const Sleeper = (props, context) => {
   const { data, act } = useBackend(context);
@@ -32,7 +55,7 @@ export const Sleeper = (props, context) => {
     <Window
       theme="ntos"
       width={440}
-      height={535}>
+      height={440}>
       <Window.Content>
         <Section title="Occupant Statistics"
           buttons={
@@ -69,50 +92,22 @@ export const Sleeper = (props, context) => {
                     bad: [-Infinity, 50],
                   }} />
               </LabeledList.Item>
-              <LabeledList.Divider />
-              <LabeledList.Item label="Respiratory Damage" labelColor={COLORS.damageType.oxy}>
-                <ProgressBar
-                  value={oxyDamage}
-                  maxValue={100}
-                  minValue={0}
-                  ranges={{
-                    good: [0, 5],
-                    average: [5, 60],
-                    bad: [60, Infinity],
-                  }} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Toxin Content" labelColor={COLORS.damageType.toxin}>
-                <ProgressBar
-                  value={toxDamage}
-                  maxValue={100}
-                  minValue={0}
-                  ranges={{
-                    good: [0, 5],
-                    average: [5, 60],
-                    bad: [60, Infinity],
-                  }} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Burn Severity" labelColor={COLORS.damageType.burn}>
-                <ProgressBar
-                  value={burnDamage}
-                  maxValue={100}
-                  minValue={0}
-                  ranges={{
-                    good: [0, 5],
-                    average: [5, 60],
-                    bad: [60, Infinity],
-                  }} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Brute Damage" labelColor={COLORS.damageType.brute}>
-                <ProgressBar
-                  value={bruteDamage}
-                  maxValue={100}
-                  minValue={0}
-                  ranges={{
-                    good: [0, 5],
-                    average: [5, 60],
-                    bad: [60, Infinity],
-                  }} />
+              <LabeledList.Item label="Damage Breakdown">
+                <HealthStat inline align="center" type="oxy" width={5}>
+                  {shortenNumber(oxyDamage)}
+                </HealthStat>
+                {"/"}
+                <HealthStat inline align="center" type="toxin" width={5}>
+                  {shortenNumber(toxDamage)}
+                </HealthStat>
+                {"/"}
+                <HealthStat inline align="center" type="burn" width={5}>
+                  {shortenNumber(burnDamage)}
+                </HealthStat>
+                {"/"}
+                <HealthStat inline align="center" type="brute" width={5}>
+                  {shortenNumber(bruteDamage)}
+                </HealthStat>
               </LabeledList.Item>
             </LabeledList>
           )}
