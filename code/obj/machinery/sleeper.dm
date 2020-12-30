@@ -23,7 +23,7 @@
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
-	var/time_started = 0 // world.timeofday when the timer was started
+	var/time_started = 0 // TIME when the timer was started
 	var/obj/machinery/sleeper/our_sleeper = null
 	var/find_sleeper_in_range = 1
 
@@ -123,6 +123,18 @@
 
 	power_change()
 		return
+
+	ui_status(mob/user)
+		var/use_obj = src
+		if (src.loc == src.our_sleeper) // port-a-medbay
+			use_obj = src.loc
+			if (user in use_obj)
+				return UI_CLOSE
+		return min(
+			tgui_broken_state.can_use_topic(use_obj, user),
+			tgui_physical_state.can_use_topic(use_obj, user),
+			tgui_not_incapacitated_state.can_use_topic(use_obj, user)
+		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
