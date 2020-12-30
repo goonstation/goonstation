@@ -374,9 +374,12 @@
 		if (isdead(M))
 			return
 
+		var/injected_anything = FALSE
+
 		// We always inject this, even when emagged to mask the fact we're malfunctioning.
 		// Otherwise, one glance at the control console would be sufficient.
 		if (M.reagents.get_reagent_amount(src.med_stabilizer) == 0)
+			injected_anything = TRUE
 			M.reagents.add_reagent(src.med_stabilizer, 2)
 
 		// Why not, I guess? Might convince people to willingly enter hiberation, providing
@@ -400,15 +403,20 @@
 			if (M.reagents.get_reagent_amount(our_poison) == 0)
 				//DEBUG_MESSAGE("Injected occupant with [our_poison] at [log_loc(src)].")
 				M.reagents.add_reagent(our_poison, 2)
+				// don't set injected_anything (the poison uses a sneaky silent injector)
 		else
 			if (M.health < -25 && M.reagents.get_reagent_amount(src.med_crit) == 0)
 				M.reagents.add_reagent(src.med_crit, 2)
+				injected_anything = TRUE
 			if (M.get_oxygen_deprivation() >= 15 && M.reagents.get_reagent_amount(src.med_oxy) == 0)
 				M.reagents.add_reagent(src.med_oxy, 2)
+				injected_anything = TRUE
 			if (M.get_toxin_damage() >= 15 && M.reagents.get_reagent_amount(src.med_tox) == 0)
 				M.reagents.add_reagent(src.med_tox, 2)
+				injected_anything = TRUE
 
-		playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
+		if (injected_anything)
+			playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
 		return
@@ -432,13 +440,16 @@
 			var/oxy = src.occupant.reagents.get_reagent_amount(src.med_oxy)
 			var/tox = src.occupant.reagents.get_reagent_amount(src.med_tox)
 
+			var/injected_anything = FALSE
+
 			// We always inject this, even when emagged to mask the fact we're malfunctioning.
 			// Otherwise, one glance at the control console would be sufficient.
 			if (rejuv < 10)
 				var/inject_r = 5
-				if ((rejuv + 5) > 10)
+				if ((rejuv + inject_r) > 10)
 					inject_r = max(0, (10 - rejuv))
 				src.occupant.reagents.add_reagent(src.med_stabilizer, inject_r)
+				injected_anything = TRUE
 
 			// No life-saving meds for you, buddy.
 			if (src.emagged)
@@ -446,34 +457,39 @@
 				var/poison = src.occupant.reagents.get_reagent_amount(our_poison)
 				if (poison < 5)
 					var/inject_p = 2.5
-					if ((poison + 2.5) > 5)
-						inject_p = max(0, (2.5 - poison))
+					if ((poison + inject_p) > 5)
+						inject_p = max(0, (5 - poison))
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
+					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
 						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < -25 && crit < 10)
 					var/inject_c = 5
-					if ((crit + 5) > 10)
+					if ((crit + inject_c) > 10)
 						inject_c = max(0, (10 - crit))
 					src.occupant.reagents.add_reagent(src.med_crit, inject_c)
+					injected_anything = TRUE
 
 				if (src.occupant.get_oxygen_deprivation() >= 15 && oxy < 10)
 					var/inject_o = 5
-					if ((oxy + 5) > 10)
+					if ((oxy + inject_o) > 10)
 						inject_o = max(0, (10 - oxy))
 					src.occupant.reagents.add_reagent(src.med_oxy, inject_o)
+					injected_anything = TRUE
 
 				if (src.occupant.get_toxin_damage() >= 15 && tox < 10)
 					var/inject_t = 5
-					if ((tox + 5) > 10)
+					if ((tox + inject_t) > 10)
 						inject_t = max(0, (10 - tox))
 					src.occupant.reagents.add_reagent(src.med_tox, inject_t)
+					injected_anything = TRUE
 
 			src.no_med_spam = world.time
 
-			playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
+			if (injected_anything)
+				playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
 
 		return
 
@@ -656,11 +672,6 @@
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 
-	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
-
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
@@ -743,15 +754,10 @@
 		our_console = new /obj/machinery/sleep_console/portable (src)
 		our_console.our_sleeper = src
 
-	disposing() // what the fuck is this?
+	disposing()
 		..()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
-
-	disposing() // combined with this???
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
 
 	attack_hand(mob/user as mob)
 		if (our_console)
