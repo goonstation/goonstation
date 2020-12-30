@@ -549,7 +549,7 @@ datum
 					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
-						G = find_ghost_by_key(B?.owner?.ckey)
+						G = find_ghost_by_key(B?.owner?.key)
 						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (G?.mind?.dnr)
@@ -559,7 +559,7 @@ datum
 								H.gib()
 							return
 					else // else just get whoever's the mind
-						G = find_ghost_by_key(M.mind?.ckey)
+						G = find_ghost_by_key(M.mind?.key)
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")

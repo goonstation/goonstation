@@ -41,11 +41,17 @@
 			user.u_equip(W)
 			qdel(W)
 			return 1
+		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
+			glass_amt += W.amount * 10
+			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.u_equip(W)
+			qdel(W)
+			return 1
 		else if (istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (istype(W,/obj/item/reagent_containers/food/drinks))
 				var/obj/item/reagent_containers/food/drinks/D = W
 				if (!D.can_recycle)
-					boutput(user, "<span class='alert'>[src] only accepts glass shards or glassware!</span>")
+					boutput(user, "<span class='alert'>[src] only accepts crystals, glass shards or glassware!</span>")
 					return
 				if (istype(W,/obj/item/reagent_containers/food/drinks/bottle))
 					var/obj/item/reagent_containers/food/drinks/bottle/B = W
