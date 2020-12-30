@@ -295,8 +295,8 @@
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
 		if(usr.plane == PLANE_UNDERFLOOR)
-			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS | NO_DENSITY)
-			usr.mob_flags &= ~NO_SPRINT_PUFFS
+			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
+			usr.mob_flags &= ~NO_MOVEMENT_PUFFS
 			usr.set_density(initial(usr.density))
 			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
@@ -314,8 +314,8 @@
 			SPAWN_DBG(0.4 SECONDS)
 				if(usr)
 					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
-					usr.flags |= NODRIFT | DOORPASS | TABLEPASS | NO_DENSITY
-					usr.mob_flags |= NO_SPRINT_PUFFS
+					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
+					usr.mob_flags |= NO_MOVEMENT_PUFFS
 					usr.set_density(0)
 					usr.layer = 4
 					usr.plane = PLANE_UNDERFLOOR

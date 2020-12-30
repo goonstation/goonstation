@@ -878,13 +878,9 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	if(src?.flags & NO_DENSITY)
-		newdensity = 0
 	src.density = newdensity
 
 /atom/movable/set_density(var/newdensity)
-	if(src?.flags & NO_DENSITY)
-		newdensity = 0
 	//BASICALLY : if we dont have the USE_CANPASS flag, turf's checkingcanpass value relies entirely on our density.
 	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
 	if (src.density != newdensity)
