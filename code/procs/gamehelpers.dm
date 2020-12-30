@@ -129,8 +129,8 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 				return 1
 
 		else if (isobj(source))
-			var/obj/M = source
-			if(M.can_access_remotely(user))
+			var/obj/SO = source
+			if(SO.can_access_remotely(user))
 				return 1
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
