@@ -11,9 +11,9 @@
 	MouseDrag(over_object, src_location, over_location, src_control, over_control, params)
 		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDRAG, over_object, over_location, over_control, params)
 
-	MouseDown(object, location, control, params)
+	MouseDown(location, control, params)
 		. = ..()
-		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, object, location, control, params)
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, src, location, control, params)
 
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
