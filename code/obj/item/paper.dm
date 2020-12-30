@@ -141,9 +141,7 @@
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
 		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
 			return
-		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		usr.u_equip(src)
 		if (fold == "Paper hat")
 			usr.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
@@ -156,12 +154,12 @@
 			else
 				usr.show_text("You crumple the paper into a ball! Neat.", "blue")
 				F = new /obj/item/paper/folded/ball(usr)
-			F.info = P.info
-			F.old_desc = P.desc
-			F.old_icon_state = P.icon_state
-			F.sealed = 1
+			F.info = src.info
+			F.old_desc = src.desc
+			F.old_icon_state = src.icon_state
 			usr.put_in_hand_or_drop(F)
-		pool(P)
+
+		pool(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
