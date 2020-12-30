@@ -3,8 +3,8 @@
 		return
 	var/mob/living/carbon/human/H = src
 
-	message_admins("[key_name(usr)] made [key_name(H)] a macho man.")
-	logTheThing("admin", usr, H, "made [constructTarget(H,"admin")] a macho man.")
+	message_admins("[key_name(usr)] made [key_name(H)] a floor goblin.")
+	logTheThing("admin", usr, H, "made [constructTarget(H,"admin")] a floor goblin.")
 
 	var/datum/abilityHolder/floor_goblin/abilityHolder = H.add_ability_holder(/datum/abilityHolder/floor_goblin)
 	H.bioHolder.age = -200
@@ -115,7 +115,7 @@
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
 					"<span class='combat'><b>You bite at [target_human]'s ankles!</b></span>")
 					REMOVE_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
-				SPAWN_DBG(0.4 SECONDS)
+				sleep(0.4 SECONDS)
 					if(floorturf)
 						animate_slide(floorturf, 0, 0, 4)
 		else
