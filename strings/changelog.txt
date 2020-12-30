@@ -2,8 +2,11 @@
 (t)wed dec 30 20
 (u)Efi
 (p)3125
-(e)|
-(+)Glass recyclers now accept processed crystalline material pieces.
+(e)🆕|feature
+(+)Glass recyclers now also accept processed crystalline material pieces.
+(u)Flourish
+(e)🆕|feature
+(+)Added two new supply packs to QM; firefighting foamtank crate and firefighting supplies crate.
 (t)mon dec 28 20
 (u)Tarmunora
 (e)⚖|balance
