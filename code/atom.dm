@@ -913,7 +913,7 @@
 
 	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_HASENTERED)
+			if (~src.event_handler_flags & USE_HASENTERED)
 				if(cur_mat_triggeronentered)
 					var/turf/T = src.loc
 					if (T)
