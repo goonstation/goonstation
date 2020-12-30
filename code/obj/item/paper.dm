@@ -139,6 +139,8 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
+		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+			return
 		var/obj/item/paper/P = src
 		src = null
 		usr.u_equip(P)
