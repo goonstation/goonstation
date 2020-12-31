@@ -1631,7 +1631,6 @@
 "adr" = (
 /obj/machinery/port_a_brig,
 /obj/blind_switch/area/east,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "ads" = (
@@ -4393,11 +4392,11 @@
 /area/station/medical/medbay/surgery/storage)
 "ajT" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/decoration/flower_vase,
 /obj/item/device/radio/intercom/medical{
 	broadcasting = 1;
 	dir = 8
 	},
+/obj/machinery/coffeemaker/medbay,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "ajU" = (
@@ -7228,13 +7227,24 @@
 /area/station/turret_protected/Zeta)
 "aqi" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/item/stamp,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = -7
+	},
+/obj/item/paper_bin{
+	pixel_y = -2
+	},
+/obj/item/pen{
+	pixel_y = -2
+	},
+/obj/item/pen/fancy{
+	pixel_x = -6
+	},
 /obj/item/crowbar,
+/obj/item/stamp,
 /obj/disposalpipe/segment,
+/obj/machinery/recharger{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqj" = (
@@ -9735,7 +9745,11 @@
 /area/station/medical/medbay/pharmacy)
 "awc" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin,
+/obj/item/paper_bin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/postit_stack,
 /obj/item/pen,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -13855,6 +13869,9 @@
 /area/station/science/teleporter)
 "aFM" = (
 /obj/table/glass/reinforced/auto,
+/obj/item/device/gps{
+	pixel_x = -4
+	},
 /obj/item/device/gps,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -15863,6 +15880,8 @@
 /area/station/storage/tech)
 "aKq" = (
 /obj/machinery/light/incandescent/warm/very,
+/obj/table/round,
+/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKr" = (
@@ -17300,6 +17319,9 @@
 "aNK" = (
 /obj/table/reinforced/auto{
 	icon_state = "3"
+	},
+/obj/item/paper/book/hydroponicsguide{
+	pixel_x = -4
 	},
 /obj/item/paper_bin,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -19305,11 +19327,11 @@
 /turf/space/fluid/nospawn,
 /area/space)
 "aSG" = (
-/obj/access_spawn/tox_storage,
-/obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 8
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/tox_storage,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aSH" = (
@@ -19352,11 +19374,10 @@
 /area/station/science/chemistry)
 "aSN" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/patch/bruise,
-/obj/item/postit_stack,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/coffeemaker,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -34100,6 +34121,7 @@
 /area/station/quartermaster/office)
 "bCW" = (
 /obj/table/reinforced/auto,
+/obj/item/hand_labeler,
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/stamp,
@@ -36192,7 +36214,7 @@
 "bHP" = (
 /obj/machinery/light_switch/auto,
 /obj/table/auto,
-/obj/item/hand_labeler,
+/obj/machinery/coffeemaker,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bHQ" = (
@@ -41663,7 +41685,12 @@
 /area/station/security/interrogation)
 "bVl" = (
 /obj/table/reinforced/auto,
-/obj/item/decoration/ashtray,
+/obj/item/decoration/ashtray{
+	pixel_y = -3
+	},
+/obj/machinery/recharger{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bVm" = (
@@ -42306,9 +42333,6 @@
 /area/station/security/main)
 "bWR" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger{
-	pixel_y = -5
-	},
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
@@ -42320,6 +42344,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/coffeemaker/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bWS" = (
@@ -44716,12 +44741,8 @@
 /area/station/hydroponics/bay)
 "cev" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/wateringcan,
-/obj/item/reagent_containers/glass/wateringcan,
-/obj/item/paper/book/hydroponicsguide,
 /obj/machinery/light/incandescent/netural,
-/obj/item/bee_egg_carton,
-/obj/item/bee_egg_carton,
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -44750,8 +44771,15 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/submachine/chicken_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/glass/wateringcan,
+/obj/item/reagent_containers/glass/wateringcan,
+/obj/item/bee_egg_carton{
+	pixel_y = 7
+	},
+/obj/item/bee_egg_carton{
+	pixel_y = 7
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -47525,6 +47553,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"fFa" = (
+/obj/item/bee_egg_carton,
+/turf/simulated/floor,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -48218,9 +48252,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"xKD" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/psychiatrist)
 "xOo" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -48235,6 +48266,9 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"yau" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/medbay/psychiatrist)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -76510,7 +76544,7 @@ aEt
 aKB
 aMd
 aME
-aMG
+fFa
 aPZ
 aPW
 aQC
@@ -90057,11 +90091,11 @@ afq
 afq
 afq
 afq
-xKD
-xKD
-xKD
+yau
+yau
+yau
 agy
-xKD
+yau
 apD
 akx
 aKz
@@ -90358,8 +90392,8 @@ abl
 afq
 afq
 afs
-xKD
-xKD
+yau
+yau
 afF
 ahx
 aaU
@@ -90962,7 +90996,7 @@ acv
 afq
 afq
 afV
-xKD
+yau
 agK
 ahc
 vHm
@@ -91264,7 +91298,7 @@ afq
 afq
 afq
 afW
-xKD
+yau
 afI
 afJ
 xOo
@@ -101243,7 +101277,7 @@ aoj
 agu
 aOO
 aOO
-aoj
+aur
 atS
 anx
 axF
@@ -101544,7 +101578,7 @@ ahr
 aoj
 aoj
 ahr
-aur
+aoj
 aoj
 atW
 aok
@@ -102753,7 +102787,7 @@ aoj
 aoj
 aoj
 aoj
-afq
+agE
 aue
 axC
 awu
