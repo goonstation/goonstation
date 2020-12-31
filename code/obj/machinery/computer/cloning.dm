@@ -25,6 +25,8 @@
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
+	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
+	var/sound_ping = 'sound/machines/ping.ogg'
 
 	lr = 1
 	lg = 0.6
@@ -265,7 +267,7 @@
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
-	playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
@@ -701,6 +703,8 @@ proc/find_ghost_by_key(var/find_key)
 		if("toggleGeneticAnalysis")
 			if(pod1 && !pod1.attempting)
 				pod1.gen_analysis = !pod1.gen_analysis
+				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
+					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 			else
 				show_message("Cannot toggle any modules while cloner is active.", "warning")
