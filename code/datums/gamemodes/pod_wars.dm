@@ -74,6 +74,7 @@
 		team_SY.members += mind
 		team_SY.equip_player(mind.current)
 
+#ifdef MAP_OVERRIDE_POD_WARS
 	for(var/turf/T in landmarks[LANDMARK_LATEJOIN])
 		if (istype(T.loc, /area/podmode/team1))
 			mind.current.set_loc(T)
@@ -81,7 +82,7 @@
 		else if (istype(T.loc, /area/podmode/team2))
 			mind.current.set_loc(T)
 			return
-
+#endif
 
 /datum/game_mode/pod_wars/post_setup()
 	SPAWN_DBG(-1)
