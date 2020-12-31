@@ -407,6 +407,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			else
 				JOB = new /datum/job/pod_wars/syndicate
 
+		//This first bit is for the round start player equipping
 		if (istype(M, /mob/new_player))
 			var/mob/new_player/N = M
 			if (team_num == TEAM_NANOTRASEN)
@@ -424,12 +425,13 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 				H.mind.special_role = "Syndicate"
 			H = N.create_character(JOB)
 
+		//This second bit is for the in-round player equipping (when cloned)
 		else if (istype(H))
-			H.Equip_Job_Slots(JOB)
-			JOB.special_setup(H)
+			SPAWN_DBG(0)
+				H.JobEquipSpawned(H.mind.assigned_role)
 
 		if (!ishuman(H))
-			boutput(H, "something went wrong. Horribly wrong.")
+			boutput(H, "something went wrong. Horribly wrong. Call 1-800-CODER")
 			return
 
 		H.set_clothing_icon_dirty()
@@ -509,8 +511,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		if (health < health_max && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
-			src.health += 30
-			checkhealth()
+			take_damage(-30)
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the damage on [src]!</span>")
 			if(health >= health_max)
@@ -522,17 +523,17 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		. = "<br><span class='notice'>It looks like it has [health] left out of [health_max]. You can just tell.</span>"
 
 	proc/take_damage(var/damage)
-		if (damage > 0)
-			src.health -= damage
+		// if (damage > 0)
+		src.health -= damage
 
-			if (!suppress_damage_message && istype(ticker.mode, /datum/game_mode/pod_wars))
-				//get the team datum from its team number right when we allocate points.
-				var/datum/game_mode/pod_wars/mode = ticker.mode
+		if (!suppress_damage_message && istype(ticker.mode, /datum/game_mode/pod_wars))
+			//get the team datum from its team number right when we allocate points.
+			var/datum/game_mode/pod_wars/mode = ticker.mode
 
-				mode.announce_critical_system_damage(team_num, src)
-				suppress_damage_message = 1
-				SPAWN_DBG(2 MINUTES)
-					suppress_damage_message = 0
+			mode.announce_critical_system_damage(team_num, src)
+			suppress_damage_message = 1
+			SPAWN_DBG(2 MINUTES)
+				suppress_damage_message = 0
 
 
 		if (health <= 0)
@@ -890,7 +891,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	anchored = 0
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 	speed = 1.7
-	
+
 	New()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
@@ -1026,7 +1027,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	proc/add_team_armor()
 		return
-		
+
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
 	add_team_armor()
@@ -1147,7 +1148,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	time = 60 SECONDS
 	create = 1
 	category = "Clothing"
-	
+
 /obj/machinery/manufacturer/mining/pod_wars
 	New()
 		available -= /datum/manufacture/jetpack

@@ -2614,9 +2614,6 @@ ABSTRACT_TYPE(/datum/job/pod_wars)
 		return
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		if (src.slot_card)
-			M.equip_new_if_possible(src.slot_card, M.slot_wear_id)
-		
 		if (!M.abilityHolder)
 			M.abilityHolder = new /datum/abilityHolder/pod_pilot(src)
 			M.abilityHolder.owner = src
