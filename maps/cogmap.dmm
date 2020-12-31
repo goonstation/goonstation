@@ -60517,7 +60517,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "cyG" = (
-/obj/decal/sink,
+/obj/submachine/chef_sink,
 /turf/simulated/floor/bot/white,
 /area/station/medical/cdc)
 "cyH" = (
