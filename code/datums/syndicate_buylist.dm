@@ -796,6 +796,14 @@ This is basically useless for anyone but miners.
 	job = list("Detective")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/generic/trickcigars
+	name = "Exploding Cigars"
+	item = /obj/item/cigarbox/syndicate
+	cost = 5
+	desc = "A two pack of cigars containing a significant amount of military-grade explosive. Please do not attempt to smoke this after lighting."
+	job = list("Bartender")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/cargo_transporter
 	name = "Syndicate Cargo Transporter"
 	item = /obj/item/cargotele/traitor

@@ -318,19 +318,28 @@
 
 
 	proc/trick_explode()
-		var/turf/tlocation = get_turf(src.loc)
-		if (tlocation)
-			explosion(src, tlocation, 0, 1, 1, 2)
+		if (istype(src, /obj/item/clothing/mask/cigarette/cigar/syndicate))
+			// Weaker than chameleon bomb, comes in pack of two
+			elecflash(src)
+			src.blowthefuckup(20)
+			if (ismob(src.loc))
+				logTheThing("bombing", null, src.loc, "An exploding cigar (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
+			else
+				logTheThing("bombing", src.fingerprintslast, null, "An exploding cigar explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 		else
-			elecflash(src,power = 2)
-			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
-		src.visible_message("<span class='alert'>The [src] explodes!</span>")
+			var/turf/tlocation = get_turf(src.loc)
+			if (tlocation)
+				explosion(src, tlocation, 0, 1, 1, 2)
+			else
+				elecflash(src,power = 2)
+				playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+			src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
-		// Added (Convair880).
-		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
-		else
-			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			// Added (Convair880).
+			if (ismob(src.loc))
+				logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
+			else
+				logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
 		qdel(src)
 
@@ -380,6 +389,9 @@
 	buttstate = "cigarbutt"
 	buttdesc = "cigar butt"
 	buttname = "cigar butt"
+
+/obj/item/clothing/mask/cigarette/cigar/syndicate
+	exploding = 1
 
 /obj/item/clothing/mask/cigarette/cigar/gold
 	name = "golden cigar"
@@ -671,6 +683,10 @@
 			user.show_text("You knock a cigar out of [src], flopping it to the ground.", "red")
 
 	src.update_icon()
+
+/obj/item/cigarbox/syndicate
+	cigcount = 2
+	cigtype = /obj/item/clothing/mask/cigarette/cigar/syndicate
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
