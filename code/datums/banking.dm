@@ -196,6 +196,7 @@
 */
 
 /obj/machinery/computer
+	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
@@ -204,6 +205,17 @@
 	attack_hand(var/mob/user)
 		..()
 		interact_particle(user,src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (can_reconnect && istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
+			boutput(user, "<span class='notice'>You reset [src.name] to re-scan for equipment.</span>")
+			connection_scan()
+			return
+		else
+			..()
+
+	proc/connection_scan() //Placeholder so reconnecting
+		return
 
 /obj/machinery/computer/ATM
 	name = "ATM"

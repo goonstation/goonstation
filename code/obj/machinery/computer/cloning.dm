@@ -12,6 +12,7 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
+	can_reconnect = 1
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/currentStatusMessage = list()
@@ -77,19 +78,22 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
-		if(portable) return
-		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
-		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
-
-		var/hookup_error = FALSE
-		if (isnull(src.scanner))
-			hookup_error = TRUE
-		if (isnull(src.pod1))
-			hookup_error = TRUE
-		if (!hookup_error)
-			src.pod1?.connected = src
-			src.scanner?.connected = src
+		connection_scan()
 	return
+
+/obj/machinery/computer/cloning/connection_scan()
+	if(portable) return
+	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
+	src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
+
+	var/hookup_error = FALSE
+	if (isnull(src.scanner))
+		hookup_error = TRUE
+	if (isnull(src.pod1))
+		hookup_error = TRUE
+	if (!hookup_error)
+		src.pod1?.connected = src
+		src.scanner?.connected = src
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
@@ -172,6 +176,7 @@
 
 	else
 		src.attack_hand(user)
+		..()
 	return
 
 // message = message you want to pass to the noticebox

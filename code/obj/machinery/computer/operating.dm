@@ -6,6 +6,7 @@
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500
+	can_reconnect = 1
 
 	var/mob/living/carbon/human/victim = null
 
@@ -15,7 +16,10 @@
 /obj/machinery/computer/operating/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		src.table = locate(/obj/machinery/optable, orange(2,src))
+		connection_scan()
+
+/obj/machinery/computer/operating/connection_scan()
+	src.table = locate(/obj/machinery/optable, orange(2,src))
 
 /obj/machinery/computer/operating/attack_ai(mob/user)
 	add_fingerprint(user)
