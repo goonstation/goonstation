@@ -9,10 +9,9 @@
 			owner.lying = istype(owner.buckled, /obj/stool/bed) || istype(owner.buckled, /obj/machinery/conveyor)
 			if (owner.lying)
 				owner.drop_item()
-			if(!(owner.mob_flags & NO_DENSITY))
-				owner.set_density(initial(owner.density))
+			owner.set_density(initial(owner.density))
 		else
-			if (!owner.lying && !(owner.mob_flags & NO_DENSITY))
+			if (!owner.lying)
 				owner.set_density(initial(owner.density))
 			else
 				owner.set_density(0)

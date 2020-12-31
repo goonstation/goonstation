@@ -65,8 +65,7 @@
 
 		if (owner.lying != lying_old)
 			owner.update_lying()
-			if(!(owner.mob_flags & NO_DENSITY))
-				owner.set_density(!owner.lying)
+			owner.set_density(!owner.lying)
 
 			if (owner.lying && !owner.buckled)
 				if (human_owner)
