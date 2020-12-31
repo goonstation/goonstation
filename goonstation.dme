@@ -784,6 +784,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\food_and_drink\bathbomb.dm"
 #include "code\modules\food_and_drink\bread.dm"
 #include "code\modules\food_and_drink\cakes.dm"
+#include "code\modules\food_and_drink\candy.dm"
 #include "code\modules\food_and_drink\condiments.dm"
 #include "code\modules\food_and_drink\discount_dans.dm"
 #include "code\modules\food_and_drink\drinks.dm"
