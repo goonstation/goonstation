@@ -1228,7 +1228,7 @@
 /obj/item/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "candy"
 	heal_amt = 1
 	real_name = "candy"
@@ -2276,7 +2276,7 @@
 
 /obj/item/kitchen/everyflavor_box
 	amount = 6
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "beans"
 	name = "bag of Farty Snott's Every Flavour Beans"
 
@@ -2314,7 +2314,7 @@
 /obj/item/reagent_containers/food/snacks/lollipop
 	name = "lollipop"
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
 	var/icon_random = 0 // does it just choose from the existing random colors?
 	var/image/image_candy
@@ -2355,7 +2355,7 @@
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"
 	desc = "A chewy gummy bright red fish. Those crazy Swedes and their fish obesssion."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "swedishfiskfisk"
 	amount = 1
 	heal_amt = 1
@@ -2374,7 +2374,7 @@
 	desc = "A curious bag of fresh swedish fisk, fresh from the factories in Sweden."
 	contained_item = /obj/item/reagent_containers/food/snacks/swedish_fish
 	icon_state = "swedishfisk"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	item_amount = 8
 	max_item_amount = 8
 	icon_closed = "swedishfisk"
@@ -2713,7 +2713,7 @@
 
 /obj/item/kitchen/peach_rings
 	amount = 6
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "rings-full"
 	name = "bag of peach rings"
 	desc = "A bag of gummy peach rings. A Delectable Dan's favorite."
@@ -2740,7 +2740,7 @@
 /obj/item/reagent_containers/food/snacks/candy/peach_ring
 	name = "peach ring"
 	desc = "A gummy peach ring dusted with sugar."
-	icon_state = "peach-ring"
+	icon_state = "peachring"
 	amount = 1
 	sugar_content = 5
 
