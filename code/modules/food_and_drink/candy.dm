@@ -417,3 +417,31 @@
 
 	get_desc()
 		. = "<br><span class='notice'>It says: [phrase]</span>"
+
+/obj/item/reagent_containers/food/snacks/candy/taffy
+	name = "saltwater taffy"
+	desc = "Produced in small artisanal batches, straight from someone's kitchen. "
+	icon_state = "red"
+	amount = 1
+	sugar_content = 10
+	var/flavor
+	var/list/flavors
+
+	New()
+		..()
+		desc += flavor
+		var/datum/reagents/R = reagents
+		for (var/F in flavors)
+			R.add_reagent(F, 10)
+
+/obj/item/reagent_containers/food/snacks/candy/taffy/cherry
+	flavor = "This one is cherry flavored."
+	flavors = list("juice_cherry", "psilocybin")
+
+/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon
+	flavor = "This one is watermelon flavored."
+	flavors = list("juice_watermelon", "love")
+
+/obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry
+	flavor = "This one is blue raspberry flavored."
+	flavors = list("juice_raspberry", "LSD")
