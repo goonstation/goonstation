@@ -101,7 +101,7 @@ var/datum/event_controller/random_events
 			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
 			do_event = 0
 
-		if (do_event)
+		if (do_event && ticker?.mode?.do_random_events)
 			var/aap = get_alive_antags_percentage()
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))

@@ -10,6 +10,7 @@
 	shuttle_available = 0 // 0: Won't dock. | 1: Normal. | 2: Won't dock if called too early.
 	list/latejoin_antag_roles = list() // Unrecognized roles default to traitor in mob/new_player/proc/makebad().
 	do_antag_random_spawns = 0
+	do_random_events = 0
 	var/list/frequencies_used = list()
 
 
