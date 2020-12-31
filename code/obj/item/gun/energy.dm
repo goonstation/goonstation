@@ -773,7 +773,7 @@
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
 			if (team_num)
-				if (team_num == 1 && user?.mind?.special_role == "Nanotrasen")
+				if (team_num == 1 && user?.mind?.special_role == "NanoTrasen")
 					return ..(target, start, user)
 				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
 					return ..(target, start, user)
