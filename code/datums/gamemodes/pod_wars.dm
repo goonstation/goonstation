@@ -1015,19 +1015,82 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		return
 		
 /obj/machinery/manufacturer/pod_wars/nanotrasen
+	name = "NanoTrasen Ship Component Fabricator"
 	add_team_armor()
 		available += list(
 		/datum/manufacture/pod_wars/pod/armor_light/nt,
 		/datum/manufacture/pod_wars/pod/armor_robust/nt
 		)
 /obj/machinery/manufacturer/pod_wars/syndicate
+	name = "Syndicate Ship Component Fabricator"
 	add_team_armor()
 		available += list(
 		/datum/manufacture/pod_wars/pod/armor_light/sy,
 		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)
 
+////////////////pod-weapons//////////////////
+/datum/manufacture/pod/weapon/mining
+	name = "Mining Phaser System"
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
+/datum/manufacture/pod/weapon/taser
+	name = "Mk.1 Combat Taser"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/taser)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/laser
+	name = "Mk.2 Scout Laser"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+/datum/manufacture/pod/weapon/laser/short
+	name = "Mk.2 CQ Laser"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser/short)
+	time = 10 SECONDS
+
+/datum/manufacture/pod/weapon/disruptor
+	name = "Heavy Disruptor Array"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/disruptor/light
+	name = "Mk.3 Disruptor"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/ass_laser
+	name = "Mk.4 Assault Laser"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
+	time = 10 SECONDS
+	create  = 1
+	category = "Tool"
+
+////////////pod-armor///////////////////////
 /datum/manufacture/pod_wars/pod/armor_light
 	name = "Light NT Pod Armor"
 	item_paths = list("MET-2","CON-1")
@@ -1036,9 +1099,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
+
 /datum/manufacture/pod_wars/pod/armor_light/nt
+	name = "Light NT Pod Armor"
 	item_outputs = list(/obj/item/pod/nt_light)
+
 /datum/manufacture/pod_wars/pod/armor_light/sy
+	name = "Light Syndicate Pod Armor"
 	item_outputs = list(/obj/item/pod/sy_light)
 
 /datum/manufacture/pod_wars/pod/armor_robust
@@ -1049,9 +1116,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
+
 /datum/manufacture/pod_wars/pod/armor_robust/nt
+	name = "Robust NT Pod Armor"
 	item_outputs = list(/obj/item/pod/nt_robust)
+
 /datum/manufacture/pod_wars/pod/armor_robust/sy
+	name = "Robust Syndicate Pod Armor"
 	item_outputs = list(/obj/item/pod/sy_robust)
 
 
