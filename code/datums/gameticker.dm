@@ -123,7 +123,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		else src.mode = config.pick_mode(master_mode)
 
 #ifdef MAP_OVERRIDE_POD_WARS
-		mode = config.pick_mode("pod_wars")
+	src.mode = config.pick_mode("pod_wars")
 #endif
 
 	if(hide_mode)
