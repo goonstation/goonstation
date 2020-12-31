@@ -249,10 +249,7 @@
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "DisposalChute")
-			ui.open()
+		USE_OR_MAKE_TGUI("DisposalChute")
 
 	ui_data(mob/user)
 		. = list(

@@ -78,10 +78,7 @@
 /* INTERFACE */
 
 /obj/machinery/dispenser/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "TankDispenser", name)
-		ui.open()
+	USE_OR_MAKE_TGUI("TankDispenser", name)
 
 /obj/machinery/dispenser/ui_data(mob/user)
 	. = list(

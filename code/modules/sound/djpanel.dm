@@ -40,10 +40,7 @@ client/proc/open_dj_panel()
 		return UI_CLOSE
 
 /datum/dj_panel/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "DJPanel")
-		ui.open()
+	USE_OR_MAKE_TGUI("DJPanel")
 
 /datum/dj_panel/ui_data(mob/user)
 	. = list(

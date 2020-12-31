@@ -48,10 +48,7 @@
 // INTERFACE
 
 /obj/machinery/computer/robot_module_rewriter/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "CyborgModuleRewriter", src.name)
-		ui.open()
+	USE_OR_MAKE_TGUI("CyborgModuleRewriter", src.name)
 
 /obj/machinery/computer/robot_module_rewriter/ui_data(mob/user)
 	var/list/modulesData = list()

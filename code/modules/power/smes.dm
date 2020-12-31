@@ -218,10 +218,7 @@
 	)
 
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Smes", src.name)
-		ui.open()
+	USE_OR_MAKE_TGUI("Smes", src.name)
 
 /obj/machinery/power/smes/ui_static_data(mob/user)
 	. = list(

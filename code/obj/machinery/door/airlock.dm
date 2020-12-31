@@ -1798,10 +1798,7 @@ obj/machinery/door/airlock
 				shock_temp(user)
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Airlock", name)
-		ui.open()
+	USE_OR_MAKE_TGUI("Airlock", name)
 	return TRUE
 
 /obj/machinery/door/airlock/ui_data(mob/user)

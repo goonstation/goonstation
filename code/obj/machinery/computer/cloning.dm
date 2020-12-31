@@ -838,10 +838,7 @@ proc/find_ghost_by_key(var/find_key)
 	)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "CloningConsole", src.name)
-		ui.open()
+	USE_OR_MAKE_TGUI("CloningConsole", src.name)
 
 #undef PROCESS_IDLE
 #undef PROCESS_STRIP

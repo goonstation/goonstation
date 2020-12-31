@@ -177,10 +177,7 @@
 	return
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "PaperSheet")
-		ui.open()
+	USE_OR_MAKE_TGUI("PaperSheet")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	if(!user.literate)

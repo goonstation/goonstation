@@ -934,10 +934,7 @@ datum/pump_ui/circulator_ui
 		updateicon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "TEG", src.name)
-		ui.open()
+	USE_OR_MAKE_TGUI("TEG", src.name)
 
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
 	. = list(

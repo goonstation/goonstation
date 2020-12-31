@@ -351,10 +351,7 @@
 	)
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "PowerTransmissionLaser")
-		ui.open()
+	USE_OR_MAKE_TGUI("PowerTransmissionLaser")
 
 /obj/machinery/power/pt_laser/ui_data(mob/user)
 	. = list(

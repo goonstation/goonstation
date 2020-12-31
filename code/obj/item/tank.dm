@@ -228,10 +228,7 @@ Contains:
 			..()
 
 /obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "GasTank", name)
-		ui.open()
+	USE_OR_MAKE_TGUI("GasTank", name)
 
 /obj/item/tank/ui_static_data(mob/user)
 	. = list(

@@ -19,10 +19,7 @@
 /* INTERFACE */
 
 /obj/submachine/slot_machine/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "SlotMachine", name)
-		ui.open()
+	USE_OR_MAKE_TGUI("SlotMachine", name)
 
 /obj/submachine/slot_machine/ui_data(mob/user)
 	. = list(
