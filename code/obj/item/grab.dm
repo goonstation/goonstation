@@ -64,8 +64,7 @@
 					affecting.layer = initial(affecting.layer)
 				affecting.pixel_x = initial(affecting.pixel_x)
 				affecting.pixel_y = initial(affecting.pixel_y)
-				if(!(affecting.mob_flags & NO_DENSITY))
-					affecting.set_density(1)
+				affecting.set_density(1)
 
 
 			if (state == GRAB_PIN)
