@@ -1126,6 +1126,22 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	item_outputs = list(/obj/item/pod/sy_robust)
 
 
+/datum/manufacture/pod_wars/jetpack
+	name = "Jetpack"
+	item_paths = list("MET-3","CON-1")
+	item_amounts = list(20,30)
+	item_outputs = list(/obj/item/tank/jetpack)
+	time = 60 SECONDS
+	create = 1
+	category = "Clothing"
+	
+/obj/machinery/manufacturer/mining/pod_wars
+	New()
+		available -= /datum/manufacture/jetpack
+		available += /datum/manufacture/pod_wars/jetpack
+		..()
+
+
 //It's cheap, use it!
 /datum/manufacture/pod_wars/lock
 	name = "Pod Lock (ID Card)"
