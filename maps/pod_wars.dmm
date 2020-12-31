@@ -4372,7 +4372,7 @@
 /turf/unsimulated/floor/blue,
 /area/podmode/team1/bridge)
 "vH" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/manufacturer/mining/pod_wars,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team1/mining)
 "vK" = (
@@ -4725,10 +4725,10 @@
 	},
 /area/podmode/spacejunk/fstation/landingpads)
 "xv" = (
-/obj/machinery/manufacturer/mining,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/manufacturer/mining/pod_wars,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team2/Mining)
 "xy" = (
