@@ -643,6 +643,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\changeling\abilities\spit.dm"
 #include "code\modules\antagonists\changeling\abilities\stings.dm"
 #include "code\modules\antagonists\changeling\abilities\transform.dm"
+#include "code\modules\antagonists\floor_goblin\floor_goblin.dm"
 #include "code\modules\antagonists\grinch\abilities\grinch.dm"
 #include "code\modules\antagonists\grinch\abilities\grinch_cloak.dm"
 #include "code\modules\antagonists\grinch\abilities\murder.dm"

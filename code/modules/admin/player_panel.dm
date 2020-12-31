@@ -292,7 +292,8 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
+						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
+						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"]
 					</div>
 				</div>
 			</div>
