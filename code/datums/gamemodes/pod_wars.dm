@@ -504,9 +504,19 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		..()
 		take_damage(W.force)
 		user.lastattacked = src
+		if (health < health_max && isweldingtool(W))
+			if(!W:try_weld(user, 1))
+				return
+			src.health += 30
+			checkhealth()
+			src.add_fingerprint(user)
+			src.visible_message("<span class='alert'>[user] has fixed some of the damage on [src]!</span>")
+			if(health >= health_max)
+				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
+			return
+		..()
 
 	get_desc()
 		. = "<br><span class='notice'>It looks like it has [health] left out of [health_max]. You can just tell.</span>"
@@ -537,6 +547,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	var/check_delay = 10 SECONDS
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/datum/pod_wars_team/team
+	is_speedy = 1
 
 	process()
 
@@ -878,7 +889,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	maxhealth = 100
 	anchored = 0
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
-
+	speed = 1.7
+	
 	New()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
