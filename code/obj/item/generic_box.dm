@@ -120,7 +120,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
+				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -151,7 +151,7 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
 
 		ornaments
 			name = "box of assorted ornaments"

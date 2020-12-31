@@ -1237,6 +1237,7 @@
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
 			mob.max_health += 50
+			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
 
@@ -1264,6 +1265,7 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")
 			mob.bioHolder.RemoveEffect("accent_scoob")
 			mob.bioHolder.RemoveEffect("accent_scoob_nerf")

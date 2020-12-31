@@ -69,7 +69,7 @@ mob
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 					last_move_trigger = ticker.round_elapsed_ticks
-					deliver_move_trigger(m_intent)
+					deliver_move_trigger(running ? "sprint" : m_intent)
 
 				src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 				src.animate_movement = SLIDE_STEPS
@@ -172,7 +172,7 @@ mob
 
 						if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 							last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
-							deliver_move_trigger(m_intent)
+							deliver_move_trigger(running ? "sprint" : m_intent)
 
 
 						src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects

@@ -20,6 +20,11 @@ WET FLOOR SIGN
 	throw_speed = 2
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
+	move_triggered = 1
+
+/obj/item/spraybottle/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
 
 /obj/item/spraybottle/pixelaction(atom/target, params, mob/user, reach)
 	..()
@@ -42,7 +47,7 @@ WET FLOOR SIGN
 		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
 
 /obj/item/spraybottle/cleaner/
-	name = "cleaner bottle"
+	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
 	New()
@@ -50,8 +55,8 @@ WET FLOOR SIGN
 		reagents.add_reagent("cleaner", 100)
 
 /obj/item/spraybottle/cleaner/robot
-	name = "cybernetic cleaner bottle"
-	desc = "A cleaner bottle jury-rigged to synthesize space cleaner."
+	name = "cybernetic cleaner spray bottle"
+	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
 
 	disposing()

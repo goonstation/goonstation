@@ -9,6 +9,7 @@ datum/controller/process/world
 		if(genResearch) genResearch.setup()
 
 		setup_radiocodes()
+		setup_organ_thresholds()
 
 		emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 		src.shuttle = emergency_shuttle
@@ -56,3 +57,9 @@ datum/controller/process/world
 	codewords -= tempword
 
 	//boutput(world, "debug:<br>head: [netpass_heads] <br> med: [netpass_medical] <br> sec: [netpass_security]<br> atm: [netpass_banking]<br> cargo: [netpass_cargo]")
+
+/proc/setup_organ_thresholds()
+	for(var/organ in cyberorgan_brute_threshold)
+		var/amt = rand(10, 60)
+		cyberorgan_brute_threshold[organ] = amt + rand(-5, 5)
+		cyberorgan_burn_threshold[organ] = 70 - amt + rand(-5, 5)
