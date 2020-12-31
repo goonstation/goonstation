@@ -612,7 +612,7 @@ world/proc/updateCameraVisibility()
 			if( t.z != 1 ) continue
 			cam_candidates += t
 
-#ifdef !MAP_OVERRIDE_POD_WARS
+#ifndef MAP_OVERRIDE_POD_WARS
 
 		var/lastpct = 0
 		var/thispct = 0
