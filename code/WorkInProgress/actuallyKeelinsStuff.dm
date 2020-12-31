@@ -2821,11 +2821,9 @@ Returns:
 	if(eligible.len > 0)
 		picked2 = pick(eligible)
 
-	if(picked1)
-		picked1.zombify()
+	picked1?.zombify()
 
-	if(picked2)
-		picked2.zombify()
+	picked2?.zombify()
 
 	for(var/turf/T in wormholeturfs)
 		if(prob(3))
@@ -3854,8 +3852,7 @@ var/list/lag_list = new/list()
 		if(z_level_lock && T.z != z_level_lock)
 			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
 			return
-		if(active_mode)
-			active_mode.used(user, target)
+		active_mode?.used(user, target)
 		return
 
 	attack()

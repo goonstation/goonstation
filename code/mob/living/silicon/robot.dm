@@ -203,6 +203,7 @@
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
 					var/datum/mind/newmind = new
+					newmind.ckey = ckey
 					newmind.key = src.key
 					newmind.current = src
 					B.owner = newmind
@@ -921,8 +922,7 @@
 	temperature_expose(null, temp, volume)
 		var/Fshield = 0
 
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)
@@ -1126,7 +1126,7 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					var/mob/M = find_ghost_by_key(B.owner.key)
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 						return

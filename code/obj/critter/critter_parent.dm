@@ -805,8 +805,7 @@
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
-		if(registered_area)
-			registered_area.registered_critters -= src
+		registered_area?.registered_critters -= src
 		if(src.is_pet)
 			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()

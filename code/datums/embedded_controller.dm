@@ -5,8 +5,7 @@ datum/computer/file/embedded_program
 
 	proc
 		post_signal(datum/signal/signal, comm_line)
-			if(master)
-				master.post_signal(signal, comm_line)
+			master?.post_signal(signal, comm_line)
 			//else
 			//	qdel(signal)
 
@@ -432,14 +431,12 @@ obj/machinery/embedded_controller
 		if(..())
 			return 0
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
 		src.add_dialog(usr)
 
 	process()
-		if(program)
-			program.process()
+		program?.process()
 
 		update_icon()
 		src.updateDialog()
@@ -656,8 +653,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if (src.locked && !issilicon(usr))
 			return
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
 		src.add_dialog(usr)
 

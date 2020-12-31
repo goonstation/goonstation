@@ -84,11 +84,10 @@
 		ui.open()
 
 /obj/machinery/dispenser/ui_data(mob/user)
-	var/list/data = list()
-	data["oxygen"] = o2tanks
-	data["plasma"] = pltanks
-
-	return data
+	. = list(
+		"oxygen" = o2tanks,
+		"plasma" = pltanks,
+	)
 
 /obj/machinery/dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

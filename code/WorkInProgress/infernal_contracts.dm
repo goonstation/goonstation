@@ -65,8 +65,7 @@
 		boutput(H, "<span class='alert'><B>You NEIGH painfully!</B></span>")
 		H.take_brain_damage(80)
 		H.stuttering = 120
-		if(H.mind)
-			H.mind.assigned_role = "Horse"
+		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 		playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 		H.change_misstep_chance(66)
@@ -604,8 +603,7 @@ obj/item/contract/mummy
 				if (!H.bandaged.Find(target))
 					H.bandaged += target
 					H.update_body()
-		if(user.reagents)
-			user.reagents.add_reagent("formaldehyde", 300) //embalming fluid for mummies
+		user.reagents?.add_reagent("formaldehyde", 300) //embalming fluid for mummies
 		if((prob(10)) || (src.limiteduse == 1))
 			boutput(user, "<span class='notice'>Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!</span>")
 			if(isliving(user))
@@ -773,6 +771,12 @@ obj/item/contract/hair
 					continue
 				else
 					H.bioHolder.mobAppearance.customization_first = "None"
+					H.bioHolder.mobAppearance.customization_first_original = "None"
+					H.bioHolder.mobAppearance.customization_second = "None"
+					H.bioHolder.mobAppearance.customization_second_original = "None"
+					H.bioHolder.mobAppearance.customization_third = "None"
+					H.bioHolder.mobAppearance.customization_third_original = "None"
+					H.update_colorful_parts()
 			if (src.limiteduse == 1)
 				src.used++
 				tooltip_rebuild = 1

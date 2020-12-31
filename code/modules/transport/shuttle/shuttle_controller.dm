@@ -149,10 +149,14 @@ datum/shuttle_controller
 									return
 								*/
 
-						start_location.move_contents_to(end_location, centcom_turf)
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
+						start_location.move_contents_to(end_location, filler_turf)
 						for (var/turf/P in end_location)
-							if (istype(P, centcom_turf))
+							if (istype(P, filler_turf))
 								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
+
 
 						settimeleft(SHUTTLELEAVETIME)
 
@@ -290,10 +294,13 @@ datum/shuttle_controller
 								D.locked = 0
 								D.update_icon()
 
+						var/filler_turf = text2path(end_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
 						start_location.move_contents_to(end_location, transit_turf)
 						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
-								G.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
+								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						world << csound("sound/misc/shuttle_centcom.ogg")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")

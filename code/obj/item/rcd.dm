@@ -315,8 +315,7 @@ Broken RCD + Effects
 				W.real_name = H.real_name
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 				playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-				if(H.mind)
-					H.mind.transfer_to(W)
+				H.mind?.transfer_to(W)
 				H.gib()
 				matter -= 3
 				boutput(user, "\the [src] now holds [matter]/30 matter-units.")

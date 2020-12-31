@@ -250,6 +250,7 @@
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
 	SHOULD_CALL_PARENT(TRUE)
+	src.bioHolder?.mobAppearance.gender = src.gender
 	return
 
 /mob/proc/is_spacefaring()
@@ -380,6 +381,7 @@
 	cooldowns = null
 	lastattacked = null
 	lastattacker = null
+	health_update_queue -= src
 	..()
 
 /mob/Login()
@@ -474,8 +476,11 @@
 	if (!src.mind)
 		src.mind = new (src)
 
-	if (src.mind && !src.mind.key)
-		src.mind.key = src.key
+	if (src.mind)
+		if (!src.mind.ckey)
+			src.mind.ckey = src.ckey
+		if (!src.mind.key)
+			src.mind.key = src.key
 
 	if (isobj(src.loc))
 		var/obj/O = src.loc
@@ -2930,3 +2935,6 @@
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
+
+/mob/proc/on_eat(var/atom/A)
+	return

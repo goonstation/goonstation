@@ -25,11 +25,11 @@
 	*
 	* For a purely static-icon mutantrace (drawn from a single, non-chunked image), use:
 	*
-	* (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	* (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	*
 	* NOT_DIMORPHIC tells the sprite builder not to use any female sprites or vars. If you remove this, make sure there's a torso_f and groin_f in the mutant's DMI!
 	*
-	* HAS_NO_SKINTONE, HAS_NO_HAIR, HAS_NO_EYES, HAS_NO_HEAD each prevent the renderer from trying to colorize the player's body or apply hair / eyes. They tend to be baked in.
+	* HAS_NO_SKINTONE, HAS_NO_EYES, HAS_NO_HEAD each prevent the renderer from trying to colorize the player's body or apply hair / eyes. They tend to be baked in.
 	*
 	* USES_STATIC_IMAGE tells the renderer to skip most of the body-sprite assembly stuff, since our sprite is already fully assembled
 	*
@@ -52,7 +52,7 @@
 	*
 	* SEE: appearance.dm for more flags and details!
 	*/
-	var/mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	var/mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 
 	/// if 1, allows human diseases and dna injectors to affect this mutantrace
 	var/human_compatible = 1
@@ -95,6 +95,9 @@
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
 	var/body_offset = 0
+	var/arm_offset = 0
+	/// affects pixel_y of the legs and stump, in case the mutant has a non-human length torsocrotch
+	var/leg_offset = 0
 	/// affects pixel_y of eyes if they're different from normal head-placement. darn anime monkey eyes
 	/// If 0, it inherits that of the head offset. Otherwise, it applies as normal
 	/// So, it should typically be something like head_offset +/- a few pixels
@@ -123,6 +126,9 @@
 	var/firevuln = 1 //Scales damage, just like critters.
 	var/brutevuln = 1
 	var/toxvuln = 1
+
+	var/list/typevulns
+
 	/// ignores suffocation from being underwater + moves at full speed underwater
 	var/aquatic = 0
 	var/needs_oxy = 1
@@ -346,6 +352,12 @@
 				AH.mob_oversuit_1_color_ref = src.detail_oversuit_1_color
 				AH.mob_oversuit_1_offset_y = src.body_offset
 
+				AH.mob_head_offset = src.head_offset
+				AH.mob_hand_offset = src.hand_offset
+				AH.mob_body_offset = src.body_offset
+				AH.mob_leg_offset = src.leg_offset
+				AH.mob_arm_offset = src.arm_offset
+
 				if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
 					AH.customization_first_color = fix_colors(AH.customization_first_color)
 					AH.customization_second_color = fix_colors(AH.customization_second_color)
@@ -382,6 +394,11 @@
 				AH.customization_first_offset_y = 0
 				AH.customization_second_offset_y = 0
 				AH.customization_third_offset_y = 0
+				AH.mob_head_offset = 0
+				AH.mob_hand_offset = 0
+				AH.mob_body_offset = 0
+				AH.mob_arm_offset = 0
+				AH.mob_leg_offset = 0
 				AH.e_offset_y = 0 // Fun fact, monkey eyes are right at nipple height
 				AH.mob_oversuit_1_offset_y = 0
 				AH.mob_detail_1_offset_y = 0
@@ -626,6 +643,8 @@
 	hand_offset = -1
 	body_offset = -8
 	voice_override = "bloop"
+	firevuln = 1.5
+	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -782,6 +801,8 @@
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
+			H.thermoregulation_mult = 0
+			H.base_body_temp = T0C + 38
 
 	sight_modifier()
 		mob.see_in_dark = SEE_DARK_HUMAN + 1
@@ -799,6 +820,8 @@
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			L.remove_lizard_powers()
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			mob.thermoregulation_mult = initial(mob.thermoregulation_mult)
+			mob.base_body_temp = initial(mob.base_body_temp)
 		. = ..()
 
 	say_verb()
@@ -1056,7 +1079,7 @@
 	icon_state = "skeleton"
 	voice_override = "skelly"
 	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
@@ -1088,7 +1111,7 @@
 /datum/mutantrace/nostalgic
 	name = "Homo nostalgius"
 	icon_state = "oldhuman"
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	override_attack = 0
 
 
@@ -1198,7 +1221,7 @@
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
 	ignore_missing_limbs = 0
 	var/old_client_color = null
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
@@ -1214,6 +1237,7 @@
 			mob.add_stam_mod_regen("werewolf", 9) //mbc : these increase as they feast now. reduced!
 			mob.add_stun_resist_mod("werewolf", 40)
 			mob.max_health += 50
+			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
 
@@ -1241,6 +1265,7 @@
 			mob.remove_stam_mod_regen("werewolf")
 			mob.remove_stun_resist_mod("werewolf")
 			mob.max_health -= 30
+			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")
 			mob.bioHolder.RemoveEffect("accent_scoob")
 			mob.bioHolder.RemoveEffect("accent_scoob_nerf")
@@ -1355,10 +1380,12 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -9
+	head_offset = -8
 	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
 	hand_offset = -5
 	body_offset = -7
+	leg_offset = -4
+	arm_offset = -8
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
@@ -1373,7 +1400,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/monkey/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	var/sound_monkeyscream = 'sound/voice/screams/monkey_scream.ogg'
 	var/had_tablepass = 0
 	var/table_hide = 0
@@ -1626,12 +1653,14 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	typevulns = list("blunt" = 1.66, "crush" = 1.66)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+		APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
 
 	say_verb()
 		return "clicks"
@@ -1643,6 +1672,8 @@
 	disposing()
 		if(ishuman(mob))
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if(mob)
+			REMOVE_MOB_PROPERTY(mob, PROP_RADPROT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
@@ -1659,7 +1690,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1700,7 +1731,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 
 	say_verb()
@@ -1766,7 +1797,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/shelterfrog/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/shelterfrog/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_HAIR | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 
 	New()

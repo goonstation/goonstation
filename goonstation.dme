@@ -813,6 +813,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\interface\keybind_style.dm"
 #include "code\modules\interface\keymap.dm"
 #include "code\modules\interface\mob_input.dm"
+#include "code\modules\items\gimmick\figurine.dm"
+#include "code\modules\items\gimmick\plushies.dm"
 #include "code\modules\localassets\localasset.dm"
 #include "code\modules\localassets\localassets_tgui.dm"
 #include "code\modules\materials\Mat_FabParts.dm"
