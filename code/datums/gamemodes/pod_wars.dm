@@ -1017,13 +1017,42 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	add_team_armor()
 		available += list(
-		/datum/manufacture/pod/armor_industrial
+		/datum/manufacture/pod_wars/pod/armor_light/nt,
+		/datum/manufacture/pod_wars/pod/armor_robust/nt
 		)
 /obj/machinery/manufacturer/pod_wars/syndicate
 	add_team_armor()
 		available += list(
-		/datum/manufacture/pod/armor_industrial
+		/datum/manufacture/pod_wars/pod/armor_light/sy,
+		/datum/manufacture/pod_wars/pod/armor_robust/sy
 		)
+
+
+/datum/manufacture/pod_wars/pod/armor_light
+	name = "Light NT Pod Armor"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,20)
+	item_outputs = list(/obj/item/pod/armor_light)
+	time = 20 SECONDS
+	create = 1
+	category = "Component"
+/datum/manufacture/pod_wars/pod/armor_light/nt
+	item_outputs = list(/obj/item/pod/nt_light)
+/datum/manufacture/pod_wars/pod/armor_light/sy
+	item_outputs = list(/obj/item/pod/sy_light)
+
+/datum/manufacture/pod_wars/pod/armor_robust
+	name = "Heavy Pod Armor"
+	item_paths = list("MET-3","CON-2", "DEN-3")
+	item_amounts = list(50,30, 10)
+	item_outputs = list(/obj/item/pod/armor_heavy)
+	time = 30 SECONDS
+	create = 1
+	category = "Component"
+/datum/manufacture/pod_wars/pod/armor_robust/nt
+	item_outputs = list(/obj/item/pod/nt_robust)
+/datum/manufacture/pod_wars/pod/armor_robust/sy
+	item_outputs = list(/obj/item/pod/sy_robust)
 
 
 //It's cheap, use it!
