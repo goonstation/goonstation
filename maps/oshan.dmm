@@ -389,7 +389,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "aaV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -1197,7 +1197,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "acx" = (
-/obj/item/genetics_injector/dna_injector,
+/obj/item/genetics_injector/dna_activator{
+	gene_to_activate = "midas";
+	name = "dna activator - Midas Touch"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "acy" = (
@@ -2685,15 +2688,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "afF" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "afG" = (
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/maintenance/north)
@@ -2710,15 +2710,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "afI" = (
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
+/obj/cabinet/taffy,
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "afJ" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "afK" = (
 /obj/storage/secure/closet/medical/uniforms,
 /obj/machinery/light/incandescent/cool/very,
@@ -2987,11 +2985,8 @@
 /area/station/maintenance/northeast)
 "agp" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/plating/random,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "agq" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -3062,7 +3057,7 @@
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "agz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3114,8 +3109,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/stool/chair/couch{
+	dir = 9
+	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "agH" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -3135,7 +3133,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "agI" = (
 /obj/stool/chair,
 /turf/simulated/floor/plating/random,
@@ -3143,7 +3141,7 @@
 "agK" = (
 /obj/cabinet/psychiatry,
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "agL" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -3252,17 +3250,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "ahc" = (
-/obj/stool/chair/comfy/blue{
-	dir = 8
-	},
+/obj/stool/chair/comfy/blue,
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "ahd" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "ahe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -3432,11 +3428,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decoration/clock{
+	pixel_x = -24
+	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "ahz" = (
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "ahA" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -3952,7 +3951,7 @@
 /obj/disposalpipe/trunk/east,
 /obj/machinery/disposal/small/east,
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "aiR" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -3960,7 +3959,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "aiS" = (
 /obj/cable{
 	d1 = 1;
@@ -3972,7 +3971,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "aiT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -3983,7 +3982,7 @@
 	mail_tag = "therapist"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "aiU" = (
 /obj/item/sea_ladder,
 /turf/simulated/floor/plating/random,
@@ -4039,6 +4038,9 @@
 /obj/table/glass/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/disposalpipe/segment/produce,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -4307,7 +4309,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/stairs/medical/wide,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "ajF" = (
 /obj/item/screwdriver,
 /obj/item/weldingtool,
@@ -6216,7 +6218,7 @@
 /area/station/chapel/sanctuary)
 "anP" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "anQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -6229,8 +6231,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/stool/chair/couch{
+	dir = 5
+	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "anS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/cloner)
@@ -7148,6 +7153,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/stool/chair{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -7174,15 +7182,16 @@
 /turf/simulated/floor/red/checker,
 /area/station/medical/head)
 "aqf" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
-	dir = 8
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/fakeobjects{
+	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "skeleton_stand";
+	name = "Jim"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -7737,6 +7746,11 @@
 	},
 /area/station/medical/head)
 "aru" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/radio/intercom/bridge{
+	broadcasting = 0;
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -38834,7 +38848,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/darkblue,
-/area/station/medical/staff)
+/area/station/medical/medbay/psychiatrist)
 "bOI" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged1,
@@ -47531,10 +47545,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"ghT" = (
-/obj/cabinet/taffy,
-/turf/simulated/floor/darkblue,
-/area/station/medical/staff)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -48148,6 +48158,15 @@
 /obj/item/furniture_parts/bench/blue,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"vHm" = (
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
@@ -48199,6 +48218,19 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xKD" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/medbay/psychiatrist)
+"xOo" = (
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/item/paper/book/caterpillar,
+/obj/item/decoration/flower_vase{
+	pixel_x = -15
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -90025,11 +90057,11 @@ afq
 afq
 afq
 afq
-ciI
-ciI
-ciI
+xKD
+xKD
+xKD
 agy
-ciI
+xKD
 apD
 akx
 aKz
@@ -90326,8 +90358,8 @@ abl
 afq
 afq
 afs
-ciI
-ciI
+xKD
+xKD
 afF
 ahx
 aaU
@@ -90630,7 +90662,7 @@ afq
 afU
 agp
 agH
-afI
+ahz
 bOH
 agG
 ahd
@@ -90930,10 +90962,10 @@ acv
 afq
 afq
 afV
-ciI
+xKD
 agK
 ahc
-ahz
+vHm
 anR
 aiS
 ajE
@@ -91232,10 +91264,10 @@ afq
 afq
 afq
 afW
-ciI
-ghT
+xKD
+afI
 afJ
-ahz
+xOo
 ahz
 aiT
 aiR
