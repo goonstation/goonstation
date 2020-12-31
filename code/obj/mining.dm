@@ -834,7 +834,7 @@
 					A.anchored = 1
 					qdel(src)
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_hand(var/mob/user as mob)

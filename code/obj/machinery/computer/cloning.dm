@@ -175,7 +175,6 @@
 
 
 	else
-		src.attack_hand(user)
 		..()
 	return
 

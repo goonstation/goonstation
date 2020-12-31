@@ -64,7 +64,7 @@
 				A.anchored = 1
 				qdel(src)
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/operating/proc/interacted(mob/user)
