@@ -1655,7 +1655,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/manufacturer,
+/obj/machinery/manufacturer/general,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team1/manufacturing)
 "hY" = (
@@ -2196,6 +2196,10 @@
 	dir = 6
 	},
 /area/podmode/team2/Mining)
+"kE" = (
+/obj/table/wood/round/champagne,
+/turf/unsimulated/floor/red/side,
+/area/podmode/team2/CentralHallway)
 "kF" = (
 /obj/machinery/light{
 	dir = 1
@@ -6031,7 +6035,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/manufacturer,
+/obj/machinery/manufacturer/general,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team1/manufacturing)
 "Ef" = (
@@ -8772,6 +8776,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/table/wood/round/champagne,
 /turf/unsimulated/floor/blue/side{
 	dir = 9
 	},
@@ -237365,7 +237370,7 @@ ED
 ef
 ED
 Ts
-XP
+kE
 HI
 jD
 cI

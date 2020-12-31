@@ -980,14 +980,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 50
+	free_resource_amt = 20
 	free_resources = list(
 		/obj/item/material_piece/mauxite,
 		/obj/item/material_piece/pharosium,
 		/obj/item/material_piece/molitz
 	)
 	available = list(
-		/datum/manufacture/pod/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
@@ -996,6 +995,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/pod/control,
 		/datum/manufacture/pod/parts,
 		/datum/manufacture/pod/engine,
+		/datum/manufacture/pod/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/cargohold,
