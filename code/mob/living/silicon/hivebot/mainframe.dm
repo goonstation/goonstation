@@ -52,8 +52,7 @@
 	src.lying = 1
 	src.icon_state = "hive_main-crash"
 
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 

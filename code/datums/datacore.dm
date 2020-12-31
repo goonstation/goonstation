@@ -87,9 +87,9 @@
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M.fields["notes"] == "No notes.") //is it in its default state?
-					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergen_name]."
+					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
 				else
-					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergen_name]."
+					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
 
 	M.fields["traits"] = traitStr
 

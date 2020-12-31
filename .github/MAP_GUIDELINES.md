@@ -38,3 +38,4 @@ If these features do not work in the current codebase then your map PR will be *
 - Cloning should follow the style of modern maps and be mostly public access.
 - Feel free to take inspiration from other maps, but please don't copy paste large parts of them.
 - If you use random item spawners, try using the types of them that create specific numbers of items. This way you don't risk accidentally overloading rooms with items because RNG decided it to be so.
+- Ephemeral spacemas ornaments (versions of the ornaments that disappear when it's not spacemas time). This prevents having to create or maintain a second version of the map.

@@ -26,7 +26,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		//fxlist =
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -273,7 +273,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 					src.master.speak("Oh no oh no oh no no no no")
 					src.master.visible_message( "<span class='alert'>[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
 					src.master.set_emotion("screaming")
-					SPAWN_DBG (40)
+					SPAWN_DBG(4 SECONDS)
 						if (src.master)
 							src.master.set_emotion("sad")
 					return
@@ -341,7 +341,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	dead_man_sleeping
 		New()
 			..()
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				src.occupant = new /mob/living/carbon/human/future (src)
 				src.icon_state = "sleeper"
 				src.update_icon()
@@ -359,17 +359,17 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	New()
 		..()
 
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_second = "Tramp"
-			bioHolder.mobAppearance.underwear = "briefs"
-			bioHolder.age = 3500
-			gender = "male"
-			sleep(0.5 SECONDS)
-			bioHolder.mobAppearance.UpdateMob()
-			bioHolder.AddEffect("psy_resist") // Heh
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
+		bioHolder.AddEffect("psy_resist") // Heh
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
+
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.underwear = "briefs"
+		bioHolder.age = 3500
+		. = ..()
+
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

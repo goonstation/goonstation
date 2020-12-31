@@ -796,7 +796,7 @@
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return null
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
@@ -2025,7 +2025,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=PAY_UNTRAINED/10)

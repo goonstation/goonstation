@@ -58,7 +58,7 @@
 		..()
 
 	streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)

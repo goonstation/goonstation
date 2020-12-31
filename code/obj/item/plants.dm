@@ -19,8 +19,7 @@
 			src.create_reagents(100)
 
 	unpooled()
-		if(src.reagents)
-			src.reagents.clear_reagents()
+		src.reagents?.clear_reagents()
 		..()
 		make_reagents()
 		// hopefully prevent issues of "jumbo perfect large incredible nice perfect superb strawberry"

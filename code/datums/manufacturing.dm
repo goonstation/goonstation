@@ -1,24 +1,6 @@
-var/global/list/manufacturer_nice_mat_names = list(
-	"ALL" = "Any Material",
-	"MET-1" = "Metal",
-	"MET-2" = "Sturdy Metal",
-	"MET-3" = "Dense Metal",
-	"CRY-1" = "Crystal",
-	"CON-1" = "Conductive Material",
-	"CON-2" = "High Energy Conductor",
-	"INS-1" = "Insulative Material",
-	"FAB-1" = "Fabric",
-	"POW-1" = "Power Source",
-	"POW-2" = "Significant Power Source",
-	"POW-3" = "Extreme Power Source",
-	"DEN-1" = "High Density Crystalline Matter",
-	"DEN-2" = "Very High Density Crystalline Matter",
-	"DEN-3" = "Extraordinarily Dense Crystalline Matter"
-)
-
 proc/get_nice_mat_name_for_manufacturers(mat)
-	if(mat in manufacturer_nice_mat_names)
-		return manufacturer_nice_mat_names[mat]
+	if(mat in material_category_names)
+		return material_category_names[mat]
 	else
 		return capitalize(mat)
 
@@ -2012,6 +1994,87 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pride_ace
+	name = "Asexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/ace)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_aro
+	name = "Aromantic Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/aro)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_bi
+	name = "Bisexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/bi)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_inter
+	name = "Intersex Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/inter)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_lesb
+	name = "Lesbian Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/lesb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_nb
+	name = "Non-binary Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/nb)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_pan
+	name = "Pansexual Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/pan)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_poly
+	name = "Polyamorous Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/poly)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/pride_trans
+	name = "Trans Pride Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/pride/trans)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
 	item_paths = list("FAB-1")
@@ -2294,6 +2357,18 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
+
+//// deployable warp beacon
+
+/datum/manufacture/beaconkit
+	name = "Warp Beacon Frame"
+	item_paths = list("CRY-1","CON-1","MET-2")
+	item_names = list("Crystal","Conductive Material","Sturdy Metal")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/beaconkit)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
 
 
 /******************** HOP *******************/

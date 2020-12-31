@@ -275,9 +275,9 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -1211,7 +1211,7 @@
 					src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
 					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1254,7 +1254,7 @@
 		if(!src.heart)
 			src.heart = new /obj/item/organ/heart/flock(src.donor, src)
 			organ_list["heart"] = heart
-			SPAWN_DBG (20) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
+			SPAWN_DBG(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
 				if (src.heart && src.donor)
 					src.heart.name = initial(src.heart.name)
 

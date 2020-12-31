@@ -1042,6 +1042,22 @@
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
+/turf/simulated/floor/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
 /////////////////////////////////////////
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
@@ -1336,7 +1352,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -1402,7 +1418,7 @@
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
 			var/obj/R1 = new /obj/item/rods(src)
@@ -1421,7 +1437,7 @@
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
@@ -1606,7 +1622,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "rainbow_road")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 
@@ -1708,8 +1734,8 @@
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)

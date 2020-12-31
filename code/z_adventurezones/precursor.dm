@@ -701,8 +701,7 @@
 
 	proc
 		update_controller()
-			if(src.linked_controller)
-				src.linked_controller.update()
+			src.linked_controller?.update()
 			return
 
 
@@ -1142,7 +1141,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG (25)
+			SPAWN_DBG(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1182,7 +1181,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			summon()
 
 

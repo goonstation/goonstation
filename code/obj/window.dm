@@ -1020,11 +1020,11 @@
 
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Fibrewoven Window"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%" // todo: damageable walls
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Fibrewoven Window
+    <br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+    <br><span class='bold'>###=-</span></span>"}
+    // todo: damageable walls
   else
     return null // give the standard description
 

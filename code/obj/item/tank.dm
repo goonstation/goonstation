@@ -233,18 +233,22 @@ Contains:
 		ui = new(user, src, "GasTank", name)
 		ui.open()
 
-/obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = using_internal()
-	data["releasePressure"] = distribute_pressure
-	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+/obj/item/tank/ui_static_data(mob/user)
+	. = list(
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"maxRelease" = TANK_MAX_RELEASE_PRESSURE
+	)
 
-	return data
+/obj/item/tank/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(air_contents),
+		"valveIsOpen" = using_internal(),
+		"releasePressure" = distribute_pressure,
+	)
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")

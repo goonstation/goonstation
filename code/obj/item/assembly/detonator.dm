@@ -25,7 +25,6 @@
 	var/dfcode
 	var/dfcodeTries = 3 //How many code attempts before *boom*
 	var/mob/builtBy = null
-	var/note = null
 
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 1.0
@@ -202,24 +201,20 @@
 				else
 					W.set_loc(src)
 					W.master = src
-					W.layer = initial(W.layer)
 					user.u_equip(W)
 					src.trigger = W
 					user.show_message("<span class='notice'>You attach the [W.name] to the trigger slot.</span>")
 					setDescription()
 			else if (istype(W, /obj/item/paper))
-				src.note = W:info
-				W.set_loc(null)
-				W.master = null
-				W.layer = null
+				W.set_loc(src)
+				W.master = src
 				user.u_equip(W)
+				src.attachments += W
 				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
-				pool(W)
 			else if (W.is_detonator_attachment())
 				if (src.attachments.len < 3)
 					W.set_loc(src)
 					W.master = src
-					W.layer = initial(W.layer)
 					user.u_equip(W)
 					src.attachments += W
 					W.detonator_act("attach", src)

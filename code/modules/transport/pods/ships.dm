@@ -435,7 +435,7 @@ obj/machinery/vehicle/miniputt/pilot
 
 	var/timer = 5 * stage + 30
 	while(timer > 0)
-		if(do_after(usr, 10))
+		if(do_after(usr, 1 SECONDS))
 			timer -= 10
 		else
 			boutput(usr, "<span class='alert'>You were interrupted!</span>")
@@ -521,7 +521,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the frame...")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You wrench some of the frame parts together.")
@@ -534,7 +534,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the rest of the frame...")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You finish wrenching the frame parts together.")
@@ -550,7 +550,7 @@ obj/machinery/vehicle/miniputt/pilot
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You weld the joints of the frame together.")
@@ -565,7 +565,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the wiring...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				W.amount -= 2
@@ -582,7 +582,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/putt/boards))
 				boutput(user, "You begin to install the circuit boards...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the internal circuitry parts.")
@@ -602,7 +602,7 @@ obj/machinery/vehicle/miniputt/pilot
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					S.amount -= 3
@@ -621,7 +621,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/putt/engine))
 				boutput(user, "You begin to install the engine...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the engine.")
@@ -636,7 +636,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/pod/armor_light))
 				boutput(user, "You begin to install the light armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the light armor plating.")
@@ -648,7 +648,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_heavy))
 				boutput(user, "You begin to install the heavy armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the heavy armor plating.")
@@ -660,7 +660,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_black))
 				boutput(user, "You begin to install the strange armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the strange armor plating.")
@@ -672,7 +672,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_red))
 				boutput(user, "You begin to install the syndicate armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the syndicate armor plating.")
@@ -684,7 +684,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_industrial))
 				boutput(user, "You begin to install the industrial armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the industrial armor plating.")
@@ -696,7 +696,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_gold))
 				boutput(user, "You begin to install the gold armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the gold armor plating.")
@@ -708,7 +708,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_custom) && W.material)
 				boutput(user, "You begin to install the custom armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the custom armor plating.")
@@ -781,7 +781,7 @@ obj/machinery/vehicle/miniputt/pilot
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
@@ -793,7 +793,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/putt/control))
 				boutput(user, "You begin to install the control system...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the control system for the pod.")
@@ -819,7 +819,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				W.amount -= 3
@@ -1068,7 +1068,7 @@ obj/machinery/vehicle/miniputt/pilot
 					P.pixel_y = V * 5
 	ex_act(severity)
 		if(!maxboom)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				..()
 				maxboom = 0
 		maxboom = max(severity, maxboom)
@@ -1527,7 +1527,7 @@ obj/machinery/vehicle/miniputt/pilot
 
 	var/timer = 5 * stage + 30
 	while(timer > 0)
-		if(do_after(usr, 10))
+		if(do_after(usr, 1 SECONDS))
 			timer -= 10
 		else
 			boutput(usr, "<span class='alert'>You were interrupted!</span>")
@@ -1611,7 +1611,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the frame...")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You wrench some of the frame parts together.")
@@ -1624,7 +1624,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if (iswrenchingtool(W))
 				boutput(user, "You begin to secure the rest of the frame...")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You finish wrenching the frame parts together.")
@@ -1639,7 +1639,7 @@ obj/machinery/vehicle/miniputt/pilot
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You weld the joints of the frame together.")
@@ -1654,7 +1654,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the wiring...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				W.amount -= 4
@@ -1671,7 +1671,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/pod/boards))
 				boutput(user, "You begin to install the circuit boards...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the internal circuitry parts.")
@@ -1691,7 +1691,7 @@ obj/machinery/vehicle/miniputt/pilot
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					S.amount -= 5
@@ -1710,7 +1710,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/pod/engine))
 				boutput(user, "You begin to install the engine...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the engine.")
@@ -1726,7 +1726,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/pod/armor_light))
 				boutput(user, "You begin to install the light armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the light armor plating.")
@@ -1738,7 +1738,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_heavy))
 				boutput(user, "You begin to install the heavy armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the heavy armor plating.")
@@ -1750,7 +1750,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_black))
 				boutput(user, "You begin to install the strange armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the strange armor plating.")
@@ -1762,7 +1762,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_red))
 				boutput(user, "You begin to install the syndicate armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the syndicate armor plating.")
@@ -1774,7 +1774,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_industrial))
 				boutput(user, "You begin to install the industrial armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the industrial armor plating.")
@@ -1786,7 +1786,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_gold))
 				boutput(user, "You begin to install the gold armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the gold armor plating.")
@@ -1798,7 +1798,7 @@ obj/machinery/vehicle/miniputt/pilot
 			else if(istype(W, /obj/item/pod/armor_custom) && W.material)
 				boutput(user, "You begin to install the custom armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the custom armor plating.")
@@ -1871,7 +1871,7 @@ obj/machinery/vehicle/miniputt/pilot
 				if(!W:try_weld(user, 1))
 					return
 				boutput(user, "You begin to weld the exterior...")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
@@ -1883,7 +1883,7 @@ obj/machinery/vehicle/miniputt/pilot
 			if(istype(W, /obj/item/pod/control))
 				boutput(user, "You begin to install the control system...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You install the control system for the pod.")
@@ -1909,7 +1909,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				W.amount -= 5

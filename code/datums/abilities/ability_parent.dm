@@ -188,8 +188,7 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		if(owner)
-			owner.detach_hud(hud)
+		owner?.detach_hud(hud)
 		owner = newbody
 		if(owner)
 			owner.attach_hud(hud)
@@ -498,7 +497,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(10) //sorry, some race condition i couldt figure out
+		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
 				var/mob/living/carbon/human/H = owner?.owner
 				H.hud?.update_ability_hotbar()
@@ -1033,7 +1032,7 @@
 	layer = 61
 	var/x_offset = 0
 	var/y_offset = 0
-	appearance_flags = RESET_COLOR
+	appearance_flags = RESET_COLOR | LONG_GLIDE | PIXEL_SCALE
 	vis_flags = VIS_INHERIT_ID
 
 /datum/abilityHolder/composite

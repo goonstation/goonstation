@@ -302,8 +302,7 @@ obj/machinery/atmospherics/retrofilter
 			network_in.merge(network_out2)
 			network_out2 = network_in
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
 		if(network_out2)
 			network_out2.update = 1
@@ -353,7 +352,7 @@ obj/machinery/atmospherics/retrofilter
 				return
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				return
 			src.open = !src.open
 			user.show_message("<span class='alert'>Done!</span>",1)
@@ -381,7 +380,7 @@ obj/machinery/atmospherics/retrofilter
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
-			if (!do_after(user, 50))
+			if (!do_after(user, 5 SECONDS))
 				return
 			src.hacked = 0
 			src.update_overlays()

@@ -312,11 +312,11 @@
 	desc = "The heaviest handgun you've ever seen. The grip is stamped \"Anderson Para-Munitions\""
 	icon_state = "deag"
 	item_state = "deag"
-	force = 18.0 //mmm, pistol whip
-	throwforce = 50 //HEAVY pistol
+	force = 10.0 //mmm, pistol whip
+	throwforce = 20 //HEAVY pistol
 	auto_eject = 1
 	max_ammo_capacity = 7
-	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
 
@@ -327,6 +327,8 @@
 
 	//gimmick deagle that decapitates
 	decapitation
+		force = 18.0 //mmm, pistol whip
+		throwforce = 50 //HEAVY pistol
 		New()
 			. = ..()
 			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
@@ -367,7 +369,7 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-				H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -493,11 +495,11 @@ obj/item/gun/reagent/syringe/lovefilled
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -540,3 +542,25 @@ obj/item/gun/reagent/syringe/lovefilled
 				flick("geiger-2", src)
 			if(5)
 				flick("geiger-3", src)
+
+
+/obj/decal/fireplace  //for Jan's chrismas event
+	name = "fireplace"
+	desc = "Looks pretty toasty."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	color = "#b74909"
+
+	New()
+		. = ..()
+		processing_items += src
+
+	disposing()
+		processing_items -= src
+		. = ..()
+
+	proc/process()
+		if(!PROC_ON_COOLDOWN(30 SECONDS))
+			for (var/mob/living/M in view(src, 5))
+				if (M.bioHolder)
+					M.bioHolder.AddEffect("cold_resist", 0, 45)

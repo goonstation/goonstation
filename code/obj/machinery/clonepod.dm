@@ -94,8 +94,7 @@
 		if(connected?.scanner?.pods)
 			connected?.scanner?.pods -= src
 		connected = null
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -808,8 +807,7 @@
 			src.find_pods()
 
 	disposing()
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 

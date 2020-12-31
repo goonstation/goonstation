@@ -13,7 +13,7 @@
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
-	
+
 /obj/item/device/radio/intercom/New()
 	. = ..()
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
@@ -38,12 +38,12 @@
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/send_hear()

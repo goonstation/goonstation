@@ -224,7 +224,7 @@
 		else
 			src.frustration++
 
-		SPAWN_DBG (3)
+		SPAWN_DBG(0.3 SECONDS)
 			if (length(src?.path))
 				if (length(src.path) > 8)
 					src.frustration++

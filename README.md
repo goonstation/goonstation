@@ -1,5 +1,7 @@
 ### ![Goonstation](.github/assets/goonstation.png) Welcome to the code repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
+![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
+
 # SETUP
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@ZeWaka/goondev)
@@ -11,7 +13,7 @@ Want to get the code up and running? This guide is the place to go. <br>***Be su
 [<img src=".github/assets/discord.png" alt="Discord" width="150" align="left">](https://discord.gg/zd8t6pY)
 Discord is the place to talk to fellow players, admins, and devs in realtime. There's plenty of friendly people there, capable of answering most of your questions.
 
-[<img src=".github/assets/forums.png" alt="Forums" width="150" align="left">](https://discord.gg/zd8t6pY)
+[<img src=".github/assets/forums.png" alt="Forums" width="150" align="left">](https://forum.ss13.co)
 The forums are where we get most of our player feedback/suggestions and talk about things in a more longform format. This is also the place to appeal any bans or give admin feedback.
 
 [<img src=".github/assets/wiki.png" alt="Goonhub" width="150" align="left">](https://wiki.ss13.co)

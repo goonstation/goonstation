@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -303,8 +303,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F)
-			F.canmove = 0
+		F?.canmove = 0
 		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()

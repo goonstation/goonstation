@@ -1479,8 +1479,8 @@
 	},
 /obj/item/radio_tape/advertisement/cloning_psa,
 /obj/item/radio_tape/advertisement/captain_psa{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
@@ -1929,7 +1929,10 @@
 	network = "Mining";
 	tag = ""
 	},
-/turf/simulated/floor/caution/east,
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "afK" = (
 /obj/table/auto,
@@ -1982,17 +1985,18 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "afS" = (
-/obj/storage/closet,
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"afT" = (
-/turf/simulated/floor/scorched2,
-/area/mining/quarters)
 "afU" = (
-/turf/simulated/floor/scorched,
+/obj/storage/closet/wardrobe/green,
+/turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "afV" = (
-/turf/simulated/floor/caution/east,
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "afW" = (
 /obj/machinery/light{
@@ -2023,7 +2027,8 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agd" = (
-/obj/storage/closet/wardrobe/green,
+/obj/table/auto,
+/obj/machinery/light/lamp/bright,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "age" = (
@@ -2040,9 +2045,8 @@
 /turf/simulated/floor,
 /area/mining/quarters)
 "agh" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/scorched,
+/obj/storage/closet/wardrobe/blue,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "agi" = (
 /obj/table/auto,
@@ -2343,27 +2347,10 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "agX" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/mining/quarters)
-"agY" = (
-/obj/table/auto,
-/turf/simulated/floor,
-/area/mining/quarters)
-"agZ" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor,
+/obj/item/storage/toilet,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "aha" = (
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag22";
-	pixel_x = 28
-	},
-/obj/rack,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "ahb" = (
@@ -2372,7 +2359,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "ahc" = (
 /obj/machinery/light/emergency{
@@ -2423,7 +2415,7 @@
 	},
 /area/mining/dock)
 "ahk" = (
-/obj/storage/closet/wardrobe/blue,
+/obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "ahl" = (
@@ -2460,6 +2452,9 @@
 /area/mining/mainasteroid)
 "ahr" = (
 /obj/decal/cleanable/dirt,
+/obj/stool/chair{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/mining/quarters)
 "ahs" = (
@@ -2493,7 +2488,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahv" = (
 /obj/cable{
@@ -2501,7 +2496,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/obj/storage/closet,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "ahw" = (
 /obj/cable{
@@ -2509,14 +2505,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/caution/east,
+/turf/simulated/wall/auto/supernorn,
 /area/mining/quarters)
 "ahx" = (
-/obj/storage/closet,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
@@ -2559,9 +2558,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/miningoutpost)
 "ahE" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/breakfast,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahF" = (
 /obj/machinery/light/emergency{
@@ -5003,6 +5000,10 @@
 	pixel_y = 23
 	},
 /obj/table/auto,
+/obj/item/cargotele{
+	pixel_x = -5
+	},
+/obj/item/hand_labeler,
 /obj/item/hand_labeler,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
@@ -5056,8 +5057,6 @@
 	name = "East Door Switch";
 	pixel_y = 23
 	},
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
 "anY" = (
@@ -6782,16 +6781,13 @@
 /area/salyut)
 "asd" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
+/obj/item/clothing/suit/space/soviet{
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -25521,6 +25517,27 @@
 /obj/item/clothing/under/misc/colmob,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
+"bAg" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/breakfast,
+/turf/simulated/floor/caution/west,
+/area/mining/quarters)
+"rdq" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag22";
+	pixel_x = 28
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/black,
+/area/mining/quarters)
+"vrI" = (
+/obj/stool/chair,
+/turf/simulated/floor/black,
+/area/mining/quarters)
 
 (1,1,1) = {"
 aaa
@@ -76606,9 +76623,9 @@ afo
 afu
 afE
 afx
-afE
+agh
 ahi
-afE
+vrI
 afS
 ahh
 aiw
@@ -76906,12 +76923,12 @@ aaa
 aaa
 afo
 aft
-afF
+afU
 afF
 afF
 afF
 agW
-agW
+bAg
 ahy
 ahy
 ahD
@@ -77212,7 +77229,7 @@ afG
 afH
 agf
 agg
-agX
+agg
 ahr
 ahy
 ahy
@@ -77514,7 +77531,7 @@ afH
 afH
 agg
 agg
-agY
+agg
 ahs
 ahD
 aix
@@ -77816,7 +77833,7 @@ afI
 afH
 afI
 agB
-agY
+agg
 aht
 agu
 aiy
@@ -78113,11 +78130,11 @@ aaa
 aaa
 aaa
 aak
-afv
-afH
-afT
-afH
-afH
+aft
+ahE
+ahE
+ahE
+ahE
 ahE
 ahu
 ahD
@@ -78415,12 +78432,12 @@ aaa
 aaa
 aaa
 aak
-afv
-afI
-afU
-agh
-afH
-agZ
+afu
+aha
+afE
+afE
+aha
+aha
 ahv
 ahy
 ahy
@@ -78719,9 +78736,9 @@ aaa
 afo
 aft
 afJ
-afV
-afV
-afV
+afu
+afu
+afu
 afV
 ahw
 ahy
@@ -79020,9 +79037,9 @@ aaa
 aqj
 afo
 afu
-afE
 agd
-afE
+afu
+agX
 ahk
 aha
 ahx
@@ -79326,7 +79343,7 @@ afu
 afu
 afu
 afu
-afu
+rdq
 ahb
 ahL
 aoo
@@ -79627,7 +79644,7 @@ aff
 aff
 aff
 aff
-aff
+afZ
 afZ
 afZ
 ahM

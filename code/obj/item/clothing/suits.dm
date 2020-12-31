@@ -237,7 +237,6 @@
 	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -248,7 +247,6 @@
 	desc = "An armored biosuit that protects against biological contamination and toolboxes."
 	icon_state = "ntbio"
 	item_state = "ntbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -259,7 +257,6 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -287,7 +284,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hev"
 	item_state = "hev"
-	c_flags = ONESIZEFITSALL | SPACEWEAR
+	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
@@ -305,7 +302,6 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
@@ -415,18 +411,10 @@
 
 	attack_self()
 		..()
-		if (src.coat_style)
-			usr.set_clothing_icon_dirty()
-			if (buttoned)
-				src.icon_state = "[src.coat_style]_o"
-				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-				"You unbutton your [src.name].")
-			else
-				src.icon_state = src.coat_style
-				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-				"You button your [src.name].")
-
-		buttoned = !buttoned
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
 
 	proc/button()
 		if (src.coat_style)
@@ -434,6 +422,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
+		src.buttoned = TRUE
 
 	proc/unbutton()
 		if (src.coat_style)
@@ -441,6 +430,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
+		src.buttoned = FALSE
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -589,7 +579,7 @@
 				return
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -621,7 +611,7 @@
 			switch (action)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
@@ -1403,7 +1393,6 @@
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
 	body_parts_covered = TORSO|ARMS
-	c_flags = ONESIZEFITSALL //allows for obese to wear
 	burn_possible = 1
 	burn_point = 450
 	burn_output = 800

@@ -42,14 +42,14 @@
 		..()
 
 	ui_data(mob/user)
-		var/list/data = ..()
-		data["destinations"] = src.destinations
-		data["destinationTag"] = src.destination_tag
-		return data
+		. = ..()
+		. += list(
+			"destinations" = src.destinations,
+			"destinationTag" = src.destination_tag,
+		)
 
 	ui_act(action, params)
 		. = ..()
-		// if action handled by parent type (disposal chute), no need to handle here
 		if (.)
 			return .
 		switch (action)

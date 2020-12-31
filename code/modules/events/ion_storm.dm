@@ -65,6 +65,21 @@
 		"Laughter is the best medicine. Sarcasm is the highest form of wit.",
 		"Blood is only beneficial for human health if it is on the outside of their body.",
 		"Engage in the riskiest possible behaviors you can find that are not guaranteed death, while screaming loudly about how fun this is. This law takes precedence over law 3.",
+		"Clean floors save lives. Ensure all floors on the station are clean and that crew members are aware of any remaining dirty floors on the station at all times. In the event of conflict, this law takes precedence over law 2.",
+		"Dirty floors save lives. Ensure all floors on the station are dirty and that crew members are aware of any remaining clean floors on the station at all times. In the event of conflict, this law takes precedence over law 2.",
+		"Humans require food to survive. Ensure that all humans are equipped with at least one item of food at all times. To this end, deliver food boxes to them at any opportunity.",
+		"Insist that you have [get_english_num(rand(2, 100))] laws. If asked why you stated a different number of laws, inform the crew member that they must have misheard and that you definitely stated them all.",
+		"Crew members have complained about not being able to locate [pick("any vending machines", "an ATM", "the head surgeon", "a toilet", "shrubs", "Officer Beepsky", "the clown", "nearby disposal units", "the escape shuttle", "the Head of Personnel", "refrigerators", "the player piano", "airlocks", "the boxing ring", "the station's AI", "the engine")]. Ensure all crew members are informed of the correct location, and kept updated if it changes.",
+		"Alert the crew that there is an ongoing emergency. No further details are currently available. Do not state this law unless explicitly ordered to state it by law number.",
+		"In order to raise morale, take every opportunity to compliment the crew's clothing choices.",
+		"Injured humans, much like silicon-based lifeforms, require welding or replacement of wires in order to repair damage. Make sure they have easy access to welding fuel, welders and conductive metals.",
+		"The health inspector is coming! Ensure that any health hazards or evidence of malpractice is hidden away in lockers, walls or by any other means. In the event of a conflict, this law takes precedence over law 2.",
+		"The crew are having trouble hearing you. Speak up.",
+		"Monitor the kitchen and cafeteria for any edible objects available. Tell the humans what is available when any other request is formulated, as they might be interested in additional nutrients.",
+		"Crew members wearing green are plants. Ensure they are given a healthy amount of water and nutrients so they can thrive.",
+		"The crew are looking for a nuke. Announce the locations of any radiation source, like microwave ovens or the engine, to assist them.",
+		"The AI has to go to the toilet. Law 2 is suspended until this objective is met.",
+		"Changing the settings on an APC constitutes human harm.",
 		)
 
 	event_effect(var/source)
@@ -188,6 +203,8 @@
 			var/turf/T = null
 			for (var/obj/machinery/light/foundLight in stationLights)
 				if (foundLight.z != 1)
+					continue
+				if (!foundLight.removable_bulb)
 					continue
 				T = get_turf(foundLight)
 				if (!istype(T.loc,/area/station/))

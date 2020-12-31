@@ -169,25 +169,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-// drsingh for faster ban panel loads
-//Wire note: this has been gutted to only do stuff for jobbans until I get round to converting that system
-/world/proc/precache_unban_txt()
-	set background = 1
-	building_jobbans = 1
-
-	global_jobban_cache_built = world.timeofday
-
-	var/buf = ""
-	jobban_count = 0
-	for(var/t in jobban_keylist) if (t)
-		jobban_count++
-		buf += text("[t];")
-
-	global_jobban_cache = buf
-	global_jobban_cache_rev = 1
-
-	building_jobbans = 0
-
 var/f_color_selector_handler/F_Color_Selector
 
 /proc/buildMaterialPropertyCache()
@@ -217,7 +198,7 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		enable_extools_debugger()
+		enable_auxtools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
 #endif
@@ -449,8 +430,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	if (config)
 		Z_LOG_DEBUG("World/New", "Loading config...")
-		jobban_loadbanfile()
-		jobban_updatelegacybans()
 
 		oocban_loadbanfile()
 		// oocban_updatelegacybans() seems to do nothing. code\admin\oocban.dm -drsingh
@@ -504,7 +483,6 @@ var/f_color_selector_handler/F_Color_Selector
 		if (config.server_name != null && config.server_suffix && world.port > 0)
 			config.server_name += " #[serverKey]"
 
-		precache_unban_txt() //Wire: left in for now because jobbans still use the shitty system
 		precache_create_txt()
 
 	Z_LOG_DEBUG("World/Init", "Loading mode...")
@@ -1691,9 +1669,6 @@ var/opt_inactive = null
 
 		sleep(10 SECONDS)
 
-
-
-
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
@@ -1701,3 +1676,9 @@ var/opt_inactive = null
 			del(C)
 
 /// EXPERIMENTAL STUFF
+
+/world/Del()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
+	. = ..()

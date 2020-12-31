@@ -8,7 +8,7 @@
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	mats = 20
-	event_handler_flags = NO_MOUSEDROP_QOL
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/atom/output_location = null
@@ -363,8 +363,7 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
-					if(RE)
-						RE.apply_to_obj(piece)
+					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")

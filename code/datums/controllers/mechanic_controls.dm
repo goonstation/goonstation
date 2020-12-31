@@ -25,7 +25,8 @@ var/datum/mechanic_controller/mechanic_controls
 	proc
 		create_partslist(var/mats_number = 10)
 			if (!isnum(mats_number))
-				mats_number = 10
+				item_mats = null
+				return
 			item_mats = list(/obj/item/electronics/battery=0,/obj/item/electronics/fuse=0,/obj/item/electronics/switc=0,/obj/item/electronics/capacitor=0,/obj/item/electronics/resistor=0,/obj/item/electronics/bulb=0,/obj/item/electronics/relay=0,/obj/item/electronics/board=0,/obj/item/electronics/keypad=0,/obj/item/electronics/screen=0,/obj/item/electronics/buzzer=0)
 			var/number_of_parts = mats_number
 			var/advanced_chance = 20
