@@ -112,6 +112,7 @@
 			// start in party line by default
 			MGD_PARTY,
 		)
+		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST) // keep in sync with the list of mail alert groups
 
 	cyborg
