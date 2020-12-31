@@ -293,6 +293,44 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 300
 	desc = "????"
 
+//pod wars ones//
+/obj/machinery/vehicle/miniputt/nt_light
+	name = "Pod NTL-"
+	desc = "A nanotrasen-issue light pod."
+	armor_score_multiplier = 1
+	icon_state = "putt_raceBlue"
+	health = 150
+	maxhealth = 150
+	speed = 0.8
+
+/obj/machinery/vehicle/miniputt/nt_robust
+	name = "Pod NTR-"
+	desc = "A nanotrasen-issue robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "putt_nt_robust"
+	health = 350
+	maxhealth = 350
+	speed = 0.6
+
+/obj/machinery/vehicle/miniputt/sy_light
+	name = "Pod SYL-"
+	desc = "A syndicate-crafted light pod."
+	armor_score_multiplier = 1
+	icon_state = "putt_raceRed_alt"
+	health = 150
+	maxhealth = 150
+	speed = 0.8
+
+/obj/machinery/vehicle/miniputt/sy_robust
+	name = "Pod SYR-"
+	desc = "A syndicate-crafted robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "putt_wizard"
+	health = 350
+	maxhealth = 350
+	speed = 0.6
+//pod wars end//
+
 /*-----------------------------*/
 /* MiniPutt construction stuff */
 /*-----------------------------*/
@@ -680,6 +718,61 @@ obj/machinery/vehicle/miniputt/pilot
 				qdel(W)
 				stage = 8
 				armor_type = 7
+
+			////////////////////pod wars ones//////////////////////
+			//NT
+			else if(istype(W, /obj/item/pod/nt_light))
+				boutput(user, "You begin to install the light armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the light armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/obj/ship.dmi', "pod_skinB")
+				stage = 8
+				armor_type = 8
+			else if(istype(W, /obj/item/pod/nt_robust))
+				boutput(user, "You begin to install the robust armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the robust armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/obj/ship.dmi', "pod_skinBF")
+				stage = 8
+				armor_type = 9
+
+			//SY
+			else if(istype(W, /obj/item/pod/sy_light))
+				boutput(user, "You begin to install the light armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the light armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/obj/ship.dmi', "pod_skinR")
+				stage = 8
+				armor_type = 10
+			else if(istype(W, /obj/item/pod/sy_robust))
+				boutput(user, "You begin to install the robust armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the robust armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/obj/ship.dmi', "pod_skinW")
+				stage = 8
+				armor_type = 11
+			////////////////////pod wars end//////////////////////
+
 			else
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
@@ -771,6 +864,24 @@ obj/machinery/vehicle/miniputt/pilot
 					A.setMaterial(src.material)
 					logTheThing("station", usr, null, "finishes building a custom armored MiniPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
 					qdel(src)
+				//pod wars ones
+				else if (armor_type == 8)
+					new /obj/machinery/vehicle/miniputt/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big nt-light pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 9)
+					new /obj/machinery/vehicle/miniputt/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big nt-robust pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 10)
+					new /obj/machinery/vehicle/miniputt/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big sy-light pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 11)
+					new /obj/machinery/vehicle/miniputt/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big sy-robust pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+
 			else
 				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Three sheets will do.")
 
@@ -1056,6 +1167,44 @@ obj/machinery/vehicle/miniputt/pilot
 	speed = 1.5
 	capacity = 4
 
+//pod wars ones//
+/obj/machinery/vehicle/pod_smooth/nt_light
+	name = "Pod NTL-"
+	desc = "A nanotrasen-issue light pod."
+	armor_score_multiplier = 1
+	icon_state = "pod_raceBlue"
+	health = 250
+	maxhealth = 250
+	speed = 0.9
+
+/obj/machinery/vehicle/pod_smooth/nt_robust
+	name = "Pod NTR-"
+	desc = "A nanotrasen-issue robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "pod_nt_robust"
+	health = 500
+	maxhealth = 500
+	speed = 0.8
+
+/obj/machinery/vehicle/pod_smooth/sy_light
+	name = "Pod SYL-"
+	desc = "A syndicate-crafted light pod."
+	armor_score_multiplier = 1
+	icon_state = "pod_raceRed"
+	health = 250
+	maxhealth = 250
+	speed = 0.9
+
+/obj/machinery/vehicle/pod_smooth/sy_robust
+	name = "Pod SYR-"
+	desc = "A syndicate-crafted robust pod."
+	armor_score_multiplier = 1.5
+	icon_state = "pod_wizard"
+	health = 500
+	maxhealth = 500
+	speed = 0.8
+//pod wars end//
+
 /obj/machinery/vehicle/pod_smooth/setup_ion_trail()
 	//////Ion Trail Setup
 	src.ion_trail = new /datum/effects/system/ion_trail_follow()
@@ -1218,6 +1367,32 @@ obj/machinery/vehicle/miniputt/pilot
 	desc = "Reinforced exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
+
+/obj/item/pod/nt_light
+	name = "Light NT Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+/obj/item/pod/nt_robust
+	name = "Robust NT Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+/obj/item/pod/sy_light
+	name = "Light Syndicate Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+/obj/item/pod/sy_robust
+	name = "Robust Syndicate Pod Armor"
+	desc = "Standard exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+
 
 /obj/item/pod/armor_black
 	name = "Strange Pod Armor"
@@ -1547,6 +1722,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "Having an engine might be nice.")
 
 		if(7)
+			//this whole if-block should be refactored to utilize polymorphism, but I'm going to add to it now cause I'm lazy and in a rush... -kyle
 			if(istype(W, /obj/item/pod/armor_light))
 				boutput(user, "You begin to install the light armor plating...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
@@ -1632,6 +1808,61 @@ obj/machinery/vehicle/miniputt/pilot
 				qdel(W)
 				stage = 8
 				armor_type = 7
+
+			////////////////////pod wars ones//////////////////////
+			//NT
+			else if(istype(W, /obj/item/pod/nt_light))
+				boutput(user, "You begin to install the light armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the light armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/effects/64x64.dmi', "pod_skinB")
+				stage = 8
+				armor_type = 8
+			else if(istype(W, /obj/item/pod/nt_robust))
+				boutput(user, "You begin to install the robust armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the robust armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/effects/64x64.dmi', "pod_skinBF")
+				stage = 8
+				armor_type = 9
+
+			//SY
+			else if(istype(W, /obj/item/pod/sy_light))
+				boutput(user, "You begin to install the light armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the light armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/effects/64x64.dmi', "pod_skinR")
+				stage = 8
+				armor_type = 10
+			else if(istype(W, /obj/item/pod/sy_robust))
+				boutput(user, "You begin to install the robust armor plating...")
+				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				if (!do_after(user, 30))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				boutput(user, "You loosely attach the robust armor plating.")
+				user.u_equip(W)
+				qdel(W)
+				src.overlays += image('icons/effects/64x64.dmi', "pod_skinW")
+				stage = 8
+				armor_type = 11
+			////////////////////pod wars end//////////////////////
+
 			else
 				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
 
@@ -1723,6 +1954,24 @@ obj/machinery/vehicle/miniputt/pilot
 					A.setMaterial(src.material)
 					logTheThing("station", usr, null, "finishes building a custom armored pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
 					qdel(src)
+				//pod wars ones
+				else if (armor_type == 8)
+					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big nt-light pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 9)
+					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big nt-robust pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 10)
+					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big sy-light pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+				else if (armor_type == 11)
+					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
+					logTheThing("station", usr, null, "finishes building a big sy-robust pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					qdel(src)
+
 			else
 				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Five sheets will do.")
 

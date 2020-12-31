@@ -873,8 +873,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "pod"
 	capacity = 1
-	health = 140
-	maxhealth = 140
+	health = 100
+	maxhealth = 100
 	anchored = 0
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 
@@ -1004,7 +1004,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/communications/mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
-		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/ltlaser
 	)
 
 	New()
@@ -1012,7 +1012,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		..()
 
 	proc/add_team_armor()
-	
+		return
+		
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	add_team_armor()
 		available += list(
