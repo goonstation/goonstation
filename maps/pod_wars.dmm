@@ -1249,7 +1249,7 @@
 	},
 /area/podmode/spacejunk/fstation)
 "fU" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team2/CentralHallway)
 "fV" = (
@@ -6410,8 +6410,8 @@
 /turf/simulated/floor/white,
 /area/podmode/spacejunk/Brighwell)
 "FT" = (
-/obj/machinery/manufacturer/hangar,
 /obj/machinery/light/small/floor,
+/obj/machinery/manufacturer/pod_wars/nanotrasen,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team1/manufacturing)
 "FV" = (
@@ -8325,7 +8325,7 @@
 /turf/simulated/floor/airless/grey,
 /area/podmode/spacejunk/greatwreck)
 "PE" = (
-/obj/machinery/manufacturer/hangar,
+/obj/machinery/manufacturer/pod_wars/nanotrasen,
 /turf/unsimulated/floor/delivery,
 /area/podmode/team1/manufacturing)
 "PF" = (
