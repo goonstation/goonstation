@@ -728,7 +728,7 @@ Code:
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
-		signal.data["group"] = mailgroup
+		signal.data["group"] = list(mailgroup, MGA_CRISIS)
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))

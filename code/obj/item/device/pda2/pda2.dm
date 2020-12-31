@@ -58,9 +58,9 @@
 		// Other
 		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
 		// Alerts
-		MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST,
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS,
 	)
-	var/alertgroups = list(MGA_MAIL) // What mail groups that we're not a member of should we be able to mute?
+	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -89,14 +89,14 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	ntso
 		icon_state = "pda-nt"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	ai
 		icon_state = "pda-h"
@@ -113,7 +113,7 @@
 			MGD_PARTY,
 		)
 		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
-		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST) // keep in sync with the list of mail alert groups
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
 		icon_state = "pda-h"
@@ -134,37 +134,37 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
-			alertgroups = list(MGA_MAIL, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_SALES)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			muted_mailgroups = list(MGA_SALES)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_SALES)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 		muted_mailgroups = list(MGD_MEDBAY)
 
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	toxins
 		icon_state = "pda-tox"
@@ -175,7 +175,7 @@
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 
 	clown
 		icon_state = "pda-clown"
@@ -202,7 +202,7 @@
 	chaplain
 		icon_state = "pda-holy"
 		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_DEATH, MGA_MEDCRIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
 		icon_state = "pda-a"
@@ -212,12 +212,12 @@
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_ENGINE)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
 	mining
 		icon_state = "pda-e"
 		mailgroups = list(MGO_MINING,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_SALES)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
@@ -230,7 +230,7 @@
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
 		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RKIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -583,17 +583,17 @@
 		else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
 			return
 
-		if (islist(signal.data["group"]))
-			var/any_member = FALSE
-			for (var/group in signal.data["group"])
-				if (group in src.mailgroups)
-					any_member = TRUE
-					break
-			if (!any_member) // not a member of any specified group; discard
-				return
-		else if (signal.data["group"])
-			if (!(signal.data["group"] in src.mailgroups)) // not a member of the specified group; discard
-				return
+	if (islist(signal.data["group"]))
+		var/any_member = FALSE
+		for (var/group in signal.data["group"])
+			if (group in src.mailgroups)
+				any_member = TRUE
+				break
+		if (!any_member) // not a member of any specified group; discard
+			return
+	else if (signal.data["group"])
+		if (!(signal.data["group"] in src.mailgroups)) // not a member of the specified group; discard
+			return
 
 	src.host_program?.receive_signal(signal, rx_method, rx_freq)
 

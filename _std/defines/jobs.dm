@@ -37,3 +37,5 @@
 #define MGA_SALES "salesalerts"
 #define MGA_SHIPPING "shippingalerts"
 #define MGA_CARGOREQUEST "cargorequestalerts"
+#define MGA_CRISIS "crisisalerts"
+#define MGA_RADIO "radioalerts"
