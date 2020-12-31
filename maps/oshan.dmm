@@ -3141,7 +3141,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "agK" = (
-/obj/cabinet,
+/obj/cabinet/psychiatry,
 /turf/simulated/floor/darkblue,
 /area/station/medical/staff)
 "agL" = (
@@ -47531,6 +47531,10 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"ghT" = (
+/obj/cabinet/taffy,
+/turf/simulated/floor/darkblue,
+/area/station/medical/staff)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -91229,7 +91233,7 @@ afq
 afq
 afW
 ciI
-agK
+ghT
 afJ
 ahz
 ahz

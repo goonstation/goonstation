@@ -424,6 +424,7 @@
 	icon_state = "red"
 	amount = 1
 	sugar_content = 10
+	var/unwrapped = 0
 	var/flavor
 	var/list/flavors
 
@@ -434,14 +435,33 @@
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to unwrap this first!</span>")
+			user.visible_message("<span class='emote'><b>[user]</b> stares at [src] in a confused manner.</span>")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove the unwrapped taffy into [M]'s mouth!</span>")
+			return
+
+	attack_self(mob/user as mob)
+		if (unwrapped)
+			return ..()
+
+		unwrapped = 1
+		user.visible_message("<span class='emote'>[user] unwraps [src].</span>", "You unwrap [src].")
+		icon_state = icon_state + "-unwrapped"
+
 /obj/item/reagent_containers/food/snacks/candy/taffy/cherry
 	flavor = "This one is cherry flavored."
 	flavors = list("juice_cherry", "psilocybin")
 
 /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon
+	icon_state = "pink"
 	flavor = "This one is watermelon flavored."
 	flavors = list("juice_watermelon", "love")
 
 /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry
+	icon_state = "blue"
 	flavor = "This one is blue raspberry flavored."
 	flavors = list("juice_raspberry", "LSD")
