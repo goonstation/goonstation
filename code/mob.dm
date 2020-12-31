@@ -2935,3 +2935,9 @@
 
 /mob/proc/on_eat(var/atom/A)
 	return
+
+/mob/set_density(var/newdensity)
+	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
+		..(0)
+	else
+		..(newdensity)

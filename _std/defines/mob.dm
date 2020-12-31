@@ -6,8 +6,8 @@
 #define SPEECH_BLOB 4		//yes
 #define SEE_THRU_CAMERAS 8	//for ai eye
 #define IS_BONER 16			//for skeletals
-#define NO_MOVEMENT_PUFFS 32	// sprinting/walking does not produce any smoke puffs
-#define NO_DENSITY 64	 // for mobs that should always have 0 density
+#define UNUSED_32 32
+#define UNUSED_64 64
 #define UNUSED_128 128
 #define UNUSED_256 256
 #define UNUSED_512 512
