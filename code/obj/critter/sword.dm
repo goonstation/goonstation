@@ -30,6 +30,7 @@
 	var/current_ability = null		//Used to keep track of what ability the SWORD is currently using.
 	var/previous_ability = null		//Used to prevent using the same ability twice in a row.
 	var/rotation_current = 0		//Used to keep track which of the 16 different orientations the SWORD is currently facing.
+	var/current_heat_level = 0		//Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/image/glow
 
 	New()
@@ -230,8 +231,6 @@
 		walk(src,0)
 		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
 		mobile = 0
-		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge")
-		src.UpdateOverlays(glow, "glow")
 
 		var/increment
 		var/turf/T
@@ -283,7 +282,7 @@
 			miscvuln = 0.2
 
 
-	proc/gyrating_edge()
+	proc/gyrating_edge()									//Spins, dealing mediocre damage to anyone nearby.
 		rotation_locked = true
 		mobile = 0
 		firevuln = 0.5
@@ -322,7 +321,7 @@
 			miscvuln = 0.2
 
 
-	proc/destructive_leap()
+	proc/destructive_leap()									//Leaps at the target using it's thrusters, dealing damage at the landing location and probably gibbing anyone at the center of said location.
 		walk_towards(src, src.target)
 		walk(src,0)
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
@@ -351,7 +350,10 @@
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x,src.loc.y,1)
 			for (var/mob/M in src.loc)
-				M.gib()
+				if(prob(69))								//Nice.
+					M.gib()
+				else
+					random_brute_damage(M, 120)
 
 		SPAWN_DBG(10)
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
@@ -367,13 +369,75 @@
 
 //-UNANCHORED ABILITIES-//
 
-//	proc/heat_reallocation()
-//		playsound(src.loc, "sound/effects/gust.ogg", 60, 1)
+	proc/heat_reallocation()								//Sets anyone nearby on fire while dealing increasing burning damage.
+		rotation_locked = true
+		mobile = 0
+		firevuln = 1.25
+		brutevuln = 1.25
+		miscvuln = 0.25
+
+		playsound(src.loc, "sound/effects/gust.ogg", 60, 1)
+		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "heatReallocation")
+		src.UpdateOverlays(glow, "glow")
+
+		SPAWN_DBG(2)
+			for (var/mob/M in range(3,src.loc))
+				random_burn_damage(M, (current_heat_level / 5))
+				T.hotspot_expose((current_heat_level * 10),1)
+				M.changeStatus("burning", 4 SECONDS)
+
+		SPAWN_DBG(4)
+			for (var/mob/M in range(3,src.loc))
+				random_burn_damage(M, (current_heat_level / 4))
+				T.hotspot_expose((current_heat_level * 20),1)
+				M.changeStatus("burning", 6 SECONDS)
+
+		SPAWN_DBG(6)
+			for (var/mob/M in range(3,src.loc))
+				random_burn_damage(M, (current_heat_level / 3))
+				T.hotspot_expose((current_heat_level * 30),1)
+				M.changeStatus("burning", 8 SECONDS)
+
+		SPAWN_DBG(8)
+			current_heat_level = 0
+			icon = 'icons/misc/retribution/SWORD/base.dmi'
+			icon_state = "anchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			src.UpdateOverlays(glow, "glow")
+			rotation_locked = false
+			mobile = 1
+			firevuln = 1
+			brutevuln = 1
+			miscvuln = 0.2
 
 
-//	proc/energy_absorption()
-//		playsound(src.loc, "sound/effects/shieldup.ogg", 80, 1)
+	proc/energy_absorption()								//Becomes immune to burn damage for the duration. Creates a snapshot of it's health during activation, returning to it after 1.2 seconds. Increases the heat value by damage taken during the duration.
+		rotation_locked = true
+		mobile = 0
+		firevuln = 0
+		brutevuln = 1.25
+		miscvuln = 0.25
+
+		var/health_before_absorption = health
+		playsound(src.loc, "sound/effects/shieldup.ogg", 80, 1)
+		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "energyAbsorption")
+		src.UpdateOverlays(glow, "glow")
+
+		SPAWN_DBG(12)
+			if(health_before_absorption > health)
+				current_heat_level = current_heat_level + health_before_absorption - health
+				health = health_before_absorption
+
+			icon = 'icons/misc/retribution/SWORD/base.dmi'
+			icon_state = "anchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			src.UpdateOverlays(glow, "glow")
+			rotation_locked = false
+			mobile = 1
+			firevuln = 1
+			brutevuln = 1
+			miscvuln = 0.2
 
 
-//	proc/destructive_flight()
-//		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)
+	proc/destructive_flight()								//Charges at the target using it's thrusters thrice, dealing damage at the locations of each one's end.
+		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)

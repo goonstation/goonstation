@@ -68,6 +68,7 @@
 			force = inactive_force
 			stamina_damage = inactive_stamina_dmg
 			stamina_cost = inactive_stamina_cost
+			w_class = 2.0
 			
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Destruction System!</span>", 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
@@ -86,6 +87,7 @@
 			force = active_force
 			stamina_damage = active_stamina_dmg
 			stamina_cost = active_stamina_cost
+			w_class = 5.0
 
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Destruction System!</span>", 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is installed."
