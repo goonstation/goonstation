@@ -2320,6 +2320,10 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Pharmacy"
 	icon_state = "chem"
 
+/area/station/medical/medbay/psychiatrist
+	name = "Psychiatrist's Office"
+	icon_state = "psychiatrist"
+
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
 	icon_state = "treat1"

@@ -14371,7 +14371,6 @@
 /area/station/crew_quarters/quarters)
 "aIC" = (
 /obj/machinery/rkit,
-/obj/item/paper/manufacturer_blueprint/loafer,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aID" = (
@@ -30979,14 +30978,14 @@
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btL" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/pocketguide/quartermaster,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "btM" = (
@@ -32969,6 +32968,9 @@
 /area/station/quartermaster/cargobay)
 "byC" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/book/pocketguide/quartermaster{
+	pixel_y = 10
+	},
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)

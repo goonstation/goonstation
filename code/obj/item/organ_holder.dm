@@ -495,6 +495,7 @@
 						else if (src.donor.ghost.key)
 							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
+							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
 							newmind.current = src.donor.ghost
 							src.donor.ghost.mind = newmind
@@ -502,6 +503,7 @@
 					else if (src.donor.key)
 						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
+						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
 						newmind.current = src.donor
 						src.donor.mind = newmind

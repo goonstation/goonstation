@@ -100,6 +100,7 @@
 			var/key = pilot.client.key
 			pilot.client.mob = src
 			src.mind = new /datum/mind()
+			src.mind.ckey = ckey
 			src.mind.key = key
 			src.mind.current = src
 			ticker.minds += src.mind
@@ -129,6 +130,7 @@
 				var/key = src.client.key
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
+				controller.mind.ckey = ckey
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind

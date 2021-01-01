@@ -1,4 +1,25 @@
 
+(t)fri jan 01 21
+(u)Flourish
+(*)Happy New Year! Come participate in <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15624">January's Monthly Contest!</a> It'll be fun, I promise!
+(u)Flourish
+(e)🆕🗺🔄|feature, mapping, rework
+(*)In anticipation of all the new and wonderful things 2053 will bring, Nanotrasen has renovated parts of Oshan Laboratory's medbay and permanently hired a psychiatrist to ensure that the crew's mental and psychological health will continue to be in tiptop shape.
+(t)thu dec 31 20
+(u)Flourish
+(e)🆕|feature
+(+)Added the "Claw School Graduate" trait, which makes you infallible when playing claw machines! The super clever pun name is courtesy of Virvatuli.
+(u)Flourish
+(e)🗺|mapping
+(+)Removed loafer blueprint from Manta.
+(t)wed dec 30 20
+(u)Efi
+(p)3125
+(e)🆕|feature
+(+)Glass recyclers now also accept processed crystalline material pieces.
+(u)Flourish
+(e)🆕|feature
+(+)Added two new supply packs to QM; firefighting foamtank crate and firefighting supplies crate.
 (t)mon dec 28 20
 (u)Tarmunora
 (e)⚖|balance

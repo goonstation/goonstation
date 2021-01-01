@@ -1710,6 +1710,7 @@
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
+	newMind.ckey = M.ckey
 	newMind.key = M.key
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role

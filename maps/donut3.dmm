@@ -50557,11 +50557,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
 "pex" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = -25
