@@ -103,12 +103,8 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/build, list(holder)))
 
 /datum/aiTask/sequence/goalbased/build/precondition()
-	. = 0
 	var/mob/living/critter/flock/F = holder.owner
-	if (!F)
-		return
-	if (F.can_afford(20))
-		. = 1
+	return F?.can_afford(20)
 
 /datum/aiTask/sequence/goalbased/build/on_tick()
 	var/had_target = holder.target
@@ -568,7 +564,7 @@
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
 		var/mob/living/M = holder.target
-		if(M && !istype(M.loc, /obj/icecube/flockdrone) && (M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
+		if(!M || istype(M.loc, /obj/icecube/flockdrone) || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat)
 			// target is down or in a cage, we don't care about this target now
 			// fetch a new one if we can
 			holder.target = get_best_target(get_targets())
