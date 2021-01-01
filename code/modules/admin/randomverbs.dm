@@ -2665,3 +2665,27 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				return
 	else
 		boutput(src, "You must be at least a Administrator to use this command.")
+
+/client/proc/cmd_blindfold_monkeys()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "See No Evil"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Really blindfold all monkeys?",,"Yes","No"))
+			if("Yes")
+				for (var/mob/living/carbon/human/M in mobs)
+					if (!ismonkey(M))
+						continue
+					var/obj/item/clothing/glasses/G = M.glasses
+					if (G)
+						M.u_equip(G)
+						qdel(G)
+					var/obj/item/clothing/glasses/blindfold/B = new()
+					M.force_equip(B, M.slot_glasses)
+
+				logTheThing("admin", src, null, "has blindfolded every monkey.")
+				logTheThing("diary", src, null, "has blindfolded every monkey.", "admin")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")
