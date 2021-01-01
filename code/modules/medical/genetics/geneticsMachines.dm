@@ -1875,12 +1875,39 @@
 	if (.)
 		return
 	switch (action)
+		if("purchasematerial")
+			. = TRUE
+			// UI doesn't allow making invalid purchases,
+			// but it can still be invalid due to lag.
+			var/amount = params["amount"]
+			amount = min(
+				round(amount),
+				genResearch.max_material - genResearch.researchMaterial,
+				round(wagesystem.research_budget / 50),
+			)
+			if (amount > 0)
+				var/cost = amount * 50
+				wagesystem.research_budget -= cost
+				genResearch.researchMaterial += amount
+				on_ui_interacted(ui.user)
 		if("research")
 			. = TRUE
 			var/datum/geneticsResearchEntry/E = locate(params["ref"])
 			if (!research_sanity_check(E))
 				genResearch.addResearch(E)
 				on_ui_interacted(ui.user)
+		if("setgene")
+			. = TRUE
+			src.currently_browsing = locate(params["ref"])
+			on_ui_interacted(ui.user, minor = TRUE)
+		if("setrecord")
+			. = TRUE
+			src.selected_record = locate(params["ref"])
+			on_ui_interacted(ui.user, minor = TRUE)
+		if("clearrecord")
+			. = TRUE
+			src.selected_record = null
+			on_ui_interacted(ui.user, minor = TRUE)
 		if("activator")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -1898,33 +1925,31 @@
 				I.gene_to_activate = E.id
 				on_ui_interacted(ui.user)
 				playsound(src, "sound/machines/click.ogg", 50, 1)
-		if("purchasematerial")
+		if("injector")
 			. = TRUE
-			// UI doesn't allow making invalid purchases,
-			// but it can still be invalid due to lag.
-			var/amount = params["amount"]
-			amount = min(
-				round(amount),
-				genResearch.max_material - genResearch.researchMaterial,
-				round(wagesystem.research_budget / 50),
-			)
-			if (amount > 0)
-				var/cost = amount * 50
-				wagesystem.research_budget -= cost
-				genResearch.researchMaterial += amount
-				on_ui_interacted(ui.user)
-		if("setgene")
-			. = TRUE
-			src.currently_browsing = locate(params["ref"])
-			on_ui_interacted(ui.user, minor = TRUE)
-		if("setrecord")
-			. = TRUE
-			src.selected_record = locate(params["ref"])
-			on_ui_interacted(ui.user, minor = TRUE)
-		if("clearrecord")
-			. = TRUE
-			src.selected_record = null
-			on_ui_interacted(ui.user, minor = TRUE)
+			if (!genResearch.isResearched(/datum/geneticsResearchEntry/injector))
+				return
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E, 0))
+				return
+			var/mob/living/L = get_scan_subject()
+			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)) || !E.can_make_injector)
+				src.log_maybe_cheater(usr, "tried to create a [E.id] injector")
+				return
+			if (!src.equipment_available("injector", E))
+				return
+			var/price = genResearch.injector_cost
+			if (genResearch.researchMaterial < price)
+				return
+			src.equipment_cooldown(GENETICS_INJECTORS, 400)
+			genResearch.researchMaterial -= price
+			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
+			I.name = "dna injector - [E.name]"
+			var/datum/bioEffect/NEW = new E.type(I)
+			copy_datum_vars(E, NEW)
+			I.BE = NEW
+			on_ui_interacted(ui.user)
+			playsound(src, "sound/machines/click.ogg", 50, 1)
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -2020,6 +2045,21 @@
 					bp.style = "5"
 			src.equipment_cooldown(GENETICS_ANALYZER, 200)
 			on_ui_interacted(ui.user)
+		if("autocomplete")
+			. = TRUE
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E))
+				return
+			for(var/i = 1, i <= length(E.dnaBlocks.blockListCurr), i++)
+				var/datum/basePair/current = E.dnaBlocks.blockListCurr[i]
+				var/datum/basePair/correct = E.dnaBlocks.blockList[i]
+				if (current.marker == "locked")
+					continue
+				current.bpp1 = correct.bpp1
+				current.bpp2 = correct.bpp2
+				current.style = ""
+				current.marker = "white"
+				on_ui_interacted(ui.user, minor = TRUE)
 		if("activate")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -2081,21 +2121,26 @@
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
-		if("autocomplete")
+		if("precisionemitter")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
 			if (bioEffect_sanity_check(E))
 				return
-			for(var/i = 1, i <= length(E.dnaBlocks.blockListCurr), i++)
-				var/datum/basePair/current = E.dnaBlocks.blockListCurr[i]
-				var/datum/basePair/correct = E.dnaBlocks.blockList[i]
-				if (current.marker == "locked")
-					continue
-				current.bpp1 = correct.bpp1
-				current.bpp2 = correct.bpp2
-				current.style = ""
-				current.marker = "white"
-				on_ui_interacted(ui.user, minor = TRUE)
+			if (!src.equipment_available("precision_emitter", E))
+				return
+			var/mob/living/subject = get_scan_subject()
+			if(!subject)
+				return
+			if(subject.stat)
+				return
+			src.log_me(subject, "gene scrambled", E)
+			if (genResearch.emitter_radiation > 0)
+				subject.changeStatus("radiation", (genResearch.emitter_radiation*10), 3)
+			subject.bioHolder.RemovePoolEffect(E)
+			subject.bioHolder.AddRandomNewPoolEffect()
+			src.equipment_cooldown(GENETICS_EMITTERS, 600)
+			on_ui_interacted(ui.user)
+			play_emitter_sound()
 		if("booth")
 			. = TRUE
 			if (!genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
@@ -2151,31 +2196,20 @@
 				return
 			src.to_splice = E
 			on_ui_interacted(ui.user, minor = TRUE)
-		if("injector")
+		if("splicegene")
 			. = TRUE
-			if (!genResearch.isResearched(/datum/geneticsResearchEntry/injector))
-				return
 			var/datum/bioEffect/E = locate(params["ref"])
 			if (bioEffect_sanity_check(E, 0))
 				return
-			var/mob/living/L = get_scan_subject()
-			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)) || !E.can_make_injector)
-				src.log_maybe_cheater(usr, "tried to create a [E.id] injector")
+			if (!src.to_splice)
 				return
-			if (!src.equipment_available("injector", E))
-				return
-			var/price = genResearch.injector_cost
-			if (genResearch.researchMaterial < price)
-				return
-			src.equipment_cooldown(GENETICS_INJECTORS, 400)
-			genResearch.researchMaterial -= price
-			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
-			I.name = "dna injector - [E.name]"
-			var/datum/bioEffect/NEW = new E.type(I)
-			copy_datum_vars(E, NEW)
-			I.BE = NEW
-			on_ui_interacted(ui.user)
-			playsound(src, "sound/machines/click.ogg", 50, 1)
+			var/datum/dna_chromosome/C = src.to_splice
+			var/result = C.apply(E)
+			if(isnull(result))
+				src.saved_chromosomes -= C
+				qdel(C)
+				src.to_splice = null
+			on_ui_interacted(ui.user, minor = TRUE)
 		if("reclaim")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -2223,26 +2257,6 @@
 			E.owner = null
 			E.holder = null
 			on_ui_interacted(ui.user)
-		if("precisionemitter")
-			. = TRUE
-			var/datum/bioEffect/E = locate(params["ref"])
-			if (bioEffect_sanity_check(E))
-				return
-			if (!src.equipment_available("precision_emitter", E))
-				return
-			var/mob/living/subject = get_scan_subject()
-			if(!subject)
-				return
-			if(subject.stat)
-				return
-			src.log_me(subject, "gene scrambled", E)
-			if (genResearch.emitter_radiation > 0)
-				subject.changeStatus("radiation", (genResearch.emitter_radiation*10), 3)
-			subject.bioHolder.RemovePoolEffect(E)
-			subject.bioHolder.AddRandomNewPoolEffect()
-			src.equipment_cooldown(GENETICS_EMITTERS, 600)
-			on_ui_interacted(ui.user)
-			play_emitter_sound()
 
 /obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()

@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../backend";
-import { Box, Button, Section, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, Tabs, Divider, Modal, Knob, AnimatedNumber, ByondUi } from "../components";
+import { AnimatedNumber, Box, Button, Divider, Flex, Icon, Knob, LabeledList, Modal, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
@@ -375,7 +375,7 @@ const ResearchTab = (props, context) => {
 };
 
 const MutationsTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data } = useBackend(context);
   const {
     bioEffects,
   } = data;
@@ -414,6 +414,7 @@ const StorageTab = (props, context) => {
 
     return p;
   }, {}));
+  chromosomes.sort((a, b) => a.name > b.name ? 1 : -1);
 
   return (
     <Fragment>
@@ -483,7 +484,7 @@ const StorageTab = (props, context) => {
 };
 
 const RecordTab = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data } = useBackend(context);
   const {
     record,
   } = data;
@@ -742,6 +743,8 @@ const BioEffect = (props, context) => {
   }
 
   const dnaGood = dna.every(pair => !pair[2]);
+  const dnaGoodExceptLocks = dna.every(pair =>
+    !pair[2] || pair[3] === "locked");
 
   return (
     <Section title={name}>
@@ -778,6 +781,7 @@ const BioEffect = (props, context) => {
             {research >= 3 && !dnaGood && (
               <Button
                 icon="magic"
+                disabled={dnaGoodExceptLocks}
                 onClick={() => act("autocomplete", { ref })}>
                 Autocomplete DNA
               </Button>
@@ -888,13 +892,8 @@ const typeColor = {
   "5": "bad",
 };
 
-const markColor = {
-  "green": "good",
-  "blue": "good",
-};
-
 const DNASequence = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { act } = useBackend(context);
   const {
     gene,
     isPotential,
@@ -957,7 +956,7 @@ const DNASequence = (props, context) => {
                 pair[2] === "" ? "check"
                   : pair[2] === "5" ? "times"
                     : "question"
-              } color={typeColor[pair[2]] || markColor[pair[3]]} />
+              } color={typeColor[pair[2]]} />
             )}
           </td>
         ))}
@@ -1005,8 +1004,7 @@ const Nucleotide = props => {
     ...rest
   } = props;
 
-  const color = useLetterColor ? letterColor[letter]
-    : (typeColor[type] || markColor[mark]);
+  const color = useLetterColor ? letterColor[letter] : typeColor[type];
 
   return (
     <Button
