@@ -278,7 +278,7 @@
 		src.burn_dam += burn
 		src.tox_dam += tox
 
-		if(src.robotic && (src.organ_name in cyberorgan_brute_threshold) && abs(src.brute_dam - cyberorgan_brute_threshold[src.organ_name]) < 2 && abs(src.burn_dam - cyberorgan_burn_threshold[src.organ_name]) < 2)
+		if(src.robotic && (src.organ_name in cyberorgan_brute_threshold) && abs(src.brute_dam - cyberorgan_brute_threshold[src.organ_name]) <= 2 && abs(src.burn_dam - cyberorgan_burn_threshold[src.organ_name]) <= 5)
 			src.emag_act(null)
 
 		//I don't think this is used at all, but I'm afraid to get rid of it - Kyle
