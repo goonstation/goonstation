@@ -236,6 +236,11 @@ var/list/genescanner_addresses = list()
 		src.occupant = M
 		src.icon_state = "scanner_1"
 
+		// open the computer UI so the person in the scanner can watch.
+		var/obj/machinery/computer/genetics/C = locate(/obj/machinery/computer/genetics, orange(1, src))
+		if (istype(C))
+			C.ui_interact(M, null)
+
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
 
