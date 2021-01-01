@@ -46604,6 +46604,7 @@
 /area/station/maintenance/inner/central)
 "cjF" = (
 /obj/storage/crate,
+/obj/item/item_box/figure_capsule,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "cjG" = (
@@ -47524,6 +47525,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
+"dMs" = (
+/obj/storage/crate,
+/obj/item/spacecash/random/small,
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47553,12 +47559,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"fFa" = (
-/obj/item/bee_egg_carton,
-/turf/simulated/floor,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47635,6 +47635,14 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"hnV" = (
+/obj/storage/crate,
+/obj/item/firework/bootleg,
+/obj/item/firework{
+	pixel_y = -7
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "hGt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47827,6 +47835,12 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"mEN" = (
+/obj/item/bee_egg_carton,
+/turf/simulated/floor,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "mSU" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -47943,6 +47957,14 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"pvs" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/obj/storage/crate,
+/obj/item/storage/box/mousetraps,
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "pvB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48183,6 +48205,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vwx" = (
+/obj/item/mop,
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "vCx" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -48252,6 +48278,9 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xMQ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/medbay/psychiatrist)
 "xOo" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -48266,9 +48295,6 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"yau" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/psychiatrist)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -76544,7 +76570,7 @@ aEt
 aKB
 aMd
 aME
-fFa
+mEN
 aPZ
 aPW
 aQC
@@ -85900,8 +85926,8 @@ aHC
 atR
 cjU
 aHC
-cjF
-ckY
+hnV
+pvs
 cfS
 aDr
 chd
@@ -86202,7 +86228,7 @@ aHC
 auq
 aHC
 aHC
-cjF
+dMs
 ckZ
 cjG
 ciZ
@@ -90091,11 +90117,11 @@ afq
 afq
 afq
 afq
-yau
-yau
-yau
+xMQ
+xMQ
+xMQ
 agy
-yau
+xMQ
 apD
 akx
 aKz
@@ -90392,8 +90418,8 @@ abl
 afq
 afq
 afs
-yau
-yau
+xMQ
+xMQ
 afF
 ahx
 aaU
@@ -90996,7 +91022,7 @@ acv
 afq
 afq
 afV
-yau
+xMQ
 agK
 ahc
 vHm
@@ -91298,7 +91324,7 @@ afq
 afq
 afq
 afW
-yau
+xMQ
 afI
 afJ
 xOo
@@ -102213,7 +102239,7 @@ chB
 aLq
 aLW
 cfS
-cfS
+vwx
 ckK
 aDr
 ciK

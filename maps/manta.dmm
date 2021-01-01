@@ -14371,7 +14371,6 @@
 /area/station/crew_quarters/quarters)
 "aIC" = (
 /obj/machinery/rkit,
-/obj/item/paper/manufacturer_blueprint/loafer,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aID" = (
