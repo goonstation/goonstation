@@ -383,19 +383,16 @@
 		SPAWN_DBG(2)
 			for (var/mob/M in range(3,src.loc))
 				random_burn_damage(M, (current_heat_level / 5))
-				T.hotspot_expose((current_heat_level * 10),1)
 				M.changeStatus("burning", 4 SECONDS)
 
 		SPAWN_DBG(4)
 			for (var/mob/M in range(3,src.loc))
 				random_burn_damage(M, (current_heat_level / 4))
-				T.hotspot_expose((current_heat_level * 20),1)
 				M.changeStatus("burning", 6 SECONDS)
 
 		SPAWN_DBG(6)
 			for (var/mob/M in range(3,src.loc))
 				random_burn_damage(M, (current_heat_level / 3))
-				T.hotspot_expose((current_heat_level * 30),1)
 				M.changeStatus("burning", 8 SECONDS)
 
 		SPAWN_DBG(8)
