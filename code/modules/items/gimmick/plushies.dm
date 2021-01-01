@@ -88,7 +88,7 @@
 	CM.icon_state = "claw"
 	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
-	var/obj/item/P = pick(prob(20) ? (prob(20) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
+	var/obj/item/P = pick(prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))
 	P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	P.throw_at(M, 16, 3)
