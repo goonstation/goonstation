@@ -1725,6 +1725,13 @@
 			scanner.icon_state = "scanner_0"
 			return null
 		else
+			for (var/D in scanner.occupant.bioHolder.effects)
+				var/datum/bioEffect/BE = scanner.occupant.bioHolder.effects[D]
+				var/datum/bioEffect/GBE = BE.get_global_instance()
+				if (GBE.research_level == EFFECT_RESEARCH_DONE)
+					// Hey look, it's the gene, and it's activated.
+					GBE.research_level = EFFECT_RESEARCH_ACTIVATED
+
 			return scanner.occupant
 	else
 		return null
