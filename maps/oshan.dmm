@@ -18737,7 +18737,7 @@
 	},
 /area/station/engine/engineering)
 "aRk" = (
-/obj/cryotron_spawner,
+/obj/cryotron,
 /turf/simulated/floor/darkpurple/side{
 	dir = 4
 	},
