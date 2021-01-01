@@ -293,7 +293,7 @@ obj/machinery/atmospherics/retrofilter
 								removed.trace_gases = null
 							if(!filtered_out.trace_gases)
 								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+							filtered_out.trace_gases[trace_gas.type] += trace_gas
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)

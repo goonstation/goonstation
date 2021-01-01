@@ -83,7 +83,7 @@
 								removed.trace_gases = null
 							if(!filtered_out.trace_gases)
 								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+							filtered_out.trace_gases[trace_gas.type] += trace_gas
 
 				//Remix the resulting gases
 				air_contents.merge(filtered_out)

@@ -410,7 +410,7 @@ turf/simulated
 			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
 			if(length(GM.trace_gases))
 				for(var/G in GM.trace_gases)
-					var/datum/gas/trace_gas = G
+					var/datum/gas/trace_gas = trace_gases[G]
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 		force_temperature(temp as num)
@@ -443,7 +443,7 @@ turf/simulated
 				var/datum/gas/sleeping_agent/trace_gas = new
 
 				trace_gas.moles = amount
-				adding.trace_gases += trace_gas
+				adding.trace_gases[trace_gas.type] += trace_gas
 				adding.temperature = T20C
 
 				assume_air(adding)
