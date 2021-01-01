@@ -46382,7 +46382,8 @@
 /area/station/maintenance/southwest)
 "cje" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/forensics,
