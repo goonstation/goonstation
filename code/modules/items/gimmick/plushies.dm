@@ -55,7 +55,7 @@
 	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	if(prob(10))
+	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
 		playsound(get_turf(CM), 'sound/machines/claw_machine_fail.ogg', 80, 1)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)

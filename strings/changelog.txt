@@ -1,4 +1,8 @@
 
+(t)thu dec 31 20
+(u)Flourish
+(e)🆕|feature
+(+)Added the "Claw School Graduate" trait, which makes you infallible when playing claw machines! The super clever pun name is courtesy of Virvatuli.
 (t)wed dec 30 20
 (u)Efi
 (p)3125

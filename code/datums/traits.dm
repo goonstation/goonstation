@@ -585,6 +585,15 @@
 	points = -1
 	isPositive = 1
 
+/obj/trait/claw
+	name = "Claw School Graduate (-1) \[Skill\]"
+	cleanName = "Claw School Graduate"
+	desc = "Your skill at claw machines is unparalleled."
+	id = "claw"
+	category = "skill"
+	points = -1
+	isPositive = 1
+
 /* Hey dudes, I moved these over from the old bioEffect/Genetics system so they work on clone */
 
 /obj/trait/job
