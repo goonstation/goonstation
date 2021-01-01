@@ -133,6 +133,11 @@
 		STOP_TRACKING
 		..()
 
+	initializeBioholder()
+		if (src.name == "monkey" || !src.name)
+			randomize_look(src, 1, 1, 1, 0, 1, 0)
+		. = ..()
+
 	ai_action()
 		if(ai_aggressive)
 			return ..()
