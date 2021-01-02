@@ -64,10 +64,12 @@
 
 // ---- atom/movable signals ----
 
-/// when an AM moves (user, previous_loc, direction)
+/// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
-/// when an AM moves (user, previous_loc)
+/// when an AM moves (thing, previous_loc)
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
+/// when an AM ends throw (thing, /datum/thrown_thing)
+#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
 
 // ---- item signals ----
 
