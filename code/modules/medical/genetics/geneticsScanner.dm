@@ -8,6 +8,7 @@ var/list/genescanner_addresses = list()
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
+	var/icon/occupant_icon = null
 	var/locked = 0
 	anchored = 1.0
 	soundproofing = 10
@@ -235,6 +236,7 @@ var/list/genescanner_addresses = list()
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "scanner_1"
+		src.update_occupant()
 
 		// open the computer UI so the person in the scanner can watch.
 		var/obj/machinery/computer/genetics/C = locate(/obj/machinery/computer/genetics, orange(1, src))
@@ -268,6 +270,13 @@ var/list/genescanner_addresses = list()
 		if (air_group || (height==0))
 			return 1
 		..()
+
+	proc/update_occupant()
+		var/mob/living/carbon/human/H = src.occupant
+		if (istype(H))
+			src.occupant_icon = character_preview_icon(H.bioHolder.mobAppearance, H.mutantrace)
+		else
+			src.occupant_icon = null
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

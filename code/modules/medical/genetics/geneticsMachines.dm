@@ -2105,6 +2105,7 @@
 					var/datum/bioEffect/mutantrace/MR = racepick
 					H.set_mutantrace(MR.mutantrace_path)
 					src.log_me(H, "mutantrace added", MR)
+				src.scanner.update_occupant()
 				on_ui_interacted(ui.user)
 		if("editappearance")
 			. = TRUE
@@ -2468,6 +2469,7 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
+		user << browse_rsc(src.scanner.occupant_icon, "genetek-scanner-occupant.png")
 		.["haveSubject"] = TRUE
 		.["subjectName"] = subject.name
 		.["subjectStat"] = subject.stat

@@ -683,11 +683,14 @@ const ScannerTab = (props, context) => {
             </LabeledList>
           </Flex.Item>
           <Flex.Item grow={0} shrink={0}>
-            <Box
-              width="80px"
-              height="80px"
-              backgroundColor="olive">
-              TODO: character sprite or whatevs
+            <Box width="80px" height="80px" textAlign="center">
+              <img
+                src={"genetek-scanner-occupant.png?" + Date.now()}
+                style={{
+                  "-ms-interpolation-mode": "nearest-neighbor",
+                  "image-rendering": "pixelated",
+                }}
+                height="80" />
             </Box>
           </Flex.Item>
         </Flex>
