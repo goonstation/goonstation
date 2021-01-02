@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../backend";
-import { AnimatedNumber, Box, Button, Divider, Flex, Icon, Knob, LabeledList, Modal, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
+import { AnimatedNumber, Box, Button, Divider, Flex, Icon, Knob, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
@@ -16,6 +16,7 @@ export const GeneTek = (props, context) => {
   const { data, act } = useBackend(context);
   const [menu, setMenu] = useSharedState(context, "menu", "research");
   const [buyMats, setBuyMats] = useSharedState(context, "buymats", null);
+  const [isCombining, setIsCombining] = useSharedState(context, "iscombining", false);
   const {
     materialCur,
     materialMax,
@@ -29,6 +30,8 @@ export const GeneTek = (props, context) => {
     costPerMaterial,
     budget,
     record,
+    scannerAlert,
+    scannerError,
   } = data;
 
   if (!record && menu === "record") {
@@ -95,6 +98,7 @@ export const GeneTek = (props, context) => {
             )}
           </Tabs>
           {buyMats !== null && <BuyMaterialsModal maxAmount={maxBuyMats} />}
+          {!!isCombining && <CombineGenesModal />}
           {menu === "research" && <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />}
           {menu === "mutations" && <MutationsTab />}
           {menu === "storage" && <StorageTab />}
@@ -185,6 +189,11 @@ export const GeneTek = (props, context) => {
               </ProgressBar>
             ))}
           </Flex.Item>
+          {!!scannerAlert && (
+            <NoticeBox info={!scannerError} danger={!!scannerError}>
+              {scannerAlert}
+            </NoticeBox>
+          )}
           <Divider />
           <LabeledList>
             {equipmentCooldown.map(e => (
@@ -269,6 +278,62 @@ const BuyMaterialsModal = (props, context) => {
             color="bad"
             icon="times"
             onClick={() => setBuyMats(null)}>
+            Cancel
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};
+
+const CombineGenesModal = (props, context) => {
+  const { data, act } = useBackend(context);
+  const [isCombining, setIsCombining] = useSharedState(context, "iscombining", false);
+  const {
+    savedMutations,
+    combining = [],
+  } = data;
+
+  return (
+    <Modal>
+      <Box width={16} mr={2}>
+        <Box bold mb={2}>
+          Select genes to combine
+        </Box>
+        <Box mb={2}>
+          {savedMutations.map(g => (
+            <Box key={g.ref}>
+              {combining.indexOf(g.ref) >= 0 ? (
+                <Button
+                  icon="blank"
+                  color="grey"
+                  onClick={() => act("togglecombine", { ref: g.ref })} />
+              ) : (
+                <Button
+                  icon="check"
+                  color="blue"
+                  onClick={() => act("togglecombine", { ref: g.ref })} />
+              )}
+              {" " + g.name}
+            </Box>
+          ))}
+        </Box>
+        <Box inline width="50%" textAlign="center">
+          <Button
+            icon="sitemap"
+            disabled={!combining.length}
+            onClick={() => {
+              act("combinegenes");
+              setIsCombining(false);
+            }}>
+            Combine
+          </Button>
+        </Box>
+        <Box inline width="50%" textAlign="center">
+          <Button
+            color="bad"
+            icon="times"
+            onClick={() => setIsCombining(false)}>
             Cancel
           </Button>
         </Box>
@@ -392,6 +457,7 @@ const MutationsTab = (props, context) => {
 const StorageTab = (props, context) => {
   const { data, act } = useBackend(context);
   const [menu, setMenu] = useSharedState(context, "menu", "research");
+  const [isCombining, setIsCombining] = useSharedState(context, "iscombining", false);
   const {
     saveSlots,
     samples,
@@ -440,7 +506,15 @@ const StorageTab = (props, context) => {
         </LabeledList>
       </Section>
       {saveSlots > 0 && (
-        <Section title="Stored Mutations">
+        <Section
+          title="Stored Mutations"
+          buttons={
+            <Button
+              icon="sitemap"
+              onClick={() => setIsCombining(true)}>
+              Combine
+            </Button>
+          }>
           {savedMutations.length ? savedMutations.map(g => (
             <BioEffect
               key={g.ref}
@@ -705,6 +779,7 @@ const BioEffect = (props, context) => {
     boothCost,
     injectorCost,
     precisionEmitter,
+    toSplice,
   } = data;
   const {
     gene,
@@ -722,6 +797,7 @@ const BioEffect = (props, context) => {
     canInject,
     canScramble,
     canReclaim,
+    spliceError,
     dna,
   } = gene;
 
@@ -749,7 +825,7 @@ const BioEffect = (props, context) => {
   return (
     <Section title={name}>
       <Flex>
-        <Flex.Item grow={0} shrink={0}>
+        <Flex.Item grow={0} shrink={0} mr={1}>
           <Icon
             color={research >= 3 ? "good" : research >= 2 ? "teal" : research >= 1 ? "average" : "bad"}
             name={research >= 2 ? "flask" : research >= 1 ? "hourglass" : "times"} />
@@ -850,6 +926,16 @@ const BioEffect = (props, context) => {
                 Injector
               </Button>
             )}
+            {(isActive || isStorage) && !!toSplice && (
+              <Button
+                disabled={!!spliceError}
+                icon="map-marker-alt"
+                onClick={() => act("splicegene", { ref })}
+                tooltip={spliceError}
+                tooltipPosition="left">
+                Splice
+              </Button>
+            )}
             {isStorage && (
               <Button
                 icon="check"
@@ -861,7 +947,7 @@ const BioEffect = (props, context) => {
             {isStorage && haveSubject && (
               <Button
                 icon="trash"
-                onClick={() => act("deletestored", { ref })}
+                onClick={() => act("deletegene", { ref })}
                 color="bad" />
             )}
             <Box inline />

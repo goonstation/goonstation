@@ -25,7 +25,9 @@
 	var/datum/dna_chromosome/to_splice = null
 	var/datum/bioEffect/currently_browsing = null
 	var/datum/geneticsResearchEntry/tracked_research = null
-
+	var/last_scanner_alert = null
+	var/last_scanner_alert_clear_after = INFINITY
+	var/last_scanner_alert_error = FALSE
 	var/datum/computer/file/genetics_scan/selected_record = null
 	var/list/gene_icon_cache = list()
 	var/list/botbutton_html = list()
@@ -108,7 +110,7 @@
 	if (genResearch.cost_discount < 0.75)
 		genResearch.cost_discount += 0.025
 
-	boutput(user, "<b>SCANNER ALERT:</b> Recycled genetic info has yielded materials, auto-decryptors, and chromosomes.")
+	scanner_alert(user, "Recycled genetic info has yielded materials, auto-decryptors, and chromosomes.")
 	genResearch.researchMaterial += 40
 	genResearch.lock_breakers += rand(1, 3)
 	var/numChromosomes = rand(1, 3) == 3 ? rand(3, 5) : rand(2, 3)
@@ -1856,7 +1858,7 @@
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
 	SPAWN_DBG(0)
-		for (var/i = 0, i < 10 && (i < 2 || prob(genResearch.emitter_radiation)), i++)
+		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)
 					playsound(src.get_scanner(), "sound/items/geiger/geiger-1-[rand(1, 2)].ogg", 50, 1)
@@ -1868,7 +1870,16 @@
 					playsound(src.get_scanner(), "sound/items/geiger/geiger-4-[rand(1, 3)].ogg", 50, 1)
 				if(60 to INFINITY)
 					playsound(src.get_scanner(), "sound/items/geiger/geiger-5-[rand(1, 3)].ogg", 50, 1)
-			sleep(0.5 SECONDS)
+			sleep(0.3 SECONDS)
+
+/obj/machinery/computer/genetics/proc/scanner_alert(mob/user, message, remove_after = 5 SECONDS, error = FALSE)
+	if (error)
+		boutput(user, "<span class='alert'><b>SCANNER ERROR:</b> [message]</span>")
+	else
+		boutput(user, "<b>SCANNER ALERT:</b> [message]")
+	src.last_scanner_alert = message
+	src.last_scanner_alert_clear_after = TIME + remove_after
+	src.last_scanner_alert_error = error
 
 /obj/machinery/computer/genetics/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -1894,7 +1905,10 @@
 			. = TRUE
 			var/datum/geneticsResearchEntry/E = locate(params["ref"])
 			if (!research_sanity_check(E))
-				genResearch.addResearch(E)
+				if (genResearch.addResearch(E))
+					scanner_alert(ui.user, "Research initiated successfully.")
+				else
+					scanner_alert(ui.user, "Unable to begin research.", error = TRUE)
 				on_ui_interacted(ui.user)
 		if("setgene")
 			. = TRUE
@@ -1974,7 +1988,7 @@
 			if (bioEffect_sanity_check(E))
 				return
 			if (istext(E.req_mut_research) && GetBioeffectResearchLevelFromGlobalListByID(E.req_mut_research) < EFFECT_RESEARCH_DONE)
-				boutput(usr, "<span class='alert'><b>SCANNER ERROR:</b> Genetic structure unknown. Cannot alter mutation.</span>")
+				scanner_alert(usr, "Genetic structure unknown. Cannot alter mutation.", error = TRUE)
 				return
 			var/bp_num = params["pair"]
 			var/datum/basePair/bp = E.dnaBlocks.blockListCurr[bp_num]
@@ -2119,6 +2133,7 @@
 			if (genResearch.emitter_radiation > 0)
 				subject.changeStatus("radiation", (genResearch.emitter_radiation*10), 3)
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
+			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
 		if("precisionemitter")
@@ -2139,6 +2154,7 @@
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
 			src.equipment_cooldown(GENETICS_EMITTERS, 600)
+			scanner_alert(ui.user, "Gene successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
 		if("booth")
@@ -2174,7 +2190,7 @@
 						P.desc = booth_effect_desc
 						P.cost = booth_effect_cost
 						P.registered_sale_id = registered_id
-						boutput(usr, "<span class='notice'>Sent 5 of '[P.name]' to gene booth.</span>")
+						scanner_alert(ui.user, "Sent 5 of '[P.name]' to gene booth.")
 						GB.reload_contexts()
 						break
 				if (!already_has)
@@ -2183,7 +2199,7 @@
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (GB.offered_genes.len == 1)
 						GB.just_pick_anything()
-					boutput(usr, "<span class='notice'>Sent 5 of '[NEW.name]' to gene booth.</span>")
+					scanner_alert(ui.user, "Sent 5 of '[NEW.name]' to gene booth.")
 					GB.reload_contexts()
 			on_ui_interacted(ui.user)
 		if("splicechromosome")
@@ -2196,6 +2212,20 @@
 				return
 			src.to_splice = E
 			on_ui_interacted(ui.user, minor = TRUE)
+		if("deletechromosome")
+			. = TRUE
+			var/datum/dna_chromosome/E = locate(params["ref"])
+			if (!istype(E))
+				return
+			if (!saved_chromosomes.Find(E))
+				src.log_maybe_cheater(usr, "tried to delete a chromosome ([E])")
+				return
+			if (E == src.to_splice)
+				src.to_splice = null
+			saved_chromosomes -= E
+			qdel(E)
+			scanner_alert(ui.user, "Chromosome deleted.")
+			on_ui_interacted(ui.user)
 		if("splicegene")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -2209,7 +2239,19 @@
 				src.saved_chromosomes -= C
 				qdel(C)
 				src.to_splice = null
-			on_ui_interacted(ui.user, minor = TRUE)
+			on_ui_interacted(ui.user)
+		if("deletegene")
+			. = TRUE
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E, 0))
+				return
+			if (!saved_mutations.Find(E))
+				src.log_maybe_cheater(usr, "tried to delete the [E.id] mutation")
+				return
+			saved_mutations -= E
+			qdel(E)
+			scanner_alert(ui.user, "Mutation deleted.")
+			on_ui_interacted(ui.user)
 		if("reclaim")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -2223,18 +2265,18 @@
 			var/reclamation_cap = genResearch.max_material * 1.5
 			on_ui_interacted(ui.user)
 			if (prob(E.reclaim_fail))
-				boutput(usr, "<b>SCANNER:</b> Reclamation failed.")
+				scanner_alert(ui.user, "Reclamation failed.", error = TRUE)
 			else
 				var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
 				if (waste >= E.reclaim_mats)
-					boutput(usr, "<b>SCANNER ALERT:</b> Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.")
+					scanner_alert(ui.user, "Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.", error = TRUE)
 					playsound(src, "sound/machines/buzz-two.ogg", 50, 1, -10)
 					return
 				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
 				if (waste > 0)
-					boutput(usr, "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
+					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else
-					boutput(usr, "<b>SCANNER:</b> Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
+					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
 				subject.bioHolder.RemovePoolEffect(E)
 			playsound(src, "sound/machines/pc_process.ogg", 50, 1)
 			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
@@ -2257,6 +2299,62 @@
 			E.owner = null
 			E.holder = null
 			on_ui_interacted(ui.user)
+		if("addstored")
+			. = TRUE
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E))
+				return
+			if (!saved_mutations.Find(E))
+				src.log_maybe_cheater(usr, "tried to add the [E.id] mutation")
+				return
+			backpage = null
+			var/mob/living/subject = get_scan_subject()
+			if (!subject)
+				return
+			src.log_me(subject, "mutation added", E)
+			subject.bioHolder.AddEffectInstance(E)
+			saved_mutations -= E
+			scanner_alert(ui.user, "Mutation successfully added to occupant.")
+			on_ui_interacted(ui.user)
+		if("togglecombine")
+			. = TRUE
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E, 0))
+				return
+			if (E in combining)
+				combining -= E
+			else
+				combining += E
+			on_ui_interacted(ui.user, minor = TRUE)
+		if("combinegenes")
+			. = TRUE
+			for (var/datum/geneticsrecipe/GR in genResearch.combinationrecipes)
+				var/matches = 0
+				if (GR.required_effects.len != src.combining.len)
+					continue
+				var/list/temp = GR.required_effects.Copy()
+				for (var/datum/bioEffect/BE in src.combining)
+					if (BE.wildcard)
+						matches++
+					if (BE.id in temp)
+						temp -= BE.id
+						matches++
+				if (matches == GR.required_effects.len)
+					var/datum/bioEffect/NEWBE = new GR.result(src)
+					src.saved_mutations += NEWBE
+					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
+					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
+					for (var/X in src.combining)
+						src.saved_mutations -= X
+						src.combining -= X
+						qdel(X)
+					scanner_alert(ui.user, "Combination successful. New '[NEWBE.name]' mutation created.")
+					src.currently_browsing = NEWBE
+					on_ui_interacted(ui.user)
+					return
+			scanner_alert(ui.user, "Combination unsuccessful.", error = TRUE)
+			src.combining = list()
+			on_ui_interacted(ui.user)
 
 /obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -2273,8 +2371,7 @@
 
 	. = list(
 		"ref" = "\ref[BE]",
-		"name" = research_level >= EFFECT_RESEARCH_ACTIVATED ? GBE.name \
-			: research_level >= EFFECT_RESEARCH_DONE ? BE.name \
+		"name" = research_level >= EFFECT_RESEARCH_DONE ? BE.name \
 			: "Unknown Mutation",
 		"desc" = research_level >= EFFECT_RESEARCH_ACTIVATED && !isnull(BE.researched_desc) ? BE.researched_desc \
 			: research_level >= EFFECT_RESEARCH_DONE ? BE.desc \
@@ -2295,6 +2392,11 @@
 	if (genResearch.cost_discount)
 		mut_research_cost -= round(mut_research_cost * genResearch.cost_discount)
 
+	if (src.last_scanner_alert_clear_after < TIME)
+		src.last_scanner_alert = null
+		src.last_scanner_alert_clear_after = INFINITY
+		src.last_scanner_alert_error = FALSE
+
 	. = list(
 		"haveScanner" = !isnull(get_scanner()),
 		"materialCur" = genResearch.researchMaterial,
@@ -2310,6 +2412,8 @@
 		"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 		"toSplice" = src.to_splice?.name,
 		"activeGene" = "\ref[src.currently_browsing]",
+		"scannerAlert" = src.last_scanner_alert,
+		"scannerError" = src.last_scanner_alert_error,
 		"bioEffects" = list(),
 		"availableResearch" = list(list(), list(), list(), list()),
 		"finishedResearch" = list(list(), list(), list(), list()),
@@ -2318,6 +2422,7 @@
 		"samples" = list(),
 		"savedMutations" = list(),
 		"savedChromosomes" = list(),
+		"combining" = list(),
 	)
 
 	for(var/datum/data/record/R in data_core.medical)
@@ -2339,6 +2444,9 @@
 			"name" = C.name,
 			"desc" = C.desc,
 		))
+
+	for (var/datum/bioEffect/BE in combining)
+		.["combining"] += "\ref[BE]"
 
 	if (istype(selected_record))
 		var/list/genes = list()
