@@ -111,6 +111,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
 
+	if(src.material?.owner_hasentered_added)
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.checkinghasentered = max(T.checkinghasentered-1, 0)
+		src.event_handler_flags &= ~USE_HASENTERED
+
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
