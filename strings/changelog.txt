@@ -1,5 +1,8 @@
 
 (t)fri jan 01 21
+(u)Tarmunora
+(e)🆕|feature
+(*)Pod brakes will no longer slow a pod in a direction if you are holding the input key for that direction - i.e.: you can do 'handbrake turns' now.
 (u)BatElite
 (p)3063
 (e)🆕|feature
