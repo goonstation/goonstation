@@ -319,9 +319,16 @@
 
 	proc/trick_explode()
 		if (istype(src, /obj/item/clothing/mask/cigarette/cigar/syndicate))
-			// Weaker than chameleon bomb, comes in pack of two
-			elecflash(src)
-			src.blowthefuckup(20)
+			var/turf/tlocation = get_turf(src.loc)
+			if (tlocation)
+				// Weaker than chameleon bomb
+				elecflash(src)
+				src.blowthefuckup(20)
+			else
+				elecflash(src,power = 3)
+				playsound(src.loc, "sound/effects/Explosion1.ogg", 100, 1)
+			src.visible_message("<span class='alert'>The [src] explodes!</span>")
+
 			if (ismob(src.loc))
 				logTheThing("bombing", null, src.loc, "An exploding cigar (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 			else
@@ -687,6 +694,20 @@
 /obj/item/cigarbox/syndicate
 	cigcount = 2
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/syndicate
+	icon_state = "cigarpack"
+	uses_multiple_icon_states = 1
+	item_state = "cigarpack"
+	package_style = "cigarpack"
+
+/obj/item/cigarbox/syndicate/update_icon()
+	src.overlays = null
+	if (src.cigcount <= 0)
+		src.icon_state = "[src.package_style]"
+		src.desc = "There aren't any cigars left, shit!"
+	else
+		src.icon_state = "[src.package_style]o"
+		src.overlays += "cigarpack[src.cigcount]"
+	return
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
