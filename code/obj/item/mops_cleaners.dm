@@ -20,6 +20,11 @@ WET FLOOR SIGN
 	throw_speed = 2
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
+	move_triggered = 1
+
+/obj/item/spraybottle/move_trigger(var/mob/M, kindof)
+	if (..() && reagents)
+		reagents.move_trigger(M, kindof)
 
 /obj/item/spraybottle/pixelaction(atom/target, params, mob/user, reach)
 	..()
@@ -42,12 +47,35 @@ WET FLOOR SIGN
 		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
 
 /obj/item/spraybottle/cleaner/
-	name = "cleaner bottle"
+	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
 	New()
 		..()
 		reagents.add_reagent("cleaner", 100)
+
+/obj/item/spraybottle/cleaner/robot
+	name = "cybernetic cleaner spray bottle"
+	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
+	icon_state = "cleaner_robot"
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	afterattack(atom/A, mob/user)
+		. = ..()
+		if (src.reagents.total_volume < 25)
+			processing_items |= src
+
+	process()
+		..()
+		// starts with 100 cleaner but only autofills to 25. thanks, nanotrasen!
+		if (src.reagents.total_volume < 25)
+			src.reagents.add_reagent("cleaner", 1)
+		else
+			processing_items.Remove(src)
+		return 0
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -190,7 +218,7 @@ WET FLOOR SIGN
 	playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 	var/log_reagents = log_reagents(src)
 	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
 			var/turf/theTurf = get_turf(D)
@@ -302,10 +330,8 @@ WET FLOOR SIGN
 		//A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
-
-
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src?.reagents)
 				src.reagents.clear_reagents()
 				mopcount = 0
@@ -319,6 +345,12 @@ WET FLOOR SIGN
 		else // Lances up!
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
+
+/obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
+	if (user.intent == INTENT_HELP)
+		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
+		return
+	return ..()
 
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
@@ -334,7 +366,7 @@ WET FLOOR SIGN
 			user.visible_message("<span class='alert'><B>[user] begins to clean [A]</B></span>")
 			var/turf/U = get_turf(A)
 
-			if (do_after(user, 40))
+			if (do_after(user, 4 SECONDS))
 				if (get_dist(A, user) > 1)
 					user.show_text("You were interrupted.", "red")
 					return
@@ -366,7 +398,7 @@ WET FLOOR SIGN
 						T.overlays -= wetoverlay
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
@@ -383,7 +415,7 @@ WET FLOOR SIGN
 			mopcount++
 
 		if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0

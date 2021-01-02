@@ -36,7 +36,7 @@ var/global/the_sun = null
 		light.set_height(3)
 		light.set_color(0.9, 0.5, 0.3)
 		light.enable()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!the_sun)
 				the_sun = src
 
@@ -55,7 +55,7 @@ var/global/the_sun = null
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
 						user.firegib()

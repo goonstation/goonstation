@@ -1,7 +1,11 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
 /client
+#ifdef PRELOAD_RSC_URL
+	preload_rsc = PRELOAD_RSC_URL
+#else
 	preload_rsc = 1
+#endif
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -141,6 +145,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.holder = null
 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
 	return ..()
 
@@ -190,6 +195,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			SPAWN_DBG(0) del(src)
 			return
 */
+
+	src.volumes = default_channel_volumes.Copy()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -415,7 +422,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		var/image/I = globalImages[key]
 		src << I
 
-	src.volumes = default_channel_volumes.Copy()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
@@ -540,6 +546,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (widescreen_checked)
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
+	
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
@@ -548,7 +556,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, "checkScreenAspect"))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
 	else
 
 		set_splitter_orientation(0, splitter_value)
@@ -655,12 +663,19 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
-	if (params.len)
-		if ((params["screenW"]/params["screenH"]) == (4/3))
-			SPAWN_DBG(6 SECONDS)
-				if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
-					set_splitter_orientation(0)
-					winset( src, "menu", "horiz_split.is-checked=true" )
+	if (!length(params))
+		return
+	if ((params["screenW"]/params["screenH"]) <= (4/3))
+		SPAWN_DBG(6 SECONDS)
+			if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
+				set_splitter_orientation(0)
+				winset( src, "menu", "horiz_split.is-checked=true" )
+
+/client/proc/checkHiRes(list/params)
+	if(!length(params))
+		return
+	if(params["screenH"] > 1000)
+		winset(src, "info", "font-size=[6 * params["screenH"] / 1080]")
 
 /client/Command(command)
 	command = html_encode(command)

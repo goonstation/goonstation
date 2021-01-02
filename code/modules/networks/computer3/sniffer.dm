@@ -55,8 +55,7 @@
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
-				if(src.link)
-					src.link.master = null
+				src.link?.master = null
 				src.link = null
 				return
 		else

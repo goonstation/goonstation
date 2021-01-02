@@ -105,8 +105,10 @@
 
 				//braking
 				if (braking)
-					velocity_x = velocity_x * brake_decel_mult
-					velocity_y = velocity_y * brake_decel_mult
+					if(input_x * velocity_x <= 0)
+						velocity_x = velocity_x * brake_decel_mult
+					if(input_y * velocity_y <= 0)
+						velocity_y = velocity_y * brake_decel_mult
 
 					if (abs(velocity_x) + abs(velocity_y) < 1.3)
 						velocity_x = 0

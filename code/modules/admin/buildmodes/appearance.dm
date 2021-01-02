@@ -27,6 +27,7 @@ Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 				H.set_mutantrace(null)
 			H.bioHolder.mobAppearance.CopyOther(AH)
 			H.bioHolder.mobAppearance.UpdateMob()
+			H.update_colorful_parts()
 		else
 			object.appearance = MA
 		blink(get_turf(object))

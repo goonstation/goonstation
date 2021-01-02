@@ -675,7 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -709,7 +709,6 @@
 
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
-	var/fat = 0
 	var/hair_override = 0
 	var/update_wearid = 0
 
@@ -849,9 +848,6 @@
 			else
 				src.tf_holder.mobAppearance.gender = FEMALE
 
-		else if (href_list["fat"])
-			src.fat = !src.fat
-
 		else if (href_list["hair_override"])
 			src.hair_override = !src.hair_override
 
@@ -895,8 +891,6 @@
 
 		src.real_name = H.real_name
 
-		src.fat = (H.bioHolder.HasEffect("fat"))
-
 		src.hair_override = H.hair_override
 
 		if(H.mutantrace)
@@ -923,7 +917,6 @@
 		dat += "Blood Type: <a href='byond://?src=\ref[src];blType=input'>[src.tf_holder.bloodType]</a><br>"
 		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
-		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
@@ -1003,8 +996,6 @@
 				smoke.start()
 
 		sanitize_null_values(target_mob)
-		if(src.fat)
-			target_mob.bioHolder.AddEffect("fat")
 
 		target_mob.hair_override = src.hair_override
 
@@ -1221,6 +1212,26 @@
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
 	else
 		msg += "No players found for '[target]'"
+
+	msg += "</span>"
+	boutput(src, msg)
+
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
 
 	msg += "</span>"
 	boutput(src, msg)
@@ -1699,6 +1710,7 @@
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
+	newMind.ckey = M.ckey
 	newMind.key = M.key
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
@@ -2613,7 +2625,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.layer -= 0.1 //retore to normal
 
 				else
-					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, warptarget_modifier = LANDMARK_VM_WARP_NONE)
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, man_warptarget_modifier = LANDMARK_VM_WARP_NONE)
 					summoning_office = TRUE
 					T.layer += 0.1 //stop hiding my turfs!!
 
@@ -2643,7 +2655,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
-					W.density = 0
+					W.set_density(0)
 
 				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
 				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")

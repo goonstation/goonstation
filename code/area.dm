@@ -881,7 +881,7 @@ ABSTRACT_TYPE(/area/adventure)
 	New()
 		..()
 
-		SPAWN_DBG (60)
+		SPAWN_DBG(6 SECONDS)
 			if (!helldrone_awake_sound)
 				helldrone_awake_sound = new/sound()
 				helldrone_awake_sound.file = 'sound/machines/giantdrone_loop.ogg'
@@ -915,7 +915,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O) && !helldrone_awake)
 				helldrone_awake = 1
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					helldrone_wakeup()
 					src.process()
 
@@ -1134,6 +1134,9 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
 
+/area/dank_trench
+	name = "marijuana trench 2" //this is lowercase on purpose
+	icon_state = "green"
 
 /area/trench_landing
 	name = "Trench Landing"
@@ -2317,6 +2320,10 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Pharmacy"
 	icon_state = "chem"
 
+/area/station/medical/medbay/psychiatrist
+	name = "Psychiatrist's Office"
+	icon_state = "psychiatrist"
+
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
 	icon_state = "treat1"
@@ -2856,6 +2863,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hydroponics Lobby"
 	icon_state = "green"
 
+/area/station/ranch
+	name = "Ranch"
+	icon_state = "ranch"
+
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
 	name = "Garden"
@@ -3031,7 +3042,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3087,7 +3098,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3109,8 +3120,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
@@ -4927,7 +4937,7 @@ area/station/security/visitation
 /area/station2/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -4975,7 +4985,7 @@ area/station/security/visitation
 /area/station2/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -4996,8 +5006,7 @@ area/station/security/visitation
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O

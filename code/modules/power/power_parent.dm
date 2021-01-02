@@ -12,7 +12,7 @@
 /obj/machinery/power/New(var/new_loc)
 	..()
 	if (current_state > GAME_STATE_PREGAME)
-		SPAWN_DBG(1) // aaaaaaaaaaaaaaaa
+		SPAWN_DBG(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			src.netnum = 0
 			if(makingpowernets)
 				return // TODO queue instead

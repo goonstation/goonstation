@@ -26,6 +26,8 @@
 	var/round_leave_time = null
 	/// the total time that this player has been playing the game this round, in 1/10ths of a second
 	var/current_playtime = null
+	/// Cache jobbans here to speed things up massively
+	var/list/cached_jobbans = null
 	/// saved profiles from the cloud
 	var/list/cloudsaves = null
 	/// saved data from the cloud (spacebux, volume settings, ...)

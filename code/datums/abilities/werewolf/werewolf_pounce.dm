@@ -49,12 +49,6 @@
 
 			usr.pixel_y = 0
 
-			if (M.bioHolder && M.bioHolder.HasEffect("fat") && prob(66))
-				M.visible_message("<span class='alert'><b>[M]</b> crashes due to their heavy weight!</span>")
-				playsound(usr.loc, "sound/effects/zhit.ogg", 50, 1)
-				M.changeStatus("weakened",70)
-				M.changeStatus("stunned",40)
-
 			M.layer = prevLayer
 
 		if (istype(M.loc,/obj/))

@@ -15,6 +15,7 @@
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
+	var/capacity
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -76,7 +77,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
-/obj/reagent_dispensers/ants
+/obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
 	desc = "A bunch of space ants."
 	icon = 'icons/effects/effects.dmi'
@@ -104,7 +105,7 @@
 					qdel(src)
 		return
 
-/obj/reagent_dispensers/spiders
+/obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
 	icon = 'icons/effects/effects.dmi'
@@ -152,10 +153,11 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 25
+	capacity = 1000
 
 	New()
 		..()
-		reagents.add_reagent("water",1000)
+		reagents.add_reagent("water",capacity)
 
 /obj/reagent_dispensers/watertank/big
 	name = "high-capacity watertank"
@@ -189,6 +191,7 @@
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	mats = 8
+	capacity = 500
 
 	var/has_tank = 1
 
@@ -258,7 +261,7 @@
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 30))
+				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
 					src.anchored = 0
 					return
@@ -270,7 +273,7 @@
 				else
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 30))
+					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
 						src.anchored = 1
 						return
@@ -560,12 +563,12 @@
 
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
-	desc = "A water cooler bottle. Can hold up to 1000 units."
+	desc = "A water cooler bottle. Can hold up to 500 units."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "itemtank"
 	item_state = "flask"
-	initial_volume = 1000
+	initial_volume = 500
 	w_class = 4.0
 	incompatible_with_chem_dispensers = 1
 

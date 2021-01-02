@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/New()
+/obj/landmark/proc/init()
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -30,8 +30,16 @@ proc/pick_landmark(name, default=null)
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
 		qdel(src)
-	else
+
+/obj/landmark/New()
+	if(current_state > GAME_STATE_MAP_LOAD)
+		SPAWN_DBG(0)
+			src.init()
 		..()
+	else
+		src.init()
+		if(!src.disposed)
+			..()
 
 var/global/list/job_start_locations = list()
 
@@ -212,11 +220,13 @@ var/global/list/job_start_locations = list()
 	var/xOffset = 0 // use only for pushing to the same z-level
 	var/yOffset = 0 // use only for pushing to the same z-level
 	add_to_landmarks = FALSE
+	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 
-	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/warptarget_modifier = LANDMARK_VM_WARP_ALL)
+	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
+		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
 		T.appearance_flags |= KEEP_TOGETHER
@@ -224,6 +234,9 @@ var/global/list/job_start_locations = list()
 		if(warptarget_modifier) T.vistarget.warptarget = T
 		T.updateVis()
 		..()
+
+/obj/landmark/viscontents_spawn/no_warp
+	warptarget_modifier = LANDMARK_VM_WARP_NONE
 
 /turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere
 /turf/var/turf/warptarget = null // target turf for teleporting its contents elsewhere

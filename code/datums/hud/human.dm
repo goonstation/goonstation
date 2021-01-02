@@ -180,7 +180,7 @@
 			if (isicon(hud_style))
 				src.icon_hud = hud_style
 
-			if (master.client && master.client.tg_layout)
+			if (master?.client?.tg_layout)
 				layout_style = "tg"
 
 			if (layouts[layout_style]["show_bg"])

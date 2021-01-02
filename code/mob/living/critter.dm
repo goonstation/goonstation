@@ -700,8 +700,7 @@
 			var/obj/item/organ/O = src.organHolder.get_organ("brain")
 			if (O)
 				O.set_loc(src)
-		if(src.mind)
-			src.mind.register_death() // it'd be nice if critters get a time of death too tbh
+		src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 		set_density(0)
 		if (src.can_implant)
 			for (var/obj/item/implant/H in src.implants)

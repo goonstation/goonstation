@@ -30,9 +30,9 @@ var/global/list/mapNames = list(
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = ASS_JAM),
 	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	//"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
-	"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
+	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
@@ -148,7 +148,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "https://cdn.discordapp.com/attachments/469379618168897538/729919886524153916/donut3-30-FINAL4-the-unlucky-number.png"
+	goonhub_map = "http://goonhub.com/maps/donut3"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
@@ -807,8 +807,13 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay),
 		"the bar" = list(/area/station/crew_quarters/bar),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
+
+	job_limits_override = list(
+		/datum/job/special/random/psychiatrist = 1
+	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
@@ -872,7 +877,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_escape-sealab"
 	manta
 		icon_state = "shuttle_escape-manta"
-		filler_turf = "/turf/space/fluid/manta"
+		filler_turf = "/turf/space/fluid"
 	donut3
 		icon_state = "shuttle_escape-dnt3"
 

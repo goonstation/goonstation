@@ -337,7 +337,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -1298,8 +1298,7 @@
 		//update gang overlays for all members so they can see the new join
 		for(var/datum/mind/M in src.gang.members)
 			if(M.current) M.current.antagonist_overlay_refresh(1, 0)
-		if(src.gang.leader.current)
-			src.gang.leader.current.antagonist_overlay_refresh(1, 0)
+		src.gang.leader.current?.antagonist_overlay_refresh(1, 0)
 
 		return
 

@@ -684,7 +684,7 @@
 
 					var/groupAddress = signal.data["group"]
 					if(groupAddress) //Check to see if we have this ~mailgroup~
-						if((!(groupAddress in src.master.mailgroups) && groupAddress != "ai") || (groupAddress in src.master.muted_mailgroups))
+						if((!(groupAddress in src.master.mailgroups) && !("ai" in src.master.mailgroups)) || (groupAddress in src.master.muted_mailgroups))
 							return
 
 					var/sender = signal.data["sender_name"]

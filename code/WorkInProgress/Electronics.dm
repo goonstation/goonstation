@@ -481,8 +481,7 @@
 			mechanic_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
-	if(radio_controller)
-		radio_controller.remove_object(src, "[frequency]")
+	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
 	if (src.net_id)
@@ -634,7 +633,7 @@
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 

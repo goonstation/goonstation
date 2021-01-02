@@ -36,7 +36,7 @@
 			return
 		else if (!src.see_face && !src.vchange)
 			user.show_text("You begin installing [W] into [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You install [W] into [src].", "green")
@@ -47,7 +47,7 @@
 	else if (issnippingtool(W))
 		if (src.vchange)
 			user.show_text("You begin removing [src.vchange] from [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You remove [src.vchange] from [src].", "green")
@@ -250,8 +250,7 @@
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			if(user)
-				user.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0

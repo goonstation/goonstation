@@ -303,7 +303,7 @@
 	New()
 		..()
 		src.update_icon()
-		SPAWN_DBG (6)
+		SPAWN_DBG(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
