@@ -818,6 +818,8 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+
 	oldloc?.Exited(src, newloc)
 
 	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)

@@ -66,6 +66,8 @@
 
 /// when an AM moves (user, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
+/// when an AM moves (user, previous_loc)
+#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 
 // ---- item signals ----
 
