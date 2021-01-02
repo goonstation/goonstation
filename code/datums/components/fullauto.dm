@@ -21,7 +21,8 @@
 	mobtype = /mob/living
 	proctype = .proc/begin_shootloop
 	var/turf/target
-	var/stopped = 0
+	var/stopping = 0
+	var/shooting
 	var/delaystart
 	var/delaymin
 	var/rampfactor
@@ -58,7 +59,7 @@
 				user.client.screen += hudSquares["[x],[y]"]
 		user.targeting_ability = 1
 		user.update_cursor()
-		stopped = 0
+		stopping = 0
 
 	on_dropped(datum/source, mob/user)
 		end_shootloop(user)
@@ -70,7 +71,7 @@
 		. = ..()
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
-	if(!stopped)
+	if(!stopping)
 		var/obj/item/gun/G = parent
 		G.current_projectile.shot_number = 1
 		G.current_projectile.cost = 1
@@ -98,23 +99,27 @@
 
 /datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
 	set waitfor = 0
+	if(shooting)
+		return
 
 	var/obj/item/gun/G = parent
 	var/delay = delaystart
-	while(G.canshoot() && !stopped)
+	shooting = 1
+
+	while(G.canshoot() && !stopping)
 		G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
 		G.suppress_fire_msg = 1
 		sleep(max(delay*=rampfactor, delaymin))
-	if(!stopped)
-		end_shootloop(L)
-	stopped = 0
-/datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/L)
+
 	//loop ended - reset values
-	var/obj/item/gun/G = parent
-	stopped = 1
 	G.current_projectile.shot_number = initial(G.current_projectile.shot_number)
 	G.current_projectile.cost = initial(G.current_projectile.cost)
-	G.suppress_fire_msg = 0
+	G.suppress_fire_msg = initial(G.suppress_fire_msg)
 	UnregisterSignal(L, COMSIG_FULLAUTO_MOUSEDRAG)
 	UnregisterSignal(L, COMSIG_MOUSEUP)
 	UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
+	stopping = 0
+	shooting = 0
+
+/datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/L)
+	stopping = 1
