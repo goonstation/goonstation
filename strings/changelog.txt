@@ -1,5 +1,10 @@
 
 (t)fri jan 01 21
+(u)Efi, Troasta, & Ben Lubar
+(p)3098
+(e)|
+(*)Changed the ion storm murder law _in RP servers_ to be way less murderous.
+(*)Added new ion storm laws that may be more fun to play around, I hope!
 (u)Flourish
 (p)3183
 (e)⚖|balance
