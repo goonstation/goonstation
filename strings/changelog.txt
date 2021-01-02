@@ -1,5 +1,9 @@
 
 (t)fri jan 01 21
+(u)TTerc
+(p)3176
+(e)🆕🗺|feature, mapping
+(*)Janitors are now able to clean up ants and spiders off the floor using space cleaner or the sponge.
 (u)Flourish
 (*)Happy New Year! Come participate in <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15624">January's Monthly Contest!</a> It'll be fun, I promise!
 (u)Flourish
