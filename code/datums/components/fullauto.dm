@@ -72,7 +72,6 @@
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
 	if(!stopping)
-		var/obj/item/gun/G = parent
 		src.retarget(user, object, location, control, params)
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
