@@ -1,5 +1,9 @@
 
 (t)fri jan 01 21
+(u)BatElite
+(p)3063
+(e)🆕|feature
+(*)You can now take stuff from loose heads. Or put things on them, if you're into head spike fashion shows.
 (u)Efi, Troasta, & Ben Lubar
 (p)3098
 (e)|
