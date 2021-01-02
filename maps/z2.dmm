@@ -54835,7 +54835,7 @@
 /area/owlery/gangzone)
 "cGq" = (
 /obj/decal/cleanable/blood/drip/high,
-/obj/reagent_dispensers/spiders,
+/obj/reagent_dispensers/cleanable/spiders,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cGr" = (
@@ -57052,7 +57052,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLI" = (
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLJ" = (
@@ -57654,7 +57654,7 @@
 "cNh" = (
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellowblack{
 	dir = 5
 	},
@@ -60448,7 +60448,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
 	},
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTb" = (
@@ -87158,7 +87158,7 @@
 	desc = "IT HIM, IT REALLY HIM";
 	name = "smol donut"
 	},
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "yld" = (

@@ -76,7 +76,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
-/obj/reagent_dispensers/ants
+/obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
 	desc = "A bunch of space ants."
 	icon = 'icons/effects/effects.dmi'
@@ -104,7 +104,7 @@
 					qdel(src)
 		return
 
-/obj/reagent_dispensers/spiders
+/obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
 	icon = 'icons/effects/effects.dmi'
