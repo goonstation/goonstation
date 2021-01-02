@@ -2377,6 +2377,7 @@
 			: research_level >= EFFECT_RESEARCH_DONE ? BE.desc \
 			: research_level >= EFFECT_RESEARCH_IN_PROGRESS ? "Research on this gene is currently in progress." \
 			: "Research on a non-active instance of this gene is required.",
+		"icon" = research_level >= EFFECT_RESEARCH_DONE ? BE.icon_state : "unknown",
 		"research" = research_level,
 		"time" = GBE.research_finish_time,
 		"canResearch" = BE.can_research,

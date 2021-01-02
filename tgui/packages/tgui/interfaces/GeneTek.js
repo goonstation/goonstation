@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../backend";
-import { AnimatedNumber, Box, Button, Divider, Flex, Icon, Knob, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
+import { AnimatedNumber, Box, Button, Divider, Flex, GeneIcon, Icon, Knob, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
@@ -792,6 +792,7 @@ const BioEffect = (props, context) => {
     ref,
     name,
     desc,
+    icon,
     research,
     canResearch,
     canInject,
@@ -823,137 +824,141 @@ const BioEffect = (props, context) => {
     !pair[2] || pair[3] === "locked");
 
   return (
-    <Section title={name}>
-      <Flex>
-        <Flex.Item grow={0} shrink={0} mr={1}>
+    <Section
+      title={name}
+      buttons={
+        <GeneIcon
+          name={icon}
+          size={1.5} />
+      }>
+      <Box textAlign="right">
+        <Box
+          mr={1}
+          style={{ "float": "left" }}>
           <Icon
             color={research >= 3 ? "good" : research >= 2 ? "teal" : research >= 1 ? "average" : "bad"}
             name={research >= 2 ? "flask" : research >= 1 ? "hourglass" : "times"} />
           {research >= 2 ? " Researched" : research >= 1 ? " In Progress" : " Not Researched"}
-        </Flex.Item>
-        <Flex.Item grow={1}>
-          <Box textAlign="right">
-            {!isActive && !!canResearch && research === 0 && (
-              <Button
-                icon="flask"
-                disabled={researchCost > materialCur}
-                onClick={() => act("researchmut", {
-                  ref: ref,
-                  sample: !!isSample,
-                })}
-                color="teal">
-                Research
-              </Button>
-            )}
-            {isPotential && (
-              <Button
-                icon="check"
-                disabled={!dnaGood}
-                onClick={() => act("activate", { ref })}
-                color="blue">
-                Activate
-              </Button>
-            )}
-            {research >= 3 && !dnaGood && (
-              <Button
-                icon="magic"
-                disabled={dnaGoodExceptLocks}
-                onClick={() => act("autocomplete", { ref })}>
-                Autocomplete DNA
-              </Button>
-            )}
-            {haveDevice.Analyzer && !dnaGood && isPotential && (
-              <Button
-                disabled={onCooldown.Analyzer}
-                icon="microscope"
-                color="average"
-                onClick={() => act("analyze", { ref })}>
-                Check Stability
-              </Button>
-            )}
-            {haveDevice.Reclaimer && isPotential && !!canReclaim && (
-              <Button
-                disabled={onCooldown.Reclaimer}
-                icon="times"
-                color="bad"
-                onClick={() => act("reclaim", { ref })}>
-                Reclaim
-              </Button>
-            )}
-            {boothCost >= 0 && research >= 2 && (isActive || isStorage) && (
-              <Button
-                disabled={materialCur < boothCost}
-                icon="person-booth"
-                color="good"
-                onClick={() => act("booth", { ref })}>
-                Sell at Booth
-              </Button>
-            )}
-            {!!precisionEmitter && research >= 2
-              && isPotential && !!canScramble && (
-              <Button
-                icon="radiation"
-                disabled={onCooldown.Emitter || subjectStat >= 0}
-                color="bad"
-                onClick={() => act("precisionemitter", { ref })}>
-                Scramble Gene
-              </Button>
-            )}
-            {saveSlots > 0 && research >= 2 && isActive && (
-              <Button
-                disabled={saveSlots <= savedMutations.length}
-                icon="save"
-                color="average"
-                onClick={() => act("save", { ref })}>
-                Store
-              </Button>
-            )}
-            {research >= 2 && !!canInject && haveDevice.Injectors && (
-              <Button
-                disabled={onCooldown.Injectors}
-                icon="syringe"
-                onClick={() => act("activator", { ref })}>
-                Activator
-              </Button>
-            )}
-            {research >= 2 && !!canInject && injectorCost >= 0
-              && (isActive || isStorage) && (
-              <Button
-                disabled={onCooldown.Injectors || materialCur < injectorCost}
-                icon="syringe"
-                onClick={() => act("injector", { ref })}
-                color="bad">
-                Injector
-              </Button>
-            )}
-            {(isActive || isStorage) && !!toSplice && (
-              <Button
-                disabled={!!spliceError}
-                icon="map-marker-alt"
-                onClick={() => act("splicegene", { ref })}
-                tooltip={spliceError}
-                tooltipPosition="left">
-                Splice
-              </Button>
-            )}
-            {isStorage && (
-              <Button
-                icon="check"
-                onClick={() => act("addstored", { ref })}
-                color="blue">
-                Add to Occupant
-              </Button>
-            )}
-            {isStorage && haveSubject && (
-              <Button
-                icon="trash"
-                onClick={() => act("deletegene", { ref })}
-                color="bad" />
-            )}
-            <Box inline />
-          </Box>
-        </Flex.Item>
-      </Flex>
+        </Box>
+        {!isActive && !!canResearch && research === 0 && (
+          <Button
+            icon="flask"
+            disabled={researchCost > materialCur}
+            onClick={() => act("researchmut", {
+              ref: ref,
+              sample: !!isSample,
+            })}
+            color="teal">
+            Research
+          </Button>
+        )}
+        {isPotential && (
+          <Button
+            icon="check"
+            disabled={!dnaGood}
+            onClick={() => act("activate", { ref })}
+            color="blue">
+            Activate
+          </Button>
+        )}
+        {research >= 3 && !dnaGood && (
+          <Button
+            icon="magic"
+            disabled={dnaGoodExceptLocks}
+            onClick={() => act("autocomplete", { ref })}>
+            Autocomplete DNA
+          </Button>
+        )}
+        {haveDevice.Analyzer && !dnaGood && isPotential && (
+          <Button
+            disabled={onCooldown.Analyzer}
+            icon="microscope"
+            color="average"
+            onClick={() => act("analyze", { ref })}>
+            Check Stability
+          </Button>
+        )}
+        {haveDevice.Reclaimer && isPotential && !!canReclaim && (
+          <Button
+            disabled={onCooldown.Reclaimer}
+            icon="times"
+            color="bad"
+            onClick={() => act("reclaim", { ref })}>
+            Reclaim
+          </Button>
+        )}
+        {boothCost >= 0 && research >= 2 && (isActive || isStorage) && (
+          <Button
+            disabled={materialCur < boothCost}
+            icon="person-booth"
+            color="good"
+            onClick={() => act("booth", { ref })}>
+            Sell at Booth
+          </Button>
+        )}
+        {!!precisionEmitter && research >= 2
+          && isPotential && !!canScramble && (
+          <Button
+            icon="radiation"
+            disabled={onCooldown.Emitter || subjectStat >= 0}
+            color="bad"
+            onClick={() => act("precisionemitter", { ref })}>
+            Scramble Gene
+          </Button>
+        )}
+        {saveSlots > 0 && research >= 2 && isActive && (
+          <Button
+            disabled={saveSlots <= savedMutations.length}
+            icon="save"
+            color="average"
+            onClick={() => act("save", { ref })}>
+            Store
+          </Button>
+        )}
+        {research >= 2 && !!canInject && haveDevice.Injectors && (
+          <Button
+            disabled={onCooldown.Injectors}
+            icon="syringe"
+            onClick={() => act("activator", { ref })}>
+            Activator
+          </Button>
+        )}
+        {research >= 2 && !!canInject && injectorCost >= 0
+          && (isActive || isStorage) && (
+          <Button
+            disabled={onCooldown.Injectors || materialCur < injectorCost}
+            icon="syringe"
+            onClick={() => act("injector", { ref })}
+            color="bad">
+            Injector
+          </Button>
+        )}
+        {(isActive || isStorage) && !!toSplice && (
+          <Button
+            disabled={!!spliceError}
+            icon="map-marker-alt"
+            onClick={() => act("splicegene", { ref })}
+            tooltip={spliceError}
+            tooltipPosition="left">
+            Splice
+          </Button>
+        )}
+        {isStorage && (
+          <Button
+            icon="check"
+            onClick={() => act("addstored", { ref })}
+            color="blue">
+            Add to Occupant
+          </Button>
+        )}
+        {isStorage && haveSubject && (
+          <Button
+            icon="trash"
+            onClick={() => act("deletegene", { ref })}
+            color="bad" />
+        )}
+        <Box inline />
+      </Box>
       <Description text={desc} />
       <DNASequence {...props} />
     </Section>
