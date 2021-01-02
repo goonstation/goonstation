@@ -543,6 +543,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
+#ifdef SUBMARINE_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -551,6 +552,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
+#endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	elevator

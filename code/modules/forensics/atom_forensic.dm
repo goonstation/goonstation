@@ -175,7 +175,7 @@
 				CI.blood_DNA = null
 				CI.icon = initial(icon)
 
-		else if (istype(src, /obj/decal/cleanable))
+		else if (istype(src, /obj/decal/cleanable) || istype(src, /obj/reagent_dispensers/cleanable))
 			pool(src)
 
 		else if (isturf(src))

@@ -1,4 +1,37 @@
 
+(t)fri jan 01 21
+(u)Tarmunora
+(e)🆕|feature
+(*)Pod brakes will no longer slow a pod in a direction if you are holding the input key for that direction - i.e.: you can do 'handbrake turns' now.
+(u)BatElite
+(p)3063
+(e)🆕|feature
+(*)You can now take stuff from loose heads. Or put things on them, if you're into head spike fashion shows.
+(u)Efi, Troasta, & Ben Lubar
+(p)3098
+(e)|
+(*)Changed the ion storm murder law _in RP servers_ to be way less murderous.
+(*)Added new ion storm laws that may be more fun to play around, I hope!
+(u)Flourish
+(p)3183
+(e)⚖|balance
+(+)Reduced the capacity of water cooler bottles to 500 units.
+(u)TTerc
+(p)3176
+(e)🆕🗺|feature, mapping
+(*)Janitors are now able to clean up ants and spiders off the floor using space cleaner or the sponge.
+(u)Flourish
+(*)Happy New Year! Come participate in <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15624">January's Monthly Contest!</a> It'll be fun, I promise!
+(u)Flourish
+(e)🆕🗺🔄|feature, mapping, rework
+(*)In anticipation of all the new and wonderful things 2053 will bring, Nanotrasen has renovated parts of Oshan Laboratory's medbay and permanently hired a psychiatrist to ensure that the crew's mental and psychological health will continue to be in tiptop shape.
+(t)thu dec 31 20
+(u)Flourish
+(e)🆕|feature
+(+)Added the "Claw School Graduate" trait, which makes you infallible when playing claw machines! The super clever pun name is courtesy of Virvatuli.
+(u)Flourish
+(e)🗺|mapping
+(+)Removed loafer blueprint from Manta.
 (t)wed dec 30 20
 (u)Efi
 (p)3125

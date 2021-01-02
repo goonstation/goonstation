@@ -76,7 +76,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
-/obj/reagent_dispensers/ants
+/obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
 	desc = "A bunch of space ants."
 	icon = 'icons/effects/effects.dmi'
@@ -104,7 +104,7 @@
 					qdel(src)
 		return
 
-/obj/reagent_dispensers/spiders
+/obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
 	icon = 'icons/effects/effects.dmi'
@@ -560,12 +560,12 @@
 
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
-	desc = "A water cooler bottle. Can hold up to 1000 units."
+	desc = "A water cooler bottle. Can hold up to 500 units."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "itemtank"
 	item_state = "flask"
-	initial_volume = 1000
+	initial_volume = 500
 	w_class = 4.0
 	incompatible_with_chem_dispensers = 1
 
