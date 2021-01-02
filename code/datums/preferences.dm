@@ -152,66 +152,14 @@ datum/preferences
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		src.preview_icon = null
+		var/datum/mutantrace/mutantRace = null
+		for (var/ID in traitPreferences.traits_selected)
+			var/obj/trait/T = getTraitById(ID)
+			if (T?.mutantRace)
+				mutantRace = T.mutantRace
+				break
 
-		src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
-
-		// Skin tone
-		if (AH.s_tone)
-			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
-
-		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.e_color))
-			eyes_s.Blend(AH.e_color, ICON_MULTIPLY)
-		else
-			eyes_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/customization_first_r = customization_styles[AH.customization_first]
-		if (!customization_first_r)
-			customization_first_r = "None"
-
-		var/customization_second_r = customization_styles[AH.customization_second]
-		if (!customization_second_r)
-			customization_second_r = "None"
-
-		var/customization_third_r = customization_styles[AH.customization_third]
-		if (!customization_third_r)
-			customization_third_r = "none"
-
-		var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_first_color))
-			hair_s.Blend(AH.customization_first_color, ICON_MULTIPLY)
-		else
-			hair_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_second_color))
-			facial_s.Blend(AH.customization_second_color, ICON_MULTIPLY)
-		else
-			facial_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_third_color))
-			detail_s.Blend(AH.customization_third_color, ICON_MULTIPLY)
-		else
-			detail_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/underwear_style = underwear_styles[AH.underwear]
-		var/icon/underwear_s = new/icon("icon" = 'icons/mob/human_underwear.dmi', "icon_state" = "[underwear_style]", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.u_color))
-			underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
-
-		eyes_s.Blend(underwear_s, ICON_OVERLAY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
-		eyes_s.Blend(detail_s, ICON_OVERLAY)
-
-		src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
-
-		facial_s = null
-		hair_s = null
-		underwear_s = null
-		eyes_s = null
+		src.preview_icon = character_preview_icon(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -2031,6 +1979,8 @@ $(function() {
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
 
 		if (traitPreferences.isValid() && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
@@ -2436,3 +2386,17 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 /proc/crap_checkbox(var/checked)
 	if (checked) return "&#9745;"
 	else return "&#9744;"
+
+/proc/character_preview_icon(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
+	var/mob/living/carbon/human/H = new(null, AH)
+	H.dir = direction
+	H.bioHolder.mobAppearance.CopyOther(AH)
+	if (MR)
+		H.set_mutantrace(MR)
+	H.organHolder.head.donor = H
+	H.organHolder.head.donor_appearance.CopyOther(H.bioHolder.mobAppearance)
+	H.update_colorful_parts()
+	H.update_body()
+	H.update_face()
+	. = getFlatIcon(H)
+	qdel(H)
