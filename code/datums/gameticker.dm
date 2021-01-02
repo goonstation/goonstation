@@ -109,31 +109,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	SPAWN_DBG(0) setup()
 
-	SPAWN_DBG(10 SECONDS)
-		for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
-			var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
-			var/datum/gas/oxygen_agent_b/trace_gas = new
-			var/datum/gas/sleeping_agent/trace_gas2 = new
-			trace_gas.moles = 10
-			trace_gas2.moles = 5
-			if(!gas.trace_gases)
-				gas.trace_gases = list()
-			gas.trace_gases[trace_gas.type] = trace_gas
-			gas.trace_gases[trace_gas2.type] = trace_gas2
-			gas.toxins = 10000
-			gas.oxygen = 10000
-			gas.temperature = 10000
-			T.assume_air(gas)
-		for (var/obj/machinery/door/airlock/maintenance/door in by_type[/obj/machinery/door])
-			LAGCHECK(LAG_LOW)
-			qdel(door)
-		for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
-			LAGCHECK(LAG_LOW)
-			qdel(door)
-
-		sleep(5 MINUTES)
-		Reboot_server()
-
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
