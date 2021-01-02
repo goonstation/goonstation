@@ -15,6 +15,7 @@
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
+	var/capacity
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -152,10 +153,11 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 25
+	capacity = 1000
 
 	New()
 		..()
-		reagents.add_reagent("water",1000)
+		reagents.add_reagent("water",capacity)
 
 /obj/reagent_dispensers/watertank/big
 	name = "high-capacity watertank"
@@ -189,6 +191,7 @@
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	mats = 8
+	capacity = 500
 
 	var/has_tank = 1
 
