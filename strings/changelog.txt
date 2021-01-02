@@ -1,5 +1,9 @@
 
 (t)fri jan 01 21
+(u)Flourish
+(p)3183
+(e)⚖|balance
+(+)Reduced the capacity of water cooler bottles to 500 units.
 (u)TTerc
 (p)3176
 (e)🆕🗺|feature, mapping
