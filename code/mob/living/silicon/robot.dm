@@ -2407,7 +2407,7 @@
 
 	process_killswitch()
 		if(killswitch)
-			if(killswitch_at <= ticker.round_elapsed_ticks)
+			if(killswitch_at <= TIME)
 				if(src.client)
 					boutput(src, "<span class='alert'><B>Killswitch Activated!</B></span>")
 				killswitch = 0

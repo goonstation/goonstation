@@ -89,7 +89,7 @@
 			if(!A.killswitch)
 				dat += "<A href='?src=\ref[src];gib=1;ai=\ref[A]'>Kill Switch AI *Swipe ID*</A><BR>"
 			else
-				var/timeleft = round((A.killswitch_at - ticker.round_elapsed_ticks)/10, 1)
+				var/timeleft = round((A.killswitch_at - TIME)/10, 1)
 				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 				dat += "Time left:[timeleft]"
 				if (!isAI(user))
@@ -125,7 +125,7 @@
 				if(!R.killswitch)
 					dat += "<A href='?src=\ref[src];gib=1;bot=\ref[R]'>Kill Switch *Swipe ID*</A><BR>"
 				else
-					var/timeleft = round((R.killswitch_at - ticker.round_elapsed_ticks)/10, 1)
+					var/timeleft = round((R.killswitch_at - TIME)/10, 1)
 					timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 					dat += "Time left:[timeleft] | "
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
@@ -156,7 +156,7 @@
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 							R.killswitch = 1
-							A.killswitch_at = ticker.round_elapsed_ticks + 1 MINUTE
+							A.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
@@ -165,7 +165,7 @@
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
 							A.killswitch = 1
-							A.killswitch_at = ticker.round_elapsed_ticks + 3 MINUTES
+							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
 

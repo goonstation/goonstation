@@ -1196,7 +1196,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/message_mob = get_message_mob()
 
 	if(killswitch_at)
-		var/killswitch_time = round((killswitch_at - ticker.round_elapsed_ticks)/10, 1)
+		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
 
 		if(killswitch_time <= 10)
 			if(src.client)

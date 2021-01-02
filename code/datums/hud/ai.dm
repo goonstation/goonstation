@@ -86,7 +86,7 @@
 
 		update_health()
 			if (master.killswitch)
-				var/timeleft = round((master.killswitch_at - ticker.round_elapsed_ticks)/10, 1)
+				var/timeleft = round((master.killswitch_at - TIME)/10, 1)
 				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 				killswitch.invisibility = 0
