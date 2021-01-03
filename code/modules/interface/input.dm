@@ -1,5 +1,4 @@
 var/list/dirty_keystates = list()
-var/list/clients_move_scheduled = list()
 
 /client
 	var/key_state = 0
@@ -299,8 +298,7 @@ var/list/clients_move_scheduled = list()
 		// stub
 
 	proc/attempt_move()
-		if(src.internal_process_move(src.client ? src.client.key_state : 0) && src.client)
-			clients_move_scheduled |= src.client
+		src.internal_process_move(src.client ? src.client.key_state : 0)
 
 	proc/recheck_keys()
 		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
@@ -343,21 +341,14 @@ var/list/clients_move_scheduled = list()
 
 /proc/start_input_loop()
 	SPAWN_DBG(0)
-		var/start_time
 		while (1)
-			start_time = world.time
 			process_keystates()
 
-			for(var/client/C in clients_move_scheduled)
-				if(C?.mob && C.mob.move_scheduled_ticks-- <= 0 && /*decrease the countdown, check if we reached 0*/ \
-							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
-					clients_move_scheduled -= C
+			for(var/client/C as() in clients) // as() is ok here since we nullcheck
+				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/X in ai_move_scheduled)
-				if (X)
-					var/datum/aiHolder/ai = X
-					if (ai.move_target)
-						ai.move_step()
+			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
+				if (ai?.move_target)
+					ai.move_step()
 
-
-			sleep(world.tick_lag - (world.time - start_time))
+			sleep(world.tick_lag)

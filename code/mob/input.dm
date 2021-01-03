@@ -124,7 +124,7 @@ mob
 					var/turf/old_loc = src.loc
 
 					//use commented bit if you wanna have world fps different from client. But its not perfect!
-					var/glide = ((32 / delay) * world.tick_lag)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
+					var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 					var/spacemove = 0
 					if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
