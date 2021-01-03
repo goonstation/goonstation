@@ -120,7 +120,9 @@ var/global/datum/controller/throwing/throwing_controller = new
 			if(!thing || thing.disposed)
 				continue
 			animate(thing)
+
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
+			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
 
 			if(thr.hitAThing)
 				thr.params = null// if we hit something don't use the pixel x/y from the click params

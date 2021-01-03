@@ -124,6 +124,7 @@ var/list/clients_move_scheduled = list()
 	MouseUp(object,location,control,params)
 		var/mob/user = usr
 		user.onMouseUp(object,location,control,params)
+		SEND_SIGNAL(user, COMSIG_MOUSEUP, object,location,control,params)
 
 
 		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not recieve mouse events from unseen tiles.

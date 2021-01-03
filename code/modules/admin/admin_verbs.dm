@@ -884,7 +884,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_heavenly()
 	set name = "Respawn Heavenly"
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself from the heavens"
 	set popup_menu = 0
 	admin_only
