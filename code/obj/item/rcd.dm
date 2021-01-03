@@ -438,6 +438,10 @@ Broken RCD + Effects
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. The deluxe edition features a bit higher matter capacity and enhanced feature set."
 	max_matter = 100
 
+	matter_remove_door = 3
+	matter_remove_wall = 2
+	matter_remove_floor = 2
+
 	var/static/hangar_id_number = 1 //static isnt a real thing in byond????? why does this compile???
 	var/hangar_id = null
 	var/door_name = null
