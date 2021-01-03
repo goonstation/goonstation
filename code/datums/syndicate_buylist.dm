@@ -796,7 +796,7 @@ This is basically useless for anyone but miners.
 	job = list("Detective")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-/datum/syndicate_buylist/generic/trickcigars
+/datum/syndicate_buylist/traitor/trickcigars
 	name = "Exploding Cigars"
 	item = /obj/item/cigarbox/syndicate
 	cost = 5
