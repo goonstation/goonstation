@@ -237,9 +237,7 @@
 				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
 				if (isnull(name) || !length(name) || name == " ")
 					return
-				//DEBUG(reagents)
 				var/list/reagentlist = params2list(reagents)
-				//DEBUG(list2params(reagentlist))
 				var/datum/reagent_group/G = new /datum/reagent_group()
 				for (var/reagent in reagentlist)
 					if (lowertext(reagent) in src.dispensable_reagents)
