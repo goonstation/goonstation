@@ -7751,7 +7751,7 @@
 /obj/item/wrench,
 /obj/item/weldingtool,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
+/area/station/maintenance/northeast)
 "arD" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
@@ -34656,6 +34656,10 @@
 "bFa" = (
 /obj/stool/bench/blue,
 /obj/machinery/light/small/floor/netural,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bFb" = (
@@ -42125,6 +42129,10 @@
 /area/station/maintenance/disposal)
 "bXl" = (
 /obj/item/crowbar,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "bXm" = (
@@ -43441,12 +43449,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/backroom)
 "cbB" = (
-/obj/decal/skeleton,
-/obj/decal/cleanable/blood/splatter,
+/obj/landmark/santa_mail,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbC" = (
 /obj/decal/cleanable/dirt,
+/obj/decal/skeleton,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbD" = (
@@ -43508,7 +43516,8 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "cbL" = (
-/turf/simulated/floor/plating,
+/obj/decal/cleanable/dirt,
+/turf/simulated/wall/false_wall/reinforced,
 /area/diner/backroom)
 "cbM" = (
 /obj/submachine/ice_cream_dispenser,
@@ -46109,9 +46118,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjp" = (
-/obj/decal/poster/wallsign/poster_beach,
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/central)
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "cjq" = (
 /obj/item/clothing/mask/cigarette/random,
 /turf/simulated/floor/carpet/grime,
@@ -47211,6 +47223,10 @@
 /obj/machinery/vehicle/tank/car/yellow,
 /turf/space/fluid,
 /area/research_outpost)
+"fJg" = (
+/obj/decal/poster/wallsign/poster_beach,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/inner/central)
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -48029,6 +48045,11 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"uBc" = (
+/obj/decal/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/diner/backroom)
 "uEG" = (
 /turf/space/fluid,
 /area/research_outpost)
@@ -48050,6 +48071,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uWe" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/inner/central)
 "vcb" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -82161,7 +82189,7 @@ bez
 aiC
 agY
 agY
-agY
+cjp
 agY
 agY
 agY
@@ -85239,8 +85267,8 @@ aqn
 aqn
 aqn
 aqn
-aqn
-cjp
+fJg
+cjt
 cjq
 cjs
 cjt
@@ -85541,8 +85569,8 @@ aqn
 aqn
 aqn
 aqn
-aqn
 chd
+cjt
 cjr
 chd
 chd
@@ -102436,7 +102464,7 @@ aLr
 aLW
 ckK
 ckK
-cfS
+uWe
 aDr
 aks
 aks
@@ -102707,7 +102735,7 @@ aoj
 aoj
 aoj
 aoj
-agE
+aqd
 aue
 axC
 awu
@@ -103008,7 +103036,7 @@ aoj
 aoj
 aoj
 aoj
-afq
+aoj
 arC
 arz
 aek
@@ -103310,7 +103338,7 @@ aoj
 aoj
 aoj
 aoj
-afq
+aoj
 apb
 apb
 apb
@@ -121279,7 +121307,7 @@ cbq
 cax
 cbB
 cbL
-cbL
+uBc
 cbA
 aqn
 aqn
@@ -121580,7 +121608,7 @@ cbi
 caT
 cax
 cbC
-cbC
+cbA
 cbW
 cbA
 aqn

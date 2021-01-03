@@ -75402,10 +75402,6 @@
 /obj/item/reagent_containers/food/snacks/zongzi{
 	pixel_y = 4
 	},
-/obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
-	pixel_y = 32
-	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/flourish)
 "dCN" = (
@@ -85027,7 +85023,7 @@
 /obj/item/clothing/mask/horse_mask,
 /obj/decal/skeleton,
 /obj/fluid_spawner{
-	amount = 10000;
+	amount = 2000;
 	reagent_id = "blood"
 	},
 /turf/unsimulated/floor/wood/two{
