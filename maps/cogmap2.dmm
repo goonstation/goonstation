@@ -79235,6 +79235,7 @@
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "tTd" = (
+/obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -100640,7 +100641,7 @@ saK
 saK
 saK
 aKt
-mBI
+ydl
 wcj
 saK
 saK
@@ -101851,7 +101852,7 @@ mBI
 mBI
 mBI
 mBI
-ydl
+mBI
 mBI
 qBq
 xTc
@@ -102446,7 +102447,7 @@ aaa
 aaa
 aam
 xfw
-nbd
+xfw
 nbd
 aEE
 nbd
@@ -102458,7 +102459,7 @@ xfw
 nbd
 tPC
 nbd
-nbd
+xfw
 xfw
 aaI
 aaa
