@@ -76,7 +76,7 @@
 			last_dir = owner.dir
 
 			if (input_x || input_y)
-				user.attempt_move()
+				attempt_move(user)
 
 
 	update_owner_dir(var/atom/movable/ship) //after move, update dir

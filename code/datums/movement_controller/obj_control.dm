@@ -33,7 +33,7 @@
 			if (keys & KEY_RUN)
 				src.running = 1
 			if(src.move_dir)
-				user.attempt_move()
+				attempt_move(user)
 
 	process_move(mob/user, keys)
 		if(!src.move_dir)

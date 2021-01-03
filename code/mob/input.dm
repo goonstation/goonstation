@@ -30,7 +30,7 @@ mob
 				move_x -= 1
 			if (move_x || move_y)
 				src.move_dir = angle2dir(arctan(move_y, move_x))
-				src.attempt_move()
+				attempt_move(src)
 			else
 				src.move_dir = 0
 
@@ -124,7 +124,7 @@ mob
 					var/turf/old_loc = src.loc
 
 					//use commented bit if you wanna have world fps different from client. But its not perfect!
-					var/glide = ((32 / delay) * world.tick_lag)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
+					var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 					var/spacemove = 0
 					if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
