@@ -30,7 +30,7 @@ mob
 				move_x -= 1
 			if (move_x || move_y)
 				src.move_dir = angle2dir(arctan(move_y, move_x))
-				src.attempt_move()
+				attempt_move(src)
 			else
 				src.move_dir = 0
 
