@@ -323,7 +323,7 @@
 			if (tlocation)
 				// Weaker than chameleon bomb
 				elecflash(src)
-				src.blowthefuckup(20)
+				src.blowthefuckup(12)
 			else
 				elecflash(src,power = 3)
 				playsound(src.loc, "sound/effects/Explosion1.ogg", 100, 1)
