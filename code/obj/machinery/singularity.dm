@@ -110,7 +110,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.energy = E
 	radius=rad
 	Scale((radius+1)/3.0,(radius+1)/3.0)
-	grav_pull = (radius+1)*4
+	grav_pull = (radius+1)*3
 	event()
 	if (Ti)
 		src.Dtime = Ti
@@ -307,7 +307,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.wear_suit)
 				return
 		M.take_toxin_damage(3)
-		M.changeStatus("radiation", 100)
+		M.changeStatus("radiation", 20*(radius+1))
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -328,7 +328,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
