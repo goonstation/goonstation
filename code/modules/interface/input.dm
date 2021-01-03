@@ -287,7 +287,6 @@ var/list/dirty_keystates = list()
 		return 0
 
 /mob
-	var/move_scheduled_ticks = 0
 
 	proc/keys_changed(keys, changed)
 		set waitfor = 0
@@ -305,9 +304,6 @@ var/list/dirty_keystates = list()
 		var/delay = src.process_move(keys)
 		if (isnull(delay))
 			return
-
-		src.move_scheduled_ticks = max(ceil(delay / world.tick_lag) - 1, 1)
-		// why -1? good question, I have no idea but that's what makes it behave as the previous version used to
 
 		if (client) // should prevent stuck directions when reconnecting
 			return 1
