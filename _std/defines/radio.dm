@@ -22,17 +22,6 @@
 #define RADIOCL_SYNDICATE "rsyndicate"
 #define RADIOCL_OTHER "rother"
 
-// Radio signal tags
-#define PDA_CRISIS_ALERT_TAG "Crisis Alert"
-#define PDA_SEC_ALERT_TAG "Security Alert"
-#define PDA_CARGO_ALERT_TAG "Cargo Alert"
-#define PDA_MEDICAL_ALERT_TAG "Medical Alert"
-#define PDA_ENGINEER_ALERT_TAG "Engineering Alert"
-#define PDA_MECHANICS_ALERT_TAG "Mechanic Alert"
-#define PDA_GENETICS_ALERT_TAG "Research Alert"
-#define PDA_MINING_ALERT_TAG "Mining Alert"
-#define PDA_CHUTE_ALERT_TAG "Snail Mail Alert"
-
 // Frequency defines for headsets & intercoms (Convair880).
 /// Minimum "selectable" freq
 #define R_FREQ_MINIMUM 1441

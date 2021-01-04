@@ -30,9 +30,6 @@
 	var/ringToneGenSlot = null
 	/// Where should this ringtone be placed?
 	var/ringToneDestSlot = null
-	/// The valid types of alert slots
-	var/list/alertSlots = list(PDA_CRISIS_ALERT_TAG,PDA_SEC_ALERT_TAG,PDA_CARGO_ALERT_TAG,PDA_MEDICAL_ALERT_TAG,PDA_ENGINEER_ALERT_TAG,\
-														PDA_MECHANICS_ALERT_TAG,PDA_GENETICS_ALERT_TAG,PDA_MINING_ALERT_TAG,PDA_CHUTE_ALERT_TAG)
 
 	return_text()
 		if(..())
@@ -77,13 +74,13 @@
 			if("alert")
 				if(!src.selectedRT)
 					src.selectedRT = "ring1"
-				if(!length(src.alertSlots) || !length(src.master.alert_ringtones))
+				if(!length(src.master.alertgroups) || !length(src.master.alert_ringtones))
 					src.subMenu = null
 					dat += "Error retrieving alert types. Please refresh the page and contact customer support at 1-800-IMC-ODER."
 				else
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select an alert type to use [ring_tone_temp].<br><br>"
-					for(var/alert in src.alertSlots)
+					for(var/alert in src.master.alertgroups)
 						dat += "<a href='?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
 					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"
