@@ -1,5 +1,9 @@
 
 (t)mon jan 04 21
+(u)virvatuli
+(p)3229
+(e)🗺|mapping
+(+)Added a mounted defibrillator to the Cairngorm's surgical suite.
 (u)BenLubar
 (p)3178
 (e)⚖|balance
