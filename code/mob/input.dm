@@ -30,7 +30,7 @@ mob
 				move_x -= 1
 			if (move_x || move_y)
 				src.move_dir = angle2dir(arctan(move_y, move_x))
-				src.attempt_move()
+				attempt_move(src)
 			else
 				src.move_dir = 0
 
@@ -69,7 +69,7 @@ mob
 				var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 				if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 					last_move_trigger = ticker.round_elapsed_ticks
-					deliver_move_trigger(m_intent)
+					deliver_move_trigger(running ? "sprint" : m_intent)
 
 				src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 				src.animate_movement = SLIDE_STEPS
@@ -124,7 +124,7 @@ mob
 					var/turf/old_loc = src.loc
 
 					//use commented bit if you wanna have world fps different from client. But its not perfect!
-					var/glide = ((32 / delay) * world.tick_lag)// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
+					var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 					var/spacemove = 0
 					if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
@@ -172,7 +172,7 @@ mob
 
 						if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 							last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
-							deliver_move_trigger(m_intent)
+							deliver_move_trigger(running ? "sprint" : m_intent)
 
 
 						src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects

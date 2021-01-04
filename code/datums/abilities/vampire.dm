@@ -3,7 +3,7 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_vampire(var/shitty = 0)
+/mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
 			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
@@ -50,6 +50,9 @@
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
+
+		if(shitty || nonantag)
+			boutput(src, "<span class='alert'><h2>You are not an antagonist!</h2> Your vampireness was achieved by in-game means, you still have the powers but are <i>not</i> an antagonist.</span>")
 
 	else return
 

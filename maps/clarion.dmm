@@ -14611,6 +14611,7 @@
 /area/station/crew_quarters/kitchen)
 "aAK" = (
 /obj/machinery/power/apc{
+	areastring = "Waste Disposal";
 	dir = 8;
 	name = "Waste Disposal APC";
 	pixel_x = -24
@@ -45898,7 +45899,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bHj" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/arc_electroplater,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bHk" = (
@@ -49053,6 +49054,10 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"fqA" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "gXP" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -83949,7 +83954,7 @@ bxb
 byh
 bzn
 bAo
-buG
+fqA
 buJ
 bDV
 bEI

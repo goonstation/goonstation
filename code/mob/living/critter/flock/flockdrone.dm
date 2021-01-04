@@ -100,6 +100,7 @@
 			var/key = pilot.client.key
 			pilot.client.mob = src
 			src.mind = new /datum/mind()
+			src.mind.ckey = ckey
 			src.mind.key = key
 			src.mind.current = src
 			ticker.minds += src.mind
@@ -129,6 +130,7 @@
 				var/key = src.client.key
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
+				controller.mind.ckey = ckey
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
@@ -168,7 +170,7 @@
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
 		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
-		<br><span class='bold'>Resources:</span> [src.resources]"
+		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
 		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
 		<br><span class='bold'>###=-</span></span>"}

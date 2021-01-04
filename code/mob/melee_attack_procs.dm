@@ -87,7 +87,7 @@
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
 		else if(target.hasStatus("shivering"))
 			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
-			target.changeStatus("shivering", -1 SECONDS)
+			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src

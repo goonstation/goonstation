@@ -248,13 +248,11 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #333; font-family: Verrdana, sans-serif; }
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: black; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
+.motd {color: #333; font-family: Verdana, sans-serif; }
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #000 !important; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
 .motd a, .motd a:link, .motd a:visited {color: #00f;}
 .motd a:active, .motd a:hover {color: #007;}
-.motd div {
-	margin: 0 0.5em;
-}
+.motd div { margin: 0 0.5em }
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 

@@ -4548,13 +4548,6 @@
 /area/station/engine/inner)
 "aXm" = (
 /obj/storage/secure/closet/command/hos,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -8886,7 +8879,7 @@
 "cou" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /obj/item/plate{
 	pixel_y = -1
 	},
@@ -15619,11 +15612,10 @@
 	dir = 1;
 	layer = 4
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "erY" = (
@@ -24451,7 +24443,8 @@
 /area/station/hangar/main)
 "hao" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/wall/auto/jen,
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "hat" = (
 /obj/cable{
@@ -31393,13 +31386,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "jks" = (
@@ -34690,6 +34676,18 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"kmc" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 10
+	},
+/area/station/security/hos)
 "kmh" = (
 /obj/machinery/networked/test_apparatus/pitching_machine{
 	dir = 4
@@ -50559,11 +50557,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
 "pex" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = -25
@@ -53342,11 +53335,9 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "pSs" = (
@@ -58323,12 +58314,6 @@
 	pixel_y = 6
 	},
 /obj/machinery/light/small/sticky/cool,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
 "rkW" = (
@@ -100269,7 +100254,7 @@ jhw
 aXm
 bYG
 fwR
-mrr
+kmc
 hLl
 kAs
 bmg
@@ -117174,7 +117159,7 @@ jyv
 tJK
 nBj
 brP
-mmy
+wEG
 wbM
 vxt
 edK
@@ -117778,7 +117763,7 @@ mRC
 tJK
 nBj
 etc
-wEG
+mSM
 cYk
 wax
 ogT
@@ -118983,7 +118968,7 @@ qCT
 qCT
 geL
 gba
-pSq
+suy
 nln
 kwi
 osx
