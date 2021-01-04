@@ -52887,9 +52887,6 @@
 /area/station/science/storage)
 "pKS" = (
 /obj/stool/bench/red,
-/obj/machinery/light/incandescent/cool{
-	dir = 8
-	},
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/crew_quarters/cafeteria)
 "pLc" = (
