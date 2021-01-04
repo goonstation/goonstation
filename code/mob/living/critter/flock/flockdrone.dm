@@ -690,7 +690,7 @@
 	else
 		if (!target.melee_attack_test(user))
 			return
-		if (prob(src.attack_hit_prob) || target.getStatusDuration("stunned") || target.getStatusDuration("weakened") || target.getStatusDuration("paralysis") || target.stat || target.restrained())
+		if (prob(src.attack_hit_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0)
 			user.attack_effects(target, affecting)

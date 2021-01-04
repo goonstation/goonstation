@@ -1120,8 +1120,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
+	. = src.hasStatus("handcuffed")
 
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)

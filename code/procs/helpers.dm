@@ -237,7 +237,7 @@ proc/get_angle(atom/a, atom/b)
 	sleep(time)
 	if (!user || !target)
 		return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !is_incapacitated(user) && !user.lying )
 		return 1
 
 /proc/do_after(mob/M as mob, time as num)
@@ -2651,8 +2651,8 @@ proc/keep_truthy(some_list)
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
-	return \
+	return (\
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
-		M.stat
+		M.stat)
