@@ -73,6 +73,16 @@
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
 	if(!stopping)
 		src.retarget(user, object, location, control, params)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if ((H.client && H.client.check_key(KEY_THROW)) || H.in_throw_mode)
+				H.throw_item(target,params)
+				return
+		else if(iscritter(user))
+			var/mob/living/critter/C = user
+			if (((C?.client.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
+				C.throw_item(target,params)
+				return
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
