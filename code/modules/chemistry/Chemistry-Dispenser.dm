@@ -135,7 +135,7 @@
 			ui.open()
 
 	ui_static_data(mob/user)
-		var/list/static_data = list()
+		. = list()
 		var/list/dispensableReagentsTemp = list()
 		if(dispensable_reagents)
 			for(var/reagent in dispensable_reagents)
@@ -148,24 +148,22 @@
 					state = current_reagent.reagent_state,
 					id = reagent
 				)))
-		static_data["beakerName"] = glass_name
-		static_data["dispensableReagents"] = dispensableReagentsTemp
-
-		return static_data
+		.["beakerName"] = glass_name
+		.["dispensableReagents"] = dispensableReagentsTemp
 
 	ui_data(mob/user)
-		var/list/data = list()
+		. = list()
 		var/list/beakerContentsTemp = list()
 		var/list/groupListTemp = list()
-		data["idCardInserted"] = !isnull(src.user_id)
-		data["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
-		data["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
-		data["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
+		.["idCardInserted"] = !isnull(src.user_id)
+		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
+		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
+		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		if(beaker)
 			var/datum/reagents/R = beaker:reagents
 			var/datum/color/average = R.get_average_color()
-			data["currentBeakerName"] = beaker.name
-			data["finalColor"] = average.to_rgba()
+			.["currentBeakerName"] = beaker.name
+			.["finalColor"] = average.to_rgba()
 			if(istype(R) && R.reagent_list.len>0)
 				for(var/reagent in R.reagent_list)
 					var/datum/reagent/current_reagent = R.reagent_list[reagent]
@@ -185,9 +183,8 @@
 					info = group.group_desc,
 					ref = ref(group)
 				)))
-		data["groupList"] = groupListTemp
-		data["beakerContents"] = beakerContentsTemp
-		return data
+		.["groupList"] = groupListTemp
+		.["beakerContents"] = beakerContentsTemp
 
 	ui_act(action, params)
 		if(..())
