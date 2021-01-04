@@ -80,7 +80,7 @@ var/list/ai_move_scheduled = list()
 
 	proc/interrupt()
 		if(src.enabled)
-			current_task.reset()
+			current_task?.reset()
 			current_task = default_task
 
 	proc/die()
