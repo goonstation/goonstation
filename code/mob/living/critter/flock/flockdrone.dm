@@ -166,14 +166,16 @@
 	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 		if(src.controller)
-			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> controlling [src.real_name])"
+			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> (controlling [src.real_name])"
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
 		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
-		<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]
-		<br><span class='bold'>###=-</span></span>"}
+		<br><span class='bold'>Cognition:</span> [isalive(src) && !dormant ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
+		if (src.is_npc && istype(src.ai.current_task))
+			special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
+		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
 		return null // give the standard description
@@ -211,7 +213,8 @@
 		return
 	if(target == user)
 		// only allow people to jump into flockdrones if they're doing it themselves
-		if(istype(user, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/F = user
+		if(istype(F) && F.flock && F.flock == src.flock)
 			// jump on in there!
 			src.take_control(user)
 		else
@@ -589,10 +592,10 @@
 		src.flock?.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
-	sleep(0.1 SECONDS) // make sure the animation finishes
-	// finally, away with us
-	src.ghostize()
-	qdel(src)
+	SPAWN_DBG(0.1 SECONDS) // make sure the animation finishes
+		// finally, away with us
+		src.ghostize()
+		qdel(src)
 
 
 /mob/living/critter/flock/drone/update_inhands()

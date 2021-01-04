@@ -2643,3 +2643,10 @@ proc/keep_truthy(some_list)
 	for(var/x in some_list)
 		if(x)
 			. += x
+
+proc/has_incapacitating_status(mob/M)
+	return \
+		M.getStatusDuration("stunned") || \
+		M.getStatusDuration("weakened") || \
+		M.getStatusDuration("paralysis") || \
+		M.stat
