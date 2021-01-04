@@ -162,7 +162,7 @@
 		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
 		if(!shoes)
 			boutput(holder.owner, "<span class='alert'>[target] has no shoes!</span>")
-			return
+			return 1
 
 		var/mob/living/carbon/human/target_human = target
 		var/turf/floorturf = get_turf(holder.owner)
