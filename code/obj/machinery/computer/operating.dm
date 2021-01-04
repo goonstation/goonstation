@@ -64,11 +64,10 @@
 	return
 
 /obj/machinery/computer/operating/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=op")
-			return
+	if (!in_range(src,user) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=op")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"

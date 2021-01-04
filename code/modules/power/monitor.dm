@@ -26,11 +26,10 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
+	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
@@ -142,16 +141,13 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
-
+	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
-
 
 	if(!powernet)
 		t += "<span style=\"color:red\">No connection</span>"

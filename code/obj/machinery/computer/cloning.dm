@@ -827,16 +827,6 @@ proc/find_ghost_by_key(var/find_key)
 
 	. += list("cloneRecords" = recordsTemp)
 
-/obj/machinery/computer/cloning/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
