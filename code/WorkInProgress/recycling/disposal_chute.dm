@@ -581,7 +581,7 @@
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
+			newsignal.data["tag"] = PDA_CHUTE_ALERT_TAG
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
