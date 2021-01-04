@@ -142,7 +142,6 @@
 	targeted = 1
 	target_anything = 1
 
-
 	tryCast()
 		if (isunconscious(holder.owner) || holder.owner.hasStatus("weakened"))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
@@ -201,6 +200,7 @@
 	onStart()
 		var/obj/item/shoes = target.get_slot(SLOT_SHOES)
 		if(!shoes)
+			boutput(source, "<span class='alert'>[target] has no shoes!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!isturf(target.loc))

@@ -1679,8 +1679,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
-	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
-		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1702,7 +1700,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 				src.next_move = world.time
-				src.attempt_move()
+				attempt_move(src)
 				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
 				if ((src.loc != last || force_puff) && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds

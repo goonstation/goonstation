@@ -203,6 +203,7 @@
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
 					var/datum/mind/newmind = new
+					newmind.ckey = ckey
 					newmind.key = src.key
 					newmind.current = src
 					B.owner = newmind
@@ -1125,7 +1126,7 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					var/mob/M = find_ghost_by_key(B.owner.key)
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 						return
@@ -2365,7 +2366,6 @@
 
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
-		var/mailgroup = MGD_MEDRESEACH
 		var/net_id = generate_net_id(src)
 		var/frequency = 1149
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -2381,7 +2381,7 @@
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
-		if (message && mailgroup && radio_connection)
+		if (message && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -2389,7 +2389,7 @@
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			radio_connection.post_signal(src, newsignal)

@@ -88,13 +88,13 @@ datum
 		proc/play_mix_sound(var/mix_sound)
 			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
 
-		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0)
+		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
-
+			var/newtemp = copy_temperature ? src.total_temperature : T20C
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if(current_reagent)
-					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
+					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
 					current_reagent.on_copy(target.reagent_list[reagent_id])
 				if(!target) return
 

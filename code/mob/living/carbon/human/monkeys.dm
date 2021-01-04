@@ -121,13 +121,12 @@
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
-			if (!src.disposed)
-				src.cust_one_state = "None"
-				src.bioHolder.AddEffect("monkey")
-				if (src.name == "monkey" || !src.name)
-					src.name = pick_string_autokey("names/monkey.txt")
-				src.real_name = src.name
+		if (!src.disposed)
+			src.cust_one_state = "None"
+			src.bioHolder.AddEffect("monkey")
+			if (src.name == "monkey" || !src.name)
+				src.name = pick_string_autokey("names/monkey.txt")
+			src.real_name = src.name
 
 	disposing()
 		STOP_TRACKING

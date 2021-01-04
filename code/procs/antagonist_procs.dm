@@ -301,7 +301,7 @@
 
 	for(var/client/C)
 		var/mob/M = C.mob
-		if(!M) continue
+		if(!M || isnewplayer(M)) continue
 		if (isdead(M) && !isliving(M))
 			dead++
 			if (M.mind?.joined_observer)

@@ -1,5 +1,4 @@
 var/list/dirty_keystates = list()
-var/list/clients_move_scheduled = list()
 
 /client
 	var/key_state = 0
@@ -124,6 +123,7 @@ var/list/clients_move_scheduled = list()
 	MouseUp(object,location,control,params)
 		var/mob/user = usr
 		user.onMouseUp(object,location,control,params)
+		SEND_SIGNAL(user, COMSIG_MOUSEUP, object,location,control,params)
 
 
 		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not recieve mouse events from unseen tiles.
@@ -287,35 +287,25 @@ var/list/clients_move_scheduled = list()
 		return 0
 
 /mob
-	var/move_scheduled_ticks = 0
 
 	proc/keys_changed(keys, changed)
 		set waitfor = 0
 		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
 		// stub
 
-	proc/process_move(keys)
-		// stub
-
-	proc/attempt_move()
-		if(src.internal_process_move(src.client ? src.client.key_state : 0) && src.client)
-			clients_move_scheduled |= src.client
-
 	proc/recheck_keys()
-		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+		if (src.client)
+			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
-
-	// returns 1 if it schedules a move
+	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)
+		. = FALSE
 		var/delay = src.process_move(keys)
 		if (isnull(delay))
-			return
-
-		src.move_scheduled_ticks = max(ceil(delay / world.tick_lag) - 1, 1)
-		// why -1? good question, I have no idea but that's what makes it behave as the previous version used to
+			return FALSE
 
 		if (client) // should prevent stuck directions when reconnecting
-			return 1
+			. = TRUE
 
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
@@ -342,21 +332,14 @@ var/list/clients_move_scheduled = list()
 
 /proc/start_input_loop()
 	SPAWN_DBG(0)
-		var/start_time
 		while (1)
-			start_time = world.time
 			process_keystates()
 
-			for(var/client/C in clients_move_scheduled)
-				if(C?.mob && C.mob.move_scheduled_ticks-- <= 0 && /*decrease the countdown, check if we reached 0*/ \
-							!C.mob.internal_process_move(C.key_state)) /* deschedule only if internal_process_move tells us to */
-					clients_move_scheduled -= C
+			for(var/client/C as() in clients) // as() is ok here since we nullcheck
+				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/X in ai_move_scheduled)
-				if (X)
-					var/datum/aiHolder/ai = X
-					if (ai.move_target)
-						ai.move_step()
+			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
+				if (ai?.move_target)
+					ai.move_step()
 
-
-			sleep(world.tick_lag - (world.time - start_time))
+			sleep(world.tick_lag)

@@ -66,7 +66,6 @@
 					if(M.move_target)
 						return
 			M.move_target = target_turf
-	LAGCHECK(LAG_LOW)
 
 /datum/aiTask/sequence/goalbased/on_reset()
 	holder.target = null
@@ -87,7 +86,6 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(1,2,4,5,6,8,9,10)
 	holder.owner.process_move()
-	LAGCHECK(LAG_LOW)
 
 /datum/aiTask/timed/wander/on_tick()
 	. = ..()

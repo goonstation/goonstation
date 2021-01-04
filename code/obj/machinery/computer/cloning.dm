@@ -215,7 +215,7 @@
 		if ((subject.ghost && subject.ghost.mind && subject.ghost.mind.key))
 			subjMind = subject.ghost.mind
 		else if (subject.last_client)
-			var/mob/M = find_ghost_by_key(subject.last_client.ckey)
+			var/mob/M = find_ghost_by_key(subject.last_client.key)
 			if (isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 				subjMind = M.mind
 			else
