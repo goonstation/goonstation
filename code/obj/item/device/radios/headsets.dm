@@ -307,6 +307,18 @@
 	item_state = "headset"
 	block_hearing_when_worn = HEARING_ANTIDEAF
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		if(istype(W,/obj/item/device/radio/headset) && !istype(W,/obj/item/device/radio/headset/deaf))
+			user.show_message("You press \the [W] against \the [src] until they become as one.")
+			var/obj/item/device/radio/headset/H = W
+			H.desc = src.desc + " It looks like someone smashed \a [W] into this... somehow."
+			H.icon = src.icon
+			H.name = src.name
+			H.icon_state = src.icon_state
+			H.block_hearing_when_worn = src.block_hearing_when_worn
+			qdel(src)
+
 /obj/item/device/radio/headset/gang
 	name = "Radio Headset"
 	desc = "A radio headset, pre-tuned to your gang's frequency. Convinient."
