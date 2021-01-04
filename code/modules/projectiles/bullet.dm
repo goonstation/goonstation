@@ -923,7 +923,7 @@ toxic - poisons
 						M.emote("scream")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 30, 0.5)
+			explosion_new(null, T, 36, 0.45)
 		return
 
 /obj/smokeDummy

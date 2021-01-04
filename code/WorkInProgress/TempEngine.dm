@@ -3,7 +3,7 @@
 //
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
-#define LUBE_CHECK_RATE 5
+#define BASE_LUBE_CHECK_RATE 5
 
 // Circulator variants
 /// no backflow
@@ -30,13 +30,17 @@
 
 	var/side = null // 1=left 2=right
 	var/last_pressure_delta = 0
-	var/static/list/circulator_preferred_reagents
-	var/lube_cycle = LUBE_CHECK_RATE //rate at which reagents are adjusted
-	var/reagents_consumed = 0.5 //amount of reagents consumed
+	var/static/list/circulator_preferred_reagents // white list of prefferred reagents where viscocity should be ignored for special value
+	var/lube_cycle = 0 // current state in cycle
+	var/lube_cycle_duration = BASE_LUBE_CHECK_RATE //rate at which reagents are adjusted for leaks/consumption in atmos machinery processes
+	var/reagents_consumed = 0 //amount of reagents consumed by active leak or variant
+	var/variant_description
 	var/lube_boost = 1.0
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
+	var/target_pressure	// crew entered desired pressure for inlet to outlet
+	var/target_pressure_enabled	// crew desired pressure is active
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 	var/repairstate = 0
 	var/repair_desc = ""
@@ -44,11 +48,19 @@
 	anchored = 1.0
 	density = 1
 
+	var/datum/pump_ui/ui
+
+	initialize()
+		..()
+		ui = new/datum/pump_ui/circulator_ui(src)
+
 	New()
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
+		target_pressure = min_circ_pressure
+		target_pressure_enabled = FALSE
 
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
@@ -65,39 +77,44 @@
 		..()
 
 	get_desc(dist, mob/user)
+
+		if(variant_description || generator.variant_description)
+			. += variant_description
+			. += generator.variant_description
+			. += "The instruction manual should have more information."
 		if(dist <= 5)
 			. += "[repair_desc]"
-			. += "<br><span class='notice'>The maintenance panel is [flags & OPENCONTAINER ? "open" : "closed"].</span>"
+			. += "<br><span class='notice'>The maintenance panel is [src.is_open_container() ? "open" : "closed"].</span>"
 		if(dist <= 2)
 			. += "<br><span class='notice'>Serial Number: [serial_num].</span>"
-		if(dist <= 2 && reagents && (src.flags & OPENCONTAINER) )
+		if(dist <= 2 && reagents && is_open_container() )
 			. += "<br><span class='notice'>The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].</span>"
 			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		var/open =  flags & OPENCONTAINER
+		var/open = is_open_container()
 
 		// Weld > Crowbar > Rods > Weld
 		if(open && repairstate)
 			switch(repairstate)
 				if(1)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(2)
 					if (istool(W, TOOL_PRYING))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(3)
 					if (istype(W, /obj/item/rods))
 						var/obj/item/rods/S = W
 						if (S.amount >= 5)
-							actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 				if(4)
 					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-						actions.start(new /datum/action/bar/icon/teg_circulator_fix(src, W, 50), user)
+						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 50), user)
 						return
 
 		if(isscrewingtool(W))
@@ -106,12 +123,15 @@
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the maintenance panel on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the maintenance panel on the [src].</span>")
 			flags ^= OPENCONTAINER
+			update_icon()
 		else if(iswrenchingtool(W) && open)
 			src.add_fingerprint(user)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1)
 			circulator_flags ^= LUBE_DRAIN_OPEN
 			open = circulator_flags & LUBE_DRAIN_OPEN
 			user.visible_message("<span class='notice'>[user] adjusts the [src] drain valve.</span>", "<span class='notice'>You [open ? "open" : "close"] the [src] drain valve.</span>")
+		else if(ispulsingtool(W))
+			ui.show_ui(user)
 		else
 			..()
 
@@ -119,6 +139,10 @@
 		var/input_starting_pressure = MIXTURE_PRESSURE(src.air1)
 		var/output_starting_pressure = MIXTURE_PRESSURE(src.air2)
 		var/fan_power_draw = 0
+		var/desired_pressure = 0
+
+		desired_pressure = src.min_circ_pressure
+		if(src.target_pressure_enabled) desired_pressure = src.target_pressure
 
 		if(!input_starting_pressure)
 			return null
@@ -131,14 +155,16 @@
 
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
-			if(input_starting_pressure < (output_starting_pressure+src.min_circ_pressure))
+			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
 				// Use maximum of minimum circulator pressure OR calculated pressure required to ensure an amount that won't get rounded away by quantization
 				// Note - ( 5 * ATMOS_EPSILON ) used to allow for a ratio of multiple gas specific heats to be utilized in the mixture
-				pressure_delta = max( src.min_circ_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
+				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
 
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
+				if(src.reagents.has_reagent("voltagen", 1))
+					fan_power_draw = max(0, 10*log(total_pressure))
 		else if(pressure_delta < 0)
 			gas_input = air2
 			gas_output = air1
@@ -173,24 +199,38 @@
 	// This is special handeling for reagent interactions and reagent reactions with circulator
 	proc/handle_reactions(var/datum/gas_mixture/gas_passed)
 		var/reaction_temp = 0
+		var/reagent_amount
 
 		// Interactions with circulator
 		if( !(src.circulator_flags & LEAKS_LUBE)							\
 			&& ( src.reagents.has_reagent("pacid", 10)					\
 		    || src.reagents.has_reagent("clacid", 10)					\
 		    || src.reagents.has_reagent("nitric_acid", 10))		\
-		  && prob(2))
+		  && prob(10))
 			src.circulator_flags |= LEAKS_LUBE
+			// Circulator system has been damaged and will leak 1/5th the contents
+			src.reagents_consumed = src.reagents.maximum_volume / 5
+			src.lube_cycle_duration = 1
 			src.repairstate = 1
-			if((circulator_flags & OPENCONTAINER) && src.reagents.total_volume )
+			if(src.is_open_container() && src.reagents.total_volume )
 				src.visible_message("<span class='alert'>Fluid is starting to drip from inside the [src] maintenance panel.</span>")
 				playsound(src.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
 			else
-				src.audible_message("<span class='alert'>An usettling gurgling sound can be heard from [src].</span>")
+				src.audible_message("<span class='alert'>An unsettling gurgling sound can be heard from [src].</span>")
 				playsound(src.loc, "sound/effects/bubbles3.ogg", 20, 1, -3, pitch=0.7)
 
 			src.repair_desc = "Lubrication system is a mess and needs replacing, the piping needs to be cut up with a welder prior to removal."
 
+		if( src.reagents.has_reagent("hugs") && src.generator.grump && prob(5) )
+			reagent_amount = src.reagents.get_reagent_amount("hugs")
+			src.generator.grump -= reagent_amount * 5
+			src.reagents.remove_reagent("hugs", 1)
+			src.audible_message("<span class='alert'>The [src] makes a fun gurgling sound.</span>")
+
+		if( src.reagents.has_reagent("love") && src.generator.grump > 20 && prob(5)  )
+			src.reagents.remove_reagent("love", 1)
+			src.generator.grump -= 100
+			src.audible_message("<span class='alert'>A oddly distinctive sound of contentment can be heard from [src]. How wonderful!</span>")
 
 		// Interactions with transferred gas
 		if(gas_passed)
@@ -234,24 +274,27 @@
 
 
 	proc/lube_loss_check()
-		if(reagents?.total_volume == 0) return
+		if(src.reagents?.total_volume == 0) return
 
-		if( circulator_flags & LUBE_DRAIN_OPEN )
+		if( src.circulator_flags & LUBE_DRAIN_OPEN )
 			var/datum/reagents/leaked = src.reagents.remove_any_to(reagents.maximum_volume * 0.25)
 			leaked.reaction(get_step(src, SOUTH))
 
-		if(!(circulator_flags & LEAKS_LUBE) || !reagents_consumed || !is_circulator_active() )
+		if(!(src.circulator_flags & LEAKS_LUBE) || !src.reagents_consumed || !src.is_circulator_active() )
 			return
 
 		// Skip off cycle consumption checks
 		if(src.lube_cycle-- > 0) return
 
 		if(lube_cycle <= 0)
-			src.lube_cycle = LUBE_CHECK_RATE
-			if( (circulator_flags & LEAKS_LUBE) && prob(5) )
-				var/datum/reagents/leaked = src.reagents.remove_any_to(reagents_consumed)
+			src.lube_cycle = src.lube_cycle_duration
+			if( (src.circulator_flags & LEAKS_LUBE) && prob(80) )
+				playsound(get_turf(src), "sound/effects/spray.ogg", 40, 1)
+				var/datum/reagents/leaked = src.reagents.remove_any_to(src.reagents_consumed)
 				leaked.reaction(get_step(src, pick(alldirs)))
 
+	// Calculate an adjusted average reagent viscosity to determine boost for lube efficiency.
+	// Viscosity value is inconsistant in some cases so a white list is used to ensure high performance of specific reagents.
 	on_reagent_change(add)
 		. = ..()
 		var/lube_efficiency = 0.0
@@ -273,6 +316,8 @@
 	process()
 		..()
 		src.lube_loss_check()
+		if(src.status & NOPOWER )	// Force off target pressure
+			src.target_pressure_enabled = FALSE
 		update_icon()
 
 	update_icon()
@@ -286,6 +331,25 @@
 		else
 			icon_state = "circ[side]-off"
 
+		if(src.is_open_container())
+			if(src.GetOverlayImage("open")) return 1
+
+			var/icon/open_icon = icon('icons/obj/atmospherics/atmos.dmi',"can-oT")
+			if(src.side == RIGHT_CIRCULATOR)
+				open_icon.Flip(WEST)
+				open_icon.Shift(SOUTH,5)
+				open_icon.Shift(EAST,5)
+			else
+				open_icon.Shift(SOUTH,5)
+				open_icon.Shift(WEST,5)
+			src.UpdateOverlays(image(open_icon), "open")
+		else
+			src.UpdateOverlays(null, "open")
+		if(src.generator.variant_b)
+			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
+		else
+			UpdateOverlays(null, "variant")
+
 		return 1
 
 /obj/machinery/atmospherics/binary/circulatorTemp/right
@@ -293,8 +357,8 @@
 	name = "cold gas circulator"
 
 
-/datum/action/bar/icon/teg_circulator_fix
-	id = "teg_circulator_fix1"
+/datum/action/bar/icon/teg_circulator_repair
+	id = "teg_circulator_repair1"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -376,9 +440,40 @@
 		if (circ.repairstate == 4)
 			circ.repairstate = 0
 			circ.circulator_flags ^= LEAKS_LUBE
+			circ.reagents_consumed = initial(circ.reagents_consumed)
+			circ.lube_cycle_duration = initial(circ.lube_cycle_duration)
 			circ.repair_desc = ""
 			boutput(owner, "<span class='notice'>You finish welding the replacement lubrication system, the circulator is again in working condition.</span>")
 			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
+
+datum/pump_ui/circulator_ui
+	value_name = "Target Transfer Pressure"
+	value_units = "Pa"
+	min_value = 0
+	max_value = 1e5
+	incr_sm = 10
+	incr_lg = 100
+	var/obj/machinery/atmospherics/binary/circulatorTemp/our_circ
+
+	New(obj/machinery/atmospherics/binary/circulatorTemp/C)
+		..()
+		src.our_circ = C
+		pump_name = "Blower Manual Override"
+
+	set_value(val)
+		our_circ.target_pressure = val
+
+	toggle_power()
+		our_circ.target_pressure_enabled = !our_circ.target_pressure_enabled
+
+	is_on()
+		return our_circ.target_pressure_enabled
+
+	get_value()
+		return our_circ.target_pressure
+
+	get_atom()
+		return our_circ
 
 
 /obj/machinery/power/monitor
@@ -409,6 +504,7 @@
 	var/datum/light/light
 	var/variant_a = null
 	var/variant_b = null
+	var/variant_description
 	var/conductor_temp = T20C
 
 	var/boost = 0
@@ -432,9 +528,19 @@
 	var/const/history_max = 50
 
 	proc/generate_variants(a=null,b=null)
-		var/prepend_serial_num = "[pick(consonants_upper)][pick(consonants_upper)]"
+		// CIRC-122333-4-5
+		// 	1 - RNG (Fluff Family/Location of Assembly)
+		// 	2 - Variant A (Minor Variants to impact circulator)
+		// 	3 - RNG (Fluff unique identifier for QA and root cause analysis)
+		//  4 - L or R depending on circulator
+		// 	5 - Variant B (Major Variants "Experimental" to impact generator) these should only happen occasionally
+		var/prepend_serial_num = "[pick(consonants_upper)]" // Lore: Production facility identifier
+		var/instructions_footnote = ""
 
-		if(is_null_or_space(a))	src.variant_a = rand(10,99)
+		if(is_null_or_space(a))
+			//Set initial value for standard variants
+			src.variant_a = rand(10,19)
+			//New Variant A to follow and are identified by numerical ranges
 		else src.variant_a = a
 
 		if(is_null_or_space(b))
@@ -444,15 +550,32 @@
 		if(src.variant_b)
 			if(src.variant_b in list("A","B","C","D"))
 				src.generator_flags |= TEG_HIGH_TEMP
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures above 4358K.</b><br>"}
+				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be for extremely high temperatures. "
 			else if(src.variant_b in list("E","F","G","H"))
 				src.generator_flags |= TEG_LOW_TEMP
+				instructions_footnote += {"<b><i>Note</i>: Thermo-Electric Generator utilizes experimental alloys optimized for temperatures below 1550K.</b><br>"}
+				variant_description = "An experimental Thermo-Electric Generator! Based on the conductive material it looks like it may be designed for cooler temperatures. "
 			else
 				// Reassign variant_b to null so unsupported variants aren't shown to players
 				// to avoid confusion
 				src.variant_b = null
+				variant_description = null
 
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
+
+		src.updateicon()
+		src.circ1?.update_icon()
+		src.circ2?.update_icon()
+
+		// Note:
+		// 	THIS WILL NEED TO BE UPDATE IFF WE HAVE MORE THAN 1 TEG PER dmm/zlevel...
+		//
+		// Iterate over TEG instructions on our current zlevel to account for prefabs.
+		for_by_tcl(instructions, /obj/item/paper/engine)
+			if(src.z == instructions.z) // Ensure instructions are only updated for relevant Z level.
+				instructions.info = initial(instructions.info) + instructions_footnote
 
 	New()
 		..()
@@ -496,12 +619,12 @@
 	proc/updateicon()
 
 		if(status & (NOPOWER|BROKEN))
-			overlays = null
+			UpdateOverlays(null, "power")
 		else
-			overlays = null
-
 			if(lastgenlev != 0)
-				overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
+			else
+				UpdateOverlays(null, "power")
 
 			switch (lastgenlev)
 				if(0)
@@ -533,6 +656,10 @@
 					light.set_brightness(1.5)
 					light.enable()
 					// this needs a safer lightbust proc
+		if(src.variant_b)
+			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+		else
+			UpdateOverlays(null, "variant")
 
 	process()
 		if(!src.circ1 || !src.circ2)
@@ -813,34 +940,42 @@
 		ui.open()
 
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
-	var/list/data = list()
-	data["output"] = src.lastgen
-	data["history"] = src.history
+	. = list(
+		"output" = src.lastgen,
+		"history" = src.history,
+	)
 	if(src.circ1)
-		data["hotCircStatus"] = src.circ1
-		data["hotInletTemp"] = src.circ1.air1.temperature
-		data["hotOutletTemp"] = src.circ1.air2.temperature
-		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
-		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
+		. += list(
+			"hotCircStatus" = src.circ1,
+			"hotInletTemp" = src.circ1.air1.temperature,
+			"hotOutletTemp" = src.circ1.air2.temperature,
+			"hotInletPres" = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS,
+			"hotOutletPres" = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS,
+		)
 	else
-		data["hotCircStatus"] = null
-		data["hotInletTemp"] = 0
-		data["hotOutletTemp"] = 0
-		data["hotInletPres"] = 0
-		data["hotOutletPres"] = 0
+		. += list(
+			"hotCircStatus" = null,
+			"hotInletTemp" = 0,
+			"hotOutletTemp" = 0,
+			"hotInletPres" = 0,
+			"hotOutletPres" = 0,
+		)
 	if(src.circ2)
-		data["coldCircStatus"] = src.circ2
-		data["coldInletTemp"] = src.circ2.air1.temperature
-		data["coldOutletTemp"] = src.circ2.air2.temperature
-		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
-		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
+		. += list(
+			"coldCircStatus" = src.circ2,
+			"coldInletTemp" = src.circ2.air1.temperature,
+			"coldOutletTemp" = src.circ2.air2.temperature,
+			"coldInletPres" = MIXTURE_PRESSURE(src.circ2.air1) KILO PASCALS,
+			"coldOutletPres" = MIXTURE_PRESSURE(src.circ2.air2) KILO PASCALS,
+		)
 	else
-		data["coldCircStatus"] = null
-		data["coldInletTemp"] = 0
-		data["coldOutletTemp"] = 0
-		data["coldInletPres"] = 0
-		data["coldOutletPres"] = 0
-	return data
+		. += list(
+			"coldCircStatus" = null,
+			"coldInletTemp" = 0,
+			"coldOutletTemp" = 0,
+			"coldInletPres" = 0,
+			"coldOutletPres" = 0,
+		)
 
 /obj/machinery/atmospherics/unary/furnace_connector
 
@@ -1158,7 +1293,7 @@
 #undef PUMP_POWERLEVEL_5
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
-#undef LUBE_CHECK_RATE
+#undef BASE_LUBE_CHECK_RATE
 #undef BACKFLOW_PROTECTION
 #undef LEAKS_GAS
 #undef LEAKS_LUBE

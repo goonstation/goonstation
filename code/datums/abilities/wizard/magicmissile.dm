@@ -34,6 +34,7 @@
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
 					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target \him!</span>")
+					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
 				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target \him!</span>")

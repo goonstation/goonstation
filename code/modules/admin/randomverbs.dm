@@ -675,7 +675,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -1216,6 +1216,26 @@
 	msg += "</span>"
 	boutput(src, msg)
 
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
+
+	msg += "</span>"
+	boutput(src, msg)
+
 /client/proc/debugreward()
 	set background = 1
 	set name = "Debug Rewards"
@@ -1690,6 +1710,7 @@
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
+	newMind.ckey = M.ckey
 	newMind.key = M.key
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
@@ -2634,7 +2655,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
-					W.density = 0
+					W.set_density(0)
 
 				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
 				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")

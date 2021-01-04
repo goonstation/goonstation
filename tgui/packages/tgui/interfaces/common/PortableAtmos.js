@@ -1,6 +1,5 @@
-import { Fragment } from 'inferno';
-import { Box, Section, LabeledList, Button, AnimatedNumber } from '../../components';
-import { PressureBar } from './PressureBar';
+import { Box, Button, LabeledList, RoundGauge, Section } from '../../components';
+import { formatPressure } from '../../format';
 
 export const PortableBasicInfo = props => {
   const {
@@ -16,9 +15,19 @@ export const PortableBasicInfo = props => {
       <LabeledList>
         <LabeledList.Item
           label="Pressure">
-          <AnimatedNumber
-            value={pressure} />
-          {' kPa'}
+          <RoundGauge
+            size={1.75}
+            value={pressure}
+            minValue={0}
+            maxValue={maxPressure}
+            alertAfter={maxPressure * 0.70}
+            ranges={{
+              "good": [0, maxPressure * 0.70],
+              "average": [maxPressure * 0.70, maxPressure * 0.85],
+              "bad": [maxPressure * 0.85, maxPressure],
+            }}
+            format={formatPressure}
+          />
         </LabeledList.Item>
         <LabeledList.Item
           label="Port"
@@ -26,13 +35,6 @@ export const PortableBasicInfo = props => {
           {connected ? 'Connected' : 'Not Connected'}
         </LabeledList.Item>
       </LabeledList>
-      <Box
-        maxWidth="400px"
-        mt={1}>
-        <PressureBar
-          pressure={pressure}
-          maxPressure={maxPressure} />
-      </Box>
       {children}
     </Section>
   );
@@ -48,7 +50,7 @@ export const PortableHoldingTank = props => {
   return (
     <Section
       title="Holding Tank"
-      minHeight="82px"
+      minHeight="115px"
       buttons={(
         <Button
           icon="eject"
@@ -57,27 +59,28 @@ export const PortableHoldingTank = props => {
           onClick={() => onEjectTank()} />
       )}>
       {holding ? (
-        <Fragment>
-          <LabeledList>
-            <LabeledList.Item
-              label="Label">
-              {holding.name}
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Pressure">
-              <AnimatedNumber
-                value={holding.pressure} />
-              {' kPa'}
-            </LabeledList.Item>
-          </LabeledList>
-          <Box
-            maxWidth="400px"
-            mt={1}>
-            <PressureBar
-              pressure={holding.pressure}
-              maxPressure={holding.maxPressure} />
-          </Box>
-        </Fragment>
+        <LabeledList>
+          <LabeledList.Item
+            label="Pressure">
+            <RoundGauge
+              size={1.75}
+              value={holding.pressure}
+              minValue={0}
+              maxValue={holding.maxPressure}
+              alertAfter={holding.maxPressure * 0.70}
+              ranges={{
+                "good": [0, holding.maxPressure * 0.70],
+                "average": [holding.maxPressure * 0.70, holding.maxPressure * 0.85],
+                "bad": [holding.maxPressure * 0.85, holding.maxPressure],
+              }}
+              format={formatPressure}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Label">
+            {holding.name}
+          </LabeledList.Item>
+        </LabeledList>
       ) : (
         <Box
           color="average">

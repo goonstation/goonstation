@@ -64,8 +64,12 @@
 
 // ---- atom/movable signals ----
 
-/// when an AM moves (user, previous_loc, direction)
+/// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
+/// when an AM moves (thing, previous_loc)
+#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
+/// when an AM ends throw (thing, /datum/thrown_thing)
+#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
 
 // ---- item signals ----
 
@@ -123,12 +127,11 @@
 
 #define COMSIG_MOB_DROPPED "mob_drop"
 
-#define COMSIG_MOB_CLICK "mob_click"
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+/// on mouseup
+#define COMSIG_MOUSEUP "mouseup"
 // ---- mob/living signals ----
-/// when start sprinting
-#define COMSIG_LIVING_SPRINT_START "living_sprint_start"
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 
@@ -193,12 +196,6 @@
 // When an obj/critter dies
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
 
-/// general return values //
-// it is a mystery
-
-/// ---- signal specific return values ----
-
-// COMSIG_LIVING_SPRINT_START
-#define RETURN_SPRINT_OVERRIDDEN 0x001000
-// COMSIG_MOB_CLICK
-#define RETURN_CANCEL_CLICK 0x001000
+// ---- fullauto UI thingy signals ----
+#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
+#define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"

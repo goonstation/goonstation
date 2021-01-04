@@ -132,7 +132,7 @@
 		src.overlays += bath_edge
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user)) return
+		if (is_incapacitated(user) || isAI(user)) return
 		if (src.myuser)
 			boutput(user, "<span class='alert'>You pull [src.myuser] out of the bath!</span>")
 			src.eject_user()

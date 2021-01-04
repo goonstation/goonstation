@@ -10,7 +10,7 @@ let defAllowedTags = [
   'br', 'code', 'li', 'p', 'pre',
   'span', 'table', 'td', 'tr', 'i',
   'th', 'ul', 'ol', 'menu', 'font', 'b',
-  'center', 'table', 'tr', 'th', 'hr',
+  'center', 'table', 'tr', 'th', 'hr', 'u',
 ];
 let defForbidAttr = ['class', 'style'];
 

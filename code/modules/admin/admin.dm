@@ -1720,6 +1720,7 @@ var/global/noir = 0
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind(  )
+					mind.ckey = M.ckey
 					mind.key = M.key
 					mind.current = M
 					ticker.minds += mind
@@ -1863,6 +1864,7 @@ var/global/noir = 0
 				var/datum/mind/mind = M.mind
 				if (!mind)
 					mind = new /datum/mind()
+					mind.ckey = M.ckey
 					mind.key = M.key
 					mind.current = M
 					ticker.minds += mind
@@ -1887,6 +1889,17 @@ var/global/noir = 0
 				ticker.mode.Agimmicks += mind
 				F.antagonist_overlay_refresh(1, 0)
 
+		if("makefloorgoblin")
+			if( src.level < LEVEL_PA)
+				alert("You must be at least a Primary Administrator to make someone a floor goblin.")
+				return
+			if(!ticker || !ticker.mode)
+				alert("The game hasn't started yet!")
+				return
+			var/mob/M = locate(href_list["target"])
+			if (!M) return
+			if (alert("Make [M] a floor goblin?", "Make Floor Goblin", "Yes", "No") == "Yes")
+				evilize(M, "floor_goblin")
 
 		if ("remove_traitor")
 			if ( src.level < LEVEL_SA )
@@ -1998,7 +2011,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 						/*	else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 					else
 						var/list/traitor_types = list("Traitor", "Wizard", "Changeling", "Vampire", "Werewolf", "Hunter", "Wrestler", "Grinch", "Omnitraitor", "Spy_Thief")
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
@@ -2013,7 +2026,7 @@ var/global/noir = 0
 							else
 								evilize(M, selection)
 							/*else
-								SPAWN_DBG (0) alert("An error occurred, please try again.")*/
+								SPAWN_DBG(0) alert("An error occurred, please try again.")*/
 			//they're a ghost/hivebotthing/etc
 			else
 				alert("Cannot make this mob a traitor")
@@ -2914,8 +2927,7 @@ var/global/noir = 0
 								setdir = SOUTH
 						if (src.level >= LEVEL_ADMIN)
 							for(var/mob/M in mobs)
-								if(M.client)
-									M.client.dir = setdir
+								M.client?.dir = setdir
 								LAGCHECK(LAG_LOW)
 							message_admins("[key_name(usr)] set station direction to [direction].")
 							logTheThing("admin", src, null, "set station direction to [direction].")
@@ -3024,8 +3036,7 @@ var/global/noir = 0
 								logTheThing("diary", usr, null, "used the Emag Everything secret.", "admin")
 								//DO IT!
 								for(var/atom/A as mob|obj in world)
-									if(A)
-										A.emag_act(null,null)
+									A?.emag_act(null,null)
 									LAGCHECK(LAG_LOW)
 								message_admins("[key_name(usr)] has emagged everything!")
 							else
@@ -4487,6 +4498,11 @@ var/global/noir = 0
 				M.mind.special_role = "grinch"
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become a grinch!</B></font></h2>", "red")
+			if("floor_goblin")
+				M.mind.special_role = "floor_goblin"
+				M.make_floor_goblin()
+				SHOW_TRAITOR_HARDMODE_TIPS(M)
+				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if("gang leader")
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -4590,7 +4606,7 @@ var/global/noir = 0
 	return chosen
 
 /proc/get_matches(var/object, var/base = /atom)
-	var/list/types = typesof(base)
+	var/list/types = concrete_typesof(base)
 
 	var/list/matches = new()
 

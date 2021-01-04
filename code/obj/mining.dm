@@ -746,7 +746,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
@@ -757,7 +757,7 @@
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (src) src.pull_new_source()
 
 		else if (href_list["override_cooldown"])
@@ -803,7 +803,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 2 SECONDS))
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
@@ -1889,9 +1889,10 @@ obj/item/clothing/gloves/concussive
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
-		//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
+			var/holder = src.loc
+			//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
 			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
-			if(!selection)
+			if (src.loc != holder || !selection)
 				return
 			var/turf/T = get_turf(selection)
 			//get the turf of the pad itself
@@ -1930,7 +1931,7 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 			// And these too (Convair880).
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
@@ -1992,7 +1993,7 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)

@@ -588,6 +588,12 @@
 		name = "electrified super high-security mk. X-22 edition chain-link fence"
 		desc = "Whoa."
 
+		ex_act(severity)
+			return
+
+		meteorhit(obj/meteor)
+			return
+
 /obj/effects/background_objects
 	icon = 'icons/misc/512x512.dmi'
 	icon_state = "moon-dark"

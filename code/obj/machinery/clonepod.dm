@@ -94,8 +94,7 @@
 		if(connected?.scanner?.pods)
 			connected?.scanner?.pods -= src
 		connected = null
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -295,6 +294,7 @@
 		else //welp
 			logTheThing("debug", null, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
+			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
@@ -808,8 +808,7 @@
 			src.find_pods()
 
 	disposing()
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 

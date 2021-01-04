@@ -267,7 +267,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -549,8 +549,7 @@
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
 	req_access = list(access_mining)
-	spawn_contents = list(/obj/item/clothing/shoes/orange,
-	/obj/item/storage/box/clothing/miner,
+	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/breaching_charge/mining/light = 3,
 	/obj/item/satchel/mining = 2,

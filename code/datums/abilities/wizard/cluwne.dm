@@ -33,6 +33,7 @@
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
 				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+				JOB_XP(H, "Chaplain", 2)
 				return
 
 			if (iswizard(H))
@@ -64,7 +65,7 @@
 				H.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(H), H.slot_wear_mask)
 				H.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(H), H.slot_gloves)
 				H.real_name = "cluwne"
-				SPAWN_DBG (25) // Don't remove.
+				SPAWN_DBG(2.5 SECONDS) // Don't remove.
 					if (H) H.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 			else
 				boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")

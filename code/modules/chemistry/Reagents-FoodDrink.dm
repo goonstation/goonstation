@@ -585,8 +585,7 @@ datum
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
 									H.equip_if_possible(E,H.slot_glasses)
-						H.set_face_icon_dirty()
-						H.set_body_icon_dirty()
+					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
 
@@ -3055,12 +3054,23 @@ datum
 			fluid_r = 235
 			fluid_g = 0
 			fluid_b = 0
-			description = "The juice from a thousand screaming cherries.  Silent screams."
+			description = "The juice from a thousand screaming cherries. Silent screams."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_pinapple
+		fooddrink/juice_raspberry
+			name = "raspberry juice"
+			id = "juice_raspberry"
+			fluid_r = 101
+			fluid_g = 216
+			fluid_b = 230
+			description = "What do you mean? Rapsberries have always been this shade of blue."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_pineapple
 			name = "pineapple juice"
 			id = "juice_pineapple"
 			fluid_r = 255
@@ -3069,6 +3079,17 @@ datum
 			description = "Juice from a pineapple. A surprise, considering the name!"
 			reagent_state = LIQUID
 			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_watermelon
+			name = "watermelon juice"
+			id = "juice_watermelon"
+			fluid_r = 238
+			fluid_g = 93
+			fluid_b = 121
+			description = "A delicious summer drink!"
+			reagent_state = LIQUID
+			thirst_value = 2
 			bladder_value = -1.5
 
 		fooddrink/juice_apple

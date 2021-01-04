@@ -919,8 +919,7 @@ datum/projectile/snowball
 	P.power = DATA.power
 
 	P.proj_data = DATA
-	if(!isnull(alter_proj))
-		alter_proj.Invoke(P)
+	alter_proj?.Invoke(P)
 
 
 	if(P.proj_data == DATA)

@@ -86,6 +86,7 @@
 			src.owner.set_loc(src)
 			if (!src.owner.mind)
 				src.owner.mind = new /datum/mind(  )
+				src.owner.mind.ckey = ckey
 				src.owner.mind.key = src.owner.key
 				src.owner.mind.current = src.owner
 				ticker.minds += src.owner.mind

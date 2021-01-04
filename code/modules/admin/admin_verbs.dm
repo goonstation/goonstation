@@ -19,6 +19,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
+		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/dsay,
@@ -266,6 +267,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
+		/client/proc/respawn_heavenly,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -607,8 +609,7 @@ var/list/special_pa_observing_verbs = list(
 
 	blink(get_turf(src.mob))
 	if(!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
-		if(src.mob.mind)
-			src.mob.mind.damned = 0
+		src.mob.mind?.damned = 0
 		src.mob.ghostize()
 		boutput(src, "<span class='notice'>You are now observing</span>")
 	else
@@ -665,8 +666,7 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if(src.holder)
-		src.holder.Topic(null, list("action"="jobbanpanel","target"=key))
+	src.holder?.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
@@ -882,6 +882,19 @@ var/list/fun_images = list()
 	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
 	return
 
+/client/proc/respawn_heavenly()
+	set name = "Respawn Heavenly"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set desc = "Respawn yourself from the heavens"
+	set popup_menu = 0
+	admin_only
+
+	src.respawn_as_self()
+
+	var/mob/M = src.mob
+	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	heavenly_spawn(M)
+
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
 	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
@@ -902,6 +915,7 @@ var/list/fun_images = list()
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
@@ -931,6 +945,7 @@ var/list/fun_images = list()
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
@@ -948,12 +963,12 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	if (!ticker)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("Wait until the game starts.")
 		return
 
 	if (istype(M, /mob/new_player) || istype(M, /mob/dead/target_observer)/* || istype(M, /mob/living/intangible/aicamera)*/)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			alert("You can't humanize new_player mobs or target observers.")
 		return
 
@@ -1803,7 +1818,7 @@ var/list/fun_images = list()
 			H.implant.Add(MB)
 			MB.implanted(H, 0)
 			implanted ++
-		SPAWN_DBG (30)
+		SPAWN_DBG(3 SECONDS)
 			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
 	else
 		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")

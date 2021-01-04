@@ -1055,8 +1055,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 0.5
-	slowdown_time = 3
+	slowdown = 5
+	slowdown_time = 10
 
 	two_handed = 1
 	w_class = 4
@@ -1064,13 +1064,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		ammo = new/obj/item/ammo/bullets/lmg
 		current_projectile = new/datum/projectile/bullet/lmg
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
 		..()
 
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.5)
 
+	fullautotestgun
+		slowdown = 0
+		slowdown_time = 0
+		New()
+			..()
+			AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+			current_projectile.shot_number = 1
+			current_projectile.cost = 1
+			ammo.amount_left = 500
 
 /obj/item/gun/kinetic/cannon
 	name = "M20-CV tactical cannon"

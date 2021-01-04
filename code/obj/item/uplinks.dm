@@ -35,7 +35,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
 				src.setup()
 
@@ -284,7 +284,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return 0
 
 #define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+#define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
 		if (src.uses < 0)
@@ -369,7 +369,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				if (src)
 					src.explode()
 
@@ -524,7 +524,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (src.vr_check(usr) != 1)
 			usr.show_text("This uplink only works in virtual reality.", "red")
@@ -820,7 +820,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		src.generate_menu()
@@ -1225,7 +1225,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

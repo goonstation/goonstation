@@ -142,11 +142,9 @@
 	vp.clickToMove = 1
 	vp.SetViewport(startPos, 8, 8)
 /mob/living/intangible/blob_overmind/death()
-	if(src.client)
-		src.client.clearViewportsByType("Blob: Viewport")
+	src.client?.clearViewportsByType("Blob: Viewport")
 	.=..()
 
 /mob/living/silicon/ai/death(gibbed)
-	if(src.client)
-		src.client.clearViewportsByType("AI: Viewport")
+	src.client?.clearViewportsByType("AI: Viewport")
 	.=..()

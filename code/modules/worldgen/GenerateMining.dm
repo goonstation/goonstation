@@ -543,6 +543,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
+#ifdef SUBMARINE_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -551,6 +552,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
+#endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	elevator
@@ -721,6 +723,14 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
 		prefabSizeX = 34
 		prefabSizeY = 19
+
+	danktrench //the marijuana trench
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_danktrench.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 9
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner
