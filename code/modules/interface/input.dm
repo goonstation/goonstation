@@ -297,16 +297,19 @@ var/list/dirty_keystates = list()
 		// stub
 
 	proc/recheck_keys()
-		if (src.client) keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+		if (src.client)
+			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
-	// returns 1 if it schedules a move
+	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)
-		var/delay = src.process_move(keys)
-		if (isnull(delay))
-			return
+		. = FALSE
+		if (keys)
+			var/delay = src.process_move(keys)
+			if (isnull(delay))
+				return FALSE
 
-		if (client) // should prevent stuck directions when reconnecting
-			return 1
+			if (client) // should prevent stuck directions when reconnecting
+				. = TRUE
 
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
@@ -337,7 +340,8 @@ var/list/dirty_keystates = list()
 			process_keystates()
 
 			for(var/client/C as() in clients) // as() is ok here since we nullcheck
-				C?.mob?.internal_process_move(C.key_state)
+				if (C?.key_state) // if they have any input
+					C.mob?.internal_process_move(C.key_state)
 
 			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
 				if (ai?.move_target)

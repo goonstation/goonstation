@@ -80,8 +80,7 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		if (keys)
-			src.stop_observing()
+		src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
