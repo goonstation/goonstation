@@ -293,9 +293,6 @@ var/list/dirty_keystates = list()
 		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
 		// stub
 
-	proc/process_move(keys)
-		// stub
-
 	proc/recheck_keys()
 		if (src.client)
 			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
@@ -303,13 +300,12 @@ var/list/dirty_keystates = list()
 	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)
 		. = FALSE
-		if (keys)
-			var/delay = src.process_move(keys)
-			if (isnull(delay))
-				return FALSE
+		var/delay = src.process_move(keys)
+		if (isnull(delay))
+			return FALSE
 
-			if (client) // should prevent stuck directions when reconnecting
-				. = TRUE
+		if (client) // should prevent stuck directions when reconnecting
+			. = TRUE
 
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
@@ -340,8 +336,7 @@ var/list/dirty_keystates = list()
 			process_keystates()
 
 			for(var/client/C as() in clients) // as() is ok here since we nullcheck
-				if (C?.key_state) // if they have any input
-					C.mob?.internal_process_move(C.key_state)
+				C?.mob?.internal_process_move(C.key_state)
 
 			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
 				if (ai?.move_target)

@@ -84,7 +84,7 @@
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
-			return
+			return FALSE
 
 		if (next_move > world.time)
 			return next_move - world.time
@@ -98,7 +98,7 @@
 
 				//We're on autopilot before the warp, NO FUCKING IT UP!
 				if (owner.engine.warp_autopilot)
-					return 0
+					return FALSE
 
 				if (owner.rcs && input_x == 0 && input_y == 0)
 					braking = 1
