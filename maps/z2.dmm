@@ -67789,7 +67789,8 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhQ" = (
-/obj/machinery/bot/medbot/no_camera,
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhR" = (
@@ -83944,6 +83945,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"kJE" = (
+/obj/machinery/bot/medbot/no_camera,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola{
@@ -113476,7 +113481,7 @@ aKf
 dhr
 dhE
 dhQ
-dgx
+kJE
 pNn
 aKf
 cfO
