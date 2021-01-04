@@ -1245,8 +1245,6 @@ datum
 						M.change_eye_blurry(10, 10)
 					if (10 to 18)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (19 to 70) // Capped at ~2 minutes, that is 70 cycles + 10 weakened (normally wears off at one per cycle).
-						M.changeStatus("weakened", 30 * mult)
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
