@@ -353,7 +353,7 @@
 		station_bounties += list(list(/obj/item/clothing/shoes/flippers, 1))
 		station_bounties += list(list(/obj/item/clothing/head/apprentice, 1))
 		station_bounties += list(list(/obj/item/clothing/head/helmet/space/santahat, 1))
-		station_bounties += list(list(/obj/item/clothing/head/beret/prisoner, 1))
+		station_bounties += list(list(/obj/item/clothing/head/beret/prisoner, 2))
 		station_bounties += list(list(/obj/item/clothing/head/merchant_hat, 1))
 		station_bounties += list(list(/obj/item/clothing/head/caphat, 2))
 		station_bounties += list(list(/obj/item/clothing/head/helmet/HoS, 3))
@@ -390,6 +390,7 @@
 		station_bounties += list(list(/obj/item/hand_tele, 3))
 		station_bounties += list(list(/obj/item/card/id/captains_spare, 3))
 		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 2))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/champagne, 2))
 		station_bounties += list(list(/obj/item/captaingun, 3))
 		station_bounties += list(list(/obj/item/gun/kinetic/detectiverevolver, 3))
 		station_bounties += list(list(/obj/item/gun/kinetic/riot40mm, 2))
@@ -415,7 +416,7 @@
 		station_bounties += list(list(/obj/item/reagent_containers/food, 1))
 
 		station_bounties += list(list(/obj/item/reagent_containers/glass/wateringcan, 1))
-		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/rum_spaced, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/rum_spaced, 2))
 		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/vintage, 1))
 
 		station_bounties += list(list(/obj/item/storage/belt/medical, 1))
@@ -440,7 +441,7 @@
 		big_station_bounties += list(list(/obj/machinery/computer/aiupload, 3))
 		big_station_bounties += list(list(/obj/machinery/computer/genetics, 2))
 		big_station_bounties += list(list(/obj/machinery/computer/supplycomp, 1))
-		big_station_bounties += list(list(/obj/machinery/computer/robotics, 1))
+		big_station_bounties += list(list(/obj/machinery/computer/robotics, 2))
 		big_station_bounties += list(list(/obj/machinery/power/reactor_stats, 1))
 
 		big_station_bounties += list(list(/obj/machinery/computer3/generic/communications, 1))
@@ -454,14 +455,14 @@
 		big_station_bounties += list(list(/obj/machinery/port_a_brig, 3))
 		big_station_bounties += list(list(/obj/machinery/flasher/portable, 2))
 		big_station_bounties += list(list(/obj/machinery/sleeper/port_a_medbay, 1))
-		big_station_bounties += list(list(/obj/machinery/atmospherics/unary/cryo_cell, 1))
-		big_station_bounties += list(list(/obj/machinery/computer/cloning, 1))
-		big_station_bounties += list(list(/obj/machinery/clonepod, 1))
+		big_station_bounties += list(list(/obj/machinery/atmospherics/unary/cryo_cell, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/cloning, 2))
+		big_station_bounties += list(list(/obj/machinery/clonepod, 2))
 		big_station_bounties += list(list(/obj/machinery/clonegrinder, 1))
 		big_station_bounties += list(list(/obj/machinery/genetics_scanner, 2))
 		//big_station_bounties += /obj/machinery/power/smes
 		big_station_bounties += list(list(/obj/machinery/recharge_station, 1))
-		big_station_bounties += list(list(/obj/machinery/optable, 1))
+		big_station_bounties += list(list(/obj/machinery/optable, 2))
 		big_station_bounties += list(list(/obj/storage/closet/port_a_sci, 2))
 
 		big_station_bounties += list(list(/obj/machinery/manufacturer/robotics, 1))
