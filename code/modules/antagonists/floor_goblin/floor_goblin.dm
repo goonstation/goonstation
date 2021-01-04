@@ -82,9 +82,16 @@
 	desc = "Trip a target by biting at their ankles."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "clown_spider_bite"
-	cooldown = 10 SECONDS
+	cooldown = 20 SECONDS
 	targeted = 1
 	target_anything = 1
+
+	tryCast()
+		if (isunconscious(holder.owner) || holder.owner.hasStatus("weakened"))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		return ..()
 
 	cast(atom/target)
 		if(..())
@@ -108,7 +115,7 @@
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			APPLY_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
 			SPAWN_DBG(0.4 SECONDS)
-				if(holder.owner && target_human)
+				if(holder.owner && target_human && IN_RANGE(holder.owner, target, 1))
 					playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
@@ -135,6 +142,14 @@
 	targeted = 1
 	target_anything = 1
 
+
+	tryCast()
+		if (isunconscious(holder.owner) || holder.owner.hasStatus("weakened"))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		return ..()
+
 	cast(atom/target)
 		if(..())
 			return 1
@@ -143,6 +158,12 @@
 		if(!IN_RANGE(holder.owner, target, 1))
 			boutput(holder.owner, __red("Target is too far away."))
 			return 1
+
+		var/mob/living/carbon/human/H = target
+		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
+		if(!shoes)
+			boutput(holder.owner, "<span class='alert'>[target] has no shoes!</span>")
+			return
 
 		var/mob/living/carbon/human/target_human = target
 		var/turf/floorturf = get_turf(holder.owner)
@@ -180,7 +201,6 @@
 	onStart()
 		var/obj/item/shoes = target.get_slot(SLOT_SHOES)
 		if(!shoes)
-			boutput(source, "<span class='alert'>[target] has no shoes!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!isturf(target.loc))
