@@ -1,4 +1,9 @@
+
 (t)mon jan 04 21
+(u)BenLubar
+(p)3178
+(e)⚖|balance
+(*)Alerts can now be muted on the PDA's messaging app groups screen. The AI can now mute incoming PDA messages, and does not auto-join custom groups.
 (u)Ursulamejor
 (e)🆕|feature
 (*)Four new chicken breeds, our first four truly secret chickens. See Minor Changes for hints.
