@@ -56,9 +56,11 @@
 		. = ..()
 		for(var/x in 1 to (istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
 			for(var/y in 1 to 15)
+				var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
+				FH.mouse_over_pointer = icon(cursors_selection[user.client.preferences.target_cursor], "all")
+				if((y >= 7 && y <= 9) && (x >= ((istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
+					continue
 				user.client.screen += hudSquares["[x],[y]"]
-		user.targeting_ability = 1
-		user.update_cursor()
 		stopping = 0
 
 	on_dropped(datum/source, mob/user)
@@ -66,8 +68,6 @@
 		for(var/x in 1 to (istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
 			for(var/y in 1 to 15)
 				user.client.screen -= hudSquares["[x],[y]"]
-		user.targeting_ability = 0
-		user.update_cursor()
 		. = ..()
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
@@ -76,6 +76,10 @@
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
+		for(var/x in ((istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(user.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				user.client.screen += hudSquares["[x],[y]"]
+
 		src.shootloop(user)
 
 /datum/component/holdertargeting/fullauto/proc/moveRetarget(mob/M, newLoc, direct)
@@ -91,7 +95,7 @@
 							M.y + (F.yOffset + -1 - 7),\
 							M.z)
 
-		if(T)
+		if(T && T != get_turf(parent))
 			src.target = T
 
 /datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
@@ -113,8 +117,12 @@
 	UnregisterSignal(L, COMSIG_FULLAUTO_MOUSEDRAG)
 	UnregisterSignal(L, COMSIG_MOUSEUP)
 	UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
+
+	for(var/x in ((istext(L.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(L.client.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+		for(var/y in 7 to 9)
+			L.client.screen -= hudSquares["[x],[y]"]
 	stopping = 0
 	shooting = 0
 
-/datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/L)
+/datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/user)
 	stopping = 1
