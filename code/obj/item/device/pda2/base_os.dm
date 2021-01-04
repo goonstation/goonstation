@@ -298,9 +298,11 @@
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[mailgrp]'>Block</a>"
-							var/leaveButton = "<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgrp]'>Leave Group</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
-							var/msgButton = "<a href='byond://?src=\ref[src]input=message;target=[mailgrp];department=1'>Message</a>"
+							var/leaveButton = "<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgrp]'>Leave</a>"
+							var/sendButton = ""
+							if(!src.clipboard?.dont_copy && src.master.fileshare_program)
+								sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>File</a>"
+							var/msgButton = "<a href='byond://?src=\ref[src]input=message;target=[mailgrp];department=1'>Mail</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
 								rt = src.master.mailgroup_ringtones[mailgrp]
 								rtButton = "[rt.name]"
@@ -308,7 +310,7 @@
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[mailgrp]'>Unblock</a>"
 							if(mailgrp in src.master.reserved_mailgroups)
 								leaveButton = ""
-							. += "<tr><td>[mailgrp]</td><td>[rtButton]</td><td></td>[msgButton]<td>[sendButton]</td><td>[muteButton]</td><td>[leaveButton]</td></tr>"
+							. += "<tr><td>[mailgrp]</td><td>[rtButton]</td><td>[msgButton]</td><td>[sendButton]</td><td>[muteButton]</td><td>[leaveButton]</td></tr>"
 						. += "</table>"
 						. += "<hr><br>"
 						. += "<h4>Alert Settings</h4>"
@@ -906,6 +908,15 @@
 
 					if(signal.data_file.copy_file_to_folder(src.holding_folder))
 						src.message_note += "<b><i>File Accepted from [messageFrom]</b></i><br>"
+
+					if(signal.data["tag"] == "auto_fileshare")
+						var/alert_beep = null //Same as with messages
+						if(!src.message_silent)
+							alert_beep = src.message_tone
+						src.master.display_alert(alert_beep, null, signal.data["tag"], null, null)
+						var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[sender]]'>[messageFrom]</a>"
+						displayMessage += ":</b></i> [signal.data_file.name] received from [messageFrom]."
+						src.master.display_message(displayMessage)
 					return
 
 				if("report_reply")
@@ -985,24 +996,26 @@
 			if(!(target_id in src.detected_pdas) && !group)
 				return
 
-			if(!src.message_on || !src.clipboard || !(src.clipboard.holder in src.master))
+			var/datum/computer/file/clipfile = file ? file : src.clipboard
+
+			if(!src.message_on || !clipfile || !(clipfile.holder in src.master))
 				return
 
 			if(group) // obvs we want to send this file to a bunch of people
-				src.HostFile(src.clipboard, null, group, null)
+				src.HostFile(clipfile, null, group, null)
 				return
 
 			var/datum/signal/signal = get_free_signal()
 			if(just_send_it)
-				signal.data_file = file ? file.copy_file() : src.clipboard.copy_file()
+				signal.data_file = clipfile.copy_file()
 				signal.data["tag"] = "auto_fileshare"
 			else
 				src.message_note += "<i><b>&rarr; File Send Request to [target_name]</b></i><br>"
 				src.target_filereq_id = target_id
 			signal.data["command"] = just_send_it ? "file_send" : "file_send_req"
-			signal.data["file_name"] = src.clipboard.name
-			signal.data["file_ext"] = src.clipboard.extension
-			signal.data["file_size"] = src.clipboard.size
+			signal.data["file_name"] = clipfile.name
+			signal.data["file_ext"] = clipfile.extension
+			signal.data["file_size"] = clipfile.size
 			signal.data["sender_name"] = src.master.owner
 			signal.data["sender_assignment"] = src.master.ownerAssignment
 			signal.data["address_1"] = target_id

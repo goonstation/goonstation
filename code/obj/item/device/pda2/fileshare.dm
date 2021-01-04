@@ -13,6 +13,8 @@
 	return_text()
 		. = src.return_text_header()
 		. += " | <a href='byond://?src=\ref[src];add_host=1'>Host</a>"
+		if(!src.master.fileshare_program)
+			. += " | <a href='byond://?src=\ref[src];install=1'>Install</a>"
 		. += " | <a href='byond://?src=\ref[src];readme=1'>Help</a><br>"
 		. += "<h4>[src.name]</h4><hr>"
 
@@ -51,7 +53,7 @@
 				. += "<h4>Select a File</h4><br>"
 				. += "<table cellspacing=5>"
 				for(var/datum/computer/file/mainfile in masterOS.browse_folder.contents)
-					if(mainfile == masterOS)
+					if(mainfile == masterOS || mainfile.dont_copy)
 						continue
 					src.file_list[mainfile.name] = mainfile
 					. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[mainfile.name]'>[mainfile.name]</a></td>
@@ -67,7 +69,7 @@
 
 				if (other_drive_folder)
 					for(var/datum/computer/file/morefile in other_drive_folder.contents)
-						if(morefile == masterOS)
+						if(morefile == masterOS || morefile.dont_copy)
 							continue
 						src.file_list[morefile.name] = morefile
 						. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[morefile.name]'>[morefile.name]</a></td>
@@ -98,6 +100,15 @@
 
 		if (href_list["unhost"])
 			src.master.host_program.hosted_files -= href_list["unhost"]
+
+		if (href_list["install"])
+			src.master.fileshare_program = src
+			var/alert_beep = null
+			if(!src.master.host_program.message_silent)
+				alert_beep = src.master.host_program.message_tone
+			src.master.display_alert(alert_beep)
+			var/displayMessage = "[bicon(master)] SpaceWire's SpaceMessenger Groupchat integration complete! You can now share files with your mailgroups."
+			src.master.display_message(displayMessage)
 
 		if (href_list["change_passkey"])
 			if(src.master.host_program.hosted_files[href_list["change_passkey"]])

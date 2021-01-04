@@ -292,11 +292,6 @@
 			if (scan && istype(scan))
 				src.scan_program = scan
 
-		if (src.cartridge)
-			var/datum/computer/file/pda_program/fileshare/share = locate() in src.cartridge.root.contents
-			if (share && istype(share))
-				src.fileshare_program = share
-
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
 		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
