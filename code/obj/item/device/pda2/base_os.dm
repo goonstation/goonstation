@@ -1,3 +1,13 @@
+#define RECENT_CALL_COOLDOWN (1 MINUTE)
+#define MODE_MAINMENU 0
+#define MODE_NOTE 1
+#define MODE_MESSAGE 2
+#define MODE_FILEBROWSER 3
+#define MODE_ATMOS 4
+#define MODE_GROUPS 5
+#define MODE_ADDRESSBOOK 6
+#define MODE_MODULECONFIG 999
+
 /datum/computer/file/pda_program/os
 	proc
 		receive_os_command(list/command_list)
@@ -40,8 +50,19 @@
 		//File browser vars
 		var/datum/computer/folder/browse_folder = null
 		var/datum/computer/file/clipboard = null //Current file to copy
+		/// Files we're hosting. Assoc'd list, (passkey = filedatum)
+		var/list/hosted_files = list()
 		var/list/cooldowns = list()
-
+		/// List of messengers we've heard from. Assoc'd list, (address_1 = sendername)
+		var/list/all_callers = list()
+		/// List of recent callers, so you get the long sound for the first message, and a shorter one for that same person after that
+		var/list/recent_callers = list()
+		/// List of messengers we don't want to hear from anymore -- set by name, not address_1!
+		var/list/blocked_numbers = list()
+		/// List of mailgroups we don't want to hear from anymore
+		var/muted_mailgroups = list()
+		/// List of alerts we don't want to get anymore
+		var/muted_alerts = list()
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -72,39 +93,36 @@
 			. = src.return_text_header()
 
 			switch(src.mode)
-				if(0)
+				if(MODE_MAINMENU)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
 					Owner: [src.master.owner]<br>
 
 					<h4>General Functions</h4>
 					<ul>
-					<li><a href='byond://?src=\ref[src];mode=1'>Notekeeper</a></li>
-					<li><a href='byond://?src=\ref[src];mode=2'>Messenger</a></li>
-					<li><a href='byond://?src=\ref[src];mode=3'>File Browser</a></li>
+					<li><a href='byond://?src=\ref[src];mode=[MODE_NOTE]'>Notekeeper</a></li>
+					<li><a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Messenger</a></li>
+					<li><a href='byond://?src=\ref[src];mode=[MODE_FILEBROWSER]'>File Browser</a></li>
 					</ul>
 
 					<h4>Utilities</h4>
 					<ul>
 					<li><a href='byond://?src=\ref[src];change_backlight_color=1'>Change Backlight Color</a></li>
-					<li><a href='byond://?src=\ref[src];mode=4'>Atmospheric Scan</a></li>
+					<li><a href='byond://?src=\ref[src];mode=[MODE_ATMOS]'>Atmospheric Scan</a></li>
 					<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"}
 #ifdef UNDERWATER_MAP
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
 #else
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Mining Map</a></li>"
 #endif
-//					. += "<li><a href='byond://?src=\ref[src];flight=1'>[src.master.fon ? "Disable" : "Enable"] Flashlight</a></li>"
 
 					if(src.master.module)
 						if(src.master.module.setup_allow_os_config)
-							. += "<li><a href='byond://?src=\ref[src];mode=5'>Module Config</a></li>"
+							. += "<li><a href='byond://?src=\ref[src];mode=[MODE_MODULECONFIG]'>Module Config</a></li>"
 
 						if(src.master.module.setup_use_menu_badge)
 							. += "<li>[src.master.module.return_menu_badge()]</li>"
 
-					. += "</ul>"
-
-				if(1)
+				if(MODE_NOTE)
 					//Note Program.  Can save/load note files.
 					. += "<h4>Notekeeper V2.5</h4>"
 
@@ -134,7 +152,7 @@
 
 						. += "</table>"
 
-				if(2)
+				if(MODE_MESSAGE)
 					//Messenger.  Uses Radio.  Is a messenger.
 					// src.master.overlays = null //Remove existing alerts
 					src.master.update_overlay("idle") //Remove existing alerts
@@ -146,8 +164,8 @@
 						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
 						<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>
 						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
-						<a href='byond://?src=\ref[src];message_mode=2'>Groups</a> |
-						<a href='byond://?src=\ref[src];mode=5'>Ringtones</a><br>
+						<a href='byond://?src=\ref[src];mode=[MODE_GROUPS]'>Groups</a> |
+						<a href='byond://?src=\ref[src];mode=[MODE_ADDRESSBOOK]'>Address Book</a><br>
 
 						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
 						<b>Detected PDAs</b><br>"}
@@ -199,27 +217,7 @@
 						. += src.message_note
 						. += "<br>"
 
-					else
-						. += {"<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a> |
-						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
-						<h4>Groups</h4>"}
-
-						var/myReservedGroups = ""
-						var/myCustomGroups = ""
-
-						for (var/mailgroup in src.master.mailgroups)
-							if (mailgroup in src.master.reserved_mailgroups)
-								myReservedGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
-								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
-							else
-								myCustomGroups += {"<a href='byond://?src=\ref[src];input=message;target=[mailgroup];department=1'>[mailgroup]</a>
-								 (<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgroup]'>*Leave Group*</a>)
-								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
-
-						. += myReservedGroups
-						. += myCustomGroups
-
-				if(3)
+				if(MODE_FILEBROWSER)
 					//File Browser.
 					//To-do(?): Setting "favorite" programs to access straight from main menu
 					//Not sure how needed it is, not like they have to go through 500 subfolders or whatever
@@ -277,7 +275,7 @@
 							</tr>"}
 						. += "</table>"
 
-				if(4)
+				if(MODE_ATMOS)
 					//Atmos Scanner
 					. += "<h4>Atmospheric Readings</h4>"
 
@@ -289,35 +287,70 @@
 
 					. += "<br>"
 
-				if(5) // ringtones
-					. += "<h4>LoudBlaster v1.01b Auditory Alert System</h4><br>"
-					. += "<hr><br>"
-					. += "<b>Primary Ringtone</b>"
-					. += "<table cellspacing=5>"
-					. += "<tr><td>[src.master.r_tone ? "[src.master.r_tone.name]</td><td><a href='byond://?src=\ref[src];delTone=1'>Reset</a></td></tr>" : "</td><td>-ERR-</td></tr>"]"
-					. += "</table>"
-					var/has_alert_set
-					for(var/alert in src.master.alert_ringtones)
-						if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
-							var/datum/ringtone/rt = src.master.alert_ringtones[alert]
-							if(!has_alert_set)
-								has_alert_set = 1
-								. += "<hr><br>"
-								. += "<b>Alert Ringtones</b>"
-								. += "<table cellspacing=5>"
-							. += "<tr><td>[alert]</td><td>[rt.name]:</td><td><a href='byond://?src=\ref[src];delATone=[alert]'>Reset</a></td></tr>"
-					if(has_alert_set)
-						. += "</table>"
+				if(MODE_GROUPS) // Groups and alerts and their ringtones
 					if(length(src.master.mailgroups))
-						. += "<hr><br>"
-						. += "<b>Mailgroup Ringtones</b>"
+						. += "<h4>SpaceMessenger V4.0.5</h4>"
+						. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
+						. += "<h4>Mailgroups</h4><br>"
+						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a>"
 						. += "<table cellspacing=5>"
 						for(var/mailgrp in src.master.mailgroups)
 							var/datum/ringtone/rt = null
+							var/rtButton = "Default"
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[mailgrp]'>Block</a>"
+							var/leaveButton = "<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgrp]'>Leave Group</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
+							var/msgButton = "<a href='byond://?src=\ref[src]input=message;target=[mailgrp];department=1'>Message</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
 								rt = src.master.mailgroup_ringtones[mailgrp]
-							. += "<tr><td>[mailgrp]:</td><td>[rt ? "[rt.name]</td><td><a href='byond://?src=\ref[src];delMGTone=[mailgrp]'>Reset</a></td></tr>" : "</td><td>Default</td></tr>"]"
+								rtButton = "[rt.name]"
+							if(mailgrp in src.muted_mailgroups)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[mailgrp]'>Unblock</a>"
+							if(mailgrp in src.master.reserved_mailgroups)
+								leaveButton = ""
+							. += "<tr><td>[mailgrp]</td><td>[rtButton]</td><td></td>[msgButton]<td>[sendButton]</td><td>[muteButton]</td><td>[leaveButton]</td></tr>"
 						. += "</table>"
+						. += "<hr><br>"
+						. += "<h4>Alert Settings</h4>"
+						. += "<table cellspacing=5>"
+						for(var/alert in src.master.pda_alert_tags)
+							var/datum/ringtone/rt = null
+							var/rtButton = "Default"
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["alert"];entry=[alert]'>Mute</a>"
+							if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
+								rt = src.master.alert_ringtones[alert]
+								rtButton = "[rt.name]"
+							if(alert in src.muted_alerts)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["alert"];entry=[alert]'>Unblock</a>"
+							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
+
+				if(MODE_ADDRESSBOOK) // Specific names sent to us, also ringtones
+					. += "<h4>SpaceMessenger V4.0.5</h4>"
+					. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
+					. += "<h4>Address Book</h4><br>"
+					if(length(src.all_callers) < 1)
+						. += "Address book is empty!"
+					else
+						. += "<table cellspacing=5>"
+						for(var/caller in src.all_callers)
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[caller]]'>Block</a>"
+							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[caller]'>Msg</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send</a>"
+							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[caller]'>Del</a>"
+							if(caller in src.blocked_numbers)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[caller]]'>Unblock</a>"
+							. += "<tr><td>[src.all_callers[caller]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
+						. += "</table>"
+					. += "<hr>"
+					. += "<h4>Primary Ringtone</h4><br>"
+					. += "<table cellspacing=5>"
+					. += "<tr><td>[src.master.r_tone ? "[src.master.r_tone.name]</td><td><a href='byond://?src=\ref[src];delTone=1'>Reset</a></td></tr>" : "</td><td>-ERR-</td></tr>"]"
+					. += "</table>"
+
+
+				if(MODE_MODULECONFIG) // Nothing seems to use this, but just in case
+					. += "<h4>Module Configuration</h4><br>"
+					. += "ERROR: No error."
 
 		Topic(href, href_list)
 			if(..())
@@ -339,8 +372,26 @@
 				qdel(src.master.mailgroup_ringtones[href_list["delMGTone"]])
 				src.master.mailgroup_ringtones[href_list["delMGTone"]] = null
 
-//			else if(href_list["flight"])
-//				src.master.toggle_light()
+			else if(href_list["manageBlock"])
+				switch(href_list["type"])
+					if("alert")
+						if(href_list["manageBlock"] == "add")
+							src.muted_alerts += href_list["entry"]
+						if(href_list["manageBlock"] == "remove")
+							src.muted_alerts -= href_list["entry"]
+					if("mailgroup")
+						if(href_list["manageBlock"] == "add")
+							src.muted_mailgroups += href_list["entry"]
+						if(href_list["manageBlock"] == "remove")
+							src.muted_mailgroups -= href_list["entry"]
+					if("single")
+						if(href_list["manageBlock"] == "add")
+							src.blocked_numbers += href_list["entry"]
+						if(href_list["manageBlock"] == "remove")
+							src.blocked_numbers -= href_list["entry"]
+
+			else if(href_list["delAddress"])
+				src.all_callers -= href_list["delAddress"]
 
 			else if(href_list["scanner"])
 				if(src.master.scan_program)
@@ -480,7 +531,11 @@
 						if(!is_department_page && !(target_id in src.detected_pdas))
 							return
 
-						var/t = input(usr, "Please enter message", target_name, null) as text
+						var/t
+						if(href_list["message_send"])
+							t = href_list["message_send"]
+						else
+							t = input(usr, "Please enter message", target_name, null) as text
 						if (!t || !isalive(usr))
 							return
 
@@ -509,27 +564,7 @@
 						if(src.message_last + 20 > world.time) //File sending delay.
 							return
 
-						var/target_id = href_list["target"]
-						var/target_name = detected_pdas[target_id]
-						if(!(target_id in src.detected_pdas))
-							return
-
-						if(!src.message_on || !src.clipboard || !(src.clipboard.holder in src.master))
-							return
-
-						var/datum/signal/signal = get_free_signal()
-						signal.data["command"] = "file_send_req"
-						signal.data["file_name"] = src.clipboard.name
-						signal.data["file_ext"] = src.clipboard.extension
-						signal.data["file_size"] = src.clipboard.size
-						signal.data["sender_name"] = src.master.owner
-						signal.data["sender_assignment"] = src.master.ownerAssignment
-						//signal.data["sender"] = src.master.net_id
-						signal.data["address_1"] = target_id
-						src.post_signal(signal)
-						src.message_note += "<i><b>&rarr; File Send Request to [target_name]</b></i><br>"
-						src.target_filereq_id = target_id
-						src.message_last = world.time
+						src.SendFile(href_list["target"], href_list["group"])
 
 					if ("mailgroup")
 						var/groupname = input(usr, "Enter group name", src.name, null) as text
@@ -569,9 +604,7 @@
 						if(src.message_on)
 							var/datum/signal/newsignal = get_free_signal()
 							last_filereq_id = href_list["sender"]
-
 							if(!last_filereq_id) return
-
 							newsignal.data["address_1"] = last_filereq_id
 							newsignal.data["command"] = "file_send_acc"
 							src.post_signal(newsignal)
@@ -581,10 +614,10 @@
 							src.master.mailgroups -= groupname
 					if("mute_group")
 						var/groupname = href_list["groupname"]
-						if (groupname in src.master.muted_mailgroups)
-							src.master.muted_mailgroups -= groupname
+						if (groupname in src.muted_mailgroups)
+							src.muted_mailgroups -= groupname
 						else
-							src.master.muted_mailgroups += groupname
+							src.muted_mailgroups += groupname
 
 
 			else if(href_list["note_func"]) //Note program specific topic junk
@@ -676,21 +709,7 @@
 								return
 
 							src.clipboard.copy_file_to_folder(target)
-/*
-					if("install") //Given a file on another system and the other system itself.
-						var/obj/item/device/pda2/source = locate(href_list["sender"])
-						if(!source || !istype(source) || !target || !istype(target, /datum/computer/file))
-							return
 
-						if(!src.message_on)
-							return
-
-						if(!(target.holder in source.contents))
-							return
-
-						if(target:copy_file_to_folder(src.holding_folder))
-							src.message_note += "<b><i>File Accepted from [source.owner]</b></i><br>"
-*/
 
 			else if(href_list["message_mode"])
 				var/newmode = text2num(href_list["message_mode"])
@@ -728,26 +747,31 @@
 
 					var/groupAddress = signal.data["group"]
 					if(groupAddress) //Check to see if we have this ~mailgroup~
-						if((!(groupAddress in src.master.mailgroups) && groupAddress != "ai") || (groupAddress in src.master.muted_mailgroups))
+						if((!(groupAddress in src.master.mailgroups) && groupAddress != "ai") || (groupAddress in src.muted_mailgroups))
 							return
 
-					var/sender = signal.data["sender_name"]
-					if(!sender)
-						sender = "!Unknown!"
+					var/signalTag = signal.data["tag"]
+					if(signalTag in src.muted_alerts)
+						return
+
+					var/senderName = signal.data["sender_name"]
+					if(!senderName)
+						senderName = "!Unknown!"
 
 					var/senderAssignment = signal.data["sender_assignment"]
-					var/messageFrom = sender
+					var/messageFrom = senderName
 					if (senderAssignment)
 						messageFrom = "[messageFrom] - [senderAssignment]"
 
 					if((length(signal.data["sender"]) == 8) && (is_hex(signal.data["sender"])) )
 						if (!(signal.data["sender"] in src.detected_pdas))
 							src.detected_pdas += signal.data["sender"]
-							//src.master.pdasay_autocomplete += sender
-						src.detected_pdas[signal.data["sender"]] = sender
-						src.master.pdasay_autocomplete[sender] = signal.data["sender"]
+						src.detected_pdas[signal.data["sender"]] = senderName
+						src.master.pdasay_autocomplete[senderName] = signal.data["sender"]
 
 					//Only add the reply link if the sender is another pda2.
+
+					src.AddCaller(signal.data["sender"], senderName)
 
 					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
@@ -765,6 +789,9 @@
 							if (src.master)
 								src.master.explode()
 
+					if(senderName in src.blocked_numbers)
+						return
+
 					var/previewtext = (signal.data["tag"] == "preview_message")
 					if(previewtext && ON_COOLDOWN(src, "preview_cooldown", 15 SECONDS))
 						return
@@ -772,7 +799,10 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					src.master.display_alert(alert_beep, previewtext, signal.data["tag"], groupAddress, sender)
+					if(length(src.hosted_files) >= 1)
+						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
+
+					src.master.display_alert(alert_beep, previewtext, signal.data["tag"], groupAddress, src.ManageRecentCallers(senderName))
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"
@@ -791,6 +821,12 @@
 					var/senderassignment = signal.data["sender_assignment"]
 					var/file_ext = signal.data["file_ext"]
 					var/filesize = signal.data["file_size"]
+					var/signalTag = signal.data["tag"]
+					var/signalGroup = signal.data["group"]
+
+					if(signalGroup) //Check to see if we have this ~mailgroup~
+						if((!(signalGroup in src.master.mailgroups) && signalGroup != "ai") || (signalGroup in src.muted_mailgroups))
+							return
 
 					if(!filename || !sender)
 						return
@@ -808,12 +844,16 @@
 					src.detected_pdas[sender] = sendername
 					src.master.pdasay_autocomplete[sendername] = signal.data["sender"]
 
+					if((sender in src.blocked_numbers) || (signalTag in src.muted_alerts) || (signalGroup in src.muted_mailgroups))
+						return
+
+					src.AddCaller(sender, sendername)
 
 					src.message_note += {"
-<i><b>&larr;File Offer From <a href='byond://?src=\ref[src];input=message;target=[sender]'>[messageFrom]</a>:</b></i><br>
-<a href='byond://?src=\ref[src];message_func=accfile;sender=[sender]'>[filename]</a>
- | Ext: [file_ext ? file_ext : "NONE"]
- | Size: [filesize ? filesize : "???"]<br>"}
+					<i><b>&larr;File Offer From <a href='byond://?src=\ref[src];input=message;target=[sender]'>[messageFrom]</a>:</b></i><br>
+					<a href='byond://?src=\ref[src];message_func=accfile;sender=[sender]'>[filename]</a>
+					| Ext: [file_ext ? file_ext : "NONE"]
+					| Size: [filesize ? filesize : "???"]<br>"}
 
 					var/alert_beep = null //Same as with messages
 					if(!src.message_silent)
@@ -852,7 +892,7 @@
 					var/sendername = signal.data["sender_name"]
 					var/senderassignment = signal.data["sender_assignment"]
 
-					if(sender != last_filereq_id)
+					if(sender != last_filereq_id && signal.data["tag"] != "auto_fileshare")
 						return
 
 					if(!sendername)
@@ -868,18 +908,6 @@
 						src.message_note += "<b><i>File Accepted from [messageFrom]</b></i><br>"
 					return
 
-			// this is now in network_hook
-			/*
-				if("report_pda")
-					if(!message_on || !signal.data["sender"])
-						return
-
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.data["command"] = "report_reply"
-					newsignal.data["address_1"] = signal.data["sender"]
-					newsignal.data["owner"] = src.master.owner
-					src.post_signal(newsignal)
-			*/
 				if("report_reply")
 					if(!detected_pdas)
 						detected_pdas = new()
@@ -951,3 +979,123 @@
 
 			logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
+
+		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)
+			var/target_name = src.detected_pdas[target_id]
+			if(!(target_id in src.detected_pdas) && !group)
+				return
+
+			if(!src.message_on || !src.clipboard || !(src.clipboard.holder in src.master))
+				return
+
+			if(group) // obvs we want to send this file to a bunch of people
+				src.HostFile(src.clipboard, null, group, null)
+				return
+
+			var/datum/signal/signal = get_free_signal()
+			if(just_send_it)
+				signal.data_file = file ? file.copy_file() : src.clipboard.copy_file()
+				signal.data["tag"] = "auto_fileshare"
+			else
+				src.message_note += "<i><b>&rarr; File Send Request to [target_name]</b></i><br>"
+				src.target_filereq_id = target_id
+			signal.data["command"] = just_send_it ? "file_send" : "file_send_req"
+			signal.data["file_name"] = src.clipboard.name
+			signal.data["file_ext"] = src.clipboard.extension
+			signal.data["file_size"] = src.clipboard.size
+			signal.data["sender_name"] = src.master.owner
+			signal.data["sender_assignment"] = src.master.ownerAssignment
+			signal.data["address_1"] = target_id
+			src.post_signal(signal)
+			src.message_last = world.time
+
+		/// Hosts a file on your PDA with an md5 passkey for others to request
+		proc/HostFile(var/datum/computer/file/file, var/passkey, var/group, var/msg)
+			if(!istype(file, /datum/computer/file)) return
+			var/file_passkey = passkey
+			if(!passkey)
+				file_passkey = input(usr, "Please enter a passkey", file.name, src.GenerateFilesharePasskey(3)) as text
+				if (!file_passkey || !isalive(usr))
+					file_passkey = src.GenerateFilesharePasskey(3)
+				else
+					file_passkey = ckey(file_passkey)
+				if(file_passkey in src.hosted_files)
+					for(var/i in 1 to 5)
+						file_passkey = src.GenerateFilesharePasskey(3)
+						if(!(file_passkey in src.hosted_files))
+							break
+					if(file_passkey in src.hosted_files) // still??
+						file_passkey = "[TIME][rand(999999999)]"
+
+			if(!msg)
+				msg = input(usr, "Please enter a message", file.name, "DOWNLOAD FREE HIGHSPEED2DAY") as text
+				if (!msg || !isalive(usr))
+					msg = null
+
+			src.hosted_files[file_passkey] = file
+
+			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+			var/datum/signal/signal = get_free_signal()
+			signal.data["command"] = "text_message"
+			signal.data["message"] = "[file.name] hosted on [src.master.owner]'s [src.master]. Text [file_passkey] to this PDA to receive a copy of this file!"
+			signal.data["tag"] = "host_file"
+			signal.data["sender_name"] = "FILE-MAN"
+			signal.data["sender"] = "UNKNOWN"
+			signal.data["address_1"] = src.master.net_id
+			signal.transmission_method = TRANSMISSION_RADIO
+			transmit_connection.post_signal(null, signal)
+
+			if(!group)
+				return
+
+			var/message_to_send = msg
+			if(!msg)
+				message_to_send = "<i><b>File Offer From <a href='byond://?src=\ref[src];input=message;target=[src.master.net_id]'>[src.master.owner]</a>:</b></i><br>| Ext: [file.extension ? file.extension : "NONE"] | Size: [file.size ? file.size : "???"]"
+			message_to_send += "<br>Reply with [file_passkey] to receive this file.<br>"
+
+			var/datum/signal/signalinvite = get_free_signal()
+			signalinvite.data["command"] = "text_message"
+			signalinvite.data["message"] = "[message_to_send]"
+			signalinvite.data["tag"] = "host_file"
+			signalinvite.data["sender_name"] = src.master.owner
+			signalinvite.data["sender"] = src.master.net_id
+			signalinvite.data["group"] = group
+			src.post_signal(signalinvite)
+			src.message_last = world.time
+
+		/// check if the message is one of the fileshare passkeys, then try to send them the file
+		proc/CheckForPasskey(var/message, var/sender)
+			if(!message || !sender)
+				return
+			message = ckey(message)
+			if(message in src.hosted_files)
+				src.SendFile(sender, just_send_it = 1, file = src.hosted_files[message])
+
+
+		/// Reads list of recent callers and adds them if they're not there
+		/// Returns TRUE if they're on the list
+		proc/ManageRecentCallers(var/sender)
+			if(!sender) return 0
+			if(sender in src.recent_callers && src.recent_callers[sender] <= TIME)
+				. = TRUE
+			else
+				. = FALSE
+
+			src.recent_callers[sender] = (TIME + RECENT_CALL_COOLDOWN)
+
+		/// Adds the sender's name to the list of people who sent stuff to this device
+		proc/AddCaller(var/address, var/sender)
+			if(!sender)
+				return
+			if(!(sender in src.all_callers))
+				src.all_callers[address] = sender
+
+#undef RECENT_CALL_COOLDOWN
+#undef MODE_MAINMENU
+#undef MODE_NOTE
+#undef MODE_MESSAGE
+#undef MODE_FILEBROWSER
+#undef MODE_ATMOS
+#undef MODE_GROUPS
+#undef MODE_ADDRESSBOOK
+#undef MODE_MODULECONFIG

@@ -1368,6 +1368,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\pda2\bot_control.dm"
 #include "code\obj\item\device\pda2\cartridges.dm"
 #include "code\obj\item\device\pda2\diagnostics.dm"
+#include "code\obj\item\device\pda2\fileshare.dm"
 #include "code\obj\item\device\pda2\game.dm"
 #include "code\obj\item\device\pda2\modules.dm"
 #include "code\obj\item\device\pda2\pda2.dm"

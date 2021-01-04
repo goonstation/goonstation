@@ -742,3 +742,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 				return
 		src.ringListIndex = 1
 		. = ..()
+
+#undef RINGLIST_STATIC
+#undef RINGLIST_CYCLE
+#undef RINGLIST_RANDOM

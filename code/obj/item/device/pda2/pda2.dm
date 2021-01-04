@@ -22,8 +22,9 @@
 	var/obj/item/disk/data/cartridge/cartridge = null //current cartridge
 	var/ejectable_cartridge = 1
 	var/datum/computer/file/pda_program/active_program = null
-	var/datum/computer/file/pda_program/os/host_program = null
+	var/datum/computer/file/pda_program/os/main_os/host_program = null
 	var/datum/computer/file/pda_program/scan/scan_program = null
+	var/datum/computer/file/pda_program/fileshare/fileshare_program = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/closed = 1 //Can we insert a module now?
 	var/obj/item/uplink/integrated/pda/uplink = null
@@ -51,8 +52,12 @@
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
 	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
-	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
 	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
+
+	var/static/pda_alert_tags = list(PDA_CRISIS_ALERT_TAG,PDA_SEC_ALERT_TAG,PDA_CARGO_ALERT_TAG,\
+																	PDA_MEDICAL_ALERT_TAG,PDA_ENGINEER_ALERT_TAG,PDA_MECHANICS_ALERT_TAG,\
+																	PDA_GENETICS_ALERT_TAG,PDA_MINING_ALERT_TAG,PDA_CHUTE_ALERT_TAG)
+
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 	/// Syndie sound programs can blow out the speakers and render it forever *silent*
@@ -74,8 +79,6 @@
 																	PDA_CHUTE_ALERT_TAG = null)
 	/// mailgroup-specific ringtones, added on the fly!
 	var/list/mailgroup_ringtones = list()
-	/// List of recent callers, so you get the long sound for the first message, and a shorter one for that same person after that
-	var/list/recent_callers = list()
 
 	registered_owner()
 		.= registered
@@ -288,6 +291,11 @@
 			var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
 			if (scan && istype(scan))
 				src.scan_program = scan
+
+		if (src.cartridge)
+			var/datum/computer/file/pda_program/fileshare/share = locate() in src.cartridge.root.contents
+			if (share && istype(share))
+				src.fileshare_program = share
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
@@ -842,35 +850,24 @@
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
-	proc/route_ringtone(var/msgtag, var/groupID, var/sender)
+	proc/route_ringtone(var/msgtag, var/groupID, var/recent)
 		if(msgtag in src.alert_ringtones)
 			if(istype(src.alert_ringtones[msgtag], /datum/ringtone))
 				var/datum/ringtone/rtone = src.alert_ringtones[msgtag]
-				. = rtone.PlayRingtone(src.manage_recent_callers(sender))
+				. = rtone.PlayRingtone(recent)
 		else if(groupID in src.mailgroup_ringtones)
 			if(istype(src.mailgroup_ringtones[groupID], /datum/ringtone))
 				var/datum/ringtone/rtone = src.mailgroup_ringtones[groupID]
-				. = rtone.PlayRingtone(src.manage_recent_callers(sender))
-
+				. = rtone.PlayRingtone(recent)
 		if(!.)
-			return src.r_tone?.PlayRingtone(src.manage_recent_callers(sender))
+			return src.r_tone?.PlayRingtone(recent)
 
-	/// Reads list of recent callers and adds them if they're not there
-	/// Returns TRUE if they're on the list
-	proc/manage_recent_callers(var/sender)
-		if(!sender) return 0
-		if(sender in src.recent_callers)
-			return 1
-		else
-			src.recent_callers.Add(sender)
-			return 0
-
-	proc/display_alert(var/alert_message, var/previewRing, var/msgtag, var/groupID, var/sender) //Add alert overlay and beep
+	proc/display_alert(var/alert_message, var/previewRing, var/msgtag, var/groupID, var/recent) //Add alert overlay and beep
 		if (alert_message && !src.speaker_busted)
 			if(previewRing && istype(src.r_tone_temp))
 				. = src.r_tone_temp?.PlayRingtone()
 			else
-				. = src.route_ringtone(msgtag, groupID, sender)
+				. = src.route_ringtone(msgtag, groupID, recent)
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
