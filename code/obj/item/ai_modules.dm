@@ -251,6 +251,7 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
+		page_departments -= "Silicon"
 		for (var/mob/living/silicon/S in mobs)
 			if (isghostdrone(S))
 				return
@@ -363,6 +364,10 @@ AI MODULES
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
 
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
+
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental 'Equality' AI Module"
 
@@ -372,6 +377,10 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
+
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
 
 
 
