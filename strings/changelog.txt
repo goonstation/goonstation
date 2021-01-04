@@ -1,5 +1,9 @@
 
 (t)mon jan 04 21
+(u)BenLubar
+(p)2947
+(e)⚖|balance
+(+)The AI's killswitch now lasts 3 minutes rather than 60 mystery time units, each almost but not quite equal to 3 seconds.
 (u)virvatuli
 (p)3229
 (e)🗺|mapping
