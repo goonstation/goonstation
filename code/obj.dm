@@ -109,7 +109,18 @@
 	* inherent packet abilities.
 	*/
 	proc/can_access_remotely_default(mob/user)
-		return issilicon(user) || isAIeye(user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
+
+
 
 	proc/client_login(var/mob/user)
 		return
