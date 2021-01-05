@@ -200,6 +200,7 @@
 		materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/noslip_boots
+		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
 	accepted_token()
 		src.current_sidearm_credits++
@@ -382,6 +383,12 @@
 	path = /obj/item/clothing/shoes/swat/noslip
 	catagory = "Utility"
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
+
+/datum/materiel/utility/bomb_decoy
+	name = "Decoy Bomb Balloon"
+	path = /obj/bomb_decoy
+	catagory = "Utility"
+	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
 // Requisition tokens
 
