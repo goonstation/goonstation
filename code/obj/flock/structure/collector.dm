@@ -39,6 +39,7 @@
 	var/myturf = get_turf(src)
 	var/distance = 0 //how far has it gone already?
 	var/turf/simulated/floor/feather/floor = myturf
+	connected = length(connectedto)
 	if(!istype(floor)) return//if it aint a flock floor
 
 	if(floor.broken) return
