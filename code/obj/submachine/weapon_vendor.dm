@@ -199,6 +199,7 @@
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/noslip_boots
 
 	accepted_token()
 		src.current_sidearm_credits++
@@ -375,6 +376,12 @@
 	path = /obj/item/chem_grenade/sarin
 	catagory = "Utility"
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
+
+/datum/materiel/utility/noslip_boots
+	name = "Hi-grip Assault Boots"
+	path = /obj/item/clothing/shoes/swat/noslip
+	catagory = "Utility"
+	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
 
 // Requisition tokens
 
