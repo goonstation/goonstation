@@ -439,11 +439,12 @@
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
 			decal.icon_state = "balloon_green_pop"
+			qdel(src)
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		..()
 		user.lastattacked = src
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_1", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src.health -= W.force
 		checkhealth()
 		return
