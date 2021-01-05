@@ -300,9 +300,9 @@
 
 /datum/materiel/loadout/medic
 	name = "Combat Medic"
-	path = /obj/storage/crate/classcrate/medic
+	path = /obj/storage/crate/classcrate/medic_rework
 	catagory = "Loadout"
-	description = "Comprehensive medical supplies in a satchel, belt and pouch, including donk injector and an experimental Juggernaut injector."
+	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
