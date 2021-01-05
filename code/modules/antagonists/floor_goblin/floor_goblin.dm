@@ -87,7 +87,7 @@
 	target_anything = 1
 
 	tryCast()
-		if (is_incapacitated(holder.owner)
+		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
 			src.holder.locked = 0
 			return 999
@@ -143,7 +143,7 @@
 	target_anything = 1
 
 	tryCast()
-		if (is_incapacitated(holder.owner)
+		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
 			src.holder.locked = 0
 			return 999
