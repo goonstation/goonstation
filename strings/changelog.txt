@@ -1,5 +1,9 @@
 
 (t)tue jan 05 21
+(u)TTerc
+(p)3226
+(e)🗺|mapping
+(+)Adds a routing depot camera monitor to Donut 3, letting the QMs monitor the cargo belts remotely.
 (u)ThePotato97
 (p)2988
 (e)🆕📄|feature, tgui
