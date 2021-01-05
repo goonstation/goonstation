@@ -917,7 +917,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(M) && !H.restrained())
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)

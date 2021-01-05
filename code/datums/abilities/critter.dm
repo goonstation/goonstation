@@ -78,7 +78,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || is_incapacitated(M))
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())
