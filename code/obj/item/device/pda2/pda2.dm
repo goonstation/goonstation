@@ -663,7 +663,7 @@
 	if (!target || !message)
 		return
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	if (istype(src.host_program))
@@ -676,7 +676,7 @@
 	set category = "Local"
 	set src in usr
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	eject_id_card(usr)

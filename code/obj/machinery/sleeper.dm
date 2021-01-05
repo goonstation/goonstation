@@ -571,23 +571,21 @@
 		return
 
 	proc/can_operate(var/mob/M)
-		if (!isalive(M))
-			return 0
-		if (get_dist(src,M) > 1)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
-			return 0
+		if (!IN_RANGE(src, M, 1))
+			return FALSE
+		if (is_incapacitated(M))
+			return FALSE
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return 0
+			return FALSE
 		if (!ishuman(M))
 			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
-			return 0
+			return FALSE
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")
-			return
+			return FALSE
 
-		.= 1
+		.= TRUE
 
 	verb/move_inside()
 		set src in oview(1)
