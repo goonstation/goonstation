@@ -130,6 +130,73 @@
 		qdel(src)
 		return
 
+	proc/eject_card()
+		if (src.user_id)
+			usr.put_in_hand_or_eject(src.user_id) // try to eject it into the users hand, if we can
+			src.user_id = null
+		return
+
+	proc/update_account()
+/*		for (var/datum/reagent_group_account/A in src.accounts)
+			if (A.user_id == src.user_id)
+				src.current_account = A
+				return
+*/
+		if (src.user_id)
+			if (!src.user_id.reagent_account)
+				src.user_id.reagent_account = new /datum/reagent_group_account()
+				src.user_id.reagent_account.user_id = src.user_id
+			src.current_account = user_id.reagent_account
+			return
+		else
+			for (var/datum/reagent_group_account/A in src.accounts)
+				if (A.user_id == src)
+					src.current_account = A
+					return
+			var/datum/reagent_group_account/new_account = new /datum/reagent_group_account()
+			new_account.user_id = src//.user_id
+			src.accounts += new_account
+			src.current_account = new_account
+
+	proc/update_icon()
+		if (!beaker)
+			src.icon_state = src.icon_base
+		else
+			src.icon_state = "[src.icon_base][rand(1,5)]"
+
+	MouseDrop(over_object, src_location, over_location)
+		if(!isliving(usr))
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
+			return
+
+		if(get_dist(over_object,src) > 1)
+			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
+			return
+
+		if(get_dist(over_object,usr) > 1)
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			return
+
+		else if (istype(over_object,/turf/simulated/floor/))
+			src.output_target = over_object
+			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
+
+		else
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+		return
+
+	proc/take_damage(var/damage_amount = 5)
+		src.health -= damage_amount
+		if (src.health <= 0)
+			if (beaker)
+				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker = null
+			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			robogibs(src.loc,null)
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			qdel(src)
+			return
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -290,73 +357,6 @@
 						src.update_account()
 						update_static_data(usr,ui)
 				return
-
-	proc/eject_card()
-		if (src.user_id)
-			usr.put_in_hand_or_eject(src.user_id) // try to eject it into the users hand, if we can
-			src.user_id = null
-		return
-
-	proc/update_account()
-/*		for (var/datum/reagent_group_account/A in src.accounts)
-			if (A.user_id == src.user_id)
-				src.current_account = A
-				return
-*/
-		if (src.user_id)
-			if (!src.user_id.reagent_account)
-				src.user_id.reagent_account = new /datum/reagent_group_account()
-				src.user_id.reagent_account.user_id = src.user_id
-			src.current_account = user_id.reagent_account
-			return
-		else
-			for (var/datum/reagent_group_account/A in src.accounts)
-				if (A.user_id == src)
-					src.current_account = A
-					return
-			var/datum/reagent_group_account/new_account = new /datum/reagent_group_account()
-			new_account.user_id = src//.user_id
-			src.accounts += new_account
-			src.current_account = new_account
-
-	proc/update_icon()
-		if (!beaker)
-			src.icon_state = src.icon_base
-		else
-			src.icon_state = "[src.icon_base][rand(1,5)]"
-
-	MouseDrop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
-			return
-
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
-			return
-
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
-			return
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
-	proc/take_damage(var/damage_amount = 5)
-		src.health -= damage_amount
-		if (src.health <= 0)
-			if (beaker)
-				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
-				beaker = null
-			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
-			robogibs(src.loc,null)
-			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-			qdel(src)
-			return
 
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"
