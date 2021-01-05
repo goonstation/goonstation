@@ -289,11 +289,11 @@
 	cooldown = 0
 
 	tryCast()
-		if (isunconscious(holder.owner) || holder.owner.hasStatus("weakened"))
+		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
 			src.holder.locked = 0
 			return 999
-		return ..()
+		. = ..()
 
 	cast(atom/T)
 		var/floorturf = get_turf(usr)
