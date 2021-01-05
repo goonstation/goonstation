@@ -22,7 +22,7 @@
 			target = get_turf(target)
 		if (isturf(target))
 			for (var/mob/living/M in target)
-				if (M.hasStatus(list("paralysis", "stunned", "weakened")))
+				if (is_incapacitated(M))
 					target = M
 					break
 		if (target == holder.owner)
@@ -34,7 +34,7 @@
 			boutput(holder.owner, __red("That is too far away to frenzy."))
 			return 1
 		var/mob/MT = target
-		if (!MT.hasStatus(list("paralysis", "stunned", "weakened")))
+		if (!is_incapacitated(MT))
 			boutput(holder.owner, __red("That is moving around far too much to pounce."))
 			return 1
 		playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_roar.ogg", 80, 1)
@@ -47,7 +47,7 @@
 				MT.canmove = 0
 				if (MT.loc)
 					holder.owner.set_loc(MT.loc)
-				if (holder?.owner.hasStatus(list("paralysis", "stunned", "weakened")))
+				if (is_incapacitated(holder?.owner))
 					break
 				playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [MT]!</b></span>")

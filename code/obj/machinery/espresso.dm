@@ -88,6 +88,9 @@
 										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 									return
 						if ("Remove cup")
+							if (get_dist(src, usr) > 1 || isAI(user))
+								user.show_text("You can not do that remotely.")
+								return
 							src.cupinside = 0
 							for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents) //removes cup from contents and ejects
 								C:set_loc(src.loc)
@@ -225,6 +228,10 @@
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
+								user.show_text("The carafe is gone!")
+								return
+							if (get_dist(src, user) > 1 || isAI(user))
+								user.show_text("You can not do that remotely.")
 								return
 							src.my_carafe.set_loc(src.loc)
 							src.my_carafe = null

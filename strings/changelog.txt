@@ -1,4 +1,24 @@
+
+(t)tue jan 05 21
+(u)Chickenish
+(p)3209
+(e)|
+(+)Pills can now be thrown over tables.
 (t)mon jan 04 21
+(u)Flourish
+(+)Item icons have been temporarily removed from manufacturer windows. As a result, game windows should now load a lot faster during game setup and when you first join.
+(u)BenLubar
+(p)2947
+(e)⚖|balance
+(+)The AI's killswitch now lasts 3 minutes rather than 60 mystery time units, each almost but not quite equal to 3 seconds.
+(u)virvatuli
+(p)3229
+(e)🗺|mapping
+(+)Added a mounted defibrillator to the Cairngorm's surgical suite.
+(u)BenLubar
+(p)3178
+(e)⚖|balance
+(*)Alerts can now be muted on the PDA's messaging app groups screen. The AI can now mute incoming PDA messages, and does not auto-join custom groups.
 (u)Ursulamejor
 (e)🆕|feature
 (*)Four new chicken breeds, our first four truly secret chickens. See Minor Changes for hints.

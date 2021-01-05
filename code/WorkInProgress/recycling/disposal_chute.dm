@@ -138,7 +138,7 @@
 	//
 	MouseDrop_T(mob/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
@@ -583,7 +583,7 @@
 			newsignal.data["message"] = "[message]"
 
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -633,7 +633,7 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
 		flush = 1

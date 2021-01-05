@@ -86,8 +86,11 @@
 
 		update_health()
 			if (master.killswitch)
+				var/timeleft = round((master.killswitch_at - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+
 				killswitch.invisibility = 0
-				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[add_zero(master.killswitch_time - 2,2)]</span></span>"
+				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[timeleft]</span></span>"
 			else
 				killswitch.invisibility = 101
 				killswitch.maptext = ""

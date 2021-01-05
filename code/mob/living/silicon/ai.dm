@@ -553,6 +553,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						foot = M.organs["l_leg"]
 					foot.take_damage(3, 0)
 					user.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = src
 	src.update_appearance()
 
 /mob/living/silicon/ai/blob_act(var/power)
@@ -1195,8 +1196,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/process_killswitch()
 	var/message_mob = get_message_mob()
 
-	if(killswitch)
-		killswitch_time --
+	if(killswitch_at)
+		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
+
 		if(killswitch_time <= 10)
 			if(src.client)
 				boutput(message_mob, "<span class='alert'><b>Time left until Killswitch: [killswitch_time]</b></span>")
@@ -2016,7 +2018,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
-		if (istype(M,/mob/living/critter/aquatic))
+		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/chicken))
 			continue
 		if(M.z != 1 && M.z != usr.z)
 			continue
