@@ -1706,7 +1706,7 @@
 				remove_link = "&#8987; Working..."
 
 			var/icon_text = "<p><p>"
-			if (A.item_outputs)
+			// if (A.item_outputs)
 			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
 			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
 			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
