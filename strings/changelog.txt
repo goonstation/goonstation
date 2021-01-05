@@ -1,4 +1,9 @@
 
+(t)tue jan 05 21
+(u)Chickenish
+(p)3209
+(e)|
+(+)Pills can now be thrown over tables.
 (t)mon jan 04 21
 (u)Flourish
 (+)Item icons have been temporarily removed from manufacturer windows. As a result, game windows should now load a lot faster during game setup and when you first join.
