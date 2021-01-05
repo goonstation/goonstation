@@ -57,6 +57,8 @@
 				PDA.eject_id_card()
 			ID.set_loc(src)
 			src.user_id = ID
+			update_static_data(usr)
+			tgui_process.update_uis(src)
 			return
 
 		if (!istype(B, glass_path))
@@ -136,6 +138,7 @@
 
 	ui_static_data(mob/user)
 		. = list()
+		var/list/groupListTemp = list()
 		var/list/dispensableReagentsTemp = list()
 		if(dispensable_reagents)
 			for(var/reagent in dispensable_reagents)
@@ -148,19 +151,26 @@
 					state = current_reagent.reagent_state,
 					id = reagent
 				)))
+		if(current_account)
+			for (var/datum/reagent_group/group in current_account.groups)
+				groupListTemp.Add(list(list(
+					name = group.name,
+					info = group.group_desc,
+					ref = ref(group)
+				)))
+		.["groupList"] = groupListTemp
 		.["beakerName"] = glass_name
 		.["dispensableReagents"] = dispensableReagentsTemp
 
 	ui_data(mob/user)
 		. = list()
 		var/list/beakerContentsTemp = list()
-		var/list/groupListTemp = list()
 		.["idCardInserted"] = !isnull(src.user_id)
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
 		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		if(beaker)
-			var/datum/reagents/R = beaker:reagents
+			var/datum/reagents/R = beaker.reagents
 			var/datum/color/average = R.get_average_color()
 			.["currentBeakerName"] = beaker.name
 			.["finalColor"] = average.to_rgba()
@@ -176,17 +186,9 @@
 						state = current_reagent.reagent_state,
 						volume = current_reagent.volume
 					)))
-		if(current_account)
-			for (var/datum/reagent_group/group in current_account.groups)
-				groupListTemp.Add(list(list(
-					name = group.name,
-					info = group.group_desc,
-					ref = ref(group)
-				)))
-		.["groupList"] = groupListTemp
 		.["beakerContents"] = beakerContentsTemp
 
-	ui_act(action, params)
+	ui_act(action, params, datum/tgui/ui)
 		if(..())
 			return
 		switch(action)
@@ -252,12 +254,14 @@
 				G.update_desc()
 				if (current_account)
 					current_account.groups += G
+				update_static_data(usr,ui)
 				. = TRUE
 			if("deleteGroup")
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(group)
 					src.current_account.groups -= group
 					qdel(group)
+					update_static_data(usr,ui)
 					. = TRUE
 			if("groupDispense")
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
@@ -276,6 +280,7 @@
 				if (src.user_id)
 					src.eject_card()
 					src.update_account()
+					update_static_data(usr,ui)
 				else
 					var/obj/item/I = usr.equipped()
 					if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
@@ -283,6 +288,7 @@
 						I.set_loc(src)
 						src.user_id = I
 						src.update_account()
+						update_static_data(usr,ui)
 				return
 
 	proc/eject_card()
