@@ -280,7 +280,7 @@
 	name = "Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
 	catagory = "Loadout"
-	description = "Bullpup assault rifle with single shot and burst fire modes, mag pouch containing standard and AP magazines, mixed grenade pouch and breaching charges."
+	description = "A good all-rounder combat class centered around an assault rifle with selectable fire-modes as well as standard and armor-piercing rounds."
 
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
@@ -301,7 +301,7 @@
 	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
 
 /datum/materiel/loadout/medic
-	name = "Combat Medic"
+	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
 	catagory = "Loadout"
 	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
