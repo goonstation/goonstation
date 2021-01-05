@@ -1,5 +1,7 @@
 
 (t)mon jan 04 21
+(u)Flourish
+(+)Item icons have been temporarily removed from manufacturer windows. As a result, game windows should now load a lot faster during game setup and when you first join.
 (u)BenLubar
 (p)2947
 (e)⚖|balance
