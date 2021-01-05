@@ -514,14 +514,18 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/list/obj/machinery/power/collector_control/collector_controlers
+	var/list/obj/machinery/power/vent_capture/vents
+	var/obj/machinery/carouselpower/carousel
 
 	return_text()
 		if(..())
 			return
 		if (!laser)
 			laser = locate() in machine_registry[MACHINES_POWER]
+			if(laser?.z != 1) laser = null
 		if (!generator)
 			generator = locate() in machine_registry[MACHINES_POWER]
+			if(generator?.z != 1) generator = null
 		if (generator && !circ1)
 			circ1 = generator.circ1
 		if (generator && !circ2)
@@ -529,8 +533,16 @@ Code:
 		if (!collector_controlers)
 			collector_controlers = list()
 			for (var/obj/machinery/power/collector_control/C in machine_registry[MACHINES_POWER])
-				collector_controlers.Add(C)
+				if( C.z == 1)
+					collector_controlers.Add(C)
 
+		if (!vents)
+			vents = list()
+			for (var/obj/machinery/power/vent_capture/V in machine_registry[MACHINES_POWER])
+				if( V.z == 1)
+					vents.Add(V)
+		if(!carousel)
+			carousel = locate() in machine_registry[MACHINES_POWER]
 
 		var/stuff = src.return_text_header()
 		var/engine_found = FALSE
@@ -567,6 +579,20 @@ Code:
 					if(C.CA3?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3?.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA4?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4?.air_contents), 0.1) : "ERR"] kPa<BR>"
 					stuff += "<BR>"
+
+		if (length(vents))
+			stuff += "<BR><h4>Vent Capture Unit Status</h4>"
+			for(var/obj/machinery/power/vent_capture/V as() in vents)
+				if(locate(/obj/machinery/power/monitor/smes) in V.powernet.nodes)
+					engine_found = TRUE
+					stuff += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			stuff += "<BR>"
+
+		if (carousel)
+			stuff += "<BR><h4>Cargo Carousel Status</h4>"
+			stuff += "Boost: [((carousel.speedup / carousel.speedup_max)*100)]%<BR>"
+			stuff += "<BR>"
+
 
 		if (!engine_found)
 			stuff += "<BR><B>Error!</B> No power source detected!<BR><BR>"
