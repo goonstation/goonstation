@@ -69,6 +69,16 @@
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
 
+/mob/living/carbon/human/npc/monkey/oppenheimer
+	name = "Oppenheimer"
+	real_name = "Oppenheimer"
+	gender = "male"
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"
