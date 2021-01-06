@@ -159,7 +159,6 @@
 
 	src.dont_spam = 1
 	SPAWN_DBG(5 SECONDS)
-	if(src)
 		src.dont_spam = 0
 
 	return
@@ -213,7 +212,7 @@
 		reply.transmission_method = TRANSMISSION_RADIO
 		reply.data["address_1"] = sender
 		reply.data["command"] = "ping_reply"
-		reply.data["device"] = "PNET_FIREALARM"
+		reply.data["device"] = "WNET_FIREALARM"
 		reply.data["netid"] = src.net_id
 		reply.data["alert"] = src.icon_state == "fire0" ? "reset" : "fire"
 		reply.data["zone"] = alarm_zone

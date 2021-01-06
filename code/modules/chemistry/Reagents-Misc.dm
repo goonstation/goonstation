@@ -66,16 +66,19 @@ datum
 					explode(holder.covered_turf(), "temperature change to gaseous form")
 
 			reaction_turf(var/turf/T, var/volume)
-				explode(list(T), "splash on turf")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(T), "splash on turf")
 
 			reaction_mob(var/mob/M, var/volume)
-				explode(list(get_turf(M)), "splash on [key_name(M)]")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
-				explode(list(get_turf(O)), "splash on [key_name(O)]")
+				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+					explode(list(get_turf(O)), "splash on [key_name(O)]")
 
 			physical_shock(var/force)
-				if (reagent_state == SOLID && force >= 4 && prob(force - (14 - holder.total_temperature) * 0.1))
+				if (reagent_state == SOLID && force >= 4 && prob(force - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in solid state")
 				else if (reagent_state == LIQUID && prob(force * 6))
 					explode(list(get_turf(holder.my_atom)), "physical trauma (force [force], usr: [key_name(usr)]) in liquid state")
@@ -84,11 +87,11 @@ datum
 				var/datum/reagent/nitroglycerin/target_ng = target.get_reagent("nitroglycerin")
 				logTheThing("combat", usr, null, "caused physical shock to nitroglycerin by transferring [trans_volume]u from [source.my_atom] to [target.my_atom].")
 				// mechanical dropper transfer (1u): solid at 14°C: 0%, liquid: 0%
-				// classic dropper transfer (5u): solid at 14°C: 0% (due to min force cap), liquid: 20%
+				// classic dropper transfer (5u): solid at 14°C: 0% (due to min force cap), liquid: 15%
 				// beaker transfer (10u): solid at -36°C: 0%, solid: 5%, liquid: 30%
 				// the only safe way to transfer nitroglycerin is by freezing it
 				// thenagain, it may explode when being thawed unless heated *very* slowly
-				target_ng.physical_shock(round(0.45 * trans_volume))
+				target_ng.physical_shock(0.5 * trans_volume)
 
 		copper_nitrate
 			name = "copper nitrate"
@@ -542,23 +545,32 @@ datum
 						M.take_toxin_damage(rand(0,15))
 						M.TakeDamage("chest", rand(0,15), rand(0,15), 0, DAMAGE_CRUSH)
 						setalive(M)
-					if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-						M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
-						M.ghost.mind.transfer_to(M)
-						qdel(M.ghost)
-					if (ishuman(M))
+					var/mob/G
+					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
-						if (came_back_wrong || H.decomp_stage != 0 || (H.mind && H.mind.dnr)) //Wire: added the dnr condition here
+						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
+						G = find_ghost_by_key(B?.owner?.key)
+						if (came_back_wrong || H.decomp_stage != 0 || G?.mind?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
-							if (H.mind && H.mind.dnr)
+							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN_DBG(rand(20, 100))
 								H.gib()
+							return
+					else // else just get whoever's the mind
+						G = find_ghost_by_key(M.mind?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(M)
 						else
-							H.visible_message("<span class='alert'>[H] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(M)
+						qdel(G)
+						M.visible_message("<span class='alert'><b>[M]</b> seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
 					else
-						M.visible_message("<span class='alert'>[M] seems to rise from the dead!</span>","<span class='alert'>You feel hungry...</span>")
+						M.visible_message("<span class='alert'><b>[M]</b> shudders and stares vacantly.</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -1581,8 +1593,8 @@ datum
 				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/simulated/target = T
 				if (istype(target) && volume >= 5)
-					if (!locate(/obj/reagent_dispensers/spiders) in target)
-						new /obj/reagent_dispensers/spiders(target)
+					if (!locate(/obj/reagent_dispensers/cleanable/spiders) in target)
+						new /obj/reagent_dispensers/cleanable/spiders(target)
 						var/obj/critter/S
 						if (prob(10))
 							S = new /obj/critter/spider/baby(target)
@@ -1590,7 +1602,7 @@ datum
 							S = new /obj/critter/nicespider(target)
 							S.name = "spider"
 							S.set_density(0)
-					else if (locate(/obj/reagent_dispensers/spiders) in target && !locate(/obj/critter) in target)
+					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/obj/critter) in target)
 						var/obj/critter/S
 						if (prob(25))
 							S = new /obj/critter/spider/baby(target)

@@ -67,8 +67,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(M)
-			M.bodytemperature = 310
+		M?.bodytemperature = 310
 		return
 
 /datum/materialProc/fail_explosive
@@ -458,11 +457,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (C.bodytemperature > 100 && prob(percentmult(4, mult)))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
-		return
-
-/datum/materialProc/soulsteel_add
-	execute(var/atom/owner)
-		owner.event_handler_flags |= USE_HASENTERED
 		return
 
 /datum/materialProc/soulsteel_entered

@@ -495,6 +495,7 @@
 						else if (src.donor.ghost.key)
 							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
+							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
 							newmind.current = src.donor.ghost
 							src.donor.ghost.mind = newmind
@@ -502,6 +503,7 @@
 					else if (src.donor.key)
 						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
+						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
 						newmind.current = src.donor
 						src.donor.mind = newmind
@@ -1334,7 +1336,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))

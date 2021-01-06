@@ -134,6 +134,7 @@
 	/obj/machinery/artifact,
 	/obj/artifact,
 	/obj/mopbucket,
+	/obj/beacon_deployer,
 	/obj/machinery/portable_atmospherics,
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,

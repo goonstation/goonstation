@@ -66,18 +66,16 @@
 
 		if (href_list["send"])
 			SPAWN_DBG( 0 )
-
-
+				if(result) result.Cut()
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["address_1"] = "ping"
 				signal.data["sender"] = master.net_id
 
-				src.post_signal(signal,"[send_freq]")
 				mode = 1
-				if(result) result.Cut()
 				master.updateSelfDialog()
+				src.post_signal(signal,"[send_freq]")
 				sleep(2 SECONDS)
 				mode = 0
 				master.updateSelfDialog()

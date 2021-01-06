@@ -35,6 +35,7 @@
 
 	var/image/body_standing = null
 	var/image/hair_standing = null
+	var/image/hair_special_standing = null
 	var/image/tail_standing = null
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
@@ -1137,8 +1138,7 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
-	if(reagents)
-		reagents.move_trigger(src, ev)
+	reagents?.move_trigger(src, ev)
 	for (var/datum/statusEffect/S as() in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)

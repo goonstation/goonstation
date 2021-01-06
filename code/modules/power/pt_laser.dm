@@ -340,16 +340,6 @@
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
 		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
-/obj/machinery/power/pt_laser/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/pt_laser/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -357,26 +347,26 @@
 		ui.open()
 
 /obj/machinery/power/pt_laser/ui_data(mob/user)
-	var/list/data = list()
-	data["capacity"] = src.capacity
-	data["charge"] = src.charge
-	data["isEmagged"] = src.emagged
-	data["isChargingEnabled"] = src.charging
-	data["excessPower"] = src.excess
-	data["gridLoad"] = src.terminal?.powernet.load
-	data["inputLevel"] = src.chargelevel
-	data["inputMultiplier"] = src.input_multi
-	data["inputNumber"] = src.input_number
-	data["isCharging"] = src.is_charging
-	data["isFiring"] = src.firing
-	data["isLaserEnabled"] = src.online
-	data["lifetimeEarnings"] = src.lifetime_earnings
-	data["name"] = src.name
-	data["outputLevel"] = src.output
-	data["outputMultiplier"] = src.output_multi
-	data["outputNumber"] = src.output_number
-	data["totalGridPower"] = src.terminal?.powernet.avail
-	return data
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
+		"isEmagged" = src.emagged,
+		"isChargingEnabled" = src.charging,
+		"excessPower" = src.excess,
+		"gridLoad" = src.terminal?.powernet.load,
+		"inputLevel" = src.chargelevel,
+		"inputMultiplier" = src.input_multi,
+		"inputNumber" = src.input_number,
+		"isCharging" = src.is_charging,
+		"isFiring" = src.firing,
+		"isLaserEnabled" = src.online,
+		"lifetimeEarnings" = src.lifetime_earnings,
+		"name" = src.name,
+		"outputLevel" = src.output,
+		"outputMultiplier" = src.output_multi,
+		"outputNumber" = src.output_number,
+		"totalGridPower" = src.terminal?.powernet.avail,
+	)
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
 	. = ..()

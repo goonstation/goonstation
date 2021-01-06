@@ -10196,11 +10196,6 @@
 "ast" = (
 /obj/table/auto,
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13"
-	},
 /obj/towelbin{
 	pixel_y = 2
 	},
@@ -25220,11 +25215,6 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
-	},
 /obj/decal/poster/wallsign/chsl{
 	pixel_y = 32
 	},
@@ -27598,16 +27588,15 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "aWt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
+/obj/stool/bed/moveable,
+/obj/iv_stand,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 1;
+	dir = 4;
 	name = "autoname - SS13"
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/lab)
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aWu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -30073,11 +30062,6 @@
 /area/station/science/chemistry)
 "baM" = (
 /obj/machinery/door/window/eastleft,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "baN" = (
@@ -80040,7 +80024,7 @@ aMW
 aOK
 aQw
 aSh
-aSh
+aWt
 aVj
 aWR
 aYs
@@ -105107,7 +105091,7 @@ aPU
 aRC
 aDB
 aUJ
-aWt
+aWp
 aYa
 aZm
 baM

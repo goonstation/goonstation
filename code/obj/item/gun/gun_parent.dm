@@ -295,7 +295,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (O.client)
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		user.show_text("<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
 
 	if (!process_ammo(user))
 		return
@@ -305,14 +305,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			muzzle_flash_attack_particle(user, user.loc, M, src.muzzle_flash)
 
 
-	if(slowdown)
+	if(slowdown && ismob(user))
 		SPAWN_DBG(-1)
 			user.movement_delay_modifier += slowdown
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
 	var/spread = 0
-	if (user.reagents)
+	if (ismob(user) && user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
 		switch(amt)

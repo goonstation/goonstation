@@ -100,7 +100,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = min(max(0,(volume/covered.len)*0.15),8)
-						fireflash_sm(t, radius, rand(3000, 6000), 500)
+						fireflash_s(t, radius, rand(3000, 6000), 500)
 					if(holder)
 						holder.del_reagent(id)
 				return
@@ -123,8 +123,9 @@ datum
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
-					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 700)
+					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+					if(istype(L) && burn)
+						L.TakeDamage("All", 0, 7 * burn.getStage(), 0, DAMAGE_BURN)
 						if(!M.stat)
 							M.emote("scream")
 					return 0
@@ -133,8 +134,11 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+				if(istype(L) && burn)
+					L.changeStatus("burning", 15 * src.volume)
+					burn.counter += 7 * src.volume
+					holder?.del_reagent(src.id)
 				..()
 				return
 

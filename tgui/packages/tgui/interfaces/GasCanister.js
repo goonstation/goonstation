@@ -73,8 +73,8 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      width={(hasDetonator ? (hasPaper ? 890 : 470) : 400)}
-      height={hasDetonator ? 680 : 370}>
+      width={(hasDetonator ? (hasPaper ? 880 : 470) : 305)}
+      height={hasDetonator ? 685 : 340}>
       <Window.Content>
         <Flex>
           <Flex.Item width="480px">
@@ -141,7 +141,7 @@ class PaperView extends Component {
   render() {
     const { data } = useBackend(this.context);
     const {
-      value,
+      text,
       stamps,
     } = data.paperData;
     return (
@@ -152,7 +152,7 @@ class PaperView extends Component {
         backgroundColor="white"
         style={{ 'overflow-wrap': 'break-word' }}>
         <PaperSheetView
-          value={value}
+          value={text ? text : ""}
           stamps={stamps}
           readOnly />
       </Section>
