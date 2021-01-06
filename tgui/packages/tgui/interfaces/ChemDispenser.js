@@ -57,7 +57,7 @@ export const ReagentDispenser = (props, context) => {
     maximumBeakerVolume,
     beakerTotalVolume,
   } = data;
-  const [addAmount, setAddAmount] = useLocalState(context, 'addAmount', 10);
+  const [addAmount, setAddAmount] = useSharedState(context, 'addAmount', 10);
   const [iconToggle, setIconToggle] = useSharedState(context, 'iconToggle', false);
   const [hoverOverId, setHoverOverId] = useLocalState(context, 'hoverOver', "");
 
@@ -100,7 +100,8 @@ export const ReagentDispenser = (props, context) => {
             width={4}
             minValue={1}
             maxValue={100}
-            onDrag={(e, value) => setAddAmount(value)} />
+            onDrag={(e, value) => setAddAmount(value)}
+          />
         </Box>
       )}>
       <Section fitted backgroundColor="rgba(0,0,0,0)">
@@ -130,19 +131,25 @@ export const ReagentDispenser = (props, context) => {
             disabled={maximumBeakerVolume === beakerTotalVolume}
             lineHeight={1.75}
             onClick={() => act("dispense", {
-              amount: addAmount, reagentId: reagent.id,
-            })}>
+              amount: addAmount,
+              reagentId: reagent.id,
+            })}
+          >
             <Icon
+              color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
+              name={iconToggle ? stateMap[reagent.state].icon : "circle"}
               pt={1}
               style={{
                 "text-shadow": "0 0 3px #000",
               }}
-              color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
-              name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
-            <Tooltip.Overflow width="105px" content={reagent.name}
+            />
+            <Tooltip.Overflow
+              content={reagent.name}
               style={{
                 "line-height": "15px",
-              }}>
+              }}
+              width="105px"
+            >
               {reagent.name}
             </Tooltip.Overflow>
           </Button>
@@ -157,13 +164,13 @@ export const Beaker = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     beakerName,
-    maximumBeakerVolume,
-    currentBeakerName,
     beakerTotalVolume,
+    currentBeakerName,
+    maximumBeakerVolume,
   } = data;
 
   const [iconToggle] = useSharedState(context, 'iconToggle', false);
-  const [removeAmount, setRemoveAmount] = useLocalState(context, 'removeAmount', 10);
+  const [removeAmount, setRemoveAmount] = useSharedState(context, 'removeAmount', 10);
   const removeReagentButtons = [removeAmount, 10, 5, 1];
   const beakerContents = data.beakerContents || [];
 
@@ -187,7 +194,8 @@ export const Beaker = (props, context) => {
             value={removeAmount}
             minValue={1}
             maxValue={100}
-            onDrag={(e, value) => setRemoveAmount(value)} />
+            onDrag={(e, value) => setRemoveAmount(value)}
+          />
         </Box>
       )}>
       <Table.Row>
@@ -231,7 +239,8 @@ export const Beaker = (props, context) => {
               <Button
                 icon="minus"
                 onClick={() => act("all", {
-                  amount: removeAmount, reagentId: reagent.id,
+                  amount: removeAmount,
+                  reagentId: reagent.id,
                 })}>
                 All
               </Button>
