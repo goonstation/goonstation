@@ -517,102 +517,103 @@ Code:
 	var/list/obj/machinery/power/vent_capture/vents
 	var/obj/machinery/carouselpower/carousel
 
+	New()
+		..()
+		collector_controlers = list()
+		vents = list()
+
+	proc/find_machinery(obj/ref, type)
+		if(!ref || ref.disposed)
+			ref = locate(type) in machine_registry[MACHINES_POWER]
+			if(ref?.z != 1) ref = null
+		. = ref
+
+	proc/find_machinery_list(list/obj_list, type)
+		obj_list.len = 0
+		for(var/obj/M in machine_registry[MACHINES_POWER])
+			if(istype(M, type) && M.z == 1)
+				obj_list.Add(M)
+
+
 	return_text()
 		if(..())
 			return
-		if (!laser)
-			laser = locate() in machine_registry[MACHINES_POWER]
-			if(laser?.z != 1) laser = null
-		if (!generator)
-			generator = locate() in machine_registry[MACHINES_POWER]
-			if(generator?.z != 1) generator = null
-		if (generator && !circ1)
-			circ1 = generator.circ1
-		if (generator && !circ2)
-			circ2 = generator.circ2
-		if (!collector_controlers)
-			collector_controlers = list()
-			for (var/obj/machinery/power/collector_control/C in machine_registry[MACHINES_POWER])
-				if( C.z == 1)
-					collector_controlers.Add(C)
 
-		if (!vents)
-			vents = list()
-			for (var/obj/machinery/power/vent_capture/V in machine_registry[MACHINES_POWER])
-				if( V.z == 1)
-					vents.Add(V)
-		if(!carousel)
-			carousel = locate() in machine_registry[MACHINES_POWER]
-
-		var/stuff = src.return_text_header()
 		var/engine_found = FALSE
+
+		//TEG
+		generator = find_machinery(generator, /obj/machinery/power/generatorTemp)
+		if (generator && (!circ1 || circ1.disposed))
+			circ1 = generator.circ1
+		if (generator && (!circ2 || circ2.disposed ))
+			circ2 = generator.circ2
+
+		//Singulo
+		find_machinery_list(collector_controlers, /obj/machinery/power/collector_control)
+
+		//Oshan
+		#if defined(MAP_OVERRIDE_OSHAN)
+		find_machinery_list(vents, /obj/machinery/power/vent_capture)
+		#endif
+
+		//PTL
+		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
+
+		. = src.return_text_header()
 
 		if (generator)
 			engine_found = TRUE
-			stuff += "<BR><h4>Thermo-Electric Generator Status</h4>"
-			stuff += "Output : [engineering_notation(generator.lastgen)]W<BR>"
-			stuff += "<BR>"
+			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
+			. += "<BR>"
 
-			if(circ1)
-				stuff += "<B>Hot Loop</B><BR>"
-				stuff += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-				stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1.air2), 0.1)] kPa<BR>"
-				stuff += "<BR>"
+			if(circ1 && !circ1.disposed)
+				. += "<B>Hot Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ1.air1?.temperature, 0.1)] K  Outlet: [round(circ1.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
 
-			if(circ2)
-				stuff += "<B>Cold Loop</B><BR>"
-				stuff += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-				stuff += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2.air2), 0.1)] kPa<BR>"
-				stuff += "<BR>"
+			if(circ2 && !circ2.disposed)
+				. += "<B>Cold Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ2.air1?.temperature, 0.1)] K  Outlet: [round(circ2.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
 
-		if (length(collector_controlers))
+		if(length(collector_controlers))
 			var/controler_index = 1
 			var/collector_index = 1
 			for(var/obj/machinery/power/collector_control/C as() in collector_controlers)
 				collector_index = 1
 				if(C?.active)
 					engine_found = TRUE
-					stuff += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
-					stuff += "Output: [engineering_notation(C.lastpower)]W<BR>"
-					if(C.CA1?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1?.air_contents), 0.1) : "ERR"] kPa<BR>"
-					if(C.CA2?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2?.air_contents), 0.1) : "ERR"] kPa<BR>"
-					if(C.CA3?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3?.air_contents), 0.1) : "ERR"] kPa<BR>"
-					if(C.CA4?.active) stuff += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4?.air_contents), 0.1) : "ERR"] kPa<BR>"
-					stuff += "<BR>"
+					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
+					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1?.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2?.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA3?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3?.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4?.air_contents), 0.1) : "ERR"] kPa<BR>"
+					. += "<BR>"
 
-		if (length(vents))
-			stuff += "<BR><h4>Vent Capture Unit Status</h4>"
+		if(length(vents))
+			. += "<BR><h4>Vent Capture Unit Status</h4>"
 			for(var/obj/machinery/power/vent_capture/V as() in vents)
-				if(locate(/obj/machinery/power/monitor/smes) in V.powernet.nodes)
+				if(locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes)
 					engine_found = TRUE
-					stuff += "Output : [engineering_notation(V.last_gen)]W<BR>"
-			stuff += "<BR>"
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
 
-		if (carousel)
-			stuff += "<BR><h4>Cargo Carousel Status</h4>"
-			stuff += "Boost: [((carousel.speedup / carousel.speedup_max)*100)]%<BR>"
-			stuff += "<BR>"
+		if(!engine_found)
+			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
 
-
-		if (!engine_found)
-			stuff += "<BR><B>Error!</B> No power source detected!<BR><BR>"
-
-		stuff += "<HR>"
-		if (laser)
-			stuff += "<BR><B>Power Transmition Laser Status</B><BR>"
-			stuff += "Currently Active: "
-
-			if(laser.firing)
-				stuff += "Yes<BR>"
-			else
-				stuff += "No<BR>"
-
-			stuff += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
-			stuff += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
-			stuff += "Power Output: [engineering_notation(laser.output)]W<BR>"
+		. += "<HR>"
+		if(laser)
+			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
+			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
+			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
+			. += "Power Output: [engineering_notation(laser.output)]W<BR>"
 		else
-			stuff += "<B>Error!</B> No PTL detected!"
-		return stuff
+			. += "<B>Error!</B> No PTL detected!"
 
 //Hydroponics plant monitor.
 /datum/computer/file/pda_program/hydro_monitor
@@ -1104,7 +1105,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		src.master.updateSelfDialog()
 		return
 
-//made global so fines can use it too, might also be useful for other stuff
+//made global so fines can use it too, might also be useful for other .
 /proc/get_byond_key(var/name)
 	for(var/mob/M in mobs)
 		if(M.real_name == name && M.key)
