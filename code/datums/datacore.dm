@@ -86,10 +86,11 @@
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
-				if (M.fields["notes"] == "No notes.") //is it in its default state?
-					M.fields["notes"] = "[G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
+				if (M.fields["alg"] == "None") //is it in its default state?
+					M.fields["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M.fields["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M.fields["notes"] += " [G.fields["name"]] has an allergy to [AT.allergic_players[H]]."
+					M.fields["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
 
 	M.fields["traits"] = traitStr
 
