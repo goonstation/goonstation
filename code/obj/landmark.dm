@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/New()
+/obj/landmark/proc/init()
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -30,8 +30,16 @@ proc/pick_landmark(name, default=null)
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
 		qdel(src)
-	else
+
+/obj/landmark/New()
+	if(current_state > GAME_STATE_MAP_LOAD)
+		SPAWN_DBG(0)
+			src.init()
 		..()
+	else
+		src.init()
+		if(!src.disposed)
+			..()
 
 var/global/list/job_start_locations = list()
 

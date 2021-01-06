@@ -807,8 +807,13 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay),
 		"the bar" = list(/area/station/crew_quarters/bar),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
+
+	job_limits_override = list(
+		/datum/job/special/random/psychiatrist = 1
+	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"

@@ -1593,8 +1593,8 @@ datum
 				CRITTER_REACTION_CHECK(reaction_count)
 				var/turf/simulated/target = T
 				if (istype(target) && volume >= 5)
-					if (!locate(/obj/reagent_dispensers/spiders) in target)
-						new /obj/reagent_dispensers/spiders(target)
+					if (!locate(/obj/reagent_dispensers/cleanable/spiders) in target)
+						new /obj/reagent_dispensers/cleanable/spiders(target)
 						var/obj/critter/S
 						if (prob(10))
 							S = new /obj/critter/spider/baby(target)
@@ -1602,7 +1602,7 @@ datum
 							S = new /obj/critter/nicespider(target)
 							S.name = "spider"
 							S.set_density(0)
-					else if (locate(/obj/reagent_dispensers/spiders) in target && !locate(/obj/critter) in target)
+					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/obj/critter) in target)
 						var/obj/critter/S
 						if (prob(25))
 							S = new /obj/critter/spider/baby(target)

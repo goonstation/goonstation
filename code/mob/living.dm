@@ -353,7 +353,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -369,14 +369,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
@@ -1679,8 +1679,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
-	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
-		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1702,7 +1700,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 				src.next_move = world.time
-				src.attempt_move()
+				attempt_move(src)
 				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
 				if ((src.loc != last || force_puff) && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds

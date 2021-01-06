@@ -820,8 +820,6 @@
 		..()
 		if (!M)
 			return
-		if (prob(20))
-			M.bioHolder.AddEffect("accent_swedish", do_stability=0)
 
 /datum/job/civilian/bartender
 	name = "Bartender"

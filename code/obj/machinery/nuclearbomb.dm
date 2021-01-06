@@ -134,7 +134,7 @@
 						if (!((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
 							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
-							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
+							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
 								src.armed = 1
 								src.anchored = 1
 								if (!src.image_light)

@@ -907,7 +907,7 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
-		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+		if (activator.restrained() || is_incapacitated(activator))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
