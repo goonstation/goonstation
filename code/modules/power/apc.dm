@@ -1072,6 +1072,7 @@ var/zapLimiter = 0
 				logTheThing("station", usr, null, "overloaded the lights at [log_loc(usr)].")
 				src.overload_lighting()
 
+		src.updateUsrDialog()
 		return
 
 	else
