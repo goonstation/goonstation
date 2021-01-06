@@ -1,5 +1,9 @@
 
 (t)wed jan 06 21
+(u)Kubius
+(p)3072
+(e)⚖🆕|balance, feature
+(+)Added a new electrical maintenance crate to QM. Insulated gloves have moved to it, and it also contains multitools.
 (u)BatElite
 (p)3107
 (e)🆕🎨|feature, sprites
