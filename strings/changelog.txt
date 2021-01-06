@@ -1,5 +1,12 @@
 
 (t)wed jan 06 21
+(u)comradef191
+(p)2803
+(e)🐛🗺|bug, mapping
+(+)Fixed a bug on Cogmap1 where standing under some APCs would act as if you were in another room
+(+)The Securitron in Cogmap1 Arrivals no longer resides in the Shuttle, and is now placed infront of it in the Hallway
+(*)The Armoury & AI Core now use Plasma Glass windows, rather then Thindows, on Cogmap 1.
+(*)Overhauled the placement of items atop tables & racks on Cogmap 1
 (u)Gannets
 (p)3241
 (e)⚖🆕🔄|balance, feature, rework
