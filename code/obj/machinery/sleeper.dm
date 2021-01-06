@@ -29,13 +29,6 @@
 	// Capped at 3 min. Used to be 10 min, Christ.
 	var/maximum_time = 3 MINUTES
 	var/injection_delay = 5 SECONDS
-	var/maximum_reagent = 10
-	var/inject_reagent = 5
-	var/maximum_poison = 5
-	var/inject_poison = 2.5
-	var/damage_threshold = 15
-	var/crit_threshold = -25
-	var/timed_inject = 2
 
 	New()
 		..()
@@ -256,6 +249,14 @@
 
 	var/emagged = 0
 	var/list/med_emag = list("sulfonal", "toxin", "mercury") // Picked at random per injection.
+
+	var/damage_threshold = 15
+	var/crit_threshold = -25
+	var/timed_inject = 2
+	var/maximum_reagent = 10
+	var/inject_reagent = 5
+	var/maximum_poison = 5
+	var/inject_poison = 2.5
 
 	New()
 		..()
