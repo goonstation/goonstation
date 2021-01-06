@@ -73,6 +73,7 @@
 	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
+	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
