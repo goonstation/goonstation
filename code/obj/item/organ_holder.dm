@@ -741,7 +741,7 @@
 						grody_arc = "greasy"
 					else
 						grody_arc = "floppy"
-				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a visceral arc!</span>")
+				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
