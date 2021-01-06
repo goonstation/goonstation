@@ -1033,13 +1033,11 @@
 
 /// Checks if the target is facing in some way away from the user. Or they're lying down
 /obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
-	var/dir_from_target = get_dir(target, user)
-	var/list/valid_dirs = alldirs - target.dir - turn(target.dir, 45) - turn(target.dir, -45)
-	if ((dir_from_target in valid_dirs) || target.lying || target.stat)
+	if(ismob(target) && IN_RANGE(target, user, 1) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
-			target.organHolder.drop_and_throw_organ("tail", direction = pick(valid_dirs), vigor = 5, showtext = 1)
+			target.organHolder.drop_and_throw_organ("tail", vigor = 5, showtext = 1)
 		else if(target.organHolder?.butt)
-			target.organHolder.drop_and_throw_organ("butt", direction = pick(valid_dirs), vigor = 5, showtext = 1)
+			target.organHolder.drop_and_throw_organ("butt", vigor = 5, showtext = 1)
 
 /obj/item/katana/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))

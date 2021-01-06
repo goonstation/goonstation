@@ -726,6 +726,21 @@
 			organ_toss.throw_at(target, vigor, vigor)
 
 			if(showtext && ishuman(src.donor))
+				var/grody_arc = "bloody"
+				if(istype(organ_toss, /obj/item/parts))
+					var/obj/item/parts/limb = organ_toss
+					grody_arc = limb.streak_descriptor
+				else if(istype(organ_toss, /obj/item/organ))
+					var/obj/item/organ/orgn = organ_toss
+					if(orgn.robotic)
+						grody_arc = "oily"
+					else
+						grody_arc = "bloody"
+				else if(istype(organ_toss, /obj/item/clothing/head/butt))
+					if(istype(organ_toss, /obj/item/clothing/head/butt/cyberbutt))
+						grody_arc = "greasy"
+					else
+						grody_arc = "floppy"
 				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a visceral arc!</span>")
 				src.donor.emote("scream")
 				src.donor.update_clothing()
