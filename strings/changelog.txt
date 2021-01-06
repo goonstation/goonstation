@@ -1,6 +1,10 @@
 
 (t)wed jan 06 21
 (u)BatElite
+(p)3107
+(e)🆕🎨|feature, sprites
+(*)Medical patch boxes are now coloured the same as the patches they were made to contain!
+(u)BatElite
 (p)3097
 (e)🔄|rework
 (+)Reworked how stepping on shards works - wearing shoes doesn't save you if you crawl over them, but having robtic legs (or being in a chair with no legs) lets you go over them with no problem.
