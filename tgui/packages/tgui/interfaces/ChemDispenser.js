@@ -57,7 +57,7 @@ export const ReagentDispenser = (props, context) => {
     maximumBeakerVolume,
     beakerTotalVolume,
   } = data;
-  const [addAmount, setAddAmount] = useLocalState(context, 'addAmount', 20);
+  const [addAmount, setAddAmount] = useLocalState(context, 'addAmount', 10);
   const [iconToggle, setIconToggle] = useSharedState(context, 'iconToggle', false);
   const [hoverOverId, setHoverOverId] = useLocalState(context, 'hoverOver', "");
 
@@ -163,7 +163,7 @@ export const Beaker = (props, context) => {
   } = data;
 
   const [iconToggle] = useSharedState(context, 'iconToggle', false);
-  const [removeAmount, setRemoveAmount] = useLocalState(context, 'removeAmount', 20);
+  const [removeAmount, setRemoveAmount] = useLocalState(context, 'removeAmount', 10);
   const removeReagentButtons = [removeAmount, 10, 5, 1];
   const beakerContents = data.beakerContents || [];
 
