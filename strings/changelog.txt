@@ -1,5 +1,9 @@
 
 (t)wed jan 06 21
+(u)Retrino
+(p)3234
+(e)🎨|sprites
+(*)PDAs now have shiny new sprites by Jinnerotto (Jinnerotto#8229 on Discord)!
 (u)comradef191
 (p)2803
 (e)🐛🗺|bug, mapping
