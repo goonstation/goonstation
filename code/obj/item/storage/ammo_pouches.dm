@@ -129,8 +129,8 @@
 	w_class = 1.00
 	slots = 4
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
-	/obj/item/reagent_containers/mender/burn)
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
+	/obj/item/reagent_containers/mender/burn/high_capacity)
 
 /obj/item/storage/security_pouch
 	name = "security pouch"
