@@ -26,12 +26,14 @@
 	var/delaystart
 	var/delaymin
 	var/rampfactor
+	var/toggle = 0
 	var/list/obj/screen/fullautoAimHUD/hudSquares = list()
 
-	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9)
+	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9, toggle = FULLAUTO_ALWAYS_ACTIVE)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
+			src.toggle = toggle
 			var/obj/item/gun/G = parent
 			src.delaystart = delaystart
 			src.delaymin = delaymin
@@ -43,9 +45,14 @@
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
+			if(src.toggle != FULLAUTO_ALWAYS_ACTIVE)
+				RegisterSignal(G, COMSIG_ITEM_ATTACK_SELF, .proc/toggle_fullauto_firemode)
 
-			if(ismob(G.loc))
-				on_pickup(null, G.loc)
+			if(src.toggle)
+				RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
+				RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
+				if(ismob(G.loc))
+					on_pickup(null, G.loc)
 
 	disposing()
 		for(var/hudSquare in hudSquares)
@@ -53,22 +60,48 @@
 		. = ..()
 
 	on_pickup(datum/source, mob/user)
-		. = ..()
-		for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-			for(var/y in 1 to 15)
-				var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
-				FH.mouse_over_pointer = icon(cursors_selection[user.client?.preferences.target_cursor], "all")
-				if((y >= 7 && y <= 9) && (x >= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
-					continue
-				user.client?.screen += hudSquares["[x],[y]"]
-		stopping = 0
+		if(toggle)
+			if(user.equipped() == parent)
+				init_fullauto_mode(source, user)
+			. = ..()
 
 	on_dropped(datum/source, mob/user)
-		end_shootloop(user)
-		for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-			for(var/y in 1 to 15)
-				user.client?.screen -= hudSquares["[x],[y]"]
+		end_fullauto_mode(source, user)
 		. = ..()
+
+/datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, mob/user)
+	src.toggle = !src.toggle
+	var/obj/item/gun/G = parent
+	if(toggle)
+		RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
+		RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
+		if(user.equipped() == G)
+			on_pickup(source, user)
+	else
+		UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
+		UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
+		if(user.equipped() == G)
+			on_dropped(source, user)
+
+/datum/component/holdertargeting/fullauto/proc/init_fullauto_mode(datum/source, mob/user)
+	for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
+		for(var/y in 1 to 15)
+			var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
+			FH.mouse_over_pointer = icon(cursors_selection[user.client?.preferences.target_cursor], "all")
+			if((y >= 7 && y <= 9) && (x >= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
+				continue
+			user.client?.screen += hudSquares["[x],[y]"]
+	stopping = 0
+
+
+
+/datum/component/holdertargeting/fullauto/proc/end_fullauto_mode(datum/source, mob/user)
+	end_shootloop(user)
+	for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
+		for(var/y in 1 to 15)
+			user.client?.screen -= hudSquares["[x],[y]"]
+
+
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
 	if(!stopping)
@@ -122,17 +155,19 @@
 		G.suppress_fire_msg = 1
 		sleep(max(delay*=rampfactor, delaymin))
 
-	//loop ended - reset values
-	G.suppress_fire_msg = initial(G.suppress_fire_msg)
-	UnregisterSignal(L, COMSIG_FULLAUTO_MOUSEDRAG)
-	UnregisterSignal(L, COMSIG_MOUSEUP)
-	UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
-
-	for(var/x in ((istext(L.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(L.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-		for(var/y in 7 to 9)
-			L.client?.screen -= hudSquares["[x],[y]"]
 	stopping = 0
 	shooting = 0
 
 /datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/user)
+	//loop ended - reset values
+	var/obj/item/gun/G = parent
+	G.suppress_fire_msg = initial(G.suppress_fire_msg)
+	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
+	UnregisterSignal(user, COMSIG_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+	for(var/x in ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+		for(var/y in 7 to 9)
+			user.client?.screen -= hudSquares["[x],[y]"]
+
 	stopping = 1

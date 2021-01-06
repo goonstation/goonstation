@@ -28,3 +28,8 @@
 
 //default max range for 'unlimited' range projectiles
 #define PROJ_INFINITE_RANGE 500
+
+//fullauto stuff
+#define FULLAUTO_INACTIVE 0
+#define FULLAUTO_ACTIVE 1
+#define FULLAUTO_ALWAYS_ACTIVE 2

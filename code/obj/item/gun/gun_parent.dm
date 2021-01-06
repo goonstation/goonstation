@@ -145,6 +145,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
+	..()
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.current_projectile = src.projectiles[src.current_projectile_num]
