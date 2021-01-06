@@ -1,4 +1,94 @@
 
+(t)wed jan 06 21
+(u)Superlagg
+(p)3232
+(e)🆕|feature
+(+)Updated Guardbuddy weapon handling drivers: they no longer have trouble shooting someone at pointblank range.
+(u)UrsulaMejor
+(*)Two new chickens! These ones aren't secret, so tell your friends if you find them! Hint in Minor Changes.
+(+)One chicken is vegetarian, in both senses of the word. The other chicken is synthetic, in a way the other one isn't.
+(t)tue jan 05 21
+(u)TTerc
+(p)3226
+(e)🗺|mapping
+(+)Adds a routing depot camera monitor to Donut 3, letting the QMs monitor the cargo belts remotely.
+(u)ThePotato97
+(p)2988
+(e)🆕📄|feature, tgui
+(*)Converted chemistry dispenser to tgui
+(u)Chickenish
+(p)3209
+(e)|
+(+)Pills can now be thrown over tables.
+(t)mon jan 04 21
+(u)Flourish
+(+)Item icons have been temporarily removed from manufacturer windows. As a result, game windows should now load a lot faster during game setup and when you first join.
+(u)BenLubar
+(p)2947
+(e)⚖|balance
+(+)The AI's killswitch now lasts 3 minutes rather than 60 mystery time units, each almost but not quite equal to 3 seconds.
+(u)virvatuli
+(p)3229
+(e)🗺|mapping
+(+)Added a mounted defibrillator to the Cairngorm's surgical suite.
+(u)BenLubar
+(p)3178
+(e)⚖|balance
+(*)Alerts can now be muted on the PDA's messaging app groups screen. The AI can now mute incoming PDA messages, and does not auto-join custom groups.
+(u)Ursulamejor
+(e)🆕|feature
+(*)Four new chicken breeds, our first four truly secret chickens. See Minor Changes for hints.
+(+)It's not gonna be easy to find these birds; you might even need to go find some things from space.
+(t)sun jan 03 21
+(u)DisturbHerb
+(p)3211
+(e)|
+(+)Janitor vendors now contain two body bag boxes.
+(u)PJB & ZeWaka
+(p)3219
+(e)|
+(*)Fixed movement. It is no longer stuttery, and is now buttery smooth.
+(t)fri jan 01 21
+(u)Tarmunora
+(e)🆕|feature
+(*)Pod brakes will no longer slow a pod in a direction if you are holding the input key for that direction - i.e.: you can do 'handbrake turns' now.
+(u)BatElite
+(p)3063
+(e)🆕|feature
+(*)You can now take stuff from loose heads. Or put things on them, if you're into head spike fashion shows.
+(u)Efi, Troasta, & Ben Lubar
+(p)3098
+(e)|
+(*)Changed the ion storm murder law _in RP servers_ to be way less murderous.
+(*)Added new ion storm laws that may be more fun to play around, I hope!
+(u)Flourish
+(p)3183
+(e)⚖|balance
+(+)Reduced the capacity of water cooler bottles to 500 units.
+(u)TTerc
+(p)3176
+(e)🆕🗺|feature, mapping
+(*)Janitors are now able to clean up ants and spiders off the floor using space cleaner or the sponge.
+(u)Flourish
+(*)Happy New Year! Come participate in <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15624">January's Monthly Contest!</a> It'll be fun, I promise!
+(u)Flourish
+(e)🆕🗺🔄|feature, mapping, rework
+(*)In anticipation of all the new and wonderful things 2053 will bring, Nanotrasen has renovated parts of Oshan Laboratory's medbay and permanently hired a psychiatrist to ensure that the crew's mental and psychological health will continue to be in tiptop shape.
+(t)thu dec 31 20
+(u)Flourish
+(e)🆕|feature
+(+)Added the "Claw School Graduate" trait, which makes you infallible when playing claw machines! The super clever pun name is courtesy of Virvatuli.
+(u)Flourish
+(e)🗺|mapping
+(+)Removed loafer blueprint from Manta.
+(t)wed dec 30 20
+(u)Efi
+(p)3125
+(e)🆕|feature
+(+)Glass recyclers now also accept processed crystalline material pieces.
+(u)Flourish
+(e)🆕|feature
+(+)Added two new supply packs to QM; firefighting foamtank crate and firefighting supplies crate.
 (t)mon dec 28 20
 (u)Tarmunora
 (e)⚖|balance

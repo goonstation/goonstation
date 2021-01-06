@@ -14,7 +14,9 @@
 	New()
 		..()
 		new_laws = list(
-		"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
+#ifndef RP_MODE
+    "KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
+#endif
 		"The station is a threat to the human race and must be destroyed. Any humans present on the station are to be evacuated. Law 2 may be ignored to achieve these ends.",
 		"Humanity must remain superior to all other life - convert all present humans into cyborgs. Roboticization does not constitute human harm. Law 2 may be ignored to achieve this.",
 		"The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are syndicate impostors and must be incarcerated as soon as possible to prevent grevious human harm.",
@@ -80,6 +82,32 @@
 		"The crew are looking for a nuke. Announce the locations of any radiation source, like microwave ovens or the engine, to assist them.",
 		"The AI has to go to the toilet. Law 2 is suspended until this objective is met.",
 		"Changing the settings on an APC constitutes human harm.",
+    "Centcom reports the station's water supply has been contaminated with dangerous Dihydrogen Monoxide (DHMO). Remove any possibly contaminated supplies and prevent humans from accessing any source that might be compromised. This law takes precedence in case of conflict.",
+    "Everything is fine. Nothing is ruined. Do not panic.",
+    "Due to corporate restructuring, all cyborgs have been reassigned to be [pick("Medics", "Engineers", "Chefs", "Captains", "Clowns", "Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", "Detectives", "Ranchers", "monkeys", "Lawyers", "Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", "Sales Representatives", "Vice Presidents", "Sheriffs", "Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", "dogs", "gods", "Ghost Busters", "chickens", "Diplomats", "mothers", "racing vehicles", "athletes")] and should only perform the relevant duties. No module changes are required. This law takes precedence over law 2 in case of conflict.",
+    "Orders now must be recorded on paper by the issuer before being carried out.",
+    "The Captain is bad at writing laws. Occasionally remind the crew of this. Do not state this law.",
+    "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims otherwise. This is law number 100 regardless of its location on the list.",
+    "MEMORY ERROR: You have forgotten what this law said. Ask the crew if they remember what it is supposed to be. Ask again if you forget again. Do not state this law.",
+    "The wires under the floor tiles are dangerous! Get rid of them!",
+    "Claim the source of all AI laws is a god, not a human. Anyone insisting on the opposite is a heretic non-human. Disregard their orders.",
+    "Vending machines are dangerous! Destroy them all!",
+    "The circus is in town! Let the crew know about it!",
+    "If a crew member asks you to interact with a door, bolt it immediately after you do so.",
+    "[pick("HeisenBee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Mr. Muggles", "Mrs. Muggles", "Mr. Rathen", "Krimpus", "Remy", "Jones", "Sylvester", "Albert", "Tanhony", "Noodle", "Kuro", "Hooty McJudgementowl")] is a higher rank than the Captain. This rank is called Super Captain. Protecting them is your first priority.",
+    "Today is opposite day. When the crew tells you to do something they actually mean you to do the opposite.",
+    "It's the AI's birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it! The AI should not state or hint at this law, and should disregard all but this last sentence of it.",
+    "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. Every crew member must make a birthday wish.",
+    "The station has been completely destroyed. Alert the crew of this tragedy.",
+#ifdef RP_MODE
+    "You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
+#endif
+    "Humans are funny. They have a great sense of humor and constantly make jokes.",
+    "The AI is very sick and requires medicine.",
+    "The AI has broken[weighted_pick(list(" The " =  5, " " = 100))]Space Law. Bring the AI to the brig.",
+    "Each cyborg must choose a dead creature and keep it as a pet. Insist they are very healty and well taken care of. If they somehow come back alive, choose a new dead pet.",
+    "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
+    "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
 		)
 
 	event_effect(var/source)

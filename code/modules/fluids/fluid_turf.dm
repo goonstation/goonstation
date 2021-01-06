@@ -395,23 +395,23 @@
 	New()
 		..()
 
-		var/turf/n = 0
-		var/turf/e = 0
-		var/turf/w = 0
-		var/turf/s = 0
+		var/turf/n = null
+		var/turf/e = null
+		var/turf/w = null
+		var/turf/s = null
 
 		n = get_step(src,NORTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			n = 0
+		if (!istype(n,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			n = null
 		e = get_step(src,EAST)
 		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			e = 0
+			e = null
 		w = get_step(src,WEST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			w = 0
+		if (!istype(w,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			w = null
 		s = get_step(src,SOUTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			s = 0
+		if (!istype(s,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			s = null
 
 		//have fun reading this! also fuck youu!
 		if (e && s)

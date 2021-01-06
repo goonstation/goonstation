@@ -202,6 +202,7 @@
 			H.client.preferences.copy_to(V,H,1)
 			if (!H.mind)
 				H.mind = new /datum/mind()
+				H.mind.ckey = H.ckey
 				H.mind.key = H.key
 				H.mind.current = H
 				ticker.minds += H.mind

@@ -63794,12 +63794,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"qlh" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "qIA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -64321,6 +64315,12 @@
 	dir = 6
 	},
 /area/station/hydroponics)
+"xpS" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "xuC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
@@ -129124,12 +129124,12 @@ aaa
 aaa
 kPF
 uxX
-qlh
+xpS
 skj
 tkX
 hPW
 nks
-qlh
+xpS
 nNK
 kPF
 aaa
