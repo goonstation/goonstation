@@ -26,6 +26,16 @@
 	var/time_started = 0 // TIME when the timer was started
 	var/obj/machinery/sleeper/our_sleeper = null
 	var/find_sleeper_in_range = 1
+	// Capped at 3 min. Used to be 10 min, Christ.
+	var/maximum_time = 3 MINUTES
+	var/injection_delay = 5 SECONDS
+	var/maximum_reagent = 10
+	var/inject_reagent = 5
+	var/maximum_poison = 5
+	var/inject_poison = 2.5
+	var/damage_threshold = 15
+	var/crit_threshold = -25
+	var/timed_inject = 2
 
 	New()
 		..()
@@ -142,7 +152,7 @@
 			return
 		switch(action)
 			if("timer")
-				if (src.our_sleeper && src.our_sleeper.occupant && !isdead(src.our_sleeper.occupant))
+				if (src.our_sleeper?.occupant && !isdead(src.our_sleeper.occupant))
 					src.timing = !src.timing
 					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
@@ -150,25 +160,25 @@
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
-						src.time = clamp(src.time + src.time_started - TIME, 0, 1800)
+						src.time = clamp(src.time + src.time_started - TIME, 0, maximum_time)
 						src.time_started = 0
 						src.wake_occupant()
 				. = TRUE
 			if("time_add")
-				// Capped at 3 min. Used to be 10 min, Christ.
-				if (src.our_sleeper && src.time <= 1800)
+				if (src.our_sleeper && src.time <= maximum_time)
 					var/t = params["tp"]
 					if (t > 0 && src.timing && src.our_sleeper.occupant)
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
-					src.time = clamp(src.time + (t*10), 0, 1800)
+					src.time = clamp(src.time + (t*10), 0, maximum_time)
 				. = TRUE
 			if("inject")
-				if (src.our_sleeper && src.our_sleeper.occupant && !src.timing)
+				var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay
+				if (src.our_sleeper?.occupant && !src.timing && !is_recharging)
 					src.our_sleeper.inject(usr, TRUE)
 				. = TRUE
 			if("eject")
-				if (src.our_sleeper && src.our_sleeper.occupant)
+				if (src.our_sleeper?.occupant)
 					src.our_sleeper.go_out()
 				. = TRUE
 
@@ -183,11 +193,12 @@
 			"sleeperGone" = FALSE,
 			"hasOccupant" = FALSE,
 			"rejuvinators" = list(),
-			"recharging" = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + 50,
+			"recharging" = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay,
 			"isTiming" = src.timing,
 			"time" = src.time,
 			"timeStarted" = src.time_started,
 			"timeNow" = TIME,
+			"maxTime" = src.maximum_time,
 		)
 
 		var/mob/occupant = src.our_sleeper.occupant
@@ -195,7 +206,7 @@
 			. += list(
 				"hasOccupant" = TRUE,
 				"occupantStat" = occupant.stat,
-				"health" = occupant.health,
+				"health" = occupant.health / occupant.max_health,
 				"oxyDamage" = occupant.get_oxygen_deprivation(),
 				"toxDamage" = occupant.get_toxin_damage(),
 				"burnDamage" = occupant.get_burn_damage(),
@@ -389,7 +400,7 @@
 				if (istype(D.master, /datum/ailment/addiction))
 					var/datum/ailment_data/addiction/A = D
 					var/probability = 5
-					if (world.timeofday > A.last_reagent_dose + 1500)
+					if (world.timeofday > A.last_reagent_dose + 2.5 MINUTES)
 						probability = 10
 					if (prob(probability))
 						//DEBUG_MESSAGE("Healed [M]'s [A.associated_reagent] addiction.")
@@ -402,17 +413,17 @@
 			var/our_poison = pick(src.med_emag)
 			if (M.reagents.get_reagent_amount(our_poison) == 0)
 				//DEBUG_MESSAGE("Injected occupant with [our_poison] at [log_loc(src)].")
-				M.reagents.add_reagent(our_poison, 2)
+				M.reagents.add_reagent(our_poison, timed_inject)
 				// don't set injected_anything (the poison uses a sneaky silent injector)
 		else
-			if (M.health < -25 && M.reagents.get_reagent_amount(src.med_crit) == 0)
-				M.reagents.add_reagent(src.med_crit, 2)
+			if (M.health < crit_threshold && M.reagents.get_reagent_amount(src.med_crit) == 0)
+				M.reagents.add_reagent(src.med_crit, timed_inject)
 				injected_anything = TRUE
-			if (M.get_oxygen_deprivation() >= 15 && M.reagents.get_reagent_amount(src.med_oxy) == 0)
-				M.reagents.add_reagent(src.med_oxy, 2)
+			if (M.get_oxygen_deprivation() >= damage_threshold && M.reagents.get_reagent_amount(src.med_oxy) == 0)
+				M.reagents.add_reagent(src.med_oxy, timed_inject)
 				injected_anything = TRUE
-			if (M.get_toxin_damage() >= 15 && M.reagents.get_reagent_amount(src.med_tox) == 0)
-				M.reagents.add_reagent(src.med_tox, 2)
+			if (M.get_toxin_damage() >= damage_threshold && M.reagents.get_reagent_amount(src.med_tox) == 0)
+				M.reagents.add_reagent(src.med_tox, timed_inject)
 				injected_anything = TRUE
 
 		if (injected_anything)
@@ -444,10 +455,10 @@
 
 			// We always inject this, even when emagged to mask the fact we're malfunctioning.
 			// Otherwise, one glance at the control console would be sufficient.
-			if (rejuv < 10)
-				var/inject_r = 5
-				if ((rejuv + inject_r) > 10)
-					inject_r = max(0, (10 - rejuv))
+			if (rejuv < maximum_reagent)
+				var/inject_r = inject_reagent
+				if ((rejuv + inject_r) > maximum_reagent)
+					inject_r = max(0, (maximum_reagent - rejuv))
 				src.occupant.reagents.add_reagent(src.med_stabilizer, inject_r)
 				injected_anything = TRUE
 
@@ -455,34 +466,34 @@
 			if (src.emagged)
 				var/our_poison = pick(src.med_emag)
 				var/poison = src.occupant.reagents.get_reagent_amount(our_poison)
-				if (poison < 5)
-					var/inject_p = 2.5
-					if ((poison + inject_p) > 5)
-						inject_p = max(0, (5 - poison))
+				if (poison < maximum_poison)
+					var/inject_p = inject_poison
+					if ((poison + inject_p) > maximum_poison)
+						inject_p = max(0, (inject_poison - poison))
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
 						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
-				if (src.occupant.health < -25 && crit < 10)
-					var/inject_c = 5
-					if ((crit + inject_c) > 10)
-						inject_c = max(0, (10 - crit))
+				if (src.occupant.health < crit_threshold && crit < maximum_reagent)
+					var/inject_c = inject_reagent
+					if ((crit + inject_c) > maximum_reagent)
+						inject_c = max(0, (maximum_reagent - crit))
 					src.occupant.reagents.add_reagent(src.med_crit, inject_c)
 					injected_anything = TRUE
 
-				if (src.occupant.get_oxygen_deprivation() >= 15 && oxy < 10)
-					var/inject_o = 5
-					if ((oxy + inject_o) > 10)
-						inject_o = max(0, (10 - oxy))
+				if (src.occupant.get_oxygen_deprivation() >= damage_threshold && oxy < maximum_reagent)
+					var/inject_o = inject_reagent
+					if ((oxy + inject_o) > maximum_reagent)
+						inject_o = max(0, (maximum_reagent - oxy))
 					src.occupant.reagents.add_reagent(src.med_oxy, inject_o)
 					injected_anything = TRUE
 
-				if (src.occupant.get_toxin_damage() >= 15 && tox < 10)
-					var/inject_t = 5
-					if ((tox + inject_t) > 10)
-						inject_t = max(0, (10 - tox))
+				if (src.occupant.get_toxin_damage() >= damage_threshold && tox < maximum_reagent)
+					var/inject_t = inject_reagent
+					if ((tox + inject_t) > maximum_reagent)
+						inject_t = max(0, (maximum_reagent - tox))
 					src.occupant.reagents.add_reagent(src.med_tox, inject_t)
 					injected_anything = TRUE
 

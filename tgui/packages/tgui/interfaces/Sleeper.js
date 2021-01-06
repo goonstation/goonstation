@@ -1,16 +1,40 @@
 /**
  * @file
- * @copyright 2020
+ * @copyright 2021
  * @author BenLubar (https://github.com/BenLubar)
  * @license ISC
  */
 
 import { useBackend } from "../backend";
-import { Box, Button, Section, Knob, ProgressBar, LabeledList, Flex, Icon, TimeDisplay, HealthStat } from "../components";
+import { Box, Button, Flex, HealthStat, Icon, LabeledList, Knob, ProgressBar, Section, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 import { formatTime } from "../format";
 
 const damageNum = num => num <= 0 ? "0" : num.toFixed(1);
+
+const OccupantStatus = {
+  Conscious: 0,
+  Unconscious: 1,
+  Dead: 2,
+};
+
+const occupantStatuses = {
+  [OccupantStatus.Conscious]: {
+    name: 'Conscious',
+    color: 'good',
+    icon: 'check',
+  },
+  [OccupantStatus.Unconscious]: {
+    name: 'Unconscious',
+    color: 'average',
+    icon: 'bed',
+  },
+  [OccupantStatus.Dead]: {
+    name: 'Dead',
+    color: 'bad',
+    icon: 'skull',
+  },
+};
 
 export const Sleeper = (props, context) => {
   const { data, act } = useBackend(context);
@@ -29,12 +53,14 @@ export const Sleeper = (props, context) => {
     time,
     timeStarted,
     timeNow,
+    maxTime,
   } = data;
 
   const curTime = Math.max(timeStarted
     ? (time || 0) + timeStarted - timeNow
     : (time || 0), 0);
   const canInject = hasOccupant && !isTiming && !recharging && occupantStat < 2;
+  const occupantStatus = occupantStatuses[occupantStat];
 
   return (
     <Window
@@ -50,46 +76,40 @@ export const Sleeper = (props, context) => {
               color="good"
               disabled={!hasOccupant || !!isTiming}
               onClick={() => act("eject")}>
-              {"Eject"}
+              Eject
             </Button>
           }>
           {!hasOccupant && (sleeperGone ? "Check connection to sleeper pod." : "The sleeper is unoccupied.")}
           {!!hasOccupant && (
             <LabeledList>
               <LabeledList.Item label="Status">
-                <Icon color={occupantStat > 1 ? "bad" : occupantStat === 1 ? "average" : "good"}
-                  name={occupantStat === 0 ? "check" : occupantStat === 1 ? "bed" : "skull"} />
-                {
-                  occupantStat === 0 ? " Conscious"
-                    : occupantStat === 1 ? " Unconscious"
-                      : occupantStat === 2 ? " Dead"
-                        : (" Error " + occupantStat)
-                }
+                <Icon
+                  color={occupantStatus.color}
+                  name={occupantStatus.icon} />
+                {" "}{occupantStatus.name}
               </LabeledList.Item>
               <LabeledList.Item label="Overall Health">
                 <ProgressBar
                   value={health}
-                  maxValue={100}
-                  minValue={0}
                   ranges={{
-                    good: [90, Infinity],
-                    average: [50, 90],
-                    bad: [-Infinity, 50],
+                    good: [0.9, Infinity],
+                    average: [0.5, 0.9],
+                    bad: [-Infinity, 0.5],
                   }} />
               </LabeledList.Item>
               <LabeledList.Item label="Damage Breakdown">
                 <HealthStat inline align="center" type="oxy" width={5}>
                   {damageNum(oxyDamage)}
                 </HealthStat>
-                {"/"}
+                /
                 <HealthStat inline align="center" type="toxin" width={5}>
                   {damageNum(toxDamage)}
                 </HealthStat>
-                {"/"}
+                /
                 <HealthStat inline align="center" type="burn" width={5}>
                   {damageNum(burnDamage)}
                 </HealthStat>
-                {"/"}
+                /
                 <HealthStat inline align="center" type="brute" width={5}>
                   {damageNum(bruteDamage)}
                 </HealthStat>
@@ -106,7 +126,7 @@ export const Sleeper = (props, context) => {
                 color="good"
                 disabled={!canInject}
                 onClick={() => act("inject")}>
-                {"Inject"}
+                Inject
               </Button>
             }>
             <Section height={10} level={2} scrollable>
@@ -118,7 +138,7 @@ export const Sleeper = (props, context) => {
                       {" " + r.volume.toFixed(3)}
                       {!!r.od && r.volume >= r.od && (
                         <Box inline color="bad" pl={1}>
-                          {"(Overdose!)"}
+                          (Overdose!)
                         </Box>
                       )}
                     </LabeledList.Item>
@@ -127,7 +147,7 @@ export const Sleeper = (props, context) => {
               )}
             </Section>
             <Box italic textAlign="center" color="label" mt={2}>
-              {"Use separate reagent scanner for complete analysis."}
+              Use separate reagent scanner for complete analysis.
             </Box>
           </Section>
         )}
@@ -152,7 +172,7 @@ export const Sleeper = (props, context) => {
                 step={5}
                 stepPixelSize={2}
                 minValue={0}
-                maxValue={180}
+                maxValue={maxTime / 10}
                 value={curTime / 10}
                 onDrag={(e, targetValue) => act("time_add", { tp: targetValue - curTime / 10 })} />
             </Flex.Item>
@@ -172,7 +192,8 @@ export const Sleeper = (props, context) => {
             </Flex.Item>
             <Flex.Item shrink={1}>
               <Box italic textAlign="center" color="label" pl={1}>
-                {"System will inject rejuvenators automatically when occupant is in hibernation."}
+                System will inject rejuvenators automatically
+                when occupant is in hibernation.
               </Box>
             </Flex.Item>
           </Flex>
