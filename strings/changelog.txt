@@ -1,4 +1,9 @@
+
 (t)wed jan 06 21
+(u)Superlagg
+(p)3232
+(e)🆕|feature
+(+)Updated Guardbuddy weapon handling drivers: they no longer have trouble shooting someone at pointblank range.
 (u)UrsulaMejor
 (*)Two new chickens! These ones aren't secret, so tell your friends if you find them! Hint in Minor Changes.
 (+)One chicken is vegetarian, in both senses of the word. The other chicken is synthetic, in a way the other one isn't.
