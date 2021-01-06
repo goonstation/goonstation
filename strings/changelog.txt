@@ -1,5 +1,9 @@
 
 (t)wed jan 06 21
+(u)BatElite
+(p)3097
+(e)🔄|rework
+(+)Reworked how stepping on shards works - wearing shoes doesn't save you if you crawl over them, but having robtic legs (or being in a chair with no legs) lets you go over them with no problem.
 (u)Retrino
 (p)3234
 (e)🎨|sprites
