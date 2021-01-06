@@ -178,6 +178,7 @@
 		..()
 
 /obj/machinery/bot/firebot/process()
+	. = ..()
 	if(!src.on)
 		src.stunned = 0
 		return

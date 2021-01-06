@@ -257,6 +257,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 
 /obj/machinery/bot/floorbot/process()
+	. = ..()
 	// checks to see if robot is on / busy already
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return

@@ -19,6 +19,26 @@
 	var/emagged = 0
 	var/mob/emagger = null
 	var/text2speech = 0 // dectalk!
+	var/obj/chat_maptext_holder/speech2text = new
+	/// Bots get their processing tier changed based on what they're doing
+	/// If they're offscreen and not doing anything interesting, they get processed less rapidly
+	/// If they're onscreen and not in the middle of something major, they get processed rapidly
+	/// If they're right in the middle of something like arresting someone, they get processed *ehhh* quick
+	/// Low process rate for bots that we can't see
+	var/PT_idle = PROCESSING_EIGHTH
+	/// High process rate for bots looking for something to do
+	var/PT_search = PROCESSING_FULL
+	/// Middle process rate for bots currently trying to murder someone
+	var/PT_active = PROCESSING_QUARTER
+	var/hash_cooldown = (2 SECONDS)
+	var/next_hash_check = 0
+	/// If we're in the middle of something and don't want our tier to go wonky
+	var/doing_something = 0
+	/// Range that the bot checks for people
+	/// Should be low for bots that don't interact with people that much, like skullbots
+	/// Should be around 7ish for bots that interact with people, but tend to sit still
+	/// Should be fairly high for patrolling "major character" bots, like Buddies
+	var/hash_check_range = 2
 	p_class = 2
 
 	power_change()
@@ -36,6 +56,8 @@
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
 			src.cam.network = setup_camera_network
+		src.processing_tier = src.PT_idle
+		src.SubscribeToProcess()
 
 	disposing()
 		botcard = null
@@ -51,6 +73,30 @@
 		if (W.hitsound)
 			playsound(src,W.hitsound,50,1)
 		..()
+
+	process(mult, var/force)
+		if(src.doing_something && src.processing_tier != src.PT_active)
+			src.processing_tier = src.PT_active
+			src.SubscribeToProcess()
+			boutput(world, "[src] set into [src.PT_active] tier!!!")
+		else if(!src.doing_something && TIME >= (src.next_hash_check))
+			src.next_hash_check = TIME + src.hash_cooldown
+			if(src.CheckIfVisible())
+				src.processing_tier = src.PT_search
+				src.SubscribeToProcess()
+				boutput(world, "[src] set into [src.PT_search] tier!!!")
+			else
+				src.processing_tier = src.PT_idle
+				src.SubscribeToProcess()
+				boutput(world, "[src] set into [src.PT_idle] tier!!!")
+		. = ..()
+
+	proc/CheckIfVisible()
+		for (var/mob/M in GET_NEARBY(src, src.hash_check_range))
+			var/client/C = M.client
+			if (C)
+				. = 1
+				break
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)

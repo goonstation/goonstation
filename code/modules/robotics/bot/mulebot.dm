@@ -494,6 +494,7 @@
 	var/last_process_time
 
 	process()
+		. = ..()
 		var/time_since_last = TIME - last_process_time
 		last_process_time = TIME
 		if(!has_power())

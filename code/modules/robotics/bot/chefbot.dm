@@ -17,6 +17,7 @@
 	if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
 
 /obj/machinery/bot/chefbot/process()
+	. = ..()
 	if (raging)
 		return
 	if(prob(60) && src.on == 1)

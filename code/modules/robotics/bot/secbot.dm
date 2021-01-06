@@ -127,6 +127,7 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
+	tacticool = 1
 	move_arrest_delay_mult = 0.9 // beepsky has some experience chasing crimers
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
@@ -204,7 +205,7 @@
 			src.our_baton = new our_baton_type(src)
 
 
-		if (src.tacticool)
+		if (src.tacticool || prob(20))
 			make_tacticool()
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
@@ -494,6 +495,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 						src.baton_attack(src.target, 1)
 
 	process()
+		. = ..()
 		if (!src.on)
 			return
 
@@ -501,12 +503,14 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_IDLE)		// idle
 
+				src.doing_something = 0
 				look_for_perp()	// see if any criminals are in range
 				if(auto_patrol)	// still idle, and set to patrol
 					mode = SECBOT_START_PATROL	// switch to patrol mode
 
 			if(SECBOT_HUNT)		// hunting for perp
 
+				src.doing_something = 1
 				if (src.target.hasStatus("handcuffed") || src.frustration >= 8) // if can't reach perp for long enough, go idle
 					src.target = null
 					src.last_found = world.time
@@ -530,6 +534,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
 				// see if he got away
+				src.doing_something = 1
 				if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc) && src.target:getStatusDuration("weakened") < 20))
 					src.anchored = 0
 					mode = SECBOT_HUNT
@@ -550,11 +555,12 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_ARREST)		// arresting
 
+				src.doing_something = 1
 				if (src.frustration >= 8)
 					src.target = null
 					src.last_found = world.time
 					src.frustration = 0
-					src.mode = 0
+					src.mode = SECBOT_IDLE
 					//qdel(src.mover)
 					if (src.mover)
 						src.mover.master = null
@@ -581,6 +587,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(SECBOT_START_PATROL)	// start a patrol
 
+				src.doing_something = 0
 				if(patrol_target) // have a valid path, so go there
 					mode = SECBOT_PATROL
 					return
@@ -593,6 +600,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				move_the_bot(PATROL_SPEED * move_patrol_delay_mult)
 
 			if(SECBOT_SUMMON)		// summoned to PDA
+				src.doing_something = 1
 				if(!src.moving)
 					mode = SECBOT_IDLE	// switch back to what we should be
 		return
@@ -1109,7 +1117,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		..()
 		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
 			master.weeoo()
-			master.process()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1118,7 +1125,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		master.cuffing = 1
 		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
 			master.weeoo()
-			master.process()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1228,18 +1234,10 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		..()
 		if(IN_RANGE(master, master.target, 1))
 			master.baton_attack(master.target, 1)
-			SPAWN_DBG(0)
-				master.weeoo()
-				master.process()
-			return
 		else
 			master.charge_baton()
-			SPAWN_DBG(0)
-				master.weeoo()
-				master.process()
-			return
-
-
+		SPAWN_DBG(0)
+			master.weeoo()
 
 //Secbot Construction
 

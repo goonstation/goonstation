@@ -24,6 +24,7 @@
 		if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
 
 /obj/machinery/bot/duckbot/process()
+	. = ..()
 	if(prob(10) && src.on == 1)
 		SPAWN_DBG(0)
 			var/message = pick("wacka", "quack","quacky","gaggle")

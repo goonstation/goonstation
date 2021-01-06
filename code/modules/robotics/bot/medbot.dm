@@ -1,7 +1,7 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-
+#define MEDBOT_MOVE_SPEED 6
 /obj/machinery/bot/medbot
 	name = "Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
@@ -228,10 +228,8 @@
 /obj/machinery/bot/medbot/Move(var/turf/NewLoc, direct)
 	. = ..()
 	if (src.patient && (get_dist(src,src.patient) <= 1))
-		if (!src.currently_healing)
-			src.currently_healing = 1
-			src.frustration = 0
-			src.medicate_patient(src.patient)
+		src.frustration = 0
+		src.medicate_patient(src.patient)
 
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
@@ -331,6 +329,7 @@
 			qdel(D)
 
 /obj/machinery/bot/medbot/process()
+	. = ..()
 	if (!src.on)
 		src.stunned = 0
 		return
@@ -357,7 +356,9 @@
 
 	if (!src.patient)
 		if(prob(1))
-			var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
+			var/message = pick("Radar, put a mask on!","I'm a doctor.","There's always a catch, and it's the best there is.",\
+			"I knew it, I should've been a plastic surgeon.",\
+			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
 
 		for (var/mob/living/carbon/C in view(7,src)) //Time to find a patient!
@@ -371,6 +372,7 @@
 				src.patient = C
 				src.oldpatient = C
 				src.last_found = world.time
+				src.doing_something = 1
 				SPAWN_DBG(0)
 					if ((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
 						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
@@ -383,16 +385,15 @@
 
 
 	if (src.patient && (get_dist(src,src.patient) <= 1))
-		if (!src.currently_healing)
-			src.currently_healing = 1
-			src.frustration = 0
-			src.medicate_patient(src.patient)
+		src.frustration = 0
+		src.medicate_patient(src.patient)
 		return
 
 	else if (src.patient && src.path && src.path.len && (get_dist(src.patient,src.path[src.path.len]) > 2))
 		src.path = null
 		src.currently_healing = 0
 		src.last_found = world.time
+		src.doing_something = 0
 
 	if (src.patient && (!src.path || src.path.len == 0) && (get_dist(src,src.patient) > 1))
 		SPAWN_DBG(0)
@@ -404,20 +405,25 @@
 				src.patient = null
 				src.currently_healing = 0
 				src.last_found = world.time
+				src.doing_something = 0
 		return
 
 	if(src.path && src.path.len && src.patient)
-		step_to(src, src.path[1])
-		src.path -= src.path[1]
-		SPAWN_DBG(0.3 SECONDS)
-			if(src.path && src.path.len)
+		SPAWN_DBG(0)
+			while(length(src.path))
+				if(src.frustration >= 8 || src.stunned || !src.on)
+					src.frustration = 0
+					break
 				step_to(src, src.path[1])
+				if(src.loc != src.path[1])
+					src.frustration++
+					sleep(MEDBOT_MOVE_SPEED*2)
+					continue
 				src.path -= src.path[1]
+				sleep(MEDBOT_MOVE_SPEED)
 
 	if(src.path && src.path.len > 8 && src.patient)
 		src.frustration++
-
-	return
 
 /obj/machinery/bot/medbot/proc/toggle_power()
 	src.on = !src.on
@@ -482,7 +488,6 @@
 	if(!istype(C))
 		src.oldpatient = src.patient
 		src.patient = null
-		src.currently_healing = 0
 		src.last_found = world.time
 		return
 
@@ -491,7 +496,6 @@
 		src.speak(death_message)
 		src.oldpatient = src.patient
 		src.patient = null
-		src.currently_healing = 0
 		src.last_found = world.time
 		return
 
@@ -533,54 +537,97 @@
 	if (!reagent_id) //If they don't need any of that they're probably cured!
 		src.oldpatient = src.patient
 		src.patient = null
-		src.currently_healing = 0
 		src.last_found = world.time
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		return
 	else
-		src.update_icon(stun = 0, heal = 1)
-		src.visible_message("<span class='alert'><B>[src] is trying to inject [src.patient]!</B></span>")
-		SPAWN_DBG(3 SECONDS)
-			if ((get_dist(src, src.patient) <= 1) && (src.on))
-				if ((reagent_id == "internal_beaker") && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-					src.reagent_glass.reagents.trans_to(src.patient,src.injection_amount) //Inject from beaker instead.
-					src.reagent_glass.reagents.reaction(src.patient, 2, src.injection_amount)
-				else
-					src.patient.reagents.add_reagent(reagent_id,src.injection_amount)
-				src.visible_message("<span class='alert'><B>[src] injects [src.patient] with the syringe!</B></span>")
-
-			src.update_icon()
-			src.currently_healing = 0
-
-			if (src.terrifying)
-				if (prob(20))
-					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.","Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.","Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.","MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00","ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a", "This will all be over soon.")
-					src.speak(message)
-				else
-					src.visible_message("<b>[src] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
-					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
-					playsound(src.loc, glitchsound, 50, 1)
-					// let's grustle a bit
-					SPAWN_DBG(1 DECI SECOND)
-						src.pixel_x += rand(-2,2)
-						src.pixel_y += rand(-2,2)
-						sleep(0.1 SECONDS)
-						src.pixel_x += rand(-2,2)
-						src.pixel_y += rand(-2,2)
-						sleep(0.1 SECONDS)
-						src.pixel_x += rand(-2,2)
-						src.pixel_y += rand(-2,2)
-						sleep(0.1 SECONDS)
-						src.pixel_x = 0
-						src.pixel_y = 0
-
-			return
-
-//	src.speak(reagent_id)
+		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
+	src.doing_something = 0
 	reagent_id = null
 	return
 
+/datum/action/bar/icon/medbot_inject
+	duration = 30
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "medbot_inject"
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "0"
+	var/obj/machinery/bot/medbot/master
+	var/reagent_id
+	var/did_spooky = 0
+
+	New(var/the_bot, var/reagentid)
+		src.master = the_bot
+		src.reagent_id = reagentid
+		if(master.terrifying)
+			duration += 10
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on || !IN_RANGE(master, master.patient, 1))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (master.terrifying && !src.did_spooky && prob(10))
+			if (prob(20))
+				var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.",\
+				"Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.",\
+				"Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.",\
+				"MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00",\
+				"ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a",\
+				"This will all be over soon.")
+				master.speak(message)
+			else
+				master.visible_message("<b>[master] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
+				var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg',\
+				'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
+				playsound(master.loc, glitchsound, 50, 1)
+				// let's grustle a bit
+				SPAWN_DBG(1 DECI SECOND)
+					master.pixel_x += rand(-2,2)
+					master.pixel_y += rand(-2,2)
+					sleep(0.1 SECONDS)
+					master.pixel_x += rand(-2,2)
+					master.pixel_y += rand(-2,2)
+					sleep(0.1 SECONDS)
+					master.pixel_x += rand(-2,2)
+					master.pixel_y += rand(-2,2)
+					sleep(0.1 SECONDS)
+					master.pixel_x = 0
+					master.pixel_y = 0
+				hit_twitch(master)
+			src.did_spooky = 1
+
+	onStart()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		attack_twitch(master)
+		master.currently_healing = 1
+		master.update_icon(stun = 0, heal = 1)
+		master.visible_message("<span class='alert'><B>[master] is trying to inject [master.patient]!</B></span>")
+
+	onInterrupt()
+		. = ..()
+		master.currently_healing = 0
+
+	onEnd()
+		..()
+		if ((get_dist(master, master.patient) <= 1) && (master.on))
+			if ((reagent_id == "internal_beaker") && (master.reagent_glass) && (master.reagent_glass.reagents.total_volume))
+				master.reagent_glass.reagents.trans_to(master.patient,master.injection_amount) //Inject from beaker instead.
+				master.reagent_glass.reagents.reaction(master.patient, 2, master.injection_amount)
+			else
+				master.patient.reagents.add_reagent(reagent_id,master.injection_amount)
+			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
+			playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
+
+		master.update_icon()
+		master.currently_healing = 0
 // copied from transposed scientists
 
 #define fontSizeMax 3
@@ -759,3 +806,5 @@
 			return
 
 		src.created_name = t
+
+#undef MEDBOT_MOVE_SPEED

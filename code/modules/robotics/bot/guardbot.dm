@@ -1850,7 +1850,7 @@
 			src.radio_connection = radio_controller.add_object(src, "[src.control_freq]")
 
 	process()
-
+		. = ..()
 		if (icon_needs_update)
 			src.update_icon()
 
@@ -1900,6 +1900,92 @@
 			src.task.task_act()
 
 		return
+
+//Buddy handcuff bar thing
+/datum/action/bar/icon/buddy_cuff
+	duration = 30 // zippy zipcuffs
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "buddy_cuff"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "handcuff"
+	var/obj/machinery/bot/guardbot/master
+	var/datum/computer/file/guardbot_task/security/task
+
+	New(var/the_bot, var/the_task)
+		src.master = the_bot
+		src.task = the_task
+		..()
+
+	onUpdate()
+		..()
+		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		task.cuffing = 1
+		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
+
+	onInterrupt()
+		..()
+		task.cuffing = 0
+
+	onEnd()
+		..()
+		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+			return
+
+		if (task.arrest_target.hasStatus("handcuffed") || !isturf(task.arrest_target.loc))
+			task.drop_arrest_target()
+			return
+
+		if (ishuman(task.arrest_target))
+			var/mob/living/carbon/human/H = task.arrest_target
+			//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
+			if(!H.limbs.l_arm || !H.limbs.r_arm)
+				task.drop_arrest_target()
+				master.set_emotion("sad")
+				return
+			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
+			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
+			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
+			task.arrest_target:set_clothing_icon_dirty()
+
+		task.mode = 0
+		task.drop_arrest_target()
+		master.set_emotion("smug")
+
+		if (length(task.arrested_messages))
+			var/arrest_message = pick(task.arrested_messages)
+			master.speak(arrest_message)
+
+		task.cuffing = 0
+
+		var/bot_location = get_area(master)
+		var/last_target = task.arrest_target
+		var/turf/LT_loc = get_turf(last_target)
+		if(!LT_loc)
+			LT_loc = get_turf(master)
+		//////PDA NOTIFY/////
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
+		var/datum/signal/pdaSignal = get_free_signal()
+		var/message2send
+		if (prob(5))
+			message2send = "Notification: Tactical law operation agent [master] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
+			in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master] over and out."
+			master.speak(message2send)
+		else
+			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-MAILBOT", "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="[message2send]")
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(master, pdaSignal)
 
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
@@ -2736,52 +2822,7 @@
 
 								master.bot_attack(arrest_target, src.lethal)
 								if(targdist <= 1 && !cuffing && (arrest_target.getStatusDuration("weakened") || arrest_target.getStatusDuration("stunned")))
-									cuffing = 1
-									src.arrest_attempts = 0 //Put in here instead of right after attack so gun robuddies don't get confused
-									playsound(master.loc, "sound/weapons/handcuffs.ogg", 30, 1, -2)
-									master.visible_message("<span class='alert'><b>[master] is trying to put handcuffs on [arrest_target]!</b></span>")
-									var/cuffloc = arrest_target.loc
-
-									SPAWN_DBG(6 SECONDS)
-										if (!master)
-											return
-
-										if (get_dist(master, arrest_target) <= 1 && arrest_target.loc == cuffloc)
-
-											if (!cuffing)
-												return
-											if (!master || !master.on || master.idle || master.stunned)
-												src.cuffing = 0
-												return
-											if (arrest_target.hasStatus("handcuffed") || !isturf(arrest_target.loc))
-												drop_arrest_target()
-												return
-
-											if (ishuman(arrest_target))
-												var/mob/living/carbon/human/H = arrest_target
-												//if(H.bioHolder.HasEffect("lost_left_arm") || H.bioHolder.HasEffect("lost_right_arm"))
-												if(!H.limbs.l_arm || !H.limbs.r_arm)
-													drop_arrest_target()
-													master.set_emotion("sad")
-													return
-
-											if(iscarbon(arrest_target))
-												arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(arrest_target)
-												arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
-												boutput(arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
-												arrest_target:set_clothing_icon_dirty()
-
-											mode = 0
-											src.drop_arrest_target()
-											master.set_emotion("smug")
-
-											if (length(arrested_messages))
-												var/arrest_message = pick(arrested_messages)
-												master.speak(arrest_message)
-
-										else
-											src.cuffing = 0
-
+									actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src)
 									return
 							if(!master.path || !master.path.len || (4 < get_dist(arrest_target,master.path[master.path.len])) )
 								master.moving = 0
@@ -4477,6 +4518,7 @@
 		return
 
 	process()
+		. = ..()
 		if(current)
 			if((status & NOPOWER) || !current.cell || (current.loc != src.loc))
 				eject_robot()

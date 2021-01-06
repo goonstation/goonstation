@@ -13,6 +13,7 @@
 	no_camera = 1
 
 	process()
+		. = ..()
 		if (prob(10) && src.on == 1)
 			SPAWN_DBG(0)
 				var/message = pick("clak clak", "clak")

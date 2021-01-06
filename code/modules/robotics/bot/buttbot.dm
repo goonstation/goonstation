@@ -49,6 +49,7 @@
 			else
 				playsound(src.loc, 'sound/vox/poo.ogg', 50, 1)
 			speak(message)
+	. = ..()
 
 /obj/machinery/bot/buttbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)

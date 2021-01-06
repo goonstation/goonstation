@@ -144,6 +144,7 @@
 	return
 
 /obj/machinery/bot/cambot/process()
+	. = ..()
 	if (!src.on)
 		return
 

@@ -209,6 +209,7 @@
 		return
 
 	process()
+		. = ..()
 		if (!src.on)
 			return
 

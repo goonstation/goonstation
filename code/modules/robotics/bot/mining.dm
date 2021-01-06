@@ -100,6 +100,7 @@
 			turnOn()
 
 /obj/machinery/bot/mining/process()
+	. = ..()
 	if(!src.on) return
 	if(src.digging) return
 	if(!istype(target, /turf/simulated/wall/asteroid/))

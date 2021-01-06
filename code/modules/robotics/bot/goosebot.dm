@@ -23,6 +23,7 @@
 		if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
 
 /obj/machinery/bot/goosebot/process()
+	. = ..()
 	if(prob(50) && src.on == 1)
 		SPAWN_DBG(0)
 			var/message = pick("HONK", "HOOOOOOONK","WACK WACK","GOWGOW","SCREEEEEE")
