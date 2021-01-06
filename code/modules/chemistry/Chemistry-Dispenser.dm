@@ -10,20 +10,20 @@
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
-	var/list/dispensable_reagents = list("aluminium","barium","bromine","calcium","carbon","chlorine", \
-										"chromium","copper","ethanol","fluorine","hydrogen", \
-										"iodine","iron","lithium","magnesium","mercury","nickel", \
-										"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
-										"radium","silicon","silver","sodium","sugar","sulfur","water")
+	var/list/dispensable_reagents = list(
+		"aluminium","barium","bromine","calcium","carbon","chlorine", \
+		"chromium","copper","ethanol","fluorine","hydrogen", \
+		"iodine","iron","lithium","magnesium","mercury","nickel", \
+		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
+		"radium","silicon","silver","sodium","sugar","sulfur","water"
+	)
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
 	var/list/accounts = list()
-	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 	var/output_target = null
-
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
 	New()
@@ -32,16 +32,12 @@
 
 	disposing()
 		beaker = null
-
-
 		if (current_account.user_id == src)
 			current_account.user_id = null
 		for (var/datum/reagent_group_account/A in src.accounts)
 			if (A.user_id == src)
 				A.user_id = null
-
 		..()
-
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
@@ -259,7 +255,7 @@
 		if(..())
 			return
 		switch(action)
-			if("dispense")
+			if ("dispense")
 				if (!(params["reagentId"] in dispensable_reagents))
 					return
 				var/amount = clamp(round(params["amount"]), 1, 100)
@@ -268,7 +264,7 @@
 				src.update_icon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
-			if("eject")
+			if ("eject")
 				if (beaker)
 					usr.put_in_hand_or_drop(beaker)
 					beaker = null
@@ -282,20 +278,20 @@
 						src.beaker = I
 						src.update_icon()
 						. = TRUE
-			if("remove")
+			if ("remove")
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.remove_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				src.update_icon()
 				. = TRUE
-			if("isolate")
+			if ("isolate")
 				beaker.reagents.isolate_reagent(params["reagentId"])
 				src.update_icon()
 				. = TRUE
-			if("all")
+			if ("all")
 				beaker.reagents.del_reagent(params["reagentId"])
 				src.update_icon()
 				. = TRUE
-			if("newGroup")
+			if ("newGroup")
 				var/reagents = params["reagents"]
 				if (isnull(reagents) || !length(reagents))
 					return
@@ -323,14 +319,14 @@
 					current_account.groups += G
 				update_static_data(usr,ui)
 				. = TRUE
-			if("deleteGroup")
+			if ("deleteGroup")
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(group)
 					src.current_account.groups -= group
 					qdel(group)
 					update_static_data(usr,ui)
 					. = TRUE
-			if("groupDispense")
+			if ("groupDispense")
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
 					for (var/reagent in group.reagents)
