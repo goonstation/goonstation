@@ -578,12 +578,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"

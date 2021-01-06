@@ -423,3 +423,28 @@
 	anyone_can_activate = 1
 	target_override = /area
 	target_override_name = "anywhere"
+
+/obj/bomb_decoy
+	name = "nuclear bomb"
+	desc = "An extremely powerful balloon capable of deceiving the whole station."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "nuclearbomb"
+	density = 1
+	anchored = 0
+	var/health = 10
+
+	proc/checkhealth()
+		if (src.health <= 0)
+			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
+			decal.icon_state = "balloon_green_pop"
+			qdel(src)
+
+	attackby(var/obj/item/W as obj, mob/user as mob)
+		..()
+		user.lastattacked = src
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+		src.health -= W.force
+		checkhealth()
+		return
