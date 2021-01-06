@@ -1,5 +1,10 @@
 
 (t)wed jan 06 21
+(u)Gannets
+(p)3241
+(e)⚖🆕🔄|balance, feature, rework
+(*)Added non-slip combat boots and an inflatable decoy nuclear bomb as utility purchases from syndicate weapons vendors.
+(+)- Operative's now spawn with sunglasses and a breath mask equipped and an emergency O2 tank in their pocket.
 (u)Superlagg
 (p)3232
 (e)🆕|feature
