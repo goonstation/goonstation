@@ -364,7 +364,7 @@
 	name = "MPRT Rocket Ammunition"
 	path = /obj/item/storage/pouch/rpg
 	catagory = "Utility"
-	description = "An additional four MPRT rockets."
+	description = "A pouch for keeping MPRT ammunition in. Comes with two additional rockets."
 
 /datum/materiel/utility/donk
 	name = "Warm Donk Pocket"
