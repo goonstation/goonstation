@@ -19885,9 +19885,7 @@
 /turf/simulated/floor/delivery/white,
 /area/station/maintenance/central)
 "aRv" = (
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aRw" = (
 /obj/machinery/door/unpowered/wood/pyro,
@@ -19900,9 +19898,7 @@
 	layer = 3;
 	name = "FIRE HAZARD"
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aRy" = (
 /obj/decal/cleanable/dirt,
@@ -21228,17 +21224,13 @@
 	dir = 1
 	},
 /obj/machinery/meter,
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aUC" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
-/turf/simulated/wall{
-	icon_state = "wooden"
-	},
+/turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aUD" = (
 /obj/table/wood/auto,
@@ -51303,7 +51295,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cfX" = (
 /obj/cable{
@@ -51374,13 +51366,13 @@
 /obj/shrub{
 	dir = 4
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cgd" = (
 /obj/shrub{
 	dir = 8
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cge" = (
 /obj/cable{
@@ -51824,7 +51816,7 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "chj" = (
 /obj/machinery/light_switch{
@@ -51856,7 +51848,7 @@
 	name = "autoname  - SS13";
 	tag = ""
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "chm" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -62036,11 +62028,11 @@
 /mob/living/critter/small_animal/slug{
 	name = "Lump"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cCR" = (
 /obj/machinery/light/small/floor/greenish,
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cCS" = (
 /obj/surgery_tray,
@@ -62081,7 +62073,7 @@
 /mob/living/critter/small_animal/slug/snail{
 	name = "Clem"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cCW" = (
 /obj/window/reinforced{
@@ -62090,7 +62082,7 @@
 /mob/living/critter/small_animal/bird/timberdoodle{
 	name = "Noodle"
 	},
-/turf/simulated/grass,
+/turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "cCX" = (
 /obj/machinery/optable,
