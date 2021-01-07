@@ -884,7 +884,7 @@
 					if(!src.message_on)
 						return
 
-					if(sender != last_filereq_id && signal.data["tag"] != "auto_fileshare")
+					if(sender != last_filereq_id && ((islist(signalTag) && ("auto_fileshare" in signal.data["tag"])) || signalTag == "auto_fileshare"))
 						return
 
 					if(!sendername)
