@@ -153,17 +153,17 @@
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
-						src.time = clamp(src.time + src.time_started - TIME, 0, maximum_time)
+						src.time = clamp(src.time + src.time_started - TIME, 0, src.maximum_time)
 						src.time_started = 0
 						src.wake_occupant()
 				. = TRUE
 			if("time_add")
-				if (src.our_sleeper && src.time <= maximum_time)
+				if (src.our_sleeper && src.time <= src.maximum_time)
 					var/t = params["tp"]
 					if (t > 0 && src.timing && src.our_sleeper.occupant)
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
-					src.time = clamp(src.time + (t*10), 0, maximum_time)
+					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
 				. = TRUE
 			if("inject")
 				var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay
@@ -186,7 +186,7 @@
 			"sleeperGone" = FALSE,
 			"hasOccupant" = FALSE,
 			"rejuvinators" = list(),
-			"recharging" = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay,
+			"recharging" = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + src.injection_delay,
 			"isTiming" = src.timing,
 			"time" = src.time,
 			"timeStarted" = src.time_started,
