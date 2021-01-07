@@ -115,7 +115,7 @@
 	proc/crit_alert(var/mob/living/carbon/human/H)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/new_signal = get_free_signal()
-		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=MGD_MEDBAY, "message"="CRIT ALERT: [H] in [get_area(src)].")
+		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=list(MGD_MEDBAY, MGA_MEDCRIT), "message"="CRIT ALERT: [H] in [get_area(src)].")
 		new_signal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection)
 			transmit_connection.post_signal(src, new_signal)

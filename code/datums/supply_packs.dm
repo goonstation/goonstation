@@ -249,14 +249,25 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
-	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Gloves"
+	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
 	contains = list(/obj/item/storage/toolbox/mechanical = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
-					/obj/item/clothing/gloves/yellow = 2)
+					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Engineering Crate"
+
+/datum/supply_packs/electool
+	name = "Electrical Maintenance Crate"
+	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
+	category = "Engineering Department"
+	contains = list(/obj/item/storage/toolbox/electrical = 2,
+					/obj/item/device/multitool = 2,
+					/obj/item/clothing/gloves/yellow = 2)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Electrical Maintenance Crate"
 
 /datum/supply_packs/firefighting
 	name = "Firefighting Supplies Crate"

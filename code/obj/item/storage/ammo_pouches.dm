@@ -129,9 +129,8 @@
 	w_class = 1.00
 	slots = 4
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/bandage = 2,
-	/obj/item/item_box/medical_patches/mini_silver_sulf,
-	/obj/item/item_box/medical_patches/mini_synthflesh)
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
+	/obj/item/reagent_containers/mender/burn/high_capacity)
 
 /obj/item/storage/security_pouch
 	name = "security pouch"

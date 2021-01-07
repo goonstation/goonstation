@@ -71,6 +71,7 @@
 	var/lying_old = 0
 	var/can_lie = 0
 	var/canmove = 1.0
+	var/incrit = 0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
@@ -1120,8 +1121,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
+	. = src.hasStatus("handcuffed")
 
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
@@ -1533,6 +1533,11 @@
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
+		if (src.health < 0 && !src.incrit)
+			src.incrit = 1
+			logTheThing("combat", src, null, "goes into crit at [log_loc(src)].")
+		else if (src.incrit && src.health >= 0)
+			src.incrit = 0
 	else
 		src.health = max_health
 		setalive(src)

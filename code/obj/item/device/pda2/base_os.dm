@@ -215,6 +215,11 @@
 								 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
 
 						. += myReservedGroups
+
+						for (var/mailgroup in src.master.alertgroups)
+							. += {"[mailgroup]
+							 (<a href='byond://?src=\ref[src];message_func=mute_group;groupname=[mailgroup]'>*[(mailgroup in src.master.muted_mailgroups) ? "Unmute" : "Mute"]*</a>)<br>"}
+
 						. += myCustomGroups
 
 				if(3)
@@ -683,8 +688,12 @@
 						return
 
 					var/groupAddress = signal.data["group"]
-					if(groupAddress) //Check to see if we have this ~mailgroup~
-						if((!(groupAddress in src.master.mailgroups) && !("ai" in src.master.mailgroups)) || (groupAddress in src.master.muted_mailgroups))
+					if(groupAddress) // Check to see if we have muted this group. The network card already checked if we are a member.
+						if (islist(groupAddress))
+							for (var/group in groupAddress)
+								if (group in src.master.muted_mailgroups)
+									return
+						else if (groupAddress in src.master.muted_mailgroups)
 							return
 
 					var/sender = signal.data["sender_name"]
@@ -707,7 +716,10 @@
 
 					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
-						senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
+						if (islist(groupAddress))
+							senderstring += " to [jointext(groupAddress,",")]"
+						else
+							senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -724,7 +736,10 @@
 					src.master.display_alert(alert_beep)
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
-						displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1;norefresh=1'>[groupAddress]</a>"
+						if (islist(groupAddress))
+							displayMessage += " to [jointext(groupAddress,",")]"
+						else
+							displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 
@@ -865,7 +880,7 @@
 
 			else
 				if (!isnull(src.master.cartridge) && !istype(src.master,/obj/item/device/pda2/ai))
-					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [src.master.cartridge]</a><br>"
+					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [stripTextMacros(src.master.cartridge.name)]</a><br>"
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 

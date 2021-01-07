@@ -289,7 +289,7 @@
 	//	Station_VNet.Enter_Vspace(usr, src, src:network)
 	//	return
 
-	if ((usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) && !isobserver(usr))
+	if (is_incapacitated(usr) && !isobserver(usr))
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
@@ -414,11 +414,10 @@
 
 
 /obj/machinery/sim/programcomp/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=mm")
-			return
+	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=mm")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"

@@ -100,67 +100,6 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			explosion_new(O, get_turf(hit), 2)
 
-/mob/living/proc/betterdir()
-	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
-
-/datum/component/holdertargeting/fullauto
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_LIVING_SPRINT_START)
-	mobtype = /mob/living
-	proctype = .proc/begin_shootloop
-	var/turf/target
-	var/shooting
-	var/delaystart
-	var/delaymin
-	var/rampfactor
-	var/obj/item/gun/G
-
-	Initialize(_delaystart = 4 DECI SECONDS, _delaymin=1 DECI SECOND, _rampfactor=0.9)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
-			return COMPONENT_INCOMPATIBLE
-		else
-			G = parent
-			src.delaystart = _delaystart
-			src.delaymin = _delaymin
-			src.rampfactor = _rampfactor
-	on_dropped(datum/source, mob/user)
-		. = ..()
-		src.shooting = 0
-
-/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user)
-	if(!shooting)
-		shooting = 1
-		target = null
-		G.current_projectile.shot_number = 1
-		G.current_projectile.cost = 1
-		G.current_projectile.shot_delay = 1.5
-		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, G)
-		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/retarget)
-		SPAWN_DBG(0)
-			src.shootloop(user)
-
-/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, atom/target, params)
-	if(istype(target))
-		src.target = get_turf(target)
-		G.suppress_fire_msg = 0
-		return RETURN_CANCEL_CLICK
-
-/datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
-	var/delay = delaystart
-	while(shooting && G.canshoot() && L?.client.check_key(KEY_RUN))
-		G.shoot(target ? target : get_step(L, L.betterdir()), get_turf(L), L)
-		G.suppress_fire_msg = 1
-		sleep(max(delay*=rampfactor, delaymin))
-	//loop ended - reset values
-	shooting = 0
-	REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, G)
-	G.current_projectile.shot_number = initial(G.current_projectile.shot_number)
-	G.current_projectile.cost = initial(G.current_projectile.cost)
-	G.current_projectile.shot_delay = initial(G.current_projectile.shot_delay)
-	G.suppress_fire_msg = 0
-	UnregisterSignal(L, COMSIG_MOB_CLICK)
-
-
 
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
@@ -172,6 +111,8 @@
 			return
 		..()
 
+//TODO fix this to be better
+/*
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
@@ -260,6 +201,7 @@
 		var/obj/item/gun/energy/E = G
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
+*/
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"

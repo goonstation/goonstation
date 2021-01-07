@@ -330,7 +330,7 @@
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
 			return 0
-		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
+		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
 			return 0
 
 		return 1

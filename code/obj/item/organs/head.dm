@@ -47,7 +47,7 @@
 
 	// equipped items - they use the same slot names because eh.
 	var/obj/item/clothing/head/head = null
-	var/obj/item/clothing/ears/ears = null
+	var/obj/item/ears = null //can be either obj/item/clothing/ears/ or obj/item/device/radio/headset, but those paths diverge a lot
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
@@ -276,7 +276,66 @@
 		. = ..()
 		src.transplanted = 1
 
+	///Taking items off a head
+	attack_self(mob/user as mob)
+		var/list/headwear = list(head, ears, wear_mask, glasses)
+		var/obj/selection = input("Which item do you want to remove","Looting the dead") as null|obj in headwear
+		if (!selection)
+			return
+		user.put_in_hand_or_drop(selection)
+		if (selection == head)
+			head = null
+		if (selection == ears)
+			ears = null
+		if (selection == wear_mask)
+			wear_mask = null
+		if (selection == glasses)
+			glasses = null
+		update_head_image()
+
+
 	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+		if (!user)
+			return
+		//Putting stuff on heads
+		if (istype(W, /obj/item/clothing/head))
+			if (!head)
+				user.drop_item(W)
+				head = W
+				head.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.head.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/ears) || istype(W, /obj/item/device/radio/headset))
+			if (!ears)
+				user.drop_item(W)
+				ears = W
+				ears.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.ears.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/mask))
+			if (!wear_mask)
+				user.drop_item(W)
+				wear_mask = W
+				wear_mask.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.wear_mask.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/glasses))
+			if (!glasses)
+				user.drop_item(W)
+				glasses = W
+				glasses.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
+			return
+
+
 		if (src.skull || src.brain)
 
 			// scalpel surgery
