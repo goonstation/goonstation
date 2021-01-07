@@ -73,8 +73,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	explosion(src, src.loc , 0, 0, 1, 1)
 	qdel(src)
 	return

@@ -11,10 +11,11 @@
 	var/raging = 0
 	var/list/calledout = list()
 	no_camera = 1
+	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
+	dynamic_processing = 0
 
 /obj/machinery/bot/chefbot/proc/do_step()
-	var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
-	if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
+	step_rand(src, 1)
 
 /obj/machinery/bot/chefbot/process()
 	. = ..()
@@ -36,13 +37,12 @@
 			qdel(D)
 
 /obj/machinery/bot/chefbot/proc/drama()
-	for (var/mob/M in hearers(7, src))
-		M << sound('sound/effects/dramatic.ogg', volume = 100) // F U C K temporary measure
+	playsound(get_turf(src),'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
 
 /obj/machinery/bot/chefbot/speak(var/message)
 	if (message)
 		message = uppertext(message)
-		..(message)
+	. = ..()
 
 /obj/machinery/bot/chefbot/proc/why_is_it_bad()
 	return pick("IS FUCKING [pick("RAW", "BLAND", "UNDERCOOKED", "OVERCOOKED", "INEDIBLE", "RANCID", "DISGUSTING")]", "LOOKS LIKE [pick("BABY VOMIT", "A MUSHY PIG'S ASS", "REGURGITATED DONKEY SHIT", "A PILE OF ROTTING FLIES", "REFINED CAT PISS")]")
@@ -189,8 +189,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/clothing/head/dramachefhat(Tsec)

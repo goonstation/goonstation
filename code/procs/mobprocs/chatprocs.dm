@@ -901,20 +901,20 @@
 		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
-/atom/proc/audible_message(var/message)
+/atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
-		M.show_message(message, 2)
+		M.show_message(message, 2, alt, alt_type, group, assoc_maptext)
 
-/mob/audible_message(var/message, var/self_message)
+/mob/audible_message(var/message, var/self_message, var/alt, var/alt_type, var/group = "", var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
 		var/msg = message
 		if (self_message && M==src)
 			msg = self_message
-		M.show_message(msg, 2)
+		M.show_message(msg, 2, alt, alt_type, group, assoc_maptext)
 
 
 // FLOCKSAY

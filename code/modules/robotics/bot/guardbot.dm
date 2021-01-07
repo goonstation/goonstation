@@ -97,12 +97,8 @@
 	req_access = list(access_heads)
 	on = 1
 	var/idle = 0 //Sleeping on the job??
-	var/stunned = 0 //Are we stunned?
 	locked = 1 //Behavior Controls and Tool lock
 
-	var/list/path = null
-	var/frustration = 0
-	var/moving = 0 //Are we currently ON THE MOVE?
 	//var/current_movepath = 0 //If we need to switch movement halfway
 	var/datum/guardbot_mover/mover = null
 
@@ -192,7 +188,7 @@
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0
 
-	var/botcard_access = "Captain" //Job access for doors.
+	botcard_access = "Captain" //Job access for doors.
 									//It's not like they can be pushed into airlocks anymore
 	var/setup_no_costumes = 0 //no halloween costumes for us!!
 	var/setup_unique_name = 0 //Name doesn't need random number appended to it.
@@ -397,8 +393,6 @@
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.on)
 				add_simple_light("guardbot", list(src.flashlight_red*255, src.flashlight_green*255, src.flashlight_blue*255, (src.flashlight_lum / 7) * 255))
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.botcard_access)
 
 			if(setup_default_tool_path && !src.tool && !src.setup_gun)
 				src.tool = new setup_default_tool_path
@@ -1583,29 +1577,6 @@
 			icon_needs_update = 1
 			set_emotion()
 
-		navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1)
-			if(src.moving)
-				return 1
-			src.moving = 1
-			if (clear_frustration)
-				src.frustration = 0
-			if(src.mover)
-				src.mover.master = null
-				//qdel(src.mover)
-				src.mover = null
-			//boutput(world, "TEST: Navigate to [target]")
-
-			//current_movepath = world.time
-
-			src.mover = new /datum/guardbot_mover(src)
-
-			// drsingh for cannot modify null.delay
-			if (!isnull(src.mover))
-				src.mover.delay = max(min(move_delay,5),2)
-				src.mover.master_move(the_target,adjacent)
-
-			return 0
-
 		bot_attack(var/atom/target as mob|obj, lethal=0)
 			if(src.tool && (src.tool.tool_id == "GUN"))
 				if (istype(src.budgun, /obj/item/bang_gun))
@@ -1900,6 +1871,29 @@
 			src.task.task_act()
 
 		return
+
+	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1)
+		if(src.moving)
+			return 1
+		src.moving = 1
+		if (clear_frustration)
+			src.frustration = 0
+		if(src.mover)
+			src.mover.master = null
+			//qdel(src.mover)
+			src.mover = null
+		//boutput(world, "TEST: Navigate to [target]")
+
+		//current_movepath = world.time
+
+		src.mover = new /datum/guardbot_mover(src)
+
+		// drsingh for cannot modify null.delay
+		if (!isnull(src.mover))
+			src.mover.delay = max(min(move_delay,5),2)
+			src.mover.master_move(the_target,adjacent)
+
+		return 0
 
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff

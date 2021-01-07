@@ -13,16 +13,13 @@
 	anchored = 0
 	on = 1
 	health = 20
-	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	locked = 1
 	access_lookup = "Assistant"
 
 	var/target // Current target.
-	var/list/path = null // Path to current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 1800 // How frequently?
-	var/frustration = 0 // Simple counter. Bot selects new target if current one is too far away.
 
 	var/idle = 1 // In relation to world time. In case there aren't any valid targets nearby.
 	var/idle_delay = 300 // For how long?
@@ -30,6 +27,8 @@
 	var/obj/item/camera_test/camera = null
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
+	/// Its a camera
+	dynamic_processing = 0
 
 /obj/machinery/bot/cambot/New()
 	..()
@@ -107,6 +106,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 

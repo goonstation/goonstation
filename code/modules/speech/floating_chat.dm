@@ -96,8 +96,8 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255)
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
 	text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
-	if(istype(target, /mob/living))
-		var/mob/living/L = target
+	if(istype(target, /atom/movable))
+		var/atom/movable/L = target
 		text.loc = L.chat_text
 		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
 			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05

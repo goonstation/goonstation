@@ -1,4 +1,5 @@
 //Floorbot assemblies
+#define FLOORBOT_MOVE_SPEED 10
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
@@ -47,10 +48,11 @@
 	var/oldloc = null
 	req_access = list(access_engineering)
 	access_lookup = "Chief Engineer"
-	var/list/path = null
 	no_camera = 1
 	var/search_range = 1
 	var/max_search_range = 7
+
+	var/static/list/floorbottargets = list()
 
 	// this is from cleanbot.dm, which should really be like. part of all bots, later.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -201,28 +203,26 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		return
 
 	// Don't target things other floorbots are targetting
-	var/list/floorbottargets = list()
 	if (!src.target || src.target == null)
 		for(var/obj/machinery/bot/floorbot/bot in machine_registry[MACHINES_BOTS])
 			if (bot != src)
-				floorbottargets += bot.target
-
+				src.floorbottargets += bot.target
 
 	// Find thing to do
-	if (!src.emagged && src.amount > 0)
-		// We can only do these things while we have tiles...
+	if (!src.emagged)
+		if(src.amount > 0)
+			// We can only do these things while we have tiles...
 
-	    // Search for space turf
-		for (var/turf/space/D in view(src.search_range, src))
-			if (D != src.oldtarget && (D.loc.name != "Space" && D.loc.name != "Ocean") && !(D in floorbottargets) && !should_ignore_tile(D))
-				return D
+				// Search for space turf
+			for (var/turf/space/D in view(src.search_range, src))
+				if (D != src.oldtarget && (D.loc.name != "Space" && D.loc.name != "Ocean") && !(D in floorbottargets) && !should_ignore_tile(D))
+					return D
 
-		// Search for incomplete/damaged floor
-		if (src.improvefloors)
-			for (var/turf/simulated/floor/F in view(src.search_range, src))
-				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
-					return F
-
+			// Search for incomplete/damaged floor
+			if (src.improvefloors)
+				for (var/turf/simulated/floor/F in view(src.search_range, src))
+					if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
+						return F
 
 	if (src.emagged)
 		for (var/turf/simulated/floor/F in view(src.search_range, src))
@@ -292,6 +292,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.oldtarget = null
 
 	if (src.target)
+		src.doing_something = 1
 
 		// are we there yet
 		if (get_turf(src.loc) == get_turf(src.target))
@@ -300,24 +301,32 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 		// we are not there. how do we get there
 		if (!src.path || !src.path.len)
-			src.path = AStar(src.loc, get_turf(src.target), /turf/proc/CardinalTurfsSpace, /turf/proc/Distance, 120)
+			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 120)
 			if (!src.path || !src.path.len)
 				// answer: we don't. try to find something else then.
-				src.oldtarget = src.target
-				targets_invalid += src.target
-				src.target = null
-
-		SPAWN_DBG(0)
-			for (var/i = 4, i > 0, i--)
-				if (src.path && src.path.len)
-					step_to(src, src.path[1])
-					src.path -= src.path[1]
-					sleep(0.3 SECONDS)
+				src.KillPathAndGiveUp(1)
 
 			if (get_turf(src.loc) == get_turf(src.target))
 				do_the_thing()
 				return
+	else
+		src.doing_something = 0
 
+/obj/machinery/bot/floorbot/DoWhileMoving()
+	. = ..()
+	if (get_turf(src.loc) == get_turf(src.target))
+		do_the_thing()
+		return TRUE
+
+/obj/machinery/bot/floorbot/KillPathAndGiveUp(var/give_up)
+	. = ..()
+	if(give_up)
+		src.oldtarget = src.target
+		src.targets_invalid += src.target
+		src.target = null
+		src.anchored = 0
+		src.updateicon()
+		src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
@@ -327,8 +336,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.maketile(src.target)
 	else if (istype(src.target, /turf/))
 		repair(src.target)
-
-	src.path = null
+	src.KillPathAndGiveUp(0)
 
 
 
@@ -340,68 +348,13 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 		if (src.amount < 0)
 			// uh. buddy. you aint got no floor tiles.
-			src.target = null
+			src.KillPathAndGiveUp(1)
 			return
-
-		src.anchored = 1
-		src.icon_state = "floorbot-c"
-		src.repairing = 1
-		var/new_tile = 0
-
-		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
-			src.visible_message("<span class='notice'>[src] begins building flooring.</span>")
-			new_tile = 1
-
-		else if (istype(target, /turf/simulated/floor))
-			src.visible_message("<span class='notice'>[src] begins to fix the floor.</span>")
-
-		else
-			// how the fucking jesus did you get here
-			src.target = null
-			return
-
-		SPAWN_DBG(0.4 SECONDS)
-			if (new_tile)
-				// Make a new tile
-				var/obj/item/tile/T = new /obj/item/tile/steel
-				T.build(src.loc)
-			else
-				// Fix yo shit
-				var/turf/simulated/floor/F = target
-				if (F.intact)
-					F.to_plating()
-					sleep(0.5 SECONDS)
-				F.restore_tile()
-
-			src.repairing = 0
-			src.amount -= 1
-			src.updateicon()
-			src.anchored = 0
-			src.target = find_target(1)
-			return
+		actions.start(new/datum/action/bar/icon/floorbot_repair(src, target), src)
 
 	else if (src.emagged && istype(target, /turf/simulated/floor))
 		// Emagged "repair"
-
-		src.visible_message("<span class='alert'>[src] starts ripping up the flooring!</span>")
-		src.anchored = 1
-		src.repairing = 1
-		SPAWN_DBG(1 SECOND)
-			// literally rip up the floor tile. honk.
-			var/turf/simulated/floor/T = target
-			var/atom/A = new /obj/item/tile(T)
-			if (T.material)
-				A.setMaterial(T.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-
-			T.ReplaceWithSpace()
-			src.repairing = 0
-			src.updateicon()
-			src.anchored = 0
-			src.target = find_target(1)
-		return
+		actions.start(new/datum/action/bar/icon/floorbot_disrepair(src, target), src)
 
 
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
@@ -504,8 +457,130 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for (var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
+
+/datum/action/bar/icon/floorbot_repair
+	duration = 10
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "floorbot_build"
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "0"
+	var/obj/machinery/bot/floorbot/master
+	var/target
+	var/new_tile
+
+	New(var/the_bot, var/_target)
+		src.master = the_bot
+		src.target = _target
+
+		master.anchored = 1
+		master.icon_state = "floorbot-c"
+		master.repairing = 1
+		src.new_tile = 0
+
+		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
+			master.visible_message("<span class='notice'>[master] begins building flooring.</span>")
+			src.new_tile = 1
+
+		else if (istype(target, /turf/simulated/floor))
+			master.visible_message("<span class='notice'>[master] begins to fix the floor.</span>")
+
+		else
+			// how the fucking jesus did you get here
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		attack_twitch(master)
+
+	onInterrupt()
+		. = ..()
+		master.KillPathAndGiveUp(1)
+
+	onEnd()
+		..()
+		if (new_tile)
+			// Make a new tile
+			var/obj/item/tile/T = new /obj/item/tile/steel
+			T.build(master.loc)
+		else
+			// Fix yo shit
+			var/turf/simulated/floor/F = target
+			if (F.intact)
+				F.to_plating()
+				sleep(0.5 SECONDS)
+			F.restore_tile()
+
+		master.repairing = 0
+		master.amount -= 1
+		master.updateicon()
+		master.anchored = 0
+		master.target = master.find_target(1)
+
+/datum/action/bar/icon/floorbot_disrepair
+	duration = 10
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "floorbot_ripup"
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "0"
+	var/obj/machinery/bot/floorbot/master
+	var/target
+
+	New(var/the_bot, var/_target)
+		src.master = the_bot
+		src.target = _target
+
+		master.anchored = 1
+		master.icon_state = "floorbot-c"
+		master.repairing = 1
+
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		attack_twitch(master)
+
+	onInterrupt()
+		. = ..()
+		master.KillPathAndGiveUp(1)
+
+	onEnd()
+		..()
+		var/turf/simulated/floor/T = target
+		var/atom/A = new /obj/item/tile(T)
+		if (T.material)
+			A.setMaterial(T.material)
+		else
+			var/datum/material/M = getMaterial("steel")
+			A.setMaterial(M)
+
+		T.ReplaceWithSpace()
+		master.repairing = 0
+		master.updateicon()
+		master.anchored = 0
+		master.target = master.find_target(1)

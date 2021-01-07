@@ -1,6 +1,8 @@
 //Firebot
 //Firebot assembly
 
+#define FIREBOT_MOVE_SPEED 8
+
 /obj/machinery/bot/firebot
 	name = "Firebot"
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
@@ -13,10 +15,7 @@
 	req_access = list(access_engineering_atmos)
 	on = 1
 	health = 20
-	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	locked = 1
-	var/frustration = 0
-	var/list/path = null
 	var/obj/hotspot/target = null
 	var/obj/hotspot/oldtarget = null
 	var/oldloc = null
@@ -108,13 +107,9 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, "<span class='alert'>You short out [src]'s valve control circuit!</span>")
-		SPAWN_DBG(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
-		src.target = null
-		src.last_found = world.time
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
@@ -136,9 +131,7 @@
 	if (!src.emagged && prob(75))
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		flick("firebot_spark", src)
-		src.target = null
-		src.last_found = world.time
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
@@ -181,14 +174,14 @@
 	. = ..()
 	if(!src.on)
 		src.stunned = 0
+		src.KillPathAndGiveUp(1)
 		return
 
 	if(src.stunned)
 		src.icon_state = "firebota"
 		src.stunned--
 
-		src.oldtarget = src.target
-		src.target = null
+		src.KillPathAndGiveUp(1)
 
 		if(src.stunned <= 0)
 			src.icon_state = "firebot[src.on]"
@@ -196,14 +189,10 @@
 		return
 
 	if(src.frustration > 8)
-		src.oldtarget = src.target
-		src.target = null
-		//src.currently_healing = 0
-		src.last_found = world.time
-		src.path = null
-		src.frustration = 0
+		src.KillPathAndGiveUp(1)
 
 	if(!src.target)
+		src.doing_something = 0
 		for (var/obj/hotspot/H in view(7,src))
 			if ((H == src.oldtarget) && (world.time < src.last_found + 80))
 				continue
@@ -229,7 +218,8 @@
 					src.target = burningMob
 					src.oldtarget = burningMob
 					src.last_found = world.time
-					src.frustration = 0
+					src.KillPathAndGiveUp(0)
+					src.doing_something = 1
 					src.visible_message("<b>[src]</b> points at [burningMob.name]!")
 					if (src.setup_party)
 						src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
@@ -237,52 +227,47 @@
 						src.speak(pick("YOU ARE ON FIRE!", "STOP DROP AND ROLL","THE FIRE IS ATTEMPTING TO FEED FROM YOU! I WILL STOP IT","I WON'T LET YOU BURN AWAY!",5;"Taste the meat, not the heat."))
 					break
 
-	if(src.target && (get_dist(src,src.target) <= 2))
+	if(src.target)
+		if(IN_RANGE(src,src.target,2))
+			if(world.time > src.last_spray + 30)
+				src.KillPathAndGiveUp(0)
+				spray_at(src.target)
+			if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
+				var/mob/living/carbon/C = src.target
+				if (!C.getStatusDuration("burning") || isdead(C))
+					src.KillPathAndGiveUp(1)
+		else
+			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 50)
+			if (!src.path)
+				src.KillPathAndGiveUp(1)
+
+		if(src.path && src.path.len && length(src.path) > 2)
+			src.last_found = world.time
+
+/obj/machinery/bot/firebot/DoWhileMoving()
+	. = ..()
+	if (IN_RANGE(src, src.target, 3))
 		if(world.time > src.last_spray + 30)
 			src.frustration = 0
 			spray_at(src.target)
-		if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
-			var/mob/living/carbon/C = src.target
-			if (!C.getStatusDuration("burning") || isdead(C))
-				src.frustration = INFINITY
-		return
+		return TRUE
 
-	else if(src.target && src.path && src.path.len && (get_dist(src.target,src.path[src.path.len]) > 2))
-		src.path = new()
-//		src.currently_healing = 0
+/obj/machinery/bot/firebot/KillPathAndGiveUp(var/give_up)
+	. = ..()
+	if(give_up)
+		src.oldtarget = src.target
+		src.target = null
 		src.last_found = world.time
 
-	if(src.target && (!src.path || !src.path.len) && (get_dist(src,src.target) > 1))
-		SPAWN_DBG(0)
-			if (!isturf(src.loc))
-				return
-			src.path = AStar(get_turf(src), get_turf(src.target), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, adjacent_param = botcard)
-			if (!src.path)
-				src.frustration += 4
-		return
-
-	if(src.path && src.path.len && src.target)
-		step_to(src, src.path[1])
-		src.path -= src.path[1]
-		SPAWN_DBG(0.3 SECONDS)
-			if(src.path && src.path.len)
-				step_to(src, src.path[1])
-				src.path -= src.path[1]
-
-	if(src.path && src.path.len > 8 && src.target)
-		src.frustration++
-
-	return
-
-//Oh no we're emagged!! Nobody better try to cross us!
+//Oh no, we may or may not be emagged! Better hope someone crossing us is on fire!
 /obj/machinery/bot/firebot/HasProximity(atom/movable/AM as mob|obj)
-	if(!on || !emagged || stunned)
+	if(!on || stunned)
 		return
 
-	if (iscarbon(AM) && prob(40))
-		spray_at(AM)
-
-	return
+	if (iscarbon(AM))
+		var/mob/living/carbon/hosem = AM
+		if(src.emagged && prob(40) || hosem.getStatusDuration("burning"))
+			spray_at(AM)
 
 /obj/machinery/bot/firebot/proc/spray_at(atom/target)
 	if(!target || !src.on || src.stunned)
@@ -305,8 +290,7 @@
 	else
 		playsound(src.loc, "sound/effects/spray.ogg", 75, 1, -3)
 
-	for(var/a=0, a<5, a++)
-		//SPAWN_DBG(0)
+	for(var/a in 0 to 5)
 		var/obj/effects/water/W = unpool(/obj/effects/water)
 		if(!W) return
 		W.set_loc( get_turf(src) )
@@ -316,7 +300,7 @@
 		R.add_reagent("ff-foam", 8)
 		if (src.setup_party)	// heh
 			R.add_reagent("glitter_harmless", 5)
-		W.spray_at(my_target, R)
+		W.spray_at(my_target, R, 1)
 
 	if (src.emagged && iscarbon(target))
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -356,8 +340,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -440,3 +424,5 @@
 			return
 
 		src.created_name = t
+
+#undef FIREBOT_MOVE_SPEED

@@ -11,28 +11,25 @@
 	on = 1 // ACTION
 	health = 5
 	var/eggs = 0
+	/// When it gets to 100, free egg!
+	var/egg_process = 0
 	no_camera = 1
-
-/obj/machinery/bot/duckbot/proc/quack(var/message)
-	if(!src.on || !message || src.muted)
-		return
-	src.visible_message("<span class='game say'><span class='name'>[src]</span> honks, \"[message]\"</span>")
-	return
+	/// ha ha NO.
+	dynamic_processing = 0
 
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
-		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
-		if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
+	step_rand(src,1)
 
 /obj/machinery/bot/duckbot/process()
 	. = ..()
-	if(prob(10) && src.on == 1)
+	if(prob(40) && src.on == 1)
 		SPAWN_DBG(0)
 			var/message = pick("wacka", "quack","quacky","gaggle")
-			quack(message)
+			src.speak(message)
 			wakka_wakka()
-			if(prob(40))
+			if(prob(10))
 				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
-			if(prob (3) && src.eggs >= 1)
+			else if(prob (1) && src.eggs >= 1)
 				var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 				E.name = "duck egg"
 				src.eggs--
@@ -40,15 +37,19 @@
 	if(src.emagged == 1)
 		SPAWN_DBG(0)
 			var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
-			quack(message)
+			src.speak(message)
 			wakka_wakka()
 			if(prob(70))
 				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
-			if(prob (10) && src.eggs >= 1)
+			else if(prob (10) && src.eggs >= 1)
 				var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 				E.name = "duck egg"
 				src.eggs--
 				playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 1)
+	src.egg_process++
+	if(src.egg_process >= 100 && prob(20))
+		src.eggs++
+		src.egg_process = 0
 
 /obj/machinery/bot/duckbot/Topic(href, href_list)
 	if (!(usr in range(1)))
@@ -76,7 +77,7 @@
 			for(var/mob/O in hearers(src, null))
 				O.show_message("<span class='alert'><B>[src] quacks loudly!</B></span>", 1)
 				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1)
-				src.eggs = rand(3,9)
+				src.eggs += rand(3,9)
 		src.emagged = 1
 		return 1
 	return 0
@@ -105,8 +106,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return

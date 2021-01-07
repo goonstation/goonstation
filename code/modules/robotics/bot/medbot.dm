@@ -16,13 +16,10 @@
 	flags = NOSPLASH
 	on = 1
 	health = 20
-	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	locked = 1
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
-	var/frustration = 0
-	var/list/path = null
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
 	var/oldloc = null
@@ -224,13 +221,6 @@
 	src.updateUsrDialog()
 	return
 
-
-/obj/machinery/bot/medbot/Move(var/turf/NewLoc, direct)
-	. = ..()
-	if (src.patient && (get_dist(src,src.patient) <= 1))
-		src.frustration = 0
-		src.medicate_patient(src.patient)
-
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
@@ -238,11 +228,7 @@
 		SPAWN_DBG(0)
 			for(var/mob/O in hearers(src, null))
 				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
-		src.patient = null
-		src.oldpatient = user
-		src.currently_healing = 0
-		src.last_found = world.time
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.update_icon()
@@ -257,11 +243,7 @@
 	if (user)
 		user.show_text("You repair [src]'s reagent synthesis circuits.", "blue")
 	src.emagged = 0
-	src.patient = null
-	src.oldpatient = user
-	src.currently_healing = 0
-	src.last_found = world.time
-	src.anchored = 0
+	src.KillPathAndGiveUp(1)
 	src.update_icon()
 	return 1
 
@@ -338,9 +320,7 @@
 		src.update_icon(stun = 1)
 		src.stunned--
 
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
+		src.KillPathAndGiveUp(1)
 
 		if(src.stunned <= 0)
 			src.stunned = 0
@@ -348,11 +328,7 @@
 		return
 
 	if (src.frustration > 8)
-		src.oldpatient = src.patient
-		src.patient = null
-		src.currently_healing = 0
-		src.last_found = world.time
-		src.path = null
+		src.KillPathAndGiveUp(1)
 
 	if (!src.patient)
 		if(prob(1))
@@ -383,47 +359,14 @@
 			else
 				continue
 
-
-	if (src.patient && (get_dist(src,src.patient) <= 1))
-		src.frustration = 0
-		src.medicate_patient(src.patient)
-		return
-
-	else if (src.patient && src.path && src.path.len && (get_dist(src.patient,src.path[src.path.len]) > 2))
-		src.path = null
-		src.currently_healing = 0
-		src.last_found = world.time
-		src.doing_something = 0
-
-	if (src.patient && (!src.path || src.path.len == 0) && (get_dist(src,src.patient) > 1))
-		SPAWN_DBG(0)
-			if (!isturf(src.loc))
-				return
-			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, adjacent_param = botcard)
-			if (!src.path)
-				src.oldpatient = src.patient
-				src.patient = null
-				src.currently_healing = 0
-				src.last_found = world.time
-				src.doing_something = 0
-		return
-
-	if(src.path && src.path.len && src.patient)
-		SPAWN_DBG(0)
-			while(length(src.path))
-				if(src.frustration >= 8 || src.stunned || !src.on)
-					src.frustration = 0
-					break
-				step_to(src, src.path[1])
-				if(src.loc != src.path[1])
-					src.frustration++
-					sleep(MEDBOT_MOVE_SPEED*2)
-					continue
-				src.path -= src.path[1]
-				sleep(MEDBOT_MOVE_SPEED)
-
-	if(src.path && src.path.len > 8 && src.patient)
-		src.frustration++
+	if (src.patient)
+		if(IN_RANGE(src,src.patient,1))
+			src.KillPathAndGiveUp(0)
+			src.medicate_patient(src.patient)
+			return
+		else
+			src.KillPathAndGiveUp(0)
+			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
 
 /obj/machinery/bot/medbot/proc/toggle_power()
 	src.on = !src.on
@@ -431,12 +374,7 @@
 		add_simple_light("medbot", list(220, 220, 255, 0.5*255))
 	else
 		remove_simple_light("medbot")
-	src.patient = null
-	src.oldpatient = null
-	src.oldloc = null
-	src.path = null
-	src.currently_healing = 0
-	src.last_found = world.time
+	src.KillPathAndGiveUp(1)
 	src.update_icon()
 	src.updateUsrDialog()
 	return
@@ -486,17 +424,13 @@
 		return
 
 	if(!istype(C))
-		src.oldpatient = src.patient
-		src.patient = null
-		src.last_found = world.time
+		src.KillPathAndGiveUp(1)
 		return
 
 	if(isdead(C))
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		src.speak(death_message)
-		src.oldpatient = src.patient
-		src.patient = null
-		src.last_found = world.time
+		src.KillPathAndGiveUp(1)
 		return
 
 	var/reagent_id = null
@@ -535,17 +469,32 @@
 			reagent_id = src.treatment_tox
 
 	if (!reagent_id) //If they don't need any of that they're probably cured!
-		src.oldpatient = src.patient
-		src.patient = null
-		src.last_found = world.time
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
+		src.KillPathAndGiveUp(1)
 		return
 	else
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
-	src.doing_something = 0
+	src.KillPathAndGiveUp(1)
 	reagent_id = null
 	return
+
+/obj/machinery/bot/medbot/DoWhileMoving()
+	. = ..()
+	if (src.patient && IN_RANGE(src,src.patient,1))
+		src.KillPathAndGiveUp(0)
+		src.medicate_patient(src.patient)
+		return TRUE
+
+/obj/machinery/bot/medbot/KillPathAndGiveUp(var/give_up)
+	. = ..()
+	if(give_up)
+		src.currently_healing = 0
+		src.oldpatient = src.patient
+		src.patient = null
+		src.last_found = TIME
+		src.oldloc = null
+		src.path = null
 
 /datum/action/bar/icon/medbot_inject
 	duration = 30
@@ -628,6 +577,7 @@
 
 		master.update_icon()
 		master.currently_healing = 0
+
 // copied from transposed scientists
 
 #define fontSizeMax 3
@@ -711,8 +661,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)

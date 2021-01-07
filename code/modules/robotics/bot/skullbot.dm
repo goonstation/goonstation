@@ -11,6 +11,10 @@
 	on = 1
 	health = 5
 	no_camera = 1
+	bot_voice = 'sound/misc/talk/skelly.ogg'
+	speakverbs = list("rattles", "clacks")
+	/// a bonehead on a stick doesnt need to process a million times a sec
+	dynamic_processing = 0
 
 	process()
 		. = ..()
@@ -79,6 +83,7 @@
 		src.exploding = 1
 		src.on = 0
 		src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>")
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 		return
