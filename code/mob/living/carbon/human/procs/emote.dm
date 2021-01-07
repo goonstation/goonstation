@@ -359,6 +359,7 @@
 						return
 					message = "<B>[src]</B> [input]"
 					maptext_out = "<I>[input]</I>"
+					custom = copytext(input, 1, 10)
 
 			if ("customv")
 				if (IS_TWITCH_CONTROLLED(src)) return

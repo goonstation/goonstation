@@ -91,6 +91,10 @@
 #define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 /// When an item is used in-hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
+/// When an item is swapped to [does not include being picked up/taken out of bags/etc] (user)
+#define COMSIG_ITEM_SWAP_TO "itm_swap_to"
+/// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
+#define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
 
 // ---- implant signals ----
 /// When implanted

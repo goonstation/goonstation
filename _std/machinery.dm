@@ -24,7 +24,7 @@
 #define MAINT     (1<<3)		//! Status flag: under maintainance
 #define HIGHLOAD  (1<<4)		//! Status flag: using a lot of power
 #define EMP_SHORT (1<<5)		//! Status flag: 1 second long emp duration, avoid stacking emp faster than 1Hz
-
+#define REQ_PHYSICAL_ACCESS (1<<6) //! Can only be interacted with if adjacent and physical
 
 //recharger stuff
 #define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)

@@ -353,7 +353,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -369,14 +369,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)

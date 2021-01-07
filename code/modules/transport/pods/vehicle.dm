@@ -1057,7 +1057,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (M.restrained() || is_incapacitated(M))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1073,7 +1073,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (M.restrained() || is_incapacitated(M))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

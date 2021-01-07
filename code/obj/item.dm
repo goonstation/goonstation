@@ -973,7 +973,7 @@
 	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
+	if (!istype(src.loc, /turf) || is_incapacitated(M) || M.restrained())
 		return
 
 	if (!can_reach(M, src))

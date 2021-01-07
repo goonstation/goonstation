@@ -139,7 +139,8 @@
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
-	/obj/machinery/nuclearbomb)
+	/obj/machinery/nuclearbomb,
+	/obj/bomb_decoy)
 
 	hud_state = "cargo"
 	f_active = 1

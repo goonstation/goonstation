@@ -937,9 +937,9 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
+		if (is_incapacitated(usr))
 			return
 		..()
 

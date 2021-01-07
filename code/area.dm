@@ -1123,6 +1123,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Drug Den"
 	icon_state = "purple"
 
+/area/prefab/von_ricken
+	name ="Von Ricken"
+	icon_state = "blue"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -2114,6 +2118,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 
 /area/station/crew_quarters/market
 	name = "Public Market"
+	icon_state = "yellow"
+	sound_environment = 0
+
+/area/station/crew_quarters/supplylobby
+	name = "Supply Lobby"
 	icon_state = "yellow"
 	sound_environment = 0
 
