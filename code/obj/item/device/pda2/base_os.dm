@@ -803,7 +803,7 @@
 					if(senderName in src.blocked_numbers)
 						return
 
-					var/previewtext = ((islist(signalTag) && ("preview_message" in signal.data["tag"])) || signalTag == "preview_message")
+					var/previewtext = ((islist(signalTag) && ("preview_message" in signalTag)) || signalTag == "preview_message")
 
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
@@ -884,7 +884,9 @@
 					if(!src.message_on)
 						return
 
-					if(sender != last_filereq_id && ((islist(signalTag) && ("auto_fileshare" in signal.data["tag"])) || signalTag == "auto_fileshare"))
+					var/autoshare = ((islist(signalTag) && ("auto_fileshare" in signalTag)) || signalTag == "auto_fileshare")
+
+					if(sender != last_filereq_id && !autoshare)
 						return
 
 					if(!sendername)
@@ -899,7 +901,7 @@
 					if(signal.data_file.copy_file_to_folder(src.holding_folder))
 						src.message_note += "<b><i>File Accepted from [messageFrom]</b></i><br>"
 
-					if(signal.data["tag"] == "auto_fileshare")
+					if(autoshare)
 						var/alert_beep = null //Same as with messages
 						if(!src.message_silent)
 							alert_beep = src.message_tone
