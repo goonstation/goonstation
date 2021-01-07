@@ -1,5 +1,8 @@
 
 (t)wed jan 06 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Lizards can have a little thermoregulation, as a treat
 (u)Kubius
 (p)3072
 (e)⚖🆕|balance, feature
