@@ -1,6 +1,9 @@
 
 (t)wed jan 06 21
 (u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)(re)Added a full auto firemode to the Clock-188 (replacing burstfire) and the Antares light machine gun (in addition to burstfire). Toggle the mode by clicking on the gun in-hand.
+(u)Tarmunora
 (e)⚖|balance
 (+)Lizards can have a little thermoregulation, as a treat
 (u)Kubius
