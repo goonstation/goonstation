@@ -4640,7 +4640,9 @@ var/global/noir = 0
 	if(!object)
 		return
 
-	if (usr.client.holder.level >= LEVEL_PA)
+	var/client/client = usr.client
+
+	if (client.holder.level >= LEVEL_PA)
 		var/chosen = get_one_match(object)
 
 		if (chosen)
@@ -4650,11 +4652,11 @@ var/global/noir = 0
 					location.ReplaceWith(chosen, handle_air = 0)
 			else
 				var/atom/movable/A
-				if (usr.client.holder.spawn_in_loc)
+				if (client.holder.spawn_in_loc)
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
-				if (usr.client.flourish)
+				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
