@@ -145,6 +145,10 @@
 	if(AM == rider || !rider)
 		return
 
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
+
 	..()
 	src.stop()
 	in_bump = 1
