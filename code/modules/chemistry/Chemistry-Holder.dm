@@ -624,7 +624,7 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, round(log((temp_to_burn_with - T0C) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
