@@ -40,7 +40,9 @@
 (+)Updated Guardbuddy weapon handling drivers: they no longer have trouble shooting someone at pointblank range.
 (u)UrsulaMejor
 (*)Two new chickens! These ones aren't secret, so tell your friends if you find them! Hint in Minor Changes.
+(*)Another new chicken! Not a secret! Tell your friends! Hint in Minor Changes! Shouting!
 (+)One chicken is vegetarian, in both senses of the word. The other chicken is synthetic, in a way the other one isn't.
+(+)This chicken is the result of voiding your chicken's stomach. Poor things. :(
 (t)tue jan 05 21
 (u)TTerc
 (p)3226
