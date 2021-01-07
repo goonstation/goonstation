@@ -272,7 +272,7 @@
 					. = TRUE
 				else
 					var/obj/item/I = usr.equipped()
-					if (istype(I, glass_path))
+					if (istype(I, glass_path) && !I.cant_drop) // change if we decide borgs can use this
 						usr.drop_item()
 						I.set_loc(src)
 						src.beaker = I
