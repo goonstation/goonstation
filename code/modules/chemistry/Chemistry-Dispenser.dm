@@ -40,6 +40,7 @@
 		..()
 
 	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+		remove_distant_beaker()
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
 			if (src.user_id)
@@ -78,6 +79,7 @@
 			user.show_text("[src] seems to be out of order.", "red")
 			return
 
+		/*
 		if (isrobot(user))
 			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
 			if (!the_reagent)
@@ -96,13 +98,15 @@
 			B.reagents.add_reagent(the_reagent,amount)
 			B.reagents.handle_reactions()
 			return
+		*/
 		if (src.beaker)
 			boutput(user, "A [glass_name] is already loaded into the machine.")
 			return
 
 		src.beaker =  B
-		user.drop_item()
-		B.set_loc(src)
+		if(!B.cant_drop)
+			user.drop_item()
+			B.set_loc(src)
 		boutput(user, "You add the [glass_name] to the machine!")
 		src.update_icon()
 		src.ui_interact(user)
@@ -193,7 +197,15 @@
 			qdel(src)
 			return
 
+	proc/remove_distant_beaker()
+		// borgs and people with item arms don't insert the beaker into the machine itself
+		// but whenever something would happen to the dispenser and the beaker is far it should disappear
+		if(beaker && !IN_RANGE(get_turf(beaker), src, 1))
+			beaker = null
+			src.update_icon()
+
 	ui_interact(mob/user, datum/tgui/ui)
+		remove_distant_beaker()
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemDispenser", src.name)
@@ -254,9 +266,10 @@
 	ui_act(action, params, datum/tgui/ui)
 		if(..())
 			return
+		remove_distant_beaker()
 		switch(action)
 			if ("dispense")
-				if (!(params["reagentId"] in dispensable_reagents))
+				if (!beaker || !(params["reagentId"] in dispensable_reagents))
 					return
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
@@ -266,28 +279,36 @@
 				. = TRUE
 			if ("eject")
 				if (beaker)
-					usr.put_in_hand_or_drop(beaker)
+					if(beaker.loc == src)
+						usr.put_in_hand_or_drop(beaker)
 					beaker = null
 					src.update_icon()
 					. = TRUE
 				else
 					var/obj/item/I = usr.equipped()
-					if (istype(I, glass_path) && !I.cant_drop) // change if we decide borgs can use this
-						usr.drop_item()
-						I.set_loc(src)
+					if (istype(I, glass_path))
+						if(!I.cant_drop) // borgs and item arms
+							usr.drop_item()
+							I.set_loc(src)
 						src.beaker = I
 						src.update_icon()
 						. = TRUE
 			if ("remove")
+				if(!beaker)
+					return
 				var/amount = clamp(round(params["amount"]), 1, 100)
 				beaker.reagents.remove_reagent(params["reagentId"], isnum(amount) ? amount : 10)
 				src.update_icon()
 				. = TRUE
 			if ("isolate")
+				if(!beaker)
+					return
 				beaker.reagents.isolate_reagent(params["reagentId"])
 				src.update_icon()
 				. = TRUE
 			if ("all")
+				if(!beaker)
+					return
 				beaker.reagents.del_reagent(params["reagentId"])
 				src.update_icon()
 				. = TRUE
@@ -327,6 +348,8 @@
 					update_static_data(usr,ui)
 					. = TRUE
 			if ("groupDispense")
+				if(!beaker)
+					return
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
 					for (var/reagent in group.reagents)
