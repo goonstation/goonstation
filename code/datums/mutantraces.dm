@@ -801,7 +801,7 @@
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
-			H.thermoregulation_mult = 0.005
+			H.thermoregulation_mult = 0.004
 			H.base_body_temp = T0C + 38
 
 	sight_modifier()
