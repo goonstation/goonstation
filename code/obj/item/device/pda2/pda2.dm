@@ -52,7 +52,7 @@
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
 	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
-	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
+	var/default_muted_mailgroups = list() //What mail groups should the PDA ignore by default
 	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
@@ -137,7 +137,7 @@
 			// start in party line by default
 			MGD_PARTY,
 		)
-		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
+		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
@@ -170,14 +170,14 @@
 		robotics
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
-			muted_mailgroups = list(MGA_SALES)
+			default_muted_mailgroups = list(MGA_SALES)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
-		muted_mailgroups = list(MGD_MEDBAY)
+		default_muted_mailgroups = list(MGD_MEDBAY)
 
 	security
 		icon_state = "pda-s"
@@ -312,6 +312,8 @@
 			src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+			if(length(src.default_muted_mailgroups))
+				src.host_program.muted_mailgroups = src.default_muted_mailgroups
 
 		src.net_id = format_net_id("\ref[src]")
 

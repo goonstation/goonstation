@@ -16,11 +16,11 @@
 	var/overrideAlertAllowed = 1
 	/// Should this ringtone's own alert message overwrite the PDA's?
 	var/overrideAlertMessage = 0
-	/// The text that asks the user whether to override the alert messages or not
-	var/overrideAlertText = "Use default ringer message?"
-	/// The text that indicates an affirmative for overriding the alert text
+	/// Asks if the PDA should use the ringtone's built-in alert messages instead of the one set by the PDA.
+	var/overrideAlertText = "Use this ringtone's ringer message in place of the PDA's?"
+	/// Button that makes the PDA display the ringtone's alert messages whenever it gets messaged
 	var/overrideAlertYesText = "Yes"
-	/// The text that indicates a negative for overriding the alert text
+	/// Button that makes the PDA display the PDA's alert messages whenever it gets messaged
 	var/overrideAlertNoText = "No"
 	/// Which menu should we be in?
 	var/subMenu = null
@@ -30,6 +30,8 @@
 	var/ringToneGenSlot = null
 	/// Where should this ringtone be placed?
 	var/ringToneDestSlot = null
+	/// Cooldowns
+	var/list/cooldowns
 
 	return_text()
 		if(..())
@@ -145,18 +147,21 @@
 			src.ResetTheMenu()
 
 		else if(href_list["previewTone"])
-			var/datum/ringtone/Rtone = src.ring_list[href_list["previewTone"]]
-			src.master.set_ringtone(Rtone, 1, src.overrideAlertMessage)
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
-			var/datum/signal/signal = get_free_signal()
-			signal.data["command"] = "text_message"
-			signal.data["message"] = "[Rtone.previewMessage]"
-			signal.data["tag"] = "preview_message"
-			signal.data["sender_name"] = "[Rtone.previewSender]"
-			signal.data["sender"] = "UNKNOWN"
-			signal.data["address_1"] = src.master.net_id
-			signal.transmission_method = TRANSMISSION_RADIO
-			transmit_connection.post_signal(null, signal)
+			if(ON_COOLDOWN(src, "preview_cooldown", 15 SECONDS))
+				src.master.display_message("[bicon(master)] Preview sprocket cooling off, please wait [time_to_text(ON_COOLDOWN(src, "preview_cooldown", 0))].")
+			else
+				var/datum/ringtone/Rtone = src.ring_list[href_list["previewTone"]]
+				src.master.set_ringtone(Rtone, 1, src.overrideAlertMessage)
+				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+				var/datum/signal/signal = get_free_signal()
+				signal.data["command"] = "text_message"
+				signal.data["message"] = "[Rtone.previewMessage]"
+				signal.data["tag"] = "preview_message"
+				signal.data["sender_name"] = "[Rtone.previewSender]"
+				signal.data["sender"] = "UNKNOWN"
+				signal.data["address_1"] = src.master.net_id
+				signal.transmission_method = TRANSMISSION_RADIO
+				transmit_connection.post_signal(null, signal)
 			src.ResetTheMenu()
 
 		src.master.add_fingerprint(usr)

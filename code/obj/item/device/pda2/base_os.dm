@@ -52,7 +52,6 @@
 		var/datum/computer/file/clipboard = null //Current file to copy
 		/// Files we're hosting. Assoc'd list, (passkey = filedatum)
 		var/list/hosted_files = list()
-		var/list/cooldowns = list()
 		/// List of messengers we've heard from. Assoc'd list, (address_1 = sendername)
 		var/list/all_callers = list()
 		/// List of recent callers, so you get the long sound for the first message, and a shorter one for that same person after that
@@ -60,9 +59,8 @@
 		/// List of messengers we don't want to hear from anymore -- set by name, not address_1!
 		var/list/blocked_numbers = list()
 		/// List of mailgroups we don't want to hear from anymore
-		var/muted_mailgroups = list()
-		/// List of alerts we don't want to get anymore
-		var/muted_alerts = list()
+		var/list/muted_mailgroups = list()
+
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
@@ -320,12 +318,12 @@
 						for(var/alert in src.master.alertgroups)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["alert"];entry=[alert]'>Mute</a>"
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[alert]'>Mute</a>"
 							if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
 								rt = src.master.alert_ringtones[alert]
 								rtButton = "[rt.name]"
-							if(alert in src.muted_alerts)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["alert"];entry=[alert]'>Unblock</a>"
+							if(alert in src.muted_mailgroups)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[alert]'>Unmute</a>"
 							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
 
 				if(MODE_ADDRESSBOOK) // Specific names sent to us, also ringtones
@@ -378,11 +376,6 @@
 
 			else if(href_list["manageBlock"])
 				switch(href_list["type"])
-					if("alert")
-						if(href_list["manageBlock"] == "add")
-							src.muted_alerts += href_list["entry"]
-						if(href_list["manageBlock"] == "remove")
-							src.muted_alerts -= href_list["entry"]
 					if("mailgroup")
 						if(href_list["manageBlock"] == "add")
 							src.muted_mailgroups += href_list["entry"]
@@ -744,22 +737,29 @@
 			if(..())
 				return
 
+			var/filename = signal.data["file_name"]
+			var/sender = signal.data["sender"]
+			var/sendername = signal.data["sender_name"]
+			var/senderassignment = signal.data["sender_assignment"]
+			var/file_ext = signal.data["file_ext"]
+			var/filesize = signal.data["file_size"]
+			var/signalTag = signal.data["tag"]
+			var/groupAddress = signal.data["group"]
+
+			if(groupAddress) // Check to see if we have muted this group. The network card already checked if we are a member.
+				if (islist(groupAddress))
+					for (var/group in groupAddress)
+						if (group in src.muted_mailgroups)
+							return
+				else if (groupAddress in src.muted_mailgroups)
+					return
+
+			if((sender in src.blocked_numbers))
+				return
+
 			switch(signal.data["command"])
 				if("text_message")
 					if(!message_on || !signal.data["message"])
-						return
-
-					var/groupAddress = signal.data["group"]
-					if(groupAddress) // Check to see if we have muted this group. The network card already checked if we are a member.
-						if (islist(groupAddress))
-							for (var/group in groupAddress)
-								if (group in src.master.muted_mailgroups)
-									return
-						else if (groupAddress in src.master.muted_mailgroups)
-							return
-
-					var/signalTag = signal.data["tag"]
-					if(signalTag in src.muted_alerts)
 						return
 
 					var/senderName = signal.data["sender_name"]
@@ -803,9 +803,7 @@
 					if(senderName in src.blocked_numbers)
 						return
 
-					var/previewtext = (signal.data["tag"] == "preview_message")
-					if(previewtext && ON_COOLDOWN(src, "preview_cooldown", 15 SECONDS))
-						return
+					var/previewtext = ((islist(signalTag) && ("preview_message" in signal.data["tag"])) || signalTag == "preview_message")
 
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
@@ -829,19 +827,6 @@
 					if(!message_on)
 						return
 
-					var/filename = signal.data["file_name"]
-					var/sender = signal.data["sender"]
-					var/sendername = signal.data["sender_name"]
-					var/senderassignment = signal.data["sender_assignment"]
-					var/file_ext = signal.data["file_ext"]
-					var/filesize = signal.data["file_size"]
-					var/signalTag = signal.data["tag"]
-					var/signalGroup = signal.data["group"]
-
-					if(signalGroup) //Check to see if we have this ~mailgroup~
-						if((!(signalGroup in src.master.mailgroups) && signalGroup != "ai") || (signalGroup in src.muted_mailgroups))
-							return
-
 					if(!filename || !sender)
 						return
 
@@ -857,9 +842,6 @@
 						//src.master.pdasay_autocomplete += sendername
 					src.detected_pdas[sender] = sendername
 					src.master.pdasay_autocomplete[sendername] = signal.data["sender"]
-
-					if((sender in src.blocked_numbers) || (signalTag in src.muted_alerts) || (signalGroup in src.muted_mailgroups))
-						return
 
 					src.AddCaller(sender, sendername)
 
@@ -901,10 +883,6 @@
 
 					if(!src.message_on)
 						return
-
-					var/sender = signal.data["sender"]
-					var/sendername = signal.data["sender_name"]
-					var/senderassignment = signal.data["sender_assignment"]
 
 					if(sender != last_filereq_id && signal.data["tag"] != "auto_fileshare")
 						return
