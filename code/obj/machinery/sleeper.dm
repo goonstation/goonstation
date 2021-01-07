@@ -457,7 +457,7 @@
 
 			// We always inject this, even when emagged to mask the fact we're malfunctioning.
 			// Otherwise, one glance at the control console would be sufficient.
-			if (rejuv < maximum_reagent)
+			if (rejuv < src.maximum_reagent)
 				var/inject_r = src.inject_reagent
 				if ((rejuv + src.inject_r) > src.maximum_reagent)
 					inject_r = max(0, (src.maximum_reagent - rejuv))
