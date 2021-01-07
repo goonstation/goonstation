@@ -1,4 +1,9 @@
 
+(t)thu jan 07 21
+(u)TTerc
+(p)3227
+(e)⚖🆕|balance, feature
+(+)Adds a new traitor item: poison bottle bundle. It lets you spawn 7 poison bottles at once.
 (t)wed jan 06 21
 (u)BobertBrockson
 (p)3251
