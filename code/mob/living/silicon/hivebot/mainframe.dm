@@ -33,6 +33,7 @@
 		if(!src.mind)
 			if(src.client)
 				src.mind = new
+				src.mind.ckey = ckey
 				src.mind.key = src.key
 				src.mind.current = src
 				ticker.minds += src.mind

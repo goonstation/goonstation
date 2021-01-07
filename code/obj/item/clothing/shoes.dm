@@ -399,6 +399,12 @@
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
 
+/obj/item/clothing/shoes/swat/noslip
+	name = "hi-grip assault boots"
+	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	icon_state = "swatheavy"
+	c_flags = NOSLIP
+
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"
 	desc = "Fairly worn out military boots."

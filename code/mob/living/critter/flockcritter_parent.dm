@@ -417,6 +417,7 @@
 					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
 					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
+				target.was_harmed(F, null, "flock", INTENT_DISARM)
 				// do effect
 				src.decal = unpool(/obj/decal/flock_build_wall)
 				if(src.decal)

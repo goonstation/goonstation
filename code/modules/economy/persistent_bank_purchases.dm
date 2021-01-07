@@ -28,6 +28,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/nt_backpack,\
 
 	new /datum/bank_purchaseable/limbless,\
+	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
@@ -353,6 +354,23 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
+	legless
+		name = "No Legs"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				SPAWN_DBG(6 SECONDS)
+					if (H.limbs)
+						if (H.limbs.l_leg)
+							H.limbs.l_leg.delete()
+						if (H.limbs.r_leg)
+							H.limbs.r_leg.delete()
+						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
+				return 1
+			return 0
+
 	corpse
 		name = "Corpse"
 		cost = 15000
@@ -578,5 +596,4 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-
 

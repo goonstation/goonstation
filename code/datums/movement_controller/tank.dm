@@ -62,7 +62,7 @@
 				input_x -= 1
 
 			if (input_x || input_y)
-				user.attempt_move()
+				attempt_move(user)
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub))

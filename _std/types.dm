@@ -138,7 +138,7 @@ var/list/list/by_type = list()
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
 // and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
-// and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
+// and to traverse the list, use by_cat["category"] to get the list of objects in that category
 // also ideally youd use defines for by_cat categories!
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)

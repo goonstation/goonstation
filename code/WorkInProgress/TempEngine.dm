@@ -1135,7 +1135,7 @@ datum/pump_ui/circulator_ui
 		..()
 		if(status & (BROKEN | NOPOWER))
 			return
-		//src.updateDialog()
+		//src.updateUsrDialog()
 
 	attackby(I as obj, user as mob)
 			//Readd construction code + boards
@@ -1179,7 +1179,7 @@ datum/pump_ui/circulator_ui
 
 			pump_infos[signal.source] = I
 
-		src.updateDialog()
+		src.updateUsrDialog()
 
 	proc/return_text()
 		var/pump_html = ""

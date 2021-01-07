@@ -884,7 +884,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_heavenly()
 	set name = "Respawn Heavenly"
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself from the heavens"
 	set popup_menu = 0
 	admin_only
@@ -915,6 +915,7 @@ var/list/fun_images = list()
 	cli.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
@@ -944,6 +945,7 @@ var/list/fun_images = list()
 	src.preferences.copy_to(H,src.mob,1)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
+		mymob.mind.ckey = ckey
 		mymob.mind.key = key
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind

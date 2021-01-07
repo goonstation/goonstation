@@ -1070,6 +1070,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.5)
 
+	fullautotestgun
+		slowdown = 0
+		slowdown_time = 0
+		New()
+			..()
+			AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+			current_projectile.shot_number = 1
+			current_projectile.cost = 1
+			ammo.amount_left = 500
 
 /obj/item/gun/kinetic/cannon
 	name = "M20-CV tactical cannon"

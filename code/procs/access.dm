@@ -284,7 +284,7 @@
 						access_medical_lockers, access_medical, access_morgue)
 		if("Medical Assistant")
 			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
-		if("Psychologist")
+		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
 
 		///////////////////////////// Science

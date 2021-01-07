@@ -389,7 +389,7 @@
 		return 1
 	if (user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if (!in_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 

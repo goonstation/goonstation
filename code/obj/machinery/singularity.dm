@@ -143,6 +143,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.active = 1
 			grav_pull = 8
 
+/obj/machinery/the_singularity/emp_act()
+	return // No action required this should be the one doing the EMPing
+
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
@@ -201,6 +204,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (!active)
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
+
+	// Don't bump that which no longer exists
+	if(A.disposed)
+		return
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -1377,7 +1384,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	updateicon()
 	..()
 
-/obj/machinery/power/collector_control/process()
+/obj/machinery/power/collector_control/process(mult)
 	if(magic != 1)
 		if(src.active == 1)
 			var/power_a = 0
@@ -1389,19 +1396,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
-					P1.air_contents.toxins -= 0.001
+					P1.air_contents.toxins -= 0.001 * mult
 			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
-					P2.air_contents.toxins -= 0.001
+					P2.air_contents.toxins -= 0.001 * mult
 			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
-					P3.air_contents.toxins -= 0.001
+					P3.air_contents.toxins -= 0.001 * mult
 			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
-					P4.air_contents.toxins -= 0.001
+					P4.air_contents.toxins -= 0.001 * mult
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)

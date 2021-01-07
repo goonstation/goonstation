@@ -684,7 +684,10 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		tooltip_rebuild = 1
+		var/holder = src.loc
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		if (src.loc != holder)
+			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
@@ -934,9 +937,9 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
+		if (is_incapacitated(usr))
 			return
 		..()
 
