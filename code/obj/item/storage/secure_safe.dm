@@ -570,6 +570,53 @@
 		- <i>[iou_name]</i>"}
 		return
 
+/obj/item/storage/secure/ssafe/vonrickenstorage
+	configure_mode = 0
+	random_code = 1
+
+	New()
+		..()
+		var/loot = rand(1,2)
+		switch (loot)
+			if (1)
+				new /obj/item/storage/firstaid/brain(src)
+				new /obj/item/storage/firstaid/toxin(src)
+				new /obj/item/storage/firstaid/old(src)
+				new /obj/item/parts/robot_parts/head(src)
+			if (2)
+				new /obj/item/injector_belt(src)
+				new /obj/item/reagent_containers/glass/bottle/morphine(src)
+				new /obj/item/reagent_containers/syringe(src)
+
+/obj/item/storage/secure/ssafe/vonricken
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/clothing/shoes/cyborg, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/gloves/cyborg, /obj/item/paper/thevonricken)
+
+/obj/item/paper/thevonricken
+	name = "This is hell! Oh god!"
+
+	New()
+		..()
+		src.icon_state = "paper_singed"
+		src.desc = "It looks like someone had jotted stuff down on it in frantic haste!"
+		src.info = {"<center><h1>My doom? Yes.</h1></center>
+		<hr>
+		Wow...then I thought boarding a space-cruise would be fun...but now? I heard these over-the-top-armed-beasts-of-robots tread into the room next door.
+		<br>
+		I doubt Marvin is anymore.
+		<br>
+		I doubt I will be either.
+		<br>
+		Never leave the room. Never. Never...yes...someone will come...rescue me,...
+		<br>
+		<b>Why did I not pack a spare radio? Fuck!</b>
+		<br>
+		<br>
+		Whoever reads this...destroy this facility! It is not what it seems to be!
+		<hr>
+		<b>Space-Cruise? My butt!</b>"}
+
 /obj/item/storage/secure/ssafe/theorangeroom
 	configure_mode = 0
 	random_code = 1

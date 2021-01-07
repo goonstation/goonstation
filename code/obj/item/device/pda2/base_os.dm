@@ -880,7 +880,7 @@
 
 			else
 				if (!isnull(src.master.cartridge) && !istype(src.master,/obj/item/device/pda2/ai))
-					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [src.master.cartridge]</a><br>"
+					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [stripTextMacros(src.master.cartridge.name)]</a><br>"
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 

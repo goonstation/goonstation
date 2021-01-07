@@ -91,7 +91,6 @@
 			if((y >= 7 && y <= 9) && (x >= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
 				continue
 			user.client?.screen += hudSquares["[x],[y]"]
-	stopping = 0
 
 
 
@@ -150,9 +149,12 @@
 	var/delay = delaystart
 	shooting = 1
 
-	while(G.canshoot() && !stopping)
-		G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
-		G.suppress_fire_msg = 1
+	while(!stopping)
+		if(G.canshoot())
+			G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
+			G.suppress_fire_msg = 1
+		else
+			end_shootloop(L)
 		sleep(max(delay*=rampfactor, delaymin))
 
 	stopping = 0
@@ -169,5 +171,5 @@
 	for(var/x in ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 		for(var/y in 7 to 9)
 			user.client?.screen -= hudSquares["[x],[y]"]
-
-	stopping = 1
+	if(shooting)
+		stopping = 1

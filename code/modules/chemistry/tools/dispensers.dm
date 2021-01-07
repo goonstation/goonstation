@@ -239,7 +239,7 @@
 
 	attackby(obj/W as obj, mob/user as mob)
 		if (has_tank)
-			if (istype(W, /obj/item/wrench))
+			if (iswrenchingtool(W))
 				user.show_text("You disconnect the bottle from [src].", "blue")
 				var/obj/item/reagent_containers/food/drinks/P = new /obj/item/reagent_containers/food/drinks/coolerbottle(src.loc)
 				P.reagents.maximum_volume = max(P.reagents.maximum_volume, src.reagents.total_volume)
@@ -257,7 +257,7 @@
 			src.update_icon()
 			return
 
-		if (istype(W, /obj/item/screwdriver))
+		if (isscrewingtool(W))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")

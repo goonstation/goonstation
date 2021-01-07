@@ -189,7 +189,9 @@
 	if(istype(src.loc, /obj/item/clipboard))
 		var/mob/living/M = user
 		return M.shared_living_ui_distance(src, viewcheck = FALSE)
-	return ..()
+	. = max(..(), UI_DISABLED)
+	if(IN_RANGE(user, src, 8))
+		. = max(., UI_UPDATE)
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	. = ..()

@@ -112,7 +112,7 @@
 			// start in party line by default
 			MGD_PARTY,
 		)
-		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
+		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
@@ -122,6 +122,8 @@
 		setup_drive_size = 1024
 		bombproof = 1
 		mailgroups = list(MGO_SILICON,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
+		muted_mailgroups = list(MGA_RKIT)
 
 	research_director
 		icon_state = "pda-rd"
@@ -415,7 +417,7 @@
 
 		if (!src.owner)
 			if (src.cartridge && src.ejectable_cartridge)
-				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 			if (src.ID_card)
 				dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 			dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
@@ -429,7 +431,7 @@
 					dat += src.active_program.return_text()
 				else
 					if (src.cartridge && src.ejectable_cartridge)
-						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 					if (src.ID_card)
 						dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 					dat += "<center><font color=red>Fatal Error 0x17<br>"

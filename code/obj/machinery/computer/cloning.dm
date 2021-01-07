@@ -28,6 +28,8 @@
 	var/mindwipe = 0 //Is mind wiping active?
 	var/datum/bioEffect/BE = null // Any bioeffects to add upon cloning (used with the geneclone module)
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
+	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
+	var/sound_ping = 'sound/machines/ping.ogg'
 
 	lr = 1
 	lg = 0.6
@@ -266,6 +268,7 @@
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
+	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
@@ -721,6 +724,8 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 			else
 				src.gen_analysis = !src.gen_analysis
+				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
+					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 		if("saveToDisk")
 			var/ckey = params["ckey"]

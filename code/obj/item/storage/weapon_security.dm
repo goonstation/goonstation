@@ -326,6 +326,12 @@
 	/obj/item/boomerang,\
 	/obj/item/ammo/bullets/tranq_darts/syndicate = 4)
 
+/obj/item/storage/box/poison
+	name = "ordinary box"
+	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
+
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit
 	name = "spy starter kit"
