@@ -1,5 +1,9 @@
 
 (t)thu jan 07 21
+(u)BenLubar
+(p)3252
+(e)|
+(+)Moved allergen information to the "Allergies" section of the medical record.
 (u)TTerc
 (p)3227
 (e)⚖🆕|balance, feature
