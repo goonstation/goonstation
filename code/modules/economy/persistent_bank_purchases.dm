@@ -282,17 +282,29 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 
 				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
-					if (ispath(text2path("[H.w_uniform.type]/april_fools")))
+					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
+					if (ispath(origin))
 						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
 						H.w_uniform.item_state = "[H.w_uniform.item_state]-alt"
+						H.w_uniform.desc = initial(origin.desc)
 						succ = 1
 
 				if (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-					if (ispath(text2path("[H.wear_suit.type]/april_fools")))
+					var/obj/origin = text2path("[H.wear_suit.type]/april_fools")
+					if (ispath(origin))
 						H.wear_suit.icon_state = "[H.wear_suit.icon_state]-alt"
 						H.wear_suit.item_state = "[H.wear_suit.item_state]-alt"
+						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit:coat_style = "[H.wear_suit:coat_style]-alt"
+						succ = 1
+
+				if (H.head && istype(H.head, /obj/item/clothing/head))
+					var/obj/origin = text2path("[H.head.type]/april_fools")
+					if (ispath(origin))
+						H.head.icon_state = "[H.head.icon_state]-alt"
+						H.head.item_state = "[H.head.item_state]-alt"
+						H.head.desc = initial(origin.desc)
 						succ = 1
 
 			return succ
