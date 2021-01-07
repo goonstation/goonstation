@@ -54,7 +54,7 @@
 			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
 			if(beaconlist.len)
 				for(var/obj/B in beaconlist)
-					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M tiles [dir_name(get_dir(src.ship, B))]"}
+					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
 			dat += {"<HR><B>[ships] Ships Detected:</B><BR>"}
 			if(shiplist.len)
 				for(var/obj/V in shiplist)
