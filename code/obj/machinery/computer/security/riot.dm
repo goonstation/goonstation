@@ -92,6 +92,9 @@
 
 
 	proc/authorize()
+		if(src.authed)
+			return
+
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
 		icon_state = "drawbr-alert"
