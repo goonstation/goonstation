@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../backend";
-import { AnimatedNumber, Box, Button, Divider, Flex, GeneIcon, Icon, Knob, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
+import { AnimatedNumber, Box, Button, Divider, Flex, GeneIcon, Icon, Input, Knob, LabeledList, Modal, NoticeBox, NumberInput, ProgressBar, Section, Tabs, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
@@ -682,17 +682,19 @@ const ScannerTab = (props, context) => {
               </LabeledList.Item>
             </LabeledList>
           </Flex.Item>
-          <Flex.Item grow={0} shrink={0}>
-            <Box width="80px" height="80px" textAlign="center">
-              <img
-                src={"genetek-scanner-occupant.png?" + Date.now()}
-                style={{
-                  "-ms-interpolation-mode": "nearest-neighbor",
-                  "image-rendering": "pixelated",
-                }}
-                height="80" />
-            </Box>
-          </Flex.Item>
+          {!!subjectHuman && (
+            <Flex.Item grow={0} shrink={0}>
+              <Box width="80px" height="80px" textAlign="center">
+                <img
+                  src={"genetek-scanner-occupant.png?" + Date.now()}
+                  style={{
+                    "-ms-interpolation-mode": "nearest-neighbor",
+                    "image-rendering": "pixelated",
+                  }}
+                  height="80" />
+              </Box>
+            </Flex.Item>
+          )}
         </Flex>
       </Section>
       <Section title="Potential Genes">
@@ -771,6 +773,7 @@ const Description = (props, context) => {
 
 const BioEffect = (props, context) => {
   const { data, act } = useBackend(context);
+  const [booth, setBooth] = useSharedState(context, "booth", null);
   const {
     materialCur,
     researchCost,
@@ -834,6 +837,74 @@ const BioEffect = (props, context) => {
           name={icon}
           size={1.5} />
       }>
+      {!!booth && booth.ref === ref && (
+        <Modal>
+          <Section
+            width={35}
+            title={name}
+            style={{
+              "margin": "-10px",
+              "margin-right": "2px",
+            }}
+            buttons={(
+              <GeneIcon
+                name={icon}
+                size={4}
+                style={{
+                  "margin-top": "-2px",
+                  "margin-right": "-4px",
+                }} />
+            )}>
+            <LabeledList>
+              <LabeledList.Item label="Price">
+                <NumberInput
+                  minValue={0}
+                  maxValue={999999}
+                  width={5}
+                  value={booth.price}
+                  onChange={(_, price) => setBooth({
+                    ref: booth.ref,
+                    price: price,
+                    desc: booth.desc,
+                  })} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Description">
+                <Input
+                  width={25}
+                  value={booth.desc}
+                  onChange={(_, desc) => setBooth({
+                    ref: booth.ref,
+                    price: booth.price,
+                    desc: desc,
+                  })} />
+              </LabeledList.Item>
+            </LabeledList>
+            <Box
+              inline
+              width="50%"
+              textAlign="center"
+              mt={2}>
+              <Button
+                icon="person-booth"
+                color="good"
+                onClick={() => act("booth", booth)}>
+                Send to Booth
+              </Button>
+            </Box>
+            <Box
+              inline
+              width="50%"
+              textAlign="center">
+              <Button
+                icon="times"
+                color="bad"
+                onClick={() => setBooth(null)}>
+                Cancel
+              </Button>
+            </Box>
+          </Section>
+        </Modal>
+      )}
       <Box textAlign="right">
         <Box
           mr={1}
@@ -895,7 +966,7 @@ const BioEffect = (props, context) => {
             disabled={materialCur < boothCost}
             icon="person-booth"
             color="good"
-            onClick={() => act("booth", { ref })}>
+            onClick={() => setBooth({ ref: ref, price: 200, desc: "" })}>
             Sell at Booth
           </Button>
         )}

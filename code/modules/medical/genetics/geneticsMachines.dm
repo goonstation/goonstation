@@ -664,11 +664,10 @@
 				return
 			if (!E.can_make_injector)
 				return
-			// TODO: convert to tgui
 			genResearch.researchMaterial -= price
-			var/booth_effect_cost = input(usr, "Please enter a price to sell this effect.", "$$$", 200) as null|num
+			var/booth_effect_cost = text2num(params["price"])
 			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
-			var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
+			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
