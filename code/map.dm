@@ -185,7 +185,11 @@ var/global/list/mapNames = list(
 		"the escape hallway" = list(/area/station/hallway/secondary/exit),
 		"the Research Director's office" = list(/area/station/crew_quarters/hor),
 		"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
-		"the kitchen" = list(/area/station/crew_quarters/kitchen))
+		"the kitchen" = list(/area/station/crew_quarters/kitchen),
+		"the bridge" = list(/area/station/bridge),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the central room in security" = list(/area/station/security/main),
+		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -232,6 +236,25 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the central research sector hub" = list(/area/station/science/lobby),
+		"the cargo office (QM)" = list(/area/station/quartermaster/office),
+		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the central warehouse" = list(/area/station/storage/warehouse),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the bridge" = list(/area/station/bridge),
+		"the stock exchange at the public market" = list(/area/station/crew_quarters/stockex),
+		"the pod bay" = list(/area/station/hangar/main),
+		"the escape arm" = list(/area/station/hallway/secondary/exit),
+		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the catering staff area" = list(/area/station/crew_quarters/catering),
+		"the fitness room" = list(/area/station/crew_quarters/fitness))
+
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
@@ -267,13 +290,18 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
+		//"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the engine control room" = list(/area/station/engine/power),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the net cafe" = list(/area/station/crew_quarters/info),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the genetics lab" = list(/area/station/medical/research))
+		"the genetics lab" = list(/area/station/medical/research),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the bridge" = list(/area/station/bridge),
+		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -305,11 +333,15 @@ var/global/list/mapNames = list(
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the refinery (arc smelter)" = list(/area/station/mining/refinery),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
+		//destiny's medbay is a swiss cheese with regard to areas
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby, /area/station/medical/medbay/restroom, /area/station/medical/medbay/surgery, /area/station/medical/medbay/surgery/storage, /area/station/medical/medbay/treatment1, /area/station/medical/medbay/treatment2),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the robotics lab" = list(/area/station/medical/robotics))
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the medical research lab" = list(/area/station/medical/research),
+		"the escape shuttle dock" = list(/area/station/hallway/secondary/exit),
+		"the kitchen" = list(/area/station/crew_quarters/kitchen))
 
 /datum/map_settings/destiny/clarion
 	name = "CLARION"
@@ -318,14 +350,20 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby, /area/station/medical/medbay/surgery),
 		"the bar" = list(/area/station/crew_quarters/bar),
-		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the tool storage room" = list(/area/station/storage/tools),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the robotics lab" = list(/area/station/medical/robotics))
+		"the bridge" = list(/area/station/bridge),
+		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
+		"the aviary" = list(/area/station/garden/aviary),
+		"the quartermaster's storage" = list(/area/station/quartermaster/storage),
+		"the secure dock" = list(/area/station/hangar/sec))
+		//"the robotics lab" = list(/area/station/medical/robotics))
 
 /datum/map_settings/horizon
 	name = "HORIZON"
@@ -368,7 +406,13 @@ var/global/list/mapNames = list(
 		"the Engineering control room" = list(/area/station/engine/power),
 		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
 		"the main medical bay room" = list(/area/station/medical/medbay),
-		"the research artifact lounge" = list(/area/station/science/artifact))
+		"the research artifact lounge" = list(/area/station/science/artifact),
+		"the cloning lab" = list(/area/station/medical/medbay/cloner),
+		"the hot loop" = list(/area/station/engine/hotloop),
+		"the mechanics' lab" = list(/area/station/engine/elect),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
 
 	job_limits_override = list(
 		/datum/job/civilian/clown = 2,
@@ -432,7 +476,12 @@ var/global/list/mapNames = list(
 		"the medbay lobby" = list(/area/station/medical/medbay/lobby),
 		"the engineering power room" = list(/area/station/engine/power),
 		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the communications office" = list(/area/station/communications/office))
+		"the communications office" = list(/area/station/communications/office),
+		"the inner engine room (surrounding the singularity, hopefully)" = list(/area/station/engine/inner),
+		"the engineering storage room" = list(/area/station/engine/storage),
+		"the security officers' quarters" = list(/area/station/security/secoffquarters),
+		"the chemistry lab" = list(/area/station/science/chemistry),
+		"the detective's quarters" = list(/area/station/security/detectives_office_manta, /area/station/security/detectives_office_manta/detectives_bedroom))
 
 /datum/map_settings/mushroom
 	name = "MUSHROOM"
@@ -549,7 +598,15 @@ var/global/list/mapNames = list(
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 		"the artifact lab" = list(/area/station/science/artifact),
-		"the janitor's office" = list(/area/station/janitor/office))
+		"the janitor's office" = list(/area/station/janitor/office),
+		"the telescience lab" = list(/area/station/science/teleporter),
+		"the merchant docks" = list(/area/station/crew_quarters/market),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the hydroponics bay" = list(/area/station/hydroponics/bay),
+		"the fitness room" = list(/area/station/crew_quarters/fitness),
+		"the EVA warehouse" = list(/area/station/storage/eva),
+		"the news office" = list(/area/station/crew_quarters/radio/news_office))
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
@@ -808,7 +865,13 @@ var/global/list/mapNames = list(
 		"the medbay" = list(/area/station/medical/medbay),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
-		"the chapel" = list(/area/station/chapel/sanctuary))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the main security room" = list(/area/station/security/main),
+		"the main engineering room" = list(/area/station/engine/engineering, /area/station/hangar/engine),
+		"the research lobby" = list(/area/station/science/lobby),
+		"the crew quarters" = list(/area/station/crew_quarters/quartersA),
+		"the bridge" = list(/area/station/bridge),
+		"the mining staff room" = list(/area/station/mining/staff_room))
 		//"the radio lab" = list(/area/station/crew_quarters/radio))
 
 	job_limits_override = list(
