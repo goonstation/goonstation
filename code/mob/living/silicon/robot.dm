@@ -2108,13 +2108,13 @@
 		if (!istype(targethead))
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
-		//for (var/obj/item/parts/robot_parts/head/screen/ in src.contents)
 
 		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
 		if (!newFace) return 0
-		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("lod", "dol")
+		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
 		if (!newMode) return 0
 		newFace = (newFace ? lowertext(newFace) : targethead.face)
+		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
 		newMode = (newMode ? newMode : targethead.mode)
 		targethead.face = newFace
 		targethead.mode = newMode
