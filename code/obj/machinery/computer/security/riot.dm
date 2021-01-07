@@ -73,12 +73,15 @@
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
 						if ("authorize")
-							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS"
+							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
 			if ("authorize")
-				if (signal.data["acc_code"] == netpass_heads)
+				if(!IN_RANGE(signal.source, src, radiorange))
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "outofrange"
+				else if (signal.data["acc_code"] == netpass_heads)
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "authorize"
