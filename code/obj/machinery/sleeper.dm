@@ -459,7 +459,7 @@
 			// Otherwise, one glance at the control console would be sufficient.
 			if (rejuv < src.maximum_reagent)
 				var/inject_r = src.inject_reagent
-				if ((rejuv + src.inject_r) > src.maximum_reagent)
+				if ((rejuv + inject_r) > src.maximum_reagent)
 					inject_r = max(0, (src.maximum_reagent - rejuv))
 				src.occupant.reagents.add_reagent(src.med_stabilizer, inject_r)
 				injected_anything = TRUE
