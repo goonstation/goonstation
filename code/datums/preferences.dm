@@ -2405,4 +2405,4 @@ var/global/mob/living/carbon/human/character_preview_icon_mob = null
 	H.update_body()
 	H.update_face()
 
-	return getFlatIcon(H)
+	. = getFlatIcon(H)
