@@ -137,8 +137,14 @@
 			var/myarea = get_area(src)
 			message = "Mail delivery alert in [myarea]."
 
+			if (message && (mailgroup || mailgroup2) && pda_connection)
+				var/groups = list()
+				if (mailgroup)
+					groups += mailgroup
+				if (mailgroup2)
+					groups += mailgroup2
+				groups += MGA_MAIL
 
-			if (message && mailgroup && pda_connection)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.transmission_method = TRANSMISSION_RADIO
@@ -147,21 +153,7 @@
 				newsignal.data["message"] = "[message]"
 
 				newsignal.data["address_1"] = "00000000"
-				newsignal.data["group"] = mailgroup
-				newsignal.data["sender"] = src.net_id
-
-				pda_connection.post_signal(src, newsignal)
-
-			if (message && mailgroup2 && pda_connection)
-				var/datum/signal/newsignal = get_free_signal()
-				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-				newsignal.data["message"] = "[message]"
-
-				newsignal.data["address_1"] = "00000000"
-				newsignal.data["group"] = mailgroup2
+				newsignal.data["group"] = groups
 				newsignal.data["sender"] = src.net_id
 
 				pda_connection.post_signal(src, newsignal)
@@ -245,17 +237,17 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_MECHANIC
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGO_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -520,7 +512,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -536,7 +528,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_MECHANIC
 		message = 1
 
 		north
@@ -552,7 +544,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGO_MINING
 		message = 1
 
 		north

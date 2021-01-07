@@ -145,8 +145,9 @@ that cannot be itched
 
 		src.add_fingerprint(user)
 
+		var/holder = src.loc
 		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-		if (!search || user.stat)
+		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
 		search = lowertext(search)

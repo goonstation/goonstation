@@ -184,6 +184,11 @@ toxic - poisons
 	cost = 3
 	sname = "burst fire"
 
+/datum/projectile/bullet/nine_mm_NATO/auto
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
 
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
@@ -499,6 +504,7 @@ toxic - poisons
 
 /datum/projectile/bullet/lmg
 	name = "bullet"
+	sname = "8-shot burst"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 12
 	cost = 8
@@ -519,6 +525,12 @@ toxic - poisons
 			var/mob/living/carbon/human/M = hit
 			M.changeStatus("slowed", 0.5 SECONDS)
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+
+	auto
+		sname = "full auto"
+		shot_volume = 66
+		cost = 1
+		shot_number = 1
 
 /datum/projectile/bullet/lmg/weak
 	power = 1

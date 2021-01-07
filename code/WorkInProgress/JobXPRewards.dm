@@ -333,6 +333,10 @@ mob/verb/checkrewards()
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
 				return
+			if (isnull(K.cell) || K.cell.charge < K.cell.max_charge * 0.9)
+				boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+				src.claimedNumbers[usr.key]--
+				return
 			C.mob.remove_item(K)
 			found = 1
 			qdel(K)

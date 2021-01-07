@@ -20,6 +20,7 @@ var/list/observers = list()
 		..()
 		observers += src
 		mobs += src
+		src.move_dir = 0
 
 	pooled()
 		mobs -= src
@@ -80,7 +81,8 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		src.stop_observing()
+		if(keys && src.move_dir)
+			src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target

@@ -80823,6 +80823,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "haY" = (
+/obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -103123,7 +103124,7 @@ tPo
 tPo
 tPo
 jCd
-fVT
+nUM
 iWY
 tPo
 tPo
@@ -104334,7 +104335,7 @@ fVT
 fVT
 fVT
 fVT
-nUM
+fVT
 fVT
 hvH
 wSt
@@ -104929,7 +104930,7 @@ aaa
 aaa
 aam
 tWd
-nqQ
+tWd
 nqQ
 aDo
 nqQ
@@ -104941,7 +104942,7 @@ tWd
 nqQ
 eDP
 nqQ
-nqQ
+tWd
 tWd
 aaI
 aaa

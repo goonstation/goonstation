@@ -237,6 +237,14 @@
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
 
+/obj/lattice/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Structural Foundation
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description
+
 /////////////
 // BARRICADE
 /////////////
@@ -284,3 +292,11 @@
 		animate_flock_passthrough(mover)
 		return 1
 	return ..()
+
+/obj/grille/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description

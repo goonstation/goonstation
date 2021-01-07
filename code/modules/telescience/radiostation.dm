@@ -215,7 +215,7 @@
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = list(MGD_PARTY, MGA_RADIO))
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
@@ -606,7 +606,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = list(MGD_PARTY, MGA_RADIO))
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)

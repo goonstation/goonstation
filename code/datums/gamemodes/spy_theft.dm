@@ -554,13 +554,12 @@
 
 	//Add big station item bounties (copy paste. bad)
 	var/list/BS = big_station_bounties.Copy()
-	var/big_choice = 0
+	var/big_choice = null
 	var/difficulty = 0
-	var/obj/obj_existing = 0
-
+	var/obj/obj_existing = null
 	for(var/i=1, i<=big_station_bounty_amt, i++)
-		big_choice = 0
-		obj_existing = 0
+		big_choice = null
+		obj_existing = null
 
 		//try to find an item that exists on the station zlevel
 		for(var/q=1, q<= 50, q++) //just like try 50 times i guess lol
@@ -572,7 +571,7 @@
 			if (obj_existing?.z == 1)
 				break
 			else
-				obj_existing = 0
+				obj_existing = null
 
 		if (obj_existing?.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)

@@ -138,7 +138,7 @@
 	//
 	MouseDrop_T(mob/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
@@ -151,7 +151,7 @@
 		var/turf/Q = target.loc
 		sleep (5)
 		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || ((user.stat || hasStatus(list("weakened", "paralysis", "stunned"))) && user != target))
+		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || (is_incapacitated(user) && user != target))
 			return
 
 		if(target == user && !user.stat)	// if drop self, then climbed in
@@ -583,7 +583,7 @@
 			newsignal.data["message"] = "[message]"
 
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -599,7 +599,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
-		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return ..()
 
 		if (!target.contents.len)
@@ -608,7 +608,7 @@
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		for (var/atom/movable/AM in target)
-			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened"))
+			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user))
 				break
 			if (AM.anchored || AM.loc != target)
 				continue
@@ -633,7 +633,7 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
 		flush = 1

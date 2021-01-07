@@ -7689,6 +7689,10 @@
 	pixel_y = 9
 	},
 /obj/item/storage/toolbox/mechanical,
+/obj/item/wrench{
+	pixel_x = 10;
+	pixel_y = 1
+	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "bVD" = (
@@ -8879,7 +8883,7 @@
 "cou" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /obj/item/plate{
 	pixel_y = -1
 	},
@@ -15612,11 +15616,10 @@
 	dir = 1;
 	layer = 4
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "erY" = (
@@ -18964,6 +18967,13 @@
 /area/station/security/quarters)
 "fqg" = (
 /obj/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Routing Depot";
+	dir = 4;
+	name = "Routing Depot Camera";
+	network = "Cargo";
+	tag = ""
+	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "fqj" = (
@@ -24444,7 +24454,8 @@
 /area/station/hangar/main)
 "hao" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/wall/auto/jen,
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "hat" = (
 /obj/cable{
@@ -52878,6 +52889,16 @@
 /obj/stool/bench/red,
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/crew_quarters/cafeteria)
+"pLc" = (
+/obj/machinery/camera{
+	c_tag = "Routing Depot - external";
+	dir = 4;
+	name = "Routing Depot Camera";
+	network = "Cargo";
+	tag = ""
+	},
+/turf/space,
+/area/space)
 "pLf" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -53335,11 +53356,9 @@
 /obj/railing/orange{
 	dir = 1
 	},
-/obj/railing/orange{
-	layer = 4
-	},
 /obj/decal/cleanable/dirt/jen,
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/storage/cart/trash,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "pSs" = (
@@ -71832,6 +71851,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"vpj" = (
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
+/turf/space,
+/area/station/routing/depot)
 "vpr" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -81198,16 +81223,14 @@
 /area/station/maintenance/outer/nw)
 "ybn" = (
 /obj/table/reinforced/auto,
-/obj/item/wrench{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = 1
-	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
+	},
+/obj/machinery/computer/security/wooden_tv{
+	desc = "A monitor connected to the cargo routing depot camera network.";
+	name = "Routing Depot Monitor";
+	network = "Cargo";
+	pixel_y = 1
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -117161,7 +117184,7 @@ jyv
 tJK
 nBj
 brP
-mmy
+wEG
 wbM
 vxt
 edK
@@ -117765,7 +117788,7 @@ mRC
 tJK
 nBj
 etc
-wEG
+mSM
 cYk
 wax
 ogT
@@ -118970,7 +118993,7 @@ qCT
 qCT
 geL
 gba
-pSq
+suy
 nln
 kwi
 osx
@@ -153737,10 +153760,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
+vpj
 aJw
 rdj
-rdj
+pLc
 rdj
 rdj
 rdj

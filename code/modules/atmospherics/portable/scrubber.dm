@@ -24,7 +24,7 @@
 	else
 		icon_state = "pscrubber:0"
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process(mult)
 	..()
 	if (!loc) return
 	if (src.contained) return
@@ -52,7 +52,7 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
+		var/transfer_moles = min(1, volume_rate * mult/environment.volume)*TOTAL_MOLES(environment)
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
