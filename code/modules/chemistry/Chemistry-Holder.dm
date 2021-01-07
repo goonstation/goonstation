@@ -630,7 +630,7 @@ datum
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, round(log((T0C - temp_to_burn_with) / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
 
