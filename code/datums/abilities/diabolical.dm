@@ -288,6 +288,13 @@
 	targeted = 0
 	cooldown = 0
 
+	tryCast()
+		if (is_incapacitated(holder.owner))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		. = ..()
+
 	cast(atom/T)
 		var/floorturf = get_turf(usr)
 		var/x_coeff = rand(0, 1)	// open the floor horizontally
