@@ -166,9 +166,10 @@
 					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
 				. = TRUE
 			if("inject")
-				var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay
-				if (src.our_sleeper?.occupant && !src.timing && !is_recharging)
-					src.our_sleeper.inject(usr, TRUE)
+				if (src.our_sleeper)
+					var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay
+					if (src.our_sleeper.occupant && !src.timing && !is_recharging)
+						src.our_sleeper.inject(usr, TRUE)
 				. = TRUE
 			if("eject")
 				if (src.our_sleeper?.occupant)
