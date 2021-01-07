@@ -573,7 +573,7 @@
 	proc/can_operate(var/mob/M)
 		if (!IN_RANGE(src, M, 1))
 			return FALSE
-		if (is_incapacitated(M))
+		if (istype(M) && is_incapacitated(M))
 			return FALSE
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
