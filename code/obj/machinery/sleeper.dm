@@ -419,13 +419,13 @@
 				// don't set injected_anything (the poison uses a sneaky silent injector)
 		else
 			if (M.health < crit_threshold && M.reagents.get_reagent_amount(src.med_crit) == 0)
-				M.reagents.add_reagent(src.med_crit, timed_inject)
+				M.reagents.add_reagent(src.med_crit, src.timed_inject)
 				injected_anything = TRUE
-			if (M.get_oxygen_deprivation() >= damage_threshold && M.reagents.get_reagent_amount(src.med_oxy) == 0)
-				M.reagents.add_reagent(src.med_oxy, timed_inject)
+			if (M.get_oxygen_deprivation() >= src.damage_threshold && M.reagents.get_reagent_amount(src.med_oxy) == 0)
+				M.reagents.add_reagent(src.med_oxy, src.timed_inject)
 				injected_anything = TRUE
-			if (M.get_toxin_damage() >= damage_threshold && M.reagents.get_reagent_amount(src.med_tox) == 0)
-				M.reagents.add_reagent(src.med_tox, timed_inject)
+			if (M.get_toxin_damage() >= src.damage_threshold && M.reagents.get_reagent_amount(src.med_tox) == 0)
+				M.reagents.add_reagent(src.med_tox, src.timed_inject)
 				injected_anything = TRUE
 
 		if (injected_anything)
@@ -458,9 +458,9 @@
 			// We always inject this, even when emagged to mask the fact we're malfunctioning.
 			// Otherwise, one glance at the control console would be sufficient.
 			if (rejuv < maximum_reagent)
-				var/inject_r = inject_reagent
-				if ((rejuv + inject_r) > maximum_reagent)
-					inject_r = max(0, (maximum_reagent - rejuv))
+				var/inject_r = src.inject_reagent
+				if ((rejuv + src.inject_r) > src.maximum_reagent)
+					inject_r = max(0, (src.maximum_reagent - rejuv))
 				src.occupant.reagents.add_reagent(src.med_stabilizer, inject_r)
 				injected_anything = TRUE
 
@@ -468,34 +468,34 @@
 			if (src.emagged)
 				var/our_poison = pick(src.med_emag)
 				var/poison = src.occupant.reagents.get_reagent_amount(our_poison)
-				if (poison < maximum_poison)
-					var/inject_p = inject_poison
-					if ((poison + inject_p) > maximum_poison)
-						inject_p = max(0, (inject_poison - poison))
+				if (poison < src.maximum_poison)
+					var/inject_p = src.inject_poison
+					if ((poison + inject_p) > src.maximum_poison)
+						inject_p = max(0, (src.inject_poison - poison))
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
 						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
-				if (src.occupant.health < crit_threshold && crit < maximum_reagent)
-					var/inject_c = inject_reagent
-					if ((crit + inject_c) > maximum_reagent)
-						inject_c = max(0, (maximum_reagent - crit))
+				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
+					var/inject_c = src.inject_reagent
+					if ((crit + inject_c) > src.maximum_reagent)
+						inject_c = max(0, (src.maximum_reagent - crit))
 					src.occupant.reagents.add_reagent(src.med_crit, inject_c)
 					injected_anything = TRUE
 
-				if (src.occupant.get_oxygen_deprivation() >= damage_threshold && oxy < maximum_reagent)
-					var/inject_o = inject_reagent
-					if ((oxy + inject_o) > maximum_reagent)
-						inject_o = max(0, (maximum_reagent - oxy))
+				if (src.occupant.get_oxygen_deprivation() >= src.damage_threshold && oxy < src.maximum_reagent)
+					var/inject_o = src.inject_reagent
+					if ((oxy + inject_o) > src.maximum_reagent)
+						inject_o = max(0, (src.maximum_reagent - oxy))
 					src.occupant.reagents.add_reagent(src.med_oxy, inject_o)
 					injected_anything = TRUE
 
-				if (src.occupant.get_toxin_damage() >= damage_threshold && tox < maximum_reagent)
-					var/inject_t = inject_reagent
-					if ((tox + inject_t) > maximum_reagent)
-						inject_t = max(0, (maximum_reagent - tox))
+				if (src.occupant.get_toxin_damage() >= src.damage_threshold && tox < src.maximum_reagent)
+					var/inject_t = src.inject_reagent
+					if ((tox + inject_t) > src.maximum_reagent)
+						inject_t = max(0, (src.maximum_reagent - tox))
 					src.occupant.reagents.add_reagent(src.med_tox, inject_t)
 					injected_anything = TRUE
 
