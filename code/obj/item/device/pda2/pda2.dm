@@ -148,7 +148,7 @@
 		bombproof = 1
 		mailgroups = list(MGO_SILICON,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
-		muted_mailgroups = list(MGA_RKIT)
+		default_muted_mailgroups = list(MGA_RKIT)
 
 	research_director
 		icon_state = "pda-rd"
