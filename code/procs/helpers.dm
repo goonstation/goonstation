@@ -176,15 +176,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 proc/get_angle(atom/a, atom/b)
     .= arctan(b.y - a.y, b.x - a.x)
 
-//list2params without the dumb encoding
-/proc/list2params_noencode(var/list/L)
-	var/strbuild = ""
-	var/first = 1
-	for(var/x in L)
-		strbuild += "[first?"":"&"][x]=[L[x]]"
-		first = 0
-	return strbuild
-
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
 
