@@ -196,7 +196,7 @@
 	selectText = "Choose a Learnventure!"
 	dividerThing = "<hr>"
 	overrideAlertAllowed = 1
-	overrideAlertText = "Enable encouragement."
+	overrideAlertText = "Enable encouragement via ringer message."
 	overrideAlertYesText = "Yes!"
 	overrideAlertNoText = "No"
 
@@ -230,10 +230,11 @@
 	selectText = "Discover your destiny..."
 	dividerThing = "<center>~~become your dreams~~~</center>"
 	overrideAlertAllowed = 1
-	overrideAlertText = "Starkle?"
+	overrideAlertText = "Starkle your PDA ringer?"
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
 
+/// Ringtones by Retkid
 /datum/computer/file/pda_program/ringtone/chimes
 	name = "Spacechimes"
 	size = 4
@@ -243,14 +244,15 @@
 									 "ring4" = new/datum/ringtone/retkid/ring6,\
 									 "ring5" = new/datum/ringtone/retkid/ring7)
 	topText = "<h4>Spacechime Family</h4>"
-	bottomText = "A diverse family of spacechimes ."
+	bottomText = "A diverse family of spacechimes. From the Retkid collection."
 	selectText = "Choose a set of spacechimes"
 	dividerThing = "<hr>"
 	overrideAlertAllowed = 1
-	overrideAlertText = "Encouragement?"
+	overrideAlertText = "PDA Ringer Encouragement?"
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
 
+/// Ringtones also by Retkid
 /datum/computer/file/pda_program/ringtone/beepy
 	name = "Blipous"
 	size = 4
@@ -260,23 +262,25 @@
 									 "ring4" = new/datum/ringtone/retkid/ring8,\
 									 "ring5" = new/datum/ringtone/retkid/ring9)
 	topText = "<h4>Blipous Family Spaceblips</h4>"
-	bottomText = "A collection of Blipous family heirloom Spaceblips."
+	bottomText = "A collection of Blipous family heirloom Spaceblips. From the Retkid collection"
 	selectText = "Choose a Spaceblip"
 	dividerThing = "<hr>"
 	overrideAlertAllowed = 1
-	overrideAlertText = "Spacequips?"
+	overrideAlertText = "PDA Ringer Spacequips?"
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
 
 /datum/computer/file/pda_program/ringtone/syndie
 	name = "SounDreamS PRO"
 	size = 28
-	ring_list = list("ring1" = new/datum/ringtone/syndie, "ring2" = new/datum/ringtone/syndie/guns, "ring3" = new/datum/ringtone/syndie/lasersword)
+	ring_list = list("ring1" = new/datum/ringtone/syndie,\
+									 "ring2" = new/datum/ringtone/syndie/guns,\
+									 "ring3" = new/datum/ringtone/syndie/lasersword)
 	topText = "<h4>SounDreamS Professional FX</h4>"
 	bottomText = "1001 PROFESSIONAL HI-QUALITY sound effects for use in your projects!"
 	selectText = "Pick a sound library:"
 	dividerThing = "<hr>"
 	overrideAlertAllowed = 1
-	overrideAlertText = "Artist commentary?"
+	overrideAlertText = "Enable Artist Commentary Track?"
 	overrideAlertYesText = "Yes"
 	overrideAlertNoText = "No"
