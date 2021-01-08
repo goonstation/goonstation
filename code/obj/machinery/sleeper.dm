@@ -167,7 +167,7 @@
 				. = TRUE
 			if("inject")
 				if (src.our_sleeper)
-					var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + injection_delay
+					var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + src.injection_delay
 					if (src.our_sleeper.occupant && !src.timing && !is_recharging)
 						src.our_sleeper.inject(usr, TRUE)
 				. = TRUE
