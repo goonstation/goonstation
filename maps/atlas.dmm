@@ -1485,7 +1485,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dI" = (
@@ -1588,10 +1587,6 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/mining/refinery)
-"dU" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor/red/side,
-/area/station/security/main)
 "dV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/catering)
@@ -71446,7 +71441,7 @@ dg
 hl
 VK
 gf
-dU
+gE
 hk
 hU
 gE
