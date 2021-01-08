@@ -1287,10 +1287,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"dj" = (
-/obj/item/storage/photo_album/beepsky,
-/turf/space,
-/area/space)
 "dk" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -48514,7 +48510,7 @@ aa
 aa
 aa
 aa
-dj
+aa
 aa
 aa
 aa
@@ -96507,7 +96503,7 @@ aa
 aa
 aa
 aa
-dj
+aa
 aa
 aa
 aa
