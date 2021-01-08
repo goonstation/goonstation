@@ -6635,8 +6635,6 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aqo" = (
-/obj/table/wood/round/auto,
-/obj/item/decoration/flower_vase,
 /obj/machinery/drainage/big,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -24577,7 +24575,7 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/flowers,
-/turf/simulated/floor/grass/random,
+/turf/simulated/floor/snow,
 /area/station/hallway/portlowerhallway)
 "bcU" = (
 /obj/potted_plant/potted_plant4{
@@ -24717,9 +24715,11 @@
 /turf/simulated/floor/red,
 /area/station/hallway/centralhallway)
 "bdg" = (
-/obj/decal/tile_edge/flowers,
-/turf/simulated/floor/grass/random,
-/area/station/hallway/portlowerhallway)
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bdi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31015,7 +31015,6 @@
 	dir = 1;
 	icon_state = "frug1"
 	},
-/obj/item/instrument/large/jukebox,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -31695,24 +31694,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqy" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
-"bqz" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bqA" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -32370,9 +32351,7 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "brM" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
+/obj/xmastree,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -48005,11 +47984,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
-"wWf" = (
-/obj/decal/tile_edge/flowers,
-/obj/xmastree,
-/turf/simulated/floor/snow,
-/area/station/hallway/portlowerhallway)
 "wXw" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -88843,8 +88817,8 @@ aDd
 blG
 aCM
 aZM
-bdg
-wWf
+qBo
+qBo
 qBo
 aZM
 bte
@@ -91562,8 +91536,8 @@ blJ
 blH
 aDd
 bpm
-bqy
-brL
+bqw
+bdg
 bsS
 fPR
 bvI
@@ -92166,8 +92140,8 @@ blL
 blH
 aDd
 bpm
-bqz
-brJ
+bqw
+bdg
 bsS
 fPR
 bvI
