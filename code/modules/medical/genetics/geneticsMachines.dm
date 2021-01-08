@@ -16,6 +16,7 @@
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1
 	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
 	var/list/equipment = list(
 		GENETICS_INJECTORS = 0,
@@ -45,7 +46,10 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
-		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
+		connection_scan()
+
+/obj/machinery/computer/genetics/connection_scan()
+	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
@@ -94,7 +98,8 @@
 			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
 			return
 
-		src.attack_hand(user)
+		..()
+	return
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
