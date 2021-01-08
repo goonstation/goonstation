@@ -803,6 +803,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				counter = optional
 
 			switchStage(getStage())
+			owner.delStatus("shivering")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -1672,6 +1673,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	desc = "You're very cold!"
 	icon_state = "shivering"
 	duration = 2 SECONDS
+	maxDuration = 30 SECONDS
 	visible = 1
 	movement_modifier = /datum/movement_modifier/shiver
 

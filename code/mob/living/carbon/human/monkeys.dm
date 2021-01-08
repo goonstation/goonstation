@@ -10,12 +10,15 @@
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
-				cust_one_state = "None"
 				src.bioHolder.AddEffect("monkey")
 				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
+
+	initializeBioholder()
+		randomize_look(src, 1, 1, 1, 0, 1, 0)
+		. = ..()
 
 // special monkeys.
 /mob/living/carbon/human/npc/monkey/mr_muggles
@@ -59,6 +62,16 @@
 /mob/living/carbon/human/npc/monkey/von_braun
 	name = "Von Braun"
 	real_name = "Von Braun"
+	gender = "male"
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+/mob/living/carbon/human/npc/monkey/oppenheimer
+	name = "Oppenheimer"
+	real_name = "Oppenheimer"
 	gender = "male"
 	New()
 		..()
@@ -118,15 +131,12 @@
 	New()
 		..()
 		START_TRACKING
-		SPAWN_DBG(0.5 SECONDS)
-			if (!src.disposed)
-				src.bioHolder.mobAppearance.gender = src.gender
-				src.bioHolder.mobAppearance.customization_first = "None"
-				src.cust_one_state = "None"
-				src.bioHolder.AddEffect("monkey")
-				if (src.name == "monkey" || !src.name)
-					src.name = pick_string_autokey("names/monkey.txt")
-				src.real_name = src.name
+		if (!src.disposed)
+			src.cust_one_state = "None"
+			src.bioHolder.AddEffect("monkey")
+			if (src.name == "monkey" || !src.name)
+				src.name = pick_string_autokey("names/monkey.txt")
+			src.real_name = src.name
 
 	disposing()
 		STOP_TRACKING
@@ -149,7 +159,7 @@
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
 			..()
 
-	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src))
 			return ..()
@@ -392,7 +402,6 @@
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
-				cust_one_state = "None"
 				src.bioHolder.AddEffect("seamonkey")
 				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)

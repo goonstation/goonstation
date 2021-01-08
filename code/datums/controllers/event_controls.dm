@@ -17,7 +17,7 @@ var/datum/event_controller/random_events
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
-	var/alive_antags_threshold = 0.15
+	var/alive_antags_threshold = 0.06
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES

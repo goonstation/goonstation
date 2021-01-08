@@ -110,7 +110,7 @@
 		return get_turf(src)
 
 	relaymove(mob/user as mob)
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (is_incapacitated(user))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
@@ -834,15 +834,31 @@
 			return
 
 		if (signal.data["address_1"] == src.net_id)
+			var/datum/signal/reply = get_free_signal()
+			reply.source = src
+			reply.transmission_method = TRANSMISSION_RADIO
+			reply.data["sender"] = src.net_id
+			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
+				if ("help")
+					if (!signal.data["topic"])
+						reply.data["description"] = "Secure Storage"
+						reply.data["topics"] = "status,lock,unlock"
+					else
+						reply.data["topic"] = signal.data["topic"]
+						switch (lowertext(signal.data["topic"]))
+							if ("status")
+								reply.data["description"] = "Returns the status of the secure storage. No arguments"
+							if ("lock")
+								reply.data["description"] = "Locks the secure storage. Requires NETPASS_SECURITY"
+								reply.data["args"] = "pass"
+							if ("unlock")
+								reply.data["description"] = "Unlocks the secure storage. Requires NETPASS_SECURITY"
+								reply.data["args"] = "pass"
+							else
+								reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 				if ("status")
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
-					reply.data = list("address_1" = sender, "command" = "lock=[locked]&open=[open]", "sender" = src.net_id)
-					SPAWN_DBG(0.5 SECONDS)
-						src.radio_control.post_signal(src, reply, 2)
-
+					reply.data["command"] = "lock=[locked]&open=[open]"
 				if ("lock")
 					. = 0
 					if (signal.data["pass"] == netpass_security)
@@ -850,17 +866,11 @@
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
 						src.update_icon()
-
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
 					if (.)
-						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
+						reply.data["command"] = "ack"
 					else
-						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-					SPAWN_DBG(0.5 SECONDS)
-						src.radio_control.post_signal(src, reply, 2)
-
+						reply.data["command"] = "nack"
+						reply.data["data"] = "badpass"
 				if ("unlock")
 					. = 0
 					if (signal.data["pass"] == netpass_security)
@@ -868,18 +878,15 @@
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
 						src.update_icon()
-
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
 					if (.)
-						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
+						reply.data["command"] = "ack"
 					else
-						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-
-					SPAWN_DBG(0.5 SECONDS)
-						src.radio_control.post_signal(src, reply, 2)
-			return //todo
+						reply.data["command"] = "nack"
+						reply.data["data"] = "badpass"
+				else
+					return //COMMAND NOT RECOGNIZED
+			SPAWN_DBG(0.5 SECONDS)
+				src.radio_control.post_signal(src, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
 			var/datum/signal/reply = get_free_signal()
@@ -891,8 +898,6 @@
 			reply.data["netid"] = src.net_id
 			SPAWN_DBG(0.5 SECONDS)
 				src.radio_control.post_signal(src, reply, 2)
-			return
-		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed

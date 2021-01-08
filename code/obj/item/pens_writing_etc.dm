@@ -316,7 +316,20 @@
 				src.color_name = hex2color_name(src.color)
 				src.name = "[src.color_name] crayon"
 				user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
-				JOB_XP(user, "Clown", 1)
+
+		robot
+			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
+
+			attack(mob/M as mob, mob/user as mob, def_zone)
+				if (M == user)
+					src.color = random_color()
+					src.font_color = src.color
+					src.color_name = hex2color_name(src.color)
+					src.name = "[src.color_name] crayon"
+					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
+					return
+
+				return ..()
 
 		pixel
 			maptext_crayon = TRUE
@@ -671,7 +684,10 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		tooltip_rebuild = 1
+		var/holder = src.loc
 		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		if (src.loc != holder)
+			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
@@ -889,6 +905,7 @@
 	New()
 		..()
 		src.pen = new /obj/item/pen(src)
+		src.update()
 		return
 
 /* =============== FOLDERS (wip) =============== */
@@ -920,9 +937,9 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.hasStatus("paralysis", "stunned", "weakened", "resting"))
+		if (is_incapacitated(usr))
 			return
 		..()
 

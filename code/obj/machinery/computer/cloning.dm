@@ -25,6 +25,8 @@
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
+	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
+	var/sound_ping = 'sound/machines/ping.ogg'
 
 	lr = 1
 	lg = 0.6
@@ -215,7 +217,7 @@
 		if ((subject.ghost && subject.ghost.mind && subject.ghost.mind.key))
 			subjMind = subject.ghost.mind
 		else if (subject.last_client)
-			var/mob/M = find_ghost_by_key(subject.last_client.ckey)
+			var/mob/M = find_ghost_by_key(subject.last_client.key)
 			if (isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 				subjMind = M.mind
 			else
@@ -265,6 +267,7 @@
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
+	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
@@ -446,17 +449,15 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	proc/can_operate(var/mob/M)
-		if (!isalive(M))
-			return
-		if (get_dist(src,M) > 1)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
-			return 0
+		if (!IN_RANGE(src, M, 1))
+			return FALSE
+		if (is_incapacitated(M))
+			return FALSE
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return
+			return FALSE
 
-		.= 1
+		.= TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -466,7 +467,7 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M)
-		if (!can_operate(M)) return
+		if (!can_operate(M) || !ishuman(M)) return
 
 		M.pulling = null
 		M.set_loc(src)
@@ -700,6 +701,8 @@ proc/find_ghost_by_key(var/find_key)
 		if("toggleGeneticAnalysis")
 			if(pod1 && !pod1.attempting)
 				pod1.gen_analysis = !pod1.gen_analysis
+				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
+					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 			else
 				show_message("Cannot toggle any modules while cloner is active.", "warning")
@@ -771,32 +774,40 @@ proc/find_ghost_by_key(var/find_key)
 
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
-	var/list/data = list()
-	var/list/recordsTemp = list()
-	data["allowedToDelete"] = src.allowed(user)
-	data["scannerGone"] = isnull(src.scanner)
-	data["occupantScanned"] = FALSE
-	data["podGone"] = isnull(src.pod1)
+
+	. = list(
+		"allowedToDelete" = src.allowed(user),
+		"scannerGone" = isnull(src.scanner),
+		"occupantScanned" = FALSE,
+		"podGone" = isnull(src.pod1),
+
+		"message" = src.currentStatusMessage,
+		"disk" = !isnull(src.diskette),
+
+		"allowMindErasure" = src.allow_mind_erasure,
+		"clonesForCash" = wagesystem.clones_for_cash,
+		"balance" = src.held_credit,
+	)
 	if(!isnull(src.pod1))
-		data["mindWipe"] = pod1.mindwipe
-		data["meatLevels"] = pod1.meat_level
-		data["cloneSlave"] = pod1.cloneslave
-		data["geneticAnalysis"] = pod1.gen_analysis
-		data["completion"] = (!isnull(pod1.occupant) ? clamp(100 - ((pod1.occupant.max_health - pod1.occupant.health) - pod1.heal_level), 0, 100) : 0)
+		. += list(
+			"mindWipe" = pod1.mindwipe,
+			"meatLevels" = pod1.meat_level,
+			"cloneSlave" = pod1.cloneslave,
+			"geneticAnalysis" = pod1.gen_analysis,
+			"completion" = (!isnull(pod1.occupant) ? clamp(100 - ((pod1.occupant.max_health - pod1.occupant.health) - pod1.heal_level), 0, 100) : 0),
+		)
 	if(!isnull(src.scanner))
-		data["scannerOccupied"] = src.scanner.occupant
-		data["scannerLocked"] = src.scanner.locked
+		. += list(
+			"scannerOccupied" = src.scanner.occupant,
+			"scannerLocked" = src.scanner.locked,
+		)
 		if(!isnull(src.scanner?.occupant?.mind))
-			data["occupantScanned"] = !isnull(find_record(ckey(src.scanner.occupant.mind.key)))
-	data["message"] = src.currentStatusMessage
-	data["disk"] = !isnull(src.diskette)
+			. += list("occupantScanned" = !isnull(find_record(ckey(src.scanner.occupant.mind.key))))
+
 	if(!isnull(src.diskette))
-		data["diskReadOnly"] = src.diskette.read_only
-	data["allowMindErasure"] = src.allow_mind_erasure
-	data["clonesForCash"] = wagesystem.clones_for_cash
-	data["balance"] = src.held_credit
+		. += list("diskReadOnly" = src.diskette.read_only)
 
-
+	var/list/recordsTemp = list()
 	for (var/r in records)
 		var/saved = FALSE
 		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
@@ -817,19 +828,7 @@ proc/find_ghost_by_key(var/find_key)
 			saved = saved
 		)))
 
-	data["cloneRecords"] = recordsTemp
-
-	return data
-
-/obj/machinery/computer/cloning/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+	. += list("cloneRecords" = recordsTemp)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

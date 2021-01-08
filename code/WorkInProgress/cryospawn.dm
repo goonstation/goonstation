@@ -20,8 +20,12 @@
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32
-	pixel_x = -32
 	bound_height = 64
+#ifdef IN_MAP_EDITOR
+	pixel_x = 0
+#else
+	pixel_x = -32
+#endif
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()

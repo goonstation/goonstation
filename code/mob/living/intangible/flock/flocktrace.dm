@@ -72,8 +72,7 @@
 /mob/living/intangible/flock/trace/death(gibbed)
 	if(src.client)
 		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
-	if(src.flock)
-		src.flock.removeTrace(src)
+	src.flock?.removeTrace(src)
 	src.invisibility = 0
 	src.icon_state = "blank"
 	src.canmove = 0

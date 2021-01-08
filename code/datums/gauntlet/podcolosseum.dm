@@ -1354,8 +1354,7 @@ proc/get_colosseum_message(var/name, var/message)
 			if(D_SLASHING)
 				damage /= 3
 			if(D_BURNING)
-				if(src.material)
-					src.material.triggerTemp(src, 5000)
+				src.material?.triggerTemp(src, 5000)
 				damage /= 2
 				damtype = 1
 		damage *= rand(75, 125) * 0.01

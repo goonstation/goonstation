@@ -359,17 +359,17 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	New()
 		..()
 
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_second = "Tramp"
-			bioHolder.mobAppearance.underwear = "briefs"
-			bioHolder.age = 3500
-			gender = "male"
-			sleep(0.5 SECONDS)
-			bioHolder.mobAppearance.UpdateMob()
-			bioHolder.AddEffect("psy_resist") // Heh
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
+		bioHolder.AddEffect("psy_resist") // Heh
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
+
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.underwear = "briefs"
+		bioHolder.age = 3500
+		. = ..()
+
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

@@ -1172,12 +1172,6 @@
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 
-/datum/cookingrecipe/cake_downs
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
-	item2 = /obj/item/organ/brain
-	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/downs
-
 #ifdef XMAS
 
 /datum/cookingrecipe/cake_fruit

@@ -65,8 +65,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -100,6 +99,28 @@
 			artifact:holder = null
 		remove_dialogs()
 		..()
+
+	proc/can_access_remotely(mob/user)
+		. = FALSE
+
+	/**
+	* Determines whether or not the user can remote access devices.
+	* This is typically limited to Borgs and AI things that have
+	* inherent packet abilities.
+	*/
+	proc/can_access_remotely_default(mob/user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
+
+
 
 	proc/client_login(var/mob/user)
 		return
@@ -314,8 +335,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)

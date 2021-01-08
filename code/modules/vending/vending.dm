@@ -796,7 +796,7 @@
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return null
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
@@ -2133,6 +2133,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/body_bag, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
 		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
