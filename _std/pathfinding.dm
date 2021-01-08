@@ -215,6 +215,17 @@
 				L.Add(T)
 	return L
 
+/// Fixes floorbots being terrified of space
+turf/proc/CardinalTurfsAndSpaceWithAccess(var/obj/item/card/id/ID)
+	var/L[] = new()
+
+	for(var/d in cardinal)
+		var/turf/T = get_step(src, d)
+		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
+			if(!LinkBlockedWithAccess(src, T, ID))
+				L.Add(T)
+	return L
+
 var/static/obj/item/card/id/AA = new /obj/item/card/id/captains_spare()
 
 /turf/proc/AllDirsTurfsWithAllAccess()

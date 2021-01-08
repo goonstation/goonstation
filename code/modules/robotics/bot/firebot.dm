@@ -21,6 +21,7 @@
 	var/oldloc = null
 	var/last_found = 0
 	var/last_spray = 0
+	var/spray_cooldown = 3 SECONDS
 	var/setup_party = 0
 	//To-Do: Patrol the station for fires maybe??
 
@@ -193,13 +194,13 @@
 
 	if(!src.target)
 		src.doing_something = 0
-		for (var/obj/hotspot/H in view(7,src))
-			if ((H == src.oldtarget) && (world.time < src.last_found + 80))
+		for (var/obj/hotspot/H in view(7,src)) // First search for burning tiles
+			if ((H == src.oldtarget) && (TIME < src.last_found + 8 SECONDS))
 				continue
 
 			src.target = H
 			src.oldtarget = H
-			src.last_found = world.time
+			src.last_found = TIME
 			src.frustration = 0
 			if(prob(10))
 				SPAWN_DBG(0)
@@ -208,7 +209,7 @@
 
 		if (!src.target)
 			for (var/mob/living/carbon/burningMob in view(7, src))
-				if (burningMob == src.oldtarget && (world.time < src.last_found + 80))
+				if (burningMob == src.oldtarget && (TIME < src.last_found + 8 SECONDS))
 					continue
 
 				if (isdead(burningMob))
@@ -217,7 +218,7 @@
 				if (burningMob.getStatusDuration("burning") || (src.emagged && prob(25)))
 					src.target = burningMob
 					src.oldtarget = burningMob
-					src.last_found = world.time
+					src.last_found = TIME
 					src.KillPathAndGiveUp(0)
 					src.doing_something = 1
 					src.visible_message("<b>[src]</b> points at [burningMob.name]!")
@@ -228,10 +229,12 @@
 					break
 
 	if(src.target)
-		if(IN_RANGE(src,src.target,2))
-			if(world.time > src.last_spray + 30)
-				src.KillPathAndGiveUp(0)
-				spray_at(src.target)
+		if(TIME <= src.last_spray + src.spray_cooldown)
+			src.KillPathAndGiveUp(0)
+			return
+		if(IN_RANGE(src,src.target,3))
+			src.KillPathAndGiveUp(0)
+			spray_at(src.target)
 			if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
 				var/mob/living/carbon/C = src.target
 				if (!C.getStatusDuration("burning") || isdead(C))
@@ -242,14 +245,13 @@
 				src.KillPathAndGiveUp(1)
 
 		if(src.path && src.path.len && length(src.path) > 2)
-			src.last_found = world.time
+			src.last_found = TIME
 
 /obj/machinery/bot/firebot/DoWhileMoving()
 	. = ..()
-	if (IN_RANGE(src, src.target, 3))
-		if(world.time > src.last_spray + 30)
-			src.frustration = 0
-			spray_at(src.target)
+	if (IN_RANGE(src, src.target, 3) && TIME >= src.last_spray + src.spray_cooldown)
+		src.frustration = 0
+		spray_at(src.target)
 		return TRUE
 
 /obj/machinery/bot/firebot/KillPathAndGiveUp(var/give_up)
@@ -257,14 +259,14 @@
 	if(give_up)
 		src.oldtarget = src.target
 		src.target = null
-		src.last_found = world.time
+		src.last_found = TIME
 
 //Oh no, we may or may not be emagged! Better hope someone crossing us is on fire!
 /obj/machinery/bot/firebot/HasProximity(atom/movable/AM as mob|obj)
 	if(!on || stunned)
 		return
 
-	if (iscarbon(AM))
+	if (iscarbon(AM) && ((TIME >= src.last_spray + src.spray_cooldown && src.target == AM) || src.emagged))
 		var/mob/living/carbon/hosem = AM
 		if(src.emagged && prob(40) || hosem.getStatusDuration("burning"))
 			spray_at(AM)
@@ -273,7 +275,7 @@
 	if(!target || !src.on || src.stunned)
 		return
 
-	src.last_spray = world.time
+	src.last_spray = TIME
 	var/direction = get_dir(src,target)
 
 	var/turf/T = get_turf(target)

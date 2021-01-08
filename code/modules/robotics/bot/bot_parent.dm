@@ -41,7 +41,7 @@
 	/// Low process rate for bots that we can't see
 	var/PT_idle = PROCESSING_EIGHTH
 	/// High process rate for bots looking for something to do
-	var/PT_search = PROCESSING_FULL
+	var/PT_search = PROCESSING_HALF
 	/// Middle process rate for bots currently trying to murder someone
 	var/PT_active = PROCESSING_QUARTER
 	var/hash_cooldown = (2 SECONDS)
@@ -84,9 +84,10 @@
 		src.SubscribeToProcess()
 		if(!src.chat_text)
 			src.chat_text = new
+		src.vis_contents += src.chat_text
 		SPAWN_DBG(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.botcard_access)
+			src.botcard.access = get_access(src.access_lookup)
 
 	disposing()
 		botcard = null
@@ -157,7 +158,7 @@
 		if (!src.on || !message || src.muted)
 			return
 
-		var/image/chat_maptext/chat_var_text = null
+		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text)
 			UpdateOverlays(speech_bubble, "bot_speech_bubble")
 			SPAWN_DBG(1.5 SECONDS)
@@ -171,13 +172,14 @@
 				maptext_color ="#D8BFD8"
 			else
 				maptext_color = src.speech_color
-			chat_var_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.speech_style + singing_italics)
-			if(chat_var_text)
+			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.speech_style + singing_italics)
+			if(chatbot_text)
+				chatbot_text.measure(src)
 				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chat_var_text)
-						I.bump_up(chat_var_text.measured_height)
+					if(I != chatbot_text)
+						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", assoc_maptext = chat_var_text)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", assoc_maptext = chatbot_text)
 		playsound(get_turf(src), src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
@@ -219,6 +221,9 @@
 		qdel(src.bot_mover)
 
 	return
+
+/obj/machinery/bot/emp_act()
+	src.emag_act()
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
 	src.frustration = 0
@@ -271,11 +276,11 @@
 			target_turf = the_target
 		else
 			target_turf = get_turf(the_target)
+		var/compare_movepath = current_movepath
+		master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, max_dist, master.botcard)
 		SPAWN_DBG(0)
 			if (!master)
 				return
-			var/compare_movepath = current_movepath
-			master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, max_dist, master.botcard)
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target)

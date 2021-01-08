@@ -1095,7 +1095,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master
-	var/can_stun = 1 // Please please stop stunning me immediately after you get interrupted, cheating is illegal
 
 	New(var/the_bot, var/M)
 		src.master = the_bot
@@ -1110,7 +1109,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	onStart()
 		..()
 		if (!master.on)
-			can_stun = 0
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

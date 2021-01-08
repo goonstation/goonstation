@@ -38,8 +38,8 @@
 	on = 1
 	var/repairing = 0
 	var/improvefloors = 0
-	var/eattiles = 0
-	var/maketiles = 0
+	var/eattiles = 1
+	var/maketiles = 1
 	locked = 1
 	health = 25
 	var/const/max_tiles = 500
@@ -51,13 +51,19 @@
 	no_camera = 1
 	var/search_range = 1
 	var/max_search_range = 7
+	/// So we don't waste time scanning the same tiles when looking for tiles to fix
+	var/list/scanned_tiles = list()
+	/// They're designed to work best while nobody's looking
+	/// and they lag to shit at higher processing levels
+	dynamic_processing = 0
+	PT_idle = PROCESSING_QUARTER
 
 	var/static/list/floorbottargets = list()
 
 	// this is from cleanbot.dm, which should really be like. part of all bots, later.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
-	var/clear_invalid_targets_interval = 1800 // How frequently?
+	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
 
 /obj/machinery/bot/floorbot/New()
@@ -99,9 +105,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if (!src.emagged)
 		if (user)
 			boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-		SPAWN_DBG(0)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
 		src.target = null
 		src.oldtarget = null
 		src.anchored = 0
@@ -202,12 +206,6 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// you already have a target you clown get out of here
 		return
 
-	// Don't target things other floorbots are targetting
-	if (!src.target || src.target == null)
-		for(var/obj/machinery/bot/floorbot/bot in machine_registry[MACHINES_BOTS])
-			if (bot != src)
-				src.floorbottargets += bot.target
-
 	// Find thing to do
 	if (!src.emagged)
 		if(src.amount > 0)
@@ -215,19 +213,31 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 				// Search for space turf
 			for (var/turf/space/D in view(src.search_range, src))
-				if (D != src.oldtarget && (D.loc.name != "Space" && D.loc.name != "Ocean") && !(D in floorbottargets) && !should_ignore_tile(D))
+				if(D in src.scanned_tiles)
+					continue
+				if (!(D in targets_invalid) && D != src.oldtarget && !(D in floorbottargets) && !should_ignore_tile(D))
 					return D
+				else
+					src.scanned_tiles += D
 
 			// Search for incomplete/damaged floor
 			if (src.improvefloors)
 				for (var/turf/simulated/floor/F in view(src.search_range, src))
-					if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
+					if(F in src.scanned_tiles)
+						continue
+					if (!(F in targets_invalid) && F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
 						return F
+					else
+						src.scanned_tiles += F
 
 	if (src.emagged)
 		for (var/turf/simulated/floor/F in view(src.search_range, src))
+			if(F in src.scanned_tiles)
+				continue
 			if (F != src.oldtarget && !(F in floorbottargets) && !should_ignore_tile(F))
 				return F
+			else
+				src.scanned_tiles += F
 
 	// Only do this if we don't have our max already
 	if (src.amount < max_tiles)
@@ -246,9 +256,6 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	return null
 
 /obj/machinery/bot/floorbot/proc/should_ignore_tile(var/turf/T)
-	if (T in targets_invalid)
-		return true
-
 	for (var/atom/A in T.contents)
 		if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
 			targets_invalid += T
@@ -267,32 +274,24 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.targets_invalid = list()
 		src.clear_invalid_targets = world.time
 
-
-	if (prob(5))
-		src.visible_message("[src] makes an excited booping beeping sound!")
-
 	if (!src.target)
-		do
-			src.target	= src.find_target()
-			src.search_range++
-		while (!src.target && src.search_range <= 3)
 		// basically: try to find a target within 3 tiles
 		// if that doesn't work: just give up, go slower as search expands
 		// will help keep a bot "focused" on an area
-		src.search_range = min(src.max_search_range, src.target ? 1 : src.search_range)
-
-		if (src.target)
-			var/obj/decal/point/P = new(get_turf(src.target))
-			P.pixel_x = target.pixel_x
-			P.pixel_y = target.pixel_y
-			SPAWN_DBG(2 SECONDS)
-				P.invisibility = 101
-				qdel(P)
-
-		src.oldtarget = null
+		src.target = src.find_target()
 
 	if (src.target)
+		src.search_range = 1
+		src.oldtarget = null
+		var/obj/decal/point/P = new(get_turf(src.target))
+		P.pixel_x = target.pixel_x
+		P.pixel_y = target.pixel_y
+		SPAWN_DBG(2 SECONDS)
+			P.invisibility = 101
+			qdel(P)
 		src.doing_something = 1
+		/// I'm targetting this, nobody else target it!
+		src.floorbottargets += src.target
 
 		// are we there yet
 		if (get_turf(src.loc) == get_turf(src.target))
@@ -308,8 +307,13 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 			if (get_turf(src.loc) == get_turf(src.target))
 				do_the_thing()
+				src.scanned_tiles = list()
 				return
 	else
+		src.search_range++
+		if(src.search_range++ > src.max_search_range)
+			src.search_range = 1
+			src.scanned_tiles = list()
 		src.doing_something = 0
 
 /obj/machinery/bot/floorbot/DoWhileMoving()
@@ -320,16 +324,23 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 /obj/machinery/bot/floorbot/KillPathAndGiveUp(var/give_up)
 	. = ..()
+	if(src.target) // release our claim on this target
+		src.floorbottargets -= src.target
 	if(give_up)
-		src.oldtarget = src.target
 		src.targets_invalid += src.target
 		src.target = null
 		src.anchored = 0
 		src.updateicon()
 		src.repairing = 0
+		src.oldtarget = null
+		src.oldloc = null
+		src.search_range = 1
+		src.scanned_tiles = list()
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
+	if (prob(80))
+		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
 	else if (istype(src.target, /obj/item/sheet))
@@ -338,14 +349,11 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		repair(src.target)
 	src.KillPathAndGiveUp(0)
 
-
-
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
 	if (src.repairing)
 		return
 	if (!src.emagged)
 		// are we doin this normally?
-
 		if (src.amount < 0)
 			// uh. buddy. you aint got no floor tiles.
 			src.KillPathAndGiveUp(1)
@@ -356,27 +364,25 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// Emagged "repair"
 		actions.start(new/datum/action/bar/icon/floorbot_disrepair(src, target), src)
 
-
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
 	src.visible_message("<span class='alert'>[src] begins to collect tiles.</span>")
 	src.repairing = 1
-	SPAWN_DBG(0.2 SECONDS)
-		if (isnull(T))
-			src.target = null
-			src.repairing = 0
-			return
-		if (src.amount + T.amount > max_tiles)
-			var/i = max_tiles - src.amount
-			src.amount += i
-			T.amount -= i
-		else
-			src.amount += T.amount
-			qdel(T)
-		src.updateicon()
+	if (isnull(T))
 		src.target = null
 		src.repairing = 0
+		return
+	if (src.amount + T.amount > max_tiles)
+		var/i = max_tiles - src.amount
+		src.amount += i
+		T.amount -= i
+	else
+		src.amount += T.amount
+		qdel(T)
+	src.updateicon()
+	src.target = null
+	src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
@@ -384,27 +390,26 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	src.visible_message("<span class='alert'>[src] begins to create tiles.</span>")
 	src.repairing = 1
 	M.set_loc(src)
-	SPAWN_DBG(0.2 SECONDS)
-		if (isnull(M))
-			src.target = null
-			src.repairing = 0
-			return
-
-		var/sheets_to_use = 1
-		if (src.amount + (M.amount * 4) > src.max_tiles)
-			sheets_to_use = round((src.max_tiles - src.amount) / 4)
-		else
-			sheets_to_use = M.amount
-
-		var/obj/item/tile/T = new /obj/item/tile/steel
-		T.set_loc(get_turf(src))
-		M.set_loc(get_turf(src))
-		T.amount = sheets_to_use * 4
-		M.amount -= sheets_to_use
-		if (M.amount < 1)
-			qdel(M)
+	if (isnull(M))
 		src.target = null
 		src.repairing = 0
+		return
+
+	var/sheets_to_use = 1
+	if (src.amount + (M.amount * 4) > src.max_tiles)
+		sheets_to_use = round((src.max_tiles - src.amount) / 4)
+	else
+		sheets_to_use = M.amount
+
+	var/obj/item/tile/T = new /obj/item/tile/steel
+	T.set_loc(get_turf(src))
+	M.set_loc(get_turf(src))
+	T.amount = sheets_to_use * 4
+	M.amount -= sheets_to_use
+	if (M.amount < 1)
+		qdel(M)
+	src.target = null
+	src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/updateicon()
 	if (src.amount > 0)
@@ -467,8 +472,8 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "floorbot_build"
-	icon = 'icons/obj/syringe.dmi'
-	icon_state = "0"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
 	var/target
 	var/new_tile
@@ -524,21 +529,21 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			var/turf/simulated/floor/F = target
 			if (F.intact)
 				F.to_plating()
-				sleep(0.5 SECONDS)
 			F.restore_tile()
 
 		master.repairing = 0
 		master.amount -= 1
 		master.updateicon()
 		master.anchored = 0
+		master.floorbottargets -= master.target
 		master.target = master.find_target(1)
 
 /datum/action/bar/icon/floorbot_disrepair
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "floorbot_ripup"
-	icon = 'icons/obj/syringe.dmi'
-	icon_state = "0"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
 	var/target
 
@@ -583,4 +588,5 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		master.repairing = 0
 		master.updateicon()
 		master.anchored = 0
+		master.floorbottargets -= master.target
 		master.target = master.find_target(1)
