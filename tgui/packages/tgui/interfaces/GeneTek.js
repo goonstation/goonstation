@@ -932,6 +932,7 @@ const BioEffect = (props, context) => {
               <Button
                 icon="person-booth"
                 color="good"
+                disabled={boothCost > materialCur}
                 onClick={() => act("booth", booth)}>
                 Send to Booth
               </Button>
