@@ -383,7 +383,7 @@
 					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
 					//	src.a_intent = INTENT_HELP
 					if(ishuman(ai_target) || issilicon(ai_target))
-						src.r_hand:attack(ai_target, src)
+						src.r_hand.attack(ai_target, src)
 					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
