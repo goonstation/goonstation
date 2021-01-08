@@ -33,6 +33,11 @@
 	var/last_scanner_alert_clear_after = INFINITY
 	var/last_scanner_alert_error = FALSE
 	var/datum/computer/file/genetics_scan/selected_record = null
+	var/decrypt_bp_num = 0
+	var/datum/basePair/decrypt_bp = null
+	var/datum/bioEffect/decrypt_gene = null
+	var/decrypt_correct_char = "?"
+	var/decrypt_correct_pos = "?"
 
 	var/registered_id = null
 
@@ -258,83 +263,6 @@
 	logTheThing("debug", who, null, "[action] but failed href validation.")
 	logTheThing("diary", who, null, "[action] but failed href validation.", "debug")
 
-
-/obj/machinery/computer/genetics/proc/encryption_challenge(var/bp_num, var/datum/basePair/bp, var/datum/bioEffect/E)
-	if(bp.marker == "locked")
-		boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Encryption is a [E.lockedDiff]-character code.</span>")
-		var/characters = ""
-		for(var/X in E.lockedChars)
-			characters += "[X] "
-		boutput(usr, "<span class='notice'>Possible characters in this code: [characters]</span>")
-		if(genResearch.lock_breakers > 0)
-			boutput(usr, "<span class='notice'>[genResearch.lock_breakers] auto-decryptions available. Enter UNLOCK as the code to expend one.</span>")
-		var/code = input("Enter decryption code.","Genetic Decryption") as null|text
-		if(!code)
-			return
-		code = uppertext(code)
-		if (code == "UNLOCK")
-			if(genResearch.lock_breakers > 0)
-				genResearch.lock_breakers--
-				var/datum/basePair/bpc = E.dnaBlocks.blockList[bp_num]
-				bp.bpp1 = bpc.bpp1
-				bp.bpp2 = bpc.bpp2
-				bp.marker = "green"
-				bp.style = ""
-				boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Base pair unlocked.</span>")
-				if (E.dnaBlocks.sequenceCorrect())
-					E.dnaBlocks.ChangeAllMarkers("white")
-				usr << link("byond://?src=\ref[src];viewpool=\ref[E]")
-				return
-			else
-				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
-				return
-
-		if(length(code) != length(bp.lockcode))
-			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
-			return
-		if (code == bp.lockcode)
-			var/datum/basePair/bpc = E.dnaBlocks.blockList[bp_num]
-			bp.bpp1 = bpc.bpp1
-			bp.bpp2 = bpc.bpp2
-			bp.marker = "green"
-			boutput(usr, "<span class='notice'><b>SCANNER ALERT:</b> Decryption successful. Base pair unlocked.</span>")
-			if (E.dnaBlocks.sequenceCorrect())
-				E.dnaBlocks.ChangeAllMarkers("white")
-		else
-			if (bp.locktries <= 1)
-				bp.lockcode = ""
-				for (var/c = E.lockedDiff, c > 0, c--)
-					bp.lockcode += pick(E.lockedChars)
-				bp.locktries = E.lockedTries
-				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
-			else
-				bp.locktries--
-				var/length = length(bp.lockcode)
-
-				var/list/lockcode_list = list()
-				for(var/i=0,i < length,i++)
-					lockcode_list["[copytext(bp.lockcode,i+1,i+2)]"]++
-
-				var/correct_full = 0
-				var/correct_char = 0
-				var/current
-				var/seek = 0
-				for(var/i=0,i < length,i++)
-					current = copytext(code,i+1,i+2)
-					if (current == copytext(bp.lockcode,i+1,i+2))
-						correct_full++
-					seek = lockcode_list.Find(current)
-					if (seek)
-						correct_char++
-						lockcode_list[current]--
-						if (lockcode_list[current] <= 0)
-							lockcode_list -= current
-
-				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption code \"[code]\" failed.</span>")
-				boutput(usr, "<span class='alert'>[correct_char]/[length] correct characters in entered code.</span>")
-				boutput(usr, "<span class='alert'>[correct_full]/[length] characters in correct position.</span>")
-				boutput(usr, "<span class='alert'>Attempts remaining: [bp.locktries].</span>")
-
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)
 		return UI_UPDATE
@@ -368,6 +296,24 @@
 	src.last_scanner_alert = message
 	src.last_scanner_alert_clear_after = TIME + remove_after
 	src.last_scanner_alert_error = error
+
+/obj/machinery/computer/genetics/proc/decrypt_sanity_check()
+	if (!istype(src.decrypt_gene))
+		return TRUE
+	if (src.decrypt_bp.marker != "locked" || !src.scanner?.occupant?.bioHolder)
+		src.clear_decrypt()
+		return TRUE
+	if (src.scanner.occupant.bioHolder.effectPool[src.decrypt_gene.id] != src.decrypt_gene)
+		src.clear_decrypt()
+		return TRUE
+	return FALSE
+
+/obj/machinery/computer/genetics/proc/clear_decrypt()
+	src.decrypt_bp_num = 0
+	src.decrypt_bp = null
+	src.decrypt_gene = null
+	src.decrypt_correct_char = "?"
+	src.decrypt_correct_pos = "?"
 
 /obj/machinery/computer/genetics/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -480,11 +426,14 @@
 				return
 			var/bp_num = params["pair"]
 			var/datum/basePair/bp = E.dnaBlocks.blockListCurr[bp_num]
-			if (!bp || bp.marker == "locked")
-				// TODO: convert to tgui
-				src.encryption_challenge(bp_num, bp, E)
-				return
 			if (!subject.bioHolder.HasEffectInPool(E.id))
+				return
+			if (!bp)
+				return
+			if (bp.marker == "locked")
+				src.decrypt_bp_num = bp_num
+				src.decrypt_bp = bp
+				src.decrypt_gene = E
 				return
 			if (bp.bpp1 == "?")
 				switch (bp.bpp2)
@@ -842,6 +791,68 @@
 			scanner_alert(ui.user, "Combination unsuccessful.", error = TRUE)
 			src.combining = list()
 			on_ui_interacted(ui.user)
+		if ("unlock")
+			. = TRUE
+			if (src.decrypt_sanity_check())
+				return
+			var/code = params["code"]
+			if (!code)
+				src.clear_decrypt()
+				return
+			code = uppertext(code)
+			if (code == "UNLOCK")
+				if (genResearch.lock_breakers > 0)
+					genResearch.lock_breakers--
+					code = src.decrypt_bp.lockcode
+				else
+					return
+			if (length(code) != src.decrypt_gene.lockedDiff)
+				// shouldn't be able to get here through the UI.
+				return
+			if (code == src.decrypt_bp.lockcode)
+				var/datum/basePair/bpc = src.decrypt_gene.dnaBlocks.blockList[src.decrypt_bp_num]
+				src.decrypt_bp.bpp1 = bpc.bpp1
+				src.decrypt_bp.bpp2 = bpc.bpp2
+				src.decrypt_bp.marker = "green"
+				src.decrypt_bp.style = ""
+				scanner_alert(ui.user, "Base pair unlocked.")
+				on_ui_interacted(ui.user)
+				if (src.decrypt_gene.dnaBlocks.sequenceCorrect())
+					src.decrypt_gene.dnaBlocks.ChangeAllMarkers("white")
+				src.clear_decrypt()
+				return
+			if (src.decrypt_bp.locktries <= 1)
+				src.decrypt_bp.lockcode = ""
+				for (var/c = src.decrypt_gene.lockedDiff, c > 0, c--)
+					src.decrypt_bp.lockcode += pick(src.decrypt_gene.lockedChars)
+				src.decrypt_bp.locktries = src.decrypt_gene.lockedTries
+				scanner_alert(ui.user, "Decryption failed. Base pair encryption code has mutated.", error = TRUE)
+				on_ui_interacted(ui.user)
+				src.clear_decrypt()
+				return
+			src.decrypt_bp.locktries--
+			var/L = length(src.decrypt_bp.lockcode)
+			var/list/lockcode_list = list()
+			for (var/i = 0, i < L, i++)
+				lockcode_list["[copytext(src.decrypt_bp.lockcode, i + 1, i + 2)]"]++
+			var/correct_full = 0
+			var/correct_char = 0
+			var/current
+			var/seek = 0
+			for(var/i = 0, i < L, i++)
+				current = copytext(code, i + 1, i + 2)
+				if (current == copytext(src.decrypt_bp.lockcode, i + 1, i + 2))
+					correct_full++
+				seek = lockcode_list.Find(current)
+				if (seek)
+					correct_char++
+					lockcode_list[current]--
+					if (lockcode_list[current] <= 0)
+						lockcode_list -= current
+			src.decrypt_correct_char = correct_char
+			src.decrypt_correct_pos = correct_full
+			scanner_alert(ui.user, "Decryption code \"[code]\" failed.", error = TRUE)
+			on_ui_interacted(ui.user)
 
 /obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -911,6 +922,7 @@
 		"savedMutations" = list(),
 		"savedChromosomes" = list(),
 		"combining" = list(),
+		"unlock" = null,
 	)
 
 	for(var/datum/data/record/R in data_core.medical)
@@ -935,6 +947,15 @@
 
 	for (var/datum/bioEffect/BE in combining)
 		.["combining"] += "\ref[BE]"
+
+	if (!src.decrypt_sanity_check())
+		.["unlock"] = list(
+			"length" = src.decrypt_gene.lockedDiff,
+			"chars" = src.decrypt_gene.lockedChars,
+			"correctChar" = src.decrypt_correct_char,
+			"correctPos" = src.decrypt_correct_pos,
+			"tries" = src.decrypt_bp.locktries,
+		)
 
 	if (istype(selected_record))
 		var/list/genes = list()
