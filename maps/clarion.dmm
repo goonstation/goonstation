@@ -13882,13 +13882,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "ayn" = (
-/obj/machinery/power/apc{
-	areastring = "Hydroponics";
-	dir = 8;
-	name = "Hydroponics APC";
-	pixel_x = -24
-	},
 /obj/cable,
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -22219,7 +22214,7 @@
 /area/station/maintenance/east)
 "aOU" = (
 /obj/machinery/power/apc{
-	areastring = "Research Sector";
+	areastring = "Test Chamber";
 	dir = 1;
 	name = "Research Sector APC";
 	pixel_y = 24
@@ -22741,7 +22736,8 @@
 	},
 /obj/stool/bench/auto,
 /obj/item/device/radio/intercom/science{
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 24
 	},
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
@@ -33138,6 +33134,11 @@
 	icon_state = "4-8"
 	},
 /obj/shrub,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -34777,6 +34778,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -36215,6 +36219,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -50220,6 +50227,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"dXn" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lobby)
 "ele" = (
 /obj/cable{
 	d1 = 1;
@@ -50598,6 +50612,14 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"oXP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lobby)
 "oYI" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -90585,11 +90607,11 @@ aUs
 aUs
 aUs
 bhP
-aNR
+oXP
 bkv
-aNR
+oXP
 bmT
-aNR
+dXn
 bpo
 aHM
 brF
