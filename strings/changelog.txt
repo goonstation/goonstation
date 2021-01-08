@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)BatElite
+(p)3203
+(e)🆕🎨|feature, sprites
+(*)Certain computers (most notably the cloning & genetic consoles) can now be made to re-scan for equipment by using a multitool on them!
 (u)BenLubar
 (p)3181
 (e)📄|tgui
