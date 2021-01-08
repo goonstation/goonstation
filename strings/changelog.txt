@@ -1,6 +1,10 @@
 
 (t)fri jan 08 21
 (u)BenLubar
+(p)3181
+(e)📄|tgui
+(*)Ported sleeper consoles to tgui.
+(u)BenLubar
 (p)3261
 (e)|
 (+)The Power Monitoring Computer has been upgraded to a state-of-the-art 6-color screen.
