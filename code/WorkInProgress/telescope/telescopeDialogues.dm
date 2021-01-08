@@ -266,7 +266,7 @@
 		linkText = "The scanner is picking up something else ..."
 		nodeText = "To your surprise, you find that the asteroid also carries some ..."
 		nodeImage = "static.png"
-		links = list(/datum/dialogueNode/telAstRareViscerite,/datum/dialogueNode/telAstRareKoshmarite,/datum/dialogueNode/telAstRareErebite,/datum/dialogueNode/telAstRareCerenkite,/datum/dialogueNode/telAstRareStarstone,/datum/dialogueNode/telAstRareNanites)
+		links = list(/datum/dialogueNode/telAstRareViscerite,/datum/dialogueNode/telAstRareKoshmarite,/datum/dialogueNode/telAstRareErebite,/datum/dialogueNode/telAstRareCerenkite,/datum/dialogueNode/telAstRareStarstone,/datum/dialogueNode/telAstRareNanites,/datum/dialogueNode/telAstRareMolitz)
 
 		onActivate(var/client/C)
 			return
