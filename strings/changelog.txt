@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)Flappybat
+(p)3205
+(e)⚖🔄|balance, rework
+(*)Changed spy thief reward logic. Rewards are now more proportional to the target's job or difficulty of accessing the object.
 (u)BatElite
 (p)3203
 (e)🆕🎨|feature, sprites
