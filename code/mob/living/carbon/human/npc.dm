@@ -366,6 +366,10 @@
 				ai_target_old.Cut()
 				if(src.bioHolder.HasEffect("coprolalia") && prob(10)) //Combat Trash Talk
 					src.say(pick("Fuck you, [ai_target.name]!", "You're [prob(10) ? "fucking " : ""]dead, [ai_target.name]!", "I will kill you, [ai_target.name]!!"))
+
+				if(prob(20))
+					src.zone_sel.selecting = pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+
 				if(!src.r_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
