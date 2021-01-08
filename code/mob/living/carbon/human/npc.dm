@@ -392,6 +392,8 @@
 							ai_target = null
 							ai_state = AI_PASSIVE
 							return
+					else
+						src.r_hand.attack(ai_target, src)
 					src.a_intent = INTENT_HARM
 
 			ai_pickupweapon()
