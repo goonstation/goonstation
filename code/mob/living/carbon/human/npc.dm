@@ -317,14 +317,17 @@
 				walk_towards(src,null)
 
 			var/area/A = get_area(src)
+
+			if(isnull(ai_target) || isdead(ai_target) || distance > 7 || (!src.see_invisible && ai_target.invisibility) || (isunconscious(ai_target) && prob(25)))
+				ai_target = null
+				ai_state = AI_PASSIVE
+				return
+
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
-				if(isdead(carbon_target) || distance > 7 || (!src.see_invisible && carbon_target.invisibility) || (isunconscious(carbon_target) && prob(25)))
-					ai_target = null
-					ai_state = AI_PASSIVE
-					if(src.get_brain_damage() >= 60)
-						src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
+				if(src.get_brain_damage() >= 60)
+					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
@@ -366,6 +369,10 @@
 				ai_target_old.Cut()
 				if(src.bioHolder.HasEffect("coprolalia") && prob(10)) //Combat Trash Talk
 					src.say(pick("Fuck you, [ai_target.name]!", "You're [prob(10) ? "fucking " : ""]dead, [ai_target.name]!", "I will kill you, [ai_target.name]!!"))
+
+				if(prob(20))
+					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+
 				if(!src.r_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
@@ -375,8 +382,8 @@
 				else // With a weapon
 					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
 					//	src.a_intent = INTENT_HELP
-					if(ishuman(ai_target))
-						src.r_hand:attack(ai_target, src)
+					if(ishuman(ai_target) || issilicon(ai_target))
+						src.r_hand.attack(ai_target, src)
 					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
@@ -385,6 +392,8 @@
 							ai_target = null
 							ai_state = AI_PASSIVE
 							return
+					else
+						src.r_hand.attack(ai_target, src)
 					src.a_intent = INTENT_HARM
 
 			ai_pickupweapon()

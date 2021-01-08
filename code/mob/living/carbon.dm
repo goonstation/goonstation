@@ -211,7 +211,7 @@
 	return src.oxyloss
 
 /mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
-	if(src.find_type_in_hand(/obj/item/bat))
+	if(src.find_type_in_hand(/obj/item/bat) && !ON_COOLDOWN(src, "baseball-bat-reflect", 1 DECI SECOND))
 		var/turf/T = get_turf(src)
 		var/turf/U = get_step(src, src.dir)
 		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?

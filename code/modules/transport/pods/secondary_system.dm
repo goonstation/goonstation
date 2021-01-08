@@ -134,11 +134,13 @@
 	/obj/machinery/artifact,
 	/obj/artifact,
 	/obj/mopbucket,
+	/obj/beacon_deployer,
 	/obj/machinery/portable_atmospherics,
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
-	/obj/machinery/nuclearbomb)
+	/obj/machinery/nuclearbomb,
+	/obj/bomb_decoy)
 
 	hud_state = "cargo"
 	f_active = 1

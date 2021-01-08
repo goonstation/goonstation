@@ -188,8 +188,7 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		if(owner)
-			owner.detach_hud(hud)
+		owner?.detach_hud(hud)
 		owner = newbody
 		if(owner)
 			owner.attach_hud(hud)

@@ -112,8 +112,7 @@
 			setup_limb_overlay()
 
 	disposing()
-		if(src.bones)
-			src.bones.dispose()
+		src.bones?.dispose()
 		src.bones = null
 		original_holder = null
 		holder = null

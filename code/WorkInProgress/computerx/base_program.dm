@@ -43,8 +43,7 @@
 			src.metadata += params2list(meta_params)
 
 	disposing()
-		if(master)
-			master.processing_programs.Remove(src)
+		master?.processing_programs.Remove(src)
 		..()
 
 	Topic(href, href_list)
@@ -81,8 +80,7 @@
 			return 0
 
 		quit()
-			if(src.master)
-				src.master.unload_program(src)
+			src.master?.unload_program(src)
 			return
 
 		input_text(var/text, source=0)

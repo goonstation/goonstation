@@ -7,4 +7,4 @@
 
 /mob/living/critter/small_animal/chicken
 
-/obj/item/chicken_feed_bag
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag

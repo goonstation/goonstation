@@ -54,7 +54,6 @@
 		ui.open()
 
 /obj/machinery/computer/robot_module_rewriter/ui_data(mob/user)
-	var/list/data = list()
 	var/list/modulesData = list()
 
 	var/list/availableModulesData = list()
@@ -80,10 +79,9 @@
 		selectedModuleData["tools"] = selectedModuleToolsData
 	modulesData["selected"] = selectedModuleData
 
-	// "modules" is the only field on the "data" object, so could be flattened,
+	// "modules" is the only key in our return list, so could be flattened,
 	// but there is intent to add more features in the near future
-	data["modules"] = modulesData
-	return data
+	. = list("modules" = modulesData)
 
 /obj/machinery/computer/robot_module_rewriter/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()

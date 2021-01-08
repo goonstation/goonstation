@@ -82,6 +82,7 @@
 /obj/item/storage/box/holywaterkit
 	name = "do-it-yourself holy water kit"
 	desc = "Just combine the ingredients with water! Free container with sample provided."
+	icon_state = "holywaterkit"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
 	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
 	/obj/item/reagent_containers/glass/bottle/holywater)

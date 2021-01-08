@@ -873,8 +873,7 @@ function lineEnter (ev)
 			return
 		src.restarting = 1
 		src.active_program = null
-		if(src.host_program)
-			src.host_program.restart()
+		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = null

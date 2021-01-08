@@ -88,13 +88,13 @@ datum
 		proc/play_mix_sound(var/mix_sound)
 			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
 
-		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0)
+		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
-
+			var/newtemp = copy_temperature ? src.total_temperature : T20C
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if(current_reagent)
-					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
+					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
 					current_reagent.on_copy(target.reagent_list[reagent_id])
 				if(!target) return
 
@@ -624,13 +624,13 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, round(max(log((temp_to_burn_with - T0C) / 50), 0) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, round(max(log((T0C - temp_to_burn_with) / 50), 0) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
 
@@ -1003,6 +1003,8 @@ datum
 		proc/move_trigger(var/mob/M, kindof)
 			var/shock = 0
 			switch (kindof)
+				if ("sprint")
+					shock = rand(8, 16)
 				if ("run")
 					shock = rand(5, 12)
 				if ("walk", "swap")

@@ -379,8 +379,7 @@
 		var/obj/powerup/P = new picked(src)
 		src.powerup = P
 
-		if(driver)
-			driver.client.screen += P
+		driver?.client.screen += P
 
 		return
 

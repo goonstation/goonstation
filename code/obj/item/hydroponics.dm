@@ -368,7 +368,10 @@
 				continue
 			usable += A
 
+		var/holder = src.loc
 		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		if (src.loc != holder)
+			return
 		src.selected = pick
 
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)

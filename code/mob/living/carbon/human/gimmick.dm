@@ -201,7 +201,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
@@ -621,7 +621,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
@@ -770,7 +770,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = 2
@@ -880,7 +880,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			real_name = spacer_name(pick("spacer","juicer"))
 			gender = pick(MALE,FEMALE)
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if(isdead(src))
 			return
 		if(prob(10))
@@ -935,7 +935,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if(isdead(src))
 			return
 		if(prob(20))

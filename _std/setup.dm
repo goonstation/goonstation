@@ -40,6 +40,7 @@
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
 // gameticker
+#define GAME_STATE_MAP_LOAD   0
 #define GAME_STATE_WORLD_INIT	1
 #define GAME_STATE_PREGAME		2
 #define GAME_STATE_SETTING_UP	3

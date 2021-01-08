@@ -85,8 +85,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			src.OnRemove()
 		holder = null
 		owner = null
-		if(dnaBlocks)
-			dnaBlocks.dispose()
+		dnaBlocks?.dispose()
 		dnaBlocks = null
 		..()
 
