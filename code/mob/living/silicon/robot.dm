@@ -532,6 +532,12 @@
 							message = "<B>[src]</B> beep-bops at [M]."
 							break
 
+						if (istype(src.buckled, /obj/machinery/conveyor))
+							message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
+							src.buckled = null
+							if(isunconscious(src))
+								setalive(src) //reset stat to ensure emote comes out
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
