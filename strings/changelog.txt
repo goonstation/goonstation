@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)TTerc
+(p)3268
+(e)🗺|mapping
+(+)Added Beepsky's house and several pet and monkey spawns to Atlas.
 (u)Flappybat
 (p)3205
 (e)⚖🔄|balance, rework
