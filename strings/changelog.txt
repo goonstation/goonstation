@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)BenLubar
+(p)3213
+(e)|
+(*)Lizards and cows and roaches and skeletons rejoice! You can now see a preview of your character in the character setup preview.
 (u)kyle
 (+)I put on my robe and wizard hat.
 (t)thu jan 07 21
