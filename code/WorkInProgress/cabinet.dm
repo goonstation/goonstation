@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user))
+		if (ismobcritter(user) || issilicon(user) || isghost(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)
@@ -86,6 +86,8 @@
 		return
 
 	proc/canHold(var/obj/item/I)
+		if(I.cant_drop)
+			return 0
 		for(var/X in deniedTypes)
 			if(istype(I, X))
 				return 0
