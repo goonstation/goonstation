@@ -83,6 +83,8 @@
 
 /obj/machinery/computer/cloning/connection_scan()
 	if(portable) return
+	scanner?.connected = null
+	pod1?.connected = null
 	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 	src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
 
