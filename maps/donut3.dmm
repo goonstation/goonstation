@@ -4903,6 +4903,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
+/obj/filing_cabinet,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
