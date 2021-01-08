@@ -1,5 +1,7 @@
 
 (t)thu jan 07 21
+(u)UrsulaMejor
+(*)A new chicken breed, with three variants. All are Gen 1 breeds: feed apples to white chikens! Two are obvious, and one you'll need to doctor to be an "opposite" of the other. ;)
 (u)BenLubar
 (p)3252
 (e)|
