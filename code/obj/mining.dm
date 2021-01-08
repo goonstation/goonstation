@@ -794,6 +794,7 @@
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
 		..()
@@ -833,7 +834,7 @@
 					A.anchored = 1
 					qdel(src)
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -891,19 +892,19 @@
 		src.updateUsrDialog()
 		return
 
-	proc/connection_scan()
-		linked_magnets = list()
-		var/badmagnets = 0
-		for (var/obj/machinery/magnet_chassis/MC in range(20,src))
-			if (MC.linked_magnet)
-				linked_magnets += MC.linked_magnet
-			else
-				badmagnets++
-		if (linked_magnets.len)
-			return 0
-		if (badmagnets)
-			return 1
-		return 2
+/obj/machinery/computer/magnet/connection_scan()
+	linked_magnets = list()
+	var/badmagnets = 0
+	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+		if (MC.linked_magnet)
+			linked_magnets += MC.linked_magnet
+		else
+			badmagnets++
+	if (linked_magnets.len)
+		return 0
+	if (badmagnets)
+		return 1
+	return 2
 
 // Turf Defines
 
