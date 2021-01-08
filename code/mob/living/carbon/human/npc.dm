@@ -317,14 +317,17 @@
 				walk_towards(src,null)
 
 			var/area/A = get_area(src)
+
+			if(isnull(ai_target) || isdead(ai_target) || distance > 7 || (!src.see_invisible && ai_target.invisibility) || (isunconscious(ai_target) && prob(25)))
+				ai_target = null
+				ai_state = AI_PASSIVE
+				return
+
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
-				if(isdead(carbon_target) || distance > 7 || (!src.see_invisible && carbon_target.invisibility) || (isunconscious(carbon_target) && prob(25)))
-					ai_target = null
-					ai_state = AI_PASSIVE
-					if(src.get_brain_damage() >= 60)
-						src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
+				if(src.get_brain_damage() >= 60)
+					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
