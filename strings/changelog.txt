@@ -1,5 +1,7 @@
 
 (t)fri jan 08 21
+(u)pali
+(+)Character preferences now contain a "Local ghost hearing" toggle - it switches between hearing all living-people chatter or restricting it to your screen. (Still also accessible as the confusingly named toggle-local-deadchat verb.)
 (u)Flappybat
 (p)3199
 (e)🆕|feature

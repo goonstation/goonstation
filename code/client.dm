@@ -27,7 +27,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
-	var/local_deadchat = 0
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -546,7 +545,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (widescreen_checked)
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
-	
+
 	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
