@@ -196,11 +196,13 @@
 
 			H.u_equip(src)
 			src.set_loc(get_turf(H))
+			H.unequip_all()
 
 			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
 			H.client.preferences.copy_to(V,H,1)
 			if (!H.mind)
 				H.mind = new /datum/mind()
+				H.mind.ckey = H.ckey
 				H.mind.key = H.key
 				H.mind.current = H
 				ticker.minds += H.mind

@@ -330,6 +330,18 @@
 		desc = "This sign points the way to the escape shuttle."
 		brightness = 1.3
 
+/obj/machinery/light/emergencyflashing
+	icon_state = "ebulb1"
+	base_state = "ebulb"
+	fitting = "bulb"
+	name = "warning light"
+	brightness = 1.3
+	desc = "This foreboding light warns of danger."
+	light_type = /obj/item/light/bulb/emergency
+	allowed_type = /obj/item/light/bulb/emergency
+	on = 1
+	removable_bulb = 0
+
 /obj/machinery/light/runway_light
 	name = "runway light"
 	desc = "A small light used to guide pods into hangars."
@@ -589,6 +601,7 @@
 	current_lamp = inserted_lamp
 	current_lamp.set_loc(null)
 	light.set_color(current_lamp.color_r, current_lamp.color_g, current_lamp.color_b)
+	brightness = initial(brightness)
 	on = has_power()
 	update()
 
@@ -625,10 +638,10 @@
 		else
 			L = new M.dispensing_bulb()
 		if(inserted_lamp)
-			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name) //name because I want this to be able to replace working lights with different colours
+			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name && brightness == initial(brightness) && current_lamp.color_r == L.color_r && current_lamp.color_g == L.color_g && current_lamp.color_b == L.color_b && on == has_power())
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
-				return //Stop borgs from making more sparks than necessary
+				return // Stop borgs from making more sparks than necessary.
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks

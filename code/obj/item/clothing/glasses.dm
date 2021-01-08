@@ -369,7 +369,7 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)

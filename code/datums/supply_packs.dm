@@ -249,14 +249,36 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
-	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Gloves"
+	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
 	contains = list(/obj/item/storage/toolbox/mechanical = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
-					/obj/item/clothing/gloves/yellow = 2)
+					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Engineering Crate"
+
+/datum/supply_packs/electool
+	name = "Electrical Maintenance Crate"
+	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
+	category = "Engineering Department"
+	contains = list(/obj/item/storage/toolbox/electrical = 2,
+					/obj/item/device/multitool = 2,
+					/obj/item/clothing/gloves/yellow = 2)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Electrical Maintenance Crate"
+
+/datum/supply_packs/firefighting
+	name = "Firefighting Supplies Crate"
+	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit"
+	category = "Engineering Department"
+	contains = list(/obj/item/extinguisher = 3,
+	/obj/item/chem_grenade/firefighting = 3,
+	/obj/item/clothing/suit/fire = 2)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Supplies Crate"
 
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
@@ -577,13 +599,22 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	containername = "Assorted Glowsticks Crate - 4 pack"
 
 /datum/supply_packs/fueltank
-	name = "Welding Fuel tank"
-	desc = "1x Welding Fuel tank"
+	name = "Welding Fuel Tank"
+	desc = "1x Welding Fuel Tank"
 	category = "Basic Materials"
 	contains = list(/obj/reagent_dispensers/fueltank)
 	cost = 4000
 	containertype = /obj/storage/crate
 	containername = "Welding Fuel Tank crate"
+
+/datum/supply_packs/foamtank
+	name = "Firefighting Foam tank"
+	desc = "1x Firefighting Foam Tank"
+	category = "Basic Materials"
+	contains = (/obj/reagent_dispensers/foamtank)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Foamtank crate"
 
 /datum/supply_packs/watertank
 	name = "High Capacity Watertank"

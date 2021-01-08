@@ -509,15 +509,22 @@
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
 			hud.update_hands()
+			if(old != src.equipped())
+				if(old)
+					SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+				if(src.equipped())
+					SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 			return 1
 		return 0
 
 	swap_hand()
 		if (!handcheck())
 			return
+		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
 			active_hand++
 			hand = active_hand
@@ -525,6 +532,11 @@
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
+		if(old != src.equipped())
+			if(old)
+				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+			if(src.equipped())
+				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
 	hand_range_attack(atom/target, params)
 		.= 0
@@ -633,6 +645,7 @@
 		reagents = R
 
 	equipped()
+		RETURN_TYPE(/obj/item)
 		if (active_hand)
 			if (hands.len >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
@@ -700,8 +713,7 @@
 			var/obj/item/organ/O = src.organHolder.get_organ("brain")
 			if (O)
 				O.set_loc(src)
-		if(src.mind)
-			src.mind.register_death() // it'd be nice if critters get a time of death too tbh
+		src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 		set_density(0)
 		if (src.can_implant)
 			for (var/obj/item/implant/H in src.implants)

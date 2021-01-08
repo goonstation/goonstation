@@ -307,8 +307,7 @@
 		// so, fuck that, you're dead, shithead. get over it.
 		setdead(O)
 
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)

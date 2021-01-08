@@ -16,8 +16,7 @@
 		src.empty = 1
 		src.icon_state = "stims0"
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		if(user.reagents)
-			user.reagents.add_reagent("stimulants", 50)
+		user.reagents?.add_reagent("stimulants", 50)
 		return
 
 /obj/item/stimpack/large_dose
@@ -26,7 +25,6 @@
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		if(user.reagents)
-			user.reagents.add_reagent("stimulants", 200)
+		user.reagents?.add_reagent("stimulants", 200)
 		qdel(src)
 		return

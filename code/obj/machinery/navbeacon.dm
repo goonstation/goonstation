@@ -33,8 +33,7 @@
 		hide(T.intact)
 
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[freq]")
+			radio_controller?.add_object(src, "[freq]")
 
 			if(!net_id)
 				net_id = generate_net_id(src)

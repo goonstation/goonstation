@@ -838,9 +838,9 @@
 			return 0
 		if (!src.the_mob)
 			return 0
-		if (src.the_mob.hasStatus(list("paralysis", "stunned", "weakened"))) //stun check
+		if (is_incapacitated(src.the_mob)) //stun check
 			return 0
-		if (src.the_mob && ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
+		if (ishuman(src.the_mob)) //cuff, straightjacket, nolimb check
 			var/mob/living/carbon/human/H = the_mob
 			if (H.restrained())
 				return 0

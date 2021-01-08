@@ -1046,11 +1046,17 @@
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
 
 /turf/simulated/floor/dirt
-	name = "Dirt"
+	name = "dirt"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
 
 /////////////////////////////////////////
 

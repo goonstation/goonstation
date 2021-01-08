@@ -101,4 +101,4 @@
 #define access_retention_black 82
 
 //rancher job
-#define access_rancher 83
+#define access_ranch 83

@@ -1,14 +1,3 @@
-#define AIRLOCK_WIRE_IDSCAN 1
-#define AIRLOCK_WIRE_MAIN_POWER1 2
-#define AIRLOCK_WIRE_MAIN_POWER2 3
-#define AIRLOCK_WIRE_DOOR_BOLTS 4
-#define AIRLOCK_WIRE_BACKUP_POWER1 5
-#define AIRLOCK_WIRE_BACKUP_POWER2 6
-#define AIRLOCK_WIRE_OPEN_DOOR 7
-#define AIRLOCK_WIRE_AI_CONTROL 8
-#define AIRLOCK_WIRE_ELECTRIFY 9
-#define AIRLOCK_WIRE_SAFETY 10
-
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
 
@@ -1805,55 +1794,55 @@ obj/machinery/door/airlock
 	return TRUE
 
 /obj/machinery/door/airlock/ui_data(mob/user)
-	var/list/data = list()
-	var/list/userstates = list()
-	userstates["distance"] = get_dist(src, user)
-	userstates["isBorg"] = ishivebot(user) || isrobot(user)
-	userstates["isAi"] = isAI(user)
-	userstates["isCarbon"] = iscarbon(user)
-	data["userStates"] = userstates
-	data["panelOpen"] = src.p_open
-	data["mainTimeLeft"] = secondsMainPowerLost
-	data["backupTimeLeft"] = secondsBackupPowerLost
-	data["shockTimeLeft"] = secondsElectrified
-	data["idScanner"] = !aiDisabledIdScanner
-	data["boltsAreUp"] = !src.locked // not bolted
-	data["welded"] = welded // welded
-	data["opened"] = !density // opened
-	data["canAiControl"] = canAIControl()
-	data["aiHacking"] = src.aiHacking
-	data["canAiHack"] = canAIHack()
-	data["hackingProgression"] = src.hackingProgression
-	data["hackMessage"] = hackMessage
-	data["aiControlVar"] = aiControlDisabled
-	data["noPower"] = (status & NOPOWER)
-	data["accessCode"] = src.net_access_code
-	var/list/wire = list()
-	wire["main_1"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)
-	wire["main_2"] = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)
-	wire["backup_1"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1)
-	wire["backup_2"] = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2)
-	wire["shock"] = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY)
-	wire["idScanner"] = !src.isWireCut(AIRLOCK_WIRE_IDSCAN)
-	wire["bolts"] = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS)
-	wire["safe"] = !src.isWireCut(AIRLOCK_WIRE_SAFETY)
+	. = list(
+		"userStates" = list(
+			"distance" = get_dist(src, user),
+			"isBorg" = ishivebot(user) || isrobot(user),
+			"isAi" = isAI(user),
+			"isCarbon" = iscarbon(user),
+		),
+		"panelOpen" = src.p_open,
 
-	data["wires"] = wire
+		"mainTimeLeft" = secondsMainPowerLost,
+		"backupTimeLeft" = secondsBackupPowerLost,
+		"shockTimeLeft" = secondsElectrified,
+
+		"idScanner" = !aiDisabledIdScanner,
+		"boltsAreUp" = !src.locked,		// not bolted
+		"welded" = welded,						// welded
+		"opened" = !density,					// opened
+		"safety" = src.safety,
+
+		"canAiControl" = canAIControl(),
+		"aiHacking" = src.aiHacking,
+		"canAiHack" = canAIHack(),
+		"hackingProgression" = src.hackingProgression,
+		"hackMessage" = hackMessage,
+		"aiControlVar" = aiControlDisabled,
+		"aiControlDisabled" = src.aiControlDisabled,
+
+		"noPower" = (status & NOPOWER),
+		"powerIsOn" = src.arePowerSystemsOn() && !(status & NOPOWER),
+		"accessCode" = src.net_access_code,
+		"wires" = list(
+			"main_1" = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1),
+			"main_2" = !src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2),
+			"backup_1" = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER1),
+			"backup_2" = !src.isWireCut(AIRLOCK_WIRE_BACKUP_POWER2),
+			"shock" = !src.isWireCut(AIRLOCK_WIRE_ELECTRIFY),
+			"idScanner" = !src.isWireCut(AIRLOCK_WIRE_IDSCAN),
+			"bolts" = !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS),
+			"safe" = !src.isWireCut(AIRLOCK_WIRE_SAFETY),
+		),
+	)
 
 	if(src.signalers)
-		data["signalers"] = src.signalers
-
-	data["powerIsOn"] = src.arePowerSystemsOn() && !(status & NOPOWER)
-
-	data["aiControlDisabled"] = src.aiControlDisabled
-	data["safety"] = src.safety
+		. += list("signalers" = src.signalers)
 
 	var/list/wire_states = list()
 	for(var/I in src.wire_colors)
 		wire_states += src.isWireCut(airlockWireColorToIndex[src.wire_colors[I]])
-	data["wireStates"] = wire_states
-
-	return data
+	. += list("wireStates" = wire_states)
 
 /obj/machinery/door/airlock/proc/aidoor_access_check(mob/user)
 	if (status & (NOPOWER | POWEROFF))

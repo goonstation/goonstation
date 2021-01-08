@@ -35,6 +35,7 @@
 
 	var/image/body_standing = null
 	var/image/hair_standing = null
+	var/image/hair_special_standing = null
 	var/image/tail_standing = null
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
@@ -1137,8 +1138,7 @@
 	for (var/obj/O in contents)
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
-	if(reagents)
-		reagents.move_trigger(src, ev)
+	reagents?.move_trigger(src, ev)
 	for (var/datum/statusEffect/S as() in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
@@ -2211,14 +2211,22 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	if(src.hand == specify)
+		return
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
-	if(B && hand != specify)
+	if(B)
 		qdel(B)
+	var/obj/item/old = src.equipped()
 	if (specify >= 0)
 		src.hand = specify
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(old != src.equipped())
+		if(old)
+			SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+		if(src.equipped())
+			SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
 		src.equipped().intent_switch_trigger(src)
 

@@ -146,8 +146,7 @@
 			location = src.master.loc
 
 		location = get_turf(location)
-		if(location)
-			location.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
+		location?.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
 		last_ignite = world.time
 
 	return

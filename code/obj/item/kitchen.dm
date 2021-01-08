@@ -1006,8 +1006,7 @@ TRAYS
 				foodoverlay.color = FOOD.food_color
 				foodoverlay.layer = (src.layer+3)
 				toppingdata.Add(FOOD.food_color)
-				if(FOOD.reagents)
-					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
+				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)
 						continue

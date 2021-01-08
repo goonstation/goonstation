@@ -873,7 +873,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/my_mutation = pick("accent_elvis", "stutter", "accent_chav", "accent_swedish", "accent_tommy", "unintelligable", "slurring")
 			src.bioHolder.AddEffect(my_mutation)
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		src.protect_from(M, null, weapon)
 
 	proc/protect_from(var/mob/M as mob, var/mob/customer as mob, var/obj/item/weapon as obj)
@@ -1513,8 +1513,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..()
 		else
 			src.bangfired = 1
-			if(user)
-				user.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
+			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
 			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return

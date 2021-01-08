@@ -2488,7 +2488,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/caution/east,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahv" = (
 /obj/cable{
@@ -2558,7 +2558,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/miningoutpost)
 "ahE" = (
-/turf/simulated/floor/airless/caution/east,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahF" = (
 /obj/machinery/light/emergency{
@@ -6781,16 +6781,13 @@
 /area/salyut)
 "asd" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
+/obj/item/clothing/suit/space/soviet{
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

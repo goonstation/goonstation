@@ -209,8 +209,7 @@
 		if(!src.handset)
 			return
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)

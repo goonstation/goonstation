@@ -18,8 +18,7 @@
 			server = "main3"
 	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server)))
 		var/datum/player/player = make_player(M) //Recache the player.
-		if(player)
-			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
 		return 1
 	return 0 //Errored.
 
