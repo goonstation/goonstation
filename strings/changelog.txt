@@ -1,5 +1,25 @@
 
 (t)fri jan 08 21
+(u)TTerc
+(p)3268
+(e)🗺|mapping
+(+)Added Beepsky's house and several pet and monkey spawns to Atlas.
+(u)Flappybat
+(p)3205
+(e)⚖🔄|balance, rework
+(*)Changed spy thief reward logic. Rewards are now more proportional to the target's job or difficulty of accessing the object.
+(u)BatElite
+(p)3203
+(e)🆕🎨|feature, sprites
+(*)Certain computers (most notably the cloning & genetic consoles) can now be made to re-scan for equipment by using a multitool on them!
+(u)BenLubar
+(p)3181
+(e)📄|tgui
+(*)Ported sleeper consoles to tgui.
+(u)BenLubar
+(p)3261
+(e)|
+(+)The Power Monitoring Computer has been upgraded to a state-of-the-art 6-color screen.
 (u)BenLubar
 (p)3213
 (e)|

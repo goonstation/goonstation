@@ -52,7 +52,7 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell  | Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
+			var/list/S = list("<span style='background-color: #f88'> Off</span>","<span style='background-color: #fa6'>AOff</span>","<span style='background-color: #8f8'>  On</span>", "<span style='background-color: #ccf'> AOn</span>")
 			var/list/chg = list("N","C","F")
 
 			var/do_newline = 0
