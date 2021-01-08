@@ -230,6 +230,8 @@
 	//else O.cell.charge = 7500
 
 	O.gender = src.gender
+	O.bioHolder.mobAppearance.pronouns = src.bioHolder.mobAppearance.pronouns
+
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
