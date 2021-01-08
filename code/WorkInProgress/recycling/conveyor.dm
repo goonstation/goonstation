@@ -47,6 +47,10 @@
 	basedir = dir
 	setdir()
 
+/obj/machinery/conveyor/initialize()
+	..()
+	setdir()
+
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
 		if (C.next_conveyor == src)
@@ -151,7 +155,7 @@
 	if(!loc)
 		return
 
-	if(next_conveyor && next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == newloc)
 		//Ok, they will soon walk() according to the new conveyor
 		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
@@ -190,7 +194,7 @@
 					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
-			M.buckled = src.loc
+			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
 			I:use(1)
 			M.lying = 1
