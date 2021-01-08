@@ -1493,12 +1493,15 @@ var/zapLimiter = 0
 
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
+		if (status & BROKEN)
+			boutput(user, "This APC needs repairs before you can turn it back on!")
+			return
 		if (src.aidisabled)
 			boutput(user, "AI control for this APC interface has been disabled.")
 			return
 
 		operating = !operating
-		boutput(user, "You have turned the [src] <B>[src.operating ? "on" : "off"]</B>.")
+		boutput(user, "You have turned \the [src] <B>[src.operating ? "on" : "off"]</B>.")
 		src.update()
 		updateicon()
 

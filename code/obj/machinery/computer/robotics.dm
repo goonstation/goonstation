@@ -99,9 +99,13 @@
 		dat += "<BR> Connected Cyborgs<BR>"
 		dat += " *------------------------------------------------*<BR>"
 
-		for(var/mob/living/silicon/robot/R in A:connected_robots)
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			dat += "[R.name] |"
-			if(R.stat)
+			if(R.disposed)
+				dat += " Missing |"
+			else if(isnull(R.brain))
+				dat += " Intelligence Cortex Missing |"
+			else if(R.stat)
 				dat += " Not Responding |"
 			else
 				dat += " Operating Normally |"

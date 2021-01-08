@@ -4,12 +4,12 @@
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
+	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
+	if (vampholder && istype(vampholder))
+		return
+
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
-			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
-			if (A && istype(A))
-				return
-
 			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
 
 			if(shitty) // Infernal vampire.
