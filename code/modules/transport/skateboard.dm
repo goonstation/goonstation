@@ -145,6 +145,10 @@
 	if(AM == rider || !rider)
 		return
 
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
+
 	..()
 	src.stop()
 	in_bump = 1
@@ -208,7 +212,8 @@
 		SPAWN_DBG(0.4 SECONDS)
 			input_lockout -= 1
 
-	runningAction?.sCurr = sickness
+	if(runningAction)
+		runningAction.sCurr = sickness
 
 	update()
 	in_bump = 0

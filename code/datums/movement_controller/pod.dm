@@ -37,6 +37,9 @@
 		..()
 
 	keys_changed(mob/user, keys, changed)
+		if(user != src.owner.pilot)
+			return
+
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod) || !owner)
 			return
 

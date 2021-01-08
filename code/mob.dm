@@ -1535,7 +1535,7 @@
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
 		if (src.health < 0 && !src.incrit)
 			src.incrit = 1
-			logTheThing("combat", src, null, "goes into crit at [log_loc(src)].")
+			logTheThing("combat", src, null, "goes into crit [log_health(src)] at [log_loc(src)].")
 		else if (src.incrit && src.health >= 0)
 			src.incrit = 0
 	else

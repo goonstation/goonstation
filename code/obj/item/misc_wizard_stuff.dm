@@ -75,6 +75,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
+	var/eldritch = 0
 
 	New()
 		..()
@@ -85,6 +86,49 @@
 		if (prob(75))
 			source.show_message(text("<span class='alert'>\The [src] just barely slips out of your grip!</span>"), 1)
 			. = 0
+
+	hear_talk(mob/M as mob, msg, real_name, lang_id)
+		if (M.is_in_hands(src) && iswizard(M))
+			var/datum/abilityHolder/wizard/AH = M.get_ability_holder(/datum/abilityHolder/wizard)
+			if (AH?.robe_and_wizard_hat_time + (1 MINUTES) < TIME)
+				var/found = findtext(msg[1], regex("I put on my robe and wizard hat", "i")) //check the spoken phrase
+				if (found && ishuman(M))	//necessary check, dumb...
+					put_on_robe_and_wizard_hat(M)
+					AH.robe_and_wizard_hat_time = TIME
+			else
+				boutput(M, "<span class='alert'>You need a bit more strength to magically put on your robe and wizard hat.</span>")
+
+
+	proc/put_on_robe_and_wizard_hat(var/mob/living/carbon/human/H)
+		//get random type of robe and hat to spawn
+		var/robe_path = pick(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/wizrobe/red, /obj/item/clothing/suit/wizrobe/purple, /obj/item/clothing/suit/wizrobe/green, /obj/item/clothing/suit/wizrobe/necro)
+		var/hat_path = pick(/obj/item/clothing/head/wizard, /obj/item/clothing/head/wizard/red, /obj/item/clothing/head/wizard/purple, /obj/item/clothing/head/wizard/green, /obj/item/clothing/head/wizard/witch, /obj/item/clothing/head/wizard/necro)
+
+		var/success = 0
+		//Check if they're wearing an exo suit, if it's not a wizzy robe, then drop it and equip the new robe
+		var/obj/item/clothing/suit = H.get_slot(H.slot_wear_suit)
+		if (!istype(suit, /obj/item/clothing/suit/wizrobe))
+			H.drop_from_slot(H.slot_wear_suit)
+			var/obj/item/clothing/robe = new robe_path(H.loc)
+			H.equip_if_possible(robe, H.slot_wear_suit)
+			success = 1
+
+		//for the hat
+		var/obj/item/clothing/head = H.get_slot(H.slot_head)
+		if (!istype(head, /obj/item/clothing/head/wizard))
+			H.drop_from_slot(H.slot_head)
+			var/obj/item/clothing/hat = new hat_path(H.loc)
+			H.equip_if_possible(hat, H.slot_head)
+			success = 1
+
+		//play sound, do animation, chance to kill staff if the spell works.
+		if (success)
+			playsound(H.loc, "sound/effects/mag_forcewall.ogg", 100, 1)
+			if (prob(40) && !src.eldritch)		//The staff of cthulhu is too powerful
+				boutput(H, "<span class='alert'>Summoning your magical clothing was too taxing on [src] and it broke!</span>")
+				animate(src, color="#000000", alpha=50, time=2 SECONDS, easing=SINE_EASING)
+				sleep(2 SECONDS)
+				qdel(src)
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
@@ -163,6 +207,7 @@
 	item_state = "staffcthulhu"
 	force = 14
 	hitsound = 'sound/effects/ghost2.ogg'
+	eldritch = 1
 
 	New()
 		. = ..()

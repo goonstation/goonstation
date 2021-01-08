@@ -604,7 +604,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath())
+	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
