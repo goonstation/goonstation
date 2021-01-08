@@ -259,9 +259,9 @@
 
 /obj/machinery/computer/genetics/proc/log_maybe_cheater(var/who, var/action = "")
 	// this is used repeatedly so let's just make it a proc and stop repeating ourselves 50 times
-	message_admins("[key_name(who)] [action] (failed href validation, maybe cheating)")
-	logTheThing("debug", who, null, "[action] but failed href validation.")
-	logTheThing("diary", who, null, "[action] but failed href validation.", "debug")
+	message_admins("[key_name(who)] [action] (failed validation, maybe cheating)")
+	logTheThing("debug", who, null, "[action] but failed validation.")
+	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)
@@ -525,25 +525,21 @@
 			on_ui_interacted(ui.user)
 		if("mutantrace")
 			. = TRUE
-			var/list/options = list("Human")
-			for (var/X in bioEffectList)
-				var/datum/bioEffect/BE = bioEffectList[X]
-				if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= 2 && BE.mutantrace_option)
-					options += BE
 			var/mob/living/carbon/human/H = get_scan_subject()
-			if (istype(H) && !isprematureclone(H))
-				// TODO: convert to tgui
-				var/racepick = input(usr, "Change to which body type?", "[src.name]") as null|anything in options
-				if (racepick == "Human")
-					if (!isnull(H.mutantrace))
-						src.log_me(H, "mutantrace removed")
-					H.set_mutantrace(null)
-				else if (istype(racepick,/datum/bioEffect/mutantrace/) && H.bioHolder)
-					var/datum/bioEffect/mutantrace/MR = racepick
-					H.set_mutantrace(MR.mutantrace_path)
-					src.log_me(H, "mutantrace added", MR)
-				src.scanner.update_occupant()
-				on_ui_interacted(ui.user)
+			if (!istype(H) || isprematureclone(H))
+				return
+			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
+			if (isnull(BE))
+				if (!isnull(H.mutantrace))
+					src.log_me(H, "mutantrace removed")
+				H.set_mutantrace(null)
+			else
+				if (!istype(BE) || BE.effectType != EFFECT_TYPE_MUTANTRACE || BE.research_level < EFFECT_RESEARCH_DONE || !BE.mutantrace_option || !H.bioHolder)
+					return
+				H.set_mutantrace(BE.mutantrace_path)
+				src.log_me(H, "mutantrace added", BE)
+			src.scanner.update_occupant()
+			on_ui_interacted(ui.user)
 		if("editappearance")
 			. = TRUE
 			var/mob/living/carbon/human/H = get_scan_subject()
@@ -922,6 +918,11 @@
 		"savedMutations" = list(),
 		"savedChromosomes" = list(),
 		"combining" = list(),
+		"mutantRaces" = list(list(
+			"name" = "Human",
+			"icon" = "template",
+			"ref" = "\ref[null]",
+		)),
 		"unlock" = null,
 	)
 
@@ -947,6 +948,15 @@
 
 	for (var/datum/bioEffect/BE in combining)
 		.["combining"] += "\ref[BE]"
+
+	for (var/X in bioEffectList)
+		var/datum/bioEffect/BE = bioEffectList[X]
+		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
+			.["mutantRaces"] += list(list(
+				"name" = BE.mutantrace_option,
+				"icon" = BE.icon_state,
+				"ref" = "\ref[BE]",
+			))
 
 	if (!src.decrypt_sanity_check())
 		.["unlock"] = list(
@@ -986,6 +996,7 @@
 		.["subjectBloodType"] = subject.bioHolder.bloodType
 		.["subjectAge"] = subject.bioHolder.age
 		.["subjectMutantRace"] = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown"
+		.["subjectCanAppearance"] = istype(H) && isnull(H.mutantrace)
 		.["subjectPremature"] = isprematureclone(subject)
 		.["subjectPotential"] = list()
 		.["subjectActive"] = list()
@@ -1078,10 +1089,6 @@
 		))
 
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
-#ifdef HALLOWEEN
-	if(prob(1))
-		new/obj/extremely_spooky_ghost(get_turf(src))
-#endif
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "GeneTek", "GeneTek Console v1.01")

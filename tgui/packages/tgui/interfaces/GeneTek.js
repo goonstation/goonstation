@@ -594,6 +594,7 @@ const RecordTab = (props, context) => {
 
 const ScannerTab = (props, context) => {
   const { data, act } = useBackend(context);
+  let [changingMutantRace, setChangingMutantRace] = useSharedState(context, "changingmutantrace", false);
   const {
     haveScanner,
     haveSubject,
@@ -603,11 +604,19 @@ const ScannerTab = (props, context) => {
     subjectAge,
     subjectBloodType,
     subjectMutantRace,
+    subjectCanAppearance,
     subjectPremature,
     subjectPotential,
     subjectActive,
     equipmentCooldown,
+    mutantRaces,
   } = data;
+
+  if (changingMutantRace
+    && (!haveSubject || !subjectHuman || subjectPremature)) {
+    changingMutantRace = false;
+    setChangingMutantRace(false);
+  }
 
   if (!haveSubject) {
     return (
@@ -636,6 +645,42 @@ const ScannerTab = (props, context) => {
 
   return (
     <Fragment>
+      {!!changingMutantRace && (
+        <Modal>
+          <Box bold width={20} mb={0.5}>
+            Change to which body type?
+          </Box>
+          {mutantRaces.map(mr => (
+            <Box key={mr.ref}>
+              <Button
+                color="blue"
+                disabled={subjectMutantRace === mr.name}
+                mt={0.5}
+                onClick={() => {
+                  setChangingMutantRace(false);
+                  act("mutantrace", { ref: mr.ref });
+                }}>
+                <GeneIcon
+                  name={mr.icon}
+                  size={1.5}
+                  style={{
+                    "margin": "-4px",
+                    "margin-right": "4px",
+                  }} />
+                {mr.name}
+              </Button>
+            </Box>
+          ))}
+          <Box mt={1} textAlign="right">
+            <Button
+              color="bad"
+              icon="times"
+              onClick={() => setChangingMutantRace(false)}>
+              Cancel
+            </Button>
+          </Box>
+        </Modal>
+      )}
       <Section title="Occupant">
         <Flex>
           <Flex.Item mr={1}>
@@ -661,13 +706,13 @@ const ScannerTab = (props, context) => {
                       icon="user"
                       color="blue"
                       disabled={!!subjectPremature}
-                      onClick={() => act("mutantrace")}>
+                      onClick={() => setChangingMutantRace(true)}>
                       Change
                     </Button>
                     <Button
                       icon="wrench"
                       color="average"
-                      disabled={subjectMutantRace !== "Human"}
+                      disabled={!subjectCanAppearance}
                       onClick={() => act("editappearance")} />
                   </Fragment>
                 )}>
