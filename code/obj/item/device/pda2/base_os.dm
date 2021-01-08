@@ -229,6 +229,9 @@
 
 					<table cellspacing=5>"}
 					for(var/datum/computer/file/F in browse_folder.contents)
+						var/copyButton = "<a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a>"
+						if(F.dont_copy)
+							copyButton = "<strike>Copy</strike>"
 						if(F == src)
 							. += "<tr><td>System</td><td>Size: [src.size]</td><td>SYSTEM</td></tr>"
 							continue
@@ -240,7 +243,7 @@
 						<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>
 						<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>
 
-						<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>
+						<td>[copyButton]</td>
 
 						</tr>"}
 
@@ -257,6 +260,9 @@
 
 						<table cellspacing=5>"}
 						for(var/datum/computer/file/F in other_drive_folder.contents)
+							var/copyButton = "<a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a>"
+							if(F.dont_copy)
+								copyButton = "<strike>Copy</strike>"
 							if(F == src)
 								. += "<tr><td>System</td><td>Size: [src.size]</td><td>SYSTEM</td></tr>"
 								continue
@@ -268,7 +274,7 @@
 							<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=delete'>Del</a></td>
 							<td><a href='byond://?src=\ref[src];target=\ref[F];input=rename'>Rename</a></td>
 
-							<td><a href='byond://?src=\ref[src];target=\ref[F];browse_func=copy'>Copy</a></td>
+							<td>[copyButton]</td>
 
 							</tr>"}
 						. += "</table>"
@@ -298,13 +304,15 @@
 							var/rtButton = "Default"
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[mailgrp]'>Block</a>"
 							var/leaveButton = "<a href='byond://?src=\ref[src];message_func=leave_group;groupname=[mailgrp]'>Leave</a>"
-							var/sendButton = ""
-							if(!src.clipboard?.dont_copy && src.master.fileshare_program)
-								sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>File</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
+							if(!src.master.fileshare_program)
+								sendButton = ""
+							else if(!src.clipboard || src.clipboard?.dont_copy)
+								sendButton = "<strike>Send File</strike>"
 							var/msgButton = "<a href='byond://?src=\ref[src];input=message;target=[mailgrp];department=1'>Mail</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
 								rt = src.master.mailgroup_ringtones[mailgrp]
-								rtButton = "[rt.name]"
+								rtButton = "<a href='byond://?src=\ref[src];delMGTone=[mailgrp]'>[rt.name]</a>"
 							if(mailgrp in src.muted_mailgroups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[mailgrp]'>Unblock</a>"
 							if(mailgrp in src.master.reserved_mailgroups)
@@ -321,7 +329,7 @@
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[alert]'>Mute</a>"
 							if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
 								rt = src.master.alert_ringtones[alert]
-								rtButton = "[rt.name]"
+								rtButton = "<a href='byond://?src=\ref[src];delATone=[alert]'>[rt.name]</a>"
 							if(alert in src.muted_mailgroups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[alert]'>Unmute</a>"
 							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
@@ -337,9 +345,13 @@
 						for(var/caller in src.all_callers)
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[caller]]'>Block</a>"
 							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[caller]'>Msg</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send File</a>"
+							if(!src.master.fileshare_program)
+								sendButton = ""
+							else if(!src.clipboard || src.clipboard?.dont_copy)
+								sendButton = "<strike>Send File</strike>"
 							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[caller]'>Del</a>"
-							if(caller in src.blocked_numbers)
+							if(src.all_callers[caller] in src.blocked_numbers)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[caller]]'>Unblock</a>"
 							. += "<tr><td>[src.all_callers[caller]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
 						. += "</table>"

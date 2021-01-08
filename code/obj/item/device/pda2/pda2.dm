@@ -877,10 +877,12 @@
 					if("mailgroup")
 						if(groupName in src.mailgroup_ringtones)
 							qdel(src.mailgroup_ringtones[groupName])
-							src.mailgroup_ringtones[groupName] = null
+							src.mailgroup_ringtones -= groupName
 						src.mailgroup_ringtones[groupName] = RT
 						var/datum/ringtone/RTone = src.mailgroup_ringtones[groupName]
+						boutput(world,"[RTone]")
 						RTone.holder = src
+						boutput(world,"[RTone.holder]")
 						if(overrideAlert)
 							RTone.overrideAlert = overrideAlert
 				if (ismob(src.loc))
@@ -893,19 +895,26 @@
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
-	proc/route_ringtone(var/groupID, var/recent)
-		if(groupID in src.alert_ringtones)
-			if(istype(src.alert_ringtones[groupID], /datum/ringtone))
-				var/datum/ringtone/rtone = src.alert_ringtones[groupID]
-				. = rtone.PlayRingtone(recent)
-		else if(groupID in src.mailgroup_ringtones)
-			if(istype(src.mailgroup_ringtones[groupID], /datum/ringtone))
-				var/datum/ringtone/rtone = src.mailgroup_ringtones[groupID]
-				. = rtone.PlayRingtone(recent)
+	proc/route_ringtone(var/list/groupID, var/recent)
+		if(!islist(groupID))
+			groupID = list(groupID)
+		for(var/alert in groupID) // Alerts get priority
+			if(alert in src.alert_ringtones)
+				if(istype(src.alert_ringtones[alert], /datum/ringtone))
+					var/datum/ringtone/rtone = src.alert_ringtones[alert]
+					. = rtone.PlayRingtone(recent)
+					break
+		if(!.)
+			for(var/group in groupID)
+				if(group in src.mailgroup_ringtones)
+					if(istype(src.mailgroup_ringtones[group], /datum/ringtone))
+						var/datum/ringtone/rtone = src.mailgroup_ringtones[group]
+						. = rtone.PlayRingtone(recent)
+						break
 		if(!.)
 			return src.r_tone?.PlayRingtone(recent)
 
-	proc/display_alert(var/alert_message, var/previewRing, var/groupID, var/recent) //Add alert overlay and beep
+	proc/display_alert(var/alert_message, var/previewRing, var/list/groupID, var/recent) //Add alert overlay and beep
 		if (alert_message && !src.speaker_busted)
 			if(previewRing && istype(src.r_tone_temp))
 				. = src.r_tone_temp?.PlayRingtone()

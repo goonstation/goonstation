@@ -53,13 +53,19 @@
 				. += "<h4>Select a File</h4><br>"
 				. += "<table cellspacing=5>"
 				for(var/datum/computer/file/mainfile in masterOS.browse_folder.contents)
-					if(mainfile == masterOS || mainfile.dont_copy)
+					if(mainfile == masterOS)
 						continue
-					src.file_list[mainfile.name] = mainfile
-					. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[mainfile.name]'>[mainfile.name]</a></td>
-					<td>Size: [mainfile.size]</td>
-					<td>[mainfile.extension]</td>
-					</tr>"}
+					else if(mainfile.dont_copy)
+						. += {"<tr><td><strike>[mainfile.name]</strike></td>
+						<td>ERROR</td>
+						<td>CANNOT SHARE</td>
+						</tr>"}
+					else
+						src.file_list[mainfile.name] = mainfile
+						. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[mainfile.name]'>[mainfile.name]</a></td>
+						<td>Size: [mainfile.size]</td>
+						<td>[mainfile.extension]</td>
+						</tr>"}
 
 				var/datum/computer/folder/other_drive_folder
 				for (var/obj/item/disk/data/D in src.master)
@@ -69,13 +75,19 @@
 
 				if (other_drive_folder)
 					for(var/datum/computer/file/morefile in other_drive_folder.contents)
-						if(morefile == masterOS || morefile.dont_copy)
+						if(morefile == masterOS)
 							continue
-						src.file_list[morefile.name] = morefile
-						. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[morefile.name]'>[morefile.name]</a></td>
-						<td>Size: [morefile.size]</td>
-						<td>[morefile.extension]</td>
-						</tr>"}
+						else if(morefile.dont_copy)
+							. += {"<tr><td><strike>[morefile.name]</strike></td>
+							<td>ERROR</td>
+							<td>CANNOT SHARE</td>
+							</tr>"}
+						else
+							src.file_list[morefile.name] = morefile
+							. += {"<tr><td><a href='byond://?src=\ref[src];host_file=[morefile.name]'>[morefile.name]</a></td>
+							<td>Size: [morefile.size]</td>
+							<td>[morefile.extension]</td>
+							</tr>"}
 				. += "</table><br>"
 				. += "<a href='byond://?src=\ref[src];add_host=1'>Go Back</a>"
 
