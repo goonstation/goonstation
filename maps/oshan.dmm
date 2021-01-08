@@ -22625,6 +22625,13 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbt" = (
@@ -23274,13 +23281,6 @@
 /turf/space/fluid,
 /area/space)
 "bdC" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -42608,6 +42608,13 @@
 	chargelevel = 4000;
 	output = 2500
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "bYE" = (
@@ -47177,6 +47184,16 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
+"dPg" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47292,6 +47309,16 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"gJl" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "gKC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -47383,16 +47410,14 @@
 	o2tanks = 5;
 	pltanks = 15
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -48186,6 +48211,15 @@
 /obj/item/mop,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"wVF" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/door_control{
@@ -129607,7 +129641,7 @@ bcL
 bei
 bcN
 bcL
-bcL
+gJl
 csr
 uGR
 bbg
@@ -131414,7 +131448,7 @@ afX
 bbg
 bdx
 bbM
-bcL
+dPg
 bcL
 bcL
 bcN
@@ -131728,7 +131762,7 @@ bZE
 llR
 bbg
 aRh
-ksg
+wVF
 aSP
 gKC
 gKC
