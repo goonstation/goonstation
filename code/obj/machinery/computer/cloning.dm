@@ -91,7 +91,9 @@
 	if (src.portable)
 		return
 	src.scanner?.connected = null
-	src.pod1?.connected = null
+	for (var/obj/machinery/clonepod/P in src.linked_pods)
+		P.connected = null
+	src.linked_pods = list()
 	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
 	for (var/obj/machinery/clonepod/P in orange(4, src))
 		src.linked_pods += P
