@@ -3156,8 +3156,10 @@
 		if (src.level == 2 || src.display_letter != null)
 			. += " | Currently Displaying: '[src.display_letter]'"
 		. += "</span>"
+
 	secure()
 		src.display(" ")
+
 	loosen()
 		src.display_letter = null
 		src.icon_state = "comp_screen"
