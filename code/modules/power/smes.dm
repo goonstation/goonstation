@@ -111,7 +111,7 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
-/obj/machinery/power/smes/process()
+/obj/machinery/power/smes/process(mult)
 
 	if (status & BROKEN)
 		return
@@ -131,7 +131,10 @@
 
 				load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
 
-				charge += load	// increase the charge
+				// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
+				// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
+				// benefits to charged value so that minimal loss occurs.
+				charge += load * mult	// increase the charge
 				add_load(load)		// add the load to the terminal side network
 
 			else					// if not enough capcity
@@ -206,16 +209,6 @@
 /obj/machinery/power/smes/add_load(var/amount)
 	if (terminal?.powernet)
 		terminal.powernet.newload += amount
-
-/obj/machinery/power/smes/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/smes/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
 
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

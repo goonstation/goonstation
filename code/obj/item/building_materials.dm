@@ -219,7 +219,7 @@ MATERIAL
 			//boutput(world, "check valid stack check 1 failed")
 			return 0
 		var/obj/item/sheet/S = O
-		if (!S.material)
+		if (!S.material || !src.material)
 			return 0
 		if (S.material.type != src.material.type)
 			//boutput(world, "check valid stack check 2 failed")

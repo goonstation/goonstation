@@ -12,6 +12,7 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
+	can_reconnect = 1
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/currentStatusMessage = list()
@@ -25,6 +26,8 @@
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
+	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
+	var/sound_ping = 'sound/machines/ping.ogg'
 
 	lr = 1
 	lg = 0.6
@@ -77,19 +80,24 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
-		if(portable) return
-		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
-		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
-
-		var/hookup_error = FALSE
-		if (isnull(src.scanner))
-			hookup_error = TRUE
-		if (isnull(src.pod1))
-			hookup_error = TRUE
-		if (!hookup_error)
-			src.pod1?.connected = src
-			src.scanner?.connected = src
+		connection_scan()
 	return
+
+/obj/machinery/computer/cloning/connection_scan()
+	if(portable) return
+	scanner?.connected = null
+	pod1?.connected = null
+	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
+	src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
+
+	var/hookup_error = FALSE
+	if (isnull(src.scanner))
+		hookup_error = TRUE
+	if (isnull(src.pod1))
+		hookup_error = TRUE
+	if (!hookup_error)
+		src.pod1?.connected = src
+		src.scanner?.connected = src
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
@@ -108,14 +116,20 @@
 			src.updateUsrDialog()
 			return
 
-	else if (isscrewingtool(W) && ((src.status & BROKEN) || !src.pod1 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.pod1.BE))
+	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 2 SECONDS))
-			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+			if(src.status & BROKEN)
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+			else
+				boutput(user, "<span class='notice'>The glass pane falls out.</span>")
+				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
+				glass.amount = 6
+				glass.inventory_counter.update_number(glass.amount)
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
 			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
 			for (var/obj/C in src)
 				C.set_loc(src.loc)
@@ -171,7 +185,7 @@
 
 
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 // message = message you want to pass to the noticebox
@@ -215,7 +229,7 @@
 		if ((subject.ghost && subject.ghost.mind && subject.ghost.mind.key))
 			subjMind = subject.ghost.mind
 		else if (subject.last_client)
-			var/mob/M = find_ghost_by_key(subject.last_client.ckey)
+			var/mob/M = find_ghost_by_key(subject.last_client.key)
 			if (isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 				subjMind = M.mind
 			else
@@ -265,6 +279,7 @@
 
 	src.records += R
 	show_message("Subject successfully scanned.", "success")
+	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
 
 //Find a specific record by key.
@@ -446,17 +461,15 @@ proc/find_ghost_by_key(var/find_key)
 
 
 	proc/can_operate(var/mob/M)
-		if (!isalive(M))
-			return
-		if (get_dist(src,M) > 1)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
-			return 0
+		if (!IN_RANGE(src, M, 1))
+			return FALSE
+		if (is_incapacitated(M))
+			return FALSE
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return
+			return FALSE
 
-		.= 1
+		.= TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -700,6 +713,8 @@ proc/find_ghost_by_key(var/find_key)
 		if("toggleGeneticAnalysis")
 			if(pod1 && !pod1.attempting)
 				pod1.gen_analysis = !pod1.gen_analysis
+				if (!ON_COOLDOWN(src, "sound_genetoggle", 2 SECONDS))
+					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 			else
 				show_message("Cannot toggle any modules while cloner is active.", "warning")
@@ -826,16 +841,6 @@ proc/find_ghost_by_key(var/find_key)
 		)))
 
 	. += list("cloneRecords" = recordsTemp)
-
-/obj/machinery/computer/cloning/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/computer/cloning/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
 
 /obj/machinery/computer/cloning/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

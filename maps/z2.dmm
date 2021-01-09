@@ -54835,7 +54835,7 @@
 /area/owlery/gangzone)
 "cGq" = (
 /obj/decal/cleanable/blood/drip/high,
-/obj/reagent_dispensers/spiders,
+/obj/reagent_dispensers/cleanable/spiders,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cGr" = (
@@ -57052,7 +57052,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLI" = (
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLJ" = (
@@ -57654,7 +57654,7 @@
 "cNh" = (
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellowblack{
 	dir = 5
 	},
@@ -60448,7 +60448,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
 	},
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cTb" = (
@@ -65311,6 +65311,7 @@
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/plates,
 /obj/item/storage/box/fruit_wedges,
+/obj/item/storage/box/glassbox,
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcz" = (
@@ -65373,18 +65374,17 @@
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
 "dcH" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcI" = (
-/obj/machinery/disposal,
 /obj/map/light/white,
-/obj/disposalpipe/trunk/east,
-/turf/unsimulated/floor/wood/two,
+/obj/disposalpipe/segment/horizontal,
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
 /area/afterlife/bar)
 "dcJ" = (
 /obj/disposalpipe/segment/vertical,
@@ -65473,20 +65473,12 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcV" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 666
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fred1"
+/obj/cup_rack{
+	pixel_y = 32
 	},
+/turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcW" = (
 /turf/unsimulated/floor/plating,
@@ -65676,10 +65668,17 @@
 /turf/unsimulated/wall/other,
 /area/afterlife/bar)
 "ddA" = (
-/obj/stool/bench/blue,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/espressocup{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "ddB" = (
@@ -65690,18 +65689,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"ddC" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/device/light/candle/small,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fred1"
-	},
-/area/afterlife/bar)
 "ddD" = (
 /obj/table/wood/round/auto,
 /obj/item/wrench/monkey,
@@ -65736,11 +65723,11 @@
 "ddI" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/matchbook,
+/obj/map/light/brighterwhite,
 /obj/decal/tile_edge/line/black{
-	dir = 5;
+	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -66468,10 +66455,16 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dfj" = (
-/obj/stool/bench/green,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/item/device/light/candle/small,
+/obj/item/device/light/candle/small,
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "dfk" = (
@@ -66939,7 +66932,10 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/device/light/candle/small,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -66965,7 +66961,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/item/storage/box/glassbox,
+/obj/machinery/espresso_machine,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -67793,7 +67789,8 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhQ" = (
-/obj/machinery/bot/medbot/no_camera,
+/obj/table/auto,
+/obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhR" = (
@@ -72040,7 +72037,6 @@
 /area/hospital/underground)
 "dur" = (
 /turf/unsimulated/floor/carpet{
-	dir = 10;
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
@@ -72690,8 +72686,9 @@
 	icon_state = "blue"
 	})
 "dvY" = (
-/obj/submachine/slot_machine/cash,
 /obj/map/light/brightwhite,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dvZ" = (
@@ -75405,10 +75402,6 @@
 	},
 /obj/item/reagent_containers/food/snacks/zongzi{
 	pixel_y = 4
-	},
-/obj/decal/poster/wallsign/teaparty{
-	desc = "Pre-eliminary signing up for Nanotrasen's newest military vessel NSS Manta has now begun. Reach out to your head of personnel or a local Nanotrasen recruiting officer to find out more about new job oppurtunities aboard NSS Manta!  ... Hold on just a minute, aren't you already there?";
-	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/flourish)
@@ -81605,11 +81598,22 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSg" = (
-/obj/stool/bench/blue,
 /obj/disposalpipe/junction/right/east,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/machinery/glass_recycler{
+	glass_amt = 666
+	},
 /turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
+	dir = 1;
+	icon_state = "fred1"
 	},
 /area/afterlife/bar)
 "dSh" = (
@@ -82873,6 +82877,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"gbs" = (
+/obj/submachine/slot_machine/cash,
+/obj/map/light/white,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "gbA" = (
 /obj/storage/crate,
 /obj/machinery/light,
@@ -83081,6 +83090,13 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"hkk" = (
+/obj/stool/bench/blue,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "hnz" = (
 /obj/item/reagent_containers/food/snacks/plant/melon/bowling{
 	pixel_x = 9;
@@ -83929,6 +83945,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"kJE" = (
+/obj/machinery/bot/medbot/no_camera,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola{
@@ -84237,6 +84257,12 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"lZf" = (
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -84283,6 +84309,10 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"mje" = (
+/obj/storage/closet/office,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "mlK" = (
 /turf/space,
 /turf/unsimulated/floor/caution/north,
@@ -85002,7 +85032,7 @@
 /obj/item/clothing/mask/horse_mask,
 /obj/decal/skeleton,
 /obj/fluid_spawner{
-	amount = 10000;
+	amount = 2000;
 	reagent_id = "blood"
 	},
 /turf/unsimulated/floor/wood/two{
@@ -85398,6 +85428,13 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
+"qrE" = (
+/obj/stool/bench/green,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "red2"
+	},
+/area/afterlife/bar)
 "qsP" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
@@ -85629,6 +85666,10 @@
 	icon_state = "floor"
 	},
 /area/hospital/samostrel)
+"rlN" = (
+/obj/submachine/claw_machine,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "rma" = (
 /obj/machinery/light_area_manager,
 /obj/table/wood/auto/desk{
@@ -87122,7 +87163,7 @@
 	desc = "IT HIM, IT REALLY HIM";
 	name = "smol donut"
 	},
-/obj/reagent_dispensers/ants,
+/obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "yld" = (
@@ -107336,7 +107377,7 @@ daM
 daM
 dcW
 cvH
-cwC
+rlN
 cwC
 dSn
 dTd
@@ -107638,7 +107679,7 @@ dcW
 dcW
 dSe
 cvH
-dSY
+gbs
 cwC
 dSA
 cwf
@@ -107940,7 +107981,7 @@ cvH
 cvH
 cvH
 cvH
-cwC
+mje
 cwC
 dTz
 cwf
@@ -110655,7 +110696,7 @@ daI
 dcR
 ddi
 dvY
-dRw
+cwC
 cwC
 cwC
 duH
@@ -110957,9 +110998,9 @@ dbX
 dda
 ddz
 dcI
-cwC
-cwC
-cwC
+hkk
+qrE
+lZf
 cwC
 dSa
 dSj
@@ -111561,7 +111602,7 @@ daE
 cvH
 cvH
 dcV
-ddC
+daK
 ddI
 dcL
 cwC
@@ -113444,7 +113485,7 @@ aKf
 dhr
 dhE
 dhQ
-dgx
+kJE
 pNn
 aKf
 cfO

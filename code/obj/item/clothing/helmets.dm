@@ -262,7 +262,13 @@
 			name = "specialist health monitor"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
+			permeability_coefficient = 0.01
+			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 			var/client/assigned = null
+
+			setupProperties()
+				..()
+				setProperty("viralprot", 50)
 
 			process()
 				if (assigned)

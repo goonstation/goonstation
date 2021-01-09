@@ -89,7 +89,9 @@
 			if(!A.killswitch)
 				dat += "<A href='?src=\ref[src];gib=1;ai=\ref[A]'>Kill Switch AI *Swipe ID*</A><BR>"
 			else
-				dat += "Time left:[A.killswitch_time]"
+				var/timeleft = round((A.killswitch_at - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+				dat += "Time left:[timeleft]"
 				if (!isAI(user))
 					dat += " | <A href='?src=\ref[src];gib=2;ai=\ref[A]'>Cancel</A>"
 				dat += "<BR>"
@@ -97,9 +99,13 @@
 		dat += "<BR> Connected Cyborgs<BR>"
 		dat += " *------------------------------------------------*<BR>"
 
-		for(var/mob/living/silicon/robot/R in A:connected_robots)
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			dat += "[R.name] |"
-			if(R.stat)
+			if(R.disposed)
+				dat += " Missing |"
+			else if(isnull(R.brain))
+				dat += " Intelligence Cortex Missing |"
+			else if(R.stat)
 				dat += " Not Responding |"
 			else
 				dat += " Operating Normally |"
@@ -123,7 +129,9 @@
 				if(!R.killswitch)
 					dat += "<A href='?src=\ref[src];gib=1;bot=\ref[R]'>Kill Switch *Swipe ID*</A><BR>"
 				else
-					dat += "Time left:[R.killswitch_time] | "
+					var/timeleft = round((R.killswitch_at - TIME)/10, 1)
+					timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+					dat += "Time left:[timeleft] | "
 					dat += "<A href='?src=\ref[src];gib=2;bot=\ref[R]'>Cancel</A><BR>"
 			dat += "*----------*<BR>"
 
@@ -152,29 +160,29 @@
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 							R.killswitch = 1
-							R.killswitch_time = 60
+							A.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
 							logTheThing("combat", usr, message, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
-								boutput(message, "<span class='alert'><b>Killswitch will engage in 60 seconds.</b></span>") // more like 180 really but whatever
+								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
 							A.killswitch = 1
-							A.killswitch_time = 60
+							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
 
 			if("2")
 				if(istype(R))
-					R.killswitch_time = 60
+					R.killswitch_at = 0
 					R.killswitch = 0
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the robot self destruct on [key_name(R, 1, 1)].</span>")
 					logTheThing("combat", usr, R, "has stopped the robot killswitch process on [constructTarget(R,"combat")].")
 					if(R.client)
 						boutput(R, "<span class='notice'><b>Killswitch process deactivated.</b></span>")
 				else if(istype(A))
-					A.killswitch_time = 60
+					A.killswitch_at = 0
 					A.killswitch = 0
 					var/mob/message = A.get_message_mob()
 					message_admins("<span class='alert'>[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)].</span>")

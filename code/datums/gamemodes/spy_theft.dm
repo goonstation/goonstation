@@ -13,9 +13,9 @@
 
 	var/const/spies_possible = 7
 
-	var/list/station_bounties = list() // on-station items that can have bounties placed on them
-	var/list/big_station_bounties = list() // on-station machines/other big objects that can have bounties placed on them
-	var/list/personal_bounties = list()  // things that belong to people like trinkets
+	var/list/station_bounties = list() // on-station items that can have bounties placed on them, pair list
+	var/list/big_station_bounties = list() // on-station machines/other big objects that can have bounties placed on them, pair list
+	var/list/personal_bounties = list()  // things that belong to people like trinkets, pair list
 	var/list/organ_bounties = list() // things that belong to people that are on the inside
 	var/list/photo_bounties = list() // photos of people (Operates by text, because that's the only info that photos store)
 
@@ -38,6 +38,7 @@
 	var/area/delivery_area = 0					//You need to stand here to deliver this
 	var/photo_containing = 0 					//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
 	var/reveal_area = 0							//show area in pda
+	var/job = "job name"					//Job of bounty item owner (if itemm has an owner). Used for personal/organ bounties
 
 	var/organ = 0 								//silly organ flag that is only checked in one place
 
@@ -52,6 +53,15 @@
 	New(var/datum/game_mode/spy_theft/ST)
 		game_mode = ST
 		..()
+
+	proc/estimate_target_difficulty(var/job)
+	// Adjust reward based off target job to estimate risk level
+		if (job == "Head of Security" || job == "Captain")
+			return 3
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Special Operative" || job == "Security Officer" || job == "Detective")
+			return 2
+		else
+			return 1
 
 	//1 to 4
 	proc/pick_reward_tier(var/val)
@@ -68,7 +78,6 @@
 			if (4)
 				value_high = 99
 				value_low = 7
-
 		pick_a_reward()
 
 	proc/pick_a_reward()
@@ -307,21 +316,22 @@
 			continue
 
 	//personal bounties (items that belong to a person)
+	//pair list, stores job for difficulty lookup
 		if (H.trinket && istype(H.trinket))
-			personal_bounties += H.trinket
+			personal_bounties += list(list(H.trinket, H.job))
 		if (H.wear_id)
-			personal_bounties += H.wear_id
+			personal_bounties += list(list(H.wear_id, H.job))
 
 	//organ bounties (limbs only)
 		if (H.client && H.organs.len)
 			if (H.organs["l_arm"])
-				organ_bounties += H.organs["l_arm"]
+				organ_bounties += list(list(H.organs["l_arm"], H.job))
 			if (H.organs["r_arm"])
-				organ_bounties += H.organs["r_arm"]
+				organ_bounties += list(list(H.organs["r_arm"], H.job))
 			if (H.organs["l_leg"])
-				organ_bounties += H.organs["l_leg"]
+				organ_bounties += list(list(H.organs["l_leg"], H.job))
 			if (H.organs["r_leg"])
-				organ_bounties += H.organs["r_leg"]
+				organ_bounties += list(list(H.organs["r_leg"], H.job))
 
 
 	//Add photographs of the crew
@@ -331,147 +341,148 @@
 	//fugginhuge list of station item bounties (misc. things on the station that would be fun to steal)
 	//Only need to set the list of station bounties once, since it's just a list of paths
 	if (!station_bounties.len)
-		station_bounties += /obj/item/ghostboard
-		station_bounties += /obj/item/gnomechompski
-		station_bounties += /obj/item/diary
-		station_bounties += /obj/item/football
-		station_bounties += /obj/item/basketball
-		station_bounties += /obj/item/clothing/head/cakehat
-		station_bounties += /obj/item/gun/russianrevolver
-		station_bounties += /obj/item/instrument
-		station_bounties += /obj/item/clothing/suit/johnny_coat
-		station_bounties += /obj/item/clothing/shoes/flippers
-		station_bounties += /obj/item/clothing/head/apprentice
-		station_bounties += /obj/item/clothing/head/helmet/space/santahat
-		station_bounties += /obj/item/clothing/head/beret/prisoner
-		station_bounties += /obj/item/clothing/head/merchant_hat
-		station_bounties += /obj/item/clothing/head/caphat
-		station_bounties += /obj/item/clothing/head/helmet/HoS
+		station_bounties += list(list(/obj/item/ghostboard, 1))
+		station_bounties += list(list(/obj/item/gnomechompski, 1))
+		station_bounties += list(list(/obj/item/diary, 1))
+		station_bounties += list(list(/obj/item/football, 1))
+		station_bounties += list(list(/obj/item/basketball, 1))
+		station_bounties += list(list(/obj/item/clothing/head/cakehat, 1))
+		station_bounties += list(list(/obj/item/gun/russianrevolver, 1))
+		station_bounties += list(list(/obj/item/instrument, 1))
+		station_bounties += list(list(/obj/item/clothing/suit/johnny_coat, 1))
+		station_bounties += list(list(/obj/item/clothing/shoes/flippers, 1))
+		station_bounties += list(list(/obj/item/clothing/head/apprentice, 1))
+		station_bounties += list(list(/obj/item/clothing/head/helmet/space/santahat, 1))
+		station_bounties += list(list(/obj/item/clothing/head/beret/prisoner, 2))
+		station_bounties += list(list(/obj/item/clothing/head/merchant_hat, 1))
+		station_bounties += list(list(/obj/item/clothing/head/caphat, 2))
+		station_bounties += list(list(/obj/item/clothing/head/helmet/HoS, 3))
 
-		station_bounties += /obj/item/pinpointer/disk
-		station_bounties += /obj/item/disk/data/floppy/read_only/authentication
-		station_bounties += /obj/item/disk/data/floppy/read_only/communications
-		station_bounties += /obj/item/aiModule/freeform
-		station_bounties += /obj/item/aiModule/reset
-		station_bounties += /obj/item/cell
-		station_bounties += /obj/item/device/multitool
+		station_bounties += list(list(/obj/item/pinpointer/disk, 3))
+		station_bounties += list(list(/obj/item/disk/data/floppy/read_only/authentication, 3))
+		station_bounties += list(list(/obj/item/disk/data/floppy/read_only/communications, 2))
+		station_bounties += list(list(/obj/item/aiModule/freeform, 3))
+		station_bounties += list(list(/obj/item/aiModule/reset, 3))
+		station_bounties += list(list(/obj/item/cell, 1))
+		station_bounties += list(list(/obj/item/device/multitool, 1))
 
-		station_bounties += /obj/item/mop //owned, janitors
-		station_bounties += /obj/item/spraybottle
+		station_bounties += list(list(/obj/item/mop, 1))
+		station_bounties += list(list(/obj/item/spraybottle, 1))
 
-		station_bounties += /obj/item/clothing/shoes/galoshes
-		station_bounties += /obj/item/clothing/shoes/magnetic
-		station_bounties += /obj/item/clothing/under/misc/clown
-		station_bounties += /obj/item/clothing/shoes/clown_shoes
-		station_bounties += /obj/item/clothing/glasses
-		station_bounties += /obj/item/clothing/suit/armor/vest
-		station_bounties += /obj/item/clothing/suit/bio_suit
-		station_bounties += /obj/item/clothing/suit/space
+		station_bounties += list(list(/obj/item/clothing/shoes/galoshes, 1))
+		station_bounties += list(list(/obj/item/clothing/shoes/magnetic, 1))
+		station_bounties += list(list(/obj/item/clothing/under/misc/clown, 1))
+		station_bounties += list(list(/obj/item/clothing/shoes/clown_shoes, 1))
+		station_bounties += list(list(/obj/item/clothing/glasses, 1))
+		station_bounties += list(list(/obj/item/clothing/suit/armor/vest, 2))
+		station_bounties += list(list(/obj/item/clothing/suit/bio_suit, 1))
+		station_bounties += list(list(/obj/item/clothing/suit/space, 1))
 
-		station_bounties += /obj/item/robodefibrillator
-		station_bounties += /obj/item/remote/porter/port_a_medbay
-		station_bounties += /obj/item/staple_gun
-		station_bounties += /obj/item/storage/firstaid
-		station_bounties += /obj/item/gun/kinetic/dart_rifle
-		station_bounties += /obj/item/circular_saw
-		station_bounties += /obj/item/paper/book/medical_guide
+		station_bounties += list(list(/obj/item/robodefibrillator, 1))
+		station_bounties += list(list(/obj/item/remote/porter/port_a_medbay, 1))
+		station_bounties += list(list(/obj/item/staple_gun, 1))
+		station_bounties += list(list(/obj/item/storage/firstaid, 1))
+		station_bounties += list(list(/obj/item/gun/kinetic/dart_rifle, 3))
+		station_bounties += list(list(/obj/item/circular_saw, 1))
+		station_bounties += list(list(/obj/item/paper/book/medical_guide, 1))
 
-		station_bounties += /obj/item/gun/energy/egun
-		station_bounties += /obj/item/hand_tele
-		station_bounties += /obj/item/card/id/captains_spare
-		station_bounties += /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff
-		station_bounties += /obj/item/captaingun
-		station_bounties += /obj/item/gun/kinetic/detectiverevolver
-		station_bounties += /obj/item/gun/kinetic/riot40mm
+		station_bounties += list(list(/obj/item/gun/energy/egun, 3))
+		station_bounties += list(list(/obj/item/hand_tele, 3))
+		station_bounties += list(list(/obj/item/card/id/captains_spare, 3))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 2))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/champagne, 2))
+		station_bounties += list(list(/obj/item/captaingun, 3))
+		station_bounties += list(list(/obj/item/gun/kinetic/detectiverevolver, 3))
+		station_bounties += list(list(/obj/item/gun/kinetic/riot40mm, 2))
 
-		station_bounties += /obj/item/baton
-		station_bounties += /obj/item/gun/energy/taser_gun
-		station_bounties += /obj/item/tank/jetpack
+		station_bounties += list(list(/obj/item/baton, 2))
+		station_bounties += list(list(/obj/item/gun/energy/taser_gun, 2))
+		station_bounties += list(list(/obj/item/tank/jetpack, 1))
 
-		station_bounties += /obj/item/clothing/gloves/yellow
+		station_bounties += list(list(/obj/item/clothing/gloves/yellow, 1))
 
-		station_bounties += /obj/item/kitchen/utensil
-		station_bounties += /obj/item/kitchen/rollingpin
-		station_bounties += /obj/item/reagent_containers/food/snacks/cereal_box
-		station_bounties += /obj/item/reagent_containers/food/snacks/beefood
-		station_bounties += /obj/item/reagent_containers/food/snacks/spaghetti
-		station_bounties += /obj/item/reagent_containers/food/snacks/pizza
-		station_bounties += /obj/item/reagent_containers/food/snacks/taco
-		station_bounties += /obj/item/reagent_containers/food/snacks/cake
-		station_bounties += /obj/item/reagent_containers/food/snacks/pancake
-		station_bounties += /obj/item/reagent_containers/food/snacks/ingredient/cheese
-		station_bounties += /obj/item/reagent_containers/glass/bottle/bubblebath
-		station_bounties += /obj/item/reagent_containers/food/snacks/ingredient/meat
-		station_bounties += /obj/item/reagent_containers/food
+		station_bounties += list(list(/obj/item/kitchen/utensil, 1))
+		station_bounties += list(list(/obj/item/kitchen/rollingpin, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/cereal_box, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/beefood, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/spaghetti, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/pizza, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/taco, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/cake, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/pancake, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/ingredient/cheese, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/glass/bottle/bubblebath, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/snacks/ingredient/meat, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food, 1))
 
-		station_bounties += /obj/item/reagent_containers/glass/wateringcan
-		station_bounties += /obj/item/reagent_containers/food/drinks/rum_spaced
-		station_bounties += /obj/item/reagent_containers/food/drinks/bottle/vintage
+		station_bounties += list(list(/obj/item/reagent_containers/glass/wateringcan, 1))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/rum_spaced, 2))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/bottle/vintage, 1))
 
-		station_bounties += /obj/item/storage/belt/medical
-		station_bounties += /obj/item/storage/belt/utility
-		station_bounties += /obj/item/storage/belt/security
-		station_bounties += /obj/item/storage/firstaid/docbag
-		station_bounties += /obj/item/storage/backpack
+		station_bounties += list(list(/obj/item/storage/belt/medical, 1))
+		station_bounties += list(list(/obj/item/storage/belt/utility, 1))
+		station_bounties += list(list(/obj/item/storage/belt/security, 2))
+		station_bounties += list(list(/obj/item/storage/firstaid/docbag, 1))
+		station_bounties += list(list(/obj/item/storage/backpack, 1))
 
-		station_bounties += /obj/item/device/radio/headset/security
-		station_bounties += /obj/item/device/radio/headset/command
-		station_bounties += /obj/item/device/radio/headset/command/captain
-		station_bounties += /obj/item/device/radio/headset/command/hop
-		station_bounties += /obj/item/device/radio/headset/command/rd
-		station_bounties += /obj/item/device/radio/headset/command/md
-		station_bounties += /obj/item/device/radio/headset/command/ce
+		station_bounties += list(list(/obj/item/device/radio/headset/security, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command/captain, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command/hop, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command/rd, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command/md, 2))
+		station_bounties += list(list(/obj/item/device/radio/headset/command/ce, 2))
 
 	if (!big_station_bounties.len)
-		big_station_bounties += /obj/machinery/vehicle
-		big_station_bounties += /obj/machinery/chem_dispenser
-		big_station_bounties += /obj/machinery/computer/announcement
-		big_station_bounties += /obj/machinery/computer/card
-		big_station_bounties += /obj/machinery/computer/aiupload
-		big_station_bounties += /obj/machinery/computer/genetics
-		big_station_bounties += /obj/machinery/computer/supplycomp
-		big_station_bounties += /obj/machinery/computer/robotics
-		big_station_bounties += /obj/machinery/power/reactor_stats
+		big_station_bounties += list(list(/obj/machinery/vehicle, 1))
+		big_station_bounties += list(list(/obj/machinery/chem_dispenser, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/announcement, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/card, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/aiupload, 3))
+		big_station_bounties += list(list(/obj/machinery/computer/genetics, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/supplycomp, 1))
+		big_station_bounties += list(list(/obj/machinery/computer/robotics, 2))
+		big_station_bounties += list(list(/obj/machinery/power/reactor_stats, 1))
 
-		big_station_bounties += /obj/machinery/computer3/generic/communications
-		big_station_bounties += /obj/machinery/computer3/terminal/zeta
-		big_station_bounties += /obj/machinery/vending/security
-		big_station_bounties += /obj/machinery/vending/medical
-		big_station_bounties += /obj/machinery/vending/port_a_nanomed
-		big_station_bounties += /obj/machinery/vending/fortune
-		big_station_bounties += /obj/machinery/vending/standard
+		big_station_bounties += list(list(/obj/machinery/computer3/generic/communications, 1))
+		big_station_bounties += list(list(/obj/machinery/computer3/terminal/zeta, 1))
+		big_station_bounties += list(list(/obj/machinery/vending/security, 2))
+		big_station_bounties += list(list(/obj/machinery/vending/medical, 1))
+		big_station_bounties += list(list(/obj/machinery/vending/port_a_nanomed, 1))
+		big_station_bounties += list(list(/obj/machinery/vending/fortune, 1))
+		big_station_bounties += list(list(/obj/machinery/vending/standard, 1))
 
-		big_station_bounties += /obj/machinery/port_a_brig
-		big_station_bounties += /obj/machinery/flasher/portable
-		big_station_bounties += /obj/machinery/sleeper/port_a_medbay
-		big_station_bounties += /obj/machinery/atmospherics/unary/cryo_cell
-		big_station_bounties += /obj/machinery/computer/cloning
-		big_station_bounties += /obj/machinery/clonepod
-		big_station_bounties += /obj/machinery/clonegrinder
-		big_station_bounties += /obj/machinery/genetics_scanner
+		big_station_bounties += list(list(/obj/machinery/port_a_brig, 3))
+		big_station_bounties += list(list(/obj/machinery/flasher/portable, 2))
+		big_station_bounties += list(list(/obj/machinery/sleeper/port_a_medbay, 1))
+		big_station_bounties += list(list(/obj/machinery/atmospherics/unary/cryo_cell, 2))
+		big_station_bounties += list(list(/obj/machinery/computer/cloning, 2))
+		big_station_bounties += list(list(/obj/machinery/clonepod, 2))
+		big_station_bounties += list(list(/obj/machinery/clonegrinder, 1))
+		big_station_bounties += list(list(/obj/machinery/genetics_scanner, 2))
 		//big_station_bounties += /obj/machinery/power/smes
-		big_station_bounties += /obj/machinery/recharge_station
-		big_station_bounties += /obj/machinery/optable
-		big_station_bounties += /obj/storage/closet/port_a_sci
+		big_station_bounties += list(list(/obj/machinery/recharge_station, 1))
+		big_station_bounties += list(list(/obj/machinery/optable, 2))
+		big_station_bounties += list(list(/obj/storage/closet/port_a_sci, 2))
 
-		big_station_bounties += /obj/machinery/manufacturer/robotics
-		big_station_bounties += /obj/machinery/manufacturer/medical
-		big_station_bounties += /obj/machinery/manufacturer/general
-		big_station_bounties += /obj/machinery/manufacturer/general
+		big_station_bounties += list(list(/obj/machinery/manufacturer/robotics, 1))
+		big_station_bounties += list(list(/obj/machinery/manufacturer/medical, 1))
+		big_station_bounties += list(list(/obj/machinery/manufacturer/general, 1))
+		big_station_bounties += list(list(/obj/machinery/manufacturer/general, 1))
 
-		big_station_bounties += /obj/submachine/chef_oven
-		big_station_bounties += /obj/machinery/gibber
+		big_station_bounties += list(list(/obj/submachine/chef_oven, 1))
+		big_station_bounties += list(list(/obj/machinery/gibber, 1))
 
-		big_station_bounties += /obj/machinery/bot/guardbot
-		big_station_bounties += /obj/machinery/artifact
-		big_station_bounties += /obj/machinery/plantpot
-		big_station_bounties += /obj/machinery/partyalarm
-		big_station_bounties += /obj/pool_springboard
+		big_station_bounties += list(list(/obj/machinery/bot/guardbot, 1))
+		big_station_bounties += list(list(/obj/machinery/artifact, 1))
+		big_station_bounties += list(list(/obj/machinery/plantpot, 1))
+		big_station_bounties += list(list(/obj/machinery/partyalarm, 1))
+		big_station_bounties += list(list(/obj/pool_springboard, 1))
 		//big_station_bounties += /obj/machinery/launcher_loader //lol //Didn't work - ZeWaka
-		big_station_bounties += /obj/reagent_dispensers
-		big_station_bounties += /obj/machinery/crusher
-		big_station_bounties += /obj/machinery/communications_dish
-		big_station_bounties += /obj/decal/poster/wallsign/poster_y4nt
+		big_station_bounties += list(list(/obj/reagent_dispensers, 2))
+		big_station_bounties += list(list(/obj/machinery/crusher, 2))
+		big_station_bounties += list(list(/obj/machinery/communications_dish, 2))
+		big_station_bounties += list(list(/obj/decal/poster/wallsign/poster_y4nt, 1))
 
 	active_bounties.len = 0
 
@@ -479,7 +490,9 @@
 	var/list/O = organ_bounties.Copy()
 	for(var/i=1, i<=organ_bounty_amt && O.len, i++)
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
-		B.item = pick(O)
+		var/list/pair = pick(O)
+		B.item = pair[1]
+		B.job = pair[2]
 		// B.path = B.item.type
 		if(istype(B.item, /obj/item/parts))
 			var/obj/item/parts/P = B.item
@@ -495,10 +508,18 @@
 		B.organ = 1
 		O -= B.item
 
-		if (prob(7))
-			B.pick_reward_tier(3)
-		else
-			B.pick_reward_tier(2)
+		// Adjust reward based off target job to estimate risk level
+		var/difficulty = B.estimate_target_difficulty(B.job)
+		switch(difficulty)
+			if(3)
+				B.pick_reward_tier(4)
+			if (2)
+				B.pick_reward_tier(3)
+			if (1)
+				if (prob(7))
+					B.pick_reward_tier(3)
+				else
+					B.pick_reward_tier(2)
 
 		active_bounties += B
 
@@ -506,35 +527,51 @@
 	var/list/P = personal_bounties.Copy()
 	for(var/i=1, i<=person_bounty_amt && P.len, i++)
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
-		B.item = pick(P)
+		var/list/pair = pick(P)
+		B.item = pair[1]
+		B.job = pair[2]
 		B.name = B.item.name
 		B.reveal_area = 1
-		P -= B.item
+		P -= pair
 
-		if (prob(10))
-			B.pick_reward_tier(4)
-		else
-			B.pick_reward_tier(pick(1,3))
+		// Adjust reward based off target job to estimate risk level
+		var/difficulty = B.estimate_target_difficulty(B.job)
+		switch(difficulty)
+			if(3)
+				B.pick_reward_tier(4)
+			if (2)
+				if (prob(10))
+					B.pick_reward_tier(4)
+				else
+					B.pick_reward_tier(pick(2,3))
+			if (1)
+				if (prob(10))
+					B.pick_reward_tier(4)
+				else
+					B.pick_reward_tier(pick(1,3))
 
 		active_bounties += B
 
 	//Add big station item bounties (copy paste. bad)
 	var/list/BS = big_station_bounties.Copy()
-	var/big_choice = 0
-	var/obj/obj_existing = 0
+	var/big_choice = null
+	var/difficulty = 0
+	var/obj/obj_existing = null
 	for(var/i=1, i<=big_station_bounty_amt, i++)
-		big_choice = 0
-		obj_existing = 0
+		big_choice = null
+		obj_existing = null
 
 		//try to find an item that exists on the station zlevel
 		for(var/q=1, q<= 50, q++) //just like try 50 times i guess lol
 			LAGCHECK(LAG_LOW)
-			big_choice = pick(BS)
+			var/list/pair = pick(BS)
+			big_choice = pair[1]
+			difficulty = pair[2]
 			obj_existing = locate(big_choice)
 			if (obj_existing?.z == 1)
 				break
 			else
-				obj_existing = 0
+				obj_existing = null
 
 		if (obj_existing?.z == 1)
 			var/datum/bounty_item/B = new /datum/bounty_item(src)
@@ -542,10 +579,16 @@
 			B.item = obj_existing
 			B.name = obj_existing.name
 
-			if (prob(15))
-				B.pick_reward_tier(pick(1,2))
-			else
-				B.pick_reward_tier(1)
+			switch(difficulty)
+				if(3)
+					B.pick_reward_tier(pick(2,3))
+				if (2)
+					B.pick_reward_tier(pick(1,2))
+				if (1)
+					if (prob(15))
+						B.pick_reward_tier(pick(1,2))
+					else
+						B.pick_reward_tier(1)
 
 			active_bounties += B
 			BS -= big_choice
@@ -567,14 +610,19 @@
 	var/list/S = station_bounties.Copy()
 	var/choice = 0
 	var/obj/item/item_existing = 0
+
+
 	for(var/i=1, i<=station_bounty_amt, i++)
 		choice = 0
+		difficulty = 0
 		item_existing = 0
 
 		//try to find an item that exists on the station zlevel
 		for(var/q=1, q<= 50, q++) //just like try 50 times i guess lol
 			LAGCHECK(LAG_LOW)
-			choice = pick(S)
+			var/list/pair = pick(S)
+			choice = pair[1]
+			difficulty = pair[2]
 			item_existing = locate(choice)
 			var/turf/T = get_turf(item_existing)
 			if (item_existing && T?.z == 1)
@@ -589,10 +637,16 @@
 			B.item = item_existing
 			B.name = item_existing.name
 
-			if (prob(10))
-				B.pick_reward_tier(pick(1,2))
-			else
-				B.pick_reward_tier(1)
+			switch(difficulty)
+				if(3)
+					B.pick_reward_tier(pick(2,3))
+				if (2)
+					B.pick_reward_tier(pick(1,2))
+				if (1)
+					if (prob(10))
+						B.pick_reward_tier(pick(1,2))
+					else
+						B.pick_reward_tier(1)
 
 			active_bounties += B
 			S -= choice

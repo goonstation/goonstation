@@ -229,7 +229,7 @@
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
 	SPAWN_DBG(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 /mob/var/last_interact_particle = 0
 
@@ -532,7 +532,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
 	SPAWN_DBG(0.4 SECONDS)
-		if (M.sprint_particle.loc == T)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)

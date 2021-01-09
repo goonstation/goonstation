@@ -39,9 +39,11 @@
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
+@include meta.load-css('./components/TooltipOverflow.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/Airlock.scss');
+@include meta.load-css('./interfaces/ChemDispenser.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');
 @include meta.load-css('./interfaces/GasCanister.scss');

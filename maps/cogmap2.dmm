@@ -6868,10 +6868,10 @@
 	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "app" = (
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "apq" = (
 /obj/lattice{
 	dir = 6;
@@ -7332,7 +7332,7 @@
 "aqA" = (
 /obj/storage/secure/closet/courtroom,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqB" = (
 /obj/storage/closet/law,
 /obj/machinery/light/small{
@@ -7340,7 +7340,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqC" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -7348,7 +7348,7 @@
 	text = "NF"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqD" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -7756,10 +7756,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
-"arD" = (
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "arE" = (
 /obj/cable{
 	d1 = 2;
@@ -8345,11 +8342,11 @@
 	},
 /obj/item/screwdriver,
 /turf/simulated/floor/plating/damaged3,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asP" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asQ" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -8357,16 +8354,16 @@
 	},
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asR" = (
 /obj/storage/closet/coffin,
 /obj/item/reagent_containers/syringe/krokodil,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asS" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asT" = (
 /obj/stool/chair/wooden{
 	desc = "An antique chair.";
@@ -9571,6 +9568,9 @@
 	name = "ratty blue couch"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/item/device/radio/intercom{
+	pixel_y = -1
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -16855,7 +16855,6 @@
 "aMz" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/firedoor/pyro,
-/obj/item/device/radio/intercom/security,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -17456,6 +17455,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aNP" = (
@@ -38883,14 +38883,6 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
-"bHH" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/device/radio/intercom/bridge,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "blue2"
-	},
-/area/station/bridge)
 "bHI" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -40122,6 +40114,7 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "blue2"
@@ -41116,7 +41109,6 @@
 /area/station/bridge)
 "bLl" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "blue2"
@@ -41722,6 +41714,7 @@
 "bMf" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper/blueprint/chart/system,
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -42130,7 +42123,10 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 4
 	},
-/obj/machinery/recharger/wall/sticky,
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/podbay)
 "bMX" = (
@@ -49030,44 +49026,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"cbk" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
-/turf/simulated/floor/delivery,
-/area/station/security/brig)
-"cbl" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
-/turf/simulated/floor/delivery,
-/area/station/hallway/primary/east)
 "cbm" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/stool/chair{
@@ -49564,6 +49522,9 @@
 	butts = 5;
 	name = "grubby old ashtray"
 	},
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "ccs" = (
@@ -49617,6 +49578,9 @@
 	icon_state = "darkwindow";
 	layer = 3.1;
 	name = "divider window"
+	},
+/obj/item/device/radio/intercom/brig{
+	broadcasting = 1
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
@@ -60553,7 +60517,6 @@
 "cBi" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/firedoor/pyro,
-/obj/item/device/radio/intercom/security,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -61150,6 +61113,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -63699,7 +63663,6 @@
 /area/station/quartermaster/office)
 "cIz" = (
 /obj/table/reinforced/auto,
-/obj/item/device/radio/intercom/cargo,
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -64339,6 +64302,7 @@
 /obj/machinery/computer/supplycomp{
 	dir = 8
 	},
+/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "red2"
@@ -79268,6 +79232,7 @@
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "tTd" = (
+/obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -100673,7 +100638,7 @@ saK
 saK
 saK
 aKt
-mBI
+ydl
 wcj
 saK
 saK
@@ -101884,7 +101849,7 @@ mBI
 mBI
 mBI
 mBI
-ydl
+mBI
 mBI
 qBq
 xTc
@@ -102479,7 +102444,7 @@ aaa
 aaa
 aam
 xfw
-nbd
+xfw
 nbd
 aEE
 nbd
@@ -102491,7 +102456,7 @@ xfw
 nbd
 tPC
 nbd
-nbd
+xfw
 xfw
 aaI
 aaa
@@ -128745,9 +128710,9 @@ ahn
 aky
 cKd
 cLE
-alM
+cia
 aqA
-arD
+chV
 asO
 alM
 avG
@@ -129047,9 +129012,9 @@ cha
 cia
 cia
 dap
-alM
+cia
 aqB
-arD
+chV
 asP
 alM
 avH
@@ -129349,9 +129314,9 @@ aho
 cYr
 cia
 dap
-alM
+cia
 aqC
-arD
+chV
 asQ
 alM
 avI
@@ -129653,7 +129618,7 @@ cLF
 dap
 apo
 app
-arD
+chV
 asR
 alM
 avJ
@@ -130255,10 +130220,10 @@ cha
 cYr
 cLF
 dap
-alK
-alK
-alM
-alM
+cLF
+cLF
+cia
+cia
 alM
 avL
 awT
@@ -138475,7 +138440,7 @@ bWe
 bXz
 bkt
 cab
-cbk
+cab
 ccr
 cdj
 bkt
@@ -139079,7 +139044,7 @@ bWg
 bBo
 bBo
 cad
-cbl
+cad
 cct
 bkK
 cdI
@@ -147522,7 +147487,7 @@ bAc
 bBP
 bDK
 bFI
-bHH
+bLl
 bJE
 bLl
 bMf

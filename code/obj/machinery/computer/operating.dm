@@ -6,6 +6,7 @@
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500
+	can_reconnect = 1
 
 	var/mob/living/carbon/human/victim = null
 
@@ -15,7 +16,10 @@
 /obj/machinery/computer/operating/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		src.table = locate(/obj/machinery/optable, orange(2,src))
+		connection_scan()
+
+/obj/machinery/computer/operating/connection_scan()
+	src.table = locate(/obj/machinery/optable, orange(2,src))
 
 /obj/machinery/computer/operating/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -60,15 +64,14 @@
 				A.anchored = 1
 				qdel(src)
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/operating/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=op")
-			return
+	if (!in_range(src,user) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=op")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"

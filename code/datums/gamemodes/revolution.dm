@@ -393,6 +393,10 @@
 				// If they're a robot don't count them
 				continue
 
+			var/area/area = get_area(rev_mind.current)
+			if(istype(area, /area/afterlife))
+				continue
+
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 

@@ -1007,9 +1007,11 @@
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
-				H.organHolder.drop_organ("head") //sever_limb doesn't apply to heads :(
+				H.organHolder.drop_and_throw_organ("head", vigor = 5, showtext = 1) //sever_limb doesn't apply to heads :(
 			return ..()
 		if("chest")
+			if (prob(delimb_prob))
+				src.SeverButtStuff(H, user)
 			return ..()
 		if("r_arm")
 			if (prob(delimb_prob))
@@ -1028,6 +1030,14 @@
 				H.sever_limb(zoney)
 			return ..()
 	..()
+
+/// Checks if the target is facing in some way away from the user. Or they're lying down
+/obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
+	if(ismob(target) && IN_RANGE(target, user, 1) && (target.dir == user.dir || target.lying))
+		if(target.organHolder?.tail)
+			target.organHolder.drop_and_throw_organ("tail", vigor = 5, showtext = 1)
+		else if(target.organHolder?.butt)
+			target.organHolder.drop_and_throw_organ("butt", vigor = 5, showtext = 1)
 
 /obj/item/katana/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1123,7 +1133,7 @@
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
 		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
-		user.organHolder.drop_organ(organtokill)
+		user.organHolder.drop_and_throw_organ(organtokill, vigor = 5, showtext = 1)
 		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
 		user.TakeDamage("chest", 100, 0)
 		SPAWN_DBG(10 SECONDS)
@@ -1151,7 +1161,7 @@
 		return 0
 	else
 		user.visible_message("<span class='alert'><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
-		user.organHolder.drop_organ("head")
+		user.organHolder.drop_and_throw_organ("head", vigor = 5, showtext = 1)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
 /obj/item/katana_sheath

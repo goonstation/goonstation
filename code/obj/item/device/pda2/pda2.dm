@@ -50,9 +50,17 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
+	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
 	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
-	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
+		// Departments
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+		// Other
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+		// Alerts
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS,
+	)
+	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -81,12 +89,14 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	ntso
 		icon_state = "pda-nt"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	ai
 		icon_state = "pda-h"
@@ -94,7 +104,16 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("ai") //"special" mailgroup, just recieves everything
+		mailgroups = list( // keep in sync with the list of reserved mail groups
+			// Departments
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+			// Other
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+			// start in party line by default
+			MGD_PARTY,
+		)
+		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
 		icon_state = "pda-h"
@@ -102,7 +121,9 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("silicon",MGD_PARTY)
+		mailgroups = list(MGO_SILICON,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
+		muted_mailgroups = list(MGA_RKIT)
 
 	research_director
 		icon_state = "pda-rd"
@@ -114,30 +135,38 @@
 		icon_state = "pda-md"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY ,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
+			muted_mailgroups = list(MGA_SALES)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		muted_mailgroups = list(MGD_MEDBAY)
 
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	toxins
 		icon_state = "pda-tox"
@@ -148,6 +177,7 @@
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 
 	clown
 		icon_state = "pda-clown"
@@ -169,11 +199,12 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_JANITOR,MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
 		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
 		icon_state = "pda-a"
@@ -182,11 +213,13 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list("mining",MGD_PARTY)
+		mailgroups = list(MGO_MINING,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
@@ -198,7 +231,8 @@
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -383,7 +417,7 @@
 
 		if (!src.owner)
 			if (src.cartridge && src.ejectable_cartridge)
-				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 			if (src.ID_card)
 				dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 			dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
@@ -397,7 +431,7 @@
 					dat += src.active_program.return_text()
 				else
 					if (src.cartridge && src.ejectable_cartridge)
-						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 					if (src.ID_card)
 						dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
@@ -548,9 +582,20 @@
 
 			return
 
-		else if(!src.mailgroups || !(signal.data["group"] in src.mailgroups))
-			if (!("ai" in src.mailgroups) || !signal.data["group"])
-				return
+		else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
+			return
+
+	if (islist(signal.data["group"]))
+		var/any_member = FALSE
+		for (var/group in signal.data["group"])
+			if (group in src.mailgroups)
+				any_member = TRUE
+				break
+		if (!any_member) // not a member of any specified group; discard
+			return
+	else if (signal.data["group"])
+		if (!(signal.data["group"] in src.mailgroups)) // not a member of the specified group; discard
+			return
 
 	src.host_program?.receive_signal(signal, rx_method, rx_freq)
 
@@ -620,7 +665,7 @@
 	if (!target || !message)
 		return
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	if (istype(src.host_program))
@@ -633,7 +678,7 @@
 	set category = "Local"
 	set src in usr
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	eject_id_card(usr)

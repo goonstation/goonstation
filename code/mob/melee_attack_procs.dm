@@ -1080,7 +1080,7 @@
 			hit_chance = 90
 		else if (def_zone == "head")
 			hit_chance = 70
-		if(!client || stat || getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		if(!client || is_incapacitated(src))
 			hit_chance = 100
 		if (!prob(hit_chance))
 			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)

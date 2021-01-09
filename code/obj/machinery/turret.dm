@@ -385,12 +385,11 @@
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user) && !isAI(user) && !isAIeye(user))
-			boutput(user, text("Too far away."))
-			src.remove_dialog(user)
-			user.Browse(null, "window=turretid")
-			return
+	if(!in_range(src, user))
+		boutput(user, text("Too far away."))
+		src.remove_dialog(user)
+		user.Browse(null, "window=turretid")
+		return
 
 	src.add_dialog(user)
 	var/area/area = get_area(src)
