@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)Flourish
+(p)3184
+(e)⚖🆕|balance, feature
+(+)Capulettium plus now allows you to play as dead when you lay down, and appear alive and functionally normally when you stand up.
 (u)Superlagg
 (p)3139
 (e)🆕|feature
