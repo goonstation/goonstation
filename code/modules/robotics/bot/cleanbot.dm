@@ -56,7 +56,7 @@
 	var/clear_invalid_targets_interval = 5 MINUTES // How frequently?
 
 	var/idle = 1 // In relation to world time. In case there aren't any valid targets nearby.
-	var/idle_delay = 5 SECONDS // For how long?
+	var/idle_delay = 2 SECONDS // For how long?
 
 	var/cleaning = 0 // Are we currently cleaning something?
 	var/reagent_normal = "cleaner"

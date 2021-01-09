@@ -1,4 +1,3 @@
-#define MINEBOT_SPEED 8
 /obj/machinery/bot/mining
 	name = "Digbot"
 	desc = "A little robot with a pickaxe. He looks so jazzed to go hit some rocks!"
@@ -17,6 +16,7 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
+	var/list/path = null
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
 	var/use_medium_light = 1
@@ -100,22 +100,18 @@
 			turnOn()
 
 /obj/machinery/bot/mining/process()
-	. = ..()
 	if(!src.on) return
 	if(src.digging) return
 	if(!istype(target, /turf/simulated/wall/asteroid/))
 		src.target = null
-		src.doing_something = 0
 	if(!src.target)
 		src.findTarget()
 	if(!src.target)
-		src.doing_something = 0
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 		return
 
 	if(src.target && (!src.path || !src.path.len))
-		src.doing_something = 1
 		src.buildPath()
 
 	if(src.path && src.path.len && src.target)
@@ -356,4 +352,3 @@
 				return
 		else
 			..()
-#undef MINEBOT_SPEED
