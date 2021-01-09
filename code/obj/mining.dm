@@ -30,13 +30,16 @@
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
+			#ifndef UNDERWATER_MAP
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
 			var/turf/T = get_turf(user)
-			sleep(24 SECONDS)
-			if (user.loc == T && user.equipped() == W && !user.stat)
+			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.set_dir(src.dir)
 				qdel(W)
+			#else
+			boutput(user, "<span class='alert'>You have no idea why you would try building a magnet underwater.</span>")
+			#endif
 		else
 			..()
 
@@ -60,6 +63,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -73,6 +77,7 @@
 	small
 		name = "small mineral magnet parts"
 		constructed_magnet = /obj/machinery/mining_magnet/construction/small
+#endif
 
 /obj/magnet_target_marker
 	name = "mineral magnet target"
