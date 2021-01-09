@@ -861,7 +861,7 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Adminstrator to monkeyize players.")
 
 		if ("forcespeech")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (ismob(M))
 					var/speech = input("What will [M] say?", "Force speech", "")
@@ -871,7 +871,8 @@ var/global/noir = 0
 					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 					logTheThing("admin", usr, M, "forced [constructTarget(M,"admin")] to say: [speech]")
 					logTheThing("diary", usr, M, "forced [constructTarget(M,"diary")] to say: [speech]", "admin")
-					message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
+					if(M.client)
+						message_admins("<span class='internal'>[key_name(usr)] forced [key_name(M)] to say: [speech]</span>")
 			else
 				alert("You need to be at least a Primary Administrator to force players to say things.")
 
