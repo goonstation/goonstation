@@ -938,7 +938,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	speak(var/message)
 		if (src.emagged >= 2)
 			message = capitalize(ckeyEx(message))
-			..(message)
+		..(message)
 
 	//Generally we want to explode() instead of just deleting the securitron.
 	ex_act(severity)

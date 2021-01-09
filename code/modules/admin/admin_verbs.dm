@@ -85,6 +85,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_murraysay,
 		/client/proc/cmd_admin_hssay,
 		/client/proc/cmd_admin_bradsay,
+		/client/proc/cmd_admin_beepsay,
 		/datum/admins/proc/restart,
 		/datum/admins/proc/toggleenter,
 		/client/proc/respawn_self,
