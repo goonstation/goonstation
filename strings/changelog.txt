@@ -1,5 +1,9 @@
 
 (t)sat jan 09 21
+(u)Keisuki
+(p)3283
+(e)🆕🎨|feature, sprites
+(+)Added the "Letter Display Component" for mechanics.
 (u)pali
 (+)Toggle-Ghost-Radio verb to toggle if you hear radio as a ghost.
 (+)You can now clickdrag barcode stickers onto things to stick them. Useful for borgs.
