@@ -3168,12 +3168,13 @@
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
-		if (!in_range(src, user) || user.stat || isnull(input)) return 0
+		if (!in_range(src, user) || user.stat || isnull(input)) 
+			return FALSE
 		if (letter_index < 1)
-			return 0
+			return FALSE
 		letter_index = input
-		tooltip_rebuild = 1
-		return 1
+		tooltip_rebuild = TRUE
+		. = TRUE
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
