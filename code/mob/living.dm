@@ -197,7 +197,6 @@
 				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
-				world << csound("sound/misc/shuttle_enroute.ogg")
 	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
