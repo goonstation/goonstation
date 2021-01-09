@@ -3165,8 +3165,8 @@
 		src.icon_state = "comp_screen"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
