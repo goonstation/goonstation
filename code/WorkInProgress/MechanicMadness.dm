@@ -3145,18 +3145,22 @@
 	name = "Letter Display Component"
 	desc = ""
 	icon_state = "comp_screen"
+	cabinet_banned = true
 
 	var/letter_index = 1
 	var/display_letter = null
 
 	get_desc()
 		. = ..()
-		. += "<br><span class='notice'>Letter Index: [src.letter_index] | Currently Displaying: [src.display_letter]</span>"
+		. += "<br><span class='notice'>Letter Index: [src.letter_index]"
+		if (src.level == 2 || src.display_letter != null)
+			. += " | Currently Displaying: '[src.display_letter]'"
+		. += "</span>"
 	secure()
-		icon_state = "comp_screen_blank"
+		src.display(" ")
 	loosen()
 		src.display_letter = null
-		icon_state = "comp_screen"
+		src.icon_state = "comp_screen"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
@@ -3172,7 +3176,7 @@
 		return 1
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady() || !input) return
+		if(level == 2 || !input) return
 		var/signal = input.signal
 		if (length(signal) < src.letter_index)
 			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
@@ -3199,6 +3203,53 @@
 			if ("G") src.setDisplayState("G", "comp_screen_G")
 			if ("h") src.setDisplayState("H", "comp_screen_H")
 			if ("H") src.setDisplayState("H", "comp_screen_H")
+			if ("i") src.setDisplayState("I", "comp_screen_I")
+			if ("I") src.setDisplayState("I", "comp_screen_I")
+			if ("j") src.setDisplayState("J", "comp_screen_J")
+			if ("J") src.setDisplayState("J", "comp_screen_J")
+			if ("k") src.setDisplayState("K", "comp_screen_K")
+			if ("K") src.setDisplayState("K", "comp_screen_K")
+			if ("l") src.setDisplayState("L", "comp_screen_L")
+			if ("L") src.setDisplayState("L", "comp_screen_L")
+			if ("m") src.setDisplayState("M", "comp_screen_M")
+			if ("M") src.setDisplayState("M", "comp_screen_M")
+			if ("n") src.setDisplayState("N", "comp_screen_N")
+			if ("N") src.setDisplayState("N", "comp_screen_N")
+			if ("o") src.setDisplayState("O", "comp_screen_O")
+			if ("O") src.setDisplayState("O", "comp_screen_O")
+			if ("p") src.setDisplayState("P", "comp_screen_P")
+			if ("P") src.setDisplayState("P", "comp_screen_P")
+			if ("q") src.setDisplayState("Q", "comp_screen_Q")
+			if ("Q") src.setDisplayState("Q", "comp_screen_Q")
+			if ("r") src.setDisplayState("R", "comp_screen_R")
+			if ("R") src.setDisplayState("R", "comp_screen_R")
+			if ("s") src.setDisplayState("S", "comp_screen_S")
+			if ("S") src.setDisplayState("S", "comp_screen_S")
+			if ("t") src.setDisplayState("T", "comp_screen_T")
+			if ("T") src.setDisplayState("T", "comp_screen_T")
+			if ("u") src.setDisplayState("U", "comp_screen_U")
+			if ("U") src.setDisplayState("U", "comp_screen_U")
+			if ("v") src.setDisplayState("V", "comp_screen_V")
+			if ("V") src.setDisplayState("V", "comp_screen_V")
+			if ("w") src.setDisplayState("W", "comp_screen_W")
+			if ("W") src.setDisplayState("W", "comp_screen_W")
+			if ("x") src.setDisplayState("X", "comp_screen_X")
+			if ("X") src.setDisplayState("X", "comp_screen_X")
+			if ("y") src.setDisplayState("Y", "comp_screen_Y")
+			if ("Y") src.setDisplayState("Y", "comp_screen_Y")
+			if ("z") src.setDisplayState("Z", "comp_screen_Z")
+			if ("Z") src.setDisplayState("Z", "comp_screen_Z")
+			if ("0") src.setDisplayState("0", "comp_screen_0")
+			if ("1") src.setDisplayState("1", "comp_screen_1")
+			if ("2") src.setDisplayState("2", "comp_screen_2")
+			if ("3") src.setDisplayState("3", "comp_screen_3")
+			if ("4") src.setDisplayState("4", "comp_screen_4")
+			if ("5") src.setDisplayState("5", "comp_screen_5")
+			if ("6") src.setDisplayState("6", "comp_screen_6")
+			if ("7") src.setDisplayState("7", "comp_screen_7")
+			if ("8") src.setDisplayState("8", "comp_screen_8")
+			if ("9") src.setDisplayState("9", "comp_screen_9")
+			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
 			else     src.setDisplayState("?", "comp_screen_question_mark") // Any unknown characters should display as ? instead.
 
 	proc/setDisplayState(var/new_letter as text, var/new_icon_state as text)
