@@ -1,4 +1,9 @@
 
+(t)sat jan 09 21
+(u)BenLubar
+(p)3274
+(e)🆕|feature
+(+)The escape shuttle announcer now announces manual shuttle calls.
 (t)fri jan 08 21
 (u)Flourish
 (p)3184
