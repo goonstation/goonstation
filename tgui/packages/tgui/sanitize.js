@@ -26,7 +26,7 @@ let defAllowedTags = [
   'th',
   'tr',
   'u',
-  'ul',p
+  'ul',
 ];
 let defForbidAttr = ['class', 'style'];
 
