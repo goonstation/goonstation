@@ -249,6 +249,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as_self,
 		/client/proc/cmd_give_pet,
 		/client/proc/cmd_give_pets,
+		/client/proc/cmd_give_player_pets,
 		/client/proc/cmd_customgrenade,
 		/client/proc/cmd_admin_gib,
 		/client/proc/cmd_admin_partygib,
@@ -1424,14 +1425,15 @@ var/list/fun_images = list()
 	logTheThing("diary", usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
 
-/client/proc/cmd_give_pets()
+/client/proc/cmd_give_pets(pet_input=null as text)
 	set popup_menu = 0
 	set name = "Give Pets"
-	set desc = "Assigns everyone a pet!  Woo!"
+	set desc = "Assigns everyone a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	admin_only
 
-	var/pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	if(isnull(pet_input))
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
 	if (!pet_input)
 		return
 	var/pet_path = get_one_match(pet_input, /obj)
@@ -1444,6 +1446,7 @@ var/list/fun_images = list()
 
 		//Pets should probably not attack their owner
 		if (istype(Pet, /obj/critter))
+
 			var/obj/critter/CritterPet = Pet
 			CritterPet.atkcarbon = 0
 			CritterPet.atksilicon = 0
@@ -1453,6 +1456,40 @@ var/list/fun_images = list()
 	logTheThing("admin", usr ? usr : src, null, "gave everyone a pet [pet_path]!")
 	logTheThing("diary", usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")
 	message_admins("[key_name(usr ? usr : src)] gave everyone a pet [pet_path]!")
+
+/client/proc/cmd_give_player_pets(pet_input=null as text)
+	set popup_menu = 0
+	set name = "Give Player Pets"
+	set desc = "Assigns every living player a pet! Enter part of the path of the thing you want to give."
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	admin_only
+
+	if(isnull(pet_input))
+		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random", "/obj/critter/cat")) as null|text
+	if (!pet_input)
+		return
+	var/pet_path = get_one_match(pet_input, /obj)
+	if (!pet_path)
+		return
+
+	for (var/client/cl as() in clients)
+		var/mob/living/L = cl.mob
+		if(!istype(L))
+			continue
+		var/obj/Pet = new pet_path(get_turf(L))
+		Pet.name = "[L]'s pet [Pet.name]"
+
+		//Pets should probably not attack their owner
+		if (istype(Pet, /obj/critter))
+			var/obj/critter/CritterPet = Pet
+			CritterPet.atkcarbon = 0
+			CritterPet.atksilicon = 0
+
+		LAGCHECK(LAG_LOW)
+
+	logTheThing("admin", usr ? usr : src, null, "gave every player a pet [pet_path]!")
+	logTheThing("diary", usr ? usr : src, null, "gave every player a pet [pet_path]!", "admin")
+	message_admins("[key_name(usr ? usr : src)] gave every player a pet [pet_path]!")
 
 /client/proc/cmd_customgrenade()
 	set popup_menu = 0
