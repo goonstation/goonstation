@@ -1175,6 +1175,21 @@ $(function() {
 	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
 		if (src.antispam)
 			return
+		switch(occ)
+			if (1)
+				if(src.job_favorite != job)
+					return
+			if (2)
+				if(!(job in src.jobs_med_priority))
+					return
+			if (3)
+				if(!(job in src.jobs_low_priority))
+					return
+			if (4)
+				if(!(job in src.jobs_unwanted))
+					return
+			else
+				return
 		if (!find_job_in_controller_by_string(job,1))
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
