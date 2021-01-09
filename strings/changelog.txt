@@ -1,5 +1,9 @@
 
 (t)fri jan 08 21
+(u)Superlagg
+(p)3139
+(e)🆕|feature
+(+)Katanas now sever butts and tails if they're in an accessible position.
 (u)BenLubar
 (p)3160
 (e)|
