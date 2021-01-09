@@ -685,10 +685,6 @@
 		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
-	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
-		return
-
 	if (isdead(src))
 		if (dd_hasprefix(message, "*")) // no dead emote spam
 			return
@@ -719,7 +715,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4) // Perfluorodecalin cap - normal life() depletion - buffer.
+		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message)
 			return
 
@@ -1122,7 +1118,7 @@
 
 			if (isobserver(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
 					if (get_dist(M,src) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)

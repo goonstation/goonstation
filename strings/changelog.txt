@@ -1,5 +1,19 @@
 
 (t)fri jan 08 21
+(u)Flourish
+(p)3184
+(e)⚖🆕|balance, feature
+(+)Capulettium plus now allows you to play as dead when you lay down, and appear alive and functionally normally when you stand up.
+(u)Superlagg
+(p)3139
+(e)🆕|feature
+(+)Katanas now sever butts and tails if they're in an accessible position.
+(u)BenLubar
+(p)3160
+(e)|
+(+)Surgeons now pay more attention to their hand-EYE coordination. Sorry, that was terrible.
+(u)pali
+(+)Character preferences now contain a "Local ghost hearing" toggle - it switches between hearing all living-people chatter or restricting it to your screen. (Still also accessible as the confusingly named toggle-local-deadchat verb.)
 (u)Flappybat
 (p)3199
 (e)🆕|feature

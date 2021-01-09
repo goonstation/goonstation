@@ -118,11 +118,7 @@
 			src.updateUsrDialog()
 			return
 
-<<<<<<< HEAD
-	else if (isscrewingtool(W) && ((src.status & BROKEN) || src.linked_pods.len == 0 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.BE))
-=======
 	else if (isscrewingtool(W))
->>>>>>> master
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 2 SECONDS))
 			if(src.status & BROKEN)

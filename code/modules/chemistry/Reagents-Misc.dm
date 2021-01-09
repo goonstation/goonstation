@@ -1205,21 +1205,18 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 5)
+					if (1 to 9)
 						M.change_eye_blurry(10, 10)
-					if (6 to 11)
+					if (10 to 18)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
+					if (19 to INFINITY)
 						M.changeStatus("paralysis", 30 * mult)
-					if (61 to INFINITY)
-						M.change_eye_blurry(10, 10)
-				if (counter >= 11 && !fakedeathed)
+				if (counter >= 19 && !fakedeathed)
 					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
-					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
+					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
-
 				..()
 
 		capulettium_plus
@@ -1243,14 +1240,18 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if ((counter += (1*mult)) >= 10 && !fakedeathed)
+				switch(counter += (1 * mult))
+					if (1 to 9)
+						M.change_eye_blurry(10, 10)
+					if (10 to 18)
+						M.drowsyness  = max(M.drowsyness, 10)
+				if (counter >= 19 && !fakedeathed)
+					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
-
-
 				..()
+
 /*
 		montaguone
 			name = "montaguone"
