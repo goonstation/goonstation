@@ -569,11 +569,11 @@ WET FLOOR SIGN
 					else
 						F.removed()
 					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>")
+					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
 				else
 					target.reagents.trans_to(src, 15)
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
+					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
 
 				JOB_XP(user, "Janitor", 1)
 				return
