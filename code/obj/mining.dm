@@ -26,21 +26,19 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
-			#ifndef UNDERWATER_MAP
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
 			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.set_dir(src.dir)
 				qdel(W)
-			#else
-			boutput(user, "<span class='alert'>You have no idea why you would try building a magnet underwater.</span>")
-			#endif
 		else
 			..()
+		#endif
 
 	ex_act()
 		return
