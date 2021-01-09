@@ -178,7 +178,7 @@
 			src.explode()
 
 /obj/machinery/bot/buttbot/proc/buttify()
-	if(length(src.butt_memory) >= 1)
+	if(length(src.butt_memory) < 1) return "butt..."
 	var/list/speech_list = splittext(src.butt_memory[rand(1,length(src.butt_memory))], " ")
 	src.butt_memory -= src.butt_memory[1]
 
