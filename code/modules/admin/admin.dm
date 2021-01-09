@@ -861,8 +861,8 @@ var/global/noir = 0
 				alert("You need to be at least a Secondary Adminstrator to monkeyize players.")
 
 		if ("forcespeech")
+			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
-				var/mob/M = locate(href_list["target"])
 				if (ismob(M))
 					var/speech = input("What will [M] say?", "Force speech", "")
 					if(!speech)
