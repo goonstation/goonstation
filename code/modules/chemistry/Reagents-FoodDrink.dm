@@ -1035,7 +1035,6 @@ datum
 			transparency = 190
 			alch_strength = 1 //its literally methanol
 			depletion_rate = 0.4
-			thirst_value = 0.6
 			thirst_value = -0.3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -1876,7 +1875,6 @@ datum
 			transparency = 190
 			taste = "sugary"
 			thirst_value = 0.75
-			bladder_value = -0.03
 			viscosity = 0.4
 			bladder_value = -0.2
 
@@ -2217,7 +2215,6 @@ datum
 			fluid_r = 117
 			fluid_g = 120
 			fluid_b = 65
-			thirst_value = 0.075
 			bladder_value = 0.04
 			energy_value = 0.04
 			transparency = 232
@@ -3054,12 +3051,23 @@ datum
 			fluid_r = 235
 			fluid_g = 0
 			fluid_b = 0
-			description = "The juice from a thousand screaming cherries.  Silent screams."
+			description = "The juice from a thousand screaming cherries. Silent screams."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_pinapple
+		fooddrink/juice_raspberry
+			name = "raspberry juice"
+			id = "juice_raspberry"
+			fluid_r = 101
+			fluid_g = 216
+			fluid_b = 230
+			description = "What do you mean? Rapsberries have always been this shade of blue."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_pineapple
 			name = "pineapple juice"
 			id = "juice_pineapple"
 			fluid_r = 255
@@ -3068,6 +3076,17 @@ datum
 			description = "Juice from a pineapple. A surprise, considering the name!"
 			reagent_state = LIQUID
 			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_watermelon
+			name = "watermelon juice"
+			id = "juice_watermelon"
+			fluid_r = 238
+			fluid_g = 93
+			fluid_b = 121
+			description = "A delicious summer drink!"
+			reagent_state = LIQUID
+			thirst_value = 2
 			bladder_value = -1.5
 
 		fooddrink/juice_apple

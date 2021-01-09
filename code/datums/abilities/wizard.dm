@@ -197,6 +197,7 @@
 	usesPoints = 0
 	topBarRendered = 1
 	tabName = "Wizard"
+	var/robe_and_wizard_hat_time = 0	//Last time that the spell was used.
 
 /////////////////////////////////////////////// Wizard spell parent ////////////////////////////
 

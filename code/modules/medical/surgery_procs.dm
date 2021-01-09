@@ -426,6 +426,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
 				playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
+				var/removing_eye = (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0) || (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0)
+
+				if (removing_eye && (surgeon.find_in_hand(src, "left") || surgeon.find_in_hand(src, "right")))
+					surgeon.show_text("Wait, which eye was I operating on?")
+				else if (removing_eye && surgeon.find_in_hand(src, "middle"))
+					surgeon.show_text("Hey, there's no middle eye!")
+
 				if (prob(screw_up_prob))
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
@@ -1696,6 +1703,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		else if (surgeon.find_in_hand(src, "left") && patient.organHolder.left_eye)
 			target_eye = patient.organHolder.left_eye
 			target_side = "left"
+		else if (surgeon.find_in_hand(src, "middle"))
+			surgeon.show_text("Hey, there's no middle eye!")
+			return 0
 		else
 			return 0
 

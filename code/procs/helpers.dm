@@ -176,15 +176,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 proc/get_angle(atom/a, atom/b)
     .= arctan(b.y - a.y, b.x - a.x)
 
-//list2params without the dumb encoding
-/proc/list2params_noencode(var/list/L)
-	var/strbuild = ""
-	var/first = 1
-	for(var/x in L)
-		strbuild += "[first?"":"&"][x]=[L[x]]"
-		first = 0
-	return strbuild
-
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
 
@@ -237,7 +228,7 @@ proc/get_angle(atom/a, atom/b)
 	sleep(time)
 	if (!user || !target)
 		return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !is_incapacitated(user) && !user.lying )
 		return 1
 
 /proc/do_after(mob/M as mob, time as num)
@@ -1748,8 +1739,8 @@ proc/countJob(rank)
 		return
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
-// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
-// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+/// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
+/// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0, var/require_client = FALSE)
 	var/list/candidates = list()
 
@@ -2115,6 +2106,7 @@ var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
 var/global/list/allowed_restricted_z_areas
+
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	if(!allowed_restricted_z_areas)
@@ -2444,6 +2436,9 @@ proc/angle_to_dir(angle)
 		else
 			.= SOUTH
 
+/**
+  * Transforms a cardinal/ordinal direction to an angle
+  */
 proc/dir_to_angle(dir)
 	.= 0
 	switch(dir)
@@ -2464,6 +2459,9 @@ proc/dir_to_angle(dir)
 		if(NORTHWEST)
 			.= 315
 
+/**
+  * Transforms a given angle to vec2 in a list
+  */
 proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
@@ -2541,8 +2539,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	*/
 /proc/lerp(var/a, var/b, var/t)
 		return a * (1 - t) + b * t
-
-
 
 /**
 	* Returns the passed decisecond-format time in the form of a text string
@@ -2643,3 +2639,11 @@ proc/keep_truthy(some_list)
 	for(var/x in some_list)
 		if(x)
 			. += x
+
+/// Returns true if the given mob is incapacitated
+proc/is_incapacitated(mob/M)
+	return (\
+		M.hasStatus("stunned") || \
+		M.hasStatus("weakened") || \
+		M.hasStatus("paralysis") || \
+		M.stat)

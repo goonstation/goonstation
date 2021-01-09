@@ -340,6 +340,7 @@
 			if (src.client)
 				src.client.mob = Z
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind

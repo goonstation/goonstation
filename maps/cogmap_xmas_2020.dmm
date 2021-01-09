@@ -8778,12 +8778,6 @@
 "atV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hydroponics/bay)
-"atW" = (
-/obj/reagent_dispensers/compostbin,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "atX" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -64678,12 +64672,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
-"fqU" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -65892,6 +65880,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rqk" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rvo" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -65941,9 +65935,6 @@
 /obj/decal/wreath,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
-"smw" = (
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "srf" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -65977,7 +65968,6 @@
 /area/station/hydroponics)
 "swS" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "sEn" = (
@@ -66323,6 +66313,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"vGT" = (
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "vQM" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights,
@@ -66520,7 +66513,6 @@
 /area/station/hydroponics/bay)
 "xUr" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -126770,7 +126762,7 @@ aag
 sKB
 arl
 asK
-atW
+wKg
 avg
 awD
 axQ
@@ -130397,7 +130389,7 @@ eVq
 nvf
 nWf
 mBk
-smw
+vGT
 dti
 srf
 gsy
@@ -130700,7 +130692,7 @@ qrh
 xXc
 tPW
 lUz
-smw
+vGT
 gji
 xXc
 qrh
@@ -131002,7 +130994,7 @@ kTy
 xXc
 tPW
 fcX
-smw
+vGT
 gji
 xXc
 oAN
@@ -131301,12 +131293,12 @@ aaa
 aaa
 jPv
 rlS
-fqU
+rqk
 xUr
 cOr
 eyq
 swS
-fqU
+rqk
 pbV
 jPv
 aaa

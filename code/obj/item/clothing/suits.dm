@@ -1089,6 +1089,13 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
+		body_parts_covered = TORSO|LEGS|ARMS
+		permeability_coefficient = 0.01
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
+
 		infiltrator
 			name = "specialist operative espionage suit"
 			desc = "A syndicate issue combat dress system, pressurized for space travel."

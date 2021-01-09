@@ -37,6 +37,9 @@
 		..()
 
 	keys_changed(mob/user, keys, changed)
+		if(user != src.owner.pilot)
+			return
+
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod) || !owner)
 			return
 
@@ -76,7 +79,7 @@
 			last_dir = owner.dir
 
 			if (input_x || input_y)
-				user.attempt_move()
+				attempt_move(user)
 
 
 	update_owner_dir(var/atom/movable/ship) //after move, update dir
@@ -84,7 +87,7 @@
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
-			return
+			return FALSE
 
 		if (next_move > world.time)
 			return next_move - world.time
@@ -98,15 +101,17 @@
 
 				//We're on autopilot before the warp, NO FUCKING IT UP!
 				if (owner.engine.warp_autopilot)
-					return 0
+					return FALSE
 
 				if (owner.rcs && input_x == 0 && input_y == 0)
 					braking = 1
 
 				//braking
 				if (braking)
-					velocity_x = velocity_x * brake_decel_mult
-					velocity_y = velocity_y * brake_decel_mult
+					if(input_x * velocity_x <= 0)
+						velocity_x = velocity_x * brake_decel_mult
+					if(input_y * velocity_y <= 0)
+						velocity_y = velocity_y * brake_decel_mult
 
 					if (abs(velocity_x) + abs(velocity_y) < 1.3)
 						velocity_x = 0

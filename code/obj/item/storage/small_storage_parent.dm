@@ -122,6 +122,10 @@
 			return -2
 
 	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+		if (W == src)
+			// Putting self in self! Was possible if weight class allows it, causing storage to disappear
+			boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
+			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
 			switch (canhold)

@@ -495,6 +495,7 @@
 						else if (src.donor.ghost.key)
 							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
+							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
 							newmind.current = src.donor.ghost
 							src.donor.ghost.mind = newmind
@@ -502,6 +503,7 @@
 					else if (src.donor.key)
 						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
+						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
 						newmind.current = src.donor
 						src.donor.mind = newmind
@@ -710,6 +712,40 @@
 				src.donor.update_body()
 				src.organ_list["tail"] = null
 				return mytail
+
+	/// drops the organ, then hurls it somewhere
+	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/vigor, var/showtext)
+		. = src.drop_organ(organ, location)
+		if(istype(., /obj))
+			var/obj/organ_toss = .
+			if (!location)
+				location = src.donor.loc
+
+			if(!direction)
+				direction = pick(alldirs)
+
+			var/atom/target = get_edge_target_turf(organ_toss, direction)
+			organ_toss.throw_at(target, vigor, vigor)
+
+			if(showtext && ishuman(src.donor))
+				var/grody_arc = "bloody"
+				if(istype(organ_toss, /obj/item/parts))
+					var/obj/item/parts/limb = organ_toss
+					grody_arc = limb.streak_descriptor
+				else if(istype(organ_toss, /obj/item/organ))
+					var/obj/item/organ/orgn = organ_toss
+					if(orgn.robotic)
+						grody_arc = "oily"
+					else
+						grody_arc = "bloody"
+				else if(istype(organ_toss, /obj/item/clothing/head/butt))
+					if(istype(organ_toss, /obj/item/clothing/head/butt/cyberbutt))
+						grody_arc = "greasy"
+					else
+						grody_arc = "floppy"
+				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
+				src.donor.emote("scream")
+				src.donor.update_clothing()
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -1334,7 +1370,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))

@@ -802,8 +802,8 @@
 	if (!usr.client) //How could this even happen?
 		return
 
-	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
+	boutput(usr, "<span class='notice'>[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
