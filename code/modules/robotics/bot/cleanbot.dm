@@ -50,10 +50,10 @@
 	no_camera = 1
 	access_lookup = "Janitor"
 
-	var/target // Current target.
+	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
-	var/clear_invalid_targets_interval = 3 MINUTES // How frequently?
+	var/clear_invalid_targets_interval = 5 MINUTES // How frequently?
 
 	var/idle = 1 // In relation to world time. In case there aren't any valid targets nearby.
 	var/idle_delay = 5 SECONDS // For how long?
@@ -61,8 +61,18 @@
 	var/cleaning = 0 // Are we currently cleaning something?
 	var/reagent_normal = "cleaner"
 	var/reagent_emagged = "lube"
-	var/list/lubed_turfs = list() // So we don't lube the same turf ad infinitum.
 	var/bucket_type_on_destruction = /obj/item/reagent_containers/glass/bucket
+	var/search_range = 1
+	var/max_search_range = 7
+	/// Favor scanning from this spot, so that they'll tend to build out from here, and not just a bunch of metal spaghetti
+	var/turf/scan_origin
+	/// They're designed to work best while nobody's looking
+	dynamic_processing = 0
+	PT_idle = PROCESSING_QUARTER
+
+	//mbc : hey i don't feel like fixing this right now, but this shouldn't be a list built each process(). move it to a static list on cleanbot base
+	// So nearby bots don't go after the same mess.
+	//lagg : k
 	var/static/list/cleanbottargets = list()
 
 	New()
@@ -74,7 +84,7 @@
 			if (src)
 				src.botcard = new /obj/item/card/id(src)
 				src.botcard.access = get_access(src.access_lookup)
-				src.clear_invalid_targets = world.time
+				src.clear_invalid_targets = TIME
 
 				var/datum/reagents/R = new /datum/reagents(50)
 				src.reagents = R
@@ -136,8 +146,7 @@
 		src.KillPathAndGiveUp(1)
 		src.icon_state = "[icon_state_base][src.on]"
 		src.targets_invalid = list() // Turf vs decal when emagged, so we gotta clear it.
-		src.lubed_turfs = list()
-		src.clear_invalid_targets = world.time
+		src.clear_invalid_targets = TIME
 
 		if (src.on)
 			src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
@@ -206,114 +215,100 @@
 
 	process()
 		. = ..()
-		if (!src.on)
-			return
-
-		if (src.cleaning || src.moving)
-			return
-
-		// We're still idling.
-		if (src.idle && world.time < src.idle + src.idle_delay)
+		if (!src.on || src.cleaning || src.moving || src.idle && TIME <= src.idle + src.idle_delay)
 			return
 
 		// Invalid targets may not be unreachable anymore. Clear list periodically.
-		if (src.clear_invalid_targets && world.time > src.clear_invalid_targets + src.clear_invalid_targets_interval)
+		if (src.clear_invalid_targets && TIME >= src.clear_invalid_targets + src.clear_invalid_targets_interval)
 			src.targets_invalid = list()
-			src.lubed_turfs = list()
-			src.clear_invalid_targets = world.time
+			src.clear_invalid_targets = TIME
 
-		if (src.frustration >= 8)
-			if (src.target && !(src.target in src.targets_invalid))
-				src.targets_invalid += src.target
+		if (!src.target)
+			if(!src.scan_origin || !isturf(src.scan_origin))
+				src.scan_origin = get_turf(src)
+			src.target = src.find_target()
+			src.doing_something = 0
+
+		if (src.target)
+			var/obj/decal/point/P = new(get_turf(src.target))
+			P.pixel_x = src.target.pixel_x
+			P.pixel_y = src.target.pixel_y
+			SPAWN_DBG(2 SECONDS)
+				P.invisibility = 101
+				qdel(P)
+			src.doing_something = 1
+			/// I'm targetting this, nobody else target it!
+			if(!(src.target in src.cleanbottargets))
+				src.cleanbottargets += src.target
+
+			// are we there yet
+			if (IN_RANGE(src, src.target, 1))
+				do_the_thing()
+				return
+
+			// we are not there. how do we get there
+			if (!src.path || !src.path.len)
+				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
+				if (!src.path || !src.path.len)
+					// answer: we don't. try to find something else then.
+					src.KillPathAndGiveUp(1)
+		else // No targets found in range? Increase the range!
+			if(src.search_range++ > src.max_search_range)
+				src.KillPathAndGiveUp(1)
+		if(frustration >= 8)
 			src.KillPathAndGiveUp(1)
 
-		//mbc : hey i don't feel like fixing this right now, but this shouldn't be a list built each process(). move it to a static list on cleanbot base
-		// So nearby bots don't go after the same mess.
-		//lagg : k
-		if (!src.target || isnull(src.target))
-			for (var/obj/machinery/bot/cleanbot/bot in machine_registry[MACHINES_BOTS])
-				if (bot != src)
-					if (bot.target && !(bot.target in src.cleanbottargets))
-						src.cleanbottargets += bot.target
+	proc/do_the_thing()
+		// we are there, hooray
+		if (prob(80))
+			src.visible_message("[src] sloshes.")
+		actions.start(new/datum/action/bar/icon/cleanbotclean(src, src.target), src)
+		src.KillPathAndGiveUp(0)
 
-		// Let's find us something to clean.
-		if (!src.target || src.target == null)
-			if (src.emagged)
-				for (var/turf/simulated/floor/F in view(7, src))
-					if (F in src.targets_invalid)
-						continue
-					if (F in src.cleanbottargets)
-						continue
-					if (F in src.lubed_turfs)
-						continue
-					for (var/atom/A in F.contents)
-						if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
-							if (!(F in src.targets_invalid))
-								src.targets_invalid += F
-							continue
-					src.target = F
-					break
-			else
-				for (var/turf/simulated/floor/F in view(7, src))
-					if (F in targets_invalid)
-						continue
-					if (F in cleanbottargets)
-						continue
+	proc/find_target()
+		for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
+			if (F in src.targets_invalid)
+				continue
+			if (src.is_it_invalid(F))
+				continue
+			if (F in src.cleanbottargets)
+				continue
+			if (src.emagged && (F.wet))
+				continue
+			if (!F.messy && !F.active_liquid)
+				continue
+			return F
 
-					if (F.messy || F.active_liquid)
-						src.target = F
-						break
+	proc/is_it_invalid(var/turf/simulated/floor/F)
+		for (var/atom/A in F.contents)
+			if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
+				if (!(F in src.targets_invalid))
+					src.targets_invalid += F
+				return 1
 
-		// Still couldn't find one? Abort and retry later.
-		if (!src.target || src.target == null)
-			src.KillPathAndGiveUp(1)
-			return
+			if (!F || !isturf(F) || F.density)
+				if (!(F in src.targets_invalid))
+					src.targets_invalid += F
+				return 1
 
-		// Let's find us a path to the target.
-		if (src.target && (!src.path || !src.path.len))
-			SPAWN_DBG(0)
-				if (!src)
-					return
-
-				var/turf/T = get_turf(src.target)
-				if (!isturf(src.loc) || !T || !isturf(T) || T.density)
-					if (!(src.target in src.targets_invalid))
-						src.targets_invalid += src.target
-					src.KillPathAndGiveUp(1)
-					return
-
-				if (istype(T, /turf/space))
-					if (!(src.target in src.targets_invalid))
-						src.targets_invalid += src.target
-					src.KillPathAndGiveUp(1)
-					return
-
-				for (var/atom/A in T.contents)
-					if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
-						if (!(src.target in src.targets_invalid))
-							src.targets_invalid += src.target
-						src.KillPathAndGiveUp(1)
-						return
-
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 50)
-
-				if (!src.path) // Woops, couldn't find a path.
-					if (!(src.target in src.targets_invalid))
-						src.targets_invalid += src.target
-					src.KillPathAndGiveUp(1)
-
-	DoWhileMoving()
-		. = ..()
-		if (IN_RANGE(src, src.target, 1))
-			src.KillPathAndGiveUp(0)
-			actions.start(new/datum/action/bar/icon/cleanbotclean(src, src.target), src)
-			return TRUE
+			if (istype(F, /turf/space))
+				if (!(F in src.targets_invalid))
+					src.targets_invalid += F
+				return 1
 
 	KillPathAndGiveUp(var/give_up)
 		. = ..()
+		src.cleaning = 0
+		src.cleanbottargets -= src.target
+		src.icon_state = "[src.icon_state_base][src.on]"
+		src.target = null
+		src.idle = TIME
+		src.anchored = 0
 		if(give_up)
-			src.target = null
-			src.idle = world.time
+			if (src.target && !(src.target in src.targets_invalid))
+				src.targets_invalid += src.target
+			src.search_range = 1
+			src.scan_origin = null
 
 	ex_act(severity)
 		switch (severity)
@@ -405,12 +400,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleaning = 0
-		master.icon_state = "[master.icon_state_base][master.on]"
-		master.anchored = 0
-		master.target = null
-		master.frustration = 0
-		master.doing_something = 0
+		master.KillPathAndGiveUp(1)
 		. = ..()
 
 	onEnd()
@@ -419,8 +409,6 @@
 				master.reagents.reaction(T, 1, 10)
 
 			if (master.emagged)
-				if (!(T in master.lubed_turfs))
-					master.lubed_turfs += T
 				if (master.reagents) // ZeWaka: Fix for null.remove_reagent()
 					master.reagents.remove_reagent(master.reagent_emagged, 10)
 					if (master.reagents.get_reagent_amount(master.reagent_emagged) <= 0)
@@ -435,12 +423,7 @@
 				if (T.active_liquid.group)
 					T.active_liquid.group.drain(T.active_liquid,1,master)
 
-			master.cleaning = 0
-			master.icon_state = "[master.icon_state_base][master.on]"
-			master.anchored = 0
-			master.target = null
-			master.frustration = 0
-			master.doing_something = 0
+			master.KillPathAndGiveUp(0)
 		..()
 
 #undef CLEANBOT_MOVE_SPEED

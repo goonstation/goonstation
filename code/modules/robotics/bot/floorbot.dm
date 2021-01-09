@@ -1,5 +1,5 @@
 //Floorbot assemblies
-#define FLOORBOT_MOVE_SPEED 10
+#define FLOORBOT_MOVE_SPEED 7
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
@@ -51,6 +51,8 @@
 	no_camera = 1
 	var/search_range = 1
 	var/max_search_range = 7
+	/// Favor scanning from this spot, so that they'll tend to build out from here, and not just a bunch of metal spaghetti
+	var/turf/scan_origin
 	/// So we don't waste time scanning the same tiles when looking for tiles to fix
 	var/list/scanned_tiles = list()
 	/// They're designed to work best while nobody's looking
@@ -63,7 +65,7 @@
 	// this is from cleanbot.dm, which should really be like. part of all bots, later.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
-	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
+	var/clear_invalid_targets_interval = 10 MINUTES // How frequently?
 
 
 /obj/machinery/bot/floorbot/New()
@@ -206,13 +208,16 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		// you already have a target you clown get out of here
 		return
 
+	if(!src.scan_origin || !isturf(src.scan_origin))
+		src.scan_origin = get_turf(src)
+
 	// Find thing to do
 	if (!src.emagged)
 		if(src.amount > 0)
 			// We can only do these things while we have tiles...
 
-				// Search for space turf
-			for (var/turf/space/D in view(src.search_range, src))
+			// Search for space turf
+			for (var/turf/space/D in view(src.search_range, src.scan_origin))
 				if(D in src.scanned_tiles)
 					continue
 				if (!(D in targets_invalid) && D != src.oldtarget && !(D in floorbottargets) && !should_ignore_tile(D))
@@ -222,7 +227,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 			// Search for incomplete/damaged floor
 			if (src.improvefloors)
-				for (var/turf/simulated/floor/F in view(src.search_range, src))
+				for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
 					if(F in src.scanned_tiles)
 						continue
 					if (!(F in targets_invalid) && F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
@@ -231,7 +236,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 						src.scanned_tiles += F
 
 	if (src.emagged)
-		for (var/turf/simulated/floor/F in view(src.search_range, src))
+		for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
 			if(F in src.scanned_tiles)
 				continue
 			if (F != src.oldtarget && !(F in floorbottargets) && !should_ignore_tile(F))
@@ -242,14 +247,14 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	// Only do this if we don't have our max already
 	if (src.amount < max_tiles)
 		if (src.eattiles)
-			for (var/obj/item/tile/T in view(src.search_range, src))
+			for (var/obj/item/tile/T in view(src.search_range, src.scan_origin))
 				// T is /var/turf, not. tiles. does this even work? does BYOND care?
 				if (T != src.oldtarget && !(target in floorbottargets) && !should_ignore_tile(get_turf(T)))
 					return T
 
 		if (src.maketiles)
 			if (src.target == null || !src.target)
-				for (var/obj/item/sheet/M in view(src.search_range, src))
+				for (var/obj/item/sheet/M in view(src.search_range, src.scan_origin))
 					if (M != src.oldtarget && !(M in floorbottargets) && M.amount >= 1 && !(istype(M.loc, /turf/simulated/wall)) && !should_ignore_tile(get_turf(M)))
 						return M
 
@@ -270,18 +275,19 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		return
 
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
-	if (src.clear_invalid_targets && world.time > src.clear_invalid_targets + src.clear_invalid_targets_interval)
+	if (src.clear_invalid_targets && TIME > src.clear_invalid_targets + src.clear_invalid_targets_interval)
 		src.targets_invalid = list()
-		src.clear_invalid_targets = world.time
+		src.clear_invalid_targets = TIME
 
 	if (!src.target)
 		// basically: try to find a target within 3 tiles
 		// if that doesn't work: just give up, go slower as search expands
 		// will help keep a bot "focused" on an area
+		if(!src.scan_origin || !isturf(src.scan_origin))
+			src.scan_origin = get_turf(src)
 		src.target = src.find_target()
 
 	if (src.target)
-		src.search_range = 1
 		src.oldtarget = null
 		var/obj/decal/point/P = new(get_turf(src.target))
 		P.pixel_x = target.pixel_x
@@ -304,23 +310,11 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			if (!src.path || !src.path.len)
 				// answer: we don't. try to find something else then.
 				src.KillPathAndGiveUp(1)
-
-			if (get_turf(src.loc) == get_turf(src.target))
-				do_the_thing()
-				src.scanned_tiles = list()
-				return
-	else
-		src.search_range++
+	else // No targets found in range? Increase the range!
 		if(src.search_range++ > src.max_search_range)
-			src.search_range = 1
-			src.scanned_tiles = list()
-		src.doing_something = 0
-
-/obj/machinery/bot/floorbot/DoWhileMoving()
-	. = ..()
-	if (get_turf(src.loc) == get_turf(src.target))
-		do_the_thing()
-		return TRUE
+			src.KillPathAndGiveUp(1)
+	if(frustration >= 8)
+		src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/floorbot/KillPathAndGiveUp(var/give_up)
 	. = ..()
@@ -336,6 +330,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.oldloc = null
 		src.search_range = 1
 		src.scanned_tiles = list()
+		src.scan_origin = null
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
@@ -346,7 +341,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	else if (istype(src.target, /obj/item/sheet))
 		src.maketile(src.target)
 	else if (istype(src.target, /turf/))
-		repair(src.target)
+		src.repair(src.target)
 	src.KillPathAndGiveUp(0)
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
@@ -367,7 +362,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
-	src.visible_message("<span class='alert'>[src] begins to collect tiles.</span>")
+	src.visible_message("<span class='alert'>[src] gathers up [T] into its hopper.</span>")
 	src.repairing = 1
 	if (isnull(T))
 		src.target = null
@@ -387,7 +382,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
 		return
-	src.visible_message("<span class='alert'>[src] begins to create tiles.</span>")
+	src.visible_message("<span class='alert'>[src] converts [M] into usable floor tiles.</span>")
 	src.repairing = 1
 	M.set_loc(src)
 	if (isnull(M))
@@ -513,6 +508,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
+		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -520,6 +516,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 	onEnd()
 		..()
+		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -569,6 +566,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
+		playsound(get_turf(master), 'sound/items/Welder.ogg', 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -576,6 +574,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 	onEnd()
 		..()
+		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		var/turf/simulated/floor/T = target
 		var/atom/A = new /obj/item/tile(T)
 		if (T.material)

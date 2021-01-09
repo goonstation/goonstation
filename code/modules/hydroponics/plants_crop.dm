@@ -122,10 +122,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
 
-/obj/machinery/bot/buttbot/synth //Opinion: i personally think this should be in the same file as buttbots
-	name = "Organic Buttbot" //TODO: This and synthbutts need to use the new green synthbutt sprites
-	desc = "What part of this even makes any sense."
-
 /datum/plant/crop/sugar
 	name = "Sugar"
 	seedcolor = "#BBBBBB"

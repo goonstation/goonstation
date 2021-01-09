@@ -52,7 +52,10 @@
 
 	/// hello this is my butt
 	var/obj/item/clothing/head/butt/butt
+	/// and this is the arm sticking out of my butt
 	var/obj/item/parts/buttarm
+	/// and this is the fallback butt I have if someone spawns me
+	var/default_butt = /obj/item/clothing/head/butt
 	var/list/fartsounds = list('sound/voice/farts/poo2.ogg', \
 								'sound/voice/farts/fart1.ogg', \
 								'sound/voice/farts/fart2.ogg', \
@@ -60,12 +63,25 @@
 								'sound/voice/farts/fart4.ogg', \
 								'sound/voice/farts/fart5.ogg')
 
+/obj/machinery/bot/buttbot/cyber
+	name = "robuttbot"
+	icon_state = "cyberbuttbot"
+	default_butt = /obj/item/clothing/head/butt/cyberbutt
+
+/obj/machinery/bot/buttbot/text2speech
+	text2speech = 1
+
+/obj/machinery/bot/buttbot/synth //Opinion: i personally think this should be in the same file as buttbots
+	name = "Organic Buttbot" //TODO: This and synthbutts need to use the new green synthbutt sprites
+	desc = "What part of this even makes any sense."
+	default_butt = /obj/item/clothing/head/butt/synth
+
 /obj/machinery/bot/buttbot/New(var/_butt, var/_arm)
 	..()
 	if(istype(_butt, /obj/item/clothing/head/butt))
 		src.butt = _butt
 	else
-		src.butt = new(src)
+		src.butt = new src.default_butt(src)
 	if(istype(_arm, /obj/item/parts))
 		src.buttarm = _arm
 	else
@@ -89,15 +105,8 @@
 /obj/machinery/bot/buttbot/emp_act()
 	src.emag_act()
 
-/obj/machinery/bot/buttbot/cyber
-	name = "robuttbot"
-	icon_state = "cyberbuttbot"
-
-/obj/machinery/bot/buttbot/text2speech
-	text2speech = 1
-
 /// Makes the buttbot mill around aimlessly, or chase people if emagged
-/obj/machinery/bot/buttbot/proc/fart_around()
+/obj/machinery/bot/buttbot/proc/scoot()
 	if(moving) return
 	if(src.emagged)
 		for (var/atom/A as() in view(5, src))
@@ -112,15 +121,17 @@
 		return
 	if (src.on == 1)
 		if(src.buttranslate && prob(60) && src.last_butt + src.butt_cooldown <= TIME)
-			var/message = pick("butts", "butt")
-			speak(message)
-		if(src.buttfart && prob(30) && src.last_fart + src.fart_cooldown <= TIME)
+			if(length(src.butt_memory) >= 1)
+				speak(src.buttify())
+			else
+				speak(pick("butts", "butt"))
+		if(src.buttfart && prob(25) && src.last_fart + src.fart_cooldown <= TIME)
 			var/fartmessage = src.fart()
 			if(fartmessage)
 				src.audible_message("[fartmessage]")
 				src.robo_expel_fart_gas(0)
 		if(src.buttmobile && prob(80) && src.last_scoot + src.scoot_cooldown <= TIME)
-			src.fart_around()
+			src.scoot()
 	if (src.emagged == 1)
 		var/message = pick("BuTTS", "buTt", "b##t", "bztBUTT", "b^%t", "BUTT", "buott", "bats", "bates", "bouuts", "buttH", "b&/t", "beats", "boats", "booots", "BAAAAATS&/", "//t/%/")
 		if (prob(2))
@@ -130,10 +141,10 @@
 		if(fartmessage)
 			src.audible_message("[fartmessage]")
 			src.robo_expel_fart_gas(1)
-		if(prob(1) && prob(1)) // small chance to blow its ass out
+		if(prob(1)) // small chance to blow its ass out
 			src.superfart()
 		if(!moving)
-			src.fart_around()
+			src.scoot()
 	if(frustration >= 8)
 		src.KillPathAndGiveUp(1)
 	. = ..()
@@ -145,8 +156,6 @@
 		SPAWN_DBG(0)
 			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
-		src.processing_tier = src.PT_active
-		src.SubscribeToProcess()
 		src.emagged = 1
 		return 1
 	return 0
@@ -157,8 +166,6 @@
 	if (user)
 		user.show_text("You repair [src]'s vocal emitter. Thank God.", "blue")
 	src.emagged = 0
-	src.processing_tier = src.PT_idle
-	src.SubscribeToProcess()
 	return 1
 
 /obj/machinery/bot/buttbot/attackby(obj/item/W as obj, mob/user as mob)
@@ -170,25 +177,28 @@
 		if (src.health <= 0)
 			src.explode()
 
+/obj/machinery/bot/buttbot/proc/buttify()
+	if(length(src.butt_memory) >= 1)
+	var/list/speech_list = splittext(src.butt_memory[rand(1,length(src.butt_memory))], " ")
+	src.butt_memory -= src.butt_memory[1]
+
+	var/num_butts = rand(1,4)
+	var/counter = 0
+	while(num_butts)
+		counter++
+		num_butts--
+		speech_list[rand(1,speech_list.len)] = "butt"
+		if(counter >= (speech_list.len / 2) )
+			num_butts = 0
+
+	return jointext(speech_list, " ")
+
 /obj/machinery/bot/buttbot/hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
 	if(!messages || !src.on)
 		return
 	var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
-	if(prob(25))
-		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
-			return
-
-		var/num_butts = rand(1,4)
-		var/counter = 0
-		while(num_butts)
-			counter++
-			num_butts--
-			speech_list[rand(1,speech_list.len)] = "butt"
-			if(counter >= (speech_list.len / 2) )
-				num_butts = 0
-
-		src.speak( jointext(speech_list, " ") )
+	if(message && !(message in src.butt_memory))
+		src.butt_memory += message
 	return
 
 
@@ -223,10 +233,14 @@
 			butt_engine = "Phyto-Active Induction Nodule"
 
 	dat += "<TT><B>[src.butt_fluff] Utility Techno-Tool v4.5.5</B></TT><BR>"
-	dat += "<B>Autonomous Reactive Speech Emitter:</B> <A href='?src=\ref[src];butt_speak_toggle=1'>[src.buttranslate ? "Active" : "Inactive"]</A><BR><BR>"
-	dat += "<B>\"Rolling Explorer\" Autonomous Rover:</B> <A href='?src=\ref[src];butt_move_toggle=1'>[src.buttmobile ? "Active" : "Inactive"]</A><BR><BR>"
-	dat += "<B>Patty-Heinrich Atmospheric Replenishment Technique:</B> <A href='?src=\ref[src];butt_fart_toggle=1'>[src.buttfart ? "Active" : "Inactive"]</A><BR><BR>"
-	dat += "<B>[butt_engine]:</B> <A href='?src=\ref[src];on=1'>[src.on ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<U><h4>Autonomous Reactive Speech Emitter:</h4></U>"
+	dat += "<A href='?src=\ref[src];butt_speak_toggle=1'>[src.buttranslate ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<U><h4>\"Rolling Explorer\" Autonomous Rover:</h4></U>"
+	dat += "<A href='?src=\ref[src];butt_move_toggle=1'>[src.buttmobile ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<U><h4>Patty-Heinrich Atmospheric Replenishment Technique:</h4></U>"
+	dat += "<A href='?src=\ref[src];butt_fart_toggle=1'>[src.buttfart ? "Active" : "Inactive"]</A><BR><BR>"
+	dat += "<U><h4>[butt_engine]:</h4></U>"
+	dat += "<A href='?src=\ref[src];on=1'>[src.on ? "Active" : "Inactive"]</A>"
 
 	user.Browse("<HEAD><TITLE>B.U.T.T. BOT</TITLE></HEAD>[dat]", "window=buttbot")
 	onclose(user, "buttbot")
@@ -282,6 +296,7 @@
 
 /obj/machinery/bot/buttbot/proc/superfart()
 	src.exploding = 1
+	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
 	playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -322,9 +337,23 @@
 						var/turf/target = get_edge_target_turf(V, get_dir(src, V))
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
 				var/go2hell
+				src.transform = oldtransform
 				for (var/obj/item/storage/bible/B in src.loc)
 					go2hell = 1
+					var/turf/oldloc = get_turf(src)
+					src.visible_message("<span class='alert'>[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b></span>")
 					src.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
+					B.burn_possible = 0 // protect the book
+					SPAWN_DBG(1 SECOND)
+						if(B)
+							B.burn_possible = initial(B.burn_possible) // But only till the explosion's gone
+					explosion_new(oldloc, oldloc, 1, 1)
+					if(src.butt_fluff == BUTT_ROBOT)
+						robogibs(oldloc)
+						src.visible_message("<span class='alert'><B>[src]'s butt shatters into a pile of scrap!</B></span>")
+					else
+						gibs(oldloc)
+						src.visible_message("<span class='alert'><B>[src]'s butt explodes into gore!</B></span>")
 					src.exploding = 0
 					src.no_more_butt_explosions = 1
 					break

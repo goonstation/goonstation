@@ -27,7 +27,7 @@
 	/// What color is the bot's speech?
 	var/speech_color
 	/// What does our bot's popup speech look like?
-	var/speech_style = "font-family: 'monospace'; font-size: 8px;"
+	var/speech_style
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
@@ -39,7 +39,7 @@
 	/// If they're onscreen and not in the middle of something major, they get processed rapidly
 	/// If they're right in the middle of something like arresting someone, they get processed *ehhh* quick
 	/// Low process rate for bots that we can't see
-	var/PT_idle = PROCESSING_EIGHTH
+	var/PT_idle = PROCESSING_SIXTEENTH
 	/// High process rate for bots looking for something to do
 	var/PT_search = PROCESSING_HALF
 	/// Middle process rate for bots currently trying to murder someone
@@ -111,23 +111,19 @@
 			if(src.doing_something && src.processing_tier != src.PT_active)
 				src.processing_tier = src.PT_active
 				src.SubscribeToProcess()
-				boutput(world, "[src] set into [src.PT_active] tier!!!")
 			else if(!src.doing_something && TIME >= (src.next_hash_check))
 				src.next_hash_check = TIME + src.hash_cooldown
 				if(src.CheckIfVisible())
 					src.processing_tier = src.PT_search
 					src.SubscribeToProcess()
-					boutput(world, "[src] set into [src.PT_search] tier!!!")
 				else
 					src.processing_tier = src.PT_idle
 					src.SubscribeToProcess()
-					boutput(world, "[src] set into [src.PT_idle] tier!!!")
 			. = ..()
 
 	proc/CheckIfVisible()
 		for (var/mob/M in GET_NEARBY(src, src.hash_check_range))
-			var/client/C = M.client
-			if (C)
+			if(M.client)
 				. = 1
 				break
 

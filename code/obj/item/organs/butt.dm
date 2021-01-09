@@ -159,7 +159,7 @@
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot
+			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
@@ -199,7 +199,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber
+			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
