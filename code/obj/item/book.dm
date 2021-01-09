@@ -311,6 +311,13 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
+	<br>
+	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	"}
 
 /obj/item/paper/book/cookbook
