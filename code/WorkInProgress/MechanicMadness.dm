@@ -3191,7 +3191,7 @@
 			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
 			else
 				var/ascii = text2ascii(letter)
-				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z") || (ascii >= text2ascii("0") && ascii <= text2ascii("9"))
+				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z") || (ascii >= text2ascii("0") && ascii <= text2ascii("9")))
 					src.setDisplayState(letter, "comp_screen_[letter]")
 				else
 					src.setDisplayState("?", "comp_screen_question_mark") // Any unknown characters should display as ? instead.
