@@ -1,6 +1,7 @@
 (t)sat jan 09 21
 (u)pali
 (*)New verb give-player-pets which is like give-pets but only for living mobs which have connected clients. Also both of the verbs now accept the path as an argument in the command bar.
+(*)Moved "Force Say" in the player panel to the Common category. Now available for NPCs. (Very useful for shenanigans.)
 (t)wed dec 09 20
 (u)Flourish
 (*)Adds a new verb, whodead. Gives you a list of everyone who's dead so you don't have to manually go through the player panel.
