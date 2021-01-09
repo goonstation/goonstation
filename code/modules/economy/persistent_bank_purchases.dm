@@ -1,5 +1,6 @@
 
 var/global/list/persistent_bank_purchaseables =	list(\
+	new /datum/bank_purchaseable/human_item/reset,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
@@ -154,6 +155,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 0
 			return ..()
 
+		reset
+			name = "Clear Purchase"
+			cost = 0
+			path = null
 		crayon
 			name = "Crayon"
 			cost = 50
