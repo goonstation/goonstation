@@ -3145,16 +3145,17 @@
 	name = "Letter Display Component"
 	desc = ""
 	icon_state = "comp_screen"
-	letter_index = 1
-	display_letter = null
+
+	var/letter_index = 1
+	var/display_letter = null
 
 	get_desc()
 		. = ..()
-		. += "<br><span class='notice'>Letter Index: [letter_index] | Currently Displaying: [display_character]</span>"
+		. += "<br><span class='notice'>Letter Index: [src.letter_index] | Currently Displaying: [src.display_letter]</span>"
 	secure()
 		icon_state = "comp_screen_blank"
 	loosen()
-		display_letter = null
+		src.display_letter = null
 		icon_state = "comp_screen"
 	New()
 		..()
@@ -3163,8 +3164,7 @@
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
-		if (!in_range(src, user) || user.stat || isnull(input))
-		  return 0
+		if (!in_range(src, user) || user.stat || isnull(input)) return 0
 		if (letter_index < 1)
 			return 0
 		letter_index = input
@@ -3174,19 +3174,34 @@
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !isReady() || !input) return
 		var/signal = input.signal
-		if (lentext(signal) > letter_index)
+		if (length(signal) < src.letter_index)
 			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
-		var/letter = copytext(signal, letter_index, letter_index + 1)
+			return
+		var/letter = copytext(signal, src.letter_index, src.letter_index + 1)
 		src.display(letter)
 
-	proc/display(text/letter)
+	proc/display(var/letter as text)
 		switch(letter)
 			if (" ") src.setDisplayState(" ", "comp_screen_blank")
 			if ("a") src.setDisplayState("A", "comp_screen_A")
 			if ("A") src.setDisplayState("A", "comp_screen_A")
-			else     src.setDisplayState("?", "comp_screen_?") // Any unknown characters should display as ? instead.
+			if ("b") src.setDisplayState("B", "comp_screen_B")
+			if ("B") src.setDisplayState("B", "comp_screen_B")
+			if ("c") src.setDisplayState("A", "comp_screen_C")
+			if ("C") src.setDisplayState("A", "comp_screen_C")
+			if ("d") src.setDisplayState("D", "comp_screen_D")
+			if ("D") src.setDisplayState("D", "comp_screen_D")
+			if ("e") src.setDisplayState("E", "comp_screen_E")
+			if ("E") src.setDisplayState("E", "comp_screen_E")
+			if ("f") src.setDisplayState("F", "comp_screen_F")
+			if ("F") src.setDisplayState("F", "comp_screen_F")
+			if ("g") src.setDisplayState("G", "comp_screen_G")
+			if ("G") src.setDisplayState("G", "comp_screen_G")
+			if ("h") src.setDisplayState("H", "comp_screen_H")
+			if ("H") src.setDisplayState("H", "comp_screen_H")
+			else     src.setDisplayState("?", "comp_screen_question_mark") // Any unknown characters should display as ? instead.
 
-	proc/setDisplayState(text/new_letter, text/new_icon_state)
+	proc/setDisplayState(var/new_letter as text, var/new_icon_state as text)
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
 
