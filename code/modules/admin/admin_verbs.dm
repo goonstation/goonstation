@@ -1474,7 +1474,7 @@ var/list/fun_images = list()
 
 	for (var/client/cl as() in clients)
 		var/mob/living/L = cl.mob
-		if(!istype(L))
+		if(!istype(L) || isdead(L))
 			continue
 		var/obj/Pet = new pet_path(get_turf(L))
 		Pet.name = "[L]'s pet [Pet.name]"
