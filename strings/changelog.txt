@@ -2,6 +2,7 @@
 (t)sat jan 09 21
 (u)pali
 (+)Toggle-Ghost-Radio verb to toggle if you hear radio as a ghost.
+(+)You can now clickdrag barcode stickers onto things to stick them. Useful for borgs.
 (u)BenLubar
 (p)3274
 (e)🆕|feature
