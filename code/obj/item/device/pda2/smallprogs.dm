@@ -567,13 +567,13 @@ Code:
 			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
 			. += "<BR>"
 
-			if(circ1 && !circ1.disposed)
+			if(circ1)
 				. += "<B>Hot Loop</B><BR>"
 				. += "Temperature Inlet: [round(circ1.air1?.temperature, 0.1)] K  Outlet: [round(circ1.air2?.temperature, 0.1)] K<BR>"
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
-			if(circ2 && !circ2.disposed)
+			if(circ2)
 				. += "<B>Cold Loop</B><BR>"
 				. += "Temperature Inlet: [round(circ2.air1?.temperature, 0.1)] K  Outlet: [round(circ2.air2?.temperature, 0.1)] K<BR>"
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
@@ -1105,7 +1105,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		src.master.updateSelfDialog()
 		return
 
-//made global so fines can use it too, might also be useful for other .
+//made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)
 	for(var/mob/M in mobs)
 		if(M.real_name == name && M.key)
