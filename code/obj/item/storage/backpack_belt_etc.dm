@@ -334,11 +334,11 @@
 		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
-	spawn_contents = list(/obj/item/crowbar,
+	spawn_contents = list(/obj/item/crowbar/yellow,
 	/obj/item/weldingtool,
-	/obj/item/wirecutters,
-	/obj/item/screwdriver,
-	/obj/item/wrench,
+	/obj/item/wirecutters/yellow,
+	/obj/item/screwdriver/yellow,
+	/obj/item/wrench/yellow,
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
