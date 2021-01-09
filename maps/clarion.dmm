@@ -11894,7 +11894,8 @@
 	pixel_y = 28
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -21919,7 +21920,9 @@
 	},
 /area/station/science/lobby)
 "aNY" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	dir = 4
+	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -27034,7 +27037,8 @@
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
-	name = "autoname  - SS13"
+	name = "autoname  - SS13";
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -30805,7 +30809,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/area/west{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bdx" = (
@@ -43638,9 +43644,6 @@
 	dir = 8;
 	level = 2
 	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bAa" = (
@@ -51044,6 +51047,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"pwv" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/unary/furnace_connector,
+/obj/machinery/power/furnace/thermo{
+	fuel = 100
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/engine/core)
 "pFT" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -79316,7 +79334,7 @@ bur
 bvx
 bwC
 bxP
-byQ
+pwv
 bzZ
 bBj
 bCs
