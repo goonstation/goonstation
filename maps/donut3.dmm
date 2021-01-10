@@ -7247,7 +7247,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "bOb" = (
 /obj/machinery/navbeacon{
@@ -10589,7 +10589,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "cPX" = (
 /obj/dartboard{
@@ -14458,7 +14458,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "dXP" = (
 /obj/cable{
@@ -14779,7 +14779,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "ecq" = (
 /turf/unsimulated/floor/shuttle,
@@ -17394,7 +17394,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "eSm" = (
 /obj/disposalpipe/segment/transport,
@@ -22232,6 +22232,9 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"goX" = (
+/turf/space/fluid,
+/area/station/engine/engineering/ce)
 "gpb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -31077,7 +31080,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "jel" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -33460,7 +33463,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "jQK" = (
 /obj/stool,
@@ -40946,7 +40949,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "mfB" = (
 /obj/lattice{
@@ -41105,7 +41108,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "miO" = (
 /obj/cable{
@@ -52878,7 +52881,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "pKP" = (
 /turf/simulated/floor/stairs/wide/other{
@@ -56391,7 +56394,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "qIa" = (
 /obj/decal/cleanable/dirt/jen,
@@ -74253,7 +74256,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "wag" = (
 /obj/machinery/firealarm{
@@ -76008,7 +76011,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "wzE" = (
 /turf/simulated/wall/auto/shuttle{
@@ -78031,7 +78034,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "xcV" = (
 /obj/cable{
@@ -78264,7 +78267,7 @@
 	amount = 200;
 	delay = 200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/engine/engineering/ce)
 "xgv" = (
 /obj/cable{
@@ -152236,7 +152239,7 @@ rdj
 rdj
 rdj
 wCh
-wCh
+goX
 mfw
 kTR
 kTR
