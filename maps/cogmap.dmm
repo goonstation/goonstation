@@ -27628,10 +27628,10 @@
 /area/station/security/main)
 "bia" = (
 /obj/machinery/light/small/floor/blueish,
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bib" = (
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bic" = (
 /obj/disposalpipe/segment{
@@ -28152,7 +28152,7 @@
 /mob/living/critter/aquatic/fish/nautilus{
 	name = "Jacques"
 	},
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bjh" = (
 /obj/wingrille_spawn/auto,
@@ -28938,7 +28938,7 @@
 /area/station/maintenance/east)
 "bkM" = (
 /obj/sea_plant/branching,
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bkN" = (
 /obj/disposalpipe/segment{
@@ -29219,7 +29219,7 @@
 /obj/fluid_spawner{
 	amount = 1700
 	},
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "blv" = (
 /obj/item/bananapeel,
@@ -30128,7 +30128,7 @@
 /area/station/routing/depot)
 "bnp" = (
 /obj/sea_plant/seaweed,
-/turf/space/fluid,
+/turf/simulated/floor/sand,
 /area/station/chapel/sanctuary)
 "bnq" = (
 /obj/cable{
