@@ -74913,7 +74913,7 @@
 /area/station/mining/magnet)
 "dgI" = (
 /obj/sea_plant/seaweed,
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgJ" = (
 /obj/machinery/mass_driver{
@@ -74942,11 +74942,11 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgN" = (
 /obj/sea_plant/branching,
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgO" = (
 /obj/table/auto,
@@ -74962,14 +74962,14 @@
 /area/station/medical/medbay/surgery)
 "dgP" = (
 /obj/machinery/light/small/floor/blueish,
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgQ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/blueish,
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgR" = (
 /obj/disposalpipe/segment/transport{
@@ -74978,7 +74978,7 @@
 /mob/living/critter/aquatic/fish/damsel/blue{
 	name = "Gilda"
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dgS" = (
 /obj/grille/catwalk/cross{
@@ -75117,7 +75117,7 @@
 /mob/living/critter/aquatic/fish/gamma{
 	name = "Hilda"
 	},
-/turf/simulated/floor/sand,
+/turf/space/fluid,
 /area/station/crew_quarters/market)
 "dhj" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
