@@ -42,6 +42,7 @@ What are the archived variables for?
 	var/graphic
 	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	var/list/datum/gas/trace_gases
+	var/list/trace_gas_refs // mapping of type=gas to leverage hashing for locate and avoid O(n^2)
 	var/tmp/fuel_burnt = 0
 
 
@@ -49,6 +50,7 @@ What are the archived variables for?
 /datum/gas_mixture/disposing()
 	if (trace_gases)
 		trace_gases = null
+		trace_gas_refs = null
 	..()
 
 /datum/gas_mixture/New()
@@ -68,6 +70,7 @@ What are the archived variables for?
 	graphic_archived = initial(graphic_archived)
 	fuel_burnt = initial(fuel_burnt)
 	trace_gases = initial(trace_gases)
+	trace_gas_refs = initial(trace_gas_refs)
 	#define _UNPOOL_GAS(GAS, ...) GAS = initial(GAS);
 	APPLY_TO_GASES(_UNPOOL_GAS)
 #ifdef ATMOS_ARCHIVING
@@ -79,7 +82,7 @@ What are the archived variables for?
 // Mutator procs
 // For specific events
 /datum/gas_mixture/proc/zero()
-	trace_gases = null
+	clear_trace_gases()
 	ZERO_BASE_GASES(src)
 	if (map_currently_underwater)
 		oxygen = MOLES_O2STANDARD * 0.5
@@ -87,9 +90,35 @@ What are the archived variables for?
 		temperature = OCEAN_TEMP
 
 /datum/gas_mixture/proc/vacuum() //yknow, for when you want "zero" to actually mean "zero".
-	trace_gases = null
+	clear_trace_gases()
 	ZERO_BASE_GASES(src)
 
+/datum/gas_mixture/proc/clear_trace_gases()
+	src.trace_gases = null
+	src.trace_gas_refs = null
+
+/datum/gas_mixture/proc/remove_trace_gas(datum/gas/trace_gas)
+	if(src.trace_gases)
+		src.trace_gases -= trace_gas
+		if(!length(src.trace_gases))
+			clear_trace_gases()
+		else
+			src.trace_gas_refs[trace_gas.type] = null
+
+/datum/gas_mixture/proc/get_or_add_trace_gas_by_type(type)
+	if(!trace_gases)
+		trace_gases = list()
+		trace_gas_refs = list()
+
+	var/datum/gas/trace_gas = src.trace_gas_refs[type]
+	if(!trace_gas)
+		trace_gas = new type()
+		trace_gases += trace_gas
+		trace_gas_refs[type] = trace_gas
+	. = trace_gas
+
+/datum/gas_mixture/proc/get_trace_gas_by_type(type)
+	if(trace_gas_refs) . = src.trace_gas_refs[type]
 
 /datum/gas_mixture/proc/check_tile_graphic()
 	//returns 1 if graphic changed
