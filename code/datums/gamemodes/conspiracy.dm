@@ -104,16 +104,12 @@
 		return candidates
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()
-	var/f = 0
 	var/list/blacklisted = list(0, 1451, 1457)
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
-		f = rand(1352, 1439)
-	while (blacklisted.Find(f))
-
-	return f
+		. = rand(1352, 1439)
+	while (blacklisted.Find(.))
 
 /datum/game_mode/traitor/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
