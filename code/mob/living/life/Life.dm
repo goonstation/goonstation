@@ -56,13 +56,9 @@
 		lifeprocesses[type] = L
 
 	proc/remove_lifeprocess(type)
-		for (var/thing in lifeprocesses)
-			if (thing)
-				if (thing == type)
-					var/datum/lifeprocess/L = lifeprocesses[thing]
-					lifeprocesses -= thing
-					qdel(L)
-					L = null
+		var/datum/lifeprocess/L = lifeprocesses[type]
+		lifeprocesses -= type
+		qdel(L)
 
 	proc/get_heat_protection()
 		.= 0
@@ -198,6 +194,7 @@
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
+			if(src.disposed) return
 			L = src.lifeprocesses[thing]
 			L.process(environment)
 

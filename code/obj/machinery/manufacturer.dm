@@ -2201,7 +2201,10 @@
 #ifdef UNDERWATER_MAP
 	/datum/manufacture/jetpackmkII,
 #endif
-	/datum/manufacture/mining_magnet)
+#ifndef UNDERWATER_MAP
+	/datum/manufacture/mining_magnet
+#endif
+	)
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,

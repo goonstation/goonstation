@@ -270,7 +270,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/tripsalot, list("shoes"))
+	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
 
 /obj/item/clothing/shoes/flippers
 	name = "flippers"

@@ -1,5 +1,41 @@
 
+(t)sat jan 09 21
+(u)BenLubar
+(p)3288
+(e)|
+(+)The AI is once again able to interface with sleeper consoles.
+(u)Flourish
+(+)Space lube, organic superlubricant, oil, and butter, when applied to a turf, now also apply a temporary "wet" overlay. Should be useful for telling when a tile is slippery!
+(u)Keisuki
+(p)3283
+(e)🆕🎨|feature, sprites
+(+)Added the "Letter Display Component" for mechanics.
+(u)pali
+(+)Toggle-Ghost-Radio verb to toggle if you hear radio as a ghost.
+(+)You can now clickdrag barcode stickers onto things to stick them. Useful for borgs.
+(u)BenLubar
+(p)3274
+(e)🆕|feature
+(+)The escape shuttle announcer now announces manual shuttle calls.
 (t)fri jan 08 21
+(u)Flourish
+(p)3184
+(e)⚖🆕|balance, feature
+(+)Capulettium plus now allows you to play as dead when you lay down, and appear alive and functionally normally when you stand up.
+(u)Superlagg
+(p)3139
+(e)🆕|feature
+(+)Katanas now sever butts and tails if they're in an accessible position.
+(u)BenLubar
+(p)3160
+(e)|
+(+)Surgeons now pay more attention to their hand-EYE coordination. Sorry, that was terrible.
+(u)pali
+(+)Character preferences now contain a "Local ghost hearing" toggle - it switches between hearing all living-people chatter or restricting it to your screen. (Still also accessible as the confusingly named toggle-local-deadchat verb.)
+(u)Flappybat
+(p)3199
+(e)🆕|feature
+(+)Added cigar box to the cigarette vending machine.
 (u)TTerc
 (p)3268
 (e)🗺|mapping

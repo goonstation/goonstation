@@ -1159,7 +1159,7 @@ var/datum/flock/testflock
 		testflock = new()
 
 	var/chui/window/flockpanel/panel = testflock.panel
-	panel.Subscribe(usr)
+	panel.Subscribe(usr.client)
 
 /client/proc/clear_string_cache()
 	set name = "Clear String Cache"

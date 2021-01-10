@@ -41,9 +41,12 @@
 		src.maptext_y = 4
 
 		src.maptext_width = 64
+
+		START_TRACKING
 		..()
 
 	disposing()
+		STOP_TRACKING
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			NUKEMODE.the_bomb = null

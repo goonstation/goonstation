@@ -569,11 +569,11 @@ WET FLOOR SIGN
 					else
 						F.removed()
 					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>")
+					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
 				else
 					target.reagents.trans_to(src, 15)
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
+					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
 
 				JOB_XP(user, "Janitor", 1)
 				return
@@ -664,7 +664,7 @@ WET FLOOR SIGN
 	New()
 		. = ..()
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
-		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
 
 	attackby(obj/item/W, mob/user, params)
