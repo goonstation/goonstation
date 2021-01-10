@@ -62,7 +62,7 @@ datum/pipeline
 			if (!member.air_temporary)
 				member.air_temporary = new
 			else
-				member.air_temporary.trace_gases = null
+				member.air_temporary.clear_trace_gases()
 			member.air_temporary.volume = member.volume
 
 			#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.GAS = air.GAS * member.volume / air.volume;
@@ -73,11 +73,7 @@ datum/pipeline
 
 			if(length(air.trace_gases))
 				for(var/datum/gas/trace_gas in air.trace_gases)
-					var/datum/gas/corresponding = new trace_gas.type()
-					if(!member.air_temporary.trace_gases)
-						member.air_temporary.trace_gases = list()
-					member.air_temporary.trace_gases += corresponding
-
+					var/datum/gas/corresponding = member.air_temporary.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
 
 	proc/build_pipeline(obj/machinery/atmospherics/pipe/base)

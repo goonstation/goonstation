@@ -285,7 +285,8 @@
 			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+			if(SA)
 				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					owner.changeStatus("paralysis", 5 SECONDS)
@@ -311,7 +312,8 @@
 
 			//cyber lungs beat radiation. Is there anything they can't do?
 			if (!has_cyberlungs)
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if (RV)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
 		if (human_owner)

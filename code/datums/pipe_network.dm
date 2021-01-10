@@ -115,7 +115,7 @@ datum/pipe_network
 		air_transient.volume = 0
 		ZERO_BASE_GASES(air_transient)
 
-		air_transient.trace_gases = null
+		air_transient.clear_trace_gases()
 
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
@@ -128,15 +128,7 @@ datum/pipe_network
 
 			if(length(gas.trace_gases))
 				for(var/datum/gas/trace_gas in gas.trace_gases)
-					var/datum/gas/corresponding
-					if(length(air_transient.trace_gases))
-						corresponding = locate(trace_gas.type) in air_transient.trace_gases
-					if(!corresponding)
-						corresponding = new trace_gas.type()
-						if(!air_transient.trace_gases)
-							air_transient.trace_gases = list()
-						air_transient.trace_gases += corresponding
-
+					var/datum/gas/corresponding = air_transient.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles += trace_gas.moles
 
 		if(air_transient.volume > 0)
@@ -161,15 +153,7 @@ datum/pipe_network
 
 				if(length(air_transient.trace_gases))
 					for(var/datum/gas/trace_gas in air_transient.trace_gases)
-						var/datum/gas/corresponding
-						if(length(gas.trace_gases))
-							corresponding = locate(trace_gas.type) in gas.trace_gases
-						if(!corresponding)
-							corresponding = new trace_gas.type()
-							if(!gas.trace_gases)
-								gas.trace_gases = list()
-							gas.trace_gases += corresponding
-
+						var/datum/gas/corresponding = gas.get_or_add_trace_gas_by_type(trace_gas.type)
 						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 		return 1
 
@@ -227,15 +211,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 			if(length(total_trace_gases))
 				for(var/datum/gas/trace_gas in total_trace_gases)
-					var/datum/gas/corresponding
-					if(length(gas.trace_gases))
-						corresponding = locate(trace_gas.type) in gas.trace_gases
-					if(!corresponding)
-						corresponding = new trace_gas.type()
-						if(!gas.trace_gases)
-							gas.trace_gases = list()
-						gas.trace_gases += corresponding
-
+					var/datum/gas/corresponding = gas.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles = trace_gas.moles*gas.volume/total_volume
 
 	return 1

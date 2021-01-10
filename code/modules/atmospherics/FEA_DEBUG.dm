@@ -440,10 +440,9 @@ turf/simulated
 
 			if(amount>1)
 				var/datum/gas_mixture/adding = unpool(/datum/gas_mixture)
-				var/datum/gas/sleeping_agent/trace_gas = new
+				var/datum/gas/sleeping_agent/trace_gas = adding.get_or_add_trace_gas_by_type(var/datum/gas/sleeping_agent)
 
 				trace_gas.moles = amount
-				adding.trace_gases += trace_gas
 				adding.temperature = T20C
 
 				assume_air(adding)
