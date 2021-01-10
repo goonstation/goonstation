@@ -31,7 +31,7 @@
 				return
 
 			if(!isghost && src.body)
-				if(isdead(src.body) || !src.body:network_device)
+				if(!istype(src.body, /mob/dead/aieye) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
