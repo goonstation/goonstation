@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 
-	Move()
+	Move(atom/target)
 		. = ..()
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
@@ -762,6 +762,13 @@
 				src.buckled_guy = null
 		..()
 		return
+
+	Move(atom/target)
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+		. = ..()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)

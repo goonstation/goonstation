@@ -357,10 +357,6 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
-
-			if (T.amount < 1 && !issilicon(user))
-				user.u_equip(T)
-				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
