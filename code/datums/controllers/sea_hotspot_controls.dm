@@ -732,6 +732,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -745,6 +746,7 @@
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 0

@@ -513,27 +513,13 @@ Code:
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
-	var/list/obj/machinery/power/collector_control/collector_controlers
-	var/list/obj/machinery/power/vent_capture/vents
 	var/obj/machinery/carouselpower/carousel
-
-	New()
-		..()
-		collector_controlers = list()
-		vents = list()
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
 			ref = locate(type) in machine_registry[MACHINES_POWER]
 			if(ref?.z != 1) ref = null
 		. = ref
-
-	proc/find_machinery_list(list/obj_list, type)
-		obj_list.len = 0
-		for(var/obj/M in machine_registry[MACHINES_POWER])
-			if(istype(M, type) && M.z == 1)
-				obj_list.Add(M)
-
 
 	return_text()
 		if(..())
@@ -547,14 +533,6 @@ Code:
 			circ1 = generator.circ1
 		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
-
-		//Singulo
-		find_machinery_list(collector_controlers, /obj/machinery/power/collector_control)
-
-		//Oshan
-		#if defined(MAP_OVERRIDE_OSHAN)
-		find_machinery_list(vents, /obj/machinery/power/vent_capture)
-		#endif
 
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
@@ -579,12 +557,12 @@ Code:
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
-		if(length(collector_controlers))
+		if(length(by_type[/obj/machinery/power/collector_control]))
 			var/controler_index = 1
 			var/collector_index = 1
-			for(var/obj/machinery/power/collector_control/C as() in collector_controlers)
+			for_by_tcl(C, /obj/machinery/power/collector_control)
 				collector_index = 1
-				if(C?.active)
+				if(C?.active && C.z == 1)
 					engine_found = TRUE
 					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
@@ -594,10 +572,10 @@ Code:
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4?.air_contents), 0.1) : "ERR"] kPa<BR>"
 					. += "<BR>"
 
-		if(length(vents))
+		if(length(by_type[/obj/machinery/power/vent_capture]))
 			. += "<BR><h4>Vent Capture Unit Status</h4>"
-			for(var/obj/machinery/power/vent_capture/V as() in vents)
-				if(locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes)
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
