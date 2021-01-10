@@ -345,17 +345,13 @@ var/global/meteor_shower_active = 0
 	exp_fsh = 3
 	oredrops = list(/obj/item/raw_material/char, /obj/item/raw_material/molitz, /obj/item/raw_material/rock)
 	oredrops_rare = list(/obj/item/raw_material/starstone, /obj/item/raw_material/syreline)
+	var/shatter_types = list(/obj/newmeteor, /obj/newmeteor/small)
 
 	shark
 		name = "robotic shark"
 		icon = 'icons/misc/64x32.dmi'
 		icon_state = "gunshark"
-
-		pick_shatter_type()
-			. = pick(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
-
-	proc/pick_shatter_type()
-		. = pick(/obj/newmeteor, /obj/newmeteor/small)
+		shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
 
 	shatter()
 		playsound(src.loc, sound_explode, 50, 1)
@@ -365,7 +361,7 @@ var/global/meteor_shower_active = 0
 		for(var/A in alldirs)
 			if(prob(15))
 				continue
-			var/type = pick_shatter_type()
+			var/type = pick(shatter_types)
 			var/atom/trg = get_step(src, A)
 			new type(src.loc, trg)
 		var/atom/source = src
