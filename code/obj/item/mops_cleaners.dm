@@ -664,7 +664,7 @@ WET FLOOR SIGN
 	New()
 		. = ..()
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
-		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
 
 	attackby(obj/item/W, mob/user, params)

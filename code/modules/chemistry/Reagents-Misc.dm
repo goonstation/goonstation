@@ -759,14 +759,17 @@ datum
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
 			block_slippy = -2
+			var/visible = 1
 
 			reaction_turf(var/turf/target, var/volume)
+				var/visible = src.visible
 				src = null
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 3) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
-					T.UpdateOverlays(wet, "wet_overlay")
+					if (visible)
+						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
 					SPAWN_DBG(80 SECONDS)
 						if (istype(T))
@@ -774,6 +777,10 @@ datum
 							T.UpdateOverlays(null, "wet_overlay")
 				return
 
+			invisible
+				name = "invisible organic superlubricant"
+				id = "invislube"
+				visible = 0
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
