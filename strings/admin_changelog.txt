@@ -1,3 +1,6 @@
+(t)tue jan 01 10
+(u)Sovexe
+(*)Add new buildmode tool, maze. Spawns in a maze of your desired turfs and lighting. Works best in larger areas.
 (t)sat jan 09 21
 (u)pali
 (*)New verb give-player-pets which is like give-pets but only for living mobs which have connected clients. Also both of the verbs now accept the path as an argument in the command bar.
