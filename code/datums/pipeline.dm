@@ -76,7 +76,7 @@ datum/pipeline
 					var/datum/gas/corresponding = new trace_gas.type()
 					if(!member.air_temporary.trace_gases)
 						member.air_temporary.trace_gases = list()
-					member.air_temporary.trace_gases[corresponding.type] += corresponding
+					member.air_temporary.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
 

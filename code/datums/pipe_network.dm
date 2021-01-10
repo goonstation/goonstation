@@ -127,16 +127,15 @@ datum/pipe_network
 			#undef _RECONCILE_AIR
 
 			if(length(gas.trace_gases))
-				for(var/trace_type in gas.trace_gases)
-					var/datum/gas/trace_gas = gas.trace_gases[trace_type]
+				for(var/datum/gas/trace_gas in gas.trace_gases)
 					var/datum/gas/corresponding
 					if(length(air_transient.trace_gases))
-						corresponding = air_transient.trace_gases[trace_gas.type]
+						corresponding = locate(trace_gas.type) in air_transient.trace_gases
 					if(!corresponding)
 						corresponding = new trace_gas.type()
 						if(!air_transient.trace_gases)
 							air_transient.trace_gases = list()
-						air_transient.trace_gases[corresponding.type] += corresponding
+						air_transient.trace_gases += corresponding
 
 					corresponding.moles += trace_gas.moles
 
@@ -161,16 +160,15 @@ datum/pipe_network
 				gas.temperature = air_transient.temperature
 
 				if(length(air_transient.trace_gases))
-					for(var/trace_type as() in air_transient.trace_gases)
-						var/datum/gas/trace_gas = air_transient.trace_gases[trace_type]
+					for(var/datum/gas/trace_gas in air_transient.trace_gases)
 						var/datum/gas/corresponding
 						if(length(gas.trace_gases))
-							corresponding = gas.trace_gases[trace_gas.type]
+							corresponding = locate(trace_gas.type) in gas.trace_gases
 						if(!corresponding)
 							corresponding = new trace_gas.type()
 							if(!gas.trace_gases)
 								gas.trace_gases = list()
-							gas.trace_gases[corresponding.type] += corresponding
+							gas.trace_gases += corresponding
 
 						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 		return 1
@@ -199,16 +197,15 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
 
 		if(length(gas.trace_gases))
-			for(var/trace_type as() in gas.trace_gases)
-				var/datum/gas/trace_gas = gas.trace_gases[trace_type]
+			for(var/datum/gas/trace_gas in gas.trace_gases)
 				var/datum/gas/corresponding
 				if(length(total_trace_gases))
-					corresponding = total_trace_gases[trace_gas.type]
+					corresponding = locate(trace_gas.type) in total_trace_gases
 				if(!corresponding)
 					corresponding = new trace_gas.type()
 					if(!total_trace_gases)
 						total_trace_gases = list()
-					total_trace_gases[corresponding.type] += corresponding
+					total_trace_gases += corresponding
 
 				corresponding.moles += trace_gas.moles
 
@@ -229,16 +226,15 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 			gas.temperature = temperature
 
 			if(length(total_trace_gases))
-				for(var/trace_type in total_trace_gases)
-					var/datum/gas/trace_gas = total_trace_gases[trace_type]
+				for(var/datum/gas/trace_gas in total_trace_gases)
 					var/datum/gas/corresponding
 					if(length(gas.trace_gases))
-						corresponding = gas.trace_gases[trace_gas.type]
+						corresponding = locate(trace_gas.type) in gas.trace_gases
 					if(!corresponding)
 						corresponding = new trace_gas.type()
 						if(!gas.trace_gases)
 							gas.trace_gases = list()
-						gas.trace_gases[corresponding.type] += corresponding
+						gas.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*gas.volume/total_volume
 

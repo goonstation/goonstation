@@ -682,7 +682,7 @@ obj/machinery/atmospherics/pipe
 
 				if(!air_temporary.trace_gases)
 					air_temporary.trace_gases = list()
-				air_temporary.trace_gases[trace_gas.type] += trace_gas
+				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -753,7 +753,7 @@ obj/machinery/atmospherics/pipe
 
 				if(!air_temporary.trace_gases)
 					air_temporary.trace_gases = list()
-				air_temporary.trace_gases[trace_gas.type] += trace_gas
+				air_temporary.trace_gases += trace_gas
 
 				..()
 

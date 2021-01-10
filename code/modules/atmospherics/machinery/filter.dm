@@ -202,7 +202,7 @@ Filter types:
 										removed.trace_gases = null
 									if(!filtered_out.trace_gases)
 										filtered_out.trace_gases = list()
-									filtered_out.trace_gases[trace_gas.type] += trace_gas
+									filtered_out.trace_gases += trace_gas
 
 
 

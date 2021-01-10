@@ -285,7 +285,7 @@ Contains:
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 		if(!src.air_contents.trace_gases)
 			src.air_contents.trace_gases = list()
-		src.air_contents.trace_gases[trace_gas.type] += trace_gas
+		src.air_contents.trace_gases += trace_gas
 		return
 
 ////////////////////////////////////////////////////////////

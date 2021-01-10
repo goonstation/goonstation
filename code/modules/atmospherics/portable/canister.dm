@@ -721,7 +721,7 @@
 	var/datum/gas/sleeping_agent/trace_gas = new
 	if(!air_contents.trace_gases)
 		air_contents.trace_gases = list()
-	air_contents.trace_gases[trace_gas.type] += trace_gas
+	air_contents.trace_gases += trace_gas
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()

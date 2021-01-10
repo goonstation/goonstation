@@ -231,7 +231,7 @@ REACTOR
 						rad.moles = 0.1
 						if(!T:air:trace_gases)
 							T:air:trace_gases = list()
-						T:air:trace_gases[rad.type] += rad
+						T:air:trace_gases += rad
 
 				temperature += 60 / numConRods
 				FR.amount -= 60 / numConRods
@@ -305,7 +305,7 @@ REACTOR
 				rad.moles = 1000
 				if(!T:air:trace_gases)
 					T:air:trace_gases = list()
-				T:air:trace_gases[rad.type] += rad
+				T:air:trace_gases += rad
 
 		SPAWN_DBG(0.8 SECONDS)
 			meltdown = 2.0
