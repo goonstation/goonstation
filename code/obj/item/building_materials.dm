@@ -133,7 +133,7 @@ MATERIAL
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+			if (S.material && src.material && !isSameMaterial(S.material, src.material))
 				// build glass tables
 				if (src.material.material_flags & MATERIAL_METAL && S.material.material_flags & MATERIAL_CRYSTAL) // we're a metal and they're a glass
 					if (src.amount_check(1,usr) && S.amount_check(2,usr))
@@ -155,7 +155,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && (S.reinforcement.mat_id != src.reinforcement.mat_id)))
+			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
@@ -224,7 +224,7 @@ MATERIAL
 		if (S.material.type != src.material.type)
 			//boutput(world, "check valid stack check 2 failed")
 			return 0
-		if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+		if (S.material && src.material && !isSameMaterial(S.material, src.material))
 			//boutput(world, "check valid stack check 3 failed")
 			return 0
 		if ((src.reinforcement && !S.reinforcement) || (S.reinforcement && !src.reinforcement))
@@ -234,7 +234,7 @@ MATERIAL
 			if (src.reinforcement.type != S.reinforcement.type)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (S.reinforcement.mat_id != src.reinforcement.mat_id)
+			if (!isSameMaterial(S.reinforcement, src.reinforcement))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -634,7 +634,7 @@ MATERIAL
 			return 0
 		if (S.material.type != src.material.type)
 			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
@@ -712,7 +712,7 @@ MATERIAL
 			if (R.amount == src.max_stack)
 				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
-			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+			if (W.material && src.material && !isSameMaterial(W.material, src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
@@ -994,9 +994,7 @@ MATERIAL
 		var/obj/item/tile/S = O
 		if (!S.material || !src.material)
 			return 0
-		if (S.material.type != src.material.type)
-			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
