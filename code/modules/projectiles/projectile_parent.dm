@@ -410,12 +410,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-
-		// The bullet has expired/decayed.
-		if (src.travelled > src.max_range * 32)
-			proj_data.on_max_range_die(src)
-			die()
-			return
 		proj_data.tick(src)
 		if (disposed || pooled)
 			return
@@ -434,6 +428,12 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			src.travelled += src.proj_data.projectile_speed
+
+		// The bullet would be expired/decayed.
+		if (src.travelled >= src.max_range * 32)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 
 		if (proj_data.precalculated)
 			for (var/i = 1, i < crossing.len, i++)

@@ -1,4 +1,5 @@
 
+
 /datum/hud/human
 	var/obj/screen/hud
 		invtoggle
@@ -246,7 +247,7 @@
 
 			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
 			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
-			if (master.stamina_bar)
+			if (master?.stamina_bar)
 				stamina.desc = master.stamina_bar.getDesc(master)
 
 			bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
@@ -266,11 +267,11 @@
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
-				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
 			stats.desc = "..."
 
 			legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
-				tooltipTheme = master && master.client && master.client.preferences && master.client.preferences.hud_style == "New" ? "newhud" : "item")
+				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
 			legend.desc = "When blocking:"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
@@ -295,7 +296,7 @@
 			update_indicators()
 			update_ability_hotbar()
 
-			master.update_equipment_screen_loc()
+			master?.update_equipment_screen_loc()
 
 	clicked(id, mob/user, list/params)
 		switch (id)

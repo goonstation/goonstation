@@ -423,7 +423,6 @@
 		return 1
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
-	world << csound("sound/misc/shuttle_recalled.ogg")
 
 	emergency_shuttle.recall()
 

@@ -1745,7 +1745,7 @@
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
 			for(var/obj/item/material_piece/M in src.contents)
-				if (istype(M, P) && M.material && M.material.mat_id == P.material.mat_id)
+				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
 					pool(P)
@@ -2201,7 +2201,10 @@
 #ifdef UNDERWATER_MAP
 	/datum/manufacture/jetpackmkII,
 #endif
-	/datum/manufacture/mining_magnet)
+#ifndef UNDERWATER_MAP
+	/datum/manufacture/mining_magnet
+#endif
+	)
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,

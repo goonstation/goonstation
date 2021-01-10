@@ -1006,7 +1006,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

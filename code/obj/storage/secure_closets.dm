@@ -136,7 +136,7 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access_txt = "49"
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,

@@ -1,5 +1,76 @@
 
+(t)sun jan 10 21
+(u)Flaborized
+(p)3284
+(e)🎨|sprites
+(+)Engineering jobs now have yellow tools.
+(u)kyle
+(+)I put away my robe and wizard hat.
+(u)DimWhat and WALPVRGIS
+(p)3263
+(e)🎨|sprites
+(+)Added mime clothing to Geoff Honkington's list of wares. Comes with its own special box! Spritework by WALPVGRIS.
+(t)sat jan 09 21
+(u)BenLubar
+(p)3288
+(e)|
+(+)The AI is once again able to interface with sleeper consoles.
+(u)Flourish
+(+)Space lube, organic superlubricant, oil, and butter, when applied to a turf, now also apply a temporary "wet" overlay. Should be useful for telling when a tile is slippery!
+(u)Keisuki
+(p)3283
+(e)🆕🎨|feature, sprites
+(+)Added the "Letter Display Component" for mechanics.
+(u)pali
+(+)Toggle-Ghost-Radio verb to toggle if you hear radio as a ghost.
+(+)You can now clickdrag barcode stickers onto things to stick them. Useful for borgs.
+(u)BenLubar
+(p)3274
+(e)🆕|feature
+(+)The escape shuttle announcer now announces manual shuttle calls.
 (t)fri jan 08 21
+(u)Flourish
+(p)3184
+(e)⚖🆕|balance, feature
+(+)Capulettium plus now allows you to play as dead when you lay down, and appear alive and functionally normally when you stand up.
+(u)Superlagg
+(p)3139
+(e)🆕|feature
+(+)Katanas now sever butts and tails if they're in an accessible position.
+(u)BenLubar
+(p)3160
+(e)|
+(+)Surgeons now pay more attention to their hand-EYE coordination. Sorry, that was terrible.
+(u)pali
+(+)Character preferences now contain a "Local ghost hearing" toggle - it switches between hearing all living-people chatter or restricting it to your screen. (Still also accessible as the confusingly named toggle-local-deadchat verb.)
+(u)Flappybat
+(p)3199
+(e)🆕|feature
+(+)Added cigar box to the cigarette vending machine.
+(u)TTerc
+(p)3268
+(e)🗺|mapping
+(+)Added Beepsky's house and several pet and monkey spawns to Atlas.
+(u)Flappybat
+(p)3205
+(e)⚖🔄|balance, rework
+(*)Changed spy thief reward logic. Rewards are now more proportional to the target's job or difficulty of accessing the object.
+(u)BatElite
+(p)3203
+(e)🆕🎨|feature, sprites
+(*)Certain computers (most notably the cloning & genetic consoles) can now be made to re-scan for equipment by using a multitool on them!
+(u)BenLubar
+(p)3181
+(e)📄|tgui
+(*)Ported sleeper consoles to tgui.
+(u)BenLubar
+(p)3261
+(e)|
+(+)The Power Monitoring Computer has been upgraded to a state-of-the-art 6-color screen.
+(u)BenLubar
+(p)3213
+(e)|
+(*)Lizards and cows and roaches and skeletons rejoice! You can now see a preview of your character in the character setup preview.
 (u)kyle
 (+)I put on my robe and wizard hat.
 (t)thu jan 07 21

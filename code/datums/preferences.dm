@@ -47,6 +47,7 @@ datum/preferences
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
 	var/auto_capitalization = 0
+	var/local_deadchat = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
@@ -152,66 +153,14 @@ datum/preferences
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		src.preview_icon = null
+		var/datum/mutantrace/mutantRace = null
+		for (var/ID in traitPreferences.traits_selected)
+			var/obj/trait/T = getTraitById(ID)
+			if (T?.mutantRace)
+				mutantRace = T.mutantRace
+				break
 
-		src.preview_icon = new /icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", "dir" = src.spessman_direction)
-
-		// Skin tone
-		if (AH.s_tone)
-			src.preview_icon.Blend(AH.s_tone, ICON_MULTIPLY)
-
-		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.e_color))
-			eyes_s.Blend(AH.e_color, ICON_MULTIPLY)
-		else
-			eyes_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/customization_first_r = customization_styles[AH.customization_first]
-		if (!customization_first_r)
-			customization_first_r = "None"
-
-		var/customization_second_r = customization_styles[AH.customization_second]
-		if (!customization_second_r)
-			customization_second_r = "None"
-
-		var/customization_third_r = customization_styles[AH.customization_third]
-		if (!customization_third_r)
-			customization_third_r = "none"
-
-		var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_first_color))
-			hair_s.Blend(AH.customization_first_color, ICON_MULTIPLY)
-		else
-			hair_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_second_color))
-			facial_s.Blend(AH.customization_second_color, ICON_MULTIPLY)
-		else
-			facial_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r, "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.customization_third_color))
-			detail_s.Blend(AH.customization_third_color, ICON_MULTIPLY)
-		else
-			detail_s.Blend("#101010", ICON_MULTIPLY)
-
-		var/underwear_style = underwear_styles[AH.underwear]
-		var/icon/underwear_s = new/icon("icon" = 'icons/mob/human_underwear.dmi', "icon_state" = "[underwear_style]", "dir" = src.spessman_direction)
-		if (is_valid_color_string(AH.u_color))
-			underwear_s.Blend(AH.u_color, ICON_MULTIPLY)
-
-		eyes_s.Blend(underwear_s, ICON_OVERLAY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
-		eyes_s.Blend(detail_s, ICON_OVERLAY)
-
-		src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
-
-		facial_s = null
-		hair_s = null
-		underwear_s = null
-		eyes_s = null
+		src.preview_icon = character_preview_icon(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -764,7 +713,8 @@ $(function() {
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
 			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
-			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span><br>
+			<a href="[pref_link]local_deadchat=1" class="toggle">[crap_checkbox(src.local_deadchat)] Local ghost hearing</a><span class="info-thing" title="You'll only hear chat messages from living people on your screen as a ghost.">?</span>
 		</td>
 	</tr>"}
 		LAGCHECK(80)
@@ -1099,6 +1049,7 @@ $(function() {
 		if (!src.job_favorite)
 			HTML += " None"
 		else
+			var/print_the_job = FALSE
 			var/datum/job/J_Fav = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : null
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
@@ -1112,7 +1063,11 @@ $(function() {
 					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
+				else
+					print_the_job = TRUE
 			else
+				print_the_job = TRUE
+			if(print_the_job)
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
 		HTML += {"
@@ -1220,6 +1175,21 @@ $(function() {
 	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
 		if (src.antispam)
 			return
+		switch(occ)
+			if (1)
+				if(src.job_favorite != job)
+					return
+			if (2)
+				if(!(job in src.jobs_med_priority))
+					return
+			if (3)
+				if(!(job in src.jobs_low_priority))
+					return
+			if (4)
+				if(!(job in src.jobs_unwanted))
+					return
+			else
+				return
 		if (!find_job_in_controller_by_string(job,1))
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
@@ -1703,6 +1673,10 @@ $(function() {
 			rebuild_data["messages"] = 1
 			src.auto_capitalization = !(src.auto_capitalization)
 
+		if (link_tags["local_deadchat"])
+			rebuild_data["messages"] = 1
+			src.local_deadchat = !(src.local_deadchat)
+
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
 			src.admin_music_volume = max(0,min(src.admin_music_volume,100))
@@ -1961,6 +1935,7 @@ $(function() {
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			local_deadchat = 0
 			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1
@@ -2031,6 +2006,8 @@ $(function() {
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
 
 		if (traitPreferences.isValid() && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
@@ -2436,3 +2413,23 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 /proc/crap_checkbox(var/checked)
 	if (checked) return "&#9745;"
 	else return "&#9744;"
+
+var/global/mob/living/carbon/human/character_preview_icon_mob = null
+
+/proc/character_preview_icon(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
+	if (isnull(character_preview_icon_mob))
+		character_preview_icon_mob = new()
+
+	var/mob/living/carbon/human/H = character_preview_icon_mob
+
+	H.dir = direction
+	H.bioHolder.mobAppearance.CopyOther(AH)
+	H.set_mutantrace(MR)
+	H.organHolder.head.donor = H
+	H.organHolder.head.donor_appearance.CopyOther(H.bioHolder.mobAppearance)
+
+	H.update_colorful_parts()
+	H.update_body()
+	H.update_face()
+
+	. = getFlatIcon(H)

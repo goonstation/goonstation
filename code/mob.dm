@@ -258,7 +258,7 @@
 	return 0
 
 /mob/Move(a, b, flag)
-	if (src.buckled && src.buckled.anchored)
+	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
 	if (src.dir_locked)
@@ -268,7 +268,7 @@
 	if (src.restrain_time > TIME)
 		return
 
-	if (src.buckled)
+	if (src.buckled && istype(src.buckled))
 		var/glide_size = src.glide_size
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
@@ -2921,7 +2921,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)

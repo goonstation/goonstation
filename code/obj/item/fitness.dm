@@ -62,6 +62,7 @@
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "weight_machine")
 			user.transforming = 1
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
@@ -81,6 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "weight_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

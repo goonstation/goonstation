@@ -122,6 +122,9 @@
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
 					"<span class='combat'><b>You bite at [target_human]'s ankles!</b></span>")
 					REMOVE_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
+				else
+					boutput(holder.owner, "<span class='alert'>[target_human] moved out of reach!</span>")
+					REMOVE_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
 				sleep(0.4 SECONDS)
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
