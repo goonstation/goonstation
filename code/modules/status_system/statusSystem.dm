@@ -333,6 +333,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	var/move_triggered = 0
 	/// Has a movement-modifying effect
 	var/datum/movement_modifier/movement_modifier
+	/// If the owner should be tracked for easy lookup. Check out types.dm for more info! Won't track them if null.
+	var/track_cat
 
 
 	/**
@@ -352,6 +354,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		* optional {optional} - arg from setStatus (passed in)
 		*/
 	proc/onAdd(var/optional=null)
+		if(src.track_cat && src.owner)
+			OTHER_START_TRACKING_CAT(src.owner, src.track_cat)
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
@@ -361,6 +365,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		* Called when the status is removed from the object. owner is still set at this point.
 		*/
 	proc/onRemove()
+		if(src.track_cat && src.owner)
+			OTHER_STOP_TRACKING_CAT(src.owner, src.track_cat)
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
@@ -776,6 +782,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		icon_state = "fire1"
 		unique = 1
 		maxDuration = 100 SECONDS
+		track_cat = TR_CAT_BURNING_MOBS
 
 		damage_burn = 1
 		damage_type = DAMAGE_BURN

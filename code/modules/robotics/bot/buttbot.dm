@@ -86,21 +86,21 @@
 		src.buttarm = _arm
 	else
 		src.buttarm = new/obj/item/parts/robot_parts/arm/left/light(src)
-	SPAWN_DBG(0)
-		if (src.butt?.toned)
-			var/icon/new_icon = icon(src.icon, "butt_ncbot")
-			if (butt.s_tone)
-				new_icon.Blend(butt.s_tone, ICON_MULTIPLY)
-			var/icon/my_icon = icon(src.icon, src.icon_state)
-			my_icon.Blend(new_icon, ICON_OVERLAY)
-			src.icon = my_icon
-		switch(src.butt?.type)
-			if(/obj/item/clothing/head/butt/synth)
-				src.butt_fluff = BUTT_PLANT
-			if(/obj/item/clothing/head/butt/cyberbutt)
-				src.butt_fluff = BUTT_ROBOT
-			else
-				src.butt_fluff = BUTT_FLESH
+
+	if (src.butt?.toned)
+		var/icon/new_icon = icon(src.icon, "butt_ncbot")
+		if (butt.s_tone)
+			new_icon.Blend(butt.s_tone, ICON_MULTIPLY)
+		var/icon/my_icon = icon(src.icon, src.icon_state)
+		my_icon.Blend(new_icon, ICON_OVERLAY)
+		src.icon = my_icon
+	switch(src.butt?.type)
+		if(/obj/item/clothing/head/butt/synth)
+			src.butt_fluff = BUTT_PLANT
+		if(/obj/item/clothing/head/butt/cyberbutt)
+			src.butt_fluff = BUTT_ROBOT
+		else
+			src.butt_fluff = BUTT_FLESH
 
 /obj/machinery/bot/buttbot/emp_act()
 	src.emag_act()
@@ -153,9 +153,8 @@
 	if (!src.emagged)
 		if (user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
-		SPAWN_DBG(0)
-			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-			playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
+		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
 		src.emagged = 1
 		return 1
 	return 0

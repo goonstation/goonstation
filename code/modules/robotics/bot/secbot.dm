@@ -22,6 +22,8 @@
 #define BATON_CHARGE_DURATION (3 SECONDS)
 #define BATON_CHARGE_DURATION_BEEPSKY (6 SECONDS)
 
+#define SECBOT_LASTTARGET_COOLDOWN "secbot_emag_grace_period"
+
 /obj/machinery/bot/secbot
 	name = "Securitron"
 #ifdef HALLOWEEN
@@ -48,7 +50,8 @@
 	var/oldtarget_name
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
-	var/last_found //There's a delay
+	/// Time after being emagged before they'll consider going after their emagger
+	var/last_target_cooldown = 20 SECONDS
 	emagged = 0 //Emagged Secbots view everyone as a criminal
 	health = 25
 	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
@@ -56,7 +59,7 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/report_arrests = 0 //If true, report arrests over PDA messages.
 	var/is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON	// How Beepsky are we?
-	botcard_access = "Head of Security"
+	access_lookup = "Head of Security"
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
 	var/our_baton_type = /obj/item/baton/secbot
 	var/loot_baton_type = /obj/item/scrap
@@ -88,7 +91,6 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
-	var/last_attack = 0
 	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
 	/// One WEEOOWEEOO at a time, please
 	var/weeooing
@@ -294,9 +296,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.overlays.len = 0
 			else if (user)
 				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-			SPAWN_DBG(0)
-				for(var/mob/O in hearers(src, null))
-					O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 
 
 			src.emagged++
@@ -316,7 +316,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 
 			if(user)
 				src.oldtarget_name = user.name
-				src.last_found = world.time
+				ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
 			logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
 			return 1
 		return 0
@@ -409,8 +409,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 			var/maxstuns = 4
 			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
 
-			src.last_attack = world.time
-
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
 				if (src.our_baton.uses_electricity == 0)
@@ -452,7 +450,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		var/oldloc = src.loc
 		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
-			if (oldloc != NewLoc && world.time != last_attack)
+			if (oldloc != NewLoc)
 				if (mode == SECBOT_HUNT && target)
 					if (IN_RANGE(src, src.target, 1))
 						src.baton_attack(src.target, 1)
@@ -720,7 +718,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
+			if ((C.name == src.oldtarget_name) && ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[C.name]", src.last_target_cooldown))
 				continue
 			if (ishuman(C))
 				src.threatlevel = src.assess_perp(C)
@@ -740,7 +738,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					if('sound/voice/bfreeze.ogg')
 						src.speak("FREEZE. SCUMBAG.")
 				playsound(src.loc, saything, 50, 0)
-				src.visible_message("<b>[src]</b> points at [C.name]!")
+				src.point(src.target, 1)
 				mode = SECBOT_HUNT
 				weeoo()
 				process()	// ensure bot quickly responds to a perp
@@ -761,7 +759,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		if(give_up)
 			src.mode = SECBOT_IDLE
 			src.target = null
-			src.last_found = world.time
 
 	proc/weeoo()
 		if(weeooing)
@@ -870,11 +867,6 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					break
 
 		return threatcount
-
-	Bumped(M as mob|obj)
-		SPAWN_DBG(0)
-			var/turf/T = get_turf(src)
-			M:set_loc(T)
 
 	bullet_act(var/obj/projectile/P)
 		var/damage = 0

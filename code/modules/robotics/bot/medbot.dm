@@ -2,6 +2,10 @@
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
 #define MEDBOT_MOVE_SPEED 6
+#define MEDBOT_LASTPATIENT_COOLDOWN "medbot_anti_patient_clinginess"
+#define MEDBOT_POINT_COOLDOWN "medbot_pointing_antirudeness"
+#define MEDBOT_HOSTILE_COOLDOWN "medbot_please_be_fair"
+
 /obj/machinery/bot/medbot
 	name = "Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
@@ -17,6 +21,7 @@
 	on = 1
 	health = 20
 	locked = 1
+	bot_move_delay = MEDBOT_MOVE_SPEED
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
@@ -24,7 +29,10 @@
 	var/mob/living/carbon/oldpatient = null
 	var/oldloc = null
 	var/last_found = 0
-	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
+	var/last_patient_cooldown = 10 SECONDS
+	/// For evil medbots, after doing their deed to a person, ignore them for this long (or the bot gets hurt)
+	var/hostile_last_patient_cooldown = 30 SECONDS
+	var/point_cooldown = 10 SECONDS //Don't spam the "HEY I'M COMING" messages
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -134,8 +142,6 @@
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.access_lookup)
 			src.update_icon()
 	return
 
@@ -225,9 +231,7 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
-		SPAWN_DBG(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -300,15 +304,9 @@
 		if (src.health <= 0)
 			src.explode()
 		else if (W.force)
+			src.cooldowns = list() // Mainly applies to hostile bots
 			step_to(src, (get_step_away(src,user)))
 		..()
-
-/obj/machinery/bot/medbot/proc/point(var/mob/living/carbon/target) // I stole this from the chefbot <3 u marq ur a beter codr then me
-	visible_message("<b>[src]</b> points at [target]!")
-	if (iscarbon(target))
-		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(2.5 SECONDS)
-			qdel(D)
 
 /obj/machinery/bot/medbot/process()
 	. = ..()
@@ -341,20 +339,18 @@
 			if ((isdead(C)) || !ishuman(C))
 				continue
 
-			if ((C == src.oldpatient) && (world.time < src.last_found + 100))
+			if ((C == src.oldpatient) && ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.oldpatient]", src.last_patient_cooldown))
 				continue
 
 			if (src.assess_patient(C))
 				src.patient = C
 				src.oldpatient = C
-				src.last_found = world.time
+				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.oldpatient]", src.last_patient_cooldown)
 				src.doing_something = 1
-				SPAWN_DBG(0)
-					if ((src.last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
-						src.speak(message)
-						src.last_newpatient_speak = world.time
-					src.point(C.name)
+				if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[src.patient]", src.point_cooldown)) //Don't spam these messages!
+					src.point(src.patient, 1)
+					var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
+					src.speak(message)
 				break
 			else
 				continue
@@ -388,6 +384,8 @@
 		return 0 //Kevorkian school of robotic medical assistants.
 
 	if(src.emagged) //Everyone needs our medicine. (Our medicine is toxins)
+		if(ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[C.name]", src.hostile_last_patient_cooldown))
+			return 0 // cept people who already had our medicine
 		return 1
 
 	var/brute = C.get_brute_damage()
@@ -439,12 +437,6 @@
 	if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 		reagent_id = "internal_beaker"
 
-	if (src.terrifying)
-		reagent_id = pick("pancuronium","haloperidol")
-
-	if (src.emagged && !src.terrifying) //Emagged! Time to poison everybody.
-		reagent_id = "pancuronium" // HEH
-
 	if (!reagent_id)
 		if(!C.reagents.has_reagent(src.treatment_virus))
 			reagent_id = src.treatment_virus
@@ -467,6 +459,20 @@
 	if (!reagent_id && (C.get_toxin_damage() >= heal_threshold))
 		if(!C.reagents.has_reagent(src.treatment_tox))
 			reagent_id = src.treatment_tox
+
+	if (src.terrifying)
+		reagent_id = "haloperidol"
+		if(C.reagents.has_reagent(reagent_id, 10))
+			reagent_id = "pancuronium"
+			if(C.reagents.has_reagent(reagent_id, 10))
+				reagent_id = null
+				ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
+
+	if (src.emagged && !src.terrifying) //Emagged! Time to poison everybody.
+		reagent_id = "pancuronium" // HEH
+		if(C.reagents.has_reagent(reagent_id, 15)) // spread the love around
+			reagent_id = null
+			ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
 
 	if (!reagent_id) //If they don't need any of that they're probably cured!
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
@@ -492,7 +498,7 @@
 		src.currently_healing = 0
 		src.oldpatient = src.patient
 		src.patient = null
-		src.last_found = TIME
+		src.cooldowns = list()
 		src.oldloc = null
 		src.path = null
 
@@ -681,11 +687,6 @@
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
-
-/obj/machinery/bot/medbot/Bumped(M as mob|obj)
-	SPAWN_DBG(0)
-		var/turf/T = get_turf(src)
-		M:set_loc(T)
 
 /*
  *	Medbot Assembly -- Can be made out of all three medkits.

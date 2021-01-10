@@ -643,6 +643,9 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
+/atom/movable/proc/rand_toss()
+	GetTurfAlongSquaredCircle(src, 3)
+
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))

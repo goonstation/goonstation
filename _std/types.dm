@@ -160,5 +160,8 @@ var/list/list/by_cat = list()
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_BURNING_MOBS "dude_on_fire"
+#define TR_CAT_HOTSPOTS "air_on_fire"
+#define TR_CAT_BURNING_THINGS "stuff_on_fire"
 // powernets? processing_items?
 // mobs? ai-mobs?

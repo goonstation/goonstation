@@ -30,13 +30,6 @@
 			if(prob(30 + src.emagged * 30))
 				yell()
 
-/obj/machinery/bot/chefbot/proc/point(var/target)
-	visible_message("<b>[src]</b> points at [target].")
-	if (istype(target, /atom))
-		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(2.5 SECONDS)
-			qdel(D)
-
 /obj/machinery/bot/chefbot/proc/drama()
 	playsound(get_turf(src),'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
 

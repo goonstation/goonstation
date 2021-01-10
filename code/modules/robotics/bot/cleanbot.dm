@@ -1,5 +1,7 @@
 // WIP bot improvements (Convair880).
 #define CLEANBOT_MOVE_SPEED 10
+#define CLEANBOT_CLEARTARGET_COOLDOWN "cleanbotclearinvalidtargetslist"
+#define CLEANBOT_CLEAN_COOLDOWN "slackbotidle"
 ////////////////////////////////////////////// Cleanbot assembly ///////////////////////////////////////
 /obj/item/bucket_sensor
 	desc = "It's a bucket. With a sensor attached."
@@ -49,6 +51,7 @@
 	health = 25
 	no_camera = 1
 	access_lookup = "Janitor"
+	bot_move_delay = CLEANBOT_MOVE_SPEED
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -82,8 +85,6 @@
 
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
-				src.botcard = new /obj/item/card/id(src)
-				src.botcard.access = get_access(src.access_lookup)
 				src.clear_invalid_targets = TIME
 
 				var/datum/reagents/R = new /datum/reagents(50)
@@ -215,13 +216,12 @@
 
 	process()
 		. = ..()
-		if (!src.on || src.cleaning || src.moving || src.idle && TIME <= src.idle + src.idle_delay)
+		if (!src.on || src.cleaning || src.moving || src.idle && ON_COOLDOWN(src, CLEANBOT_CLEAN_COOLDOWN, src.idle_delay))
 			return
 
 		// Invalid targets may not be unreachable anymore. Clear list periodically.
-		if (src.clear_invalid_targets && TIME >= src.clear_invalid_targets + src.clear_invalid_targets_interval)
+		if (src.clear_invalid_targets && !ON_COOLDOWN(src, CLEANBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 			src.targets_invalid = list()
-			src.clear_invalid_targets = TIME
 
 		if (!src.target)
 			if(!src.scan_origin || !isturf(src.scan_origin))
@@ -230,12 +230,7 @@
 			src.doing_something = 0
 
 		if (src.target)
-			var/obj/decal/point/P = new(get_turf(src.target))
-			P.pixel_x = src.target.pixel_x
-			P.pixel_y = src.target.pixel_y
-			SPAWN_DBG(2 SECONDS)
-				P.invisibility = 101
-				qdel(P)
+			src.point(src.target)
 			src.doing_something = 1
 			/// I'm targetting this, nobody else target it!
 			if(!(src.target in src.cleanbottargets))

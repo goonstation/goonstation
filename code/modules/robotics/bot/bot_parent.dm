@@ -8,7 +8,7 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
 	var/obj/item/card/id/botcard // ID card that the bot "holds".
-	var/access_lookup = "Captain" // For the get_access() proc. Defaults to all-access.
+	var/access_lookup = "Assistant" // For the get_access() proc. Defaults to staff assistant.
 	var/locked = null
 	var/on = 1
 	var/health = 25
@@ -19,20 +19,23 @@
 	var/obj/machinery/camera/cam = null
 	var/emagged = 0
 	var/mob/emagger = null
+	/// The bot's net ID
+	var/botnet_id = null
 	/// What's it talk like?
 	var/list/speakverbs = list("beeps", "boops")
 	var/text2speech = 0 // dectalk!
 	/// Should the bot's speech pop up over them?
 	var/speech2text = 1
 	/// What color is the bot's speech?
-	var/speech_color
+	var/bot_speech_color
 	/// What does our bot's popup speech look like?
-	var/speech_style
+	var/bot_speech_style
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
+	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
 	var/dynamic_processing = 1
 	/// Bots get their processing tier changed based on what they're doing
 	/// If they're offscreen and not doing anything interesting, they get processed less rapidly
@@ -48,17 +51,15 @@
 	var/next_hash_check = 0
 	/// If we're in the middle of something and don't want our tier to go wonky
 	var/doing_something = 0
-	/// Range that the bot checks for people
-	/// Should be low for bots that don't interact with people that much, like skullbots
-	/// Should be around 7ish for bots that interact with people, but tend to sit still
-	/// Should be fairly high for patrolling "major character" bots, like Buddies
+	/// Range that the bot checks for clients
 	var/hash_check_range = 6
 
 	var/frustration = 0
+	/// How slowly the bot moves by default -- higher is slower!
+	var/bot_move_delay = 6
 	var/list/path = null	// list of path turfs
 	var/datum/robot_mover/bot_mover
 	var/moving = 0 // Are we ON THE MOVE??
-	var/botcard_access = "Staff Assistant" //Job access for doors.
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/current_movepath = 0
 	var/scanrate = 10 // How often do we check for stuff while we're ON THE MOVE. in deciseconds
@@ -88,6 +89,7 @@
 		SPAWN_DBG(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
+			src.botnet_id = format_net_id("\ref[src]")
 
 	disposing()
 		botcard = null
@@ -156,19 +158,19 @@
 
 		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text)
-			UpdateOverlays(speech_bubble, "bot_speech_bubble")
+			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
 			SPAWN_DBG(1.5 SECONDS)
 				UpdateOverlays(null, "bot_speech_bubble")
-			if(!src.speech_color)
+			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.speech_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
+				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
 			var/singing_italics = sing ? " font-style: italic;" : ""
 			var/maptext_color
 			if (sing)
 				maptext_color ="#D8BFD8"
 			else
-				maptext_color = src.speech_color
-			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.speech_style + singing_italics)
+				maptext_color = src.bot_speech_color
+			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.bot_speech_style + singing_italics)
 			if(chatbot_text)
 				chatbot_text.measure(src)
 				for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -205,6 +207,12 @@
 	if(!src.density)
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROGH
 
+/obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
+	var/turf/T = get_turf(src)
+	if(ismovable(M))
+		var/atom/movable/AM = M
+		AM.set_loc(T)
+
 /obj/machinery/bot/proc/DoWhileMoving()
 	return
 
@@ -217,6 +225,19 @@
 		qdel(src.bot_mover)
 
 	return
+
+/obj/machinery/bot/proc/point(var/atom/target, var/announce_it = 0) // I stole this from the medibot (and chefbot) <3 u marq ur a beter codr then me
+	var/turf/T = get_turf(target)
+	if(!T) return
+	if(announce_it)
+		visible_message("<b>[src]</b> points at [target]!")
+	var/obj/decal/point/P = new(T)
+	P.pixel_x = target.pixel_x
+	P.pixel_y = target.pixel_y
+	P.color = src.bot_speech_color
+	SPAWN_DBG(2 SECONDS)
+		P.invisibility = 101
+		qdel(P)
 
 /obj/machinery/bot/emp_act()
 	src.emag_act()

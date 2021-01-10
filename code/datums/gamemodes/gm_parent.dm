@@ -36,6 +36,7 @@
 // Fuck.
 // F U C K
 /datum/game_mode/proc/post_post_setup()
+	station_areas = get_accessible_station_areas()
 
 /datum/game_mode/proc/process()
 	if (spy_market)

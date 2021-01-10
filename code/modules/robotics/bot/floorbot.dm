@@ -1,5 +1,6 @@
 //Floorbot assemblies
 #define FLOORBOT_MOVE_SPEED 7
+#define FLOORBOT_CLEARTARGET_COOLDOWN "clearinvalidfloorbotlist"
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
@@ -33,6 +34,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = 0
+	bot_move_delay = FLOORBOT_MOVE_SPEED
 	//weight = 1.0E7
 	var/amount = 50
 	on = 1
@@ -72,8 +74,6 @@
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.access_lookup)
 			src.updateicon()
 	return
 
@@ -275,9 +275,8 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		return
 
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
-	if (src.clear_invalid_targets && TIME > src.clear_invalid_targets + src.clear_invalid_targets_interval)
+	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
-		src.clear_invalid_targets = TIME
 
 	if (!src.target)
 		// basically: try to find a target within 3 tiles
@@ -288,13 +287,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		src.target = src.find_target()
 
 	if (src.target)
-		src.oldtarget = null
-		var/obj/decal/point/P = new(get_turf(src.target))
-		P.pixel_x = target.pixel_x
-		P.pixel_y = target.pixel_y
-		SPAWN_DBG(2 SECONDS)
-			P.invisibility = 101
-			qdel(P)
+		src.point(src.target)
 		src.doing_something = 1
 		/// I'm targetting this, nobody else target it!
 		src.floorbottargets += src.target

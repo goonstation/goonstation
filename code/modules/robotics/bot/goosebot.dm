@@ -19,21 +19,19 @@
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
-		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
-		if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
+	step_rand(src,1)
 
 /obj/machinery/bot/goosebot/process()
 	. = ..()
 	if(prob(50) && src.on == 1)
-		SPAWN_DBG(0)
-			var/message = pick("HONK", "HOOOOOOONK","WACK WACK","GOWGOW","SCREEEEEE")
-			quack(message)
-			wakka_wakka()
-			if(prob(50))
-				playsound(src.loc, "sound/misc/thegoose_honk.ogg", 100, 0)
-				throw_egg_is_true()
-			else
-				playsound(src.loc, "sound/misc/thegoose_song.ogg", 100, 0)
+		var/message = pick("HONK", "HOOOOOOONK","WACK WACK","GOWGOW","SCREEEEEE")
+		quack(message)
+		wakka_wakka()
+		if(prob(50))
+			playsound(src.loc, "sound/misc/thegoose_honk.ogg", 100, 0)
+			throw_egg_is_true()
+		else
+			playsound(src.loc, "sound/misc/thegoose_song.ogg", 100, 0)
 
 
 

@@ -37,8 +37,6 @@
 	src.clear_invalid_targets = TIME
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.access_lookup)
 			src.camera = new /obj/item/camera_test(src)
 			src.icon_state = "cambot[src.on]"
 
@@ -52,10 +50,9 @@
 			src.add_fingerprint(user)
 			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
-		SPAWN_DBG(0)
-			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-			playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
-			flick("cambot-spark", src)
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
+		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
 	return 0

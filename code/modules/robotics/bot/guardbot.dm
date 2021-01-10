@@ -176,7 +176,7 @@
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-
+	var/datum/buddy_shooter/shootloop
 	//
 	////////////////////// GUN STUFF -^
 
@@ -188,7 +188,7 @@
 	var/last_comm = 0 //World time of last transmission
 	var/reply_wait = 0
 
-	botcard_access = "Captain" //Job access for doors.
+	access_lookup = "Captain" //Job access for doors.
 									//It's not like they can be pushed into airlocks anymore
 	var/setup_no_costumes = 0 //no halloween costumes for us!!
 	var/setup_unique_name = 0 //Name doesn't need random number appended to it.
@@ -1090,7 +1090,7 @@
 		if(bar_gun.shotsLeft > 1)
 			bar_gun.shotsLeft--
 			playsound(src, "sound/weapons/Gunclick.ogg", 80, 1)
-			src.visible_message("<span class='alert'>[src] points the gun at itself head. Click!</span>")
+			src.visible_message("<span class='alert'>[src] points the gun at its head. Click!</span>")
 
 		if (bar_gun.shotsLeft == 0)
 			DropTheThing("gun", null, 0, 1, TdurgBar, 1)
@@ -1219,7 +1219,10 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			budgun.shoot(target_turf, my_turf, src)
+			if(IN_RANGE(target_turf, my_turf, 2))
+				budgun.shoot_point_blank(target, my_turf)
+			else
+				budgun.shoot(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1395,7 +1398,11 @@
 	explode(var/allow_big_explosion=1)
 		if(src.exploding) return
 		src.exploding = 1
-		var/death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
+		var/death_message
+		if(istype(src, /obj/machinery/bot/guardbot/xmas))
+			death_message = pick("I'll be back again some day!", "And to all a good night!", "A buddy is never truly happy until it is loved by a child. ", "I guess Spacemas isn't coming this year.", "Ho ho hFATAL ERROR")
+		else
+			death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
 		speak(death_message)
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
@@ -1404,7 +1411,7 @@
 			src.mover.master = null
 			//qdel(src.mover)
 			src.mover = null
-		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
+		if(istype(src, /obj/machinery/bot/guardbot/old) || ((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite)))
 			src.invisibility = 100
 			var/obj/overlay/Ov = new/obj/overlay(T)
 			Ov.anchored = 1
@@ -1578,7 +1585,7 @@
 			set_emotion()
 
 		bot_attack(var/atom/target as mob|obj, lethal=0)
-			if(src.tool && (src.tool.tool_id == "GUN"))
+			if(src.tool?.tool_id == "GUN")
 				if (istype(src.budgun, /obj/item/bang_gun))
 					src.budgun.pixelaction(target, null, src, null) // dang it
 					GunSux()
@@ -1594,7 +1601,7 @@
 						SPAWN_DBG(1 SECOND)
 							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
 					update_icon()
-				else if(!src.budgun)
+				else
 					var/r = rand(1,9)
 					switch(r)
 						if(1)
@@ -1617,6 +1624,7 @@
 							src.speak("ERROR: Unable to prosecute beatdown.arrest_target!")
 					src.set_emotion("screaming")	// *scream
 					src.remove_current_task()		// welp
+					. = TRUE
 					SPAWN_DBG(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
@@ -1981,6 +1989,54 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(master, pdaSignal)
 
+/// Looping attack loop
+/datum/buddy_shooter
+	var/stop_shooting
+	var/obj/machinery/bot/guardbot/master
+	var/datum/computer/file/guardbot_task/security/task
+	var/mob/target
+	var/refire_delay
+	var/lethal
+	/// If we're here for this long, chances are something's wrong
+	var/loop_timeout = 20 SECONDS
+	var/list/cooldowns
+
+	New(var/obj/machinery/bot/guardbot/_master, var/mob/_target, var/_lethal, var/datum/computer/file/guardbot_task/security/_task)
+		. = ..()
+		if(_task.arrest_target)
+			src.task = _task
+		else
+			qdel(src)
+		if(istype(_master, /obj/machinery/bot/guardbot))
+			src.master = _master
+		if(ismob(_target))
+			src.target = _target
+		src.lethal = _lethal
+		if(src.master.tool)
+			src.refire_delay = src.master.tool.refire_delay
+			src.lethal = src.master.lethal
+		src.StartShooting()
+
+	disposing()
+		src.master.shootloop = null
+		src.master = null
+		src.target = null
+		src.stop_shooting = 1
+		. = ..()
+
+	proc/StartShooting()
+		ON_COOLDOWN(src, "loop_timeout", src.loop_timeout)
+		SPAWN_DBG(0)
+			while(src.task?.arrest_target) // So if they try to shoot their gun, but there IS no gun, they'll stop shooting their gun
+				if(src.stop_shooting)
+					break
+				if(!ON_COOLDOWN(src, "loop_timeout", src.loop_timeout))
+					break
+				if(!master.bot_attack(src.target, src.lethal))
+					break
+				sleep(master.tool.refire_delay)
+			qdel(src)
+
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
 	name = "Tool module"
@@ -1989,16 +2045,19 @@
 	icon_state = "tool_generic"
 	mats = 6
 	w_class = 2.0
+	var/refire_delay = 2 SECONDS
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
 	var/tool_id = "GENERIC" //Identification ID.
 	var/is_gun = 0 //1 Is ranged, 0 is melee.
-	var/last_use = 0 //If we want a use delay.
 
 	proc
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if(!user || !user.on || user.getStatusDuration("stunned") || user.idle)
 				return 1
+			if(ON_COOLDOWN(src, "buddy_gun_cooldown", src.refire_delay))
+				return 1
+
 
 			return 0
 
@@ -2046,7 +2105,6 @@
 				P.was_pointblank = 1
 				hit_with_existing_projectile(P, target)
 
-			src.last_use = world.time
 			return
 
 
@@ -2059,6 +2117,7 @@
 		is_gun = 1
 		is_stun = 1 //Can be both nonlethal and lethal
 		is_lethal = 1 //Depends on reagent load.
+		refire_delay = 3 SECONDS
 		var/datum/projectile/current_projectile = new /datum/projectile/syringe
 		var/stun_reagent = "haloperidol"
 		var/kill_reagent = "cyanide"
@@ -2066,9 +2125,6 @@
 		// Updated for new projectile code (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
-
-			if (src.last_use && world.time < src.last_use + 60)
-				return
 
 			if (ranged)
 				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
@@ -2099,8 +2155,6 @@
 				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with a syringe!</b></span>")
 				P.was_pointblank = 1
 				hit_with_existing_projectile(P, target)
-
-			src.last_use = world.time
 			return
 
 	//Short-range smoke riot control module
@@ -2111,6 +2165,7 @@
 		tool_id = "SMOKE"
 		is_stun = 1
 		is_lethal = 1
+		refire_delay = 5 SECONDS
 		var/stun_reagent = "ketamine"
 		var/kill_reagent = "neurotoxin"
 
@@ -2122,19 +2177,15 @@
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if(..() || !reagents || ranged) return
 
-			if(src.last_use && world.time < src.last_use + 120)
-				return
-
 			src.reagents.clear_reagents()
 			if (lethal)
-				src.reagents.add_reagent(kill_reagent, 15)
+				src.reagents.add_reagent(kill_reagent, 30)
 			else
-				src.reagents.add_reagent(stun_reagent, 15)
+				src.reagents.add_reagent(stun_reagent, 30)
 
 			smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message("<span class='alert'><b>[master] releases a cloud of gas!</b></span>")
 
-			src.last_use = world.time
 			return
 
 	//Taser tool
@@ -2145,14 +2196,12 @@
 		tool_id = "TASER"
 		is_stun = 1
 		is_gun = 1
+		refire_delay = 3 SECONDS
 		var/datum/projectile/current_projectile = new/datum/projectile/energy_bolt/robust
 
 		// Updated for new projectile code (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if (..()) return
-
-			if (src.last_use && world.time < src.last_use + 80)
-				return
 
 			if (ranged)
 				var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
@@ -2169,8 +2218,6 @@
 				user.visible_message("<span class='alert'><b>[master] shoots [target] point-blank with the taser!</b></span>")
 				P.was_pointblank = 1
 				hit_with_existing_projectile(P, target)
-
-			src.last_use = world.time
 			return
 
 	//Flash tool
@@ -2180,26 +2227,24 @@
 		icon_state = "tool_flash"
 		is_stun = 1
 		tool_id = "FLASH"
+		refire_delay = 2 SECONDS
 
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if(..()) return
 
-			if(ranged) return
+			playsound(get_turf(user), "sound/weapons/flash.ogg", 100, 1)
+			flick("robuddy-c", user)
+			if(ranged)
+				for (var/mob/living/M in viewers(3, get_turf(user)))
+					var/dist = get_dist(get_turf(user),get_turf(target))
+					dist = clamp(dist,1,4)
+					M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+			else
+				if(isliving(target))
 
-			if(iscarbon(target))
-
-				var/mob/living/carbon/O = target
-
-				if(src.last_use && world.time < src.last_use + 80)
-					return
-
-				playsound(user.loc, "sound/weapons/flash.ogg", 100, 1)
-				flick("robuddy-c", user)
-				src.last_use = world.time
-
-				// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
-				O.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-
+					var/mob/living/O = target
+					// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
+					O.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
 			return
 
 	//Electrobolt tool.  Basically, Keelin owns ok
@@ -2211,68 +2256,20 @@
 		is_gun = 1
 		is_stun = 1 //Can be both nonlethal and lethal
 		is_lethal = 1
+		refire_delay = 8 SECONDS // This one is actually legit hecka deadly
 
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 			if(..())
 				return
 
-			if (get_dist(user,target) > 4)
+			if (!IN_RANGE(user, target, 7))
 				return
 
-			if(src.last_use && world.time < src.last_use + 80)
-				return
-
-			var/atom/last = user
-			var/atom/target_r = target
-
-			var/list/dummies = new/list()
-
-			playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
-
-			if(isturf(target))
-				target_r = new/obj/elec_trg_dummy(target)
-
-			var/turf/currTurf = get_turf(target_r)
-			currTurf.hotspot_expose(2000, 400)
-
-			for(var/count=0, count<4, count++)
-
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-				for(var/obj/O in affected)
-					SPAWN_DBG(0.6 SECONDS) pool(O)
-
-				if(isliving(target_r)) //Probably unsafe.
-					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
-					if (lethal)
-						var/mob/living/carbon/human/H = target_r
-						random_burn_damage(target_r, rand(45,60))
-						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
-					boutput(target_r, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
-					target_r:unlock_medal("HIGH VOLTAGE", 1)
-					target_r:Virus_ShockCure(target_r, 100)
-					target_r:shock_cyberheart(33)
-					if (ishuman(target_r))
-						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
-					break
-
-				var/list/next = new/list()
-				for(var/atom/movable/AM in orange(3, target_r))
-					if(istype(AM, /obj/line_obj/elec) || istype(AM, /obj/elec_trg_dummy) || istype(AM, /obj/overlay/tile_effect) || AM.invisibility)
-						continue
-					next.Add(AM)
-
-				if(istype(target_r, /obj/elec_trg_dummy))
-					dummies.Add(target_r)
-
-				last = target_r
-				target_r = pick(next)
-				target = target_r
-
-			for(var/d in dummies)
-				qdel(d)
-
-			src.last_use = world.time
+			arcFlash(user, target, 8000)
+			if (lethal)
+				var/mob/living/carbon/human/H = target
+				random_burn_damage(target, rand(45,60))
+				H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 			return
 
 	//xmas -- See spacemas.dm
@@ -2792,14 +2789,15 @@
 						find_patrol_target()
 				if(1)
 					if(!arrest_target || !master.tool)
+						if(src.master.shootloop)
+							qdel(src.master.shootloop)
 						src.mode = 0
 						return
 
 					if(arrest_target)
 
-						if(!(arrest_target in view(7,master)) && !master.moving)
-							//qdel(master.mover)
-							master.frustration += 2
+						if(!IN_RANGE(arrest_target, master, 7) && !master.moving)
+							master.frustration += 1
 							if (master.mover)
 								master.mover.master = null
 								master.mover = null
@@ -2807,25 +2805,19 @@
 							return
 
 						else
-							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || master.tool && master.tool.is_gun || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
-								if (!isliving(arrest_target) || isdead(arrest_target))
-									mode = 0
-									drop_arrest_target()
-									return
+							if (!isliving(arrest_target) || isdead(arrest_target))
+								mode = 0
+								drop_arrest_target()
+								return
 
-								master.bot_attack(arrest_target, src.lethal)
-								if(targdist <= 1 && !cuffing && (arrest_target.getStatusDuration("weakened") || arrest_target.getStatusDuration("stunned")))
-									actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src)
-									return
-							if(!master.path || !master.path.len || (4 < get_dist(arrest_target,master.path[master.path.len])) )
-								master.moving = 0
-								//master.current_movepath = "HEH" //Stop any current movement.
-								master.navigate_to(arrest_target,ARREST_DELAY, 0,0)
-
-					return
-
-			return
+							if(!istype(master.shootloop))
+								src.master.shootloop = new(src.master, arrest_target, src.lethal, src)
+							if(IN_RANGE(arrest_target, master, 1) && !cuffing && is_incapacitated(arrest_target))
+								if(src.master.shootloop)
+									qdel(src.master.shootloop)
+								actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
+								return
+							master.navigate_to(arrest_target,ARREST_DELAY, 1,0)
 
 		task_input(input)
 			if(..()) return 1
@@ -3023,9 +3015,8 @@
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
-						SPAWN_DBG(0)
-							master.speak("Level [threat] infraction alert!")
-							master.visible_message("<b>[master]</b> points at [C.name]!")
+						master.speak("Level [threat] infraction alert!")
+						master.point(C, 1)
 					else if (!last_cute_action || ((last_cute_action + TIME_BETWEEN_CUTE_ACTIONS) < world.time))
 						if (prob(10))
 							last_cute_action = world.time
@@ -3036,7 +3027,7 @@
 									master.visible_message("<b>[master]</b> rotates slowly around in a circle.")
 								if (3,4)
 									//hugs!!
-									master.visible_message("<b>[master]</b> points at [C.name]!")
+									master.point(C, 1)
 									master.speak( pick("Level [rand(1,32)] hug deficiency alert!", "Somebody needs a hug!", "Cheer up!") )
 									src.hug_target = C
 								if (5)
@@ -3425,11 +3416,10 @@
 						src.desired_emotion = GUARDING_EMOTION
 						C.unlock_medal("Ol' buddy ol' pal", 1)
 						src.buddy_is_dork = (C.client && C.client.IsByondMember())
-						SPAWN_DBG(0)
-							//if (buddy_is_dork && prob(50))
-								//master.speak(pick("I am here to protect...Oh, it's <i>you</i>.", "I have been instructed to guard you. Welp.", "You are now under guard.  I guess."))
-							master.speak(pick("I am here to protect you.","I have been instructed to guard you.","You are now under guard.","Come with me if you want to live!"))
-							master.visible_message("<b>[master]</b> points at [C.name]!")
+						//if (buddy_is_dork && prob(50))
+							//master.speak(pick("I am here to protect...Oh, it's <i>you</i>.", "I have been instructed to guard you. Welp.", "You are now under guard.  I guess."))
+						master.speak(pick("I am here to protect you.","I have been instructed to guard you.","You are now under guard.","Come with me if you want to live!"))
+						master.point(C, 1)
 						break
 
 				return
@@ -3480,7 +3470,7 @@
 
 			if (src.protected && prob(10))
 				master.speak( pick(buddy_heckle_phrases) )
-				master.visible_message("<b>[master]</b> points at [src.protected.name]!")
+				master.point(src.protected, 1)
 
 		look_for_protected() //Search for a mob in view with the name we are programmed to guard.
 			if(src.protected) return //We have someone to protect!
@@ -3496,9 +3486,8 @@
 					src.protected = C
 					buddy_is_dork = 1
 					//src.desired_emotion = GUARDING_EMOTION
-					SPAWN_DBG(0)
-						master.speak("Level 9F [pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")] detected!")
-						master.visible_message("<b>[master]</b> points at [C.name]!")
+					master.speak("Level 9F [pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")] detected!")
+					master.point(C)
 					return
 
 				if (!initial_seek_complete)
@@ -3782,11 +3771,7 @@
 
 						src.master.speak(insultphrase)
 
-						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG(4 SECONDS)
-							qdel(P)
-
-						src.master.visible_message("<b>[src.master]</b> points to [H]")
+						master.point(H)
 						return
 
 				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
@@ -4951,13 +4936,13 @@
 /obj/machinery/bot/guardbot/old/tourguide/destiny
 	name = "Mary"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mary'."
-	botcard_access = "Staff Assistant"
+	access_lookup = "Staff Assistant"
 	beacon_freq = 1443
 
 /obj/machinery/bot/guardbot/old/tourguide/oshan
 	name = "Moby"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Moby'."
-	botcard_access = "Staff Assistant"
+	access_lookup = "Staff Assistant"
 	beacon_freq = 1443
 	HatToWear = /obj/item/clothing/head/sea_captain
 
@@ -4968,7 +4953,7 @@
 /obj/machinery/bot/guardbot/old/tourguide/atlas
 	name = "Mabel"
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Mabel'."
-	botcard_access = "Staff Assistant"
+	access_lookup = "Staff Assistant"
 	beacon_freq = 1443
 	HatToWear = /obj/item/clothing/head/NTberet
 
