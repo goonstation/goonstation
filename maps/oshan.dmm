@@ -15669,6 +15669,7 @@
 "aJY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/machinery/photocopier,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aJZ" = (
