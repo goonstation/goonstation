@@ -1,5 +1,7 @@
 
 (t)sat jan 09 21
+(u)Flourish
+(+)Space lube, organic superlubricant, oil, and butter, when applied to a turf, now also apply a temporary "wet" overlay. Should be useful for telling when a tile is slippery!
 (u)Keisuki
 (p)3283
 (e)🆕🎨|feature, sprites
