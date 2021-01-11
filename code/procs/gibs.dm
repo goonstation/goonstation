@@ -2,7 +2,8 @@
     // Added blood type and DNA for forensics (Convair880).
 	var/obj/decal/cleanable/blood/gibs/gib = null
 	var/list/gibs = new()
-
+	if(!location)
+		location = usr
 	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
 	LAGCHECK(LAG_LOW)

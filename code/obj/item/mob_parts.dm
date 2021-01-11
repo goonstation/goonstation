@@ -367,24 +367,28 @@
 		return
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
+	var/destination
+	var/dist = rand(1,6)
+	if(prob(10))
+		dist = 30 // Occasionally throw the chunk somewhere *interesting*
+	if(length(directions))
+		destination = pick(directions)
+		if(!(destination in cardinal))
+			destination = null
+
+	if(destination)
+		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)
+	else
+		destination = GetRandomPerimeterTurf(get_turf(src), dist)
+
+	var/list/linepath = getline(src, destination)
+
 	SPAWN_DBG(0)
-		var/direction
-		if(islist(directions))
-			direction = pick(directions)
-			if(!(direction in cardinal))
-				direction = null
-		else if(directions in cardinal)
-			direction = directions
+		/// Number of tiles where it should try to make a splatter
+		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		for (var/turf/T in linepath)
+			if(step_to(src, T, 0, 300) || num_splats-- >= 1)
+				if (ispath(streak_splatter))
+					make_cleanable(streak_splatter,src.loc)
+			sleep(0.1 SECONDS)
 
-		if(direction)
-			direction = GetRandomPerimeterTurf(get_turf(src), 10, direction)
-		else
-			direction = GetRandomPerimeterTurf(get_turf(src), 10)
-
-		var/j = rand(1,3)
-		for (var/i in 1 to j)
-			LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
-			if (ispath(streak_splatter))
-				make_cleanable(streak_splatter,src.loc)
-			if (!step_towards(src, direction, 0))
-				break

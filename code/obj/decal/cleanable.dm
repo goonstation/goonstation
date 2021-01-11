@@ -1675,60 +1675,66 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
-/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, randcolor = 0)
+/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+	var/destination
+	var/dist = rand(1,6)
+	if(prob(10))
+		dist = 30 // Occasionally throw the chunk somewhere *interesting*
+	if(length(directions))
+		destination = pick(directions)
+		if(!(destination in cardinal))
+			destination = null
+
+	if(destination)
+		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)
+	else
+		destination = GetRandomPerimeterTurf(get_turf(src), dist)
+
+	var/list/linepath = getline(src, destination)
+
+	var/kind_of_cleanable
+	if(istype(src, /obj/decal/cleanable/blood))
+		kind_of_cleanable = "BLOOD"
+	else if(istype(src, /obj/decal/cleanable/machine_debris))
+		kind_of_cleanable = "MACHINE"
+	else if(istype(src, /obj/decal/cleanable/robot_debris))
+		kind_of_cleanable = "ROBOT"
+	else if(istype(src, /obj/decal/cleanable/martian_viscera))
+		kind_of_cleanable = "MARTIAN"
+	else if(istype(src, /obj/decal/cleanable/flockdrone_debris))
+		kind_of_cleanable = "FLOCK"
+	else
+		kind_of_cleanable = "BLOOD"
 	SPAWN_DBG(0)
-		var/direction
-		if(length(directions))
-			direction = pick(directions)
-			if(!(direction in cardinal))
-				direction = null
-
-		if(direction)
-			direction = GetRandomPerimeterTurf(get_turf(src), 10, direction)
-		else
-			direction = GetRandomPerimeterTurf(get_turf(src), 10)
-
-		var/kind_of_cleanable
-		if(istype(src, /obj/decal/cleanable/blood))
-			kind_of_cleanable = "BLOOD"
-		else if(istype(src, /obj/decal/cleanable/machine_debris))
-			kind_of_cleanable = "MACHINE"
-		else if(istype(src, /obj/decal/cleanable/robot_debris))
-			kind_of_cleanable = "ROBOT"
-		else if(istype(src, /obj/decal/cleanable/martian_viscera))
-			kind_of_cleanable = "MARTIAN"
-		else if(istype(src, /obj/decal/cleanable/flockdrone_debris))
-			kind_of_cleanable = "FLOCK"
-		else
-			kind_of_cleanable = "BLOOD"
-
-		for (var/i in 1 to pick(1, 200; 2, 150; 3, 50; 4))
-			LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
-			switch(kind_of_cleanable)
-				if("BLOOD")
-					var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
-					if (!b) continue //ZeWaka: fix for null.diseases
-					if (src?.diseases)
-						b.diseases += src.diseases
-					if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
-						b.blood_DNA = src.blood_DNA
-						b.blood_type = src.blood_type
-					if (randcolor) // only used by funnygibs atm. in the future, the possibilities are endless for this var. imagine what it could do..........
-						b.color = random_saturated_hex_color()
-				if("MARTIAN")
-					if (prob(40))
+		/// Number of tiles where it should try to make a splatter
+		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		for (var/turf/T in linepath)
+			if(step_to(src, T, 0, 300) && num_splats-- >= 1)
+				switch(kind_of_cleanable)
+					if("BLOOD")
 						var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
-						b.blood_DNA = src.blood_DNA
-						b.blood_type = src.blood_type
-						b.color = "#0b1f8f"
-					else if (prob(10))
-						elecflash(src)
-				if("FLOCK")
-					make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,src.loc)
-				if("MACHINE", "ROBOT")
-					if (prob(40))
-						make_cleanable(/obj/decal/cleanable/oil/streak,src.loc)
-					else if (prob(10))
-						elecflash(src)
-			if (step_towards(src, get_step(src, direction), 1))
-				break
+						if (!b) continue //ZeWaka: fix for null.diseases
+						if (src?.diseases)
+							b.diseases += src.diseases
+						if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
+							b.blood_DNA = src.blood_DNA
+							b.blood_type = src.blood_type
+						if (randcolor) // only used by funnygibs atm. in the future, the possibilities are endless for this var. imagine what it could do..........
+							b.color = random_saturated_hex_color()
+					if("MARTIAN")
+						if (prob(40))
+							var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
+							b.blood_DNA = src.blood_DNA
+							b.blood_type = src.blood_type
+							b.color = "#0b1f8f"
+						else if (prob(10))
+							elecflash(src)
+					if("FLOCK")
+						make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,src.loc)
+					if("MACHINE", "ROBOT")
+						if (prob(40))
+							make_cleanable(/obj/decal/cleanable/oil/streak,src.loc)
+						else if (prob(10))
+							elecflash(src)
+			sleep(0.1 SECONDS)
+
