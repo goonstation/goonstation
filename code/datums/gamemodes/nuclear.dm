@@ -393,8 +393,7 @@
 /datum/game_mode/nuclear/proc/random_radio_frequency()
 	var/f = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
 		f = rand(1352, 1439)
