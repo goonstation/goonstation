@@ -612,7 +612,6 @@
 							break
 
 	proc/attack_now(var/turf/T)
-		attack.last_used = 0 // cheat, to compensate for the loop's tick rate
 		set_loc(T)
 		attack.onUse(T)
 
