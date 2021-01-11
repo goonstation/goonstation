@@ -577,6 +577,7 @@
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
+	var/do_buzz = 1
 
 	var/datum/projectile/slam/proj = new
 
@@ -597,7 +598,8 @@
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
-		playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
+		if(do_buzz)
+			playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN_DBG(2.5 SECONDS)

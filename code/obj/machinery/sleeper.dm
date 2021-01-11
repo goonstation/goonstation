@@ -23,9 +23,12 @@
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL
 	var/timing = 0 // Timer running?
 	var/time = null // In 1/10th seconds.
-	var/time_started = 0 // world.timeofday when the timer was started
+	var/time_started = 0 // TIME when the timer was started
 	var/obj/machinery/sleeper/our_sleeper = null
 	var/find_sleeper_in_range = 1
+	// Capped at 3 min. Used to be 10 min, Christ.
+	var/maximum_time = 3 MINUTES
+	var/injection_delay = 5 SECONDS
 
 	New()
 		..()
@@ -88,11 +91,7 @@
 			src.updateDialog()
 			return
 		if (src.timing)
-			//if (src.time > 0)
-				//src.time = round(src.time) - 1
-			var/time_of_day = world.timeofday + ((world.timeofday < src.time_started) ? 864000 : 0) // Offset the time of day in case of midnight rollover
-			if ((src.time_started + src.time) > time_of_day) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
-			//if ((src.time_started + src.time) > world.timeofday)
+			if ((src.time_started + src.time) > TIME) // is the time started plus the time we're set to greater than the current time? the mob hasn't waited long enough
 				var/mob/occupant = src.our_sleeper.occupant
 				if (occupant)
 					if (ishuman(occupant))
@@ -128,148 +127,101 @@
 	power_change()
 		return
 
-	attack_hand(mob/user as mob)
-		if(status & (NOPOWER|BROKEN))
-			return 1
-		if(user.lying || user.stat)
-			return 1
-		if ((get_dist(src, user) > 1 || !(isturf(src.loc) || istype(src.loc, /obj/machinery/sleeper))) && (!issilicon(user) && !isAI(user)))
-			return 1
-		if (ishuman(user))
-			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
-				return 1
+	ui_status(mob/user)
+		var/use_obj = src
+		if (src.loc == src.our_sleeper) // port-a-medbay
+			use_obj = src.loc
+			if (user in use_obj)
+				return UI_CLOSE
+		return min(
+			tgui_broken_state.can_use_topic(use_obj, user),
+			tgui_default_state.can_use_topic(use_obj, user),
+			tgui_not_incapacitated_state.can_use_topic(use_obj, user)
+		)
 
-		src.add_fingerprint(user)
-		src.add_dialog(user)
-
-		var/dat = ""
-
-		if (src.our_sleeper)
-			var/mob/occupant = src.our_sleeper.occupant
-			dat += "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>"
-
-			if (occupant)
-				var/t1
-				switch(occupant.stat)
-					if(0)
-						t1 = "Conscious"
-					if(1)
-						t1 = "Unconscious"
-					if(2)
-						t1 = "*dead*"
-					else
-
-				var/brute = occupant.get_brute_damage()
-				var/burn = occupant.get_burn_damage()
-				dat += {"<hr>[occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"]\tHealth: [occupant.health]% ([t1])</FONT><BR>
-						[occupant.get_oxygen_deprivation() < 60 ? "<font color='blue'>" : "<font color='red'>"]&emsp;-Respiratory Damage: [occupant.get_oxygen_deprivation()]</FONT><BR>
-						[occupant.get_toxin_damage() < 60 ? "<font color='blue'>" : "<font color='red'>"]&emsp;-Toxin Content: [occupant.get_toxin_damage()]</FONT><BR>
-						[burn < 60 ? "<font color='blue'>" : "<font color='red'>"]&emsp;-Burn Severity: [burn]</FONT><BR>
-						[brute < 60 ? "<font color='blue'>" : "<font color='red'>"]&emsp;-Brute Damage: [brute]</FONT><BR>"}
-
-				// We don't have a fully-fledged reagent scanner built-in. Of course, this also means
-				// we can't detect our own poisons if the sleeper's emagged. Too bad.
-				var/reagents = ""
-				for (var/R in occupant.reagents.reagent_list)
-					var/datum/reagent/MR = occupant.reagents.reagent_list[R]
-					if (istype(MR, /datum/reagent/medical))
-						reagents += " [MR.name] ([MR.volume]),"
-				if (reagents == "")
-					reagents += "None "
-				var/report = copytext(reagents, 1, -1)
-				dat += {"<br>Detectable rejuvenators in occupant's bloodstream:<br>
-						<font color='blue' size=2>[report]</font><br>
-						<br><font size=2>Note: Use separate reagent scanner for complete analysis.</font><br><hr>"}
-
-				// Capped at 3 min. Used to be 10 min, Christ.
-				var/time_of_day = world.timeofday + ((world.timeofday < src.time_started) ? 864000 : 0)
-				var/time_left = src.timing ? round((src.time_started + src.time - time_of_day) / 10) : round(src.time / 10)
-				var/second = time_left % 60//src.time % 60
-				var/minute = round(time_left / 60)//(src.time - second) / 60
-				//DEBUG_MESSAGE("[time_of_day] - [time_left] - [minute]:[second]")
-				dat += {"<TT><B>Occupant Alarm Clock</B><br>[src.timing ? "<A href='?src=\ref[src];time=0'>Timing</A>" : "<A href='?src=\ref[src];time=1'>Not Timing</A>"] [minute]:[second]<br>
-						<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A><br></TT>
-						<br><font size=2>System will inject rejuvenators automatically when occupant is in hibernation.</font><hr
-						<A href='?src=\ref[src];refresh=1'>Refresh</A> | <A href='?src=\ref[src];rejuv=1'>Inject Rejuvenators</A> | <A href='?src=\ref[src];eject_occupant=1'>Eject Occupant</A>"}
-
-			else
-				dat += "<HR>The sleeper is unoccupied."
-
-		else
-			dat += {"<font color='red'><b>ERROR:</b> No sleeper detected!</font><br>
-					<br><A href='?src=\ref[src];refresh=1'>Refresh Connection</A>"}
-
-		user.Browse(dat, "window=sleeper")
-		onclose(user, "sleeper")
-
-		return
-
-	Topic(href, href_list)
-		/*if (..())
-			return*/
-		if (!isturf(src.loc) && !istype(src.loc, /obj/machinery/sleeper))
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
 			return
-		if ((src.our_sleeper && src.our_sleeper.occupant == usr) || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained())
-			return
-		if (!issilicon(usr) && !in_range(src, usr))
-			return
-
-		src.add_fingerprint(usr)
-		src.add_dialog(usr)
-
-		if (href_list["time"])
-			if (src.our_sleeper && src.our_sleeper.occupant)
-				if (isdead(src.our_sleeper.occupant))
-					usr.show_text("The occupant is dead.", "red")
-				else
-					src.timing = text2num(href_list["time"])
+		switch(action)
+			if("timer")
+				if (src.our_sleeper?.occupant && !isdead(src.our_sleeper.occupant))
+					src.timing = !src.timing
 					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
 					if (src.timing)
-						src.time_started = world.timeofday//realtime
+						src.time_started = TIME
 						// People do use sleepers for grief from time to time.
 						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
+						src.time = clamp(src.time + src.time_started - TIME, 0, src.maximum_time)
 						src.time_started = 0
 						src.wake_occupant()
+				. = TRUE
+			if("time_add")
+				if (src.our_sleeper && src.time <= src.maximum_time)
+					var/t = params["tp"]
+					if (t > 0 && src.timing && src.our_sleeper.occupant)
+						// People do use sleepers for grief from time to time.
+						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
+					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
+				. = TRUE
+			if("inject")
+				if (src.our_sleeper)
+					var/is_recharging = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + src.injection_delay
+					if (src.our_sleeper.occupant && !src.timing && !is_recharging)
+						src.our_sleeper.inject(usr, TRUE)
+				. = TRUE
+			if("eject")
+				if (src.our_sleeper?.occupant)
+					src.our_sleeper.go_out()
+				. = TRUE
 
-		// Capped at 3 min. Used to be 10 min, Christ.
-		if (href_list["tp"])
-			if (src.our_sleeper && src.time < 1800)
-				var/t = text2num(href_list["tp"])
-				if (t > 0 && src.timing && src.our_sleeper.occupant)
-					// People do use sleepers for grief from time to time.
-					logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
-				//src.time = min(180, max(0, src.time + t))
-				src.time = clamp(src.time + (t*10), 0, 1800)
+	ui_data(mob/user)
+		if (!src.our_sleeper)
+			return list(
+				"sleeperGone" = TRUE,
+				"hasOccupant" = FALSE,
+			)
 
-		if (href_list["rejuv"])
-			if (src.our_sleeper && src.our_sleeper.occupant)
-				if (src.timing)
-					// So they can't combine this with manual injections to spam/farm reagents.
-					usr.show_text("Occupant alarm clock active. Manual injection unavailable.", "red")
-				else
-					src.our_sleeper.inject(usr, 1)
+		. = list(
+			"sleeperGone" = FALSE,
+			"hasOccupant" = FALSE,
+			"rejuvinators" = list(),
+			"recharging" = src.our_sleeper.no_med_spam && world.time < src.our_sleeper.no_med_spam + src.injection_delay,
+			"isTiming" = src.timing,
+			"time" = src.time,
+			"timeStarted" = src.time_started,
+			"timeNow" = TIME,
+			"maxTime" = src.maximum_time,
+		)
 
-		if (href_list["refresh"])
-			if (!src.our_sleeper && src.find_sleeper_in_range)
-				our_sleeper = locate() in orange(src,1)
-			else if (istype(src.loc, /obj/machinery/sleeper))
-				our_sleeper = src.loc
+		var/mob/occupant = src.our_sleeper.occupant
+		if (occupant)
+			. += list(
+				"hasOccupant" = TRUE,
+				"occupantStat" = occupant.stat,
+				"health" = occupant.health / occupant.max_health,
+				"oxyDamage" = occupant.get_oxygen_deprivation(),
+				"toxDamage" = occupant.get_toxin_damage(),
+				"burnDamage" = occupant.get_burn_damage(),
+				"bruteDamage" = occupant.get_brute_damage(),
+			)
 
-		if (href_list["eject_occupant"])
-			if (src.our_sleeper && src.our_sleeper.occupant)
-				src.our_sleeper.go_out()
-				src.remove_dialog(usr)
-				usr.Browse(null, "window=sleeper")
+			// We don't have a fully-fledged reagent scanner built-in. Of course, this also means
+			// we can't detect our own poisons if the sleeper's emagged. Too bad.
+			for (var/R in occupant.reagents.reagent_list)
+				var/datum/reagent/medical/MR = occupant.reagents.reagent_list[R]
+				if (istype(MR))
+					.["rejuvinators"] += list(list("name" = MR.name, "color" = rgb(MR.fluid_r, MR.fluid_g, MR.fluid_b), "volume" = MR.volume, "od" = MR.overdose))
 
-		if (istype(src, /obj/machinery/sleep_console/portable))
-			src.attack_hand(usr)
-		else
-			src.updateUsrDialog()
-		return
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Sleeper", src.name)
+			ui.open()
 
 /obj/machinery/sleep_console/portable
+	name = "Port-A-Medbay console"
 	find_sleeper_in_range = 0
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////
@@ -299,6 +251,14 @@
 
 	var/emagged = 0
 	var/list/med_emag = list("sulfonal", "toxin", "mercury") // Picked at random per injection.
+
+	var/damage_threshold = 15
+	var/crit_threshold = -25
+	var/timed_inject = 2
+	var/maximum_reagent = 10
+	var/inject_reagent = 5
+	var/maximum_poison = 5
+	var/inject_poison = 2.5
 
 	New()
 		..()
@@ -428,9 +388,12 @@
 		if (isdead(M))
 			return
 
+		var/injected_anything = FALSE
+
 		// We always inject this, even when emagged to mask the fact we're malfunctioning.
 		// Otherwise, one glance at the control console would be sufficient.
 		if (M.reagents.get_reagent_amount(src.med_stabilizer) == 0)
+			injected_anything = TRUE
 			M.reagents.add_reagent(src.med_stabilizer, 2)
 
 		// Why not, I guess? Might convince people to willingly enter hiberation, providing
@@ -440,7 +403,7 @@
 				if (istype(D.master, /datum/ailment/addiction))
 					var/datum/ailment_data/addiction/A = D
 					var/probability = 5
-					if (world.timeofday > A.last_reagent_dose + 1500)
+					if (world.timeofday > A.last_reagent_dose + 2.5 MINUTES)
 						probability = 10
 					if (prob(probability))
 						//DEBUG_MESSAGE("Healed [M]'s [A.associated_reagent] addiction.")
@@ -453,14 +416,21 @@
 			var/our_poison = pick(src.med_emag)
 			if (M.reagents.get_reagent_amount(our_poison) == 0)
 				//DEBUG_MESSAGE("Injected occupant with [our_poison] at [log_loc(src)].")
-				M.reagents.add_reagent(our_poison, 2)
+				M.reagents.add_reagent(our_poison, timed_inject)
+				// don't set injected_anything (the poison uses a sneaky silent injector)
 		else
-			if (M.health < -25 && M.reagents.get_reagent_amount(src.med_crit) == 0)
-				M.reagents.add_reagent(src.med_crit, 2)
-			if (M.get_oxygen_deprivation() >= 15 && M.reagents.get_reagent_amount(src.med_oxy) == 0)
-				M.reagents.add_reagent(src.med_oxy, 2)
-			if (M.get_toxin_damage() >= 15 && M.reagents.get_reagent_amount(src.med_tox) == 0)
-				M.reagents.add_reagent(src.med_tox, 2)
+			if (M.health < crit_threshold && M.reagents.get_reagent_amount(src.med_crit) == 0)
+				M.reagents.add_reagent(src.med_crit, src.timed_inject)
+				injected_anything = TRUE
+			if (M.get_oxygen_deprivation() >= src.damage_threshold && M.reagents.get_reagent_amount(src.med_oxy) == 0)
+				M.reagents.add_reagent(src.med_oxy, src.timed_inject)
+				injected_anything = TRUE
+			if (M.get_toxin_damage() >= src.damage_threshold && M.reagents.get_reagent_amount(src.med_tox) == 0)
+				M.reagents.add_reagent(src.med_tox, src.timed_inject)
+				injected_anything = TRUE
+
+		if (injected_anything)
+			playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
 		return
@@ -484,46 +454,56 @@
 			var/oxy = src.occupant.reagents.get_reagent_amount(src.med_oxy)
 			var/tox = src.occupant.reagents.get_reagent_amount(src.med_tox)
 
+			var/injected_anything = FALSE
+
 			// We always inject this, even when emagged to mask the fact we're malfunctioning.
 			// Otherwise, one glance at the control console would be sufficient.
-			if (rejuv < 10)
-				var/inject_r = 5
-				if ((rejuv + 5) > 10)
-					inject_r = max(0, (10 - rejuv))
+			if (rejuv < src.maximum_reagent)
+				var/inject_r = src.inject_reagent
+				if ((rejuv + inject_r) > src.maximum_reagent)
+					inject_r = max(0, (src.maximum_reagent - rejuv))
 				src.occupant.reagents.add_reagent(src.med_stabilizer, inject_r)
+				injected_anything = TRUE
 
 			// No life-saving meds for you, buddy.
 			if (src.emagged)
 				var/our_poison = pick(src.med_emag)
 				var/poison = src.occupant.reagents.get_reagent_amount(our_poison)
-				if (poison < 5)
-					var/inject_p = 2.5
-					if ((poison + 2.5) > 5)
-						inject_p = max(0, (2.5 - poison))
+				if (poison < src.maximum_poison)
+					var/inject_p = src.inject_poison
+					if ((poison + inject_p) > src.maximum_poison)
+						inject_p = max(0, (src.inject_poison - poison))
 					src.occupant.reagents.add_reagent(our_poison, inject_p)
+					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
 						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
-				if (src.occupant.health < -25 && crit < 10)
-					var/inject_c = 5
-					if ((crit + 5) > 10)
-						inject_c = max(0, (10 - crit))
+				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
+					var/inject_c = src.inject_reagent
+					if ((crit + inject_c) > src.maximum_reagent)
+						inject_c = max(0, (src.maximum_reagent - crit))
 					src.occupant.reagents.add_reagent(src.med_crit, inject_c)
+					injected_anything = TRUE
 
-				if (src.occupant.get_oxygen_deprivation() >= 15 && oxy < 10)
-					var/inject_o = 5
-					if ((oxy + 5) > 10)
-						inject_o = max(0, (10 - oxy))
+				if (src.occupant.get_oxygen_deprivation() >= src.damage_threshold && oxy < src.maximum_reagent)
+					var/inject_o = src.inject_reagent
+					if ((oxy + inject_o) > src.maximum_reagent)
+						inject_o = max(0, (src.maximum_reagent - oxy))
 					src.occupant.reagents.add_reagent(src.med_oxy, inject_o)
+					injected_anything = TRUE
 
-				if (src.occupant.get_toxin_damage() >= 15 && tox < 10)
-					var/inject_t = 5
-					if ((tox + 5) > 10)
-						inject_t = max(0, (10 - tox))
+				if (src.occupant.get_toxin_damage() >= src.damage_threshold && tox < src.maximum_reagent)
+					var/inject_t = src.inject_reagent
+					if ((tox + inject_t) > src.maximum_reagent)
+						inject_t = max(0, (src.maximum_reagent - tox))
 					src.occupant.reagents.add_reagent(src.med_tox, inject_t)
+					injected_anything = TRUE
 
 			src.no_med_spam = world.time
+
+			if (injected_anything)
+				playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
 
 		return
 
@@ -571,23 +551,21 @@
 		return
 
 	proc/can_operate(var/mob/M)
-		if (!isalive(M))
-			return 0
-		if (get_dist(src,M) > 1)
-			return 0
-		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
-			return 0
+		if (!IN_RANGE(src, M, 1))
+			return FALSE
+		if (istype(M) && is_incapacitated(M))
+			return FALSE
 		if (src.occupant)
 			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return 0
+			return FALSE
 		if (!ishuman(M))
 			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
-			return 0
+			return FALSE
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")
-			return
+			return FALSE
 
-		.= 1
+		.= TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -706,11 +684,6 @@
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 
-	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
-
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
@@ -763,19 +736,20 @@
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	var/alertgroup = MGA_MEDCRIT
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."
+		alertgroup = MGA_DEATH
 	else if (occupant.health < 0)
 		PDAalert += "patient in critical condition - respond and treat immediately."
 	else
 		PDAalert += "patient - please check in on the occupant."
 
-	for(var/mailgroup in mailgroups)
-		var/datum/signal/PDAsignal = get_free_signal()
+	var/datum/signal/PDAsignal = get_free_signal()
 
-		PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroup, "sender"="00000000", "message"="[PDAalert]")
-		PDAsignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(src, PDAsignal)
+	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
+	PDAsignal.transmission_method = TRANSMISSION_RADIO
+	transmit_connection.post_signal(src, PDAsignal)
 
 
 /obj/machinery/sleeper/compact
@@ -793,15 +767,10 @@
 		our_console = new /obj/machinery/sleep_console/portable (src)
 		our_console.our_sleeper = src
 
-	disposing() // what the fuck is this?
+	disposing()
 		..()
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
-
-	disposing() // combined with this???
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
 
 	attack_hand(mob/user as mob)
 		if (our_console)

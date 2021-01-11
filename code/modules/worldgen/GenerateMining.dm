@@ -532,6 +532,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 27
+
+	von_ricken // One way or another - an expensive space vavaction for a physical toll.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_von_ricken.dmm"
+		prefabSizeX = 42
+		prefabSizeY = 40
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -543,6 +550,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
+#ifdef SUBMARINE_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -551,6 +559,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
+#endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	elevator

@@ -341,7 +341,7 @@ var/list/globalContextActions = null
 				else
 					A = src
 
-				 A.hud.remove_screen(C)
+				A.hud.remove_screen(C)
 			if (ishivebot(src))
 				var/mob/living/silicon/hivebot/hivebot = src
 				hivebot.hud.remove_screen(C)
@@ -998,7 +998,7 @@ var/list/globalContextActions = null
 
 			checkRequirements(var/atom/target, var/mob/user)
 				var/obj/machinery/vehicle/V = target
-				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
 
 			execute(var/atom/target, var/mob/user)
 				..()
@@ -1012,7 +1012,7 @@ var/list/globalContextActions = null
 
 			checkRequirements(var/atom/target, var/mob/user)
 				var/obj/machinery/vehicle/V = target
-				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
 
 			execute(var/atom/target, var/mob/user)
 				..()
@@ -1027,7 +1027,7 @@ var/list/globalContextActions = null
 			checkRequirements(var/atom/target, var/mob/user)
 				var/obj/machinery/vehicle/V = target
 				if (V.locked && V.lock)
-					.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+					.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
 
 			execute(var/atom/target, var/mob/user)
 				..()
@@ -1041,7 +1041,7 @@ var/list/globalContextActions = null
 
 			checkRequirements(var/atom/target, var/mob/user)
 				var/obj/machinery/vehicle/V = target
-				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null)
+				.= ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(usr))
 
 			execute(var/atom/target, var/mob/user)
 				..()

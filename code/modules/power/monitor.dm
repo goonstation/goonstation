@@ -26,11 +26,10 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
+	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
@@ -53,7 +52,7 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell  | Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
+			var/list/S = list("<span style='background-color: #f88'> Off</span>","<span style='background-color: #fa6'>AOff</span>","<span style='background-color: #8f8'>  On</span>", "<span style='background-color: #ccf'> AOn</span>")
 			var/list/chg = list("N","C","F")
 
 			var/do_newline = 0
@@ -142,16 +141,13 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=[window_tag]")
-			return
-
+	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=[window_tag]")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
-
 
 	if(!powernet)
 		t += "<span style=\"color:red\">No connection</span>"

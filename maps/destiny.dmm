@@ -2095,7 +2095,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "adT" = (
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -2410,7 +2409,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "aeq" = (
-/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -2746,7 +2744,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "aeM" = (
-/obj/storage/secure/closet/command/research_director,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -3037,7 +3034,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "afg" = (
-/obj/storage/secure/closet/command/medical_director,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -8967,7 +8963,6 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqn" = (
@@ -8976,6 +8971,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqo" = (

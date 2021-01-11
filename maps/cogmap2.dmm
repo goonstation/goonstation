@@ -6868,10 +6868,10 @@
 	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "app" = (
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "apq" = (
 /obj/lattice{
 	dir = 6;
@@ -7332,7 +7332,7 @@
 "aqA" = (
 /obj/storage/secure/closet/courtroom,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqB" = (
 /obj/storage/closet/law,
 /obj/machinery/light/small{
@@ -7340,7 +7340,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqC" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -7348,7 +7348,7 @@
 	text = "NF"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "aqD" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -7756,10 +7756,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
-"arD" = (
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "arE" = (
 /obj/cable{
 	d1 = 2;
@@ -8345,11 +8342,11 @@
 	},
 /obj/item/screwdriver,
 /turf/simulated/floor/plating/damaged3,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asP" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asQ" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -8357,16 +8354,16 @@
 	},
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asR" = (
 /obj/storage/closet/coffin,
 /obj/item/reagent_containers/syringe/krokodil,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asS" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating/scorched,
-/area/station/chapel/sanctuary)
+/area/station/maintenance/northeast)
 "asT" = (
 /obj/stool/chair/wooden{
 	desc = "An antique chair.";
@@ -79235,6 +79232,7 @@
 /turf/simulated/floor/delivery,
 /area/station/ranch)
 "tTd" = (
+/obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
@@ -100640,7 +100638,7 @@ saK
 saK
 saK
 aKt
-mBI
+ydl
 wcj
 saK
 saK
@@ -101851,7 +101849,7 @@ mBI
 mBI
 mBI
 mBI
-ydl
+mBI
 mBI
 qBq
 xTc
@@ -102446,7 +102444,7 @@ aaa
 aaa
 aam
 xfw
-nbd
+xfw
 nbd
 aEE
 nbd
@@ -102458,7 +102456,7 @@ xfw
 nbd
 tPC
 nbd
-nbd
+xfw
 xfw
 aaI
 aaa
@@ -128712,9 +128710,9 @@ ahn
 aky
 cKd
 cLE
-alM
+cia
 aqA
-arD
+chV
 asO
 alM
 avG
@@ -129014,9 +129012,9 @@ cha
 cia
 cia
 dap
-alM
+cia
 aqB
-arD
+chV
 asP
 alM
 avH
@@ -129316,9 +129314,9 @@ aho
 cYr
 cia
 dap
-alM
+cia
 aqC
-arD
+chV
 asQ
 alM
 avI
@@ -129620,7 +129618,7 @@ cLF
 dap
 apo
 app
-arD
+chV
 asR
 alM
 avJ
@@ -130222,10 +130220,10 @@ cha
 cYr
 cLF
 dap
-alK
-alK
-alM
-alM
+cLF
+cLF
+cia
+cia
 alM
 avL
 awT

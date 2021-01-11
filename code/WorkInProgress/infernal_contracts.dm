@@ -93,6 +93,7 @@
 	src.partygib()
 
 /proc/soulcheck(var/mob/M as mob)
+	M.abilityHolder.updateText()
 	if ((ishuman(M)) && (isdiabolical(M)))
 		if (total_souls_value >= 10)
 			if (!M.bioHolder.HasEffect("demon_horns"))
@@ -358,7 +359,9 @@
 			return 0
 		src.visible_message("<span class='alert'><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a [src.type] contract at [log_loc(user)]!")
-		return user.sell_soul(100, 0, 1)
+		. = user.sell_soul(100, 0, 1)
+		if(!.)
+			boutput(badguy, "[user] signed [src] but had no soul to give!")
 
 	proc/vanish(var/mob/user as mob, var/mob/badguy as mob)
 		if(user)

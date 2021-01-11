@@ -16,7 +16,7 @@ Contains:
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
 	density = 1
-	var/mob/living/carbon/human/rider = null
+	var/mob/living/rider = null
 	var/in_bump = 0
 	var/sealed_cabin = 0
 	var/rider_visible =	1
@@ -48,10 +48,15 @@ Contains:
 			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
 		return
 
+	Exited(atom/movable/thing, atom/newloc)
+		. = ..()
+		if(thing == src.rider)
+			src.eject_rider()
+
 	proc/eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		if(rider.loc == src)
+			rider.set_loc(src.loc)
 		rider = null
-		return
 
 	ex_act(severity)
 		switch(severity)
@@ -258,10 +263,11 @@ Contains:
 	return
 
 /obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if (rider.client)
@@ -410,7 +416,7 @@ Contains:
 			M.set_loc(src.loc)
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -709,7 +715,8 @@ Contains:
 	return
 
 /obj/vehicle/floorbuffer/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if (rider.client)
@@ -769,7 +776,7 @@ Contains:
 			M.set_loc(src.loc)
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -814,7 +821,7 @@ Contains:
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(!is_incapacitated(usr))
 		eject_rider(0, 1)
 	return
 
@@ -1020,7 +1027,7 @@ Contains:
 	return
 
 /obj/vehicle/clowncar/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user) || isghostcritter(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
 		return
 
 	var/msg
@@ -1145,7 +1152,8 @@ Contains:
 /obj/vehicle/clowncar/eject_rider(var/crashed, var/selfdismount)
 	if (!src.rider || !ismob(src.rider))
 		return
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	walk(src, 0)
 	moving = 0
 	src.log_me(src.rider, null, "rider_exit")
@@ -1275,7 +1283,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_y = 0
 
 /obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1395,7 +1403,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/cat/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if(crashed)
@@ -1721,7 +1730,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/adminbus/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1850,24 +1859,25 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/adminbus/eject_rider(var/crashed, var/selfdismount)
-	src.rider.set_loc(src.loc)
-	src.rider.remove_adminbus_powers()
+	var/mob/living/rider = src.rider
+	..()
+	rider.remove_adminbus_powers()
 	for(var/obj/ability_button/B in src.ability_buttons)
-		src.rider.client.screen -= B
+		rider.client.screen -= B
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src.loc, "shatter", 40, 1)
 		boutput(rider, "<span class='alert'><B>You are flung through the [src]'s windshield!</B></span>")
-		src.rider.changeStatus("stunned", 80)
-		src.rider.changeStatus("weakened", 5 SECONDS)
+		rider.changeStatus("stunned", 80)
+		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
-			if(C == src.rider)
+			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
-		src.rider.throw_at(target, 5, 1)
+		rider.throw_at(target, 5, 1)
 		if(prob(40) && src.contents.len)
 			src.visible_message("<span class='alert'><B>Everything in the [src] flies out!</B></span>")
 			for(var/atom/A in src.contents)
@@ -1880,14 +1890,14 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 					O.set_loc(src.loc)
 
 	if(selfdismount)
-		boutput(src.rider, "<span class='notice'>You climb out of the [src].</span>")
+		boutput(rider, "<span class='notice'>You climb out of the [src].</span>")
 		for (var/mob/C in AIviewers(src))
-			if(C == src.rider)
+			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
 
-	src.rider.buckled = null
-	src.rider = null
+	rider.buckled = null
+	rider = null
 	src.icon_state = src.nonmoving_state
 	if (src.is_badmin_bus)
 		src.toggle_badmin()
@@ -2224,11 +2234,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/forklift/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
-	rider.set_loc(src.loc)
-	src.rider = null
+	var/mob/living/rider = src.rider
+	..()
+
 	boutput(rider, "You get out of [src].")
 
 	//Stops items from being lost forever

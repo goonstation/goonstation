@@ -7,6 +7,8 @@
 	var/mob/living/critter/small_animal/mouse/weak/mentor/my_mouse
 	var/is_admin = 0
 
+	var/leave_popup_open = FALSE
+
 	New(atom/L, is_admin)
 		..()
 		src.is_admin = is_admin
@@ -23,8 +25,11 @@
 		src.ping.plane = PLANE_HUD
 
 	process_move(keys)
-		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-			..()
+		if(keys && src.move_dir && !src.leave_popup_open)
+			src.leave_popup_open = TRUE
+			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+				src.stop_observing()
+			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))

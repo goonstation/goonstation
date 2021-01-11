@@ -6,6 +6,7 @@
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
+	status = REQ_PHYSICAL_ACCESS
 
 	var/has_valve = 1
 	var/valve_open = 0
@@ -436,15 +437,6 @@
 			. += list("paperData" = sheet.ui_static_data())
 			has_paper = true
 		. += list("hasPaper" = has_paper)
-
-/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
-	return tgui_physical_state
-
-/obj/machinery/portable_atmospherics/canister/ui_status(mob/user)
-  return min(
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()
