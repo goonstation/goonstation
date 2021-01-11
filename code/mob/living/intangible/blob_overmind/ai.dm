@@ -19,10 +19,11 @@
 	var/datum/blob_ability/deploy = null
 	var/datum/blob_ability/attack = null
 	var/datum/blob_ability/spread = null
-	var/datum/blob_ability/lipid = null
+	var/datum/blob_ability/ribosome = null
 	var/datum/blob_ability/mito = null
 	var/datum/blob_ability/wall = null
 	var/datum/blob_ability/absorb = null
+	var/datum/blob_ability/promote = null
 	var/datum/blob_upgrade/spread_up = null
 	var/datum/blob_upgrade/gen_up = null
 	var/datum/blob_upgrade/fireres_up = null
@@ -33,7 +34,7 @@
 	var/list/open = list()
 	var/list/open_medium = list()
 	var/list/open_low = list()
-	var/lipid_count = 0
+	var/ribosome_count = 0
 	var/turf/destroying = null
 	var/turf/fortifying = null
 	var/turf/protecting = null
@@ -257,6 +258,9 @@
 					evaluate(T)
 
 		if (state > 1)
+			if(src.extra_nuclei)
+				src.place_extra_nucleus()
+
 			if (fireres_up)
 				if (fireres_up.check_requirements())
 					fireres_up.take_upgrade()
@@ -265,8 +269,6 @@
 
 			if (absorb)
 				for (var/mob/living/carbon/human/H in (mobs + ai_mobs))
-					if(!IN_RANGE(H, src, 30))
-						continue
 					if (!isturf(H.loc))
 						continue
 					if (isdead(H))
@@ -275,15 +277,13 @@
 						continue
 					if (!(locate(/obj/blob) in H.loc))
 						var/turf/T = get_turf(H)
-						if (has_adjacent_blob(T) && prob(15))
+						if (has_adjacent_blob(T) && prob(50))
 							attack_now(T)
 							if (T.can_blob_spread_here())
 								spread_to(T, 0)
 							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
 						continue
-					if (prob(118 - 3 * get_dist(src, H)))
-						absorb.onUse(H.loc)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Absorbing [H].")
+					// no explicit `absorb.onUse` call because absorption is now automatic
 
 		switch (state)
 			if (STATE_DEAD)
@@ -322,10 +322,11 @@
 					update_lists(T)
 					spread = locate(/datum/blob_ability/spread) in abilities
 					attack = locate(/datum/blob_ability/attack) in abilities
-					lipid = locate(/datum/blob_ability/build/ribosome) in abilities
+					ribosome = locate(/datum/blob_ability/build/ribosome) in abilities
 					mito = locate(/datum/blob_ability/build/mitochondria) in abilities
 					wall = locate(/datum/blob_ability/build/wall) in abilities
 					absorb = locate(/datum/blob_ability/absorb) in abilities
+					promote = locate(/datum/blob_ability/promote) in abilities
 					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
 					gen_up = locate(/datum/blob_upgrade/extra_genrate) in available_upgrades
 					fireres_up = locate(/datum/blob_upgrade/fire_resist) in available_upgrades
@@ -333,7 +334,7 @@
 					counter = 0
 			if (STATE_EXPANDING)
 				refresh_lists++
-				if (blobs.len > 15 && prob(blobs.len / (lipid_count + 1)) && bio_points_max >= lipid.bio_point_cost)
+				if (blobs.len > 15 && prob(blobs.len / (ribosome_count + 1)) && bio_points_max >= ribosome.bio_point_cost)
 					state = STATE_DO_LIPIDS
 				if (!(gen_up in available_upgrades))
 					gen_up = null
@@ -458,8 +459,8 @@
 					state = force_state
 					force_state = 0
 			if (STATE_DO_LIPIDS)
-				if (bio_points < lipid.bio_point_cost)
-					if(bio_points_max < lipid.bio_point_cost)
+				if (bio_points < ribosome.bio_point_cost)
+					if(bio_points_max < ribosome.bio_point_cost)
 						state = STATE_EXPANDING
 					return
 				var/obj/blob/A
@@ -471,15 +472,15 @@
 							break
 				if (!A)
 					state = STATE_EXPANDING
-					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Failed to find suitable lipid candidate in 20 attempts.")
+					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Failed to find suitable ribosome candidate in 20 attempts.")
 					return
 				var/turf/T = get_turf(A)
 				set_loc(T)
-				lipid.onUse(T)
-				var/obj/blob/lipid/L = locate() in T
+				ribosome.onUse(T)
+				var/obj/blob/ribosome/L = locate() in T
 				if (L)
-					lipid_count++
-				logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating lipid at [showCoords(T.x, T.y, T.z)].")
+					ribosome_count++
+				logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating ribosome at [showCoords(T.x, T.y, T.z)].")
 				state = STATE_EXPANDING
 			if (STATE_FORTIFYING)
 				if (!fortifying)
@@ -540,8 +541,6 @@
 						attackers += nearest
 					if (!attacker)
 						for (var/mob/living/M in (mobs + ai_mobs))
-							if(!IN_RANGE(M, src, 30))
-								continue
 							if (isintangible(M))
 								continue
 							if (isdead(M))
@@ -611,6 +610,31 @@
 							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [showCoords(T.x, T.y, T.z)] in response to attack force.")
 							break
 
+	proc/place_extra_nucleus()
+		if(!src.extra_nuclei)
+			return
+		var/list/obj/blob/visited = list()
+		var/list/obj/blob/current = list()
+		var/obj/blob/final_target = null
+		for_by_tcl(blob, /obj/blob)
+			for(var/dir in cardinal)
+				var/turf/T = get_step(blob.loc, dir)
+				if(!T.density && !(locate(/obj/blob) in T))
+					current[blob] = 1
+					break
+		while(length(current))
+			var/list/next = list()
+			for(var/obj/blob/blob as() in current)
+				visited[blob] = 1
+				if(blob.type == /obj/blob)
+					final_target = blob
+				for(var/dir in cardinal)
+					var/obj/blob/next_blob = locate(/obj/blob) in get_step(blob.loc, dir)
+					if(next_blob && !(next_blob in visited) && !(next_blob in next) && !(next_blob in current))
+						next[next_blob] = 1
+			current = next
+		promote.onUse(final_target?.loc)
+
 	proc/attack_now(var/turf/T)
 		set_loc(T)
 		attack.onUse(T)
@@ -659,7 +683,7 @@
 			return
 		if (!(M in attackers))
 			attackers += M
-		if (!attacker)
+		if (!attacker || istype(B, /obj/blob/nucleus))
 			attacker = M
 		if (state != STATE_UNDER_ATTACK)
 			calm_state = state
@@ -670,9 +694,9 @@
 		if (!prob(max(1, min(100, (2000 - 100 * get_dist(B, src)) / 13))))
 			return
 		attacker = M
-		if (istype(B, /obj/blob/lipid))
-			if (lipid_count > 0)
-				lipid_count--
+		if (istype(B, /obj/blob/ribosome))
+			if (ribosome_count > 0)
+				ribosome_count--
 		if (state != STATE_UNDER_ATTACK)
 			calm_state = state
 			state = STATE_UNDER_ATTACK
