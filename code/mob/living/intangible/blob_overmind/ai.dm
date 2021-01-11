@@ -619,7 +619,7 @@
 		for_by_tcl(blob, /obj/blob)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(blob.loc, dir)
-				if(!T.density && !(locate(/obj/blob) in T))
+				if(!T.density && !(locate(/obj/blob) in T) || blob.type == /obj/blob/nucleus)
 					current[blob] = 1
 					break
 		while(length(current))
