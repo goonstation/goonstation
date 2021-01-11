@@ -369,7 +369,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if(directions)
 				direction = pick(directions)
 			else
-				direction = GetTurfAlongSquaredCircle(get_turf(src), 10)
+				direction = GetRandomPerimeterTurf(get_turf(src), 10)
 			for (var/i in 1 to pick(1, 200; 2, 150; 3, 50; 4))
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))

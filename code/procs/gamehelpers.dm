@@ -650,7 +650,7 @@ proc/LoadSavefile(name)
 	. = new/savefile(name)
 
 /// Returns a turf at the edge of a squared circle of specified radius around a thing
-proc/GetTurfAlongSquaredCircle(var/atom/A, var/dist = 10)
+proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10)
 	var/turf/T = get_turf(A)
 	if(!isturf(T))
 		return
@@ -672,5 +672,5 @@ proc/GetTurfAlongSquaredCircle(var/atom/A, var/dist = 10)
 
 proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
 	if(istype(A))
-		var/turf/Y = GetTurfAlongSquaredCircle(A, dist)
+		var/turf/Y = GetRandomPerimeterTurf(A, dist)
 		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
