@@ -69,6 +69,8 @@
 	var/limb_is_unnatural = FALSE
 	/// Limb is not attached to its original owner
 	var/limb_is_transplanted = FALSE
+	/// What kind of limb is this? So we dont have to do dozens of typechecks. is bitflags, check defines/item.dm
+	var/kind_of_limb
 
 	New(atom/new_holder)
 		..()

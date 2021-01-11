@@ -365,22 +365,25 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	proc/streak(var/list/directions, randcolor = 0)
 		SPAWN_DBG(0)
-			var/direction = pick(directions)
-			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+			var/direction
+			if(directions)
+				direction = pick(directions)
+			else
+				direction = GetTurfAlongSquaredCircle(get_turf(src), 10)
+			for (var/i in 1 to pick(1, 200; 2, 150; 3, 50; 4))
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
-				if (i > 0)
-					var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
-					if (!b) continue //ZeWaka: fix for null.diseases
-					if (src?.diseases)
-						b.diseases += src.diseases
-					if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
-						b.blood_DNA = src.blood_DNA
-						b.blood_type = src.blood_type
-					if (randcolor) // only used by funnygibs atm. in the future, the possibilities are endless for this var. imagine what it could do..........
-						b.color = random_saturated_hex_color()
-					//else if (src.color != DEFAULT_BLOOD_COLOR)
-						//b.color = src.color
-				if (step_to(src, get_step(src, direction), 0))
+				var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
+				if (!b) continue //ZeWaka: fix for null.diseases
+				if (src?.diseases)
+					b.diseases += src.diseases
+				if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
+					b.blood_DNA = src.blood_DNA
+					b.blood_type = src.blood_type
+				if (randcolor) // only used by funnygibs atm. in the future, the possibilities are endless for this var. imagine what it could do..........
+					b.color = random_saturated_hex_color()
+				//else if (src.color != DEFAULT_BLOOD_COLOR)
+					//b.color = src.color
+				if (step_towards(src, get_step(src, direction), 0))
 					break
 
 	proc/handle_reagent_list(var/list/reagent_list)

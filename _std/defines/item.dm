@@ -100,3 +100,39 @@
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
+
+// Limb Kind Bitflags, to avoid the funky typecheck spam limbs usually need
+/// Limb typically belongs to one of the normal-ass mutantraces
+#define LIMB_MUTANT   (1<<0)
+/// Limb is robotic in nature
+#define LIMB_ROBOT    (1<<1)
+/// Limb lighter than the average limb
+#define LIMB_LIGHT    (1<<2)
+/// Limb heavier than the average limb
+#define LIMB_HEAVY    (1<<3)
+/// Limb is really heavy
+#define LIMB_HEAVIER  (1<<4)
+/// Limb is actually tank treads
+#define LIMB_TREADS   (1<<5)
+/// Limb typically belongs to a shambling abomination
+#define LIMB_ABOM     (1<<6)
+/// Limb is made of plants
+#define LIMB_PLANT    (1<<7)
+/// Limb is whatever the heck a hot limb is
+#define LIMB_HOT      (1<<8)
+/// Limb typically belongs to the restless undead
+#define LIMB_ZOMBIE   (1<<9)
+/// Limb typically belongs to hunters
+#define LIMB_HUNTER   (1<<10)
+/// Limb is actually an item stuck to a stump
+#define LIMB_ITEM     (1<<11)
+/// Limb is made of stone
+#define LIMB_STONE    (1<<12)
+/// Limb typically belongs to a vicious bear
+#define LIMB_BEAR     (1<<13)
+/// Limb typically belongs to a wendigo
+#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a large angry dog
+#define LIMB_WOLF     (1<<15)
+/// Limb is kinda boney
+#define LIMB_SKELLY   (1<<16)
