@@ -44611,7 +44611,7 @@
 	},
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEM" = (
 /obj/cable{
 	d1 = 4;
@@ -44624,18 +44624,18 @@
 	req_access_txt = "31|50"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEN" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEO" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEP" = (
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
@@ -44902,7 +44902,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -44921,12 +44921,12 @@
 	dir = 8;
 	icon_state = "engine_caution_corners"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFw" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFx" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -44935,7 +44935,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFy" = (
 /obj/machinery/light{
 	dir = 1;
@@ -44944,7 +44944,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFz" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -44952,7 +44952,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFA" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -45246,19 +45246,19 @@
 /obj/item/crowbar,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGc" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGd" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGe" = (
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45266,7 +45266,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGg" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/gannets,
@@ -45555,7 +45555,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/clothing/shoes/magnetic,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -45758,7 +45758,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/hand_labeler,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHf" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -45766,7 +45766,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
@@ -45960,11 +45960,11 @@
 /obj/item/weldingtool,
 /obj/item/shipcomponent/mainweapon/phaser,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHE" = (
 /obj/machinery/light,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHF" = (
 /obj/machinery/door_control{
 	id = "cargo_hangar";
@@ -45974,19 +45974,19 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHG" = (
 /obj/machinery/r_door_control{
 	id = "cargo_hangar";
 	pixel_y = -24
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHH" = (
 /obj/machinery/light,
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHI" = (
 /obj/lattice{
 	dir = 6;
@@ -46712,7 +46712,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46772,7 +46772,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJs" = (
 /turf/space,
 /area/mining/magnet)
@@ -46792,7 +46792,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJu" = (
 /obj/machinery/power/monitor/smes{
 	dir = 4;
@@ -49107,6 +49107,9 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nIJ" = (
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/hangar/qm)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49137,6 +49140,10 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"oPg" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/hangar/qm)
 "pFT" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/seed_manipulator{
@@ -49231,6 +49238,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"vPt" = (
+/obj/wingrille_spawn,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -49238,6 +49249,9 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"xdU" = (
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 
 (1,1,1) = {"
 aaa
@@ -84629,7 +84643,7 @@ bGb
 bGH
 bHe
 bHD
-bBM
+nIJ
 bNv
 agJ
 agJ
@@ -84881,12 +84895,12 @@ bBG
 buJ
 bDV
 bEM
-bEP
-bEP
-bEP
-bEP
-bEP
-bBM
+xdU
+xdU
+xdU
+xdU
+xdU
+nIJ
 aaH
 aay
 aay
@@ -85139,11 +85153,11 @@ bCP
 bCU
 bEL
 bFu
-bEP
-bEP
-bEP
+xdU
+xdU
+xdU
 bHE
-bEd
+oPg
 aaH
 aay
 aaa
@@ -85400,7 +85414,7 @@ bGc
 bGc
 bGc
 bHF
-bBM
+nIJ
 bNw
 bIG
 bIO
@@ -86165,7 +86179,7 @@ buL
 buG
 bCS
 bCU
-byg
+vPt
 bFx
 bGe
 bGe
@@ -86422,13 +86436,13 @@ bAt
 buK
 bCT
 bEa
-byg
+vPt
 bFy
 bGd
 bGe
 bGe
 bHG
-bBM
+nIJ
 aaH
 bIG
 bIO
@@ -86679,13 +86693,13 @@ bAu
 bBL
 bCU
 bEb
-byg
+vPt
 bFz
 bGf
 bGe
 bHf
 bHH
-bEd
+oPg
 bNv
 aay
 aaa
@@ -86937,12 +86951,12 @@ bBM
 bCV
 bBM
 bEO
-bBM
-bBM
+nIJ
+nIJ
 bEO
-bBM
-bBM
-bBM
+nIJ
+nIJ
+nIJ
 aaH
 aay
 aaa
