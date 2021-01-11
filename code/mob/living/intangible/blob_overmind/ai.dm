@@ -235,8 +235,9 @@
 		src.ai_process()
 		SPAWN_DBG(0)
 			var/max_extra_ticks = 4
-			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && max_extra_ticks-- && world.tick_usage < 80)
-				sleep(0.3 SECONDS)
+			var/extra_ticks_left = max_extra_ticks
+			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && world.tick_usage < 80)
+				sleep(4 SECONDS / (max_extra_ticks + 1))
 				src.ai_process()
 			ai_ticks_queued_up--
 
