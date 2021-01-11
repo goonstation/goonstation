@@ -41,10 +41,6 @@ export const GeneTek = (props, context) => {
     scannerError,
   } = data;
 
-  if (!record && menu === "record") {
-    setMenu("storage");
-  }
-
   const maxBuyMats = Math.min(
     materialMax - materialCur,
     Math.floor(budget / costPerMaterial),
@@ -72,7 +68,7 @@ export const GeneTek = (props, context) => {
             </Tabs.Tab>
             <Tabs.Tab
               icon="server"
-              selected={menu === "storage"}
+              selected={menu === "storage" || (!record && menu === "record")}
               onClick={() => setMenu("storage")}>
               Storage
             </Tabs.Tab>
@@ -87,10 +83,7 @@ export const GeneTek = (props, context) => {
                     compact
                     color="transparent"
                     icon="times"
-                    onClick={() => {
-                      act("clearrecord");
-                      setMenu("storage");
-                    }} />
+                    onClick={() => act("clearrecord")} />
                 )}>
                 Record
               </Tabs.Tab>
@@ -109,7 +102,7 @@ export const GeneTek = (props, context) => {
           {menu === "research" && <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />}
           {menu === "mutations" && <MutationsTab />}
           {menu === "storage" && <StorageTab />}
-          {menu === "record" && <RecordTab />}
+          {menu === "record" && (record ? <RecordTab /> : <StorageTab />)}
           {menu === "scanner" && <ScannerTab />}
         </Box>
         <Flex
