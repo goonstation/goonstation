@@ -197,7 +197,6 @@
 				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
-				world << csound("sound/misc/shuttle_enroute.ogg")
 	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
@@ -685,10 +684,6 @@
 		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
-	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
-		return
-
 	if (isdead(src))
 		if (dd_hasprefix(message, "*")) // no dead emote spam
 			return
@@ -719,7 +714,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4) // Perfluorodecalin cap - normal life() depletion - buffer.
+		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message)
 			return
 
@@ -1039,11 +1034,13 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M in listening)
-		if (M.say_understands(src, forced_language))
-			heard_a += M
+	for (var/mob/M as() in listening)
+		if(M.mob_flags & MOB_HEARS_ALL)
+			continue
+		else if (M.say_understands(src, forced_language))
+			heard_a[M] = 1
 		else
-			heard_b += M
+			heard_b[M] = 1
 
 	var/list/processed = list()
 
@@ -1096,6 +1093,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
+	var/list/hearers = hearers(src)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1107,7 +1105,7 @@
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
 			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && (M in hearers(src))) || \
+			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(src.loc) && src.loc == M.loc) && \
 				!(M in heard_a) && \
@@ -1122,7 +1120,7 @@
 
 			if (isobserver(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
 					if (get_dist(M,src) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)

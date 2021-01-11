@@ -366,6 +366,7 @@ body.theme-dark .radio {color: #3fcc3f;}
 body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
 body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
 body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
+body.theme-dark  .popup {background-color: rgb(48, 48, 48);}
 body.theme-dark a {color: #6464ff;}
 body.theme-dark a:visited {color: #ae6fff;}
 body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}

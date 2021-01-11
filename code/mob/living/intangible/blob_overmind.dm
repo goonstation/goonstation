@@ -756,6 +756,10 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
+/mob/living/intangible/blob_overmind/checkContextActions(atom/target)
+	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
+	return list()
+
 /mob/proc/make_blob()
 	if (!src.client && !src.mind)
 		return null

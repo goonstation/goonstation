@@ -47,6 +47,7 @@ datum/preferences
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
 	var/auto_capitalization = 0
+	var/local_deadchat = 0
 	var/use_wasd = 1
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
@@ -712,7 +713,8 @@ $(function() {
 			<a href="[pref_link]listen_ooc=1" class="toggle">[crap_checkbox(src.listen_ooc)] Display <abbr title="Out-of-Character">OOC</abbr> chat</a><span class="info-thing" title="Out-of-Character chat. This mostly just shows up on the RP server and at the end of rounds.">?</span><br>
 			<a href="[pref_link]listen_looc=1" class="toggle">[crap_checkbox(src.listen_looc)] Display <abbr title="Local Out-of-Character">LOOC</abbr> chat</a><span class="info-thing" title="Local Out-of-Character is OOC chat, but only appears for nearby players. This is basically only used on the RP server.">?</span><br>
 			<a href="[pref_link]flying_chat_hidden=1" class="toggle">[crap_checkbox(!src.flying_chat_hidden)] See chat above people's heads</a><span class="info-thing" title="Chat messages will appear over characters as they're talking.">?</span><br>
-			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span>
+			<a href="[pref_link]auto_capitalization=1" class="toggle">[crap_checkbox(src.auto_capitalization)] Auto-capitalize your messages</a><span class="info-thing" title="Chat messages you send will be automatically capitalized.">?</span><br>
+			<a href="[pref_link]local_deadchat=1" class="toggle">[crap_checkbox(src.local_deadchat)] Local ghost hearing</a><span class="info-thing" title="You'll only hear chat messages from living people on your screen as a ghost.">?</span>
 		</td>
 	</tr>"}
 		LAGCHECK(80)
@@ -1047,6 +1049,7 @@ $(function() {
 		if (!src.job_favorite)
 			HTML += " None"
 		else
+			var/print_the_job = FALSE
 			var/datum/job/J_Fav = src.job_favorite ? find_job_in_controller_by_string(src.job_favorite) : null
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
@@ -1060,7 +1063,11 @@ $(function() {
 					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
+				else
+					print_the_job = TRUE
 			else
+				print_the_job = TRUE
+			if(print_the_job)
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
 		HTML += {"
@@ -1168,6 +1175,21 @@ $(function() {
 	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
 		if (src.antispam)
 			return
+		switch(occ)
+			if (1)
+				if(src.job_favorite != job)
+					return
+			if (2)
+				if(!(job in src.jobs_med_priority))
+					return
+			if (3)
+				if(!(job in src.jobs_low_priority))
+					return
+			if (4)
+				if(!(job in src.jobs_unwanted))
+					return
+			else
+				return
 		if (!find_job_in_controller_by_string(job,1))
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
@@ -1651,6 +1673,10 @@ $(function() {
 			rebuild_data["messages"] = 1
 			src.auto_capitalization = !(src.auto_capitalization)
 
+		if (link_tags["local_deadchat"])
+			rebuild_data["messages"] = 1
+			src.local_deadchat = !(src.local_deadchat)
+
 		if (link_tags["volume"])
 			src.admin_music_volume = input("Goes from 0 to 100.","Admin Music Volume", src.admin_music_volume) as num
 			src.admin_music_volume = max(0,min(src.admin_music_volume,100))
@@ -1909,6 +1935,7 @@ $(function() {
 			flavor_text = null
 			src.ResetAllPrefsToLow(user)
 			flying_chat_hidden = 0
+			local_deadchat = 0
 			auto_capitalization = 0
 			listen_ooc = 1
 			view_changelog = 1

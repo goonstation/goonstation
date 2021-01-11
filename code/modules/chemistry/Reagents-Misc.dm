@@ -739,6 +739,8 @@ datum
 
 				if (istype(T))
 					if (T.wet >= 2) return
+					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(800 * volume_mult)
 						if (istype(T))
@@ -757,12 +759,17 @@ datum
 			value = 4 // 1 1 1
 			hygiene_value = 0.25
 			block_slippy = -2
+			var/visible = 1
 
 			reaction_turf(var/turf/target, var/volume)
+				var/visible = src.visible
 				src = null
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 3) return
+					if (visible)
+						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
 					SPAWN_DBG(80 SECONDS)
 						if (istype(T))
@@ -770,6 +777,10 @@ datum
 							T.UpdateOverlays(null, "wet_overlay")
 				return
 
+			invisible
+				name = "invisible organic superlubricant"
+				id = "invislube"
+				visible = 0
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
@@ -1161,6 +1172,8 @@ datum
 				if (istype(T) && T.wet) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					src = null
 					if (T.wet >= 2) return
+					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
@@ -1205,21 +1218,18 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 5)
+					if (1 to 9)
 						M.change_eye_blurry(10, 10)
-					if (6 to 11)
+					if (10 to 18)
 						M.drowsyness  = max(M.drowsyness, 10)
-					if (12 to 60) // Capped at ~2 minutes, that is 60 cycles + 10 paralysis (normally wears off at one per cycle).
+					if (19 to INFINITY)
 						M.changeStatus("paralysis", 30 * mult)
-					if (61 to INFINITY)
-						M.change_eye_blurry(10, 10)
-				if (counter >= 11 && !fakedeathed)
+				if (counter >= 19 && !fakedeathed)
 					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
-					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
+					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
-
 				..()
 
 		capulettium_plus
@@ -1243,14 +1253,18 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				if ((counter += (1*mult)) >= 10 && !fakedeathed)
+				switch(counter += (1 * mult))
+					if (1 to 9)
+						M.change_eye_blurry(10, 10)
+					if (10 to 18)
+						M.drowsyness  = max(M.drowsyness, 10)
+				if (counter >= 19 && !fakedeathed)
+					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					M.visible_message("<B>[M]</B> seizes up and falls limp, \his eyes dead and lifeless...")
-					playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
-
-
 				..()
+
 /*
 		montaguone
 			name = "montaguone"
@@ -3290,6 +3304,8 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
+					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(80 SECONDS)
 						if (istype(T))

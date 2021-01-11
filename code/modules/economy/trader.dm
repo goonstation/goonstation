@@ -1037,6 +1037,8 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/mime(src)
+		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)

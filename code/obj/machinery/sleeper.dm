@@ -135,7 +135,7 @@
 				return UI_CLOSE
 		return min(
 			tgui_broken_state.can_use_topic(use_obj, user),
-			tgui_physical_state.can_use_topic(use_obj, user),
+			tgui_default_state.can_use_topic(use_obj, user),
 			tgui_not_incapacitated_state.can_use_topic(use_obj, user)
 		)
 
@@ -221,6 +221,7 @@
 			ui.open()
 
 /obj/machinery/sleep_console/portable
+	name = "Port-A-Medbay console"
 	find_sleeper_in_range = 0
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////

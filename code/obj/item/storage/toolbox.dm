@@ -82,6 +82,14 @@
 		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
+	yellow_tools
+		spawn_contents = list(/obj/item/screwdriver/yellow,\
+		/obj/item/wrench/yellow,\
+		/obj/item/weldingtool,\
+		/obj/item/crowbar/yellow,\
+		/obj/item/wirecutters/yellow,\
+		/obj/item/device/analyzer/atmospheric)
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
