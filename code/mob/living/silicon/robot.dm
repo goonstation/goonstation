@@ -2902,11 +2902,11 @@
 				src.part_leg_l = null
 				src.compborg_force_unequip(1)
 				src.compborg_force_unequip(3)
-			if (part.slot == "arm_left")
+			if (part.slot == "l_arm")
 				src.visible_message("<b>[src]'s</b> left arm breaks off!")
 				src.part_arm_l = null
 				src.compborg_force_unequip(1)
-			if (part.slot == "arm_right")
+			if (part.slot == "r_arm")
 				src.visible_message("<b>[src]'s</b> right arm breaks off!")
 				src.part_arm_r = null
 				src.compborg_force_unequip(3)
@@ -2915,10 +2915,10 @@
 				src.visible_message("<b>[src]'s</b> legs are destroyed!")
 				src.part_leg_r = null
 				src.part_leg_l = null
-			if (part.slot == "leg_left")
+			if (part.slot == "l_leg")
 				src.visible_message("<b>[src]'s</b> left leg breaks off!")
 				src.part_leg_l = null
-			if (part.slot == "leg_right")
+			if (part.slot == "r_leg")
 				src.visible_message("<b>[src]'s</b> right leg breaks off!")
 				src.part_leg_r = null
 		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
