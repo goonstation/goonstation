@@ -265,6 +265,8 @@
 		ai_state = AI_PASSIVE
 
 /mob/living/carbon/human/proc/ai_action()
+	if(src.equipped() && prob(1))
+		src.equipped().attack_self(src)
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
@@ -373,7 +375,13 @@
 				if(prob(20))
 					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 
-				if(!src.r_hand)
+				if(src.r_hand && src.l_hand)
+					if(prob(50))
+						src.swap_hand()
+				else if(!src.equipped())
+					src.swap_hand()
+
+				if(!src.equipped())
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
@@ -382,18 +390,26 @@
 				else // With a weapon
 					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
 					//	src.a_intent = INTENT_HELP
+					var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
 					if(ishuman(ai_target) || issilicon(ai_target))
-						src.r_hand.attack(ai_target, src)
+						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
 					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
-							C.attackby(src.r_hand, src)
+							src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
 						else
 							ai_target = null
 							ai_state = AI_PASSIVE
 							return
+					else if(ismob(ai_target))
+						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
 					else
-						src.r_hand.attack(ai_target, src)
+						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
+						var/obj/critter/maybe_critter = ai_target
+						if(prob(10) || istype(maybe_critter) && !maybe_critter.alive && prob(60))
+							ai_target = null
+							ai_state = AI_PASSIVE
+							return
 					src.a_intent = INTENT_HARM
 
 			ai_pickupweapon()
