@@ -217,7 +217,7 @@
 			direction = turn(direction,180)
 
 		if (isitem(object))
-			object.streak(direction, src.streak_decal)
+			object.streak_object(direction, src.streak_decal)
 
 		if(prob(60)) holder.emote("scream")
 
@@ -366,13 +366,25 @@
 	proc/on_holder_examine()
 		return
 
-/obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
+/obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	SPAWN_DBG(0)
-		if (istype(direction, /list))
-			direction = pick(direction)
-		for (var/i = 0, i < rand(1,3), i++)
+		var/direction
+		if(islist(directions))
+			direction = pick(directions)
+			if(!(direction in cardinal))
+				direction = null
+		else if(directions in cardinal)
+			direction = directions
+
+		if(direction)
+			direction = GetRandomPerimeterTurf(get_turf(src), 10, direction)
+		else
+			direction = GetRandomPerimeterTurf(get_turf(src), 10)
+
+		var/j = rand(1,3)
+		for (var/i in 1 to j)
 			LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
-			if (i > 0 && ispath(streak_splatter))
+			if (ispath(streak_splatter))
 				make_cleanable(streak_splatter,src.loc)
-			if (!step_to(src, get_step(src, direction), 0))
+			if (!step_towards(src, direction, 0))
 				break

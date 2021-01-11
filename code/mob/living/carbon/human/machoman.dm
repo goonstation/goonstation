@@ -1323,7 +1323,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
-		gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+		gib.streak_cleanable(NORTH)
 		qdel(src)
 
 

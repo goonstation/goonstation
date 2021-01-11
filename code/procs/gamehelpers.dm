@@ -650,7 +650,7 @@ proc/LoadSavefile(name)
 	. = new/savefile(name)
 
 /// Returns a turf at the edge of a squared circle of specified radius around a thing
-proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10)
+proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 	var/turf/T = get_turf(A)
 	if(!isturf(T))
 		return
@@ -660,10 +660,26 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10)
 	var/out_x
 	var/out_y
 	var/x_or_y = pick("x", "y") // Which edge of the squircle isn't randomized
+	if(dir)
+		if(dir == NORTH || dir == SOUTH)
+			x_or_y = "y"
+		else
+			x_or_y = "x"
 	if(x_or_y == "x")
-		out_x = clamp(pick((T_x + dist), (T_x - dist)), 0, world.maxx)
+		if(dir)
+			if(dir == EAST)
+				out_x = clamp(T_x + dist, 0, world.maxx)
+			else if (dir == WEST)
+				out_x = clamp(T_x - dist, 0, world.maxx)
+		else
+			out_x = clamp(pick((T_x + dist), (T_x - dist)), 0, world.maxx)
 		out_y = clamp(rand(T_y - dist, T_y + dist), 0, world.maxy)
 	else
+		if(dir)
+			if(dir == NORTH)
+				out_y = clamp(T_y + dist, 0, world.maxy)
+			else if (dir == SOUTH)
+				out_y = clamp(T_y - dist, 0, world.maxy)
 		out_x = clamp(rand(T_x - dist, T_x + dist), 0, world.maxx)
 		out_y = clamp(pick((T_y + dist), (T_y - dist)), 0, world.maxy)
 	T = locate(out_x, out_y, T_z)

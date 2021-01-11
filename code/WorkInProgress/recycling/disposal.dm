@@ -1830,21 +1830,21 @@
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 /obj/decal/cleanable/robot_debris/gib/pipe_eject(var/direction)
 	var/list/dirs
-	if(direction)
-		dirs = list( direction, turn(direction, -45), turn(direction, 45))
+	if(direction in cardinal)
+		dirs = direction
 	else
-		dirs = alldirs.Copy()
+		dirs = cardinal.Copy()
 
-	src.streak(dirs)
+	src.streak_cleanable(dirs)
 
 
 

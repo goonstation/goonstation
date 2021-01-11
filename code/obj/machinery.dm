@@ -108,29 +108,29 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibdown1"
-	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
+	gib.streak_cleanable(WEST)
 	LAGCHECK(LAG_LOW)
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
+	gib.streak_cleanable(EAST)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(alldirs)
+	gib.streak_cleanable(cardinal)
 
 /obj/machinery/Topic(href, href_list)
 	..()
