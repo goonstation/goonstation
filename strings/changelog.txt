@@ -1,5 +1,9 @@
 
 (t)mon jan 11 21
+(u)Flourish
+(p)3291
+(e)🆕|feature
+(*)Conspirators now spawn with a secret radio frequency on their headset. You can access the frequency with the :z prefix to talk with your co-conspirators.
 (u)BenLubar
 (p)3299
 (e)|
