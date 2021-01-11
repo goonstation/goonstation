@@ -983,36 +983,6 @@ datum/projectile/snowball
 	Q.launch()
 	return Q
 
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
-	if (!P.incidence || !(P.incidence in cardinal))
-		return null
-	if(P.reflectcount >= max_reflects)
-		return
-
-	var/rx = 0
-	var/ry = 0
-
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
-
-	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
-	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
-	ry = P.yo - dn * ny
-
-	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Marquesas/Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
-
-	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
-	if (!Q)
-		return null
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
-	Q.name = "reflected [Q.name]"
-	Q.launch()
-	return Q
-
 /*
  * shoot_reflected_true seemed half broken...
  * So I made my own proc, but left the old one in place just in case -- Sovexe
