@@ -866,7 +866,12 @@
 
 	var/list/dna = list()
 	for (var/datum/basePair/BP in blockList)
-		dna += list(list(BP.bpp1, BP.bpp2, BP.style, BP.marker))
+		dna += list(list(
+			"upper" = BP.bpp1,
+			"lower" = BP.bpp2,
+			"style" = BP.style,
+			"marker" = BP.marker,
+		))
 
 	. = list(
 		"ref" = "\ref[BE]",

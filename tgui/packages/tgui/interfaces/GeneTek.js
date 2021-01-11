@@ -891,9 +891,9 @@ const BioEffect = (props, context) => {
     onCooldown[label] = cooldown > 0;
   }
 
-  const dnaGood = dna.every(pair => !pair[2]);
+  const dnaGood = dna.every(pair => !pair.style);
   const dnaGoodExceptLocks = dna.every(pair =>
-    !pair[2] || pair[3] === "locked");
+    !pair.style || pair.marker === "locked");
 
   return (
     <Section
@@ -1254,9 +1254,9 @@ const DNASequence = (props, context) => {
         {block.map((pair, j) => (
           <td key={j}>
             <Nucleotide
-              letter={pair[0]}
-              type={pair[2]}
-              mark={pair[3]}
+              letter={pair.upper}
+              type={pair.style}
+              mark={pair.marker}
               useLetterColor={allGood}
               onClick={() => advancePair(i * 4 + j + 1)} />
           </td>
@@ -1265,17 +1265,17 @@ const DNASequence = (props, context) => {
       <tr>
         {block.map((pair, j) => (
           <td key={j} style={{ "text-align": "center" }}>
-            {allGood ? "|" : pair[3] === "locked" ? (
+            {allGood ? "|" : pair.marker === "locked" ? (
               <Icon
                 name="lock"
                 color="average"
                 onClick={() => advancePair(i * 4 + j + 1)} />
             ) : (
               <Icon name={
-                pair[2] === "" ? "check"
-                  : pair[2] === "5" ? "times"
-                    : "question"
-              } color={typeColor[pair[2]]} />
+                pair.style === "" ? "check" // correct
+                  : pair.style === "5" ? "times" // incorrect
+                    : "question" // changed since last analyze
+              } color={typeColor[pair.style]} />
             )}
           </td>
         ))}
@@ -1284,9 +1284,9 @@ const DNASequence = (props, context) => {
         {block.map((pair, j) => (
           <td key={j}>
             <Nucleotide
-              letter={pair[1]}
-              type={pair[2]}
-              mark={pair[3]}
+              letter={pair.lower}
+              type={pair.style}
+              mark={pair.marker}
               useLetterColor={allGood}
               onClick={() => advancePair(i * 4 + j + 1)} />
           </td>
