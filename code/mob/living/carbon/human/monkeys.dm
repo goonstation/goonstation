@@ -1,4 +1,10 @@
 
+#define IS_NPC_HATED_ITEM(x) ( \
+		istype(x, /obj/item/clothing/suit/straight_jacket) || \
+		istype(x, /obj/item/handcuffs) || \
+		x:block_vision \
+	)
+
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
 #ifdef IN_MAP_EDITOR
@@ -150,10 +156,10 @@
 			return
 		..()
 		if (src.ai_state == 0)
-			if (prob(10))
-				src.ai_pickpocket()
-			else if (prob(10))
-				src.ai_knock_from_hand()
+			if (prob(50))
+				src.ai_pickpocket(priority_only=prob(80))
+			else if (prob(50))
+				src.ai_knock_from_hand(priority_only=prob(80))
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
@@ -161,7 +167,7 @@
 
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		// Dead monkeys can't hold a grude and stops emote
-		if(isdead(src))
+		if(isdead(src) || T == src)
 			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
@@ -223,49 +229,98 @@
 		else
 			return 0
 
-	proc/ai_pickpocket()
+	proc/ai_pickpocket(priority_only=FALSE)
 		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket)
 			return
 		var/list/possible_targets = list()
+		var/list/priority_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))
-			if (istype(H, /mob/living/carbon/human/npc/monkey))
+			if(H == src)
 				continue
-			if (!H.l_store && !H.r_store)
+			if (istype(H, /mob/living/carbon/human/npc/monkey))
+				if(H.handcuffs)
+					priority_targets += H
+					continue
+				for(var/obj/item/thing in H)
+					if(IS_NPC_HATED_ITEM(thing) && thing.equipped_in_slot)
+						priority_targets += H
+						break
+				continue
+			if (!H.l_store && !H.r_store && isalive(H))
 				continue
 			possible_targets += H
-		if (!possible_targets.len)
+		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
-		var/mob/living/carbon/human/theft_target = pick(possible_targets)
+		var/mob/living/carbon/human/theft_target
+		if(length(priority_targets))
+			theft_target = pick(priority_targets)
+		else if(!priority_only)
+			theft_target = pick(possible_targets)
 		var/obj/item/thingy
 		var/slot = 15
-		if (theft_target.l_store && theft_target.r_store)
-			thingy = pick(theft_target.l_store, theft_target.r_store)
-			if (thingy == theft_target.r_store)
-				slot = 16
-		else if (theft_target.l_store)
-			thingy = theft_target.l_store
-		else if (theft_target.r_store)
-			thingy = theft_target.r_store
-			slot = 16
-		else // ???
+		if(!theft_target)
 			return
+		if(ismonkey(theft_target))
+			if(theft_target.handcuffs)
+				actions.start(new/datum/action/bar/icon/handcuffRemovalOther(theft_target), src)
+				return
+			for(var/obj/item/thing in theft_target)
+				if(IS_NPC_HATED_ITEM(thing) && thing.equipped_in_slot)
+					thingy = thing
+					slot = thing.equipped_in_slot
+					break
+		if(!thingy)
+			if(!isalive(theft_target))
+				var/list/choices = theft_target.get_equipped_items()
+				if(!length(choices))
+					return
+				thingy = pick(choices)
+				slot = thingy.equipped_in_slot
+			else if (theft_target.l_store && theft_target.r_store)
+				thingy = pick(theft_target.l_store, theft_target.r_store)
+				if (thingy == theft_target.r_store)
+					slot = 16
+			else if (theft_target.l_store)
+				thingy = theft_target.l_store
+			else if (theft_target.r_store)
+				thingy = theft_target.r_store
+				slot = 16
+			else // ???
+				return
 		walk_towards(src, null)
-		src.say("[pick("Gimme", "Want", "Need")] [thingy.name].") // Monkeys don't know grammar!
+		if(ismonkey(theft_target))
+			src.say("I help!")
+		else if(isalive(theft_target))
+			src.say("[pick("Gimme", "Want", "Need")] [thingy.name].") // Monkeys don't know grammar!
 		actions.start(new/datum/action/bar/icon/filthyPickpocket(src, theft_target, slot), src)
 
-	proc/ai_knock_from_hand()
+	ai_move()
+		if(src.ai_picking_pocket)
+			return
+		. = ..()
+
+	proc/ai_knock_from_hand(priority_only=FALSE)
 		if (src.getStatusDuration("weakened") || src.getStatusDuration("stunned") || src.getStatusDuration("paralysis") || src.stat || src.ai_picking_pocket || src.r_hand)
 			return
 		var/list/possible_targets = list()
+		var/list/priority_targets = list()
 		for (var/mob/living/carbon/human/H in view(1, src))
 			if (istype(H, /mob/living/carbon/human/npc/monkey))
 				continue
 			if (!H.l_hand && !H.r_hand)
 				continue
 			possible_targets += H
-		if (!possible_targets.len)
+			if(IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
+				priority_targets += H
+		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
-		var/mob/living/carbon/human/theft_target = pick(possible_targets)
+		var/mob/living/carbon/human/theft_target
+		if(length(priority_targets))
+			theft_target = pick(priority_targets)
+		else if(!priority_only)
+			theft_target = pick(possible_targets)
+		if(!theft_target)
+			return
 		walk_towards(src, null)
 		src.a_intent = INTENT_DISARM
 		theft_target.attack_hand(src)
@@ -338,8 +393,10 @@
 
 		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
-		for(var/mob/O in AIviewers(owner))
-			O.show_message("<B>[source]</B> rifles through [target]'s pockets!", 1)
+		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
+			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
+		else
+			source.visible_message("<B>[source]</B> rifles through [target]!", "You rifle through [target]!")
 
 		source.ai_picking_pocket = 1
 
@@ -354,8 +411,10 @@
 
 		if(I.handle_other_remove(source, target))
 			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
-			for(var/mob/O in AIviewers(owner))
-				O.show_message("<B>[source]</B> grabs [I] from [target]'s pockets!", 1)
+			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
+				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
+			else
+				source.visible_message("<B>[source]</B> grabs [I] from [target]!", "You grab [I] from [target]!")
 			target.u_equip(I)
 			I.dropped(target)
 			I.layer = initial(I.layer)
@@ -468,3 +527,5 @@
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, src.slot_shoes)
+
+#undef IS_NPC_HATED_ITEM

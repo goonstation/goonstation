@@ -5,6 +5,22 @@
 #define AI_IDLE 4
 #define AI_FLEEING 5
 
+#define IS_NPC_HATED_ITEM(x) ( \
+		istype(x, /obj/item/clothing/suit/straight_jacket) || \
+		istype(x, /obj/item/handcuffs) || \
+		x:block_vision \
+	)
+#define IS_NPC_CLOTHING(x) ( \
+		( \
+			istype(x, /obj/item/clothing) || \
+			istype(x, /obj/item/device/radio/headset) || \
+			istype(x, /obj/item/card/id) || \
+			x.flags & ONBELT || \
+			x.flags & ONBACK \
+		) && !IS_NPC_HATED_ITEM(x) \
+	)
+
+
 /mob/living/carbon/human/npc
 	name = "human"
 	is_npc = 1
@@ -186,13 +202,7 @@
 		ai_target = null
 		ai_state = AI_PASSIVE
 		if(src.canmove && !ai_busy)
-			ai_busy = 1
-			src.visible_message("<span class='alert'><B>[src] attempts to remove the handcuffs!</B></span>")
-			SPAWN_DBG(2 MINUTES)
-				ai_busy = 0
-				if(src.hasStatus("handcuffed") && !ai_incapacitated())
-					src.visible_message("<span class='alert'><B>[src] manages to remove the handcuffs!</B></span>")
-					src.handcuffs.drop_handcuffs(src)
+			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(1 MINUTE + rand(-10 SECONDS, 10 SECONDS)), src)
 	ai_move()
 
 	if(ai_target)
@@ -265,14 +275,16 @@
 		ai_state = AI_PASSIVE
 
 /mob/living/carbon/human/proc/ai_action()
-	if(src.equipped() && prob(1))
-		src.equipped().attack_self(src)
+	usr = src
+
+	src.ai_do_hand_stuff()
+
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
 			src.a_intent = src.ai_default_intent
 
-			ai_pickupweapon()
+			ai_pickupstuff()
 			ai_obstacle(1)
 			ai_openclosets()
 			//ai_findtarget()
@@ -361,12 +373,12 @@
 							if(2)
 								src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.r_hand && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && !A?.sanctuary))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot() && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
 
-			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && A?.sanctuary))
+			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !A?.sanctuary)
 				//I can attack someone! =D
 				ai_target_old.Cut()
 				if(src.bioHolder.HasEffect("coprolalia") && prob(10)) //Combat Trash Talk
@@ -376,9 +388,12 @@
 					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 
 				if(src.r_hand && src.l_hand)
-					if(prob(50))
+					if(prob(src.hand ? 15 : 50))
 						src.swap_hand()
-				else if(!src.equipped())
+				else if(!src.equipped() && (src.r_hand || src.l_hand))
+					src.swap_hand()
+
+				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
 				if(!src.equipped())
@@ -390,21 +405,20 @@
 				else // With a weapon
 					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
 					//	src.a_intent = INTENT_HELP
-					var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
 					if(ishuman(ai_target) || issilicon(ai_target))
-						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
+						src.ai_attack_target(ai_target, src.equipped())
 					else if(ismobcritter(ai_target))
 						var/mob/living/critter/C = ai_target
 						if (isalive(C))
-							src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
+							src.ai_attack_target(ai_target, src.equipped())
 						else
 							ai_target = null
 							ai_state = AI_PASSIVE
 							return
 					else if(ismob(ai_target))
-						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
+						src.ai_attack_target(ai_target, src.equipped())
 					else
-						src.weapon_attack(ai_target, src.equipped(), 1, attack_params)
+						src.ai_attack_target(ai_target, src.equipped())
 						var/obj/critter/maybe_critter = ai_target
 						if(prob(10) || istype(maybe_critter) && !maybe_critter.alive && prob(60))
 							ai_target = null
@@ -412,7 +426,7 @@
 							return
 					src.a_intent = INTENT_HARM
 
-			ai_pickupweapon()
+			ai_pickupstuff()
 
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
@@ -426,13 +440,96 @@
 			if (grabbed_by.len)
 				src.resist()
 
-	return
 
+/mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
+	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
+	return src.weapon_attack(target, weapon, 1, attack_params)
+
+/mob/living/carbon/human/proc/ai_do_hand_stuff()
+	// swap hands
+	if(src.r_hand && src.l_hand)
+		if(prob(src.hand ? 15 : 4))
+			src.swap_hand()
+	else if(!src.equipped() && (src.r_hand || src.l_hand))
+		src.swap_hand()
+
+	if(!src.equipped())
+		return
+
+	var/throw_equipped = prob(0.1)
+
+	if(IS_NPC_HATED_ITEM(src.equipped()))
+		throw_equipped |= prob(80)
+
+	// wear clothes
+	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(5)))
+		src.hud.clicked("invtoggle", src, list())
+		if(src.equipped())
+			throw_equipped |= prob(80)
+
+	if(istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
+		if(istype(src.equipped(), /obj/item/device/light/zippo) || istype(src.equipped(), /obj/item/weldingtool) || istype(src.equipped(), /obj/item/device/igniter))
+			if(!cigarette.on)
+				if(istype(src.equipped(), /obj/item/device/light/zippo))
+					var/obj/item/device/light/zippo/zippo = src.equipped()
+					if(!zippo.on)
+						zippo.attack_self(src)
+				if(istype(src.equipped(), /obj/item/weldingtool))
+					var/obj/item/weldingtool/welder = src.equipped()
+					if(!welder.welding)
+						welder.attack_self(src)
+				src.ai_attack_target(cigarette, src.equipped())
+				throw_equipped = 1
+
+	// eat, drink, splash!
+	if(istype(src.equipped(), /obj/item/reagent_containers))
+		if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
+			src.ai_attack_target(src, src.equipped())
+		else
+			var/obj/item/thing = src.equipped()
+			src.u_equip(thing)
+			thing.set_loc(src.loc)
+			thing.dropped(src)
+			thing.layer = initial(thing.layer)
+
+	// draw
+	if(istype(src.equipped(), /obj/item/pen/crayon) && prob(20))
+		var/list/turf/eligible = list()
+		for(var/turf/T in view(src, 1))
+			if(!T.density && !(locate(/obj/decal/cleanable/writing) in T))
+				eligible += T
+		if(length(eligible))
+			src.ai_attack_target(pick(eligible), src.equipped())
+
+	// use
+	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7))
+		src.equipped().attack_self(src)
+
+	// throw
+	if(throw_equipped)
+		var/turf/T = get_turf(src)
+		src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+
+	// give
+	if(prob(5) && src.equipped())
+		for(var/mob/living/carbon/human/H in view(1))
+			if(H != src)
+				src.give_to(H)
+				break
+
+	// put on table
+	if(prob(5) && src.equipped())
+		for(var/obj/table/table in view(1))
+			src.ai_attack_target(table, src.equipped())
+			break
 
 /mob/living/carbon/human/proc/ai_move()
 	if(ai_incapacitated() || !ai_canmove() || ai_busy)
 		walk_towards(src, null)
 		return
+	if((src in actions.running) && length(actions.running[src]))
+		return // don't interupt actions
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
@@ -447,9 +544,57 @@
 				walk_towards(src, null)
 				step_towards(src, ai_target) //Take a step and hit the shite (but only if you won't push them out of the way by doing so)
 
+
+/mob/living/carbon/human/proc/ai_pickupstuff()
+	src.ai_pickupweapon()
+	if(prob(40))
+		src.ai_pickupoffhand()
+
+/mob/living/carbon/human/proc/ai_pickupoffhand()
+	if(src.l_hand?.cant_drop)
+		return
+
+	var/obj/item/pickup
+	var/pickup_score = 0
+
+	for (var/obj/item/G in view(1,src))
+		if(G != src.l_hand && !istype(G.loc, /turf) || G.anchored) continue
+		var/score = 0
+		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
+			score += 6
+		if(IS_NPC_CLOTHING(G))
+			score += 10
+		if(istype(G, /obj/item/remote))
+			score += 3
+		if(istype(G, /obj/item/reagent_containers) && G.reagents?.total_volume > 0)
+			score += 5
+		if(istype(G, /obj/item/reagent_containers/food/snacks))
+			score += 5
+		if(istype(G, /obj/item/pen/crayon))
+			score += 4
+		if(istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
+			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
+				score += 8
+		score += G.contraband
+		score += rand(-2, 2)
+		if(score > pickup_score)
+			pickup_score = score
+			pickup = G
+
+	if(src.l_hand && pickup && pickup != src.l_hand)
+		var/obj/item/LHITM = src.l_hand
+		src.u_equip(LHITM)
+		LHITM.set_loc(get_turf(src))
+		LHITM.dropped(src)
+		LHITM.layer = initial(LHITM.layer)
+
+	if(pickup && !src.l_hand)
+		src.swap_hand(1)
+		if(src.put_in_hand_or_drop(pickup))
+			src.set_clothing_icon_dirty()
+
 /mob/living/carbon/human/proc/ai_pickupweapon()
-
-
 	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
 		return
 
@@ -512,6 +657,7 @@
 		RHITM:layer = initial(RHITM:layer)
 
 	if(pickup && !src.r_hand)
+		src.swap_hand(0)
 		if(src.put_in_hand_or_drop(pickup))
 			src.set_clothing_icon_dirty()
 
@@ -678,6 +824,8 @@
 			S.open()
 
 
+#undef IS_NPC_HATED_ITEM
+#undef IS_NPC_CLOTHING
 
 #undef AI_PASSIVE
 #undef AI_ANGERING
