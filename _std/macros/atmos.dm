@@ -17,6 +17,9 @@
 /// Moles in a standard cell after which plasma is visible
 #define MOLES_PLASMA_VISIBLE	2
 
+#define GAS_IMG_PLASMA_BIT (1<<0)
+#define GAS_IMG_N2O_BIT	(1<<1)
+
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
 /// Amount of air to take a from a tile

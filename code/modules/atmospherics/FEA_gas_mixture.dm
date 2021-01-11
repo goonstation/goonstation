@@ -121,17 +121,19 @@ What are the archived variables for?
 
 /datum/gas_mixture/proc/check_tile_graphic()
 	//returns 1 if graphic changed
-	graphic = ""
+	graphic = 0
 
 	if(toxins > MOLES_PLASMA_VISIBLE)
-		graphic += "plasma;"
+		graphic |= GAS_IMG_PLASMA_BIT
+
 	else if(length(trace_gases))
-		var/datum/gas/sleeping_agent = src.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
 		if(sleeping_agent && (sleeping_agent.moles > 1))
-			graphic += "n2o;"
-		var/datum/gas/rad_particles = src.get_trace_gas_by_type(/datum/gas/rad_particles)
-		if(rad_particles && (rad_particles.moles > 1))
-			graphic += "n2o;"
+			graphic |= GAS_IMG_N2O_BIT
+		else
+			var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
+			if(rad_particles && (rad_particles.moles > 1))
+				graphic |= GAS_IMG_N2O_BIT
 	. = graphic != graphic_archived
 #ifndef ATMOS_ARCHIVING
 	graphic_archived = graphic

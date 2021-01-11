@@ -84,7 +84,6 @@ turf
 	simulated
 
 		var/tmp/dist_to_space = null
-		var/tmp/current_graphic = null
 
 		var/tmp
 			datum/gas_mixture/air
@@ -124,39 +123,18 @@ turf
 				if (disposed)
 					return
 
-				//overlays.len = 0
-
-				var/list/graphics = params2list(model.graphic)//splittext(model.graphic, ";")
-
-				if(!graphics || !graphics.len)
-					if (gas_icon_overlay)
-						pool(gas_icon_overlay)
-						gas_icon_overlay = null
-					return
-
-				var/new_visuals_state = 0
-
-				for(var/str in graphics)
-					switch(str)
-						if("plasma")
-							new_visuals_state |= 1
-						if("n2o")
-							new_visuals_state |= 2
-						else
-							continue
-
-				if (new_visuals_state)
-					if (new_visuals_state != visuals_state)
+				if (model.graphic)
+					if (model.graphic != visuals_state)
 						if(!gas_icon_overlay)
 							gas_icon_overlay = unpool(/obj/overlay/tile_gas_effect)
 							gas_icon_overlay.set_loc(src)
 						else
 							gas_icon_overlay.overlays.len = 0
 
-						visuals_state = new_visuals_state
-						if (visuals_state & 1)
+						visuals_state = model.graphic
+						if (visuals_state & GAS_IMG_PLASMA_BIT)
 							gas_icon_overlay.overlays.Add(plmaster)
-						if (visuals_state & 2)
+						if (visuals_state & GAS_IMG_N2O_BIT)
 							gas_icon_overlay.overlays.Add(slmaster)
 				else
 					if (gas_icon_overlay)
