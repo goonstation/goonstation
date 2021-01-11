@@ -283,6 +283,16 @@
 								spread_to(T, 0)
 							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
 						continue
+					else
+						var/turf/H_turf = H.loc
+						SPAWN_DBG(-1)
+							for(var/dir in cardinal)
+								var/turf/T = get_step(H, dir)
+								if(H.loc != H_turf)
+									break
+								if(T.can_blob_spread_here())
+									spread_to(T, 0)
+									sleep(spread.cooldown_time + 1)
 					// no explicit `absorb.onUse` call because absorption is now automatic
 
 		switch (state)
