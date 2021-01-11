@@ -229,7 +229,7 @@
 			return
 		if (!blobs.len && state != 1)
 			return
-		if (refresh_lists > 50 && state > 1)
+		if (refresh_lists > 50 && state > 1 || length(open) + length(open_low) + length(open_medium) + length(closed) <= 1)
 			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Refreshing lists.")
 			refresh_lists = 0
 			var/list/all = open + open_low + open_medium + closed
@@ -313,7 +313,7 @@
 					counter = 0
 			if (STATE_EXPANDING)
 				refresh_lists++
-				if (blobs.len > 15 && prob(blobs.len / (lipid_count + 1)))
+				if (blobs.len > 15 && prob(blobs.len / (lipid_count + 1)) && bio_points_max >= lipid.bio_point_cost)
 					state = STATE_DO_LIPIDS
 				if (!(gen_up in available_upgrades))
 					gen_up = null
@@ -437,6 +437,8 @@
 					force_state = 0
 			if (STATE_DO_LIPIDS)
 				if (bio_points < lipid.bio_point_cost)
+					if(bio_points_max < lipid.bio_point_cost)
+						state = STATE_EXPANDING
 					return
 				var/obj/blob/A
 				if (!A)
