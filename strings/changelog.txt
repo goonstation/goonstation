@@ -1,5 +1,7 @@
 
 (t)mon jan 11 21
+(u)pali
+(+)You can now stuff ammo casings, paper and floor tiles into crates en-masse by clickdragging.
 (u)Flourish
 (p)3291
 (e)🆕|feature
