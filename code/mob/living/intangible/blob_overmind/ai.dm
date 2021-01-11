@@ -155,13 +155,13 @@
 		var/cl = evaluate_no_add(C)
 		switch (cl)
 			if (0)
-				open += C
+				open[C] = 1
 			if (1)
-				open_medium += C
+				open_medium[C] = 1
 			if (2)
-				open_low += C
+				open_low[C] = 1
 			if (3)
-				closed += C
+				closed[C] = 1
 
 	proc/has_adjacent_blob(var/turf/T)
 		var/turf/N = locate(T.x, T.y + 1, T.z)
@@ -194,7 +194,8 @@
 
 	proc/check_viability(var/turf/start)
 		var/list/closed = list()
-		var/list/open = list(start)
+		var/list/open = list()
+		open[start] = 1
 		var/viability = 0
 		while (open.len)
 			var/turf/T = open[1]
@@ -202,23 +203,23 @@
 			if (viability >= 100)
 				return 1
 			open.Cut(1,2)
-			closed += T
+			closed[T] = 1
 			var/turf/N = locate(T.x, T.y + 1, T.z)
 			var/turf/S = locate(T.x, T.y - 1, T.z)
 			var/turf/W = locate(T.x - 1, T.y, T.z)
 			var/turf/E = locate(T.x + 1, T.y, T.z)
 			if (N)
 				if (!istype(N, /turf/space) && !N.density && !(N in closed) && !(N in open))
-					open += N
+					open[N] = 1
 			if (S)
 				if (!istype(S, /turf/space) && !S.density && !(S in closed) && !(S in open))
-					open += S
+					open[S] = 1
 			if (W)
 				if (!istype(W, /turf/space) && !W.density && !(W in closed) && !(W in open))
-					open += W
+					open[W] = 1
 			if (E)
 				if (!istype(E, /turf/space) && !E.density && !(E in closed) && !(E in open))
-					open += E
+					open[E] = 1
 		return 0
 
 	Life(datum/controller/process/mobs/parent)
@@ -236,9 +237,9 @@
 			closed.len = 0
 			open_low.len = 0
 			open_medium.len = 0
-			for (var/turf/C in all)
+			for (var/turf/C as() in all)
 				evaluate(C)
-			for (var/turf/T in range(30, src))
+			for (var/turf/T as() in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
 				if (!(T in all))
 					evaluate(T)
 
@@ -250,7 +251,9 @@
 					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
 
 			if (absorb)
-				for (var/mob/living/carbon/human/H in range(33, src))
+				for (var/mob/living/carbon/human/H in (mobs + ai_mobs))
+					if(!IN_RANGE(H, src, 30))
+						continue
 					if (!isturf(H.loc))
 						continue
 					if (isdead(H))
@@ -385,11 +388,11 @@
 						if (new_score != 1)
 							switch (new_score)
 								if (0)
-									open += ST
+									open[ST] = 1
 								if (2)
-									open_low += ST
+									open_low[ST] = 1
 								if (3)
-									closed += ST
+									closed[ST] = 1
 							destroying = null
 						return
 					else if (destroying)
@@ -420,11 +423,11 @@
 						if (new_score != 2)
 							switch (new_score)
 								if (0)
-									open += ST
+									open[ST] = 1
 								if (1)
-									open_medium += ST
+									open_medium[ST] = 1
 								if (3)
-									closed += ST
+									closed[ST] = 1
 							destroying = null
 						return
 					else if (destroying)
@@ -512,7 +515,9 @@
 					if (nearest)
 						attackers += nearest
 					if (!attacker)
-						for (var/mob/living/M in range(30, src))
+						for (var/mob/living/M in (mobs + ai_mobs))
+							if(!IN_RANGE(M, src, 30))
+								continue
 							if (isintangible(M))
 								continue
 							if (isdead(M))
@@ -558,7 +563,9 @@
 				else if (!attacker)
 					var/obj/blob/F = null
 					//var/preferred = 0
-					for (var/obj/blob/B in range(10, nearest))
+					for_by_tcl(B, /obj/blob)
+						if(!IN_RANGE(B, nearest, 10))
+							continue
 						if (B.type == /obj/blob)
 							var/obj/blob/adj_blob = locate(/obj/blob) in get_step_towards(B, nearest)
 							if (!adj_blob)
