@@ -535,9 +535,10 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if(ismob(src.loc) && !isrobot(src.loc)) // aaaaaa borgs
-		var/mob/holding_mob = src.loc
-		holding_mob.u_equip(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
 		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
