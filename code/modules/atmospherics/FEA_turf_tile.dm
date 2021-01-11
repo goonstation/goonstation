@@ -184,6 +184,9 @@ turf
 					if(air_master && istype(tile) && !tile.blocks_air)
 						air_master.tiles_to_update |= tile
 			pool(air)
+			if (gas_icon_overlay)
+				pool(gas_icon_overlay)
+				gas_icon_overlay = null
 			air = null
 			parent = null
 			..()
