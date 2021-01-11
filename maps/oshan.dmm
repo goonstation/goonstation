@@ -15669,6 +15669,7 @@
 "aJY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/machinery/photocopier,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aJZ" = (
@@ -22625,6 +22626,13 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbt" = (
@@ -22933,15 +22941,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/meter,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcu" = (
@@ -23274,13 +23277,6 @@
 /turf/space/fluid,
 /area/space)
 "bdC" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -42608,6 +42604,13 @@
 	chargelevel = 4000;
 	output = 2500
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "bYE" = (
@@ -47159,6 +47162,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dBL" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "dBP" = (
 /obj/item/clothing/under/misc/mime/alt,
 /turf/simulated/floor/plating/random,
@@ -47219,6 +47233,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"fkH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "fCI" = (
 /obj/machinery/vehicle/tank/car/yellow,
 /turf/space/fluid,
@@ -47383,16 +47406,14 @@
 	o2tanks = 5;
 	pltanks = 15
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -47949,6 +47970,16 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"sdi" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47992,6 +48023,15 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/hangar)
+"tDZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "tGH" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -48038,6 +48078,16 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"umv" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "uAB" = (
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
@@ -129607,7 +129657,7 @@ bcL
 bei
 bcN
 bcL
-bcL
+sdi
 csr
 uGR
 bbg
@@ -131108,10 +131158,10 @@ bcp
 aTq
 aTq
 aTq
-bbn
+tDZ
 bbv
-bcL
-bbM
+bcM
+dBL
 bcL
 bcL
 bcL
@@ -131414,7 +131464,7 @@ afX
 bbg
 bdx
 bbM
-bcL
+umv
 bcL
 bcL
 bcN
@@ -131728,7 +131778,7 @@ bZE
 llR
 bbg
 aRh
-ksg
+fkH
 aSP
 gKC
 gKC

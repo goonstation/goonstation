@@ -1045,14 +1045,6 @@ Other Goonstation servers:[serverList]"}
 				qdel(L)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
-		return
-	return
 
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)

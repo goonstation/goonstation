@@ -26,6 +26,7 @@
 // Mail Groups (Alerts)
 // These cannot be joined, and no PDAs start in them.
 // However, they can be muted.
+
 #define MGA_MAIL "Snail Mail Alert"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"

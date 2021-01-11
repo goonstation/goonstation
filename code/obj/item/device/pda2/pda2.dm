@@ -179,7 +179,6 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
-		default_muted_mailgroups = list(MGD_MEDBAY)
 
 	security
 		icon_state = "pda-s"
@@ -636,7 +635,7 @@
 		if (!any_member) // not a member of any specified group; discard
 			return
 	else if (signal.data["group"])
-		if (!(signal.data["group"] in src.mailgroups)) // not a member of the specified group; discard
+		if (!(signal.data["group"] in src.mailgroups) && !(signal.data["group"] in src.alertgroups)) // not a member of the specified group; discard
 			return
 
 	src.host_program?.receive_signal(signal, rx_method, rx_freq)

@@ -116,6 +116,7 @@
 		//if (src.owner:holder:level >= LEVEL_CODER)
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Local deadchat?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
 		if (src.owner:holder:level >= LEVEL_PA)
 			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"

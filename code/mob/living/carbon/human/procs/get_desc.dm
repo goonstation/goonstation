@@ -281,7 +281,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.getStatusDuration("weakened")))
+	if ((isdead(src)) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else

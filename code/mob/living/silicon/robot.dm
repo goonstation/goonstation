@@ -532,6 +532,12 @@
 							message = "<B>[src]</B> beep-bops at [M]."
 							break
 
+						if (istype(src.buckled, /obj/machinery/conveyor))
+							message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
+							src.buckled = null
+							if(isunconscious(src))
+								setalive(src) //reset stat to ensure emote comes out
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
@@ -1571,6 +1577,7 @@
 			src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 16, 3) // heh
 
 		src.brain = null
+		src.part_head?.brain = null
 		src.update_appearance()
 
 	Topic(href, href_list)
@@ -2375,7 +2382,8 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-				setalive(src)
+				if(src.health > 0)
+					setalive(src)
 
 			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
 				batteryDistress() // Execute distress mode
@@ -2396,7 +2404,10 @@
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
 			setunconscious(src)
 		else
-			setalive(src)
+			if(src.health > 0)
+				setalive(src)
+			else
+				setdead(src)
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)

@@ -35,7 +35,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\error_handling.dm"
 #include "code\global.dm"
 #include "code\hellban.dm"
-#include "code\hub.dm"
 #include "code\interface.dm"
 #include "code\map.dm"
 #include "code\mapSwitching.dm"

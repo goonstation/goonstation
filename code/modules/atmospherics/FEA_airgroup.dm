@@ -1,10 +1,13 @@
-/datum/air_group
-	//Processing all tiles as one large tile if 1
-	var/tmp/group_processing = 1
 
+/datum/air_group
+
+	/// Processing all tiles as one large tile if TRUE
+	var/tmp/group_processing = TRUE
+
+	/// The gas mixture we use for the air group's atmos
 	var/tmp/datum/gas_mixture/air = null
 
-	//cycle that oxygen value represents
+	/// cycle that oxygen value represents
 	var/tmp/current_cycle = 0
 
 	//cycle that ARCHIVED(oxygen) value represents
@@ -33,8 +36,8 @@
 	var/list/turf/simulated/self_group_borders
 	var/list/turf/simulated/self_tile_borders
 
-	var/spaced = 0
-	var/spaced_via_group = 0
+	/// If true, will drain the gasses of the airgroup
+	var/spaced = FALSE
 
 // overrides
 /datum/air_group/disposing()
@@ -48,14 +51,14 @@
 // Group procs
 /datum/air_group/proc/suspend_group_processing()
 	// Distribute air from the group out to members
-	ASSERT(group_processing == 1)
+	ASSERT(group_processing == TRUE)
 	update_tiles_from_group()
-	group_processing = 0
+	group_processing = FALSE
 
 /datum/air_group/proc/resume_group_processing()
-	ASSERT(group_processing == 0)
+	ASSERT(group_processing == FALSE)
 	update_group_from_tiles()
-	group_processing = 1
+	group_processing = TRUE
 
 //Copy group air information to individual tile air
 //Used right before turning on group processing
@@ -116,7 +119,7 @@
 
 
 /datum/air_group/proc/process_group(var/datum/controller/process/parent_controller)
-	var/abort_group = 0
+	var/abort_group = FALSE
 	current_cycle = air_master.current_cycle
 
 	if (spaced)
@@ -210,7 +213,7 @@
 						AG.suspend_group_processing()
 						connection_difference = air.share(enemy_border.air)
 					else
-						abort_group = 1
+						abort_group = TRUE
 						break
 
 					if(connection_difference && !isnull(enemy_border) && !isnull(self_border))
@@ -246,13 +249,13 @@
 						if(air.check_gas_mixture(enemy_tile:air))
 							connection_difference = air.share(enemy_tile:air)
 						else
-							abort_group = 1
+							abort_group = TRUE
 							break
 				else if(isturf(enemy_tile) && !enemy_tile.density) // optimization, if you ever need unsimmed walls to affect temperature change this
 					if(air.check_turf(enemy_tile))
 						connection_difference = air.mimic(enemy_tile)
 					else
-						abort_group = 1
+						abort_group = TRUE
 						break
 
 				if(connection_difference)
@@ -279,7 +282,7 @@
 					if(air && sample && air.check_turf(sample))
 						connection_difference = air.mimic(sample, length_space_border)
 					else
-						abort_group = 1
+						abort_group = TRUE
 				else // faster check for actual space (modified check_turf)
 					var/moles = TOTAL_MOLES(air)
 					if(moles <= MINIMUM_AIR_TO_SUSPEND)
@@ -288,7 +291,7 @@
 							sample = air_master.update_space_sample()
 						connection_difference = air.mimic(sample, length_space_border)
 					else
-						abort_group = 1
+						abort_group = TRUE
 
 				if(connection_difference)
 					for(var/turf/simulated/self_border in space_borders) // ZeWaka/Atmos: BOTH SPACE AND SIM?
@@ -387,11 +390,11 @@
 	for(var/turf/simulated/member as() in members)
 		member.air?.zero()
 	if (length_space_border)
-		spaced = 1
+		spaced = TRUE
 		if(!group_processing)
 			resume_group_processing()
 
 /datum/air_group/proc/unspace_group()
 	if(group_processing)
 		suspend_group_processing()
-	spaced = 0
+	spaced = FALSE
