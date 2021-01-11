@@ -562,7 +562,7 @@
 		var/score = 0
 		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
 			score += 6
-		if(IS_NPC_CLOTHING(G))
+		if(IS_NPC_CLOTHING(G) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
 			score += 10
 		if(istype(G, /obj/item/remote))
 			score += 3
