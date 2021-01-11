@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2020
+ * @copyright 2021
  * @author BenLubar (https://github.com/BenLubar)
  * @license ISC
  */

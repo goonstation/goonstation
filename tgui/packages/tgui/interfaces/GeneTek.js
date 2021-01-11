@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright 2020
+ * @copyright 2021
  * @author BenLubar (https://github.com/BenLubar)
  * @license ISC
  */
@@ -11,6 +11,13 @@ import { AnimatedNumber, Box, Button, Divider, Flex, GeneIcon, Icon, Input, Knob
 import { Window } from "../layouts";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
+
+const ResearchLevel = {
+  None: 0,
+  InProgress: 1,
+  Done: 2,
+  Activated: 3,
+};
 
 export const GeneTek = (props, context) => {
   const { data, act } = useBackend(context);
@@ -216,14 +223,14 @@ export const GeneTek = (props, context) => {
 
 const BuyMaterialsModal = (props, context) => {
   const { data, act } = useBackend(context);
-  let [buyMats, setBuyMats] = useSharedState(context, "buymats", null);
+  const [buyMats, setBuyMats] = useSharedState(context, "buymats", null);
   const maxBuyMats = props.maxAmount;
   const {
     budget,
     costPerMaterial,
   } = data;
 
-  buyMats = Math.min(buyMats, maxBuyMats);
+  const resolvedBuyMats = Math.min(buyMats, maxBuyMats);
 
   return (
     <Modal>
@@ -236,26 +243,26 @@ const BuyMaterialsModal = (props, context) => {
           top={0}>
           <Knob
             inline
-            value={buyMats}
+            value={resolvedBuyMats}
             onChange={(e, value) => setBuyMats(value)}
             minValue={1}
             maxValue={maxBuyMats} />
         </Box>
         <LabeledList>
           <LabeledList.Item label="Purchase">
-            {buyMats}
-            {buyMats === 1 ? " Material " : " Materials "}
+            {resolvedBuyMats}
+            {resolvedBuyMats === 1 ? " Material" : " Materials"}
           </LabeledList.Item>
           <LabeledList.Item label="Budget">
-            {budget}{" Credits"}
+            {`${budget} Credits`}
           </LabeledList.Item>
           <LabeledList.Item label="Cost">
-            {buyMats * costPerMaterial}{" Credits"}
+            {`${resolvedBuyMats * costPerMaterial} Credits`}
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Remainder">
-            <Box inline color={budget - buyMats * costPerMaterial < 0 && "bad"}>
-              {budget - buyMats * costPerMaterial}
+            <Box inline color={budget - resolvedBuyMats * costPerMaterial < 0 && "bad"}>
+              {budget - resolvedBuyMats * costPerMaterial}
             </Box>
             {" Credits"}
           </LabeledList.Item>
@@ -265,9 +272,9 @@ const BuyMaterialsModal = (props, context) => {
           <Button
             color="good"
             icon="dollar-sign"
-            disabled={buyMats <= 0}
+            disabled={resolvedBuyMats <= 0}
             onClick={() => {
-              act("purchasematerial", { amount: buyMats });
+              act("purchasematerial", { amount: resolvedBuyMats });
               setBuyMats(null);
             }}>
             Submit
@@ -447,7 +454,7 @@ const MutationsTab = (props, context) => {
 
   bioEffects.sort((a, b) => a.time - b.time);
 
-  return bioEffects.filter(be => be.research >= 1).map(be => (
+  return bioEffects.map(be => (
     <BioEffect
       key={be.ref}
       gene={be} />
@@ -771,6 +778,25 @@ const GeneList = (props, context) => {
   } = props;
   const ag = genes.find(g => g.ref === activeGene);
 
+  const researchLevels = {
+    [ResearchLevel.None]: {
+      icon: "question",
+      color: "grey",
+    },
+    [ResearchLevel.InProgress]: {
+      icon: "hourglass",
+      color: "average",
+    },
+    [ResearchLevel.Done]: {
+      icon: "flask",
+      color: "teal",
+    },
+    [ResearchLevel.Activated]: {
+      icon: "flask",
+      color: "good",
+    },
+  };
+
   return (
     <Fragment>
       <Flex wrap mb={1}>
@@ -780,28 +806,23 @@ const GeneList = (props, context) => {
             grow={1}
             textAlign="center">
             <Button
-              icon={g.research >= 2 ? "flask"
-                : g.research >= 1 ? "hourglass"
-                  : "question"}
-              color={g.ref === activeGene ? "black"
-                : g.research >= 3 ? "good"
-                  : g.research >= 2 ? "teal"
-                    : g.research >= 1 ? "average"
-                      : "grey"}
+              icon={researchLevels[g.research].icon}
+              color={g.ref === activeGene ? "black" : researchLevels[g.research].color}
               onClick={() => act("setgene", { ref: g.ref })}
-              tooltip={g.research === 1 ? "Researching..." : g.name}
+              tooltip={g.research === ResearchLevel.InProgress ? "Researching..." : g.name}
               tooltipPosition="left"
               width="80%" />
           </Flex.Item>
         ))}
       </Flex>
-      {genes.length ? ag ? (
+      {!genes.length && (noGenes || "No genes found.")}
+      {!!genes.length && !ag && (noSelection || "Select a gene to view it.")}
+      {ag && (
         <BioEffect
           key={ag.ref}
           gene={ag}
           {...rest} />
-      ) : (noSelection || "Select a gene to view it.")
-        : (noGenes || "No genes found.")}
+      )}
     </Fragment>
   );
 };
@@ -882,7 +903,7 @@ const BioEffect = (props, context) => {
           name={icon}
           size={1.5} />
       }>
-      {!!booth && booth.ref === ref && (
+      {booth && booth.ref === ref && (
         <Modal>
           <Section
             width={35}

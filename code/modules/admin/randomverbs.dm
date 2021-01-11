@@ -2664,7 +2664,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("No")
 				return
 	else
-		boutput(src, "You must be at least a Administrator to use this command.")
+		boutput(src, "You must be at least an Administrator to use this command.")
 
 /client/proc/cmd_blindfold_monkeys()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -2688,4 +2688,4 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("No")
 				return
 	else
-		boutput(src, "You must be at least a Administrator to use this command.")
+		boutput(src, "You must be at least an Administrator to use this command.")
