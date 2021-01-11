@@ -545,7 +545,15 @@ What are the archived variables for?
 				var/datum/gas/corresponding
 				var/delta = 0
 
-				corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
+				//corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
+				// Simplified get_or_add_trace_gas_by_type as we know it must be added
+				if(!trace_gases)
+					trace_gases = list()
+					trace_gas_refs = list()
+
+				corresponding = new trace_gas.type()
+				trace_gases += corresponding
+				trace_gas_refs[corresponding.type] = corresponding
 
 				delta = trace_gas.ARCHIVED(moles)/5
 
