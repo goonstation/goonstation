@@ -42,6 +42,8 @@
 
 	var/list/closed = list()
 
+	var/ai_ticks_queued_up = 0
+
 	New()
 		ai_id = src.next_id
 		src.next_id++
@@ -229,6 +231,16 @@
 			return
 		if (!blobs.len && state != 1)
 			return
+		ai_ticks_queued_up++
+		src.ai_process()
+		SPAWN_DBG(0)
+			var/max_extra_ticks = 4
+			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && max_extra_ticks-- && world.tick_usage < 80)
+				sleep(0.3 SECONDS)
+				src.ai_process()
+			ai_ticks_queued_up--
+
+	proc/ai_process()
 		if (refresh_lists > 50 && state > 1 || length(open) + length(open_low) + length(open_medium) + length(closed) <= 1)
 			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Refreshing lists.")
 			refresh_lists = 0
@@ -286,9 +298,16 @@
 						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find deploy ability in state DEPLOYING.")
 						state = 0
 						return
+
 					color = random_color()
 					my_material.color = color
 					initial_material.color = color
+					var/r = hex2num(copytext(color, 2, 4))
+					var/g = hex2num(copytext(color, 4, 6))
+					var/b = hex2num(copytext(color, 6))
+					var/hsv = rgb2hsv(r,g,b)
+					organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
+
 					if (istype(T, /turf/space))
 						return // Do not deploy on space.
 					if (!check_viability(T))
@@ -327,6 +346,8 @@
 					if (spread_up.check_requirements())
 						spread_up.take_upgrade()
 						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Took spread upgrade while expanding.")
+				if(length(open) + length(open_low) + length(open_medium) == 0 && length(closed) > 0)
+					destroying = pick(closed)
 				var/turf/ST = null
 				if (destroying && !has_adjacent_blob(destroying))
 					destroying = null
