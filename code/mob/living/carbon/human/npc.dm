@@ -462,7 +462,7 @@
 		throw_equipped |= prob(80)
 
 	// wear clothes
-	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(5)))
+	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
 		src.hud.clicked("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
