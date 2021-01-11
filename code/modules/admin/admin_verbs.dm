@@ -1214,7 +1214,7 @@ var/list/fun_images = list()
 		if(istype(M, /mob/new_player))
 			continue
 
-		if (M.client && (isblobbular(M) || M.client.holder && !M.client.player_mode))
+		if (M.client && (isblob(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mob.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
