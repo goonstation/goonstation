@@ -17,7 +17,6 @@ export { Divider } from './Divider';
 export { DraggableControl } from './DraggableControl';
 export { Dropdown } from './Dropdown';
 export { Flex } from './Flex';
-export { GeneIcon } from './GeneIcon';
 export { Grid } from './Grid';
 export { HealthStat } from './HealthStat';
 export { Icon } from './Icon';
