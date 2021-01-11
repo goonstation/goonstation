@@ -679,6 +679,17 @@
 			state = STATE_UNDER_ATTACK
 		counter = 0
 
+
+
+/mob/living/intangible/blob_overmind/ai/start_here
+	var/deployment_attempt = 0
+	pick_deployment_location()
+		deployment_attempt++
+		if(deployment_attempt == 1)
+			return src.loc
+		else
+			return get_step(src.loc, pick(alldirs))
+
 #undef STATE_UNDER_ATTACK
 #undef STATE_FORTIFYING
 #undef STATE_DO_LIPIDS
