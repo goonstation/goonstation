@@ -148,7 +148,7 @@
 	if (is_bot)
 		robogibs(T)
 	else
-		gibs(T)
+		gibs(T, headbits = 0)
 	var/list/nobutt_phrase = list("magical" = "[changer ? "We" : "You"] feel something grab handful of [changer ? "our" : "your"] [is_bot ? "internal components" : "innards"] and WRENCH them out of space where [changer ? "our" : "your"] arse used to be!",
 																"notmagical" = "The cosmic force collides with [changer ? "our" : "your"] being, surges through [changer ? "our" : "your"] body, and exits through where [changer ? "our" : "your"] ass used to be, ripping along with it a sizable clump of [changer ? "our" : "your"] [is_bot ? "internal components" : "innards"]!")
 	var/assmagic = magical ? "magical" : "notmagical"

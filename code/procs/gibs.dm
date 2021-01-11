@@ -1,4 +1,4 @@
-/proc/gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type)
+/proc/gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type, var/headbits = 1)
     // Added blood type and DNA for forensics (Convair880).
 	var/obj/decal/cleanable/blood/gibs/gib = null
 	var/list/gibs = new()
@@ -45,14 +45,15 @@
 	gib.blood_type = blood_type
 	gibs.Add(gib)
 
-	LAGCHECK(LAG_LOW)
-	// RANDOM BODY
-	gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
-	gib.streak(alldirs)
-	gib.diseases += diseases
-	gib.blood_DNA = blood_DNA
-	gib.blood_type = blood_type
-	gibs.Add(gib)
+	if(headbits)
+		LAGCHECK(LAG_LOW)
+		// RANDOM BODY
+		gib = make_cleanable( /obj/decal/cleanable/blood/gibs/body,location)
+		gib.streak(alldirs)
+		gib.diseases += diseases
+		gib.blood_DNA = blood_DNA
+		gib.blood_type = blood_type
+		gibs.Add(gib)
 
 	LAGCHECK(LAG_LOW)
 	// CORE
