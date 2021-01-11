@@ -583,6 +583,16 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat"
+					M.item_state = "centcoat"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/suit/space/captain))
 					var/prev = M.name
 					M.icon_state = "spacecap-blue"
