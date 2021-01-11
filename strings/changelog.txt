@@ -1,4 +1,9 @@
 
+(t)mon jan 11 21
+(u)BenLubar
+(p)3299
+(e)|
+(*)Cyborg arms, legs, and heads will now break properly rather than getting stuck in some quantum state.
 (t)sun jan 10 21
 (u)Flaborized
 (p)3284
