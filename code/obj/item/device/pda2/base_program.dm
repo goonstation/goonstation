@@ -146,6 +146,22 @@
 		network_hook()
 			return
 
+		/// Sends a message to the owner's PDA about... something, usually a confirmation that it did something
+		self_text(var/message)
+			if(!message)
+				message = "Confirmed."
+			var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
+			if(frequency)
+
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["sender"] = "00000000"
+				signal.data["command"] = "text_message"
+				signal.data["sender_name"] = "BOT-CMD"
+				signal.data["address_1"] = src.master.net_id
+				signal.data["message"] = message
+				signal.transmission_method = TRANSMISSION_RADIO
+				frequency.post_signal(src, signal)
 
 	Topic(href, href_list)
 		if((!src.holder) || (!src.master))

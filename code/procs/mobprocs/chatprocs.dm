@@ -815,7 +815,7 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
 
-/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
 
@@ -836,14 +836,15 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis"))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))
 				for (var/mob/dead/target_observer/observer in src:observers)
 					boutput(observer, "<I>... You can almost hear something ...</I>")
 	else
-		boutput(src, msg, group)
+		if(!just_maptext)
+			boutput(src, msg, group)
 		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
 			assoc_maptext.show_to(src.client)
 
@@ -853,7 +854,8 @@
 
 		if (isliving(src))
 			for (var/mob/dead/target_observer/observer in src:observers)
-				boutput(observer, msg, group)
+				if(!just_maptext)
+					boutput(observer, msg, group)
 				if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
 					assoc_maptext.show_to(observer.client)
 
@@ -901,20 +903,20 @@
 		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
-/atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/image/chat_maptext/assoc_maptext = null)
+/atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
-		M.show_message(message, 2, alt, alt_type, group, assoc_maptext)
+		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
-/mob/audible_message(var/message, var/self_message, var/alt, var/alt_type, var/group = "", var/image/chat_maptext/assoc_maptext = null)
+/mob/audible_message(var/message, var/self_message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
 		var/msg = message
 		if (self_message && M==src)
 			msg = self_message
-		M.show_message(msg, 2, alt, alt_type, group, assoc_maptext)
+		M.show_message(msg, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
 
 // FLOCKSAY

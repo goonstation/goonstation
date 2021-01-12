@@ -247,6 +247,7 @@
 	render_target = "\ref[src]"
 	mob_properties = list()
 	src.chat_text = new
+	START_TRACKING_CAT(TR_CAT_MOBS_MOB)
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -294,6 +295,7 @@
 		src.s_active = null
 
 /mob/disposing()
+	STOP_TRACKING_CAT(TR_CAT_MOBS_MOB)
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()

@@ -2,6 +2,9 @@
 #define DUCKBOT_MOVE_SPEED 8
 #define DUCKBOT_QUACK_COOLDOWN "duckbotquackdelay"
 #define DUCKBOT_AMUSEMENT_COOLDOWN "duckbotlovesongdelay"
+#define DUCKBOT_ANNOY_TIMEOUT "duckbotnerdobsessionlength"
+#define DUCKBOT_ANNOY_LOCKOUT_TIMEOUT "duckbotforgetannoyednerds"
+#define DUCKBOT_ANNOY_PATHING_COOLDOWN "duckbotnospamastar"
 
 /obj/machinery/bot/duckbot
 	name = "Amusing Duck"
@@ -18,11 +21,19 @@
 	/// When it gets to 100, free egg!
 	var/egg_process = 0
 	/// Minimum time between gaggles and quacks
-	var/last_quack
 	var/quack_cooldown = 3 SECONDS
 	/// To make sure MAKING NOISE IS TRUE is false
-	var/last_amusement
 	var/amusement_cooldown = 10 SECONDS
+	/// Pick someone, then mill around them making noise. If emagged is true.
+	var/mob/annoy_target
+	/// Though maybe pick someone else after a while
+	var/annoy_timeout = 30 SECONDS
+	/// And forget about who you annoyed after a while
+	var/forget_annoyed_timeout = 3 MINUTES
+	/// Don't spam that pathfinding
+	var/annoy_path_cooldown = 5 SECONDS
+	/// And don't just go back to pestering the same person
+	var/list/annoyed_nerds = list()
 	/// Location on the station where all these damn things migrate to for whatever reason
 	var/static/area/duck_migration_target
 	/// Someone set our migration path, let's go there instead of picking something
@@ -40,10 +51,26 @@
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
 	if(moving) return
 	if(src.emagged)
-		for(var/mob/M in view(5,src))
-			if(!isdead(M))
-				src.navigate_to(M, DUCKBOT_MOVE_SPEED, 1, 30)
-				break
+		if(src.annoy_target)
+			if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT, src.quack_cooldown))
+				src.KillPathAndGiveUp(1)
+			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
+				var/turf/randwander = get_step_rand(get_turf(src.annoy_target))
+				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 1, 30)
+		else
+			for(var/mob/M in by_cat[TR_CAT_MOBS_MOB])
+				if(IN_RANGE(src, M, 7))
+					if(M in src.annoyed_nerds)
+						if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
+							src.annoyed_nerds -= M
+						else
+							continue
+					ON_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT, src.quack_cooldown)
+					ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout)
+					src.annoy_target = M
+					src.annoyed_nerds[M] = TRUE
+					src.navigate_to(M, DUCKBOT_MOVE_SPEED, 1, 30)
+					break
 	else
 		step_rand(src,1)
 
@@ -219,6 +246,9 @@
 
 /obj/machinery/bot/duckbot/KillPathAndGiveUp(give_up)
 	. = ..()
+	if(give_up)
+		src.annoy_target = null
+		src.cooldowns = list()
 	if(src.access_lookup != initial(src.access_lookup))
 		src.access_lookup = initial(src.access_lookup)
 		qdel(src.botcard)

@@ -438,6 +438,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner) && optional != 0)
 				var/mob/M = owner
 				change = optional
@@ -549,6 +550,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return 1
 
 		onAdd(var/optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -684,6 +686,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 
 		onAdd(var/optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -806,6 +809,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return 1
 
 		onAdd(var/optional = BURNING_LV1)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				counter = optional
 
@@ -1062,6 +1066,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		movement_modifier = new /datum/movement_modifier/status_slowed
 
 		onAdd(var/optional=null)
+			. = ..()
 			if(optional)
 				howMuch = optional
 				movement_modifier.additive_slowdown = optional
@@ -1125,6 +1130,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/how_drunk = 0
 
 		onAdd(var/optional=null)
+			. = ..()
 			changeState()
 			return ..(optional)
 
@@ -1173,6 +1179,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/wait = 0
 
 		onAdd(var/optional=null)
+			. = ..()
 			animate(owner, alpha=30,flags=ANIMATION_PARALLEL, time=30)
 			return
 
@@ -1201,6 +1208,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return "Your stamina regen is increased by [change]."
 
 		onAdd(var/optional=null)
+			. = ..()
 			if(hascall(owner, "add_stam_mod_regen"))
 				owner:add_stam_mod_regen("fitness_regen", change)
 			return
@@ -1224,6 +1232,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return "Your stamina max is increased by [change]."
 
 		onAdd(var/optional=null)
+			. = ..()
 			if(hascall(owner, "add_stam_mod_max"))
 				owner:add_stam_mod_max("fitness_max", change)
 			return
@@ -1244,6 +1253,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/mob/living/carbon/human/H
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1267,6 +1277,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/sleepcount = 5 SECONDS
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 				sleepcount = 5 SECONDS
@@ -1303,6 +1314,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/mob/living/L
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))
@@ -1339,6 +1351,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/on_turf = 0
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1404,6 +1417,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner))
 				//var/mob/M = owner
 				owner.delStatus("janktank_withdrawl")
@@ -1449,6 +1463,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(var/optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner) && optional != 0)
 				//var/mob/M = owner
 				change = optional
@@ -1480,6 +1495,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/mob/living/carbon/human/H
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1512,6 +1528,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/mob/living/carbon/human/H
 
 		onAdd(var/optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1541,6 +1558,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/endCount = 0
 
 		onAdd(optional)
+			. = ..()
 			src.oxygenAmount = optional
 			if(iscarbon(owner))
 				H = owner
@@ -1570,6 +1588,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/efficiency = 1
 
 		onAdd(optional)
+			. = ..()
 			src.efficiency = optional
 			..()
 			if(H)
@@ -1612,6 +1631,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		return 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		if (ishuman(owner))
 			H = owner
 		else
@@ -1685,6 +1705,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	movement_modifier = /datum/movement_modifier/shiver
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")

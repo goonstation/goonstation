@@ -152,7 +152,7 @@
 	proc/explode()
 		return
 
-	proc/speak(var/message, var/sing)
+	proc/speak(var/message, var/sing, var/just_float)
 		if (!src.on || !message || src.muted)
 			return
 
@@ -177,7 +177,7 @@
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", assoc_maptext = chatbot_text)
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(get_turf(src), src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
@@ -218,13 +218,10 @@
 
 /obj/machinery/bot/proc/KillPathAndGiveUp(var/give_up)
 	src.frustration = 0
-	src.anchored = 0
+	src.path = null
+	qdel(src.bot_mover)
 	if(give_up)
 		src.doing_something = 0
-	if(src.bot_mover)
-		qdel(src.bot_mover)
-
-	return
 
 /obj/machinery/bot/proc/point(var/atom/target, var/announce_it = 0) // I stole this from the medibot (and chefbot) <3 u marq ur a beter codr then me
 	var/turf/T = get_turf(target)
@@ -243,26 +240,15 @@
 	src.emag_act()
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
-	src.frustration = 0
-	src.path = null
-	if(src.bot_mover)
-		src.bot_mover.master = null
-		src.bot_mover = null
-
-	current_movepath = world.time
-
+	src.KillPathAndGiveUp(0)
+	src.current_movepath = world.time
 	src.bot_mover = new /datum/robot_mover(src)
 
-	// drsingh for cannot modify null.delay
-	if (!isnull(src.bot_mover))
+	if (!isnull(src.bot_mover)) // drsingh for cannot modify null.delay
 		src.bot_mover.master_move(the_target,current_movepath,adjacent,scanrate,max_dist)
 
-	// drsingh again for the same thing further down in a moment.
-	// Because master_move can delete the mover
-
-	if (!isnull(src.bot_mover))
-		src.bot_mover.delay = move_delay
-
+	if (!isnull(src.bot_mover))	// drsingh again for the same thing further down in a moment.
+		src.bot_mover.delay = move_delay	// Because master_move can delete the mover
 	return 0
 
 //movement control datum. Why yes, this is copied from secbot.dm. Which was copied from guardbot.dm
