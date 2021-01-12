@@ -161,6 +161,13 @@
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
 				src.ai_knock_from_hand(priority_only=prob(80))
+			if(!ai_target && prob(20) && !ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
+				for(var/obj/fitness/speedbag/bag in view(1, src))
+					src.ai_target = bag
+					src.ai_state = 2
+					break
+			if(prob(1))
+				src.emote("dance")
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)

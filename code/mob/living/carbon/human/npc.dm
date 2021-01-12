@@ -391,17 +391,26 @@
 				if(src.r_hand && src.l_hand)
 					if(prob(src.hand ? 5 : 90))
 						src.swap_hand()
-				else if(!src.equipped() && (src.r_hand || src.l_hand))
+				else if(!src.equipped())
+					if(src.hand || prob(10))
+						src.swap_hand()
+				else if(src.hand && prob(50))
 					src.swap_hand()
 
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				if(!src.equipped())
+				if(isgrab(src.r_hand) || isgrab(src.l_hand))
+					src.a_intent = INTENT_GRAB
+					var/obj/item/grab/grab = locate(/obj/item/grab) in src
+					grab.attack_hand(src)
+				else if(!src.equipped())
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
 					//else
+					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 5 SECONDS))
+						src.a_intent = INTENT_GRAB
 					ai_target.attack_hand(src) //We're a human!
 				else // With a weapon
 					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
@@ -449,6 +458,20 @@
 /mob/living/carbon/human/proc/ai_do_hand_stuff()
 	if(prob(10))
 		src.in_throw_mode = !src.in_throw_mode
+
+	// suplex and table!
+	if(isgrab(src.r_hand) || isgrab(src.l_hand))
+		var/obj/item/grab/grab = src.equipped()
+		if(!istype(grab))
+			src.swap_hand()
+			grab = src.equipped()
+		if(prob(10) || grab.state > 0)
+			if(prob(80))
+				for(var/obj/table/table in view(1))
+					src.ai_attack_target(table, grab)
+					break
+			if(!grab.disposed && grab.loc == src)
+				src.emote("flip", TRUE)
 
 	// swap hands
 	if(src.r_hand && src.l_hand)
@@ -540,7 +563,7 @@
 			src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
-	if(prob(5) && src.equipped())
+	if(prob(5) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src)
 				src.give_to(H)
