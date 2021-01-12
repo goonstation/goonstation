@@ -325,8 +325,8 @@
 	item_state = "centcoat"
 	setupProperties()
 		..()
-		setProperty("coldprot", 30)
-		setProperty("heatprot", 30)
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.9)
 
