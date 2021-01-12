@@ -2,6 +2,7 @@
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
+		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
 
@@ -168,6 +169,8 @@
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src) || T == src)
+			return ..()
+		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
