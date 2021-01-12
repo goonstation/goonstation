@@ -530,7 +530,7 @@
 		var/obj/item/storage/storage = src.equipped()
 		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else
+		else if(length(storage.contents))
 			var/obj/item/taken = pick(storage.contents)
 			src.u_equip(storage)
 			storage.set_loc(src.loc)
