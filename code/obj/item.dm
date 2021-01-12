@@ -69,6 +69,8 @@
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 
+	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
+
 	var/list/module_research = null//list()
 	var/module_research_type = null
 	var/module_research_no_diminish = 0

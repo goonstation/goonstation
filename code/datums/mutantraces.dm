@@ -134,6 +134,7 @@
 	var/needs_oxy = 1
 
 	var/voice_override = 0
+	var/step_override = 0
 
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
@@ -1936,6 +1937,7 @@
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
+	step_override = "step_wood"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
