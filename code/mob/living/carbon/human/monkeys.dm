@@ -170,6 +170,20 @@
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
+			if(prob(0.5))
+				var/list/priority_targets = list()
+				var/list/targets = list()
+				for(var/atom/movable/AM in view(5, src))
+					if(ismob(AM) && AM != src)
+						priority_targets += AM
+					else if(isobj(AM) && isturf(AM.loc) && !istype(AM, /obj/overlay))
+						targets += AM
+				if(length(priority_targets) && prob(55))
+					src.point_at(pick(priority_targets))
+					if(prob(20))
+						src.emote("laugh")
+				else if(length(targets))
+					src.point_at(pick(targets))
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
