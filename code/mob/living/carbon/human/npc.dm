@@ -309,6 +309,11 @@
 
 			src.a_intent = INTENT_HARM
 
+			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
+				src.ai_state = AI_FLEEING
+				src.ai_frustration = 0
+				return
+
 			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
 				ai_frustration = 0
 				ai_target = null
@@ -455,6 +460,24 @@
 			if (grabbed_by.len)
 				src.resist()
 
+		if(AI_FLEEING)  //Yes, brave Sir Robin turned about. And gallantly he chickened out.
+			var/cancel_fleeing = FALSE
+			if(isnull(src.ai_target) || src.ai_target.disposed || !IN_RANGE(src, src.ai_target, 8))
+				cancel_fleeing = TRUE
+			else if(ismob(src.ai_target) && !isalive(src.ai_target))
+				cancel_fleeing = TRUE
+			else if(istype(src.ai_target, /obj/machinery/bot/secbot))
+				var/obj/machinery/bot/secbot/securitron = src.ai_target
+				if(securitron.target != src)
+					cancel_fleeing = TRUE
+			else if(istype(src.ai_target, /obj/machinery/bot/guardbot))
+				var/obj/machinery/bot/guardbot/guardbuddy = src.ai_target
+				if(guardbuddy.arrest_target != src)
+					cancel_fleeing = TRUE
+			if(cancel_fleeing)
+				src.ai_state = AI_PASSIVE
+				if(prob(95))
+					src.ai_target = null
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
@@ -588,6 +611,7 @@
 /mob/living/carbon/human/proc/ai_move()
 	if(ai_incapacitated() || !ai_canmove() || ai_busy)
 		walk_towards(src, null)
+		walk_away(src, null)
 		return
 	if((src in actions.running) && length(actions.running[src]))
 		return // don't interupt actions
@@ -604,6 +628,18 @@
 			else if (dist > 1)
 				walk_towards(src, null)
 				step_towards(src, ai_target) //Take a step and hit the shite (but only if you won't push them out of the way by doing so)
+	if( ai_state == AI_FLEEING && ai_canmove() )
+		set_dir(get_step_away(src, ai_target))
+		ai_obstacle(1)
+		walk_away(src, ai_target, 10, ai_movedelay)
+
+/mob/living/carbon/human/changeStatus(statusId, duration, optional)
+	. = ..()
+	if(!src.ai_active)
+		return
+	if(src.ai_state == AI_FLEEING && ai_incapacitated())
+		src.ai_state = AI_PASSIVE
+		walk_away(src, null)
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()

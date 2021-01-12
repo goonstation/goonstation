@@ -221,9 +221,12 @@
 		if (!T)
 			return 0
 		if (src.health <= 0 || (get_dist(src, T) >= 7))
-			src.target = null
-			src.ai_state = 0
-			src.ai_target = null
+			if(src.health <= 0)
+				src.ai_state = 5
+			else
+				src.ai_state = 0
+				src.target = null
+				src.ai_target = null
 			src.ai_frustration = 0
 			walk_towards(src,null)
 			return 1
@@ -363,6 +366,11 @@
 							if (prob(40))
 								src.emote("scream")
 		..()
+
+	proc/pursuited_by(atom/movable/AM)
+		src.ai_state = 5
+		src.ai_target = AM
+		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
 	id = "pickpocket"
