@@ -388,7 +388,7 @@
 					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 
 				if(src.r_hand && src.l_hand)
-					if(prob(src.hand ? 15 : 50))
+					if(prob(src.hand ? 5 : 90))
 						src.swap_hand()
 				else if(!src.equipped() && (src.r_hand || src.l_hand))
 					src.swap_hand()
