@@ -669,6 +669,8 @@
 			score += 10
 		else if(IS_NPC_CLOTHING(G) && G.loc == src)
 			continue
+		if(IS_NPC_HATED_ITEM(G))
+			score -= 10
 		if(istype(G, /obj/item/remote))
 			score += 3
 		if(istype(G, /obj/item/reagent_containers) && G.reagents?.total_volume > 0)
