@@ -331,6 +331,11 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
+/obj/item/implant/health/security/anti_mindslave //HoS implant
+	name = "mind protection health implant"
+	icon_state = "implant-b"
+	impcolor = "b"
+
 /obj/item/implant/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
@@ -637,9 +642,11 @@ THROWING DARTS
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return 0
+		for(var/obj/item/implant/health/security/anti_mindslave/AM in H.implant)
+			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
+			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
-		// Also the HoS is immune now because they tended to get mindslaved most rounds they could be.
-		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave") || (H.mind.assigned_role == "Head of Security")))
+		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
 			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
