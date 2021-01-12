@@ -5,20 +5,46 @@
  * @license ISC
  */
 
-import { useBackend } from "../../../backend";
+import { Fragment } from "inferno";
+import { useBackend, useSharedState } from "../../../backend";
+import { Button, Section } from "../../../components";
 import { BioEffect } from "../BioEffect";
 
 export const MutationsTab = (props, context) => {
   const { data } = useBackend(context);
-  const {
-    bioEffects,
-  } = data;
+  const [sortMode, setSortMode] = useSharedState(context, "mutsortmode", "time");
+  const bioEffects = data.bioEffects.slice(0);
 
-  bioEffects.sort((a, b) => a.time - b.time);
+  if (sortMode === "time") {
+    bioEffects.sort((a, b) => a.time - b.time);
+  } else if (sortMode === "alpha") {
+    bioEffects.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
 
-  return bioEffects.map(be => (
-    <BioEffect
-      key={be.ref}
-      gene={be} />
-  ));
+      if (a.name < b.name) {
+        return -1;
+      }
+
+      return 0;
+    });
+  }
+
+  return (
+    <Fragment>
+      <Section>
+        <Button
+          icon={sortMode === "time" ? "clock" : "sort-alpha-down"}
+          onClick={() => setSortMode(sortMode === "time" ? "alpha" : "time")}>
+          Sort Mode
+        </Button>
+      </Section>
+      {bioEffects.map(be => (
+        <BioEffect
+          key={be.ref}
+          gene={be} />
+      ))}
+    </Fragment>
+  );
 };
