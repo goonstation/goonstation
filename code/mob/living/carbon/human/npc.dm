@@ -447,6 +447,9 @@
 	return src.weapon_attack(target, weapon, 1, attack_params)
 
 /mob/living/carbon/human/proc/ai_do_hand_stuff()
+	if(prob(10))
+		src.in_throw_mode = !src.in_throw_mode
+
 	// swap hands
 	if(src.r_hand && src.l_hand)
 		if(prob(src.hand ? 15 : 4))
@@ -465,7 +468,7 @@
 	// pull things out of other things!
 	if(istype(src.equipped(), /obj/item/storage))
 		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents))
+		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
 		else
 			var/obj/item/taken = pick(storage.contents)
