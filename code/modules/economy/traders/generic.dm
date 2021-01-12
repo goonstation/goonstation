@@ -78,6 +78,20 @@
 	possible_names = list("We have a number of glowsticks available for purchase.",
 	"We have come across some glowstick lighting supplies and have no use for them. Please buy them!")
 
+/datum/commodity/trader/generic/gasmask
+	comname = "Emergency Gas Mask"
+	comtype = /obj/item/clothing/mask/gas/emergency
+	amount = 10
+	price_boundary = list(200, 500)
+	possible_names = list("We have a surplus of gas masks. Need any?",
+	"We seem to have ordered too many gas masks, so we're putting the extras up for sale.")
+
+/datum/commodity/trader/generic/flashlight
+	comname = "Flashlight"
+	comtype = /obj/item/device/light/flashlight
+	amount = 15
+	price_boundary = list()
+
 /datum/commodity/trader/synthmodule
 	comname = "Synth-O-Matic module"
 	comtype = /obj/item/synthmodule
@@ -189,6 +203,20 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under/
-	price_boundary = list(100,250)
+	price_boundary = list(100,200)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
+
+/datum/commidity/trader/generic/furniture
+	comname = "Furniture Parts"
+	comtype = /obj/item/furniture_parts/
+	price_boundary = list(100, 300)
+	possible_names = list("We need some more furniture to spice up our ship.",
+	"We're building a new lounge, and we need whatever furniture you have.")
+
+/datum/commodity/trader/generic/pens
+	comname = "Writing Utensils"
+	comtype = /obj/item/pen/
+	price_boundary = list(80, 150)
+	possible_names = list("We can't take notes! Send us something to write with, and make it snappy.",
+	"Our crew's been really starved creatively. Give us something we can doodle with.")
