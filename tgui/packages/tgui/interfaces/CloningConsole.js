@@ -6,27 +6,29 @@
 */
 
 import { Fragment } from "inferno";
-import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, ColorBox, Section, Tabs, ProgressBar, NoticeBox, LabeledList, Flex, Modal, Icon, HealthStat } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useSharedState, useLocalState } from '../backend';
+import { Box, Button, ColorBox, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { Window } from '../layouts';
+import { HealthStat } from './common/HealthStat';
 import { clamp } from 'common/math';
 
-const Suffixes = ["", "k", "M", "B", "T"];
+const Suffixes = ['', 'k', 'M', 'B', 'T'];
 
 export const shortenNumber = (value, minimumTier = 0) => {
   const tier = Math.log10(Math.abs(value)) / 3 | 0;
-  return (tier === minimumTier) ? value
+  return (tier === minimumTier)
+    ? value
     : `${Math.round(value / Math.pow(10, tier * 3))}${Suffixes[tier]}`;
 };
 
 
 const healthColorByLevel = [
-  "#17d568",
-  "#2ecc71",
-  "#e67e22",
-  "#ed5100",
-  "#e74c3c",
-  "#ed2814",
+  '#17d568',
+  '#2ecc71',
+  '#e67e22',
+  '#ed5100',
+  '#e74c3c',
+  '#ed2814',
 ];
 
 
