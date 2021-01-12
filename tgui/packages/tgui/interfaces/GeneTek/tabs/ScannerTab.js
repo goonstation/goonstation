@@ -8,7 +8,7 @@
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
 import { Box, Button, Flex, LabeledList, Modal, Section } from "../../../components";
-import { GeneList } from "../BioEffect";
+import { GeneList, haveDevice, onCooldown } from "../BioEffect";
 import { GeneIcon } from "../GeneIcon";
 
 export const ScannerTab = (props, context) => {
@@ -43,23 +43,6 @@ export const ScannerTab = (props, context) => {
         {haveScanner ? "Subject has absconded." : "Check connection to scanner."}
       </Section>
     );
-  }
-
-  const haveDevice = {
-    Injectors: false,
-    Analyzer: false,
-    Emitter: false,
-    Reclaimer: false,
-  };
-  const onCooldown = {
-    Injectors: true,
-    Analyzer: true,
-    Emitter: true,
-    Reclaimer: true,
-  };
-  for (const { label, cooldown } of equipmentCooldown) {
-    haveDevice[label] = true;
-    onCooldown[label] = cooldown > 0;
   }
 
   return (
@@ -106,10 +89,10 @@ export const ScannerTab = (props, context) => {
             <LabeledList>
               <LabeledList.Item
                 label="Name"
-                buttons={haveDevice.Emitter && (
+                buttons={haveDevice(equipmentCooldown, "Emitter") && (
                   <Button
                     icon="radiation"
-                    disabled={onCooldown.Emitter || subjectHealth <= 0}
+                    disabled={onCooldown(equipmentCooldown, "Emitter") || subjectHealth <= 0}
                     color="bad"
                     onClick={() => act("emitter")}>
                     Scramble DNA

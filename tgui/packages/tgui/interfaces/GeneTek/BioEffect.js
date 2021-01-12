@@ -19,6 +19,26 @@ export const ResearchLevel = {
   Activated: 3,
 };
 
+export const haveDevice = (equipmentCooldown, name) => {
+  for (const { label, cooldown } of equipmentCooldown) {
+    if (label === name) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const onCooldown = (equipmentCooldown, name) => {
+  for (const { label, cooldown } of equipmentCooldown) {
+    if (label === name) {
+      return cooldown > 0;
+    }
+  }
+
+  return true;
+};
+
 export const BioEffect = (props, context) => {
   const { data, act } = useBackend(context);
   const [booth, setBooth] = useSharedState(context, "booth", null);
@@ -55,23 +75,6 @@ export const BioEffect = (props, context) => {
     spliceError,
     dna,
   } = gene;
-
-  const haveDevice = {
-    Injectors: false,
-    Analyzer: false,
-    Emitter: false,
-    Reclaimer: false,
-  };
-  const onCooldown = {
-    Injectors: true,
-    Analyzer: true,
-    Emitter: true,
-    Reclaimer: true,
-  };
-  for (const { label, cooldown } of equipmentCooldown) {
-    haveDevice[label] = true;
-    onCooldown[label] = cooldown > 0;
-  }
 
   const dnaGood = dna.every(pair => !pair.style);
   const dnaGoodExceptLocks = dna.every(pair =>
@@ -193,18 +196,18 @@ export const BioEffect = (props, context) => {
             Autocomplete DNA
           </Button>
         )}
-        {haveDevice.Analyzer && !dnaGood && isPotential && (
+        {haveDevice(equipmentCooldown, "Analyzer") && !dnaGood && isPotential && (
           <Button
-            disabled={onCooldown.Analyzer}
+            disabled={onCooldown(equipmentCooldown, "Analyzer")}
             icon="microscope"
             color="average"
             onClick={() => act("analyze", { ref })}>
             Check Stability
           </Button>
         )}
-        {haveDevice.Reclaimer && isPotential && !!canReclaim && (
+        {haveDevice(equipmentCooldown, "Reclaimer") && isPotential && !!canReclaim && (
           <Button
-            disabled={onCooldown.Reclaimer}
+            disabled={onCooldown(equipmentCooldown, "Reclaimer")}
             icon="times"
             color="bad"
             onClick={() => act("reclaim", { ref })}>
@@ -224,7 +227,7 @@ export const BioEffect = (props, context) => {
           && isPotential && !!canScramble && (
           <Button
             icon="radiation"
-            disabled={onCooldown.Emitter || subjectStat >= 0}
+            disabled={onCooldown(equipmentCooldown, "Emitter") || subjectStat >= 0}
             color="bad"
             onClick={() => act("precisionemitter", { ref })}>
             Scramble Gene
@@ -239,9 +242,9 @@ export const BioEffect = (props, context) => {
             Store
           </Button>
         )}
-        {research >= 2 && !!canInject && haveDevice.Injectors && (
+        {research >= 2 && !!canInject && haveDevice(equipmentCooldown, "Injectors") && (
           <Button
-            disabled={onCooldown.Injectors}
+            disabled={onCooldown(equipmentCooldown, "Injectors")}
             icon="syringe"
             onClick={() => act("activator", { ref })}>
             Activator
@@ -250,7 +253,7 @@ export const BioEffect = (props, context) => {
         {research >= 2 && !!canInject && injectorCost >= 0
           && (isActive || isStorage) && (
           <Button
-            disabled={onCooldown.Injectors || materialCur < injectorCost}
+            disabled={onCooldown(equipmentCooldown, "Injectors") || materialCur < injectorCost}
             icon="syringe"
             onClick={() => act("injector", { ref })}
             color="bad">
