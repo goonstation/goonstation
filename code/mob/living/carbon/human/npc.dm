@@ -589,13 +589,8 @@
 			continue
 		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
 			score += 6
-		if(IS_NPC_CLOTHING(G) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
-			if(G.equipped_in_slot)
-				if(prob(90)) // monkeys keep removing their clothes way too much
-					continue
-				score -= 5
-			else
-				score += 10
+		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(90)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
+			score += 10
 		if(istype(G, /obj/item/remote))
 			score += 3
 		if(istype(G, /obj/item/reagent_containers) && G.reagents?.total_volume > 0)
