@@ -66,7 +66,7 @@
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
 /datum/commodity/trader/generic/telecrystal
-	comname = "Telecrystal"
+	comname = "Telecrystals"
 	comtype = /obj/item/raw_material/telecrystal
 	amount = 20
 	price_boundary = list(750,1200)
@@ -74,7 +74,7 @@
 	"We have raw telecrystal stones and no facilities to make use of them, so we're selling them instead.")
 
 /datum/commodity/trader/generic/glowstick
-	comname = "Glowstick"
+	comname = "Glowsticks"
 	comtype = /obj/item/device/light/glowstick
 	amount = 20
 	price_boundary = list(8,20)
@@ -82,7 +82,7 @@
 	"We have come across some glowstick lighting supplies and have no use for them. Please buy them!")
 
 /datum/commodity/trader/generic/gasmask
-	comname = "Emergency Gas Mask"
+	comname = "Emergency Gas Masks"
 	comtype = /obj/item/clothing/mask/gas/emergency
 	amount = 10
 	price_boundary = list(200, 500)
