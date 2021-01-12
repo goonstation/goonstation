@@ -490,6 +490,8 @@ var/zapLimiter = 0
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
+			charging = chargemode
+
 		else return src.attack_hand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -553,10 +555,6 @@ var/zapLimiter = 0
 		src.remove_dialog(user)
 		user.Browse(null, "window=apc")
 		return
-	else if (can_access_remotely(user) && src.aidisabled)
-		boutput(user, "AI control for this APC interface has been disabled.")
-		user.Browse(null, "window=apc")
-		return
 	if(wiresexposed && (!isAI(user)))
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
@@ -581,6 +579,11 @@ var/zapLimiter = 0
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p><br>")
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
+
+	if (can_access_remotely(user) && src.aidisabled)
+		boutput(user, "AI control for this APC interface has been disabled.")
+		user.Browse(null, "window=apc")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
