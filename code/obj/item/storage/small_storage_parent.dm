@@ -38,6 +38,14 @@
 		SPAWN_DBG(1 DECI SECOND)
 			src.make_my_stuff()
 
+	Entered(Obj, OldLoc)
+		. = ..()
+		src.hud.add_item(Obj)
+
+	Exited(Obj, newloc)
+		. = ..()
+		src.hud.remove_item(Obj)
+
 	disposing()
 		if (hud)
 			for (var/mob/M in hud.mobs)
