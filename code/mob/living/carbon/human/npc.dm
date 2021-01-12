@@ -443,7 +443,7 @@
 					if(istype(src.equipped(), /obj/item/sword) && prob(80))
 						var/obj/item/sword/csaber = src.equipped()
 						if(!csaber.open)
-							src.ai_attack_target(sword, null)
+							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
 					src.a_intent = INTENT_HARM
 
