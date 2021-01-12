@@ -440,6 +440,10 @@
 						src.a_intent = INTENT_GRAB
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
+					if(istype(src.equipped(), /obj/item/sword) && prob(80))
+						var/obj/item/sword/csaber = src.equipped()
+						if(!csaber.open)
+							src.ai_attack_target(sword, null)
 					src.ai_attack_target(ai_target, src.equipped())
 					src.a_intent = INTENT_HARM
 
@@ -757,6 +761,9 @@
 				if(src:r_hand:force < G.force) pickup = G
 			else if(src.r_hand && pickup && G.force > 3)
 				if(pickup.force < G.force) pickup = G
+			else if(istype(G, /obj/item/sword))
+				pickup = G
+				break
 
 	if(src.r_hand && pickup)
 		var/RHITM = src.r_hand
