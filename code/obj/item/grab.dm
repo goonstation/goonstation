@@ -830,6 +830,8 @@
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
 							damage += H.shoes.kick_bonus
+						else if (iscow(H))
+							damage += 3
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
