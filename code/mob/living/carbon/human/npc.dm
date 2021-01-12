@@ -490,6 +490,9 @@
 	else
 		return src.hand_attack(target, attack_params, null, null)
 
+/mob/living/carbon/human/proc/ai_put_away_thing(obj/item/thing)
+
+
 /mob/living/carbon/human/proc/ai_do_hand_stuff()
 	if(prob(10))
 		src.in_throw_mode = !src.in_throw_mode
@@ -597,7 +600,8 @@
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
 		if(T)
-			src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(5) && src.equipped() && ai_state != AI_ATTACKING)
