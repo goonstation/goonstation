@@ -580,7 +580,7 @@
 				step_on(H)
 			else
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right))
+				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
