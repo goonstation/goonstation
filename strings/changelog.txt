@@ -1,5 +1,8 @@
 
 (t)mon jan 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted stamina cost/damage of disarm shoves. Disarm shoves should also now be incapable of causing stamina KOs.
 (u)pali
 (+)You can now stuff ammo casings, paper and floor tiles into crates en-masse by clickdragging.
 (u)Flourish
