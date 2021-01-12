@@ -604,7 +604,7 @@
 				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
-	if(prob(5) && src.equipped() && ai_state != AI_ATTACKING)
+	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src)
 				src.give_to(H)
