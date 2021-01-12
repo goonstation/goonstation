@@ -89,12 +89,6 @@
 	possible_names = list("We have a surplus of gas masks. Need any?",
 	"We seem to have ordered too many gas masks, so we're putting the extras up for sale.")
 
-/datum/commodity/trader/generic/flashlight
-	comname = "Flashlight"
-	comtype = /obj/item/device/light/flashlight
-	amount = 15
-	price_boundary = list()
-
 /datum/commodity/trader/synthmodule
 	comname = "Synth-O-Matic module"
 	comtype = /obj/item/synthmodule

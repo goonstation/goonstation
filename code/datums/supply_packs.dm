@@ -1014,7 +1014,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	name = "Furnishings Crate"
 	desc = "An assortment of flat-packed furniture, designed in Space Sweden."
 	contains = list(/obj/random_item_spawner/furniture_parts)
-	cost = 3000
+	cost = 1500
 	containertype = /obj/storage/crate/wooden
 	containername = "Furnishings Crate"
 
