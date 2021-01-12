@@ -318,25 +318,29 @@ var/list/genetek_hair_styles = null
 		switch (action)
 			if("editappearance")
 				. = TRUE
+				var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
 				if (params["skin"])
-					src.s_tone = params["skin"]
+					src.s_tone = sanitize_color(params["skin"], FALSE)
 				if (params["eyes"])
-					src.e_color = params["eyes"]
+					src.e_color = sanitize_color(params["eyes"], FALSE)
 				if (params["color1"])
-					src.customization_first_color = params["color1"]
+					src.customization_first_color = sanitize_color(params["color1"], fixColors)
 				if (params["color2"])
-					src.customization_second_color = params["color2"]
+					src.customization_second_color = sanitize_color(params["color2"], fixColors)
 				if (params["color3"])
-					src.customization_third_color = params["color3"]
+					src.customization_third_color = sanitize_color(params["color3"], fixColors)
 				if (params["style1"])
-					src.customization_first = params["style1"]
+					src.customization_first = sanitize_hairstyle(params["style1"])
 				if (params["style2"])
-					src.customization_second = params["style2"]
+					src.customization_second = sanitize_hairstyle(params["style2"])
 				if (params["style3"])
-					src.customization_third = params["style3"]
+					src.customization_third = sanitize_hairstyle(params["style3"])
+				if (params["apply"] || params["cancel"])
+					if (params["apply"])
+						src.copy_to_target()
+					qdel(src)
+					return
 				src.update_preview_icon()
-				if (params["apply"])
-					src.copy_to_target()
 
 	ui_data(mob/user)
 		if (isnull(genetek_hair_styles))
@@ -451,6 +455,18 @@ var/list/genetek_hair_styles = null
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
+
+		sanitize_color(color, fix)
+			if (fix)
+				. = fix_colors(color)
+			else
+				var/list/L = hex_to_rgb_list(color)
+				. = rgb(L[1], L[2], L[3])
+
+		sanitize_hairstyle(style)
+			. = style
+			if (!customization_styles[.] && !customization_styles_gimmick[.])
+				. = "None"
 
 		sanitize_null_values()
 			if (customization_first_color == null)
