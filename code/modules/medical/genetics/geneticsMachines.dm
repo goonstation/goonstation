@@ -39,6 +39,7 @@
 	var/datum/bioEffect/decrypt_gene = null
 	var/decrypt_correct_char = "?"
 	var/decrypt_correct_pos = "?"
+	var/datum/genetics_appearancemenu/modify_appearance = null
 
 	var/registered_id = null
 
@@ -547,10 +548,20 @@
 			on_ui_interacted(ui.user)
 		if("editappearance")
 			. = TRUE
-			var/mob/living/carbon/human/H = get_scan_subject()
-			if (istype(H) && !H.mutantrace)
-				src.log_me(H, "appearance modifier accessed")
-				new/datum/genetics_appearancemenu(usr.client, H) // TODO: convert to tgui
+			if (!src.modify_appearance)
+				var/mob/living/carbon/human/H = get_scan_subject()
+				if (istype(H))
+					src.log_me(H, "appearance modifier accessed")
+					src.modify_appearance = new/datum/genetics_appearancemenu(H, usr.client) // TODO: convert to tgui
+			if (!src.modify_appearance || src.modify_appearance.target_mob != get_scan_subject())
+				qdel(src.modify_appearance)
+				src.modify_appearance = null
+				return
+			src.modify_appearance.ui_act(action, params, ui, state)
+			if (params["apply"] || params["cancel"])
+				qdel(src.modify_appearance)
+				src.modify_appearance = null
+				src.scanner?.update_occupant()
 		if("emitter")
 			. = TRUE
 			if (!src.equipment_available("emitter"))
@@ -1006,7 +1017,7 @@
 		.["subjectBloodType"] = subject.bioHolder.bloodType
 		.["subjectAge"] = subject.bioHolder.age
 		.["subjectMutantRace"] = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown"
-		.["subjectCanAppearance"] = istype(H) && isnull(H.mutantrace)
+		.["subjectCanAppearance"] = istype(H) && (!H.mutantrace || length(H.mutantrace.color_channel_names) || H.mutantrace.mutant_appearance_flags & (HAS_HUMAN_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR))
 		.["subjectPremature"] = isprematureclone(subject)
 		.["subjectPotential"] = list()
 		.["subjectActive"] = list()
@@ -1026,6 +1037,10 @@
 			if (GBE.secret && !genResearch.see_secret)
 				continue
 			.["subjectActive"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE))
+		if (src.modify_appearance)
+			.["modifyAppearance"] = src.modify_appearance.ui_data(user)
+		else
+			.["modifyAppearance"] = null
 	else
 		.["haveSubject"] = FALSE
 

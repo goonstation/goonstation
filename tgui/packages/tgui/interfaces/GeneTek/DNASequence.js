@@ -44,7 +44,7 @@ export const DNASequence = (props, context) => {
 
     blocks[blocks.length - 1].push(sequence[i]);
 
-    if (sequence[i][2]) {
+    if (sequence[i].style) {
       allGood = false;
     }
   }

@@ -2423,6 +2423,7 @@ var/global/mob/living/carbon/human/character_preview_icon_mob = null
 	var/mob/living/carbon/human/H = character_preview_icon_mob
 
 	H.dir = direction
+	H.set_mutantrace(null)
 	H.bioHolder.mobAppearance.CopyOther(AH)
 	H.set_mutantrace(MR)
 	H.organHolder.head.donor = H

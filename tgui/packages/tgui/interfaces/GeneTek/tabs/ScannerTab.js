@@ -8,6 +8,7 @@
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
 import { Box, Button, Flex, LabeledList, Modal, Section } from "../../../components";
+import { AppearanceEditor } from "../AppearanceEditor";
 import { GeneList, haveDevice, onCooldown } from "../BioEffect";
 import { GeneIcon } from "../GeneIcon";
 
@@ -27,6 +28,7 @@ export const ScannerTab = (props, context) => {
     subjectPremature,
     subjectPotential,
     subjectActive,
+    modifyAppearance,
     equipmentCooldown,
     mutantRaces,
   } = data;
@@ -83,79 +85,85 @@ export const ScannerTab = (props, context) => {
           </Box>
         </Modal>
       )}
-      <Section title="Occupant">
-        <Flex>
-          <Flex.Item mr={1}>
-            <LabeledList>
-              <LabeledList.Item
-                label="Name"
-                buttons={haveDevice(equipmentCooldown, "Emitter") && (
-                  <Button
-                    icon="radiation"
-                    disabled={onCooldown(equipmentCooldown, "Emitter") || subjectHealth <= 0}
-                    color="bad"
-                    onClick={() => act("emitter")}>
-                    Scramble DNA
-                  </Button>
-                )}>
-                {subjectName}
-              </LabeledList.Item>
-              <LabeledList.Item
-                label="Body Type"
-                buttons={!!subjectHuman && (
-                  <Fragment>
-                    <Button
-                      icon="user"
-                      color="blue"
-                      disabled={!!subjectPremature}
-                      onClick={() => setChangingMutantRace(true)}>
-                      Change
-                    </Button>
-                    <Button
-                      icon="wrench"
-                      color="average"
-                      disabled={!subjectCanAppearance}
-                      onClick={() => act("editappearance")} />
-                  </Fragment>
-                )}>
-                {subjectMutantRace}
-              </LabeledList.Item>
-              <LabeledList.Item
-                label="Physical Age">
-                {subjectAge} years
-              </LabeledList.Item>
-              <LabeledList.Item label="Blood Type">
-                {subjectBloodType}
-              </LabeledList.Item>
-            </LabeledList>
-          </Flex.Item>
-          {!!subjectHuman && (
-            <Flex.Item grow={0} shrink={0}>
-              <Box width="80px" height="80px" textAlign="center">
-                <img
-                  src={"genetek-scanner-occupant.png?" + Date.now()}
-                  style={{
-                    "-ms-interpolation-mode": "nearest-neighbor",
-                    "image-rendering": "pixelated",
-                  }}
-                  height="80" />
-              </Box>
-            </Flex.Item>
-          )}
-        </Flex>
-      </Section>
-      <Section title="Potential Genes">
-        <GeneList
-          genes={subjectPotential}
-          noGenes="All detected potential mutations are active."
-          isPotential />
-      </Section>
-      <Section title="Active Mutations">
-        <GeneList
-          genes={subjectActive}
-          noGenes="Subject has no detected mutations."
-          isActive />
-      </Section>
+      {modifyAppearance ? (
+        <AppearanceEditor {...modifyAppearance} />
+      ) : (
+        <Fragment>
+          <Section title="Occupant">
+            <Flex>
+              <Flex.Item mr={1}>
+                <LabeledList>
+                  <LabeledList.Item
+                    label="Name"
+                    buttons={haveDevice(equipmentCooldown, "Emitter") && (
+                      <Button
+                        icon="radiation"
+                        disabled={onCooldown(equipmentCooldown, "Emitter") || subjectHealth <= 0}
+                        color="bad"
+                        onClick={() => act("emitter")}>
+                        Scramble DNA
+                      </Button>
+                    )}>
+                    {subjectName}
+                  </LabeledList.Item>
+                  <LabeledList.Item
+                    label="Body Type"
+                    buttons={!!subjectHuman && (
+                      <Fragment>
+                        <Button
+                          icon="user"
+                          color="blue"
+                          disabled={!!subjectPremature}
+                          onClick={() => setChangingMutantRace(true)}>
+                          Change
+                        </Button>
+                        <Button
+                          icon="wrench"
+                          color="average"
+                          disabled={!subjectCanAppearance}
+                          onClick={() => act("editappearance")} />
+                      </Fragment>
+                    )}>
+                    {subjectMutantRace}
+                  </LabeledList.Item>
+                  <LabeledList.Item
+                    label="Physical Age">
+                    {subjectAge} years
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Blood Type">
+                    {subjectBloodType}
+                  </LabeledList.Item>
+                </LabeledList>
+              </Flex.Item>
+              {!!subjectHuman && (
+                <Flex.Item grow={0} shrink={0}>
+                  <Box width="80px" height="80px" textAlign="center">
+                    <img
+                      src={"genetek-scanner-occupant.png?" + Date.now()}
+                      style={{
+                        "-ms-interpolation-mode": "nearest-neighbor",
+                        "image-rendering": "pixelated",
+                      }}
+                      height="80" />
+                  </Box>
+                </Flex.Item>
+              )}
+            </Flex>
+          </Section>
+          <Section title="Potential Genes">
+            <GeneList
+              genes={subjectPotential}
+              noGenes="All detected potential mutations are active."
+              isPotential />
+          </Section>
+          <Section title="Active Mutations">
+            <GeneList
+              genes={subjectActive}
+              noGenes="Subject has no detected mutations."
+              isActive />
+          </Section>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
