@@ -313,7 +313,7 @@
 			if (!H.l_hand && !H.r_hand)
 				continue
 			possible_targets += H
-			if(IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
+			if(H.equipped() && IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
 				priority_targets += H
 		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return

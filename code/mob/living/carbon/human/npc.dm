@@ -462,6 +462,20 @@
 	if(IS_NPC_HATED_ITEM(src.equipped()))
 		throw_equipped |= prob(80)
 
+	// pull things out of other things!
+	if(istype(src.equipped(), /obj/item/storage))
+		var/obj/item/storage/storage = src.equipped()
+		if(!length(storage.contents))
+			throw_equipped |= prob(80)
+		else
+			var/obj/item/taken = pick(storage.contents)
+			src.u_equip(storage)
+			storage.set_loc(src.loc)
+			storage.dropped(src)
+			storage.layer = initial(storage.layer)
+			taken.set_loc(storage.loc)
+			src.put_in_hand_or_drop(taken)
+
 	// wear clothes
 	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
 		src.hud.clicked("invtoggle", src, list())
@@ -485,7 +499,16 @@
 
 	// eat, drink, splash!
 	if(istype(src.equipped(), /obj/item/reagent_containers))
-		if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
+		var/poured = FALSE
+		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
+			for(var/obj/item/reagent_containers/container in view(1, src))
+				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+					src.ai_attack_target(container, src.equipped())
+					poured = TRUE
+					break
+		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
+			// do nothing
+		else if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
 			src.ai_attack_target(src, src.equipped())
 		else
 			var/obj/item/thing = src.equipped()
@@ -497,7 +520,7 @@
 	// draw
 	if(istype(src.equipped(), /obj/item/pen/crayon) && prob(20))
 		var/list/turf/eligible = list()
-		for(var/turf/T in view(src, 1))
+		for(var/turf/T in view(1, src))
 			if(!T.density && !(locate(/obj/decal/cleanable/writing) in T))
 				eligible += T
 		if(length(eligible))
@@ -510,7 +533,8 @@
 	// throw
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
-		src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+		if(T)
+			src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(5) && src.equipped())
@@ -559,12 +583,19 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G != src.l_hand && !istype(G.loc, /turf) || G.anchored) continue
+		if(G.anchored) continue
 		var/score = 0
+		if(G.loc == src && !G.equipped_in_slot) // probably organs
+			continue
 		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
 			score += 6
 		if(IS_NPC_CLOTHING(G) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
-			score += 10
+			if(G.equipped_in_slot)
+				if(prob(90)) // monkeys keep removing their clothes way too much
+					continue
+				score -= 5
+			else
+				score += 10
 		if(istype(G, /obj/item/remote))
 			score += 3
 		if(istype(G, /obj/item/reagent_containers) && G.reagents?.total_volume > 0)
@@ -573,6 +604,10 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
+		if(istype(G, /obj/item/storage) && length(G.contents))
+			score += 9
+		if(G.loc == src)
+			score += 1
 		if(istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
@@ -592,6 +627,8 @@
 
 	if(pickup && !src.l_hand)
 		src.swap_hand(1)
+		if(pickup.equipped_in_slot)
+			src.u_equip(pickup)
 		if(src.put_in_hand_or_drop(pickup))
 			src.set_clothing_icon_dirty()
 
