@@ -211,7 +211,7 @@
 						if (!do_after(user, 100) || (repair_stage != 7))
 							return
 						repair_stage = 8
-						if (prob(33))//5)) upped from 5 because eh
+						if(prob(100))
 							user.visible_message("[user] secures the maintenance panel!", "You secure the maintenance panel.")
 							new /obj/machinery/vending/paint(src.loc)
 							qdel(src)
@@ -253,6 +253,7 @@ var/list/cached_colors = new/list()
 	icon_state = "paint"
 	item_state = "bucket"
 	var/paint_color = rgb(1,1,1)
+	var/actual_paint_color
 	var/image/paint_overlay
 	var/uses = 15
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -290,8 +291,8 @@ var/list/cached_colors = new/list()
 			target.icon = new_icon
 		*/
 		var/oldVal = target.color
-		target.color = paint_color
-		target.onVarChanged("color", oldVal, paint_color) // to force redraws on worn items if needed
+		target.color = src.actual_paint_color
+		target.onVarChanged("color", oldVal, actual_paint_color) // to force redraws on worn items if needed
 
 		//var/icon/new_icon = icon(initial(target.icon))
 		//new_icon.ColorTone(color)
@@ -305,6 +306,8 @@ var/list/cached_colors = new/list()
 		paint_overlay.color = paint_color
 		overlays = null
 		overlays += paint_overlay
+		var/list/color_list = hex_to_rgb_list(src.paint_color)
+		src.actual_paint_color = list(1/2, 0, 0, 0, 1/2, 0, 0, 0, 1/2, color_list["r"]/256/2, color_list["g"]/256/2, color_list["b"]/256/2)
 
 /obj/item/paint_can/random
 	name = "random paint can"

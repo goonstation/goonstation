@@ -1,4 +1,7 @@
 
+(t)tue jan 12 21
+(u)pali
+(+)Paint machine repair is no longer luck based. Paint application reworked to disallow obnoxious uses like "everything is now pitch black".
 (t)mon jan 11 21
 (u)Flourish
 (e)🗺|mapping
