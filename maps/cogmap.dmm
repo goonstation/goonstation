@@ -63514,6 +63514,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rNh" = (
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "rNK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -104738,7 +104744,7 @@ ctD
 cxq
 cxy
 cxq
-cxq
+rNh
 cyd
 aah
 adC
