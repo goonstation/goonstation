@@ -232,7 +232,8 @@
 		if (ismob(T))
 			var/mob/M = T
 			if (M.health <= 0)
-				src.target = null				src.ai_state = 0
+				src.target = null
+				src.ai_state = 0
 				src.ai_target = null
 				src.ai_frustration = 0
 				walk_towards(src,null)
