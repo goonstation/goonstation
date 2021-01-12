@@ -583,7 +583,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored) continue
+		if(G.anchored || G.throwing) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -664,6 +664,7 @@
 	var/obj/item/pickup
 
 	for(var/obj/item/G in src.contents)
+		if(G.throwing) continue
 		if((istype(G,/obj/item/gun) && G:canshoot()) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
@@ -671,6 +672,7 @@
 
 	if(!pickup)
 		for (var/obj/item/G in view(1,src))
+			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
 			if((istype(G,/obj/item/gun) && G:canshoot()))
 				pickup = G
