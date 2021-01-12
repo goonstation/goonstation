@@ -589,7 +589,7 @@
 			continue
 		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
 			score += 6
-		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(90)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
+		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(2)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
 			score += 10
 		else if(IS_NPC_CLOTHING(G) && G.loc == src)
 			continue
