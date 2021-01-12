@@ -207,7 +207,8 @@
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 
-/datum/commidity/trader/generic/furniture
+
+/datum/commodity/trader/generic/furniture
 	comname = "Furniture Parts"
 	comtype = /obj/item/furniture_parts/
 	price_boundary = list(100, 300)
