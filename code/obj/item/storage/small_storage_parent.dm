@@ -40,11 +40,11 @@
 
 	Entered(Obj, OldLoc)
 		. = ..()
-		src.hud.add_item(Obj)
+		src.hud?.add_item(Obj)
 
 	Exited(Obj, newloc)
 		. = ..()
-		src.hud.remove_item(Obj)
+		src.hud?.remove_item(Obj)
 
 	disposing()
 		if (hud)
