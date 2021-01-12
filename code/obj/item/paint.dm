@@ -25,6 +25,8 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
 	var/paint_color = "#ff0000"
+	var/add_orig = 0.2
+	var/paint_intensity = 0.6
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
@@ -52,11 +54,13 @@
 			return
 
 	attack_hand(mob/user as mob)
-		var/col_new = input(user) as color
+		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
 			P.paint_color = col_new
 			paint_color = col_new
+			P.paint_intensity = src.paint_intensity
+			P.add_orig = src.add_orig
 			P.generate_icon()
 		return
 
@@ -256,6 +260,8 @@ var/list/cached_colors = new/list()
 	var/actual_paint_color
 	var/image/paint_overlay
 	var/uses = 15
+	var/paint_intensity = 0.5
+	var/add_orig = 0.0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = 2.0
 
@@ -307,7 +313,11 @@ var/list/cached_colors = new/list()
 		overlays = null
 		overlays += paint_overlay
 		var/list/color_list = hex_to_rgb_list(src.paint_color)
-		src.actual_paint_color = list(1/2, 0, 0, 0, 1/2, 0, 0, 0, 1/2, color_list["r"]/256/2, color_list["g"]/256/2, color_list["b"]/256/2)
+		src.actual_paint_color = list(
+			1 - paint_intensity + add_orig, 0, 0,
+			0, 1 - paint_intensity + add_orig, 0,
+			0, 0, 1 - paint_intensity + add_orig,
+			paint_intensity * color_list["r"]/255, paint_intensity * color_list["g"]/255, paint_intensity * color_list["b"]/255)
 
 /obj/item/paint_can/random
 	name = "random paint can"
