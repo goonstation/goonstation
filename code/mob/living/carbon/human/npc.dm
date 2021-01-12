@@ -333,10 +333,24 @@
 
 			var/area/A = get_area(src)
 
-			if(isnull(ai_target) || isdead(ai_target) || distance > 7 || (!src.see_invisible && ai_target.invisibility) || (isunconscious(ai_target) && prob(25)))
+			var/stop_fight = FALSE
+			if(isnull(ai_target) || !src.see_invisible && ai_target.invisibility)
+				stop_fight = TRUE
+			else if(ismob(src.ai_target))
+				stop_fight = isdead(src.ai_target) || isunconscious(src.ai_target) && prob(25)
+			else if(iscritter(src.ai_target))
+				var/obj/critter/critter = src.ai_target
+				stop_fight = !critter.alive
+			else if(istype(src.ai_target, /obj/fitness/speedbag))
+				stop_fight = prob(30)
+			else
+				stop_fight = prob(10)
+
+			if(stop_fight)
 				ai_target = null
 				ai_state = AI_PASSIVE
 				return
+
 
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
@@ -389,7 +403,7 @@
 					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 
 				if(src.r_hand && src.l_hand)
-					if(prob(src.hand ? 5 : 90))
+					if(prob(src.hand ? 90 : 5))
 						src.swap_hand()
 				else if(!src.equipped())
 					if(src.hand || prob(10))
@@ -400,41 +414,32 @@
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
+				src.a_intent = INTENT_HARM
+
+				var/prefer_hand = FALSE
+				if(istype(ai_target, /obj/fitness/speedbag))
+					prefer_hand = TRUE
+				if(prob(1))
+					prefer_hand = TRUE
+
 				if(isgrab(src.r_hand) || isgrab(src.l_hand))
-					src.a_intent = INTENT_GRAB
 					var/obj/item/grab/grab = locate(/obj/item/grab) in src
 					grab.attack_hand(src)
-				else if(!src.equipped())
+
+				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
 					//else
-					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 5 SECONDS))
+					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
 						src.a_intent = INTENT_GRAB
-					ai_target.attack_hand(src) //We're a human!
+					src.ai_attack_target(ai_target, null)
 				else // With a weapon
-					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
-					//	src.a_intent = INTENT_HELP
-					if(ishuman(ai_target) || issilicon(ai_target))
-						src.ai_attack_target(ai_target, src.equipped())
-					else if(ismobcritter(ai_target))
-						var/mob/living/critter/C = ai_target
-						if (isalive(C))
-							src.ai_attack_target(ai_target, src.equipped())
-						else
-							ai_target = null
-							ai_state = AI_PASSIVE
-							return
-					else if(ismob(ai_target))
-						src.ai_attack_target(ai_target, src.equipped())
-					else
-						src.ai_attack_target(ai_target, src.equipped())
-						var/obj/critter/maybe_critter = ai_target
-						if(prob(10) || istype(maybe_critter) && !maybe_critter.alive && prob(60))
-							ai_target = null
-							ai_state = AI_PASSIVE
-							return
+					src.ai_attack_target(ai_target, src.equipped())
 					src.a_intent = INTENT_HARM
+
+
+
 
 			ai_pickupstuff()
 
@@ -453,7 +458,10 @@
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
-	return src.weapon_attack(target, weapon, 1, attack_params)
+	if(weapon)
+		return src.weapon_attack(target, weapon, 1, attack_params)
+	else
+		return src.hand_attack(target, attack_params, null, null)
 
 /mob/living/carbon/human/proc/ai_do_hand_stuff()
 	if(prob(10))
@@ -467,9 +475,11 @@
 			grab = src.equipped()
 		if(prob(10) || grab.state > 0)
 			if(prob(80))
+				var/list/obj/table/tables = list()
 				for(var/obj/table/table in view(1))
-					src.ai_attack_target(table, grab)
-					break
+					tables += table
+				if(length(tables))
+					src.ai_attack_target(pick(tables), grab)
 			if(!grab.disposed && grab.loc == src)
 				src.emote("flip", TRUE)
 
@@ -793,6 +803,8 @@
 	L = getline(src,target)
 
 	for (var/turf/T in L)
+		if(target in T)
+			continue
 		if (T.density)
 			ai_frustration += 3
 			return 0
@@ -844,7 +856,7 @@
 				V.eject_rider(0, 1)
 
 	else if(istype(src.loc, /obj/icecube/))
-		src.loc.attack_hand(src)
+		src.ai_attack_target(src.loc, null)
 
 /mob/living/carbon/human/proc/ai_obstacle(var/doorsonly)
 
@@ -871,10 +883,10 @@
 
 	if((locate(/obj/machinery/door) in get_step(src,dir)))
 		var/obj/machinery/door/W = (locate(/obj/machinery/door) in get_step(src,dir))
-		if(W.density) W.attack_hand(src)
+		if(W.density) src.ai_attack_target(W, null)
 	else if((locate(/obj/machinery/door) in get_turf(src.loc)))
 		var/obj/machinery/door/W = (locate(/obj/machinery/door) in get_turf(src.loc))
-		if(W.density) W.attack_hand(src)
+		if(W.density) src.ai_attack_target(W, null)
 
 /mob/living/carbon/human/proc/ai_openclosets()
 	if (ai_incapacitated())

@@ -161,13 +161,15 @@
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
 				src.ai_knock_from_hand(priority_only=prob(80))
-			if(!ai_target && prob(20) && !ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
+			if(!ai_target && prob(20))
 				for(var/obj/fitness/speedbag/bag in view(1, src))
-					src.ai_target = bag
-					src.ai_state = 2
-					break
+					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
+						src.ai_target = bag
+						src.target = bag
+						src.ai_state = 2
+						break
 			if(prob(1))
-				src.emote("dance")
+				src.emote(pick("dance", "flip", "laugh"))
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
@@ -230,8 +232,7 @@
 		if (ismob(T))
 			var/mob/M = T
 			if (M.health <= 0)
-				src.target = null
-				src.ai_state = 0
+				src.target = null				src.ai_state = 0
 				src.ai_target = null
 				src.ai_frustration = 0
 				walk_towards(src,null)
