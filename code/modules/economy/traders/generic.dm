@@ -160,7 +160,7 @@
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(50,80)
+	price_boundary = list(70,100)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 
@@ -181,13 +181,14 @@
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
 	comtype = /obj/item/shipcomponent/
-	price_boundary = list(500,2500)
+	price_boundary = list(300,1000)
 	possible_names = list("Our shipyards are low on ship-building components. Could you sell us some?",
-	"We're trying a new experimental pod construction technique and need all the ship components we can get.")
+	"We're trying a new experimental pod construction technique and need all the ship components we can get.",
+	"Some jokers sold us 600 cargo bays when we asked for parts, so we can't build any pods. We're in dire need of some other ship components.")
 
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under/
-	price_boundary = list(40,100)
+	price_boundary = list(100,250)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
