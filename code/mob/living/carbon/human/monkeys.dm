@@ -2,6 +2,7 @@
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
+		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
 
@@ -160,6 +161,29 @@
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
 				src.ai_knock_from_hand(priority_only=prob(80))
+			if(!ai_target && prob(20))
+				for(var/obj/fitness/speedbag/bag in view(1, src))
+					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
+						src.ai_target = bag
+						src.target = bag
+						src.ai_state = 2
+						break
+			if(prob(1))
+				src.emote(pick("dance", "flip", "laugh"))
+			if(prob(0.5))
+				var/list/priority_targets = list()
+				var/list/targets = list()
+				for(var/atom/movable/AM in view(5, src))
+					if(ismob(AM) && AM != src)
+						priority_targets += AM
+					else if(isobj(AM) && isturf(AM.loc) && !istype(AM, /obj/overlay))
+						targets += AM
+				if(length(priority_targets) && prob(55))
+					src.point_at(pick(priority_targets))
+					if(prob(20))
+						src.emote("laugh")
+				else if(length(targets))
+					src.point_at(pick(targets))
 
 	ai_findtarget_new()
 		if (ai_aggressive || ai_aggression_timeout == 0 || (world.timeofday - ai_threatened) < ai_aggression_timeout)
@@ -168,6 +192,8 @@
 	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src) || T == src)
+			return ..()
+		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
@@ -209,9 +235,12 @@
 		if (!T)
 			return 0
 		if (src.health <= 0 || (get_dist(src, T) >= 7))
-			src.target = null
-			src.ai_state = 0
-			src.ai_target = null
+			if(src.health <= 0)
+				src.ai_state = 5
+			else
+				src.ai_state = 0
+				src.target = null
+				src.ai_target = null
 			src.ai_frustration = 0
 			walk_towards(src,null)
 			return 1
@@ -310,7 +339,7 @@
 			if (!H.l_hand && !H.r_hand)
 				continue
 			possible_targets += H
-			if(IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
+			if(H.equipped() && IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
 				priority_targets += H
 		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
@@ -351,6 +380,11 @@
 							if (prob(40))
 								src.emote("scream")
 		..()
+
+	proc/pursuited_by(atom/movable/AM)
+		src.ai_state = 5
+		src.ai_target = AM
+		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
 	id = "pickpocket"

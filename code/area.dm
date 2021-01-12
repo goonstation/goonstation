@@ -2763,6 +2763,11 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "chapeloffice"
 	sound_environment = 11
 
+/area/station/chapel/funeral_parlor
+	name = "Funeral Parlor"
+	icon_state = "funeralparlor"
+	sound_environment = 7
+
 /area/station/storage
 	name = "Storage Area"
 	icon_state = "storage"
@@ -2989,6 +2994,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/research_outpost/toxins
 		name = "Research Outpost Toxins"
 		icon_state = "green"
+
+/area/research_outpost/pathology
+		name = "Research Outpost Pathology"
+		icon_state = "pink"
 
 // end station areas //
 

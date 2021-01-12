@@ -596,7 +596,7 @@
 	src.update_cursor()
 
 /mob/living/point_at(var/atom/target)
-	if (!isturf(src.loc) || usr.stat || usr.restrained())
+	if (!isturf(src.loc) || src.stat || src.restrained())
 		return
 
 	if (isghostcritter(src))
