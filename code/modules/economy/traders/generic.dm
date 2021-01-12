@@ -13,12 +13,15 @@
 	/datum/commodity/trader/generic/electronics,
 	/datum/commodity/trader/generic/anyfood,
 	/datum/commodity/trader/generic/shipcomponents,
-	/datum/commodity/trader/generic/jumpsuits)
+	/datum/commodity/trader/generic/jumpsuits,
+	/datum/commodity/trader/generic/furniture,
+	/datum/commodity/trader/generic/pens)
 	base_goods_sell = list(/datum/commodity/trader/generic/sheetmetal,
 	/datum/commodity/trader/generic/rcd_ammo,
 	/datum/commodity/trader/generic/fabric,
 	/datum/commodity/trader/generic/telecrystal,
-	/datum/commodity/trader/generic/glowstick)
+	/datum/commodity/trader/generic/glowstick,
+	/datum/commodity/trader/generic/gasmask)
 	/*
 	/datum/commodity/trader/synthmodule/bacteria,
 	/datum/commodity/trader/synthmodule/virii,
