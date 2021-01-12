@@ -1932,6 +1932,8 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
+	human_compatible = FALSE
+	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
 	race_mutation = /datum/bioEffect/mutantrace/cow
@@ -1957,6 +1959,8 @@
 			mob.update_body()
 			mob.update_clothing()
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
+			mob.kickMessage = "stomps"
+			mob.traitHolder?.addTrait("hemophilia")
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
@@ -1969,6 +1973,8 @@
 			H.blood_color = initial(H.blood_color)
 			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			H.kickMessage = initial(H.kickMessage)
+			H.traitHolder?.removeTrait("hemophilia")
 		. = ..()
 
 	say_filter(var/message)

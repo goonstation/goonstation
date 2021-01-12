@@ -275,7 +275,7 @@ SHARDS
 			var/mob/living/carbon/human/H = M
 			if(isabomination(H))
 				return
-			if(!H.shoes)
+			if(!H.shoes && !iscow(H))
 				boutput(H, "<span class='alert'><B>You step in the broken glass!</B></span>")
 				playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
