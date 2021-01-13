@@ -1,5 +1,9 @@
 
 (t)wed jan 13 21
+(u)Flaborized
+(p)3290
+(e)🆕🎨|feature, sprites
+(+)Botanists now spawn with a field guide in their pocket explaining the very very basic mechanics of the job.
 (u)BenLubar
 (p)3319
 (e)|
