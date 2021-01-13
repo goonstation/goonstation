@@ -9,9 +9,9 @@
 	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
 	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
 	voice_other = "sound/voice/wizard/MagicMissileLoud.ogg"
-	var/num_shots = 6
-	var/datum/projectile/big_missile = new/datum/projectile/special/magicmissile
-	var/datum/projectile/lil_missile = new/datum/projectile/special/magicmissile
+	var/base_shots = 6
+	var/datum/projectile/big_missile = new/datum/projectile/special/homing/magicmissile
+	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
 	var/datum/projectile/the_missile
 
 	cast()
@@ -20,7 +20,7 @@
 
 		var/list/missile_targets = list()
 
-		for(var/mob/living/M as mob in oview())
+		for(var/mob/living/M in oview(7, holder.owner))
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
@@ -30,11 +30,12 @@
 			if (iswizard(M))
 				boutput(holder.owner, "<span class='alert'>You feel your spell ignore [M], a fellow magical practitioner!</span>")
 				continue
-			missile_targets[M] = 1
+			missile_targets += M
 
 		holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
 		..()
 
+		var/num_shots = src.base_shots
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!</span>")
 			num_shots *= 0.5
@@ -43,21 +44,19 @@
 			src.the_missile = src.big_missile
 
 		for (var/i in 1 to num_shots)
-			if(length(missile_targets) > 1)
+			if(length(missile_targets))
 				var/mob/living/L = pick(missile_targets)
 				var/turf/target = get_turf(L)
-				var/obj/projectile/P = initialize_projectile_ST(holder.owner, src.the_missile, target)
+				var/obj/projectile/P = shoot_projectile_ST(holder.owner, src.the_missile, target)
 				if (P)
+					P.targets = list(L)
 					P.mob_shooter = holder.owner
 					P.shooter = holder.owner
-					P.launch()
 				missile_targets -= L
 			else // we got ammo left, lets just shoot them somewhere or something
-				var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, src.the_missile, get_step_rand(get_turf(holder.owner)), 0, 0, 360)
+				var/obj/projectile/P = shoot_projectile_XY(holder.owner, src.the_missile, cos(rand(0,360)), sin(rand(0,360)))
 				if (P)
 					P.mob_shooter = holder.owner
 					P.shooter = holder.owner
-					P.launch()
-
 
 		playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)

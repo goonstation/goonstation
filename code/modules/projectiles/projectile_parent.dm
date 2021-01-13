@@ -98,7 +98,7 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
-		if (proj_data.on_pre_hit(hit = A)) return // Our bullet doesnt want to hit this
+		if (proj_data.on_pre_hit(A, src.angle, src)) return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -639,6 +639,7 @@ datum/projectile
 		on_max_range_die(var/obj/projectile/O)
 			return
 		/// Check if we want to do something before actually hitting the thing we hit
+		/// Return TRUE for it to more or less skip collide()
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			return
 
