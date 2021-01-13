@@ -23009,7 +23009,7 @@
 "bdt" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bdu" = (
@@ -24657,7 +24657,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/bottle/icing{
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = 4
 	},
 /turf/simulated/floor/black,
