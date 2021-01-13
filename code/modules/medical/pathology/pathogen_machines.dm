@@ -738,6 +738,8 @@
 				SEND_SLOT_LOAD_INFO
 
 		if(href_list["manip"])
+			if(!src.manip.loaded) // Why are you clicking this, there is no pathogen loaded in!
+				return
 			// the buttons should be disabled if the stats are maxed out, so these checks are just in case someone does nerd stuff
 			var/points = 0
 			var/totalPoints = src.manip.loaded.reference.spread + src.manip.loaded.reference.advance_speed + src.manip.loaded.reference.suppression_threshold
