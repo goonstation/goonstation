@@ -331,6 +331,76 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 100, 1)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
+/datum/projectile/special/magicmissile
+	name = "magic missile"
+	sname = "magic missile"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "magicm"
+	shot_sound = null
+	power = 10
+	cost = 1
+	damage_type = D_KINETIC
+	dissipation_delay = 0
+	dissipation_rate = 0
+	ks_ratio = 1
+	brightness = 2
+	projectile_speed = 15
+	is_magical = 1 // It passes right through them, but just for consistency
+	var/max_bounce_count = 4 // putting the I in ICEE BEEYEM
+	var/weaken_length = 5 SECONDS
+	var/impact_brute = 5
+	var/bouncy = 1 // No staff? No bounce!
+	var/slam_text = "The magic missile SLAMS into you!"
+	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
+	var/cat_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0
+
+	tick(var/obj/projectile/P)
+		if(prob(5))
+			elecflash(get_turf(P)) // zap
+
+	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
+		if(isliving(hit))
+			var/mob/living/M = hit
+			if (iswizard(M) || M.traitHolder.hasTrait("training_chaplain"))
+				boutput(M, "The magic missile passes harmlessly through you!")
+				return TRUE
+
+	on_hit(atom/A, direction, var/obj/projectile/projectile)
+		if(isliving(A))
+			var/mob/living/M = A
+			M.changeStatus("weakened", src.weaken_length)
+			M.force_laydown_standup()
+			boutput(M, text("<span class='notice'>[slam_text]</span>"))
+			M.visible_message("<span class='alert'>[M] is struck by a magic missile!</span>")
+			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			random_brute_damage(M, src.impact_brute)
+			M.lastattacker = src.master?.shooter
+			M.lastattackertime = TIME
+			projectile.die()
+		else if (src.bouncy && projectile.reflectcount < src.max_bounce_count)
+			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			var/turf/T = get_turf(A)
+			if(TIME >= last_sound_time + 1 DECI SECOND)
+				last_sound_time = TIME
+				if(prob(1))
+					playsound(T, src.cat_sound, 60, 1)
+				else
+					playsound(T, src.hit_sound, 60, 1)
+		else
+			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			projectile.die()
+
+/datum/projectile/special/magicmissile/weak
+	name = "magic minimissile"
+	sname = "magic minimissile"
+	power = 5
+	projectile_speed = 12
+	max_bounce_count = 0 // putting the Y in ICEE BEEYEM
+	weaken_length = 3 SECONDS
+	impact_brute = 5
+	bouncy = 0 // No staff? No bounce!
+	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
