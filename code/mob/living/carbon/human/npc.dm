@@ -944,10 +944,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-
-#undef AI_PASSIVE
-#undef AI_ANGERING
-#undef AI_ATTACKING
-#undef AI_HELPING
-#undef AI_IDLE
-#undef AI_FLEEING
