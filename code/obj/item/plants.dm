@@ -6,6 +6,8 @@
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	wear_image_icon = 'icons/mob/mask.dmi'
+	var/use_bloodoverlay = 0
 	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
