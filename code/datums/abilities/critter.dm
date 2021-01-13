@@ -44,6 +44,7 @@
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()
+		..()
 		var/obj/screen/ability/topBar/critter/B = new /obj/screen/ability/topBar/critter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -77,7 +78,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.hasStatus(list("paralysis", "stunned", "weakened"))
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())

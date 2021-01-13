@@ -16,6 +16,7 @@
 	var/list/random_icons = list()
 
 	New()
+		..()
 		if (islist(src.random_icons) && src.random_icons.len)
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
@@ -64,11 +65,11 @@
 
 		src.attached = A
 		src.active = 1
-		src.loc = A
+		src.set_loc(A)
 
 		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (prob(50))
 			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")
@@ -83,9 +84,9 @@
 	proc/fall_off()
 		if (!active) return
 		if (istype(attached,/turf))
-			src.loc = attached
+			src.set_loc(attached)
 		else
-			src.loc = attached.loc
+			src.set_loc(attached.loc)
 		if (!dont_make_an_overlay)
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
@@ -218,7 +219,7 @@
 			var/turf/F = src.attached
 			F.vis_contents -= src
 
-		src.loc = src.attached.loc
+		src.set_loc(src.attached.loc)
 		src.layer = initial(src.layer)
 		src.plane = initial(src.plane)
 		src.pixel_x = initial(src.pixel_x)
@@ -302,6 +303,10 @@
 /obj/item/sticker/bee
 	name = "bee sticker"
 	icon_state = "bee"
+
+/obj/item/sticker/robuddy
+	name = "robuddy sticker"
+	icon_state = "robuddy"
 
 /obj/item/sticker/xmas_ornament
 	name = "ornament"
@@ -453,7 +458,7 @@
 		..()
 
 		if (istype(A, /turf/simulated/wall) || istype(A, /turf/unsimulated/wall))
-			src.loc = get_turf(user) //If sticking to a wall, just set the loc to the user loc. Otherwise the spycam would be able to see through walls.
+			src.set_loc(get_turf(user)) //If sticking to a wall, just set the loc to the user loc. Otherwise the spycam would be able to see through walls.
 
 		if (src.radio)
 			src.loc.open_to_sound = 1
@@ -560,6 +565,7 @@
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
 	listening = 0
+	hardened = 0
 
 /obj/item/device/radio/spy/sec_only
 	locked_frequency = 1

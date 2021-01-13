@@ -3,8 +3,6 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-DESTINY-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
-var/global/list/valid_target_arrival_pads = list()
-
 /proc/get_random_station_turf()
 	var/list/areas = get_areas(/area/station)
 	if (!areas.len)
@@ -27,10 +25,6 @@ var/global/list/valid_target_arrival_pads = list()
 	anchored = 1
 	density = 0
 
-	New()
-		..()
-		valid_target_arrival_pads += src
-
 /client/proc/cmd_rp_rules()
 	set name = "RP Rules"
 	set category = "Commands"
@@ -40,12 +34,12 @@ var/global/list/valid_target_arrival_pads = list()
 	<ul style='list-style-type:disc'>
 		<li><b>These are extra rules.</b>
 			<ul style='list-style-type:circle'>
-				<li>The RP rules are an extension to the base rules, not a replacement for. Do not use roleplay as an excuse for rulebreaking behavior, such as bigoted language or sexual content. No, your character doesn’t get a free pass to be racist just because you’re trying to roleplay as a racist.</li>
+				<li>The RP rules are an extension to the base rules, not a replacement for. Do not use roleplay as an excuse for rulebreaking behavior, such as bigoted language or sexual content. No, your character doesnï¿½t get a free pass to be racist just because youï¿½re trying to roleplay as a racist.</li>
 			</ul>
 		</li>
 		<li><b>We're all here to have a good time.</b>
 			<ul style='list-style-type:circle'>
-				<li>Going out of your way to seriously negatively impact or end the round for someone with little to no justification is against the rules. Legitimate conflicts where people get upset do happen; however, these conflicts should escalate properly, and retribution must be proportionate. For example, this means you shouldn’t immediately escalate to murder when someone refuses to leave a certain area or give back something they stole.</li>
+				<li>Going out of your way to seriously negatively impact or end the round for someone with little to no justification is against the rules. Legitimate conflicts where people get upset do happen; however, these conflicts should escalate properly, and retribution must be proportionate. For example, this means you shouldnï¿½t immediately escalate to murder when someone refuses to leave a certain area or give back something they stole.</li>
 			</ul>
 		</li>
 		<li><b>Keep IC and OOC separate.</b>
@@ -53,9 +47,9 @@ var/global/list/valid_target_arrival_pads = list()
 				<li>Do not use the OOC channel to spoil IC (In Character) events, such as the identity of an antagonist. Even if something seems minor to you, as long as it pertains to the current round and characters, you should not be mentioning it in OOC. Likewise, do not treat IC chat like OOC (saying things like ((this round is great)) over radio, etc).</li>
 			</ul>
 		</li>
-		<li><b>Don’t use OOC information or knowledge that your character would not reasonably be aware of just to give yourself an advantage.</b>
+		<li><b>Donï¿½t use OOC information or knowledge that your character would not reasonably be aware of just to give yourself an advantage.</b>
 			<ul style='list-style-type:circle'>
-				<li>In other words, don’t powergame or metagame. This includes things such as shouting “LING!” right after you as a player realize that you’ve been stung, or rolling captain every round just to do genetics. Deadchat is considered OOC, and so you should not be using the information you learned from there to inform your IC decisions. Conversely, a changeling’s hivemind is considered IC, and so you should not be bringing in OOC content or information.</li>
+				<li>In other words, donï¿½t powergame or metagame. This includes things such as shouting ï¿½LING!ï¿½ right after you as a player realize that youï¿½ve been stung, or rolling captain every round just to do genetics. Deadchat is considered OOC, and so you should not be using the information you learned from there to inform your IC decisions. Conversely, a changelingï¿½s hivemind is considered IC, and so you should not be bringing in OOC content or information.</li>
 			</ul>
 		</li>
 		<li><b>Play as a coherent, believable character that you enjoy portraying.</b>
@@ -82,16 +76,16 @@ var/global/list/valid_target_arrival_pads = list()
 		</li>
 		<li><b>Look out for everyone. </b>
 			<ul style='list-style-type:circle'>
-				<li>Please be considerate of other players, as their experiences are just as important as your own. If you aren’t an antagonist and yet you really want to play out a hostage situation, or deep-fry someone, or be a rude dude in whatever way, confirm with the involved and affected players either IC or in LOOC first. If everyone agrees to being subjected to harm or terrorization, then you’re good to go. Please keep in mind that this rule does not protect you from IC consequences, such as getting arrested by security. </li>
-				<li> If you are going to RP as a rude dude, given that your victims have given you the okay, you still have to own the responsibility that comes with your decision. This means, no, you can’t kill a security officer because they tried to arrest you for murdering the clown, even if the clown agreed to being murdered.</li>
+				<li>Please be considerate of other players, as their experiences are just as important as your own. If you arenï¿½t an antagonist and yet you really want to play out a hostage situation, or deep-fry someone, or be a rude dude in whatever way, confirm with the involved and affected players either IC or in LOOC first. If everyone agrees to being subjected to harm or terrorization, then youï¿½re good to go. Please keep in mind that this rule does not protect you from IC consequences, such as getting arrested by security. </li>
+				<li> If you are going to RP as a rude dude, given that your victims have given you the okay, you still have to own the responsibility that comes with your decision. This means, no, you canï¿½t kill a security officer because they tried to arrest you for murdering the clown, even if the clown agreed to being murdered.</li>
 			</ul>
 		</li>
 		<li><b>Have you been made an antagonist? </b>
 			<ul style='list-style-type:circle'>
-				<li>Treat your role as an interesting challenge and not an excuse to destroy other people’s game experience. Your actions should make the game more fun, more exciting and more enjoyable for everyone; you can treat your objectives as suggestions on what you should attempt to achieve but you are also allowed to ignore them if you have something more enjoyable in mind. You do NOT have to act in a nefarious or evil way, but you are not allowed to just go on a silent rampage and eliminate all the players in a power trip. It is the experience of everyone that matters, not just your own.</li>
+				<li>Treat your role as an interesting challenge and not an excuse to destroy other peopleï¿½s game experience. Your actions should make the game more fun, more exciting and more enjoyable for everyone; you can treat your objectives as suggestions on what you should attempt to achieve but you are also allowed to ignore them if you have something more enjoyable in mind. You do NOT have to act in a nefarious or evil way, but you are not allowed to just go on a silent rampage and eliminate all the players in a power trip. It is the experience of everyone that matters, not just your own.</li>
 			</ul>
 		</li>
-		<li><b>It is security’s job to stop antagonists.</b>
+		<li><b>It is securityï¿½s job to stop antagonists.</b>
 			<ul style='list-style-type:circle'>
 				<li>If you are not part of the security team (HoS, Sec. Officer, Detective or Vice Officer), you should not go out of your way to hunt for potential antagonists. You are allowed to defend yourself and others from violent antagonists, but you should not act like a vigilante if a security force is present. The exception to this rule is when rare game modes such as blob or nuke ops appear on the RP server - you are free to fully engage with these antagonists, as they are considered stationwide threats.</li>
 			</ul>

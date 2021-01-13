@@ -29,6 +29,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	hide_attack = 2
+	inventory_counter_enabled = 1
 
 	emagged
 		New() // as it turns out it is me who is the dumb
@@ -52,6 +53,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			src.icon_state = "hypo0"
 			src.name = "hypospray"
 			src.UpdateOverlays(null, "fluid")
+		src.inventory_counter.update_number(src.reagents.total_volume)
 		signal_event("icon_updated")
 
 	on_reagent_change(add)

@@ -7,7 +7,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 1
@@ -35,6 +35,8 @@
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
+			if (C in src.friends) continue
+
 			if (C.health < 0) continue
 			if (ishuman(C))
 				if (C:mutantrace && istype(C:mutantrace, /datum/mutantrace/zombie)) continue
@@ -99,7 +101,7 @@
 				src.attacking = 0
 			return
 
-		if (M.health > 40 && !M.getStatusDuration("weakened"))
+		if (!M.getStatusDuration("weakened") && !M.lying)
 			src.visible_message("<span class='alert'><B>[src]</B> punches [src.target]!</span>")
 			playsound(M.loc, "punch", 25, 1, -1)
 
@@ -116,7 +118,8 @@
 				SPAWN_DBG(0)
 					M:changeStatus("paralysis", 2 SECONDS)
 					step_away(M,src,15)
-					SPAWN_DBG(0.3 SECONDS) step_away(M,src,15)
+					sleep(0.3 SECONDS)
+					step_away(M,src,15)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else

@@ -35,9 +35,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(80)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(80)
 		..()
 
 	trigger_actions()

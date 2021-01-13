@@ -30,7 +30,7 @@
 	icon_state_on_tray = "torped_hiexp_tray"
 	icon_state_off_tray = "torped_hiexp_notray"
 	icon_state_fired = "torped_hiexp_fired"
-	numPierce = 6 //Max amount of steps that can pierce before it blows up instantly.
+	numPierce = 0 //Max amount of steps that can pierce before it blows up instantly.
 	stepsAfterPierce = 12 //Will blow up this many steps after first pierce at most.
 	sleepPerStep = 2 //How long to sleep between steps.
 
@@ -191,8 +191,7 @@
 		return
 
 	proc/fire()
-		if(tube)
-			tube.launch()
+		tube?.launch()
 		return
 
 /obj/machinery/torpedo_switch
@@ -253,7 +252,7 @@
 		underlays.Add(tube)
 
 		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
-			dir = NORTH
+			set_dir(NORTH)
 
 		rebuildOverlays()
 		return .
@@ -290,7 +289,7 @@
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
 		if(loaded)
-			loaded.loc = tray_obj.loc
+			loaded.set_loc(tray_obj.loc)
 			loaded = null
 		rebuildOverlays()
 		return
@@ -323,22 +322,20 @@
 			if(ismob(loaded))
 				var/mob/M = loaded
 				M.set_loc(start)
-				M.dir = src.dir
-				SPAWN_DBG(0)
-					M.throw_at(target, 600, 2)
+				M.set_dir(src.dir)
+				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
-				C.dir = src.dir
-				SPAWN_DBG(0)
-					C.throw_at(target, 600, 2)
+				C.set_dir(src.dir)
+				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded
 				T.set_loc(start)
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
 				SPAWN_DBG(0)
@@ -365,8 +362,7 @@
 	var/obj/machinery/torpedo_tube/parent = null
 
 	attack_hand(mob/living/carbon/human/M as mob)
-		if(parent)
-			parent.close()
+		parent?.close()
 		return
 
 	MouseDrop_T(atom/target, mob/user)
@@ -458,11 +454,12 @@
 		if(..(NewLoc, Dir, step_x, step_y))
 			if(dir != lastdir)
 				if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-					dir = lastdir
+					set_dir(lastdir)
 					changeIcon()
 				else
 					lastdir = dir
 					changeIcon()
+			return TRUE
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)
@@ -475,7 +472,7 @@
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
-		T.loc = src
+		T.set_loc(src)
 		src.loaded = T
 		changeIcon()
 		return
@@ -485,7 +482,7 @@
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
 		var/obj/torpedo/T = loaded
 		loaded = null
-		T.dir = (direction ? direction : src.dir)
+		T.set_dir((direction ? direction : src.dir))
 		T.set_loc(target)
 		changeIcon()
 		return
@@ -664,6 +661,7 @@
 		else
 			for(var/atom/movable/M in T)
 				if(M == src) continue
+				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
 				if(!M.CanPass(src, T)) return 1
 				if(M.density) return 1
 		return 0

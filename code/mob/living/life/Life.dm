@@ -1,5 +1,3 @@
-var/global/life_pause_check = 0
-
 /datum/lifeprocess
 	var/mob/living/owner
 	var/last_process = 0
@@ -34,7 +32,7 @@ var/global/life_pause_check = 0
 		robot_owner = null
 		critter_owner = null
 
-	proc/process(var/datum/gas_mixture/environment)
+	proc/process(var/datum/gas_mixture/environment, mult)
 		last_process = TIME
 
 	proc/get_multiplier()
@@ -58,13 +56,9 @@ var/global/life_pause_check = 0
 		lifeprocesses[type] = L
 
 	proc/remove_lifeprocess(type)
-		for (var/thing in lifeprocesses)
-			if (thing)
-				if (thing == type)
-					var/datum/lifeprocess/L = lifeprocesses[thing]
-					lifeprocesses -= thing
-					qdel(L)
-					L = null
+		var/datum/lifeprocess/L = lifeprocesses[type]
+		lifeprocesses -= type
+		qdel(L)
 
 	proc/get_heat_protection()
 		.= 0
@@ -89,7 +83,6 @@ var/global/life_pause_check = 0
 
 /mob/living/critter/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
@@ -105,11 +98,11 @@ var/global/life_pause_check = 0
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/human/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
@@ -128,10 +121,10 @@ var/global/life_pause_check = 0
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/cube/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
@@ -140,31 +133,32 @@ var/global/life_pause_check = 0
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/ai/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/hivebot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 
 /mob/living/silicon/drone/New()
@@ -183,7 +177,8 @@ var/global/life_pause_check = 0
 
 	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
 
-	life_pause_check = 0
+	var/life_mult = life_time_passed / tick_spacing
+
 	// Jewel's attempted fix for: null.return_air()
 	// These objects should be garbage collected the next tick, so it's not too bad if it's not breathing I think? I might be totallly wrong here.
 	if (loc)
@@ -199,11 +194,12 @@ var/global/life_pause_check = 0
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
+			if(src.disposed) return
 			L = src.lifeprocesses[thing]
 			L.process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
-			I.on_life((life_time_passed / tick_spacing))
+			I.on_life(life_mult)
 
 		update_item_abilities()
 
@@ -211,7 +207,7 @@ var/global/life_pause_check = 0
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, (life_time_passed / tick_spacing))
+			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -220,11 +216,6 @@ var/global/life_pause_check = 0
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
-				for (var/thing in src) //bnlech, do a smarter search later
-					var/atom/movable/A = thing
-					if (A.material)
-						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
@@ -247,13 +238,13 @@ var/global/life_pause_check = 0
 					src.updateOverlaysClient(x.client)
 
 		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process((life_time_passed / tick_spacing))
+			G.process(life_mult)
 
 		if (!can_act(M=src,include_cuffs=0))
 			actions.interrupt(src, INTERRUPT_STUNNED)
 
 		if (src.abilityHolder)
-			src.abilityHolder.onLife((life_time_passed / tick_spacing))
+			src.abilityHolder.onLife(life_mult)
 
 	last_life_tick = TIME
 
@@ -341,6 +332,7 @@ var/global/life_pause_check = 0
 	process_killswitch()
 	process_locks()
 	process_oil()
+	update_canmove()
 
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
@@ -419,7 +411,7 @@ var/global/life_pause_check = 0
 
 	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
 		if (isturf(src.item.loc))
-			src.item.loc = src
+			src.item.set_loc(src)
 		else
 			src.death(0)
 
@@ -429,7 +421,7 @@ var/global/life_pause_check = 0
 				A:set_loc(src.loc)
 
 	src.set_density(src.item ? src.item.density : 0)
-	src.item.dir = src.dir
+	src.item.set_dir(src.dir)
 	src.icon = src.item.icon
 	src.icon_state = src.item.icon_state
 	src.color = src.item.color
@@ -472,8 +464,7 @@ var/global/life_pause_check = 0
 		if (src.getStatusDuration("burning"))
 
 			if (src.getStatusDuration("burning") > 200)
-				for(var/atom in src.contents)
-					var/atom/A = atom
+				for (var/atom/A as() in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
@@ -513,7 +504,7 @@ var/global/life_pause_check = 0
 		if (src.mind.stealth_objective)
 			for (var/datum/objective/O in src.mind.objectives)
 				if (istype(O, /datum/objective/specialist/stealth))
-					var/turf/T = get_turf_loc(src)
+					var/turf/T = get_turf(src)
 					if (T && isturf(T) && (istype(T, /turf/space) || T.loc.name == "Space" || T.loc.name == "Ocean" || T.z != 1))
 						O:score = max(0, O:score - 1)
 						if (prob(20))
@@ -617,8 +608,6 @@ var/global/life_pause_check = 0
 
 		// Resistance from Bio Effects
 		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("fat"))
-				thermal_protection += 10
 			if (src.bioHolder.HasEffect("dwarf"))
 				thermal_protection += 10
 
@@ -626,8 +615,7 @@ var/global/life_pause_check = 0
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
 /*
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
@@ -675,8 +663,7 @@ var/global/life_pause_check = 0
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -695,7 +682,7 @@ var/global/life_pause_check = 0
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)
@@ -709,7 +696,7 @@ var/global/life_pause_check = 0
 
 		// Resistance from Clothing
 		protection += GET_MOB_PROPERTY(src, PROP_RANGEDPROT)
-
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/10 //enchanted clothing isn't that bulletproof at all
 		return protection
 
 	get_melee_protection(zone, damage_type)
@@ -729,7 +716,7 @@ var/global/life_pause_check = 0
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
 			else //can only be head
 				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-
+			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
 			//protection from blocks
 			var/obj/item/grab/block/G = src.check_block()
 			if (G)
@@ -748,8 +735,7 @@ var/global/life_pause_check = 0
 		var/protection = 0
 
 		// Resistance from Clothing
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			if(C.hasProperty("deflection"))
 				var/curr = C.getProperty("deflection")
 				protection += curr

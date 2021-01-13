@@ -247,7 +247,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
 
-	if (istype(AM, /obj/projectile))
+	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12 && src.part1)
 		src.part1.sense()
@@ -662,7 +662,7 @@ Contains:
 
 /obj/item/assembly/anal_ignite/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src && !src.part1)
 			src.part1 = new /obj/item/device/analyzer/healthanalyzer(src)
 			src.part1.master = src
@@ -861,7 +861,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/Move()
-	..()
+	. = ..()
 	src.part2.sense()
 	return
 

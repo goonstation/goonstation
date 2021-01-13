@@ -5,6 +5,7 @@
 	latejoin_only_if_all_antags_dead = 1 // No hunters until the conspiracy is dead, thanks
 
 	var/maxConspirators = 6
+	var/agent_radiofreq = 1401
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -44,6 +45,8 @@
 		conspirator.special_role = "conspirator"
 		potentialAntags.Remove(conspirator)
 
+	agent_radiofreq = random_radio_frequency()
+
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
@@ -62,7 +65,8 @@
 		for(var/datum/objective/objective in conspirator.objectives)
 			boutput(conspirator.current, "<B>Objective</B>: [objective.explanation_text]")
 
-		SHOW_CONSPIRACY_TIPS(conspirator.current)
+		equip_conspirator(conspirator.current)
+
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
@@ -99,6 +103,14 @@
 	else
 		return candidates
 
+/datum/game_mode/conspiracy/proc/random_radio_frequency()
+	var/list/blacklisted = list(0, 1451, 1457)
+	blacklisted.Add(R_FREQ_BLACKLIST)
+
+	do
+		. = rand(1352, 1439)
+	while (blacklisted.Find(.))
+
 /datum/game_mode/traitor/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
@@ -116,7 +128,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")

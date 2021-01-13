@@ -12,7 +12,8 @@
   $bg-map-keys: (),
 );
 @use '../base.scss' with (
-  $color-bg: #E8E4C9,
+  $color-fg: #000000,
+  $color-bg: #E8E4C8,
   $color-bg-grad-spread: 0%,
   $border-radius: 0,
 );

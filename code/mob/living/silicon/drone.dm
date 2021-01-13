@@ -185,7 +185,7 @@
 			return src.next_click - world.time
 
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))
@@ -204,15 +204,6 @@
 		SPAWN_DBG( 0 )
 			if ((!( yes ) || src.now_pushing))
 				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					src.visible_message("<span class='alert'><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-			src.now_pushing = 0
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -278,13 +269,13 @@
 				emote_sound = beeps_n_boops[5]
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
-				playsound(src.loc, pick(glitchy_noise), 50, 1)
+				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
 		if (emote_sound)
-			playsound(src.loc, emote_sound, 50, 1)
+			playsound(src.loc, emote_sound, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		if (message)
 			src.visible_message(message)
 		return
@@ -349,7 +340,7 @@
 
 		icon_state = "frame-" + max(0,min(change_to,6))
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()
@@ -435,16 +426,16 @@
 					var/mob/living/silicon/drone/D = new /mob/living/silicon/drone(src.loc)
 					if (part_cell)
 						D.cell = part_cell
-						part_cell.loc = D
+						part_cell.set_loc(D)
 					if (part_radio)
 						D.radio = part_radio
-						part_radio.loc = D
+						part_radio.set_loc(D)
 					if (part_propulsion)
 						D.propulsion = part_propulsion
-						part_propulsion.loc = D
+						part_propulsion.set_loc(D)
 					if (part_plating)
 						D.plating = part_plating
-						part_plating.loc = D
+						part_plating.set_loc(D)
 					qdel(src)
 				else
 					boutput(user, "<span class='alert'>There's lots of good times to use a wrench, but this isn't one of them.</span>")

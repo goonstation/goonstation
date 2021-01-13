@@ -5,6 +5,8 @@
 	desc = "For connecting portables devices related to atmospherics control."
 	dir = SOUTH
 	initialize_directions = SOUTH
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/portable_atmospherics/connected_device
 	var/obj/machinery/atmospherics/node
 	var/datum/pipe_network/network
@@ -32,7 +34,7 @@
 	update_icon()
 		if(node)
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-			dir = get_dir(src, node)
+			set_dir(get_dir(src, node))
 		else
 			icon_state = "exposed"
 
@@ -41,7 +43,7 @@
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(node)
 			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-			dir = get_dir(src, node)
+			set_dir(get_dir(src, node))
 		else
 			icon_state = "exposed"
 
@@ -52,8 +54,7 @@
 		if(!connected_device)
 			on = 0
 			return
-		if(network)
-			network.update = 1
+		network?.update = 1
 		return 1
 
 // Housekeeping and pipe network stuff below
@@ -69,10 +70,8 @@
 		return null
 
 	disposing()
-		loc = null
 
-		if(connected_device)
-			connected_device.disconnect()
+		connected_device?.disconnect()
 
 		if(node)
 			node.disconnect(src)

@@ -33,7 +33,7 @@
 			M.visible_message("<span class='alert'>You seem to attack [HH]!</span>")
 			return 1
 		HH.set_loc(M.loc)
-		HH.dir = get_dir(HH, M)
+		HH.set_dir(get_dir(HH, M))
 
 		if (M.invisibility > 0)
 			for (var/obj/item/cloaking_device/I in M)
@@ -79,12 +79,12 @@
 					qdel(G)
 					return 0
 
-				M.dir = turn(M.dir, 90)
+				M.set_dir(turn(M.dir, 90))
 				var/turf/T = get_step(M, M.dir)
 				var/turf/S = HH.loc
 				if ((S && isturf(S) && S.Exit(HH)) && (T && isturf(T) && T.Enter(HH)))
 					HH.set_loc(T)
-					HH.dir = get_dir(HH, M)
+					HH.set_dir(get_dir(HH, M))
 			else
 				return 0
 
@@ -118,16 +118,15 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					if (!isdead(HH))
-						HH.emote("scream")
-					if (!fake)
-						HH.throw_at(T, 10, 4)
-						HH.changeStatus("weakened", 2 SECONDS)
-						HH.force_laydown_standup()
-						HH.change_misstep_chance(33)
-					else
-						HH.throw_at(T, 3, 1)
+				if (!isdead(HH))
+					HH.emote("scream")
+				if (!fake)
+					HH.throw_at(T, 10, 4)
+					HH.changeStatus("weakened", 2 SECONDS)
+					HH.force_laydown_standup()
+					HH.change_misstep_chance(33)
+				else
+					HH.throw_at(T, 3, 1)
 
 
 			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")

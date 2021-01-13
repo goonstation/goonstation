@@ -126,19 +126,17 @@
 	set name = "Bat Kick \[Combat]"
 	set desc = "A powerful stunning kick, sending people flying across the room"
 
-	SPAWN_DBG(0)
-		if(T)
-			var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
-			usr.visible_message("<span class='alert'><B>[usr] powerfully kicks [T]!</B></span>", "<span class='alert'><B>You kick [T]!</B></span>")
-			usr.emote("flip")
-			playsound(usr.loc, "swing_hit", 40, 1)
-			batman_pow(T.loc)
-			T.setStatus("weakened", T.getStatusDuration("weakened") + 4 SECONDS)
-			T.setStatus("stunned", T.getStatusDuration("stunned") + 4 SECONDS)
-			T.force_laydown_standup()
-			if(tturf && isturf(tturf))
-				SPAWN_DBG(0)
-					T.throw_at(tturf, 3, 2)
+	if(T)
+		var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
+		usr.visible_message("<span class='alert'><B>[usr] powerfully kicks [T]!</B></span>", "<span class='alert'><B>You kick [T]!</B></span>")
+		usr.emote("flip")
+		playsound(usr.loc, "swing_hit", 40, 1)
+		batman_pow(T.loc)
+		T.setStatus("weakened", T.getStatusDuration("weakened") + 4 SECONDS)
+		T.setStatus("stunned", T.getStatusDuration("stunned") + 4 SECONDS)
+		T.force_laydown_standup()
+		if(tturf && isturf(tturf))
+			T.throw_at(tturf, 3, 2)
 
 /mob/proc/batrevive()
 	set category = "Batman"
@@ -173,23 +171,21 @@
 	if(usr.stat)
 		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
 		return
-	SPAWN_DBG(0)
-		usr.visible_message("<span class='alert'><B>[usr] bat-punches [T]!</B></span>", "<span class='alert'><B>You bat-punch [T]!</B></span>")
-		playsound(usr.loc, "swing_hit", 40, 1)
-		batman_pow(T.loc)
-		var/zone = "chest"
-		if(usr.zone_sel)
-			zone = usr.zone_sel.selecting
-		if ((zone in list( "eyes", "mouth" )))
-			zone = "head"
-		T.TakeDamage(zone, 4, 0)
-		T.setStatus("weakened", T.getStatusDuration("weakened") + 3 SECONDS)
-		T.setStatus("stunned", T.getStatusDuration("stunned") + 3 SECONDS)
-		T.force_laydown_standup()
-		var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
-		if(tturf && isturf(tturf))
-			SPAWN_DBG(0)
-				T.throw_at(tturf, 2, 2)
+	usr.visible_message("<span class='alert'><B>[usr] bat-punches [T]!</B></span>", "<span class='alert'><B>You bat-punch [T]!</B></span>")
+	playsound(usr.loc, "swing_hit", 40, 1)
+	batman_pow(T.loc)
+	var/zone = "chest"
+	if(usr.zone_sel)
+		zone = usr.zone_sel.selecting
+	if ((zone in list( "eyes", "mouth" )))
+		zone = "head"
+	T.TakeDamage(zone, 4, 0)
+	T.setStatus("weakened", T.getStatusDuration("weakened") + 3 SECONDS)
+	T.setStatus("stunned", T.getStatusDuration("stunned") + 3 SECONDS)
+	T.force_laydown_standup()
+	var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
+	if(tturf && isturf(tturf))
+		T.throw_at(tturf, 2, 2)
 
 /mob/proc/batspinkick(mob/T as mob in oview(1))
 	set category = "Batman"
@@ -209,26 +205,26 @@
 		usr.visible_message("<span class='alert'><B>[usr] begins kicking [T] in the face rapidly!</B></span>", "<span class='alert'><B>You begin kicking [T] in the face rapidly!</B></span>")
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 4
-			usr.dir = NORTH
+			usr.set_dir(NORTH)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = EAST
+			usr.set_dir(EAST)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = SOUTH
+			usr.set_dir(SOUTH)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
-			usr.dir = WEST
+			usr.set_dir(WEST)
 			T.TakeDamage("head", 1, 0)
 			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
 			playsound(T.loc, "swing_hit", 25, 1, -1)
-		usr.dir = get_dir(usr, T)
+		usr.set_dir(get_dir(usr, T))
 		usr.visible_message("<span class='alert'><B>[usr] stares deeply at [T]!</B></span>", "<span class='alert'><B>You stares deeply at [T]!</B></span>")
 		sleep(0.8 SECONDS)
 		usr.visible_message("<span class='alert'><B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B></span>", "<span class='alert'><B>You unleash a tremendous kick to the jaw towards [T]!</B></span>")
@@ -279,48 +275,48 @@
 		usr.visible_message("<span class='alert'><B>[usr] starts spinning [T] around!</B></span>", "<span class='alert'><B>You start spinning [T] around!</B></span>")
 		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
 		for(var/i = 0, i < 2, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.5 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.5 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.5 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.5 SECONDS)
 		for(var/i = 0, i < 1, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.2 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.2 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.2 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.2 SECONDS)
 		boutput(T, "<span class='alert'>YOU'RE GOING TOO FAST!!!</span>")
 		for(var/i = 0, i < 10, i++)
-			T.dir = NORTH
+			T.set_dir(NORTH)
 			sleep(0.1 SECONDS)
-			T.dir = EAST
+			T.set_dir(EAST)
 			sleep(0.1 SECONDS)
-			T.dir = SOUTH
+			T.set_dir(SOUTH)
 			sleep(0.1 SECONDS)
-			T.dir = WEST
+			T.set_dir(WEST)
 			sleep(0.1 SECONDS)
 		playsound(usr.loc, "sound/weapons/rocket.ogg", 50)
 		usr.visible_message("<span class='alert'><B>[src] flings [T] with all of his might!</B></span>")
 		T.force_laydown_standup()
 		var/target_dir = get_dir(usr, T)
-		SPAWN_DBG(0)
-			if (T)
-				walk(T, target_dir, 1)
-				sleep(0.5 SECONDS)
-				walk(T, 0)
-				playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-				random_brute_damage(T, 30)
-				T.losebreath += 10
-				T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
-				T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-				T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
+		sleep(0)
+		if (T)
+			walk(T, target_dir, 1)
+			sleep(0.5 SECONDS)
+			walk(T, 0)
+			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			random_brute_damage(T, 30)
+			T.losebreath += 10
+			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
+			T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
 
 
 /mob/proc/batdropkick(mob/T as mob in oview())
@@ -328,27 +324,25 @@
 	set name = "Drop Kick \[Disabler]"
 	set desc = "Fall to the ground, leap up and knock a dude out"
 
-	SPAWN_DBG(0)
-		usr.visible_message("<span class='alert'><B>[usr] drops to the ground, preparing for a jump</B>!</span>", "<span class='alert'><B>You drop to the ground, preparing for a jump</B>!</span>")
-		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
-		usr.setStatus("weakened", 8 SECONDS)
-		usr.force_laydown_standup()
-		sleep(1.5 SECONDS)
-		usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
-		for(var/i=0, i<100, i++)
-			step_to(usr,T,0)
-			if (get_dist(usr,T) <= 1)
-				batman_pow(T.loc)
-				T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
-				T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-				usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
-				playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-				random_brute_damage(T, 25)
-				usr.delStatus("weakened")
-				i=100
-				var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
-				if(tturf && isturf(tturf))
-					SPAWN_DBG(0)
-						T.throw_at(tturf, 4, 2)
-			sleep(0.1 SECONDS)
+	usr.visible_message("<span class='alert'><B>[usr] drops to the ground, preparing for a jump</B>!</span>", "<span class='alert'><B>You drop to the ground, preparing for a jump</B>!</span>")
+	playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
+	usr.setStatus("weakened", 8 SECONDS)
+	usr.force_laydown_standup()
+	sleep(1.5 SECONDS)
+	usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
+	for(var/i=0, i<100, i++)
+		step_to(usr,T,0)
+		if (get_dist(usr,T) <= 1)
+			batman_pow(T.loc)
+			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
+			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
+			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
+			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			random_brute_damage(T, 25)
+			usr.delStatus("weakened")
+			i=100
+			var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
+			if(tturf && isturf(tturf))
+				T.throw_at(tturf, 4, 2)
+		sleep(0.1 SECONDS)
 

@@ -91,6 +91,7 @@
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, __blue("Your faith protects you from [M]'s dark designs!"))
+			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
 
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?

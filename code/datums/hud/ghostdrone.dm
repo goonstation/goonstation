@@ -141,13 +141,14 @@
 				actions.stopId("magpickerhold", master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
-			O.loc = master
+			O.set_loc(master)
 			O.pickup(master) // Handle light datums and the like.
 			set_active_tool(1)
 			update_equipment()
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "blank", "1, 10 to 1, 1")
 		remove_screen(boxes)
@@ -197,8 +198,8 @@
 		update_equipment()
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
-		if(!master) return
+	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
+		if(!master || user != master) return
 
 		if(scr.item)
 			if(dy < 0) items_screen++
@@ -385,7 +386,7 @@
 				remove_screen(G)
 
 			for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-				if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
+				if(!master.statusEffects || !(S in master.statusEffects))
 					pool(statusUiElements[S])
 					src.statusUiElements.Remove(S)
 					qdel(S)

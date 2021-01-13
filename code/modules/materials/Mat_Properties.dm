@@ -1,12 +1,20 @@
+/// Base material property. Stuff like conductivity. See: [/datum/material/var/properties]
 /datum/material_property
-	var/name = ""			 //External name of this property.
-	var/id = ""				 //Internal ID of this property.
-	var/min_value = 1		 //Min value of this property. Please NOTHING BELOW 1. It breaks everything.
-	var/max_value = 100		 //Max value of this property. May be modified by quality.
-	var/default_value = 50	 //What should be considered the "default" value of this property?
+	/// External name of this property.
+	var/name = ""
+	/// Internal ID of this property.
+	var/id = ""
+	/// Min value of this property. Please NOTHING BELOW `1`. It breaks everything.
+	var/min_value = 1
+	/// Max value of this property. May be modified by quality.
+	var/max_value = 100
+	/// What should be considered the "default" value of this property?
+	var/default_value = 50
 
-	var/prefix_high_min = 80 //Min value for high-prefix. Minimum for the prefix to show up on the object names.
-	var/prefix_low_max = 20  //Max value for low-prefix. Maximum for the prefix to show up on the object names.
+	/// Min value for high-prefix. Minimum for the prefix to show up on the object names.
+	var/prefix_high_min = 80
+	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
+	var/prefix_low_max = 20
 
 	proc/changeValue(var/datum/material/M, var/newValue)
 		for(var/X in M.properties)

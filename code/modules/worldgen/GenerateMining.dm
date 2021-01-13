@@ -71,7 +71,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		ambient_light = TRENCH_LIGHT
 
 /proc/decideSolid(var/turf/current, var/turf/center, var/sizemod = 0)
-	if(!current || !center || (current.loc.type != /area && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
+	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
 		return 0
 	if(ISDISTEDGE(current, AST_MAPBORDER))
 		return 0
@@ -132,11 +132,11 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
 				var/turf/T = locate(x,y,AST_ZLEVEL)
-				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)) )
+				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
 					var/turf/simulated/wall/asteroid/N = new/turf/simulated/wall/asteroid(T)
 					N.quality = rand(-101,101)
 					generated.Add(N)
-				if(T.loc.type == /area || istype(T.loc, /area/allowGenerate))
+				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
 				LAGCHECK(LAG_REALTIME)
 
@@ -207,7 +207,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area && !istype(X.loc , /area/allowGenerate)))
+			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
 				X = pick(miningZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -244,7 +244,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
-				if(!isnull(T) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)))
+				if(!isnull(T) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)))
 					var/turf/simulated/wall/asteroid/AST = new/turf/simulated/wall/asteroid(T)
 					placed.Add(AST)
 					AST.quality = quality
@@ -286,25 +286,26 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == AST_ZLEVEL)
 			miningZ.Add(T)
 
-	var/extra = rand(0,AST_NUMPREFABSEXTRA)
-	for(var/n=0, n<AST_NUMPREFABS+extra, n++)
+	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
+	for (var/n = 1, n <= num_to_place, n++)
+		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/generatorPrefab/M = pickPrefab()
-		if(M)
+		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
-			while(!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
-				if(ret == 0)
+				if (ret == 0)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = 1
 				count++
-				if(count >= 33)
+				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
 
@@ -315,6 +316,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
 
+	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
@@ -359,6 +361,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			return P
 		else return null
 
+ABSTRACT_TYPE(/datum/generatorPrefab)
 /datum/generatorPrefab
 	var/probability = 0
 	var/maxNum = 0
@@ -384,7 +387,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeX; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L && L.loc && ((L.loc.type != /area) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
+				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
 					return 0
 
 		var/loaded = file2text(prefabPath)
@@ -431,7 +434,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeY = 19
 
 	rockworms
-		maxNum = 10
+		maxNum = 4 // It was at 10 ... and there was a good chance that most of the prefabs on Z5 were this ugly mess. We need less of that. Way less. So here ya'go.
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_rockworms.dmm"
 		prefabSizeX = 5
@@ -509,6 +512,33 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 20
 		prefabSizeY = 15
 
+	clown_nest // Gores abandoned Clown-Federation Outpost
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_clown_nest.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
+	dans_asteroid // Discount Dans Delivery Asteroid featuring advanced cooling technology
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_dans_asteroid.dmm"
+		prefabSizeX = 37
+		prefabSizeY = 48
+
+	drug_den // A highly cozy hideout in space; take out the stress - eat some mice sandwiches.
+		maxNum = 1
+		probability = 40
+		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
+		prefabSizeX = 32
+		prefabSizeY = 27
+
+	von_ricken // One way or another - an expensive space vavaction for a physical toll.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_von_ricken.dmm"
+		prefabSizeX = 42
+		prefabSizeY = 40
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -520,6 +550,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabSizeX = 8
 		prefabSizeY = 8
 
+#ifdef SUBMARINE_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -528,6 +559,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
+#endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	elevator
@@ -698,6 +730,14 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
 		prefabSizeX = 34
 		prefabSizeY = 19
+
+	danktrench //the marijuana trench
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_danktrench.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 9
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

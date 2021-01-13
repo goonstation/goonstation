@@ -1,21 +1,46 @@
-Gandalf
-The Witch King
-Rincewind
-Shazam
-Merlin
-Voldemort
-Dumbledore
-Snape
-Wizard Whitebeard
-Prospero
-Elminster
-Rasputin
-Thulsa Doom
-Lord Zedd
-Zordon
-Constantine
-Faust
-Doctor Strange
-Mr. Mxyzptlk
-Astaroth
-Nemesis the Warlock
+names@=
+	Gandalf
+	The Witch King
+	Rincewind
+	Shazam
+	Merlin
+	Voldemort
+	Dumbledore
+	Snape
+	Wizard Whitebeard
+	Prospero
+	Elminster
+	Rasputin
+	Thulsa Doom
+	Lord Zedd
+	Zordon
+	Constantine
+	Faust
+	Doctor Strange
+	Mr. Mxyzptlk
+	Astaroth
+	Nemesis the Warlock
+	Rhialto the Marvellous
+	Ningauble of the Seven Eyes
+	Gongsun Sheng
+	Kulan Gath
+	Archimago
+	Harry Dresden
+	Raistlin Majere
+	Morreion
+	Hache-Moncour
+	Ildefonse the Preceptor
+	Turjan of Miir
+	Pandelume
+	Mazirian
+	Darvilk the Miaanther
+	Haze of Wheary Water
+	Herark the Harbinger
+	Mune the Mage
+	Byzant the Necrope
+	Ao of the Opals
+	Vermoulian the Dream-Walker
+	Zahoulik-Khuntze
+	Zanzel Melancthones
+	Oz the Great and Terrible
+	The Whizzard

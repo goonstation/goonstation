@@ -41,8 +41,7 @@
 
 	/* new disposing() pattern should handle this. -singh
 	disposing()
-		if(host)
-			host.peripherals.Remove(src)
+		host?.peripherals.Remove(src)
 		..()
 	*/
 
@@ -59,7 +58,7 @@
 			if((source != host) || !(src in host))
 				return 1
 
-			if(!command || (signal && signal.encryption && signal.encryption != src.id))
+			if(!command || (signal?.encryption && signal.encryption != src.id))
 				return 1
 
 			return 0
@@ -473,7 +472,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		if(!src.check_connection())
@@ -531,7 +530,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, print, or subnet# to set subnet."
@@ -605,7 +603,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		command = lowertext(command)
@@ -679,7 +677,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, mode_net, mode_free, mode_wire, print, ping, subnet# to set subnet, or 1000-1500 to set frequency in wireless modes."
@@ -880,7 +877,6 @@
 					P.name = "paper- '[print_title]'"
 
 				src.printing = 0
-				return 0
 		else if (command == "help")
 			return "Valid command: print, accompanied by a file to print."
 
@@ -1158,8 +1154,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -1245,8 +1240,7 @@
 		return dat
 
 	uninstalled()
-		if(src.disk)
-			src.disk.set_loc(src)
+		src.disk?.set_loc(src)
 
 		return 0
 
@@ -1278,8 +1272,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))

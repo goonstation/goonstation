@@ -174,7 +174,7 @@
 			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (heated > 0 && on && prob(30 + (heated * 20)))
 			if(iscarbon(A))
@@ -200,6 +200,19 @@
 				burst()
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+
+/obj/item/device/light/glowstick/green_on
+	base_state = "glowstick-green"
+	icon_state = "glowstick-green0"
+	name = "emergency glowstick"
+	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	col_r = 0.0
+	col_g = 0.9
+	col_b = 0.1
+	color_name = "green"
+	New()
+		..()
+		turnon()
 
 /obj/item/device/light/glowstick/white
 	base_state = "glowstick-white"
@@ -320,6 +333,12 @@
 		else
 			return ..()
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == 0)
+			if (temperature > (T0C + 430))
+				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
+				src.light()
+
 	process()
 		if (src.on)
 			var/turf/location = src.loc
@@ -340,8 +359,7 @@
 			src.force = 3
 			src.icon_state = src.icon_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		return
 
 	proc/put_out(var/mob/user as mob)
@@ -353,8 +371,7 @@
 			src.force = 0
 			src.icon_state = src.icon_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 		return
 
 /obj/item/device/light/candle/spooky
@@ -430,11 +447,18 @@
 
 	attack_self(mob/user as mob)
 		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
-		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		src.on = !src.on
+		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
 			set_icon_state(src.icon_on)
 			src.light.enable()
 		else
 			set_icon_state(src.icon_off)
 			src.light.disable()
+
+/obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()

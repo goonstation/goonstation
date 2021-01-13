@@ -3,6 +3,7 @@
 	icon = 'icons/obj/atmospherics/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
+	plane = PLANE_NOSHADOW_BELOW
 	anchored = 1.0
 	var/frequency = 0
 	var/id
@@ -74,7 +75,9 @@
 
 /obj/machinery/meter/examine()
 	. = list("A gas flow meter. ")
-	if (src.target)
+	if(status & (NOPOWER|BROKEN))
+		. += "It appears to be nonfunctional."
+	else if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
 			. += text("The pressure gauge reads [] kPa", round(MIXTURE_PRESSURE(environment), 0.1))

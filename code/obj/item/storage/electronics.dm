@@ -21,7 +21,9 @@
 		var/list/invalid_carts = list(/obj/item/disk/data/cartridge,
 		/obj/item/disk/data/cartridge/captain,
 		/obj/item/disk/data/cartridge/nuclear,
-		/obj/item/disk/data/cartridge/syndicate)
+		/obj/item/disk/data/cartridge/syndicate,
+		/obj/item/disk/data/cartridge/ai,
+		/obj/item/disk/data/cartridge/cyborg)
 
 		var/list/spawnable = typesof(/obj/item/disk/data/cartridge)
 		spawnable -= invalid_carts

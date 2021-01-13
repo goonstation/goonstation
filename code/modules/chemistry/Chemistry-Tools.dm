@@ -1,16 +1,10 @@
-/*
-//reagent_container bit flags
-#define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly
-#define RC_VISIBLE	2		// reagent is visible inside, so color can be described
-#define RC_FULLNESS 4		// can estimate fullness of container
-#define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
-*/
 /* ================================================================== */
 /* -------------------- Reagent Container Parent -------------------- */
 /* ================================================================== */
 
 // for some reason this very important parent item of a fucking thousand other things was planted down on line 700
 // I AM SCREAMING A LOT IN REAL LIFE ABOUT THIS CURRENTLY
+ABSTRACT_TYPE(/obj/item/reagent_containers)
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -121,7 +115,7 @@
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))

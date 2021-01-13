@@ -15,8 +15,11 @@
 
 /**
  * Stub parent.
+ *
  * Allows for a tool (or lists of tools) to be created and configured properly.
+ *
  * Configuration includes correctly setting them up for inclusion in a robot module.
+ *
  * Configuration can include other processing, e.g. random generation.
  */
 /datum/robot/module_tool_creator
@@ -24,8 +27,10 @@
 
 /**
  * Instantiates contents and adds to a specific module.
- * @param {/obj/item/robot_module} M
- * @return {(/obj/item|/list</obj/item>)} [result] Added contents
+ *
+ * * M {[/obj/item/robot_module]}
+ *
+ * * return {(/obj/item|/list</obj/item>)} result - Added contents
  */
 /datum/robot/module_tool_creator/proc/apply_to_module(obj/item/robot_module/M)
 	return M.add_contents(src.instantiate(M))
@@ -33,8 +38,10 @@
 /**
  * Stub, used to instantiate tool(s).
  * Ensure `setup` is called when defining behavior.
- * @param {/atom} proxy_loc Location to create contents
- * @return {(/obj/item|/list</obj/item>)} [result]
+ *
+ * * proxy_loc {[/atom]} - Location to create contents
+ *
+ * * return {(/obj/item|/list</obj/item>)} result
  */
 /datum/robot/module_tool_creator/proc/instantiate(atom/proxy_loc)
 	return
@@ -42,25 +49,31 @@
 /**
  * Stub proc.
  * Used to alter/configure instantiated tool(s).
- * @param {(/obj/item|/list</obj/item>)} [contents] Instantiated contents
- * @param {/atom} proxy_loc Location used in `instantiate`, in case needed
- * @return {(/obj/item|/list</obj/item>)} [result] Altered/configured instantiated item(s) (may not be same instance(s) as argument)
+ *
+ * * contents {(/obj/item|/list</obj/item>)} - Instantiated contents
+ * * proxy_loc {[/atom]} - Location used in `instantiate`, in case needed
+ *
+ * * return {(/obj/item|/list</obj/item>)} result - Altered/configured instantiated item(s) (may not be same instance(s) as argument)
  */
 /datum/robot/module_tool_creator/proc/setup(contents, atom/proxy_loc)
 	return contents
 
 /**
  * Stub parent.
- * Allows for simple instantiation of a single /obj/item from a type.
- * @property {type</obj/item>} [item_type]
+ *
+ * Allows for simple instantiation of a single [/obj/item] from a type.
+ *
+ * @property {type</obj/item>} item_type
  */
 /datum/robot/module_tool_creator/item_type
 	var/item_type = null
 
 /**
- * Instantiates single /obj/item from type.
- * @param {/atom} proxy_loc Location to create contents
- * @return {/obj/item} [result]
+ * Instantiates single [/obj/item] from type.
+ *
+ * * proxy_loc {[/atom]} - Location to create contents
+ *
+ * * return {[/obj/item]} result
  */
 /datum/robot/module_tool_creator/item_type/instantiate(atom/proxy_loc)
 	var/obj/item/I = null
@@ -70,17 +83,21 @@
 
 /**
  * Stub parent.
- * Allows simple instantiation of a single /obj/item from a type that uses the `amount` var.
+ *
+ * Allows simple instantiation of a single [/obj/item] from a type that uses the `amount` var.
+ *
  * You may need to extend the `setup` proc for e.g. custom icon state behavior.
- * @property {number} [amount=1]
+ *
+ * @property {number} amount=1
  */
 /datum/robot/module_tool_creator/item_type/amount
 	var/amount = 1
 
 /**
- * @param {/obj/item} [contents] Instantiated contents
- * @param {/atom} proxy_loc Location used in `instantiate`
- * @return {/obj/item} [result]
+ * * contents {[/obj/item]} - Instantiated contents
+ * * proxy_loc {[/atom]} - Location used in `instantiate`
+ *
+ * * return {[/obj/item]} result
  */
 /datum/robot/module_tool_creator/item_type/amount/setup(obj/item/contents, atom/proxy_loc)
 	if (!isnull(contents))
@@ -89,17 +106,22 @@
 
 /**
  * Stub parent.
- * Allows instantiation of a single /obj/item type picked from a list of types.
- * @property {/list<type</obj/item>>} [item_types]
+ *
+ * Allows instantiation of a single [/obj/item] type picked from a list of types.
+ *
+ * @property {/list<type</obj/item>>} item_types
  */
 /datum/robot/module_tool_creator/item_type/random
 	var/list/item_types = null
 
 /**
- * Instantiates random /obj/item type picked from `item_types`
+ * Instantiates random ]/obj/item] type picked from `item_types`
+ *
  * Side effect of setting `item_type` when called
- * @param {/atom} proxy_loc Location to create contents
- * @return {/obj/item} [result]
+ *
+ * * proxy_loc {[/atom]} - Location to create contents
+ *
+ * * return {[/obj/item]} result
  */
 /datum/robot/module_tool_creator/item_type/random/instantiate(atom/proxy_loc)
 	if (!isnull(src.item_types))
@@ -109,16 +131,20 @@
 
 /**
  * Stub parent.
- * Allows simple instantiation of multiple /obj/item instances from a list of types.
- * @property {/list<path</obj/item>>} [item_types]
+ *
+ * Allows simple instantiation of multiple [/obj/item] instances from a list of types.
+ *
+ * @property {/list<path</obj/item>>} item_types
  */
 /datum/robot/module_tool_creator/item_types
 	var/list/item_types = null
 
 /**
- * Instantiates list of /obj/item instances from list of types.
- * @param /atom proxy_loc Location to create contents
- * @return {/list</obj/item>} [result]
+ * Instantiates list of [/obj/item] instances from list of types.
+ *
+ * * proxy_loc [/atom] - Location to create contents
+ *
+ * * return {/list</obj/item>} result
  */
 /datum/robot/module_tool_creator/item_types/instantiate(atom/proxy_loc)
 	var/list/L = null
@@ -130,7 +156,7 @@
 				L += I
 	return src.setup(L, proxy_loc)
 
-/**
+/*
  * Versatile recursive definition.
  * @typedef (
  *   type</obj/item>|
@@ -142,18 +168,23 @@
 
 /**
  * Stub parent.
+ *
  * Allows instantiations of potentially multiple /obj/item instances via multiple methods.
+ *
  * N.B. If possible, use a simpler type due to more complexity in here.
- * @property {/list</datum/robot/module_tool_creator/recursive/definition>} [definitions]
+ *
+ * @property {/list</datum/robot/module_tool_creator/recursive/definition>} definitions
  */
 /datum/robot/module_tool_creator/recursive
 	var/list/definitions = null
 
 /**
- * Instantiates list of /obj/item instances via multiple methods.
- * @param {/atom} proxy_loc Location to create contents
- * @param {/datum/robot/module_tool_creator/recursive/definition} proxy_definition
- * @return {/list</obj/item>} [result]
+ * Instantiates list of [/obj/item] instances via multiple methods.
+ *
+ * * proxy_loc {[/atom]} - Location to create contents
+ * * proxy_definition {[/datum/robot/module_tool_creator/recursive/definition]}
+ *
+ * * return {/list</obj/item>} result
  */
 /datum/robot/module_tool_creator/recursive/proc/instantiate_recursive(atom/proxy_loc, proxy_definition)
 	if (isnull(proxy_definition))
@@ -178,8 +209,10 @@
 
 /**
  * Instantiates list of /obj/item instances via multiple methods.
- * @param {/atom} proxy_loc Location to create contents
- * @return {/list</obj/item>} [result]
+ *
+ * * proxy_loc {/atom} - Location to create contents
+ *
+ * * return {/list</obj/item>} result
  */
 /datum/robot/module_tool_creator/recursive/instantiate(atom/proxy_loc)
 	var/R = src.instantiate_recursive(proxy_loc, src.definitions)

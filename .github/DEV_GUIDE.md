@@ -134,7 +134,11 @@ If you are on a version of BYOND different from the one specified in buildByond.
 
 Alternative solution is to press `ctrl+shift+B` and then select the build task by hitting enter. This one does not automatically make you an administrator in-game so you will need to edit the config/admins.txt file by adding a `yourckey - Host` line there. Just make sure you don't commit this file later!
 
-<!--- TODO: Troubleshooting for non-existing task? --->
+:::info
+If an error popup with an error message of "Could not find the task 'dm: build - goonstation.dme'." shows up, one possible cause is that a VS Code Workspace is confusing things. If this is the case, close your current workspace (`File` -> `Close Workspace`) then use the `Open Folder` option to select the `goonstation` folder and try to build again.
+
+You can use a VS Code Workspace, but should do via Open Folder to select the `goonstation` folder then `File` -> `Save Workspace As...` rather than `Add Folder to Workspace`.
+:::
 
 ![](https://i.imgur.com/mXSjfC2.png)
 
@@ -239,6 +243,7 @@ It might happen that somewhere in the process of making a PR you see a message a
 
 Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
 
+0. This step is only necessary if you're doing this for the first time! Press **Ctrl + Shift + P** and type in "fetch from all remotes" and choose the relevant command.
 1. Checkout the master branch
     You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
     ![](https://i.imgur.com/z2o1Nw6.png)

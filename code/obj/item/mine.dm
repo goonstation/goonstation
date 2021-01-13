@@ -168,15 +168,11 @@
 			for (var/mob/living/L in T.contents)
 				if (!istype(L) || isintangible(L) || iswraith(L))
 					continue
-				if (!(L in mobs))
-					mobs.Add(L)
 
 		if (radius > 0)
 			for (var/mob/living/L2 in range(src, radius))
 				if (!istype(L2) || isintangible(L2) || iswraith(L2))
 					continue
-				if (!(L2 in mobs))
-					mobs.Add(L2)
 
 		return mobs
 
@@ -199,8 +195,6 @@
 			return
 
 		var/list/mobs = src.get_mobs_on_turf()
-		if (M && isliving(M) && !(M in mobs))
-			mobs.Add(M)
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
@@ -240,8 +234,6 @@
 			return
 
 		var/list/mobs = src.get_mobs_on_turf(1)
-		if (M && isliving(M) && !(M in mobs))
-			mobs.Add(M)
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))

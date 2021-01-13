@@ -34,7 +34,6 @@
 			"tgui/tgui.bundle.css" = "[resource("tgui/tgui.bundle.css")]"
 		)
 
-// !! NOT IMPLEMENTED ON THE CDN/BROWSERASSETS, ADD THE SYMLINKS IF YOU WANT THIS !!
 /// tgui panel specific assets
 /datum/asset/basic/tgui_panel
 	local_assets = list(

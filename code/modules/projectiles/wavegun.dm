@@ -35,6 +35,9 @@ toxic - poisons
 	//Can we pass windows
 	window_pass = 0
 
+	color_red = 1
+	color_green = 0
+	color_blue = 0
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/
 	shot_number = 1
@@ -51,7 +54,9 @@ toxic - poisons
 	damage_type = D_ENERGY
 	sname = "transverse wave"
 	icon_state = "wave-g"
-
+	color_red = 0
+	color_green = 1
+	color_blue = 0
 
 
 
@@ -68,6 +73,10 @@ toxic - poisons
 	sname = "electromagnetic distruption wave"
 	icon_state = "wave-emp"
 	disruption = 25
+
+	color_red = 0
+	color_green = 0
+	color_blue = 1
 
 	on_hit(atom/H, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)

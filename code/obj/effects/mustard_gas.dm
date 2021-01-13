@@ -14,12 +14,12 @@
 
 /obj/effects/mustard_gas/New()
 	..()
-	SPAWN_DBG (100)
+	SPAWN_DBG(10 SECONDS)
 		dispose()
 	return
 
 /obj/effects/mustard_gas/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
 		else

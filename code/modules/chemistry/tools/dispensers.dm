@@ -15,6 +15,7 @@
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
+	var/capacity
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -23,9 +24,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 
 
 	get_desc(dist, mob/user)
@@ -65,7 +64,7 @@
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
 	MouseDrop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister))
+		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
 			return ..()
 
 		if (get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)
@@ -78,7 +77,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
-/obj/reagent_dispensers/ants
+/obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
 	desc = "A bunch of space ants."
 	icon = 'icons/effects/effects.dmi'
@@ -92,7 +91,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
 
 	get_desc(dist, mob/user)
@@ -101,12 +100,12 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
 
-/obj/reagent_dispensers/spiders
+/obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
 	icon = 'icons/effects/effects.dmi'
@@ -121,7 +120,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)
@@ -132,7 +131,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
@@ -154,10 +153,11 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 25
+	capacity = 1000
 
 	New()
 		..()
-		reagents.add_reagent("water",1000)
+		reagents.add_reagent("water",capacity)
 
 /obj/reagent_dispensers/watertank/big
 	name = "high-capacity watertank"
@@ -181,9 +181,7 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(10000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
 
 /obj/reagent_dispensers/watertank/fountain
@@ -193,6 +191,7 @@
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	mats = 8
+	capacity = 500
 
 	var/has_tank = 1
 
@@ -240,7 +239,7 @@
 
 	attackby(obj/W as obj, mob/user as mob)
 		if (has_tank)
-			if (istype(W, /obj/item/wrench))
+			if (iswrenchingtool(W))
 				user.show_text("You disconnect the bottle from [src].", "blue")
 				var/obj/item/reagent_containers/food/drinks/P = new /obj/item/reagent_containers/food/drinks/coolerbottle(src.loc)
 				P.reagents.maximum_volume = max(P.reagents.maximum_volume, src.reagents.total_volume)
@@ -258,11 +257,11 @@
 			src.update_icon()
 			return
 
-		if (istype(W, /obj/item/screwdriver))
+		if (isscrewingtool(W))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 30))
+				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
 					src.anchored = 0
 					return
@@ -274,7 +273,7 @@
 				else
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 30))
+					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
 						src.anchored = 1
 						return
@@ -297,9 +296,7 @@
 	piss
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
 			src.update_icon()
@@ -310,9 +307,7 @@
 	juicer
 		New()
 			..()
-			var/datum/reagents/R = new/datum/reagents(4000)
-			reagents = R
-			R.my_atom = src
+			src.create_reagents(4000)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
@@ -358,7 +353,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*400, power*125)
+				reagents.temperature_reagents(power*500, power*125)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -389,7 +384,7 @@
 	icon_state = "compost"
 	anchored = 0
 	amount_per_transfer_from_this = 30
-
+	event_handler_flags = NO_MOUSEDROP_QOL
 	New()
 		..()
 
@@ -468,7 +463,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "still"
 	amount_per_transfer_from_this = 25
-
+	event_handler_flags = NO_MOUSEDROP_QOL
 	// what was the point here exactly
 	//New()
 		//..()
@@ -568,12 +563,12 @@
 
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
-	desc = "A water cooler bottle. Can hold up to 1000 units."
+	desc = "A water cooler bottle. Can hold up to 500 units."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "itemtank"
 	item_state = "flask"
-	initial_volume = 1000
+	initial_volume = 500
 	w_class = 4.0
 	incompatible_with_chem_dispensers = 1
 
@@ -589,6 +584,12 @@
 	proc/update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			src.icon_state = "itemtank[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
-			fluid_image.color = average.to_rgba()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = initial(src.icon_state)
+

@@ -118,7 +118,7 @@
 				src.z = sharktarget2.z
 				banproc()
 				return
-			else if (DIST_CHECK(src, src.sharktarget2, 1))
+			else if (IN_RANGE(src, src.sharktarget2, 1))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -176,7 +176,7 @@
 
 	proc/process()
 		while (!disposed)
-			if (DIST_CHECK(src, src.sharktarget2, 1))
+			if (IN_RANGE(src, src.sharktarget2, 1))
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> bites [sharktarget2]!</span>", 1)
 				sharktarget2.changeStatus("weakened", 1 SECOND)
@@ -191,11 +191,11 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (DIST_CHECK(src, src.sharktarget2, 1))
+		if (IN_RANGE(src, src.sharktarget2, 1))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
-			if(sharktarget2 && sharktarget2.client)
+			if(sharktarget2?.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
 				message_admins("<span class='internal'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")

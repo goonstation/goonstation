@@ -21,6 +21,7 @@
 //-- Used in generating turf underlay stacks -----
 turf/dmm_suite/underlay
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 
 //-- Fills maps when writing with IGNORE_TURFS ---
@@ -29,6 +30,7 @@ turf/dmm_suite/clear_turf
 	icon_state = "clear_turf"
 	layer = FLY_LAYER
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 //-- Fills maps when writing with IGNORE_AREAS ---
 area/dmm_suite/clear_area
@@ -36,4 +38,5 @@ area/dmm_suite/clear_area
 	icon_state = "clear_area"
 	layer = FLY_LAYER
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)

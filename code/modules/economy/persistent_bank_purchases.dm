@@ -1,5 +1,6 @@
 
 var/global/list/persistent_bank_purchaseables =	list(\
+	new /datum/bank_purchaseable/human_item/reset,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
@@ -26,14 +27,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
 	new /datum/bank_purchaseable/nt_backpack,\
-	new /datum/bank_purchaseable/lizard,\
-	new /datum/bank_purchaseable/cow,\
-	new /datum/bank_purchaseable/skeleton,\
-	new /datum/bank_purchaseable/roach,\
+
 	new /datum/bank_purchaseable/limbless,\
+	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/corpse,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
+	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
 	new /datum/bank_purchaseable/critter_respawn,\
@@ -69,7 +69,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			equip_success = 1
 			var/obj/I = new path(H.loc)
-			I.name = "[H.real_name][pick(trinket_names)] [I.name]"
+			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
 			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))
@@ -155,6 +155,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 0
 			return ..()
 
+		reset
+			name = "Clear Purchase"
+			cost = 0
+			path = null
 		crayon
 			name = "Crayon"
 			cost = 50
@@ -252,7 +256,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			Create(var/mob/living/M)
 				..(M)
-				if(M && M.mind)
+				if(M?.mind)
 					battle_pass_holders.Add(M.mind)
 				return 1
 
@@ -283,17 +287,29 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 
 				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
-					if (ispath(text2path("[H.w_uniform.type]/april_fools")))
+					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
+					if (ispath(origin))
 						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
 						H.w_uniform.item_state = "[H.w_uniform.item_state]-alt"
+						H.w_uniform.desc = initial(origin.desc)
 						succ = 1
 
 				if (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-					if (ispath(text2path("[H.wear_suit.type]/april_fools")))
+					var/obj/origin = text2path("[H.wear_suit.type]/april_fools")
+					if (ispath(origin))
 						H.wear_suit.icon_state = "[H.wear_suit.icon_state]-alt"
 						H.wear_suit.item_state = "[H.wear_suit.item_state]-alt"
+						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit:coat_style = "[H.wear_suit:coat_style]-alt"
+						succ = 1
+
+				if (H.head && istype(H.head, /obj/item/clothing/head))
+					var/obj/origin = text2path("[H.head.type]/april_fools")
+					if (ispath(origin))
+						H.head.icon_state = "[H.head.icon_state]-alt"
+						H.head.item_state = "[H.head.item_state]-alt"
+						H.head.desc = initial(origin.desc)
 						succ = 1
 
 			return succ
@@ -334,54 +350,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 			return 0
 
-	lizard
-		name = "Reptillian"
-		cost = 3000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("lizard")
-					return 1
-			return 0
-
-	cow
-		name = "Cow"
-		cost = 4000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("cow")
-					return 1
-			return 0
-
-	skeleton
-		name = "Skeleton"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("skeleton")
-					return 1
-			return 0
-
-	roach
-		name = "Roach"
-		cost = 5000
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bioHolder)
-					H.bioHolder.AddEffect("roach")
-					return 1
-			return 0
-
 	limbless
 		name = "No Limbs"
 		cost = 10000
@@ -400,6 +368,23 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
 						boutput( H, "<span class='notice'><b>Your limbs magically disappear! Oh, no!</b></span>" )
+				return 1
+			return 0
+
+	legless
+		name = "No Legs"
+		cost = 5000
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				SPAWN_DBG(6 SECONDS)
+					if (H.limbs)
+						if (H.limbs.l_leg)
+							H.limbs.l_leg.delete()
+						if (H.limbs.r_leg)
+							H.limbs.r_leg.delete()
+						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
 				return 1
 			return 0
 
@@ -440,10 +425,29 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
 				S = M.loc
 			else
-				S = new /obj/storage/crate/packing(get_turf(M))
+				S = new /obj/storage/crate/packing()
 				M.set_loc(S)
-				shippingmarket.receive_crate(S)
-				return 1
+			shippingmarket.receive_crate(S)
+			return 1
+
+	missile_arrival
+		name = "Missile Arrival"
+		cost = 20000
+
+		Create(var/mob/living/M)
+			if(istype(M.back, /obj/item/storage))
+				var/obj/item/storage/backpack = M.back
+				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
+				backpack.hud.update()
+			var/mob/living/carbon/human/H = M
+			if(istype(H))
+				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			SPAWN_DBG(0)
+				if(istype(M.loc, /obj/storage))
+					launch_with_missile(M.loc)
+				else
+					launch_with_missile(M)
+			return 1
 
 	critter_respawn
 		name = "Alt Ghost Critter"
@@ -609,5 +613,4 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				A.set_hat(new picked())
 				return 1
 			return 0
-
 

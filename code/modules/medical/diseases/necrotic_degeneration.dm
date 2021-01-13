@@ -15,6 +15,7 @@
 	if (affected_mob.get_burn_damage() >= 80 && prob(60))
 		affected_mob.cure_disease(D)
 		return
+	affected_mob.is_zombie = 1
 	switch(D.stage)
 		if(1)
 			if (prob(5))
@@ -30,6 +31,16 @@
 				affected_mob.changeStatus("paralysis", 40)
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
+
+			//spaceacillin stalls the infection...
+			var/amt = affected_mob.reagents?.get_reagent_amount("spaceacillin")
+			if (amt)
+				if (amt > 15)
+					affected_mob.reagents?.remove_reagent("spaceacillin", 1)
+				else
+					affected_mob.reagents?.remove_reagent("spaceacillin", 0.4)
+				D.stage--
+
 		if(3)
 			affected_mob.stuttering = 10
 			if (prob(10))

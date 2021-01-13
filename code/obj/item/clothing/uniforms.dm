@@ -54,7 +54,7 @@
 		var/list_counter = 0
 		src.images = list()
 
-		for (var/C as anything in src.component_images)
+		for (var/C as() in src.component_images)
 			list_counter++
 			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
 			suit_image.icon_state = C
@@ -68,7 +68,6 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 	icon_state = "white"
 	item_state = "white"
 
@@ -77,7 +76,6 @@
 /obj/item/clothing/under/color
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 
 	grey
 		name = "grey jumpsuit"
@@ -201,7 +199,7 @@
 
 	aro
 		name = "aro pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromatic pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the aromantic pride flag."
 		icon_state ="aro"
 		item_state = "aro"
 
@@ -544,6 +542,13 @@
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
 
+/obj/item/clothing/under/rank/rancher
+	name = "rancher's overalls"
+	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
+	icon_state = "rancher"
+	item_state = "rancher"
+	permeability_coefficient = 0.50
+
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
 	desc = "You don't really want to think about what those stains are from."
@@ -749,7 +754,6 @@
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
 	compatible_species = list("human", "monkey")
-	c_flags = ONESIZEFITSALL
 
 	red
 		icon_state = "shortsR"
@@ -909,6 +913,87 @@
 		..()
 		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 		src.item_state = "[src.icon_state]"
+
+// Black Pants
+/obj/item/clothing/under/shirt_pants_b
+	name = "shirt and black pants"
+	desc = "A button-down shirt and some black pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-b"
+	item_state = "shirt_n_pant-b"
+
+/obj/item/clothing/under/shirt_pants_b/redtie
+	name = "shirt and black pants with a red tie"
+	desc = "A button-down shirt, some black pants and a red tie."
+	icon_state = "shirt_n_pant-b_tie-r"
+	item_state = "shirt_n_pant-b_tie-r"
+
+/obj/item/clothing/under/shirt_pants_b/blacktie
+	name = "shirt and black pants with a black tie"
+	desc = "A button-down shirt, some black pants and a black tie."
+	icon_state = "shirt_n_pant-b_tie-b"
+	item_state = "shirt_n_pant-b_tie-b"
+
+/obj/item/clothing/under/shirt_pants_b/bluetie
+	name = "shirt and black pants with a blue tie"
+	desc = "A button-down shirt, some black pants and a blue tie."
+	icon_state = "shirt_n_pant-b_tie-bl"
+	item_state = "shirt_n_pant-b_tie-bl"
+
+// Brown Pants
+/obj/item/clothing/under/shirt_pants_br
+	name = "shirt and brown pants"
+	desc = "A button-down shirt and some brown pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-br"
+	item_state = "shirt_n_pant-br"
+
+/obj/item/clothing/under/shirt_pants_br/redtie
+	name = "shirt and brown pants with a red tie"
+	desc = "A button-down shirt, some brown pants and a red tie."
+	icon_state = "shirt_n_pant-br_tie-r"
+	item_state = "shirt_n_pant-br_tie-r"
+
+/obj/item/clothing/under/shirt_pants_br/blacktie
+	name = "shirt and brown pants with a black tie"
+	desc = "A button-down shirt, some brown pants and a black tie."
+	icon_state = "shirt_n_pant-br_tie-b"
+	item_state = "shirt_n_pant-br_tie-b"
+
+/obj/item/clothing/under/shirt_pants_br/bluetie
+	name = "shirt and brown pants with a blue tie"
+	desc = "A button-down shirt, some black pants and a blue tie."
+	icon_state = "shirt_n_pant-br_tie-bl"
+	item_state = "shirt_n_pant-br_tie-bl"
+
+// White Pants
+/obj/item/clothing/under/shirt_pants_w
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants."
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "shirt_n_pant-w"
+	item_state = "shirt_n_pant-w"
+
+/obj/item/clothing/under/shirt_pants_w/redtie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and red tie."
+	icon_state = "shirt_n_pant-w_tie-r"
+	item_state = "shirt_n_pant-w_tie-r"
+
+/obj/item/clothing/under/shirt_pants_w/blacktie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and black tie."
+	icon_state = "shirt_n_pant-w_tie-b"
+	item_state = "shirt_n_pant-w_tie-b"
+
+/obj/item/clothing/under/shirt_pants_w/bluetie
+	name = "shirt and white pants"
+	desc = "A button-down shirt and some white pants and blue tie."
+	icon_state = "shirt_n_pant-w_tie-bl"
+	item_state = "shirt_n_pant-w_tie-bl"
 
 // Suits
 
@@ -1095,7 +1180,7 @@
 
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -1110,7 +1195,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else
@@ -1259,7 +1344,6 @@
 		desc = "Christ, these things stink!"
 		icon_state = "wario"
 		item_state = "wario"
-		c_flags = ONESIZEFITSALL
 
 	waluigi
 		name = "total prick's overalls"

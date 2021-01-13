@@ -37,7 +37,7 @@
 		return
 
 
-////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/kudzu
 	usesPoints = 1
@@ -282,24 +282,40 @@
 	cooldown = 30 SECONDS
 	pointCost = 40
 	max_range = 1
+	var/heal_coef = 30
 
 	cast(atom/target)
 		if (..())
 			return 1
 
 		if (target == holder.owner)
-			boutput(holder.owner, "<span class='alert'>You can't heal yourself with your own vines this way!</span>")
-			return 1
+			heal_coef = round(heal_coef/2)
+			boutput(holder.owner, "<span class='alert'>Using your own nutrients to heal is slightly less effective!</span>")
 
 		var/mob/living/C = target
 		if (istype(C))
 			C.visible_message("<span class='alert'><b>[holder.owner] touches [C], enveloping them soft glowing vines!</b></span>")
 			boutput(C, "<span class='notice'>You feel your pain fading away.</span>")
-			C.HealDamage("All", 25, 25)
-			C.take_toxin_damage(-25)
-			C.take_oxygen_deprivation(-25)
-			C.take_brain_damage(-25)
+			C.HealDamage("All", heal_coef, heal_coef)
+			C.take_toxin_damage(-heal_coef)
+			C.take_oxygen_deprivation(-heal_coef)
+			C.take_brain_damage(-heal_coef)
 			C.remove_ailments()
+			if (C.organHolder)
+				var/organ_const = heal_coef/3
+				C.organHolder.heal_organs(organ_const, organ_const, organ_const, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
+
+			//remove all implants too
+			if (C.implant)
+				for (var/obj/item/implant/I in C.implant)
+					if (istype(I, /obj/item/implant/projectile))
+						boutput(C, "[I] falls out of you!")
+						I.on_remove(C)
+						C.implant.Remove(I)
+						//del(I)
+						I.set_loc(get_turf(C))
+						continue
+
 			//Transfer nutrients to our brethren.
 			var/mob/living/carbon/human/H = target
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
@@ -495,7 +511,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", "no owner for this kudzu ability. [src]")
+			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -639,7 +655,7 @@
 		else if (amount <= 9999)
 			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>[amount]</div>"
 			src.maptext_y = 8
-		else 
+		else
 			src.maptext = "<div style='font-size:8px; color:maroon;text-align:center;'>+</div>"
 			src.maptext_y = 8
 
@@ -698,8 +714,7 @@
 		if (prob(20))
 			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
 			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
-			SPAWN_DBG(0)
-				M.throw_at(target, 5, 1)
+			M.throw_at(target, 5, 1)
 
 /obj/item/kudzu/kudzumen_vine/proc/build_buttons()
 	if (src.contextActions != null)	//dont need rebuild
@@ -755,7 +770,7 @@
 			return
 
 		kudzu.growth = 1
-		kudzu.update_self()		
+		kudzu.update_self()
 		new creation_path(get_turf(kudzu))
 
 

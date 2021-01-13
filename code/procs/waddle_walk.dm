@@ -15,9 +15,10 @@ var/global/waddle_walking = 0
 	var/static/list/animation_locked = list()
 	if (!animation_locked[H])
 		animation_locked[H] = TRUE
+		var/matrix/M = H.transform
 		animate(H, pixel_z = 6, time = 0)
-		animate(pixel_z = 0, transform = getMatrixFromPool(nextWaddle(H)), time = WADDLE_TIME)
-		animate(pixel_z = 0, transform = getMatrixFromPool(0), time = 0)
+		animate(pixel_z = 0, transform = (M * getMatrixFromPool(nextWaddle(H))), time = WADDLE_TIME)
+		animate(pixel_z = 0, transform = M, time = 0)
 		sleep(WADDLE_TIME)
 		animation_locked[H] = FALSE
 #undef WADDLE_TIME

@@ -673,7 +673,7 @@
 
 /datum/commodity/drugs/cannabis
 	comname = "Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/spawnable
+	comtype = /obj/item/plant/herb/cannabis
 	price = 150
 	baseprice = 150
 	upperfluc = 100
@@ -681,7 +681,7 @@
 
 /datum/commodity/drugs/cannabis_mega
 	comname = "Rainbow Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/mega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/mega
 	price = 700
 	baseprice = 700
 	upperfluc = 500
@@ -689,7 +689,7 @@
 
 /datum/commodity/drugs/cannabis_white
 	comname = "White Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/white/spawnable
+	comtype = /obj/item/plant/herb/cannabis/white
 	price = 450
 	baseprice = 450
 	upperfluc = 200
@@ -697,7 +697,7 @@
 
 /datum/commodity/drugs/cannabis_omega
 	comname = "Omega Cannabis"
-	comtype = /obj/item/plant/herb/cannabis/omega/spawnable
+	comtype = /obj/item/plant/herb/cannabis/omega
 	price = 2500
 	baseprice = 2500
 	upperfluc = 2000
@@ -774,6 +774,15 @@
 	desc = "A highly potent hallucinogenic substance. Far out, maaaan."
 	price = 250
 	baseprice = 250
+	upperfluc = 100
+	lowerfluc = -100
+
+/datum/commodity/drugs/lsd_bee
+	comname = "LSBee (1x patch)"
+	comtype = /obj/item/reagent_containers/patch/lsd_bee
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	price = 220
+	baseprice = 220
 	upperfluc = 100
 	lowerfluc = -100
 
@@ -858,6 +867,15 @@
 	baseprice = 7000
 	upperfluc = 5000
 	lowerfluc = -3000
+
+/datum/commodity/relics/bootlegfirework
+	comname = "Bootleg Firework (1x rocket)"
+	comtype = /obj/item/firework/bootleg
+	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
+	price = 60
+	baseprice = 60
+	upperfluc = 10
+	lowerfluc = -10
 
 ////////////////////////////////
 ///// syndicate trader /////////
@@ -1233,6 +1251,15 @@
 	baseprice = 150
 	upperfluc = 50
 	lowerfluc = -50
+
+/datum/commodity/junk/pie_launcher
+	comname = "Pie Tool Module"
+	comtype = /obj/item/device/guardbot_tool/pie_launcher
+	desc = "A tool module compatible with guardbuddies. Are tool modules supposed to have cream on them?"
+	price = PAY_DOCTORATE/2
+	baseprice = PAY_DOCTORATE/2
+	upperfluc = PAY_DOCTORATE/6
+	lowerfluc = -PAY_DOCTORATE/6
 
 /datum/commodity/junk/laughbox
 	comname = "Box of Laughs"
@@ -1949,6 +1976,30 @@
 	upperfluc = 100
 	lowerfluc = -100
 
+/datum/commodity/medical/firstaidC
+	comname = "First Aid Kit - Critical"
+	comtype = /obj/item/storage/firstaid/crit
+	price = 10000
+	baseprice = 10000
+	upperfluc = 2000
+	lowerfluc = -2000
+
+/datum/commodity/medical/injectorPent
+	comname = "Auto-Injector - Pentetic Acid"
+	comtype = /obj/item/reagent_containers/emergency_injector/pentetic_acid
+	price = 2000
+	baseprice = 2000
+	upperfluc = 500
+	lowerfluc = -700
+
+/datum/commodity/medical/injectorPerf
+	comname = "Auto-Injector - Perfluorodecalin"
+	comtype = /obj/item/reagent_containers/emergency_injector/perf
+	price = 800
+	baseprice = 800
+	upperfluc = 500
+	lowerfluc = -700
+
 /datum/commodity/medical/ether
 	comname = "Ether"
 	comtype = /obj/item/reagent_containers/glass/bottle/ether
@@ -2104,6 +2155,20 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/mime
+	comname = "Mime Clothes"
+	comtype = /obj/item/storage/box/costume/mime
+	desc = "No words can describe this. Only intricate gesticulation."
+	price = 100 //exactly what the clown spawns with in their account, three mimes on mondays.
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mime/alt
+	comname = "Alternate Mime Clothes."
+	comtype = /obj/item/storage/box/costume/mime/alt
+	desc = "This stuff will give you an edge in charades."
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
@@ -2123,6 +2188,28 @@
 	baseprice = 50
 	upperfluc = 100
 	lowerfluc = -20
+
+/*
+/datum/commodity/screamshoes
+	comname = "scream shoes"
+	comtype = /obj/item/clothing/shoes/scream
+	desc = "AAAAAAAAAAAAAAAAAAAA!"
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+
+/datum/commodity/fartflops
+	comname = "fart-flops"
+	comtype = /obj/item/clothing/shoes/fart
+	desc = "They fart when you walk."
+	onmarket = 0
+	price = 50
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -20
+*/
 
 /// pathology
 /datum/commodity/synthmodule

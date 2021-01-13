@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
 /obj/item/storage/backpack/withO2
@@ -34,6 +34,22 @@
 	icon_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/captain
+	name = "Captain's Backpack"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capbackpack"
+	item_state = "capbackpack"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_blue"
+		item_state = "capbackpack_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capbackpack_red"
+		item_state = "capbackpack_red"
+
 /obj/item/storage/backpack/syndie/tactical
 	name = "tactical assault rucksack"
 	desc = "A military backpack made of high density fabric, designed to fit a wide array of tools for comprehensive storage support."
@@ -47,6 +63,7 @@
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -58,9 +75,23 @@
 	icon_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/satchel/captain
+	name = "Captain's Satchel"
+	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+	icon_state = "capsatchel"
+
+	blue
+		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_blue"
+
+	red
+		desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold."
+		icon_state = "capsatchel_red"
+
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
 	icon_state = "satchel_medic"
+
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru"
@@ -73,6 +104,7 @@
 	item_state = "bp_fjallraven_red"
 
 	New()
+		..()
 		if (prob(50))
 			icon_state = "bp_fjallraven_yellow"
 			item_state = "bp_fjallraven_yellow"
@@ -102,7 +134,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -140,7 +172,7 @@
 
 	New()
 		..()
-		BLOCK_ROPE
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
 		.= 1
@@ -215,8 +247,7 @@
 		return
 
 	proc/activate()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 		if(charge > 0)
 			charge -= 1
@@ -303,13 +334,17 @@
 		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
-	spawn_contents = list(/obj/item/crowbar,
+	spawn_contents = list(/obj/item/crowbar/yellow,
 	/obj/item/weldingtool,
-	/obj/item/wirecutters,
-	/obj/item/screwdriver,
-	/obj/item/wrench,
+	/obj/item/wirecutters/yellow,
+	/obj/item/screwdriver/yellow,
+	/obj/item/wrench/yellow,
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
+
+/obj/item/storage/belt/utility/superhero
+	name = "superhero utility belt"
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -352,7 +387,9 @@
 	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
-	/obj/item/gun/kinetic/zipgun)
+	/obj/item/gun/kinetic/zipgun,
+	/obj/item/clothing/mask/gas/NTSO,
+	/obj/item/gun/energy/signifer2) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -382,6 +419,9 @@
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun //lol
+
+	ntso
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch) //secbelt subtype that only spawns on NTSO, not in vendor
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
@@ -433,18 +473,17 @@
 // combat medic storage 7 slot
 
 /obj/item/storage/belt/syndicate_medic_belt
-	name = "medical lifesaver bag"
+	name = "injector bag"
 	icon = 'icons/obj/items/belts.dmi'
-	desc = "A canvas duffel bag full of medicines."
+	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salicylic_acid,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol)
+	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 
 /obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel
 	name = "medical shoulder pack"
@@ -452,11 +491,7 @@
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher,
-	/obj/item/reagent_containers/iv_drip/blood,
-	/obj/item/reagent_containers/mender/brute,
-	/obj/item/reagent_containers/mender/burn,
-	/obj/item/reagent_containers/hypospray)
+	/obj/item/extinguisher)
 
 
 /* -------------------- Wrestling Belt -------------------- */

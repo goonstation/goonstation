@@ -132,6 +132,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
+	var/pellet_shot_volume = 100
 	nomsg = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -148,6 +149,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -161,6 +163,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	proc/split(var/obj/projectile/P)
 		var/datum/projectile/F = new spread_projectile_type()
+		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
 		while (pellets > 0)
@@ -196,13 +199,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
-	var/dissipation_variance = 1
+	var/dissipation_variance = 32
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.dissipation_ticker = rand(0,dissipation_variance)
+		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
 
 /datum/projectile/special/spreader/buckshot_burst/nails
@@ -211,7 +214,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 8
 	spread_projectile_type = /datum/projectile/bullet/nails
-	casing = /obj/item/casing/shotgun_gray
+	casing = /obj/item/casing/shotgun/gray
 	spread_angle_variance = 10
 	damage_type = D_SPECIAL
 	power = 32
@@ -219,7 +222,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"
 	sname = "circular spread"
-	spread_angle = 360
+	spread_angle = 180
 	pellets_to_fire = 20
 
 /datum/projectile/special/spreader/uniform_burst/blaster
@@ -398,23 +401,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/explosive_hits = 1
 	var/explosion_power = 30
 	var/hit_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0 // anti-ear destruction
 	var/max_bounce_count = 50
-	var/allow_headon_bounce = 1
 
 	on_hit(atom/A, direction, projectile)
-		shoot_reflected_bounce(projectile, A, max_bounce_count, allow_headon_bounce)
+		shoot_reflected_bounce(projectile, A, max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 		var/turf/T = get_turf(A)
-		playsound(A, hit_sound, 60, 1)
+
+		//prevent playing all 50 sounds at once on rapid bounce
+		if(world.time >= last_sound_time + 1 DECI SECOND)
+			last_sound_time = world.time
+			playsound(A, hit_sound, 60, 1)
 
 		if (explosive_hits)
-			SPAWN_DBG(1 DECI SECOND)
-				for(var/mob/living/M in mobs)
-					shake_camera(M, 2, 1)
-
 			SPAWN_DBG(0)
 				explosion_new(projectile, T, explosion_power, 1)
-			if(prob(50))
-				playsound(A, hit_sound, 60, 1)
 		return
 
 /datum/projectile/special/meowitzer/inert
@@ -583,9 +584,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "bloodproj"
 	start_speed = 9
 	goes_through_walls = 1
-	goes_through_mobs = 1
+	//goes_through_mobs = 1
 	auto_find_targets = 0
 	silentshot = 1
+	pierces = -1
 
 	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 
@@ -604,8 +606,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire.owner == hit)
-				P.die()
+			if (vampire.owner == hit && P.max_range == PROJ_INFINITE_RANGE)
+				P.travelled = 0
+				P.max_range = 4
 			..()
 
 	on_end(var/obj/projectile/P)
@@ -758,10 +761,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			SPAWN_DBG(0)
-				L.changeStatus("weakened", 2 SECONDS)
-				L.force_laydown_standup()
-				L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
+			L.changeStatus("weakened", 2 SECONDS)
+			L.force_laydown_standup()
+			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
 	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
 		if (P != passing_thing)
@@ -793,10 +795,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
-	var/initial_angle_offset_mult = 0
+	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
@@ -844,16 +846,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
 	power = 1
+	dissipation_rate = 0
+	max_range = 10
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = "sound/weapons/rocket.ogg"
 	icon_state = "bullet"
 	implanted= null
 	casing = null
 	icon_turf_hit = null
 	var/typetospawn = null
 	var/hasspawned = null
+	var/hit_sound = null
 
 	on_hit(atom/hit, direction, projectile)
+		if(src.hit_sound)
+			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
@@ -908,9 +915,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(istype(W))
 			W.throw_impact(get_turf(O))
 
-
-
-
 /datum/projectile/special/spawner/beepsky
 	name = "Beepsky"
 	window_pass = 0
@@ -941,3 +945,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky))
 			beepsky.emagged = 1
+
+/datum/projectile/special/spawner/battlecrate
+	name = "Battlecrate"
+	power = 100
+	max_range = 30
+	cost = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "attachecase"
+	typetospawn = /obj/lootbox
+	var/explosion_power = 15
+
+	on_hit(atom/hit, direction, projectile)
+		explosion_new(projectile, get_turf(hit), explosion_power, 1)
+		..()

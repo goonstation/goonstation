@@ -65,8 +65,7 @@
 		boutput(H, "<span class='alert'><B>You NEIGH painfully!</B></span>")
 		H.take_brain_damage(80)
 		H.stuttering = 120
-		if(H.mind)
-			H.mind.assigned_role = "Horse"
+		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 		playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 		H.change_misstep_chance(66)
@@ -94,6 +93,7 @@
 	src.partygib()
 
 /proc/soulcheck(var/mob/M as mob)
+	M.abilityHolder.updateText()
 	if ((ishuman(M)) && (isdiabolical(M)))
 		if (total_souls_value >= 10)
 			if (!M.bioHolder.HasEffect("demon_horns"))
@@ -140,7 +140,7 @@
 		acount++
 	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
 	if(C.mind)
-		shake_camera(C, 20, 1)
+		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
 		boutput(C, "<i><b><font face = Tempus Sans ITC>You have sold your soul and become an avatar of evil! Spread darkness across the land!</font></b></i>")
 		C.mind.special_role = "Faustian Cluwne"
@@ -163,7 +163,7 @@
 	color = "#FF0000"
 	font_color = "#FF0000"
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			if (ismob(usr))
 				A:lastattacker = usr
@@ -286,7 +286,7 @@
 		if (total_souls_value >= 10)
 			wrestler_backfist(user, M) //sends people flying above 10 souls sold, does not scale with souls.
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.throwforce = min((15 + total_souls_value), 30) //capped at 30 max throwforce.
 		..()
 
@@ -334,6 +334,7 @@
 	showTooltipDesc = 0
 
 	New()
+		..()
 		src.color = random_color()
 
 	examine(mob/user)
@@ -358,7 +359,9 @@
 			return 0
 		src.visible_message("<span class='alert'><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
 		logTheThing("admin", user, null, "signed a [src.type] contract at [log_loc(user)]!")
-		return user.sell_soul(100, 0, 1)
+		. = user.sell_soul(100, 0, 1)
+		if(!.)
+			boutput(badguy, "[user] signed [src] but had no soul to give!")
 
 	proc/vanish(var/mob/user as mob, var/mob/badguy as mob)
 		if(user)
@@ -603,8 +606,7 @@ obj/item/contract/mummy
 				if (!H.bandaged.Find(target))
 					H.bandaged += target
 					H.update_body()
-		if(user.reagents)
-			user.reagents.add_reagent("formaldehyde", 300) //embalming fluid for mummies
+		user.reagents?.add_reagent("formaldehyde", 300) //embalming fluid for mummies
 		if((prob(10)) || (src.limiteduse == 1))
 			boutput(user, "<span class='notice'>Wow, that contract did a really thorough job of mummifying you! It removed your organs and everything!</span>")
 			if(isliving(user))
@@ -772,6 +774,12 @@ obj/item/contract/hair
 					continue
 				else
 					H.bioHolder.mobAppearance.customization_first = "None"
+					H.bioHolder.mobAppearance.customization_first_original = "None"
+					H.bioHolder.mobAppearance.customization_second = "None"
+					H.bioHolder.mobAppearance.customization_second_original = "None"
+					H.bioHolder.mobAppearance.customization_third = "None"
+					H.bioHolder.mobAppearance.customization_third_original = "None"
+					H.update_colorful_parts()
 			if (src.limiteduse == 1)
 				src.used++
 				tooltip_rebuild = 1

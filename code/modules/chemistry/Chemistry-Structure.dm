@@ -22,7 +22,7 @@
 /proc/build_reagent_cache()
 	var/startTime = world.timeofday
 	reagents_cache.Cut()
-	for(var/R in childrentypesof(/datum/reagent))
+	for(var/R in concrete_typesof(/datum/reagent))
 		var/datum/reagent/Rinstance = new R()
 		//If R is not a datum/reagent then I don't think anything I can do will help here.
 		reagents_cache[Rinstance.id] = Rinstance

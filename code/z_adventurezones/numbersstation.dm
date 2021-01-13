@@ -246,15 +246,15 @@ Nanotrasen, Inc.<br>
 	var/next_play = 0
 
 	New()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		..()
+		processing_items |= src
 		if (ticker)
 			while (next_play <= ticker.round_elapsed_ticks)
 				next_play += play_interval
 		else
 			next_play = play_interval
 		next_warning = next_play - 300
-		SPAWN_DBG (200)
+		SPAWN_DBG(20 SECONDS)
 			apiHandler.queryAPI("numbers/get")
 
 	proc/gather_listeners()
@@ -299,7 +299,7 @@ Nanotrasen, Inc.<br>
 			if (!listeners.len)
 				logTheThing("debug", null, null, "<b>Numbers station:</b> [name] broadcast aborted: no listeners.")
 				return
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				broadcast_sound(login_signal)
 				play_all_numbers()
 				var/doop = get_vox_by_string("doop")

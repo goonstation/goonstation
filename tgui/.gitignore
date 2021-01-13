@@ -1,7 +1,11 @@
-node_modules
+## NPM
+/node_modules
 *.log
 package-lock.json
 
-/packages/tgui/public/.tmp/**/*
-/packages/tgui/public/**/*.hot-update.*
-/packages/tgui/public/**/*.map
+## Yarn
+/.pnp.*
+/.yarn/*
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks

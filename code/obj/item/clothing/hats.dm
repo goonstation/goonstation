@@ -33,6 +33,16 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
+/obj/item/clothing/head/pink
+	desc = "A knit cap in pink."
+	icon_state = "pink"
+	item_state = "pgloves"
+
+/obj/item/clothing/head/orange
+	desc = "A knit cap in orange."
+	icon_state = "orange"
+	item_state = "ogloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
 	desc = "A plsing hat."
@@ -68,7 +78,7 @@
 	icon_state = "bio"
 	item_state = "bio_hood"
 	permeability_coefficient = 0.01
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 
@@ -102,7 +112,7 @@
 	icon_state = "emerg"
 	item_state = "emerg"
 	permeability_coefficient = 0.25
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
 
@@ -115,7 +125,7 @@
 	name = "Class II Radiation Hood"
 	icon_state = "radiation"
 	permeability_coefficient = 0.01
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -178,8 +188,7 @@
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			src.firesource = 0
 			src.force = 3
@@ -424,6 +433,13 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("gold"))
+
+/obj/item/clothing/head/longtophat
+	name = "Long tophat"
+	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "ltophat"
+	item_state = "lthat"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
@@ -730,7 +746,7 @@
 		src.throw_source = get_turf(src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(get_turf(src), src.hitsound, 60, 1)
@@ -877,10 +893,10 @@
 		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
 		SPAWN_DBG(1 SECOND)
 			playsound(src.loc, "sound/vox/time.ogg", 100, 1)
-			SPAWN_DBG(1 SECOND)
-				playsound(src.loc, "sound/vox/for.ogg", 100, 1)
-				SPAWN_DBG(1 SECOND)
-					playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/for.ogg", 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/perpname = user.name
@@ -903,7 +919,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
@@ -936,7 +952,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
@@ -995,6 +1011,12 @@
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+
+	stunhatr
+		stunready = 1
+		uses = 1
+		icon_state = "sunhatr-stun"
+		item_state = "sunhatr-stun"
 
 	examine()
 		. = ..()
@@ -1058,7 +1080,7 @@
 	icon_state = "chemhood"
 	item_state = "chemhood"
 	permeability_coefficient = 0
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
@@ -1180,3 +1202,25 @@
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+
+/obj/item/clothing/head/danberet
+	name = "Discount Dan's beret"
+	desc = "A highly advanced textile experience!"
+	icon_state = "danberet"
+	item_state = "danberet"
+
+/obj/item/clothing/head/janiberet
+	name = "Head of Sanitation beret"
+	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
+	icon_state = "janitorberet"
+	item_state = "janitorberet"
+
+/obj/item/clothing/head/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = 1.0
+	throwforce = 0

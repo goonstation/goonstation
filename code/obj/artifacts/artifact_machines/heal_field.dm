@@ -21,13 +21,14 @@
 		src.field_radius = rand(2,9) // field radius
 		src.field_type = rand(0,1)
 		src.field_strength = rand(1,5)
+
+	post_setup()
 		var/harmprob = 33
-		if (src.artitype == "eldritch")
+		if (src.artitype.name == "eldritch")
 			harmprob += 42 // total of 75% chance of it being nasty
 		if (prob(harmprob))
 			src.field_type = 1
-
-		if (src.field_type && src.artitype == "eldritch")
+		if (src.field_type && src.artitype.name == "eldritch")
 			src.field_strength *= 2
 
 	effect_process(var/obj/O)

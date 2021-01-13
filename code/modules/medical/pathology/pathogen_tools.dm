@@ -37,6 +37,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
 	var/stage = 0
 
 	var/dirty = 0
@@ -49,10 +50,7 @@
 	rc_flags = 0
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		// Integration notes: stable mutagen ID.
+		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
 			nutrition[nutrient] = 0
@@ -190,8 +188,7 @@
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
 				if (R == "pathogen")
 					if (src.medium)
-						if (!(src in processing_items))
-							processing_items.Add(src)
+						processing_items |= src
 				else if (R in pathogen_controller.media)
 					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
@@ -206,8 +203,7 @@
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
-							if (!(src in processing_items))
-								processing_items.Add(src)
+							processing_items |= src
 					else
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
@@ -311,7 +307,7 @@
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -321,7 +317,7 @@
 	name = "Beaker of Eggs"
 	desc = "Eggs; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -331,7 +327,7 @@
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -341,7 +337,7 @@
 	name = "Beaker of Bacterial Growth Medium"
 	desc = "Bacterial Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -351,7 +347,7 @@
 	name = "Beaker of Fungal Growth Medium"
 	desc = "Fungal Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -361,7 +357,7 @@
 	name = "Beaker of Antiviral Agent"
 	desc = "A beaker of a weak anti-viral agent."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -371,7 +367,7 @@
 	name = "Beaker of Biocides"
 	desc = "A beaker of biocides. The label says 'do not feed to worms or mushrooms'. Curious."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -381,7 +377,7 @@
 	name = "Beaker of Spaceacillin"
 	desc = "It's penicillin in space."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -391,7 +387,7 @@
 	name = "Beaker of Inhibition Agent"
 	desc = "It's green, that's for sure."
 
-	icon_state = "beaker1"
+	icon_state = "beaker"
 
 	New()
 		..()
@@ -450,7 +446,7 @@
 					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
 				var/ML = M.loc
 				var/UL = user.loc
-				SPAWN_DBG (30)
+				SPAWN_DBG(3 SECONDS)
 					if (used)
 						return
 					if (user.equipped() == src && M.loc == ML && user.loc == UL)

@@ -17,7 +17,7 @@ datum/controller/process/kudzu
 				scheck()
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>Kudzu Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

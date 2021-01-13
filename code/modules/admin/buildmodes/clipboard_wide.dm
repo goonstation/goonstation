@@ -49,7 +49,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 				continue
 			var/turf/R = new CBT.turf_type(TheOneToReplace)
 			R.appearance = CBT.turf_appearance
-			R.dir = CBT.turf_dir
+			R.set_dir(CBT.turf_dir)
 			for (var/obj/O in CBT.objects)
 				O.clone(R)
 			blink(R)

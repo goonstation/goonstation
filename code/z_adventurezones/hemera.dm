@@ -328,8 +328,7 @@ Obsidian Crown
 		cant_other_remove = 1
 		if (!src.processing)
 			src.processing++
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		if (istype(user.reagents)) //Protect them from poisions! (And coincidentally healing chems OH WELL)
 			user.reagents.maximum_volume = 0
@@ -346,6 +345,15 @@ Obsidian Crown
 			processing = 0
 			return
 
+		if(isrestrictedz(host.z) && prob(0.5))
+			hear_voidSpeak("...the sun...", "<small>", "</small>")
+		var/area/A = get_area(src)
+		if(A.type == /area/solarium && prob(3))
+			if(prob(10))
+				hear_voidSpeak("Let them touch the sun.")
+			else
+				hear_voidSpeak("THE SUN")
+
 		if (armor_paired)
 			if (armor_paired < 4 && prob(15))
 				switch (armor_paired++)
@@ -355,15 +363,6 @@ Obsidian Crown
 						hear_voidSpeak("How wonderous!  Our newest friend shares our appetite for adventure!  I dub thee \"Journeyman.\"")
 					if (3)
 						hear_voidSpeak("How lucky you are, Friend, how truly blessed!  Companions guarding your form entirely from the risks of the material!")
-
-		if(isrestrictedz(host.z) && prob(0.5))
-			hear_voidSpeak("...the sun...", "<small>", "</small>")
-		var/area/A = get_area(src)
-		if(A.type == /area/solarium && prob(3))
-			if(prob(10))
-				hear_voidSpeak("Let them touch the sun.")
-			else
-				hear_voidSpeak("THE SUN")
 
 		else if (ishuman(host) && istype(host:wear_suit, /obj/item/clothing/suit/armor/ancient))
 			armor_paired = 1
@@ -411,7 +410,7 @@ Obsidian Crown
 
 				if(isrestrictedz(host.z))
 					for(var/turf/T in view(M, 4))
-						if (T.loc != get_area(M) && T.loc.type != /area) //If we're in a telesci area and this is a change in area.
+						if (T.loc != get_area(M) && T.loc.type != /area/space) //If we're in a telesci area and this is a change in area.
 							continue
 						if(T.density)
 							continue
@@ -509,7 +508,7 @@ Obsidian Crown
 		for(var/mob/N in viewers(host, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
 
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)

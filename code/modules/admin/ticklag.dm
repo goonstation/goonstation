@@ -19,20 +19,3 @@
 	logTheThing("diary", src.mob, null, "set tick_lag to [number]", "admin")
 	message_admins("[key_name(usr)] modified world's tick_lag to [number]")
 	return
-/*
-	if(Debug2)
-		if(src.holder)
-			if(!src.mob)
-				return
-			if(src.holder.rank in list("Coder", "Host"))
-				world.tick_lag = number
-				logTheThing("admin", src, null, "set tick_lag to [number]")
-				logTheThing("diary", src.mob, null, "set tick_lag to [number]", "admin")
-				message_admins("[key_name(usr)] modified world's tick_lag to [number]")
-			else
-				alert("Fuck off, no crashing dis server")
-				return
-	else
-		alert("Debugging is disabled")
-		return
-*/

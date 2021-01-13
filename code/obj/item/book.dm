@@ -311,6 +311,13 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
+	<br>
+	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	"}
 
 /obj/item/paper/book/cookbook
@@ -976,7 +983,7 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	examine(mob/user)
 		if (!issilicon(user))
@@ -1971,6 +1978,7 @@ globules of this sludge can be harvested from the plant however - with proper pr
 			<li>brain = cut -> saw -> cut -> saw - Target HEAD on "HELP" intent (*note - Performing this surgery on "HARM" intent can decapitate the head).
 			<li>eyes = L/R spoon -> L/R cut -> L/R spoon - 	in order to remove a specific eye, you must only hold a tool in the corresponding hand R/L.
 			<li>limbs = cut -> saw -> cut 	while targeting the appropriate limb. Replacing a limb only requires you to target the correct limb, and then staple it firmly to the stump.
+			<li>tail = saw -> cut -> saw	while targetting the chest. I don't even know why they taught me this in medschool.
 			<li>butt = I do not know how to remove butts, and if I did I wouldn't spread that knowledge for it is a cruel and inhumane practice to remove a butt from anyone.
 		</ul>
 		</div>
@@ -2531,7 +2539,7 @@ worshipping world; we all belong to that; only some of us cherish some queer cro
 	desc = "Some kinda children's book. What's that doing here?"
 	icon_state = "bookadps"
 	info = {"
-		<font face=Georgia color=black size='3'> ALBERT AND THE DEEP BLUE SEA<BR>
+		<font face=Georgia color=black size='3'>ALBERT AND THE DEEP BLUE SEA<BR>
 A children&#39;s book by R. Brooks:<BR>
 <BR>
 Albert was an adventurous little monkey. One day, he decided to go exploring. He asked the Research Director to send him somewhere cool with the experimental long-range teleporter.<BR>
@@ -2555,6 +2563,56 @@ After a very long time, Albert got up. He was not going to give up just because 
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
+
+/obj/item/paper/book/caterpillar
+	name = "Advice from a Caterpillar"
+	desc = "You vaguely remember reading this as a kid. Or was that someone else?"
+	icon_state = "greybook"
+	info = {"
+		<font face=Georgia color=black size='3'>ADVICE FROM A CATERPILLAR<BR>
+<BR>
+The Caterpillar and Alice looked at each other for some time in silence: at last the Caterpillar took the hookah out of its mouth, and addressed her in a languid, sleepy voice.
+<BR>
+“Who are <i>you</i>?” said the Caterpillar.
+<BR>
+This was not an encouraging opening for a conversation. Alice replied, rather shyly, “I—I hardly know, sir, just at present—at least I know who I <i>was</i> when I got up this morning, but I think I must have been changed several times since then.”
+<BR>
+“What do you mean by that?” said the Caterpillar sternly. “Explain yourself!”
+<BR>
+“I can’t explain <i>myself</i>, I’m afraid, sir,” said Alice, “because I’m not myself, you see.”
+<BR>
+“I don’t see,” said the Caterpillar.
+<BR>
+“I’m afraid I can’t put it more clearly,” Alice replied very politely, “for I can’t understand it myself to begin with; and being so many different sizes in a day is very confusing.”
+<BR>
+“It isn’t,” said the Caterpillar.
+<BR>
+“Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to turn into a chrysalis—you will some day, you know—and then after that into a butterfly, I should think you’ll feel it a little queer, won’t you?”
+<BR>
+“Not a bit,” said the Caterpillar.
+<BR>
+“Well, perhaps your feelings may be different,” said Alice; “all I know is, it would feel very queer to me.”
+<BR>
+“You!” said the Caterpillar contemptuously. “Who are <i>you</i>?”
+<BR>
+Which brought them back again to the beginning of the conversation. Alice felt a little irritated at the Caterpillar’s making such very short remarks, and she drew herself up and said, very gravely, “I think, you ought to tell me who <i>you</i> are, first.”
+<BR>
+“Why?” said the Caterpillar.
+<BR>
+Here was another puzzling question; and as Alice could not think of any good reason, and as the Caterpillar seemed to be in a very unpleasant state of mind, she turned away.
+<BR>
+“Come back!” the Caterpillar called after her. “I’ve something important to say!”
+<BR>
+This sounded promising, certainly: Alice turned and came back again.
+<BR>
+“Keep your temper,” said the Caterpillar.
+<BR>
+“Is that all?” said Alice, swallowing down her anger as well as she could.
+<BR>
+“No,” said the Caterpillar.
+<BR>
+Alice thought she might as well wait, as she had nothing else to do, and perhaps after all it might tell her something worth hearing. For some minutes it puffed away without speaking, but at last it unfolded its arms, took the hookah out of its mouth again, and said, “So you think you’re <i>changed</i>, do you?”
+		"}
 
 /obj/item/paper/book/zoo_diary
 	name = "grimy diary"
@@ -2754,7 +2812,7 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "lawbook"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -2867,6 +2925,8 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	medical
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
+
+
 
 		info = {"<body><h1>NT MEDICAL DIVISION</h1>
 		<h2>Introductory briefing for aspiring Medical Doctors!</h2>
@@ -3267,6 +3327,71 @@ I'm being taken somewhere. I can feel it. Piece by piece, particle by particle, 
 	<li>It should be noted that torpedoes are extremely fragile and no force should be applied to them. Enough force will lead to the torpedo flying off into the direction it's facing which is extremely undesirable inside NSS Manta.</li>
 	"}
 
+/obj/item/paper/book/grifening
+	name = "Spacemen the Grifening rulebook"
+	desc = "A book outlining the rules of the stations favorite nerd trading-card-game Spacemen the Grifening."
+	icon_state = "sbook"
+	info = {"<center><h2>Spacemen the Grifening</h2></center><hr>
+	<h3>Foreword:</h3>
+	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
+	<br>
+	<br>
+	Spacemen the Grifening is a 2 player party-game; well worth the fun!
+	The machine that spit out this wonderful piece of literature can sell you a few booster packs or a starter set to get going! Feel free to buy a deck and begin immediately!
+	<br>
+	<br>
+	With more experience you can even create your own deck - feel free to experiment and start your own tournament!
+	<hr>
+	<h3>Rules:</h3>
+	<ul style='list-style-type:disc'>
+		<li><b>At Game Start</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player initially has 100 HP. Normally, the player who loses all of their HP loses. There are additional ways to win.</li>
+				<br>
+				<li>Both players stock up their hand with <i>3</i> cards. The person taking the first turn has to draw another card according to the following Draw Phase.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Draw Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Draw one card unless otherwise specified.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Main Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Play any amount of effect and equipment cards - you may also play up to 1 creature card.</li>
+				<br>
+				<li>You may have up to 5 effect, equipment and creature cards on your side of field at any given time. There must be only 1 area card on the table; playing a new area card discards the previous one.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Battle Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an effect. No cards may be played after the beginning of battle phase unless allowed by a special effect, but face down cards may be activated.</li>
+				<br>
+				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated.</li>
+				<br>
+				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacker is defeated.</li>
+				<br>
+			</ul>
+		<li><b>Important Game Information</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player must play with a minimum of 40 and a maximum of 80 cards.</li>
+				<br>
+				<li>If a player must draw and is out of cards to draw, that player loses.</li>
+				<br>
+			</ul>
+		</li>
+	<h3>Tips:</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) There are themed sets of cards that work great in combination with one another! Try to build your deck around that!</li>
+		<li>2) Tap your equipment, effect or even the boards area card to differenciate between creatures!</li>
+		<li>3) Cards which are face-down on the table can surprise your opponent!</li>
+		<li>4) Just because a creature died and has to be put on your discard pile does not mean it is out of the game yet!</li>
+		<li>5) Keep some dice nearby. Some cards might require a bit of luck!</li>
+		<li>6) Buy more cards! Spend your cash!</li>
+	</ul>"}
 
 /obj/item/paper/book/ratbook
 	name = "chewed and mangled book"

@@ -5,7 +5,7 @@
 /////////////////////////////////////////////
 
 proc/ClearBadsmokeRefs(var/atom/A)
-	for (var/datum/effects/system/bad_smoke_spread/BS in bad_smoke_list)
+	for_by_tcl(BS, /datum/effects/system/bad_smoke_spread)
 		if (BS.holder == A)
 			BS.holder = null
 
@@ -20,7 +20,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 
 	New()
 		..()
-		bad_smoke_list += src
+		START_TRACKING
 
 /datum/effects/system/bad_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct, color)
 	if(n > 20)
@@ -41,7 +41,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 	holder.temp_flags |= HAS_BAD_SMOKE
 
 /datum/effects/system/bad_smoke_spread/disposing()
-	bad_smoke_list -= src
+	STOP_TRACKING
 	if (holder)
 		holder.temp_flags &= ~HAS_BAD_SMOKE
 	holder = null
@@ -68,11 +68,12 @@ proc/ClearBadsmokeRefs(var/atom/A)
 			for(var/j=0, j<pick(0,1,1,1,2,2,2,3), j++)
 				sleep(1 SECOND)
 				var/turf/t = get_step(smoke, direction)
-				if( t && t.loc && t.loc:sanctuary )
+				var/area/A = get_area(t)
+				if(A?.sanctuary)
 					pool(smoke)
 					continue
 				step(smoke,direction)
-			SPAWN_DBG(150+rand(10,30))
-				if (smoke)
-					pool(smoke)
-				src.total_smoke--
+			sleep(150+rand(10,30))
+			if (smoke)
+				pool(smoke)
+			src.total_smoke--

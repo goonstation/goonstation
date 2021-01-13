@@ -28,13 +28,13 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		for (var/client/C in clients)
 			C.sound_playing[ admin_sound_channel ][1] = vol
 			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN )
+			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
 				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -73,7 +73,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			C << music_sound
 			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
-		move_admin_sound_channel()
+		dj_panel.move_admin_sound_channel()
 	logTheThing("admin", src, null, "started loading music [S]")
 	logTheThing("diary", src, null, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
@@ -151,76 +151,14 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		message_admins("[key_name(data["key"])] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
-/mob/verb/adminmusicvolume()
-	set name = "Alter Music Volume"
-	set desc = "Alter admin music volume, default is 50"
-	set hidden = 1
-
-	if (!usr.client) //How could this even happen?
-		return
-
-	var/vol = input("Goes from 0-100. Default is 50", "Admin Music Volume", usr.client.getRealVolume(VOLUME_CHANNEL_ADMIN) * 100) as num
+/client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
+	var/channel_id = audio_channel_name_to_id[channel_name]
+	if(isnull(channel_id))
+		alert(usr, "Invalid channel.")
+	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]", "[channel_name] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = max(0,min(vol,100))
-	//usr.client.preferences.admin_music_volume = vol
-	usr.client.setVolume( VOLUME_CHANNEL_ADMIN, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Admin Music Volume to [vol].</span>")
-
-/mob/verb/radiomusicvolume()
-	set name = "Alter Radio Volume"
-	set desc = "Alter radio music volume, default is 50"
-	set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 50", "Radio Music Volume", usr.client.getRealVolume(VOLUME_CHANNEL_RADIO) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_RADIO, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Radio Music Volume to [vol].</span>")
-
-/mob/verb/gamevolume()
-	set name = "Alter Game Volume"
-	set desc = "Alter game volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Game Volume", usr.client.getRealVolume(VOLUME_CHANNEL_GAME) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_GAME, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Game Volume to [vol].</span>")
-
-/mob/verb/ambiencevolume()
-	set name = "Alter Ambience Volume"
-	set desc = "Alter ambience volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getRealVolume(VOLUME_CHANNEL_AMBIENT) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_AMBIENT, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Ambience Volume to [vol].</span>")
-
-
-/mob/verb/mastervolume()
-	set name = "Alter Master Volume"
-	set desc = "Alter master volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getMasterVolume() * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_MASTER, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed Master Volume to [vol].</span>")
-
-
-
-
+	src.setVolume(channel_id, vol/100 )
+	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
@@ -286,30 +224,6 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	SPAWN_DBG(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
 
-/proc/move_admin_sound_channel(var/opposite = 0)
-	if (opposite)
-		if (admin_sound_channel > 1014)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel--
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1014, set it bring it up 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1024
-			admin_dj.SetVar("admin_channel", 1024)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-	else
-		if (admin_sound_channel < 1024)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel++
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1024, set it back down 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1014
-			admin_dj.SetVar("admin_channel", 1014)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-
 /client/proc/play_youtube_audio()
 	if (!config.youtube_audio_key)
 		alert("You don't have access to the youtube audio converter")
@@ -319,27 +233,20 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!video)
 		return
 
-	var/url = "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]"
-	var/response[] = world.Export(url)
-	if (!response)
+	// Fetch via HTTP from goonhub
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
 		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
 		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
 		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
 		return
 
-	var/key
-	var/contentExists = 0
-	for (key in response)
-		if (key == "CONTENT")
-			contentExists = 1
-
-	if (!contentExists)
-		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: Malformed response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: Malformed response from server with video: [video]", "debug")
-		return
-
-	var/data = json_decode(file2text(response["CONTENT"]))
+	var/data = json_decode(response.body)
 	if (data["error"])
 		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return

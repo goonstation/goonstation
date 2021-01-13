@@ -47,7 +47,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
 			// Firebots are used in multiple department, so I guess they get all-access instead of only engineering.
 			src.botcard = new /obj/item/card/id(src)
@@ -320,11 +320,10 @@
 	if (src.emagged && iscarbon(target))
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-		SPAWN_DBG(0)
-			var/mob/living/carbon/Ctarget = target
-			boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
-			Ctarget.changeStatus("weakened", 2 SECONDS)
-			Ctarget.throw_at(targetTurf, 200, 4)
+		var/mob/living/carbon/Ctarget = target
+		boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
+		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.throw_at(targetTurf, 200, 4)
 
 	return
 

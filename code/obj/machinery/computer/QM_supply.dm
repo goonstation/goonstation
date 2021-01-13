@@ -74,7 +74,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						D.time_factor = sym_count * rand(10, 15) // 200, 600
 						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 						D.name = P.name
-						var/rating = max(P.advance_speed, P.mutation_speed, P.mutativeness, P.suppression_threshold, P.maliciousness)
+						var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
 						var/ds = "weak"
 						switch (P.stages)
 							if (4)
@@ -102,7 +102,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			qdel(sell_crate)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
@@ -113,7 +113,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	name = "Quartermaster's Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
-	req_access = list(access_cargo)
+	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	var/temp = null

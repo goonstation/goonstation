@@ -3,7 +3,7 @@
  * 90 101 87 97 107 97 39 115  83 116 117 102 102
  */
 
-//foo 15: bodacious grandiose bargaloo mambo
+//foo 37: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc
 
 //everything here is wip, this can also be ascertained by the location of this file
 
@@ -21,7 +21,7 @@
 	skip_sims = 1
 	sims_score = 30
 
-///////////////////////////////////// Beach Stuff
+///////////////////////////////////// Beach zone Stuff
 
 /area/greek/beach
 	name = "Strange Beach"
@@ -207,8 +207,8 @@
 		if (isobserver(A))
 			return ..()
 
-		if (greekfall.len)
-			var/turf/T = pick(greekfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_GREEK)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()
@@ -222,3 +222,4 @@
 
 
 //th3*vqoE
+// :O

@@ -91,7 +91,7 @@
             playsound(src, "sound/impact_sounds/Slimy_Splat_2.ogg", 100, 1)
             src.visible_message("<span style='color: red; font-weight: bold;'>[src.occupant] is unceremoniously ejected from [src].</span>")
             setalive(M)
-            M.loc = src.loc
+            M.set_loc(src.loc)
             reset()
     else
       // work on eating the current occupant
@@ -112,7 +112,7 @@
           qdel(M.ghost)
         M = M.make_critter(src.growing_variant)
         src.occupant = M
-        M.loc = src // the value of target has changed, do not edit this/delete this
+        M.set_loc(src) // the value of target has changed, do not edit this/delete this
         M.TakeDamage("All", 30, 30)
         src.growing = 1
   else
@@ -179,7 +179,7 @@
   // now consume
   src.visible_message("<span style='color: red; font-weight: bold;'>[src] [pick("devours", "swallows", "consumes", "gulps down", "snaps up")] [target]![prob(20) ? " Holy shit!" : ""]</span>")
   playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
-  target.loc = src
+  target.set_loc(src)
   src.in_use = 1
   src.occupant = target
   src.icon_state = "cloner-on"

@@ -11,9 +11,7 @@ import { Window } from '../layouts';
 export const TankDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window
-      width={280}
-      height={110}>
+    <Window width={280} height={105}>
       <Window.Content>
         <Section>
           <LabeledList>

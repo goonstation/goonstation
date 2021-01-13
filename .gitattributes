@@ -6,7 +6,7 @@
 *.dme	text
 *.dms	text
 *.dmf	text
-*.dmm text
+*.dmm text eol=lf
 
 # BYOND Images & bytecode
 *.dmi	binary

@@ -4,6 +4,7 @@
 	var/obj/screen/health
 
 	New(M)
+		..()
 		master = M
 		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "health-7", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
 		health.desc = "You feel powerful."

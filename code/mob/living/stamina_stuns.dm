@@ -47,8 +47,7 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
@@ -87,8 +86,7 @@
 		val += stamina_mods_regen[x]
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamregen")
 	return val
 
@@ -145,12 +143,11 @@
 	if(prob(4) && ishellbanned(src)) //Chances are this will happen during combat
 		SPAWN_DBG(rand(5, 80)) //Detach the cause (hit, reduced stamina) from the consequence (disconnect)
 			var/dur = src.client.fake_lagspike()
-			SPAWN_DBG(dur)
-				del(src.client)
+			sleep(dur)
+			del(src.client)
 
 	var/stam_mod_items = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -158,8 +155,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar)
-		src.stamina_bar.update_value(src)
+	src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -197,7 +193,6 @@
 	if(!src.use_stamina) return
 	damage = max(damage,10)
 	damage *= 4
-	//playsound(src.loc, "sound/impact_sounds/Generic_Punch_1.ogg", 50, 1, -1)
 	if(src.stamina >= 1 )
 		#if STAMINA_CRIT_DROP == 1
 		src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))
@@ -256,8 +251,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist"))
 			res = C.getProperty("disorient_resist")
 			if (res >= 100)
@@ -276,8 +270,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_eye"))
 			res = C.getProperty("disorient_resist_eye")
 			if (res >= 100)
@@ -310,8 +303,7 @@
 	.= 0
 
 	var/res = 0
-	for(var/atom in src.get_equipped_items())
-		var/obj/item/C = atom
+	for (var/obj/item/C as() in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_ear"))
 			res = C.getProperty("disorient_resist_ear")
 			if (res >= 100)
@@ -371,6 +363,11 @@
 	else
 		.= 0
 		src.changeStatus("disorient", disorient)
+
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	// Apply the twitching disorient animation for as long as the maximum stun duration is.
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	. = ..()
 
 //STAMINA UTILITY PROCS
 

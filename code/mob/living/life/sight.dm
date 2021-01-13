@@ -93,8 +93,8 @@
 					return ..()
 
 		if (owner.traitHolder && owner.traitHolder.hasTrait("infravision"))
-			if (owner.see_infrared < 1)
-				owner.see_infrared = 1
+			if (owner.see_invisible < 1)
+				owner.see_invisible = 1
 ////Reagents
 		if (owner.reagents?.has_reagent("green_goop") && (T && !isrestrictedz(T.z)))
 			if (owner.see_in_dark != 1)

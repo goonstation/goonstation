@@ -35,25 +35,3 @@
 	anchored = 1.0
 	opacity = 0
 	density = 0
-
-/obj/cairngorm_stats
-	name = "scoreboard of sorts"
-	icon = 'icons/obj/decals/wallsigns.dmi'
-	icon_state = "rip"
-	anchored = 1.0
-	opacity = 0
-	density = 0
-
-	New()
-		..()
-		var/wins = world.load_intra_round_value("nukie_win")
-		var/losses = world.load_intra_round_value("nukie_loss")
-		if(isnull(wins))
-			wins = 0
-		if(isnull(losses))
-			losses = 0
-		src.desc = "Successful missions: [wins]<br>\nUnsuccessful missions: [losses]"
-
-	attack_hand(mob/user)
-		examine(user)
-		. = ..()

@@ -60,7 +60,7 @@
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
@@ -284,7 +284,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 			var/obj/decal/point/P = new(get_turf(src.target))
 			P.pixel_x = target.pixel_x
 			P.pixel_y = target.pixel_y
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				P.invisibility = 101
 				qdel(P)
 

@@ -33,6 +33,25 @@
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/synthburger
 
+/datum/cookingrecipe/spicychickensandwich_2
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+
+/datum/cookingrecipe/spicychickensandwich
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
+
+/datum/cookingrecipe/chickensandwich
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/chicken
+
 /datum/cookingrecipe/mysteryburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -1153,12 +1172,6 @@
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 
-/datum/cookingrecipe/cake_downs
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
-	item2 = /obj/item/organ/brain
-	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/downs
-
 #ifdef XMAS
 
 /datum/cookingrecipe/cake_fruit
@@ -1202,6 +1215,7 @@
 		B.UpdateOverlays(overlay,"base")
 		if(S)
 			S.reagents.trans_to(B, 50)
+			B.food_effects += S.food_effects
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
 				for(var/food_effect in S.food_effects)

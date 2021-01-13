@@ -41,10 +41,13 @@
 		src.maptext_y = 4
 
 		src.maptext_width = 64
+
+		START_TRACKING
 		..()
 
 	disposing()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		STOP_TRACKING
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			NUKEMODE.the_bomb = null
 		qdel(wirepanel)
@@ -70,7 +73,8 @@
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
 		if (det_time && ticker.round_elapsed_ticks >= det_time)
-			explode()
+			SPAWN_DBG(0)
+				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
 		else
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
@@ -115,7 +119,7 @@
 
 
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) || src.target_override)
 			NUKEMODE = ticker.mode
 			var/target_area = src.target_override
 			if(isnull(target_area))
@@ -133,7 +137,7 @@
 						if (!((ispath(target_area) && istype(A, target_area)) || (islist(target_area) && (A.type in target_area))))
 							boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
 						else
-							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
+							if (alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") == "Yes" && !src.armed && get_dist(src, user) <= 1 && !(is_incapacitated(user) || user.restrained()))
 								src.armed = 1
 								src.anchored = 1
 								if (!src.image_light)
@@ -168,7 +172,7 @@
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/NUKEMODE = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
@@ -197,8 +201,7 @@
 
 			if (istype(W, /obj/item/remote/syndicate_teleporter))
 				for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
-					for(var/X in by_type[/obj/submachine/syndicate_teleporter]) // receiver
-						var/obj/submachine/syndicate_teleporter/R = X
+					for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
 						if(R.id == S.id && S != R)
 							if(S.recharging == 1)
 								return
@@ -312,7 +315,7 @@
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/NUKEMODE = null
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				NUKEMODE = ticker.mode
 				NUKEMODE.the_bomb = null
 				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
@@ -336,7 +339,7 @@
 			area_correct = 1
 		if(istype(ticker?.mode, /datum/game_mode/nuclear) && istype(nuke_area, NUKEMODE.target_location_type))
 			area_correct = 1
-		if ((nuke_turf.z != 1 && !area_correct) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
+		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			NUKEMODE.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			explosion(src, src.loc, 20, 30, 40, 50)
@@ -350,6 +353,9 @@
 			cinematic.add_client(C)
 		cinematic.play("nuke")
 #endif
+		if(istype(NUKEMODE))
+			NUKEMODE.nuke_detonated = 1
+			NUKEMODE.check_win()
 		sleep(5.5 SECONDS)
 
 		enter_allowed = 0
@@ -362,10 +368,7 @@
 
 		creepify_station()
 
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			ticker.mode:nuke_detonated = 1
-			ticker.mode.check_win()
-		else
+		if(!istype(NUKEMODE))
 			sleep(1 SECOND)
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
@@ -377,7 +380,7 @@
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "unanchornuke"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 
@@ -423,3 +426,28 @@
 	anyone_can_activate = 1
 	target_override = /area
 	target_override_name = "anywhere"
+
+/obj/bomb_decoy
+	name = "nuclear bomb"
+	desc = "An extremely powerful balloon capable of deceiving the whole station."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "nuclearbomb"
+	density = 1
+	anchored = 0
+	var/health = 10
+
+	proc/checkhealth()
+		if (src.health <= 0)
+			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
+			decal.icon_state = "balloon_green_pop"
+			qdel(src)
+
+	attackby(var/obj/item/W as obj, mob/user as mob)
+		..()
+		user.lastattacked = src
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
+		src.health -= W.force
+		checkhealth()
+		return

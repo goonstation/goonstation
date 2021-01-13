@@ -104,6 +104,11 @@
 	initial_reagents = "anti_rad"
 	label = "green"
 
+/obj/item/reagent_containers/emergency_injector/pentetic_acid
+	name = "emergency auto-injector (pentetic acid)"
+	initial_reagents = list("penteticacid"=5)
+	label = "blue"
+
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
 	initial_reagents = "insulin"
@@ -132,6 +137,11 @@
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
+	label = "blue"
+
+/obj/item/reagent_containers/emergency_injector/perf
+	name = "emergency auto-injector (perfluorodecalin)"
+	initial_reagents = "perfluorodecalin"
 	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/mannitol
@@ -183,7 +193,7 @@
 	name = "emergency auto-injector (???)"
 	label = "black"
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 
 /obj/item/reagent_containers/emergency_injector/vr/epinephrine
@@ -247,3 +257,11 @@
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector
+	name = "Donk injector"
+	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains a cocktail of chemicals intended to mimic the effect of eating a warm donk pocket."
+	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "methamphetamine" = 15)
+	label = "bigblue"
+	initial_volume = 90
+	amount_per_transfer_from_this = 15

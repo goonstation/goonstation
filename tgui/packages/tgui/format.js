@@ -87,8 +87,7 @@ export const formatMoney = (value, precision = 0) => {
   let result = '';
   for (let i = 0; i < length; i++) {
     if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
-      // Thin space
-      result += '\u2009';
+      result += ',';
     }
     result += fixed.charAt(i);
   }
@@ -109,4 +108,45 @@ export const formatDb = value => {
     formatted = toFixed(formatted, 2);
   }
   return sign + formatted + ' dB';
+};
+
+/**
+ * Formats time as a string in the minutes:seconds format.
+ * @param time the time to format, in tenths of a second
+ * @param msg an optional message to display if time <= 0
+ * @example formatTime(690)
+ * //returns `01:09`
+ * @example formatTime(0, 'BO:OM')
+ * //returns `BO:OM`
+ */
+export const formatTime = (time, msg = "") => {
+  let seconds = Math.floor((time / 10) % 60);
+  let minutes = Math.floor(((time / 10) - seconds) / 60);
+  if (time <= 0 && msg !== "") {
+    return msg;
+  }
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${minutes}:${seconds}`;
+};
+/**
+ * Formats pressure in terms of kPa, or scientific Pa if very large.
+ */
+export const formatPressure = value => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
+
+/**
+ * Truncates a string with an ellipsis after n characters. Default is 25.
+ */
+export const truncate = (str, n = 25) => {
+  return (str.length > n) ? str.substr(0, n-1) + '…' : str;
 };

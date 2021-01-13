@@ -1,74 +1,94 @@
+/// Base item. These are objects you can hold, generally.
 /obj/item
-	/*_____*/
-	/*Basic*/
-	/*‾‾‾‾‾*/
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	text = ""
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
+	var/force = null
 	var/item_state = null
+	/// for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
+	var/hit_type = DAMAGE_BLUNT
+	throwforce = 1
+	var/r_speed = 1.0
+	var/health = 4 // burn faster
+	var/burn_point = 15000  // this already exists but nothing uses it???
+	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
+	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+
+	var/burn_output = 1500 //how hot should it burn
+	/// 0 = ash, 1 = melt
+	var/burn_type = 0
+	var/burning = null
+	var/burning_last_process = 0
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	/// how big they are, determines if they can fit in backpacks and pockets and the like
+	var/w_class = 3.0
+	/// how hard they are to pull around, determines how much something slows you down while pulling it
+	p_class = 1.5
+	/// Can't remove from non-hand slots
+	var/cant_self_remove = 0
+	/// Can't be removed from non-hand slots by others
+	var/cant_other_remove = 0
+	/// Cant' be removed in general. I guess.
+	var/cant_drop = 0
+
+	flags = FPRINT | TABLEPASS
+	var/tool_flags = 0
+	var/c_flags = null
+	var/tooltip_flags = null
+	var/item_function_flags = null
+	var/force_use_as_tool = 0
+
+	pressure_resistance = 50
+	var/obj/item/master = null
+	var/amount = 1
+	var/max_stack = 1
+	/// if null, only current type. otherwise uses this
+	var/stack_type = null
+	/// If nonzero, bots consider this a thing people shouldn't be carrying without authorization
+	var/contraband = 0
+	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
+						//If 2, play the attack animation but hide the attack particles.
+
+	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
+
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	/*_______*/
-	/*Burning*/
-	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
-	var/burning = null
-	var/health = 4 //burn faster
-	var/burn_point = 15000  //this already exists but nothing uses it???
-	var/burn_output = 1500 //how hot should it burn
-	var/burn_type = 0 //0 = ash, 1 = melt
-	var/burning_last_process = 0
-	var/firesource = 0 //0 or 1 : dictates whether or not the item can be used as a valid source of fire
+	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
 
-	/*______*/
-	/*Combat*/
-	/*‾‾‾‾‾‾*/
-	var/force = null
-	var/hit_type = DAMAGE_BLUNT //for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
-	throwforce = 1//4
-	var/r_speed = 1.0
-	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
+	var/over_clothes = 0 //draw over clothes when used as a limb
+	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
+	var/can_hold_items = 0 //when used as an arm, can it hold things?
 
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
-	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
+
+	var/list/module_research = null//list()
+	var/module_research_type = null
+	var/module_research_no_diminish = 0
+
+	/// can you eat the thing?
+	var/edible = 0
+
+	var/duration_put    = -1 // If set to something other than -1 these will control
+	var/duration_remove = -1 // how long it takes to remove or put the item onto a person. 1/10ths of a second.
+
+	var/rand_pos = 0
+	/// Should this item use a contained item (in contents) to attack with instead?
+	var/useInnerItem = 0
+	var/obj/item/holding = null
+
+	/// Requires both hands. Do not change while equipped. Use proc for that (TBI)
+	var/two_handed = 0
+	///Delay before next click after using this.
+	var/click_delay = DEFAULT_CLICK_DELAY
 	var/combat_click_delay = COMBAT_CLICK_DELAY
-
-	var/datum/item_special/special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
-						//If 2, play the attack animation but hide the attack particles.
-	var/can_disarm = 0
-	var/useInnerItem = 0 //Should this item use a contained item (in contents) to attack with instead?
-
-	var/obj/item/grab/chokehold = null
-	var/obj/item/grab/special_grab = null
-
-	/*_________*/
-	/*Inventory*/
-	/*‾‾‾‾‾‾‾‾‾*/
-	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-	var/w_class = 3.0 //how big they are, determines if they can fit in backpacks and pockets and the like
-	p_class = 1.5 //how hard they are to pull around, determines how much something slows you down while pulling it
-
-	var/cant_self_remove = 0 //Can't remove from non-hand slots
-	var/cant_other_remove = 0 //Can't be removed from non-hand slots by others
-	var/cant_drop = 0 //Cant' be removed in general. I guess.
-
-	var/amount = 1
-	var/max_stack = 1
-	var/stack_type = null //if null, only current type. otherwise uses this
-
-	var/equipped_in_slot = null //null if not equipped, otherwise contains the slot in which it is
-	var/two_handed = 0 //Requires both hands. Do not change while equipped. Use proc for that (TBI)
-	var/duration_put    = -1 //If set to something other than -1 these will control
-	var/duration_remove = -1 //how long it takes to remove or put the item onto a person. 1/10ths of a second.
 
 	var/showTooltip = 1
 	var/showTooltipDesc = 1
@@ -79,42 +99,35 @@
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
 	var/tmp/tooltip_rebuild = 1
+	/// Just a little thing to indicate item rarity. RPG fluff.
+	var/rarity = ITEM_RARITY_COMMON
 
-	/*_____*/
-	/*Flags*/
-	/*‾‾‾‾‾*/
-	flags = FPRINT | TABLEPASS
-	var/tool_flags = 0
-	var/c_flags = null
-	var/tooltip_flags = null
-	var/item_function_flags = null
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/special = null
+
+	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
+
+	var/can_disarm = 0
 
 	var/block_hearing_when_worn = HEARING_NORMAL
-	//fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
+	 //fuck me mbc why you do this | | ok i did it to reduce type checking in a proc that gets called A LOT and idk what else to do ok help
+
+
+	var/obj/item/grab/chokehold = null
+	var/obj/item/grab/special_grab = null
+
 	var/block_vision = 0 //cannot see when worn
-	var/needOnMouseMove = 0 //If 1, we check all the stuff required for onMouseMove for this. Leave this off unless required. Might cause extra lag.
-	var/contraband = 0 //If nonzero, bots consider this a thing people shouldn't be carrying without authorization
-	var/edible = 0 // can you eat the thing?
 
-	/*_____*/
-	/*Other*/
-	/*‾‾‾‾‾*/
-	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
-	var/over_clothes = 0 //draw over clothes when used as a limb
-	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
-	var/can_hold_items = 0 //when used as an arm, can it hold things?
+	/// Inventory count display. Call create_inventory_counter in New()
+	var/inventory_counter_enabled = 0
+	var/obj/overlay/inventory_counter/inventory_counter = null
 
-	var/list/module_research = null//list()
-	var/module_research_type = null
-	var/module_research_no_diminish = 0
+	// amount of time spent between previous tick and this one (1 = normal)
+	var/last_tick_duration = 1
+	var/last_processing_tick = -1
 
-	var/rand_pos = 0
-	var/obj/item/holding = null
-	var/rarity = ITEM_RARITY_COMMON //Just a little thing to indicate item rarity. RPG fluff.
-	pressure_resistance = 50
-	var/obj/item/master = null
-
-	proc/setTwoHanded(var/twohanded = 1) //This is the safe way of changing 2-handed-ness at runtime. Use this please.
+	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
+	proc/setTwoHanded(var/twohanded = 1)
 		if(ismob(src.loc))
 			var/mob/L = src.loc
 			return L.updateTwoHanded(src, twohanded)
@@ -133,36 +146,43 @@
 		. += "<hr>"
 		if(rarity >= 4)
 			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+		//combat stats
 		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
 		if (src.stamina_cost || src.stamina_damage)
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
+		//standard object properties
 		if(src.properties && src.properties.len)
 			for(var/datum/objectProperty/P in src.properties)
-				if(!istype(P, /datum/objectProperty/inline))
+				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//itemblock tooltip additions
+		//Blocking section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && B.properties.len)
-					for(var/datum/objectProperty/inline/P in B.properties)
-						. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
-						if(!istype(P, /datum/objectProperty/inline))
+						if(P.inline)
+							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					//blocking-based properties
+					for(var/datum/objectProperty/P in B.properties)
+						if(!P.hidden)
 							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
-			for (var/datum/component/C in src.GetComponents(/datum/component/itemblock))
-				. += jointext(C.getTooltipDesc(), "")
+			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
 
+		//item specials
+		//unarmed special overrides from gloves
 		if(istype(src, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
 				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
 			. = jointext(., "")
+		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
@@ -257,18 +277,32 @@
 		if (!src.pixel_y) // same as above
 			src.pixel_y = rand(-8,8)
 	src.setItemSpecial(/datum/item_special/simple)
+
+	if (inventory_counter_enabled)
+		src.create_inventory_counter()
+		if (src.amount != 1)
+			// this is a gross hack to make things not just show "1" by default
+			src.inventory_counter.update_number(src.amount)
 	..()
 
 /obj/item/unpooled()
 	..()
-	src.amount = 1
+	src.amount = initial(src.amount)
 
+	// Reset scaling/transforms/etc.
+	src.transform = initial(transform)
+
+	// @TODO should we just like. clear all overlays? this seems particularly hacky
+	// or maybe this should be done in pooled / disposing???
 	if (src.burning)
 		if (src.burn_output >= 1000)
 			src.overlays -= image('icons/effects/fire.dmi', "2old")
 		else
 			src.overlays -= image('icons/effects/fire.dmi', "1old")
 	src.burning = 0
+
+	if (inventory_counter_enabled)
+		src.create_inventory_counter()
 
 /obj/item/pooled()
 	src.amount = 0
@@ -284,6 +318,11 @@
 	if (ismob(src.loc))
 		var/mob/M = src.loc
 		M.u_equip(src)
+
+	if (src.inventory_counter)
+		src.vis_contents -= src.inventory_counter
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	..()
 
@@ -343,9 +382,13 @@
 
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
-	if (!src.edible && !(src.material && src.material.edible))
-		return 0
 	if (!iscarbon(M) && !ismobcritter(M))
+		return 0
+	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
+		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
+			return 0
+	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
+	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
 
 	if (M == user)
@@ -357,28 +400,22 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-			// Why not, I guess. Adds a bit of flavour (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
 
 	else
-		if(M.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
-			return 0
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
@@ -399,20 +436,17 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-			// Ditto (Convair880).
-			if (iswerewolf(M) && istype(src, /obj/item/organ/))
-				M.show_text("Mmmmm, tasty organs. How refreshing.", "blue")
-				M.HealDamage("All", 5, 5)
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -432,43 +466,19 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-
-/*
-		var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-		if (color)
-			overlay.Blend(color,ICON_MULTIPLY)
-		var/image/I = image(overlay)
-		I.pixel_x = -32
-		I.pixel_y = -32
-
-		var/the_dir = NORTH
-	for(var/i=0, i<8, i++)
-		var/obj/chem_smoke/C = new/obj/chem_smoke(location, holder, max_vol)
-		C.overlays += I
-		if (rname) C.name = "[rname] smoke"
-		SPAWN_DBG(0)
-			var/my_dir = the_dir
-			var/my_time = rand(80,110)
-			var/my_range = 3
-			SPAWN_DBG(my_time) qdel(C)
-			for(var/b=0, b<my_range, b++)
-				sleep(1.5 SECONDS)
-				if (!C) break
-				step(C,my_dir)
-				C.expose()
-		the_dir = turn(the_dir,45)
-*/
+/obj/item/proc/combust_ended()
+	processing_items.Remove(src)
 
 /obj/item/proc/combust() // cogwerks- flammable items project
 	if (!src.burning)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
-		src.firesource = 1
 		if (src.burn_output >= 1000)
-			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
+			src.overlays += image('icons/effects/fire.dmi', "2old")
 		else
-			UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
+			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
+
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -507,13 +517,6 @@
 						C.expose()
 				the_dir = turn(the_dir,45) */
 
-/obj/item/proc/combust_ended()
-	processing_items.Remove(src)
-	burning = null
-	firesource = 0
-	ClearSpecificOverlays("burn_overlay")
-	name = "[pick("charred","burned","scorched")] [name]"
-
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -527,12 +530,16 @@
 
 /obj/item/proc/change_stack_amount(var/diff)
 	amount += diff
+	if (!inventory_counter)
+		create_inventory_counter()
+	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else
-		SPAWN_DBG(0)
-			usr.u_equip(src)
-			pool(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
+		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
@@ -681,7 +688,8 @@
 			if (!(in_range(src,user) && in_range(storage,user)))
 				return
 
-		var/succ = src.try_put_hand_mousedrop(user, storage)
+		src.pick_up_by(user)
+		var/succ = user.is_in_hands(src)
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
@@ -692,7 +700,9 @@
 		if (src.cant_self_remove)
 			return
 		if ( !user.restrained() && !user.stat )
-			var/succ = src.try_put_hand_mousedrop(user)
+
+			src.pick_up_by(user)
+			var/succ = user.is_in_hands(src)
 			if (succ)
 				SPAWN_DBG(1 DECI SECOND)
 					if (user.is_in_hands(src))
@@ -750,7 +760,7 @@
 	if (src.material)
 		src.material.triggerTemp(src ,1500)
 	if (src.burn_possible && src.burn_point <= 1500)
-		if (W.firesource)
+		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || (istype(W, /obj/item/clothing/head/cakehat) && W:on) || (istype(W, /obj/item/device/igniter)) || (istype(W, /obj/item/device/light/zippo) && W:on) || (istype(W, /obj/item/match) && (W:on > 0)) || W.burning)
 			src.combust()
 		else
 			..(W, user)
@@ -758,6 +768,11 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	if (src.last_processing_tick < 0)
+		src.last_tick_duration = 1
+	else
+		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
+	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
 		if (src.material)
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
@@ -768,10 +783,11 @@
 		if (prob(7))
 			elecflash(src)
 		if (prob(7))
-			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
-			smoke.start()
+			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
+				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
 		if (prob(7))
 			fireflash(src, 0)
 
@@ -822,8 +838,9 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
-	if(chokehold)
-		chokehold.attack_self(user)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
+
+	chokehold?.attack_self(user)
 
 	return
 
@@ -892,19 +909,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (1.0)
-			if (istype(src,/obj/item/parts/human_parts))
-				src:holder = null
-			qdel(src)
-			return
 		if (2.0)
-			if (prob(50))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -914,13 +919,6 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3.0)
-			if (prob(5))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -930,7 +928,7 @@
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		else
-	return
+	return ..()
 
 /obj/item/blob_act(var/power)
 	if (src.artifact)
@@ -963,13 +961,14 @@
 		src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
+
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
 	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
+	if (!istype(src.loc, /turf) || is_incapacitated(M) || M.restrained())
 		return
 
 	if (!can_reach(M, src))
@@ -1012,7 +1011,7 @@
 		if (4.0) t = "bulky"
 		if (5.0 to INFINITY) t = "huge"
 		else
-	if (usr && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)
@@ -1021,6 +1020,10 @@
 		if (isliving(checkloc) && checkloc != user)
 			return 0
 		checkloc = checkloc:loc
+
+	if(!src.can_pickup(user))
+		return 0
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
@@ -1064,7 +1067,7 @@
 		oldloc_sfx = oldloc.loc
 	if (src in bible_contents)
 		bible_contents.Remove(src) // UNF
-		for (var/obj/item/storage/bible/bible in by_type[/obj/item/storage/bible])
+		for_by_tcl(bible, /obj/item/storage/bible)
 			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
@@ -1085,12 +1088,13 @@
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-	if ((src.edible && (ishuman(M) || ismobcritter(M)) || (src.material && src.material.edible)) && src.Eat(M, user))
-		return
 
 	if (surgeryCheck(M, user))		// Check for surgery-specific actions
 		if(insertChestItem(M, user))	// Puting item in patient's chest
 			return
+
+	if (src.Eat(M, user)) // All those checks were done in there anyway
+		return
 
 	if (src.flags & SUPPRESSATTACK)
 		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
@@ -1114,19 +1118,8 @@
 			return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area
-	var/d_zone
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		hit_area = parse_zone(O.organ_name)
-		d_zone = O.organ_name
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		hit_area = parse_zone(P.slot)
-		d_zone = P.slot
-	else
-		hit_area = parse_zone(affecting)
-		d_zone = affecting
+	var/hit_area = parse_zone(affecting)
+	var/d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
@@ -1152,7 +1145,7 @@
 
 	user.violate_hippocratic_oath()
 
-	for (var/mob/V in nervous_mobs)
+	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(user,V) > 6)
 			continue
 		if (prob(8) && user)
@@ -1167,18 +1160,14 @@
 	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+		return
 	var/stam_crit_pow = src.stamina_crit_chance
 	if (prob(stam_crit_pow))
 		msgs.stamina_crit = 1
-		msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
-
-	if (can_disarm)
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
-	else
-		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
-		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit))
 
 	msgs.played_sound = src.hitsound
 
@@ -1226,7 +1215,31 @@
 	if(user.is_hulk())
 		power *= 1.5
 
+	var/pre_armor_power = power
 	power -= armor_mod
+
+	var/armor_blocked = 0
+
+	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
+		block_spark(M,armor=1)
+		switch(hit_type)
+			if (DAMAGE_BLUNT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_CUT)
+				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_STAB)
+				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+			if (DAMAGE_BURN)
+				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+		if(power <= 0)
+			fuckup_attack_particle(user)
+			armor_blocked = 1
+
+	if (can_disarm)
+		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+	else
+		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
+		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
 
 	if (w_class > STAMINA_MIN_WEIGHT_CLASS)
 		var/stam_power = stamina_damage
@@ -1311,10 +1324,10 @@
 	if (attacher.zone_sel.selecting == "l_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
 		attachee.limbs.l_arm = new_arm
-	else
+	else if (attacher.zone_sel.selecting == "r_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
 		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows
+	if (!new_arm) return //who knows - or they aren't targetting an arm!
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)
@@ -1356,6 +1369,9 @@
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
+	if (src.inventory_counter)
+		pool(src.inventory_counter)
+		src.inventory_counter = null
 
 	if(istype(src.loc, /obj/item/storage))
 		var/obj/item/storage/storage = src.loc
@@ -1431,9 +1447,14 @@
 				possible_mob_holder.drop_item()
 				possible_mob_holder.hand = !possible_mob_holder.hand
 
+/obj/item/proc/create_inventory_counter()
+	if (!src.inventory_counter)
+		src.inventory_counter = unpool(/obj/overlay/inventory_counter)
+		src.vis_contents += src.inventory_counter
+
 /obj/item/proc/dropped(mob/user)
 	if (user)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
@@ -1449,7 +1470,8 @@
 			B.OnDrop()
 	hide_buttons()
 	clear_mob()
-
+	if (src.inventory_counter)
+		src.inventory_counter.hide_count()
 	if (special_grab || chokehold)
 		drop_grab()
 	return
@@ -1461,15 +1483,16 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	if(src.material)
-		src.material.triggerPickup(user, src)
+	src.material?.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
+	if (src.inventory_counter)
+		src.inventory_counter.show_count()
 	if (src.c_flags & EQUIPPED_WHILE_HELD)
 		src.equipped(user, user.get_slot_from_item(src))
 
 /obj/item/proc/intent_switch_trigger(mob/user)
 	return
 
-/obj/item/proc/firesource_interact() //usually called after interacting with an object on attack and using the if(firesource) check. This can be used to, for instance, decrase the fuel of a welding tool after lighting a candle.
-	return
+/obj/item/proc/can_pickup(mob/user)
+	return !src.anchored

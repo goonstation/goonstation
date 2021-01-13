@@ -270,7 +270,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/tripsalot, list("shoes"))
+	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
 
 /obj/item/clothing/shoes/flippers
 	name = "flippers"
@@ -398,6 +398,12 @@
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+
+/obj/item/clothing/shoes/swat/noslip
+	name = "hi-grip assault boots"
+	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	icon_state = "swatheavy"
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"
@@ -544,3 +550,37 @@
 	name = "jester's shoes"
 	desc = "The shoes of a not-so-funny-clown."
 	icon_state = "jester"
+
+/obj/item/clothing/shoes/scream
+	name = "scream shoes"
+	icon_state = "pink"
+	step_sound = list("sound/voice/screams/male_scream.ogg", "sound/voice/screams/mascream6.ogg", "sound/voice/screams/mascream7.ogg")
+	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
+
+/obj/item/clothing/shoes/fart
+	name = "fart-flops"
+	icon_state = "tourist"
+	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
+	desc = "Do I really need to tell you what these do?"
+
+/obj/item/clothing/shoes/crafted
+	name = "shoes"
+	desc = "A custom pair of shoes"
+	icon_state = "white"
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("thermal"))
+				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			else
+				protective_temperature = 0
+				setProperty("coldprot", 0)
+				setProperty("heatprot", 0)
+			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+			else
+				kick_bonus = 0
+		return

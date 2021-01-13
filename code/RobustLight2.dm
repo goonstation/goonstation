@@ -158,6 +158,7 @@ datum/light
 #endif
 
 	New(x=0, y=0, z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -194,8 +195,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -211,6 +211,9 @@ datum/light
 				if (SHOULD_QUEUE)
 					light_update_queue.queue(src)
 					dirty_flags |= D_COLOR
+					r_des = red
+					g_des = green
+					b_des = blue
 					return
 
 				var/strip_gen = ++RL_Generation
@@ -223,8 +226,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -252,8 +254,7 @@ datum/light
 
 				APPLY_AND_UPDATE
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						if (T.RL_UpdateGeneration <= strip_gen)
 							RL_UPDATE_LIGHT(T)
 			else
@@ -287,8 +288,7 @@ datum/light
 			enabled = 0
 
 			if (RL_Started)
-				for (var/turf in src.strip(++RL_Generation))
-					var/turf/T = turf
+				for (var/turf/T as() in src.strip(++RL_Generation))
 					RL_UPDATE_LIGHT(T)
 
 		detach()
@@ -394,8 +394,7 @@ datum/light
 
 			if (src.enabled && RL_Started)
 				APPLY_AND_UPDATE
-				for (var/turf in affected)
-					var/turf/T = turf
+				for (var/turf/T as() in affected)
 					if (T.RL_UpdateGeneration <= strip_gen)
 						RL_UPDATE_LIGHT(T)
 
@@ -436,8 +435,7 @@ datum/light
 				T.RL_UpdateGeneration = generation
 				. += T
 
-			for (var/X in .)
-				var/turf/T = X
+			for (var/turf/T as() in .)
 				var/E_new = 0
 				if (T.E && T.E.RL_ApplyGeneration < generation)
 					E_new = 1
@@ -509,8 +507,7 @@ datum/light
 				T.RL_UpdateGeneration = generation
 				. += T
 
-			for (var/X in .)
-				var/turf/T = X
+			for (var/turf/T as() in .)
 
 				if (T.E && T.E.RL_ApplyGeneration < generation)
 					T.E.RL_ApplyGeneration = generation
@@ -593,12 +590,14 @@ proc
 
 /obj/overlay/tile_effect
 	event_handler_flags = IMMUNE_SINGULARITY
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /obj/overlay/tile_effect/lighting
 	icon = 'icons/effects/light_overlay.dmi'
 	blend_mode = BLEND_ADD
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
+	vis_flags = VIS_HIDE
 
 turf
 	var
@@ -777,8 +776,7 @@ atom
 			var/old_loc = src.loc
 			. = ..()
 			if (src.loc != old_loc && src.RL_Attached)
-				for (var/L in src.RL_Attached)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in src.RL_Attached)
 					light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
 			// commented out for optimization purposes, let's hope it doesn't matter too much
 			/*
@@ -805,8 +803,7 @@ atom
 						lights |= T.RL_Lights
 
 				var/list/affected = list()
-				for (var/L in lights)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in lights)
 					if (light.enabled)
 						affected |= light.strip(++RL_Generation)
 
@@ -817,28 +814,24 @@ atom
 
 				. = ..()
 
-				for (var/L in lights)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in lights)
 					if (light.enabled)
 						affected |= light.apply()
 				if (RL_Started)
-					for (var/turf in affected)
-						var/turf/T = turf
+					for (var/turf/T as() in affected)
 						RL_UPDATE_LIGHT(T)
 			else
 				. = ..()
 
 			if (src.RL_Attached) // TODO: defer updates and update all affected tiles at once?
 				var/dont_queue = (loc == null) //if we are being thrown to a null loc, dont queue this move. we need it Now.
-				for (var/L in src.RL_Attached)
-					var/datum/light/light = L
+				for (var/datum/light/light as() in src.RL_Attached)
 					light.move(src.x+0.5, src.y+0.5, src.z, src.dir, queued_run = dont_queue)
 
 	disposing()
 		..()
 		if (src.RL_Attached)
-			for (var/L in src.RL_Attached)
-				var/datum/light/attached = L
+			for (var/datum/light/attached as() in src.RL_Attached)
 				attached.disable(queued_run = 1)
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
@@ -872,6 +865,5 @@ atom
 				if (light.enabled)
 					affected |= light.apply()
 			if (RL_Started)
-				for (var/turf in affected)
-					var/turf/T = turf
+				for (var/turf/T as() in affected)
 					RL_UPDATE_LIGHT(T)

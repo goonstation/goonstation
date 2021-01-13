@@ -16,7 +16,7 @@ Contains:
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
 	density = 1
-	var/mob/living/carbon/human/rider = null
+	var/mob/living/rider = null
 	var/in_bump = 0
 	var/sealed_cabin = 0
 	var/rider_visible =	1
@@ -48,10 +48,15 @@ Contains:
 			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
 		return
 
+	Exited(atom/movable/thing, atom/newloc)
+		. = ..()
+		if(thing == src.rider)
+			src.eject_rider()
+
 	proc/eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		if(rider.loc == src)
+			rider.set_loc(src.loc)
 		rider = null
-		return
 
 	ex_act(severity)
 		switch(severity)
@@ -128,7 +133,7 @@ Contains:
 		return
 
 	weeoo_in_progress = 10
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][src.icon_weeoo_state]"
@@ -258,10 +263,11 @@ Contains:
 	return
 
 /obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if (rider.client)
@@ -360,7 +366,7 @@ Contains:
 					T.u_equip(hat)
 					hat.set_loc(T.loc)
 					hat.dropped(T)
-					SPAWN_DBG(0) hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
+					hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
 
 			else if (istype(joustingTool, /obj/item/experimental/melee/spear)) // don't need custom attackResults here, just use the spear attack, that's deadly enough
 				T.attackby(joustingTool, R)
@@ -410,7 +416,7 @@ Contains:
 			M.set_loc(src.loc)
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -535,14 +541,12 @@ Contains:
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(1250)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(1250)
 		if(zamboni)
-			R.add_reagent("cryostylane", 1000)
+			reagents.add_reagent("cryostylane", 1000)
 		else
-			R.add_reagent("water", 1000)
-			//R.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
+			reagents.add_reagent("water", 1000)
+			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
 
 		if (!islist(src.ability_buttons))
 			ability_buttons = list()
@@ -587,7 +591,8 @@ Contains:
 		src.underlays = null
 
 /obj/vehicle/floorbuffer/Move()
-	if(..() && rider)
+	. = ..()
+	if(. && rider)
 		pixel_x = rand(-1, 1)
 		pixel_y = rand(-1, 1)
 		SPAWN_DBG(1 DECI SECOND)
@@ -710,7 +715,8 @@ Contains:
 	return
 
 /obj/vehicle/floorbuffer/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if (rider.client)
@@ -770,7 +776,7 @@ Contains:
 			M.set_loc(src.loc)
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -815,7 +821,7 @@ Contains:
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(!is_incapacitated(usr))
 		eject_rider(0, 1)
 	return
 
@@ -1021,7 +1027,7 @@ Contains:
 	return
 
 /obj/vehicle/clowncar/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user) || isghostcritter(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
 		return
 
 	var/msg
@@ -1146,7 +1152,8 @@ Contains:
 /obj/vehicle/clowncar/eject_rider(var/crashed, var/selfdismount)
 	if (!src.rider || !ismob(src.rider))
 		return
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	walk(src, 0)
 	moving = 0
 	src.log_me(src.rider, null, "rider_exit")
@@ -1251,6 +1258,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		SPAWN_DBG(1 DECI SECOND)
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-2, 2)
+		return TRUE
 
 /obj/vehicle/clowncar/cluwne/relaymove(mob/user as mob, dir)
 	..(user, dir)
@@ -1275,7 +1283,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_y = 0
 
 /obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1395,7 +1403,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/cat/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 	if(crashed)
@@ -1520,17 +1529,21 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/adminbus
 	name = "Admin Bus"
 	desc = "A short yellow bus that looks reinforced."
+	var/badmin_name = "Badmin Bus"
+	var/badmin_desc = "A short bus painted in blood that looks horrifyingly evil."
 	icon_state = "adminbus"
 	var/nonmoving_state = "adminbus"
 	var/moving_state = "adminbus2"
+	var/badmin_moving_state = "badminbus2"
+	var/badmin_nonmoving_state = "badminbus"
 	var/antispam = 0
 	is_syndicate = 1
 	mats = 15
 	sealed_cabin = 1
 	rider_visible = 0
 	var/gib_onhit = 0
-	var/is_badmin_bus = 0
-	var/atom/movable/effect/darkness/darkness
+	var/is_badmin_bus = FALSE
+	var/darkness = FALSE
 	soundproofing = 5
 
 /obj/vehicle/adminbus/New()
@@ -1538,20 +1551,17 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	if (!islist(src.ability_buttons))
 		ability_buttons = list()
 	var/obj/ability_button/loudhorn/NB = new
-	NB.screen_loc = "NORTH-2,1"
+	NB.screen_loc = "NORTH-2"
 	ability_buttons += NB
 	var/obj/ability_button/stopthebus/SB = new
-	SB.screen_loc = "NORTH-2,2"
+	SB.screen_loc = "NORTH-2"
 	ability_buttons += SB
-
-/obj/vehicle/adminbus/disposing()
-	if(darkness)
-		qdel(darkness)
-	..()
+	var/obj/ability_button/togglespook/togglespook = new
+	togglespook.screen_loc = "NORTH-2"
+	ability_buttons += togglespook
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
-		src.darkness.set_loc(src.loc)
 		if(prob(3))
 			src.do_darkness()
 
@@ -1563,7 +1573,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	icon_state = "noise"
 	var/active = 0
 
-	Click()
+	Click(location, control, params)
+		. = ..()
 		if(!the_mob) return
 		if(active) return
 
@@ -1578,21 +1589,36 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		SPAWN_DBG(1 SECOND)
 			active = 0
 
-		return
-
 /obj/ability_button/stopthebus
 	name = "Stop The Bus"
 	icon = 'icons/misc/ManuUI.dmi'
 	icon_state = "cancel"
 	var/active = 0
 
-	Click()
+	Click(location, control, params)
+		. = ..()
 		if(!the_mob) return
 		var/mob/my_mob = the_mob
 		if(!istype(my_mob.loc, /obj/vehicle)) return
 		var/obj/vehicle/v = my_mob.loc
 		v.stop()
-		return
+
+/obj/ability_button/togglespook
+	name = "Toggle Spook"
+	icon = 'icons/ui/context32x32.dmi'
+	icon_state = "wraith-break-lights"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.darkness = !bus.darkness
+			if (bus.darkness)
+				boutput( the_mob, "<span class='alert'>The air grows heavy and nearby lights begin to flicker and dim!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>Things seem to return to normal.</span>" )
 
 /obj/vehicle/adminbus/Stopped()
 	..()
@@ -1704,7 +1730,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/adminbus/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -1767,7 +1793,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			boutput(rider, "<span class='alert'><B>You crash through the wall!</B></span>")
 			for(var/mob/C in viewers(src))
-				shake_camera(C, 10, 4)
+				shake_camera(C, 10, 16)
 				if(C == rider)
 					continue
 				C.show_message("<span class='alert'><B>The [src] crashes through the wall!</B></span>", 1)
@@ -1777,7 +1803,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/mob/M = AM
 		boutput(rider, "<span class='alert'><B>You crash into [M]!</B></span>")
 		for (var/mob/C in viewers(src))
-			shake_camera(C, 8, 3)
+			shake_camera(C, 8, 12)
 			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>The [src] crashes into [M]!</B></span>", 1)
@@ -1787,8 +1813,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			M.changeStatus("stunned", 80)
 			M.changeStatus("weakened", 5 SECONDS)
 			var/turf/target = get_edge_target_turf(src, src.dir)
-			SPAWN_DBG(0)
-				M.throw_at(target, 10, 2)
+			M.throw_at(target, 10, 2)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		in_bump = 0
@@ -1798,7 +1823,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(O.density)
 			boutput(rider, "<span class='alert'><B>You crash into [O]!</B></span>")
 			for (var/mob/C in viewers(src))
-				shake_camera(C, 8, 3)
+				shake_camera(C, 8, 12)
 				if(C == rider)
 					continue
 				C.show_message("<span class='alert'><B>The [src] crashes into [O]!</B></span>", 1)
@@ -1834,9 +1859,10 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/adminbus/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.remove_adminbus_powers()
-	for(var/obj/ability_button/B in ability_buttons)
+	for(var/obj/ability_button/B in src.ability_buttons)
 		rider.client.screen -= B
 	walk(src, 0)
 	if(crashed)
@@ -1852,9 +1878,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		rider.buckled = null
-		rider = null
-		icon_state = nonmoving_state
 		if(prob(40) && src.contents.len)
 			src.visible_message("<span class='alert'><B>Everything in the [src] flies out!</B></span>")
 			for(var/atom/A in src.contents)
@@ -1866,21 +1889,19 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 					var/obj/O = A
 					O.set_loc(src.loc)
 
-		if(is_badmin_bus)
-			toggle_darkness()
-		return
 	if(selfdismount)
 		boutput(rider, "<span class='notice'>You climb out of the [src].</span>")
-		if(is_badmin_bus)
-			toggle_darkness()
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
 			C.show_message("<B>[rider]</B> climbs out of the [src].", 1)
+
 	rider.buckled = null
 	rider = null
-	icon_state = nonmoving_state
-	return
+	src.icon_state = src.nonmoving_state
+	if (src.is_badmin_bus)
+		src.toggle_badmin()
+
 
 /obj/vehicle/adminbus/attackby(var/obj/item/I, var/mob/user)
 	if(!(user.client && user.client.holder))
@@ -1917,22 +1938,21 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	if(prob(50))
 		gibs(get_turf(src))
 
-/obj/vehicle/adminbus/proc/toggle_darkness()
-	if(src.darkness)
-		qdel(src.darkness)
-		src.name = "Admin Bus"
-		src.desc = "A short yellow bus that looks reinforced."
-		src.moving_state = "adminbus2"
-		src.nonmoving_state = "adminbus"
-		src.is_badmin_bus = 0
+/obj/vehicle/adminbus/proc/toggle_badmin()
+	if (src.is_badmin_bus)
+		src.name = initial(src.name)
+		src.desc = initial(src.desc)
+		src.moving_state = initial(src.moving_state)
+		src.nonmoving_state = initial(src.nonmoving_state)
+		src.is_badmin_bus = FALSE
+		boutput(usr, "<span class='info'>Badmin mode disabled.</span>")
 	else
-		src.name = "Badmin Bus"
-		src.desc = "A short bus painted in blood that looks horrifyingly evil."
-		src.moving_state = "badminbus2"
-		src.nonmoving_state = "badminbus"
-		src.is_badmin_bus = 1
-		src.darkness = new
-		src.darkness.set_loc(src.loc)
+		src.name = src.badmin_name
+		src.desc = src.badmin_desc
+		src.moving_state = src.badmin_moving_state
+		src.nonmoving_state = src.badmin_nonmoving_state
+		src.is_badmin_bus = TRUE
+		boutput(usr, "<span class='info'>Badmin mode enabled.</span>")
 
 /client/proc/toggle_gib_onhit()
 	set category = "Adminbus"
@@ -1953,21 +1973,21 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	else
 		boutput(usr, "<span class='alert'>Uh-oh, you aren't in the adminbus! Report this.</span>")
 
-/client/proc/toggle_dark_adminbus()
+/client/proc/toggle_badminbus()
 	set category = "Adminbus"
-	set name = "Toggle The Darkness"
-	set desc = "Activates a cloud of darkness that the adminbus emits. Spooky..."
+	set name = "Toggle Badmin Mode"
+	set desc = "Become the Badmin Bus"
 
-
-	if(usr.stat)
+	if(!isalive(usr))
 		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
 	if(istype(usr.loc, /obj/vehicle/adminbus))
 		var/obj/vehicle/adminbus/bus = usr.loc
-		bus.toggle_darkness()
+		bus.toggle_badmin()
 	else
 		boutput(usr, "<span class='alert'>Uh-oh, you aren't in the adminbus! Report this.</span>")
 
+/*
 /atom/movable/effect/darkness
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "spooky"
@@ -1976,18 +1996,144 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//blend_mode = BLEND_MULTIPLY
 
 	New()
+		..()
 		src.Scale(9,9)
+*/
 
 /mob/proc/add_adminbus_powers()
 	if(src.client.holder && src.client.holder.rank && src.client.holder.level >= LEVEL_PA)
 		src.verbs += /client/proc/toggle_gib_onhit
-		src.verbs += /client/proc/toggle_dark_adminbus
+		src.verbs += /client/proc/toggle_badminbus
 	return
 
 /mob/proc/remove_adminbus_powers()
 	src.verbs -= /client/proc/toggle_gib_onhit
-	src.verbs -= /client/proc/toggle_dark_adminbus
+	src.verbs -= /client/proc/toggle_badminbus
 	return
+
+//////////////////////////////////////////////////////////////// Battle Bus //////////////////////////
+
+/obj/vehicle/adminbus/battlebus
+	name = "Battle Bus"
+	desc = "A bus made for war."
+	icon = 'icons/obj/battlebus.dmi'
+	icon_state = "adminbus"
+	moving_state = "adminbus"
+	nonmoving_state = "adminbus2"
+	badmin_moving_state = "adminbus"
+	badmin_nonmoving_state = "adminbus2"
+	badmin_name = "Baddler Bus"
+	badmin_desc = "An unstoppable bus made for war."
+	var/datum/projectile/P = new/datum/projectile/special/spawner/battlecrate
+	var/datum/projectile/special/spreader/uniform_burst/circle/P2 = new
+	var/power_hotwheels = FALSE
+	var/power_staticcharge = FALSE
+	var/power_bomberbus = FALSE
+	var/power_bomberbus_chance = 25
+	var/power_bomberbus_type = /obj/bomberman
+
+	New()
+		..()
+
+		P2.spread_projectile_type = /datum/projectile/fireball
+		P2.pellets_to_fire = 10
+		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
+
+		if (!islist(src.ability_buttons))
+			ability_buttons = list()
+		ability_buttons += new/obj/ability_button/battlecannon
+		ability_buttons += new/obj/ability_button/omnicannon
+		ability_buttons += new/obj/ability_button/bombchute
+		ability_buttons += new/obj/ability_button/hotwheels
+		ability_buttons += new/obj/ability_button/staticcharge
+
+	relaymove(mob/user, dir)
+		if(src.power_hotwheels)
+			tfireflash(get_turf(src), 0, 100)
+		if(src.power_staticcharge)
+			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
+		if(src.power_bomberbus && prob(power_bomberbus_chance))
+			new src.power_bomberbus_type(get_turf(src))
+		. = ..()
+
+
+/obj/ability_button/battlecannon
+	name = "Battle Cannon"
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildmode4"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			shoot_projectile_DIR(bus, bus.P, the_mob.dir)
+
+/obj/ability_button/omnicannon
+	name = "Omni Cannon"
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "pandemonium"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+
+			shoot_projectile_DIR(bus, bus.P2, NORTH)
+
+/obj/ability_button/hotwheels
+	name = "Hot Wheels"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_sprint"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_hotwheels = !bus.power_hotwheels
+			if (bus.power_hotwheels)
+				boutput( the_mob, "<span class='alert'>Hot wheels engaged!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>Your tires begin to cooldown.</span>" )
+
+/obj/ability_button/staticcharge
+	name = "Static Charge"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "zzzap"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_staticcharge = !bus.power_staticcharge
+			if (bus.power_staticcharge)
+				boutput( the_mob, "<span class='alert'>The bus begins to tingle with static!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The static charge disipates.</span>" )
+
+/obj/ability_button/bombchute
+	name = "Bomb Chute"
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_e_flamethrower"
+
+	Click(location, control, params)
+		. = ..()
+		if (!the_mob)
+			return
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
+			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+			bus.power_bomberbus = !bus.power_bomberbus
+			if (bus.power_bomberbus)
+				boutput( the_mob, "<span class='alert'>The bomb chute springs open!</span>" )
+			else
+				boutput( the_mob, "<span class='alert'>The bomb chute seals tightly shut.</span>" )
 
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
@@ -2088,11 +2234,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	return
 
 /obj/vehicle/forklift/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
-	rider.set_loc(src.loc)
-	src.rider = null
+	var/mob/living/rider = src.rider
+	..()
+
 	boutput(rider, "You get out of [src].")
 
 	//Stops items from being lost forever
@@ -2121,7 +2268,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	//forklift movement
 	if (direction == 1 || direction == 2 || direction == 4 || direction == 8)
 		if(src.dir != direction)
-			src.dir = direction
+			src.set_dir(direction)
 		walk(src, dir, 2.5)
 	return
 
@@ -2154,7 +2301,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	//pick up crates with forklift
 	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
-		A.loc = src
+		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
 		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
@@ -2223,7 +2370,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(usr, "<span class='notice'><B>You leave [helditems.len] crates on [src.loc].</B></span>")
 
 		for (var/obj/HI in helditems)
-			HI.loc = src.loc
+			HI.set_loc(src.loc)
 
 		helditems.len = 0
 		update_overlays()

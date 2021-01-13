@@ -98,11 +98,11 @@ proc/list_frozen()
 	proc/generateAuthorName()
 		switch(rand(1,3))
 			if (1)
-				return "[consonant()]. [pick(last_names)]"
+				return "[consonant()]. [pick_string_autokey("names/last.txt")]"
 			if (2)
-				return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick(last_names)]"
+				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick_string_autokey("names/last.txt")]"
 			if (3)
-				return "[prob(50) ? pick(first_names_male) : pick(first_names_female)] \"[prob(50) ? pick(first_names_male) : pick(first_names_female)]\" [pick(last_names)]"
+				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] \"[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]\" [pick_string_autokey("names/last.txt")]"
 
 	proc/formatSpacetime()
 		var/ticksc = round(ticks/100)
@@ -158,9 +158,10 @@ proc/list_frozen()
 		var/datum/article/product_article = null
 		var/effect = 0
 		New(var/datum/stock/S)
+			..()
 			company = S
 			var/mins = rand(5,20)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = "Product demo"
 			current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at spacetime [spacetime(next_phase)]")
 			S.addEvent(src)
@@ -194,11 +195,12 @@ proc/list_frozen()
 		var/bailout_millions = 0
 
 		New(var/datum/stock/S)
+			..()
 			hidden = 1
 			company = S
 			var/mins = rand(9,60)
 			bailout_millions = rand(70, 190)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = ""
 			current_desc = ""
 			S.addEvent(src)
@@ -273,10 +275,11 @@ proc/list_frozen()
 		var/effect = 0
 
 		New(var/datum/stock/S)
+			..()
 			hidden = 1
 			company = S
 			var/mins = rand(10, 35)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = ""
 			current_desc = ""
 			female = prob(50)
@@ -301,7 +304,7 @@ proc/list_frozen()
 		transition()
 			switch (phase_id)
 				if (0)
-					tname = "[female ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
+					tname = "[female ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")] [pick_string_autokey("names/last.txt")]"
 					next_phase = ticker.round_elapsed_ticks + rand(300, 600) * 10
 					var/datum/article/A = generateArrestArticle()
 					if (!A.opinion)

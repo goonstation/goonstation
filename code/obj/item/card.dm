@@ -135,6 +135,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Member"
 	assignment = "Member"
+	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -168,7 +169,7 @@ GAUNTLET CARDS
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
-	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0)]")
+	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
 
 	src.add_fingerprint(user)
 	return
@@ -226,8 +227,12 @@ GAUNTLET CARDS
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("blue","red","green","purple","yellow","No band")
+		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
 		switch (color)
+			if ("clown")
+				src.icon_state = "id_clown"
+			if ("golden")
+				src.icon_state = "gold"
 			if ("No band")
 				src.icon_state = "id"
 			if ("blue")
@@ -267,6 +272,10 @@ GAUNTLET CARDS
 	input = jointext(namecheck, " ")
 	return input
 
+/obj/item/card/id/syndicate/commander
+	name = "commander card"
+	access = list(access_maint_tunnels, access_syndicate_shuttle, access_syndicate_commander)
+
 /obj/item/card/id/temporary
 	name = "temporary identification card"
 	icon_state = "id"
@@ -282,9 +291,9 @@ GAUNTLET CARDS
 	SPAWN_DBG(0) //to give time for duration and starting access to be set
 		starting_access = access
 		end_time = ticker.round_elapsed_ticks + duration*10
-		SPAWN_DBG(duration * 10)
-			if(access == starting_access) //don't delete access if it's modified with an ID computer
-				access = list()
+		sleep(duration * 10)
+		if(access == starting_access) //don't delete access if it's modified with an ID computer
+			access = list()
 
 /obj/item/card/id/temporary/examine(mob/user)
 	. = ..()
@@ -356,7 +365,7 @@ GAUNTLET CARDS
 
 	process()
 		if(!owner) return
-		if(!isInContents(src,owner))
+		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
 			logTheThing("combat",owner,null,"dropped their license to kill")
 			logTheThing("admin",owner,null,"dropped their license to kill")

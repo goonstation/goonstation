@@ -10,6 +10,7 @@
 	density = 0
 	flags = NOSPLASH
 	event_handler_flags = USE_HASENTERED
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
 	var/id = null //ID used for brig stuff
@@ -140,7 +141,7 @@
 				update()
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		if(open != 1)
@@ -229,7 +230,8 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0)
+				flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
@@ -282,6 +284,8 @@
 		open = 1
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
+		for(var/atom/movable/AM in src.loc)
+			src.HasEntered(AM) // try to flush them
 
 	proc/closeup()
 		open = 0
@@ -299,9 +303,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
 		pool(H)
@@ -315,7 +317,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			openup()
 
 	Crossed(atom/movable/AM)
@@ -356,7 +358,7 @@
 			return
 
 		if(open && flush)	// flush can happen even without power, must be open first
-			flush()
+			SPAWN_DBG(0) flush()
 
 		if(status & NOPOWER)			// won't charge if no power
 			return

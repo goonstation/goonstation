@@ -12,13 +12,14 @@
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
 	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
 	throwforce = 10
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
+	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
 	var/registered = null
@@ -50,20 +51,21 @@
 
 	var/list/spawn_contents = list() // maybe better than just a bunch of stuff in New()?
 	var/made_stuff
+
+	var/grab_stuff_on_spawn = TRUE
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
-			if (!src.open)		// if closed, any item at src's loc is put in the contents
-				for (var/obj/O in src.loc)
-					if (src.is_acceptable_content(O))
-						O.set_loc(src)
-
-		lockers_and_crates.Add(src)
+			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
+				for (var/atom/movable/A in src.loc)
+					if (src.is_acceptable_content(A))
+						A.set_loc(src)
 
 	disposing()
-		lockers_and_crates.Remove(src)
+		STOP_TRACKING
 		..()
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
@@ -88,10 +90,10 @@
 			flick(src.closing_anim,src)
 			src.icon_state = src.icon_closed
 
-		if (src.overlays)
-			src.overlays = list()
 		if (src.welded)
-			src.overlays += src.icon_welded
+			src.UpdateOverlays(image(src.icon, src.icon_welded), "welded")
+		else
+			src.UpdateOverlays(null, "welded")
 
 	emp_act()
 		if (!src.open && src.contents.len)
@@ -108,7 +110,7 @@
 		return get_turf(src)
 
 	relaymove(mob/user as mob)
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user))
+		if (is_incapacitated(user))
 			return
 		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
 			return
@@ -152,7 +154,7 @@
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
-		if (get_dist(user, src) > 1)
+		if (!in_range(src, user))
 			return
 
 		interact_particle(user,src)
@@ -286,7 +288,7 @@
 					L.changeStatus("weakened", 4 SECONDS)
 				if (prob(25))
 					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 0, 10)
+					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 
 			. = 0
 		else
@@ -301,7 +303,7 @@
 			return
 
 		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 
 		src.add_fingerprint(user)
@@ -350,16 +352,33 @@
 			O.set_loc(get_turf(user))
 
 		SPAWN_DBG(0.5 SECONDS)
-			if (istype(O, /obj/item/raw_material/))
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>",\
-				"<span class='notice'>You begin quickly stuffing materials into [src]!</span>")
+			var/stuffed = FALSE
+			var/list/draggable_types = list(
+				/obj/item/plant = "produce",
+				/obj/item/reagent_containers/food/snacks = "food",
+				/obj/item/casing = "ammo casings",
+				/obj/item/raw_material = "materials",
+				/obj/item/material_piece = "processed materials",
+				/obj/item/paper = "paper",
+				/obj/item/tile = "floor tiles")
+			for(var/drag_type in draggable_types)
+				if(!istype(O, drag_type))
+					continue
+				stuffed = TRUE
+				var/type_name = draggable_types[drag_type]
+				user.visible_message("<span class='notice'>[user] begins quickly stuffing [type_name] into [src]!</span>",\
+				"<span class='notice'>You begin quickly stuffing [type_name] into [src]!</span>")
 				var/staystill = user.loc
-				for (var/obj/item/raw_material/M in view(1,user))
-					if (M.material && M.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(M.material.getProperty("radioactive") / 2, 20)))*10, 2)
-					if (M.loc == src || M.loc == src.loc) // we're already there!
+				for (var/obj/thing in view(1,user))
+					if(!istype(thing, drag_type))
 						continue
-					M.set_loc(src.loc)
+					if (thing.material && thing.material.getProperty("radioactive") > 0)
+						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20)))*10, 2)
+					if (thing in user)
+						continue
+					if (thing.loc == src || thing.loc == src.loc) // we're already there!
+						continue
+					thing.set_loc(src.loc)
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -367,60 +386,11 @@
 						break
 					if (T.contents.len >= src.max_capacity)
 						break
-				for (var/obj/item/material_piece/M in view(1,user))
-					if (M.material && M.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(M.material.getProperty("radioactive") / 2, 20)))*10, 2)
-					if (M.loc == src || M.loc == src.loc) // we're already there!
-						continue
-					M.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				user.show_text("You finish stuffing materials into [src]!", "blue")
+				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
 					if (src.open)
 						src.close()
-
-			else if (istype(O, /obj/item/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/))
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing produce into [src]!</span>",\
-				"<span class='notice'>You begin quickly stuffing produce into [src]!</span>")
-				var/staystill = user.loc
-				for (var/obj/item/plant/P in view(1,user))
-					if (P in user)
-						continue
-					if (P.loc == src || P.loc == src.loc) // we're already there!
-						continue
-					P.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				for (var/obj/item/reagent_containers/food/snacks/F in view(1,user))
-					if (F in user)
-						continue
-					if (F.loc == src || F.loc == src.loc) // we're already there!
-						continue
-					F.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				user.show_text("You finish stuffing produce into [src]!", "blue")
-				SPAWN_DBG(0.5 SECONDS)
-					if (src.open)
-						src.close()
-
-			else
+			if(!stuffed)
 				if(check_if_enterable(O))
 					O.set_loc(src.loc)
 					if (user != O)
@@ -518,6 +488,9 @@
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
+		if (!src.intact_frame())
+			visible_message("<span class='alter'>[src] can't close; the door is completely bend out of shape!</span>")
+			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
 			visible_message("<span class='alert'>It won't budge!</span>")
@@ -538,8 +511,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
-					LAGCHECK(LAG_LOW)
+				for_by_tcl(O, /obj/storage)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
 					myPals.Add(O)
@@ -591,6 +563,11 @@
 				return 0
 		return 1
 
+	proc/intact_frame()
+		if (!src.intact_frame)
+			return 0
+		return 1
+
 	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
@@ -612,6 +589,10 @@
 		if (user)
 			return src.open(null,user)
 		return src.open()
+
+	proc/unlock()
+		if (src.locked)
+			src.locked = !src.locked
 
 	proc/bust_out()
 		if (src.health)
@@ -742,7 +723,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -803,11 +784,14 @@
 
 		if(!src.open || always_display_locks)
 			if (src.emagged)
-				src.overlays += src.icon_sparks
+				src.UpdateOverlays(image(src.icon, src.icon_sparks), "sparks")
 			else if (src.locked)
-				src.overlays += src.icon_redlight
+				src.UpdateOverlays(image(src.icon, src.icon_redlight), "light")
 			else
-				src.overlays += src.icon_greenlight
+				src.UpdateOverlays(image(src.icon, src.icon_greenlight), "light")
+		else
+			src.UpdateOverlays(null, "sparks")
+			src.UpdateOverlays(null, "light")
 
 	receive_signal(datum/signal/signal)
 		if (!src.radio_control)
@@ -818,52 +802,59 @@
 			return
 
 		if (signal.data["address_1"] == src.net_id)
+			var/datum/signal/reply = get_free_signal()
+			reply.source = src
+			reply.transmission_method = TRANSMISSION_RADIO
+			reply.data["sender"] = src.net_id
+			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
+				if ("help")
+					if (!signal.data["topic"])
+						reply.data["description"] = "Secure Storage"
+						reply.data["topics"] = "status,lock,unlock"
+					else
+						reply.data["topic"] = signal.data["topic"]
+						switch (lowertext(signal.data["topic"]))
+							if ("status")
+								reply.data["description"] = "Returns the status of the secure storage. No arguments"
+							if ("lock")
+								reply.data["description"] = "Locks the secure storage. Requires NETPASS_SECURITY"
+								reply.data["args"] = "pass"
+							if ("unlock")
+								reply.data["description"] = "Unlocks the secure storage. Requires NETPASS_SECURITY"
+								reply.data["args"] = "pass"
+							else
+								reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 				if ("status")
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
-					reply.data = list("address_1" = sender, "command" = "lock=[locked]&open=[open]", "sender" = src.net_id)
-					SPAWN_DBG (5)
-						src.radio_control.post_signal(src, reply, 2)
-
+					reply.data["command"] = "lock=[locked]&open=[open]"
 				if ("lock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
 						src.update_icon()
-
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
 					if (.)
-						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
+						reply.data["command"] = "ack"
 					else
-						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-					SPAWN_DBG (5)
-						src.radio_control.post_signal(src, reply, 2)
-
+						reply.data["command"] = "nack"
+						reply.data["data"] = "badpass"
 				if ("unlock")
 					. = 0
-					if (signal.data["pass"] == netpass_heads)
+					if (signal.data["pass"] == netpass_security)
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
 						src.update_icon()
-
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.transmission_method = TRANSMISSION_RADIO
 					if (.)
-						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
+						reply.data["command"] = "ack"
 					else
-						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-
-					SPAWN_DBG(0.5 SECONDS)
-						src.radio_control.post_signal(src, reply, 2)
-			return //todo
+						reply.data["command"] = "nack"
+						reply.data["data"] = "badpass"
+				else
+					return //COMMAND NOT RECOGNIZED
+			SPAWN_DBG(0.5 SECONDS)
+				src.radio_control.post_signal(src, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
 			var/datum/signal/reply = get_free_signal()
@@ -875,8 +866,6 @@
 			reply.data["netid"] = src.net_id
 			SPAWN_DBG(0.5 SECONDS)
 				src.radio_control.post_signal(src, reply, 2)
-			return
-		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed

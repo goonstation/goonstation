@@ -22,6 +22,7 @@
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>[H]'s butt has divine protection from magic.</span>")
 				H.visible_message("<span class='alert'>The spell fails to work on [H]!</span>")
+				JOB_XP(H, "Chaplain", 2)
 				continue
 			if (iswizard(H))
 				H.visible_message("<span class='alert'>[H] magically farts the spell away!</span>")
@@ -31,5 +32,5 @@
 			smoke.set_up(5, 0, H:loc)
 			smoke.attach(H)
 			smoke.start()
-			ass_explosion(H, 1, 100)
+			ass_explosion(H, 1, 30)
 // See bigfart.dm for the ass_explosion() proc. The third value represents the probability of limb loss in percent.

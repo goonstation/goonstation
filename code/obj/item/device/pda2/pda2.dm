@@ -36,9 +36,12 @@
 
 	var/tmp/list/pdasay_autocomplete = list()
 
-	var/bg_color = "6F7961"
-	var/link_color = "000000"
-	var/linkbg_color = "565D4B"
+	var/tmp/list/image/overlay_images = null
+	var/tmp/current_overlay = "idle"
+
+	var/bg_color = "#6F7961"
+	var/link_color = "#000000"
+	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
@@ -47,9 +50,17 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list("staff",MGD_PARTY) //What default mail groups the PDA is part of.
+	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
 	var/muted_mailgroups = list() //What mail groups should the PDA ignore?
-	var/reserved_mailgroups = list(MGD_COMMAND,MGD_SECURITY,MGD_SCIENCE,"ai","sillicon",MGD_MEDRESEACH,MGD_MEDBAY ,MGD_CARGO,"janitor",MGD_SPIRITUALAFFAIRS,"engineer","mining",MGD_KITCHEN,"mechanic",MGD_BOTANY,MGD_STATIONREPAIR) //Job-specific mailgroups that cannot be joined or left
+	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
+		// Departments
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+		// Other
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+		// Alerts
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS,
+	)
+	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 
@@ -78,6 +89,14 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+
+	ntso
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+		setup_drive_size = 32
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	ai
 		icon_state = "pda-h"
@@ -85,7 +104,16 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("ai") //"special" mailgroup, just recieves everything
+		mailgroups = list( // keep in sync with the list of reserved mail groups
+			// Departments
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+			// Other
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+			// start in party line by default
+			MGD_PARTY,
+		)
+		muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
 		icon_state = "pda-h"
@@ -93,7 +121,9 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list("silicon",MGD_PARTY)
+		mailgroups = list(MGO_SILICON,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
+		muted_mailgroups = list(MGA_RKIT)
 
 	research_director
 		icon_state = "pda-rd"
@@ -105,30 +135,37 @@
 		icon_state = "pda-md"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY ,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
+			muted_mailgroups = list(MGA_SALES)
 
 	genetics
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
 
 	toxins
 		icon_state = "pda-tox"
@@ -139,6 +176,7 @@
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 
 	clown
 		icon_state = "pda-clown"
@@ -160,11 +198,12 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list("janitor",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_JANITOR,MGD_STATIONREPAIR,MGD_PARTY)
 
 	chaplain
 		icon_state = "pda-holy"
 		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
 		icon_state = "pda-a"
@@ -173,23 +212,26 @@
 	engine
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		mailgroups = list("engineer",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list("mining",MGD_PARTY)
+		mailgroups = list(MGO_MINING,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
-	barman
+	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	mechanic
 		icon_state = "pda-a"
 		setup_default_module = /obj/item/device/pda_module/tray
 		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list("mechanic",MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -218,6 +260,14 @@
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
+	var/mob/M = src.loc
+	if(istype(M) && M.client)
+		src.bg_color = M.client.preferences.PDAcolor
+		var/list/color_vals = hex_to_rgb_list(bg_color)
+		src.linkbg_color = rgb(color_vals["r"] * 0.8, color_vals["g"] * 0.8, color_vals["b"] * 0.8)
+
+	src.update_colors(src.bg_color, src.linkbg_color)
+
 	SPAWN_DBG(0.5 SECONDS)
 		src.hd = new /obj/item/disk/data/fixed_disk(src)
 		src.hd.file_amount = src.setup_drive_size
@@ -239,8 +289,7 @@
 
 		src.net_id = format_net_id("\ref[src]")
 
-		if(radio_controller)
-			radio_controller.add_object(src, "[frequency]")
+		radio_controller?.add_object(src, "[frequency]")
 
 		if (src.setup_default_cartridge)
 			src.cartridge = new src.setup_default_cartridge(src)
@@ -252,7 +301,7 @@
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -266,7 +315,7 @@
 	src.scan_program = null
 
 	if (src.hd)
-		for (var/datum/computer/file/pda_program/P in src.hd.root.contents)
+		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
 			if (P.name == "Packet Sniffer")
 				radio_controller.remove_object(src, "[P:scan_freq]")
 				continue
@@ -329,36 +378,47 @@
 		winset(user, "pda2_\ref[src].texto","is-visible=true")
 		winset(user, "pda2_\ref[src].grido","is-visible=false")
 
-		var/dat = {"<html><head>
-		<style type="text/css">
-		hr
-		{
+		var/dat = {"<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type='text/css'>
+		hr {
 			color:#000;
 			background-color:#000;
 			height:2px;
 			border-width:0;
 		}
-		body
-		{
-			background-color:#[src.bg_color]
+		h1,h2,h3,h4,h5,h6 { margin: 0.5em 0; padding: 0; }
+		ul, ol { margin: 0.5em; }
+		body {
+			background-color: [src.bg_color];
+			color: [src.link_color];
+			font-family: Tahoma, sans-serif;
+			font-size: [(user?.client?.preferences && user?.client?.preferences.font_size) ? "[user?.client?.preferences.font_size]%" : "10pt"];
+;
 		}
+		a {
+			background-color: [src.linkbg_color];
+			color: [src.link_color];
+			text-decoration: none;
+			padding: 0.0em 0.2em;
+		}
+		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
-		a:link {background-color:#[src.linkbg_color];color:#[src.link_color];text-decoration:none}
-		a:visited {background-color:#[src.linkbg_color];color:#[src.bg_color]}
-		a:active {background-color:#[src.linkbg_color];color:#[src.bg_color]}
-		a:hover {background-color:#[src.link_color];color:#[src.bg_color]}
+	</style>
+</head>
+<body>"}
 
-		</style>
-		</head>
-		<body vlink='#[src.link_color]' alink='#[src.link_color]'>"}
-
-		dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+		// you can just use the windows close button for this...
+		// dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
 		if (!src.owner)
 			if (src.cartridge && src.ejectable_cartridge)
-				dat += " | <a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a>"
+				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 			if (src.ID_card)
-				dat += " | <a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a>"
+				dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 			dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
 			dat += "<a href='byond://?src=\ref[src];refresh=1'>Retry</a>"
 		else
@@ -370,9 +430,9 @@
 					dat += src.active_program.return_text()
 				else
 					if (src.cartridge && src.ejectable_cartridge)
-						dat += " | <a href='byond://?src=\ref[src];eject_cart=1'>Eject [src.cartridge]</a><br>"
+						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
 					if (src.ID_card)
-						dat += " | <a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a>"
+						dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
 					dat += "No System Software Loaded</font></center>"
 
@@ -423,10 +483,14 @@
 		if (U.try_deliver(C, user))
 			return
 
-	if (istype(C, /obj/item/disk/data/cartridge) && isnull(src.cartridge))
+	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
-		boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		if (isnull(src.cartridge))
+			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+		else
+			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
@@ -495,8 +559,7 @@
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
 
-	if(src.host_program)
-		src.host_program.network_hook(signal, rx_method, rx_freq)
+	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
@@ -518,12 +581,22 @@
 
 			return
 
-		else if(!src.mailgroups || !(signal.data["group"] in src.mailgroups))
-			if (!("ai" in src.mailgroups) || !signal.data["group"])
-				return
+		else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
+			return
 
-	if(src.host_program)
-		src.host_program.receive_signal(signal, rx_method, rx_freq)
+	if (islist(signal.data["group"]))
+		var/any_member = FALSE
+		for (var/group in signal.data["group"])
+			if (group in src.mailgroups)
+				any_member = TRUE
+				break
+		if (!any_member) // not a member of any specified group; discard
+			return
+	else if (signal.data["group"])
+		if (!(signal.data["group"] in src.mailgroups) && !(signal.data["group"] in src.alertgroups)) // not a member of the specified group; discard
+			return
+
+	src.host_program?.receive_signal(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.receive_signal(signal, rx_method, rx_freq)
@@ -591,7 +664,7 @@
 	if (!target || !message)
 		return
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	if (istype(src.host_program))
@@ -604,35 +677,51 @@
 	set category = "Local"
 	set src in usr
 
-	if (usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
+	if (is_incapacitated(usr))
 		return
 
 	eject_id_card(usr)
 	src.updateSelfDialog()
 
 /obj/item/device/pda2
+
+	proc/update_colors(bg, linkbg)
+		src.bg_color = bg
+		src.linkbg_color = linkbg
+		var/color_list = hex_to_rgb_list(src.linkbg_color)
+		if(max(color_list["r"], color_list["b"], color_list["g"]) <= 50)
+			src.link_color = "#dddddd"
+		else
+			src.link_color = initial(src.link_color)
+
+		if (!overlay_images)
+			src.overlay_images = list()
+			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle")
+			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message")
+
+		for (var/k in src.overlay_images)
+			src.overlay_images[k].color = bg
+
+		src.update_overlay()
+
 	proc/is_user_in_range(var/mob/user)
 		return in_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
-		SPAWN_DBG(0)
-			LAGCHECK(LAG_REALTIME)
-			if(!signal)
-				return
-			var/freq = newfreq
-			if(!freq)
-				freq = src.frequency
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
 
-			signal.source = src
-			signal.data["sender"] = src.net_id
+		signal.source = src
+		signal.data["sender"] = src.net_id
 
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
 
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(frequency)
-				return frequency.post_signal(src, signal)
-			//else
-				//qdel(signal)
+		signal.transmission_method = TRANSMISSION_RADIO
+		if(frequency)
+			return frequency.post_signal(src, signal)
 
 	proc/eject_cartridge(var/mob/user as mob)
 		if (src.cartridge && src.ejectable_cartridge)
@@ -701,12 +790,20 @@
 
 		src.updateSelfDialog()
 */
+
+	proc/update_overlay(mode = null)
+		if (mode)
+			src.current_overlay = mode
+		src.overlays = null
+		src.overlays += src.overlay_images[src.current_overlay]
+
+
 	proc/display_alert(var/alert_message) //Add alert overlay and beep
 		if (alert_message)
 			playsound(get_turf(src), "sound/machines/twobeep.ogg", 35, 1)
 
 			for (var/atom in mobs)
-				if (!atom) break
+				if (!atom) continue
 				var/mob/O = atom
 				if (get_dist(get_turf(src),O) <= 3)
 					O.show_message(text("[bicon(src)] *[alert_message]*"))
@@ -714,8 +811,10 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		src.overlays = null
-		src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
+		update_overlay("alert")
+		// src.overlays = null
+		// // src.overlays += image('icons/obj/items/pda.dmi', "pda-r")
+		// src.overlays += src.overlay_images["alert"]
 		return
 
 	proc/display_message(var/message)
@@ -748,8 +847,7 @@
 		src.active_program = program
 		program.init()
 
-		if(program.setup_use_process && !(src in processing_items))
-			processing_items.Add(src)
+		if(program.setup_use_process) processing_items |= src
 
 		return 1
 
@@ -790,7 +888,7 @@
 			return
 
 		if(src in bible_contents)
-			for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+			for_by_tcl(B, /obj/item/storage/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)

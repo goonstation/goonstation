@@ -60,6 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 
 		New(maximum=100)
+			..()
 			maximum_volume = maximum
 
 		disposing()
@@ -85,15 +86,15 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1)
+			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
 
-		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0)
+		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
-
+			var/newtemp = copy_temperature ? src.total_temperature : T20C
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if(current_reagent)
-					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
+					target.add_reagent(reagent=reagent_id, amount=max(current_reagent.volume * multiplier, 0.001),donotreact=do_not_react, temp_new = newtemp) //mbc : fixed reagent duplication bug by changing max(x,1) to max(x,0.001). Still technically possible to dupe, but not realistically doable.
 					current_reagent.on_copy(target.reagent_list[reagent_id])
 				if(!target) return
 
@@ -273,7 +274,7 @@ datum
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
-				T.fluid_react(src, amount)
+				return T.fluid_react(src, amount, index = index)
 
 			return trans_to_direct(target_reagents, amount, multiplier, index = index)
 
@@ -435,7 +436,7 @@ datum
 						if (!old_reactions.Find(C))
 							var/turf/T = 0
 							if (my_atom)
-								for(var/mob/living/M in AIviewers(4, get_turf(my_atom)) )	//Fuck you, ghosts
+								for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
 									if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
 								if (C.mix_sound) play_mix_sound(C.mix_sound)
 
@@ -516,7 +517,7 @@ datum
 					src.add_reagent(C.result, speed,, src.total_temperature)
 				covered_cache = 0
 
-				if(my_atom && my_atom.loc) //We might be inside a thing, let's tell it we updated our reagents.
+				if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
 					my_atom.loc.handle_event("reagent_holder_update", src)
 
 			defer_reactions = 0
@@ -614,7 +615,7 @@ datum
 					if(istype(H) && can_burn)
 						var/temp_to_burn_with = total_temperature
 						var/dmg_multiplier = 1
-						if (paramslist && paramslist.len)
+						if (length(paramslist))
 							if ("override_can_burn" in paramslist)
 								temp_to_burn_with = paramslist["override_can_burn"]
 							if ("dmg_multiplier" in paramslist)
@@ -623,13 +624,13 @@ datum
 						if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 							if (chem_helmet_check(H, "hot"))
 								boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
+								H.TakeDamage("head", 0, round(max(log((temp_to_burn_with - T0C) / 50), 0) * 10) * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 								H.emote("scream")
 								H.bodytemperature += min(max((temp_to_burn_with - T0C) - 20, 5),500)
 						else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 							if (chem_helmet_check(H, "cold"))
 								boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
-								H.TakeDamage("head", 0, round(log(T0C - temp_to_burn_with / 50) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
+								H.TakeDamage("head", 0, round(max(log((T0C - temp_to_burn_with) / 50), 0) * 10) * dmg_multiplier, 0, DAMAGE_BURN)
 								H.emote("scream")
 								H.bodytemperature -= min(max(T0C - temp_to_burn_with - 20, 5), 500)
 
@@ -668,7 +669,7 @@ datum
 							var/mob/living/carbon/C = A
 							var/temp_to_burn_with = total_temperature
 							var/dmg_multiplier = 1
-							if (paramslist && paramslist.len)
+							if (length(paramslist))
 								if ("override_can_burn" in paramslist)
 									temp_to_burn_with = paramslist["override_can_burn"]
 								if ("dmg_multiplier" in paramslist)
@@ -794,6 +795,12 @@ datum
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 			return current_reagent && current_reagent.volume >= amount
 
+		proc/has_active_reaction(var/reaction_id, var/amount=0)
+			for(var/datum/chemical_reaction/C in src.active_reactions)
+				if(C.id == reaction_id)
+					return C && C.result_amount >= amount
+			return FALSE
+
 		proc/get_reagent(var/reagent_id)
 			return reagent_list[reagent_id]
 
@@ -858,7 +865,7 @@ datum
 
 		proc/get_exact_description(mob/user)
 
-			if(!reagent_list.len)
+			if(!length(reagent_list))
 				return
 
 			// check to see if user wearing the spectoscopic glasses (or similar)
@@ -996,6 +1003,8 @@ datum
 		proc/move_trigger(var/mob/M, kindof)
 			var/shock = 0
 			switch (kindof)
+				if ("sprint")
+					shock = rand(8, 16)
 				if ("run")
 					shock = rand(5, 12)
 				if ("walk", "swap")
@@ -1046,7 +1055,7 @@ datum
 				logTheThing("combat", our_user, null, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
 
 			if (classic)
-				classic_smoke_reaction(src, 4, location = my_atom ? get_turf(my_atom) : 0)
+				classic_smoke_reaction(src, min(round(volume / 5) + 1, 4), location = my_atom ? get_turf(my_atom) : 0)
 			else
 				smoke_reaction(src, round(min(5, volume/10)), location = my_atom ? get_turf(my_atom) : 0)
 

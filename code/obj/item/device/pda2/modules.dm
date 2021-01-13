@@ -249,8 +249,7 @@
 
 	proc/toggle_scan()
 		src.on = !src.on
-		if (src.on && !(src in processing_items))
-			processing_items.Add(src)
+		if(src.on) processing_items |= src
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
 			B.icon_state = "pda[src.on]"
 		if (src.host)
@@ -290,7 +289,7 @@
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.2 SECONDS)
 					if(M)

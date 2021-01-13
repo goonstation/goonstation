@@ -11,6 +11,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = 0
+	initial_volume = 40
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
 	var/balloon_color = "white"
@@ -18,9 +19,6 @@
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
 		if (prob(1) && islist(rare_colors) && rare_colors.len)
 			balloon_color = pick(rare_colors)
 			update_icon()
@@ -202,7 +200,7 @@
 
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)

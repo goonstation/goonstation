@@ -69,6 +69,8 @@
 				icon_state = "[src.style]_med1"
 			if (reagents.has_reagent("LSD",1))
 				icon_state = "[src.style]_LSD"
+			if (reagents.has_reagent("lsd_bee"))
+				icon_state = "[src.style]_LSBee"
 
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "[src.style]-fluid", -1)
@@ -114,7 +116,7 @@
 			attach_sticker_manual(user)
 		return
 
-	throw_impact(mob/M as mob)
+	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
 		if (src.medical && !borg && !src.in_use && (iscarbon(M) || ismobcritter(M)))
 			if (prob(30) || good_throw && prob(70))
@@ -186,12 +188,12 @@
 		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			if (!borg)
 				user.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
-				src.loc = M
+				src.set_loc(M)
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
@@ -316,6 +318,13 @@
 	cyborg
 		borg = 1
 
+/obj/item/reagent_containers/patch/lsd_bee
+	name = "bluzzer"
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	icon_state = "patch_LSBee"
+	initial_reagents = list("lsd_bee"=20)
+	module_research = list("vice" = 10)
+
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "patch_med"
@@ -406,7 +415,7 @@
 	attack_self(var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.loc = user.loc
+			P.set_loc(user.loc)
 			patches -= P
 			update_overlay()
 			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
@@ -427,7 +436,7 @@
 					U.contents -= target
 					if (U.hud)
 						U.hud.update()
-				target.loc = src
+				target.set_loc(src)
 				patches += target
 				update_overlay()
 				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
@@ -543,7 +552,7 @@
 		//repair_bleeding_damage(M, 66, 1)
 		var/use_volume_adjusted = use_volume * mult
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			var/list/params = list("nopenetrate")
 			if (silent)
 				params.Add("silent")
@@ -569,12 +578,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
@@ -643,6 +658,6 @@
 				..()
 				user.show_text("[M] is finished healing and powers down automatically.", "blue")
 				return
-		
+
 		looped++
 		src.onRestart()

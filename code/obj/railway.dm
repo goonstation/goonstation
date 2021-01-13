@@ -272,7 +272,7 @@
 			return
 		current = R
 		moving_dir = towards_dir
-		dir = moving_dir
+		set_dir(moving_dir)
 		set_loc(T)
 		current.entering(src)
 		distance = default_distance
@@ -308,7 +308,7 @@
 						return
 				current = NR
 				moving_dir = current.get_travel_dir(moving_dir)
-				dir = moving_dir
+				set_dir(moving_dir)
 				current.entering(src)
 				set_loc(next)
 				if (!self_powered)
@@ -335,8 +335,7 @@
 				M.TakeDamageAccountArmor("chest", src.road_rage_force, 0)
 				M.visible_message("<span class='alert'><b>[M] was hit by [src]!</b></span>", "<span class='alert'><b>You were hit by [src]!</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-				SPAWN_DBG(0)
-					M.throw_at(get_edge_target_turf(M, knock_dir), 10, 2)
+				M.throw_at(get_edge_target_turf(M, knock_dir), 10, 2)
 			for (var/obj/O in dest_t)
 				if (O == src || istype(O, /obj/railway) || !O.density)
 					continue
@@ -345,9 +344,8 @@
 					visible_message("<span class='alert'><b>[src] crashes into [O].</b></span>")
 					qdel(O)
 				else if (!O.anchored)
-					SPAWN_DBG(0)
-						visible_message("<span class='alert'><b>[O] was hit by [src]!</b></span>")
-						O.throw_at(get_edge_target_turf(O, knock_dir), 10, 2)
+					visible_message("<span class='alert'><b>[O] was hit by [src]!</b></span>")
+					O.throw_at(get_edge_target_turf(O, knock_dir), 10, 2)
 
 
 	ex_act()

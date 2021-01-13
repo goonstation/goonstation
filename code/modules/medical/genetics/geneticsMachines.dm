@@ -10,14 +10,13 @@
 #define GENETICS_EMITTERS 3
 #define GENETICS_RECLAIMER 4
 
-var/list/genetics_computers = list()
-
 /obj/machinery/computer/genetics
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1
 	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
 	var/list/equipment = list(0,0,0,0)
 	// Injector, Analyser, Emitter, Reclaimer
@@ -42,9 +41,9 @@ var/list/genetics_computers = list()
 
 /obj/machinery/computer/genetics/New()
 	..()
-	genetics_computers += src
+	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
-		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
+		connection_scan()
 		return
 	gene_icon_cache["unknown"] = resource("images/genetics/mutGrey.png")
 	gene_icon_cache["researching"] = resource("images/genetics/mutGrey2.png")
@@ -54,16 +53,18 @@ var/list/genetics_computers = list()
 	gene_icon_cache["locked"] = resource("images/genetics/bpSep-locked.png")
 	return
 
+/obj/machinery/computer/genetics/connection_scan()
+	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 
 /obj/machinery/computer/genetics/disposing()
-	genetics_computers -= src
+	STOP_TRACKING
 	..()
 
 
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
@@ -100,7 +101,7 @@ var/list/genetics_computers = list()
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
 
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
@@ -478,13 +479,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -519,13 +520,13 @@ var/list/genetics_computers = list()
 		if(globalInstance != null)
 			var/name_string = "Unknown Mutation"
 			var/desc_string = "Research on a non-active instance of this gene is required."
-			if (globalInstance.research_level == 3)
+			if (globalInstance.research_level == EFFECT_RESEARCH_ACTIVATED)
 				name_string = globalInstance.name
 				desc_string = globalInstance.desc
-			else if (globalInstance.research_level == 2)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_DONE)
 				name_string = E.name
 				desc_string = E.desc
-			else if (globalInstance.research_level == 1)
+			else if (globalInstance.research_level == EFFECT_RESEARCH_IN_PROGRESS)
 				desc_string = "Research on this gene is currently in progress."
 
 			html_list += "<p><b>[name_string]</b><br>[desc_string]</p>"
@@ -664,7 +665,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/NEWBE = new GR.result(src)
 				saved_mutations += NEWBE
 				var/datum/bioEffect/GBE = NEWBE.get_global_instance()
-				GBE.research_level = max(GBE.research_level,3) // counts as researching it
+				GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
 				for (var/X in combining)
 					saved_mutations -= X
 					combining -= X
@@ -756,7 +757,7 @@ var/list/genetics_computers = list()
 		var/booth_effect_desc = input(usr, "Please enter a product description.", "$$$", "") as null|text
 		booth_effect_desc = strip_html(booth_effect_desc,280)
 
-		for (var/obj/machinery/genetics_booth/GB in genetics_computers)
+		for_by_tcl(GB, /obj/machinery/genetics_booth)
 			var/already_has = 0
 			for (var/datum/geneboothproduct/P in GB.offered_genes)
 				if (P.id == E.id)
@@ -1062,7 +1063,7 @@ var/list/genetics_computers = list()
 	// 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
 	// 				return
 
-	// 		if(lentext(code) != lentext(bp.lockcode))
+	// 		if(length(code) != length(bp.lockcode))
 	// 			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 	// 			return
 	// 		if (code == bp.lockcode)
@@ -1082,7 +1083,7 @@ var/list/genetics_computers = list()
 	// 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
 	// 			else
 	// 				bp.locktries--
-	// 				var/length = lentext(bp.lockcode)
+	// 				var/length = length(bp.lockcode)
 
 	// 				var/list/lockcode_list = list()
 	// 				for(var/i=0,i < length,i++)
@@ -1127,7 +1128,7 @@ var/list/genetics_computers = list()
 
 		src.log_me(subject, "mutation activated", E)
 
-		if (subject.bioHolder.ActivatePoolEffect(E) && !ismonkey(subject) && subject.client)
+		if (subject.bioHolder.ActivatePoolEffect(E) && !isnpcmonkey(subject) && subject.client)
 			activated_bonus(usr)
 		usr << link("byond://?src=\ref[src];menu=mutations")
 		//send them to the mutations page.
@@ -1362,11 +1363,11 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for(var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (!BE.scanner_visibility || BE.research_level < 2)
+					if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_DONE)
 						continue
-					if (BE.research_level == 2)
+					if (BE.research_level == EFFECT_RESEARCH_DONE)
 						html_list += "- <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
-					else if (BE.research_level == 3)
+					else if (BE.research_level == EFFECT_RESEARCH_ACTIVATED)
 						html_list += "* <a href=\"javascript:goBYOND('researched_mutation=\ref[BE]')\">[BE.name]</a><br>"
 				html_list += "</p>"
 
@@ -1472,7 +1473,7 @@ var/list/genetics_computers = list()
 				var/datum/bioEffect/BE
 				for (var/X in bioEffectList)
 					BE = bioEffectList[X]
-					if (BE.effectType == effectTypeMutantRace && BE.research_level >= 2 && BE.mutantrace_option)
+					if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= 2 && BE.mutantrace_option)
 						options += BE
 					else continue
 
@@ -1533,28 +1534,28 @@ var/list/genetics_computers = list()
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision) && world.time >= src.equipment[GENETICS_EMITTERS])
 					return 1
 		if("reclaimer")
-			if(E && GBE && GBE.research_level >= 2 && E.can_reclaim)
+			if(E?.can_reclaim && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer) && world.time >= src.equipment[GENETICS_RECLAIMER])
 					return 1
 		if("injector")
 			if(genResearch.researchMaterial < genResearch.injector_cost)
 				return 0
-			if(E && GBE && GBE.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/injector) && world.time >= src.equipment[GENETICS_INJECTORS])
 					if (genResearch.researchMaterial >= genResearch.injector_cost)
 						return 1
 		if("genebooth")
 			if(genResearch.researchMaterial < genResearch.genebooth_cost)
 				return 0
-			if(E && GBE && GBE.research_level >= 1 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 1)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
-			if(E && GBE && GBE.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(world.time >= src.equipment[GENETICS_INJECTORS])
 					return 1
 		if("saver")
-			if(E && GBE && GBE.research_level >= 2)
+			if(E && GBE?.research_level >= 2)
 				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && src.saved_mutations.len < genResearch.max_save_slots)
 					return 1
 
@@ -1713,7 +1714,7 @@ var/list/genetics_computers = list()
 	if (!src)
 		return null
 	// Check for the occupant
-	if (scanner && scanner.occupant)
+	if (scanner?.occupant)
 		// Verify that the occupant is actually inside the scanner
 		if(scanner.occupant.loc != scanner)
 			// They're not. Bweeoo, dodgy stuff alert
@@ -1795,7 +1796,7 @@ var/list/genetics_computers = list()
 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> No automatic decryptions available.</span>")
 				return
 
-		if(lentext(code) != lentext(bp.lockcode))
+		if(length(code) != length(bp.lockcode))
 			boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Invalid code length.</span>")
 			return
 		if (code == bp.lockcode)
@@ -1815,7 +1816,7 @@ var/list/genetics_computers = list()
 				boutput(usr, "<span class='alert'><b>SCANNER ALERT:</b> Decryption failed. Base pair encryption code has mutated.</span>")
 			else
 				bp.locktries--
-				var/length = lentext(bp.lockcode)
+				var/length = length(bp.lockcode)
 
 				var/list/lockcode_list = list()
 				for(var/i=0,i < length,i++)

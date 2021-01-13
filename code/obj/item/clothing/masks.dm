@@ -36,7 +36,7 @@
 			return
 		else if (!src.see_face && !src.vchange)
 			user.show_text("You begin installing [W] into [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You install [W] into [src].", "green")
@@ -47,7 +47,7 @@
 	else if (issnippingtool(W))
 		if (src.vchange)
 			user.show_text("You begin removing [src.vchange] from [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You remove [src.vchange] from [src].", "green")
@@ -115,6 +115,19 @@
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
+/obj/item/clothing/mask/gas/NTSO
+	name = "NT-SO gas mask"
+	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect elite Nanotrasen personnel from environmental threats."
+	icon_state = "gas_mask_NT"
+	item_state = "gas_mask_NT"
+	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
+	color_g = 0.8
+	color_b = 1
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 20)
+
 /obj/item/clothing/mask/moustache
 	name = "fake moustache"
 	desc = "Nobody will know who you are if you put this on. Nobody."
@@ -146,6 +159,10 @@
 	name = "SWAT Mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
+	item_state = "swat"
+	color_r = 1
+	color_g = 0.8
+	color_b = 0.8
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -237,8 +254,7 @@
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			if(user)
-				user.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0
@@ -261,7 +277,7 @@
 	equipped(var/mob/user, var/slot)
 		. = ..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_WEAR_MASM)
+		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
 				src.cant_other_remove = 1.0
 				src.cant_self_remove = 0.0
@@ -281,8 +297,7 @@
 		if ( src.victim )
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
-			if ( src in processing_items )
-				processing_items.Remove(src)
+			processing_items -= src
 
 	process()
 		if ( src.victim )
@@ -353,6 +368,26 @@
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
+
+	New()
+		..()
+		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
+		var/image/onhead = image('icons/mob/mask.dmi', "")
+
+		if (prob(1))
+			name = "surgical face bee-ld"
+			inventory.icon_state = "surgicalshield-bee"
+			onhead.icon_state = "surgicalshield-bee"
+			desc = "For those really, <i>really</i> messy surgeries where you also want to look like a dork."
+		else
+			inventory.icon_state = "surgicalshield-overlay"
+			onhead.icon_state = "surgicalshield-overlay"
+			var/randcol = random_hex(6)
+			inventory.color = "#[randcol]"
+			onhead.color = "#[randcol]"
+
+		src.UpdateOverlays(inventory, "surgmaskcolour")
+		src.wear_image.overlays += onhead
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"

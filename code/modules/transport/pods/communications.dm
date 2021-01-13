@@ -55,8 +55,7 @@
 		access_type_secondary = 2
 
 	opencomputer(mob/user as mob)
-		if(ship.intercom)
-			ship.intercom.attack_self(user)
+		ship.intercom?.attack_self(user)
 		return
 
 	deactivate()
@@ -101,8 +100,7 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if(radio_controller)
-				radio_controller.add_object(src, "[frequency]")
+			radio_controller?.add_object(src, "[frequency]")
 
 			src.net_id = format_net_id("\ref[src]")
 

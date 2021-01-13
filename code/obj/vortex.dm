@@ -16,7 +16,7 @@
 
 			var/event_type = rand(1,5)
 			switch(event_type)
-				if(1 || 2 || 3)
+				if(1, 2, 3)
 					spawn_horror()
 				/*
 				if(2)

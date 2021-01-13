@@ -14,6 +14,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -43,6 +44,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -63,6 +65,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -95,6 +98,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -149,6 +153,7 @@
 	density = 1
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE - 1
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
@@ -165,6 +170,7 @@
 	attackby()
 	attack_hand()
 	hitby()
+		. = ..()
 	reagent_act()
 	bullet_act()
 	ex_act()

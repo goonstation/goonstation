@@ -19,16 +19,12 @@
 	var/drain_max = 12
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
-	src.overlays = 0
-
 	if(on)
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
 
-	return
-
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process(mult)
 	..()
 	if (!loc) return
 	if (src.contained) return
@@ -46,7 +42,7 @@
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/F = my_turf.active_airborne_liquid
-			if (F && F.group) //ZeWaka: Fix for null.group
+			if (F?.group) //ZeWaka: Fix for null.group
 				F.group.queued_drains += rand(drain_min,drain_max)
 				F.group.last_drain = my_turf
 				if (!F.group.draining)
@@ -56,7 +52,7 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
+		var/transfer_moles = min(1, volume_rate * mult/environment.volume)*TOTAL_MOLES(environment)
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -83,7 +79,8 @@
 			filtered_out.nitrogen = 0
 
 			if(length(removed.trace_gases))
-				for(var/datum/gas/trace_gas in removed.trace_gases)
+				for(var/G in removed.trace_gases)
+					var/datum/gas/trace_gas = G
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 					removed.trace_gases -= trace_gas
 					if(!removed.trace_gases.len)
@@ -109,8 +106,8 @@
 
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/atmosporter))
-		var/canamt = W.contents.len
-		if (canamt >= W:capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		var/obj/item/atmosporter/porter = W
+		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")

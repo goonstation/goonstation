@@ -4,24 +4,13 @@
  * @license MIT
  */
 
-// Polyfills
-import 'core-js/es';
-import 'core-js/web/immediate';
-import 'core-js/web/queue-microtask';
-import 'core-js/web/timers';
-import 'regenerator-runtime/runtime';
-import './polyfills/html5shiv';
-import './polyfills/ie8';
-import './polyfills/dom4';
-import './polyfills/css-om';
-import './polyfills/inferno';
-
 // Themes
 import './styles/main.scss';
 import './styles/themes/abductor.scss';
 import './styles/themes/cardtable.scss';
 import './styles/themes/hackerman.scss';
 import './styles/themes/malfunction.scss';
+import './styles/themes/neutral.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/paper.scss';
 import './styles/themes/retro.scss';
@@ -29,8 +18,11 @@ import './styles/themes/syndicate.scss';
 
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupHotKeys } from './hotkeys';
+import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
 import { configureStore, StoreProvider } from './store';
+import { setupGlobalEvents } from './events';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -53,6 +45,10 @@ const setupApp = () => {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
+  setupGlobalEvents();
+  setupHotKeys();
+  captureExternalLinks();
 
   // Subscribe for state updates
   store.subscribe(renderApp);

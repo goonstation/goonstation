@@ -21,7 +21,6 @@
     icon_state = "dou-tare"
     item_state = "dou-tare"
     body_parts_covered = TORSO | LEGS
-    c_flags = ONESIZEFITSALL
     bloodoverlayimage = SUITBLOOD_ARMOR
 
     setupProperties()
@@ -79,7 +78,7 @@
 
     New()
         ..()
-        BLOCK_SWORD
+        BLOCK_SETUP(BLOCK_SWORD)
 
     proc/change_guard(var/mob/user,var/intent)
         user.do_disorient(10,0,0,0,0,0,null)
@@ -158,8 +157,7 @@
                 defender.u_equip(I)
                 I.set_loc(defender.loc)
                 var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
-                SPAWN_DBG(1 DECI SECOND)
-                    I.throw_at(target_turf,3,1)
+                I.throw_at(target_turf,3,1)
                 defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
                 attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
         ..()

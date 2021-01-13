@@ -92,11 +92,11 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/martian_screech.ogg", 80, 1)
+					playsound(get_turf(src), "sound/voice/screams/martian_screech.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> emits a psychic screech!"
 			if ("growl")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/martian_growl.ogg", 80, 1)
+					playsound(get_turf(src), "sound/voice/screams/martian_growl.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> gives a guttural psionic growl!"
 		return null
 
@@ -209,7 +209,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 
 	var/rendered = ""
 	var/adminrendered = ""
-	if(C && C.holder && speak_as_admin)
+	if(C?.holder && speak_as_admin)
 		// admin mode go
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)

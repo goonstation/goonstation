@@ -13,7 +13,6 @@ Left Mouse Button on turf/mob/obj      = SHOCK!<br>
 		dummy.anchored = 0
 		dummy.set_density(0)
 		dummy.invisibility = 101
-		dummy.loc = null
 		..()
 
 	click_mode_right(var/ctrl, var/alt, var/shift)

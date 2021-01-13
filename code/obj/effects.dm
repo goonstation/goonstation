@@ -22,6 +22,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	attackby()
 	attack_hand()
 	hitby()
+		SHOULD_CALL_PARENT(FALSE)
 	reagent_act()
 	bullet_act()
 	ex_act()

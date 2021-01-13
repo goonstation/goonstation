@@ -35,14 +35,9 @@
 
 /datum/game_mode/waldo/post_setup()
 	var/num_waldos = waldos.len
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Teleport-Scroll")
-			var/scrollcount
-			for (scrollcount = num_waldos, scrollcount > 0, scrollcount--)
-				new /obj/item/teleportation_scroll(A.loc)
-			A.dispose()
-			continue
+	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
+		for(var/scrollcount in 1 to num_waldos)
+			new /obj/item/teleportation_scroll(T)
 	var/k = 1
 	for(var/datum/mind/waldo in waldos)
 		if(!waldo || !istype(waldo))
@@ -57,11 +52,10 @@
 				if(3)
 					waldo.special_role = "wizard"
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
-			if(wizardstart.len == 0)
+			if(!job_start_locations["wizard"])
 				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				waldo.current.set_loc(starting_loc)
+				waldo.current.set_loc(pick(job_start_locations["wizard"]))
 			if(waldo.special_role in list("odlaw", "wizard"))
 				switch(rand(1,100))
 					if(1 to 30)
@@ -290,7 +284,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(waldos))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -299,7 +293,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			C.messagetitle.Add("Cent. Com. Status Summary")
 			C.messagetext.Add(intercepttext)

@@ -1,4 +1,7 @@
 //Contains Fire / Explosion / Implosion related reagents.
+
+ABSTRACT_TYPE(/datum/reagent/combustible)
+
 datum
 	reagent
 		combustible/
@@ -97,7 +100,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = min(max(0,(volume/covered.len)*0.15),8)
-						fireflash_sm(t, radius, rand(3000, 6000), 500)
+						fireflash_s(t, radius, rand(3000, 6000), 500)
 					if(holder)
 						holder.del_reagent(id)
 				return
@@ -120,8 +123,9 @@ datum
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
-					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 700)
+					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+					if(istype(L) && burn)
+						L.TakeDamage("All", 0, 7 * burn.getStage(), 0, DAMAGE_BURN)
 						if(!M.stat)
 							M.emote("scream")
 					return 0
@@ -130,8 +134,11 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+				if(istype(L) && burn)
+					L.changeStatus("burning", 15 * src.volume)
+					burn.counter += 7 * src.volume
+					holder?.del_reagent(src.id)
 				..()
 				return
 
@@ -320,11 +327,12 @@ datum
 
 					var/checkdist = get_dist(M, location)
 					var/weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-					var/misstep = 40
+					var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
 					var/ear_damage = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
 					var/ear_tempdeaf = max(0, holder.get_reagent_amount(id) * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+					var/stamina = clamp(holder.get_reagent_amount(id) * (5 + 1 * (7 - checkdist)), 0, 120)
 
-					M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf)
+					M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 
 				for (var/mob/living/silicon/S in all_hearers(world.view, location))
 					if (src.no_fluff == 0)
@@ -534,7 +542,6 @@ datum
 			fluid_b = 150
 			transparency = 150
 			viscosity = 0.7
-			volatility = 2.5
 			minimum_reaction_temperature = 1000
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -873,15 +880,8 @@ datum
 				..()
 				is_dry = 0
 
-			unpooled()
-				..()
-				bang()
-
-			New()
-				bang()
-
 			proc/bang()
-				if(holder && holder.my_atom)
+				if(holder?.my_atom)
 					holder.my_atom.visible_message("<b>The powder detonates!</b>")
 
 					var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -931,6 +931,7 @@ datum
 			viscosity = 0.3
 
 			New()
+				..()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
@@ -938,6 +939,7 @@ datum
 			unpooled()
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
+				..()
 
 
 
@@ -950,12 +952,15 @@ datum
 			minimum_reaction_temperature = -INFINITY
 
 			New()
+				..()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
 
 			unpooled()
+				is_dry = 1
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
+				..()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/obj/decal/cleanable/nitrotriiodide/NT = ..()

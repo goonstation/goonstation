@@ -14,6 +14,7 @@
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
 	muzzle_flash = null
+	inventory_counter_enabled = 1
 
 	New()
 		if (!cell)
@@ -21,10 +22,10 @@
 		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
 			processing_items.Add(src)
 		..()
+		update_icon()
 
 	disposing()
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 
@@ -40,6 +41,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+		if (src.cell)
+			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		else
+			inventory_counter.update_text("-")
 		return 0
 
 	emp_act()
@@ -184,6 +189,7 @@
 				src.icon_state = "taserburst[ratio]"
 			else if(current_projectile.type == /datum/projectile/energy_bolt)
 				src.icon_state = "taser[ratio]"
+		..()
 
 	attack_self()
 		..()
@@ -211,6 +217,7 @@
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/bouncy)
 				src.icon_state = "taser[ratio]"
+		..()
 
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
@@ -245,6 +252,7 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "laser[ratio]"
 			return
+		..()
 
 ////////////////////////////////////// Antique laser gun
 // Part of a mini-quest thing (see displaycase.dm). Typically, the gun's properties (cell, projectile)
@@ -267,6 +275,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -292,6 +301,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -327,6 +337,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			if(src.cell.charge >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				set_icon_state("crossbow")
@@ -346,7 +357,7 @@
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
-	mats = 50
+	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
@@ -356,6 +367,7 @@
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -399,6 +411,7 @@
 		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -434,6 +447,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -463,6 +477,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -521,6 +536,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.20) * 100
@@ -549,6 +565,7 @@
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
 	// Flaborized has made even more wavegun sprites!
 	update_icon()
+		..()
 		if (src.cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -587,6 +604,7 @@
 		..()
 
 	update_icon()
+		..()
 		return
 
 	shoot(var/target,var/start,var/mob/user)
@@ -621,6 +639,7 @@
 		..()
 
 	update_icon()
+		..()
 		if (!cell)
 			icon_state = "teleport"
 			return
@@ -635,7 +654,7 @@
 		var/list/L = list()
 		L += "None (Cancel)" // So we'll always get a list, even if there's only one teleporter in total.
 
-		for(var/obj/machinery/teleport/portal_generator/PG in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as() in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -778,6 +797,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -830,6 +850,7 @@
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -848,14 +869,17 @@
 	w_class = 4
 	force = 15
 
+
 	New()
 		cell = new/obj/item/ammo/power_cell/self_charging/big
 		current_projectile = new /datum/projectile/special/spreader/uniform_burst/blaster
 		projectiles = list(current_projectile)
+		flags |= ONBACK
 		..()
 
 
 	update_icon()
+		..()
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
 			var/ratio = min(1, src.cell.charge / maxCharge)
@@ -939,6 +963,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -959,6 +984,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -979,9 +1005,6 @@
 		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
 		..()
 
-	update_icon()
-		return
-
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -997,6 +1020,7 @@
 		projectiles = list(current_projectile)
 		..()
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1025,9 +1049,6 @@
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	update_icon()
-		return
-
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
 			playsound(user, "sound/weapons/DSBFG.ogg", 75)
@@ -1051,6 +1072,7 @@
 		projectiles = list(new/datum/projectile/laser/pred)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1143,7 +1165,6 @@
 		var/turf/tgt = get_turf(M)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
-			message_admins("[key_name(usr)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [showCoords(us.x, us.y, us.z)].")
 			return
 		return ..(M, user)
 
@@ -1192,6 +1213,7 @@
 		..()
 
 	update_icon()
+		..()
 		if(cell)
 			//Wire: Fix for Division by zero runtime
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
@@ -1216,7 +1238,7 @@
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
-	mats = 16
+	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
 	rechargeable = 0
@@ -1226,13 +1248,12 @@
 	New(var/mob/M)
 		cell = new/obj/item/ammo/power_cell/self_charging/lawbringer
 		current_projectile = new/datum/projectile/energy_bolt/aoe
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
-		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
+		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		asign_name(M)
 
-		update_icon()
 		..()
 
 	disposing()
@@ -1370,6 +1391,7 @@
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
+		..()
 		src.icon_state = "[old ? "old-" : ""]lawbringer0"
 		src.overlays = null
 
@@ -1384,7 +1406,7 @@
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/bullet/revolver_38)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/bullet/revolver_38/lb)			//execute - cyan
 				indicator_display.color = "#00FFFF"
 				muzzle_flash = "muzzle_flash"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
@@ -1489,6 +1511,7 @@
 		projectiles = list(new/datum/projectile/energy_bolt/pulse)
 
 	update_icon()
+		..()
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
@@ -1537,3 +1560,73 @@
 		cell = new/obj/item/ammo/power_cell/self_charging/howitzer
 		current_projectile = new/datum/projectile/special/howitzer
 		projectiles = list(new/datum/projectile/special/howitzer )
+
+/obj/item/gun/energy/signifer2
+	name = "Signifer II"
+	desc = "It's a handgun? Or an smg? You can't tell."
+	icon_state = "signifer2"
+	force = 8
+	two_handed = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	can_swap_cell = 0
+	var/shotcount = 0
+
+
+	New()
+		current_projectile = new/datum/projectile/energy_bolt/signifer_tase
+		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
+		..()
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+				src.icon_state = "signifer_2"
+				src.item_state = "signifer_2"
+				muzzle_flash = "muzzle_flash_elec"
+				shoot_delay = 2
+				spread_angle = 0
+				force = 9
+			else //if (current_projectile.type == /datum/projectile/laser)
+				src.item_state = "signifer_2-smg"
+				src.icon_state = "signifer_2-smg"
+				muzzle_flash = "muzzle_flash_bluezap"
+				force = 12
+				spread_angle = 3
+				shoot_delay = 5
+
+	attack_self(var/mob/M)
+		if (!src.two_handed)
+
+			if(M.l_hand == src)
+				if(M.r_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+			else if(M.r_hand == src)
+				if(M.l_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+		..()
+
+		setTwoHanded(!src.two_handed)
+		src.can_dual_wield = !src.two_handed
+		update_icon()
+
+		M.update_inhands()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
+			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
+
+	shoot()
+		shotcount = 0
+		. = ..()
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
+		shotcount = 0
+		. = ..()

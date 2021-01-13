@@ -94,15 +94,15 @@
 	else if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
 
 		var/obj/item/assembly/detonator/R = new /obj/item/assembly/detonator(user);
-		W.loc = R
+		W.set_loc(R)
 		W.master = R
 		W.layer = initial(W.layer)
-		src.loc = R
+		src.set_loc(R)
 		src.master = R
 		src.layer = initial(src.layer)
 		R.part_mt = W
 		R.part_ig = src
-		R.loc = user
+		R.set_loc(user)
 		user.u_equip(src)
 		user.u_equip(W)
 
@@ -147,8 +147,7 @@
 			location = src.master.loc
 
 		location = get_turf(location)
-		if(location)
-			location.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
+		location?.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
 		last_ignite = world.time
 
 	return

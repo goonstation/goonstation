@@ -1,0 +1,23 @@
+/**
+ * @file
+ * @copyright 2020
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+@use '../colors.scss';
+
+.cyborg-module-rewriter-interface {
+  $color-label: colors.fg(colors.$label) !default;
+
+  &-empty-placeholder {
+    color: $color-label;
+  }
+
+  &-module-view {
+    &__tool-label {
+      margin-left: 0.5em;
+      color: $color-label;
+    }
+  }
+}

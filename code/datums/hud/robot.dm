@@ -1,6 +1,3 @@
-#define COLOR_MATRIX_IDENTITY list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0, 0.7152,0.7152,0.7152,0, 0.0722,0.0722,0.0722,0, 0,0,0,1)
-
 /obj/screen/hud/robotstorage
 	MouseEntered(location, control, params)
 		if (src.name)
@@ -88,8 +85,8 @@
 			var x = 1, y = 10, sx = 1, sy = 10
 			if (!boxes)
 				return
-			if (items_screen + 6 > master.module.modules.len)
-				items_screen = max(master.module.modules.len - 6, 1)
+			if (items_screen + 6 > master.module.tools.len)
+				items_screen = max(master.module.tools.len - 6, 1)
 			if (items_screen < 1)
 				items_screen = 1
 			boxes.screen_loc = "[x], [y] to [x+sx-1], [y-sy+1]"
@@ -119,7 +116,7 @@
 
 			var/sid = 1
 			var/i_max = items_screen + 7
-			if (i_max <= master.module.modules.len)
+			if (i_max <= master.module.tools.len)
 				next.icon_state = "down"
 				next.color = COLOR_MATRIX_IDENTITY
 			else
@@ -127,9 +124,9 @@
 				next.color = COLOR_MATRIX_GRAYSCALE
 
 			for (var/i = items_screen, i < i_max, i++)
-				if (i > master.module.modules.len)
+				if (i > master.module.tools.len)
 					break
-				var/obj/item/I = master.module.modules[i]
+				var/obj/item/I = master.module.tools[i]
 				var/obj/screen/hud/S = screen_tools[sid]
 
 				if (!I) // if the item has been deleted, just show an empty slot.
@@ -167,41 +164,42 @@
 				update_equipment()
 				return
 			var/content_id = items_screen + i - 1
-			if (content_id > master.module.modules.len || content_id < 1)
+			if (content_id > master.module.tools.len || content_id < 1)
 				boutput(usr, "<span class='alert'>An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
-			var/obj/item/O = master.module.modules[content_id]
+			var/obj/item/O = master.module.tools[content_id]
 			if(!O || O.loc != master.module)
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 				master.module_states[1] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master) // Handle light datums and the like.
 			else if(!master.module_states[2])
 				master.module_states[2] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master)
 			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
 				master.module_states[3] = O
-				O.loc = master
+				O.set_loc(master)
 				O.pickup(master)
 			else
 				master.uneq_active()
 				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 					master.module_states[1] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 				else if(!master.module_states[2])
 					master.module_states[2] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
 					master.module_states[3] = O
-					O.loc = master
+					O.set_loc(master)
 					O.pickup(master)
 			update_equipment()
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 
 		// @TODO i fucking hate the boxes not being clickable so here's a gross hack to fix it
@@ -270,8 +268,8 @@
 		mainframe.underlays += "block"
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
-		if(!master) return
+	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
+		if(!master || user != master) return
 		switch(id)
 			if("object1", "object2", "object3", "object4", "object5", "object6", "object7", "next", "nextbg", "prev", "prevbg", "boxes")
 				if(dy < 0) items_screen++
@@ -387,7 +385,7 @@
 			remove_screen(G)
 
 		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-			if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
+			if(!master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)

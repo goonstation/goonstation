@@ -233,7 +233,7 @@
 		..()
 		return
 
-	hitby(A as mob|obj)
+	hitby(atom/movable/A, datum/thrown_thing/thr)
 		if (!src.armed)
 			return ..()
 		src.visible_message("<span class='alert'><B>The mousetrap is triggered by [A].</B></span>")
@@ -298,7 +298,10 @@
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
-			src.pie.throw_impact(target)
+			var/datum/thrown_thing/thr = new
+			thr.user = usr // ew gross
+			thr.thing = src.pie
+			src.pie.throw_impact(target, thr)
 			src.pie = null
 
 		return
@@ -397,7 +400,7 @@
 		user.u_equip(src)
 
 		src.layer = initial(src.layer)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
 	Bump(atom/movable/AM as mob|obj)

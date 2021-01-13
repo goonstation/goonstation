@@ -48,7 +48,7 @@
 			B.layer = OBJ_LAYER
 
 			for(var/i=0, i<20, i++)
-				B.loc = A.loc
+				B.set_loc(A.loc)
 
 				step_to(A,MT,0)
 				if (get_dist(A,MT) == 0)

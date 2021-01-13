@@ -184,7 +184,6 @@
 			src.desk_drawer = null
 			qdel(O)
 
-		loc = null
 		if (!OL)
 			return
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -231,8 +230,6 @@
 					G.affecting.changeStatus("weakened", 2 SECONDS)
 					G.affecting.force_laydown_standup()
 				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			if (G.affecting.bioHolder.HasEffect("fat")) // fatties crash through the table instead :V
-				deconstruct()
 			qdel(W)
 			return
 
@@ -308,7 +305,9 @@
 					src.material.triggerOnAttacked(src, user, user, src)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
+			if(ismonkey(H))
+				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -353,6 +352,56 @@
 		if (usr && usr == over_object && src.desk_drawer)
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
+
+	Bumped(atom/AM)
+		..()
+		if(!ismonkey(AM))
+			return
+		var/mob/living/carbon/human/M = AM
+		if(!isalive(M))
+			return
+		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
+
+//Replacement for monkies walking through tables: They now parkour over them.
+//Note: Max count of tables traversable is 2 more than the iteration limit
+/datum/action/bar/icon/railing_jump/table_jump
+	id = "table_jump"
+	var/const/throw_range = 7
+	var/const/iteration_limit = 5
+
+	getLandingLoc()
+		var/iteration = 0
+		var/dir = get_dir(ownerMob, the_railing)
+		var/turf/target = get_step(the_railing, dir)
+		var/obj/table/maybe_table = locate(/obj/table) in target
+		while(maybe_table && iteration < iteration_limit)
+			iteration++
+			target = get_step(target, dir)
+			maybe_table = locate(/obj/table) in target
+			duration += 1 SECOND
+		return target
+
+	do_bunp()
+		return FALSE // no bunp
+
+	proc/unset_tablepass_callback(datum/thrown_thing/thr)
+		thr.thing.flags &= ~TABLEPASS
+
+	sendOwner()
+		var/const/throw_speed = 0.5
+		var/datum/thrown_thing/thr = ownerMob.throw_at(jump_target, throw_range, throw_speed)
+		if(isnull(thr))
+			return
+		if(!(ownerMob.flags & TABLEPASS))
+			ownerMob.flags |= TABLEPASS
+			thr.end_throw_callback = .proc/unset_tablepass_callback
+		for(var/O in AIviewers(ownerMob))
+			var/mob/M = O //inherently typed list
+			var/the_text = "[ownerMob] jumps over [the_railing]."
+			if (is_athletic_jump) // athletic jumps are more athletic!!
+				the_text = "[ownerMob] swooces right over [the_railing]!"
+			M.show_text("[the_text]", "red")
+		// logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing%]].")
 
 /* ======================================== */
 /* ---------------------------------------- */
@@ -423,7 +472,7 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				for (var/mob/N in AIviewers(usr, null))
 					if (N.client)
-						shake_camera(N, 4, 1, 0.5)
+						shake_camera(N, 4, 8, 0.5)
 			else
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
@@ -671,11 +720,11 @@
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
-				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))) || (G.affecting.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80))))
+				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 					src.smash()
 					random_brute_damage(G.affecting, rand(20,40),1)
 					take_bleeding_damage(G.affecting, G.assailant, rand(20,40))
-					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy") || G.affecting.bioHolder.HasEffect("fat"))
+					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy"))
 						boutput(user, "<span class='alert'>You cut yourself on \the [src] as [G.affecting] slams through the glass!</span>")
 						random_brute_damage(G.assailant, rand(10,30),1)
 						take_bleeding_damage(G.assailant, G.assailant, rand(10,30))
@@ -689,10 +738,6 @@
 					smashprob += 25
 				else
 					smashprob += 10
-			if (G.affecting.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80)))
-				src.smash()
-				qdel(W)
-				return
 			qdel(W)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
@@ -733,11 +778,11 @@
 		else
 			return ..()
 
-	hitby(AM as mob|obj)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (ismob(AM))
 			var/mob/M = AM
-			if ((prob(src.reinforced ? 60 : 80)) || (M.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80))))
+			if ((prob(src.reinforced ? 60 : 80)))
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()
@@ -871,7 +916,7 @@
 			duration = duration_i
 		if (ishuman(owner) && interaction != TABLE_LOCKPICK)
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

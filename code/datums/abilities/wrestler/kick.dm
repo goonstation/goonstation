@@ -42,10 +42,10 @@
 
 		M.emote("scream")
 		M.emote("flip")
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 
 		for (var/mob/C in oviewers(M))
-			shake_camera(C, 8, 3)
+			shake_camera(C, 8, 24)
 
 		M.visible_message("<span class='alert'><B>[M.name] [pick_string("wrestling_belt.txt", "kick")]-kicks [target]!</B></span>")
 		if (!fake)
@@ -54,11 +54,10 @@
 
 		var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 		if (!fake && T && isturf(T))
-			SPAWN_DBG(0)
-				target.throw_at(T, 3, 2)
-				target.changeStatus("weakened", 2 SECONDS)
-				target.changeStatus("stunned", 2 SECONDS)
-				target.force_laydown_standup()
+			target.throw_at(T, 3, 2)
+			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("stunned", 2 SECONDS)
+			target.force_laydown_standup()
 
 		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

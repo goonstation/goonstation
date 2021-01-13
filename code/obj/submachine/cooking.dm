@@ -21,7 +21,7 @@
 			user.show_text("You add water to the rice to make sticky rice!", "blue")
 			new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(src.loc)
 			qdel(W)
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/))
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
 			if (fill == W.reagents.total_volume)
 				user.show_text("[W] is too full already.", "red")
@@ -51,6 +51,11 @@
 				W.icon_state = "skull"
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	attack_hand(var/mob/user as mob)
 		src.add_fingerprint(user)
@@ -115,7 +120,7 @@
 		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
-			if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+			if (is_incapacitated(usr) || usr.restrained())
 				return
 
 			src.add_fingerprint(usr)
@@ -183,6 +188,10 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.cant_drop) // For borg held items
+			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
+			return
+
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
 			if(src.cone)
 				boutput(user, "There is already a cone loaded.")
@@ -209,6 +218,11 @@
 			src.update_icon()
 			src.updateUsrDialog()
 		else ..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/update_icon()
 		if(src.beaker)
@@ -395,6 +409,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
+			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
+			src.recipes += new /datum/cookingrecipe/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
@@ -466,7 +482,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
-			src.recipes += new /datum/cookingrecipe/cake_downs(src)
 			src.recipes += new /datum/cookingrecipe/cake_meat(src)
 			src.recipes += new /datum/cookingrecipe/cake_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/cake_cream(src)
@@ -532,7 +547,7 @@ table#cooktime a#start {
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (href_list["cook"])
 			if (src.working)
@@ -661,8 +676,12 @@ table#cooktime a#start {
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 							F.name = "[M.subjectname] [foodname]"
 							F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-							if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
+							if(!isnull(F.unlock_medal_when_eaten))
+								continue
+							else if (M.subjectjob && M.subjectjob == "Clown")
 								F.unlock_medal_when_eaten = "That tasted funny"
+							else
+								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
@@ -716,6 +735,9 @@ table#cooktime a#start {
 		if (isghostdrone(user))
 			boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return
 		if (src.working)
 			boutput(usr, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
@@ -745,6 +767,11 @@ table#cooktime a#start {
 		W.set_loc(src)
 		W.dropped()
 		src.updateUsrDialog()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return 0
@@ -941,7 +968,7 @@ table#cooktime a#start {
 		..()
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
 			for(var/obj/item/P in src.contents)
@@ -953,7 +980,7 @@ table#cooktime a#start {
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained())
+		if (is_incapacitated(user) || user.restrained())
 			return
 
 		if (istype(O, /obj/storage))
@@ -1002,6 +1029,7 @@ var/list/mixer_recipes = list()
 	var/working = 0
 
 	New()
+		..()
 		src.recipes = mixer_recipes
 		if (!src.recipes)
 			src.recipes = list()
@@ -1066,10 +1094,15 @@ var/list/mixer_recipes = list()
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
+
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		if (href_list["mix"])
@@ -1137,8 +1170,12 @@ var/list/mixer_recipes = list()
 					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 						F.name = "[M.subjectname] [foodname]"
 						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if (M.subjectjob && M.subjectjob == "Clown" && isnull(F.unlock_medal_when_eaten))
+						if(!isnull(F.unlock_medal_when_eaten))
+							continue
+						else if (M.subjectjob && M.subjectjob == "Clown")
 							F.unlock_medal_when_eaten = "That tasted funny"
+						else
+							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				for (var/obj/item/I in to_remove)
 					qdel(I)
 				to_remove.len = 0

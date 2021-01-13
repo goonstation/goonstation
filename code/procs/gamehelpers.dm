@@ -119,16 +119,25 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.anchored = 1
 					O.set_density(0)
 					O.layer = FLY_LAYER
-					O.dir = pick(cardinal)
+					O.set_dir(pick(cardinal))
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(O)
+					sleep(0.5 SECONDS)
+					qdel(O)
 
 				return 1
-		else if (istype(source, /obj/machinery) && isAI(user))
-			return 1
+
+		else if (isobj(source))
+			var/obj/SO = source
+			if(SO.can_access_remotely(user))
+				return 1
+
+	if (mirrored_physical_zone_created) //checking for vistargets if true
+		var/turf/T = get_turf(source)
+		if (T.vistarget)
+			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
+				return 1
 
 	return 0 //not in range and not telekinetic
 
@@ -208,14 +217,15 @@ var/obj/item/dummy/click_dummy = new
 
 
 /proc/get_viewing_AIs(center = null, distance = 7)
+	RETURN_TYPE(/list/mob)
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for (var/mob/living/silicon/ai/theAI in AIs)
+	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
 //			if (AIeye in view(center, distance))
-			if(DIST_CHECK(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
 		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
@@ -251,10 +261,7 @@ var/obj/item/dummy/click_dummy = new
 //A little wrapper around format_net_id to account for non-null tag values
 /proc/generate_net_id(var/atom/the_atom)
 	if(!the_atom) return
-	var/tag_holder = the_atom.tag
-	the_atom.tag = null //So we generate from internal ref id
 	. = format_net_id("\ref[the_atom]")
-	the_atom.tag = tag_holder
 
 /proc/can_act(var/mob/M, var/include_cuffs = 1)
 	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
@@ -431,7 +438,6 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
@@ -453,6 +459,28 @@ var/obj/item/dummy/click_dummy = new
 			for (var/turf/T in R)
 				. += R
 				break
+
+/proc/get_areas_with_unblocked_turfs(var/areatype)
+	//Takes: Area type as text string or as typepath OR an instance of the area.
+	//Returns: A list of all areas of that type in the world that have at least one unblocked turf.
+	//Also sets an unblocked turf for each area for the spy thief mode.
+	//Notes: Simple!
+	if(!areatype) return null
+	if(istext(areatype)) areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	. = list()
+
+	for(var/area/R in world)
+		LAGCHECK(LAG_LOW)
+		if(istype(R, areatype))
+			for (var/turf/T in R)
+				if(!is_blocked_turf(T))
+					R.spyturf = T
+					. += R
+					break
 
 /proc/get_area_turfs(var/areatype, var/floors_only)
 	//Takes: Area type as text string or as typepath OR an instance of the area.
@@ -506,6 +534,7 @@ var/obj/item/dummy/click_dummy = new
 	var/a = null
 
 	New(_r,_g,_b,_a=255)
+		..()
 		r = _r
 		g = _g
 		b = _b
@@ -540,8 +569,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/x in turfs_src)
-		var/turf/T = x
+	for (var/turf/T as() in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -549,8 +577,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/x in turfs_trg)
-		var/turf/T = x
+	for (var/turf/T as() in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -558,21 +585,20 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T.loc != A) continue
-		T.ReplaceWith(S.type, force=1)
+		if(T?.loc != A) continue
+		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
-		T.density = S.density
-		T.dir = S.dir
+		T.set_density(S.density)
+		T.set_dir(S.dir)
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for(var/x in S)
-			var/atom/movable/AM = x
+		for (var/atom/movable/AM as() in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)
 		if(turftoleave)
-			S.ReplaceWith(turftoleave, force=1)
+			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
 		else
 			S.ReplaceWithSpaceForce()
 

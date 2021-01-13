@@ -50,7 +50,7 @@
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
-			if (prob(decrease_chance*mult))
+			if (prob(percentmult(decrease_chance, mult)))
 				owner.bleeding -= 1 * mult
 				boutput(owner, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
 

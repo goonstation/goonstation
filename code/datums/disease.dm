@@ -99,7 +99,7 @@
 
 		..()
 
-	proc/stage_act()
+	proc/stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -110,7 +110,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 		master.stage_act(affected_mob,src)
@@ -151,7 +151,7 @@
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -170,7 +170,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
+		advance_prob = clamp(percentmult(advance_prob, mult), 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")
@@ -183,11 +183,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33))
+			if (cure == "Sleep" && affected_mob.sleeping && prob(percentmult(33, mult)))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5))
+			else if (cure == "Self-Curing" && prob(percentmult(5, mult)))
 				state = "Remissive"
 				return 1
 
@@ -209,7 +209,7 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(reagcure_prob))
+							if (prob(max((percentmult(reagcure_prob, mult)), 100)))
 								we_are_cured = 1
 						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
 							var/list/cureprobs = reagcure_prob
@@ -217,11 +217,11 @@
 							for (var/thing in cureprobs)
 								if (!isnum(thing))
 									continue
-								if (!prob(thing))
+								if (!prob(max(percentmult(thing, mult), 100)))
 									success = 0
 							if (success)
 								we_are_cured = 1
-						else if (prob(recureprob))
+						else if (prob(max(percentmult(recureprob, mult), 100)))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -258,7 +258,7 @@
 		src.cure = master.cure
 		src.was_setup = 1
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob)
 			return
 
@@ -276,7 +276,7 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (prob(percentmult(stage_prob, mult)) && stage < master.max_stages)
 			stage++
 
 
@@ -295,8 +295,7 @@
 		var/mob/living/carbon/human/H = src
 		resist_prob = H.get_disease_protection(ailment_path, ailment_name)
 	else
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as() in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 	if (ispath(ailment_path) || istext(ailment_name))
@@ -528,6 +527,7 @@
 	return null
 
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
+	src.changeStatus("defibbed", (12 SECONDS * (probcure * 0.1))) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
 		if (V.cure == "Electric Shock" && prob(probcure))
 			src.cure_disease(V)
