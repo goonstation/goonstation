@@ -390,12 +390,12 @@
 			if (!(src in processing_items))
 				processing_items.Add(src)
 
-      if(src.sliced && src.GetOverlayImage("slice-candle"))
-        src.ClearSpecificOverlays("slice-candle")
-        src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle_lit")
-      else if(src.GetOverlayImage("cake[src.clayer]-candle"))
-        src.ClearSpecificOverlays("cake[src.clayer]-candle")
-        src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
+		if(src.sliced && src.GetOverlayImage("slice-candle"))
+			src.ClearSpecificOverlays("slice-candle")
+			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle_lit")
+		else if(src.GetOverlayImage("cake[src.clayer]-candle"))
+			src.ClearSpecificOverlays("cake[src.clayer]-candle")
+			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
 		return
 
 
