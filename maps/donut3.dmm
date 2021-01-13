@@ -31101,7 +31101,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "jey" = (
-/obj/bookshelf/persistent{
+/obj/bookshelf{
 	pixel_y = 28
 	},
 /turf/simulated/floor/white,
