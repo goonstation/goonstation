@@ -1562,10 +1562,10 @@
 				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
 				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
-					if (synthesize_pathogen_cost > wagesystem.research_budget)
+					var/count = text2num(confirm)
+					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
 						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else
-						var/count = text2num(confirm)
 						boutput(usr, "<span class='notice'>Transaction successful.</span>")
 						wagesystem.research_budget -= synthesize_pathogen_cost*count
 						machine_state = 1
