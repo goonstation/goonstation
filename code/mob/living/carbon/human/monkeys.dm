@@ -153,7 +153,7 @@
 		if(ai_aggressive)
 			return ..()
 
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		..()
 		if (src.ai_state == 0)
@@ -166,7 +166,7 @@
 					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
 						src.ai_target = bag
 						src.target = bag
-						src.ai_state = 2
+						src.ai_state = AI_ATTACKING
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
@@ -197,7 +197,7 @@
 			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
-		src.ai_state = 2
+		src.ai_state = AI_ATTACKING
 		src.ai_threatened = world.timeofday
 		src.ai_target = T
 		src.shitlist[T] ++
@@ -213,7 +213,7 @@
 				continue
 			//pal.ai_aggressive = 1
 			pal.target = T
-			pal.ai_state = 2
+			pal.ai_state = AI_ATTACKING
 			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
@@ -222,7 +222,7 @@
 				src.emote("scream")
 
 	proc/shot_by(var/atom/A as mob|obj)
-		if (src.ai_state == 2)
+		if (src.ai_state == AI_ATTACKING)
 			return
 		if (ishuman(A))
 			src.was_harmed(A)
@@ -236,7 +236,7 @@
 			return 0
 		if (src.health <= 0 || (get_dist(src, T) >= 7))
 			if(src.health <= 0)
-				src.ai_state = 5
+				src.ai_state = AI_FLEEING
 			else
 				src.ai_state = 0
 				src.target = null
@@ -382,7 +382,7 @@
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
-		src.ai_state = 5
+		src.ai_state = AI_FLEEING
 		src.ai_target = AM
 		src.target = AM
 
