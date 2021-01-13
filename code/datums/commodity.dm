@@ -2155,6 +2155,20 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/mime
+	comname = "Mime Clothes"
+	comtype = /obj/item/storage/box/costume/mime
+	desc = "No words can describe this. Only intricate gesticulation."
+	price = 100 //exactly what the clown spawns with in their account, three mimes on mondays.
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mime/alt
+	comname = "Alternate Mime Clothes."
+	comtype = /obj/item/storage/box/costume/mime/alt
+	desc = "This stuff will give you an edge in charades."
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox

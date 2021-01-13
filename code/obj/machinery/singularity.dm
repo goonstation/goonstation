@@ -1295,8 +1295,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_control/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(1 SECOND)
 		updatecons()
+
+/obj/machinery/power/collector_control/disposing()
+	. = ..()
+	STOP_TRACKING
 
 /obj/machinery/power/collector_control/proc/updatecons()
 

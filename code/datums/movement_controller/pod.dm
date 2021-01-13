@@ -43,12 +43,12 @@
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod) || !owner)
 			return
 
-		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT|KEY_RUN))
+		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT|KEY_RUN|KEY_BOLT))
 			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
 				return
 
-			braking = keys & KEY_RUN
+			braking = keys & (KEY_RUN | KEY_BOLT)
 
 			input_x = 0
 			input_y = 0

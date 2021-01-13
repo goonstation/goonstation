@@ -1,5 +1,53 @@
 
+(t)tue jan 12 21
+(u)BatElite
+(p)3259
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Almost all maps now have additional nuke planting targets!
+(u)pali
+(+)Paint machine repair is no longer luck based. Paint application reworked to disallow obnoxious uses like "everything is now pitch black".
+(t)mon jan 11 21
+(u)Flourish
+(e)🗺|mapping
+(+)Pathology on Oshan can now be found in the research outpost.
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted stamina cost/damage of disarm shoves. Disarm shoves should also now be incapable of causing stamina KOs.
+(u)pali
+(+)You can now stuff ammo casings, paper and floor tiles into crates en-masse by clickdragging.
+(u)Flourish
+(p)3291
+(e)🆕|feature
+(*)Conspirators now spawn with a secret radio frequency on their headset. You can access the frequency with the :z prefix to talk with your co-conspirators.
+(u)BenLubar
+(p)3299
+(e)|
+(*)Cyborg arms, legs, and heads will now break properly rather than getting stuck in some quantum state.
+(t)sun jan 10 21
+(u)Flaborized
+(p)3284
+(e)🎨|sprites
+(+)Engineering jobs now have yellow tools.
+(u)kyle
+(+)I put away my robe and wizard hat.
+(u)DimWhat and WALPVRGIS
+(p)3263
+(e)🎨|sprites
+(+)Added mime clothing to Geoff Honkington's list of wares. Comes with its own special box! Spritework by WALPVGRIS.
 (t)sat jan 09 21
+(u)BenLubar
+(p)3288
+(e)|
+(+)The AI is once again able to interface with sleeper consoles.
+(u)Flourish
+(+)Space lube, organic superlubricant, oil, and butter, when applied to a turf, now also apply a temporary "wet" overlay. Should be useful for telling when a tile is slippery!
+(u)Keisuki
+(p)3283
+(e)🆕🎨|feature, sprites
+(+)Added the "Letter Display Component" for mechanics.
+(u)pali
+(+)Toggle-Ghost-Radio verb to toggle if you hear radio as a ghost.
+(+)You can now clickdrag barcode stickers onto things to stick them. Useful for borgs.
 (u)BenLubar
 (p)3274
 (e)🆕|feature

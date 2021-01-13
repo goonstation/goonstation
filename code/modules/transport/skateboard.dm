@@ -220,12 +220,13 @@
 	return
 
 /obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
 	density = 0
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 
 	src.stop()

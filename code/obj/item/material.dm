@@ -103,8 +103,8 @@
 
 		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
-			targetObject.stack_item(src)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
 				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
@@ -133,7 +133,7 @@
 							var/obj/item/raw_material/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -147,7 +147,7 @@
 							var/obj/item/raw_material/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -560,6 +560,10 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
+	unpooled()
+		. = ..()
+		src.setItemSpecial(/datum/item_special/double)
+
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
@@ -576,7 +580,7 @@
 				step_on(H)
 			else
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts/leg/left) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts/leg/right))
+				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")

@@ -2921,7 +2921,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)

@@ -596,7 +596,7 @@
 	src.update_cursor()
 
 /mob/living/point_at(var/atom/target)
-	if (!isturf(src.loc) || usr.stat || usr.restrained())
+	if (!isturf(src.loc) || src.stat || src.restrained())
 		return
 
 	if (isghostcritter(src))
@@ -1034,11 +1034,13 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M in listening)
-		if (M.say_understands(src, forced_language))
-			heard_a += M
+	for (var/mob/M as() in listening)
+		if(M.mob_flags & MOB_HEARS_ALL)
+			continue
+		else if (M.say_understands(src, forced_language))
+			heard_a[M] = 1
 		else
-			heard_b += M
+			heard_b[M] = 1
 
 	var/list/processed = list()
 
@@ -1091,6 +1093,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
+	var/list/hearers = hearers(src)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1102,7 +1105,7 @@
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
 			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && (M in hearers(src))) || \
+			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(src.loc) && src.loc == M.loc) && \
 				!(M in heard_a) && \
@@ -1279,7 +1282,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 
 	if (thing)
-		if (alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes")
+		if (M.client && alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes" || M.ai_active)
 			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)

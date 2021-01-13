@@ -363,6 +363,10 @@
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (damage > 0)
 		def_zone = target.check_target_zone(def_zone)
@@ -381,13 +385,10 @@
 	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
-		msgs.force_stamina_target = 1
+		if(target_stamina >= 0)
+			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			msgs.force_stamina_target = 1
 
-	var/target_stamina = STAMINA_MAX //uses stamina?
-	if (isliving(target))
-		var/mob/living/L = target
-		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -757,7 +758,8 @@
 			else
 				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
 				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
-				BORG.part_head.ropart_take_damage(rand(20,40),0)
+				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
 					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
 					send_flying = 2

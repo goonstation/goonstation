@@ -27,6 +27,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
+	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0

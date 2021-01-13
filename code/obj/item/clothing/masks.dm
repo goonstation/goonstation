@@ -159,6 +159,10 @@
 	name = "SWAT Mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
+	item_state = "swat"
+	color_r = 1
+	color_g = 0.8
+	color_b = 0.8
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"

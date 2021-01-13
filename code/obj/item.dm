@@ -535,16 +535,11 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if (!issilicon(usr))
-		// Zamu change - added if (!issilicon(usr))
-		// I have no idea if this matters - issilicon() is used in other places to prevent
-		// dropping or deleting items in some places.
-		// good thing I have no clue what I'm doing
-		// Potential issue for later: may end up not deleting external-to-player stacks
-		// maybe check for src.loc = usr? ???
-		SPAWN_DBG(0)
-			usr.u_equip(src)
-			pool(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
+		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0

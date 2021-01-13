@@ -383,6 +383,13 @@
 	proc/write_input(mob/user)
 		if(src.in_use)
 			return null
+		if(!user.client && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(ismonkey(H) && H.ai_active)
+				if(prob(90))
+					return pick(src.c_symbol)
+				else
+					return pick(src.c_default)
 		src.in_use = 1
 		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
