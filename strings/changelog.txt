@@ -1,4 +1,9 @@
+
 (t)wed jan 13 21
+(u)BenLubar
+(p)3319
+(e)|
+(+)AI "eyebot" shells now have access to all radio channels, just like AI cyborg shells do.
 (u)UrsulaMajor
 (e)⚖🆕|balance, feature
 (*)zjdtmkhzt's Pathology Rework is being enabled for ONE WEEK for in game testing! Guide here: <a target="_blank" href="https://wiki.ss13.co/Guide_to_Pathology">Guide To Pathology</a>. Summary of changes here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
