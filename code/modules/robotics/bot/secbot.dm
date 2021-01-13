@@ -860,9 +860,9 @@
 
 		src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 		src.target = C
-    if(istype(C, /mob/living/carbon/human/npc/monkey))
-      var/mob/living/carbon/human/npc/monkey/npcmonkey = C
-      npcmonkey.pursuited_by(src)
+		if(istype(C, /mob/living/carbon/human/npc/monkey))
+			var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+			npcmonkey.pursuited_by(src)
 		src.oldtarget_name = C.name
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
