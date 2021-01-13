@@ -42,7 +42,7 @@
 			if(prob(maxcharge/1000)) 									// the more charge the bigger the chance it does dumb stuff
 				switch(A.artitype.name) 								// leakage
 					if ("martian")
-						src.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo")
+						src.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
 					if ("ancient")
 						src.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 					if ("wizard")
