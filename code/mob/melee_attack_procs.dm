@@ -638,10 +638,6 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
-
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
@@ -1139,6 +1135,10 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
+
+	for (var/uid in src.pathogens)
+		var/datum/pathogen/P = src.pathogens[uid]
+		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()
