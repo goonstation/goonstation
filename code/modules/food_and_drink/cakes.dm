@@ -272,7 +272,8 @@
 						src.amount3 = 0
 					if(toggleswitch)
 						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
-						stack.color = (src.GetOverlayImage(src.overlay_refs[i])).color
+						var/image/warningsuppression = src.GetOverlayImage(src.overlay_refs[i])
+						stack.color = warningsuppression.color
 						cake.UpdateOverlays(stack,"base")
 						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
 						staticiterator--
