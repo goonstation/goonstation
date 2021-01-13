@@ -42,6 +42,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
 		src.update_icon()
@@ -152,6 +153,7 @@
 	disposing()
 		if (qdeled || in_disposing)
 			return
+		STOP_TRACKING
 		in_disposing = 1
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src

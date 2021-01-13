@@ -167,8 +167,12 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/cleanName = ""   //Name without any additional information.
 	var/isMoveTrait = 0 // If 1, onMove will be called each movement step from the holder's mob
+	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 
 	proc/onAdd(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(mutantRace)
 		return
 
 	proc/onRemove(var/mob/owner)
@@ -1050,12 +1054,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/lizard)
-		return
+	mutantRace = /datum/mutantrace/lizard
 
 /obj/trait/cow
 	name = "Bovine (-1) \[Species\]"
@@ -1066,12 +1065,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/cow)
-		return
+	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
 	name = "Skeleton (-2) \[Species\]"
@@ -1082,12 +1076,7 @@ obj/trait/pilot
 	points = -2
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/skeleton)
-		return
+	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
@@ -1098,9 +1087,5 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
+	mutantRace = /datum/mutantrace/roach
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/roach)
-		return

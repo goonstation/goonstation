@@ -448,18 +448,18 @@
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
 
-			var/icon_text = ""
+			var/icon_text = "<p><p>"
 			// @todo probably refactor this since it's copy pasted twice now.
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (A.item_outputs)
+			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (istype(A, /datum/manufacture/mechanics))
+			// 	var/datum/manufacture/mechanics/F = A
+			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			var/list/material_text = list()
 			var/list/material_count = 0
@@ -1705,17 +1705,17 @@
 				// shut up
 				remove_link = "&#8987; Working..."
 
-			var/icon_text = ""
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			var/icon_text = "<p><p>"
+			// if (A.item_outputs)
+			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (istype(A, /datum/manufacture/mechanics))
+			// 	var/datum/manufacture/mechanics/F = A
+			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 
 			dat += {"
@@ -1745,7 +1745,7 @@
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
 			for(var/obj/item/material_piece/M in src.contents)
-				if (istype(M, P) && M.material && M.material.mat_id == P.material.mat_id)
+				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
 					pool(P)
@@ -2201,7 +2201,10 @@
 #ifdef UNDERWATER_MAP
 	/datum/manufacture/jetpackmkII,
 #endif
-	/datum/manufacture/mining_magnet)
+#ifndef UNDERWATER_MAP
+	/datum/manufacture/mining_magnet
+#endif
+	)
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,

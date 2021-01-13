@@ -316,6 +316,7 @@ var/list/dirty_keystates = list()
 
 		if (new_state != C.last_keys) // !?
 			var/mob/M = C.mob
+			usr = M
 			M.keys_changed(new_state, new_state ^ C.last_keys)
 			C.last_keys = new_state
 

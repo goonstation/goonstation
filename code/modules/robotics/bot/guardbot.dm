@@ -1220,7 +1220,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if(IN_RANGE(target_turf, my_turf, 2))
+			if(IN_RANGE(target_turf, my_turf, 1))
 				budgun.shoot_point_blank(target, my_turf)
 			else
 				budgun.shoot(target_turf, my_turf, src)
@@ -3018,6 +3018,10 @@
 						master.set_emotion("angry")
 						master.speak("Level [threat] infraction alert!")
 						master.point(C, 1)
+						if(istype(C, /mob/living/carbon/human/npc/monkey))
+							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+							npcmonkey.pursuited_by(src)
+
 					else if (!last_cute_action || ((last_cute_action + TIME_BETWEEN_CUTE_ACTIONS) < world.time))
 						if (prob(10))
 							last_cute_action = world.time

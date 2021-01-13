@@ -670,6 +670,14 @@ This is basically useless for anyone but miners.
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/poisonbundle
+	name = "Poison Bottle Bundle"
+	item = /obj/item/storage/box/poison
+	cost = 7
+	desc = "A box filled with seven random poison bottles."
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/chemicompiler
 	name = "Chemicompiler"
 	item = /obj/item/device/chemicompiler

@@ -910,6 +910,12 @@ var/datum/action_controller/actions
 
 		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
 
+	onUpdate()
+		. = ..()
+		if(!owner.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 	onInterrupt(var/flag)
 		..()
 		boutput(owner, "<span class='alert'>Your attempt to remove your handcuffs was interrupted!</span>")

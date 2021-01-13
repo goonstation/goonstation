@@ -111,7 +111,7 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
-/obj/machinery/power/smes/process()
+/obj/machinery/power/smes/process(mult)
 
 	if (status & BROKEN)
 		return
@@ -131,7 +131,10 @@
 
 				load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
 
-				charge += load	// increase the charge
+				// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
+				// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
+				// benefits to charged value so that minimal loss occurs.
+				charge += load * mult	// increase the charge
 				add_load(load)		// add the load to the terminal side network
 
 			else					// if not enough capcity

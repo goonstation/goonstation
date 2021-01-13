@@ -189,7 +189,9 @@
 	if(istype(src.loc, /obj/item/clipboard))
 		var/mob/living/M = user
 		return M.shared_living_ui_distance(src, viewcheck = FALSE)
-	return ..()
+	. = max(..(), UI_DISABLED)
+	if(IN_RANGE(user, src, 8))
+		. = max(., UI_UPDATE)
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	. = ..()
@@ -344,6 +346,13 @@
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
+	else if (issnippingtool(P))
+		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
+		user.put_in_hand_or_drop(M)
+		usr.u_equip(src)
+		pool(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this

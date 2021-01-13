@@ -155,7 +155,6 @@
 	proc/speak(var/message, var/sing, var/just_float)
 		if (!src.on || !message || src.muted)
 			return
-
 		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text)
 			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")

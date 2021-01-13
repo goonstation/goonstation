@@ -406,10 +406,11 @@ var/global/list/atomTooltips = new()
 		tooltipDebugOut(src.owner, "hide() called. force: [force]. fromJS: [fromJS]. src.visible: [src.visible]. src.created: [src.created]. src.isStuck: [src.isStuck]")
 		#endif
 
-		if (!fromJS)
+		if (!fromJS && src.owner)
 			src.owner << output(1, "[src.window].browser:tooltip.setInterrupt")
 
-		winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
+		if(src.owner)
+			winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
 
 		if (src.hasCloseHandler)
 			src.closeHandler()

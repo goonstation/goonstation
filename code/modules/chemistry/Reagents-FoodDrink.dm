@@ -1035,7 +1035,6 @@ datum
 			transparency = 190
 			alch_strength = 1 //its literally methanol
 			depletion_rate = 0.4
-			thirst_value = 0.6
 			thirst_value = -0.3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -1876,7 +1875,6 @@ datum
 			transparency = 190
 			taste = "sugary"
 			thirst_value = 0.75
-			bladder_value = -0.03
 			viscosity = 0.4
 			bladder_value = -0.2
 
@@ -2217,7 +2215,6 @@ datum
 			fluid_r = 117
 			fluid_g = 120
 			fluid_b = 65
-			thirst_value = 0.075
 			bladder_value = 0.04
 			energy_value = 0.04
 			transparency = 232

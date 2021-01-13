@@ -145,6 +145,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
+	..()
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.current_projectile = src.projectiles[src.current_projectile_num]
@@ -296,6 +297,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
 		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>")
+
 	if (!process_ammo(user))
 		return
 

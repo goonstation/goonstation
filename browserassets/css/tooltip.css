@@ -25,6 +25,7 @@ html, body {
 	padding: 6px;
 	border: 2px solid #222;
 	background: #333;
+	user-select: none;
 }
 
 .pinned .wrap .title {

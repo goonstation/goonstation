@@ -145,6 +145,10 @@
 	if(AM == rider || !rider)
 		return
 
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
+
 	..()
 	src.stop()
 	in_bump = 1
@@ -208,19 +212,21 @@
 		SPAWN_DBG(0.4 SECONDS)
 			input_lockout -= 1
 
-	runningAction?.sCurr = sickness
+	if(runningAction)
+		runningAction.sCurr = sickness
 
 	update()
 	in_bump = 0
 	return
 
 /obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
 	density = 0
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 
 	src.stop()

@@ -116,11 +116,11 @@
 	else
 		step_rand(src,1)
 
-/obj/machinery/bot/buttbot/process()
+/obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)
 		return
 	if (src.on == 1)
-		if(src.buttranslate && prob(60) && src.last_butt + src.butt_cooldown <= TIME)
+		if(src.buttranslate && prob(60*mult) && src.last_butt + src.butt_cooldown <= TIME)
 			if(length(src.butt_memory) >= 1)
 				speak(src.buttify())
 			else

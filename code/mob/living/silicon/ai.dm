@@ -553,6 +553,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						foot = M.organs["l_leg"]
 					foot.take_damage(3, 0)
 					user.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = src
 	src.update_appearance()
 
 /mob/living/silicon/ai/blob_act(var/power)
@@ -1633,7 +1634,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
+			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
 
@@ -1655,7 +1656,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
+			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
 				count++

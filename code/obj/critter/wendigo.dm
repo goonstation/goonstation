@@ -268,7 +268,8 @@
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
 					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-					BORG.part_head.ropart_take_damage(rand(20,40),0)
+					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+						BORG.compborg_lose_limb(BORG.part_head)
 					if (prob(33)) playsound(src.loc, "sound/voice/animal/wendigo_scream.ogg", 75, 1)
 					attack_delay = 5
 		else

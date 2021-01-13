@@ -490,6 +490,8 @@ var/zapLimiter = 0
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
+			charging = chargemode
+
 		else return src.attack_hand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -553,10 +555,6 @@ var/zapLimiter = 0
 		src.remove_dialog(user)
 		user.Browse(null, "window=apc")
 		return
-	else if (can_access_remotely(user) && src.aidisabled)
-		boutput(user, "AI control for this APC interface has been disabled.")
-		user.Browse(null, "window=apc")
-		return
 	if(wiresexposed && (!isAI(user)))
 		src.add_dialog(user)
 		var/t1 = text("<B>Access Panel</B><br>")
@@ -581,6 +579,11 @@ var/zapLimiter = 0
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p><br>")
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
+
+	if (can_access_remotely(user) && src.aidisabled)
+		boutput(user, "AI control for this APC interface has been disabled.")
+		user.Browse(null, "window=apc")
+		return
 
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
@@ -1072,6 +1075,7 @@ var/zapLimiter = 0
 				logTheThing("station", usr, null, "overloaded the lights at [log_loc(usr)].")
 				src.overload_lighting()
 
+		src.updateUsrDialog()
 		return
 
 	else
@@ -1492,12 +1496,15 @@ var/zapLimiter = 0
 
 	if (user.client.check_key(KEY_OPEN))
 		. = 1
+		if (status & BROKEN)
+			boutput(user, "This APC needs repairs before you can turn it back on!")
+			return
 		if (src.aidisabled)
 			boutput(user, "AI control for this APC interface has been disabled.")
 			return
 
 		operating = !operating
-		boutput(user, "You have turned the [src] <B>[src.operating ? "on" : "off"]</B>.")
+		boutput(user, "You have turned \the [src] <B>[src.operating ? "on" : "off"]</B>.")
 		src.update()
 		updateicon()
 

@@ -1492,7 +1492,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 
 // Mining Gear
-
+#ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
 	name = "Mining Magnet Replacement Parts"
 	item_paths = list("DEN-1","MET-3","CON-2")
@@ -1501,6 +1501,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+#endif
 
 /datum/manufacture/pick
 	name = "Pickaxe"

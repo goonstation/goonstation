@@ -802,8 +802,18 @@
 	if (!usr.client) //How could this even happen?
 		return
 
-	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
+	boutput(usr, "<span class='notice'>[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+
+/mob/dead/verb/toggle_ghost_radio()
+	set desc = "Toggle whether you can hear radio chatter while dead"
+	set name = "Toggle Ghost Radio"
+
+	if (!usr.client) //How could this even happen?
+		return
+
+	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
+	boutput(usr, "<span class='notice'>[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"

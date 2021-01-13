@@ -604,7 +604,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath())
+	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -966,8 +966,6 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
-	if("npc_throw" in params)
-		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -1650,7 +1648,7 @@
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer))
+		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
 	//mbc FUCK why doesn't this have any parent to call
@@ -2137,7 +2135,7 @@
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && M.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2154,7 +2152,7 @@
 		if (slot_head)
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && H.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2162,7 +2160,7 @@
 		if (slot_shoes)
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SH.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && SH.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SH.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2170,7 +2168,7 @@
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SU.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && SU.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SU.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2178,7 +2176,7 @@
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !U.compatible_species.Find(src.mutantrace.name)) || (!ismonkey(src) && U.monkey_clothes))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !U.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2211,14 +2209,22 @@
 		return 0
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
+	if(src.hand == specify)
+		return
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
-	if(B && hand != specify)
+	if(B)
 		qdel(B)
+	var/obj/item/old = src.equipped()
 	if (specify >= 0)
 		src.hand = specify
 	else
 		src.hand = !src.hand
 	hud.update_hands()
+	if(old != src.equipped())
+		if(old)
+			SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+		if(src.equipped())
+			SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 	if(src.equipped() && (src.equipped().item_function_flags & USE_INTENT_SWITCH_TRIGGER) && !src.equipped().two_handed)
 		src.equipped().intent_switch_trigger(src)
 

@@ -717,9 +717,9 @@
 					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
-							senderstring += " to [jointext(groupAddress,",")]"
+							senderstring += " to [jointext(groupAddress,", ")]"
 						else
-							senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
+							senderstring += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -737,9 +737,9 @@
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
-							displayMessage += " to [jointext(groupAddress,",")]"
+							displayMessage += " to [jointext(groupAddress,", ")]"
 						else
-							displayMessage += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
+							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 
@@ -880,7 +880,7 @@
 
 			else
 				if (!isnull(src.master.cartridge) && !istype(src.master,/obj/item/device/pda2/ai))
-					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [src.master.cartridge]</a><br>"
+					. += "<a href='byond://?src=\ref[src.master];eject_cart=1'>Eject [stripTextMacros(src.master.cartridge.name)]</a><br>"
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 

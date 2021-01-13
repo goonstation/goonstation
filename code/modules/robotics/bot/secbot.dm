@@ -860,6 +860,9 @@
 
 		src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 		src.target = C
+    if(istype(C, /mob/living/carbon/human/npc/monkey))
+      var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+      npcmonkey.pursuited_by(src)
 		src.oldtarget_name = C.name
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
@@ -887,7 +890,6 @@
 			weeooing = 1
 			var/weeoo = 10
 			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
-
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -1016,10 +1018,8 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
-
 		else if (patrol_target) // valid path
 			navigate_to(patrol_target, delay)
-
 		else	// no path, so calculate new one
 			mode = SECBOT_START_PATROL
 

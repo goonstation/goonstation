@@ -521,13 +521,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(throw_return)
 			projectiles = list(current_projectile)
 		else
-			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
+			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/auto)
+			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
 		..()
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 8
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
+			spread_angle = 10
 			shoot_delay = 4
 		else
 			spread_angle = 0
@@ -1055,30 +1056,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 5
-	slowdown_time = 10
-
 	two_handed = 1
 	w_class = 4
 
 	New()
 		ammo = new/obj/item/ammo/bullets/lmg
 		current_projectile = new/datum/projectile/bullet/lmg
+		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1, FULLAUTO_INACTIVE)
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.5)
+		setProperty("movespeed", 1)
 
-	fullautotestgun
-		slowdown = 0
-		slowdown_time = 0
-		New()
-			..()
-			AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
-			current_projectile.shot_number = 1
-			current_projectile.cost = 1
-			ammo.amount_left = 500
 
 /obj/item/gun/kinetic/cannon
 	name = "M20-CV tactical cannon"

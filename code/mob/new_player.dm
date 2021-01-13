@@ -759,7 +759,7 @@ a.latejoin-card:hover {
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
-			if(master_mode in list("secret","traitor","nuclear","blob","wizard","changeling","mixed","mixed_rp","vampire"))
+			if(master_mode in list("secret","traitor","nuclear","blob","wizard","changeling","mixed","mixed_rp","vampire","intrigue"))
 				src.client.using_antag_token = 1
 			src.show_text("Token redeemed, if mode supports redemption your new total will be [src.client.antag_tokens - 1].", "red")
 		else

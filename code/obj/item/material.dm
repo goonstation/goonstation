@@ -103,8 +103,8 @@
 
 		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
-			targetObject.stack_item(src)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
 				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
@@ -133,7 +133,7 @@
 							var/obj/item/raw_material/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -147,7 +147,7 @@
 							var/obj/item/raw_material/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -560,28 +560,31 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
+	unpooled()
+		. = ..()
+		src.setItemSpecial(/datum/item_special/double)
+
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
 	HasEntered(AM as mob|obj)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
-					return
-				if(isabomination(H))
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+				return
+			if(isabomination(H))
+				return
+			if(H.lying)
+				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+				step_on(H)
+			else
+				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					playsound(src.loc, src.sound_stepped, 50, 1)
-					var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-					H.changeStatus("weakened", 3 SECONDS)
-					H.force_laydown_standup()
-					var/shard_damage = force
-					affecting.take_damage(shard_damage, 0)
-					H.UpdateDamageIcon()
+					step_on(H)
 		..()
 
 	custom_suicide = 1
@@ -607,6 +610,15 @@
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
+
+/obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
+	playsound(src.loc, src.sound_stepped, 50, 1)
+	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
+	H.changeStatus("weakened", 3 SECONDS)
+	H.force_laydown_standup()
+	affecting.take_damage(force, 0)
+	H.UpdateDamageIcon()
+
 
 /obj/item/raw_material/chitin
 	name = "chitin chunk"

@@ -1262,12 +1262,10 @@ obj/machinery/vehicle/miniputt/pilot
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (istype(T, /turf/simulated))
-				var/turf/simulated/S = T
-				if (!S.allows_vehicles)
-					canbuild = 0
-					boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
-					break
+			if (!T.allows_vehicles)
+				canbuild = 0
+				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
+				break
 			for (A in T)
 				if (A == user)
 					continue

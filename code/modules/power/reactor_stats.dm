@@ -81,7 +81,7 @@
 
 		/* sample loop gasses from sensors */
 		for(var/obj/machinery/power/stats_meter/M in meters)
-			if (!M.target)
+			if (!M.target || !M.tag)
 				continue
 			var/list/T[] = sample_air(M.target.return_air(), 1)
 			M.set_bars(T["thermal_energy"])
@@ -98,8 +98,8 @@
 		process_chamber(chamber_samples_avg)
 
 		/* process meter samples */
-		for(var/M in meter_samples)
-			process_meter(M["tag"], M)
+		for(var/M in src.meter_samples)
+			if (M) process_meter(M["tag"], M)
 
 		if(refresh)
 			src.updateUsrDialog()
@@ -144,6 +144,7 @@
 					avg_meter["[N]"]["[Z]_d2x"] = 0
 
 		process_generator(var/list/L)
+			if(!L) return
 			master_generator_datapoints[++master_generator_datapoints.len] = L
 			if(master_generator_datapoints.len == 1) return
 
@@ -560,14 +561,14 @@
 			var/list/ret = new/list()
 
 			ret["output"] = teg.lastgen
-			ret["hot_temp_in"] = teg_hot.air1.temperature
-			ret["hot_temp_out"] = teg_hot.air2.temperature
-			ret["hot_pressure_in"] = MIXTURE_PRESSURE(teg_hot.air1)
-			ret["hot_pressure_out"] = MIXTURE_PRESSURE(teg_hot.air2)
-			ret["cold_temp_in"] = teg_cold.air1.temperature
-			ret["cold_temp_out"] = teg_cold.air2.temperature
-			ret["cold_pressure_in"] = MIXTURE_PRESSURE(teg_cold.air1)
-			ret["cold_pressure_out"] = MIXTURE_PRESSURE(teg_cold.air2)
+			ret["hot_temp_in"] = teg_hot.air1?.temperature
+			ret["hot_temp_out"] = teg_hot.air2?.temperature
+			ret["hot_pressure_in"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) : 0
+			ret["hot_pressure_out"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) : 0
+			ret["cold_temp_in"] = teg_cold.air1?.temperature
+			ret["cold_temp_out"] = teg_cold.air2?.temperature
+			ret["cold_pressure_in"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) : 0
+			ret["cold_pressure_out"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) : 0
 
 			return ret
 
@@ -1316,6 +1317,8 @@
 
 		gen_loops_page(var/p_tag as text)
 			var/ret = ""
+			if(p_tag == "") return
+
 			var/list/cur_metric = meter_metrics["[p_tag]"][meter_metrics["[p_tag]"].len]
 			var/list/disc_sample = master_meter_datapoints["[p_tag]"][cur_metric["index"]]
 			var/list/avg = new/list()

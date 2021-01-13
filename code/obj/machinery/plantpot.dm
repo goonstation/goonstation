@@ -838,8 +838,6 @@
 				UpdateOverlays(null, "health_display")
 
 		var/planticon = null
-		if(growing.sprite)
-			planticon = "[growing.sprite]-G[src.grow_level]"
 		if(MUT?.iconmod)
 			planticon = "[MUT.iconmod]-G[src.grow_level]"
 		else if(growing.sprite)

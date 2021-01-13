@@ -509,15 +509,22 @@
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
 			hud.update_hands()
+			if(old != src.equipped())
+				if(old)
+					SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+				if(src.equipped())
+					SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 			return 1
 		return 0
 
 	swap_hand()
 		if (!handcheck())
 			return
+		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
 			active_hand++
 			hand = active_hand
@@ -525,6 +532,11 @@
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
+		if(old != src.equipped())
+			if(old)
+				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+			if(src.equipped())
+				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
 	hand_range_attack(atom/target, params)
 		.= 0
@@ -633,6 +645,7 @@
 		reagents = R
 
 	equipped()
+		RETURN_TYPE(/obj/item)
 		if (active_hand)
 			if (hands.len >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
@@ -673,6 +686,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -686,6 +700,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
