@@ -125,17 +125,17 @@
 
 	if (A.automatic_activation)
 		src.ArtifactActivated()
-	else
-		var/list/valid_triggers = A.validtriggers
-		var/trigger_amount = rand(A.min_triggers,A.max_triggers)
-		var/selection = null
-		while (trigger_amount > 0)
-			trigger_amount--
-			selection = pick(valid_triggers)
-			if (ispath(selection))
-				var/datum/artifact_trigger/AT = new selection
-				A.triggers += AT
-				valid_triggers -= selection
+
+	var/list/valid_triggers = A.validtriggers
+	var/trigger_amount = rand(A.min_triggers,A.max_triggers)
+	var/selection = null
+	while (trigger_amount > 0)
+		trigger_amount--
+		selection = pick(valid_triggers)
+		if (ispath(selection))
+			var/datum/artifact_trigger/AT = new selection
+			A.triggers += AT
+			valid_triggers -= selection
 
 	artifact_controls.artifacts += src
 	A.post_setup()
