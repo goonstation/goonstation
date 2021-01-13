@@ -11173,10 +11173,12 @@
 "asr" = (
 /obj/machinery/light/small,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south/noaicontrol,
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
 "ass" = (
@@ -51070,6 +51072,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"nUB" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/qm)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -51332,6 +51337,10 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"tKo" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/qm)
 "umm" = (
 /obj/disposalpipe/segment/morgue,
 /obj/decal/tile_edge/line/red{
@@ -51362,10 +51371,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"usH" = (
-/obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/qm)
 "uuk" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -51441,9 +51446,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
-"wnA" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/qm)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -86906,7 +86908,7 @@ bGb
 bGH
 bHe
 bHD
-wnA
+nUB
 bNv
 agJ
 agJ
@@ -87163,7 +87165,7 @@ brK
 brK
 brK
 brK
-wnA
+nUB
 aaH
 aay
 aay
@@ -87420,7 +87422,7 @@ brK
 brK
 brK
 bHE
-usH
+tKo
 aaH
 aay
 aaa
@@ -87677,7 +87679,7 @@ bGc
 bGc
 bGc
 bGc
-wnA
+nUB
 bNw
 bIG
 bIO
@@ -88705,7 +88707,7 @@ bGd
 bGe
 bGe
 bGe
-wnA
+nUB
 bNv
 bIG
 bIO
@@ -88962,7 +88964,7 @@ bGf
 uSc
 bHf
 bHH
-usH
+tKo
 aaH
 aay
 aaa
@@ -89214,12 +89216,12 @@ bBM
 bCV
 bBM
 bEO
-wnA
-wnA
+nUB
+nUB
 bEO
-wnA
-wnA
-wnA
+nUB
+nUB
+nUB
 aaH
 aay
 aaa
