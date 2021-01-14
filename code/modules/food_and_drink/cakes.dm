@@ -223,32 +223,31 @@
 			if(src.litfam)
 				src.put_out()
 
-		var/staticiterator = c.overlays.len
-		for(var/i=1,i<=staticiterator,i++) //the handling for actually adding the toppings to the cake
-			if(("[c.overlay_refs[i]]" == "base") || ("[c.overlay_refs[i]]" == "second")) //setting up base layer overlay
+		for(var/overlay_ref in c.overlay_refs) //the handling for actually adding the toppings to the cake
+			if(("[overlay_ref]" == "base") || ("[overlay_ref]" == "second")) //setting up base layer overlay
 				var/overlay_layer
-				if("[c.overlay_refs[i]]" == "base")
+				if("[overlay_ref]" == "base")
 					if(src.clayer == 2)
 						overlay_layer = "second"
 						src.amount2 = c.amount
 					else if(src.clayer == 3)
 						overlay_layer = "third"
 						src.amount3 = c.amount
-				else if("[c.overlay_refs[i]]" == "second")
+				else if("[overlay_ref]" == "second")
 					overlay_layer = "third"
 					src.amount3 = c.amount
 					src.clayer++
 					src.reagents.maximum_volume += 100
 					src.amount += 10
 				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-overlay")
-				var/image/ov_image = c.GetOverlayImage(c.overlay_refs[i])
+				var/image/ov_image = c.GetOverlayImage(overlay_ref)
 				stack.color = ov_image.color
 				src.UpdateOverlays(stack, overlay_layer)
 				continue
-			var/image/buffer = c.GetOverlayImage("[c.overlay_refs[i]]") //generating the topping reference from the original cake to be stacked
+			var/image/buffer = c.GetOverlayImage("[overlay_ref]") //generating the topping reference from the original cake to be stacked
 			var/list/tag
 			var/list/newnumbers = c.overlay_number_convert(src.clayer,1,singlecake)
-			tag = replacetext("[c.overlay_refs[i]]","[newnumbers[1]]","[newnumbers[2]]")
+			tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
 			if(c.cake_candle)
 				src.cake_candle = replacetext("[c.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
 				c.cake_candle = 0
@@ -487,17 +486,15 @@
 				src.put_out()
 				s.ignite()
 		else if(user.a_intent == INTENT_DISARM) //blowing out candles
-			//check for candle
 			var/blowout
-			var/staticiterator = src.overlays.len
-			for(var/i=1,i<=staticiterator,i++)
-				if(src.sliced && ("[src.overlay_refs[i]]" == "slice-candle_lit"))
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+			for(var/overlay_ref in src.overlay_refs)
+				if(src.sliced && ("[overlay_ref]" == "slice-candle_lit"))
+					src.ClearSpecificOverlays("[overlay_ref]")
 					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
 					blowout = 1
 					break
-				if("[src.overlay_refs[i]]" == "cake[src.clayer]-candle_lit")
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+				if("[overlay_ref]" == "cake[src.clayer]-candle_lit")
+					src.ClearSpecificOverlays("[overlay_ref]")
 					var/tag = "cake[src.clayer]-candle"
 					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',tag), tag)
 					blowout = 1
