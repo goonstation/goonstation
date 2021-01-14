@@ -162,19 +162,19 @@
 		depletion_rate = 0.078
 		var/debuff = "hungry"
 		var/debuff_threshold = 25
-		var/debuffed = 0
+		var/debuffed = FALSE
 
 		onIncrease()
 			if (value > debuff_threshold && debuffed)
 				showOwner("<span class='notice'>You feel considerably less [debuff]!</span>")
 				holder.owner.delStatus(debuff)
-				debuffed = 0
+				debuffed = FALSE
 
 		onDecrease()
 			if (value < debuff_threshold && !debuffed)
 				showOwner("<span class='alert'>You feel considerably [debuff]!</span>")
 				holder.owner.setStatus(debuff, duration = null)
-				debuffed = 1
+				debuffed = TRUE
 
 		getWarningMessage()
 			if (value < 25)
