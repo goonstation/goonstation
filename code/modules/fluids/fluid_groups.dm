@@ -44,7 +44,7 @@
 				var/obj/fluid/remove_source = my_group.last_reacted
 				if (!remove_source)
 					remove_source = my_group.spread_member
-					if (!remove_source && my_group.length(src.members))
+					if (!remove_source && length(my_group.members))
 						remove_source = pick(my_group.members)
 					if (!remove_source)
 						my_group.evaporate()
@@ -69,7 +69,7 @@
 		src.update_total()
 
 	play_mix_sound(var/mix_sound) //play sound at random locs
-		for (var/i = 0, i < my_group.length(src.members) / 20, i++)
+		for (var/i = 0, i < length(my_group.members) / 20, i++)
 			playsound(get_turf(pick(my_group.members)), mix_sound, 80, 1)
 			if (i > 8) break
 
