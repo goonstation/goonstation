@@ -1,5 +1,21 @@
-
+(t)wed jan 13 21
+(u)UrsulaMajor
+(e)⚖🆕|balance, feature
+(*)zjdtmkhzt's Pathology Rework is being enabled for ONE WEEK for in game testing! Guide here: <a target="_blank" href="https://wiki.ss13.co/Guide_to_Pathology">Guide To Pathology</a>. Summary of changes here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
+(t)tue jan 12 21
+(u)BatElite
+(p)3259
+(e)⚖🗺🎨|balance, mapping, sprites
+(*)Almost all maps now have additional nuke planting targets!
+(u)pali
+(+)Paint machine repair is no longer luck based. Paint application reworked to disallow obnoxious uses like "everything is now pitch black".
 (t)mon jan 11 21
+(u)Flourish
+(e)🗺|mapping
+(+)Pathology on Oshan can now be found in the research outpost.
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjusted stamina cost/damage of disarm shoves. Disarm shoves should also now be incapable of causing stamina KOs.
 (u)pali
 (+)You can now stuff ammo casings, paper and floor tiles into crates en-masse by clickdragging.
 (u)Flourish

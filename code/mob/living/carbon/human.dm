@@ -966,8 +966,6 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
-	if("npc_throw" in params)
-		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -2152,7 +2150,7 @@
 			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
-			if (istype(I, /obj/item/clothing/head))
+			if (istype(I, /obj/item/clothing/head ) || istype(I,/obj/item/plant/flower))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -3289,7 +3287,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)

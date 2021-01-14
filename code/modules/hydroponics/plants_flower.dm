@@ -20,3 +20,19 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	force_seed_on_harvest = 1
 	mutations = list()
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
+
+/datum/plant/flower/hibiscus
+	name = "Hibiscus"
+	seedcolor = "#d52c53"
+	crop = /obj/item/plant/flower/hibiscus
+	starthealth = 20
+	growtime = 45
+	harvtime = 100
+	cropsize = 3
+	harvests = 1
+	endurance = 0
+	nectarlevel = 12
+	genome = 7
+	force_seed_on_harvest = 1
+	mutations = list()
+	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)

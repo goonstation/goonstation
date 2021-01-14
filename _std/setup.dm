@@ -63,7 +63,7 @@
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-//#define ASS_JAM 1 // ASS JAM DISABLED! FOR NOW! -warc
+#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
 #else
 #define ASS_JAM 0
 #endif

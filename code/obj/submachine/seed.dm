@@ -534,11 +534,11 @@
 				else
 					P.name = dominantspecies.name
 
-				if (dominantspecies.sprite)
-					P.sprite = dominantspecies.sprite
+				P.sprite = dominantspecies.sprite
+				if(dominantspecies.override_icon_state)
+					P.override_icon_state = dominantspecies.override_icon_state
 				else
-					P.sprite = dominantspecies.name
-				P.override_icon_state = dominantspecies.override_icon_state
+					P.override_icon_state = dominantspecies.name
 				P.plant_icon = dominantspecies.plant_icon
 				P.crop = dominantspecies.crop
 				P.force_seed_on_harvest = dominantspecies.force_seed_on_harvest
