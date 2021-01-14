@@ -5,6 +5,7 @@
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
 	density = 1
+	mats = 8
 
 	var/obj/item/bloodslide/source = null
 	var/datum/pathogen/isolated = null
@@ -196,6 +197,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
+	mats = 5
 
 	var/obj/item/target = null
 
@@ -398,6 +400,7 @@
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
 	var/obj/machinery/pathogen_manipulator/manip = null
+	mats = 20
 
 	var/datum/pathobank/db = new
 	var/predictive_data = ""
@@ -1035,6 +1038,7 @@
 	desc = "A large, softly humming machine."
 	density = 1
 	anchored = 1
+	mats = 15
 
 	var/machine_state = 0
 
@@ -1193,6 +1197,7 @@
 	icon_state = "synth1"
 	density = 1
 	anchored = 1
+	mats = 12
 
 	var/list/obj/item/reagent_containers/glass/vial/vials[5]
 	var/obj/item/reagent_containers/glass/beaker/antiagent = null
@@ -1640,6 +1645,7 @@
 	icon_state = "autoclave"
 	density = 1
 	anchored = 1
+	mats = 10
 	var/obj/item/reagent_containers/glass/sanitizing = null
 	var/machine_state = 0
 	var/santime = 3 // 15
@@ -1728,6 +1734,7 @@
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1
+	mats = 6
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
 
