@@ -183,7 +183,7 @@
 					M.bodytemperature += 6
 		return
 
-/datum/statusEffect/foodstaminaregen
+/datum/statusEffect/staminaregen/food
 	id = "food_refreshed"
 	name = "Food (Refreshed)"
 	desc = ""
@@ -191,7 +191,8 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
-	var/change = 2.2
+	change = 2.2
+	id = "food_bonus"
 
 	big
 		name = "Food (Refreshed+)"
@@ -200,16 +201,6 @@
 
 	getTooltip()
 		return "Your stamina regen is increased by [change]."
-
-	onAdd(var/optional=null)
-		if(hascall(owner, "add_stam_mod_regen"))
-			owner:add_stam_mod_regen("food_bonus", change)
-		return
-
-	onRemove()
-		if(hascall(owner, "remove_stam_mod_regen"))
-			owner:remove_stam_mod_regen("food_bonus")
-		return
 
 /datum/statusEffect/foodstaminamax
 	id = "food_energized"
