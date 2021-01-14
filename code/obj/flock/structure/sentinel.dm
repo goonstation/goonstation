@@ -4,7 +4,7 @@
 /obj/flock_structure/sentinel
 	name = "Glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
-	icon_state = "mark" //todo, get sprite for this abomination.
+	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	var/charge_status = -1 //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
 	var/charge = 0 //0-100 charge percent
@@ -14,7 +14,7 @@
 
 /obj/flock_structure/sentinel/New(var/atom/location, var/datum/flock/F=null)
 	..(location, F)
-	src.filters = filter(type="rays", x=0, y=10, size=1, color=rgb(0,155,155), offset=rand(1000), density=20, threshold=0.2, factor=1, flags=FILTER_UNDERLAY)
+	src.filters = filter(type="rays", x=-0.2, y=6, size=1, color=rgb(255,255,255), offset=rand(1000), density=20, threshold=0.2, factor=1, flags=FILTER_UNDERLAY)
 	var/f = src.filters[length(src.filters)]
 	animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=5 MINUTES, easing=LINEAR_EASING, loop=-1, offset=f:offset + 100, flags=ANIMATION_PARALLEL)
 
@@ -37,15 +37,34 @@
 			if(-1)
 				charge_status = 1//begin charging as there is energy available
 			if(1)
+				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
 				src.charge(5)
 			if(2)
-				message_admins("thing charged")
+				message_admins("charged")
+				var/mob/m = null
+				var/list/hit = list()
+				for(m in mobs)
+					if(IN_RANGE(m, src, 5) && !isflock(m))
+						break//found target
+				if(!m) return//if no target stop
+				var/chain = rand(5, 6)
+				arcFlash(src, m, 6000)
+				hit += m
+				while(chain > 0)
+					for(var/mob/nearbymob in range(3, m))//todo: optimize this.
+						if(nearbymob != m && !nearbymob in hit && !isflock(nearbymob))
+							arcFlash(m, nearbymob, 6000)
+							hit += nearbymob
+							m = nearbymob
+						chain--//infinite loop prevention, wouldve been in the if statement.
+				hit.len = 0//clean up
 				return
 	else
 		if(charge > 0)//if theres charge make it decrease with time
 			src.charge_status = 0
 			src.charge(-5)
 		else
+			if(icon_state != "sentinel") icon_state = "sentinel"//forgive me again
 			src.charge_status = -1 //out of juice its dead
 
 	var/msg = "[group?.debugid]<br>"
