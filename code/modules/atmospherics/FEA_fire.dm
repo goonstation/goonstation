@@ -74,6 +74,7 @@
 	mouse_opacity = 0
 	anchored = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"

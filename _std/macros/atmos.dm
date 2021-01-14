@@ -14,13 +14,43 @@
 /// N2 standard value (79%)
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD
 
-/// Moles in a standard cell after which plasma is visible
-#define MOLES_PLASMA_VISIBLE	2
+/// Moles in a standard cell after which visible gases are visible
+#define MOLES_GAS_VISIBLE	1
 
-/// Plasma Tile Overlay Flag
-#define GAS_IMG_PLASMA_BIT (1<<0)
-/// N20 Tile Overlay Flag
-#define GAS_IMG_N2O_BIT	(1<<1)
+/// Plasma Tile Overlay Id
+#define GAS_IMG_PLASMA 0
+/// N20 Tile Overlay Id
+#define GAS_IMG_N2O 1
+
+/// Enables gas overlays to have continuous opacity based on molarity
+#define ALPHA_GAS_OVERLAYS
+/// Factor that reduces the number of gas opacity levels, higher = better performance and worse visuals
+#define ALPHA_GAS_COMPRESSION 4
+
+#ifdef ALPHA_GAS_OVERLAYS
+/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
+#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) do { \
+	var/_base_alpha = 0; \
+	if(OVERLAY_ID == GAS_IMG_N2O) {if(MOLES > MOLES_GAS_VISIBLE / 2) _base_alpha = 95 + MOLES / 8 * 180;} \
+	else {if(MOLES > MOLES_GAS_VISIBLE) _base_alpha = 30 + MOLES / 40 * 125;} \
+	VISUALS_STATE |= (round(min(255, _base_alpha) / ALPHA_GAS_COMPRESSION) << (OVERLAY_ID * 8)); \
+	} while(0)
+/// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
+#define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
+	if(VISUALS_STATE & (0xff << (OVERLAY_ID * 8))) {\
+		gas_overlays[1 + OVERLAY_ID].alpha = ((VISUALS_STATE >> (OVERLAY_ID * 8)) & 0xff) * ALPHA_GAS_COMPRESSION ; \
+		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID]) \
+	}
+#else
+/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
+#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) \
+	if(MOLES > MOLES_GAS_VISIBLE) \
+		VISUALS_STATE |= (1 << OVERLAY_ID)
+/// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
+#define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
+	if(VISUALS_STATE & (1 << OVERLAY_ID)) \
+		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID])
+#endif
 
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
