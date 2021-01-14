@@ -758,7 +758,7 @@
 			FG.can_update = 1
 			FG.last_contained_amt = 0
 			FG.last_members_amt = 0
-			if (FG.length(src.members))
+			if (length(FG.members))
 				FG.last_spread_member = FG.members[1]
 			FG.update_loop()
 
