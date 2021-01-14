@@ -646,7 +646,7 @@
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
 	src.ai_pickupweapon()
-	if(prob(40))
+	if(prob(ai_offhand_pickup_chance))
 		src.ai_pickupoffhand()
 
 /mob/living/carbon/human/proc/ai_pickupoffhand()
