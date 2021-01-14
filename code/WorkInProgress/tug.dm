@@ -36,6 +36,7 @@
 				else
 					user.show_text("\The [src] already has a cart connected to it!", "red")
 					return
+
 		if (load)
 			return
 
