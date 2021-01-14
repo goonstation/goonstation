@@ -1722,9 +1722,9 @@
 
 /obj/machinery/incubator
 	name = "Incubator"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "heater"
-	var/static/image/icon_beaker = image('icons/obj/pathology.dmi', "incubator")
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "incubator"
+	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1
