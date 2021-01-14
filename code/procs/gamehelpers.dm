@@ -224,12 +224,9 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-//			if (AIeye in view(center, distance))
 			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
-		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
-		//	. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -248,7 +245,9 @@ var/obj/item/dummy/click_dummy = new
 		Center = Depth
 		Depth = newDepth
 
-	return viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		. |= by_cat[TR_CAT_OMNIPRESENT_MOBS]
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
