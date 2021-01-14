@@ -1298,6 +1298,12 @@ datum/pathogen
 					if (!(T in mutex))
 						mutex += T
 
+	proc/getHighestTier()
+		. = 0
+		for(var/datum/pathogeneffects/E in src.effects)
+			. = max(., E.rarity)
+
+
 proc/dig2hex(num)
 	switch (num)
 		if (0 to 9)
