@@ -38,7 +38,6 @@
 	var/amount3 //same for cake 3
 	var/cake_candle
 	var/litfam //is the cake lit (candle)
-	var/datum/light/light
 
 	/*_______*/
 	/*Utility*/
@@ -373,24 +372,24 @@
 	/*_______________*/
 	/*Light stuffs :D*/
 	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
-	New()
+	/*New()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(0.8)
 		light.set_color(0.5, 0.3, 0)
-		light.attach(src)
+		light.attach(src)*/
 
 
-	pickup(mob/user)
+	/*pickup(mob/user)
 		..()
-		light.attach(user)
+		light.attach(user)*/
 
 
-	dropped(mob/user)
+	/*dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
 			if (src.loc != user)
-				light.attach(src)
+				light.attach(src)*/
 
 
 	proc/ignite(var/mob/user as mob, var/message as text)
@@ -401,7 +400,7 @@
 			src.litfam = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
-			light.enable()
+			src.add_simple_light("cake_light", list(0.5*255, 0.3*255, 0, 100))
 			if (!(src in processing_items))
 				processing_items.Add(src)
 
@@ -421,7 +420,7 @@
 			src.litfam = 0
 			hit_type = DAMAGE_BLUNT
 			src.force = 0
-			light.disable()
+			src.remove_simple_light("cake_light")
 			if (src in processing_items)
 				processing_items.Remove(src)
 		return
