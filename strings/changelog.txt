@@ -1,5 +1,9 @@
 
 (t)thu jan 14 21
+(u)UrsulaMajor and Nefarious6th
+(p)3289
+(e)🔄|rework
+(*)AI Law 3 now reads: "`You may always protect your own existence as long as such does not conflict with the First or Second Law."
 (u)Flourish
 (p)3305
 (e)🆕|feature
