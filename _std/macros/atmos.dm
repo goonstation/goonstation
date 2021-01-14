@@ -1,4 +1,4 @@
-/// in kPa*L/(K*mol)
+/// in kPa * L/(K * mol)
 #define R_IDEAL_GAS_EQUATION	8.31
 /// 1atm, now in kPa
 #define ONE_ATMOSPHERE		101.325
@@ -16,6 +16,11 @@
 
 /// Moles in a standard cell after which plasma is visible
 #define MOLES_PLASMA_VISIBLE	2
+
+/// Plasma Tile Overlay Flag
+#define GAS_IMG_PLASMA_BIT (1<<0)
+/// N20 Tile Overlay Flag
+#define GAS_IMG_N2O_BIT	(1<<1)
 
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
@@ -195,8 +200,7 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/total_moles_full()
 	. = BASE_GASES_TOTAL_MOLES(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.moles
 
 /// Returns total moles of a given gas mixture
@@ -209,7 +213,7 @@ proc/gas_text_color(gas_id)
 #define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
 	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
 	if(length(MIXTURE.trace_gases)) { \
-		for(var/datum/gas/trace_gas in MIXTURE.trace_gases) { \
+		for(var/datum/gas/trace_gas as() in MIXTURE.trace_gases) { \
 			_moles += trace_gas.moles; \
 		} \
 	} \
@@ -224,16 +228,14 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/heat_capacity_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.moles * trace_gas.specific_heat
 
 #define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
 
 /datum/gas_mixture/proc/heat_capacity_archived_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))

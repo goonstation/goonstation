@@ -452,7 +452,7 @@
 
 datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
-	value_units = "Pa"
+	value_units = "kPa"
 	min_value = 0
 	max_value = 1e5
 	incr_sm = 10
