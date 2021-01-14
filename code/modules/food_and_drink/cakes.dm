@@ -157,7 +157,6 @@
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(slice_candle) //making sure there's only one candle :)
-				var/list/newnumbers = schild.overlay_number_convert(slice_candle)
 				if(slice_candle == 1)
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
 				if(slice_candle == 2)
