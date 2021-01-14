@@ -420,6 +420,8 @@
 			break
 
 	attack_hand(var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
@@ -1242,6 +1244,8 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
@@ -1261,6 +1265,9 @@
 		return 0
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			boutput(usr,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
 			var/done = 0
 			for (var/i = 1, i <= 5, i++)
@@ -1690,7 +1697,7 @@
 				icon_state = "autoclave"
 
 	attack_hand(var/mob/user as mob)
-		if (machine_state)
+		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
 			santime = initial(santime)
