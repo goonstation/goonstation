@@ -20,22 +20,22 @@
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
-			var/obj/tug_cart/connecting = C
-			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
-				return
-			else if (!src.next_cart && !connecting.next_cart)
-				src.next_cart = connecting
-				user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
-				return
-			else if (src.next_cart == connecting)
-				src.next_cart = null
-				user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
-				return
-			else
-				user.show_text("\The [src] already has a cart connected to it!", "red")
-				return
-
+		if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart) && in_range(C, src))
+			if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart))
+				var/obj/tug_cart/connecting = C
+				if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
+					return
+				else if (!src.next_cart && !connecting.next_cart)
+					src.next_cart = connecting
+					user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
+					return
+				else if (src.next_cart == connecting)
+					src.next_cart = null
+					user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
+					return
+				else
+					user.show_text("\The [src] already has a cart connected to it!", "red")
+					return
 		if (load)
 			return
 
@@ -243,7 +243,7 @@
 		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart) && in_range(C, src))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)
