@@ -431,7 +431,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		var/change = 1
 
 		getTooltip()
-			return "Your stamina regen has been [change > 0 ? "increased":"reduced"] by [abs(change)]."
+			return "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		onAdd(var/optional=null)
 			if(hascall(owner, "add_stam_mod_regen"))
@@ -483,7 +483,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return
 
 		getTooltip()
-			return "Your max. health has been [change > 0 ? "increased":"reduced"] by [abs(change)]."
+			return "Your max. health is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		//Technically the base class can handle either but we need to separate these.
 		increased

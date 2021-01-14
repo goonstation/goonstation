@@ -192,7 +192,6 @@
 	maxDuration = 6000
 	unique = 1
 	change = 2.2
-	id = "food_bonus"
 
 	big
 		name = "Food (Refreshed+)"
