@@ -1710,4 +1710,4 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	icon_state = "stam-"
 	duration = INFINITE_STATUS
 	maxDuration = null
-	change = -3
+	change = -5
