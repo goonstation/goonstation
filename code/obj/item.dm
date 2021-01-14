@@ -473,7 +473,7 @@
 		processing_items.Add(src)
 
 /obj/item/proc/combust_ended()
-	processing_items.Remove(src) //DEV - fix, was not my addition :P
+	processing_items.Remove(src)
 	burning = null
 	firesource = 0
 	ClearSpecificOverlays("burn_overlay")

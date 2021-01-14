@@ -53,7 +53,7 @@
 				tag = "cake[clayer]-candle_lit"
 			else
 				tag = "cake[clayer]-candle"
-			cake_candle = 1
+			cake_candle = tag
 		else
 			switch(W.type)
 				if(/obj/item/reagent_containers/food/snacks/condiment/chocchips) //checks for item paths and assigns an overlay tag to it
@@ -104,6 +104,23 @@
 				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
 
+	proc/overlay_number_convert(var/original,var/mode,var/singlecake) //original - original overlay, mode - which math we're using
+		var/list/newnumbers = list()
+		switch(mode)
+			if(1)
+				if(original==2)
+					newnumbers = list(1,2)
+				else if(original==3&&singlecake)
+					newnumbers = list(1,3)
+				else
+					newnumbers = list(2,3)
+			if(2)
+				if(original==2)
+					newnumbers = list(2,1)
+				else if(original==3)
+					newnumbers = list(3,1)
+		return newnumbers
+
 
 	proc/slice_cake(var/obj/item/W,var/mob/user)
 		if (src.sliced == 1)
@@ -140,6 +157,7 @@
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(slice_candle) //making sure there's only one candle :)
+				var/list/newnumbers = schild.overlay_number_convert(slice_candle)
 				if(slice_candle == 1)
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
 				if(slice_candle == 2)
@@ -197,16 +215,14 @@
 		if(c.clayer == 1)
 			singlecake = 1
 
-		for(var/i=1,i<=src.overlays.len,i++) //looking for candles and if you set a cake on top of it, it pops off!
-			if(("[src.overlay_refs[i]]" == "cake[(src.clayer)-1]-candle") || ("[src.overlay_refs[i]]" == "cake[(src.clayer)-1]-candle_lit") || ("[src.overlay_refs[i]]" == "cake[(src.clayer)-2]-candle") || ("[src.overlay_refs[i]]" == "cake[(src.clayer)-2]-candle_lit"))
-				src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-				var/obj/item/device/light/candle/can = new /obj/item/device/light/candle/small
-				can.set_loc(get_turf(src.loc))
-				user.show_text("<b>The candle pops off! Oh no!</b>","red")
-				cake_candle = 0
-				if(src.litfam)
-					src.put_out()
-				break
+		if(src.cake_candle)	//looking for candles and if you set a cake on top of it, it pops off!
+			src.ClearSpecificOverlays("[src.cake_candle]")
+			var/obj/item/device/light/candle/can = new /obj/item/device/light/candle/small
+			can.set_loc(get_turf(src.loc))
+			user.show_text("<b>The candle pops off! Oh no!</b>","red")
+			cake_candle = 0
+			if(src.litfam)
+				src.put_out()
 
 		var/staticiterator = c.overlays.len
 		for(var/i=1,i<=staticiterator,i++) //the handling for actually adding the toppings to the cake
@@ -232,12 +248,11 @@
 				continue
 			var/image/buffer = c.GetOverlayImage("[c.overlay_refs[i]]") //generating the topping reference from the original cake to be stacked
 			var/list/tag
-			if(src.clayer == 2)
-				tag = replacetext("[c.overlay_refs[i]]","1","2")
-			else if(src.clayer == 3 && singlecake)
-				tag = replacetext("[c.overlay_refs[i]]","1","3")
-			else
-				tag = replacetext("[c.overlay_refs[i]]","2","3")
+			var/list/newnumbers = c.overlay_number_convert(src.clayer,1,singlecake)
+			tag = replacetext("[c.overlay_refs[i]]","[newnumbers[1]]","[newnumbers[2]]")
+			if(c.cake_candle)
+				src.cake_candle = replacetext("[c.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
+				c.cake_candle = 0
 			var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 			if(buffer.color)
 				newoverlay.color = buffer.color
@@ -282,10 +297,11 @@
 				if(toggleswitch)
 					var/tag
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					if(src.clayer == 2)
-						tag = replacetext("[src.overlay_refs[i]]","2","1")
-					else if(src.clayer == 3)
-						tag = replacetext("[src.overlay_refs[i]]","3","1")
+					var/list/newnumbers = src.overlay_number_convert(src.clayer,2)
+					tag = replacetext("[src.overlay_refs[i]]","[newnumbers[1]]","[newnumbers[2]]")
+					if(src.cake_candle)
+						cake.cake_candle = replacetext("[src.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
+						src.cake_candle = 0
 					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 					if(buffer.color)
 						newoverlay.color = buffer.color
