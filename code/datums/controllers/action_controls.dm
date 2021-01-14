@@ -207,7 +207,7 @@ var/datum/action_controller/actions
 		..()
 
 	updateBar(var/animate = 1)
-		if (duration <= 0)
+		if (duration <= 0 || isnull(bar))
 			return
 		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"
