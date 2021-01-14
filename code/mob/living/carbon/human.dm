@@ -2150,7 +2150,7 @@
 			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
-			if (istype(I, /obj/item/clothing/head))
+			if (istype(I, /obj/item/clothing/head ) || istype(I,/obj/item/plant/flower))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
