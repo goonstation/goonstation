@@ -1,3 +1,7 @@
+#define CAKE_MODE_CAKE 1
+#define CAKE_MODE_SLICE 2
+#define CAKE_MODE_STACK 1
+#define CAKE_MODE_BUILD 2
 
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 	name = "yellow cake"
@@ -145,7 +149,7 @@
 				replacetext = "cake3"
 				slices = src.amount3
 
-		var/list/returns = build_cake(s,user,2,layer_tag,replacetext)
+		var/list/returns = build_cake(s,user,CAKE_MODE_SLICE,layer_tag,replacetext)
 		slices = returns[1]
 		slice_candle = returns[2]
 
@@ -245,7 +249,7 @@
 				continue
 			var/image/buffer = c.GetOverlayImage("[overlay_ref]") //generating the topping reference from the original cake to be stacked
 			var/list/tag
-			var/list/newnumbers = c.overlay_number_convert(src.clayer,1,singlecake)
+			var/list/newnumbers = c.overlay_number_convert(src.clayer,CAKE_MODE_STACK,singlecake)
 			tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
 			if(c.cake_candle)
 				src.cake_candle = replacetext("[c.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
@@ -259,7 +263,7 @@
 		qdel(c)
 
 
-	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //mode : 1 or 2 : cake or slice //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
+	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
 		if((mode<1) || (mode>2))
 			return
 		var/staticiterator = src.overlays.len
@@ -270,7 +274,7 @@
 		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
 			cake = cake_transfer
 		for(var/i=1,i<=staticiterator,i++)
-			if(mode == 1)
+			if(mode == CAKE_MODE_CAKE)
 				if("[src.overlay_refs[i]]" == "base")
 					continue
 				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
@@ -294,7 +298,7 @@
 				if(toggleswitch)
 					var/tag
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/list/newnumbers = src.overlay_number_convert(src.clayer,2)
+					var/list/newnumbers = src.overlay_number_convert(src.clayer,CAKE_MODE_BUILD)
 					tag = replacetext("[src.overlay_refs[i]]","[newnumbers[1]]","[newnumbers[2]]")
 					if(src.cake_candle)
 						cake.cake_candle = replacetext("[src.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
@@ -307,7 +311,7 @@
 					staticiterator--
 					i--
 					continue
-			else if(mode == 2)
+			else if(mode == CAKE_MODE_SLICE)
 				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
 					toggleswitch = 1
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
@@ -475,7 +479,7 @@
 			s.quality = src.quality
 			s.food_color = src.food_color
 
-			build_cake(s,user,1)
+			build_cake(s,user,CAKE_MODE_CAKE)
 
 			if(istype(user,/mob/living/carbon/human))
 				user.put_in_hand_or_drop(s)
