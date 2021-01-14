@@ -82,7 +82,7 @@
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume)
 			if(prob(25))
-				elecflash(src.loc)
+				elecflash(T)
 
 	ArtifactActivated()
 		. = ..()
