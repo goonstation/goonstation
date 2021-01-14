@@ -247,7 +247,9 @@ var/obj/item/dummy/click_dummy = new
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		. |= by_cat[TR_CAT_OMNIPRESENT_MOBS]
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
+				. |= M
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
