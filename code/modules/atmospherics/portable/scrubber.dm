@@ -6,7 +6,7 @@
 	density = 1
 
 	var/on = 0
-	var/volume_rate = 800
+	var/volume_rate = 10 * ONE_ATMOSPHERE
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
@@ -52,7 +52,8 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate * mult/environment.volume)*TOTAL_MOLES(environment)
+		var/transfer_moles = min(1, volume_rate * mult/(10 * ONE_ATMOSPHERE))*TOTAL_MOLES(environment)
+		// used to be environvment.volume instead of 10 * ONE_ATMOSPHERE, neither make sense imo 🤷‍♀️
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed

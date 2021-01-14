@@ -83,6 +83,16 @@ turf
 turf
 	simulated
 
+		var/static/list/mutable_appearance/gas_overlays = list(
+				#ifdef ALPHA_GAS_OVERLAYS
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#else
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#endif
+			)
+
 		var/tmp/dist_to_space = null
 
 		var/tmp
@@ -132,10 +142,9 @@ turf
 							gas_icon_overlay.overlays.len = 0
 
 						visuals_state = model.graphic
-						if (visuals_state & GAS_IMG_PLASMA_BIT)
-							gas_icon_overlay.overlays.Add(plmaster)
-						if (visuals_state & GAS_IMG_N2O_BIT)
-							gas_icon_overlay.overlays.Add(slmaster)
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
+						gas_icon_overlay.dir = pick(cardinal)
 				else
 					if (gas_icon_overlay)
 						pool(gas_icon_overlay)

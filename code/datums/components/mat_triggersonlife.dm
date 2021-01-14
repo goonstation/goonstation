@@ -2,6 +2,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	proctype = .proc/triggerMatOnLife
 	signals = list(COMSIG_LIVING_LIFE_TICK)
+	keep_while_on_mob = TRUE
 
 /datum/component/holdertargeting/mat_triggersonlife/RegisterWithParent()
 	..()

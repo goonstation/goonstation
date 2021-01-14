@@ -128,19 +128,14 @@ What are the archived variables for?
 	//returns 1 if graphic changed
 	graphic = 0
 
-	if(toxins > MOLES_PLASMA_VISIBLE)
-		graphic |= GAS_IMG_PLASMA_BIT
+	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, toxins)
 
-	else if(length(trace_gases))
+	if(length(trace_gases))
 		// refs are accessed directly to optimize functions as trace_gases
 		// has already been asserted above instead of utilizing get_trace_gas_by_type()
 		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
-		if(sleeping_agent && (sleeping_agent.moles > 1))
-			graphic |= GAS_IMG_N2O_BIT
-		else
-			var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
-			if(rad_particles && (rad_particles.moles > 1))
-				graphic |= GAS_IMG_N2O_BIT
+		var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
+		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles + rad_particles?.moles)
 	. = graphic != graphic_archived
 #ifndef ATMOS_ARCHIVING
 	graphic_archived = graphic
