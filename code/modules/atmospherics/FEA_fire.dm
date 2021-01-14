@@ -80,7 +80,7 @@
 	icon_state = "1"
 
 	//layer = TURF_LAYER
-	alpha = 250
+	alpha = 160
 	blend_mode = BLEND_ADD
 	var/datum/light/light
 
