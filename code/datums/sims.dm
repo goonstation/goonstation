@@ -284,13 +284,14 @@
 				holder.owner.vomit()
 				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 			*/
-			/*#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1))
+			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
+			if (value < 5 && prob(1) && prob(25))
 				var/datum/pathogen/P = unpool(/datum/pathogen)
 				P.create_weak()
+				P.spread = 0
 				holder.owner.infected(P)
-				showOwner("<span class='alert'>You don't feel well.</span>")
-			#endif*/
+				showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
+			#endif
 
 		getWarningMessage()
 			if (value < 25)
