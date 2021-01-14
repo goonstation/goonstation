@@ -559,7 +559,6 @@
 		//Modify stamina.
 		var/stam_time_passed = max(tick_spacing, TIME - last_stam_change)
 
-		var/test = src.stamina_regen + src.get_stam_mod_regen()
 		var/final_mod = (src.stamina_regen + src.get_stam_mod_regen()) * (stam_time_passed / tick_spacing)
 		if (final_mod > 0)
 			src.add_stamina(abs(final_mod))
