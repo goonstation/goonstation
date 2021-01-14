@@ -487,18 +487,14 @@
 				s.ignite()
 		else if(user.a_intent == INTENT_DISARM) //blowing out candles
 			var/blowout
-			for(var/overlay_ref in src.overlay_refs)
-				if(src.sliced && ("[overlay_ref]" == "slice-candle_lit"))
-					src.ClearSpecificOverlays("[overlay_ref]")
-					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
-					blowout = 1
-					break
-				if("[overlay_ref]" == "cake[src.clayer]-candle_lit")
-					src.ClearSpecificOverlays("[overlay_ref]")
-					var/tag = "cake[src.clayer]-candle"
-					src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',tag), tag)
-					blowout = 1
-					break
+			if(src.sliced && src.GetOverlayImage("slice-candle_lit"))
+				src.ClearSpecificOverlays("slice-candle_lit")
+				src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
+				blowout = 1
+			else if(src.GetOverlayImage("cake[src.clayer]-candle_lit"))
+				src.ClearSpecificOverlays("cake[src.clayer]-candle_lit")
+				src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
+				blowout = 1
 			if(blowout)
 				src.put_out()
 				user.visible_message("<b>[user.name]</b> blows out the candle!")
