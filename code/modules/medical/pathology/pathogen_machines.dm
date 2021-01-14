@@ -1120,6 +1120,8 @@
 
 		if (comp)
 			comp.gui.sendToSubscribers({"{"dnaDetails":[src.comp.slots2json()]}"}, "setUIState")
+			comp.sendAnalysisData()
+
 
 
 #undef PATHOGEN_MANIPULATOR_STATE_MAIN
