@@ -211,9 +211,11 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	max_wclass = 3 // The bowling ball won't fit into the bowling bag!
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
+		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
-	/obj/item/bowling_ball = 4)
+		/obj/item/bowling_ball = 4)
 
 	New()
 		..()
