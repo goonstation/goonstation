@@ -42,7 +42,7 @@ What are the archived variables for?
 	var/graphic
 	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	var/list/datum/gas/trace_gases
-	var/list/trace_gas_refs // mapping of type=gas to leverage hashing for locate and avoid O(n^2)
+	var/list/trace_gas_refs // mapping of type->gas to leverage hashing previous use of locate and avoid O(n^2) when comparing multiple gas_mixtures
 	var/tmp/fuel_burnt = 0
 
 
@@ -92,10 +92,12 @@ What are the archived variables for?
 	clear_trace_gases()
 	ZERO_BASE_GASES(src)
 
+/// Perform all handeling required to clear out trace gases
 /datum/gas_mixture/proc/clear_trace_gases()
 	src.trace_gases = null
 	src.trace_gas_refs = null
 
+/// Remove trace gas from a gas_mixture and handle clearing the trace_gases when applicable
 /datum/gas_mixture/proc/remove_trace_gas(datum/gas/trace_gas)
 	if(src.trace_gases)
 		src.trace_gases -= trace_gas
@@ -104,6 +106,7 @@ What are the archived variables for?
 		else
 			src.trace_gas_refs[trace_gas.type] = null
 
+/// Retrieve a gas or create a gas for a gas mixture based on the gas type
 /datum/gas_mixture/proc/get_or_add_trace_gas_by_type(type)
 	if(!trace_gases)
 		trace_gases = list()
@@ -116,9 +119,11 @@ What are the archived variables for?
 		trace_gas_refs[type] = trace_gas
 	. = trace_gas
 
+/// Retrieve a gas by type
 /datum/gas_mixture/proc/get_trace_gas_by_type(type)
 	if(trace_gas_refs) . = src.trace_gas_refs[type]
 
+/// Build bitfield of overlays to use for a gas mixture and determine if graphic should be updated
 /datum/gas_mixture/proc/check_tile_graphic()
 	//returns 1 if graphic changed
 	graphic = 0
@@ -127,6 +132,8 @@ What are the archived variables for?
 		graphic |= GAS_IMG_PLASMA_BIT
 
 	else if(length(trace_gases))
+		// refs are accessed directly to optimize functions as trace_gases
+		// has already been asserted above instead of utilizing get_trace_gas_by_type()
 		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
 		if(sleeping_agent && (sleeping_agent.moles > 1))
 			graphic |= GAS_IMG_N2O_BIT
@@ -547,8 +554,8 @@ What are the archived variables for?
 				var/datum/gas/corresponding
 				var/delta = 0
 
-				//corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
-				// Simplified get_or_add_trace_gas_by_type as we know it must be added
+				// This is using a simplified implementation of get_or_add_trace_gas_by_type()
+				// assumptions can be made to minimize decision points thereby minimize operations to perform
 				if(!trace_gases)
 					trace_gases = list()
 					trace_gas_refs = list()

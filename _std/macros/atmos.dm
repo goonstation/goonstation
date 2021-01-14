@@ -1,4 +1,4 @@
-/// in kPa*L/(K*mol)
+/// in kPa * L/(K * mol)
 #define R_IDEAL_GAS_EQUATION	8.31
 /// 1atm, now in kPa
 #define ONE_ATMOSPHERE		101.325
@@ -17,7 +17,9 @@
 /// Moles in a standard cell after which plasma is visible
 #define MOLES_PLASMA_VISIBLE	2
 
+/// Plasma Tile Overlay Flag
 #define GAS_IMG_PLASMA_BIT (1<<0)
+/// N20 Tile Overlay Flag
 #define GAS_IMG_N2O_BIT	(1<<1)
 
 /// liters in a normal breath
