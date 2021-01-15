@@ -313,15 +313,16 @@ turf
 								else
 									parent.space_borders = list(src)
 								length_space_border++
+								group_border |= direction
 
-							else
+							else if(issimulatedturf(T))
 								if(parent.borders)
 									parent.borders -= src
 									parent.borders += src
 								else
 									parent.borders = list(src)
+								group_border |= direction
 
-							group_border |= direction
 
 				parent.length_space_border += length_space_border
 
