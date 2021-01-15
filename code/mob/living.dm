@@ -1019,8 +1019,7 @@
 			listening = all_hearers(message_range, olocs[olocs.len])
 
 
-	listening -= src
-	listening += src
+	listening |= src
 
 
 	var/list/heard_a = list() // understood us
