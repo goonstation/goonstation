@@ -45,7 +45,7 @@
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
