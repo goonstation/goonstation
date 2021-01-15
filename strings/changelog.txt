@@ -1,5 +1,11 @@
 
 (t)thu jan 14 21
+(u)zjdtmkhzt
+(p)3327
+(e)⚖🎨|balance, sprites
+(*)A person can now only have one pathogen at a time. Pathogens of a higher tier will replace weaker ones.
+(*)Nerfed most pathogen spreading symptoms. (Less clouds.)
+(+)Plasma farts are now a T4 pathogen, Smoke farts are now a T3.
 (u)Flaborized
 (p)3302
 (e)🎨|sprites
