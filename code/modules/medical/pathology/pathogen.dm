@@ -347,7 +347,7 @@ datum/controller/pathogen
 		if (!usr.client.holder)
 			boutput(usr, "<span class='alert'>Visitors of the CDC are not allowed to interact with the equipment!</span>")
 			return
-		if (usr.client.holder.level < LEVEL_PA)
+		if (usr.client.holder.level < LEVEL_SA)
 			boutput(usr, "<span class='alert'>I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
 			return
 		var/state = 1
