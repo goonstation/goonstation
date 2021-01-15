@@ -122,7 +122,7 @@
 	)
 
 	if(timeout)
-		.["timeout"] = clamp(((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
+		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_act(action, list/params)
 	. = ..()
@@ -134,7 +134,7 @@
 				return
 			choice = params["choice"]
 			tgui_process.close_uis(src)
-			return TRUE
+			. = TRUE
 
 /**
  * # async tgui_modal
