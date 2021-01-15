@@ -11,3 +11,5 @@
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190
 
+/// Overrides multicontext menu popup when an object is clicked by a player who is holding an item
+#define IGNORE_CONTEXT_CLICK_HELD 200

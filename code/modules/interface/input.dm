@@ -191,9 +191,14 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
+
 			if(contexts.len)
-				mob.showContextActions(contexts, object)
-				return
+				var/obj/o = object
+				if((o.object_flags & IGNORE_CONTEXT_CLICK_HELD) && mob.equipped())
+					..()
+				else 
+					mob.showContextActions(contexts, object) //hmm...
+					return
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me

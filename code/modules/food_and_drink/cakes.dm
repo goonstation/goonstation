@@ -33,6 +33,7 @@
 	heal_amt = 2
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
+	object_flags = IGNORE_CONTEXT_CLICK_HELD
 	initial_volume = 100
 	w_class = 4.0
 	var/sliced = 0
@@ -42,6 +43,13 @@
 	var/amount3 //same for cake 3
 	var/cake_candle
 	var/litfam //is the cake lit (candle)
+
+	New()
+		..()
+		contextLayout = new /datum/contextLayout/default()
+		for(var/datum/contextAction/C in src.contextActions)
+			C.dispose()
+		src.contextActions = list()
 
 	/*_______*/
 	/*Utility*/
@@ -154,6 +162,12 @@
 		slice_candle = returns[2]
 
 		var/transferamount = (src.amount/src.clayer)/slices //amount of reagent to transfer to slices
+		var/deletionqueue //is the source cake deleted after slicing?
+		if(src.clayer == 1) //qdel(src) if there was only one layer to the cake, otherwise, decrement the layer
+			deletionqueue = 1
+		else
+			src.clayer--
+			src.update_cake_context()
 		for(var/i=1,i<=slices,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/custom/schild = new /obj/item/reagent_containers/food/snacks/cake/custom
 			schild.icon_state = "slice-overlay"
@@ -165,7 +179,7 @@
 				if(slice_candle == 2)
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"),"slice-candle_lit")
 				slice_candle = 0
-				cake_candle = 0
+				cake_candle = 0 
 				schild.cake_candle = 1
 				if(src.litfam) //light update
 					src.put_out()
@@ -187,10 +201,9 @@
 
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
-		if(src.clayer == 1) //qdel(src) if there was only one layer to the cake, otherwise, decrement the layer
+		if(deletionqueue)
 			qdel(src)
-		else
-			src.clayer--
+			
 
 
 	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/custom/c,var/mob/user)
@@ -260,6 +273,7 @@
 			src.UpdateOverlays(newoverlay,tag)
 		if(c.litfam)
 			src.ignite()
+		src.update_cake_context()
 		qdel(c)
 
 
@@ -332,9 +346,9 @@
 							candle = 1
 						else
 							candle = 2
-							src.ClearSpecificOverlays("[src.overlay_refs[i]]")
 							staticiterator--
 							i--
+						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
 						continue
 
 					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',toppingpath)
@@ -346,7 +360,6 @@
 					i--
 			else
 				break
-
 		if(src.amount > 10)
 			src.amount -= 10
 			switch(src.clayer)
@@ -354,11 +367,11 @@
 					src.amount2 = 0
 				if(3)
 					src.amount3 = 0
-			if(mode == 1)
+			if(mode == CAKE_MODE_CAKE)
 				cake.amount = 10
 			else
 				slices = 10
-		else if((mode == 2) && (src.clayer == 1))
+		else if((mode == CAKE_MODE_SLICE) && (src.clayer == 1))
 			slices = src.amount
 		else
 			qdel(cake) //this will happen if someone eats a cake without slicing it and the amount math has to recalculate past an entire layer (i.e. someone takes 11 bites)
@@ -368,33 +381,15 @@
 			return
 
 		src.reagents.maximum_volume -= 100
-		if(mode == 2)
+		if(mode == CAKE_MODE_SLICE)
 			return list(slices,candle)
 		else
 			src.clayer--
+			src.update_cake_context()
 
 	/*_______________*/
 	/*Light stuffs :D*/
 	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
-	/*New()
-		..()
-		light = new /datum/light/point
-		light.set_brightness(0.8)
-		light.set_color(0.5, 0.3, 0)
-		light.attach(src)*/
-
-
-	/*pickup(mob/user)
-		..()
-		light.attach(user)*/
-
-
-	/*dropped(mob/user)
-		..()
-		SPAWN_DBG(0)
-			if (src.loc != user)
-				light.attach(src)*/
-
 
 	proc/ignite(var/mob/user as mob, var/message as text)
 		if (!src)
@@ -407,6 +402,9 @@
 			src.add_simple_light("cake_light", list(0.5*255, 0.3*255, 0, 100))
 			if (!(src in processing_items))
 				processing_items.Add(src)
+			src.update_cake_context()
+		else
+			return
 
 		if(src.sliced && src.GetOverlayImage("slice-candle"))
 			src.ClearSpecificOverlays("slice-candle")
@@ -427,7 +425,62 @@
 			src.remove_simple_light("cake_light")
 			if (src in processing_items)
 				processing_items.Remove(src)
+			src.update_cake_context()
 		return
+
+	/*__________________*/
+	/*Context Actions :D*/
+	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
+
+	proc/update_cake_context()
+		for(var/datum/contextAction/C in src.contextActions)
+			C.dispose()
+		src.contextActions = list()
+
+		var/pickup
+		if(clayer>1)
+			contextActions += new /datum/contextAction/cake/unstack
+			pickup = 1
+		if(litfam)
+			contextActions += new /datum/contextAction/cake/candle
+			pickup = 1
+		if(pickup)
+			contextActions += new /datum/contextAction/cake/pickup
+
+	proc/unstack(var/mob/user)
+		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom
+
+		src.reagents.trans_to(s,(src.reagents.total_volume/3))
+		for(var/food_effect in src.food_effects)
+			if(food_effect in s.food_effects)
+				continue
+			s.food_effects += food_effect
+		s.quality = src.quality
+		s.food_color = src.food_color
+
+		build_cake(s,user,CAKE_MODE_CAKE)
+
+		if(istype(user,/mob/living/carbon/human))
+			user.put_in_hand_or_drop(s)
+		else
+			s.set_loc(get_turf(user))
+		if(src.litfam)
+			src.put_out()
+			s.ignite()
+
+	proc/extinguish(var/mob/user)
+		var/blowout
+		if(src.sliced && src.GetOverlayImage("slice-candle_lit"))
+			src.ClearSpecificOverlays("slice-candle_lit")
+			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
+			blowout = 1
+		else if(src.GetOverlayImage("cake[src.clayer]-candle_lit"))
+			src.ClearSpecificOverlays("cake[src.clayer]-candle_lit")
+			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
+			blowout = 1
+		if(blowout)
+			src.put_out()
+			user.visible_message("<b>[user.name]</b> blows out the candle!")
 
 	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
 		var/topping //the topping the player is adding (stored as a string reference to an icon_state)
@@ -468,41 +521,8 @@
 
 
 	attack_hand(mob/user as mob)
-		if((user.a_intent == INTENT_GRAB) && (src.clayer >1)) //removing layers from cakes.
-			var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom
-
-			src.reagents.trans_to(s,(src.reagents.total_volume/3))
-			for(var/food_effect in src.food_effects)
-				if(food_effect in s.food_effects)
-					continue
-				s.food_effects += food_effect
-			s.quality = src.quality
-			s.food_color = src.food_color
-
-			build_cake(s,user,CAKE_MODE_CAKE)
-
-			if(istype(user,/mob/living/carbon/human))
-				user.put_in_hand_or_drop(s)
-			else
-				s.set_loc(get_turf(user))
-			if(src.litfam)
-				src.put_out()
-				s.ignite()
-		else if(user.a_intent == INTENT_DISARM) //blowing out candles
-			var/blowout
-			if(src.sliced && src.GetOverlayImage("slice-candle_lit"))
-				src.ClearSpecificOverlays("slice-candle_lit")
-				src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
-				blowout = 1
-			else if(src.GetOverlayImage("cake[src.clayer]-candle_lit"))
-				src.ClearSpecificOverlays("cake[src.clayer]-candle_lit")
-				src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
-				blowout = 1
-			if(blowout)
-				src.put_out()
-				user.visible_message("<b>[user.name]</b> blows out the candle!")
-			else
-				..()
+		if(length(contextActions))
+			user.showContextActions(contextActions, src)
 		else
 			..()
 
