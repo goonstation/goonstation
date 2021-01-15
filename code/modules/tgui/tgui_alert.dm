@@ -82,7 +82,7 @@
 	src.buttons = buttons.Copy()
 	if (timeout)
 		src.timeout = timeout
-		start_time = world.time
+		src.start_time = TIME
 		SPAWN_DBG(timeout)
 			qdel(src)
 		..()
