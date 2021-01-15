@@ -701,28 +701,25 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
 	var/last_sound_time = 0
-	var/last_person_hit // Dont spam the fact you didn't hit them, its rude
 
 	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
-		. = ..()
+		if(..()) return TRUE
 		if(isliving(hit))
 			var/mob/living/M = hit
 			if (iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
-				if(M?.name != src.last_person_hit)
-					boutput(M, "The magic missile passes right through you!")
-				last_person_hit = M?.name
-				return TRUE
-			else
-				return FALSE
+				boutput(M, "The magic missile passes right through you!")
+				. = TRUE
+
+		/// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
 		else if(src.homing_active && isturf(hit) && hit?.density)
 			src.homing_active = 0
 			src.bouncy = 1
-		/// Missiles home into their targets until they hit a wall, forget their target, and then just bounce around
-		else if(!src.homing_active)
-			if(isturf(hit))
-				return FALSE
-			else
-				return TRUE
+
+		if(!src.homing_active && !isturf(hit))
+			. = TRUE
+
+		if(.)
+			src.last_thing_hit = hit
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
 		. = ..()

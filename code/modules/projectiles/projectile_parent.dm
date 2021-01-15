@@ -98,7 +98,6 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
-		if (proj_data.on_pre_hit(A, src.angle, src)) return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -376,11 +375,15 @@
 		src.was_setup = 1
 
 	Bump(var/atom/A)
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
 		if (!istype(A))
 			return // can't happen will happen
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
 			src.collide(A)
 
@@ -394,6 +397,7 @@
 		for(var/thing as mob|obj|turf|area in T)
 			var/atom/A = thing
 			if (A == src) continue
+			if (proj_data.on_pre_hit(A, src.angle, src)) continue
 			if (!A.CanPass(src, get_step(src, A.dir), 1, 0))
 				src.collide(A)
 
@@ -596,6 +600,9 @@ datum/projectile
 	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
+	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
+	var/atom/last_thing_hit
+
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
@@ -641,7 +648,8 @@ datum/projectile
 		/// Check if we want to do something before actually hitting the thing we hit
 		/// Return TRUE for it to more or less skip collide()
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-			return
+			if(hit == src.last_thing_hit)
+				return TRUE // If we already did something with the thing we're inside of, don't do it again until we pass through it again
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
 			.= 1
