@@ -41319,10 +41319,10 @@
 	dir = 1
 	},
 /obj/machinery/disposal/mail{
-	mail_tag = "electronics";
+	mail_tag = "mechanics";
 	mailgroup = "mechanic";
 	message = "1";
-	name = "mail chute-'Electronics'"
+	name = "mail chute-'Mechanics'"
 	},
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/yellow,
@@ -48226,8 +48226,8 @@
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 8;
-	mail_tag = "electronics";
-	name = "electronics mail router"
+	mail_tag = "mechanics";
+	name = "mechanics mail router"
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/south)
@@ -52207,6 +52207,9 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "cif" = (
@@ -61742,6 +61745,10 @@
 /obj/item/circuitboard/powermonitor{
 	pixel_x = -5;
 	pixel_y = -3
+	},
+/obj/item/circuitboard/genetics{
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /obj/item/circuitboard/powermonitor_smes{
 	pixel_x = 5;

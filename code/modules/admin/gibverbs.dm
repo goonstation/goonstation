@@ -276,7 +276,7 @@
 		O.mouse_opacity = 0
 		SPAWN_DBG(3.5 SECONDS)
 			qdel(O)
-	src.mob.gib()
+	src.mob.gib(FALSE, TRUE)
 
 /client/proc/cmd_admin_tysonban(mob/tysontarget as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)

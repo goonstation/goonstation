@@ -112,6 +112,7 @@
 	var/ai_default_intent = INTENT_DISARM
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
+	var/ai_offhand_pickup_chance = 50
 
 	max_health = 100
 
@@ -485,6 +486,7 @@
 			hud.master = null
 		hud.inventory_bg = null
 		hud.inventory_items = null
+		qdel(hud)
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -3175,7 +3177,7 @@
 						if (priority > 0)
 							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
-							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
+							priority = src.shoes ? src.shoes.step_sound : (src.mutantrace && src.mutantrace.step_override ? src.mutantrace.step_override : "step_barefoot")
 
 						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 

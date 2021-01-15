@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf")
+	compatible_species = list("human", "cow", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/acid_proof = 0	//Is this mask immune to flouroacid?

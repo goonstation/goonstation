@@ -134,6 +134,7 @@
 	var/needs_oxy = 1
 
 	var/voice_override = 0
+	var/step_override = 0
 
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
@@ -1932,8 +1933,11 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
+	human_compatible = FALSE
+	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
+	step_override = "step_wood"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
@@ -1957,6 +1961,8 @@
 			mob.update_body()
 			mob.update_clothing()
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
+			mob.kickMessage = "stomps"
+			mob.traitHolder?.addTrait("hemophilia")
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
@@ -1969,6 +1975,8 @@
 			H.blood_color = initial(H.blood_color)
 			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			H.kickMessage = initial(H.kickMessage)
+			H.traitHolder?.removeTrait("hemophilia")
 		. = ..()
 
 	say_filter(var/message)
