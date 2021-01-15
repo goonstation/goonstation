@@ -48142,7 +48142,7 @@
 /area/station/science/artifact)
 "oqi" = (
 /obj/stool/bench/red,
-/turf/unsimulated/floor/purple,
+/turf/simulated/floor/purple,
 /area/station/hallway/primary/south)
 "oqj" = (
 /obj/decal/tile_edge/line/yellow{
