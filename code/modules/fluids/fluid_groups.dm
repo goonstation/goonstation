@@ -246,7 +246,7 @@
 		var/turf/removed_loc = F.loc
 		if (removed_loc)
 			var/turf/T = removed_loc
-			T.active_liquid = 0
+			T.active_liquid = null
 
 		pool(F)
 
@@ -295,7 +295,7 @@
 			var/turf/removed_loc = F.loc
 			if (removed_loc)
 				var/turf/T = removed_loc
-				T.active_liquid = 0
+				T.active_liquid = null
 		else
 			if (lost_fluid)
 				src.reagents.skip_next_update = 1
@@ -325,7 +325,7 @@
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
 					else
-						F.loc:active_liquid = 0
+						F.loc:active_liquid = null
 						F.set_loc(T)
 						T.active_liquid = F
 					break
