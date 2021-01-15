@@ -208,7 +208,7 @@ datum/controller/pathogen
 							P.stages = newval
 					if ("create")
 						P.dnasample = new/datum/pathogendna(P)
-						P.pathogen_uid = "[next_uid]"
+						P.pathogen_uid = "p[next_uid]"
 						next_uid++
 
 						pathogen_trees += P.name_base
@@ -910,7 +910,7 @@ datum/pathogen
 		src.mutation = text2num(mutation)
 		src.base_mutation = 0
 
-		src.pathogen_uid = "[pathogen_controller.next_uid]"
+		src.pathogen_uid = "p[pathogen_controller.next_uid]"
 		pathogen_controller.next_uid++
 
 		pathogen_controller.pathogen_trees += src.name_base
