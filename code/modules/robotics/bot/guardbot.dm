@@ -2991,6 +2991,9 @@
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
+						if(istype(C, /mob/living/carbon/human/npc/monkey))
+							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+							npcmonkey.pursuited_by(src)
 						SPAWN_DBG(0)
 							master.speak("Level [threat] infraction alert!")
 							master.visible_message("<b>[master]</b> points at [C.name]!")

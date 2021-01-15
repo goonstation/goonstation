@@ -2033,19 +2033,19 @@ var/global/noir = 0
 				alert("Cannot make this mob a traitor")
 
 		if ("create_object")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_SA)
 				create_object(usr)
 			else
 				alert("You need to be at least a Primary Adminstrator to create objects.")
 
 		if ("create_turf")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_SA)
 				create_turf(usr)
 			else
 				alert("You need to be at least a Primary Adminstrator to create turfs.")
 
 		if ("create_mob")
-			if (src.level >= LEVEL_PA) // Moved from SG to PA. They can do this through build mode anyway (Convair880).
+			if (src.level >= LEVEL_SA)
 				create_mob(usr)
 			else
 				alert("You need to be at least a Primary Administrator to create mobs.")
@@ -4042,7 +4042,7 @@ var/global/noir = 0
 			dat += "<b>Force players to use random appearances:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomlooks'>[force_random_looks ? "Yes" : "No"]</a><br>"
 			//dat += "<A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>Politely suggest all players use random names</a>" // lol
 
-	if (src.level >= LEVEL_PA)
+	if (src.level >= LEVEL_SA)
 		dat += "<hr>"
 		dat += "<A href='?src=\ref[src];action=create_object'>Create Object</A><br>"
 		dat += "<A href='?src=\ref[src];action=create_turf'>Create Turf</A><br>"

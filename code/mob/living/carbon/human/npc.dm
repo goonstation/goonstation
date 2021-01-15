@@ -1,13 +1,8 @@
-#define AI_PASSIVE 0
-#define AI_ANGERING 1
-#define AI_ATTACKING 2
-#define AI_HELPING 3
-#define AI_IDLE 4
-#define AI_FLEEING 5
 
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
+		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
 #define IS_NPC_CLOTHING(x) ( \
@@ -308,6 +303,11 @@
 
 			src.a_intent = INTENT_HARM
 
+			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
+				src.ai_state = AI_FLEEING
+				src.ai_frustration = 0
+				return
+
 			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
 				ai_frustration = 0
 				ai_target = null
@@ -332,10 +332,24 @@
 
 			var/area/A = get_area(src)
 
-			if(isnull(ai_target) || isdead(ai_target) || distance > 7 || (!src.see_invisible && ai_target.invisibility) || (isunconscious(ai_target) && prob(25)))
+			var/stop_fight = FALSE
+			if(isnull(ai_target) || !src.see_invisible && ai_target.invisibility)
+				stop_fight = TRUE
+			else if(ismob(src.ai_target))
+				stop_fight = isdead(src.ai_target) || isunconscious(src.ai_target) && prob(25)
+			else if(iscritter(src.ai_target))
+				var/obj/critter/critter = src.ai_target
+				stop_fight = !critter.alive
+			else if(istype(src.ai_target, /obj/fitness/speedbag))
+				stop_fight = prob(30)
+			else
+				stop_fight = prob(10)
+
+			if(stop_fight)
 				ai_target = null
 				ai_state = AI_PASSIVE
 				return
+
 
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
@@ -388,43 +402,47 @@
 					src.zone_sel.select_zone(pick(prob(150); "head", prob(200); "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
 
 				if(src.r_hand && src.l_hand)
-					if(prob(src.hand ? 15 : 50))
+					if(prob(src.hand ? 90 : 5))
 						src.swap_hand()
-				else if(!src.equipped() && (src.r_hand || src.l_hand))
+				else if(!src.equipped())
+					if(src.hand || prob(10))
+						src.swap_hand()
+				else if(src.hand && prob(50))
 					src.swap_hand()
 
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				if(!src.equipped())
+				src.a_intent = INTENT_HARM
+
+				var/prefer_hand = FALSE
+				if(istype(ai_target, /obj/fitness/speedbag))
+					prefer_hand = TRUE
+				if(prob(1))
+					prefer_hand = TRUE
+
+				if(isgrab(src.r_hand) || isgrab(src.l_hand))
+					var/obj/item/grab/grab = locate(/obj/item/grab) in src
+					grab.attack_hand(src)
+
+				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
 					//else
-					ai_target.attack_hand(src) //We're a human!
+					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
+						src.a_intent = INTENT_GRAB
+					src.ai_attack_target(ai_target, null)
 				else // With a weapon
-					//if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
-					//	src.a_intent = INTENT_HELP
-					if(ishuman(ai_target) || issilicon(ai_target))
-						src.ai_attack_target(ai_target, src.equipped())
-					else if(ismobcritter(ai_target))
-						var/mob/living/critter/C = ai_target
-						if (isalive(C))
-							src.ai_attack_target(ai_target, src.equipped())
-						else
-							ai_target = null
-							ai_state = AI_PASSIVE
-							return
-					else if(ismob(ai_target))
-						src.ai_attack_target(ai_target, src.equipped())
-					else
-						src.ai_attack_target(ai_target, src.equipped())
-						var/obj/critter/maybe_critter = ai_target
-						if(prob(10) || istype(maybe_critter) && !maybe_critter.alive && prob(60))
-							ai_target = null
-							ai_state = AI_PASSIVE
-							return
+					if(istype(src.equipped(), /obj/item/sword) && prob(80))
+						var/obj/item/sword/csaber = src.equipped()
+						if(!csaber.open)
+							src.ai_attack_target(csaber, null)
+					src.ai_attack_target(ai_target, src.equipped())
 					src.a_intent = INTENT_HARM
+
+
+
 
 			ai_pickupstuff()
 
@@ -440,12 +458,55 @@
 			if (grabbed_by.len)
 				src.resist()
 
+		if(AI_FLEEING)  //Yes, brave Sir Robin turned about. And gallantly he chickened out.
+			var/cancel_fleeing = FALSE
+			if(isnull(src.ai_target) || src.ai_target.disposed || !IN_RANGE(src, src.ai_target, 8))
+				cancel_fleeing = TRUE
+			else if(ismob(src.ai_target) && !isalive(src.ai_target))
+				cancel_fleeing = TRUE
+			else if(istype(src.ai_target, /obj/machinery/bot/secbot))
+				var/obj/machinery/bot/secbot/securitron = src.ai_target
+				if(securitron.target != src)
+					cancel_fleeing = TRUE
+			else if(istype(src.ai_target, /obj/machinery/bot/guardbot))
+				var/obj/machinery/bot/guardbot/guardbuddy = src.ai_target
+				if(guardbuddy.arrest_target != src)
+					cancel_fleeing = TRUE
+			if(cancel_fleeing)
+				src.ai_state = AI_PASSIVE
+				if(prob(95))
+					src.ai_target = null
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
-	return src.weapon_attack(target, weapon, 1, attack_params)
+	if(weapon)
+		return src.weapon_attack(target, weapon, 1, attack_params)
+	else
+		return src.hand_attack(target, attack_params, null, null)
+
+/mob/living/carbon/human/proc/ai_put_away_thing(obj/item/thing)
+
 
 /mob/living/carbon/human/proc/ai_do_hand_stuff()
+	if(prob(10))
+		src.in_throw_mode = !src.in_throw_mode
+
+	// suplex and table!
+	if(isgrab(src.r_hand) || isgrab(src.l_hand))
+		var/obj/item/grab/grab = src.equipped()
+		if(!istype(grab))
+			src.swap_hand()
+			grab = src.equipped()
+		if(prob(10) || grab.state > 0)
+			if(prob(80))
+				var/list/obj/table/tables = list()
+				for(var/obj/table/table in view(1))
+					tables += table
+				if(length(tables))
+					src.ai_attack_target(pick(tables), grab)
+			if(!grab.disposed && grab.loc == src)
+				src.emote("flip", TRUE)
+
 	// swap hands
 	if(src.r_hand && src.l_hand)
 		if(prob(src.hand ? 15 : 4))
@@ -461,8 +522,22 @@
 	if(IS_NPC_HATED_ITEM(src.equipped()))
 		throw_equipped |= prob(80)
 
+	// pull things out of other things!
+	if(istype(src.equipped(), /obj/item/storage))
+		var/obj/item/storage/storage = src.equipped()
+		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+			throw_equipped |= prob(80)
+		else if(length(storage.contents))
+			var/obj/item/taken = pick(storage.contents)
+			src.u_equip(storage)
+			storage.set_loc(src.loc)
+			storage.dropped(src)
+			storage.layer = initial(storage.layer)
+			taken.set_loc(storage.loc)
+			src.put_in_hand_or_drop(taken)
+
 	// wear clothes
-	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
 		src.hud.clicked("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -484,7 +559,16 @@
 
 	// eat, drink, splash!
 	if(istype(src.equipped(), /obj/item/reagent_containers))
-		if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
+		var/poured = FALSE
+		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
+			for(var/obj/item/reagent_containers/container in view(1, src))
+				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+					src.ai_attack_target(container, src.equipped())
+					poured = TRUE
+					break
+		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
+			// do nothing
+		else if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
 			src.ai_attack_target(src, src.equipped())
 		else
 			var/obj/item/thing = src.equipped()
@@ -496,7 +580,7 @@
 	// draw
 	if(istype(src.equipped(), /obj/item/pen/crayon) && prob(20))
 		var/list/turf/eligible = list()
-		for(var/turf/T in view(src, 1))
+		for(var/turf/T in view(1, src))
 			if(!T.density && !(locate(/obj/decal/cleanable/writing) in T))
 				eligible += T
 		if(length(eligible))
@@ -509,10 +593,12 @@
 	// throw
 	if(throw_equipped)
 		var/turf/T = get_turf(src)
-		src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+		if(T)
+			SPAWN_DBG(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
+				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
-	if(prob(5) && src.equipped())
+	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src)
 				src.give_to(H)
@@ -527,6 +613,7 @@
 /mob/living/carbon/human/proc/ai_move()
 	if(ai_incapacitated() || !ai_canmove() || ai_busy)
 		walk_towards(src, null)
+		walk_away(src, null)
 		return
 	if((src in actions.running) && length(actions.running[src]))
 		return // don't interupt actions
@@ -543,11 +630,23 @@
 			else if (dist > 1)
 				walk_towards(src, null)
 				step_towards(src, ai_target) //Take a step and hit the shite (but only if you won't push them out of the way by doing so)
+	if( ai_state == AI_FLEEING && ai_canmove() )
+		set_dir(get_step_away(src, ai_target))
+		ai_obstacle(1)
+		walk_away(src, ai_target, 10, ai_movedelay)
+
+/mob/living/carbon/human/changeStatus(statusId, duration, optional)
+	. = ..()
+	if(!src.ai_active)
+		return
+	if(src.ai_state == AI_FLEEING && ai_incapacitated())
+		src.ai_state = AI_PASSIVE
+		walk_away(src, null)
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
 	src.ai_pickupweapon()
-	if(prob(40))
+	if(prob(ai_offhand_pickup_chance))
 		src.ai_pickupoffhand()
 
 /mob/living/carbon/human/proc/ai_pickupoffhand()
@@ -558,12 +657,18 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G != src.l_hand && !istype(G.loc, /turf) || G.anchored) continue
+		if(G.anchored || G.throwing) continue
 		var/score = 0
+		if(G.loc == src && !G.equipped_in_slot) // probably organs
+			continue
 		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
 			score += 6
-		if(IS_NPC_CLOTHING(G) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
+		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(2)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
 			score += 10
+		else if(IS_NPC_CLOTHING(G) && G.loc == src)
+			continue
+		if(IS_NPC_HATED_ITEM(G))
+			score -= 10
 		if(istype(G, /obj/item/remote))
 			score += 3
 		if(istype(G, /obj/item/reagent_containers) && G.reagents?.total_volume > 0)
@@ -572,6 +677,10 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
+		if(istype(G, /obj/item/storage) && length(G.contents))
+			score += 9
+		if(G.loc == src)
+			score += 1
 		if(istype(src.wear_mask, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
@@ -591,6 +700,8 @@
 
 	if(pickup && !src.l_hand)
 		src.swap_hand(1)
+		if(pickup.equipped_in_slot)
+			src.u_equip(pickup)
 		if(src.put_in_hand_or_drop(pickup))
 			src.set_clothing_icon_dirty()
 
@@ -629,6 +740,7 @@
 	var/obj/item/pickup
 
 	for(var/obj/item/G in src.contents)
+		if(G.throwing) continue
 		if((istype(G,/obj/item/gun) && G:canshoot()) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
@@ -636,6 +748,7 @@
 
 	if(!pickup)
 		for (var/obj/item/G in view(1,src))
+			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
 			if((istype(G,/obj/item/gun) && G:canshoot()))
 				pickup = G
@@ -648,6 +761,9 @@
 				if(src:r_hand:force < G.force) pickup = G
 			else if(src.r_hand && pickup && G.force > 3)
 				if(pickup.force < G.force) pickup = G
+			else if(istype(G, /obj/item/sword))
+				pickup = G
+				break
 
 	if(src.r_hand && pickup)
 		var/RHITM = src.r_hand
@@ -730,6 +846,8 @@
 	L = getline(src,target)
 
 	for (var/turf/T in L)
+		if(target in T)
+			continue
 		if (T.density)
 			ai_frustration += 3
 			return 0
@@ -781,7 +899,7 @@
 				V.eject_rider(0, 1)
 
 	else if(istype(src.loc, /obj/icecube/))
-		src.loc.attack_hand(src)
+		src.ai_attack_target(src.loc, null)
 
 /mob/living/carbon/human/proc/ai_obstacle(var/doorsonly)
 
@@ -808,10 +926,10 @@
 
 	if((locate(/obj/machinery/door) in get_step(src,dir)))
 		var/obj/machinery/door/W = (locate(/obj/machinery/door) in get_step(src,dir))
-		if(W.density) W.attack_hand(src)
+		if(W.density) src.ai_attack_target(W, null)
 	else if((locate(/obj/machinery/door) in get_turf(src.loc)))
 		var/obj/machinery/door/W = (locate(/obj/machinery/door) in get_turf(src.loc))
-		if(W.density) W.attack_hand(src)
+		if(W.density) src.ai_attack_target(W, null)
 
 /mob/living/carbon/human/proc/ai_openclosets()
 	if (ai_incapacitated())
@@ -826,10 +944,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-
-#undef AI_PASSIVE
-#undef AI_ANGERING
-#undef AI_ATTACKING
-#undef AI_HELPING
-#undef AI_IDLE
-#undef AI_FLEEING

@@ -89,7 +89,6 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl"
-	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
 		..()

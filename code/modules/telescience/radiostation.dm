@@ -207,7 +207,6 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			src.is_playing = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
@@ -220,12 +219,13 @@
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
 			//////
+			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-				sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
 #else
-				sleep(3000)
+			sleep(3000)
 #endif
-			is_playing = 0
+			src.is_playing = 0
 	else
 		..()
 
