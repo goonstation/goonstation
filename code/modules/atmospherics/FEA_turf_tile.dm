@@ -64,7 +64,7 @@ turf
 #ifdef ATMOS_TILE_STATS_TRACKING
 	var/tmp/atmos_operations = 0
 	var/static/max_atmos_operations = 0
-#endif ATMOS_TILE_STATS_TRACKING
+#endif
 
 	proc
 		high_pressure_movements()
