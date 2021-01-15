@@ -147,7 +147,7 @@ proc/debug_color_of(var/thing)
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas in GM.trace_gases)
+			for(var/datum/gas/trace_gas as() in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
@@ -680,11 +680,11 @@ proc/debug_color_of(var/thing)
 			var/direct_trace = 0
 			var/turf/simulated/sim = theTurf
 			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg in sim.air.trace_gases)
+				for(var/datum/gas/tg as() in sim.air.trace_gases)
 					img.app.desc += "[tg.type] [tg.moles]<br>"
 					direct_trace = 1
 				if(sim?.parent?.air)
-					for(var/datum/gas/tg in sim.parent.air.trace_gases)
+					for(var/datum/gas/tg as() in sim.parent.air.trace_gases)
 						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
 						air_group_trace = 1
 			if(air_group_trace && direct_trace)

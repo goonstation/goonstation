@@ -1186,6 +1186,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 50
 	good_grip = 1
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		if(act == "flip" && istype(src.equipped(), /obj/item/grab))
+			return src.do_suplex(src.equipped())
+		return null
+
 /* -------------------- Seagull -------------------- */
 
 /mob/living/critter/small_animal/bird/seagull

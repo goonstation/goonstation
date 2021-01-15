@@ -44025,7 +44025,9 @@
 	},
 /area/sim/bball)
 "cfO" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	file_name = "data/persistent_bookshelf_cairngorm.json"
+	},
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
 	name = "Trash bin"

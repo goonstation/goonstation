@@ -2111,16 +2111,15 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aeq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aer" = (
@@ -2311,16 +2310,19 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment1)
 "aeI" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_1";
-	name = "Chamber One Exhaust"
+/obj/machinery/sparker{
+	dir = 2;
+	id = "toxins_1";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = -24
 	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_corners"
+	},
 /area/research_outpost/toxins)
 "aeJ" = (
 /obj/cable{
@@ -2436,18 +2438,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"afa" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/computer3frame,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
-"afb" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor,
-/area/research_outpost)
 "afd" = (
 /obj/cable{
 	d1 = 1;
@@ -2479,9 +2469,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering)
-"afh" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/toxins)
 "afi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/restroom)
@@ -2570,28 +2557,29 @@
 	name = "Genetic Research"
 	})
 "afw" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_2";
-	name = "Chamber Two Exhaust"
+/obj/machinery/sparker{
+	dir = 2;
+	id = "toxins_2";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = -24
 	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
-/turf/simulated/floor/engine/vacuum,
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_corners"
+	},
 /area/research_outpost/toxins)
 "afx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "afy" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
 	},
-/turf/simulated/floor/engine/vacuum{
-	dir = 8;
-	icon_state = "engine_caution_corners"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "afz" = (
 /obj/machinery/camera{
@@ -2609,19 +2597,6 @@
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/west,
 /area/station/medical/robotics)
-"afC" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
 "afD" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -2720,12 +2695,24 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "afR" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_north"
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Chamber One Heat Shield";
+	opacity = 0
 	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
 /area/research_outpost/toxins)
 "afS" = (
 /obj/cable{
@@ -2737,9 +2724,16 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "afT" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
-/area/research_outpost/toxins)
+/area/research_outpost)
 "afU" = (
 /obj/table/auto,
 /obj/item/caution{
@@ -2766,13 +2760,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"afX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "afY" = (
 /obj/decal/skeleton,
 /obj/item/clothing/suit/labcoat/genetics,
@@ -2908,10 +2895,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "agn" = (
-/turf/simulated/floor/engine/vacuum{
-	dir = 4;
-	icon_state = "engine_caution_corners"
+/obj/machinery/door/poddoor/pyro{
+	dir = 1;
+	id = "chamber_1";
+	name = "Chamber One Exhaust"
 	},
+/obj/forcefield/energyshield/perma{
+	name = "Permanent Liquid Forcefield";
+	powerlevel = 4
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "ago" = (
 /obj/machinery/camera{
@@ -2953,10 +2946,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "agt" = (
-/turf/simulated/floor/engine/vacuum{
-	dir = 8;
-	icon_state = "engine_caution_corners"
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "agu" = (
 /obj/item/crowbar,
@@ -3927,12 +3920,25 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aiV" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_north"
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_two";
+	layer = 4;
+	name = "Chamber Two Heat Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating/random,
 /area/research_outpost/toxins)
 "aiW" = (
 /obj/item/device/radio/intercom/medical{
@@ -5679,13 +5685,10 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "amM" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
-/turf/simulated/floor/engine/vacuum{
-	dir = 4;
-	icon_state = "engine_caution_corners"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "amN" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -5753,13 +5756,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
-"amT" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/toxins)
 "amU" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -6102,13 +6098,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"anK" = (
-/obj/machinery/power/monitor,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
 "anL" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -6738,15 +6727,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "apk" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
-	},
+/obj/table/reinforced/auto,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "apl" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -7309,16 +7294,17 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hangar/science)
 "aqx" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/test_apparatus/gas_sensor{
-	setup_tag = "BOTTOM"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
 	},
 /obj/cable{
+	d1 = 1;
 	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/engine/vacuum,
+/obj/machinery/meter,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aqy" = (
 /obj/machinery/light/incandescent/warm/very,
@@ -7992,17 +7978,26 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "ase" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	external_pressure_bound = 0;
-	icon_state = "in";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	pressure_checks = 2;
-	pump_direction = 0
+/obj/machinery/atmospherics/binary/pump{
+	dir = 0;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber One Outlet";
+	on = 1;
+	target_pressure = 250
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_east"
+/obj/machinery/door_control{
+	id = "chamber_1";
+	name = "Chamber One Exhaust";
+	pixel_x = -12;
+	pixel_y = 32
 	},
+/obj/machinery/ignition_switch{
+	id = "toxins_1";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/turf/simulated/floor/red,
 /area/research_outpost/toxins)
 "asf" = (
 /obj/machinery/light/incandescent/cool,
@@ -8016,13 +8011,26 @@
 	},
 /area/station/science/teleporter)
 "asg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber Two Inlet";
+	on = 1;
+	target_pressure = 500
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_west"
+/obj/machinery/door_control{
+	id = "chamber_2";
+	name = "Chamber Two Exhaust";
+	pixel_x = 12;
+	pixel_y = 32
 	},
+/obj/machinery/ignition_switch{
+	id = "toxins_2";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "ash" = (
 /obj/storage/secure/closet/medical{
@@ -8064,19 +8072,15 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "asm" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 0;
-	icon_state = "in";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_east"
-	},
+/obj/table/reinforced/auto,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/obj/item/clothing/glasses/vr/bomb,
+/obj/item/clothing/glasses/vr/bomb,
+/obj/item/clothing/glasses/vr/bomb,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "asn" = (
 /obj/machinery/vending/medical,
@@ -8138,13 +8142,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"asv" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 10
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/toxins)
 "asw" = (
 /obj/item/device/radio/intercom/medical{
 	broadcasting = 1;
@@ -8287,14 +8284,9 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "asN" = (
-/obj/storage/crate/furnacefuel,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "asO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8452,16 +8444,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
-"atg" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
 "ath" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -8877,10 +8859,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hangar/science)
 "aun" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "auo" = (
 /obj/decal/tile_edge/line/purple{
@@ -8913,19 +8896,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aus" = (
-/obj/machinery/sparker{
-	dir = 2;
-	id = "toxins_1";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_x = -24
+/obj/machinery/door/poddoor/pyro{
+	dir = 1;
+	id = "chamber_2";
+	name = "Chamber Two Exhaust"
 	},
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 1
+/obj/forcefield/energyshield/perma{
+	name = "Permanent Liquid Forcefield";
+	powerlevel = 4
 	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_corners"
-	},
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "aut" = (
 /obj/machinery/light/incandescent/warm,
@@ -9135,15 +9115,16 @@
 	},
 /area/station/hallway/primary/east)
 "auN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
 	},
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid,
-/area/space)
+/turf/simulated/floor/black,
+/area/research_outpost/chamber)
 "auO" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -9291,16 +9272,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "avf" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 1
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
 	},
 /turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_south"
+	dir = 8;
+	icon_state = "engine_caution_corners"
 	},
 /area/research_outpost/toxins)
 "avg" = (
@@ -9337,14 +9314,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "avk" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
-	},
-/turf/simulated/floor/engine/vacuum{
-	dir = 1;
-	icon_state = "engine_caution_corners"
-	},
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/red,
 /area/research_outpost/toxins)
 "avl" = (
 /obj/cable{
@@ -9884,19 +9855,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/entry)
 "awB" = (
-/obj/machinery/sparker{
-	dir = 2;
-	id = "toxins_2";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_x = -24
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/turf/simulated/floor/engine/vacuum{
-	icon_state = "engine_caution_corners"
-	},
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "awD" = (
 /obj/disposalpipe/segment{
@@ -11097,12 +11057,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "azj" = (
-/obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
 	},
 /turf/simulated/floor/engine/vacuum{
-	dir = 1;
-	icon_state = "engine_caution_corners"
+	icon_state = "engine_caution_north"
 	},
 /area/research_outpost/toxins)
 "azk" = (
@@ -11118,14 +11077,17 @@
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/north)
 "azl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/red,
 /area/research_outpost/toxins)
 "azm" = (
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
+/obj/machinery/door_control{
+	id = "test_chamber";
+	name = "Test Chamber Blast Door Control";
+	pixel_y = -24
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
@@ -11780,15 +11742,10 @@
 	},
 /area/station/medical/medbay/lobby)
 "aAN" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber One Inlet";
-	on = 1;
-	target_pressure = 500
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aAO" = (
 /obj/disposalpipe/segment{
@@ -12603,11 +12560,10 @@
 	},
 /area/station/hallway/primary/west)
 "aCV" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 5
+/turf/simulated/floor/engine/vacuum{
+	dir = 4;
+	icon_state = "engine_caution_corners"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "aCW" = (
 /obj/disposalpipe/segment/morgue{
@@ -12804,12 +12760,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"aDx" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/maint)
 "aDy" = (
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 9
@@ -13015,24 +12965,17 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "aEa" = (
-/obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4
+	dir = 4;
+	level = 2
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/meter,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aEb" = (
 /obj/cable{
@@ -13931,7 +13874,6 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "aGh" = (
-/obj/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
 	level = 2
@@ -13941,15 +13883,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_two";
-	layer = 4;
-	name = "Chamber Two Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/meter,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aGi" = (
 /obj/cable{
@@ -14019,10 +13954,10 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aGs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
+/turf/simulated/floor/engine/vacuum{
+	dir = 8;
+	icon_state = "engine_caution_corners"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "aGt" = (
 /obj/table/reinforced/chemistry/auto,
@@ -15301,15 +15236,17 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "aJj" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber Two Outlet";
-	on = 1;
-	target_pressure = 250
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aJk" = (
 /obj/cable{
@@ -15669,6 +15606,7 @@
 "aJY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/machinery/photocopier,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aJZ" = (
@@ -16096,8 +16034,10 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aLc" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/blue,
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aLd" = (
 /obj/table/reinforced/auto,
@@ -16137,11 +16077,12 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "aLh" = (
-/obj/table/reinforced/auto,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_north"
+	},
 /area/research_outpost/toxins)
 "aLi" = (
 /obj/disposalpipe/segment,
@@ -18108,26 +18049,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/baroffice)
 "aQb" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber One Outlet";
-	on = 1;
-	target_pressure = 250
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
 	},
-/obj/machinery/door_control{
-	id = "chamber_1";
-	name = "Chamber One Exhaust";
-	pixel_x = -12;
-	pixel_y = 32
-	},
-/obj/machinery/ignition_switch{
-	id = "toxins_1";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/turf/simulated/floor/red,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aQc" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -18594,18 +18519,18 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aRe" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "aRf" = (
-/obj/machinery/manufacturer/general,
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
 	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/turf/simulated/floor/engine/vacuum{
+	dir = 4;
+	icon_state = "engine_caution_corners"
+	},
+/area/research_outpost/toxins)
 "aRg" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -18616,8 +18541,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/hangar/science)
 "aRh" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/black,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
 /area/research_outpost)
 "aRi" = (
 /obj/table/wood/auto,
@@ -18804,13 +18733,6 @@
 	name = " Research Outpost Pod Bay Pad"
 	},
 /obj/machinery/light_switch/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "aRM" = (
@@ -18818,49 +18740,17 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/hangar)
 "aRN" = (
-/obj/machinery/atmospherics/valve,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/door_control{
-	id = "tox_hs_two";
-	name = "Chamber Two Heat Shield";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/obj/machinery/door_control{
-	id = "tox_hs_one";
-	name = "Chamber One Heat Shield";
-	pixel_x = -8;
-	pixel_y = 24
+/obj/machinery/atmospherics/pipe/manifold{
+	level = 2
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aRO" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber Two Inlet";
-	on = 1;
-	target_pressure = 500
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
 	},
-/obj/machinery/door_control{
-	id = "chamber_2";
-	name = "Chamber Two Exhaust";
-	pixel_x = 12;
-	pixel_y = 32
-	},
-/obj/machinery/ignition_switch{
-	id = "toxins_2";
-	pixel_x = -8;
-	pixel_y = 24
-	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aRP" = (
 /obj/machinery/power/apc/autoname_west,
@@ -18872,15 +18762,11 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/maintenance/northeast)
 "aRQ" = (
-/obj/table/reinforced/auto,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/item/clothing/glasses/vr/bomb,
-/obj/item/clothing/glasses/vr/bomb,
-/obj/item/clothing/glasses/vr/bomb,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "aRR" = (
 /turf/simulated/floor,
@@ -19573,11 +19459,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aTp" = (
+/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTq" = (
 /turf/simulated/floor,
@@ -22457,41 +22341,47 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "baW" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/red,
-/area/research_outpost/toxins)
-"baX" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/turf/simulated/floor/red,
-/area/research_outpost/toxins)
-"baY" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"baZ" = (
+"baX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
-	dir = 1
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/machinery/meter,
-/obj/machinery/light/small/floor/greenish,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"baY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/unary/outlet_injector{
+	dir = 8;
+	icon_state = "on";
+	on = 1
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_west"
+	},
+/area/research_outpost/toxins)
+"baZ" = (
+/obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bba" = (
-/obj/machinery/light/incandescent/netural,
 /obj/machinery/atmospherics/portables_connector{
-	dir = 1
+	name = "Mixing Port"
 	},
-/turf/simulated/floor/red,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbb" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbc" = (
@@ -22500,10 +22390,6 @@
 	},
 /turf/space/fluid,
 /area/space)
-"bbd" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "bbe" = (
 /obj/decal/cleanable/flockdrone_debris/fluid,
 /turf/simulated/floor/shuttle/flock,
@@ -22518,17 +22404,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
 "bbh" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
+/obj/table/reinforced,
+/obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/atmosphere/pumpcontrol{
-	dir = 4;
-	frequency = 1229
-	},
 /turf/simulated/floor,
-/area/research_outpost/toxins)
+/area/research_outpost)
 "bbi" = (
 /obj/item/crowbar,
 /obj/item/wrench,
@@ -22536,444 +22416,74 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bbj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
-	},
-/obj/machinery/meter,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbk" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 1
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbl" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "2-4"
 	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbm" = (
 /obj/stool/chair/office/blue{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbn" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbo" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbp" = (
-/obj/machinery/power/apc/autoname_south,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbq" = (
-/obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor,
+/area/research_outpost)
+"bbo" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"bbq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbr" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
 /obj/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/meter,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbs" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbt" = (
-/obj/machinery/atmospherics/pipe/tank{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbu" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbv" = (
-/obj/machinery/door/airlock/pyro/sci_alt,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/access_spawn/research,
-/turf/simulated/floor,
-/area/research_outpost)
-"bbw" = (
-/obj/machinery/light/flock{
-	dir = 1;
-	pixel_y = 9
-	},
-/turf/simulated/floor/shuttlebay/flock{
-	dir = 9
-	},
-/area/flock_trader)
-"bbx" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bby" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 10
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/research_outpost/maint)
-"bbA" = (
-/obj/machinery/manufacturer/robotics,
-/turf/simulated/floor/caution/corner/nw,
-/area/station/medical/robotics)
-"bbB" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbC" = (
-/obj/machinery/atmospherics/pipe/tank{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbD" = (
-/obj/shrub{
-	desc = "You suspect that it's just an Earth fern.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = -4;
-	pixel_y = 14
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/research_outpost)
-"bbE" = (
-/obj/machinery/power/furnace{
-	active = 1;
-	fuel = 600
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
-"bbF" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/toxins)
-"bbG" = (
-/obj/machinery/portable_atmospherics/pump,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbH" = (
-/obj/machinery/light/flock{
-	dir = 1;
-	pixel_y = 9
-	},
-/turf/simulated/floor/shuttlebay/flock{
-	dir = 5
-	},
-/area/flock_trader)
-"bbK" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/stool/chair/office/blue{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/research_outpost)
-"bbM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
-"bbN" = (
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
-"bbO" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	dir = 1;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbP" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbQ" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Mixing Port"
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bca" = (
-/obj/machinery/vending/monkey,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"bcb" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcd" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost)
-"bce" = (
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
-"bcg" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"bci" = (
-/obj/machinery/shower{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
-"bck" = (
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/research_outpost)
-"bcl" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"bcm" = (
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost)
-"bcn" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "test_chamber";
-	name = "Test Chamber Blast Door";
-	opacity = 0
-	},
-/turf/simulated/floor/black,
-/area/research_outpost/chamber)
-"bco" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcp" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 5
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcq" = (
-/obj/decal/fakeobjects/flock/antenna{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"bcr" = (
-/obj/machinery/atmospherics/pipe/vent{
-	dir = 8
-	},
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"bcs" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/meter,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bct" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 5
-	},
-/obj/machinery/meter,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcu" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcw" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bcx" = (
-/obj/decal/fakeobjects/flock/antenna/end{
-	dir = 4
-	},
-/turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"bcB" = (
-/turf/space/fluid,
-/turf/simulated/shuttle/wall/cockpit/flock{
-	dir = 8
-	},
-/area/space)
-"bcC" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -23001,13 +22511,69 @@
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"bcD" = (
-/obj/cable{
-	icon_state = "1-2"
+"bbu" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/gas_sensor{
+	setup_tag = "BOTTOM"
 	},
-/turf/simulated/floor,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
-"bcE" = (
+"bbv" = (
+/obj/machinery/atmospherics/unary/vent_pump{
+	external_pressure_bound = 0;
+	icon_state = "in";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_east"
+	},
+/area/research_outpost/toxins)
+"bbw" = (
+/obj/machinery/light/flock{
+	dir = 1;
+	pixel_y = 9
+	},
+/turf/simulated/floor/shuttlebay/flock{
+	dir = 9
+	},
+/area/flock_trader)
+"bbx" = (
+/obj/machinery/atmospherics/unary/outlet_injector{
+	icon_state = "on";
+	on = 1
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_west"
+	},
+/area/research_outpost/toxins)
+"bby" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 0;
+	icon_state = "in";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_east"
+	},
+/area/research_outpost/toxins)
+"bbA" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/caution/corner/nw,
+/area/station/medical/robotics)
+"bbB" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
@@ -23015,12 +22581,285 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"bcF" = (
+"bbC" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
 	},
 /obj/machinery/meter,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bbD" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
+"bbE" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"bbF" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_south"
+	},
+/area/research_outpost/toxins)
+"bbG" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/networked/storage/bomb_tester,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bbH" = (
+/obj/machinery/light/flock{
+	dir = 1;
+	pixel_y = 9
+	},
+/turf/simulated/floor/shuttlebay/flock{
+	dir = 5
+	},
+/area/flock_trader)
+"bbK" = (
+/obj/table/round/auto,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
+"bbM" = (
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/research_outpost)
+"bbN" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"bbP" = (
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bbQ" = (
+/obj/machinery/atmospherics/valve,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bca" = (
+/obj/machinery/light_switch/auto,
+/obj/iv_stand,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"bcb" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	dir = 4;
+	frequency = 1229
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcd" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/turf/simulated/floor/engine/vacuum{
+	dir = 1;
+	icon_state = "engine_caution_corners"
+	},
+/area/research_outpost/toxins)
+"bce" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/turf/simulated/floor/engine/vacuum{
+	dir = 1;
+	icon_state = "engine_caution_corners"
+	},
+/area/research_outpost/toxins)
+"bcg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
+"bci" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"bck" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber One Inlet";
+	on = 1;
+	target_pressure = 500
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
+"bcl" = (
+/obj/machinery/vehicle/tank/car/yellow,
+/turf/space/fluid,
+/area/space)
+"bcn" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 0;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber Two Outlet";
+	on = 1;
+	target_pressure = 250
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/toxins)
+"bco" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcp" = (
+/obj/machinery/atmospherics/valve,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/door_control{
+	id = "tox_hs_two";
+	name = "Chamber Two Heat Shield";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/machinery/door_control{
+	id = "tox_hs_one";
+	name = "Chamber One Heat Shield";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcq" = (
+/obj/decal/fakeobjects/flock/antenna{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/flock_trader)
+"bcr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/obj/machinery/meter,
+/obj/machinery/light/small/floor/greenish,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcs" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bct" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcu" = (
+/obj/machinery/atmospherics/valve,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcw" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1;
+	name = "Mixing Port"
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcx" = (
+/obj/decal/fakeobjects/flock/antenna/end{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall/flock,
+/area/flock_trader)
+"bcB" = (
+/turf/space/fluid,
+/turf/simulated/shuttle/wall/cockpit/flock{
+	dir = 8
+	},
+/area/space)
+"bcC" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcD" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bcF" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcG" = (
@@ -23044,79 +22883,37 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"bcJ" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/light/incandescent/netural,
-/obj/machinery/networked/storage/bomb_tester,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "bcL" = (
 /turf/simulated/floor,
 /area/research_outpost)
-"bcM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
 "bcN" = (
-/obj/machinery/light/incandescent/netural,
+/obj/machinery/vending/cola/red,
 /turf/simulated/floor,
 /area/research_outpost)
-"bcP" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/kitchen/utensil/knife{
-	pixel_x = -3
-	},
-/obj/item/kitchen/utensil/fork,
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = 3
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "bcQ" = (
 /obj/machinery/door/feather/friendly{
 	dir = 4
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"bcR" = (
-/obj/machinery/door_control{
-	id = "test_chamber";
-	name = "Test Chamber Blast Door Control";
-	pixel_y = -24
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "bcS" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bcT" = (
-/obj/machinery/light_switch/auto,
-/obj/iv_stand,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"bcU" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/computer/pathology{
+	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "bcV" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "bcW" = (
-/obj/machinery/atmospherics/portables_connector,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "bcX" = (
 /obj/machinery/bot/duckbot,
@@ -23153,51 +22950,32 @@
 /turf/space/fluid,
 /area/space)
 "bdf" = (
-/obj/machinery/atmospherics/valve,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/toxins)
 "bdi" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/stool/chair/office/blue{
-	dir = 8
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/research_outpost/toxins)
 "bdl" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bdm" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1;
-	name = "Mixing Port"
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bdn" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bdo" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 5
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bdp" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bdq" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/carpet/arcade/half,
@@ -23221,32 +22999,27 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bdv" = (
-/obj/table/reinforced,
-/obj/item/reagent_containers/food/snacks/cookie{
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/snacks/cookie,
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 6;
-	pixel_y = 3
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
 	},
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "bdw" = (
-/obj/table/reinforced,
-/obj/machinery/computer3/generic/personal,
-/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/research_outpost)
 "bdx" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 4;
-	pixel_y = 14
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
 "bdy" = (
@@ -23276,9 +23049,16 @@
 /turf/space/fluid,
 /area/space)
 "bdC" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bdD" = (
 /turf/simulated/floor/caution/east,
 /area/research_outpost/hangar)
@@ -23312,17 +23092,17 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "bdI" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/disk/data/floppy/read_only/communications,
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/optable,
+/obj/machinery/drainage,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bdJ" = (
-/obj/machinery/vending/snack,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/research_outpost)
 "bdK" = (
@@ -23331,47 +23111,23 @@
 /obj/machinery/light/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"bdL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
-"bdM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/drainage/big,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
 "bdN" = (
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bdO" = (
+/obj/item/device/radio/beacon,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bdP" = (
-/obj/storage/closet/biohazard,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/plating/random,
+/obj/machinery/power/smes{
+	charge = 100000;
+	chargelevel = 4000;
+	output = 2500
+	},
+/turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "bdQ" = (
 /obj/cable{
@@ -23411,15 +23167,32 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bdX" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/plating/random,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
 /area/research_outpost/maint)
 "bdY" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/iv_drip/saline{
+	pixel_x = 6
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/item/handcuffs,
+/obj/item/clothing/glasses/blindfold,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bdZ" = (
@@ -23446,32 +23219,49 @@
 /turf/simulated/floor/black,
 /area/research_outpost)
 "bed" = (
-/obj/item/device/radio/intercom/science,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -3
+	},
+/obj/item/kitchen/utensil/fork,
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 3
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bee" = (
 /obj/reagent_dispensers/fueltank,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "bef" = (
 /obj/reagent_dispensers/foamtank,
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "beg" = (
-/obj/storage/closet/fire,
+/obj/machinery/power/monitor{
+	dir = 8
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "beh" = (
-/obj/submachine/chef_sink/chem_sink{
-	layer = 3;
-	pixel_y = 8
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bei" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/research_outpost)
@@ -23484,17 +23274,11 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bel" = (
-/obj/table/round/auto,
-/obj/item/storage/firstaid/fire{
-	pixel_x = 3;
-	pixel_y = 5
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
 	},
-/obj/item/storage/firstaid/toxin,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
+/turf/simulated/floor/blue,
+/area/research_outpost/toxins)
 "bem" = (
 /obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment{
@@ -33541,26 +33325,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bCs" = (
-/obj/table/round/auto,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
 "bCt" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
 /area/station/bridge/customs)
 "bCu" = (
-/obj/table/round/auto,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "bCv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42412,18 +42193,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/entry)
-"bXZ" = (
-/obj/table/round/auto,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/research_outpost)
 "bYa" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
@@ -42529,13 +42298,22 @@
 	},
 /area/station/ai_monitored/armory)
 "bYr" = (
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/access_spawn/research,
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "bYs" = (
-/obj/table/round/auto,
-/obj/item/hand_labeler,
-/turf/simulated/floor,
-/area/research_outpost)
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/toxins)
 "bYt" = (
 /obj/item/reagent_containers/food/snacks/donut/robust{
 	pixel_y = 4;
@@ -42597,21 +42375,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/maintenance/south)
-"bYD" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargelevel = 4000;
-	output = 2500
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
 "bYE" = (
 /obj/grille/steel,
 /turf/space/fluid,
@@ -42735,18 +42498,8 @@
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/ghostdrone_factory)
 "bZd" = (
-/obj/table/round/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/stamp{
-	pixel_y = 14
-	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/research_outpost)
@@ -42791,18 +42544,8 @@
 /turf/simulated/floor/damaged4,
 /area/ghostdrone_factory)
 "bZn" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost/maint)
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "bZo" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42905,16 +42648,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/chamber)
 "bZF" = (
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 1;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
 	},
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "bZG" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -46915,18 +46656,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "clN" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/research,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "clO" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -47068,9 +46802,10 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "csr" = (
-/obj/machinery/vending/cola/red,
+/obj/machinery/light/incandescent/netural,
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/hangar)
 "csG" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -47083,24 +46818,32 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cuy" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/device/reagentscanner,
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"cHP" = (
-/obj/machinery/door/airlock/pyro/alt,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/synthomatic,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"cxH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"cGD" = (
+/obj/decal/poster{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/research_outpost/hangar)
+"cHP" = (
+/turf/simulated/floor/caution/south,
+/area/research_outpost/hangar)
+"cKm" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -47152,6 +46895,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
+"duw" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -47163,15 +46913,10 @@
 /area/station/hangar/sec)
 "dBL" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "dBP" = (
 /obj/item/clothing/under/misc/mime/alt,
 /turf/simulated/floor/plating/random,
@@ -47190,6 +46935,17 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
+"dRe" = (
+/obj/shrub{
+	desc = "You suspect that it's just an Earth fern.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/research_outpost)
 "dWG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47221,7 +46977,14 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "eXS" = (
-/obj/machinery/drainage/big,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "fcK" = (
@@ -47232,6 +46995,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"fhb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "fkH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47241,10 +47010,23 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
+"fsJ" = (
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "fCI" = (
-/obj/machinery/vehicle/tank/car/yellow,
-/turf/space/fluid,
-/area/research_outpost)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "fJg" = (
 /obj/decal/poster/wallsign/poster_beach,
 /turf/simulated/wall/auto/supernorn,
@@ -47262,6 +47044,12 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fTt" = (
+/obj/machinery/incubator{
+	dir = 1
+	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "fVJ" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/arc_electroplater,
@@ -47269,12 +47057,49 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"gaJ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
+"gcE" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/computer3frame,
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
+"ggG" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "ghV" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"gie" = (
+/obj/machinery/autoclave,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "giE" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "mining_podbay"
@@ -47305,6 +47130,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
+"gEE" = (
+/obj/rack,
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/extinguisher,
+/obj/item/screwdriver,
+/obj/item/clothing/mask/gas,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "gGI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -47332,12 +47166,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "gNp" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/research_outpost/hangar)
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "gUK" = (
 /obj/storage/crate/freezer{
 	name = "Freezer"
@@ -47363,14 +47194,18 @@
 	},
 /area/station/hallway/secondary/exit)
 "hkh" = (
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/extinguisher,
-/obj/item/screwdriver,
-/obj/item/clothing/mask/gas,
-/turf/simulated/floor/plating/random,
+/obj/storage/crate/furnacefuel,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/item/raw_material/char,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"hBQ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/pathology)
 "hGt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47386,11 +47221,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "hXO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/obj/machinery/atmospherics/portables_connector,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "ibd" = (
 /obj/item/device/flyswatter,
 /turf/simulated/floor/specialroom/arcade,
@@ -47401,21 +47234,14 @@
 	},
 /area/station/hallway/secondary/exit)
 "iwt" = (
-/obj/machinery/dispenser{
-	o2tanks = 5;
-	pltanks = 15
-	},
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13"
+/obj/cable{
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "ixM" = (
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
@@ -47428,6 +47254,10 @@
 	dir = 10
 	},
 /area/station/crew_quarters/kitchen)
+"iCh" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor,
+/area/research_outpost)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -47479,21 +47309,41 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/caution/east,
 /area/station/maintenance/south)
-"juK" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/sec)
-"jxG" = (
-/obj/cable{
-	icon_state = "1-8"
+"jiM" = (
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"jsw" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
+"juK" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
+"jxG" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cabinet/pathology,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"jzB" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "jCs" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -47530,6 +47380,17 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"jMv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "jPN" = (
 /obj/lattice{
 	dir = 4;
@@ -47546,10 +47407,26 @@
 /area/station/medical/staff)
 "kgN" = (
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/access_spawn/research,
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/green,
 /area/research_outpost/maint)
+"knq" = (
+/obj/table/reinforced,
+/obj/item/reagent_containers/food/snacks/cookie{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -47563,22 +47440,30 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kYa" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "lbK" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "ljO" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"llR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
-"llR" = (
-/obj/landmark/artifact,
-/turf/space/fluid,
-/area/research_outpost)
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"luP" = (
+/obj/machinery/centrifuge,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "lTa" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -47591,6 +47476,24 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"lZa" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"mhq" = (
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/research_outpost/hangar)
 "mip" = (
 /obj/item/bee_egg_carton,
 /turf/simulated/floor,
@@ -47628,12 +47531,28 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"mIT" = (
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"mSm" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor,
+/area/research_outpost)
 "mSU" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"mVv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "mYN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47646,13 +47565,25 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/research_outpost)
-"ncG" = (
-/obj/item/device/radio/beacon,
-/obj/cable{
-	icon_state = "1-2"
+"ndB" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor,
+/area/research_outpost)
+"ndI" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = 9
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "nej" = (
 /obj/machinery/light/incandescent/blueish,
 /obj/item/pen/crayon/white,
@@ -47670,6 +47601,12 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"nvJ" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "nAo" = (
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -47692,10 +47629,12 @@
 /area/station/crew_quarters/catering)
 "nBR" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/shuttlebay,
-/area/research_outpost/hangar)
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -47725,6 +47664,11 @@
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"nSl" = (
+/obj/table/round/auto,
+/obj/item/hand_labeler,
+/turf/simulated/floor,
+/area/research_outpost)
 "nYa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47759,7 +47703,7 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "oqx" = (
-/obj/reagent_dispensers/watertank,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "osc" = (
@@ -47768,24 +47712,17 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "oDh" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/iv_drip/saline{
-	pixel_x = 6
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
 	},
-/obj/item/handcuffs,
-/obj/item/clothing/glasses/blindfold,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/item/reagent_containers/syringe{
-	pixel_y = -4
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"oFy" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/research_outpost)
 "oOi" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -47800,6 +47737,18 @@
 /obj/grille/steel,
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
+"oVm" = (
+/obj/table/round/auto,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "oWv" = (
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating/airless,
@@ -47810,6 +47759,28 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"phi" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/device/reagentscanner,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
+"prZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "pvB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47817,9 +47788,28 @@
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"pFS" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 4
+	},
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "pHw" = (
-/obj/machinery/light/incandescent/netural,
-/obj/machinery/recharge_station,
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_y = 14
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "pIo" = (
@@ -47922,14 +47912,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"qEu" = (
-/obj/machinery/optable,
-/obj/machinery/drainage,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "qEN" = (
 /obj/item/crowbar,
 /obj/cable{
@@ -47951,6 +47933,16 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"qXh" = (
+/obj/machinery/pathogen_manipulator,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"ret" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/microscope,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "rqc" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -47959,9 +47951,25 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "rwx" = (
-/obj/machinery/vending/standard,
-/turf/simulated/floor/plating/random,
-/area/research_outpost/maint)
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"rxc" = (
+/obj/table/round/auto,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/stamp{
+	pixel_y = 14
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "rBz" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -47970,15 +47978,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "sdi" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor,
-/area/research_outpost)
+/area/research_outpost/toxins)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47995,11 +48002,24 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"sRT" = (
+/obj/item/device/radio/intercom/science,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "sRW" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"sVY" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
 "tbh" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -48024,13 +48044,15 @@
 /area/research_outpost/hangar)
 "tDZ" = (
 /obj/cable{
+	d1 = 4;
+	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/research_outpost/toxins)
+/area/research_outpost)
 "tGH" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -48041,14 +48063,24 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
+"tMA" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/microscope,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "tRf" = (
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
-/obj/storage/closet/welding_supply,
-/turf/simulated/floor/caution/east,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/chamber)
+"tWw" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/research_outpost/hangar)
 "tWV" = (
 /obj/machinery/camera{
@@ -48064,6 +48096,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uah" = (
+/obj/table/round/auto,
+/turf/simulated/floor,
+/area/research_outpost)
 "ubH" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/hydro,
@@ -48072,20 +48108,30 @@
 /area/station/hydroponics/bay)
 "ueE" = (
 /obj/landmark/artifact,
-/obj/decal/poster{
-	pixel_y = 32
-	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "umv" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
+/area/research_outpost)
+"uyg" = (
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/storage/closet/fire,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
+"uzL" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
 /area/research_outpost)
 "uAB" = (
 /obj/railing/orange/reinforced,
@@ -48100,12 +48146,25 @@
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "uEG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
 /turf/space/fluid,
-/area/research_outpost)
+/area/space)
 "uGR" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor,
-/area/research_outpost)
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 8
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "uHb" = (
 /obj/cable{
 	d1 = 1;
@@ -48201,15 +48260,30 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
+"vNP" = (
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/maint)
 "wfi" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
-/obj/access_spawn/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "wis" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
@@ -48235,6 +48309,32 @@
 /obj/item/mop,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"wGG" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost)
+"wJK" = (
+/obj/table/round/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/toxin,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/research_outpost)
+"xhN" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/storage/closet/emergency,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "xmS" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/door_control{
@@ -48249,6 +48349,14 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"xFh" = (
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
+"xIA" = (
+/obj/machinery/vending/pathology,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/green,
+/area/research_outpost/pathology)
 "xOo" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -129046,10 +129154,10 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 bdd
+bdr
+bdr
+bdr
 bdr
 bdr
 bdr
@@ -129344,20 +129452,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 bbg
 bbg
 bbg
 bbg
-bcd
+uzL
 aSP
 aSP
 bbg
 bbg
 bbg
-bbg
+bds
+bds
+bds
+bds
 bds
 ueE
 aRC
@@ -129645,21 +129753,21 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 bbg
 bbg
+mSm
+iCh
+bcL
 bdJ
-afb
+umv
 bcL
 bei
 bcN
-bcL
-sdi
+ndB
+bds
 csr
-uGR
-bbg
+aRD
+gEE
 pHw
 aRD
 aRD
@@ -129947,22 +130055,22 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 bbg
-bbD
+dRe
 bcL
 bcL
 bcL
-bce
-bcm
-bcm
+sVY
+wGG
+wGG
 bcL
 bcL
-bcN
-bbg
-tRf
+umv
+bds
+uyg
+aRD
+mhq
+bdD
 bdD
 bdS
 bdZ
@@ -130236,35 +130344,35 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 aeB
 aqn
-afh
-afh
+bcV
+bcV
 aSF
 aSF
 aSF
-bbF
-aSF
-aSF
-aSF
-afh
-afh
-bbg
-bdv
-bcL
-bcL
-bcL
-bel
-bCu
 bYs
+aSF
+aSF
+aSF
+bcV
+bcV
+bcV
+knq
 bcL
 bcL
 bcL
-bbg
-gNp
+wJK
+uah
+nSl
+bcL
+bcL
+bcL
+bds
+xhN
+aRD
+cHP
+bdU
 bdU
 bdU
 bdU
@@ -130536,12 +130644,12 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-afh
-afh
-amT
+bcV
+bcV
+aRQ
+agt
+bck
+awB
 aun
 aAN
 aLc
@@ -130551,22 +130659,22 @@ bbt
 bbG
 bcb
 bcC
-bcJ
+bcV
 bbh
 bbl
-bbg
+bZd
 bdw
 bbK
-bcM
-bcM
-bCs
-bXZ
+oVm
+rxc
 bZd
-bcM
-bcM
-bcM
+bZd
+bZd
+tWw
+nvJ
+aRD
 cHP
-nBR
+bdU
 bdU
 bdU
 bdU
@@ -130838,36 +130946,36 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+agn
+avf
+baY
 aeI
 afy
 apk
-aus
-aCV
-aLh
 aTq
 bbf
 bbf
 aTq
+clN
+dBL
+fCI
 bco
 bcD
-bcU
-bdi
-bbm
-bbg
+bcV
+aRh
+tDZ
 bcL
+bdx
+bbM
+bbM
 bbM
 bcL
 bcL
-bck
-bck
-bZF
 bcL
-bcL
-bcL
-bbg
+bds
+cGD
+aRD
+cHP
 gyC
 bdF
 bdU
@@ -131140,36 +131248,36 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aeI
+agn
+azj
+bbu
+bbF
 afR
 aqx
-avf
+aXb
 aEa
 aeq
 aXb
 bbj
-bbu
-aXb
-bcp
 aTq
 aTq
 aTq
+iwt
+sdi
+bZd
 tDZ
-bbv
-bcM
-dBL
+bcL
+bdx
 bcL
 bcL
 bcL
 bcL
-bbM
 bcL
 bcL
-bcL
-bbg
+bds
+kYa
+jzB
+bds
 bds
 bds
 bdV
@@ -131442,38 +131550,38 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aeI
 agn
+aCV
+bbv
+bcd
+aeM
 ase
 avk
-aeM
+bdi
 aQb
-baW
+bZF
 baX
-baY
-bbO
-bcs
 aTq
-bbd
+bbP
+bcs
+llR
+bcV
 afT
-afX
-bbg
 bdx
-bbM
+cxH
+bdx
+bcL
 umv
 bcL
 bcL
-bcN
-bbM
 bcL
-bcL
-bcN
+umv
+bds
+bds
+bds
+bds
 bbg
-uEG
-bbg
+ksg
 ksg
 bec
 mZL
@@ -131741,9 +131849,6 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
 ael
 aem
 aem
@@ -131752,31 +131857,34 @@ aeM
 aeM
 aeM
 aeM
+bcp
+bcr
+bdv
 aRN
 baZ
 bbk
-bbx
-bbP
-bbn
 aTq
-bbd
-afT
+bbP
+bcs
+nBR
+bcV
+bZE
 bbo
-bdt
-bdt
+bbN
+lZa
+bbN
 bbN
 bZE
-bZE
-bcg
+hBQ
+hBQ
+hBQ
+hBQ
 bcl
-clN
-bcl
-bcl
-bZE
-bZE
-llR
+aqn
+aeB
 bbg
-aRh
+oFy
+ksg
 fkH
 aSP
 gKC
@@ -132046,38 +132154,38 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+aus
+aGs
+bbx
 afw
 agt
 asg
 awB
-aun
+bel
 aRO
-aLc
+bZF
 bbq
-bby
-bbO
-bct
 aTq
+gNp
+bct
+oDh
 bcV
 bdl
-bbp
-bdt
+beh
+beh
 bdC
-bdL
-bZE
+bZn
+bZn
 bdY
+hBQ
 aRe
-aRe
-jxG
-bYr
-bYr
-oDh
-bZE
-fCI
+xFh
+hBQ
+hBQ
+hBQ
+hBQ
 bbg
+ksg
 ksg
 bec
 mZL
@@ -132348,36 +132456,36 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-afw
+aus
+aLh
+bbu
+bbF
 aiV
 aqx
-avf
+aXb
 aGh
-aeq
+bCu
 aXb
 bbr
 bbB
-aXb
+hXO
 bcu
 bcE
 bcW
-bcw
-bdn
-bbz
-afa
-bdM
-bZE
 bcS
-bYr
-bYr
-ljO
-bYr
-bYr
+bZn
+bZn
+bbE
+bZn
+bZn
+phi
+hBQ
+jxG
+xFh
+ndI
+tMA
 cuy
-bZE
+hBQ
 bdt
 bdt
 sBY
@@ -132650,39 +132758,39 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-afw
+aus
+aRf
+bby
+bce
 amM
 asm
-azj
-aGs
-aRQ
 aTq
 bbf
 bbf
 aTq
 aTq
 bbf
-bcW
-bcw
-bdo
-aDx
-bbE
-afC
-bZE
-bed
-bYr
-bYr
-ljO
-bYr
-bYr
-bcP
-bZE
+hXO
+bcu
 rwx
-bdN
-bdN
+bdf
+sRT
+bZn
+bZn
+bbE
+bZn
+bZn
+bed
+hBQ
+xFh
+xFh
+xFh
+mIT
+xFh
+ljO
+bdt
+ggG
+gaJ
 bee
 bdt
 aqn
@@ -132952,39 +133060,39 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-afh
-afh
-asv
+bcV
+bcV
+bbD
+bcg
+bcn
+avk
 azl
 aJj
 baW
 bba
-bbs
+bcu
 bbC
 bbQ
 bcw
 bcF
 bdf
 bdm
-bdp
-aDx
+bZn
+bZn
 bdI
 bdO
-bZE
+beh
 beh
 bYr
-bYr
-qEu
-ncG
-aRe
-aRe
 wfi
+wfi
+wfi
+wfi
+wfi
+jMv
 kgN
-bdN
-bdN
+fhb
+prZ
 bef
 bdt
 aqn
@@ -133258,35 +133366,35 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-afh
-afh
+bcV
+bcV
 aSF
 aSF
 aSF
-bbF
+bYs
 aSF
 aSF
 aSF
-afh
-afh
-aDx
-anK
+bcV
+bcV
+bdf
+fsJ
 bZn
-bZE
+bZn
+bZn
+bZn
+bZn
 azm
-bYr
-bYr
-bYr
-bYr
-bYr
-bcR
-bZE
-hXO
+hBQ
+fTt
+xFh
+xFh
+xFh
+xFh
+duw
+bdt
 bdN
-bdN
+mVv
 oqx
 bdt
 aqn
@@ -133571,23 +133679,23 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aDx
-bYD
-atg
-bZE
+tRf
 bcS
-bYr
-bYr
-bYr
-bYr
-bYr
+bZn
+bZn
+bZn
+bZn
+bZn
 bcS
-bZE
-aRf
-bdN
+hBQ
+gie
+xFh
+xFh
+xFh
+jiM
+xFh
+bdt
+gcE
 eXS
 hkh
 bdt
@@ -133873,25 +133981,25 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aDx
-bdt
+tRf
+bZE
+bZn
+bZn
+cKm
 asN
-bZE
+bZn
 bca
-bYr
-bYr
-bYr
-bYr
-bYr
+hBQ
+xIA
+pFS
+luP
+qXh
 bcT
-bZE
-iwt
-bdN
-bdN
-bdN
+ret
+bdt
+vNP
+jsw
+gaJ
 bdt
 aqn
 aqn
@@ -134175,21 +134283,21 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+uEG
+bZE
+bZE
 auN
-bdt
-bdt
+auN
+auN
 bZE
 bZE
-bcn
-bcn
-bcn
-bcn
-bcn
-bZE
-bZE
+hBQ
+hBQ
+hBQ
+hBQ
+hBQ
+hBQ
+hBQ
 bdt
 bdP
 bdX
@@ -134477,10 +134585,10 @@ aqn
 aqn
 aqn
 aqn
+uEG
 aqn
 aqn
 aqn
-auN
 aqn
 aqn
 aqn
@@ -134779,10 +134887,10 @@ aqn
 aqn
 aqn
 aqn
+uGR
 aqn
 aqn
 aqn
-bcr
 aqn
 aqn
 aqn

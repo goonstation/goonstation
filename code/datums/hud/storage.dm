@@ -128,13 +128,13 @@
 
 		if (istype(usr,/mob/living/carbon/human))
 			if (usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
-				x = 1 + master.slots
+				x = 11 - round(master.slots / 2)
 				y = 3
 				sx = master.slots + 1
 				sy = 1
 
 				if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-					x = 7
+					x = 8
 					y = 8
 					sx = (master.slots + 1) / 2
 					sy = 2

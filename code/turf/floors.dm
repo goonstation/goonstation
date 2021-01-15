@@ -1158,12 +1158,6 @@
 		if (T.amount >= 1)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
 		return
 
 	if(prob(75 - metal * 25))
@@ -1457,11 +1451,6 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
-		if (T.amount < 1)
-			if(!issilicon(user))
-				user.u_equip(T)
-				qdel(T)
-			return
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)

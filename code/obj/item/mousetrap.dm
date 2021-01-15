@@ -301,7 +301,7 @@
 			var/datum/thrown_thing/thr = new
 			thr.user = usr // ew gross
 			thr.thing = src.pie
-			src.pie.throw_impact(target)
+			src.pie.throw_impact(target, thr)
 			src.pie = null
 
 		return

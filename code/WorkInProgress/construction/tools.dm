@@ -275,11 +275,11 @@
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -294,7 +294,7 @@
 		else if (DM.material_flags & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -303,7 +303,7 @@
 		else if (DM.material_flags & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -428,7 +428,7 @@
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (MT.mat_id == DM.mat_id)
+				if (isSameMaterial(MT, DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10

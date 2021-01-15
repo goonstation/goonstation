@@ -85,6 +85,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_murraysay,
 		/client/proc/cmd_admin_hssay,
 		/client/proc/cmd_admin_bradsay,
+		/client/proc/cmd_admin_beepsay,
 		/datum/admins/proc/restart,
 		/datum/admins/proc/toggleenter,
 		/client/proc/respawn_self,
@@ -299,6 +300,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_debug_del_all,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
+		/client/proc/cmd_admin_omnipresence,
 		/client/proc/cmd_admin_get_mobject,
 		/client/proc/cmd_admin_get_mobject_loc,
 		/client/proc/Getmob,
@@ -1474,7 +1476,7 @@ var/list/fun_images = list()
 
 	for (var/client/cl as() in clients)
 		var/mob/living/L = cl.mob
-		if(!istype(L))
+		if(!istype(L) || isdead(L))
 			continue
 		var/obj/Pet = new pet_path(get_turf(L))
 		Pet.name = "[L]'s pet [Pet.name]"
