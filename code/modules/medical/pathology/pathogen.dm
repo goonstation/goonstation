@@ -963,7 +963,7 @@ datum/pathogen
 			if (src.curable_by_suppression < 0)
 				src.curable_by_suppression = 0
 		else
-			src.curable_by_suppression = 0
+			src.curable_by_suppression = 10
 
 		src.stages = src.body_type.stages
 
