@@ -417,6 +417,8 @@
 			break
 
 	attack_hand(var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
@@ -1115,6 +1117,8 @@
 
 		if (comp)
 			comp.gui.sendToSubscribers({"{"dnaDetails":[src.comp.slots2json()]}"}, "setUIState")
+			comp.sendAnalysisData()
+
 
 
 #undef PATHOGEN_MANIPULATOR_STATE_MAIN
@@ -1238,6 +1242,8 @@
 
 
 	attack_hand(var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
@@ -1257,6 +1263,9 @@
 		return 0
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if(status & (BROKEN|NOPOWER))
+			boutput(usr,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
 			var/done = 0
 			for (var/i = 1, i <= 5, i++)
@@ -1685,7 +1694,7 @@
 				icon_state = "autoclave"
 
 	attack_hand(var/mob/user as mob)
-		if (machine_state)
+		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
 			santime = initial(santime)
@@ -1723,9 +1732,9 @@
 
 /obj/machinery/incubator
 	name = "Incubator"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "heater"
-	var/static/image/icon_beaker = image('icons/obj/pathology.dmi', "incubator")
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "incubator"
+	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1
