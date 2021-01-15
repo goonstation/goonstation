@@ -12,7 +12,7 @@
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"

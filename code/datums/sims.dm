@@ -160,17 +160,21 @@
 		icon_state = "hunger"
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
 		depletion_rate = 0.078
-		var/starve_message = "<span class='alert'>You are starving to death!</span>"
+		var/debuff = "hungry"
+		var/debuff_threshold = 25
+		var/debuffed = FALSE
 
-		var/starving = 0
+		onIncrease()
+			if (value > debuff_threshold && debuffed)
+				showOwner("<span class='notice'>You feel considerably less [debuff]!</span>")
+				holder.owner.delStatus(debuff)
+				debuffed = FALSE
 
-		onDeplete()
-			if (!starving)
-				showOwner(starve_message)
-				starving++
-
-		onFill()
-			starving = 0
+		onDecrease()
+			if (value < debuff_threshold && !debuffed)
+				showOwner("<span class='alert'>You feel considerably [debuff]!</span>")
+				holder.owner.setStatus(debuff, duration = null)
+				debuffed = TRUE
 
 		getWarningMessage()
 			if (value < 25)
@@ -182,22 +186,12 @@
 			else
 				return null
 
-		/*onLife()
-			if (starving && value < 25)
-				starving++
-				if (!(starving % 10))
-					showOwner(starve_message)
-				if (starving > 30 && prob(10))
-					holder.owner.death()
-			else if (starving && value > 50)
-				starving--*/
-
 		thirst
 			name = "Thirst"
 			icon_state = "thirst"
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
-			starve_message = "<span class='alert'>You are dying of thirst!</span>"
 			depletion_rate = 0.0909
+			debuff = "thirsty"
 
 			getWarningMessage()
 				if (value < 25)
