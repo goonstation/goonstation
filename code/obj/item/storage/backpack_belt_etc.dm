@@ -196,7 +196,7 @@
 			return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
