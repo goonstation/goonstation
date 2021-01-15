@@ -279,7 +279,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
-				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,1) // awoo
+				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,0) // awoo
 
 /datum/bioEffect/detox
 	name = "Natural Anti-Toxins"
