@@ -4,13 +4,13 @@
 /// Enables debug overlay which counts all atmos operations per turf (viewable through info-overlays)
 #define ATMOS_TILE_STATS_TRACKING
 /// Puts a list of turfs which get processed a lot into `global.hotly_processed_turf` for debugging
-#define KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS
+#define KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS 1
 
 #if defined(ATMOS_TILE_STATS_TRACKING) && defined(KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
 	#define ATMOS_TILE_OPERATION_DEBUG(turf) do { \
 		turf?.atmos_operations++; \
 		turf?.max_atmos_operations = max(turf?.max_atmos_operations, turf?.atmos_operations); \
-		if(turf?.atmos_operations > air_master.current_cycle * 2) hotly_processed_turfs |= turf ;\
+		if(turf?.atmos_operations > air_master.current_cycle * KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS) hotly_processed_turfs |= turf ;\
 		else hotly_processed_turfs -= turf ;\
 		} while(0)
 #elif defined(ATMOS_TILE_STATS_TRACKING)
