@@ -248,13 +248,11 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #333; font-family: Verrdana, sans-serif; }
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: black; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
+.motd {color: #333; font-family: Verdana, sans-serif; }
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #000; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
 .motd a, .motd a:link, .motd a:visited {color: #00f;}
 .motd a:active, .motd a:hover {color: #007;}
-.motd div {
-	margin: 0 0.5em;
-}
+.motd div { margin: 0 0.5em }
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 
@@ -359,15 +357,16 @@ body.theme-dark .mentorooc {color: #a653ff;}
 body.theme-dark .mentorlooc {color: #be81ff;}
 body.theme-dark .medal {color: #caca20;}
 body.theme-dark .motd {color: rgb(190, 190, 190);}
-body.theme-dark .motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: rgb(255, 255, 255);}
-body.theme-dark .motd a, .motd a:link, .motd a:visited {color: rgb(100, 100, 255);}
-body.theme-dark .motd a:active, .motd a:hover {color: rgb(48, 48, 223);}
+body.theme-dark .motd h1, body.theme-dark .motd h2, body.theme-dark .motd h3, body.theme-dark .motd h4, body.theme-dark .motd h5, body.theme-dark .motd h6 {color: rgb(255, 255, 255);}
+body.theme-dark .motd a, body.theme-dark .motd a:link, body.theme-dark .motd a:visited {color: rgb(100, 100, 255);}
+body.theme-dark .motd a:active, body.theme-dark .motd a:hover {color: rgb(48, 48, 223);}
 body.theme-dark .internal.boldnshit {color: rgb(95, 95, 253);}
 body.theme-dark .green {color: #3fcc3f;}
 body.theme-dark .radio {color: #3fcc3f;}
 body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
 body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
 body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
+body.theme-dark  .popup {background-color: rgb(48, 48, 48);}
 body.theme-dark a {color: #6464ff;}
 body.theme-dark a:visited {color: #ae6fff;}
 body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}

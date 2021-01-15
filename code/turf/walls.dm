@@ -115,8 +115,8 @@
 			user.show_text("You were interrupted!", "red")
 			return
 
-		if (!parts) //ZeWaka: Fix for null.fixture_type
-			return
+	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
+		return
 
 		// if they didn't move, put it up
 		boutput(user, "You attach the light fixture to [src].")

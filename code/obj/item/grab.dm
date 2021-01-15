@@ -597,8 +597,7 @@
 	.= 0
 	if(!chokehold && istype(target) && istype(user))
 		src.chokehold = user.grab_other(target, hide_attack, src)
-		if(chokehold)
-			chokehold.post_item_setup()
+		chokehold?.post_item_setup()
 		.= 1
 
 /obj/item/proc/drop_grab()
@@ -831,6 +830,10 @@
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
 							damage += H.shoes.kick_bonus
+						else if (H.limbs.r_leg)
+							damage += H.limbs.r_leg.limb_hit_bonus
+						else if (H.limbs.l_leg)
+							damage += H.limbs.l_leg.limb_hit_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)

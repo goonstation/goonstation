@@ -47,6 +47,15 @@ turf
 	var/tmp/pressure_direction = 0
 	var/tmp/obj/hotspot/active_hotspot
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/tmp/process_cell_operations = 0
+	var/static/max_process_cell_operations = 0
+#endif
+#ifdef ATMOS_TILE_STATS_TRACKING
+	var/tmp/atmos_operations = 0
+	var/static/max_atmos_operations = 0
+#endif ATMOS_TILE_STATS_TRACKING
+
 	proc
 		high_pressure_movements()
 			if( !loc:sanctuary )
@@ -83,8 +92,17 @@ turf
 turf
 	simulated
 
+		var/static/list/mutable_appearance/gas_overlays = list(
+				#ifdef ALPHA_GAS_OVERLAYS
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#else
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#endif
+			)
+
 		var/tmp/dist_to_space = null
-		var/tmp/current_graphic = null
 
 		var/tmp
 			datum/gas_mixture/air
@@ -124,40 +142,18 @@ turf
 				if (disposed)
 					return
 
-				//overlays.len = 0
-
-				var/list/graphics = params2list(model.graphic)//splittext(model.graphic, ";")
-
-				if(!graphics || !graphics.len)
-					if (gas_icon_overlay)
-						pool(gas_icon_overlay)
-						gas_icon_overlay = null
-					return
-
-				var/new_visuals_state = 0
-
-				for(var/str in graphics)
-					switch(str)
-						if("plasma")
-							new_visuals_state |= 1
-						if("n2o")
-							new_visuals_state |= 2
-						else
-							continue
-
-				if (new_visuals_state)
-					if (new_visuals_state != visuals_state)
+				if (model.graphic)
+					if (model.graphic != visuals_state)
 						if(!gas_icon_overlay)
 							gas_icon_overlay = unpool(/obj/overlay/tile_gas_effect)
 							gas_icon_overlay.set_loc(src)
 						else
 							gas_icon_overlay.overlays.len = 0
 
-						visuals_state = new_visuals_state
-						if (visuals_state & 1)
-							gas_icon_overlay.overlays.Add(plmaster)
-						if (visuals_state & 2)
-							gas_icon_overlay.overlays.Add(slmaster)
+						visuals_state = model.graphic
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
+						gas_icon_overlay.dir = pick(cardinal)
 				else
 					if (gas_icon_overlay)
 						pool(gas_icon_overlay)
@@ -198,12 +194,17 @@ turf
 				if (active_hotspot)
 					pool(active_hotspot)
 					active_hotspot = null
+			if(being_superconductive)
+				air_master.active_super_conductivity.Remove(src)
 			if(blocks_air)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
 					if(air_master && istype(tile) && !tile.blocks_air)
 						air_master.tiles_to_update |= tile
 			pool(air)
+			if (gas_icon_overlay)
+				pool(gas_icon_overlay)
+				gas_icon_overlay = null
 			air = null
 			parent = null
 			..()
@@ -322,6 +323,11 @@ turf
 				processing = 0
 
 		process_cell()
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+			src.process_cell_operations++
+			max_process_cell_operations = max(max_process_cell_operations, src.process_cell_operations)
+#endif
+			ATMOS_TILE_OPERATION_DEBUG(src)
 			var/list/turf/simulated/possible_fire_spreads
 			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
@@ -530,7 +536,7 @@ turf
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
 			var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
-			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && src.heat_capacity)
 
 				var/heat = conduction_coefficient*delta_temperature* \
 					(src.heat_capacity*sharer.heat_capacity/(src.heat_capacity+sharer.heat_capacity))

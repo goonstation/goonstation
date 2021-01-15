@@ -41,26 +41,25 @@
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
-				return 1
+				return
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
 			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
 			if (!master)
-				return 1
+				return
 
 			master.path = thePath
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
-				if(master.task)
-					master.task.task_input("path_error")
+				master.task?.task_input("path_error")
 
 				master.moving = 0
 				//dispose()
 				master.mover = null
 				src.master = null
-				return 1
+				return
 
 			while(length(master?.path) && target_turf && master.moving)
 //				boutput(world, "[compare_movepath] : [current_movepath]")
@@ -68,8 +67,7 @@
 				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
-					if(master.task)
-						master.task.task_input("path_blocked")
+					master.task?.task_input("path_blocked")
 					break
 				step_to(master, master.path[1])
 				if(master.loc != master.path[1])
@@ -84,7 +82,6 @@
 				master.mover = null
 				src.master = null
 			//dispose()
-			return 0
 
 		return 0
 
@@ -1228,7 +1225,10 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			budgun.shoot(target_turf, my_turf, src)
+			if(IN_RANGE(target_turf, my_turf, 1))
+				budgun.shoot_point_blank(target, my_turf)
+			else
+				budgun.shoot(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1254,8 +1254,7 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
-			if(src.task)
-				src.task.task_input("hugged")
+			src.task?.task_input("hugged")
 			return
 
 		if(get_dist(user, src) > 1)
@@ -1314,8 +1313,7 @@
 				speak("SO SAYETH THE WIZARD!")
 				return
 
-		if(src.task)
-			src.task.receive_signal(signal, is_beacon)
+		src.task?.receive_signal(signal, is_beacon)
 
 		return
 
@@ -1477,8 +1475,7 @@
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
 				new /obj/item/parts/robot_parts/arm/left(T)
-			if(src.hat)
-				src.hat.set_loc(T)
+			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
 			var/obj/item/guardbot_core/core = new /obj/item/guardbot_core(T)
@@ -2994,6 +2991,9 @@
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
+						if(istype(C, /mob/living/carbon/human/npc/monkey))
+							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+							npcmonkey.pursuited_by(src)
 						SPAWN_DBG(0)
 							master.speak("Level [threat] infraction alert!")
 							master.visible_message("<b>[master]</b> points at [C.name]!")
@@ -4529,11 +4529,9 @@
 		return
 
 	disposing()
-		if(src.current)
-			src.current.wakeup()
+		src.current?.wakeup()
 		current = null
-		if(radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
+		radio_controller?.remove_object(src, "[frequency]")
 		radio_connection = null
 		if (link)
 			link.master = null
@@ -4776,8 +4774,7 @@
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)
-		if(src.hat)
-			src.hat.set_loc(T)
+		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
 		core.created_name = src.name

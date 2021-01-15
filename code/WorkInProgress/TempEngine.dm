@@ -44,6 +44,7 @@
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 	var/repairstate = 0
 	var/repair_desc = ""
+	var/variant_b_active = FALSE
 
 	anchored = 1.0
 	density = 1
@@ -65,7 +66,9 @@
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
 		src.serial_num += src.side==1? "L":"R"
-		if(variant_b) src.serial_num += "-[variant_b]"
+		if(variant_b)
+			src.serial_num += "-[variant_b]"
+			variant_b_active = TRUE
 
 	disposing()
 		switch (side)
@@ -345,7 +348,8 @@
 			src.UpdateOverlays(image(open_icon), "open")
 		else
 			src.UpdateOverlays(null, "open")
-		if(src.generator.variant_b)
+
+		if(src.variant_b_active)
 			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
 		else
 			UpdateOverlays(null, "variant")
@@ -448,7 +452,7 @@
 
 datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
-	value_units = "Pa"
+	value_units = "kPa"
 	min_value = 0
 	max_value = 1e5
 	incr_sm = 10
@@ -940,34 +944,42 @@ datum/pump_ui/circulator_ui
 		ui.open()
 
 /obj/machinery/power/generatorTemp/ui_data(mob/user)
-	var/list/data = list()
-	data["output"] = src.lastgen
-	data["history"] = src.history
+	. = list(
+		"output" = src.lastgen,
+		"history" = src.history,
+	)
 	if(src.circ1)
-		data["hotCircStatus"] = src.circ1
-		data["hotInletTemp"] = src.circ1.air1.temperature
-		data["hotOutletTemp"] = src.circ1.air2.temperature
-		data["hotInletPres"] = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS
-		data["hotOutletPres"] = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS
+		. += list(
+			"hotCircStatus" = src.circ1,
+			"hotInletTemp" = src.circ1.air1.temperature,
+			"hotOutletTemp" = src.circ1.air2.temperature,
+			"hotInletPres" = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS,
+			"hotOutletPres" = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS,
+		)
 	else
-		data["hotCircStatus"] = null
-		data["hotInletTemp"] = 0
-		data["hotOutletTemp"] = 0
-		data["hotInletPres"] = 0
-		data["hotOutletPres"] = 0
+		. += list(
+			"hotCircStatus" = null,
+			"hotInletTemp" = 0,
+			"hotOutletTemp" = 0,
+			"hotInletPres" = 0,
+			"hotOutletPres" = 0,
+		)
 	if(src.circ2)
-		data["coldCircStatus"] = src.circ2
-		data["coldInletTemp"] = src.circ2.air1.temperature
-		data["coldOutletTemp"] = src.circ2.air2.temperature
-		data["coldInletPres"] = MIXTURE_PRESSURE(src.circ2?.air1) KILO PASCALS
-		data["coldOutletPres"] = MIXTURE_PRESSURE(src.circ2?.air2) KILO PASCALS
+		. += list(
+			"coldCircStatus" = src.circ2,
+			"coldInletTemp" = src.circ2.air1.temperature,
+			"coldOutletTemp" = src.circ2.air2.temperature,
+			"coldInletPres" = MIXTURE_PRESSURE(src.circ2.air1) KILO PASCALS,
+			"coldOutletPres" = MIXTURE_PRESSURE(src.circ2.air2) KILO PASCALS,
+		)
 	else
-		data["coldCircStatus"] = null
-		data["coldInletTemp"] = 0
-		data["coldOutletTemp"] = 0
-		data["coldInletPres"] = 0
-		data["coldOutletPres"] = 0
-	return data
+		. += list(
+			"coldCircStatus" = null,
+			"coldInletTemp" = 0,
+			"coldOutletTemp" = 0,
+			"coldInletPres" = 0,
+			"coldOutletPres" = 0,
+		)
 
 /obj/machinery/atmospherics/unary/furnace_connector
 
@@ -1127,7 +1139,7 @@ datum/pump_ui/circulator_ui
 		..()
 		if(status & (BROKEN | NOPOWER))
 			return
-		//src.updateDialog()
+		//src.updateUsrDialog()
 
 	attackby(I as obj, user as mob)
 			//Readd construction code + boards
@@ -1171,7 +1183,7 @@ datum/pump_ui/circulator_ui
 
 			pump_infos[signal.source] = I
 
-		src.updateDialog()
+		src.updateUsrDialog()
 
 	proc/return_text()
 		var/pump_html = ""

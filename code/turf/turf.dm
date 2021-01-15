@@ -356,8 +356,7 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	if(src.material)
-		src.material.triggerOnEntered(src, M)
+	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -520,6 +519,10 @@
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_checkinghasproximity = src.checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/old_process_cell_operations = src.process_cell_operations
+#endif
+
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		new_turf = new new_type(src)
@@ -588,6 +591,10 @@
 	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.checkinghasproximity = old_checkinghasproximity
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	new_turf.process_cell_operations = old_process_cell_operations
+#endif
 
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
@@ -685,6 +692,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -1042,14 +1053,6 @@ Other Goonstation servers:[serverList]"}
 				qdel(L)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
-		return
-	return
 
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)

@@ -57,6 +57,7 @@
 
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
+#define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_DEEP "deepfall" // locations for people to fall into the precursor pit area
 #define LANDMARK_FALL_ANCIENT "ancientfall" // locations for people to fall into the ancient pit area
 #define LANDMARK_FALL_GREEK "greekfall" // locations for people to fall into the greek pit area

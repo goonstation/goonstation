@@ -936,6 +936,12 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon_state = "sovspace"
 	item_state = "sov_suit"
 
+/obj/item/clothing/head/helmet/space/soviet
+	name = "cosmonaut helmet"
+	desc = "Korolyov's pride."
+	icon_state = "cosmonaut"
+	item_state = "cosmonaut"
+
 /obj/item/luggable_computer/cheget
 	name = "important-looking briefcase"
 	desc = "A lockable briefcase that looks really important.  It has insignias with cyrillic lettering on them."
@@ -1233,8 +1239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(get_dist(host, usr) > 1)
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
@@ -1266,8 +1271,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(get_dist(host, usr) > 1)
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["key"])
 			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)

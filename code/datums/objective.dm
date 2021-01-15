@@ -1,5 +1,6 @@
 ABSTRACT_TYPE(/datum/objective)
 /datum/objective
+	var/enabled = TRUE
 	var/datum/mind/owner
 	var/explanation_text
 	var/medal_name = null // Called by ticker.mode.declare_completion().
@@ -977,6 +978,9 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/escape/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
+#ifdef RP_MODE
+	enabled = FALSE
+#endif
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
@@ -1264,7 +1268,16 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		for(var/X in objective_list)
 			if (!ispath(X))
 				continue
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.objective_list -= X
+				continue
 			ticker.mode.bestow_objective(enemy,X)
+
+		for(var/X in escape_choices)
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.escape_choices -= X
 
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)

@@ -249,14 +249,36 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
-	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Gloves"
+	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
 	contains = list(/obj/item/storage/toolbox/mechanical = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
-					/obj/item/clothing/gloves/yellow = 2)
+					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Engineering Crate"
+
+/datum/supply_packs/electool
+	name = "Electrical Maintenance Crate"
+	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
+	category = "Engineering Department"
+	contains = list(/obj/item/storage/toolbox/electrical = 2,
+					/obj/item/device/multitool = 2,
+					/obj/item/clothing/gloves/yellow = 2)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Electrical Maintenance Crate"
+
+/datum/supply_packs/firefighting
+	name = "Firefighting Supplies Crate"
+	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit"
+	category = "Engineering Department"
+	contains = list(/obj/item/extinguisher = 3,
+	/obj/item/chem_grenade/firefighting = 3,
+	/obj/item/clothing/suit/fire = 2)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Supplies Crate"
 
 /datum/supply_packs/generator
 	name = "Experimental Local Generator"
@@ -577,13 +599,22 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	containername = "Assorted Glowsticks Crate - 4 pack"
 
 /datum/supply_packs/fueltank
-	name = "Welding Fuel tank"
-	desc = "1x Welding Fuel tank"
+	name = "Welding Fuel Tank"
+	desc = "1x Welding Fuel Tank"
 	category = "Basic Materials"
 	contains = list(/obj/reagent_dispensers/fueltank)
 	cost = 4000
 	containertype = /obj/storage/crate
 	containername = "Welding Fuel Tank crate"
+
+/datum/supply_packs/foamtank
+	name = "Firefighting Foam tank"
+	desc = "1x Firefighting Foam Tank"
+	category = "Basic Materials"
+	contains = (/obj/reagent_dispensers/foamtank)
+	cost = 1000
+	containertype = /obj/storage/crate
+	containername = "Firefighting Foamtank crate"
 
 /datum/supply_packs/watertank
 	name = "High Capacity Watertank"
@@ -1251,6 +1282,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
+#ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
 	name = "Small Magnet Kit"
 	desc = "1x Magnetizer, 1x Low Performance Magnet Kit, 1x Magnet Chassis Frame"
@@ -1274,17 +1306,8 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	cost = 75000
 	containertype = /obj/storage/crate
 	containername = "Magnet Kit"
-/*
-/datum/supply_packs/complex/arc_smelter
-	name = "Arc Smelter"
-	desc = "2x Slag Shovel, Frames: 1x Arc Smelter, 1x Loom, 1x Workbench"
-	contains = list(/obj/item/slag_shovel = 2)
-	frames = list(/obj/machinery/smelter,
-					/obj/workbench)
-	cost = 100000
-	containertype = /obj/storage/crate
-	containername = "Arc Smelter"
-*/
+#endif
+
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
 	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"

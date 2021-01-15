@@ -60,22 +60,44 @@
 				radio_connection.post_signal(src, pingsignal, radiorange)
 			return
 
+		var/datum/signal/returnsignal = get_free_signal()
+		returnsignal.source = src
+		returnsignal.data["sender"] = src.net_id
+		returnsignal.data["address_1"] = target
 		switch(signal.data["command"])
+			if ("help")
+				if (!signal.data["topic"])
+					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
+					returnsignal.data["topics"] = "authorize"
+				else
+					returnsignal.data["topic"] = signal.data["topic"]
+					switch (lowertext(signal.data["topic"]))
+						if ("authorize")
+							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
+						else
+							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
 			if ("authorize")
-				signal.data["sender"] = src.net_id
-				signal.data["address_1"] = target
-				if (signal.data["acc_code"] == netpass_heads)
-					signal.data["command"] = "ack"
-					signal.data["acc_code"] = netpass_security
-					signal.data["data"] = "authorize"
+				if(!IN_RANGE(signal.source, src, radiorange))
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "outofrange"
+				else if (signal.data["acc_code"] == netpass_heads)
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["acc_code"] = netpass_security
+					returnsignal.data["data"] = "authorize"
 					authorize()
 				else
-					signal.data["command"] = "nack"
-					signal.data["data"] = "badpass"
-				radio_connection.post_signal(src, signal, radiorange)
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "badpass"
+			else
+				return //COMMAND NOT RECOGNIZED
+		radio_connection.post_signal(src, returnsignal, radiorange)
 
 
 	proc/authorize()
+		if(src.authed)
+			return
+
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
 		icon_state = "drawbr-alert"

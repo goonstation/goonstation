@@ -87,7 +87,7 @@
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
 		else if(target.hasStatus("shivering"))
 			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
-			target.changeStatus("shivering", -1 SECONDS)
+			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
@@ -247,14 +247,6 @@
 
 	var/mob/living/carbon/human/H = src
 
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
-
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
@@ -344,15 +336,7 @@
 	msgs.disarm = 1
 
 	var/def_zone = null
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		def_zone = O.organ_name
-		msgs.affecting = affecting
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		def_zone = P.slot
-		msgs.affecting = affecting
-	else if (zone_sel)
+	if (zone_sel)
 		def_zone = zone_sel.selecting
 		msgs.affecting = def_zone
 	else
@@ -371,6 +355,10 @@
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (damage > 0)
 		def_zone = target.check_target_zone(def_zone)
@@ -389,13 +377,10 @@
 	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
-		msgs.force_stamina_target = 1
+		if(target_stamina >= 0)
+			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			msgs.force_stamina_target = 1
 
-	var/target_stamina = STAMINA_MAX //uses stamina?
-	if (isliving(target))
-		var/mob/living/L = target
-		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -645,6 +630,12 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.pathogens)
+			var/datum/pathogen/P = LM.pathogens[uid]
+			punchmult *= P.onpunch(target, def_zone)
+
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
@@ -670,6 +661,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif
@@ -765,7 +760,8 @@
 			else
 				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
 				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
-				BORG.part_head.ropart_take_damage(rand(20,40),0)
+				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
 					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
 					send_flying = 2
@@ -1088,7 +1084,7 @@
 			hit_chance = 90
 		else if (def_zone == "head")
 			hit_chance = 70
-		if(!client || stat || getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
+		if(!client || is_incapacitated(src))
 			hit_chance = 100
 		if (!prob(hit_chance))
 			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
@@ -1121,11 +1117,8 @@
 	else if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
 	var/r_zone = ran_zone(t)
-	var/obj/item/affecting = organs["chest"]
 
-	if (organs[text("[]", r_zone)])
-		affecting = organs[text("[]", r_zone)]
-	return affecting
+	return r_zone
 
 /mob/proc/check_target_zone(var/def_zone)
 	return def_zone
@@ -1144,10 +1137,6 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()

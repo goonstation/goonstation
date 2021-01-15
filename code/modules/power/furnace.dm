@@ -79,14 +79,19 @@
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
 				return
 			else
-				user.visible_message("<span class='alert'>[user] starts to shove [W:affecting] into the furnace!</span>")
-				logTheThing("combat", user, W:affecting, "attempted to force [constructTarget(W:affecting,"combat")] into a furnace at [log_loc(src)].")
-				message_admins("[key_name(user)] is trying to force [key_name(W:affecting)] into a furnace at [log_loc(src)].")
+				var/obj/item/grab/grab = W
+				var/mob/target = grab.affecting
+				if(target?.buckled || target?.anchored)
+					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
+					return
+				user.visible_message("<span class='alert'>[user] starts to shove [target] into the furnace!</span>")
+				logTheThing("combat", user, target, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
+				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
-				if(W && W:affecting && src.active) //ZeWaka: Fix for null.affecting
-					user.visible_message("<span class='alert'>[user] stuffs [W:affecting] into the furnace!</span>")
-					var/mob/M = W:affecting
+				if(grab?.affecting && src.active) //ZeWaka: Fix for null.affecting
+					var/mob/M = grab.affecting
+					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
 					M.death(1)

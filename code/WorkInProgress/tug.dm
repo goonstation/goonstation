@@ -188,7 +188,8 @@
 		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		var/mob/living/rider = src.rider
+		..()
 		rider.pixel_y = 0
 		walk(src, 0)
 		if (rider.client)
@@ -304,7 +305,7 @@
 		if (usr != rider)
 			..()
 			return
-		if (!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if (!is_incapacitated(usr))
 			eject_rider(0, 1)
 		return
 

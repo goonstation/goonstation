@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf")
+	compatible_species = list("human", "cow", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/acid_proof = 0	//Is this mask immune to flouroacid?
@@ -159,6 +159,10 @@
 	name = "SWAT Mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
+	item_state = "swat"
+	color_r = 1
+	color_g = 0.8
+	color_b = 0.8
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -250,8 +254,7 @@
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			if(user)
-				user.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0

@@ -6,7 +6,7 @@
 	density = 1
 
 	var/on = 0
-	var/volume_rate = 800
+	var/volume_rate = 10 * ONE_ATMOSPHERE
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	volume = 750
@@ -24,7 +24,7 @@
 	else
 		icon_state = "pscrubber:0"
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/scrubber/process(mult)
 	..()
 	if (!loc) return
 	if (src.contained) return
@@ -52,7 +52,8 @@
 
 		//atmos
 
-		var/transfer_moles = min(1, volume_rate/environment.volume)*TOTAL_MOLES(environment)
+		var/transfer_moles = min(1, volume_rate * mult/(10 * ONE_ATMOSPHERE))*TOTAL_MOLES(environment)
+		// used to be environvment.volume instead of 10 * ONE_ATMOSPHERE, neither make sense imo 🤷‍♀️
 
 		//Take a gas sample
 		var/datum/gas_mixture/removed
@@ -79,15 +80,12 @@
 			filtered_out.nitrogen = 0
 
 			if(length(removed.trace_gases))
-				for(var/G in removed.trace_gases)
-					var/datum/gas/trace_gas = G
+				var/datum/gas/filtered_gas
+				for(var/datum/gas/trace_gas as() in removed.trace_gases)
 //					if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-					removed.trace_gases -= trace_gas
-					if(!removed.trace_gases.len)
-						removed.trace_gases = null
-					if(!filtered_out.trace_gases)
-						filtered_out.trace_gases = list()
-					filtered_out.trace_gases += trace_gas
+					filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+					filtered_gas.moles = trace_gas.moles
+					removed.remove_trace_gas(trace_gas)
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)

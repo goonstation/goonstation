@@ -69,7 +69,7 @@
 				if(prob(get_brute_damage() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib(give_medal, include_ejectables)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -79,7 +79,7 @@
 			M.cancel_camera()
 
 		M.set_loc(src.loc)
-	. = ..(give_medal)
+	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
 	SPAWN_DBG(0)
@@ -211,7 +211,7 @@
 	return src.oxyloss
 
 /mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
-	if(src.find_type_in_hand(/obj/item/bat))
+	if(src.find_type_in_hand(/obj/item/bat) && !ON_COOLDOWN(src, "baseball-bat-reflect", 1 DECI SECOND))
 		var/turf/T = get_turf(src)
 		var/turf/U = get_step(src, src.dir)
 		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?

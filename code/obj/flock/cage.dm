@@ -158,8 +158,7 @@
 	disposing()
 		playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_2.ogg", 80, 1)
 		processing_items -= src
-		if(occupant)
-			occupant.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+		occupant?.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 		..()
 
 

@@ -738,6 +738,8 @@
 				SEND_SLOT_LOAD_INFO
 
 		if(href_list["manip"])
+			if(!src.manip.loaded) // Why are you clicking this, there is no pathogen loaded in!
+				return
 			// the buttons should be disabled if the stats are maxed out, so these checks are just in case someone does nerd stuff
 			var/points = 0
 			var/totalPoints = src.manip.loaded.reference.spread + src.manip.loaded.reference.advance_speed + src.manip.loaded.reference.suppression_threshold
@@ -1099,6 +1101,7 @@
 		//boutput(user, "Valid. Contains pathogen ([P.volume] units with pathogen [PT.name]. Slot is [exposed]. DNA: [PT.dnasample]")
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
+			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
 			logTheThing("pathology", usr, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
@@ -1379,7 +1382,7 @@
 									first = 0
 								else
 									output_text += ", "
-								output_text += supp
+								output_text += reagent_id_to_name(supp)
 							output_text += "<br><br>"
 						else
 							output_text += "<br>"
@@ -1562,10 +1565,10 @@
 				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
 				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
-					if (synthesize_pathogen_cost > wagesystem.research_budget)
+					var/count = text2num(confirm)
+					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
 						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else
-						var/count = text2num(confirm)
 						boutput(usr, "<span class='notice'>Transaction successful.</span>")
 						wagesystem.research_budget -= synthesize_pathogen_cost*count
 						machine_state = 1
@@ -1722,7 +1725,7 @@
 	name = "Incubator"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "heater"
-	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	var/static/image/icon_beaker = image('icons/obj/pathology.dmi', "incubator")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
 	anchored = 1
 	density = 1

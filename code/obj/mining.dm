@@ -26,19 +26,19 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
-			var/turf/T = get_turf(user)
-			sleep(24 SECONDS)
-			if (user.loc == T && user.equipped() == W && !user.stat)
+			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
+		#endif
 
 	ex_act()
 		return
@@ -60,6 +60,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -73,6 +74,7 @@
 	small
 		name = "small mineral magnet parts"
 		constructed_magnet = /obj/machinery/mining_magnet/construction/small
+#endif
 
 /obj/magnet_target_marker
 	name = "mineral magnet target"
@@ -794,6 +796,7 @@
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
 		..()
@@ -833,7 +836,7 @@
 					A.anchored = 1
 					qdel(src)
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -891,19 +894,19 @@
 		src.updateUsrDialog()
 		return
 
-	proc/connection_scan()
-		linked_magnets = list()
-		var/badmagnets = 0
-		for (var/obj/machinery/magnet_chassis/MC in range(20,src))
-			if (MC.linked_magnet)
-				linked_magnets += MC.linked_magnet
-			else
-				badmagnets++
-		if (linked_magnets.len)
-			return 0
-		if (badmagnets)
-			return 1
-		return 2
+/obj/machinery/computer/magnet/connection_scan()
+	linked_magnets = list()
+	var/badmagnets = 0
+	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+		if (MC.linked_magnet)
+			linked_magnets += MC.linked_magnet
+		else
+			badmagnets++
+	if (linked_magnets.len)
+		return 0
+	if (badmagnets)
+		return 1
+	return 2
 
 // Turf Defines
 
@@ -1889,9 +1892,10 @@ obj/item/clothing/gloves/concussive
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
-		//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
+			var/holder = src.loc
+			//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
 			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
-			if(!selection)
+			if (src.loc != holder || !selection)
 				return
 			var/turf/T = get_turf(selection)
 			//get the turf of the pad itself

@@ -127,8 +127,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					qdel(O)
 
 				return 1
-		else if (istype(source, /obj/machinery) && isAI(user))
-			return 1
+
+		else if (isobj(source))
+			var/obj/SO = source
+			if(SO.can_access_remotely(user))
+				return 1
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)
@@ -221,12 +224,9 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-//			if (AIeye in view(center, distance))
 			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
-		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
-		//	. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -245,7 +245,11 @@ var/obj/item/dummy/click_dummy = new
 		Center = Depth
 		Depth = newDepth
 
-	return viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
+				. |= M
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
@@ -585,7 +589,7 @@ var/obj/item/dummy/click_dummy = new
 		if(T?.loc != A) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
-		T.density = S.density
+		T.set_density(S.density)
 		T.set_dir(S.dir)
 
 	for (var/turf/S in turfs_src)

@@ -34,6 +34,10 @@
 	if(ticker.mode.type == /datum/game_mode/nuclear)
 		var/datum/game_mode/nuclear/mode = ticker.mode
 		the_bomb = mode.the_bomb
+	if(isnull(the_bomb))
+		for_by_tcl(nuke, /obj/machinery/nuclearbomb)
+			the_bomb = nuke
+			break
 
 /obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user as mob)
 	showswirl(the_bomb)

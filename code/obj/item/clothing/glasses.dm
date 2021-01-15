@@ -12,7 +12,7 @@
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -369,7 +369,7 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)

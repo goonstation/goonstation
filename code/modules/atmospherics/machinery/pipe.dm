@@ -386,10 +386,8 @@ obj/machinery/atmospherics/pipe
 
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
 			parent = null
 			..()
 
@@ -679,12 +677,8 @@ obj/machinery/atmospherics/pipe
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
-				var/datum/gas/oxygen_agent_b/trace_gas = new
+				var/datum/gas/oxygen_agent_b/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -750,12 +744,8 @@ obj/machinery/atmospherics/pipe
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
-				var/datum/gas/sleeping_agent/trace_gas = new
+				var/datum/gas/sleeping_agent/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent/)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -810,8 +800,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -879,8 +868,7 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 250)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -993,12 +981,9 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 70)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
-			if(node3)
-				node3.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			node3?.disconnect(src)
 			parent = null
 			..()
 

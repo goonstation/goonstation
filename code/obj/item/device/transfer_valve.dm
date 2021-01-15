@@ -380,8 +380,7 @@
 		..()
 
 	toggle_valve()
-		if(tester)
-			tester.update_bomb_log("Valve Opened.")
+		tester?.update_bomb_log("Valve Opened.")
 
 		processing_items |= src
 		..()

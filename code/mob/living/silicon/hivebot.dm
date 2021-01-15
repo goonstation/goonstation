@@ -62,7 +62,7 @@
 		src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 
-	src.radio = new /obj/item/device/radio(src)
+	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
 	SPAWN_DBG(1 SECOND)
@@ -100,8 +100,7 @@
 			sleep(recently_time)
 			recently_dead -= key
 */
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 

@@ -197,7 +197,6 @@
 				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
 				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
-				world << csound("sound/misc/shuttle_enroute.ogg")
 	#undef VALID_MOB
 
 	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
@@ -353,7 +352,7 @@
 			W.afterattack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
 			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -369,14 +368,14 @@
 	return
 */
 /mob/living/onMouseDown(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseDown(object,location,control,params)
 	return
 
 /mob/living/onMouseUp(object,location,control,params)
-	if (!src.stat && !src.restrained() && !src.hasStatus(list("weakened", "paralysis", "stunned")))
+	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
 		if (W && istype(W))
 			W.onMouseUp(object,location,control,params)
@@ -472,16 +471,6 @@
 	actions.interrupt(src, INTERRUPT_ACT)
 
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
-		if (target != src && ishuman(src))
-			var/mob/living/carbon/human/S = src
-			if (S.sims)
-				var/mult = S.sims.getMoodActionMultiplier()
-				if (mult < 0.5)
-					if (prob((0.5 - mult) * 200))
-						boutput(src, pick("<span class='alert'>You're not in the mood to attack that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-						return
-
-
 		var/obj/item/equipped = src.equipped()
 		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
@@ -496,6 +485,8 @@
 
 		if (target == equipped)
 			equipped.attack_self(src, params, location, control)
+			if(equipped.flags & ATTACK_SELF_DELAY)
+				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
@@ -597,7 +588,7 @@
 	src.update_cursor()
 
 /mob/living/point_at(var/atom/target)
-	if (!isturf(src.loc) || usr.stat || usr.restrained())
+	if (!isturf(src.loc) || src.stat || src.restrained())
 		return
 
 	if (isghostcritter(src))
@@ -685,10 +676,6 @@
 		boutput(src, "<span class='alert'>You can not speak!</span>")
 		return
 
-	if(src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		boutput(src, "<span class='alert'>You are completely paralysed and can't speak!</span>")
-		return
-
 	if (isdead(src))
 		if (dd_hasprefix(message, "*")) // no dead emote spam
 			return
@@ -719,7 +706,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4) // Perfluorodecalin cap - normal life() depletion - buffer.
+		if (H.oxyloss > 10 || H.losebreath >= 4 || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message)
 			return
 
@@ -1039,11 +1026,13 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M in listening)
-		if (M.say_understands(src, forced_language))
-			heard_a += M
+	for (var/mob/M as() in listening)
+		if(M.mob_flags & MOB_HEARS_ALL)
+			continue
+		else if (M.say_understands(src, forced_language))
+			heard_a[M] = 1
 		else
-			heard_b += M
+			heard_b[M] = 1
 
 	var/list/processed = list()
 
@@ -1096,6 +1085,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
+	var/list/hearers = hearers(src)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1107,7 +1097,7 @@
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
 			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && (M in hearers(src))) || \
+			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(src.loc) && src.loc == M.loc) && \
 				!(M in heard_a) && \
@@ -1122,7 +1112,7 @@
 
 			if (isobserver(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
 					if (get_dist(M,src) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
@@ -1284,7 +1274,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 
 	if (thing)
-		if (alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes")
+		if (M.client && alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes" || M.ai_active)
 			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -1371,8 +1361,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.vis_contents += src.chat_text
 		else
 			var/atom/movable/A = src
-			while(!istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A.vis_contents += src.chat_text
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 
 /mob/living/proc/empty_hands()
@@ -1410,7 +1400,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	attack_particle(M,src)
 
 	if (M.a_intent != INTENT_HELP)
-		src.was_harmed(M)
+		src.was_harmed(M, intent = M.a_intent)
 
 		if (M.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
@@ -1498,17 +1488,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (world.time < src.next_move + SUSTAINED_RUN_GRACE)
 			if(move_dir & last_move_dir)
-				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1)
+				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1 && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying)
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 				else if (move_dir == turn(last_move_dir,180) && !isFlying)
-					sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+					if(!HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
+						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
+						playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
 						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 						if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
@@ -1531,7 +1522,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/Move(var/turf/NewLoc, direct)
 	. = ..()
 	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
-		if (sustained_moves >= SUSTAINED_RUN_REQ+1)
+		if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS))
 			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
@@ -1678,8 +1669,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/proc/start_sprint()
 	if (HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 		return
-	if (SEND_SIGNAL(src, COMSIG_LIVING_SPRINT_START) & RETURN_SPRINT_OVERRIDDEN)
-		return
 	if (special_sprint && src.client)
 		if (special_sprint & SPRINT_BAT)
 			spell_batpoof(src, cloak = 0)
@@ -1701,10 +1690,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
 				src.next_move = world.time
-				src.attempt_move()
+				attempt_move(src)
 				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
 
-				if (src.loc != last || force_puff) //ugly check to prevent stationary sprint weirds
+				if ((src.loc != last || force_puff) && !HAS_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
 					if (!isFlying)
 						playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
@@ -1718,11 +1707,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(M)
 
 
-/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+/mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	.= 0
 
 //left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	if (src.ai)
 		src.ai.was_harmed(weapon,M)
 	..()
@@ -1772,8 +1761,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.proj_data)
 		return 0
 
-	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
-		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
 
 	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(src,V) > 6)
@@ -1789,7 +1776,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
-
+	var/armor_msg = ""
 	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
@@ -1798,18 +1785,24 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+				src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, DAMAGE_STAB)
+				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
+				if (rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
@@ -1817,9 +1810,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				if (rangedprot > 1)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_BLUNT)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 				else
-					src.TakeDamage("chest", (damage*2), 0, 0, DAMAGE_CUT)
+					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
 			if (D_ENERGY)
 				if (stun > 0)
@@ -1830,7 +1825,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.stuttering < stun)
 					src.stuttering = stun
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1841,8 +1839,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					// fire resistance should probably not let you get hurt by welders
 					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
 					return 0
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, DAMAGE_BURN)
+				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
@@ -1853,6 +1854,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (src.add_stam_mod_regen("projectile", -5))
 					SPAWN_DBG(30 SECONDS)
 						src.remove_stam_mod_regen("projectile")
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
@@ -1860,12 +1864,19 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stamina_stun()
 
 				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, DAMAGE_STAB)
+					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 					if (isalive(src))
 						lastgasp()
 					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
 				else
 					src.take_toxin_damage(damage)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
+
+	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
+		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
+
 
 	if (ismob(P.shooter))
 		if (P.shooter)

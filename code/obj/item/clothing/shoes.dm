@@ -11,7 +11,7 @@
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
-	compatible_species = list("human", "monkey")
+	compatible_species = list("human")
 	protective_temperature = 500
 	permeability_coefficient = 0.50
 		//cogwerks - burn vars
@@ -270,7 +270,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/tripsalot, list("shoes"))
+	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
 
 /obj/item/clothing/shoes/flippers
 	name = "flippers"
@@ -398,6 +398,12 @@
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+
+/obj/item/clothing/shoes/swat/noslip
+	name = "hi-grip assault boots"
+	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	icon_state = "swatheavy"
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"

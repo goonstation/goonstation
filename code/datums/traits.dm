@@ -167,8 +167,12 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/cleanName = ""   //Name without any additional information.
 	var/isMoveTrait = 0 // If 1, onMove will be called each movement step from the holder's mob
+	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 
 	proc/onAdd(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(mutantRace)
 		return
 
 	proc/onRemove(var/mob/owner)
@@ -302,8 +306,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_swedish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
 		return
 
 /obj/trait/french
@@ -317,8 +320,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_french", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
 		return
 
 /obj/trait/scots
@@ -331,8 +333,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_scots", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
 		return
 
 /obj/trait/chav
@@ -346,8 +347,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_chav", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
 		return
 
 /obj/trait/elvis
@@ -360,8 +360,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_elvis", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
 		return
 
 /obj/trait/tommy // please do not re-enable this without talking to spy tia
@@ -376,8 +375,7 @@
 	unselectable = 1 // this was not supposed to be a common thing!!
 /*
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tommy")
+		owner.bioHolder?.AddEffect("accent_tommy")
 		return
 */
 
@@ -392,8 +390,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_finnish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
 		return
 
 /obj/trait/tyke
@@ -407,8 +404,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke")
 		return
 
 // VISION/SENSES - Green Border
@@ -491,8 +487,7 @@
 	category = "genetics"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.genetic_stability = 120
+		owner.bioHolder?.genetic_stability = 120
 		return
 
 /obj/trait/stablegenes
@@ -590,6 +585,15 @@
 	cleanName = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
+	category = "skill"
+	points = -1
+	isPositive = 1
+
+/obj/trait/claw
+	name = "Claw School Graduate (-1) \[Skill\]"
+	cleanName = "Claw School Graduate"
+	desc = "Your skill at claw machines is unparalleled."
+	id = "claw"
 	category = "skill"
 	points = -1
 	isPositive = 1
@@ -707,8 +711,6 @@
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			H.add_stam_mod_regen("trait", STAMINA_REGEN * 0.1)
-			H.max_health = 60
-			H.health = 60
 		return
 
 /obj/trait/bigbruiser
@@ -784,8 +786,7 @@ obj/trait/pilot
 	isPositive = 1
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("resist_alcohol", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 		return
 
 
@@ -1028,12 +1029,12 @@ obj/trait/pilot
 	isPositive = 0
 
 /obj/trait/allears
-	name = "All Ears (+1) \[Trinkets\]"
+	name = "All Ears (0) \[Trinkets\]"
 	cleanName="All ears"
 	desc = "You lost your headset on the way to work."
 	category = "trinkets"
 	id = "allears"
-	points = 1
+	points = 0
 	isPositive = 0
 
 /obj/trait/atheist
@@ -1053,12 +1054,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/lizard)
-		return
+	mutantRace = /datum/mutantrace/lizard
 
 /obj/trait/cow
 	name = "Bovine (-1) \[Species\]"
@@ -1069,12 +1065,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/cow)
-		return
+	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
 	name = "Skeleton (-2) \[Species\]"
@@ -1085,12 +1076,7 @@ obj/trait/pilot
 	points = -2
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/skeleton)
-		return
+	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
@@ -1101,9 +1087,5 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
+	mutantRace = /datum/mutantrace/roach
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/roach)
-		return

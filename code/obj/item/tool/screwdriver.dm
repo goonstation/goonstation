@@ -38,3 +38,8 @@
 /obj/item/screwdriver/vr
 	icon_state = "screwdriver-vr"
 	item_state = "screwdriver"
+
+/obj/item/screwdriver/yellow
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice lemon color."
+	icon_state = "screwdriver-yellow"
+	item_state = "screwdriver-yellow"

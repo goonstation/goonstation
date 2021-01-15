@@ -89,7 +89,6 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl"
-	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
 		..()
@@ -764,8 +763,7 @@
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
 			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
-			H.set_face_icon_dirty()
-			H.set_body_icon_dirty()
+			H.update_colorful_parts()
 
 /obj/item/clothing/under/gimmick/chav
 	name = "blue tracksuit"
