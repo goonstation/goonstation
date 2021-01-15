@@ -61152,7 +61152,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/abandonedship))
+/area/abandonedship)
 "cAD" = (
 /obj/lattice{
 	dir = 8;
