@@ -1,5 +1,9 @@
 
 (t)thu jan 14 21
+(u)Flourish
+(p)3323
+(e)🔄|rework
+(*)The motives system on RP has been slightly reworked. Instead of dropping clicks when your overall motives are too low, you now receive a maximum health debuff when your hunger is too low, and a stamina regeneration debuff when your thirst is too low.
 (u)UrsulaMajor and Nefarious6th
 (p)3289
 (e)🔄|rework
