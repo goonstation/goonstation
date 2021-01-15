@@ -1382,7 +1382,7 @@
 									first = 0
 								else
 									output_text += ", "
-								output_text += supp
+								output_text += reagent_id_to_name(supp)
 							output_text += "<br><br>"
 						else
 							output_text += "<br>"
