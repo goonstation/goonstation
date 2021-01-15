@@ -247,14 +247,6 @@
 
 	var/mob/living/carbon/human/H = src
 
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
-
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
@@ -669,6 +661,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif

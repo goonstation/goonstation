@@ -18,7 +18,7 @@
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
-	var/list/compatible_species = list("human") // allow monkeys/mutantraces to wear certain garments
+	var/list/compatible_species = list("human", "cow") // allow mutantraces to wear certain garments
 
 	var/fallen_offset_x = 1
 	var/fallen_offset_z = -6

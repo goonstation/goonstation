@@ -131,7 +131,7 @@
 
 					spacemove = 1
 					for (var/atom/A in oview(1,src))
-						if (A.stops_space_move)
+						if (A.stops_space_move && (!src.no_gravity || !isfloor(A)))
 							spacemove = 0
 							break
 

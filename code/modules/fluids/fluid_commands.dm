@@ -31,8 +31,7 @@ client/proc/delete_fluids()
 			if(fluid.group)
 				fluid.group.evaporate()
 			else
-				if( fluid.loc )//for some reason there's a chance for this to be null.
-					fluid.loc:active_liquid = null
+				fluid.turf_remove_cleanup(fluid.loc)
 				fluid.removed()
 			i++
 			if(!(i%30))

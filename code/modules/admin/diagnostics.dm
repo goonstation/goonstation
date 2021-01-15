@@ -813,6 +813,36 @@ proc/debug_color_of(var/thing)
 		is_ok(atom/A)
 			return !istype(A, /obj/item)
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	process_cell_operations
+		name = "process cell stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.process_cell_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.process_cell_operations]<br>[round(theTurf.process_cell_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.process_cell_operations / theTurf.max_process_cell_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
+
+#ifdef ATMOS_TILE_STATS_TRACKING
+	total_atmos_operations_stats
+		name = "total atmos operations stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.process_cell_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.atmos_operations]<br>[round(theTurf.atmos_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.atmos_operations / theTurf.max_atmos_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
