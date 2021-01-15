@@ -41448,6 +41448,19 @@
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/AIsat)
 "mog" = (
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/crowbar{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/security{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/space/security{
+	pixel_y = 7
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -63950,13 +63963,12 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/clothing/suit/space/emerg{
+/obj/item/clothing/suit/space/security{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 1;
-	pixel_y = 10
+/obj/item/clothing/head/helmet/space/security{
+	pixel_y = 7
 	},
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -69463,13 +69475,12 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/clothing/suit/space/emerg{
+/obj/item/clothing/suit/space/security{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 1;
-	pixel_y = 10
+/obj/item/clothing/head/helmet/space/security{
+	pixel_y = 7
 	},
 /turf/simulated/floor/red,
 /area/station/hangar/sec)

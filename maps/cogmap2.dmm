@@ -28587,6 +28587,13 @@
 "bnq" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
+/obj/item/clothing/head/helmet/space/security{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/space/security{
+	pixel_x = -3
+	},
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
@@ -28628,11 +28635,13 @@
 /area/station/hangar/sec)
 "bnv" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
+/obj/item/clothing/suit/space/security,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/crowbar,
+/obj/item/clothing/head/helmet/space/security,
+/obj/item/clothing/head/helmet/space/security,
+/obj/item/clothing/head/helmet/space/security,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},

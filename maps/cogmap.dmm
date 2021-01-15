@@ -5664,7 +5664,7 @@
 "any" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
+/obj/item/clothing/head/helmet/space/security,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/crowbar,
@@ -5679,7 +5679,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/space/emerg{
+/obj/item/clothing/suit/space/security{
 	pixel_x = 6
 	},
 /obj/item/crowbar{
@@ -5690,7 +5690,7 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/emerg{
+/obj/item/clothing/head/helmet/space/security{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -6216,7 +6216,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/space/emerg{
+/obj/item/clothing/suit/space/security{
 	pixel_x = 6
 	},
 /obj/item/crowbar{
@@ -6227,7 +6227,7 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/clothing/head/emerg{
+/obj/item/clothing/head/helmet/space/security{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -61142,17 +61142,9 @@
 /turf/space,
 /area/abandonedship)
 "cAC" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/abandonedship)
+/obj,
+/turf/space,
+/area/space)
 "cAD" = (
 /obj/lattice{
 	dir = 8;
@@ -63742,6 +63734,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
+"uKd" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
 "uKI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -71591,7 +71588,7 @@ adC
 adC
 adC
 adC
-cAC
+cAD
 cAV
 adC
 cBs
@@ -74006,7 +74003,7 @@ adC
 adC
 adC
 adC
-cAw
+uKd
 cAK
 cBd
 cAE
@@ -79264,7 +79261,7 @@ adC
 adC
 adC
 adC
-adC
+cAC
 adC
 adC
 adC
