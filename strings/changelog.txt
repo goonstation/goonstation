@@ -1,4 +1,10 @@
 
+(t)fri jan 15 21
+(u)zjdtmkhzt
+(p)3325
+(e)⚖|balance
+(*)Pathology fixes: cloud-based pathogens should now spread less and pathogens resulting from poor hygiene are now rarer and always non-contagious.
+(+)Plasma farts is now a higher tier symptom, trading places with Smoke farts.
 (t)thu jan 14 21
 (u)zjdtmkhzt
 (p)3327
