@@ -85,7 +85,7 @@
 		src.start_time = TIME
 		SPAWN_DBG(timeout)
 			qdel(src)
-		..()
+	. = ..()
 
 /datum/tgui_modal/disposing()
 	tgui_process.close_uis(src)
