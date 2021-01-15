@@ -66,7 +66,7 @@ var/datum/action_controller/actions
 					A.onEnd()
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
-				if(A.state == ACTIONSTATE_DELETE)
+				if(A.state == ACTIONSTATE_DELETE || A.disposed)
 					A.onDelete()
 					running[X] -= A
 					continue
@@ -207,7 +207,7 @@ var/datum/action_controller/actions
 		..()
 
 	updateBar(var/animate = 1)
-		if (duration <= 0)
+		if (duration <= 0 || isnull(bar))
 			return
 		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"

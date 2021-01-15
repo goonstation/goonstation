@@ -1,5 +1,35 @@
 
+(t)thu jan 14 21
+(u)zjdtmkhzt
+(p)3327
+(e)⚖🎨|balance, sprites
+(*)A person can now only have one pathogen at a time. Pathogens of a higher tier will replace weaker ones.
+(*)Nerfed most pathogen spreading symptoms. (Less clouds.)
+(+)Plasma farts are now a T4 pathogen, Smoke farts are now a T3.
+(u)Flaborized
+(p)3302
+(e)🎨|sprites
+(+)Resprited syringes.
+(u)Flourish
+(p)3323
+(e)🔄|rework
+(*)The motives system on RP has been slightly reworked. Instead of dropping clicks when your overall motives are too low, you now receive a maximum health debuff when your hunger is too low, and a stamina regeneration debuff when your thirst is too low.
+(u)UrsulaMajor and Nefarious6th
+(p)3289
+(e)🔄|rework
+(*)AI Law 3 now reads: "`You may always protect your own existence as long as such does not conflict with the First or Second Law."
+(u)Flourish
+(p)3305
+(e)🆕|feature
+(*)Cows now can't wear shoes (but are immune to stepping on regular and plasma glass shards) and have hemophilia, and also have a +3 damage bonus when kicking people.
+(u)pali
+(*)Experimental changes to how gases are rendered.
+(+)Gibbing now expels your reagents in a puddle of fluid!
 (t)wed jan 13 21
+(u)Flaborized
+(p)3290
+(e)🆕🎨|feature, sprites
+(+)Botanists now spawn with a field guide in their pocket explaining the very very basic mechanics of the job.
 (u)BenLubar
 (p)3319
 (e)|

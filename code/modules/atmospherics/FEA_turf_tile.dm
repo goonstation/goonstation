@@ -83,8 +83,17 @@ turf
 turf
 	simulated
 
+		var/static/list/mutable_appearance/gas_overlays = list(
+				#ifdef ALPHA_GAS_OVERLAYS
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#else
+				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
+				#endif
+			)
+
 		var/tmp/dist_to_space = null
-		var/tmp/current_graphic = null
 
 		var/tmp
 			datum/gas_mixture/air
@@ -124,40 +133,18 @@ turf
 				if (disposed)
 					return
 
-				//overlays.len = 0
-
-				var/list/graphics = params2list(model.graphic)//splittext(model.graphic, ";")
-
-				if(!graphics || !graphics.len)
-					if (gas_icon_overlay)
-						pool(gas_icon_overlay)
-						gas_icon_overlay = null
-					return
-
-				var/new_visuals_state = 0
-
-				for(var/str in graphics)
-					switch(str)
-						if("plasma")
-							new_visuals_state |= 1
-						if("n2o")
-							new_visuals_state |= 2
-						else
-							continue
-
-				if (new_visuals_state)
-					if (new_visuals_state != visuals_state)
+				if (model.graphic)
+					if (model.graphic != visuals_state)
 						if(!gas_icon_overlay)
 							gas_icon_overlay = unpool(/obj/overlay/tile_gas_effect)
 							gas_icon_overlay.set_loc(src)
 						else
 							gas_icon_overlay.overlays.len = 0
 
-						visuals_state = new_visuals_state
-						if (visuals_state & 1)
-							gas_icon_overlay.overlays.Add(plmaster)
-						if (visuals_state & 2)
-							gas_icon_overlay.overlays.Add(slmaster)
+						visuals_state = model.graphic
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
+						UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
+						gas_icon_overlay.dir = pick(cardinal)
 				else
 					if (gas_icon_overlay)
 						pool(gas_icon_overlay)
@@ -206,6 +193,9 @@ turf
 					if(air_master && istype(tile) && !tile.blocks_air)
 						air_master.tiles_to_update |= tile
 			pool(air)
+			if (gas_icon_overlay)
+				pool(gas_icon_overlay)
+				gas_icon_overlay = null
 			air = null
 			parent = null
 			..()
