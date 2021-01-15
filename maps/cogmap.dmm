@@ -61142,9 +61142,17 @@
 /turf/space,
 /area/abandonedship)
 "cAC" = (
-/obj,
-/turf/space,
-/area/space)
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/abandonedship))
 "cAD" = (
 /obj/lattice{
 	dir = 8;

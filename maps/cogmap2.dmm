@@ -28640,8 +28640,6 @@
 /obj/item/tank/air,
 /obj/item/crowbar,
 /obj/item/clothing/head/helmet/space/security,
-/obj/item/clothing/head/helmet/space/security,
-/obj/item/clothing/head/helmet/space/security,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
