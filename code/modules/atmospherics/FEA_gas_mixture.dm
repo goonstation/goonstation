@@ -48,6 +48,7 @@ What are the archived variables for?
 
 // Overrides
 /datum/gas_mixture/disposing()
+	total_gas_mixtures--
 	if (trace_gases)
 		trace_gases = null
 		trace_gas_refs = null
