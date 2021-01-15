@@ -1,6 +1,10 @@
 atom/movable/var/pressure_resistance = 20
 atom/movable/var/last_forced_movement = 0
 
+#ifdef KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS
+var/global/list/turf/hotly_processed_turfs = list()
+#endif
+
 atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	if(last_forced_movement >= air_master.current_cycle)
 		return 0
