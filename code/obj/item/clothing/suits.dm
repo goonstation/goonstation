@@ -1165,6 +1165,12 @@
 		icon_state = "espace-alt"
 		item_state = "es_suit"
 
+/obj/item/clothing/suit/space/security
+	name = "Security space suit"
+	desc = "A sleek space suit primarly worn by security personnel, feels just like the ones from EVA storage."
+	icon_state = "secspace"
+	item_state = "secspace"
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

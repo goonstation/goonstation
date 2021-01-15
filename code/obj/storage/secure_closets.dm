@@ -175,6 +175,8 @@
 	name = "\improper Security equipment locker"
 	spawn_contents = list(/obj/item/storage/box/clothing/security,
 	/obj/item/clothing/suit/wintercoat/security,
+	/obj/item/clothing/head/helmet/space/security,
+	/obj/item/clothing/suit/space/security,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,

@@ -106,6 +106,12 @@
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
 
+/obj/item/clothing/head/helmet/space/security
+	name = "Security space helmet"
+	desc = "Helps protect against vacuum."
+	icon_state = "secspace"
+	item_state = "s_helmet"
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
