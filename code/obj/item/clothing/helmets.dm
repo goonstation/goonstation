@@ -468,6 +468,7 @@
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	c_flags = SPACEWEAR
+	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
