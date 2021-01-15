@@ -216,7 +216,7 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
@@ -249,8 +249,29 @@
 			usr.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
 
 		else
-			usr.set_loc(spawnturf)
-			spawnturf = null
+			if(usr.mind.damned) //Backup plan incase Satan gets himself stuck in hell.
+				usr.set_loc(pick(get_area_turfs(/area/station/chapel))
+			else
+				usr.set_loc(spawnturf)
+				spawnturf = null
+
+/datum/targetable/gimmick/spawncontractsatan
+	icon_state = "clairvoyance"
+	name = "Summon Contract"
+	desc = "Summon a devilish contract and pen."
+	targeted = 0
+	target_nodamage_check = 0
+	max_range = 0
+	cooldown = 0
+
+	cast(mob/target)
+		if (!holder)
+			return 1
+		var/mob/living/M = holder.owner
+		if (!M)
+			return 1
+		spawncontract(usr, 0, 1)
+		return 0
 
 ////////////////////////Kill Jesta///////////////////////////////
 /datum/targetable/gimmick/Jestershift
