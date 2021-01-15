@@ -47,6 +47,15 @@ turf
 	var/tmp/pressure_direction = 0
 	var/tmp/obj/hotspot/active_hotspot
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/tmp/process_cell_operations = 0
+	var/static/max_process_cell_operations = 0
+#endif
+#ifdef ATMOS_TILE_STATS_TRACKING
+	var/tmp/atmos_operations = 0
+	var/static/max_atmos_operations = 0
+#endif ATMOS_TILE_STATS_TRACKING
+
 	proc
 		high_pressure_movements()
 			if( !loc:sanctuary )
@@ -314,6 +323,11 @@ turf
 				processing = 0
 
 		process_cell()
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+			src.process_cell_operations++
+			max_process_cell_operations = max(max_process_cell_operations, src.process_cell_operations)
+#endif
+			ATMOS_TILE_OPERATION_DEBUG(src)
 			var/list/turf/simulated/possible_fire_spreads
 			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING
