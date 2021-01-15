@@ -59,9 +59,9 @@ Contains:
 
 	proc/eject_rider(var/crashed, var/selfdismount)
 		src.eject_other_stuff()
-		if(rider.loc == src)
+		if(rider?.loc == src)
 			rider.set_loc(src.loc)
-		rider = null
+			rider = null
 
 	ex_act(severity)
 		switch(severity)
