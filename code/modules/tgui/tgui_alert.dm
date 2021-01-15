@@ -1,6 +1,6 @@
 /*
  * Copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
- * Licensed to exclusively Goonstation under MIT (https://choosealicense.com/licenses/mit/)
+ * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 
 /**
