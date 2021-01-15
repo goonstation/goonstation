@@ -282,6 +282,7 @@
 			if(FM)
 				P.forced_microbody = FM
 			P.create_weak()
+			P.setup(1)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")
