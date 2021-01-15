@@ -9,6 +9,7 @@
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
+	plane = PLANE_NOSHADOW_BELOW
 	mouse_opacity = 0
 	event_handler_flags = USE_HASENTERED | USE_CANPASS
 	var/foamcolor
