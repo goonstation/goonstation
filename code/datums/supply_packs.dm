@@ -375,15 +375,6 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	containername = "Mining Equipment Crate"
 	access = null
 
-/datum/supply_packs/monkey4
-	name = "Lab Monkey Crate - 4 pack"
-	desc = "x4 Monkey"
-	category = "Research Department"
-	contains = list(/mob/living/carbon/human/npc/monkey = 4)
-	cost = 500
-	containertype = /obj/storage/crate/medical
-	containername = "Lab Monkey Crate"
-
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
 	desc = "For use with existing hydroponics bay."
