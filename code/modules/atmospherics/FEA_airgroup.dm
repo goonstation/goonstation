@@ -176,7 +176,7 @@
 						// Build individual border list
 						if(!border_individual)
 							border_individual = list()
-						border_individual += enemy_tile
+						border_individual |= enemy_tile
 
 						// Build self-tile-border list
 						if(!self_tile_borders)
