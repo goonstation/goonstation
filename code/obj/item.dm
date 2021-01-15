@@ -462,7 +462,9 @@
 	return 0
 
 /obj/item/proc/combust() // cogwerks- flammable items project
-	if (!src.burning)
+	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
+		return
+	if(!src.burning)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = 1
