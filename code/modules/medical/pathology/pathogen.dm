@@ -887,6 +887,8 @@ datum/pathogen
 
 	proc/create_weak()
 		randomize(0)
+		if (!dnasample)
+			dnasample = new/datum/pathogendna(src)
 
 	proc/cdc_announce(var/mob/M)
 		var/datum/pathogen_cdc/CDC = null
