@@ -14080,6 +14080,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/storage/crate/abcumarker,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "dSF" = (
@@ -81694,6 +81695,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/abcu,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "yhc" = (
