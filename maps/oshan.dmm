@@ -19459,8 +19459,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aTp" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/dispenser,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTq" = (
@@ -22370,6 +22370,7 @@
 /area/research_outpost/toxins)
 "baZ" = (
 /obj/machinery/light/small/floor,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bba" = (

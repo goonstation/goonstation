@@ -810,7 +810,7 @@
 	food_effects = list("food_bad_breath")
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (src.icon_state == "sursd")
+		if (src.icon_state == "surs")
 			if (user == M)
 				boutput(user, "<span class='alert'>You need to take the lid off first, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")

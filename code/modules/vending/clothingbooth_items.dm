@@ -34,8 +34,8 @@
 	cost = PAY_IMPORTANT
 	hidden = 1
 
-/datum/clothingbooth_item/monocole
-	name = "Monocole"
+/datum/clothingbooth_item/monocle
+	name = "Monocle"
 	path = /obj/item/clothing/glasses/monocle
 	category = "Accessories"
 	cost = PAY_IMPORTANT/3
