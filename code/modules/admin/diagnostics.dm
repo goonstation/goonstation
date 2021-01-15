@@ -835,7 +835,7 @@ proc/debug_color_of(var/thing)
 			img.app.alpha = 0
 			if(!air_master?.current_cycle)
 				return
-			if(!theTurf.process_cell_operations)
+			if(!theTurf.atmos_operations)
 				return
 			img.app.overlays = list(src.makeText("[theTurf.atmos_operations]<br>[round(theTurf.atmos_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
 			var/p = theTurf.atmos_operations / theTurf.max_atmos_operations
