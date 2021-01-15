@@ -1,10 +1,10 @@
 // debugging stuff, possibly laggy, turn off when not using
 /// Enables debug overlay which counts process_cell() calls per turf (viewable through info-overlays)
-#define ATMOS_PROCESS_CELL_STATS_TRACKING
+// #define ATMOS_PROCESS_CELL_STATS_TRACKING
 /// Enables debug overlay which counts all atmos operations per turf (viewable through info-overlays)
-#define ATMOS_TILE_STATS_TRACKING
+// #define ATMOS_TILE_STATS_TRACKING
 /// Puts a list of turfs which get processed a lot into `global.hotly_processed_turf` for debugging
-#define KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS 1
+// #define KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS 1
 
 #if defined(ATMOS_TILE_STATS_TRACKING) && defined(KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
 	#define ATMOS_TILE_OPERATION_DEBUG(turf) do { \
