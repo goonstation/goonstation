@@ -159,6 +159,7 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/robot_oil)
 
 
 /mob/living/silicon/drone/New()
@@ -331,7 +332,7 @@
 
 	process_killswitch()
 	process_locks()
-	process_oil()
+//	process_oil() moved to life process in robot_oil.dm
 	update_canmove()
 
 	if (metalman_skin && prob(1))

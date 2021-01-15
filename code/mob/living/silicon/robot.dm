@@ -2425,13 +2425,7 @@
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
-	proc/process_oil()
-		src.oil -= 1
-		if (oil <= 0)
-			oil = 0
-			src.remove_stun_resist_mod("robot_oil", 25)
-			REMOVE_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
-
+//process_oil has been moved to /datum/lifeprocess/robot_oil in robot_oil.dm
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)
