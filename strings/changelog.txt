@@ -1,5 +1,9 @@
 
 (t)thu jan 14 21
+(u)Flaborized
+(p)3302
+(e)🎨|sprites
+(+)Resprited syringes.
 (u)Flourish
 (p)3323
 (e)🔄|rework
