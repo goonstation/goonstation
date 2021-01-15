@@ -250,7 +250,7 @@
 
 		else
 			if(usr.mind.damned) //Backup plan incase Satan gets himself stuck in hell.
-				usr.set_loc(pick(get_area_turfs(/area/station/chapel))
+				usr.set_loc(pick(get_area_turfs(/area/station/chapel)))
 			else
 				usr.set_loc(spawnturf)
 				spawnturf = null
