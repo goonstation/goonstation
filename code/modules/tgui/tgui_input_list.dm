@@ -1,3 +1,9 @@
+/*
+ * Copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * Changes: watermelon914 (https://github.com/watermelon914)
+ * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
+ */
+
 /**
  * Creates a TGUI input list window and returns the user's response.
  *
