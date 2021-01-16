@@ -624,8 +624,9 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	DoSpecialThing(var/index)
 		animate_shockwave(src.holder)
 		if(index == 6) return
+		var/turf/T = get_turf(src.holder)
 		for(var/client/C in clients)
-			if(C.mob && (C.mob.z == src.holder?.loc?.z))
+			if(C.mob && (C.mob.z == T?.z))
 				C << sound('sound/effects/explosionfar.ogg')
 		if(prob(10))
 			src.holder.bust_speaker()
