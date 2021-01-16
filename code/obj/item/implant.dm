@@ -1162,7 +1162,7 @@ THROWING DARTS
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
 	//Whether this is the paper type that goes away when emptied
-	var/disposable = 0
+	var/disposable = FALSE
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1243,7 +1243,7 @@ THROWING DARTS
 	if (usedimplant && istype(usedimplant))
 		src.imp = usedimplant
 		imp.set_loc(src)
-		disposable = 1
+		disposable = TRUE
 		name = "removed implant"
 		desc = "A paper wad containing an implant extracted from someone. An implanting tool can reuse the implant."
 	else

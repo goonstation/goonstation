@@ -663,6 +663,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 				wadblood.color = patient.blood_color
 				newcase.UpdateOverlays(wadblood, "blood")
+				newcase.blood_DNA = patient.bioHolder.Uid
+				newcase.blood_type = patient.bioHolder.bloodType
 
 				return 1
 
