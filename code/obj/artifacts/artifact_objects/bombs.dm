@@ -133,6 +133,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.exp_hevy = rand(3,6)
 		src.exp_lite = rand(6,9)
 
+	post_setup()
+		. = ..()
+		src.react_xray[1] = src.exp_hevy*5
+
 	deploy_payload(var/obj/O)
 		if (..())
 			return
