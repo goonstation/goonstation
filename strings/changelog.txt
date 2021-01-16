@@ -1,4 +1,9 @@
 
+(t)sat jan 16 21
+(u)glassofmilk
+(p)3326
+(e)🆕|feature
+(+)Signal components can now have their starting and ending strings set using MechComp signals.
 (t)fri jan 15 21
 (u)zjdtmkhzt
 (p)3325
