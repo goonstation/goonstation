@@ -190,7 +190,7 @@
 
 		if (reagents?.total_volume)
 			if (!borg)
-				user.drop_item(src)
+				user?.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
 				src.set_loc(M)

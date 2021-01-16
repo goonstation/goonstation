@@ -34,6 +34,7 @@
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
+	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,

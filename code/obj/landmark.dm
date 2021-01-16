@@ -233,6 +233,8 @@ var/global/list/job_start_locations = list()
 		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 		if(warptarget_modifier) T.vistarget.warptarget = T
 		T.updateVis()
+		T.vistarget.fullbright = TRUE
+		T.vistarget.RL_Init()
 		..()
 
 /obj/landmark/viscontents_spawn/no_warp

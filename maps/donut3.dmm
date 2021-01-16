@@ -14080,6 +14080,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/storage/crate/abcumarker,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "dSF" = (
@@ -48142,7 +48143,7 @@
 /area/station/science/artifact)
 "oqi" = (
 /obj/stool/bench/red,
-/turf/unsimulated/floor/purple,
+/turf/simulated/floor/purple,
 /area/station/hallway/primary/south)
 "oqj" = (
 /obj/decal/tile_edge/line/yellow{
@@ -81694,6 +81695,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/abcu,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "yhc" = (
