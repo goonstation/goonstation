@@ -21,7 +21,6 @@
 			return
 
 		if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart) && in_range(C, src))
-			if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart))
 				var/obj/tug_cart/connecting = C
 				if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 					return
