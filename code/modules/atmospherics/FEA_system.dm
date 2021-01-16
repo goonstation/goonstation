@@ -228,7 +228,7 @@ datum/controller/air_system
 						test.dist_to_space = dist
 
 			// Allow groups to determine if group processing is applicable after FEA setup
-			if(current_cycle) group.group_processing = 0
+			if(current_cycle) group.group_processing = FALSE
 			group.members = members
 			air_groups += group
 

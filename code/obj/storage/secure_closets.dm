@@ -34,6 +34,7 @@
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
+	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
@@ -136,7 +137,7 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access_txt = "49"
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,

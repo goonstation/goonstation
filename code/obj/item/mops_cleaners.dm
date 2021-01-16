@@ -296,6 +296,8 @@ WET FLOOR SIGN
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
 
+	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
+		A = get_turf(A)
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
 		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
@@ -516,6 +518,8 @@ WET FLOOR SIGN
 	if (!src.reagents)
 		return ..()
 
+	if(istype(target, /obj/fluid/airborne)) // no sponging up smoke
+		target = get_turf(target)
 	if (!isarea(target))
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)
@@ -569,11 +573,11 @@ WET FLOOR SIGN
 					else
 						F.removed()
 					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>")
+					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
 				else
 					target.reagents.trans_to(src, 15)
 					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>")
+					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
 
 				JOB_XP(user, "Janitor", 1)
 				return
@@ -664,7 +668,7 @@ WET FLOOR SIGN
 	New()
 		. = ..()
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
-		payload.reagents.add_reagent("superlube", payload.reagents.maximum_volume)
+		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
 
 	attackby(obj/item/W, mob/user, params)

@@ -236,9 +236,9 @@ proc/get_angle(atom/a, atom/b)
 		return 0
 	. = 0
 	var/turf/T = M.loc
-	var/holding = M.equipped()
+	var/atom/holding = M.equipped()
 	sleep(time)
-	if ((M.loc == T && M.equipped() == holding && !( M.stat )))
+	if (M.loc == T && M.equipped() == holding && isalive(M) && !holding.disposed)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
@@ -1231,6 +1231,10 @@ proc/get_angle(atom/a, atom/b)
 
 				if (can_hear)
 					. += M
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
+				. |= M
 
 
 
@@ -1242,6 +1246,10 @@ proc/get_angle(atom/a, atom/b)
 		else if (isobj(A))
 			for(var/mob/M in A.contents)
 				. += M
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
+				. |= M
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()

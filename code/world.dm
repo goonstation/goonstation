@@ -22,6 +22,10 @@
 
 	view = "15x15"
 
+	hub = "Exadv1.SpaceStation13"
+	hub_password = "kMZy3U5jJHSiBQjr"
+	name = "Goonstation 13"
+
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
@@ -253,18 +257,6 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
-
-		plmaster = new /obj/overlay(  )
-		plmaster.icon = 'icons/effects/tile_effects.dmi'
-		plmaster.icon_state = "plasma"
-		plmaster.layer = FLY_LAYER
-		plmaster.mouse_opacity = 0
-
-		slmaster = new /obj/overlay(  )
-		slmaster.icon = 'icons/effects/tile_effects.dmi'
-		slmaster.icon_state = "sleeping_agent"
-		slmaster.layer = FLY_LAYER
-		slmaster.mouse_opacity = 0
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -1287,13 +1279,13 @@ var/f_color_selector_handler/F_Color_Selector
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a>
+								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a>
 							</div>
 							<div style="padding: 0.2em 0.5em;">
 								[game_msg]
 							</div>
 							<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								<a href=\"byond://?action=priv_msg_irc&nick=[nick]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
 						"})
@@ -1305,7 +1297,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1327,7 +1319,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = discord_emojify(msg)
 
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)

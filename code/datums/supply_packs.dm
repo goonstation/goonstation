@@ -959,7 +959,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	name = "ABCU Unit Crate"
 	desc = "An additional ABCU Unit, for large construction projects."
 	category = "Engineering Department"
-	contains = list(/obj/machinery/abcu)
+	contains = list(/obj/machinery/abcu, /obj/item/blueprint_marker)
 	cost = 5000
 	containertype = /obj/storage/secure/crate
 	containername = "ABCU Unit Crate (Cardlocked \[Engineering])"
@@ -1282,6 +1282,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	containertype = /obj/storage/crate
 	containername = "Mechanics Reconstruction Kit"
 
+#ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
 	name = "Small Magnet Kit"
 	desc = "1x Magnetizer, 1x Low Performance Magnet Kit, 1x Magnet Chassis Frame"
@@ -1305,17 +1306,8 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	cost = 75000
 	containertype = /obj/storage/crate
 	containername = "Magnet Kit"
-/*
-/datum/supply_packs/complex/arc_smelter
-	name = "Arc Smelter"
-	desc = "2x Slag Shovel, Frames: 1x Arc Smelter, 1x Loom, 1x Workbench"
-	contains = list(/obj/item/slag_shovel = 2)
-	frames = list(/obj/machinery/smelter,
-					/obj/workbench)
-	cost = 100000
-	containertype = /obj/storage/crate
-	containername = "Arc Smelter"
-*/
+#endif
+
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
 	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"

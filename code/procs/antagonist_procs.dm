@@ -45,6 +45,32 @@
 
 	return
 
+/proc/equip_conspirator(mob/living/carbon/human/traitor_mob)
+	if (!(traitor_mob && ishuman(traitor_mob)))
+		return
+
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+		var/datum/game_mode/conspiracy/C = ticker.mode
+		var/the_frequency = C.agent_radiofreq
+
+		var/obj/item/device/radio/headset/H
+		if (istype(traitor_mob.ears, /obj/item/device/radio/headset))
+			H = traitor_mob.ears
+		else
+			H = new /obj/item/device/radio/headset(traitor_mob)
+			if (!traitor_mob.r_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_r_store)
+			else if (!traitor_mob.l_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_l_store)
+			else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
+			else
+				traitor_mob.put_in_hand_or_drop(H)
+		H.secure_classes["z"] = RADIOCL_SYNDICATE
+		H.set_secure_frequency("z",the_frequency)
+
+	SHOW_CONSPIRACY_TIPS(traitor_mob)
+
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
@@ -128,8 +154,8 @@
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
-			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
 			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
@@ -206,8 +232,8 @@
 		pda_pass = T.lock_code
 
 		SHOW_SPY_THIEF_TIPS(traitor_mob)
-		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 	else
 		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
 

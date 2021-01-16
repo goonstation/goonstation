@@ -134,6 +134,7 @@
 	var/needs_oxy = 1
 
 	var/voice_override = 0
+	var/step_override = 0
 
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
@@ -220,7 +221,7 @@
 		return
 
 	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
-	proc/onDeath()
+	proc/onDeath(gibbed)
 		return
 
 	New(var/mob/living/carbon/human/M)
@@ -687,7 +688,7 @@
 		if (mob.health < mob.max_health && mob.health>0) //you can kill flubber with extreme measures
 			mob.full_heal()
 
-	onDeath()
+	onDeath(gibbed)
 		var/turf/T = get_turf(mob)
 		T.fluid_react_single("flubber", 500)
 		mob.gib()
@@ -925,7 +926,9 @@
 		else
 			..()
 
-	onDeath()
+	onDeath(gibbed)
+		if(gibbed)
+			return
 		mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
 		SPAWN_DBG(45 SECONDS)
 			if (mob)
@@ -1063,7 +1066,7 @@
 		else
 			..()
 
-	onDeath()
+	onDeath(gibbed)
 		var/datum/abilityHolder/vampiric_zombie/abil = mob.get_ability_holder(/datum/abilityHolder/vampiric_zombie)
 		if (abil)
 			if (abil.master)
@@ -1605,7 +1608,9 @@
 	say_verb()
 		return "gurgles"
 
-	onDeath()
+	onDeath(gibbed)
+		if(gibbed)
+			return
 		SPAWN_DBG(2 SECONDS)
 			if (ishuman(mob))
 				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
@@ -1613,7 +1618,6 @@
 				mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				mob.gib()
-		return
 
 // some new simple gimmick junk
 
@@ -1874,13 +1878,14 @@
 	disposing()
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
+			if(H.abilityHolder)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			H.remove_stam_mod_regen("kudzu")
 		return ..()
@@ -1929,8 +1934,11 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
+	human_compatible = FALSE
+	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
+	step_override = "step_wood"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
@@ -1954,6 +1962,8 @@
 			mob.update_body()
 			mob.update_clothing()
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
+			mob.kickMessage = "stomps"
+			mob.traitHolder?.addTrait("hemophilia")
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
@@ -1966,6 +1976,8 @@
 			H.blood_color = initial(H.blood_color)
 			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			H.kickMessage = initial(H.kickMessage)
+			H.traitHolder?.removeTrait("hemophilia")
 		. = ..()
 
 	say_filter(var/message)

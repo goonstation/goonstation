@@ -1071,6 +1071,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/menthol, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/propuffs, 10, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo, 10, cost=PAY_TRADESMAN/5)
+		product_list += new/datum/data/vending_product(/obj/item/cigarbox, 1, cost=PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/matchbook, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=PAY_TRADESMAN/10)
@@ -1378,6 +1379,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/screen, 30)
 
 /obj/machinery/vending/computer3
 	name = "CompTech"
@@ -1466,6 +1468,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_beepy, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost=PAY_UNTRAINED/2)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=PAY_TRADESMAN/3, hidden=1)
@@ -2139,3 +2145,4 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+

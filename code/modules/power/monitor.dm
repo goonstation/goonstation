@@ -52,14 +52,14 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell  | Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
+			var/list/S = list("<span style='background-color: #f88'> Off</span>","<span style='background-color: #fa6'>AOff</span>","<span style='background-color: #8f8'>  On</span>", "<span style='background-color: #ccf'> AOn</span>")
 			var/list/chg = list("N","C","F")
 
 			var/do_newline = 0
 			for(var/obj/machinery/power/apc/A in L)
 
 				t += copytext(add_tspace(A.area.name, 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"][do_newline ? "<BR>" : " | "]"
+				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "   N/C"][do_newline ? "<BR>" : " | "]"
 				do_newline = !do_newline
 
 		t += "</FONT></PRE>"

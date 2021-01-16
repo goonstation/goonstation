@@ -33729,7 +33729,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "bEz" = (
 /obj/map/light/lava,
@@ -44025,7 +44025,9 @@
 	},
 /area/sim/bball)
 "cfO" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	file_name = "data/persistent_bookshelf_cairngorm.json"
+	},
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
@@ -44762,7 +44764,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "chv" = (
 /obj/lattice{
@@ -47297,7 +47299,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "cnB" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -84309,6 +84311,10 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"mje" = (
+/obj/storage/closet/office,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "mlK" = (
 /turf/space,
 /turf/unsimulated/floor/caution/north,
@@ -107977,7 +107983,7 @@ cvH
 cvH
 cvH
 cvH
-cwC
+mje
 cwC
 dTz
 cwf

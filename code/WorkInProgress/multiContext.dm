@@ -341,7 +341,7 @@ var/list/globalContextActions = null
 				else
 					A = src
 
-				 A.hud.remove_screen(C)
+				A.hud.remove_screen(C)
 			if (ishivebot(src))
 				var/mob/living/silicon/hivebot/hivebot = src
 				hivebot.hud.remove_screen(C)

@@ -16,7 +16,7 @@
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
-	food_effects = null
+	food_effects = list()
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)

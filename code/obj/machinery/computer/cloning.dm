@@ -12,6 +12,7 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
+	can_reconnect = 1
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/currentStatusMessage = list()
@@ -79,19 +80,24 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
-		if(portable) return
-		src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
-		src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
-
-		var/hookup_error = FALSE
-		if (isnull(src.scanner))
-			hookup_error = TRUE
-		if (isnull(src.pod1))
-			hookup_error = TRUE
-		if (!hookup_error)
-			src.pod1?.connected = src
-			src.scanner?.connected = src
+		connection_scan()
 	return
+
+/obj/machinery/computer/cloning/connection_scan()
+	if(portable) return
+	scanner?.connected = null
+	pod1?.connected = null
+	src.scanner = locate(/obj/machinery/clone_scanner, orange(2,src))
+	src.pod1 = locate(/obj/machinery/clonepod, orange(4,src))
+
+	var/hookup_error = FALSE
+	if (isnull(src.scanner))
+		hookup_error = TRUE
+	if (isnull(src.pod1))
+		hookup_error = TRUE
+	if (!hookup_error)
+		src.pod1?.connected = src
+		src.scanner?.connected = src
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
@@ -110,14 +116,20 @@
 			src.updateUsrDialog()
 			return
 
-	else if (isscrewingtool(W) && ((src.status & BROKEN) || !src.pod1 || !src.scanner || src.allow_dead_scanning || src.allow_mind_erasure || src.pod1.BE))
+	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		if(do_after(user, 2 SECONDS))
-			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+			if(src.status & BROKEN)
+				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+			else
+				boutput(user, "<span class='notice'>The glass pane falls out.</span>")
+				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
+				glass.amount = 6
+				glass.inventory_counter.update_number(glass.amount)
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
 			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
 			for (var/obj/C in src)
 				C.set_loc(src.loc)
@@ -173,7 +185,7 @@
 
 
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 // message = message you want to pass to the noticebox

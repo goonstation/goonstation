@@ -117,7 +117,6 @@
 						<a href='?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
 						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
 					</div>
@@ -185,7 +184,11 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
 					</div>
-				 </div>
+					<div class='l'>Misc</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+					</div>
+				</div>
 			</div>
 				"}
 
