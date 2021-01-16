@@ -1,5 +1,12 @@
 
 (t)sat jan 16 21
+(u)Superlagg
+(p)3122
+(e)🆕🔄|feature, rework
+(*)PDAs can now use different ringtones! Ask the clown if you can borrow their ringtone program.
+(*)PDAs can now block specific people, mailgroups, and alerts.
+(+)The Syndicate are dirty software pirates, supplying their agents with stolen copies of a certain PDA compatible sound effect library for a single TC.
+(+)The heads of staff have a new filesharing program, SpaceWire, which lets them automatically share PDA files to anyone who messages them a secret password.
 (u)glassofmilk
 (p)3326
 (e)🆕|feature
