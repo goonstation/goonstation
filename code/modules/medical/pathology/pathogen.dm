@@ -887,6 +887,8 @@ datum/pathogen
 
 	proc/create_weak()
 		randomize(0)
+		if (!dnasample)
+			dnasample = new/datum/pathogendna(src)
 
 	proc/cdc_announce(var/mob/M)
 		var/datum/pathogen_cdc/CDC = null
@@ -1297,6 +1299,12 @@ datum/pathogen
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
 						mutex += T
+
+	proc/getHighestTier()
+		. = 0
+		for(var/datum/pathogeneffects/E in src.effects)
+			. = max(., E.rarity)
+
 
 proc/dig2hex(num)
 	switch (num)

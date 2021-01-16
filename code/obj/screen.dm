@@ -10,8 +10,7 @@
 
 /obj/screen/proc/add_to_client(var/client/C)
 	if (clients)
-		clients -= C
-		clients += C
+		clients |= C
 	C.screen += src
 
 /obj/screen/disposing()

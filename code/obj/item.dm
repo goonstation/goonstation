@@ -249,17 +249,17 @@
 				burn_type = 0
 
 		if (src.material.triggersOnLife.len)
-			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
 		if (src.material && src.material.triggersOnLife.len)
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
 /obj/item/New()

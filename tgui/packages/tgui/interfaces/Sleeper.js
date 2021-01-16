@@ -5,12 +5,13 @@
  * @license ISC
  */
 
-import { useBackend } from "../backend";
-import { Box, Button, Flex, HealthStat, Icon, LabeledList, Knob, ProgressBar, Section, TimeDisplay } from "../components";
-import { Window } from "../layouts";
-import { formatTime } from "../format";
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, LabeledList, Knob, ProgressBar, Section, TimeDisplay } from '../components';
+import { Window } from '../layouts';
+import { formatTime } from '../format';
+import { HealthStat } from './common/HealthStat';
 
-const damageNum = num => num <= 0 ? "0" : num.toFixed(1);
+const damageNum = num => num <= 0 ? '0' : num.toFixed(1);
 
 const OccupantStatus = {
   Conscious: 0,
@@ -75,7 +76,7 @@ export const Sleeper = (props, context) => {
               align="center"
               color="good"
               disabled={!hasOccupant || !!isTiming}
-              onClick={() => act("eject")}>
+              onClick={() => act('eject')}>
               Eject
             </Button>
           }>
@@ -125,7 +126,7 @@ export const Sleeper = (props, context) => {
                 align="center"
                 color="good"
                 disabled={!canInject}
-                onClick={() => act("inject")}>
+                onClick={() => act('inject')}>
                 Inject
               </Button>
             }>
@@ -134,8 +135,8 @@ export const Sleeper = (props, context) => {
                 <LabeledList>
                   {rejuvinators.map(r => (
                     <LabeledList.Item key={r.name} label={r.name}>
-                      <Icon name={!r.od || r.volume < r.od ? "circle" : "skull"} color={r.color} />
-                      {" " + r.volume.toFixed(3)}
+                      <Icon name={!r.od || r.volume < r.od ? 'circle' : 'skull'} color={r.color} />
+                      {' ' + r.volume.toFixed(3)}
                       {!!r.od && r.volume >= r.od && (
                         <Box inline color="bad" pl={1}>
                           (Overdose!)
@@ -151,18 +152,20 @@ export const Sleeper = (props, context) => {
             </Box>
           </Section>
         )}
-        <Section title="Occupant Alarm Clock"
+        <Section
+          title="Occupant Alarm Clock"
           buttons={
             <Button
               width={8}
               icon="clock"
               align="center"
-              color={isTiming ? "bad" : "good"}
+              color={isTiming ? 'bad' : 'good'}
               disabled={!hasOccupant || occupantStat > 1 || time <= 0}
-              onClick={() => act("timer")}>
-              {isTiming ? "Stop Timer" : "Start Timer"}
+              onClick={() => act('timer')}>
+              {isTiming ? 'Stop Timer' : 'Start Timer'}
             </Button>
-          }>
+          }
+        >
           <Flex>
             <Flex.Item>
               <Knob
@@ -174,7 +177,7 @@ export const Sleeper = (props, context) => {
                 minValue={0}
                 maxValue={maxTime / 10}
                 value={curTime / 10}
-                onDrag={(e, targetValue) => act("time_add", { tp: targetValue - curTime / 10 })} />
+                onDrag={(e, targetValue) => act('time_add', { tp: targetValue - curTime / 10 })} />
             </Flex.Item>
             <Flex.Item>
               <Box
