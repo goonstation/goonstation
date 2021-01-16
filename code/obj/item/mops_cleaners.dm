@@ -518,8 +518,8 @@ WET FLOOR SIGN
 	if (!src.reagents)
 		return ..()
 
-	if(istype(A, /obj/fluid/airborne)) // no sponging up smoke
-	A = get_turf(A)
+	if(istype(target, /obj/fluid/airborne)) // no sponging up smoke
+		target = get_turf(target)
 	if (!isarea(target))
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)
