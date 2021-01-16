@@ -1,6 +1,16 @@
 atom/movable/var/pressure_resistance = 20
 atom/movable/var/last_forced_movement = 0
 
+#ifdef KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS
+var/global/list/turf/hotly_processed_turfs = list()
+proc/filter_out_hotly_processed_turfs()
+	. = list()
+	for(var/turf/T as() in hotly_processed_turfs)
+		if(istype(T) && T?.atmos_operations > air_master.current_cycle * KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
+			. += T
+	global.hotly_processed_turfs = .
+#endif
+
 atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	if(last_forced_movement >= air_master.current_cycle)
 		return 0
@@ -46,6 +56,15 @@ turf
 	var/tmp/pressure_difference = 0
 	var/tmp/pressure_direction = 0
 	var/tmp/obj/hotspot/active_hotspot
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/tmp/process_cell_operations = 0
+	var/static/max_process_cell_operations = 0
+#endif
+#ifdef ATMOS_TILE_STATS_TRACKING
+	var/tmp/atmos_operations = 0
+	var/static/max_atmos_operations = 0
+#endif
 
 	proc
 		high_pressure_movements()
@@ -289,20 +308,19 @@ turf
 							//See what kind of border it is
 							if(istype(T,/turf/space))
 								if(parent.space_borders)
-									parent.space_borders -= src
-									parent.space_borders += src
+									parent.space_borders |= src
 								else
 									parent.space_borders = list(src)
 								length_space_border++
+								group_border |= direction
 
-							else
+							else if(issimulatedturf(T))
 								if(parent.borders)
-									parent.borders -= src
-									parent.borders += src
+									parent.borders |= src
 								else
 									parent.borders = list(src)
+								group_border |= direction
 
-							group_border |= direction
 
 				parent.length_space_border += length_space_border
 
@@ -314,6 +332,11 @@ turf
 				processing = 0
 
 		process_cell()
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+			src.process_cell_operations++
+			max_process_cell_operations = max(max_process_cell_operations, src.process_cell_operations)
+#endif
+			ATMOS_TILE_OPERATION_DEBUG(src)
 			var/list/turf/simulated/possible_fire_spreads
 			if(src.processing && src.air)
 #ifdef ATMOS_ARCHIVING

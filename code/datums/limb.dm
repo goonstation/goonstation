@@ -71,6 +71,9 @@
 		user.lastattacked = target
 
 	proc/grab(mob/living/target, var/mob/living/user)
+		if(target == user)
+			user.grab_self()
+			return
 		if (issilicon(target))
 			return
 		user.grab_other(target)

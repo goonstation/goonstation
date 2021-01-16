@@ -33729,7 +33729,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "bEz" = (
 /obj/map/light/lava,
@@ -44764,7 +44764,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "chv" = (
 /obj/lattice{
@@ -47299,7 +47299,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "cnB" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,

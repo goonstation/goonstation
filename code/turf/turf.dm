@@ -519,6 +519,10 @@
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_checkinghasproximity = src.checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/old_process_cell_operations = src.process_cell_operations
+#endif
+
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		new_turf = new new_type(src)
@@ -587,6 +591,10 @@
 	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.checkinghasproximity = old_checkinghasproximity
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	new_turf.process_cell_operations = old_process_cell_operations
+#endif
 
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.

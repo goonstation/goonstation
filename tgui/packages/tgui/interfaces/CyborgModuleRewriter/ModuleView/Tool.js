@@ -6,7 +6,7 @@
  */
 
 import { Button } from '../../../components';
-import { ToolLabelCn } from '../style';
+import * as styles from '../style';
 
 const Tool = props => {
   const {
@@ -20,7 +20,7 @@ const Tool = props => {
       <Button icon="arrow-up" onClick={onMoveToolUp} title="Move Up" />
       <Button icon="arrow-down" onClick={onMoveToolDown} title="Move Down" />
       <Button icon="trash" onClick={onRemoveTool} title="Remove" />
-      <span className={ToolLabelCn}>{children}</span>
+      <span className={styles.ToolLabel}>{children}</span>
     </div>
   );
 };
