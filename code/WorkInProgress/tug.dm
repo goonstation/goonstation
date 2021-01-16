@@ -27,10 +27,12 @@
 				else if (!src.next_cart && !connecting.next_cart)
 					src.next_cart = connecting
 					user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
+					playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 					return
 				else if (src.next_cart == connecting)
 					src.next_cart = null
 					user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
+					playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 					return
 				else
 					user.show_text("\The [src] already has a cart connected to it!", "red")
@@ -249,10 +251,12 @@
 			else if (!src.cart)
 				src.cart = C
 				user.visible_message("[user] connects [C] to [src].", "You connect [C] to [src].")
+				playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 				return
 			else if (src.cart == C)
 				src.cart = null
 				user.visible_message("[user] disconnects [C] from [src].", "You disconnect [C] from [src].")
+				playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 				return
 			else
 				user.show_text("\The [src] already has a cart connected to it!", "red")
