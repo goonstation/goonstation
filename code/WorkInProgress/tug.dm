@@ -21,22 +21,22 @@
 			return
 
 		if (istype(C, /obj/tug_cart) || istype(C, /obj/storage/cart) && in_range(C, src))
-				var/obj/tug_cart/connecting = C
-				if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
-					return
-				else if (!src.next_cart && !connecting.next_cart)
-					src.next_cart = connecting
-					user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
-					playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-					return
-				else if (src.next_cart == connecting)
-					src.next_cart = null
-					user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
-					playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
-					return
-				else
-					user.show_text("\The [src] already has a cart connected to it!", "red")
-					return
+			var/obj/tug_cart/connecting = C
+			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
+				return
+			else if (!src.next_cart && !connecting.next_cart)
+				src.next_cart = connecting
+				user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
+				playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+				return
+			else if (src.next_cart == connecting)
+				src.next_cart = null
+				user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
+				playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+				return
+			else
+				user.show_text("\The [src] already has a cart connected to it!", "red")
+				return
 
 		if (load)
 			return
