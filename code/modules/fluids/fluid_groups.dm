@@ -686,7 +686,7 @@
 		return src.avg_viscosity
 
 	proc/join(var/datum/fluid_group/join_with) //join a fluid group into this one
-		if (src == join_with || src.qdeled || join_with.qdeled)
+		if (src == join_with || src.qdeled || !join_with || join_with.qdeled)
 			return 0
 
 		join_with.qdeled = 1 //hacky but stop updating
