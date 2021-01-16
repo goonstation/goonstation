@@ -905,19 +905,19 @@
 	examine(mob/user)
 		. = ..()
 		if (user.bioHolder.HasEffect("accent_swedish"))
-			if (src.icon_state == "surs_closed")
+			if (src.icon_state == "surs")
 				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It looks like it's ready to eat."
 			else
 				. += "Oooh, a can of surströmming! It's been a while since you've seen one of these. It smells heavenly!"
 			return
 		else
-			if (src.icon_state == "surs_closed")
+			if (src.icon_state == "surs")
 				. += "The fuck is this? The label's written in some sort of gibberish, and you're pretty sure cans aren't supposed to bulge like that."
 			else
 				. += "<b>AAAAAAAAAAAAAAAAUGH AAAAAAAAAAAUGH IT SMELLS LIKE FERMENTED SKUNK EGG BUTTS MAKE IT STOP</b>"
 
 	attack_self(var/mob/user as mob)
-		if (src.icon_state == "surs_closed")
+		if (src.icon_state == "surs")
 			boutput(user, "<span class='notice'>You pop the lid off the [src].</span>")
 			src.icon_state = "surs-open" //todo: get real sprite
 			for(var/mob/living/carbon/M in viewers(user, null))
@@ -926,7 +926,7 @@
 						boutput(user, "<span class='notice'>Ahhh, that smells wonderful!</span>")
 					else
 						boutput(user, "<span class='alert'><font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font></span>")
-						user.changeStatus("weakened", 80)
+						user.changeStatus("weakened", 8 SECONDS)
 						user.visible_message("<span class='alert'>[user] suddenly and violently vomits!</span>")
 						user.vomit()
 				else
