@@ -64,7 +64,7 @@ datum/preferences
 	var/random2 = 0
 	var/random3 = 0
 
-	var/icon/preview_icon = null
+	var/datum/character_preview/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -148,7 +148,6 @@ datum/preferences
 		real_name = jointext(namecheck, " ")
 */
 	proc/update_preview_icon()
-		//qdel(src.preview_icon)
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
@@ -160,7 +159,10 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		src.preview_icon = character_preview_icon(src.AH, mutantRace, src.spessman_direction)
+		if (isnull(src.preview))
+			src.preview = new(usr.client)
+
+		src.preview.update_appearance(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -195,7 +197,6 @@ datum/preferences
 		sanitize_null_values()
 		update_preview_icon()
 		LAGCHECK(LAG_HIGH)
-		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 		LAGCHECK(LAG_HIGH)
@@ -826,6 +827,11 @@ $(function() {
 			dat += data_cache[x]
 
 		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
+		if (src.preview)
+			src.preview.Show()
+			winset(user, "preferences", list2params(list(
+				"on-close" = ".winset \"[src.preview.preview_id].is-visible=0\"",
+			)))
 
 
 	//id, The name of the Select table ID to be used.
@@ -873,8 +879,6 @@ $(function() {
 
 			if (changed)
 				update_preview_icon()
-				usr << browse_rsc(preview_icon, "previewicon.png")
-				usr << browse("previewicon.png","display=0")
 
 		..()
 
