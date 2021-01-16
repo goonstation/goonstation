@@ -44,6 +44,7 @@
 
 // Interfaces
 @include meta.load-css('./interfaces/Airlock.scss');
+@include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/ChemDispenser.scss');
 @include meta.load-css('./interfaces/CloningConsole.scss');
 @include meta.load-css('./interfaces/CyborgModuleRewriter.scss');

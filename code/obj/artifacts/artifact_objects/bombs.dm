@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		O.ArtifactDestroyed()
 
-/obj/artifact/bomb/devastating
+/*/obj/artifact/bomb/devastating
 	name = "artifact devastating bomb"
 	associated_datum = /datum/artifact/bomb/explosive/devastating
 
@@ -111,6 +111,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.exp_hevy *= rand(4,6)
 		src.exp_lite *= rand(5,7)
 		src.explode_delay *= 1.5 //Was too long, nobody would know it was a bomb.ZeWaka
+*/
 
 // black hole bomb
 
@@ -143,7 +144,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	New()
 		..()
-		src.create_reagents(1000)
+		src.create_reagents(rand(100,1000))
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/artifact/bomb/chemical
@@ -163,12 +164,14 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
-				"thermite","fuel","acid","silicate","lube","cryostylane","oil")
+				"silicon","gypsum","sodium_sulfate","diethylamine","pyrosium","thermite","fuel","acid","silicate","lube","cryostylane",
+				"ash","clacid","oil","acetone","ammonia")
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
-				"omnizine","synthflesh","cyanide","ketamine","toxin","neurotoxin","mutagen","fake_initropidril",
-				"toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease")
+				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine",
+				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","mutagen",
+				"fake_initropidril","toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter")
 			if ("eldritch")
 				// all the worst stuff. all of it
 				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
@@ -181,7 +184,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				potential_reagents = all_functional_reagent_ids
 
 		if (potential_reagents.len > 0)
-			var/looper = rand(2,8)
+			var/looper = rand(2,5)
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
 				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
@@ -189,7 +192,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				looper--
 				payload_reagents += reagent
 
-		recharge_delay = rand(200,800)
+		recharge_delay = rand(300,800)
 
 	deploy_payload(var/obj/O)
 		if (..())

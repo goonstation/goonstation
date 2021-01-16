@@ -62,7 +62,7 @@
 		src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 
-	src.radio = new /obj/item/device/radio(src)
+	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
 	SPAWN_DBG(1 SECOND)

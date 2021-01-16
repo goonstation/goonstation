@@ -1344,6 +1344,7 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/cow
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
+	limb_hit_bonus = 4
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/cow/left

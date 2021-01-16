@@ -9590,9 +9590,7 @@
 /area/station/maintenance/east)
 "apU" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "apV" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -10065,9 +10063,7 @@
 "aqW" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "aqX" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/security{
@@ -10343,14 +10339,10 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "arC" = (
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "arD" = (
 /obj/item/basketball,
 /obj/item/basketball,
@@ -10372,14 +10364,10 @@
 /obj/item/clothing/under/jersey/red,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "arE" = (
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "arF" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -10828,9 +10816,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "asq" = (
 /obj/cable{
 	d1 = 4;
@@ -10838,9 +10824,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "asr" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -10848,10 +10832,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "ass" = (
 /obj/machinery/door/airlock/gannets{
 	name = "airlock-'Community Center Storage'";
@@ -10863,9 +10849,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "ast" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11062,23 +11046,14 @@
 "asR" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
-"asS" = (
-/turf/simulated/wall/auto/gannets,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "asT" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
 /turf/simulated/wall/auto/gannets,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "asU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -11233,9 +11208,7 @@
 "atr" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "ats" = (
 /obj/stool/chair/wooden,
 /obj/machinery/camera{
@@ -11246,9 +11219,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "att" = (
 /obj/stool/chair/wooden,
 /obj/machinery/light{
@@ -11256,9 +11227,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "atu" = (
 /obj/stool/chair/wooden,
 /obj/machinery/firealarm{
@@ -11268,9 +11237,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "atv" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal/small{
@@ -11279,15 +11246,11 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "atw" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/black,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "atx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11587,16 +11550,12 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "aue" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auf" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -11605,9 +11564,7 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "aug" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -11616,9 +11573,7 @@
 	name = "glass airlock-'Funeral Parlor'"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auh" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -11948,28 +11903,20 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auQ" = (
 /obj/stool/chair/wooden,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auR" = (
 /turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auS" = (
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "auT" = (
 /obj/cable{
 	d1 = 4;
@@ -12265,15 +12212,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avB" = (
 /obj/window/reinforced/north,
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avC" = (
 /obj/window/reinforced/north,
 /obj/mic_stand{
@@ -12283,9 +12226,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avD" = (
 /obj/window/reinforced/north,
 /obj/loudspeaker,
@@ -12293,18 +12234,14 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avE" = (
 /obj/window/reinforced/north,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avF" = (
 /obj/machinery/door/window/northright{
 	req_access_txt = "22"
@@ -12313,9 +12250,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "avG" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -12586,28 +12521,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awl" = (
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awm" = (
 /obj/machinery/light,
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awn" = (
 /obj/machinery/conveyor_switch{
 	id = "chapel_belt"
 	},
 /turf/simulated/floor/wood,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awo" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -12616,33 +12543,25 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awp" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen3"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awq" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awr" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "aws" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12974,9 +12893,7 @@
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awY" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -12986,9 +12903,7 @@
 	id = "chapel_driver"
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "awZ" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -12996,18 +12911,14 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axa" = (
 /obj/machinery/launcher_loader/west{
 	id = "chapel_driver"
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axb" = (
 /obj/window/reinforced/north,
 /obj/machinery/conveyor{
@@ -13017,9 +12928,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/caution/northsouth,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axc" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -13032,17 +12941,13 @@
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axd" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axe" = (
 /obj/machinery/light,
 /obj/table/wood/auto,
@@ -13050,9 +12955,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axf" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase,
@@ -13060,9 +12963,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13382,16 +13283,12 @@
 	},
 /obj/window/reinforced/north,
 /turf/simulated/floor/grass/random,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axU" = (
 /obj/shrub,
 /obj/window/reinforced/north,
 /turf/simulated/floor/grass/random,
-/area/station/chapel/sanctuary{
-	name = "Funeral Parlor"
-	})
+/area/station/chapel/funeral_parlor)
 "axV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13535,7 +13432,7 @@
 /area/station/hydroponics/bay)
 "ayn" = (
 /obj/machinery/power/apc{
-	areastring = "Hydroponics";
+	areastring = null;
 	dir = 8;
 	name = "Hydroponics APC";
 	pixel_x = -24
@@ -16070,9 +15967,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/chapel/sanctuary{
-	name = "Community Center Storage"
-	})
+/area/station/chapel/funeral_parlor)
 "aDV" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -21680,7 +21575,7 @@
 /area/station/maintenance/east)
 "aOU" = (
 /obj/machinery/power/apc{
-	areastring = "Research Sector";
+	areastring = "Science Lobby";
 	dir = 1;
 	name = "Research Sector APC";
 	pixel_y = 24
@@ -44716,7 +44611,7 @@
 	},
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEM" = (
 /obj/cable{
 	d1 = 4;
@@ -44729,18 +44624,18 @@
 	req_access_txt = "31|50"
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEN" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/wingrille_spawn,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEO" = (
 /obj/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bEP" = (
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
@@ -45007,7 +44902,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -45026,12 +44921,12 @@
 	dir = 8;
 	icon_state = "engine_caution_corners"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFw" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFx" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -45040,7 +44935,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFy" = (
 /obj/machinery/light{
 	dir = 1;
@@ -45049,7 +44944,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFz" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -45057,7 +44952,7 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bFA" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -45351,19 +45246,19 @@
 /obj/item/crowbar,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGc" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGd" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGe" = (
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45371,7 +45266,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGg" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/gannets,
@@ -45660,7 +45555,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/clothing/shoes/magnetic,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bGI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -45863,7 +45758,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/hand_labeler,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHf" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -45871,7 +45766,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
@@ -46065,11 +45960,11 @@
 /obj/item/weldingtool,
 /obj/item/shipcomponent/mainweapon/phaser,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHE" = (
 /obj/machinery/light,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHF" = (
 /obj/machinery/door_control{
 	id = "cargo_hangar";
@@ -46079,19 +45974,19 @@
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHG" = (
 /obj/machinery/r_door_control{
 	id = "cargo_hangar";
 	pixel_y = -24
 	},
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHH" = (
 /obj/machinery/light,
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/engine,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bHI" = (
 /obj/lattice{
 	dir = 6;
@@ -46817,7 +46712,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46877,7 +46772,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJs" = (
 /turf/space,
 /area/mining/magnet)
@@ -46897,7 +46792,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/storage)
+/area/station/hangar/qm)
 "bJu" = (
 /obj/machinery/power/monitor/smes{
 	dir = 4;
@@ -49212,6 +49107,9 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nIJ" = (
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/hangar/qm)
 "nUT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/green{
@@ -49242,6 +49140,10 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"oPg" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/hangar/qm)
 "pFT" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/seed_manipulator{
@@ -49336,6 +49238,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"vPt" = (
+/obj/wingrille_spawn,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -49343,6 +49249,9 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"xdU" = (
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 
 (1,1,1) = {"
 aaa
@@ -73876,7 +73785,7 @@ aac
 aaT
 apU
 apU
-asS
+arE
 atr
 aud
 atr
@@ -74133,7 +74042,7 @@ aaT
 apU
 apU
 asp
-asS
+arE
 ats
 aue
 auQ
@@ -74647,7 +74556,7 @@ apU
 aqW
 arC
 asr
-asS
+arE
 atu
 aue
 auQ
@@ -74904,7 +74813,7 @@ aiW
 aiZ
 arD
 asq
-asS
+arE
 atv
 auf
 auR
@@ -75161,13 +75070,13 @@ aqE
 aiZ
 arE
 ass
-asS
+arE
 atw
 aug
 auS
-asS
-asS
-asS
+arE
+arE
+arE
 axS
 ayF
 ayF
@@ -84734,7 +84643,7 @@ bGb
 bGH
 bHe
 bHD
-bBM
+nIJ
 bNv
 agJ
 agJ
@@ -84986,12 +84895,12 @@ bBG
 buJ
 bDV
 bEM
-bEP
-bEP
-bEP
-bEP
-bEP
-bBM
+xdU
+xdU
+xdU
+xdU
+xdU
+nIJ
 aaH
 aay
 aay
@@ -85244,11 +85153,11 @@ bCP
 bCU
 bEL
 bFu
-bEP
-bEP
-bEP
+xdU
+xdU
+xdU
 bHE
-bEd
+oPg
 aaH
 aay
 aaa
@@ -85505,7 +85414,7 @@ bGc
 bGc
 bGc
 bHF
-bBM
+nIJ
 bNw
 bIG
 bIO
@@ -86270,7 +86179,7 @@ buL
 buG
 bCS
 bCU
-byg
+vPt
 bFx
 bGe
 bGe
@@ -86527,13 +86436,13 @@ bAt
 buK
 bCT
 bEa
-byg
+vPt
 bFy
 bGd
 bGe
 bGe
 bHG
-bBM
+nIJ
 aaH
 bIG
 bIO
@@ -86784,13 +86693,13 @@ bAu
 bBL
 bCU
 bEb
-byg
+vPt
 bFz
 bGf
 bGe
 bHf
 bHH
-bEd
+oPg
 bNv
 aay
 aaa
@@ -87042,12 +86951,12 @@ bBM
 bCV
 bBM
 bEO
-bBM
-bBM
+nIJ
+nIJ
 bEO
-bBM
-bBM
-bBM
+nIJ
+nIJ
+nIJ
 aaH
 aay
 aaa
