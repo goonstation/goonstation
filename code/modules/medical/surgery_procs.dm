@@ -658,11 +658,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
 
 				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
-				//newcase.imp = I
 				I.on_remove(patient)
 				patient.implant.Remove(I)
-				//I.set_loc(newcase)
-				//newcase.icon_state = "implantcase-b"
+				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+				wadblood.color = patient.blood_color
+				newcase.UpdateOverlays(wadblood, "blood")
 
 				return 1
 
