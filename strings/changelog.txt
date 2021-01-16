@@ -1,5 +1,7 @@
 
 (t)sat jan 16 21
+(u)pali
+(*)Air scrubbers are now way more effective (for both gases and smoke) at the cost of a lot of APC power. Sponges and mops no longer work on smoke.
 (u)BenLubar
 (p)3338
 (e)🗺|mapping
