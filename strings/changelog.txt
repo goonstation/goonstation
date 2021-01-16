@@ -1,5 +1,9 @@
 
 (t)sat jan 16 21
+(u)Camryn Buttes
+(p)3357
+(e)🐛|bug
+(+)Surstromming cans work again, stink your friends
 (u)BatElite
 (p)3022
 (e)🆕🎨|feature, sprites
