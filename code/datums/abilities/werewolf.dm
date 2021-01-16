@@ -82,7 +82,6 @@
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
-				// if (istype(I, /obj/item/implant/projectile))
 				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 				I.on_remove(M)
 				M.implant.Remove(I)
@@ -102,9 +101,6 @@
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
 
-			//when in werewolf form, get more max health or regenerate
-			// M.maxhealth = 200
-			// M.health =
 			if (src.bioHolder)
 				src.bioHolder.AddEffect("regenerator_wolf")
 				boutput(src, "<span class='alert'>You will now heal over time!</span>")
@@ -135,7 +131,6 @@
 
 			//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
 			for(var/obj/item/implant/I in M)
-				// if (istype(I, /obj/item/implant/projectile))
 				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 				I.on_remove(M)
 				M.implant.Remove(I)

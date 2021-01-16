@@ -274,8 +274,8 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 
-	OnLife()
-		if(..()) return
+	OnAdd()
+		. = ..()
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
