@@ -2025,6 +2025,7 @@
 	/datum/manufacture/robo_leg_r_light,
 	/datum/manufacture/robo_leg_l_light,
 	/datum/manufacture/robo_leg_treads,
+	/datum/manufacture/robo_head_screen,
 	/datum/manufacture/robo_module,
 	/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye,
