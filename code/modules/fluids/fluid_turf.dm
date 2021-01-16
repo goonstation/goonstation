@@ -36,7 +36,7 @@
 
 	special_volume_override = 0.62
 
-	turf_flags = CAN_BE_SPACE_SAMPLE | FLUID_MOVE
+	turf_flags = FLUID_MOVE
 
 	var/datum/light/point/light = 0
 	var/light_r = 0.16

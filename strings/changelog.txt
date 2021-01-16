@@ -1,5 +1,7 @@
 
 (t)sat jan 16 21
+(u)pali
+(*)Oshan ocean is now atmospherically inert instead of producing nitrogen. Wrenches can now be used to fiddle with atmos pump settings (instead of this being locked to multitools).
 (u)Camryn Buttes
 (p)3357
 (e)🐛|bug
