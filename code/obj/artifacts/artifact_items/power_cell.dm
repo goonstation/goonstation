@@ -10,7 +10,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	var/effectProbModifier = 0
-	var/sound/noise = null
+	var/noise = null
 	var/leakChem = null
 
 	New(var/loc, var/forceartiorigin)
@@ -31,13 +31,13 @@
 			src.effectProbModifier = 1/rand(10,50) 	// probability
 			switch(A.artitype.name)										// noise
 				if ("martian")
-					src.noise = pick('sound/voice/babynoise.ogg', 'sound/voice/animal/bugchitter.ogg', 'sound/voice/blob/blobdeath.ogg', 'sound/voice/farts/frogfart.ogg', 'sound/effects/splort.ogg')
+					src.noise = pick("sound/voice/babynoise.ogg", "sound/voice/animal/bugchitter.ogg", "sound/voice/blob/blobdeath.ogg", "sound/voice/farts/frogfart.ogg", "sound/effects/splort.ogg")
 				if ("ancient")
-					src.noise = pick('sound/effects/electric_shock_short.ogg', 'sound/effects/creaking_metal2.ogg','sound/machines/weapons-reloading.ogg', 'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg','sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg', 'sound/machines/scan.ogg')
+					src.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
 				if ("wizard")
-					src.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/newsting.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
+					src.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/newsting.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
 				if ("precursor") // what does precursor stuff even sound like???
-					src.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
+					src.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
 
 			if(prob(maxcharge/1000)) 									// the more charge the bigger the chance it does dumb stuff
 				switch(A.artitype.name) 								// leakage
