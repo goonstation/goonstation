@@ -65,7 +65,9 @@ export const ListInput = (props, context) => {
                 }
                 lastScrollTime = performance.now() + 125;
 
-                if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN) {
+                if (e.keyCode === ARROW_KEY_UP
+                  || e.keyCode === ARROW_KEY_DOWN)
+                {
                   let direction = 1;
                   if (e.keyCode === ARROW_KEY_UP) {
                     direction = -1;
@@ -76,7 +78,7 @@ export const ListInput = (props, context) => {
                     if (buttons[index] === selectedButton) break;
                   }
                   index += direction;
-                  if (index < 0) index = buttons.length-1;
+                  if (index < 0) index = buttons.length - 1;
                   else if (index >= buttons.length) index = 0;
                   setSelectedButton(buttons[index]);
                   setLastCharCode(null);
