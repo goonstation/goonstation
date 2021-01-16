@@ -205,7 +205,7 @@
 			if (ACT.universal || A.artitype == K.artitype)
 				if (ACT.activator && !A.activated)
 					src.ArtifactActivated()
-				else if (!ACT.activator && A.activated)
+				else if (A.activated)
 					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
