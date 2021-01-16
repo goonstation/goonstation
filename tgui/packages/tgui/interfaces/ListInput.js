@@ -5,12 +5,10 @@
  */
 
 import { clamp01 } from 'common/math';
+import { ARROW_KEY_UP, ARROW_KEY_DOWN } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Section, Input } from '../components';
 import { Window } from '../layouts';
-
-const ARROW_KEY_UP = 38;
-const ARROW_KEY_DOWN = 40;
 
 let lastScrollTime = 0;
 
