@@ -3529,6 +3529,7 @@
 /area/station/hallway/secondary/exit)
 "ags" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "agt" = (
@@ -9138,6 +9139,7 @@
 /area/station/crew_quarters/arcade)
 "apd" = (
 /obj/machinery/light_switch/east,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ape" = (
@@ -9312,6 +9314,7 @@
 "apw" = (
 /obj/disposalpipe/segment,
 /obj/machinery/drainage,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
@@ -10696,6 +10699,7 @@
 	dir = 1;
 	name = "camera - game room"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "asg" = (
@@ -11099,14 +11103,14 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atb" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass{
 	name = "glass airlock-'Crew Lounge'"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atc" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/fitness)
@@ -11364,27 +11368,27 @@
 	name = "swimming trunks"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atG" = (
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atH" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atI" = (
 /obj/machinery/computer/tanning{
 	pixel_y = 32
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atJ" = (
 /obj/crematorium/tanning,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "atK" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -11672,14 +11676,14 @@
 	tag = "icon-pool (NORTHWEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "aus" = (
 /obj/pool/perspective{
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "aut" = (
 /obj/pool/perspective{
 	density = 0;
@@ -11699,17 +11703,17 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "auu" = (
 /obj/pool/perspective{
 	dir = 5;
 	tag = "icon-pool (NORTHEAST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "auv" = (
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "auw" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -12013,23 +12017,23 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avb" = (
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avc" = (
 /obj/pool/perspective{
 	dir = 4;
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avd" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ave" = (
 /obj/stool/chair{
 	desc = "";
@@ -12041,7 +12045,7 @@
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avf" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -12334,19 +12338,19 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avP" = (
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avQ" = (
 /obj/item/reagent_containers/food/drinks/water,
 /obj/item/reagent_containers/food/drinks/water,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "avR" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -12655,7 +12659,7 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "awB" = (
 /obj/pool_springboard,
 /obj/pool/perspective{
@@ -12663,7 +12667,7 @@
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "awC" = (
 /obj/stool/chair{
 	desc = "";
@@ -12678,7 +12682,7 @@
 	},
 /obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "awD" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -13022,16 +13026,16 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "axo" = (
 /obj/item/beach_ball,
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "axp" = (
 /obj/towelbin,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "axq" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -13350,7 +13354,7 @@
 	tag = "icon-pool (SOUTHWEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayc" = (
 /obj/pool/perspective,
 /obj/pool/perspective{
@@ -13358,13 +13362,13 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayd" = (
 /obj/fluid_spawner{
 	amount = 2100
 	},
 /turf/simulated/pool/no_animate,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "aye" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -13668,7 +13672,7 @@
 "ayN" = (
 /obj/window/reinforced/south,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayO" = (
 /obj/window/reinforced/south,
 /obj/pool/perspective{
@@ -13676,12 +13680,12 @@
 	tag = "icon-pool (SOUTHWEST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayP" = (
 /obj/window/reinforced/south,
 /obj/pool/perspective,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayQ" = (
 /obj/window/reinforced/south,
 /obj/pool/perspective{
@@ -13689,20 +13693,20 @@
 	tag = "icon-pool (SOUTHEAST)"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayR" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/white,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayS" = (
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/shrub,
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/fitness)
+/area/station/crew_quarters/pool)
 "ayT" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/blue{
@@ -14232,6 +14236,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "purple2"
@@ -14407,6 +14412,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aAy" = (
@@ -15693,6 +15699,7 @@
 /area/station/crew_quarters/fitness)
 "aDh" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDi" = (
@@ -17113,6 +17120,7 @@
 /area/station/solar/east)
 "aGs" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple1"
 	},
@@ -17986,6 +17994,7 @@
 	})
 "aIn" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple2"
@@ -18797,6 +18806,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/orangeblack/side,
 /area/station/storage/tools)
 "aJV" = (
@@ -18968,6 +18978,7 @@
 /area/station/science/testchamber)
 "aKo" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aKp" = (
@@ -24348,6 +24359,7 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTF" = (
@@ -24761,6 +24773,7 @@
 /area/station/ai_monitored/storage/eva)
 "aUl" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "aUm" = (
@@ -25325,6 +25338,7 @@
 "aVw" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -26295,6 +26309,7 @@
 /area/station/medical/cdc)
 "aXr" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
 "aXs" = (
@@ -26892,6 +26907,7 @@
 	name = "monkeyspawn_albert"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "aYs" = (
@@ -27363,6 +27379,7 @@
 	location = "sec";
 	name = "bot navigation beacon"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor{
 	icon_state = "nt_logo";
 	tag = "icon-nt_logo"
@@ -28400,6 +28417,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "baW" = (
@@ -28935,6 +28953,7 @@
 /area/station/crew_quarters/captain)
 "bbS" = (
 /obj/critter/cat/jones,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bbT" = (
@@ -30508,6 +30527,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/lab)
 "beG" = (
@@ -31523,6 +31543,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -31576,6 +31597,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bgJ" = (
@@ -32644,6 +32666,7 @@
 	name = "brig pipe"
 	},
 /obj/machinery/floorflusher/genpop,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/security/brig)
 "biz" = (
@@ -33848,6 +33871,7 @@
 /turf/simulated/floor/damaged4,
 /area/station/science/artifact)
 "bkA" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/neutral/corner{
 	dir = 1
 	},
@@ -36777,6 +36801,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/green/checker,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -38407,6 +38432,7 @@
 	dir = 1;
 	icon_state = "line2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bsM" = (
@@ -39584,6 +39610,7 @@
 /area/station/engine/engineering)
 "buD" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
 "buE" = (
@@ -41518,6 +41545,7 @@
 /area/station/quartermaster/office)
 "byn" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "byo" = (
@@ -46843,6 +46871,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -48928,6 +48957,24 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"cGV" = (
+/turf/simulated/wall/auto/gannets,
+/area/station/crew_quarters/pool)
+"cVs" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"dQO" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"eik" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "enf" = (
 /obj/cable{
 	d1 = 2;
@@ -48959,6 +49006,10 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"hlh" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/engine/substation/west)
 "hLm" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -49010,6 +49061,10 @@
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"iOh" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/engine/substation/east)
 "jgt" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -49029,6 +49084,10 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"jxP" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/plating/airless,
+/area/station/mining/magnet)
 "jAP" = (
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -49042,6 +49101,11 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"jZU" = (
+/obj/machinery/drainage,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/pharmacy)
 "lhP" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -49107,6 +49171,10 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"nkj" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "nIJ" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/hangar/qm)
@@ -49208,6 +49276,14 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"rLd" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rQt" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -49217,6 +49293,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tdg" = (
@@ -49252,6 +49329,18 @@
 "xdU" = (
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
+"xky" = (
+/obj/wingrille_spawn,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/pool)
+"xyj" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/entry{
+	name = "Entry Hallway"
+	})
 
 (1,1,1) = {"
 aaa
@@ -72298,7 +72387,7 @@ bwr
 bxB
 byG
 bzK
-bAT
+hlh
 bCg
 bDn
 bEl
@@ -74598,7 +74687,7 @@ aOh
 bip
 bjI
 bkR
-bmf
+cVs
 bnw
 bos
 bpR
@@ -74832,7 +74921,7 @@ aFf
 aEa
 aHg
 aIi
-beQ
+jZU
 aKG
 aLL
 aNj
@@ -76918,7 +77007,7 @@ bpY
 brb
 bsj
 bsY
-bur
+eik
 bvx
 bwB
 bxP
@@ -78411,7 +78500,7 @@ ajZ
 arc
 arR
 asy
-asZ
+xky
 atF
 aur
 ava
@@ -78668,7 +78757,7 @@ ajZ
 ard
 arR
 asz
-asZ
+xky
 atG
 aus
 avb
@@ -78925,7 +79014,7 @@ ajZ
 are
 arR
 asy
-asZ
+xky
 atG
 aut
 avb
@@ -79696,12 +79785,12 @@ ajZ
 ark
 arR
 asy
-asZ
+xky
 atH
 atG
 avd
 atG
-atG
+dQO
 atG
 atG
 ayR
@@ -79953,7 +80042,7 @@ ajZ
 asj
 arT
 asA
-asZ
+xky
 atI
 atG
 atG
@@ -80210,7 +80299,7 @@ ajZ
 arj
 arR
 asy
-asZ
+xky
 atJ
 auv
 ave
@@ -80467,15 +80556,15 @@ ajZ
 ari
 arR
 asy
-atc
-asZ
-asZ
-asZ
-asZ
-asZ
-asZ
-asZ
-asZ
+cGV
+xky
+xky
+xky
+xky
+xky
+xky
+xky
+xky
 asZ
 aAm
 asZ
@@ -81557,7 +81646,7 @@ bAc
 bFk
 bHi
 bHi
-bHi
+jxP
 bHi
 bHi
 bNn
@@ -83287,7 +83376,7 @@ amT
 ans
 amL
 aoC
-apf
+nkj
 apH
 aqn
 aqP
@@ -85608,7 +85697,7 @@ ati
 atO
 avS
 atU
-atU
+rLd
 auF
 avo
 awd
@@ -85836,7 +85925,7 @@ adf
 ace
 acc
 aeF
-afg
+xyj
 afN
 ago
 ago
@@ -89774,7 +89863,7 @@ bxr
 byt
 bzA
 qfi
-bBW
+iOh
 bDc
 bEh
 bES

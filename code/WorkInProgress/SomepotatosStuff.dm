@@ -72,6 +72,11 @@
 			if(!name)
 				var/area/area = get_area(wp)
 				name = area.name
+#ifdef GPS_MAP_TESTING
+			if(targets[name])
+				boutput( usr, "*** Duplicate waypoint in ([name]): ([targets[name].x],[targets[name].y]) and ([wp.x],[wp.y])" )
+#endif
+
 			targets[name] = wp
 			wtfbyond[++wtfbyond.len] = name
 #ifdef GPS_MAP_TESTING
@@ -82,8 +87,16 @@
 			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
 				path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=max_trav)
 				if(path)
-					boutput( usr, "Area ([area.name]) found in [length(path)]" )
+					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
 					break
+
+	var/list/sorted_names = list()
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
+		sorted_names += landmarks[LANDMARK_GPS_WAYPOINT][wp]
+	sorted_names = sortList(sorted_names)
+	boutput( usr, "::Sorted GPS Waypoints::" )
+	for(var/N in sorted_names)
+		boutput( usr, "[N]" )
 #endif
 
 	if(!targets.len)
