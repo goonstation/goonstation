@@ -607,8 +607,7 @@
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			if(T.air.trace_gases)
-				T.air.trace_gases = null
+			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 

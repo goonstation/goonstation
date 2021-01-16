@@ -62,7 +62,7 @@
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
-			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "weight_machine")
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.transforming = 1
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
@@ -82,7 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
-			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "weight_machine")
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -111,6 +111,7 @@
 			in_use = 1
 			icon_state = "fitnessweight-c"
 			user.transforming = 1
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/obj/decal/W = new /obj/decal/
@@ -139,6 +140,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

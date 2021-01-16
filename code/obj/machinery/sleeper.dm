@@ -220,9 +220,12 @@
 			ui = new(user, src, "Sleeper", src.name)
 			ui.open()
 
-/obj/machinery/sleep_console/portable
-	name = "Port-A-Medbay console"
+/obj/machinery/sleep_console/compact
 	find_sleeper_in_range = 0
+
+	portable
+		name = "Port-A-Medbay console"
+
 
 ////////////////////////////////////////////// Sleeper ////////////////////////////////////////
 
@@ -674,7 +677,7 @@
 		if (!islist(portable_machinery))
 			portable_machinery = list()
 		portable_machinery.Add(src)
-		our_console = new /obj/machinery/sleep_console/portable (src)
+		our_console = new /obj/machinery/sleep_console/compact/portable (src)
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
@@ -764,7 +767,7 @@
 		if (!islist(portable_machinery))
 			portable_machinery = list()
 		portable_machinery.Add(src)
-		our_console = new /obj/machinery/sleep_console/portable (src)
+		our_console = new /obj/machinery/sleep_console/compact (src)
 		our_console.our_sleeper = src
 
 	disposing()

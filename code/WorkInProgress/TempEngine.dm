@@ -44,6 +44,7 @@
 	var/serial_num = "CIRC-FEEDDEADBEEF"
 	var/repairstate = 0
 	var/repair_desc = ""
+	var/variant_b_active = FALSE
 
 	anchored = 1.0
 	density = 1
@@ -65,7 +66,9 @@
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
 		src.serial_num += src.side==1? "L":"R"
-		if(variant_b) src.serial_num += "-[variant_b]"
+		if(variant_b)
+			src.serial_num += "-[variant_b]"
+			variant_b_active = TRUE
 
 	disposing()
 		switch (side)
@@ -347,7 +350,8 @@
 			src.UpdateOverlays(image(open_icon), "open")
 		else
 			src.UpdateOverlays(null, "open")
-		if(src.generator?.variant_b)
+
+		if(src.variant_b_active)
 			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
 		else
 			UpdateOverlays(null, "variant")
@@ -450,7 +454,7 @@
 
 datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
-	value_units = "Pa"
+	value_units = "kPa"
 	min_value = 0
 	max_value = 1e5
 	incr_sm = 10

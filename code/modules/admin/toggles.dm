@@ -319,6 +319,27 @@ var/global/IP_alerts = 1
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
 
+/client/proc/cmd_admin_omnipresence()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Your Mob's Omnipresence"
+	set popup_menu = 0
+	admin_only
+
+	var/omnipresent
+	if(!length(by_cat[TR_CAT_OMNIPRESENT_MOBS]) || !(src.mob in by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		if(alert(usr, "Are you sure you want to see all messages from the whole world? This is very experimental, possibly laggy, clientcrashing and of dubious usefulness.", "Really???", "Yes", "No") != "Yes")
+			return
+		OTHER_START_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = TRUE
+	else
+		OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = FALSE
+	boutput(usr, "<span class='notice'><b>Your omnipresence is now [omnipresent ? "ON" : "OFF"]</b></span>")
+
+	logTheThing("admin", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+	logTheThing("diary", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"

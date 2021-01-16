@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 				DEBUG_MESSAGE("[key_name(owner)] is too low rank to have buildmode [M.name] ([M.type]) and the buildmode is being disposed (min level is [level_to_rank(M.admin_level)] and [owner.ckey] is [owner.holder ? level_to_rank(owner.holder.level) : "not an admin"])")
 				qdel(M)
 				continue
-			if (!mode)
+			if (!mode || istype(M, /datum/buildmode/spawn_single))
 				select_mode(M)
 			modes_cache += M.name
 			modes_cache[M.name] = M

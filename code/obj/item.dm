@@ -69,6 +69,8 @@
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 
+	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
+
 	var/list/module_research = null//list()
 	var/module_research_type = null
 	var/module_research_no_diminish = 0
@@ -253,17 +255,17 @@
 				burn_type = 0
 
 		if (src.material.triggersOnLife.len)
-			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
 		if (src.material && src.material.triggersOnLife.len)
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
 /obj/item/New()
@@ -535,9 +537,10 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if(ismob(src.loc) && !isrobot(src.loc)) // aaaaaa borgs
-		var/mob/holding_mob = src.loc
-		holding_mob.u_equip(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
 		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)

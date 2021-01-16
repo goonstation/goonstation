@@ -31101,7 +31101,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "jey" = (
-/obj/bookshelf/persistent{
+/obj/bookshelf{
 	pixel_y = 28
 	},
 /turf/simulated/floor/white,
@@ -68008,7 +68008,6 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/science/lobby)
 "uhk" = (
-/obj/machinery/floorflusher/genpop_n,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -68017,6 +68016,7 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 4
 	},
+/obj/machinery/floorflusher/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "uhs" = (
@@ -71529,11 +71529,6 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "vkg" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor/redblack,

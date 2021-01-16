@@ -352,16 +352,33 @@
 			O.set_loc(get_turf(user))
 
 		SPAWN_DBG(0.5 SECONDS)
-			if (istype(O, /obj/item/raw_material/))
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>",\
-				"<span class='notice'>You begin quickly stuffing materials into [src]!</span>")
+			var/stuffed = FALSE
+			var/list/draggable_types = list(
+				/obj/item/plant = "produce",
+				/obj/item/reagent_containers/food/snacks = "food",
+				/obj/item/casing = "ammo casings",
+				/obj/item/raw_material = "materials",
+				/obj/item/material_piece = "processed materials",
+				/obj/item/paper = "paper",
+				/obj/item/tile = "floor tiles")
+			for(var/drag_type in draggable_types)
+				if(!istype(O, drag_type))
+					continue
+				stuffed = TRUE
+				var/type_name = draggable_types[drag_type]
+				user.visible_message("<span class='notice'>[user] begins quickly stuffing [type_name] into [src]!</span>",\
+				"<span class='notice'>You begin quickly stuffing [type_name] into [src]!</span>")
 				var/staystill = user.loc
-				for (var/obj/item/raw_material/M in view(1,user))
-					if (M.material && M.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(M.material.getProperty("radioactive") / 2, 20)))*10, 2)
-					if (M.loc == src || M.loc == src.loc) // we're already there!
+				for (var/obj/thing in view(1,user))
+					if(!istype(thing, drag_type))
 						continue
-					M.set_loc(src.loc)
+					if (thing.material && thing.material.getProperty("radioactive") > 0)
+						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20)))*10, 2)
+					if (thing in user)
+						continue
+					if (thing.loc == src || thing.loc == src.loc) // we're already there!
+						continue
+					thing.set_loc(src.loc)
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -369,60 +386,11 @@
 						break
 					if (T.contents.len >= src.max_capacity)
 						break
-				for (var/obj/item/material_piece/M in view(1,user))
-					if (M.material && M.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(M.material.getProperty("radioactive") / 2, 20)))*10, 2)
-					if (M.loc == src || M.loc == src.loc) // we're already there!
-						continue
-					M.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				user.show_text("You finish stuffing materials into [src]!", "blue")
+				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
 					if (src.open)
 						src.close()
-
-			else if (istype(O, /obj/item/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/))
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing produce into [src]!</span>",\
-				"<span class='notice'>You begin quickly stuffing produce into [src]!</span>")
-				var/staystill = user.loc
-				for (var/obj/item/plant/P in view(1,user))
-					if (P in user)
-						continue
-					if (P.loc == src || P.loc == src.loc) // we're already there!
-						continue
-					P.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				for (var/obj/item/reagent_containers/food/snacks/F in view(1,user))
-					if (F in user)
-						continue
-					if (F.loc == src || F.loc == src.loc) // we're already there!
-						continue
-					F.set_loc(src.loc)
-					sleep(0.5)
-					if (!src.open)
-						break
-					if (user.loc != staystill)
-						break
-					if (T.contents.len >= src.max_capacity)
-						break
-				user.show_text("You finish stuffing produce into [src]!", "blue")
-				SPAWN_DBG(0.5 SECONDS)
-					if (src.open)
-						src.close()
-
-			else
+			if(!stuffed)
 				if(check_if_enterable(O))
 					O.set_loc(src.loc)
 					if (user != O)

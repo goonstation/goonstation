@@ -45,6 +45,32 @@
 
 	return
 
+/proc/equip_conspirator(mob/living/carbon/human/traitor_mob)
+	if (!(traitor_mob && ishuman(traitor_mob)))
+		return
+
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+		var/datum/game_mode/conspiracy/C = ticker.mode
+		var/the_frequency = C.agent_radiofreq
+
+		var/obj/item/device/radio/headset/H
+		if (istype(traitor_mob.ears, /obj/item/device/radio/headset))
+			H = traitor_mob.ears
+		else
+			H = new /obj/item/device/radio/headset(traitor_mob)
+			if (!traitor_mob.r_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_r_store)
+			else if (!traitor_mob.l_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_l_store)
+			else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
+			else
+				traitor_mob.put_in_hand_or_drop(H)
+		H.secure_classes["z"] = RADIOCL_SYNDICATE
+		H.set_secure_frequency("z",the_frequency)
+
+	SHOW_CONSPIRACY_TIPS(traitor_mob)
+
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
