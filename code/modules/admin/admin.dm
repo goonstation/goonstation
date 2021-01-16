@@ -2129,7 +2129,7 @@ var/global/noir = 0
 				alert("You need to be at least a Primary Adminstrator to promote or demote.")
 
 		if ("object_list")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_SA)
 				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_PA))
 					var/atom/loc = usr.loc
 

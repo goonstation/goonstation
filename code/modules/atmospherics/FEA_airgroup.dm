@@ -171,12 +171,12 @@
 						if(!self_group_borders)
 							self_group_borders = list()
 						self_group_borders += border_tile
-					else
+					else if(enemy_tile.turf_flags & IS_TYPE_SIMULATED)
 						// Tile is a border with a singleton, not a group in group processing mode.
 						// Build individual border list
 						if(!border_individual)
 							border_individual = list()
-						border_individual += enemy_tile
+						border_individual |= enemy_tile
 
 						// Build self-tile-border list
 						if(!self_tile_borders)
@@ -323,11 +323,16 @@
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
 
+		var/totalPressure = 0
 		for(var/turf/simulated/member as() in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
-
+			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
 			LAGCHECK(LAG_REALTIME)
+
+		if(totalPressure / members.len < 5)
+			resume_group_processing()
+			return
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			for(var/turf/simulated/member as() in members)

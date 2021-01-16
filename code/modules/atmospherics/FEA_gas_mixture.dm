@@ -138,9 +138,7 @@ What are the archived variables for?
 		var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
 		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles + rad_particles?.moles)
 	. = graphic != graphic_archived
-#ifndef ATMOS_ARCHIVING
 	graphic_archived = graphic
-#endif
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
