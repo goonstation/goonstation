@@ -598,11 +598,6 @@ proc
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
 
-	New()
-		..()
-		if(src.z != Z_LEVEL_STATION) // ugly hack so viewports work and visual mirrors / noneuclidean space does too
-			src.vis_flags |= VIS_HIDE
-
 turf
 	var
 		RL_ApplyGeneration = 0
