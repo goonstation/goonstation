@@ -41,7 +41,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if(src.bioHolder && src.bioHolder.HasEffect("mute"))
+					if(src.bioHolder?.HasEffect("mute"))
 						var/list/mimescreams = list("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
 						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
 						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")
@@ -2196,4 +2196,3 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
-
