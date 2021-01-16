@@ -306,7 +306,7 @@ turf
 						if(!istype(T) || (T.parent!=parent))
 
 							//See what kind of border it is
-							if(istype(T,/turf/space))
+							if(istype(T,/turf/space) && !istype(T,/turf/space/fluid))
 								if(parent.space_borders)
 									parent.space_borders |= src
 								else
@@ -372,7 +372,7 @@ turf
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
 								possible_fire_spreads += enemy_tile
-						else
+						else if(!istype(enemy_tile, /turf/space/fluid))
 							connection_difference = mimic_air_with_tile(enemy_tile)
 								//bordering a tile with fixed air properties
 
