@@ -149,9 +149,9 @@
 			animate(img, alpha= 255, transform=xf,time=2)
 
 			img2.alpha = 0
-			animate(img2, time = 0.5 SECONDS, loop=-1 ) //noop to delay for img and maintain illuminated state
-			animate(alpha = 0, time = 2 SECONDS, loop=-1, easing = CUBIC_EASING| EASE_OUT )
-			animate(alpha = 80, time = 1 SECONDS, loop=-1, easing = BACK_EASING | EASE_OUT )
+			animate(img2, time = 0.5 SECONDS, loop = -1 ) //noop to delay for img and maintain illuminated state
+			animate(alpha = 0, time = 2 SECONDS, loop = -1, easing = CUBIC_EASING | EASE_OUT )
+			animate(alpha = 80, time = 1 SECONDS, loop = -1, easing = BACK_EASING | EASE_OUT )
 			sleep(0.1 SECONDS)
 
 /mob/proc/removeGpsPath(doText = 1)
