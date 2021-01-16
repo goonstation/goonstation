@@ -1159,12 +1159,12 @@
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc)
-					newcase.imp = I
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
+					//newcase.imp = I
 					I.on_remove(target)
 					target.implant.Remove(I)
-					I.set_loc(newcase)
-					newcase.icon_state = "implantcase-b"
+					//I.set_loc(newcase)
+					//newcase.icon_state = "implantcase-b"
 
 		target.set_loc(grinder)
 		grinder.occupant = target

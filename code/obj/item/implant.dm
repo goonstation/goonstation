@@ -1237,8 +1237,13 @@ THROWING DARTS
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
 
-/obj/item/implantcase/New()
-	src.imp = new implant_type(src)
+/obj/item/implantcase/New(obj/item/implant/usedimplant = null)
+	if (usedimplant && istype(usedimplant))
+		src.imp = usedimplant
+		imp.set_loc(src)
+	else
+		src.imp = new implant_type(src)
+	update()
 	..()
 	return
 
