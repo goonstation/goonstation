@@ -71,16 +71,15 @@ export const ListInput = (props, context) => {
                     direction = -1;
                   }
 
-                  let index = 0;
-                  for (index; index < buttons.length; index++) {
-                    if (buttons[index] === selectedButton) break;
+                  let index = buttons.findIndex(selectedButton);
+                  if (index === -1) {
+                    index = 0;
                   }
-                  index += direction;
-                  if (index < 0) index = buttons.length - 1;
-                  else if (index >= buttons.length) index = 0;
-                  setSelectedButton(buttons[index]);
+                  index = (index + direction) % buttons.length;
+                  const button = buttons[index];
+                  setSelectedButton(button);
                   setLastCharCode(null);
-                  document.getElementById(buttons[index]).focus();
+                  document.getElementById(button).focus();
                   return;
                 }
 
