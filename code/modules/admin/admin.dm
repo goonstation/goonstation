@@ -2130,7 +2130,7 @@ var/global/noir = 0
 
 		if ("object_list")
 			if (src.level >= LEVEL_SA)
-				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_PA))
+				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_SA))
 					var/atom/loc = usr.loc
 
 					var/type = href_list["type"]
@@ -2148,7 +2148,7 @@ var/global/noir = 0
 							removed_paths += dirty_path
 						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 							removed_paths += dirty_path
-						else if (ispath(path, /mob) && src.level < LEVEL_PA)
+						else if (ispath(path, /mob) && src.level < LEVEL_SA)
 							removed_paths += dirty_path
 						else
 							paths += path
