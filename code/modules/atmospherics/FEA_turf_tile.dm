@@ -372,7 +372,7 @@ turf
 								if(!possible_fire_spreads)
 									possible_fire_spreads = list()
 								possible_fire_spreads += enemy_tile
-						else
+						else if(!istype(enemy_tile, /turf/space/fluid))
 							connection_difference = mimic_air_with_tile(enemy_tile)
 								//bordering a tile with fixed air properties
 
