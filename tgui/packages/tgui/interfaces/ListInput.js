@@ -65,10 +65,11 @@ export const ListInput = (props, context) => {
                 }
                 lastScrollTime = performance.now() + 125;
 
-                if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN)
-                {
+                if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN) {
                   let direction = 1;
-                  if (e.keyCode === ARROW_KEY_UP) direction = -1;
+                  if (e.keyCode === ARROW_KEY_UP) {
+                    direction = -1;
+                  }
 
                   let index = 0;
                   for (index; index < buttons.length; index++) {
@@ -100,9 +101,9 @@ export const ListInput = (props, context) => {
                   }
                 }
                 else {
-                  const resultArray = displayedArray.filter(value =>
+                  const resultArray = displayedArray.filter(value => (
                     value.substring(0, 1).toLowerCase() === charCode
-                  );
+                  ));
 
                   if (resultArray.length > 0) {
                     setSearchArray(resultArray);
@@ -143,7 +144,7 @@ export const ListInput = (props, context) => {
                       selected={selectedButton === button}
                       onClick={() => {
                         if (selectedButton === button) {
-                          act("choose", { choice: button });
+                          act('choose', { choice: button });
                         }
                         else {
                           setSelectedButton(button);
@@ -166,9 +167,9 @@ export const ListInput = (props, context) => {
               <Input
                 fluid
                 onInput={(e, value) => setDisplayedArray(
-                  buttons.filter(val =>
+                  buttons.filter(val => (
                     val.toLowerCase().search(value.toLowerCase()) !== -1
-                  )
+                  ))
                 )}
               />
             </Flex.Item>
@@ -181,7 +182,7 @@ export const ListInput = (props, context) => {
                   color="bad"
                   lineHeight={2}
                   content="Cancel"
-                  onClick={() => act("cancel")}
+                  onClick={() => act('cancel')}
                 />
               </Flex.Item>
               <Flex.Item grow={1} basis={0} ml={1}>
@@ -191,7 +192,7 @@ export const ListInput = (props, context) => {
                   lineHeight={2}
                   content="Confirm"
                   disabled={selectedButton === null}
-                  onClick={() => act("choose", { choice: selectedButton })}
+                  onClick={() => act('choose', { choice: selectedButton })}
                 />
               </Flex.Item>
             </Flex>
@@ -205,8 +206,7 @@ export const ListInput = (props, context) => {
 export const Loader = props => {
   const { value } = props;
   return (
-    <div
-      className="ListInput__Loader">
+    <div className="ListInput__Loader">
       <Box
         className="ListInput__LoaderProgress"
         style={{
