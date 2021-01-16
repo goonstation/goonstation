@@ -366,6 +366,15 @@
 			coin.pixel_x = rand(-9, 9)
 			coin.pixel_y = rand(0, 6)
 
+/obj/storage/crate/chest/spacebux
+	New()
+		..()
+		var/bux_count = rand(3, 10)
+		for(var/i in 1 to bux_count)
+			var/obj/item/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
+			bux.pixel_x = rand(-9, 9)
+			bux.pixel_y = rand(0, 6)
+
 // Gannets' Nuke Ops Specialist Class Crates
 
 /obj/storage/crate/classcrate
