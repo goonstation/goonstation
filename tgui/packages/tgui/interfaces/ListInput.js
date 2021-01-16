@@ -10,7 +10,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Section, Input } from '../components';
 import { Window } from '../layouts';
 
-let lastScrollTime = 0;
+let nextScrollTime = 0;
 
 export const ListInput = (props, context) => {
   const { act, data } = useBackend(context);
@@ -58,10 +58,10 @@ export const ListInput = (props, context) => {
               tabIndex={0}
               onKeyDown={e => {
                 e.preventDefault();
-                if (lastScrollTime > performance.now()) {
+                if (nextScrollTime > performance.now()) {
                   return;
                 }
-                lastScrollTime = performance.now() + 125;
+                nextScrollTime = performance.now() + 125;
 
                 if (e.keyCode === ARROW_KEY_UP
                   || e.keyCode === ARROW_KEY_DOWN)
