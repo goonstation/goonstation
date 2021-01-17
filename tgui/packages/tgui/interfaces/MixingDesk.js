@@ -71,8 +71,6 @@ export const MixingDesk = (props, context) => {
     }
   };
 
-  const ellipsis = text => text.length > 18 ? text.substring(0, 18) + "…" : text;
-
   return (
     <Window
       height={375}
@@ -87,7 +85,7 @@ export const MixingDesk = (props, context) => {
             { voices.map((entry, id) => (
               <LabeledList.Item
                 key={entry["name"]}
-                label={(id + 1) + " " + (entry["accent"] ? ellipsis(entry["name"]) + " [" + entry["accent"] + "]" : ellipsis(entry["name"]))}
+                label={(id + 1) + " " + (entry["accent"] ? truncate(entry["name"], 18) + " [" + entry["accent"] + "]" : truncate(entry["name"], 18))}
                 labelColor={id + 1 === selected_voice ? "red" : "label"}>
                 <Button
                   icon="trash-alt"
