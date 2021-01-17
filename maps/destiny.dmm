@@ -1027,11 +1027,6 @@
 	dir = 8;
 	pixel_x = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -4744,11 +4739,6 @@
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -35778,11 +35768,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/white/grime,
 /area/station/crew_quarters/showers{
 	name = "Pool Shower Room"
