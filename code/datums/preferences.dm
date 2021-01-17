@@ -159,10 +159,7 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		if (isnull(src.preview))
-			src.preview = new(usr.client)
-
-		src.preview.update_appearance(src.AH, mutantRace, src.spessman_direction)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -252,39 +249,25 @@ datum/preferences
 		data_cache["script"] = {"
 [chui_toggle_script_jqery_thing]
 <script type='text/javascript'>
+function update_image() {
+	var id = $(this).attr('id');
+	var r = $(this).val();
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '?src=\ref[src];preferences=1;id=' + id + ';style=' + encodeURIComponent(r), false);
+	xhr.send();
+};
 $(function() {
-	function SwitchPic(picID) {
-		var pic = document.getElementById(picID);
-		var d = new Date();
-		var image='previewicon.png?'+d.getMilliseconds();
-		setTimeout(function(){
-			pic.src = image;
-
-			}, 500)
-	}
-	//stole this debounce function from Kfir Zuberi at https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
-	function debounce (func, interval) {
-		var timeout;
-		return function () {
-			var context = this, args = arguments;
-			var later = function () {
-				timeout = null;
-				func.apply(context, args);
-			};
-			clearTimeout(timeout);
-			timeout = setTimeout(later, interval || 200);
-		}
-	}
-	 var update_image = debounce(function(){
-			var id = $(this).attr('id')
-		var r = $("#" + id + " option:selected" ).text();
-		window.location='byond://?src=\ref[src];preferences=1;id='+id+';style='+encodeURIComponent(r);
-		SwitchPic("sprite_preview");
-	}, 250);
-	$(function() {
-		$('select').change(update_image)
-	})
+	$('select').change(update_image);
 });
+function updateCharacterPreviewPos() {
+	var rect = document.getElementById("sprite_preview").getBoundingClientRect();
+	window.location = ('byond://winset?id=preferences.preferences_character_preview'
+		+ ';pos=' + rect.left + ',' + rect.top
+		+ ';size=' + rect.width + 'x' + rect.height);
+}
+$(window).resize(updateCharacterPreviewPos);
+$(window).scroll(updateCharacterPreviewPos);
+$(updateCharacterPreviewPos);
 </script>"}
 
 		LAGCHECK(LAG_HIGH)
@@ -827,11 +810,9 @@ $(function() {
 			dat += data_cache[x]
 
 		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
-		if (src.preview)
-			src.preview.Show()
-			winset(user, "preferences", list2params(list(
-				"on-close" = ".winset \"[src.preview.preview_id].is-visible=0\"",
-			)))
+		if (isnull(src.preview))
+			src.preview = new(user.client, "preferences", "preferences_character_preview")
+			src.update_preview_icon()
 
 
 	//id, The name of the Select table ID to be used.

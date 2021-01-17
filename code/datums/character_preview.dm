@@ -1,49 +1,67 @@
 datum/character_preview
 	var/global/max_preview_id = 0
-	var/preview_id = 0
+	var/preview_id
+	var/window_id
 	var/client/viewer
 	var/obj/screen/handler
 	var/mob/living/carbon/human/preview_mob
 
-	New(client/viewer)
+	window
+		New(client/viewer)
+			var/winid = "preview_[max_preview_id]"
+
+			winclone(viewer, "blank-map", winid)
+
+			winset(viewer, winid, list2params(list(
+				"size" = "128,128",
+				"title" = "Character Preview",
+				"can-close" = FALSE,
+				"can-resize" = FALSE,
+			)))
+
+			. = ..(viewer, winid)
+
+		disposing()
+			. = ..()
+			SPAWN_DBG(0)
+				if (src.viewer)
+					winset(src.viewer, "[src.window_id]", "parent=")
+
+		proc/Show(shown = TRUE)
+			winshow(src.viewer, src.window_id, shown)
+
+	New(client/viewer, window_id, control_id = null)
 		. = ..()
+
 		src.viewer = viewer
-		src.preview_id = "preview_[max_preview_id++]"
-		winclone(src.viewer, "blank-map", src.preview_id)
+		if (isnull(control_id))
+			control_id = "map_preview_[max_preview_id++]"
+		src.preview_id = "[control_id]"
+		src.window_id = window_id
 
-		winset(viewer, "[src.preview_id]", list2params(list(
-			"size" = "128,128",
-			"title" = "Character Preview",
-			"can-close" = FALSE,
-			"can-resize" = FALSE,
-		)))
-
-		winset(viewer, "map_[src.preview_id]", list2params(list(
-			"parent" = src.preview_id,
+		winset(viewer, src.preview_id, list2params(list(
+			"parent" = src.window_id,
 			"type" = "map",
 			"pos" = "0,0",
 			"size" = "128,128",
-			"anchor1" = "0,0",
-			"anchor2" = "100,100",
 		)))
 
 		src.handler = new
 		src.handler.plane = 0
 		src.handler.mouse_opacity = 0
-		src.handler.screen_loc = "map_[src.preview_id]:1,1"
+		src.handler.screen_loc = "[src.preview_id]:1,1"
 		src.viewer.screen += src.handler
 
 		var/mob/living/carbon/human/H = new()
 		src.preview_mob = H
-		H.screen_loc = "map_[src.preview_id];1,1"
+		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
 		src.viewer.screen += H
 
 	disposing()
 		SPAWN_DBG(0)
 			if (src.viewer)
-				winset(src.viewer, "[src.preview_id].map_[src.preview_id]", "parent=none")
-				winset(src.viewer, "[src.preview_id]", "parent=none")
+				winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
 		if (src.handler)
 			if (src.viewer)
 				src.viewer.screen -= src.handler
@@ -55,10 +73,7 @@ datum/character_preview
 		. = ..()
 
 	proc/GetID()
-		. = "[src.preview_id].map_[src.preview_id]"
-
-	proc/Show(shown = TRUE)
-		winshow(src.viewer, src.preview_id, shown)
+		. = "[src.window_id].[src.preview_id]"
 
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
 		src.preview_mob.dir = direction
