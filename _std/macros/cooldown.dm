@@ -14,7 +14,7 @@
 
 // the same thing but uses src as the cooldown owner and generates the ID based on the current proc's / verb's path
 #ifdef SPACEMAN_DMM // spacemandmm can't understand the fine art of the "many dots" syntax
-#define PROC_ON_COOLDOWN(DELAY) FALSE
+#define PROC_ON_COOLDOWN(DELAY) UNLINT(FALSE)
 #else
 #define PROC_ON_COOLDOWN(DELAY) ON_COOLDOWN(src, "[....]", DELAY)
 #endif

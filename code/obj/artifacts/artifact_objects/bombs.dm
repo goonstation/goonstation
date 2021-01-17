@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		O.ArtifactDestroyed()
 
-/obj/artifact/bomb/devastating
+/*/obj/artifact/bomb/devastating
 	name = "artifact devastating bomb"
 	associated_datum = /datum/artifact/bomb/explosive/devastating
 
@@ -111,6 +111,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.exp_hevy *= rand(4,6)
 		src.exp_lite *= rand(5,7)
 		src.explode_delay *= 1.5 //Was too long, nobody would know it was a bomb.ZeWaka
+*/
 
 // black hole bomb
 

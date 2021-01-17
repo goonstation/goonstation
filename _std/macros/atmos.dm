@@ -1,4 +1,32 @@
-/// in kPa*L/(K*mol)
+// debugging stuff, possibly laggy, turn off when not using
+/// Enables debug overlay which counts process_cell() calls per turf (viewable through info-overlays)
+// #define ATMOS_PROCESS_CELL_STATS_TRACKING
+/// Enables debug overlay which counts all atmos operations per turf (viewable through info-overlays)
+// #define ATMOS_TILE_STATS_TRACKING
+/// Puts a list of turfs which get processed a lot into `global.hotly_processed_turf` for debugging
+// #define KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS 1
+
+#if defined(ATMOS_TILE_STATS_TRACKING) && defined(KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS)
+	#define ATMOS_TILE_OPERATION_DEBUG(turf) do { \
+		turf?.atmos_operations++; \
+		turf?.max_atmos_operations = max(turf?.max_atmos_operations, turf?.atmos_operations); \
+		if(turf?.atmos_operations > air_master.current_cycle * KEEP_A_LIST_OF_HOTLY_PROCESSED_TURFS) hotly_processed_turfs |= turf ;\
+		else hotly_processed_turfs -= turf ;\
+		} while(0)
+#elif defined(ATMOS_TILE_STATS_TRACKING)
+	#define ATMOS_TILE_OPERATION_DEBUG(turf) do { \
+		turf?.atmos_operations++; \
+		turf?.max_atmos_operations = max(turf?.max_atmos_operations, turf?.atmos_operations); \
+		} while(0)
+#else
+	#define ATMOS_TILE_OPERATION_DEBUG(turf)
+#endif
+
+// end debugging stuff
+
+
+
+/// in kPa * L/(K * mol)
 #define R_IDEAL_GAS_EQUATION	8.31
 /// 1atm, now in kPa
 #define ONE_ATMOSPHERE		101.325
@@ -14,8 +42,43 @@
 /// N2 standard value (79%)
 #define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD
 
-/// Moles in a standard cell after which plasma is visible
-#define MOLES_PLASMA_VISIBLE	2
+/// Moles in a standard cell after which visible gases are visible
+#define MOLES_GAS_VISIBLE	1
+
+/// Plasma Tile Overlay Id
+#define GAS_IMG_PLASMA 0
+/// N20 Tile Overlay Id
+#define GAS_IMG_N2O 1
+
+/// Enables gas overlays to have continuous opacity based on molarity
+#define ALPHA_GAS_OVERLAYS
+/// Factor that reduces the number of gas opacity levels, higher = better performance and worse visuals
+#define ALPHA_GAS_COMPRESSION 4
+
+#ifdef ALPHA_GAS_OVERLAYS
+/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
+#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) do { \
+	var/_base_alpha = 0; \
+	if(UNLINT(OVERLAY_ID == GAS_IMG_N2O)) {if(MOLES > MOLES_GAS_VISIBLE / 2) _base_alpha = 95 + MOLES / 8 * 180;} \
+	else {if(MOLES > MOLES_GAS_VISIBLE) _base_alpha = 30 + MOLES / 40 * 125;} \
+	VISUALS_STATE |= (round(min(255, _base_alpha) / ALPHA_GAS_COMPRESSION) << (OVERLAY_ID * 8)); \
+	} while(0)
+/// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
+#define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
+	if(VISUALS_STATE & (0xff << (OVERLAY_ID * 8))) {\
+		gas_overlays[1 + OVERLAY_ID].alpha = ((VISUALS_STATE >> (OVERLAY_ID * 8)) & 0xff) * ALPHA_GAS_COMPRESSION ; \
+		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID]) \
+	}
+#else
+/// Given gas mixture's graphics var and gas overlay id and gas moles sets the graphics so the gas is rendered if there are right conditions
+#define UPDATE_GAS_MIXTURE_GRAPHIC(VISUALS_STATE, OVERLAY_ID, MOLES) \
+	if(MOLES > MOLES_GAS_VISIBLE) \
+		VISUALS_STATE |= (1 << OVERLAY_ID)
+/// Given the VISUALS_STATE bit field and gas overlay id as defined above it possibly adds the right overlay to TILE_GRAPHIC
+#define UPDATE_TILE_GAS_OVERLAY(VISUALS_STATE, TILE_GRAPHIC, OVERLAY_ID) \
+	if(VISUALS_STATE & (1 << OVERLAY_ID)) \
+		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID])
+#endif
 
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
@@ -195,8 +258,7 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/total_moles_full()
 	. = BASE_GASES_TOTAL_MOLES(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.moles
 
 /// Returns total moles of a given gas mixture
@@ -209,7 +271,7 @@ proc/gas_text_color(gas_id)
 #define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
 	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
 	if(length(MIXTURE.trace_gases)) { \
-		for(var/datum/gas/trace_gas in MIXTURE.trace_gases) { \
+		for(var/datum/gas/trace_gas as() in MIXTURE.trace_gases) { \
 			_moles += trace_gas.moles; \
 		} \
 	} \
@@ -224,16 +286,14 @@ proc/gas_text_color(gas_id)
 
 /datum/gas_mixture/proc/heat_capacity_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.moles * trace_gas.specific_heat
 
 #define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
 
 /datum/gas_mixture/proc/heat_capacity_archived_full()
 	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/x in trace_gases)
-		var/datum/gas/trace_gas = x
+	for(var/datum/gas/trace_gas as() in trace_gases)
 		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
 
 #define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))

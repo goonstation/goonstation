@@ -89,7 +89,6 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl"
-	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
 		..()
@@ -365,6 +364,7 @@
 	icon_state = "cursedclown"
 	item_state = "cclown_shoes"
 	step_sound = "cluwnestep"
+	compatible_species = list("human", "cow")
 	cant_self_remove = 1
 	cant_other_remove = 1
 	step_lots = 1

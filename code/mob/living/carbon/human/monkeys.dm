@@ -32,6 +32,7 @@
 	name = "Mr. Muggles"
 	real_name = "Mr. Muggles"
 	gender = "male"
+	ai_offhand_pickup_chance = 1 // very civilized
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -41,6 +42,7 @@
 	name = "Mrs. Muggles"
 	real_name = "Mrs. Muggles"
 	gender = "female"
+	ai_offhand_pickup_chance = 1 // also very civilized
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -50,7 +52,7 @@
 	name = "Mr. Rathen"
 	real_name = "Mr. Rathen"
 	gender = "male"
-
+	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -60,6 +62,7 @@
 	name = "Albert"
 	real_name = "Albert"
 	gender = "male"
+	ai_offhand_pickup_chance = 10 // more curious than most monkeys
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -70,6 +73,7 @@
 	name = "Von Braun"
 	real_name = "Von Braun"
 	gender = "male"
+	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -80,6 +84,7 @@
 	name = "Oppenheimer"
 	real_name = "Oppenheimer"
 	gender = "male"
+	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -92,6 +97,7 @@
 	gender = "male"
 	New()
 		..()
+		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
 
@@ -99,6 +105,7 @@
 	name = "Tanhony"
 	real_name = "Tanhony"
 	gender = "female"
+	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -108,6 +115,7 @@
 	name = "Krimpus"
 	real_name = "Krimpus"
 	gender = "female"
+	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
@@ -117,11 +125,17 @@
 	name = "Monsieur Stirstir"
 	real_name = "Monsieur Stirstir"
 	gender = "male"
+	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
+			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
+				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
+				idk.set_loc(src)
+				src.chest_item = idk
+				src.chest_item_sewn = 1
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
@@ -153,7 +167,7 @@
 		if(ai_aggressive)
 			return ..()
 
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		..()
 		if (src.ai_state == 0)
@@ -166,7 +180,7 @@
 					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
 						src.ai_target = bag
 						src.target = bag
-						src.ai_state = 2
+						src.ai_state = AI_ATTACKING
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
@@ -197,7 +211,7 @@
 			return ..()
 		//src.ai_aggressive = 1
 		src.target = T
-		src.ai_state = 2
+		src.ai_state = AI_ATTACKING
 		src.ai_threatened = world.timeofday
 		src.ai_target = T
 		src.shitlist[T] ++
@@ -213,7 +227,7 @@
 				continue
 			//pal.ai_aggressive = 1
 			pal.target = T
-			pal.ai_state = 2
+			pal.ai_state = AI_ATTACKING
 			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
@@ -222,7 +236,7 @@
 				src.emote("scream")
 
 	proc/shot_by(var/atom/A as mob|obj)
-		if (src.ai_state == 2)
+		if (src.ai_state == AI_ATTACKING)
 			return
 		if (ishuman(A))
 			src.was_harmed(A)
@@ -236,7 +250,7 @@
 			return 0
 		if (src.health <= 0 || (get_dist(src, T) >= 7))
 			if(src.health <= 0)
-				src.ai_state = 5
+				src.ai_state = AI_FLEEING
 			else
 				src.ai_state = 0
 				src.target = null
@@ -382,7 +396,7 @@
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
-		src.ai_state = 5
+		src.ai_state = AI_FLEEING
 		src.ai_target = AM
 		src.target = AM
 
