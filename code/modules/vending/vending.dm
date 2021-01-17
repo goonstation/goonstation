@@ -1131,6 +1131,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/device/light/flashlight/penlight, 4)
+		product_list += new/datum/data/vending_product(/obj/item/medical/medicaldiagnosis/stethoscope, 4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_surgery_guide, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
