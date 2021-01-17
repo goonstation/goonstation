@@ -13,15 +13,18 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/warning_initial = "begins catastrophically overloading!"
 	var/warning_final = "reaches critical energy levels!"
 	var/text_disarmed = "goes quiet."
+	var/text_cooldown = "makes a subdued noise."
 	var/text_dud = "sputters and rattles a bit, then falls quiet."
 	var/flascustomization_first_color = "#FF0000"
 	var/sound/alarm_initial = "sound/machines/lavamoon_plantalarm.ogg"
 	var/sound/alarm_during = "sound/machines/alarm_a.ogg"
 	var/sound/alarm_final = "sound/machines/engine_alert1.ogg"
+	var/sound/sound_cooldown = "sound/machines/weaponoverload.ogg"
 	var/doAlert = 0
 	var/blewUp = 0
 	var/animationScale = 3
 	var/detonation_time = INFINITY
+	var/lightColor = list(255,255,255,255)
 	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
@@ -35,22 +38,28 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	effect_activate(var/obj/O)
 		if (..())
 			return
+		var/turf/T = get_turf(O)
+		src.detonation_time = TIME + src.explode_delay
+		if(doAlert && ON_COOLDOWN(O, "alertArm", 10 MINUTES))
+			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
+			playsound(T, sound_cooldown, 100, 1)
+			spawn(3 SECONDS)
+				O.ArtifactDeactivated() // lol get rekt spammer
+			return
 		if (explode_delay < 1)
 			deploy_payload(O)
 			return
 
-		src.detonation_time = TIME + src.explode_delay
 
 		// this is all just fluff
-		var/turf/T = get_turf(O)
 		if (warning_initial)
 			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
 		if (alarm_initial)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
-		if (doAlert && !ON_COOLDOWN(O, "alertArm", 10 MINUTES)) // spam protection
+		if (doAlert) // spam protection
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
-		O.add_simple_light("artbomb", list(255,255,255,255))
+		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
 
