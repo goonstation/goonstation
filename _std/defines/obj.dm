@@ -12,4 +12,4 @@
 #define MATERIAL_ALPHA_OPACITY 190
 
 /// Overrides multicontext menu popup when an object is clicked by a player who is holding an item
-#define IGNORE_CONTEXT_CLICK_HELD 1
+#define IGNORE_CONTEXT_CLICK_HELD 16

@@ -1,8 +1,8 @@
 //defines used later for custom cake utility procs
 #define CAKE_MODE_CAKE 1
 #define CAKE_MODE_SLICE 2
-#define CAKE_MODE_STACK 1
-#define CAKE_MODE_BUILD 2
+#define CAKE_MODE_STACK 4
+#define CAKE_MODE_BUILD 9
 
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 	name = "yellow cake"
@@ -43,12 +43,11 @@
 	var/amount2 //holds the amount of slices in cake 2 (not entirely, but its used for a bit of math later)
 	var/amount3 //same for cake 3
 	var/cake_candle
-	var/litfam //is the cake lit (candle)
+	var/litfam = FALSE //is the cake lit (candle)
 
 	New()
 		..()
 		contextLayout = new /datum/contextLayout/default()
-		src.contextActions = list()
 
 	/*_______*/
 	/*Utility*/
@@ -86,7 +85,7 @@
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
-		if(!(tube.reagents.total_volume >= 25))
+		if(tube.reagents.total_volume < 25)
 			user.show_text("The icing tube isn't full enough to frost the cake!","red")
 			return
 		var/frostingtype
@@ -119,7 +118,7 @@
 			if(CAKE_MODE_STACK)
 				if(original_clayer==2)
 					. = list(1,2)
-				else if(original_clayer==3&&singlecake)
+				else if(original_clayer==3 && singlecake)
 					. = list(1,3)
 				else
 					. = list(2,3)
@@ -215,9 +214,7 @@
 		c.reagents.trans_to(src,c.reagents.total_volume)
 
 		for(var/food_effect in c.food_effects) //adding food effects to the src that arent already present
-			if(food_effect in src.food_effects)
-				continue
-			src.food_effects += food_effect
+			src.food_effects |= food_effect
 
 		var/singlecake //logging the clayer before changing it later
 		if(c.clayer == 1)
@@ -271,7 +268,7 @@
 
 
 	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
-		if(mode != (CAKE_MODE_CAKE || CAKE_MODE_SLICE))
+		if((mode != CAKE_MODE_CAKE) && (mode != CAKE_MODE_SLICE))
 			return
 		var/staticiterator = src.overlays.len
 		var/toggleswitch
@@ -389,7 +386,7 @@
 			return
 		if (!src.litfam)
 			src.firesource = TRUE
-			src.litfam = 1
+			src.litfam = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.add_simple_light("cake_light", list(0.5*255, 0.3*255, 0, 100))
@@ -412,7 +409,7 @@
 		if (!src) return
 		if (src.litfam)
 			src.firesource = FALSE
-			src.litfam = 0
+			src.litfam = FALSE
 			hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.remove_simple_light("cake_light")
@@ -428,13 +425,13 @@
 	proc/update_cake_context()
 		src.contextActions = list()
 
-		var/pickup
+		var/pickup = FALSE
 		if(clayer>1)
 			contextActions += new /datum/contextAction/cake/unstack
-			pickup = 1
+			pickup = TRUE
 		if(litfam)
 			contextActions += new /datum/contextAction/cake/candle
-			pickup = 1
+			pickup = TRUE
 		if(pickup)
 			contextActions += new /datum/contextAction/cake/pickup
 
