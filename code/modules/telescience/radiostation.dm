@@ -165,8 +165,8 @@
 
 /obj/submachine/mixing_desk/ui_data(mob/user)
 	. = list(
-		"voices" = src.voices
-		"selected_voice" = src.selected_voice
+		"voices" = src.voices,
+		"selected_voice" = src.selected_voice,
 		"say_popup" = src.say_popup
 	)
 
