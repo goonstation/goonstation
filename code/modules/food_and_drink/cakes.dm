@@ -1,8 +1,8 @@
 //defines used later for custom cake utility procs
 #define CAKE_MODE_CAKE 1
 #define CAKE_MODE_SLICE 2
-#define CAKE_MODE_STACK 4
-#define CAKE_MODE_BUILD 9
+#define CAKE_MODE_STACK 3
+#define CAKE_MODE_BUILD 4
 
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 	name = "yellow cake"
@@ -270,8 +270,8 @@
 	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
 		if((mode != CAKE_MODE_CAKE) && (mode != CAKE_MODE_SLICE))
 			return
-		var/staticiterator = src.overlays.len
-		var/toggleswitch
+		var/staticiterator = src.overlays.len //saves a static number of times for the loop to run, this number is offset when the loop encounters special conditions below. this makes sure that no matter how many weird overlays we have, toppings are always set as toppings and no layers are lost.
+		var/normal_topping = FALSE //there are special cases in rendering cake overlays that should only ever trigger once, afterward the toggle is switched to true, initiating the normal topping overlay handling
 		var/slices
 		var/candle //cute little wax stick that people light on fire for their own enjoyment <3
 		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
@@ -283,14 +283,14 @@
 					continue
 				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
 					if(("[src.overlay_refs[i]]" == "second") && (src.clayer == 2))
-						toggleswitch = 1
+						normal_topping = TRUE
 						cake.amount = src.amount2
 						src.amount2 = 0
 					else if(("[src.overlay_refs[i]]" == "third") && (src.clayer == 3))
-						toggleswitch = 1
+						normal_topping = TRUE
 						cake.amount = src.amount3
 						src.amount3 = 0
-					if(toggleswitch)
+					if(normal_topping)
 						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
 						var/image/warningsuppression = src.GetOverlayImage(src.overlay_refs[i])
 						stack.color = warningsuppression.color
@@ -299,7 +299,7 @@
 						staticiterator--
 						i--
 						continue
-				if(toggleswitch)
+				if(normal_topping)
 					var/tag
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
 					var/list/newnumbers = src.overlay_number_convert(src.clayer,CAKE_MODE_BUILD)
@@ -317,7 +317,7 @@
 					continue
 			else if(mode == CAKE_MODE_SLICE)
 				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
-					toggleswitch = 1
+					normal_topping = TRUE
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
 					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
 					if(buffer.color)
@@ -327,7 +327,7 @@
 					staticiterator--
 					i--
 					continue
-				if(toggleswitch) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
+				if(normal_topping) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
 					var/toppingpath = replacetext("[src.overlay_refs[i]]","[replacetext]","slice")
 
