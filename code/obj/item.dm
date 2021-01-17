@@ -25,7 +25,7 @@
 	var/burn_output = 1500 //how hot should it burn
 	var/burn_type = 0 //0 = ash, 1 = melt
 	var/burning_last_process = 0
-	var/firesource = 0 //0 or 1 : dictates whether or not the item can be used as a valid source of fire
+	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
 
 	/*______*/
 	/*Combat*/
@@ -109,7 +109,7 @@
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
 
-	var/list/module_research = null//list()
+	var/list/module_research = null
 	var/module_research_type = null
 	var/module_research_no_diminish = 0
 
@@ -468,7 +468,7 @@
 	if(!src.burning)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
-		src.firesource = 1
+		src.firesource = TRUE
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
@@ -478,7 +478,7 @@
 /obj/item/proc/combust_ended()
 	processing_items.Remove(src)
 	burning = null
-	firesource = 0
+	firesource = FALSE
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 

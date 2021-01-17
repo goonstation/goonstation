@@ -1201,8 +1201,6 @@
 			return null
 
 		var/obj/item/reagent_containers/food/snacks/cake/batter/docakeitem = locate() in ourCooker.contents
-		/*if (!istype( docakeitem ))
-			return null*/
 
 		var/obj/item/reagent_containers/food/snacks/S
 		if(docakeitem.custom_item)

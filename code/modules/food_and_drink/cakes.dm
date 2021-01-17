@@ -36,7 +36,7 @@
 	object_flags = IGNORE_CONTEXT_CLICK_HELD
 	initial_volume = 100
 	w_class = 4.0
-	var/sliced = 0
+	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
 	var/amount2 //holds the amount of slices in cake 2 (not entirely, but its used for a bit of math later)
@@ -47,8 +47,8 @@
 	New()
 		..()
 		contextLayout = new /datum/contextLayout/default()
-		for(var/datum/contextAction/C in src.contextActions)
-			C.dispose()
+		/*for(var/datum/contextAction/C in src.contextActions)
+			C.dispose()*/
 		src.contextActions = list()
 
 	/*_______*/
@@ -92,7 +92,7 @@
 			return
 		var/frostingtype
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
-		if(frostingtype && (user in range(1,src)))
+		if(frostingtype && (get_dist(src, usr) <= 1))
 			var/tag
 			var/datum/color/average = tube.reagents.get_average_color()
 			switch(frostingtype)
@@ -115,26 +115,24 @@
 				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
 
-	proc/overlay_number_convert(var/original,var/mode,var/singlecake) //original - original overlay, mode - which math we're using
-		var/list/newnumbers = list()
+	proc/overlay_number_convert(var/original_clayer,var/mode,var/singlecake) //original - original clayer value, mode - which math we're using
 		switch(mode)
-			if(1)
-				if(original==2)
-					newnumbers = list(1,2)
-				else if(original==3&&singlecake)
-					newnumbers = list(1,3)
+			if(CAKE_MODE_STACK)
+				if(original_clayer==2)
+					. = list(1,2)
+				else if(original_clayer==3&&singlecake)
+					. = list(1,3)
 				else
-					newnumbers = list(2,3)
-			if(2)
-				if(original==2)
-					newnumbers = list(2,1)
-				else if(original==3)
-					newnumbers = list(3,1)
-		return newnumbers
+					. = list(2,3)
+			if(CAKE_MODE_BUILD)
+				if(original_clayer==2)
+					. = list(2,1)
+				else if(original_clayer==3)
+					. = list(3,1)
 
 
 	proc/slice_cake(var/obj/item/W,var/mob/user)
-		if (src.sliced == 1)
+		if (src.sliced)
 			user.show_text("This cake has already been sliced!","red")
 			return
 		user.show_text("You cut the cake into slices.")
@@ -196,7 +194,7 @@
 			schild.name = "slice of [src.name]"
 			schild.desc = "a delicious slice of cake!"
 			schild.food_color = src.food_color
-			schild.sliced = 1
+			schild.sliced = TRUE
 			schild.amount = 1
 
 			schild.set_loc(get_turf(src.loc))
@@ -207,11 +205,7 @@
 
 
 	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/custom/c,var/mob/user)
-		if(!(src.clayer<3))
-			return
-		if(c.clayer>=3)
-			return
-		if(c.sliced)
+		if(!(src.clayer<3) || (c.clayer>=3) || (c.sliced))
 			return
 
 		user.u_equip(c)
@@ -278,7 +272,7 @@
 
 
 	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
-		if((mode<1) || (mode>2))
+		if(mode != (CAKE_MODE_CAKE || CAKE_MODE_SLICE))
 			return
 		var/staticiterator = src.overlays.len
 		var/toggleswitch
@@ -395,7 +389,7 @@
 		if (!src)
 			return
 		if (!src.litfam)
-			src.firesource = 1
+			src.firesource = TRUE
 			src.litfam = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -418,7 +412,7 @@
 	proc/put_out(var/mob/user as mob)
 		if (!src) return
 		if (src.litfam)
-			src.firesource = 0
+			src.firesource = FALSE
 			src.litfam = 0
 			hit_type = DAMAGE_BLUNT
 			src.force = 0
@@ -469,15 +463,15 @@
 			s.ignite()
 
 	proc/extinguish(var/mob/user)
-		var/blowout
+		var/blowout = FALSE
 		if(src.sliced && src.GetOverlayImage("slice-candle_lit"))
 			src.ClearSpecificOverlays("slice-candle_lit")
 			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
-			blowout = 1
+			blowout = TRUE
 		else if(src.GetOverlayImage("cake[src.clayer]-candle_lit"))
 			src.ClearSpecificOverlays("cake[src.clayer]-candle_lit")
 			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
-			blowout = 1
+			blowout = TRUE
 		if(blowout)
 			src.put_out()
 			user.visible_message("<b>[user.name]</b> blows out the candle!")

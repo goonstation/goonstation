@@ -42,7 +42,7 @@
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
-			src.firesource = 0
+			src.firesource = FALSE
 			src.light()
 
 		if (src.exploding)
@@ -99,7 +99,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
-			src.firesource = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -118,7 +118,7 @@
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
-			src.firesource = 0
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = buttstate
@@ -915,7 +915,7 @@
 
 	proc/light(var/mob/user as mob)
 		src.on = 1
-		src.firesource = 1
+		src.firesource = TRUE
 		src.icon_state = "match-lit"
 
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
@@ -925,7 +925,7 @@
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
-		src.firesource = 0
+		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
 			src.icon_state = "match-broken"
@@ -1097,7 +1097,7 @@
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
-				src.firesource = 1
+				src.firesource = TRUE
 				set_icon_state(src.icon_on)
 				src.item_state = "zippoon"
 				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
@@ -1107,7 +1107,7 @@
 				processing_items |= src
 			else
 				src.on = 0
-				src.firesource = 0
+				src.firesource = FALSE
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
 				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
