@@ -1,3 +1,4 @@
+//defines used later for custom cake utility procs
 #define CAKE_MODE_CAKE 1
 #define CAKE_MODE_SLICE 2
 #define CAKE_MODE_STACK 1
@@ -47,15 +48,13 @@
 	New()
 		..()
 		contextLayout = new /datum/contextLayout/default()
-		/*for(var/datum/contextAction/C in src.contextActions)
-			C.dispose()*/
 		src.contextActions = list()
 
 	/*_______*/
 	/*Utility*/
 	/*‾‾‾‾‾‾‾*/
 	proc/check_for_topping(var/obj/item/W)
-		var/tag = 0
+		var/tag = null
 		var/pendinglight = 0
 		if(istype(W,/obj/item/device/light/candle)) //special handling for candles because they need to send unique information
 			var/obj/item/device/light/candle/candle = W
@@ -83,7 +82,8 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-		return list(tag,pendinglight) //returns a list consisting of the new overlay tag and candle data
+		if(tag)
+			return list(tag,pendinglight) //returns a list consisting of the new overlay tag and candle data
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
@@ -427,8 +427,6 @@
 	/*‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*/
 
 	proc/update_cake_context()
-		for(var/datum/contextAction/C in src.contextActions)
-			C.dispose()
 		src.contextActions = list()
 
 		var/pickup
