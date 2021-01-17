@@ -141,10 +141,10 @@ def get_post_id():
 
 icon = os.environ["POST_ICON"]
 prefix = os.environ["SUBJECT_PREFIX"]
-if os.environ["merged"] == "true":
+if os.environ["PR_MERGED"] == "true":
 	prefix = os.environ["SUBJECT_PREFIX_MERGED"]
 	icon = os.environ["POST_ICON_MERGED"]
-elif os.environ["closed"] == "true":
+elif os.environ["PR_STATE"] == "closed":
 	prefix = os.environ["SUBJECT_PREFIX_CLOSED"]
 	icon = os.environ["POST_ICON_CLOSED"]
 subject = prefix + os.environ["PR_TITLE"]
