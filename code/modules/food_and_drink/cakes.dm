@@ -116,13 +116,13 @@
 	proc/overlay_number_convert(var/original_clayer,var/mode,var/singlecake) //original - original clayer value, mode - which math we're using
 		switch(mode)
 			if(CAKE_MODE_STACK)
-				if(original_clayer==2)
-					. = list(1,2)
-				else if(original_clayer==3 && singlecake)
-					. = list(1,3)
-				else
+				if(original_clayer==2) //if the cake is two cakes high now
+					. = list(1,2) //replacetext all instances of 1 with 2, updating the first layer overlays with second layer overlays
+				else if(original_clayer==3 && singlecake) //if the cake is three cakes high now and the player is adding a single cake to it
+					. = list(1,3) //replace all instances of 1 with 3, updating the first layer overlays with third layer overlays
+				else //fringe case catch yay math
 					. = list(2,3)
-			if(CAKE_MODE_BUILD)
+			if(CAKE_MODE_BUILD) //same idea, but different math
 				if(original_clayer==2)
 					. = list(2,1)
 				else if(original_clayer==3)
