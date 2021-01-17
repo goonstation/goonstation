@@ -31,10 +31,9 @@ var/list/clothingbooth_items = list()
 		return
 	user << browse_rsc('browserassets/css/clothingbooth.css')
 	user << browse_rsc('browserassets/js/clothingbooth.js')
-	user.client.preferences.AH = user.bioHolder.mobAppearance
-	user.client.preferences.update_preview_icon()
-	user << browse_rsc(user.client.preferences.preview_icon, "previewimage.png")
 	user << browse(replacetext(replacetext(grabResource("html/clothingbooth.html"), "!!BOOTH_LIST!!", clothingbooth_json), "!!SRC_REF!!", "\ref[src]"), "window=ClothingBooth;size=600x600;can_resize=1;can_minimize=1;")
+	// TODO: preview icon
+
 
 //clothing booth stuffs <3
 /obj/machinery/clothingbooth

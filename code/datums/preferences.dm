@@ -64,7 +64,7 @@ datum/preferences
 	var/random2 = 0
 	var/random3 = 0
 
-	var/icon/preview_icon = null
+	var/datum/character_preview/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -148,7 +148,6 @@ datum/preferences
 		real_name = jointext(namecheck, " ")
 */
 	proc/update_preview_icon()
-		//qdel(src.preview_icon)
 		if (!AH)
 			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
@@ -160,7 +159,7 @@ datum/preferences
 				mutantRace = T.mutantRace
 				break
 
-		src.preview_icon = character_preview_icon(src.AH, mutantRace, src.spessman_direction)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction)
 
 	var/list/profile_cache
 	var/rebuild_profile
@@ -195,7 +194,6 @@ datum/preferences
 		sanitize_null_values()
 		update_preview_icon()
 		LAGCHECK(LAG_HIGH)
-		user << browse_rsc(preview_icon, "previewicon.png")
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor.png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview.png")
 		LAGCHECK(LAG_HIGH)
@@ -251,39 +249,27 @@ datum/preferences
 		data_cache["script"] = {"
 [chui_toggle_script_jqery_thing]
 <script type='text/javascript'>
+function update_image() {
+	var id = $(this).attr('id');
+	var r = $(this).val();
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '?src=\ref[src];preferences=1;id=' + id + ';style=' + encodeURIComponent(r));
+	xhr.send();
+};
 $(function() {
-	function SwitchPic(picID) {
-		var pic = document.getElementById(picID);
-		var d = new Date();
-		var image='previewicon.png?'+d.getMilliseconds();
-		setTimeout(function(){
-			pic.src = image;
-
-			}, 500)
-	}
-	//stole this debounce function from Kfir Zuberi at https://medium.com/walkme-engineering/debounce-and-throttle-in-real-life-scenarios-1cc7e2e38c68
-	function debounce (func, interval) {
-		var timeout;
-		return function () {
-			var context = this, args = arguments;
-			var later = function () {
-				timeout = null;
-				func.apply(context, args);
-			};
-			clearTimeout(timeout);
-			timeout = setTimeout(later, interval || 200);
-		}
-	}
-	 var update_image = debounce(function(){
-			var id = $(this).attr('id')
-		var r = $("#" + id + " option:selected" ).text();
-		window.location='byond://?src=\ref[src];preferences=1;id='+id+';style='+encodeURIComponent(r);
-		SwitchPic("sprite_preview");
-	}, 250);
-	$(function() {
-		$('select').change(update_image)
-	})
+	$('select').change(update_image).find('option').each(function() {
+		$(this).val($(this).text());
+	});
 });
+function updateCharacterPreviewPos() {
+	var rect = document.getElementById("sprite_preview").getBoundingClientRect();
+	window.location = ('byond://winset?id=preferences.preferences_character_preview'
+		+ ';pos=' + rect.left + ',' + rect.top
+		+ ';size=' + rect.width + 'x' + rect.height);
+}
+$(window).resize(updateCharacterPreviewPos);
+$(window).scroll(updateCharacterPreviewPos);
+$(updateCharacterPreviewPos);
 </script>"}
 
 		LAGCHECK(LAG_HIGH)
@@ -391,7 +377,7 @@ $(function() {
 		cursor: help;
 		}
 </style>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["profile_name"])
 			rebuild_data["profile_name"] = 0
 			data_cache["profile_name"] = {"
@@ -409,7 +395,7 @@ $(function() {
 			<a href="[pref_link]profile_name=input">[src.profile_name ? src.profile_name : "Unnamed"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["character_name"])
 			rebuild_data["character_name"] = 0
 			data_cache["character_name"] = {"
@@ -422,7 +408,7 @@ $(function() {
 			<br><a href="[pref_link]b_random_name=1" class="toggle">[crap_checkbox(src.be_random_name)] Use a random name instead</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["gender"])
 			rebuild_data["gender"] = 0
 			data_cache["gender"] = {"
@@ -434,7 +420,7 @@ $(function() {
 			<a href="[pref_link]gender=input">[display_gender]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["age_blood"])
 			rebuild_data["age_blood"] = 0
 			data_cache["age_blood"] = {"
@@ -452,7 +438,7 @@ $(function() {
 			<a href='[pref_link]blType=input'>[src.random_blood ? "Random" : src.blType]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["bank"])
 			rebuild_data["bank"] = 0
 			data_cache["bank"] = {"
@@ -464,7 +450,7 @@ $(function() {
 			<a href="[pref_link]pin=random" class="toggle">[crap_checkbox(!(src.pin))] Random</a> &middot; <a href='[pref_link]pin=input' class="toggle">[src.pin ? (crap_checkbox(1) + " Set: [src.pin]") : (crap_checkbox(0) + " Set")]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["flavortext"])
 			rebuild_data["flavortext"] = 0
 			data_cache["flavortext"] = {"
@@ -477,7 +463,7 @@ $(function() {
 			[length(src.flavor_text) ? src.flavor_text : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["security_note"])
 			rebuild_data["security_note"] = 0
 			data_cache["security_note"] = {"
@@ -490,7 +476,7 @@ $(function() {
 			[length(src.security_note) ? src.security_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["medical_note"])
 			rebuild_data["medical_note"] = 0
 			data_cache["medical_note"] = {"
@@ -503,7 +489,7 @@ $(function() {
 			[length(src.medical_note) ? src.medical_note : "<em>None</em>"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["occupation"])
 			rebuild_data["occupation"] = 1 //always rebuild egh
 			data_cache["occupation"] = {"
@@ -515,7 +501,7 @@ $(function() {
 			<a href="[pref_link]jobswindow=1">Change occupation preferences...</a><br><em>Favorite job: [favoriteJob ? "<strong>[favoriteJob]</strong>" : "(unset)"]</em>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["traits"])
 			rebuild_data["traits"] = 1 //always rebuild egh
 			data_cache["traits"] = {"
@@ -527,7 +513,7 @@ $(function() {
 			<a href="[pref_link]traitswindow=1">Choose traits...</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["fartsound"])
 			rebuild_data["fartsound"] = 0
 			data_cache["fartsound"] = {"
@@ -539,7 +525,7 @@ $(function() {
 			<a href='[pref_link]fartsound=input'>[AH.fartsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["screamsound"])
 			rebuild_data["screamsound"] = 0
 			data_cache["screamsound"] = {"
@@ -551,7 +537,7 @@ $(function() {
 			<a href='[pref_link]screamsound=input'>[AH.screamsound]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["chatsound"])
 			rebuild_data["chatsound"] = 0
 			data_cache["chatsound"] = {"
@@ -563,7 +549,7 @@ $(function() {
 			<a href='[pref_link]voicetype=input'>[AH.voicetype]</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["PDAcolor"])
 			rebuild_data["PDAcolor"] = 0
 			data_cache["PDAcolor"] = {"
@@ -576,7 +562,7 @@ $(function() {
 			<span class='colorbit' style="background-color: [src.PDAcolor];">[src.PDAcolor]</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["skintone"])
 			rebuild_data["skintone"] = 0
 			data_cache["skintone"] = {"
@@ -600,7 +586,7 @@ $(function() {
 			<a href="[pref_link]rotate_clockwise=1">&#x27f3;</a>
 		</th>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["eyecolor"])
 			rebuild_data["eyecolor"] = 0
 			data_cache["eyecolor"] = {"
@@ -613,7 +599,7 @@ $(function() {
 			<span class='colorbit' style="background-color: [AH.e_color];">[AH.e_color]</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_top"])
 			rebuild_data["hair_top"] = 0
 			data_cache["hair_top"] = {"
@@ -627,7 +613,7 @@ $(function() {
 			[generate_select_table("custom_third", AH.customization_third, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_mid"])
 			rebuild_data["hair_mid"] = 0
 			data_cache["hair_mid"] = {"
@@ -641,7 +627,7 @@ $(function() {
 			[generate_select_table("custom_second", AH.customization_second, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hair_bottom"])
 			rebuild_data["hair_bottom"] = 0
 			data_cache["hair_bottom"] = {"
@@ -655,7 +641,7 @@ $(function() {
 			[generate_select_table("custom_first", AH.customization_first, customization_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["underwear"])
 			rebuild_data["underwear"] = 0
 			data_cache["underwear"] = {"
@@ -669,7 +655,7 @@ $(function() {
 			[generate_select_table("underwear", AH.underwear, underwear_styles)]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["randomize"])
 			rebuild_data["randomize"] = 0
 			data_cache["randomize"] = {"
@@ -681,7 +667,7 @@ $(function() {
 			<a href="[pref_link]b_random_look=1" class="toggle">[crap_checkbox(src.be_random_look)] Always use a randomized appearance</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["font_size"])
 			rebuild_data["font_size"] = 0
 			data_cache["font_size"] = {"
@@ -700,7 +686,7 @@ $(function() {
 			<a href="[pref_link]font_size=input">[src.font_size ? "[src.font_size]%" : "Default"]
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["messages"])
 			rebuild_data["messages"] = 0
 			data_cache["messages"] = {"
@@ -717,7 +703,7 @@ $(function() {
 			<a href="[pref_link]local_deadchat=1" class="toggle">[crap_checkbox(src.local_deadchat)] Local ghost hearing</a><span class="info-thing" title="You'll only hear chat messages from living people on your screen as a ghost.">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["hud"])
 			rebuild_data["hud"] = 0
 			data_cache["hud"] = {"
@@ -738,7 +724,7 @@ $(function() {
 			</div>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["tooltips"])
 			rebuild_data["tooltips"] = 0
 			data_cache["tooltips"] = {"
@@ -752,7 +738,7 @@ $(function() {
 			<br><a href="[pref_link]tooltip=3" class="toggle">[crap_checkbox(src.tooltip_option == TOOLTIP_NEVER)] Never Show</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["tgui"])
 			rebuild_data["tgui"] = 0
 			data_cache["tgui"] = {"
@@ -765,7 +751,7 @@ $(function() {
 			<br><a href="[pref_link]tgui_lock=1" class="toggle">[crap_checkbox(src.tgui_lock)] Lock initial placement of windows</a>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["popups"])
 			rebuild_data["popups"] = 0
 			data_cache["popups"] = {"
@@ -779,7 +765,7 @@ $(function() {
 			<br><a href="[pref_link]tickets=1" class="toggle">[crap_checkbox(src.view_tickets)] Auto-open end-of-round ticket summary</a><span class="info-thing" title="The end-of-round ticketing summary shows the various tickets and fines that were handed out. If this option is off, you can still see them on Goonhub (goonhub.com).">?</span>
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["controls"])
 			rebuild_data["controls"] = 0
 			data_cache["controls"] = {"
@@ -794,7 +780,7 @@ $(function() {
 			<br>Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top left.
 		</td>
 	</tr>"}
-		LAGCHECK(80)
+			LAGCHECK(80)
 		if (rebuild_data["map"])
 			rebuild_data["map"] = 0
 			data_cache["map"] = {"
@@ -813,7 +799,7 @@ $(function() {
 
 "}
 
-		LAGCHECK(LAG_MED)
+			LAGCHECK(LAG_MED)
 		traitPreferences.updateTraits(user)
 		LAGCHECK(LAG_MED)
 
@@ -826,6 +812,9 @@ $(function() {
 			dat += data_cache[x]
 
 		user.Browse(dat.Join(),"window=preferences;size=666x750;title=Character Setup")
+		if (isnull(src.preview))
+			src.preview = new(user.client, "preferences", "preferences_character_preview")
+			src.update_preview_icon()
 
 
 	//id, The name of the Select table ID to be used.
@@ -873,8 +862,6 @@ $(function() {
 
 			if (changed)
 				update_preview_icon()
-				usr << browse_rsc(preview_icon, "previewicon.png")
-				usr << browse("previewicon.png","display=0")
 
 		..()
 
@@ -2413,24 +2400,3 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 /proc/crap_checkbox(var/checked)
 	if (checked) return "&#9745;"
 	else return "&#9744;"
-
-var/global/mob/living/carbon/human/character_preview_icon_mob = null
-
-/proc/character_preview_icon(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
-	if (isnull(character_preview_icon_mob))
-		character_preview_icon_mob = new()
-
-	var/mob/living/carbon/human/H = character_preview_icon_mob
-
-	H.dir = direction
-	H.set_mutantrace(null)
-	H.bioHolder.mobAppearance.CopyOther(AH)
-	H.set_mutantrace(MR)
-	H.organHolder.head.donor = H
-	H.organHolder.head.donor_appearance.CopyOther(H.bioHolder.mobAppearance)
-
-	H.update_colorful_parts()
-	H.update_body()
-	H.update_face()
-
-	. = getFlatIcon(H)
