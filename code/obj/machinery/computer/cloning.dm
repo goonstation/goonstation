@@ -700,7 +700,7 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 		if("scan")
 			if(usr == src.scanner.occupant)
-				boutput(usr, "<span class='alert'>You can't quite rearch the scan button from inside the scanner, darn!</span>")
+				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
 				return TRUE
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
