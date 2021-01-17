@@ -151,10 +151,6 @@
 				name = copytext(name, 8)
 			name = replacetext(name, "_", " ")
 			accents[name] = effect
-
-/obj/submachine/mixing_desk/ui_state(mob/user)
-	return tgui_default_state
-
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
