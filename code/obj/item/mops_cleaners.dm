@@ -296,6 +296,8 @@ WET FLOOR SIGN
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
 
+	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
+		A = get_turf(A)
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
 		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
 		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
@@ -516,6 +518,8 @@ WET FLOOR SIGN
 	if (!src.reagents)
 		return ..()
 
+	if(istype(target, /obj/fluid/airborne)) // no sponging up smoke
+		target = get_turf(target)
 	if (!isarea(target))
 		var/list/choices = list()
 		var/target_is_fluid = istype(target,/obj/fluid)

@@ -1,4 +1,32 @@
 
+(t)sat jan 16 21
+(u)pali
+(*)Oshan ocean is now atmospherically inert instead of producing nitrogen. Wrenches can now be used to fiddle with atmos pump settings (instead of this being locked to multitools).
+(u)Camryn Buttes
+(p)3357
+(e)🐛|bug
+(+)Surstromming cans work again, stink your friends
+(u)BatElite
+(p)3022
+(e)🆕🎨|feature, sprites
+(*)Added the cyborg screen head, so that emotionally inclined cyborgs can share their feelings with the world visually! Ask your roboticist to make you one, and check your Robot Commands tab to change expressions.
+(u)pali
+(*)Air scrubbers are now way more effective (for both gases and smoke) at the cost of a lot of APC power. Sponges and mops no longer work on smoke.
+(u)BenLubar
+(p)3338
+(e)🗺|mapping
+(+)Added an ABCU to Donut 3.
+(u)Superlagg
+(p)3122
+(e)🆕🔄|feature, rework
+(*)PDAs can now use different ringtones! Ask the clown if you can borrow their ringtone program.
+(*)PDAs can now block specific people, mailgroups, and alerts.
+(+)The Syndicate are dirty software pirates, supplying their agents with stolen copies of a certain PDA compatible sound effect library for a single TC.
+(+)The heads of staff have a new filesharing program, SpaceWire, which lets them automatically share PDA files to anyone who messages them a secret password.
+(u)glassofmilk
+(p)3326
+(e)🆕|feature
+(+)Signal components can now have their starting and ending strings set using MechComp signals.
 (t)fri jan 15 21
 (u)zjdtmkhzt
 (p)3325

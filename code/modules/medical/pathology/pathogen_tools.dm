@@ -102,7 +102,7 @@
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
 			var/uid = P.pathogens[1]
 			var/datum/pathogen/PT = P.pathogens[uid]
-			if (medium.id != PT.body_type.growth_medium)
+			if (medium?.id != PT.body_type.growth_medium)
 				set_dirty("The pathogen is unable to cultivate on the growth medium.")
 		if (ctime <= 0)
 			ctime = 8
@@ -158,7 +158,7 @@
 						// Too many pathogens. This culture is dead.
 						set_dirty("The presence of multiple pathogens makes them unable to grow.")
 				else if (R in pathogen_controller.media)
-					if (R == medium.id)
+					if (R == medium?.id)
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
@@ -190,7 +190,7 @@
 					if (src.medium)
 						processing_items |= src
 				else if (R in pathogen_controller.media)
-					if (src.medium && src.medium.id != R)
+					if (src.medium?.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
 					else if (!src.medium)
 						src.medium = src.reagents.reagent_list[R]
