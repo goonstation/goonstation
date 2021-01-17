@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Button, LabeledList, Section, Divider, Modal, Input, Box } from '../components';
+import { Button, LabeledList, Section, Divider, Modal, Input, Box, Tooltip, Icon } from '../components';
 import { Window } from '../layouts';
 import { truncate } from '../format.js';
 
@@ -101,11 +101,15 @@ export const MixingDesk = (props, context) => {
                 icon="plus"
                 onClick={() => act("add_voice")}
                 disabled={voices.length >= 9} />
-              <Button
+              <Box
+                as="span"
                 position="relative"
-                icon="question-circle"
-                tooltip="Press T to talk and 1-9 keys to switch voices. Press 0 to reset to your normal voice."
-                tooltipPosition="right" />
+                pl="5px">
+                <Icon name="question-circle" />
+                <Tooltip
+                  position="right"
+                  content="Press T to talk and 1-9 keys to switch voices. Press 0 to reset to your normal voice." />
+              </Box>
             </LabeledList.Item>
           </LabeledList>
         </Section>
