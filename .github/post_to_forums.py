@@ -33,6 +33,7 @@ def markdown_to_mybb(markdown):
 	result = re.sub(r"<!--.*?-->", r"", markdown, flags=re.MULTILINE | re.DOTALL)
 	result = re.sub(r"```(.*?)```", r"[code]\1[/code]", result, flags=re.MULTILINE | re.DOTALL)
 	result = re.sub(r"##\s*(.*)\r?\n", r"[b]\1[/b]\n", result)
+	result = re.sub(r"!\[[^]]*\]\(([^)]*)\)", r"[img]\1[/img]", result)
 	return result
 
 def edit_thread(thread_id, subject, contents, icon="-1", edit_reason=""):
