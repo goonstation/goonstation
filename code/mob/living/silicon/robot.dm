@@ -2445,7 +2445,6 @@
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
-//process_oil has been moved to /datum/lifeprocess/robot_oil in robot_oil.dm
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
 		var/net_id = generate_net_id(src)

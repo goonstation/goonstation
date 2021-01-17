@@ -332,7 +332,6 @@
 
 	process_killswitch()
 	process_locks()
-//	process_oil() moved to life process in robot_oil.dm
 	update_canmove()
 
 	if (metalman_skin && prob(1))
