@@ -2116,7 +2116,7 @@
 		sleep(1 SECOND)
 		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 		sleep(1 SECOND)
-		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
@@ -2164,6 +2164,26 @@
 					src.locked = 1
 					src.locking = 0
 					boutput(src, "<span class='alert'>You have locked your interface.</span>")
+
+	verb/cmd_alter_head_screen()
+		set category = "Robot Commands"
+		set name = "Change facial expression (screen head only)"
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (!istype(targethead))
+			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
+			return 0
+
+		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
+		if (!newFace) return 0
+		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
+		if (!newMode) return 0
+		newFace = (newFace ? lowertext(newFace) : targethead.face)
+		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
+		newMode = (newMode ? newMode : targethead.mode)
+		targethead.face = newFace
+		targethead.mode = newMode
+		update_bodypart(part = "head")
+		return 1
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
@@ -2544,11 +2564,17 @@
 				i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
-					var/icon/eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					var/icon/eyesovl = null
+					var/image/eye_light = null
+					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+					else
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
 
-					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
@@ -3252,7 +3278,7 @@
 	New()
 		..(usr.loc, null, 1)
 
-	update_bodypart()
+	update_bodypart(var/part)
 		return
 	update_appearance()
 		return

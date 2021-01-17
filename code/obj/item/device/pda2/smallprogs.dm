@@ -773,6 +773,7 @@ Code:
 	size = 8
 	var/tmp/charges = 0 //Don't let jerks copy the program to have extra charges.
 	var/list/pdas = list()
+	dont_copy = 1 // srsly dont let jerks whatsit the whatever
 
 	return_text()
 		if(..())

@@ -607,8 +607,7 @@
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			if(T.air.trace_gases)
-				T.air.trace_gases = null
+			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 
@@ -2618,6 +2617,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				if (T.vistarget)
 					T.vistarget.vis_contents -= T
 					T.vistarget.warptarget = null
+					T.vistarget.fullbright = initial(T.vistarget.fullbright)
+					T.vistarget.RL_Init()
+					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE

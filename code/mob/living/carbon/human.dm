@@ -112,6 +112,7 @@
 	var/ai_default_intent = INTENT_DISARM
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
+	var/ai_offhand_pickup_chance = 50
 
 	max_health = 100
 
@@ -485,6 +486,7 @@
 			hud.master = null
 		hud.inventory_bg = null
 		hud.inventory_items = null
+		qdel(hud)
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -966,8 +968,6 @@
 	//	return
 
 	var/obj/item/I = src.equipped()
-	if("npc_throw" in params)
-		I = src.r_hand
 
 	if (!I || !isitem(I) || I.cant_drop) return
 
@@ -2352,6 +2352,22 @@
 	if (P.pathogen_uid in src.immunities)
 		return 0
 	if (!(P.pathogen_uid in src.pathogens))
+		var/maxTierExisting = 0
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
+		var/maxTierNew = P.getHighestTier()
+
+		// thanks, we already got strong pathogen, go away
+		if(maxTierNew <= maxTierExisting)
+			return 0
+
+		// wow, strong pathogen, let's kick out all the other ones
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			src.cured(PA)
+
+		// and get the new one instead
 		var/datum/pathogen/Q = unpool(/datum/pathogen)
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)
@@ -3177,7 +3193,7 @@
 						if (priority > 0)
 							priority = "[NewLoc.step_material]"
 						else if (priority < 0)
-							priority = src.shoes ? src.shoes.step_sound : "step_barefoot"
+							priority = src.shoes ? src.shoes.step_sound : (src.mutantrace && src.mutantrace.step_override ? src.mutantrace.step_override : "step_barefoot")
 
 						playsound(NewLoc, priority, src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
@@ -3289,7 +3305,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-			logTheThing("combat", src, thr.user, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)

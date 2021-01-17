@@ -247,14 +247,6 @@
 
 	var/mob/living/carbon/human/H = src
 
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
-
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
@@ -363,6 +355,10 @@
 
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
+	var/target_stamina = STAMINA_MAX //uses stamina?
+	if (isliving(target))
+		var/mob/living/L = target
+		target_stamina = L.stamina
 
 	if (damage > 0)
 		def_zone = target.check_target_zone(def_zone)
@@ -381,13 +377,10 @@
 	else if ( !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) )
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone)
-		msgs.stamina_target -= max(STAMINA_HTH_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm doesnt get full reduction
-		msgs.force_stamina_target = 1
+		if(target_stamina >= 0)
+			msgs.stamina_target -= max(STAMINA_DISARM_DMG - (armor_mod*0.5), 0) //armor vs barehanded disarm gives flat reduction
+			msgs.force_stamina_target = 1
 
-	var/target_stamina = STAMINA_MAX //uses stamina?
-	if (isliving(target))
-		var/mob/living/L = target
-		target_stamina = L.stamina
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -637,6 +630,12 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.pathogens)
+			var/datum/pathogen/P = LM.pathogens[uid]
+			punchmult *= P.onpunch(target, def_zone)
+
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
@@ -662,6 +661,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif
@@ -1134,10 +1137,6 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()

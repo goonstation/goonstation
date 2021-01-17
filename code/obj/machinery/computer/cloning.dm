@@ -700,8 +700,8 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 		if("scan")
 			if(usr == src.scanner.occupant)
-				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
-				// this doesn't need to return we still want to scan them
+				boutput(usr, "<span class='alert'>You can't quite rearch the scan button from inside the scanner, darn!</span>")
+				return TRUE
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE

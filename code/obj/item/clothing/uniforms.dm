@@ -753,7 +753,6 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
-	compatible_species = list("human", "monkey")
 
 	red
 		icon_state = "shortsR"

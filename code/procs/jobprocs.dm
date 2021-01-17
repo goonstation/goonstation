@@ -619,10 +619,8 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if((src.mutantrace && !src.mutantrace.uses_human_clothes))
+		if(!src.equip_if_possible(C, slot_wear_id))
 			src.equip_if_possible(C, slot_in_backpack)
-		else
-			src.equip_if_possible(C, slot_wear_id)
 
 		if(src.pin)
 			C.pin = src.pin
