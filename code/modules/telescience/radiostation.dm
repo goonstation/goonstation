@@ -151,10 +151,6 @@
 				name = copytext(name, 8)
 			name = replacetext(name, "_", " ")
 			accents[name] = effect
-
-/obj/submachine/mixing_desk/ui_state(mob/user)
-	return tgui_default_state
-
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		state.can_use_topic(src, user),
@@ -168,11 +164,11 @@
 		ui.open()
 
 /obj/submachine/mixing_desk/ui_data(mob/user)
-	var/list/data = list()
-	data["voices"] = src.voices
-	data["selected_voice"] = src.selected_voice
-	data["say_popup"] = src.say_popup
-	return data
+	. = list(
+		"voices" = src.voices
+		"selected_voice" = src.selected_voice
+		"say_popup" = src.say_popup
+	)
 
 /obj/submachine/mixing_desk/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
