@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Button, LabeledList, Section, Divider, Modal, Input } from '../components';
+import { Button, LabeledList, Section, Divider, Modal, Input, Box } from '../components';
 import { Window } from '../layouts';
 
 export const MixingDesk = (props, context) => {
@@ -13,26 +13,34 @@ export const MixingDesk = (props, context) => {
 
   const sayPopup = () => (
     <Modal>
-      Choose something to say as {
+      Say as {
         selected_voice > 0 && selected_voice <= voices.length
           ? voices[selected_voice - 1].name
           : "yourself"
       }:
       <br />
-      <Input
-        autoFocus
-        selfClear
-        width={20}
-        value={message}
-        onEnter={(_, msg) => {
-          window.focus();
-          act("say", { "message": msg });
-          setMessage("");
-        }}
-        onChange={(_, msg) => setMessage(msg)} />
+      <Box
+        pt={"5px"}
+        pr={"10px"}
+        textAlign={"center"}>
+        <Input
+          autoFocus
+          selfClear
+          width={20}
+          value={message}
+          onEnter={(_, msg) => {
+            window.focus();
+            act("say", { "message": msg });
+            setMessage("");
+          }}
+          onChange={(_, msg) => setMessage(msg)} />
+      </Box>
       <br />
-      <Button onClick={() => { act("say", { "message": message }); setMessage(""); }}>Say</Button>
-      <Button onClick={() => { act("cancel_say"); setMessage(""); }}>Cancel</Button>
+      <Box
+        textAlign={"center"}>
+        <Button onClick={() => { act("say", { "message": message }); setMessage(""); }}>Say</Button>
+        <Button onClick={() => { act("cancel_say"); setMessage(""); }}>Cancel</Button>
+      </Box>
     </Modal>);
 
   const onKeyDown = e => {
