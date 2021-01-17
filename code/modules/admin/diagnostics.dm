@@ -813,6 +813,20 @@ proc/debug_color_of(var/thing)
 		is_ok(atom/A)
 			return !istype(A, /obj/item)
 
+	temperature
+		name = "temperature"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/temp = null
+			if(issimulatedturf(theTurf))
+				var/turf/simulated/sim = theTurf
+				if(sim.air)
+					temp = sim.air.temperature
+			if(isnull(temp))
+				temp = theTurf.temperature
+			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
+			var/p = clamp(temp / (T0C * 2), 0, 1)
+			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
 		name = "process cell stats"
