@@ -1211,7 +1211,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
-		product_list += new/datum/data/vending_product(/obj/item/device/detective_scanner, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/detective_scanner, 2)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
 #endif
