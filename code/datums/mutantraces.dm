@@ -134,7 +134,7 @@
 	var/needs_oxy = 1
 
 	var/voice_override = 0
-	var/step_override = 0
+	var/step_override = null
 
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
@@ -1878,13 +1878,14 @@
 	disposing()
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
-			H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
+			if(H.abilityHolder)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
+				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			H.remove_stam_mod_regen("kudzu")
 		return ..()
@@ -1937,7 +1938,7 @@
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
-	step_override = "step_wood"
+	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'

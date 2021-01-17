@@ -620,6 +620,8 @@
 		return // don't interupt actions
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
+		if(src.pulling)
+			src.set_pulling(null)
 		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
@@ -651,6 +653,21 @@
 		src.ai_pickupoffhand()
 
 /mob/living/carbon/human/proc/ai_pickupoffhand()
+	// this doesn't actually do anything yet because the movement of pulled object happens in process_move which npcs don't use
+	/*
+	if(src.pulling)
+		if(prob(15))
+			src.set_pulling(null)
+	else
+		if(prob(100))
+			var/list/atom/movable/pullables = list()
+			for(var/atom/movable/AM in view(1, src))
+				if(AM != src && !isitem(AM) && !AM.anchored)
+					pullables += AM
+			if(length(pullables))
+				src.set_pulling(pick(pullables))
+	*/
+
 	if(src.l_hand?.cant_drop)
 		return
 
