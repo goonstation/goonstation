@@ -56,13 +56,14 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 
 	effect_process(var/obj/O)
-		if(src.activated) // repeating noise, so people who come near later know it's a bomb
-			playsound(get_turf(O), alarm_during, 30, 1)
+		if(!src.activated) 
+			return
+		var/turf/T = get_turf(O)
+		playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
 
 		if(TIME > src.detonation_time)
 			src.detonation_time = INFINITY
-			var/turf/T = get_turf(O)
-			if (!O || !T || !src.activated) // please stop
+			if (!O || !T) // please stop
 				return
 
 			// more fluff
