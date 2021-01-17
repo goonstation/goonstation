@@ -19,7 +19,7 @@
 	var/list/organ_bounties = list() // things that belong to people that are on the inside
 	var/list/photo_bounties = list() // photos of people (Operates by text, because that's the only info that photos store)
 
-var/const/organ_bounty_amt = 4
+	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
 	var/const/station_bounty_amt = 4
@@ -358,7 +358,6 @@ var/const/organ_bounty_amt = 4
 		station_bounties[/obj/item/clothing/head/caphat] = 2
 		station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
 
-		station_bounties[/obj/item/pinpointer/disk] = 3
 		station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
 		station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 		station_bounties[/obj/item/aiModule/freeform] = 3
@@ -480,7 +479,6 @@ var/const/organ_bounty_amt = 4
 		big_station_bounties[/obj/reagent_dispensers] = 2
 		big_station_bounties[/obj/machinery/crusher] = 2
 		big_station_bounties[/obj/machinery/communications_dish] = 2
-		big_station_bounties[/obj/decal/poster/wallsign/poster_y4nt] = 1
 
 	active_bounties.len = 0
 
@@ -497,6 +495,9 @@ var/const/organ_bounty_amt = 4
 		LAGCHECK(LAG_LOW)
 		var/turf/Turf = get_turf(Object)
 		if(!Turf || Turf.z != Z_LEVEL_STATION)
+			continue
+		var/area/A = get_area(Object)
+		if (A.name == "Listening Post")
 			continue
 		for(var/type in spy_thief_target_types)
 			if(istype(Object, type))
@@ -576,10 +577,11 @@ var/const/organ_bounty_amt = 4
 	var/big_choice = null
 	var/difficulty = 0
 	var/obj/obj_existing = null
-	for(var/i=1, i<=big_station_bounty_amt, i++)
+	var/big_picked=1
+	while(big_picked<=big_station_bounty_amt)
 		if (big_station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm has been unable to create enough big station bounties." )
-			message_admins("Spy bounty logic is unable to create enough big station bounties.")
+			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
+			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
 		// Pick a known valid item, retrieve difficulty rating from other list
 		big_choice = pick(big_station_bounties)
@@ -587,7 +589,7 @@ var/const/organ_bounty_amt = 4
 		difficulty = big_station_bounties[big_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		if (obj_existing == null)
-			// Sanity check
+			// Catch picks that weren't found
 			continue
 		B.path = obj_existing.type
 		B.item = obj_existing
@@ -605,7 +607,8 @@ var/const/organ_bounty_amt = 4
 					B.pick_reward_tier(1)
 
 		active_bounties += B
-		big_station_bounties -= big_choice
+		valid_spy_thief_targets_by_type -= big_choice
+		big_picked++
 
 	//Add photos
 	var/list/PH = photo_bounties.Copy()
@@ -624,10 +627,11 @@ var/const/organ_bounty_amt = 4
 	var/item_choice = null
 	difficulty = 0
 	var/obj/item_existing = null
-	for(var/i=1, i<=station_bounty_amt, i++)
+	var/item_picked=1
+	while(item_picked<=station_bounty_amt)
 		if (station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm has been unable to create enough item bounties." )
-			message_admins("Spy bounty logic is unable to create enough item bounties.")
+			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
+			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
 		// Pick a known valid item, retrieve difficulty rating from other list
 		item_choice = pick(station_bounties)
@@ -635,7 +639,7 @@ var/const/organ_bounty_amt = 4
 		difficulty = station_bounties[item_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		if (item_existing == null)
-			// Sanity check
+			// Catch picks that weren't found
 			continue
 		B.path = item_existing.type
 		B.item = item_existing
@@ -653,7 +657,8 @@ var/const/organ_bounty_amt = 4
 					B.pick_reward_tier(1)
 
 		active_bounties += B
-		station_bounties -= item_choice
+		valid_spy_thief_targets_by_type -= item_choice
+		item_picked++
 
 
 	//Set delivery areas
