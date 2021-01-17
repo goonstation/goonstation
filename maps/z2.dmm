@@ -82508,7 +82508,9 @@
 	},
 /obj/item/paper{
 	info = "It's a good diversion, keeping them from the truth. They can never learn the truth. The admin team didn't just hire someone who was*the writing ends abrubtly*";
-	name = "sOrD iS bAnNeD fRoM tHe BlOcKlAnD fOrUmS"
+	name = "sOrD iS bAnNeD fRoM tHe BlOcKlAnD fOrUmS";
+	pixel_x = 6;
+	pixel_y = -5
 	},
 /obj/item/paper{
 	info = "As far as we can tell, the person named 'Sord' doesn't exist on any known database. Or, there's so many people named Sord that it's impossible to tell which is which. Is it a purposeful attempt to remain hidden? We'll never know. All we know is anyone who digs into it ends up disappearing.";
@@ -82521,6 +82523,24 @@
 	name = "To: Syndicate Battlecruiser Cai...Car...Cormgan?";
 	pixel_x = 6;
 	pixel_y = 12
+	},
+/obj/item/paper{
+	info = "Todo: 1. Make the Lodbrok less phallic. 2. Make the NT ship MORE phallic. 3. More phallic shaped asteroids.";
+	name = "pod-wars";
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/paper{
+	info = "Holy SHIT you ASSHOLE, Sord. Where did you get all that blood? Why would you fill your office with blood in the first place? Every time some idiot came to your office to file a complaint half the office block would flood. Why would you think that's a good idea? My mop is permanently stained red thanks to you, asshole.";
+	name = "letter from the janitor";
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/paper{
+	info = "thanks sord, best admin";
+	name = "letter to sov";
+	pixel_x = 4;
+	pixel_y = -3
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -82798,9 +82818,18 @@
 /area/centcom/offices/sord)
 "fCL" = (
 /obj/item/gun/kinetic/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
 	pixel_x = -6;
 	pixel_y = 24
 	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
+"fGD" = (
 /obj/storage/cart/hotdog,
 /obj/item/clothing/suit/gimmick/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -82816,18 +82845,11 @@
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"fGD" = (
 /obj/machinery/light{
 	dir = 1;
 	on = 1
 	},
+/obj/decal/skeleton,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -86463,6 +86485,17 @@
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadjunction"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"uBJ" = (
+/obj/admin_plaque{
+	name = "Sord's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -164670,7 +164703,7 @@ dvV
 hVQ
 dDP
 uAx
-dvV
+uBJ
 ftk
 dDP
 rQF
