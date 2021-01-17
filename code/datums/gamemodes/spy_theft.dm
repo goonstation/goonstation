@@ -423,11 +423,6 @@
 
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command] = 2
-	station_bounties[/obj/item/device/radio/headset/command/captain] = 2
-	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
-	station_bounties[/obj/item/device/radio/headset/command/rd] = 2
-	station_bounties[/obj/item/device/radio/headset/command/md] = 2
-	station_bounties[/obj/item/device/radio/headset/command/ce] = 2
 
 	// Big machinery (non portable) objects
 	big_station_bounties[/obj/machinery/vehicle] = 1
@@ -463,7 +458,6 @@
 
 	big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
 	big_station_bounties[/obj/machinery/manufacturer/medical] = 1
-	big_station_bounties[/obj/machinery/manufacturer/general] = 1
 	big_station_bounties[/obj/machinery/manufacturer/general] = 1
 
 	big_station_bounties[/obj/submachine/chef_oven] = 1
