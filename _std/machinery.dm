@@ -1,3 +1,6 @@
+// debug stats for machines
+#define MACHINE_PROCESSING_DEBUG
+
 //this file is not in defines or macros because this one is kind of a frankenstein
 #define NETWORK_MACHINE_RESET_DELAY 40 //Time (in 1/10 of a second) before we can be manually reset again (machines).
 
