@@ -34,7 +34,7 @@
 
 /datum/aiTask/sequence/goalbased/proc/get_targets()
 	// obviously a specific goal will have specific requirements for targets
-	return list()
+	. = list()
 
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
 	if(target)
