@@ -338,175 +338,181 @@
 		photo_bounties += H.real_name
 
 
-	//fugginhuge list of station item bounties (misc. things on the station that would be fun to steal)
-	//Only need to set the list of station bounties once, since it's just a list of paths
-	if (!station_bounties.len)
-		station_bounties[/obj/item/ghostboard] = 1
-		station_bounties[/obj/item/gnomechompski] = 1
-		station_bounties[/obj/item/diary] = 1
-		station_bounties[/obj/item/football] = 1
-		station_bounties[/obj/item/basketball] = 1
-		station_bounties[/obj/item/clothing/head/cakehat] = 1
-		station_bounties[/obj/item/gun/russianrevolver] = 1
-		station_bounties[/obj/item/instrument] = 1
-		station_bounties[/obj/item/clothing/suit/johnny_coat] = 1
-		station_bounties[/obj/item/clothing/shoes/flippers] = 1
-		station_bounties[/obj/item/clothing/head/apprentice] = 1
-		station_bounties[/obj/item/clothing/head/helmet/space/santahat] = 1
-		station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
-		station_bounties[/obj/item/clothing/head/merchant_hat] = 1
-		station_bounties[/obj/item/clothing/head/caphat] = 2
-		station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
+	//List of station item bounties (misc. things on the station that would be fun to steal)
+	station_bounties[/obj/item/ghostboard] = 1
+	station_bounties[/obj/item/gnomechompski] = 1
+	station_bounties[/obj/item/diary] = 1
+	station_bounties[/obj/item/football] = 1
+	station_bounties[/obj/item/basketball] = 1
+	station_bounties[/obj/item/clothing/head/cakehat] = 1
+	station_bounties[/obj/item/gun/russianrevolver] = 1
+	station_bounties[/obj/item/instrument] = 1
+	station_bounties[/obj/item/clothing/suit/johnny_coat] = 1
+	station_bounties[/obj/item/clothing/shoes/flippers] = 1
+	station_bounties[/obj/item/clothing/head/apprentice] = 1
+	station_bounties[/obj/item/clothing/head/helmet/space/santahat] = 1
+	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
+	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
+	station_bounties[/obj/item/clothing/head/caphat] = 2
+	station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
 
-		station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
-		station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
-		station_bounties[/obj/item/aiModule/freeform] = 3
-		station_bounties[/obj/item/aiModule/reset] = 3
-		station_bounties[/obj/item/cell] = 1
-		station_bounties[/obj/item/device/multitool] = 1
+	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
+	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
+	station_bounties[/obj/item/aiModule/freeform] = 3
+	station_bounties[/obj/item/aiModule/reset] = 3
+	station_bounties[/obj/item/cell] = 1
+	station_bounties[/obj/item/device/multitool] = 1
 
-		station_bounties[/obj/item/mop] = 1
-		station_bounties[/obj/item/spraybottle] = 1
+	station_bounties[/obj/item/mop] = 1
+	station_bounties[/obj/item/spraybottle] = 1
 
-		station_bounties[/obj/item/clothing/shoes/galoshes] = 1
-		station_bounties[/obj/item/clothing/shoes/magnetic] = 1
-		station_bounties[/obj/item/clothing/under/misc/clown] = 1
-		station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
-		station_bounties[/obj/item/clothing/glasses] = 1
-		station_bounties[/obj/item/clothing/suit/armor/vest] = 2
-		station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-		station_bounties[/obj/item/clothing/suit/space] = 1
+	station_bounties[/obj/item/clothing/shoes/galoshes] = 1
+	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
+	station_bounties[/obj/item/clothing/under/misc/clown] = 1
+	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
+	station_bounties[/obj/item/clothing/glasses] = 1
+	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
+	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/space] = 1
 
-		station_bounties[/obj/item/robodefibrillator] = 1
-		station_bounties[/obj/item/remote/porter/port_a_medbay] = 1
-		station_bounties[/obj/item/staple_gun] = 1
-		station_bounties[/obj/item/storage/firstaid] = 1
-		station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
-		station_bounties[/obj/item/circular_saw] = 1
-		station_bounties[/obj/item/paper/book/medical_guide] = 1
+	station_bounties[/obj/item/robodefibrillator] = 1
+	station_bounties[/obj/item/remote/porter/port_a_medbay] = 1
+	station_bounties[/obj/item/staple_gun] = 1
+	station_bounties[/obj/item/storage/firstaid] = 1
+	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
+	station_bounties[/obj/item/circular_saw] = 1
+	station_bounties[/obj/item/paper/book/medical_guide] = 1
 
-		station_bounties[/obj/item/gun/energy/egun] = 3
-		station_bounties[/obj/item/hand_tele] = 3
-		station_bounties[/obj/item/card/id/captains_spare] = 3
-		station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
-		station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
-		station_bounties[/obj/item/captaingun] = 3
-		station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
-		station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
+	station_bounties[/obj/item/gun/energy/egun] = 3
+	station_bounties[/obj/item/hand_tele] = 3
+	station_bounties[/obj/item/card/id/captains_spare] = 3
+	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
+	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
+	station_bounties[/obj/item/captaingun] = 3
+	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
+	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
 
-		station_bounties[/obj/item/baton] = 2
-		station_bounties[/obj/item/gun/energy/taser_gun] = 2
-		station_bounties[/obj/item/tank/jetpack] = 1
+	station_bounties[/obj/item/baton] = 2
+	station_bounties[/obj/item/gun/energy/taser_gun] = 2
+	station_bounties[/obj/item/tank/jetpack] = 1
 
-		station_bounties[/obj/item/clothing/gloves/yellow] = 1
+	station_bounties[/obj/item/clothing/gloves/yellow] = 1
 
-		station_bounties[/obj/item/kitchen/utensil] = 1
-		station_bounties[/obj/item/kitchen/rollingpin] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/cereal_box] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/beefood] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/spaghetti] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/pizza] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/taco] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/cake] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/pancake] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/ingredient/cheese] = 1
-		station_bounties[/obj/item/reagent_containers/glass/bottle/bubblebath] = 1
-		station_bounties[/obj/item/reagent_containers/food/snacks/ingredient/meat] = 1
+	station_bounties[/obj/item/kitchen/utensil] = 1
+	station_bounties[/obj/item/kitchen/rollingpin] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/cereal_box] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/beefood] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/spaghetti] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/pizza] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/taco] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/cake] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/pancake] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/ingredient/cheese] = 1
+	station_bounties[/obj/item/reagent_containers/glass/bottle/bubblebath] = 1
+	station_bounties[/obj/item/reagent_containers/food/snacks/ingredient/meat] = 1
 
-		station_bounties[/obj/item/reagent_containers/glass/wateringcan] = 1
-		station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
-		station_bounties[/obj/item/reagent_containers/food/drinks/bottle/vintage] = 1
+	station_bounties[/obj/item/reagent_containers/glass/wateringcan] = 1
+	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
+	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/vintage] = 1
 
-		station_bounties[/obj/item/storage/belt/medical] = 1
-		station_bounties[/obj/item/storage/belt/utility] = 1
-		station_bounties[/obj/item/storage/belt/security] = 2
-		station_bounties[/obj/item/storage/firstaid/docbag] = 1
-		station_bounties[/obj/item/storage/backpack] = 1
+	station_bounties[/obj/item/storage/belt/medical] = 1
+	station_bounties[/obj/item/storage/belt/utility] = 1
+	station_bounties[/obj/item/storage/belt/security] = 2
+	station_bounties[/obj/item/storage/firstaid/docbag] = 1
+	station_bounties[/obj/item/storage/backpack] = 1
 
-		station_bounties[/obj/item/device/radio/headset/security] = 2
-		station_bounties[/obj/item/device/radio/headset/command] = 2
-		station_bounties[/obj/item/device/radio/headset/command/captain] = 2
-		station_bounties[/obj/item/device/radio/headset/command/hop] = 2
-		station_bounties[/obj/item/device/radio/headset/command/rd] = 2
-		station_bounties[/obj/item/device/radio/headset/command/md] = 2
-		station_bounties[/obj/item/device/radio/headset/command/ce] = 2
+	station_bounties[/obj/item/device/radio/headset/security] = 2
+	station_bounties[/obj/item/device/radio/headset/command] = 2
+	station_bounties[/obj/item/device/radio/headset/command/captain] = 2
+	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
+	station_bounties[/obj/item/device/radio/headset/command/rd] = 2
+	station_bounties[/obj/item/device/radio/headset/command/md] = 2
+	station_bounties[/obj/item/device/radio/headset/command/ce] = 2
 
-	if (!big_station_bounties.len)
-		big_station_bounties[/obj/machinery/vehicle] = 1
-		big_station_bounties[/obj/machinery/chem_dispenser] = 2
-		big_station_bounties[/obj/machinery/computer/announcement] = 2
-		big_station_bounties[/obj/machinery/computer/card] = 2
-		big_station_bounties[/obj/machinery/computer/aiupload] = 3
-		big_station_bounties[/obj/machinery/computer/genetics] = 2
-		big_station_bounties[/obj/machinery/computer/supplycomp] = 1
-		big_station_bounties[/obj/machinery/computer/robotics] = 2
-		big_station_bounties[/obj/machinery/power/reactor_stats] = 1
+	// Big machinery (non portable) objects
+	big_station_bounties[/obj/machinery/vehicle] = 1
+	big_station_bounties[/obj/machinery/chem_dispenser] = 2
+	big_station_bounties[/obj/machinery/computer/announcement] = 2
+	big_station_bounties[/obj/machinery/computer/card] = 2
+	big_station_bounties[/obj/machinery/computer/aiupload] = 3
+	big_station_bounties[/obj/machinery/computer/genetics] = 2
+	big_station_bounties[/obj/machinery/computer/supplycomp] = 1
+	big_station_bounties[/obj/machinery/computer/robotics] = 2
+	big_station_bounties[/obj/machinery/power/reactor_stats] = 1
 
-		big_station_bounties[/obj/machinery/computer3/generic/communications] = 1
-		big_station_bounties[/obj/machinery/computer3/terminal/zeta] = 1
-		big_station_bounties[/obj/machinery/vending/security] = 2
-		big_station_bounties[/obj/machinery/vending/medical] = 1
-		big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
-		big_station_bounties[/obj/machinery/vending/fortune] = 1
-		big_station_bounties[/obj/machinery/vending/standard] = 1
+	big_station_bounties[/obj/machinery/computer3/generic/communications] = 1
+	big_station_bounties[/obj/machinery/computer3/terminal/zeta] = 1
+	big_station_bounties[/obj/machinery/vending/security] = 2
+	big_station_bounties[/obj/machinery/vending/medical] = 1
+	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
+	big_station_bounties[/obj/machinery/vending/fortune] = 1
+	big_station_bounties[/obj/machinery/vending/standard] = 1
 
-		big_station_bounties[/obj/machinery/port_a_brig] = 3
-		big_station_bounties[/obj/machinery/flasher/portable] = 2
-		big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
-		big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
-		big_station_bounties[/obj/machinery/computer/cloning] = 2
-		big_station_bounties[/obj/machinery/clonepod] = 2
-		big_station_bounties[/obj/machinery/clonegrinder] = 1
-		big_station_bounties[/obj/machinery/genetics_scanner] = 2
+	big_station_bounties[/obj/machinery/port_a_brig] = 3
+	big_station_bounties[/obj/machinery/flasher/portable] = 2
+	big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
+	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
+	big_station_bounties[/obj/machinery/computer/cloning] = 2
+	big_station_bounties[/obj/machinery/clonepod] = 2
+	big_station_bounties[/obj/machinery/clonegrinder] = 1
+	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 
-		big_station_bounties[/obj/machinery/recharge_station] = 1
-		big_station_bounties[/obj/machinery/optable] = 2
-		big_station_bounties[/obj/storage/closet/port_a_sci] = 2
+	big_station_bounties[/obj/machinery/recharge_station] = 1
+	big_station_bounties[/obj/machinery/optable] = 2
+	big_station_bounties[/obj/storage/closet/port_a_sci] = 2
 
-		big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
-		big_station_bounties[/obj/machinery/manufacturer/medical] = 1
-		big_station_bounties[/obj/machinery/manufacturer/general] = 1
-		big_station_bounties[/obj/machinery/manufacturer/general] = 1
+	big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
+	big_station_bounties[/obj/machinery/manufacturer/medical] = 1
+	big_station_bounties[/obj/machinery/manufacturer/general] = 1
+	big_station_bounties[/obj/machinery/manufacturer/general] = 1
 
-		big_station_bounties[/obj/submachine/chef_oven] = 1
-		big_station_bounties[/obj/machinery/gibber] = 1
+	big_station_bounties[/obj/submachine/chef_oven] = 1
+	big_station_bounties[/obj/machinery/gibber] = 1
 
-		big_station_bounties[/obj/machinery/bot/guardbot] = 1
-		big_station_bounties[/obj/machinery/plantpot] = 1
-		big_station_bounties[/obj/machinery/partyalarm] = 1
-		big_station_bounties[/obj/pool_springboard] = 1
+	big_station_bounties[/obj/machinery/bot/guardbot] = 1
+	big_station_bounties[/obj/machinery/plantpot] = 1
+	big_station_bounties[/obj/machinery/partyalarm] = 1
+	big_station_bounties[/obj/pool_springboard] = 1
 
-		big_station_bounties[/obj/reagent_dispensers] = 2
-		big_station_bounties[/obj/machinery/crusher] = 2
-		big_station_bounties[/obj/machinery/communications_dish] = 2
+	big_station_bounties[/obj/reagent_dispensers] = 2
+	big_station_bounties[/obj/machinery/crusher] = 2
+	big_station_bounties[/obj/machinery/communications_dish] = 2
 
 	active_bounties.len = 0
 
 	// Find matches for all our possible bounties
-	var/list/spy_thief_target_types = list()
-	// Construct master list of target types
-	for(var/i=1, i<=station_bounties.len, i++)
-		spy_thief_target_types += station_bounties[i]
-	for(var/i=1, i<=big_station_bounties.len, i++)
-		spy_thief_target_types += big_station_bounties[i]
+	var/list/spy_thief_target_types = station_bounties + big_station_bounties
 	var/list/valid_spy_thief_targets_by_type = list()
 	// Loop through all objects and pick valid objects on station
 	for(var/obj/Object in world)
 		LAGCHECK(LAG_LOW)
-		var/turf/Turf = get_turf(Object)
-		if(!Turf || Turf.z != Z_LEVEL_STATION)
-			continue
-		var/area/A = get_area(Object)
-		if (A.name == "Listening Post")
-			continue
-		for(var/type in spy_thief_target_types)
-			if(istype(Object, type))
-				if(valid_spy_thief_targets_by_type[type])
-					valid_spy_thief_targets_by_type[type] += Object
-				else
-					valid_spy_thief_targets_by_type[type] = list(Object)
-				break
-
+		// Super fast exact type check
+		if(spy_thief_target_types[Object.type])
+			var/turf/Turf = get_turf(Object)
+			if(!Turf || Turf.z != Z_LEVEL_STATION)
+				continue
+			var/area/A = get_area(Object)
+			if(A.name == "Listening Post")
+				continue
+			if(valid_spy_thief_targets_by_type[Object.type])
+				valid_spy_thief_targets_by_type[Object.type] += Object
+			else
+				valid_spy_thief_targets_by_type[Object.type] = list(Object)
+		else
+			// Slowr subtype check
+			var/turf/Turf = get_turf(Object)
+			if(!Turf || Turf.z != Z_LEVEL_STATION)
+				continue
+			var/area/A = get_area(Object)
+			if(A.name == "Listening Post")
+				continue
+			for(var/type in spy_thief_target_types)
+				if(istype(Object, type))
+					if(valid_spy_thief_targets_by_type[type])
+						valid_spy_thief_targets_by_type[type] += Object
+					else
+						valid_spy_thief_targets_by_type[type] = list(Object)
+					break
 	//Add organs
 	var/list/O = organ_bounties.Copy()
 	for(var/i=1, i<=organ_bounty_amt && O.len, i++)
@@ -586,11 +592,12 @@
 		// Pick a known valid item, retrieve difficulty rating from other list
 		big_choice = pick(big_station_bounties)
 		obj_existing = pick(valid_spy_thief_targets_by_type[big_choice])
-		difficulty = big_station_bounties[big_choice]
-		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		if (obj_existing == null)
 			// Catch picks that weren't found
+			big_station_bounties -= big_choice
 			continue
+		difficulty = big_station_bounties[big_choice]
+		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = obj_existing.type
 		B.item = obj_existing
 		B.name = obj_existing.name
@@ -607,7 +614,7 @@
 					B.pick_reward_tier(1)
 
 		active_bounties += B
-		valid_spy_thief_targets_by_type -= big_choice
+		big_station_bounties -= big_choice
 		big_picked++
 
 	//Add photos
@@ -636,11 +643,12 @@
 		// Pick a known valid item, retrieve difficulty rating from other list
 		item_choice = pick(station_bounties)
 		item_existing = pick(valid_spy_thief_targets_by_type[item_choice])
-		difficulty = station_bounties[item_choice]
-		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		if (item_existing == null)
 			// Catch picks that weren't found
+			station_bounties -= big_choice
 			continue
+		difficulty = station_bounties[item_choice]
+		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = item_existing.type
 		B.item = item_existing
 		B.name = item_existing.name
@@ -657,7 +665,7 @@
 					B.pick_reward_tier(1)
 
 		active_bounties += B
-		valid_spy_thief_targets_by_type -= item_choice
+		station_bounties -= big_choice
 		item_picked++
 
 
