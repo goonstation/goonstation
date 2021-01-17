@@ -48,7 +48,9 @@
 /datum/aiTask/sequence/goalbased/proc/score_goal()
 	// do any specific stuff here, eg. if the goal requires some conditions and they don't exist, reduce the score here
 	// by default, return the score of the best target
-	return precondition() * score_target(get_best_target(get_targets()))
+	. = 0
+	if(precondition())
+		return precondition() * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
