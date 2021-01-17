@@ -3,7 +3,7 @@
 	process(var/datum/gas_mixture/environment)
 		if(robot_owner)
 			var/mult = get_multiplier()
-			robot_owner.oil -= 1*mult
+			robot_owner.oil -= mult
 			if (robot_owner.oil <= 0)
 				robot_owner.oil = 0
 				robot_owner.remove_stun_resist_mod("robot_oil", 25)
