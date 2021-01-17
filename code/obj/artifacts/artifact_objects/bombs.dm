@@ -49,14 +49,14 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
 		if (doAlert && !ON_COOLDOWN(O, "alertArm", 10 MINUTES)) // spam protection
 			var/area/A = get_area(O)
-			command_alert("\An extremely unstable object of [artitype.name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
+			command_alert("An extremely unstable object of [artitype.name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
 		O.add_simple_light("artbomb", list(255,255,255,255))
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
 
 
 	effect_process(var/obj/O)
-		if(!src.activated) 
+		if(!src.activated)
 			return
 		var/turf/T = get_turf(O)
 		playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
-			command_alert("\The object of [src.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+			command_alert("The object of [src.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(src.artifact && istype(src.artifact, /datum/artifact/bomb))
 			var/datum/artifact/bomb/B = src.artifact
 			if(B.doAlert && B.activated && !B.blewUp) // lol, don't give the message if it was destroyed by exploding itself
-				command_alert("\The object of [B.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [B.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
 
 
 
