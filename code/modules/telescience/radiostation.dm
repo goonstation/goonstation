@@ -177,11 +177,10 @@
 	switch(action)
 		if("add_voice")
 			if(length(src.voices) >= src.max_voices)
-				. = FALSE
+				return FALSE
 			var/name = input("Enter voice name:", "Voice name")
 			if(!name)
-				. = FALSE
-				return
+				return FALSE
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
 			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
@@ -192,8 +191,7 @@
 		if("remove_voice")
 			var/id = params["id"]
 			if(id <= 0 || id > length(voices))
-				. = FALSE
-				return
+				return FALSE
 			if(id == src.selected_voice)
 				src.selected_voice = 0
 			else if(id < src.selected_voice)
@@ -220,8 +218,7 @@
 			var/message = html_encode(params["message"])
 			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
 				usr.say(message)
-				. = TRUE
-				return
+				return TRUE
 			var/name = voices[src.selected_voice]["name"]
 			var/accent_id = voices[src.selected_voice]["accent"]
 			if(!isnull(accent_id))
