@@ -1,4 +1,8 @@
 
+(t)sun jan 17 21
+(u)Flourish
+(e)🆕|feature
+(+)Cows can now customize their hoof color with the mid detail option in character setup.
 (t)sat jan 16 21
 (u)pali
 (*)Oshan ocean is now atmospherically inert instead of producing nitrogen. Wrenches can now be used to fiddle with atmos pump settings (instead of this being locked to multitools).
