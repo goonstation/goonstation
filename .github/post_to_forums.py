@@ -43,6 +43,9 @@ def edit_thread(thread_id, subject, contents, icon="-1", edit_reason=""):
 		return None
 	print("Logged in")
 
+	r = s.post(URL + "/showthread.php?tid={}".format(thread_id))
+	post_id = re.search(r'id="post_([0-9]*)', r.text).groups()[0]
+
 	POST_DATA = {
 		"my_post_key": os.environ["FORUM_POST_KEY"],
 		"subject": subject,
@@ -56,7 +59,7 @@ def edit_thread(thread_id, subject, contents, icon="-1", edit_reason=""):
 		"attachmentact": ""
 	}
 
-	edit_url = URL + "/editpost.php?pid={}&processed=1".format(thread_id)
+	edit_url = URL + "/editpost.php?pid={}&processed=1".format(post_id)
 	thread_url = None
 	r = s.post(edit_url, files={k: (None, v) for k, v in POST_DATA.items()})
 	thread_url = r.url
@@ -129,7 +132,7 @@ def post_pr_comment(body):
 	pull_but_as_issue = pull.as_issue() # what the fuck github
 	pull_but_as_issue.create_comment(body)
 
-def get_post_id():
+def get_thread_id():
 	g = Github(os.environ["TOKEN"])
 	repo = g.get_repo(os.environ["REPO"])
 	pull = repo.get_pull(int(os.environ["PR_NUM"]))
@@ -154,13 +157,13 @@ if len(subject) > MAX_SUBJECT_LEN:
 pr_link = "[url={}]{}[/url]".format(os.environ["PR_URL"], "PULL REQUEST DETAILS")
 content = pr_link + "\n\n" + markdown_to_mybb(os.environ["PR_BODY"]) + "\n\n" + pr_link
 
-existing_post_id = get_post_id()
+existing_thread_id = get_thread_id()
 
-if existing_post_id:
+if existing_thread_id:
 	thread_url = None
 	attempts_left = 3
 	while not thread_url and attempts_left:
-		thread_url = edit_thread(existing_post_id, subject, content, icon)
+		thread_url = edit_thread(existing_thread_id, subject, content, icon)
 		if not thread_url:
 			attempts_left -= 1
 			time.sleep(1)
