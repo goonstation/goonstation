@@ -528,7 +528,6 @@ mob/verb/checkrewards()
 	required_levels = list("Bartender"=10)
 	icon_state = "?"
 	claimable = 1
-	claimPerRound = 1
 	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
 
 	activate(var/client/C)
