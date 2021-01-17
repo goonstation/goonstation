@@ -474,8 +474,11 @@
 		var/topping //the topping the player is adding (stored as a string reference to an icon_state)
 		var/pendinglight //a variable referenced later to check if the light source on a cake needs to be updated
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
-			slice_cake(W,user)
-			return
+			if(!src.sliced)
+				slice_cake(W,user)
+				return
+			else
+				..()
 		else if(istype(W,/obj/item/reagent_containers/food/drinks/drinkingglass/icing))
 			frost_cake(W,user)
 			return
