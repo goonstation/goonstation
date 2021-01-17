@@ -234,7 +234,7 @@ this should mean that now itll update the fireflashes when someone opens a door,
 
 		sleep(0.1 SECONDS) //we need to do this once originally
 		while (volume)
-			var/new_hotspots_made = 0 //will probably be used later, for temp variation or speed/pressure calculations. idk
+			//var/new_hotspots_made = 0 //will probably be used later, for temp variation or speed/pressure calculations. idk
 			var/list/found_neighbors = list() //populated with valid tiles for the next iteration of the loop
 			for (var/turf/current_tile in tiles_to_process)
 				for (var/check_dir in cardinal) //check all neighbors of the tile
@@ -283,7 +283,7 @@ this should mean that now itll update the fireflashes when someone opens a door,
 					else
 						if (volume > 0) //check if have enough volume to make a new fireflash
 							volume--
-							new_hotspots_made++
+							//new_hotspots_made++
 							var/obj/hotspot/new_hotspot = unpool(/obj/hotspot)
 							new_hotspot.temperature = temp
 							new_hotspot.volume = 400 //do some testing as to Why is this number???? ?????
