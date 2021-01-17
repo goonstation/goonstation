@@ -1561,28 +1561,46 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "sendstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", "clrbff")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingString")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingString")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", "setStartingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", "setEndingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingStringManual")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingStringManual")
 
-	proc/setStartingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
-		inp = strip_html(inp)
-		bstr = inp
-		boutput(user, "String set to [inp]")
-		tooltip_rebuild = 1
+		setStartingString(inp)
+		boutput(user, "String set to [bstr]")
 		return 1
 
-	proc/setEndingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setStartingString(input.signal)
+
+	proc/setStartingString(var/inp)
+		inp = strip_html(inp)
+		bstr = inp
+		tooltip_rebuild = 1
+
+	proc/setEndingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
+		setEndingString(inp)
+		boutput(user, "String set to [astr]")
+		return 1
+
+	proc/setEndingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setEndingString(input.signal)
+
+	proc/setEndingString(var/inp)
 		inp = strip_html(inp)
 		astr = inp
-		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
-		return 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return

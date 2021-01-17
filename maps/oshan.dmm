@@ -2895,14 +2895,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "agn" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_1";
-	name = "Chamber One Exhaust"
-	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Chamber One Heat Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
@@ -7986,12 +7986,6 @@
 	on = 1;
 	target_pressure = 250
 	},
-/obj/machinery/door_control{
-	id = "chamber_1";
-	name = "Chamber One Exhaust";
-	pixel_x = -12;
-	pixel_y = 32
-	},
 /obj/machinery/ignition_switch{
 	id = "toxins_1";
 	pixel_x = 8;
@@ -8018,12 +8012,6 @@
 	id = "Chamber Two Inlet";
 	on = 1;
 	target_pressure = 500
-	},
-/obj/machinery/door_control{
-	id = "chamber_2";
-	name = "Chamber Two Exhaust";
-	pixel_x = 12;
-	pixel_y = 32
 	},
 /obj/machinery/ignition_switch{
 	id = "toxins_2";
@@ -8896,14 +8884,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aus" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_2";
-	name = "Chamber Two Exhaust"
-	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_two";
+	layer = 4;
+	name = "Chamber Two Heat Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
@@ -19459,8 +19447,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aTp" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/dispenser,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTq" = (
@@ -22370,6 +22358,7 @@
 /area/research_outpost/toxins)
 "baZ" = (
 /obj/machinery/light/small/floor,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bba" = (

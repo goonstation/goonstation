@@ -264,6 +264,7 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
+	compatible_species = list("human", "cow")
 	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999

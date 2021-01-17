@@ -838,8 +838,8 @@ datum/pathogen
 	proc/clear()
 		name = ""
 		name_base = ""
-		pathogen_uid = 0
-		mutation = 0
+		pathogen_uid = null
+		mutation = null
 		desc = ""
 		stages = 1
 		carriers = list()
@@ -849,7 +849,7 @@ datum/pathogen
 		symptomatic = 1
 		advance_speed = 0
 		spread = 0
-		base_mutation = 0
+		base_mutation = null
 		body_type = null
 		infected = null
 		cooldown = 3
