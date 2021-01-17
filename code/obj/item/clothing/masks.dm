@@ -358,6 +358,10 @@
 	permeability_coefficient = 0.05
 	path_prot = 0
 
+	setupProperties()
+		..()
+		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
+
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
 	desc = "For those really, <i>really</i> messy surgeries."
