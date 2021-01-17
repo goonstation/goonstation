@@ -529,11 +529,21 @@ mob/verb/checkrewards()
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
+	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
 
 	activate(var/client/C)
-		boutput(C, "You take the monocle out from your pocket")
-		new /obj/item/clothing/glasses/spectro/monocle(get_turf(C.mob))
-		return
+		var/obj/item/clothing/glasses/spectro/glasses = locate(/obj/item/clothing/glasses/spectro) in C.mob.contents
+
+		if(!istype(glasses))
+			boutput(C.mob, "You need to be holding a pair of spectroscopic scanner goggles to claim this item")
+			return
+		C.mob.remove_item(glasses)
+		qdel(glasses)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You break the goggles in half and fashion the lens into a monocle...somehow.")
+
 /datum/jobXpReward/bartender/goldenshaker
 	name = "Golden Cocktail Shaker"
 	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
