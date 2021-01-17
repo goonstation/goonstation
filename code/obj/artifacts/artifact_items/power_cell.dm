@@ -50,10 +50,10 @@
 						src.leakChem = pick("glitter","sakuride","grassgro","glitter_harmless","glowing_fliptonium", "mugwort")
 					if ("precursor")
 						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
-				src.create_reagents(rand(5,20))
-				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume) // so you can reagent scan the cell!
 				if(prob(10))
 					src.smoky = TRUE
+				src.create_reagents(rand(5,20))
+				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume) // so you can reagent scan the cell!
 
 
 			..()
@@ -81,11 +81,16 @@
 			var/turf/T = get_turf(src.loc)
 			if(src.noise)
 				playsound(T, noise, 50, 1, -1)
+
 			if(leakChem && prob(50))
-				src.reagents.reaction(T, TOUCH)
+				if(src.smoky)
+					smoke_reaction(src.reagents, 1, T)
+				else
+					src.reagents.reaction(T, TOUCH)
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume)
-			if(prob(25))
+
+			if(!issilicon(src.loc) && prob(10))
 				elecflash(T)
 
 	ArtifactActivated()
