@@ -18,7 +18,7 @@
 		var/list/closets = list()
 		var/n_closets = 0
 		for_by_tcl(closet, /obj/storage/closet)
-			if(isrestrictedz(closet.z))
+			if(isrestrictedz(closet.z) || istype(closet, /obj/storage/closet/port_a_sci))
 				continue
 			closets += closet
 			n_closets++
