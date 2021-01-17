@@ -134,8 +134,8 @@
 			user.show_text("This cake has already been sliced!","red")
 			return
 		user.show_text("You cut the cake into slices.")
-		var/layer_tag
-		var/replacetext
+		var/layer_tag //passes layer information to the build_cake function
+		var/replacetext //used to change layer identifiers to reformat from cake overlays to slice overlays
 		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
 		var/slices
 		var/slice_candle
@@ -402,7 +402,6 @@
 		else if(src.GetOverlayImage("cake[src.clayer]-candle"))
 			src.ClearSpecificOverlays("cake[src.clayer]-candle")
 			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
-		return
 
 
 	proc/put_out(var/mob/user as mob)
@@ -416,7 +415,6 @@
 			if (src in processing_items)
 				processing_items.Remove(src)
 			src.update_cake_context()
-		return
 
 	/*__________________*/
 	/*Context Actions :D*/
@@ -426,7 +424,7 @@
 		src.contextActions = list()
 
 		var/pickup = FALSE
-		if(clayer>1)
+		if(clayer > 1)
 			contextActions += new /datum/contextAction/cake/unstack
 			pickup = TRUE
 		if(litfam)
@@ -508,7 +506,6 @@
 				qdel(W)
 				if(pendinglight)
 					src.ignite()
-				return
 
 
 	attack_hand(mob/user as mob)
