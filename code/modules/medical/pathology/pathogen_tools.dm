@@ -190,7 +190,7 @@
 					if (src.medium)
 						processing_items |= src
 				else if (R in pathogen_controller.media)
-					if (src.medium?.id != R)
+					if (src.medium && src.medium?.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
 					else if (!src.medium)
 						src.medium = src.reagents.reagent_list[R]
