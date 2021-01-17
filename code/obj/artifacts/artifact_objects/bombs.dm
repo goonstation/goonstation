@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(doAlert && ON_COOLDOWN(O, "alertArm", 10 MINUTES))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
 			playsound(T, sound_cooldown, 100, 1)
-			spawn(3 SECONDS)
+			SPAWN_DBG(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
 		if (explode_delay < 1)
@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
 
 			// actual boom
-			spawn(10 SECONDS)
+			SPAWN_DBG(10 SECONDS)
 				if (src.activated)
 					blewUp = 1
 					deploy_payload(O)
@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		// and remove all the animation stuff when it is deactivated (:
 		animate(O, pixel_y = 0, pixel_y = 0, time = 3,loop = 1, easing = LINEAR_EASING)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time= 3 SECONDS, transform = null)
-		spawn(3 SECONDS)
+		SPAWN_DBG(3 SECONDS)
 			O.remove_simple_light("artbomb")
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
