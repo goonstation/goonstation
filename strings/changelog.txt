@@ -1,5 +1,12 @@
 
 (t)sun jan 17 21
+(u)zjdtmkhzt
+(p)3337
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Pathogens can no longer reinfect a cured person
+(*)Spreading spreading symptoms reworked to use a new visual system instead of clouds. Details in the extended changelog.
+(+)The new pathogen visuals will slip people less, linger for a shorter period of time, and block clicks less.
+(+)You can protect yourself from pathogen stains via disease resistance (e.g. biosuit, spacesuit, certain foods), and particles via certain headwear (e.g. biohood, space helmet, sterile mask).
 (u)AwkwardDryad
 (p)3346
 (e)🆕|feature
