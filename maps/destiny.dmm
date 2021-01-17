@@ -31029,6 +31029,11 @@
 /obj/decal/poster/wallsign/cdnp{
 	pixel_y = 32
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bcz" = (
@@ -31043,6 +31048,11 @@
 	},
 /obj/decal/poster/wallsign/cdnp{
 	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -33730,11 +33740,6 @@
 	icon_state = "2-4"
 	},
 /obj/window/crystal/reinforced/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "bhj" = (
@@ -34640,6 +34645,11 @@
 	pixel_x = 24
 	},
 /obj/window/crystal/reinforced/south,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13"
+	},
 /obj/storage/closet/wardrobe/orange,
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/red,
@@ -37647,6 +37657,11 @@
 "bnJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13"
+	},
 /obj/item/decoration/ashtray{
 	butts = 5;
 	name = "grubby old ashtray"
