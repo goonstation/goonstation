@@ -1331,6 +1331,8 @@
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
+		if(prob(20))
+			M.bioHolder.AddEffect("noir", magical=1)
 
 // randomizd gimmick jobs
 
