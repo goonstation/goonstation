@@ -81,7 +81,7 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-		return list(tag,pendinglight) //returns a list consisting of the new overlay tag and candle data
+		. = list(tag,pendinglight) //returns a list consisting of the new overlay tag and candle data
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
