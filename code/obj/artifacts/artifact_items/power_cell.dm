@@ -12,6 +12,7 @@
 	var/effectProbModifier = 0
 	var/noise = null
 	var/leakChem = null
+	var/smoky = FALSE
 
 	New(var/loc, var/forceartiorigin)
 		//src.artifact = new /datum/artifact/powercell(src)
@@ -51,6 +52,9 @@
 						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 				src.create_reagents(rand(5,20))
 				src.reagents.add_reagent(leakChem, src.reagents.maximum_volume) // so you can reagent scan the cell!
+				if(prob(10))
+					src.smoky = TRUE
+
 
 			..()
 
