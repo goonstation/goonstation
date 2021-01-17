@@ -8,4 +8,4 @@
 				robot_owner.oil = 0
 				robot_owner.remove_stun_resist_mod("robot_oil", 25)
 				REMOVE_MOVEMENT_MODIFIER(robot_owner, /datum/movement_modifier/robot_oil, "oil")
-	..()
+		..()
