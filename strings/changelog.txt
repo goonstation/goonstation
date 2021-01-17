@@ -1,5 +1,9 @@
 
 (t)sun jan 17 21
+(u)Asche
+(p)3307
+(e)⚖|balance
+(+)Ship components have fallen in price. On the bright side, space traders are accepting some new items.
 (u)zjdtmkhzt
 (p)3337
 (e)⚖🆕🎨|balance, feature, sprites
