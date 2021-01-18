@@ -29954,12 +29954,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	dir = 0;
-	icon_state = "2-4"
-	},
 /obj/machinery/door/airlock/pyro/glass/sci{
 	name = "Teleporter Pad"
 	},
@@ -29973,6 +29967,9 @@
 	layer = 4;
 	name = "Teleporter Blast Shield";
 	opacity = 0
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
@@ -31292,11 +31289,12 @@
 	},
 /area/station/hallway/primary/east)
 "ber" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets/glass/chemistry{
-	name = "glass airlock-'Teleporter Pad'";
-	req_access_txt = ""
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Teleporter Pad"
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/research,
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
 	id = "scienceteleporter2";
@@ -31304,14 +31302,15 @@
 	name = "Teleporter Blast Shield"
 	},
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "0-8"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
@@ -31334,10 +31333,6 @@
 	},
 /obj/cable,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
 	d2 = 4;
 	dir = 0;
 	icon_state = "0-4"
@@ -31355,11 +31350,6 @@
 /area/station/science/teleporter)
 "bev" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -31371,6 +31361,9 @@
 	layer = 4;
 	name = "Teleporter Blast Shield";
 	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -32059,20 +32052,12 @@
 	},
 /area/station/science/teleporter)
 "bfH" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
 	},
 /area/station/science/teleporter)
 "bfI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	dir = 1;
@@ -32081,11 +32066,6 @@
 /area/station/science/teleporter)
 "bfJ" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/cable,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
