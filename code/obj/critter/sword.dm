@@ -487,3 +487,18 @@
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+
+
+//DELETE THIS SHIT LATER, ITS FOR TESTS YOU DUMMY.
+
+/obj/big_thing_test
+	icon = 'icons/misc/retribution/SWORD/base.dmi'
+	icon_state = "beacon"
+	bound_height = 96
+	bound_width = 96
+
+	New()
+		..()
+		src.set_dir(WEST)
+		var/turf/center = get_step(get_turf(src), NORTHEAST)
+		new /obj/item/space_thing(center)
