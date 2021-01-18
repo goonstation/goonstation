@@ -9,7 +9,6 @@ proc/EndSpacePush(var/atom/movable/A)
 	if(ismob(A))
 		var/mob/M = A
 		M.inertia_dir = 0
-		M.last_move = 0
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
