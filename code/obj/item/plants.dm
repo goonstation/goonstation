@@ -6,8 +6,6 @@
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
-	var/use_bloodoverlay = 0
 	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
@@ -193,8 +191,10 @@
 	name = "wheat"
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
+	wear_image_icon = 'icons/mob/mask.dmi'
 	brewable = 1
 	brew_result = "beer"
+	var/use_bloodoverlay = 0
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"
@@ -333,14 +333,6 @@
 	brewable = 1
 	brew_result = "catdrugs"
 	module_research = list("vice" = 3)
-	module_research_type = /obj/item/plant/herb/cannabis
-
-/obj/item/plant/herb/poppy
-	name = "poppy"
-	crop_suffix	= ""
-	desc = "A distinctive red flower."
-	icon_state = "poppy"
-	module_research = list("vice" = 4)
 	module_research_type = /obj/item/plant/herb/cannabis
 
 /obj/item/plant/herb/aconite

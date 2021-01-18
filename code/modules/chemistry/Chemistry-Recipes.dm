@@ -753,6 +753,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		hibiscus_tea //
+			name = "hibiscus tea"
+			id = "hibiscus_tea"
+			result = "hibiscus_tea"
+			required_reagents = list("hibiscus_petals" = 1, "water" = 1)
+			result_amount = 1
+			mix_phrase = "The water dissolves the hibiscus petals and becomes a pleasing crimson liquid."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 
 		sodawater
 			name = "soda water"

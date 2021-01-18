@@ -657,7 +657,7 @@
 
 /datum/commodity/drugs/poppies
 	comname = "Poppies"
-	comtype = /obj/item/plant/herb/poppy
+	comtype = /obj/item/plant/flower/poppy
 	price = 350
 	baseprice = 350
 	upperfluc = 200
@@ -2712,7 +2712,7 @@
 /datum/commodity/drugs/poppies/greg
 	comname = "Poppies"
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
-	comtype = /obj/item/plant/herb/poppy
+	comtype = /obj/item/plant/flower/poppy
 	onmarket = 0
 	price = 350
 	baseprice = 350

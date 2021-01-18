@@ -171,21 +171,6 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 1
 	assoc_reagents = list("mercury")
 
-/datum/plant/herb/poppy
-	name = "Poppy"
-	seedcolor = "#FF1500"
-	crop = /obj/item/plant/herb/poppy
-	starthealth = 10
-	growtime = 50
-	harvtime = 80
-	cropsize = 4
-	harvests = 1
-	isgrass = 1
-	endurance = 0
-	vending = 2
-	genome = 1
-	assoc_reagents = list("morphine")
-
 /datum/plant/herb/aconite
 	name = "Aconite"
 	seedcolor = "#990099"

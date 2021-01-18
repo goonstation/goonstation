@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	cropsize = 5
 	harvests = 1
 	endurance = 0
-	nectarlevel = 12
+	nectarlevel = 0 //roses make no nectar, poor bees.
 	genome = 7
 	force_seed_on_harvest = 1
 	mutations = list()
@@ -27,12 +27,26 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	crop = /obj/item/plant/flower/hibiscus
 	starthealth = 20
 	growtime = 45
-	harvtime = 100
+	harvtime = 130
 	cropsize = 3
 	harvests = 1
-	endurance = 0
-	nectarlevel = 12
-	genome = 7
+	endurance = 2
+	nectarlevel =  19 //these things literally drip nectar from time to time
+	genome = 11
 	force_seed_on_harvest = 1
-	mutations = list()
-	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
+	assoc_reagents = list("hibiscus_petals")
+
+/datum/plant/flower/poppy
+	name = "Poppy"
+	seedcolor = "#FF1500"
+	crop = /obj/item/plant/flower/poppy
+	starthealth = 10
+	growtime = 50
+	harvtime = 80
+	cropsize = 4
+	harvests = 1
+	isgrass = 1
+	endurance = 0
+	vending = 2
+	genome = 1
+	assoc_reagents = list("morphine")

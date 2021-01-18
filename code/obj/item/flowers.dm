@@ -1,5 +1,14 @@
 
 /obj/item/plant/flower
+	name = "flower"
+	desc = "Somebody messed up while coding a pretty flower."
+	burn_point = 330
+	burn_output = 800
+	burn_possible = 2
+	wear_image_icon = 'icons/mob/head.dmi'
+	var/thorned = 0
+	var/seal_hair = 0
+	var/use_bloodoverlay = 0
 	var/bites = 1
 
 	attack(mob/M as mob, mob/user as mob) //shamlessly yoinking fruit hat code
@@ -46,7 +55,7 @@
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
-	var/thorned = 1
+	thorned = 1
 	var/list/names = list("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia",
 	"Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Dakota", "Avery",
 	"Sofia", "Camila", "Aria", "Scarlett", "Liam", "Noah", "William", "James",
@@ -81,5 +90,14 @@
 
 /obj/item/plant/flower/hibiscus
 	name = "Hibiscus"
-	desc = "A beatiful flower that makes a beautiful tea."
+	desc = "A flower that makes up for it's lack of scent with it's beauty."
 	icon_state = "hibiscus"
+
+
+/obj/item/plant/flower/poppy
+	name = "poppy"
+	crop_suffix	= ""
+	desc = "A distinctive red flower."
+	icon_state = "poppy"
+//	module_research = list("vice" = 4)
+//	module_research_type = /obj/item/plant/herb/cannabis

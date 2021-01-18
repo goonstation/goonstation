@@ -2133,7 +2133,7 @@
 			if (I.flags & ONBACK)
 				return 1
 		if (slot_wear_mask) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
-			if (istype(I, /obj/item/clothing/mask) || istype(I,/obj/item/plant/wheat))
+			if (istype(I, /obj/item/clothing/mask) || istype(I, /obj/item/plant/wheat))
 				var/obj/item/clothing/M = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !M.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
@@ -2141,7 +2141,7 @@
 				else
 					return 1
 		if (slot_ears)
-			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
+			if (istype(I, /obj/item/clothing/ears) || istype(I, /obj/item/device/radio/headset))
 				return 1
 		if (slot_glasses)
 			if (istype(I, /obj/item/clothing/glasses))
@@ -2150,7 +2150,7 @@
 			if (istype(I, /obj/item/clothing/gloves))
 				return 1
 		if (slot_head)
-			if (istype(I, /obj/item/clothing/head ) || istype(I,/obj/item/plant/flower))
+			if (istype(I, /obj/item/clothing/head ) || istype(I, /obj/item/plant/flower))
 				var/obj/item/clothing/H = I
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")

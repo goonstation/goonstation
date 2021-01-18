@@ -2227,6 +2227,21 @@ datum
 				..()
 				return
 
+		fooddrink/hibiscus_tea
+			name = "hibiscus tea"
+			id = "hibiscus_tea"
+			description = "A crimson beverage that was used to treat heart disease." //actually true!
+			taste = "tart"
+			fluid_r = 220
+			fluid_g = 20
+			fluid_b = 60
+			transparency = 232
+			thirst_value = 1.2
+			bladder_value = 0.04
+			energy_value = 0.05
+			overdose = 80 //this stuff can damage your liver if you let it
+
+
 		fooddrink/ginger_ale
 			name = "ginger ale"
 			id = "ginger_ale"
@@ -3853,3 +3868,5 @@ datum
 			alch_strength = 0.3
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
+
+

@@ -933,3 +933,12 @@ datum
 			fluid_b = 180
 			transparency = 35
 			value = 5 // 3c + 1c + 1c
+
+		hibiscus_petals
+			name = "hibiscus petals"
+			id = "hibiscus_petals"
+			description = "A bunch of petals from the hibiscus flower."
+			fluid_r = 213
+			fluid_g = 44
+			fluid_b = 83
+			transparency = 255
