@@ -1344,7 +1344,15 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/cow
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
-	limb_hit_bonus = 3
+	limb_hit_bonus = 4
+	skintoned = 1
+	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
+	handfoot_overlay_1_state = null
+	handfoot_overlay_1_color = CUST_2
+
+	New()
+		handfoot_overlay_1_state = "[src.partlistPart]"
+		. = ..()
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/cow/left

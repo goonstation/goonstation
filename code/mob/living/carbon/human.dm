@@ -93,6 +93,8 @@
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
+	/// used by werewolf TF to store and restore what you were before TFing into a werewolf
+	var/datum/mutantrace/coreMR = null // There are two wolves inside you. One's a wolf, the other's probably some kind of lizard. Also one's actually you, and they trade places Hannah Montana style
 
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
@@ -486,6 +488,7 @@
 			hud.master = null
 		hud.inventory_bg = null
 		hud.inventory_items = null
+		qdel(hud)
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -2351,6 +2354,22 @@
 	if (P.pathogen_uid in src.immunities)
 		return 0
 	if (!(P.pathogen_uid in src.pathogens))
+		var/maxTierExisting = 0
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
+		var/maxTierNew = P.getHighestTier()
+
+		// thanks, we already got strong pathogen, go away
+		if(maxTierNew <= maxTierExisting)
+			return 0
+
+		// wow, strong pathogen, let's kick out all the other ones
+		for (var/uid in src.pathogens)
+			var/datum/pathogen/PA = src.pathogens[uid]
+			src.cured(PA)
+
+		// and get the new one instead
 		var/datum/pathogen/Q = unpool(/datum/pathogen)
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)

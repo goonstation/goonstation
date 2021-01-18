@@ -471,16 +471,6 @@
 	actions.interrupt(src, INTERRUPT_ACT)
 
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
-		if (target != src && ishuman(src))
-			var/mob/living/carbon/human/S = src
-			if (S.sims)
-				var/mult = S.sims.getMoodActionMultiplier()
-				if (mult < 0.5)
-					if (prob((0.5 - mult) * 200))
-						boutput(src, pick("<span class='alert'>You're not in the mood to attack that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-						return
-
-
 		var/obj/item/equipped = src.equipped()
 		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
@@ -1029,8 +1019,7 @@
 			listening = all_hearers(message_range, olocs[olocs.len])
 
 
-	listening -= src
-	listening += src
+	listening |= src
 
 
 	var/list/heard_a = list() // understood us

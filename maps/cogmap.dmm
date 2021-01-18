@@ -15894,7 +15894,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -15908,6 +15908,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "aJm" = (
@@ -51963,6 +51964,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/cargo)
 "chy" = (

@@ -448,7 +448,7 @@
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
 
-			var/icon_text = "<p><p>"
+			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
 			// if (A.item_outputs)
 			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
@@ -1705,7 +1705,7 @@
 				// shut up
 				remove_link = "&#8987; Working..."
 
-			var/icon_text = "<p><p>"
+			var/icon_text = "<img class='icon'>"
 			// if (A.item_outputs)
 			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
 			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
@@ -2025,6 +2025,7 @@
 	/datum/manufacture/robo_leg_r_light,
 	/datum/manufacture/robo_leg_l_light,
 	/datum/manufacture/robo_leg_treads,
+	/datum/manufacture/robo_head_screen,
 	/datum/manufacture/robo_module,
 	/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye,

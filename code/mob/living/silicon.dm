@@ -264,8 +264,7 @@
 					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
-	listening -= src
-	listening += src
+	listening |= src
 
 	var/list/heard = list()
 	for (var/mob/M in listening)

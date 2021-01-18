@@ -329,6 +329,7 @@
 	//undo if bug
 	cant_self_remove = 0
 	cant_other_remove = 0
+	var/infectious = 0
 
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
 	..()
@@ -341,6 +342,8 @@
 		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
+		if(src.infectious && user.reagents)
+			user.reagents.add_reagent("painbow fluid",10)
 	return
 
 /obj/item/clothing/mask/cursedclown_hat/custom_suicide = 1
@@ -364,6 +367,7 @@
 	icon_state = "cursedclown"
 	item_state = "cclown_shoes"
 	step_sound = "cluwnestep"
+	compatible_species = list("human", "cow")
 	cant_self_remove = 1
 	cant_other_remove = 1
 	step_lots = 1
