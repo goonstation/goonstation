@@ -1,4 +1,10 @@
 
+(t)mon jan 18 21
+(u)Superlagg
+(p)3329
+(e)🐛|bug
+(+)Fixed werewolf transformations not working properly with other mutant races.
+(+)Buffed werewolf transformation. Now also clears burning, radiation, and stagger, adds +10 stun resistance, applies twice as much regeneration than it did previously, and regrows any lost or robotic limbs.
 (t)sun jan 17 21
 (u)Ursulamejor
 (e)🆕|feature
