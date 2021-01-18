@@ -1174,6 +1174,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 2, cost=PAY_DOCTORATE/5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=PAY_DOCTORATE/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salicylic_acid, 10, cost=PAY_DOCTORATE/10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 10, cost=PAY_DOCTORATE/10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 10, cost=PAY_DOCTORATE/10)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(0, 2), hidden=1, cost=PAY_DOCTORATE/4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/synthflesh, rand(0, 5), hidden=1, cost=PAY_DOCTORATE/4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=PAY_DOCTORATE)
