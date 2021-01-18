@@ -7,7 +7,7 @@
 
 import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, Flex, LabeledList, Modal, Section } from "../../../components";
+import { Box, Button, ByondUi, Flex, LabeledList, Modal, Section } from "../../../components";
 import { AppearanceEditor } from "../AppearanceEditor";
 import { GeneList, haveDevice, onCooldown } from "../BioEffect";
 import { GeneIcon } from "../GeneIcon";
@@ -18,6 +18,7 @@ export const ScannerTab = (props, context) => {
   const {
     haveScanner,
     haveSubject,
+    subjectPreview,
     subjectName,
     subjectHealth,
     subjectHuman,
@@ -137,15 +138,15 @@ export const ScannerTab = (props, context) => {
               </Flex.Item>
               {!!subjectHuman && (
                 <Flex.Item grow={0} shrink={0}>
-                  <Box width="80px" height="80px" textAlign="center">
-                    <img
-                      src={"genetek-scanner-occupant.png?" + Date.now()}
-                      style={{
-                        "-ms-interpolation-mode": "nearest-neighbor",
-                        "image-rendering": "pixelated",
-                      }}
-                      height="80" />
-                  </Box>
+                  <ByondUi
+                    params={{
+                      id: subjectPreview,
+                      type: "map",
+                    }}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                    }} />
                 </Flex.Item>
               )}
             </Flex>

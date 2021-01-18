@@ -9,7 +9,7 @@ var/list/genetek_hair_styles = null
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
-	var/icon/occupant_icon = null
+	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = 1.0
 	soundproofing = 10
@@ -275,15 +275,15 @@ var/list/genetek_hair_styles = null
 	proc/update_occupant()
 		var/mob/living/carbon/human/H = src.occupant
 		if (istype(H))
-			src.occupant_icon = character_preview_icon(H.bioHolder.mobAppearance, H.mutantrace)
+			if (src.occupant_preview)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
 		else
-			src.occupant_icon = null
+			qdel(src.occupant_preview)
+			src.occupant_preview = null
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/genetics_appearancemenu
-	var/client/usercl = null
-
 	var/mob/living/carbon/human/target_mob = null
 	var/direction = SOUTH
 
@@ -298,18 +298,22 @@ var/list/genetek_hair_styles = null
 
 	var/s_tone = "#FAD7D0"
 
-	var/icon/preview_icon = null
+	var/datum/character_preview/multiclient/preview = null
 
-	New(var/mob/target, var/client/newuser)
+	New(mob/target)
 		..()
-		if(!newuser || !ishuman(target))
+		if(!ishuman(target))
 			qdel(src)
 			return
 
 		src.target_mob = target
-		src.usercl = newuser
+		src.preview = new()
 		src.load_mob_data(src.target_mob)
 		return
+
+	disposing()
+		. = ..()
+		qdel(src.preview)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
@@ -343,6 +347,8 @@ var/list/genetek_hair_styles = null
 				src.update_preview_icon()
 
 	ui_data(mob/user)
+		src.preview?.AddClient(user?.client)
+
 		if (isnull(genetek_hair_styles))
 			genetek_hair_styles = list()
 			for (var/S in customization_styles)
@@ -358,9 +364,8 @@ var/list/genetek_hair_styles = null
 		if (!hasHumanHair)
 			colorChannels = src.target_mob.mutantrace.color_channel_names
 
-		user << browse_rsc(src.preview_icon, "polymorphicon.png")
-
 		return list(
+			"preview" = src.preview.preview_id,
 			"hairStyles" = genetek_hair_styles,
 			"direction" = src.direction,
 			"skin" = src.s_tone,
@@ -377,6 +382,10 @@ var/list/genetek_hair_styles = null
 			"hasHair" = hasHumanHair,
 			"channels" = colorChannels,
 		)
+
+	ui_close(mob/user)
+		. = ..()
+		src.preview?.RemoveClient(user?.client)
 
 	proc
 		load_mob_data(var/mob/living/carbon/human/H)
@@ -461,7 +470,7 @@ var/list/genetek_hair_styles = null
 				. = fix_colors(color)
 			else
 				var/list/L = hex_to_rgb_list(color)
-				. = rgb(L[1], L[2], L[3])
+				. = rgb(L["r"], L["g"], L["b"])
 
 		sanitize_hairstyle(style)
 			. = style
@@ -487,8 +496,6 @@ var/list/genetek_hair_styles = null
 				s_tone = "#FEFEFE"
 
 		update_preview_icon()
-			qdel(src.preview_icon)
-
 			var/datum/appearanceHolder/AH = new()
 
 			AH.CopyOther(src.target_mob.bioHolder.mobAppearance)
@@ -509,4 +516,4 @@ var/list/genetek_hair_styles = null
 			AH.customization_third = src.customization_third
 			AH.customization_third_original = src.customization_third
 
-			src.preview_icon = character_preview_icon(AH, src.target_mob.mutantrace, src.direction)
+			src.preview.update_appearance(AH, src.target_mob.mutantrace, src.direction)

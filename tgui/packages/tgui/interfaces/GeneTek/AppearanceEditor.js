@@ -7,11 +7,12 @@
 
 import { Fragment } from "inferno";
 import { useBackend } from "../../backend";
-import { Box, Button, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "../../components";
+import { Box, Button, ByondUi, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "../../components";
 
 export const AppearanceEditor = (params, context) => {
   const { act } = useBackend(context);
   const {
+    preview,
     hairStyles,
     skin,
     eyes,
@@ -46,83 +47,89 @@ export const AppearanceEditor = (params, context) => {
         </Fragment>
       }>
       <Flex>
-        <LabeledList>
-          {!!hasSkin && (
-            <LabeledList.Item label="Skin Tone">
-              <ColorInput
-                color={skin}
-                onChange={c => act("editappearance", { skin: c })} />
-            </LabeledList.Item>
-          )}
-          {!!hasEyes && (
-            <LabeledList.Item label="Eye Color">
-              <ColorInput
-                color={eyes}
-                onChange={c => act("editappearance", { eyes: c })} />
-            </LabeledList.Item>
-          )}
-          {(!!hasSkin || !!hasEyes) && !!channels[0] && <LabeledList.Divider />}
-          {!!channels[0] && !!hasHair && (
-            <LabeledList.Item label={channels[0]}>
-              <Dropdown
-                width={20}
-                selected={style1}
-                onSelected={s => act("editappearance", { style1: s })}
-                options={hairStyles} />
-            </LabeledList.Item>
-          )}
-          {!!channels[0] && (
-            <LabeledList.Item label={`${channels[0]} Color`}>
-              <ColorInput
-                color={color1}
-                onChange={c => act("editappearance", { color1: c })}
-                fix={fixColors} />
-            </LabeledList.Item>
-          )}
-          {!!channels[1] && <LabeledList.Divider />}
-          {!!channels[1] && !!hasHair && (
-            <LabeledList.Item label={channels[1]}>
-              <Dropdown
-                width={20}
-                selected={style2}
-                onSelected={s => act("editappearance", { style2: s })}
-                options={hairStyles} />
-            </LabeledList.Item>
-          )}
-          {!!channels[1] && (
-            <LabeledList.Item label={`${channels[1]} Color`}>
-              <ColorInput
-                color={color2}
-                onChange={c => act("editappearance", { color2: c })}
-                fix={fixColors} />
-            </LabeledList.Item>
-          )}
-          {!!channels[2] && <LabeledList.Divider />}
-          {!!channels[2] && !!hasHair && (
-            <LabeledList.Item label={channels[2]}>
-              <Dropdown
-                width={20}
-                selected={style3}
-                onSelected={s => act("editappearance", { style3: s })}
-                options={hairStyles} />
-            </LabeledList.Item>
-          )}
-          {!!channels[2] && (
-            <LabeledList.Item label={`${channels[2]} Color`}>
-              <ColorInput
-                color={color3}
-                onChange={c => act("editappearance", { color3: c })}
-                fix={fixColors} />
-            </LabeledList.Item>
-          )}
-        </LabeledList>
-        <img
-          src={"polymorphicon.png?" + Date.now()}
-          style={{
-            "-ms-interpolation-mode": "nearest-neighbor",
-            "image-rendering": "pixelated",
-          }}
-          height="80" />
+        <Flex.Item shrink="1">
+          <LabeledList>
+            {!!hasSkin && (
+              <LabeledList.Item label="Skin Tone">
+                <ColorInput
+                  color={skin}
+                  onChange={c => act("editappearance", { skin: c })} />
+              </LabeledList.Item>
+            )}
+            {!!hasEyes && (
+              <LabeledList.Item label="Eye Color">
+                <ColorInput
+                  color={eyes}
+                  onChange={c => act("editappearance", { eyes: c })} />
+              </LabeledList.Item>
+            )}
+            {!!((hasSkin || hasEyes) && channels[0]) && <LabeledList.Divider />}
+            {!!channels[0] && !!hasHair && (
+              <LabeledList.Item label={channels[0]}>
+                <Dropdown
+                  width={20}
+                  selected={style1}
+                  onSelected={s => act("editappearance", { style1: s })}
+                  options={hairStyles} />
+              </LabeledList.Item>
+            )}
+            {!!channels[0] && (
+              <LabeledList.Item label={`${channels[0].replace(/ Detail$/, "")} Color`}>
+                <ColorInput
+                  color={color1}
+                  onChange={c => act("editappearance", { color1: c })}
+                  fix={fixColors} />
+              </LabeledList.Item>
+            )}
+            {!!channels[1] && <LabeledList.Divider />}
+            {!!channels[1] && !!hasHair && (
+              <LabeledList.Item label={channels[1]}>
+                <Dropdown
+                  width={20}
+                  selected={style2}
+                  onSelected={s => act("editappearance", { style2: s })}
+                  options={hairStyles} />
+              </LabeledList.Item>
+            )}
+            {!!channels[1] && (
+              <LabeledList.Item label={`${channels[1].replace(/ Detail$/, "")} Color`}>
+                <ColorInput
+                  color={color2}
+                  onChange={c => act("editappearance", { color2: c })}
+                  fix={fixColors} />
+              </LabeledList.Item>
+            )}
+            {!!channels[2] && <LabeledList.Divider />}
+            {!!channels[2] && !!hasHair && (
+              <LabeledList.Item label={channels[2]}>
+                <Dropdown
+                  width={20}
+                  selected={style3}
+                  onSelected={s => act("editappearance", { style3: s })}
+                  options={hairStyles} />
+              </LabeledList.Item>
+            )}
+            {!!channels[2] && (
+              <LabeledList.Item label={`${channels[2].replace(/ Detail$/, "")} Color`}>
+                <ColorInput
+                  color={color3}
+                  onChange={c => act("editappearance", { color3: c })}
+                  fix={fixColors} />
+              </LabeledList.Item>
+            )}
+          </LabeledList>
+        </Flex.Item>
+        <Flex.Item basis="80px" shrink="0">
+          <ByondUi
+            params={{
+              id: preview,
+              type: "map",
+            }}
+            style={{
+              width: "80px",
+              height: "80px",
+            }} />
+        </Flex.Item>
       </Flex>
     </Section>
   );

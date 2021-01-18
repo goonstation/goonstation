@@ -30,8 +30,34 @@ datum/character_preview
 		proc/Show(shown = TRUE)
 			winshow(src.viewer, src.window_id, shown)
 
+	multiclient
+		var/list/viewers = list()
+
+		New(control_id = null)
+			. = ..(null, "unused", control_id)
+
+		disposing()
+			for (var/client/viewer in src.viewers)
+				if (viewer)
+					viewer.screen -= src.handler
+					viewer.screen -= src.preview_mob
+			. = ..()
+
+		proc/AddClient(client/viewer)
+			if (viewer && !(viewer in src.viewers))
+				src.viewers += viewer
+				viewer.screen += src.handler
+				viewer.screen += src.preview_mob
+
+		proc/RemoveClient(client/viewer)
+			if (viewer && (viewer in src.viewers))
+				src.viewers -= viewer
+				viewer.screen -= src.handler
+				viewer.screen -= src.preview_mob
+
 	New(client/viewer, window_id, control_id = null)
 		. = ..()
+		START_TRACKING
 
 		src.viewer = viewer
 		if (isnull(control_id))
@@ -39,26 +65,28 @@ datum/character_preview
 		src.preview_id = "[control_id]"
 		src.window_id = window_id
 
-		winset(viewer, src.preview_id, list2params(list(
-			"parent" = src.window_id,
-			"type" = "map",
-			"pos" = "0,0",
-			"size" = "128,128",
-		)))
+		if (viewer)
+			winset(viewer, src.preview_id, list2params(list(
+				"parent" = src.window_id,
+				"type" = "map",
+				"pos" = "0,0",
+				"size" = "128,128",
+			)))
 
 		src.handler = new
 		src.handler.plane = 0
 		src.handler.mouse_opacity = 0
 		src.handler.screen_loc = "[src.preview_id]:1,1"
-		src.viewer.screen += src.handler
+		src.viewer?.screen += src.handler
 
 		var/mob/living/carbon/human/H = new()
 		src.preview_mob = H
 		H.screen_loc = "[src.preview_id];1,1"
 		src.handler.vis_contents += H
-		src.viewer.screen += H
+		src.viewer?.screen += H
 
 	disposing()
+		STOP_TRACKING
 		SPAWN_DBG(0)
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
@@ -71,9 +99,6 @@ datum/character_preview
 				src.viewer.screen -= src.preview_mob
 			qdel(src.preview_mob)
 		. = ..()
-
-	proc/GetID()
-		. = "[src.window_id].[src.preview_id]"
 
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
 		src.preview_mob.dir = direction

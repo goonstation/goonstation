@@ -552,7 +552,7 @@
 				var/mob/living/carbon/human/H = get_scan_subject()
 				if (istype(H))
 					src.log_me(H, "appearance modifier accessed")
-					src.modify_appearance = new/datum/genetics_appearancemenu(H, usr.client) // TODO: convert to tgui
+					src.modify_appearance = new(H)
 			if (!src.modify_appearance || src.modify_appearance.target_mob != get_scan_subject())
 				qdel(src.modify_appearance)
 				src.modify_appearance = null
@@ -1007,8 +1007,12 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
-		user << browse_rsc(src.scanner.occupant_icon, "genetek-scanner-occupant.png")
+		if (!src.scanner.occupant_preview)
+			src.scanner.occupant_preview = new()
+			src.scanner.update_occupant()
+		src.scanner.occupant_preview.AddClient(user?.client)
 		.["haveSubject"] = TRUE
+		.["subjectPreview"] = src.scanner.occupant_preview.preview_id
 		.["subjectName"] = subject.name
 		.["subjectStat"] = subject.stat
 		.["subjectHealth"] = subject.health / subject.max_health
@@ -1118,6 +1122,11 @@
 	if(!ui)
 		ui = new(user, src, "GeneTek", "GeneTek Console v1.01")
 		ui.open()
+
+/obj/machinery/computer/genetics/ui_close(mob/user)
+	. = ..()
+	src.scanner?.occupant_preview?.RemoveClient(user?.client)
+	src.modify_appearance?.ui_close(user)
 
 #undef GENETICS_INJECTORS
 #undef GENETICS_ANALYZER
