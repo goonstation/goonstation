@@ -1220,7 +1220,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		exclusiveGroup = "Food"
 		maxDuration = 500 SECONDS
 		unique = 1
-		var/change = 2
+		change = 2
 
 		getTooltip()
 			return "Your stamina regen is increased by [change]."
