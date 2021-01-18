@@ -17939,6 +17939,9 @@
 /obj/stool/chair/office/blue{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "aIj" = (
@@ -20506,7 +20509,7 @@
 "aMV" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass,
-/obj/access_spawn/medical,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aMW" = (
@@ -21247,7 +21250,7 @@
 	name = "Pathology Quarantine";
 	opacity = 0
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/pathology,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "aOk" = (
@@ -22277,7 +22280,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/gannets/glass,
-/obj/access_spawn/medical,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aQw" = (
@@ -24127,9 +24130,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
 "aTr" = (
@@ -25720,6 +25720,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
 "aWm" = (
@@ -26287,9 +26290,6 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
 	},
 /turf/simulated/floor/green/checker,
 /area/station/medical/cdc)
@@ -29986,7 +29986,7 @@
 "bdH" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass,
-/obj/access_spawn/medical,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/black,
 /area/station/medical/cdc)
 "bdI" = (
@@ -49010,6 +49010,12 @@
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"iSJ" = (
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "jgt" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -74598,7 +74604,7 @@ aOh
 bip
 bjI
 bkR
-bmf
+iSJ
 bnw
 bos
 bpR

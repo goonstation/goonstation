@@ -17987,12 +17987,12 @@
 	dir = 4;
 	name = "Pathogen Research"
 	},
-/obj/access_spawn/medical,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -18493,6 +18493,9 @@
 "aSC" = (
 /obj/stool/chair/office{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Pathologist"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -20132,13 +20135,13 @@
 	name = "Pathogen Research"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/access_spawn/medical,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aWm" = (
@@ -20167,13 +20170,13 @@
 	dir = 4;
 	name = "Pathogen Research"
 	},
-/obj/access_spawn/medical,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aWp" = (
@@ -21060,11 +21063,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aYw" = (
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	name = "Subject Chamber"
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/cdc)
 "aYx" = (
@@ -27607,6 +27610,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "boU" = (
@@ -31658,13 +31664,13 @@
 	name = "Morgue"
 	},
 /obj/access_spawn/morgue,
-/obj/access_spawn/medical,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "byR" = (

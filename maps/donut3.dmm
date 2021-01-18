@@ -14856,7 +14856,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/access_spawn/pathology,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "edt" = (
@@ -24509,6 +24509,23 @@
 	},
 /turf/simulated/wall/auto/jen/blue,
 /area/station/hallway/primary/southeast)
+"hbt" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/firedoor_spawn,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/access_spawn/pathology,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "hbA" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
@@ -35711,6 +35728,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/landmark/start{
+	name = "Pathologist"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "kCF" = (
@@ -37627,8 +37647,7 @@
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
-/obj/access_spawn/research,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "lkm" = (
@@ -115472,7 +115491,7 @@ pEb
 pEb
 jiY
 nJb
-wut
+hbt
 nJb
 jiY
 wxD
