@@ -95,6 +95,7 @@ task-validate-build() {
   cd "${target_dir}/.."
   local diff
   diff="$(git diff ${target_dir_name}/*)"
+  echo "${diff}"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
