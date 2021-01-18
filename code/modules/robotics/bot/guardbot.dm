@@ -189,6 +189,8 @@
 	var/list/bulletsToDupe
 	/// The bullet the ammofab'll try to dupe
 	var/datum/projectile/top_shot
+	/// Bot's busy reloading, please wait
+	var/reloading_gun = 0
 	//
 	////////////////////// GUN STUFF -^
 
@@ -1131,16 +1133,22 @@
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
 			var/datum/firemode/currFM = shootgun.firemodes[shootgun.firemode_index]
+			shootgun.handle_casings()
 			if(length(shootgun.loaded_magazine.mag_contents) <= currFM.burst_count)
 				if(shootgun.fixed_mag) // fixed magazine? load individual bullets into it
-					SPAWN_DBG(0)
+					src.reloading_gun = 1
+					if(prob(1))
+						speak("I love to reload during a battle!")
+					SPAWN_DBG(1 SECOND)
 						while(shootgun.loaded_magazine.mag_contents.len < shootgun.loaded_magazine.max_amount)
 							if((src.cell?.charge -= (top_shot.power * top_shot.ks_ratio * 0.75)) >= GUARDBOT_LOWPOWER_ALERT_LEVEL && shootgun.loaded_magazine.add_ammo(top_shot.type))
 								playsound(get_turf(src), shootgun.gunsounds.soundLoadSingle, 100, 1)
 								sleep(0.5 SECONDS)
 							else
+								src.reloading_gun = 0
 								DischargeAndTakeANap()
 								break
+						src.reloading_gun = 0
 
 				else
 					if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
@@ -1643,6 +1651,8 @@
 			return 0
 
 		bot_attack(var/atom/target as mob|obj, lethal=0)
+			if(src.reloading_gun)
+				return
 			if(src.tool && (src.tool.tool_id == "GUN"))
 				if (istype(src.budgun, /obj/item/bang_gun))
 					src.budgun.pixelaction(target, null, src, null) // dang it

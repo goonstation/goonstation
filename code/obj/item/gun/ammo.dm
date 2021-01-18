@@ -168,7 +168,7 @@
 				if(src.mag_type == AMMO_PILE)
 					num_to_move = from_this_mag.mag_contents.len
 		if(num_to_move < 1)
-			boutput(user, "You can't move anything from your [from_this_mag] to \the [src] in this form! Try yanking the bullets from one of them first.")
+			boutput(user, "You can't move anything from your [from_this_mag] to \the [src] in this form! Try unloading one of them first.")
 			return FALSE
 
 		var/ammo_wildcard = ((CALIBER_ANY) in src.caliber)
@@ -202,7 +202,7 @@
 			if(ammo_wildcard || (bullet.caliber in src.caliber))
 				if(bullet.caliber == CALIBER_RPG || bullet.caliber == CALIBER_ROCKET)
 					if(src.mag_contents.len || temp_mag.len) // only it if there isnt anything in there
-						boutput(user, "[bullet] is really big. It simply won't fit inside anything that has anything else in it!")
+						boutput(user, "[bullet] is really big, too big to fit inside anything that isn't either totally empty or a gun.")
 						continue
 					else
 						src.has_big_projectile = 1
@@ -237,6 +237,15 @@
 		else
 			boutput(user, "You couldn't find anything in [from_this_mag] to fit in [src]")
 			return FALSE
+
+	/// Turns an input atom into a usable form of ammo. Such as turning trash into bullets
+	/// Input atom can be anything. Will form the output projectile datum and configure it with set params
+	/// If load_it isnt set, it'll load the output into a new pile on the spot!
+	proc/transform_ammo(var/atom/atomIn, var/datum/projectile/projOut, var/load_it = 1, params)
+
+	/// Turns a grenade into a shootable projectile, typically a grenade-shell
+	/// Resulting projectile type can be overridden to be something else
+	proc/grenade_to_ammo(var/obj/nadeIn, var/datum/projectile/bullet/projOut = /datum/projectile/bullet/grenade_shell, var/load_it = 1)
 
 	/// Builds a user-readable list or line of whatever's in the supplied mag_manifest
 	proc/make_ammo_string(var/list/list_in, var/mode = "list")

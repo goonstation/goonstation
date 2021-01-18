@@ -141,17 +141,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/target = null
 	var/user = 0
 
-/obj/item/gun/proc/sanitycheck(var/casings = 0, var/ammo = 1)
-	if (casings && (src.casings_to_eject.len > 30 || src.current_projectile?.shot_number > 30))
-		logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-		if (src.casings_to_eject.len > 0)
-			src.casings_to_eject.len = 0
-		return 0
-	// if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
-	// 	logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
-	// 	return 0
-	return 1
-
 /obj/item/gun/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 	if(!continuous) return
 	if(c_target == null) c_target = new()
@@ -368,8 +357,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return FALSE // Error message.
 	if (!src.can_reload)
 		boutput(user, "[src] can't be reloaded!")
-		return FALSE
-	if (src.sanitycheck() == 0)
 		return FALSE
 	if(!(A.mag_type in src.accepted_mag))
 		boutput(user, "[A] doesn't fit in [src]!")
@@ -958,20 +945,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
-/obj/item/gun/proc/handle_casings(var/eject_stored = 0, var/mob/user)
+/obj/item/gun/proc/handle_casings(var/eject_stored = 0, var/atom/user)
 
+	if (src.casings_to_eject.len > 30 || src.current_projectile?.shot_number > 30)
+		logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap. Capping casings to cap.")
+	src.casings_to_eject.len = clamp(src.casings_to_eject.len, 0, 30)
 	if(eject_stored)
-		if(!user || src.casings_to_eject.len < 1)
+		if(src.casings_to_eject.len < 1) // Nothing to eject? Job well done!
 			return
-		if (src.sanitycheck(1, 0) == 0)
-			logTheThing("debug", usr, null, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
 			src.casings_to_eject.len = 0
-			boutput(user, "You don't find any casings to eject. Huh.")
+			boutput(user, "<span class='alert'>You don't find any casings to eject. Huh.</span>")
 			return
 		// If it accepts a clip at all, unload all of them. Like a revolver
 		// If not, eject one casing. Like a revolver, the kind that takes one bullet at a time
 		if ((AMMO_CLIP) in src.accepted_mag)
-			user.show_text("You eject [src.casings_to_eject.len > 1 ? "[src.casings_to_eject.len] casings" : "a casing"] from [src].", "red")
+			boutput(user, "<span class='notice'>You eject [src.casings_to_eject.len > 1 ? "[src.casings_to_eject.len] casings" : "a casing"] from [src].</span>")
 			var/turf/T = get_turf(src)
 			if(T)
 				var/obj/item/casing/C = null
@@ -982,7 +970,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					src.casings_to_eject -= src.casings_to_eject[1]
 			return
 		else
-			user.show_text("You eject a casing from [src].", "red")
+			boutput(user, "<span class='notice'>You eject a casing from [src].</span>")
 			var/turf/T = get_turf(src)
 			if(T)
 				var/obj/item/casing/C = null

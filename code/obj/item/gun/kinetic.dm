@@ -1149,21 +1149,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			update_icon()
 			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 				src.add_fingerprint(user)
-				if (!src.sanitycheck(0, 1))
-					user.show_text("You can't unload this gun.", "red")
-					return
-				if (src.casings_to_eject > 0 && src.current_projectile.casing)
-					if (!src.sanitycheck(1, 0))
-						logTheThing("debug", usr, null, "<b>Convair880</b>: [user]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						handle_casings(eject_stored = 1, user = user)
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
+				src.handle_casings(1, user)
 
 	canshoot()
 		if(open)
