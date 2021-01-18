@@ -427,6 +427,7 @@ var/datum/action_controller/actions
 			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
 
 /datum/action/bar/icon/mob_doer // for do_mob
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	var/mob/user
 	var/atom/target
 	var/atom/user_loc
