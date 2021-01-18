@@ -95,7 +95,6 @@ task-validate-build() {
   cd "${target_dir}/.."
   local diff
   diff="$(git diff ${target_dir_name}/*)"
-  echo "${diff}"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
@@ -143,16 +142,6 @@ fi
 if [[ ${1} == "--install-git-hooks" ]]; then
   shift 1
   task-install-git-hooks
-  exit 0
-fi
-
-## Continuous integration scenario
-if [[ ${1} == "--ci" ]]; then
-  task-clean
-  task-install
-  task-eslint
-  task-webpack --mode=production
-  task-validate-build
   exit 0
 fi
 
