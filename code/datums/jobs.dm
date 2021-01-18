@@ -556,7 +556,11 @@
 
 /datum/job/research/pathologist
 	name = "Pathologist"
+	#ifdef CREATE_PATHOGENS
 	limit = 1
+	#else
+	limit = 0
+	#endif
 	wages = PAY_DOCTORATE
 	slot_belt = /obj/item/device/pda2/genetics
 	slot_jump = /obj/item/clothing/under/rank/medical

@@ -41,7 +41,7 @@ var/global/crew_creds = null
 					continue
 
 				// Medical?
-				if("Medical Director","Medical Doctor","Roboticist","Geneticist","Pathologist")
+				if("Medical Director","Medical Doctor","Roboticist","Geneticist")
 					round_medical.Add(M)
 					continue
 
@@ -49,6 +49,14 @@ var/global/crew_creds = null
 				if("Research Director","Scientist")
 					round_science.Add(M)
 					continue
+
+				// Pathology?
+				if("Pathologist")
+					#ifdef SCIENCE_PATHO_MAP
+					round_science.Add(M)
+					#else
+					round_medical.Add(M)
+					#endif
 
 				// Engineering?
 				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic")

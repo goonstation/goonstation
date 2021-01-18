@@ -277,8 +277,12 @@
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
-		if("Pathology")
+		if("Pathologist")
+			#ifdef SCIENCE_PATHO_MAP
+			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology)
+			#else
 			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
+			#endif
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Pharmacist")
@@ -420,7 +424,7 @@ var/list/access_name_lookup //Generated at round start.
 		if(access_medlab)
 			return "Med-Sci/Genetics"
 		if(access_pathology)
-			return "Med-Sci/Genetics"
+			return "Pathology"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)
