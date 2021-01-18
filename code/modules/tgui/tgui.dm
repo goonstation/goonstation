@@ -79,7 +79,7 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
-			fancy = client.preferences.tgui_fancy,
+			fancy = user.client.preferences.tgui_fancy,
 			inline_assets = list(
 				get_assets(/datum/asset/basic/tgui_common),
 				get_assets(/datum/asset/group/base_tgui)
