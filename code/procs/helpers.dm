@@ -219,14 +219,14 @@ proc/get_angle(atom/a, atom/b)
 		if(curr.density) return 0
 	return 1
 
-/proc/do_mob(mob/user , atom/target as turf|obj|mob, time = 30) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , atom/target as turf|obj|mob, time = 3 SECONDS) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target) return 0
 	. = 0
 	var/datum/action/bar/icon/mob_doer/doer = new(user, target, time)
 	actions.start(doer, user)
 	while (doer.success == -1)
 		sleep(1)
-	return doer.success
+	. = doer.success
 
 /proc/do_after(mob/M as mob, time as num)
 	if (!ismob(M))
@@ -236,7 +236,7 @@ proc/get_angle(atom/a, atom/b)
 	actions.start(doer, M)
 	while (doer.success == -1)
 		sleep(1)
-	return doer.success
+	. = doer.success
 
 /proc/is_blocked_turf(var/turf/T)
 	// drsingh for cannot read null.density
