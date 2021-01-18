@@ -13,6 +13,7 @@
 	var/acid_proof = 0	//Is this mask immune to flouroacid?
 	var/stapled = 0
 	var/allow_staple = 1
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()
@@ -108,6 +109,7 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -354,6 +356,11 @@
 	w_class = 1
 	c_flags = COVERSMOUTH
 	permeability_coefficient = 0.05
+	path_prot = 0
+
+	setupProperties()
+		..()
+		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
 
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
@@ -478,6 +485,7 @@
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
+	path_prot = 0
 
 /obj/item/clothing/mask/chicken
 	name = "chicken mask"

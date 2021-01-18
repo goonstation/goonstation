@@ -1,5 +1,33 @@
 
+(t)mon jan 18 21
+(u)Superlagg
+(p)3329
+(e)🐛|bug
+(+)Fixed werewolf transformations not working properly with other mutant races.
+(+)Buffed werewolf transformation. Now also clears burning, radiation, and stagger, adds +10 stun resistance, applies twice as much regeneration than it did previously, and regrows any lost or robotic limbs.
 (t)sun jan 17 21
+(u)Ursulamejor
+(e)🆕|feature
+(*)Be nice to the clown chickens. Or else.
+(u)Asche
+(p)3307
+(e)⚖|balance
+(+)Ship components have fallen in price. On the bright side, space traders are accepting some new items.
+(u)zjdtmkhzt
+(p)3337
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Pathogens can no longer reinfect a cured person
+(*)Spreading spreading symptoms reworked to use a new visual system instead of clouds. Details in the extended changelog.
+(+)The new pathogen visuals will slip people less, linger for a shorter period of time, and block clicks less.
+(+)You can protect yourself from pathogen stains via disease resistance (e.g. biosuit, spacesuit, certain foods), and particles via certain headwear (e.g. biohood, space helmet, sterile mask).
+(u)AwkwardDryad
+(p)3346
+(e)🆕|feature
+(+)Recent reports indicate that mimes are quiter than ever. They've even seemed darker and paler on occasion...
+(u)Dions & Nefarious6th
+(p)3133
+(e)🗺|mapping
+(*)Clarion now uses the 3/4ths perspective tilesets
 (u)Flourish
 (e)🆕|feature
 (+)Cows can now customize their hoof color with the mid detail option in character setup.
