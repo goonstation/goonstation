@@ -1,5 +1,7 @@
 
 (t)mon jan 18 21
+(u)pali
+(*)The bug report button (in the top right corner of your game client) has now an option for reporting exploits. Use this instead of the forum please.
 (u)Superlagg
 (p)3329
 (e)🐛|bug
