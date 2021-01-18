@@ -41,7 +41,7 @@ var/global/crew_creds = null
 					continue
 
 				// Medical?
-				if("Medical Director","Medical Doctor","Roboticist","Geneticist")
+				if("Medical Director","Medical Doctor","Roboticist","Geneticist","Pathologist")
 					round_medical.Add(M)
 					continue
 

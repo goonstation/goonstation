@@ -554,6 +554,21 @@
 		src.access = get_access("Geneticist")
 		return
 
+/datum/job/research/pathologist
+	name = "Pathologist"
+	limit = 1
+	wages = PAY_DOCTORATE
+	slot_belt = /obj/item/device/pda2/genetics
+	slot_jump = /obj/item/clothing/under/rank/medical
+	slot_foot = /obj/item/clothing/shoes/white
+	slot_suit = /obj/item/clothing/suit/labcoatlong
+	slot_ears = /obj/item/device/radio/headset/medical
+
+	New()
+		..()
+		src.access = get_access("Pathologist")
+		return
+
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
