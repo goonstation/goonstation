@@ -5169,6 +5169,7 @@
 "bld" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/drainage,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "blg" = (
@@ -5336,6 +5337,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -7156,6 +7158,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -7601,6 +7604,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "bVo" = (
@@ -9655,6 +9659,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "cBK" = (
@@ -12306,6 +12311,7 @@
 /area/station/hallway/primary/east)
 "dqc" = (
 /obj/disposalpipe/segment/mail,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -14802,6 +14808,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -16838,6 +16845,7 @@
 	icon_state = "tile1"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "eLg" = (
@@ -17146,6 +17154,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ePH" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/red/fancy/innercorner{
 	dir = 9
 	},
@@ -20621,6 +20630,7 @@
 /area/station/hallway/primary/west)
 "fQR" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "fRb" = (
@@ -30207,6 +30217,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "iPM" = (
@@ -30266,6 +30277,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"iQY" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black/grime,
+/area/station/quartermaster/refinery)
 "iRo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -31725,6 +31740,18 @@
 "jqe" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
+"jqq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "kitchen freezer pipe"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jqw" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/white,
@@ -32596,6 +32623,7 @@
 	icon_state = "check1"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jFA" = (
@@ -33402,6 +33430,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "jQP" = (
@@ -33451,6 +33480,15 @@
 	},
 /turf/space,
 /area/space)
+"jRA" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grey,
+/area/station/science/lab)
 "jRU" = (
 /obj/machinery/door/window/westright,
 /obj/access_spawn/robotics,
@@ -36176,6 +36214,10 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
+"kMI" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "kMO" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=medsci";
@@ -45996,6 +46038,7 @@
 /area/station/crew_quarters/heads)
 "nMd" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "nMh" = (
@@ -46354,6 +46397,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "nRR" = (
@@ -47487,6 +47531,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
 "oiR" = (
@@ -47550,6 +47595,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/airless/plating,
 /area/station/engine/singcore)
 "okq" = (
@@ -47644,6 +47690,10 @@
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"olP" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "olQ" = (
 /obj/cable{
 	d1 = 4;
@@ -49643,6 +49693,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "oON" = (
@@ -57655,6 +57706,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "raQ" = (
@@ -58891,6 +58943,7 @@
 /area/station/hallway/primary/east)
 "rtp" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "rtr" = (
@@ -64600,6 +64653,7 @@
 	name = "Cyborg"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "tiv" = (
@@ -65249,6 +65303,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "tsr" = (
@@ -77566,6 +77621,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "wWw" = (
@@ -119613,7 +119669,7 @@ vGa
 uAS
 ecX
 bWg
-cnA
+jRA
 cnA
 cnA
 cnA
@@ -122838,7 +122894,7 @@ yht
 eer
 bpC
 gWT
-uTJ
+jqq
 qgq
 uTJ
 uTJ
@@ -128864,7 +128920,7 @@ iba
 kHx
 mke
 nVl
-mke
+olP
 kHx
 txZ
 fYJ
@@ -129461,7 +129517,7 @@ mBB
 mBB
 mBB
 oJP
-orn
+kMI
 jLx
 mwk
 iba
@@ -136450,7 +136506,7 @@ aaM
 vpC
 rLN
 nQT
-fNb
+iQY
 fNb
 hzd
 hzd
