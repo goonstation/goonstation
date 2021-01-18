@@ -219,27 +219,24 @@ proc/get_angle(atom/a, atom/b)
 		if(curr.density) return 0
 	return 1
 
-/proc/do_mob(var/mob/user , var/atom/target as turf|obj|mob, var/time = 30) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , atom/target as turf|obj|mob, time = 30) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target) return 0
 	. = 0
-	var/user_loc = user.loc
-	var/target_loc = target.loc
-	var/holding = user.equipped()
-	sleep(time)
-	if (!user || !target)
-		return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !is_incapacitated(user) && !user.lying )
-		return 1
+	var/datum/action/bar/icon/mob_doer/doer = new(user, target, time)
+	actions.start(doer, user)
+	while (doer.success == -1)
+		sleep(1)
+	return doer.success
 
 /proc/do_after(mob/M as mob, time as num)
 	if (!ismob(M))
 		return 0
 	. = 0
-	var/turf/T = M.loc
-	var/atom/holding = M.equipped()
-	sleep(time)
-	if (M.loc == T && M.equipped() == holding && isalive(M) && !holding.disposed)
-		return 1
+	var/datum/action/bar/icon/mob_doer/doer = new(M, M, time)
+	actions.start(doer, M)
+	while (doer.success == -1)
+		sleep(1)
+	return doer.success
 
 /proc/is_blocked_turf(var/turf/T)
 	// drsingh for cannot read null.density

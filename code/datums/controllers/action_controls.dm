@@ -426,6 +426,47 @@ var/datum/action_controller/actions
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, src.proc_args)
 
+/datum/action/bar/icon/mob_doer // for do_mob
+	var/mob/user
+	var/atom/target
+	var/atom/user_loc
+	var/atom/target_loc
+	var/obj/item/holding
+	var/success = -1
+
+	New(mob/user, atom/target as turf|obj|mob, time)
+		. = ..()
+		src.owner = user
+		src.user = user
+		src.user_loc = user.loc
+		src.target = target
+		src.target_loc = target.loc
+		src.duration = time
+		src.holding = user.equipped()
+		src.icon = src.holding?.icon
+		src.icon_state = src.holding?.icon_state
+
+	onUpdate()
+		..()
+		if (!src.user)
+			interrupt(INTERRUPT_ALWAYS)
+		if (!src.target)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.user.loc != src.user_loc)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target.loc != src.target_loc)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.user.equipped() != src.holding)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onInterrupt(flag)
+		. = ..()
+		src.success = 0
+
+	onEnd()
+		. = ..()
+		src.success = 1
+
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
