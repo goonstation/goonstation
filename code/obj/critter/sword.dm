@@ -324,6 +324,9 @@
 	proc/destructive_leap()									//Leaps at the target using it's thrusters, dealing damage at the landing location and probably gibbing anyone at the center of said location.
 		walk_towards(src, src.target)
 		walk(src,0)
+		for (var/mob/B in range(3,src.loc))
+			random_burn_damage(B, 30)
+			B.changeStatus("burning", 3 SECONDS)
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
 		icon_state = "destructiveLeap"
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
@@ -344,8 +347,6 @@
 				else
 					src.pixel_y -= 4
 				sleep(1)
-
-		SPAWN_DBG(9)
 			for (var/mob/M in range(3,src.loc))
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x,src.loc.y,1)
@@ -398,8 +399,8 @@
 		SPAWN_DBG(8)
 			current_heat_level = 0
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
-			icon_state = "anchored"
-			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			icon_state = "unanchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			mobile = 1
@@ -426,8 +427,8 @@
 				health = health_before_absorption
 
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
-			icon_state = "anchored"
-			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			icon_state = "unanchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			mobile = 1
@@ -437,4 +438,52 @@
 
 
 	proc/destructive_flight()								//Charges at the target using it's thrusters thrice, dealing damage at the locations of each one's end.
+		walk_towards(src, src.target)
+		walk(src,0)
+		for (var/mob/B in range(3,src.loc))
+			random_burn_damage(B, 30)
+		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
+		icon_state = "destructiveFlight"
+		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
+		src.UpdateOverlays(glow, "glow")
+		rotation_locked = true
+		mobile = 0
+		firevuln = 0.75
+		brutevuln = 0.75
+		miscvuln = 0.15
+		animate_float(src, -1, 5, 1)
 		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)
+
+
+
+
+//FIND OUT HOW TO BREAK WALLS IN FRONT OF THE SWORD.
+
+
+
+		SPAWN_DBG(1)
+			for(var/i=0, i < 6, i++)
+				step(src, src.dir)
+				sleep(0.5)
+			for (var/mob/M in range(3,src.loc))
+				random_brute_damage(M, 60)
+
+		SPAWN_DBG(8)
+			walk_towards(src, src.target)
+			walk(src,0)
+			for(var/l=0, l < 6, l++)
+				step(src, src.dir)
+				sleep(0.5)
+			for (var/mob/O in range(3,src.loc))
+				random_brute_damage(O, 45)
+
+		SPAWN_DBG(15)
+			icon = 'icons/misc/retribution/SWORD/base.dmi'
+			icon_state = "unanchored"
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+			src.UpdateOverlays(glow, "glow")
+			rotation_locked = false
+			mobile = 1
+			firevuln = 1
+			brutevuln = 1
+			miscvuln = 0.2
