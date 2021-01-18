@@ -687,11 +687,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	ks_ratio = 1
 	brightness = 2
-	projectile_speed = 10
+	projectile_speed = 15
 	is_magical = 1 // It passes right through them, but just for consistency
 	auto_find_targets = 0
 	min_speed = 0.1
-	max_speed = 10
+	max_speed = 15
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
 	var/weaken_length = 5 SECONDS
@@ -715,7 +715,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			src.homing_active = 0
 			src.bouncy = 1
 
-		if(!src.homing_active && !isturf(hit))
+		if(!src.homing_active && !isturf(hit) && !ismob(hit))
 			. = TRUE
 
 		if(.)
@@ -750,9 +750,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "magic minimissile"
 	sname = "magic minimissile"
 	power = 5
-	projectile_speed = 7
+	projectile_speed = 100
 	min_speed = 1
-	max_speed = 7
+	max_speed = 10
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
 	weaken_length = 3 SECONDS
 	impact_brute = 5

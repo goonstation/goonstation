@@ -32,13 +32,11 @@ var
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
 	pooled = 1
-	thing_is_being_used = 0
 
 /datum/proc/unpooled(var/pooltype)
 	SHOULD_CALL_PARENT(TRUE)
 	disposed = 0
 	pooled = 0
-	thing_is_being_used = 1
 
 #ifdef DETAILED_POOL_STATS
 var/global/list/pool_stats = list()
@@ -79,7 +77,7 @@ proc/unpool(var/type=null)
 		return new type
 
 	var/datum/thing = l[l.len]
-	if (!thing || thing.thing_is_being_used) //This should not happen, but I guess it did.
+	if (!thing || !thing.pooled) //This should not happen, but I guess it did.
 		l.len-- // = 0
 		#ifdef DETAILED_POOL_STATS
 		increment_pool_stats(type, POOL_MISS_COUNT)
