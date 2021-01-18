@@ -21202,8 +21202,8 @@
 /area/station/medical/cdc)
 "aMV" = (
 /obj/machinery/door/airlock/pyro/glass/med,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aMW" = (
@@ -21969,7 +21969,6 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
@@ -21979,6 +21978,7 @@
 	name = "Pathology Quarantine";
 	opacity = 0
 	},
+/obj/access_spawn/pathology,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "aOk" = (
@@ -23014,8 +23014,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med,
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aQw" = (
@@ -30939,8 +30939,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/access_spawn/pathology,
 /turf/simulated/floor/black,
 /area/station/medical/cdc)
 "bdI" = (
@@ -51478,6 +51478,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"xGr" = (
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "xIf" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -76863,7 +76869,7 @@ aOh
 bip
 bjI
 bkR
-iSJ
+xGr
 bnw
 bos
 bpR
