@@ -1196,7 +1196,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/process_killswitch()
 	var/message_mob = get_message_mob()
 
-	if(killswitch_at)
+	if(killswitch_at && killswitch)
 		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
 
 		if(killswitch_time <= 10)
