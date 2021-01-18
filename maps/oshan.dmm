@@ -2895,14 +2895,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "agn" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_1";
-	name = "Chamber One Exhaust"
-	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Chamber One Heat Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
@@ -7986,12 +7986,6 @@
 	on = 1;
 	target_pressure = 250
 	},
-/obj/machinery/door_control{
-	id = "chamber_1";
-	name = "Chamber One Exhaust";
-	pixel_x = -12;
-	pixel_y = 32
-	},
 /obj/machinery/ignition_switch{
 	id = "toxins_1";
 	pixel_x = 8;
@@ -8018,12 +8012,6 @@
 	id = "Chamber Two Inlet";
 	on = 1;
 	target_pressure = 500
-	},
-/obj/machinery/door_control{
-	id = "chamber_2";
-	name = "Chamber Two Exhaust";
-	pixel_x = 12;
-	pixel_y = 32
 	},
 /obj/machinery/ignition_switch{
 	id = "toxins_2";
@@ -8896,14 +8884,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aus" = (
-/obj/machinery/door/poddoor/pyro{
-	dir = 1;
-	id = "chamber_2";
-	name = "Chamber Two Exhaust"
-	},
-/obj/forcefield/energyshield/perma{
-	name = "Permanent Liquid Forcefield";
-	powerlevel = 4
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_two";
+	layer = 4;
+	name = "Chamber Two Heat Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
@@ -18519,29 +18507,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aRe" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = 9
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/vial{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/glass/vial{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/glass/vial{
-	pixel_x = -8;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/dropper{
-	pixel_x = -4
-	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "aRf" = (
@@ -19481,8 +19447,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aTp" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/dispenser,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "aTq" = (
@@ -22392,6 +22358,7 @@
 /area/research_outpost/toxins)
 "baZ" = (
 /obj/machinery/light/small/floor,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bba" = (
@@ -47067,7 +47034,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "fTt" = (
-/obj/storage/closet/biohazard,
+/obj/machinery/incubator{
+	dir = 1
+	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "fVJ" = (
@@ -47356,8 +47325,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "jxG" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/machinery/light/incandescent/netural,
+/obj/cabinet/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "jzB" = (
@@ -47590,7 +47559,17 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "ndI" = (
-/obj/machinery/pathogen_manipulator,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = 9
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -4
+	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
@@ -47929,10 +47908,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"qFi" = (
-/obj/cabinet/pathology,
-/turf/simulated/floor/green,
-/area/research_outpost/pathology)
 "qPg" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -47955,14 +47930,6 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/microscope,
 /obj/machinery/light/incandescent/netural,
-/obj/item/reagent_containers/glass/vial{
-	pixel_x = 11;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/vial{
-	pixel_x = 10;
-	pixel_y = 13
-	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "rqc" = (
@@ -48086,9 +48053,8 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "tMA" = (
-/obj/machinery/computer/pathology{
-	dir = 4
-	},
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/microscope,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "tRf" = (
@@ -132202,7 +132168,7 @@ bZn
 bdY
 hBQ
 aRe
-jxG
+xFh
 hBQ
 hBQ
 hBQ
@@ -132503,7 +132469,7 @@ bZn
 bZn
 phi
 hBQ
-ljO
+jxG
 xFh
 ndI
 tMA
@@ -132805,7 +132771,7 @@ bZn
 bZn
 bed
 hBQ
-qFi
+xFh
 xFh
 xFh
 mIT

@@ -50,14 +50,13 @@
 		. = 1
 
 /datum/aiTask/sequence/goalbased/replicate/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
 		if(isnull(locate(/obj/flock_structure/egg) in F))
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), F, 0, null, /proc/heuristic, 40))
-				targets += F
-	return targets
+				. += F
 
 ////////
 
@@ -76,7 +75,7 @@
 		return 1
 
 /datum/aiTask/succeedable/replicate/succeeded()
-	return (!actions.hasAction(holder.owner, "flock_egg")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, "flock_egg")) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/replicate/on_tick()
 	if(!has_started)
@@ -116,23 +115,22 @@
 			F.flock.reserveTurf(T, F.real_name)
 
 /datum/aiTask/sequence/goalbased/build/get_targets()
-	var/list/targets = list()
+	. = list()
 	var/mob/living/critter/flock/F = holder.owner
 
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, null, /proc/heuristic, 20))
-			targets += reserved
-			return targets
+			. += reserved
+			return
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
 				if(cirrAstar(get_turf(holder.owner), PT, 1, null, /proc/heuristic, 80))
-					targets += PT
-			return targets
+					. += PT
 
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
@@ -142,8 +140,7 @@
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), T, 1, null, /proc/heuristic, 40))
-				targets += T
-	return targets
+				. += T
 
 ////////
 
@@ -164,7 +161,7 @@
 		return 1
 
 /datum/aiTask/succeedable/build/succeeded()
-	return isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, "flock_convert"))
+	. = isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, "flock_convert"))
 
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
@@ -207,15 +204,14 @@
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/repair/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
 		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
-				targets += F
-	return targets
+				. += F
 
 ////////
 
@@ -232,7 +228,7 @@
 		return 1
 
 /datum/aiTask/succeedable/repair/succeeded()
-	return (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/repair/on_tick()
 	if(!has_started)
@@ -275,13 +271,12 @@
 
 /datum/aiTask/sequence/goalbased/deposit/get_targets()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	var/list/targets = list()
+	. = list()
 	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
 		if(S.flock == F.flock && S.goal > S.currentmats)
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(F), get_turf(S), 1, null, /proc/heuristic, 40))
-				targets += S
-	return targets
+				. += S
 
 ////////
 
@@ -298,7 +293,7 @@
 		return 1
 
 /datum/aiTask/succeedable/deposit/succeeded()
-	return (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/deposit/on_tick()
 	if(!has_started)
@@ -329,16 +324,15 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/open_container, list(holder)))
 
 /datum/aiTask/sequence/goalbased/open_container/precondition()
-	return 1 // no precondition required that isn't already checked for targets
+	. = 1 // no precondition required that isn't already checked for targets
 
 /datum/aiTask/sequence/goalbased/open_container/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(S), 1, null, /proc/heuristic, 10))
-				targets += S
-	return targets
+				. += S
 
 ////////
 
@@ -349,7 +343,7 @@
 /datum/aiTask/succeedable/open_container/failed()
 	var/obj/storage/container_target = holder.target
 	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
-		return 1
+		. = 1
 
 /datum/aiTask/succeedable/open_container/succeeded()
 	var/obj/storage/container_target = holder.target
@@ -386,16 +380,15 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rummage, list(holder)))
 
 /datum/aiTask/sequence/goalbased/rummage/precondition()
-	return 1 // no precondition required that isn't already checked for targets
+	. = 1 // no precondition required that isn't already checked for targets
 
 /datum/aiTask/sequence/goalbased/rummage/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
 		if(I.contents.len > 0 && I.loc != holder.owner && I.does_not_open_in_pocket)
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 10))
-				targets += I
-	return targets
+				. += I
 
 ////////
 
@@ -407,7 +400,7 @@
 /datum/aiTask/succeedable/rummage/failed()
 	var/obj/item/storage/container_target = holder.target
 	if(!container_target || get_dist(holder.owner, container_target) > 1 || fails >= max_fails)
-		return 1
+		. = 1
 
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
@@ -427,20 +420,16 @@
 			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target)
 			if(F.equipped() == container_target)
-				// we've picked up a container
-				// just eat it
-				// dump it onto the floor
+				// we've picked up a container, just eat it, dump it onto the floor
 				container_target.MouseDrop(get_turf(F))
-				// might as well eat the container now
-				F.drop_item()
+				F.drop_item() // might as well eat the container now
 				return
 			else
-				// we've opened a HUD
-				// do a fake HUD click, because i am dedicated to this whole puppetry schtick
+				// we've opened a HUD, do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				container_target.hud.clicked("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT
-					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it
+					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it)
 					F.throw_mode_on()
 					var/list/random_pixel_offsets = list("icon-x" = rand(1, 32), "icon-y" = rand(1, 32))
 					// pick a random turf in sight to throw this at
@@ -486,7 +475,7 @@
 		return 0 // can't harvest anyway, if not a flockdrone
 
 /datum/aiTask/sequence/goalbased/harvest/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/obj/item/I in view(max_dist, holder.owner))
 		if(!I.anchored && I.loc != holder.owner)
 			if(istype(I, /obj/item/game_kit))
@@ -498,8 +487,7 @@
 					continue // do not try to fetch paper out of an empty paper bin forever
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 40))
-				targets += I
-	return targets
+				. += I
 
 ////////
 
@@ -510,10 +498,10 @@
 /datum/aiTask/succeedable/harvest/failed()
 	var/obj/item/harvest_target = holder.target
 	if(!harvest_target || get_dist(holder.owner, harvest_target) > 1 || fails >= max_fails)
-		return 1
+		. = 1
 
 /datum/aiTask/succeedable/harvest/succeeded()
-	return holder.owner.find_in_equipment(holder.target)
+	. = holder.owner.find_in_equipment(holder.target)
 
 /datum/aiTask/succeedable/harvest/on_tick()
 	var/obj/item/harvest_target = holder.target
@@ -590,17 +578,16 @@
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
-	var/list/targets = list()
+	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(!istype(M.loc?.type, /obj/icecube/flockdrone) && !(M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") || M.stat))
 				// mob isn't already stunned, check if they're in our target list
 				if(F.flock.isEnemy(M))
-					targets += M
+					. += M
 					// also, while we're here, update the last time this mob was seen
 					F.flock.updateEnemy(M)
-	return targets
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE-SPECIFIC CAPTURE TASK
@@ -619,7 +606,7 @@
 		. = 1
 
 /datum/aiTask/timed/targeted/flockdrone_capture/evaluate()
-	return precondition() * weight * score_target(get_best_target(get_targets()))
+	. = precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/timed/targeted/flockdrone_capture/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
@@ -648,7 +635,7 @@
 			owncritter.hand_attack(holder.target)
 
 /datum/aiTask/timed/targeted/flockdrone_capture/get_targets()
-	var/list/targets = list()
+	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
 		for(var/mob/living/M in view(target_range, holder.owner))
@@ -658,8 +645,7 @@
 					// if we can get a valid path to the target, include it for consideration
 					if(cirrAstar(get_turf(holder.owner), get_turf(M), 1, null, /proc/heuristic, 40))
 						// GO AND IMPRISON THEM
-						targets += M
-	return targets
+						. += M
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -684,15 +670,14 @@
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/butcher/get_targets()
-	var/list/targets = list()
+	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
 		if(isdead(F))
 			// if we can get a valid path to the target, include it for consideration
 			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
-				targets += F
-	return targets
+				. += F
 
 ////////
 
@@ -709,7 +694,7 @@
 		return 1
 
 /datum/aiTask/succeedable/butcher/succeeded()
-	return (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/butcher/on_tick()
 	if(!has_started)

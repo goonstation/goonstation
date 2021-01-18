@@ -96,6 +96,7 @@
 
 		src.bioHolder.AddEffect("horns", 0, 0, 1)
 		src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
+		abilityHolder.addAbility(/datum/targetable/gimmick/spawncontractsatan)
 		abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
 		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
 		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
@@ -107,6 +108,7 @@
 			src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/hitman/satansuit, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+			src.equip_new_if_possible(/obj/item/clothing/gloves/ring/wizard/teleport, slot_gloves) //Yes I could make a special satan teleport power, or I can give him a ring. Fuck it right?
 			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 			src.put_in_hand_or_drop(new /obj/item/storage/briefcase/satan)
 
@@ -204,7 +206,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -624,7 +626,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM
@@ -773,7 +775,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 

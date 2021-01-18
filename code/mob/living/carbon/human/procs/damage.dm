@@ -19,10 +19,7 @@
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
-				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
-				else
+				if (armor_value_bullet <= 1)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage, 0, 0, target_organ)
 					src.set_clothing_icon_dirty()
@@ -57,8 +54,6 @@
 							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>[P] pierces through your armor!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/max(armor_value_bullet/3), 0, 0, target_organ)
 				else
@@ -93,8 +88,6 @@
 
 			if (D_SLASHING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(damage/armor_value_bullet, 0, 0, target_organ)
 				else
@@ -103,8 +96,6 @@
 
 			if (D_ENERGY)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
 				else
@@ -113,8 +104,6 @@
 
 			if (D_BURNING)
 				if (armor_value_bullet > 1)
-					if (!P.proj_data.nomsg)
-						show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (src.organHolder && prob(50))
 						src.organHolder.damage_organ(0, damage/armor_value_bullet, 0, target_organ)
 				else
@@ -123,9 +112,6 @@
 
 			if (D_TOXIC)
 				if (P.proj_data.reagent_payload)
-					if (armor_value_bullet > 1)
-						if (!P.proj_data.nomsg)
-							show_message("<span class='alert'>Your armor softens the hit!</span>", 4)
 					if (P.implanted)
 						if (istext(P.implanted))
 							P.implanted = text2path(P.implanted)

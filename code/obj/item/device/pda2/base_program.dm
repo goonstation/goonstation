@@ -163,6 +163,12 @@
 				signal.transmission_method = TRANSMISSION_RADIO
 				frequency.post_signal(src, signal)
 
+		/// generates a passkey out of a bunch of words and shit
+		GenerateFilesharePasskey(var/how_many = 3)
+			for(var/i in 1 to how_many)
+				. += pick_string("agent_callsigns.txt", "[pick("nato", "melee_weapons", "colors", "birds", "mammals", "moons")]")
+			. = ckey(.)
+
 	Topic(href, href_list)
 		if((!src.holder) || (!src.master))
 			return 1

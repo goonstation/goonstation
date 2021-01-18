@@ -247,14 +247,6 @@
 
 	var/mob/living/carbon/human/H = src
 
-	if (istype(H))
-		if (H.sims)
-			var/mult = H.sims.getMoodActionMultiplier()
-			if (mult < 0.5)
-				if (prob((0.5 - mult) * 200))
-					boutput(src, pick("<span class='alert'>You're not in the mood to grab that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-					return
-
 	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
@@ -638,6 +630,12 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
+	if(ishuman(src))
+		var/mob/living/carbon/human/LM = src
+		for (var/uid in LM.pathogens)
+			var/datum/pathogen/P = LM.pathogens[uid]
+			punchmult *= P.onpunch(target, def_zone)
+
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
 	if (!punchedmult)
@@ -663,6 +661,10 @@
 			var/mob/living/carbon/human/H = src
 			if (H.shoes)
 				damage += H.shoes.kick_bonus
+			else if (H.limbs.r_leg)
+				damage += H.limbs.r_leg.limb_hit_bonus
+			else if (H.limbs.l_leg)
+				damage += H.limbs.l_leg.limb_hit_bonus
 		#if STAMINA_LOW_COST_KICK == 1
 		msgs.stamina_self += STAMINA_HTH_COST / 3
 		#endif
@@ -1135,10 +1137,6 @@
 
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchmult *= P.onpunch(target, def_zone)
 
 	if (sims)
 		punchmult *= sims.getMoodActionMultiplier()

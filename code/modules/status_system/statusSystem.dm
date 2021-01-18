@@ -429,6 +429,26 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		getTooltip()
 			return "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
 
+	staminaregen
+		id = "staminaregen"
+		name = ""
+		icon_state = ""
+		unique = 1
+		var/change = 1
+
+		getTooltip()
+			return "Your stamina regen is [change > 0 ? "increased":"reduced"] by [abs(change)]."
+
+		onAdd(var/optional=null)
+			if(hascall(owner, "add_stam_mod_regen"))
+				owner:add_stam_mod_regen(id, change)
+			return
+
+		onRemove()
+			if(hascall(owner, "remove_stam_mod_regen"))
+				owner:remove_stam_mod_regen(id)
+			return
+
 	maxhealth
 		id = "maxhealth"
 		name = ""
@@ -470,7 +490,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			return
 
 		getTooltip()
-			return "Your max. health has been [change > 0 ? "increased":"reduced"] by [abs(change)]."
+			return "Your max. health is [change > 0 ? "increased":"reduced"] by [abs(change)]."
 
 		//Technically the base class can handle either but we need to separate these.
 		increased
@@ -478,14 +498,12 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			onUpdate(var/timePassed)
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
-				return ..(timePassed)
 
 		decreased
 			id = "maxhealth-"
 			onUpdate(var/timePassed)
 				if(change > 0) //Someone fucked this up; remove effect.
 					duration = 1
-				return ..(timePassed)
 
 	simplehot //Simple heal over time.
 		var/tickCount = 0
@@ -1194,7 +1212,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				wait = 0
 			return
 
-	fitness_staminaregen
+	staminaregen/fitness
 		id = "fitness_stam_regen"
 		name = "Pumped"
 		desc = ""
@@ -1710,3 +1728,27 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		if(istype(M))
 			M.emote("shiver")
 		. = ..()
+
+/datum/statusEffect/maxhealth/decreased/hungry
+	id = "hungry"
+	name = "Hungry"
+	desc = "You really gotta eat!"
+	icon_state = "heart-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -20
+
+	onAdd(var/optional=null)
+		return ..(change)
+
+	onChange(var/optional=null)
+		return ..(change)
+
+/datum/statusEffect/staminaregen/thirsty
+	id = "thirsty"
+	name = "Thirsty"
+	desc = "You really need some water!"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5

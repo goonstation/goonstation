@@ -132,11 +132,6 @@
 					else if (on)
 						user.remove_sm_light("pda\ref[src]")
 						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
-				else
-					if (!use_simple_light && !use_medium_light)
-						light.detach()
-					else if (on)
-						user.remove_sm_light("pda\ref[src]")
 
 
 	return_menu_badge()

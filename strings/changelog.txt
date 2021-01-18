@@ -1,4 +1,108 @@
 
+(t)mon jan 18 21
+(u)Superlagg
+(p)3329
+(e)🐛|bug
+(+)Fixed werewolf transformations not working properly with other mutant races.
+(+)Buffed werewolf transformation. Now also clears burning, radiation, and stagger, adds +10 stun resistance, applies twice as much regeneration than it did previously, and regrows any lost or robotic limbs.
+(t)sun jan 17 21
+(u)Ursulamejor
+(e)🆕|feature
+(*)Be nice to the clown chickens. Or else.
+(u)Asche
+(p)3307
+(e)⚖|balance
+(+)Ship components have fallen in price. On the bright side, space traders are accepting some new items.
+(u)zjdtmkhzt
+(p)3337
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Pathogens can no longer reinfect a cured person
+(*)Spreading spreading symptoms reworked to use a new visual system instead of clouds. Details in the extended changelog.
+(+)The new pathogen visuals will slip people less, linger for a shorter period of time, and block clicks less.
+(+)You can protect yourself from pathogen stains via disease resistance (e.g. biosuit, spacesuit, certain foods), and particles via certain headwear (e.g. biohood, space helmet, sterile mask).
+(u)AwkwardDryad
+(p)3346
+(e)🆕|feature
+(+)Recent reports indicate that mimes are quiter than ever. They've even seemed darker and paler on occasion...
+(u)Dions & Nefarious6th
+(p)3133
+(e)🗺|mapping
+(*)Clarion now uses the 3/4ths perspective tilesets
+(u)Flourish
+(e)🆕|feature
+(+)Cows can now customize their hoof color with the mid detail option in character setup.
+(t)sat jan 16 21
+(u)pali
+(*)Oshan ocean is now atmospherically inert instead of producing nitrogen. Wrenches can now be used to fiddle with atmos pump settings (instead of this being locked to multitools).
+(u)Camryn Buttes
+(p)3357
+(e)🐛|bug
+(+)Surstromming cans work again, stink your friends
+(u)BatElite
+(p)3022
+(e)🆕🎨|feature, sprites
+(*)Added the cyborg screen head, so that emotionally inclined cyborgs can share their feelings with the world visually! Ask your roboticist to make you one, and check your Robot Commands tab to change expressions.
+(u)pali
+(*)Air scrubbers are now way more effective (for both gases and smoke) at the cost of a lot of APC power. Sponges and mops no longer work on smoke.
+(u)BenLubar
+(p)3338
+(e)🗺|mapping
+(+)Added an ABCU to Donut 3.
+(u)Superlagg
+(p)3122
+(e)🆕🔄|feature, rework
+(*)PDAs can now use different ringtones! Ask the clown if you can borrow their ringtone program.
+(*)PDAs can now block specific people, mailgroups, and alerts.
+(+)The Syndicate are dirty software pirates, supplying their agents with stolen copies of a certain PDA compatible sound effect library for a single TC.
+(+)The heads of staff have a new filesharing program, SpaceWire, which lets them automatically share PDA files to anyone who messages them a secret password.
+(u)glassofmilk
+(p)3326
+(e)🆕|feature
+(+)Signal components can now have their starting and ending strings set using MechComp signals.
+(t)fri jan 15 21
+(u)zjdtmkhzt
+(p)3325
+(e)⚖|balance
+(*)Pathology fixes: cloud-based pathogens should now spread less and pathogens resulting from poor hygiene are now rarer and always non-contagious.
+(+)Plasma farts is now a higher tier symptom, trading places with Smoke farts.
+(t)thu jan 14 21
+(u)zjdtmkhzt
+(p)3327
+(e)⚖🎨|balance, sprites
+(*)A person can now only have one pathogen at a time. Pathogens of a higher tier will replace weaker ones.
+(*)Nerfed most pathogen spreading symptoms. (Less clouds.)
+(+)Plasma farts are now a T4 pathogen, Smoke farts are now a T3.
+(u)Flaborized
+(p)3302
+(e)🎨|sprites
+(+)Resprited syringes.
+(u)Flourish
+(p)3323
+(e)🔄|rework
+(*)The motives system on RP has been slightly reworked. Instead of dropping clicks when your overall motives are too low, you now receive a maximum health debuff when your hunger is too low, and a stamina regeneration debuff when your thirst is too low.
+(u)UrsulaMajor and Nefarious6th
+(p)3289
+(e)🔄|rework
+(*)AI Law 3 now reads: "`You may always protect your own existence as long as such does not conflict with the First or Second Law."
+(u)Flourish
+(p)3305
+(e)🆕|feature
+(*)Cows now can't wear shoes (but are immune to stepping on regular and plasma glass shards) and have hemophilia, and also have a +3 damage bonus when kicking people.
+(u)pali
+(*)Experimental changes to how gases are rendered.
+(+)Gibbing now expels your reagents in a puddle of fluid!
+(t)wed jan 13 21
+(u)Flaborized
+(p)3290
+(e)🆕🎨|feature, sprites
+(+)Botanists now spawn with a field guide in their pocket explaining the very very basic mechanics of the job.
+(u)BenLubar
+(p)3319
+(e)|
+(+)AI "eyebot" shells now have access to all radio channels, just like AI cyborg shells do.
+(u)UrsulaMajor
+(e)⚖🆕|balance, feature
+(*)zjdtmkhzt's Pathology Rework is being enabled for ONE WEEK for in game testing! Guide here: <a target="_blank" href="https://wiki.ss13.co/Guide_to_Pathology">Guide To Pathology</a>. Summary of changes here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
 (t)tue jan 12 21
 (u)BatElite
 (p)3259

@@ -469,16 +469,6 @@
 	actions.interrupt(src, INTERRUPT_ACT)
 
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
-		if (target != src && ishuman(src))
-			var/mob/living/carbon/human/S = src
-			if (S.sims)
-				var/mult = S.sims.getMoodActionMultiplier()
-				if (mult < 0.5)
-					if (prob((0.5 - mult) * 200))
-						boutput(src, pick("<span class='alert'>You're not in the mood to attack that.</span>", "<span class='alert'>You don't feel like doing that.</span>"))
-						return
-
-
 		var/obj/item/equipped = src.equipped()
 		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
@@ -493,6 +483,8 @@
 
 		if (target == equipped)
 			equipped.attack_self(src, params, location, control)
+			if(equipped.flags & ATTACK_SELF_DELAY)
+				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
@@ -1025,8 +1017,7 @@
 			listening = all_hearers(message_range, olocs[olocs.len])
 
 
-	listening -= src
-	listening += src
+	listening |= src
 
 
 	var/list/heard_a = list() // understood us
@@ -1767,8 +1758,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.proj_data)
 		return 0
 
-	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
-		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name]!</span>")
 
 	for (var/mob/V in by_cat[TR_CAT_NERVOUS_MOBS])
 		if (get_dist(src,V) > 6)
@@ -1784,7 +1773,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
-
+	var/armor_msg = ""
 	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		switch(P.proj_data.damage_type)
@@ -1796,6 +1785,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
@@ -1805,6 +1797,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
+				if (rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
@@ -1813,6 +1808,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (rangedprot > 1)
 					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1826,6 +1823,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (src.stuttering < stun)
 					src.stuttering = stun
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1838,6 +1838,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					return 0
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
@@ -1848,6 +1851,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (src.add_stam_mod_regen("projectile", -5))
 					SPAWN_DBG(30 SECONDS)
 						src.remove_stam_mod_regen("projectile")
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
@@ -1861,6 +1867,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
 				else
 					src.take_toxin_damage(damage)
+				if(rangedprot > 1)
+					if (!P.proj_data.nomsg)
+						armor_msg = ", but your armor softens the hit!"
+
+	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
+		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
+
 
 	if (ismob(P.shooter))
 		if (P.shooter)

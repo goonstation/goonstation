@@ -29,9 +29,6 @@ var/global
 
 	datum/datacore/data_core = null
 
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
-
 	turf/buzztile = null
 
 	obj/screen/renderSourceHolder

@@ -858,6 +858,7 @@
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
+	slot_poc1 = /obj/item/paper/botany_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -1330,6 +1331,8 @@
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
+		if(prob(20))
+			M.bioHolder.AddEffect("noir", magical=1)
 
 // randomizd gimmick jobs
 

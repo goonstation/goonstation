@@ -49,7 +49,7 @@ var/global/list/bible_contents = list()
 			if(prob(5))
 				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user)
+	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
