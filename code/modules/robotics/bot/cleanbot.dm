@@ -222,6 +222,7 @@
 		// Invalid targets may not be unreachable anymore. Clear list periodically.
 		if (src.clear_invalid_targets && !ON_COOLDOWN(src, CLEANBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 			src.targets_invalid = list()
+			src.cleanbottargets = list() // if 5 minutes have gone by and jim still hasnt cleaned up the floor, I dont think they're gonna
 
 		if (!src.target)
 			if(!src.scan_origin || !isturf(src.scan_origin))
@@ -268,7 +269,7 @@
 				continue
 			if (F in src.cleanbottargets)
 				continue
-			if (src.emagged && (F.wet))
+			if (src.emagged && F.wet)
 				continue
 			if (!F.messy && !F.active_liquid)
 				continue
@@ -294,7 +295,6 @@
 	KillPathAndGiveUp(var/give_up)
 		. = ..()
 		src.cleaning = 0
-		src.cleanbottargets -= src.target
 		src.icon_state = "[src.icon_state_base][src.on]"
 		src.target = null
 		src.idle = TIME
@@ -418,6 +418,7 @@
 				if (T.active_liquid.group)
 					T.active_liquid.group.drain(T.active_liquid,1,master)
 
+			master.cleanbottargets -= master.target
 			master.KillPathAndGiveUp(0)
 		..()
 

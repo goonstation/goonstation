@@ -34,6 +34,7 @@
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
 	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
 	var/dynamic_processing = 1
@@ -157,9 +158,10 @@
 			return
 		var/image/chat_maptext/chatbot_text = null
 		if (src.speech2text && src.chat_text)
-			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-			SPAWN_DBG(1.5 SECONDS)
-				UpdateOverlays(null, "bot_speech_bubble")
+			if(src.use_speech_bubble)
+				UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
+				SPAWN_DBG(1.5 SECONDS)
+					UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
 				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
@@ -303,6 +305,16 @@
 					break	// We're here! Or something!
 
 				if(master?.path)
+					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
+						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						I.set_loc(get_turf(master))
+						I.set_dir(master.dir)
+						flick("ion_fade", I)
+						I.icon_state = "blank"
+						I.pixel_x = master.pixel_x
+						I.pixel_y = master.pixel_y
+						SPAWN_DBG( 20 )
+							if (I && !I.disposed) pool(I)
 					step_to(master, master.path[1])
 					if(master.loc != master.path[1])
 						master.frustration++

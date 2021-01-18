@@ -147,10 +147,12 @@
 	var/guard_start_no_announce
 	/// These people get a pass on getting secbotted. For a while
 	var/static/list/secbot_ignore = list()
+	var/static/image/bothat
+	var/static/image/chargepic
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_BOT_SECBOTS)
-		src.chatspam_cooldown = (1 SECOND) + (length(by_cat[TR_CAT_BOT_SECBOTS]) * 2) // big hordes of bots can really jam up the chat
+		STOP_TRACKING
+		src.chatspam_cooldown = (1 SECOND) + (length(by_type[/obj/machinery/bot/secbot]) * 2) // big hordes of bots can really jam up the chat
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 		if(our_baton)
 			our_baton.dispose()
@@ -252,15 +254,17 @@
 			make_tacticool()
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-		START_TRACKING_CAT(TR_CAT_BOT_SECBOTS)
-		src.chatspam_cooldown = (1 SECOND) + (length(by_cat[TR_CAT_BOT_SECBOTS]) * 2) // big hordes of bots can really jam up the chat
+		chargepic = image('icons/effects/electile.dmi', "6c")
+		START_TRACKING
+		src.chatspam_cooldown = (1 SECOND) + (length(by_type[/obj/machinery/bot/secbot]) * 2) // big hordes of bots can really jam up the chat
 
 		SPAWN_DBG(0.5 SECONDS)
 			if(radio_controller)
 				radio_controller.add_object(src, "[control_freq]")
 				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
-				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
+				bothat = image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
+				UpdateOverlays(bothat, "secbot_hat")
 
 	speak(var/message, var/sing, var/just_float)
 		if (src.emagged >= 2)
@@ -290,7 +294,7 @@
 			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
 			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
 			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] <A href='?src=\ref[src];operation=adjwarn;go=1'>+</A> <A href='?src=\ref[src];operation=adjwarn;go=0'>-</A<BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=1'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=0'>\[-]</A><BR>
 			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
 			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
 			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
@@ -382,7 +386,8 @@
 			if (emagged)
 				if (user)
 					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
-				src.overlays.len = 0
+				UpdateOverlays(null, "secbot_hat")
+				UpdateOverlays(null, "secbot_charge")
 			else if (user)
 				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
 			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
@@ -581,10 +586,10 @@
 	/// Makes the bot able to baton people, then makes them unable to baton people after a while
 	proc/charge_baton()
 		src.baton_charged = TRUE
-		src.overlays += image('icons/effects/electile.dmi', "6c")
+		UpdateOverlays(chargepic, "secbot_charged")
 		SPAWN_DBG(src.baton_charge_duration)
 			src.baton_charged = FALSE
-			src.overlays -= image('icons/effects/electile.dmi', "6c")
+			UpdateOverlays(null, "secbot_charged")
 
 	/// Hits someone with our baton, or charges it if it isnt
 	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
@@ -778,9 +783,9 @@
 					SPAWN_DBG(0)
 						src.baton_attack(src.target) // has while-sleeps, proc happens as part of process(), stc
 			/// Tango in charging distance?
-			else if(IN_RANGE(src, src.target, 18))
+			else if(IN_RANGE(src, src.target, 13)) // max perp-seek distance of 13
 				/// Charge em!
-				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 18)
+				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 200) // but they can go anywhere in that 13 tiles
 				if(!src.path || length(src.path) < 1)
 					src.frustration += 2
 					speak("...", just_float = 1)
@@ -795,7 +800,7 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = 0
-		for (var/mob/living/carbon/C in by_cat[TR_CAT_MOBS_CARBON]) //Let's find us a criminal
+		for (var/mob/living/carbon/C in by_type[/mob/living/carbon]) //Let's find us a criminal
 			if(!IN_RANGE(src, C, 7)) // We've made a plea bargain with opaque objects to turn in criminals hiding behind them
 				continue
 			if ((C.stat) || (C.hasStatus("handcuffed")))
@@ -827,7 +832,7 @@
 			return
 
 		if(need_backup)
-			for(var/obj/machinery/bot/secbot/S in by_cat[TR_CAT_BOT_SECBOTS]) // Beat up an officer? That's a batonning
+			for(var/obj/machinery/bot/secbot/S in by_type[/obj/machinery/bot/secbot]) // Beat up an officer? That's a batonning
 				if(S == src)
 					continue
 				if(IN_RANGE(src, S, 7))
@@ -864,6 +869,17 @@
 			var/mob/living/carbon/human/npc/monkey/npcmonkey = C
 			npcmonkey.pursuited_by(src)
 		src.oldtarget_name = C.name
+		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-yellatthem", src.chatspam_cooldown * 3))
+			src.YellAtPerp()
+		switch(src.mode)
+			if(SECBOT_IDLE, SECBOT_START_PATROL, SECBOT_PATROL, SECBOT_SUMMON, SECBOT_AGGRO)
+				src.mode = SECBOT_AGGRO
+			else
+				src.mode = SECBOT_GUARD_AGGRO
+		weeoo()
+		process()	// ensure bot quickly responds to a perp
+
+	proc/YellAtPerp()
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
@@ -875,13 +891,6 @@
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
 		playsound(src.loc, saything, 50, 0)
-		switch(src.mode)
-			if(SECBOT_IDLE, SECBOT_START_PATROL, SECBOT_PATROL, SECBOT_SUMMON, SECBOT_AGGRO)
-				src.mode = SECBOT_AGGRO
-			else
-				src.mode = SECBOT_GUARD_AGGRO
-		weeoo()
-		process()	// ensure bot quickly responds to a perp
 
 	proc/weeoo()
 		if(weeooing)
@@ -1009,6 +1018,8 @@
 			src.oldtarget_name = src.target?.name
 			src.mode = SECBOT_GUARD_IDLE
 		if(give_up == KPAGU_RETURN_TO_PATROL || give_up == KPAGU_CLEAR_ALL)
+			src.target = null
+			src.oldtarget_name = src.target?.name
 			src.guard_area = null
 			src.guard_area_lockdown = FALSE
 			src.mode = SECBOT_IDLE

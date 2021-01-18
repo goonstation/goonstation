@@ -12,12 +12,12 @@
 	infra_luminosity = 4
 
 /mob/living/carbon/New()
-	START_TRACKING_CAT(TR_CAT_MOBS_CARBON)
+	START_TRACKING
 	. = ..()
 
 /mob/living/carbon/disposing()
+	STOP_TRACKING
 	stomach_contents = null
-	STOP_TRACKING_CAT(TR_CAT_MOBS_CARBON)
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)

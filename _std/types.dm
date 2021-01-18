@@ -163,8 +163,5 @@ var/list/list/by_cat = list()
 #define TR_CAT_BURNING_MOBS "dude_on_fire"
 #define TR_CAT_HOTSPOTS "air_on_fire"
 #define TR_CAT_BURNING_THINGS "stuff_on_fire"
-#define TR_CAT_MOBS_CARBON "carbon_based_lifeforms"
-#define TR_CAT_MOBS_MOB "mob_based_lifeforms"
-#define TR_CAT_BOT_SECBOTS "secbots"
 // powernets? processing_items?
 // mobs? ai-mobs?

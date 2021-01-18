@@ -28,11 +28,12 @@
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
 	var/oldloc = null
+	var/static/image/medbot_overlays = image('icons/obj/bots/medbots.dmi', icon_state = "blank")
 	var/last_found = 0
 	var/last_patient_cooldown = 10 SECONDS
 	/// For evil medbots, after doing their deed to a person, ignore them for this long (or the bot gets hurt)
 	var/hostile_last_patient_cooldown = 30 SECONDS
-	var/point_cooldown = 10 SECONDS //Don't spam the "HEY I'M COMING" messages
+	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -43,6 +44,12 @@
 	var/treatment_fire = "saline"
 	var/treatment_tox = "charcoal"
 	var/treatment_virus = "spaceacillin"
+	/// the stuff the bot injects when emagged
+	var/list/dangerous_stuff = list()
+	/// Set this to make the bot only inject all this crap
+	var/list/override_reagent = list()
+	/// They'll stop stop injecting that crap if the patient has the per-inject amount
+	var/override_reagent_limit_mult = 0.9
 	var/terrifying = 0 // for making the medbots all super fucked up
 
 /obj/machinery/bot/medbot/no_camera
@@ -106,36 +113,37 @@
 			src.overlays += "medibot-arm"
 
 /obj/machinery/bot/medbot/proc/update_icon(var/stun = 0, var/heal = 0)
-	if (src.overlays)
-		src.overlays = null
+	UpdateOverlays(null, "medbot_overlays")
+	medbot_overlays.overlays.len = 0
 
 	if (src.terrifying)
 		src.icon_state = "medibot[src.on]"
 		if (stun)
-			src.overlays += "medibota"
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibota")
 		if (heal)
-			src.overlays += "medibots"
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibots")
 		return
 
 	else
 		src.icon_state = "medibot"
 		if (src.skin)
-			src.overlays += "medskin-[src.skin]"
-		src.overlays += "medibot-scanner"
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medskin-[src.skin]")
+		medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-scanner")
 		if (heal)
-			src.overlays += "medibot-arm-syringe"
-			src.overlays += "medibot-light-flash"
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-arm-syringe")
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-light-flash")
 		else
-			src.overlays += "medibot-arm"
+			medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-arm")
 			if (stun)
-				src.overlays += "medibot-light-stun"
+				medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-light-stun")
 			else
-				src.overlays += "medibot-light[src.on]"
+				medbot_overlays.overlays += image('icons/obj/bots/medbots.dmi', icon_state = "medibot-light[src.on]")
 		/*
 		if (emagged)
 			src.overlays += "medibot-spark"
 		*/
-		return
+	UpdateOverlays(medbot_overlays, "medbot_overlays")
+	return
 
 /obj/machinery/bot/medbot/New()
 	..()
@@ -231,13 +239,15 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
-		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.update_icon()
+		src.pick_poison()
 		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
 		return 1
+	else if (prob(1))
+		src.pick_poison()
 	return 0
 
 
@@ -335,7 +345,10 @@
 			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
 
-		for (var/mob/living/carbon/C in view(7,src)) //Time to find a patient!
+		for (var/mob/living/carbon/C in by_type[/mob/living/carbon]) //Time to find a patient!
+			if(!IN_RANGE(src, C, 7))
+				continue
+
 			if ((isdead(C)) || !ishuman(C))
 				continue
 
@@ -345,7 +358,6 @@
 			if (src.assess_patient(C))
 				src.patient = C
 				src.oldpatient = C
-				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.oldpatient]", src.last_patient_cooldown)
 				src.doing_something = 1
 				if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[src.patient]", src.point_cooldown)) //Don't spam these messages!
 					src.point(src.patient, 1)
@@ -360,9 +372,39 @@
 			src.KillPathAndGiveUp(0)
 			src.medicate_patient(src.patient)
 			return
-		else
+		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
 			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+		else
+			src.KillPathAndGiveUp(1)
+
+/obj/machinery/bot/medbot/proc/pick_poison()
+	src.dangerous_stuff = list()
+	switch(rand(1, 100))
+		if(1 to 5) // deadly deadly poison
+			src.audible_message("[src] makes an ominous buzzing noise!")
+			src.dangerous_stuff[pick_string("chemistry_tools.txt", "traitor_poison_bottle")] = 1 // they're pretty deadly
+		if(11 to 50) // obnoxious but also pretty deadly poison
+			src.audible_message("[src] makes a trippy buzzing noise!")
+			var/primaries = rand(1,3)
+			var/adulterants = rand(2,4)
+			var/adulterants_safe = rand(2,4)
+			for(var/i in 1 to (primaries + adulterants + adulterants_safe))
+				if(primaries >= 1)
+					src.dangerous_stuff[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries")] += 3
+					primaries--
+					continue
+				if(adulterants >= 1)
+					src.dangerous_stuff[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants")] += 3
+					adulterants--
+					continue
+				if(adulterants_safe >= 1)
+					src.dangerous_stuff[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants_safe")] += 3
+					adulterants_safe--
+					continue
+		else // annoying knockout stun poisons
+			src.audible_message("[src] makes an awful buzzing noise!")
+			src.dangerous_stuff["pancuronium"] = 10
 
 /obj/machinery/bot/medbot/proc/toggle_power()
 	src.on = !src.on
@@ -383,7 +425,7 @@
 	if(C.suiciding)
 		return 0 //Kevorkian school of robotic medical assistants.
 
-	if(src.emagged) //Everyone needs our medicine. (Our medicine is toxins)
+	if(src.emagged || src.terrifying) //Everyone needs our medicine. (Our medicine is toxins)
 		if(ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[C.name]", src.hostile_last_patient_cooldown))
 			return 0 // cept people who already had our medicine
 		return 1
@@ -418,7 +460,7 @@
 	return 0
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
-	if(!src.on)
+	if(!src.on || src.currently_healing)
 		return
 
 	if(!istype(C))
@@ -431,65 +473,62 @@
 		src.KillPathAndGiveUp(1)
 		return
 
-	var/reagent_id = null
-
-	//Use whatever is inside the loaded beaker. If there is one.
-	if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
-
-	if (!reagent_id)
-		if(!C.reagents.has_reagent(src.treatment_virus))
-			reagent_id = src.treatment_virus
-
+	var/list/reagent_id = list()
 	var/brute = C.get_brute_damage()
 	var/burn = C.get_burn_damage()
 
-	if (!reagent_id && (brute >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_brute))
-			reagent_id = src.treatment_brute
+	if(length(src.override_reagent))
+		var/reag_id = pick(src.override_reagent)
+		if(!C.reagents.has_reagent(reag_id, src.override_reagent[reag_id] * src.override_reagent_limit_mult))
+			reagent_id = src.override_reagent
 
-	if (!reagent_id && (C.get_oxygen_deprivation() >= (15 + heal_threshold)))
-		if(!C.reagents.has_reagent(src.treatment_oxy))
-			reagent_id = src.treatment_oxy
+	else
+		//Use whatever is inside the loaded beaker. If there is one.
+		if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
+			reagent_id = "internal_beaker"
 
-	if (!reagent_id && (burn >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_fire))
-			reagent_id = src.treatment_fire
+		if (length(reagent_id) < 1)
+			if (brute >= heal_threshold)
+				if(!C.reagents.has_reagent(src.treatment_brute))
+					reagent_id[src.treatment_brute] = 15
+			if (burn >= heal_threshold)
+				if(!C.reagents.has_reagent(src.treatment_fire))
+					reagent_id[src.treatment_fire] = 15
+			if (C.get_toxin_damage() >= heal_threshold)
+				if(!C.reagents.has_reagent(src.treatment_tox))
+					reagent_id[src.treatment_tox] = 15
+			if(!C.reagents.has_reagent(src.treatment_virus))
+				reagent_id[src.treatment_virus] = 15
+			if (C.get_oxygen_deprivation() >= (15 + heal_threshold))
+				if(!C.reagents.has_reagent(src.treatment_oxy))
+					reagent_id[src.treatment_oxy] = 15
 
-	if (!reagent_id && (C.get_toxin_damage() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_tox))
-			reagent_id = src.treatment_tox
+		if (src.terrifying)
+			reagent_id["haloperidol"] = 15
+			if(C.reagents.has_reagent("haloperidol", 10))
+				reagent_id["pancuronium"] = 5
+				if(C.reagents.has_reagent("pancuronium", 4))
+					reagent_id = null
+					ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
 
-	if (src.terrifying)
-		reagent_id = "haloperidol"
-		if(C.reagents.has_reagent(reagent_id, 10))
-			reagent_id = "pancuronium"
-			if(C.reagents.has_reagent(reagent_id, 10))
-				reagent_id = null
-				ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
+		else if (src.emagged) //Emagged! Time to poison everybody.
+			var/reag_check = pick(src.dangerous_stuff)
+			if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
+				reagent_id = src.dangerous_stuff
 
-	if (src.emagged && !src.terrifying) //Emagged! Time to poison everybody.
-		reagent_id = "pancuronium" // HEH
-		if(C.reagents.has_reagent(reagent_id, 15)) // spread the love around
-			reagent_id = null
-			ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
-
-	if (!reagent_id) //If they don't need any of that they're probably cured!
+	if (length(reagent_id) < 1) //If they don't need any of that they're probably cured!
+		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.patient]", src.last_patient_cooldown)
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
 		return
 	else
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
-	src.KillPathAndGiveUp(1)
-	reagent_id = null
 	return
 
 /obj/machinery/bot/medbot/DoWhileMoving()
 	. = ..()
 	if (src.patient && IN_RANGE(src,src.patient,1))
-		src.KillPathAndGiveUp(0)
-		src.medicate_patient(src.patient)
 		return TRUE
 
 /obj/machinery/bot/medbot/KillPathAndGiveUp(var/give_up)
@@ -498,7 +537,6 @@
 		src.currently_healing = 0
 		src.oldpatient = src.patient
 		src.patient = null
-		src.cooldowns = list()
 		src.oldloc = null
 		src.path = null
 
@@ -509,14 +547,14 @@
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "0"
 	var/obj/machinery/bot/medbot/master
-	var/reagent_id
+	var/list/reagent_id
 	var/did_spooky = 0
 
-	New(var/the_bot, var/reagentid)
+	New(var/the_bot, var/list/reagentid)
 		src.master = the_bot
 		src.reagent_id = reagentid
 		if(master.terrifying)
-			duration += 10
+			duration += 20
 		..()
 
 	onUpdate()
@@ -577,7 +615,8 @@
 				master.reagent_glass.reagents.trans_to(master.patient,master.injection_amount) //Inject from beaker instead.
 				master.reagent_glass.reagents.reaction(master.patient, 2, master.injection_amount)
 			else
-				master.patient.reagents.add_reagent(reagent_id,master.injection_amount)
+				for(var/reagent in reagent_id)
+					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
 			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
 			playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
 
@@ -613,10 +652,9 @@
 			if (fontSize <= fontSizeMin)
 				fontIncreasing = 1
 
-	for (var/mob/O in audience)
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[processedMessage]\"",2)
+	message = processedMessage
 
-	return
+	..()
 
 #undef fontSizeMax
 #undef fontSizeMin
@@ -645,8 +683,8 @@
 	..()
 	if(!src.emagged && prob(75))
 		src.emagged = 1
-		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		src.on = 1
+		src.pick_poison()
 	else
 		src.explode()
 	return

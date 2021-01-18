@@ -122,6 +122,7 @@
 	var/hat_x_offset = 0
 	var/hat_y_offset = 0
 	var/icon_needs_update = 1 //Call update_icon() in process
+	use_speech_bubble = 0 // D:
 
 	var/image/costume_icon = null
 

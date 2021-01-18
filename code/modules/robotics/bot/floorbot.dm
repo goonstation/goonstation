@@ -79,20 +79,19 @@
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
 	var/dat
-	dat += text({"
-<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>
-Status: []<BR>
-Tiles left: [src.amount]<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
+	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
+	dat += "Status: []<BR>"
+	dat += "Tiles left: [src.amount]<BR>"
+	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]"
+	dat += "<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"
 	if (!src.locked)
-		dat += text({"<hr>
-Improves floors: []<BR>
-Finds tiles: []<BR>
-Make single pieces of metal into tiles when empty: []"},
-text("<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>"))
+		dat += "<hr>"
+		dat += "Improves floors: []<BR>"
+		dat += "Finds tiles: []<BR>"
+		dat += "Make single pieces of metal into tiles when empty: []"
+		dat += "<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>"
+		dat += "<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>"
+		dat += "<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>"
 
 	if (user.client.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
@@ -311,8 +310,6 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 /obj/machinery/bot/floorbot/KillPathAndGiveUp(var/give_up)
 	. = ..()
-	if(src.target) // release our claim on this target
-		src.floorbottargets -= src.target
 	if(give_up)
 		src.targets_invalid += src.target
 		src.target = null
@@ -505,6 +502,8 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 	onInterrupt()
 		. = ..()
+		if(master.target) // release our claim on this target
+			master.floorbottargets -= src.target
 		master.KillPathAndGiveUp(1)
 
 	onEnd()
@@ -563,6 +562,8 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 	onInterrupt()
 		. = ..()
+		if(master.target) // release our claim on this target
+			master.floorbottargets -= src.target
 		master.KillPathAndGiveUp(1)
 
 	onEnd()
