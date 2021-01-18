@@ -7,7 +7,6 @@
  * @license MIT
  */
 import { resolveAsset } from '../assets';
-import { Fragment } from 'inferno';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
@@ -355,7 +354,7 @@ class PaperSheetStamper extends Component {
       rotate: this.state.rotate,
     };
     return (
-      <Fragment>
+      <>
         <PaperSheetView
           readOnly
           value={value}
@@ -364,7 +363,7 @@ class PaperSheetStamper extends Component {
           activeStamp
           opacity={0.5}
           image={currentPos} />
-      </Fragment>
+      </>
     );
   }
 }
