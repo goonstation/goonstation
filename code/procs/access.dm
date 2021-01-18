@@ -231,11 +231,19 @@
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
-						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload)
+						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload
+						#ifdef SCIENCE_PATHO_MAP
+						, access_pathology
+						#endif
+						)
 		if("Medical Director", "Head Surgeon")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
-						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload)
+						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload
+						#ifndef SCIENCE_PATHO_MAP
+						, access_pathology
+						#endif
+						)
 		if("Chief Engineer")
 			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
 						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
@@ -263,7 +271,7 @@
 #else
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
 			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering,
-			access_chemistry, access_bar, access_kitchen, access_hydro)
+			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology)
 #endif
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,access_hydro,access_bar,access_kitchen, access_ranch)
