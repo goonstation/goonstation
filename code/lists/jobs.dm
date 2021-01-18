@@ -19,7 +19,7 @@ var/list/occupations = list(
 //	"Hangar Mechanic", "Hangar Mechanic",
 	"AI",
 	"Cyborg", "Cyborg",
-	"Barman",
+	"Bartender",
 	"Chef",
 	"Janitor",
 	"Clown",
@@ -68,6 +68,6 @@ var/list/page_departments = list(
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
 				"Geneticist", "Scientist", "Head of Personnel",
-				"Chaplain", "Barman", "Janitor", "Chef", "Roboticist", "Quartermaster",
+				"Chaplain", "Bartender", "Janitor", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer","Engineer", "Miner", "Mechanic",
 				"Research Director", "Medical Director", "Botanist", "Clown")

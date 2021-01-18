@@ -38,6 +38,7 @@ THROWING DARTS
 	proc/implanted(mob/M, mob/I)
 		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
+		SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, M)
 		owner = M
 		if (implant_overlay)
 			M.update_clothing()
@@ -53,6 +54,7 @@ THROWING DARTS
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
 		deactivate()
+		SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, M)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.implant -= src
@@ -118,10 +120,14 @@ THROWING DARTS
 					user.show_text("[Imp] already has an implant loaded.")
 					return
 				else
-					user.u_equip(src)
+					var/obj/item/storage/store
+					if(istype(src.loc, /obj/item/storage))
+						store = src.loc
 					src.set_loc(Imp)
 					Imp.imp = src
 					Imp.update()
+					user.u_equip(src)
+					store?.hud.remove_item(src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))
@@ -151,7 +157,6 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
 	var/frequency = 1149
@@ -262,9 +267,8 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		src.message = "HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]"
 		//DEBUG_MESSAGE("implant reporting crit")
-		src.send_message()
+		src.send_message("HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]", MGA_MEDCRIT)
 
 	proc/death_alert()
 		if (!src.owner)
@@ -272,15 +276,15 @@ THROWING DARTS
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
 		var/has_record = src.check_for_valid_record()
-		src.message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
 		if (has_record) //the title for this next section of code is grammar sucks
 			if (he_or_she(src.owner) == "they")
-				src.message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
+				message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
 			else
-				src.message += "[he_or_she(src.owner)] [has_record ? "has a record in the cloner at [has_record]" : "does not have a cloning record."]"
+				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
 		//DEBUG_MESSAGE("implant reporting death")
-		src.send_message()
+		src.send_message(message, MGA_DEATH)
 
 	proc/get_coords()
 		if (ishuman(src.owner))
@@ -303,24 +307,22 @@ THROWING DARTS
 					return get_area(comp)
 		return null
 
-	proc/send_message()
-		DEBUG_MESSAGE("sending message: [src.message]")
+	proc/send_message(var/message, var/alertgroup)
+		DEBUG_MESSAGE("sending message: [message]")
 		if(!radio_connection)
 			return
-		for(var/mailgroup in mailgroups)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "HEALTH-MAILBOT"
-			newsignal.data["message"] = "[src.message]"
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
+		newsignal.data["message"] = "[message]"
 
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups + alertgroup
+		newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
-			//DEBUG_MESSAGE("message sent to [src.mailgroup]")
+		radio_connection.post_signal(src, newsignal)
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -412,7 +414,7 @@ THROWING DARTS
 	do_process(var/mult = 1)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			if (src.health < 40 && !src.inactive)
+			if (H.health < 40 && !src.inactive)
 				if (!H.reagents.has_reagent("omnizine", 10))
 					H.reagents.add_reagent("omnizine", 10)
 				src.inactive = 1
@@ -431,7 +433,7 @@ THROWING DARTS
 			return
 		var/mob/living/carbon/human/H = src.owner
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if (H.mind in ticker.mode:head_revolutionaries)
 				H.visible_message("<span class='alert'><b>[H] resists the loyalty implant!</b></span>")
 				H.changeStatus("weakened", 1 SECOND)
@@ -448,7 +450,7 @@ THROWING DARTS
 				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 1.6)
 
 	do_process(var/mult = 1)
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if (!ishuman(src.owner))
 				return
 			var/mob/living/carbon/human/H = src.owner
@@ -556,8 +558,7 @@ THROWING DARTS
 					throwjunk += I
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
-				if(source)
-					source.gib()
+				source?.gib()
 
 				for(var/obj/O in throwjunk) //Throw this junk around
 					var/edge = get_edge_target_turf(T, pick(alldirs))
@@ -687,7 +688,7 @@ THROWING DARTS
 */
 		boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
 		M.changeStatus("stunned", 10 SECONDS)
-		M.changeStatus("weakened", 3 SECONDS)
+		M.changeStatus("weakened", 10 SECONDS)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
@@ -837,6 +838,7 @@ THROWING DARTS
 		desc = "Ouch."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
+	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
@@ -918,6 +920,10 @@ THROWING DARTS
 			if (dist <= 1)
 				. += "This one has unlimited charges."
 
+		assistant
+			New()
+				..()
+				access.access = get_access("Staff Assistant")
 
 		shittybill //give im some access
 

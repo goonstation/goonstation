@@ -37,7 +37,7 @@
 				else
 					driver = pick(drivers)
 
-				src.dir = get_dir(src,driver)
+				src.set_dir(get_dir(src,driver))
 
 	proc/activate()
 		if(operating || !isturf(src.loc)) return
@@ -111,7 +111,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_HASENTERED
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/default_direction = NORTH //The direction things get sent into when the router does not have a destination for the given barcode or when there is none attached.
@@ -136,11 +136,11 @@
 					break
 
 		if(next_dest)
-			src.dir = next_dest
+			src.set_dir(next_dest)
 		else
 			if (!trigger_when_no_match)
 				operating = 0
-			src.dir = default_direction
+			src.set_dir(default_direction)
 
 		operating = 1
 
@@ -464,3 +464,15 @@
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
 				src.stick_to(target, pox, poy)
 		return
+
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
+				get_dist(get_turf(over_object), get_turf(src)) > 1 || \
+				get_dist(usr, get_turf(over_object)) > 1 ||  \
+				get_dist(usr, src) > 1 || \
+				over_object == usr || !istype(over_object, /atom/movable))
+			return ..()
+		var/atom/movable/target = over_object
+		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
+		target.delivery_destination = destination
+		src.stick_to(target, src.pixel_x, src.pixel_y)

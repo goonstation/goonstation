@@ -27,7 +27,6 @@ Make sure to add new items to this list if you document new components.
   - [`Flex.Item`](#flexitem)
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
-  - [`HealthStat`](#HealthStat)
   - [`Icon`](#icon)
   - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
@@ -41,6 +40,7 @@ Make sure to add new items to this list if you document new components.
   - [`NoticeBox`](#noticebox)
   - [`NumberInput`](#numberinput)
   - [`ProgressBar`](#progressbar)
+  - [`RoundGauge`](#roundgauge)
   - [`Section`](#section)
   - [`Slider`](#slider)
   - [`Table`](#table)
@@ -49,6 +49,8 @@ Make sure to add new items to this list if you document new components.
   - [`Tabs`](#tabs)
   - [`Tabs.Tab`](#tabstab)
   - [`Tooltip`](#tooltip)
+- [`tgui/interfaces/common`](#tguiinterfacescommon)
+  - [`HealthStat`](#healthstat)
 - [`tgui/layouts`](#tguilayouts)
   - [`Window`](#window)
   - [`Window.Content`](#windowcontent)
@@ -508,25 +510,6 @@ Example:
 - See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
-### `HealthStat`
-
-A box that applies a color to its contents depending on the damage type.
-
-**Props:**
-
-- See inherited props: [Box](#box)
-- `info: boolean` - Info box
-- `type: string` - Damage type oxy, toxin, burn, brute
-- `content: string` - Content to render inside the box.
-
-Example:
-
-```jsx
-<HealthStat
-  type="DamageType"
-  content="content" />
-```
-
 ### `Icon`
 
 Renders one of the FontAwesome icons of your choice.
@@ -791,6 +774,38 @@ based on whether the value lands in the range between `from` and `to`.
 - `color: string` - Color of the progress bar.
 - `children: any` - Content to render inside the progress bar.
 
+### `RoundGauge`
+
+The RoundGauge component provides a visual representation of a single metric, as well as being capable of showing informational or cautionary boundaries related to that metric.
+
+```jsx
+<RoundGauge
+  size={1.75}
+  value={tankPressure}
+  minValue={0}
+  maxValue={pressureLimit}
+  alertAfter={pressureLimit * 0.70}
+  ranges={{
+    "good": [0, pressureLimit * 0.70],
+    "average": [pressureLimit * 0.70, pressureLimit * 0.85],
+    "bad": [pressureLimit * 0.85, pressureLimit],
+  }}
+  format={formatPressure} />
+```
+
+The alert on the gauge is optional, and will only be shown if the `alertAfter` prop is defined. When defined, the alert will begin to flash the respective color upon which the needle currently rests, as defined in the `ranges` prop.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `value: number` - The current value of the metric.
+- `minValue: number` (default: 0) - The lower bound of the guage.
+- `maxValue: number` (default: 1) - The upper bound of the guage.
+- `ranges: { color: [from, to] }` (default: `{ "good": [0, 1] }`) - Provide regions of the guage to color between two specified values of the metric.
+- `alertAfter: number` (optional) - When provided, will cause an alert symbol on the gauge to begin flashing in the color upon which the needle currently rest, as defined in `ranges`.
+- `format: function(value) => string` (optional) - When provided, will be used to format the value of the metric for display.
+- `size: number` (default: 1) - When provided scales the gauge.
+
 ### `Section`
 
 Section is a surface that displays content and actions on a single topic.
@@ -1001,6 +1016,28 @@ Usage:
 - `position: string` - Tooltip position.
 - `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
+
+## `tgui/interfaces/common`
+
+### `HealthStat`
+
+A box that applies a color to its contents depending on the damage type.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `info: boolean` - Info box
+- `type: string` - Damage type oxy, toxin, burn, brute
+- `content: string` - Content to render inside the box.
+
+Example:
+
+```jsx
+<HealthStat
+  type="DamageType"
+  content="content"
+/>
+```
 
 ## `tgui/layouts`
 

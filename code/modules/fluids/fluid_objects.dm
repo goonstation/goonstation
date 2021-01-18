@@ -389,7 +389,7 @@
 		set category = "Local"
 
 		if (!og_ladder_item)
-			if (linked_ladder && linked_ladder.og_ladder_item)
+			if (linked_ladder?.og_ladder_item)
 				og_ladder_item = linked_ladder.og_ladder_item
 			else
 				og_ladder_item = new /obj/item/sea_ladder(src.loc)

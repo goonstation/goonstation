@@ -24,7 +24,7 @@
 
 	Topic(var/href, var/href_list)
 
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr) || usr.hasStatus(list("paralysis", "stunned", "weakened", "resting")))
+		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr) || is_incapacitated(usr))
 			return
 		..()
 

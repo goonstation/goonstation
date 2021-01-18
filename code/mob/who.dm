@@ -87,7 +87,7 @@
 	rendered += "<b>Remember: even if there are no admins ingame, your adminhelps will still be sent to our Discord channel. Current Admins:</b><br>"
 
 	for (var/client/C in clients)
-		if (C && C.mob && C.holder && !C.player_mode)
+		if (C?.mob && C.holder && !C.player_mode)
 			if (usr.client.holder)
 				rendered += "[C.key] is "
 
@@ -108,7 +108,7 @@
 	rendered += "<br><b>Current Mentors:</b><br>"
 
 	for (var/client/C in clients)
-		if(C && C.mob && !C.holder && C.can_see_mentor_pms())
+		if(C?.mob && !C.holder && C.can_see_mentor_pms())
 			rendered += "&emsp;[C]<br>"
 
 	boutput(usr, rendered)

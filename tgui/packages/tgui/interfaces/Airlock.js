@@ -135,7 +135,7 @@ const AirlockControlsOnly = (props, context) => {
   return (
     <Window
       width={315}
-      height={375}
+      height={380}
       title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         {(!canAiControl || !!noPower) && (
@@ -167,7 +167,7 @@ const AccessPanelOnly = (props, context) => {
   return (
     <Window
       width={354}
-      height={460}
+      height={465}
       title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
@@ -183,6 +183,7 @@ const PowerStatus = (props, context) => {
     backupTimeLeft,
     wires,
     netId,
+    accessCode,
   } = data;
 
   const buttonProps = {
@@ -192,7 +193,12 @@ const PowerStatus = (props, context) => {
 
   return (
     <Section title="Power Status">
-      {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
+      <Box>
+        {"Access sensor reports the net identifer is:"} <Box inline italic>{netId}</Box>
+      </Box>
+      <Box>
+        {"Net access code:"} <Box inline italic>{accessCode}</Box>
+      </Box>
       <Divider />
       <LabeledList>
         <LabeledList.Item
@@ -438,6 +444,7 @@ export const AccessPanel = (props, context) => {
     aiControlVar,
     safety,
     panelOpen,
+    accessCode,
   } = data;
 
   const handleWireInteract = (wireColorIndex, action) => {
@@ -458,6 +465,9 @@ export const AccessPanel = (props, context) => {
       )}
       <Box>
         {"An identifier is engraved under the airlock's card sensors:"} <Box inline italic>{netId}</Box>
+      </Box>
+      <Box>
+        {"A display shows net access code:"} <Box inline italic>{accessCode}</Box>
       </Box>
       <Divider />
       <LabeledList>

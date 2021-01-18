@@ -212,7 +212,7 @@ CritterAttack(atom/M)
     A.xo = target:x - start:x
 
   A.shooter = src
-  src.dir = get_dir(src, target)
+  src.set_dir(get_dir(src, target))
   SPAWN_DBG( 0 )
     A.process()
   return

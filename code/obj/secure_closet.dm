@@ -24,7 +24,7 @@
 	New()
 		..()
 		update_overlays()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!opened)		// if closed, any item at src's loc is put in the contents
 				for (var/obj/item/I in src.loc)
 					if (I.density || I.anchored || I == src) continue
@@ -67,7 +67,7 @@
 					reply.source = src
 					reply.transmission_method = TRANSMISSION_RADIO
 					reply.data = list("address_1" = sender, "command" = "lock=[locked]&open=[opened]", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("lock")
@@ -85,7 +85,7 @@
 						reply.data = list("address_1" = sender, "command" = "ack", "sender" = src.net_id)
 					else
 						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 
 				if ("unlock")
@@ -104,7 +104,7 @@
 					else
 						reply.data = list("address_1" = sender, "command" = "nack", "data" = "badpass", "sender" = src.net_id)
 
-					SPAWN_DBG (5)
+					SPAWN_DBG(0.5 SECONDS)
 						src.radio_control.post_signal(src, reply, 2)
 			return //todo
 		else if(signal.data["address_1"] == "ping")
@@ -354,7 +354,7 @@
 		if (istype(W, /obj/item/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.drop_item()
-		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
+		if(W?.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 	else if (istype(W, /obj/item/card/id))
 		if(src.broken)
 			boutput(user, "<span class='alert'>It appears to be broken.</span>")
@@ -1088,7 +1088,7 @@
 			else
 				boutput(user, "The locker is too small to stuff [W] into!")
 		user.drop_item()
-		if(W && W.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
+		if(W?.loc && !(W.cant_drop || W.cant_self_remove))	W.set_loc(src.loc)
 		return
 	else if(src.broken)
 		boutput(user, "<span class='alert'>It appears to be broken.</span>")

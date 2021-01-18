@@ -26,7 +26,7 @@
 		return 1
 
 	alter_projectile(var/obj/projectile/P)
-		if(src.projectile_reagents && P && P.proj_data)
+		if(src.projectile_reagents && P?.proj_data)
 			if (!P.reagents)
 				P.reagents = new /datum/reagents(P.proj_data.cost)
 				P.reagents.my_atom = P

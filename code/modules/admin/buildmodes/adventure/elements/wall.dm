@@ -65,7 +65,7 @@
 		else
 			SPAWN_DBG(0)
 				var/waited = 0
-				while (waiting && waiting.sliding)
+				while (waiting?.sliding)
 					waited++
 					if (waited == 5)
 						break

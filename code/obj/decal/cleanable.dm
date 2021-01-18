@@ -49,7 +49,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 		src.real_name = src.name
 
-		if (viral_list && viral_list.len > 0)
+		if (length(viral_list))
 			for (var/datum/ailment_data/AD in viral_list)
 				src.diseases += AD
 		if (src.can_dry)
@@ -107,7 +107,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			pool(src)
 
 	Move(NewLoc, direct)
-		..()
+		. = ..()
 		if (last_turf && istype(last_turf))
 			last_turf.messy = max(last_turf.messy-1, 0)
 		last_turf = src.loc
@@ -276,7 +276,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if (!src.pooled)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && (!src.pooled) && prob(max(src?.reagents.total_volume*5, 10)))
+					if (O && (!src.pooled) && prob(max(src?.reagents?.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -364,14 +364,14 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			. = " It's [src.dry == DRY_BLOOD ? "dry and flakey" : "fresh"]."
 
 	proc/streak(var/list/directions, randcolor = 0)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (i > 0)
 					var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 					if (!b) continue //ZeWaka: fix for null.diseases
-					if (src && src.diseases)
+					if (src?.diseases)
 						b.diseases += src.diseases
 					if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
 						b.blood_DNA = src.blood_DNA
@@ -665,6 +665,53 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "ketchup"
 
+
+/obj/decal/cleanable/pathogen_sweat
+	name = "weirdly colored sweat"
+	desc = "Ew, better not step in this stuff."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = "#12b828"
+	slippery = 5
+	can_sample = 1
+	sample_reagent = "pathogen"
+	can_dry = 1
+	can_fluid_absorb = 0
+
+	HasEntered(AM)
+		. = ..()
+		if(prob(4))
+			src.reagents.reaction(AM, TOUCH)
+
+/obj/decal/cleanable/pathogen_cloud
+	name = "disease particles"
+	desc = "The air in that particular area gives you a bad vibe."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "pathogen_cloud"
+	color = "#12b828"
+	slippery = 5
+	can_sample = 1
+	sample_reagent = "pathogen"
+	can_dry = 1
+	can_fluid_absorb = 0
+
+	HasEntered(AM)
+		. = ..()
+		if(!ishuman(AM))
+			return
+
+		var/mob/living/carbon/human/H = AM
+		var/chance = 10
+		if(H.wear_mask)
+			chance *= H.wear_mask.path_prot
+		if(H.head)
+			chance *= H.head.path_prot
+
+		if(prob(chance))
+			src.reagents.reaction(AM, INGEST)
+
+
 /obj/decal/cleanable/paper
 	name = "paper"
 	desc = "Ripped up little flecks of paper."
@@ -819,7 +866,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				return
 			logTheThing("station", user, null, "writes on [src] with [pen] at [showCoords(src.x, src.y, src.z)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (pen.uses_handwriting && user && user.mind && user.mind.handwriting)
+			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
 				src.webfont = 1
 			else if (pen.font)
@@ -1275,7 +1322,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	// eeeeeey it's copy paste code from your pal cirr
 	proc/streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
@@ -1310,7 +1357,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 30
 
 	proc/streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
@@ -1337,7 +1384,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
 	proc/streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
@@ -1394,7 +1441,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			return ..()
 
 	proc/streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
@@ -1575,6 +1622,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		..()
 		updateSurroundingMagnesium(T)
+
+	pooled()
+		..()
+		src.sampled = 0 // stop fucking breaking butthead! >:(
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()

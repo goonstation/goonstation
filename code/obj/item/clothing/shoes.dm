@@ -11,7 +11,7 @@
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
-	compatible_species = list("human", "monkey")
+	compatible_species = list("human")
 	protective_temperature = 500
 	permeability_coefficient = 0.50
 		//cogwerks - burn vars
@@ -264,13 +264,14 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
+	compatible_species = list("human", "cow")
 	module_research = list("audio" = 5)
 	step_lots = 1
 	step_priority = 999
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/tripsalot, list("shoes"))
+	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
 
 /obj/item/clothing/shoes/flippers
 	name = "flippers"
@@ -398,6 +399,12 @@
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot", 1)
+
+/obj/item/clothing/shoes/swat/noslip
+	name = "hi-grip assault boots"
+	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
+	icon_state = "swatheavy"
+	c_flags = NOSLIP
 
 /obj/item/clothing/shoes/swat/heavy
 	name = "heavy military boots"
@@ -556,3 +563,25 @@
 	icon_state = "tourist"
 	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
 	desc = "Do I really need to tell you what these do?"
+
+/obj/item/clothing/shoes/crafted
+	name = "shoes"
+	desc = "A custom pair of shoes"
+	icon_state = "white"
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("thermal"))
+				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+			else
+				protective_temperature = 0
+				setProperty("coldprot", 0)
+				setProperty("heatprot", 0)
+			if(src.material.hasProperty("hard") && src.material.hasProperty("density"))
+				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 2500)
+			else
+				kick_bonus = 0
+		return

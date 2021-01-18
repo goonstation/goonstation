@@ -82,9 +82,9 @@
 		.= 1
 
 	proc/play(var/mob/user)
-		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions?.len)
+		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
@@ -564,7 +564,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

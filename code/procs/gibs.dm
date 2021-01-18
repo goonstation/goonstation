@@ -72,7 +72,7 @@
 	var/turf/Q = get_turf(location)
 	if (!Q)
 		return
-	if (ejectables && ejectables.len)
+	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
 			var/turf/target = null
 			var/tries = 0

@@ -216,12 +216,13 @@
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] does finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
 		playsound(holder.owner.loc, "sound/effects/fingersnap.ogg", 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
 			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			JOB_XP(H, "Chaplain", 2)
 			return
 
 		holder.owner.say("See you in hell.")
@@ -248,8 +249,29 @@
 			usr.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
 
 		else
-			usr.set_loc(spawnturf)
-			spawnturf = null
+			if(usr.mind.damned) //Backup plan incase Satan gets himself stuck in hell.
+				usr.set_loc(pick(get_area_turfs(/area/station/chapel)))
+			else
+				usr.set_loc(spawnturf)
+				spawnturf = null
+
+/datum/targetable/gimmick/spawncontractsatan
+	icon_state = "clairvoyance"
+	name = "Summon Contract"
+	desc = "Summon a devilish contract and pen."
+	targeted = 0
+	target_nodamage_check = 0
+	max_range = 0
+	cooldown = 0
+
+	cast(mob/target)
+		if (!holder)
+			return 1
+		var/mob/living/M = holder.owner
+		if (!M)
+			return 1
+		spawncontract(usr, 0, 1)
+		return 0
 
 ////////////////////////Kill Jesta///////////////////////////////
 /datum/targetable/gimmick/Jestershift
@@ -287,21 +309,48 @@
 	targeted = 0
 	cooldown = 0
 
+	tryCast()
+		if (is_incapacitated(holder.owner))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		. = ..()
+
 	cast(atom/T)
 		var/floorturf = get_turf(usr)
-		var/floormod1 = rand(0, 32)
-		var/floormod2 = rand(0, 32)
+		var/x_coeff = rand(0, 1)	// open the floor horizontally
+		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
+		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+
 		if(usr.plane == PLANE_UNDERFLOOR)
-			usr.plane = PLANE_DEFAULT
-			usr.layer = 4
-			animate_slide(floorturf, floormod1, floormod2, 5)
-			animate_slide(floorturf, 0, 0, 5)
+			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
+			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+			REMOVE_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+			REMOVE_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
+			usr.set_density(initial(usr.density))
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(usr)
+					usr.plane = PLANE_DEFAULT
+					usr.layer = 4
+					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+				if(floorturf)
+					animate_slide(floorturf, 0, 0, 4)
 
 		else
-			usr.layer = 4
-			usr.plane = PLANE_UNDERFLOOR
-			animate_slide(floorturf, floormod1, floormod2, 5)
-			animate_slide(floorturf, 0, 0, 5)
+			APPLY_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(usr)
+					REMOVE_MOB_PROPERTY(usr, PROP_CANTMOVE, "floorswitching")
+					APPLY_MOB_PROPERTY(usr, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+					APPLY_MOB_PROPERTY(usr, PROP_NEVER_DENSE, "floorswitching")
+					usr.flags |= NODRIFT | DOORPASS | TABLEPASS
+					usr.set_density(0)
+					usr.layer = 4
+					usr.plane = PLANE_UNDERFLOOR
+				if(floorturf)
+					animate_slide(floorturf, 0, 0, 4)
 
 /datum/targetable/gimmick/movefloor
 	icon_state = "pandemonium"

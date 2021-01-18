@@ -1811,3 +1811,37 @@
 		var/obj/storage/S = locate(/obj/storage) in K.loc
 		if (S)
 			K.set_loc(S)
+
+/obj/random_item_spawner/organs
+	name = "random organ spawner"
+	icon_state = "rand_organ"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/item/organ/eye/left,
+	/obj/item/organ/eye/right,
+	/obj/item/organ/heart,
+	/obj/item/organ/lung/left,
+	/obj/item/organ/lung/right,
+	/obj/item/organ/kidney/left,
+	/obj/item/organ/kidney/right,
+	/obj/item/organ/liver,
+	/obj/item/organ/stomach,
+	/obj/item/organ/intestines,
+	/obj/item/organ/spleen,
+	/obj/item/organ/pancreas,
+	/obj/item/organ/appendix,
+	)
+
+	one_to_three
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+/obj/random_item_spawner/organs/bloody
+	New()
+		. = ..()
+		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
+
+	one_to_three
+		min_amt2spawn = 1
+		max_amt2spawn = 3

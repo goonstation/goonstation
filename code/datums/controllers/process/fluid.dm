@@ -57,7 +57,7 @@ datum/controller/process/fluid_group
 			else if (FG)
 				avg_viscosity += FG.avg_viscosity
 
-			if (FG && FG.qdeled)
+			if (FG?.qdeled)
 				FG = null
 
 		avg_viscosity /= processing_fluid_spreads.len ? processing_fluid_spreads.len : 1
@@ -142,5 +142,5 @@ datum/controller/process/fluid_group
 								B.blood_type = F.blood_type
 
 						FG.evaporate()
-						if (FG && FG.qdeled)
+						if (FG?.qdeled)
 							FG = null

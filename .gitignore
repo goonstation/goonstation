@@ -57,6 +57,7 @@ var/
 
 # Local Map Backups
 /maps/**/backup/
+*.dmm.backup
 
 # Local tgui dev server files
 /browserassets/tgui/.tmp/**/*

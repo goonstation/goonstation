@@ -143,7 +143,7 @@
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
-			src.dir = turn(get_dir(src, src.pulling), 180)
+			src.set_dir(turn(get_dir(src, src.pulling), 180))
 
 /obj/maptext_spawner
 	var/loc_maptext = ""
@@ -298,12 +298,12 @@
 			AM.set_loc(get_turf(src))
 			if(AM.density)
 				to_densify += AM
-			AM.density = 0
+			AM.set_density(0)
 			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
 		SPAWN_DBG(1 SECOND)
 			for(var/atom/movable/AM in to_densify)
-				AM.density = TRUE
+				AM.set_density(TRUE)
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
@@ -359,3 +359,27 @@
 
 	setup_healths()
 		add_hh_robot(-150, 150, 1.15)
+
+
+
+
+/obj/item/storage/belt/muscly
+	name = "muscly belt"
+	desc = "Probably made out of steroids or something."
+	icon_state = "machobelt"
+	item_state = "machobelt"
+	var/muscliness_factor = 7
+	var/filter
+
+	equipped(var/mob/user)
+		..()
+		user.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
+		src.filter = user.filters[length(user.filters)]
+		animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+
+	unequipped(var/mob/user)
+		..()
+		animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+		SPAWN_DBG(1 SECOND)
+			user.filters -= filter
+			filter = null

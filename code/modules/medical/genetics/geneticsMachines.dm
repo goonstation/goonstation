@@ -16,6 +16,7 @@
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1
 	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
 	var/list/equipment = list(0,0,0,0)
 	// Injector, Analyser, Emitter, Reclaimer
@@ -42,7 +43,7 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
-		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
+		connection_scan()
 		return
 	gene_icon_cache["unknown"] = resource("images/genetics/mutGrey.png")
 	gene_icon_cache["researching"] = resource("images/genetics/mutGrey2.png")
@@ -52,6 +53,8 @@
 	gene_icon_cache["locked"] = resource("images/genetics/bpSep-locked.png")
 	return
 
+/obj/machinery/computer/genetics/connection_scan()
+	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
@@ -61,7 +64,7 @@
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
@@ -98,7 +101,7 @@
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
 
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
@@ -1125,7 +1128,7 @@
 
 		src.log_me(subject, "mutation activated", E)
 
-		if (subject.bioHolder.ActivatePoolEffect(E) && !ismonkey(subject) && subject.client)
+		if (subject.bioHolder.ActivatePoolEffect(E) && !isnpcmonkey(subject) && subject.client)
 			activated_bonus(usr)
 		usr << link("byond://?src=\ref[src];menu=mutations")
 		//send them to the mutations page.
@@ -1531,28 +1534,28 @@
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision) && world.time >= src.equipment[GENETICS_EMITTERS])
 					return 1
 		if("reclaimer")
-			if(E && GBE && GBE.research_level >= 2 && E.can_reclaim)
+			if(E?.can_reclaim && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer) && world.time >= src.equipment[GENETICS_RECLAIMER])
 					return 1
 		if("injector")
 			if(genResearch.researchMaterial < genResearch.injector_cost)
 				return 0
-			if(E && GBE && GBE.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/injector) && world.time >= src.equipment[GENETICS_INJECTORS])
 					if (genResearch.researchMaterial >= genResearch.injector_cost)
 						return 1
 		if("genebooth")
 			if(genResearch.researchMaterial < genResearch.genebooth_cost)
 				return 0
-			if(E && GBE && GBE.research_level >= 1 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 1)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
-			if(E && GBE && GBE.research_level >= 2 && E.can_make_injector)
+			if(E?.can_make_injector && GBE?.research_level >= 2)
 				if(world.time >= src.equipment[GENETICS_INJECTORS])
 					return 1
 		if("saver")
-			if(E && GBE && GBE.research_level >= 2)
+			if(E && GBE?.research_level >= 2)
 				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && src.saved_mutations.len < genResearch.max_save_slots)
 					return 1
 
@@ -1711,7 +1714,7 @@
 	if (!src)
 		return null
 	// Check for the occupant
-	if (scanner && scanner.occupant)
+	if (scanner?.occupant)
 		// Verify that the occupant is actually inside the scanner
 		if(scanner.occupant.loc != scanner)
 			// They're not. Bweeoo, dodgy stuff alert

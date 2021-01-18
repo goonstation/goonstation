@@ -30,9 +30,7 @@
 
 		src.product_amount = amount
 		src.product_cost = round(cost)
-#if ASS_JAM
-		src.product_cost -= 0.01
-#endif
+
 		src.product_hidden = hidden
 		src.logged_on_vend = logged_on_vend
 
@@ -461,7 +459,7 @@
 		attack_particle(user,src)
 		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
 		..()
-		if (W && W.force >= 5 && prob(4 + (W.force - 5)))
+		if (W?.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
@@ -798,7 +796,7 @@
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return null
 
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
@@ -953,7 +951,7 @@
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "right_vendor"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null
 
@@ -1073,6 +1071,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/menthol, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/propuffs, 10, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo, 10, cost=PAY_TRADESMAN/5)
+		product_list += new/datum/data/vending_product(/obj/item/cigarbox, 1, cost=PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/nicotine, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/matchbook, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/zippo, 5, cost=PAY_TRADESMAN/10)
@@ -1097,12 +1096,7 @@
 	lg = 0.88
 	lb = 0.88
 
-#if ASS_JAM
-	New()
-		. = ..()
-		if(src.type == /obj/machinery/vending/medical)
-			ADD_MORTY(7, 8, 12, 12)
-#endif
+
 
 	create_products()
 		..()
@@ -1385,6 +1379,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/screen, 30)
 
 /obj/machinery/vending/computer3
 	name = "CompTech"
@@ -1473,6 +1468,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_beepy, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost=PAY_UNTRAINED/2)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=PAY_TRADESMAN/3, hidden=1)
@@ -1747,6 +1746,11 @@
 /obj/machinery/vending/hydroponics
 	name = "GardenGear"
 	desc = "A vendor for Hydroponics related equipment."
+	icon_state = "gardengear"
+	icon_panel = "standard-panel"
+	icon_off = "gardengear-off"
+	icon_broken = "gardengear-broken"
+	icon_fallen = "gardengear-fallen"
 	acceptcard = 0
 
 	lr = 0.5
@@ -1769,6 +1773,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/powerplant, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/fruitful, 5)
 		product_list += new/datum/data/vending_product(/obj/decorative_pot, 5)
+		product_list += new/datum/data/vending_product(/obj/chicken_nesting_box,3)
 
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)
@@ -2026,7 +2031,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/card_manual, 10, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/trading, 5, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/booster, 20, cost=PAY_UNTRAINED/10)
@@ -2116,7 +2121,9 @@
 	desc = "One stop shop for all your custodial needs."
 	icon_state = "janitor"
 	icon_panel = "standard-panel"
-	icon_deny = "null"
+	icon_off = "janitor-off"
+	icon_broken = "janitor-broken"
+	icon_fallen = "janitor-fallen"
 	pay = 1
 	acceptcard = 1
 	mats = 10
@@ -2132,8 +2139,10 @@
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cleaner, 6)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/trash_bags, 8)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/biohazard_bags, 8)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/body_bag, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/mousetraps, 4)
 		product_list += new/datum/data/vending_product(/obj/item/caution, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/long, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
+

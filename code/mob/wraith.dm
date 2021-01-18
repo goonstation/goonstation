@@ -6,7 +6,7 @@
 	real_name = "Wraith" //todo: construct name from a user input (e.g. <x> the Impaler)
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
-#ifdef XMAS
+#if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
 	icon_state = "wraith-love"
 #else
 	icon_state = "wraith"
@@ -319,7 +319,7 @@
 				if (istype(A)) salted = 1
 				if (salted) break
 
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 			OnMove()
 			NewLoc.HasEntered(src)
@@ -389,8 +389,7 @@
 			/*var/rendered = "<strong>[src.name]</strong> screeches incomprehensibly!"
 
 			var/list/listening = all_hearers(null, src)
-			listening -= src
-			listening += src
+			listening |= src
 
 			for (var/mob/M in listening)
 				M.show_message(rendered, 2)*/
@@ -597,6 +596,7 @@
 			if (src.client)
 				src.client.mob = W
 			W.mind = new /datum/mind()
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind

@@ -12,7 +12,7 @@
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -186,8 +186,6 @@
 			if (loc != assigned.mob)
 				assigned.images.Remove(arrestIconsAll)
 				assigned = null
-		else
-			processing_items.Remove(src)
 
 	proc/addIcons()
 		if (assigned)
@@ -203,8 +201,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
-				processing_items |= src
+			processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -212,7 +209,7 @@
 		if (assigned)
 			assigned.images.Remove(arrestIconsAll)
 			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
 		return
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
@@ -372,7 +369,7 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)
@@ -431,10 +428,6 @@
 				assigned.images.Remove(health_mon_icons)
 				assigned = null
 
-			//sleep(2 SECONDS)
-		else
-			processing_items.Remove(src)
-
 	proc/addIcons()
 		if (assigned)
 			for (var/image/I in health_mon_icons)
@@ -449,9 +442,7 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			assigned = user.client
-			SPAWN_DBG(-1)
-				//updateIcons()
-				processing_items |= src
+		processing_items |= src
 		return
 
 	unequipped(var/mob/user)
@@ -459,7 +450,7 @@
 		if (assigned)
 			assigned.images.Remove(health_mon_icons)
 			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)

@@ -188,9 +188,9 @@
 		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			if (!borg)
-				user.drop_item(src)
+				user?.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
 				src.set_loc(M)
@@ -462,7 +462,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	module_research = list("medicine" = 4, "science" = 4)
 	module_research_type = /obj/item/reagent_containers/patch
@@ -552,7 +553,7 @@
 		//repair_bleeding_damage(M, 66, 1)
 		var/use_volume_adjusted = use_volume * mult
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			var/list/params = list("nopenetrate")
 			if (silent)
 				params.Add("silent")
@@ -578,12 +579,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"

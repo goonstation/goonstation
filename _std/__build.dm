@@ -93,11 +93,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
 //#define MAP_OVERRIDE_DONUT2			// Updated Donut2
 //#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
-//#define MAP_OVERRIDE_LINEMAP			// Linemap by pgoat
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
 //#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
-//#define MAP_OVERRIDE_SAMEDI			// Samedi by Kusibu
 //#define MAP_OVERRIDE_OSHAN			// Oshan
 //#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
 //#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
@@ -120,7 +118,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
 
-//#define ASS_JAM_ENABLED 1 // BUT YOU ALSO GOTTA SET BUILD_TIME_DAY TO 13 BELOW!!!
+//#define ASS_JAM_ENABLED 1 // Don't re-enable this. -warc
 
 
 var/global/vcs_revision = "1"
@@ -135,8 +133,11 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
 #define BUILD_TIME_MONTH 01
-#define BUILD_TIME_DAY 01 //SET ME TO 13 TO TEST YOUR ASS_JAM CONTENT!!
+#define BUILD_TIME_DAY 13 //SET ME TO 13 TO TEST YOUR ASS_JAM CONTENT!!
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
 #define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
+
+// Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
+//#define PRELOAD_RSC_URL ""

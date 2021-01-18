@@ -305,7 +305,7 @@ lua
 		if("control_freak") src.control_freak = v
 		//if("computer_id") src.computer_id = v
 		if("default_verb_category") src.default_verb_category = v
-		if("dir") src.dir = v
+		if("dir") src.set_dir(v)
 		if("edge_limit") src.edge_limit = v
 		if("eye") src.eye = v
 		//if("gender") src.gender = v

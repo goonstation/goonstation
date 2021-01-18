@@ -18,13 +18,13 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 	wizard_mob.cust_two_state = "wiz"
-	wizard_mob.set_face_icon_dirty()
+	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
 	if (wizard_mob.mind)
@@ -215,7 +215,7 @@
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
 		var/mob/user = src.holder.owner
-		if (user && user.bioHolder)
+		if (user?.bioHolder)
 			switch (user.bioHolder.HasEffect("arcane_power"))
 				if (1)
 					cool /= 2

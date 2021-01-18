@@ -25,6 +25,7 @@ when you instantiate an abstract type. CRASH will runtime, WARN will log it. Don
 *permanently* on the live server (though turning it on once in a while is probably fine to see
 if there are any violations).
 */
+
 #ifdef ABSTRACT_VIOLATION_CRASH
 /datum/New()
 	..()
@@ -37,19 +38,28 @@ if there are any violations).
 		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")
 #endif
 
-
-/*
-typesof but only for concrete (not abstract) types
-it caches the result so you don't need to worry about doing that manually
-so subsequent calls on the same type will be very fast
-just don't modify the result of the call directly
-OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet
-ALSO OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-           hats -= /obj/item/clothing/head/hosberet
-NOT OKAY: var/list/hats = concrete_typesof(/obj/item/clothing/head)
-          hats -= /obj/item/clothing/head/hosberet
-*/
 var/global/list/cached_concrete_types
+
+/**
+	* typesof() but only for concrete (not abstract) types,
+	* it caches the result so you don't need to worry about doing that manually
+	* so subsequent calls on the same type will be very fast.
+	*
+	* just don't modify the result of the call directly
+	* OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
+	*
+	* ALSO OKAY:
+	* ```dm
+	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
+  * hats -= /obj/item/clothing/head/hosberet
+	* ```
+	*
+	* NOT OKAY:
+	* ```dm
+	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
+  * hats -= /obj/item/clothing/head/hosberet
+	* ```
+	*/
 proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
@@ -62,23 +72,26 @@ proc/concrete_typesof(type, cache=TRUE)
 	if(cache)
 		cached_concrete_types[type] = .
 
-/*
-The same thing but now you can filter the types using a proc. Also cached.
-The filter proc takes a type and should return 1 if we want to include it and 0 otherwise.
-That proc should also be pure (always return the same thing for the same arguments) because of the caching.
-If you want to use non-pure proc do the filtering manually yourself and don't use this.
-Note that the first call to filtered_concrete_typesof with a given type and filter will be (possibly a lot)
-*slower* than doing it manually. The benefit of this proc only shows itself for future calls which are
-very fast due to caching.
-
-Example:
-proc/filter_is_syndicate(type)
-	var/obj/fake_instance = type
-	return initial(fake_instance.is_syndicate)
-
-var/syndie_thing_type = pick(filtered_concrete_typesof(/obj/item, /proc/filter_is_syndicate))
-*/
 var/global/list/cached_filtered_types
+
+/**
+	* The same thing but now you can filter the types using a proc. Also cached.
+	* The filter proc takes a type and should return 1 if we want to include it and 0 otherwise.
+	* That proc should also be pure (always return the same thing for the same arguments) because of the caching.
+	* If you want to use non-pure proc do the filtering manually yourself and don't use this.
+	* Note that the first call to filtered_concrete_typesof with a given type and filter will be (possibly a lot)
+	* *slower* than doing it manually. The benefit of this proc only shows itself for future calls which are
+	* very fast due to caching.
+	*
+	* Example:
+	* ```
+	* proc/filter_is_syndicate(type)
+	* 	var/obj/fake_instance = type
+	* 	return initial(fake_instance.is_syndicate)
+	*
+	* var/syndie_thing_type = pick(filtered_concrete_typesof(/obj/item, /proc/filter_is_syndicate))
+	* ```
+	*/
 proc/filtered_concrete_typesof(type, filter)
 	if(isnull(cached_filtered_types))
 		cached_filtered_types = list()
@@ -125,7 +138,7 @@ var/list/list/by_type = list()
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
 // and add STOP_TRACKING_CAT("category") to disposing, or whatever proc you want to stop tracking the objects in (eg: tracking live humans, put stop tracking in death())
-// and to traverse the list, use by_type_cat["category"] to get the list of objects in that category
+// and to traverse the list, use by_cat["category"] to get the list of objects in that category
 // also ideally youd use defines for by_cat categories!
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
@@ -147,5 +160,6 @@ var/list/list/by_cat = list()
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?

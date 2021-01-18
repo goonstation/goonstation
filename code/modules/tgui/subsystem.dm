@@ -143,7 +143,7 @@
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.process(force = 1)
 			count++
 	return count
@@ -165,7 +165,7 @@
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
 			count++
 	return count
@@ -182,7 +182,7 @@
 	for(var/key in open_uis_by_src)
 		for(var/datum/tgui/ui in open_uis_by_src[key])
 			// Check if UI is valid.
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 				ui.close()
 				count++
 	return count
@@ -259,8 +259,7 @@
 	// Remove it from the list of processing UIs.
 	open_uis.Remove(ui)
 	// If the user exists, remove it from them too.
-	if(ui.user)
-		ui.user.tgui_open_uis.Remove(ui)
+	ui.user?.tgui_open_uis.Remove(ui)
 	var/list/uis = open_uis_by_src[key]
 	uis.Remove(ui)
 	if(length(uis) == 0)

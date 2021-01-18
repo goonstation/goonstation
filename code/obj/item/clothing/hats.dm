@@ -7,9 +7,10 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 
 	setupProperties()
@@ -32,6 +33,16 @@
 	desc = "A knit cap in yellow."
 	icon_state = "yellow"
 	item_state = "ygloves"
+
+/obj/item/clothing/head/pink
+	desc = "A knit cap in pink."
+	icon_state = "pink"
+	item_state = "pgloves"
+
+/obj/item/clothing/head/orange
+	desc = "A knit cap in orange."
+	icon_state = "orange"
+	item_state = "ogloves"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's Hat"
@@ -71,6 +82,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -105,6 +117,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -421,6 +434,13 @@
 	New()
 		..()
 		src.setMaterial(getMaterial("gold"))
+
+/obj/item/clothing/head/longtophat
+	name = "Long tophat"
+	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
+	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon_state = "ltophat"
+	item_state = "lthat"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
@@ -900,7 +920,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
@@ -933,7 +953,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !(H.stat || H.getStatusDuration("paralysis") || H.getStatusDuration("stunned") || H.getStatusDuration("weakened") || H.restrained()))
+			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
 				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
@@ -1195,3 +1215,13 @@
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
+
+/obj/item/clothing/head/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = 1.0
+	throwforce = 0

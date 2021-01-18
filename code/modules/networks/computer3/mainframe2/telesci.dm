@@ -630,7 +630,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -686,7 +686,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -727,7 +727,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -800,7 +800,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if (turfs && turfs.len)
+				if (length(turfs))
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)

@@ -584,9 +584,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "bloodproj"
 	start_speed = 9
 	goes_through_walls = 1
-	goes_through_mobs = 1
+	//goes_through_mobs = 1
 	auto_find_targets = 0
 	silentshot = 1
+	pierces = -1
 
 	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
 
@@ -605,8 +606,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
-			if (vampire.owner == hit)
-				P.die()
+			if (vampire.owner == hit && P.max_range == PROJ_INFINITE_RANGE)
+				P.travelled = 0
+				P.max_range = 4
 			..()
 
 	on_end(var/obj/projectile/P)
@@ -793,10 +795,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
-	var/initial_angle_offset_mult = 0
+	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
@@ -844,16 +846,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
 	power = 1
+	dissipation_rate = 0
+	max_range = 10
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = "sound/weapons/rocket.ogg"
 	icon_state = "bullet"
 	implanted= null
 	casing = null
 	icon_turf_hit = null
 	var/typetospawn = null
 	var/hasspawned = null
+	var/hit_sound = null
 
 	on_hit(atom/hit, direction, projectile)
+		if(src.hit_sound)
+			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
@@ -942,6 +949,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner/battlecrate
 	name = "Battlecrate"
 	power = 100
+	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
 	icon = 'icons/obj/large_storage.dmi'

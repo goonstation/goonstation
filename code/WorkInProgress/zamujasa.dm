@@ -82,7 +82,7 @@
 	New(var/change = 0)
 		..()
 		if (abs(change) < 1)
-			del(src)
+			qdel(src)
 			return
 
 		var/hcol = (change > 0) ? "#88ff88" : "#ff6666"
@@ -100,8 +100,9 @@
 			animate(maptext_y = 52, alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
 
 		// ptoato said to just call del directly so blame them
+		// pali: potato was wrong
 		SPAWN_DBG(4 SECONDS)
-			del(src)
+			qdel(src)
 
 
 /obj/maptext_junk/speech
@@ -244,6 +245,7 @@
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	flags = FPRINT
 	anchored = 1
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
@@ -581,7 +583,7 @@
 
 		Entered(atom/movable/O)
 			..()
-			if (isobserver(O) || !istype(ticker.mode, /datum/game_mode/football))
+			if (isobserver(O) || !istype(ticker?.mode, /datum/game_mode/football))
 				return
 			var/datum/game_mode/football/F = ticker.mode
 			if (ismob(O))

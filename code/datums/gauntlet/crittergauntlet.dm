@@ -44,7 +44,7 @@
 
 /mob/proc/is_in_gauntlet()
 	var/area/A = get_area(src)
-	if (A && A.type == /area/gauntlet)
+	if (A?.type == /area/gauntlet)
 		return 1
 	return 0
 

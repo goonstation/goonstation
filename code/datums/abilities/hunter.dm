@@ -143,7 +143,7 @@
 								if (iswerewolf(H))
 									skull_value = 4
 									skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
-								if (ismonkey(H) || H.bioHolder && H.bioHolder.HasEffect("monkey"))
+								if (isnpcmonkey(H))
 									skull_value = 0
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
 
@@ -212,7 +212,7 @@
 	var/value = 0
 
 	var/list/L = src.get_all_items_on_mob()
-	if (L && L.len)
+	if (length(L))
 		for (var/obj/item/skull/S in L)
 			if (ishuman(src))
 				var/mob/living/carbon/human/H = src

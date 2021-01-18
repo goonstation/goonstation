@@ -21,6 +21,9 @@
 	var/datum/light/light
 	var/brightness = 0.5
 	var/on = 0
+	var/connected = 0 //used for collector
+	var/datum/flock_tile_group/group = null //the group its connected to
+
 
 /turf/simulated/floor/feather/New()
 	..()
@@ -29,15 +32,16 @@
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
 	light.attach(src)
-
+	src.checknearby() //check for nearby groups
+	if(!group)//if no group found
+		initializegroup() //make a new one
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Conduit"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Conduit
+    <br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -73,6 +77,12 @@
 	off()
 	icon_state = "floor-broken"
 	broken = 1
+	splitgroup()
+	for(var/obj/flock_structure/f in src)
+		if(f.usesgroups)
+			f.group.removestructure(f)
+			f.group = null
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // stuff to make floorrunning possible (god i wish i could think of a better verb than "floorrunning")
@@ -90,7 +100,7 @@
 	..()
 	if(!istype(F) || !newloc)
 		return
-	if(on)
+	if(on && !connected)
 		off()
 	if(F.floorrunning)
 		if(istype(newloc, /turf/simulated/floor/feather))
@@ -126,6 +136,12 @@
 	src.health = initial(health)
 	src.name = initial(name)
 	src.desc = initial(desc)
+	if(isnull(src.group))
+		checknearby() //check for groups to join
+	for(var/obj/flock_structure/f in get_turf(src))
+		if(f.usesgroups)
+			f.group = src.group
+			f.group.addstructure(f)
 
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"
@@ -133,6 +149,100 @@
 	icon_state = "floor-broken"
 	broken = 1
 
+////////////////////////////////////////////////////////////////////////////////////////
+//start of flocktilegroup stuff
+
+/turf/simulated/floor/feather/proc/initializegroup() //make a new group
+	group = new/datum/flock_tile_group
+	group.addtile(src)
+
+/turf/simulated/floor/feather/proc/checknearby()//handles merging groups
+	var/list/groups_found = list() //list of tile groups found
+	var/datum/flock_tile_group/largestgroup = null //largest group
+	var/max_group_size = 0
+	for(var/turf/simulated/floor/feather/F in getneighbours(src))//check for nearby flocktiles
+		if(F.group)
+			if(F.group.size > max_group_size)
+				max_group_size = F.group.size
+				largestgroup = F.group
+			groups_found |= F.group
+	if(length(groups_found) == 1)
+		src.group = groups_found[1] //set it to the group found.
+		src.group.addtile(src)
+	else if(length(groups_found) > 1) //if there is more then one, then join the largest (add merging functionality here later)
+		for(var/datum/flock_tile_group/oldgroup in groups_found)
+			if(oldgroup == largestgroup) continue
+			largestgroup.powergen += oldgroup.powergen
+			largestgroup.poweruse += oldgroup.poweruse
+			for(var/turf/simulated/floor/feather/F in oldgroup.members)
+				F.group = largestgroup
+				largestgroup.addtile(F)
+			for(var/obj/flock_structure/f in oldgroup.connected)
+				f.group = largestgroup
+				largestgroup.addstructure(f)
+			qdel(oldgroup)
+		src.group = largestgroup
+		largestgroup.addtile(src)
+
+	else
+		return null
+
+/turf/simulated/floor/feather/proc/splitgroup()
+	var/count = 0 //count of nearby tiles
+	var/datum/flock_tile_group/oldgroup = src.group
+	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
+		count++ //enumerate nearby tiles
+//TODO: fail safe for if there are more then 1 group.
+	src.group.removetile(src)
+	src.group = null
+
+	if(count <= 1) //if theres only one tile nearby or it by itself dont bother splitting
+		if(count <=0) qdel(oldgroup)
+		return
+
+	for(var/turf/simulated/floor/feather/tile in getneighbours(get_turf(src)))
+		if(tile.group == oldgroup)//check if the tile is the same as the old group
+			var/list/listotiles = bfs(tile)//compile a list of connected tiles
+			var/datum/flock_tile_group/newgroup = new
+			for(tile in listotiles)
+				tile.group.removetile(tile)//reassign tiles in the list to new group
+				tile.group = newgroup
+				tile.group.addtile(tile)
+				for(var/obj/flock_structure/s in tile)
+					s.groupcheck()//reassign any structures aswell
+	qdel(oldgroup)
+
+// TODO: make this use typecheckless lists
+
+turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by richardgere(god bless)
+	var/list/queue = list()
+	var/list/visited = list()
+	var/turf/current = null
+
+	if(!istype(start, /turf/simulated/floor/feather))
+		return //dont bother if it SOMEHOW gets called on a non flock turf
+	// start node
+	queue += start
+	visited[start] = TRUE
+
+	while(length(queue))
+		// dequeue
+		current = queue[1]
+		queue -= current
+
+		// enqueue
+		for(var/dir in cardinal)
+			var/next_turf = get_step(current, dir)
+			if(!visited[next_turf] && istype(next_turf, /turf/simulated/floor/feather))
+				var/turf/simulated/floor/feather/f = next_turf
+				if(f.broken)
+					continue //skip broken tiles
+				queue += f
+				visited[next_turf] = TRUE
+	return visited
+
+//end of flocktilegroup stuff
+////////////////////////////////////////////////////////////////////////////////////////
 
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
@@ -148,11 +258,11 @@
 
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Nanite Block"
-    special_desc += "<br><span class='bold'>System Integrity:</span> 100%" // todo: damageable walls
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Nanite Block
+    <br><span class='bold'>System Integrity:</span> 100%
+    <br><span class='bold'>###=-</span></span>"}
+    // todo: damageable walls
   else
     return null // give the standard description
 

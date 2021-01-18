@@ -17,9 +17,11 @@ var/datum/event_controller/random_events
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
+	var/alive_antags_threshold = 0.06
 	var/list/player_spawn_events = list()
+	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 7 MINUTES
+	var/time_between_spawn_events = 8 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -55,6 +57,10 @@ var/datum/event_controller/random_events
 			special_events += RE
 
 	proc/process()
+		// prevent random events near round end
+		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
+			return
+
 		if (TIME >= major_events_begin)
 			if (TIME >= next_major_event)
 				event_cycle()
@@ -96,38 +102,16 @@ var/datum/event_controller/random_events
 			do_event = 0
 
 		if (do_event)
-			var/alive = 0
-			var/dead_dnr = 0
-			var/antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
-			var/dead_antags = 0
-
-			for (var/datum/mind/antag in ticker.mode.traitors)
-				var/mob/M = antag.current
-				if (!M) continue
-				if (!M.client || isdead(M))
-					dead_antags++
-			for (var/datum/mind/antag in ticker.mode.Agimmicks)
-				var/mob/M = antag.current
-				if (!M) continue
-				if (!M.client || isdead(M))
-					dead_antags++
-
-			for(var/client/C)
-				var/mob/M = C.mob
-				if(!M) continue
-				if (!isdead(M) && isliving(M))
-					alive++
-				else if (M.mind?.dnr)
-					dead_dnr++
-
-			if (dead_antags >= round(antags * 0.75) && (ticker?.mode?.do_antag_random_spawns))
+			var/aap = get_alive_antags_percentage()
+			var/dcp = get_dead_crew_percentage()
+			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
-				message_admins("<span class='internal'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
-			else if (alive <= (total_clients() - dead_dnr) * 0.6)
+				message_admins("<span class='internal'>Antag spawn event success!<br>[100 * aap]% of the alive crew were antags.</span>")
+			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
-				message_admins("<span class='internal'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
+				message_admins("<span class='internal'>Player spawn event success!<br>[100 * dcp]% of the entire crew were dead.</span>")
 			else
-				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
+				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br>[100 * aap]% of the alive crew were antags and [100 * dcp]% of the entire crew were dead.</span>")
 
 		next_spawn_event = TIME + time_between_spawn_events
 
@@ -215,7 +199,7 @@ var/datum/event_controller/random_events
 
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
-		if(usr && usr.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
 
 		if(href_list["TriggerEvent"])
 			var/datum/random_event/RE = locate(href_list["TriggerEvent"]) in events

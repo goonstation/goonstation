@@ -590,6 +590,7 @@ proc
 
 /obj/overlay/tile_effect
 	event_handler_flags = IMMUNE_SINGULARITY
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /obj/overlay/tile_effect/lighting
 	icon = 'icons/effects/light_overlay.dmi'

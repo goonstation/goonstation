@@ -56,13 +56,9 @@
 		lifeprocesses[type] = L
 
 	proc/remove_lifeprocess(type)
-		for (var/thing in lifeprocesses)
-			if (thing)
-				if (thing == type)
-					var/datum/lifeprocess/L = lifeprocesses[thing]
-					lifeprocesses -= thing
-					qdel(L)
-					L = null
+		var/datum/lifeprocess/L = lifeprocesses[type]
+		lifeprocesses -= type
+		qdel(L)
 
 	proc/get_heat_protection()
 		.= 0
@@ -87,7 +83,6 @@
 
 /mob/living/critter/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
@@ -103,11 +98,11 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/human/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
@@ -126,10 +121,10 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/cube/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
@@ -138,31 +133,32 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/ai/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/hivebot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 
 /mob/living/silicon/drone/New()
@@ -198,6 +194,7 @@
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
+			if(src.disposed) return
 			L = src.lifeprocesses[thing]
 			L.process(environment)
 
@@ -210,7 +207,7 @@
 
 		if (!isdead(src)) //still breathing
 			//do on_life things for components?
-			SEND_SIGNAL(src, COMSIG_HUMAN_LIFE_TICK, life_mult)
+			SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, life_mult)
 
 			if (last_no_gravity != src.no_gravity)
 				if(src.no_gravity)
@@ -219,11 +216,6 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-			if (src.mob_flags & MAT_TRIGGER_LIFE)//controlled by a signal that is added when an item with mat gets a lifeprocess proc
-				for (var/thing in src) //bnlech, do a smarter search later
-					var/atom/movable/A = thing
-					if (A.material)
-						A.material.triggerOnLife(src, A)
 
 		clamp_values()
 
@@ -429,7 +421,7 @@
 				A:set_loc(src.loc)
 
 	src.set_density(src.item ? src.item.density : 0)
-	src.item.dir = src.dir
+	src.item.set_dir(src.dir)
 	src.icon = src.item.icon
 	src.icon_state = src.item.icon_state
 	src.color = src.item.color
@@ -616,8 +608,6 @@
 
 		// Resistance from Bio Effects
 		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("fat"))
-				thermal_protection += 10
 			if (src.bioHolder.HasEffect("dwarf"))
 				thermal_protection += 10
 
@@ -692,7 +682,7 @@
 		// Resistance from Clothing
 		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
 
-		if (bioHolder && bioHolder.HasEffect("food_rad_resist"))
+		if (bioHolder?.HasEffect("food_rad_resist"))
 			rad_protection += 100
 
 		rad_protection = clamp(rad_protection, 0, 100)

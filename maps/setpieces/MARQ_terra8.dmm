@@ -6,7 +6,7 @@
 /area/bunker/lv1)
 "ab" = (
 /turf/cordon,
-/area)
+/area/space)
 "ac" = (
 /turf/unsimulated/wall/cave{
 	name = "rock"
@@ -76,7 +76,7 @@
 /area/bunker/lv1)
 "an" = (
 /turf/space/dense,
-/area)
+/area/space)
 "ao" = (
 /obj/chainlink_fence,
 /turf/unsimulated/floor/moss,
@@ -127,7 +127,7 @@
 	icon_state = "wall3";
 	dir = 8
 	},
-/area)
+/area/space)
 "aw" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -145,13 +145,13 @@
 /area/terraeight/fog/ground/lv5)
 "ay" = (
 /turf/space,
-/area)
+/area/space)
 "az" = (
 /turf/unsimulated/wall{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_floor4"
 	},
-/area)
+/area/space)
 "aA" = (
 /turf/unsimulated/floor/concrete,
 /area/terraeight/fog/ground/lv5)
@@ -254,7 +254,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
-/area)
+/area/space)
 "aN" = (
 /turf/unsimulated/wall/cave{
 	name = "rock"
@@ -266,11 +266,11 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_floor4"
 	},
-/area)
+/area/space)
 "aP" = (
 /obj/wingrille_spawn/bulletproof,
 /turf/unsimulated/floor/plating,
-/area)
+/area/space)
 "aQ" = (
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
@@ -282,7 +282,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "diagonalWall3"
 	},
-/area)
+/area/space)
 "aR" = (
 /obj/decal/fakeobjects/terra8/vines,
 /obj/disposalpipe/segment{
@@ -299,14 +299,14 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area)
+/area/space)
 "aT" = (
 /obj/shrub,
 /turf/unsimulated/floor/moss,
 /area/terraeight/fog/ground)
 "aU" = (
 /turf/unsimulated/floor/cave,
-/area)
+/area/space)
 "aV" = (
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
@@ -318,7 +318,7 @@
 	icon_state = "diagonalWall3";
 	dir = 10
 	},
-/area)
+/area/space)
 "aW" = (
 /turf/unsimulated/wall/setpieces/bunker_window{
 	dir = 4;
@@ -372,7 +372,7 @@
 	name = "air pipe"
 	},
 /turf/unsimulated/floor/cave,
-/area)
+/area/space)
 "bd" = (
 /obj/decal/fakeobjects/terra8/vines,
 /turf/unsimulated/floor/plating,
@@ -501,7 +501,7 @@
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/space)
 "bt" = (
 /turf/unsimulated/wall/void{
 	icon = 'icons/misc/worlds.dmi';
@@ -709,7 +709,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
 	},
-/area)
+/area/space)
 "bS" = (
 /turf/unsimulated/floor/concrete,
 /turf/unsimulated/wall/adaptive/concrete{
@@ -961,7 +961,7 @@
 	icon_state = "dark_stairs";
 	dir = 4
 	},
-/area)
+/area/space)
 "cx" = (
 /obj/stool/chair/office/red{
 	icon_state = "office_chair_red";
@@ -972,7 +972,7 @@
 	icon_state = "track_2";
 	dir = 4
 	},
-/area)
+/area/space)
 "cy" = (
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete6";
@@ -1139,7 +1139,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area)
+/area/space)
 "cT" = (
 /obj/table/round/auto,
 /obj/map/light/screen,
@@ -1214,7 +1214,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area)
+/area/space)
 "dd" = (
 /obj/machinery/door/airlock/bunker{
 	dir = 2;
@@ -1335,7 +1335,7 @@
 "dr" = (
 /obj/decal/fakeobjects/terra8/vines,
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "ds" = (
 /turf/unsimulated/wall/setpieces/bunker_window,
 /area/terraeight/fog/ground/lv5)
@@ -1436,14 +1436,14 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_floor4"
 	},
-/area)
+/area/space)
 "dD" = (
 /turf/unsimulated/wall{
 	dir = 8;
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_floor4"
 	},
-/area)
+/area/space)
 "dE" = (
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete6";
@@ -1487,7 +1487,7 @@
 	icon_state = "diagonalWall3";
 	dir = 1
 	},
-/area)
+/area/space)
 "dK" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
@@ -1546,7 +1546,7 @@
 	icon_state = "track_2";
 	dir = 1
 	},
-/area)
+/area/space)
 "dQ" = (
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/terraeight/fog/ground/lv5)
@@ -1663,7 +1663,7 @@
 	icon_state = "wall3";
 	dir = 9
 	},
-/area)
+/area/space)
 "ed" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -1750,7 +1750,7 @@
 	icon_state = "track_2";
 	dir = 4
 	},
-/area)
+/area/space)
 "el" = (
 /obj/decal/fakeobjects/terra8/cabinets,
 /turf/unsimulated/floor/plating,
@@ -1813,7 +1813,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area)
+/area/space)
 "es" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (WEST)";
@@ -1831,7 +1831,7 @@
 /obj/chainlink_fence,
 /obj/decal/fakeobjects/terra8/vines,
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "eu" = (
 /obj/lattice{
 	tag = "icon-lattice-dir-b (EAST)";
@@ -2538,7 +2538,7 @@
 "fP" = (
 /obj/effects/background_objects/x4,
 /turf/space,
-/area)
+/area/space)
 "fQ" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1";
@@ -2740,7 +2740,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "gh" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line2";
@@ -2922,7 +2922,7 @@
 	},
 /obj/lattice,
 /turf/unsimulated/floor/setpieces/pitchblack,
-/area)
+/area/space)
 "gz" = (
 /obj/decal/fakeobjects/terra8/air_equipment{
 	icon_state = "old_circ1-off"
@@ -3031,7 +3031,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/setpieces/pitchblack,
-/area)
+/area/space)
 "gK" = (
 /obj/machinery/power/furnace,
 /obj/decal/cleanable/dirt,
@@ -5243,7 +5243,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "lj" = (
 /obj/machinery/door/airlock/bunker{
 	dir = 4;
@@ -5747,7 +5747,7 @@
 	opacity = 0;
 	tag = "icon-deepcorners (NORTHWEST)"
 	},
-/area)
+/area/space)
 "ms" = (
 /obj/critter/shade,
 /turf/unsimulated/floor/void{
@@ -5859,7 +5859,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "mA" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -6059,7 +6059,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "mT" = (
 /turf/unsimulated/wall/setpieces/bunker_window{
 	dir = 4;
@@ -7225,7 +7225,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "oP" = (
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete3";
@@ -7425,7 +7425,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "pf" = (
 /obj/decal{
 	tag = "icon-cornerofdarkness";
@@ -7464,7 +7464,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "pi" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/packing{
@@ -7678,7 +7678,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "pB" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -8025,7 +8025,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "qb" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (NORTH)";
@@ -8168,7 +8168,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "qm" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (WEST)";
@@ -8557,7 +8557,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "qV" = (
 /obj/storage/secure/closet/security/equipment{
 	anchored = 1;
@@ -8639,7 +8639,7 @@
 	opacity = 0;
 	tag = "icon-deepcorners (NORTHWEST)"
 	},
-/area)
+/area/space)
 "rc" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -8656,7 +8656,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "rd" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -8678,7 +8678,7 @@
 	icon_state = "deepcorners2";
 	name = "???"
 	},
-/area)
+/area/space)
 "rf" = (
 /obj/decal{
 	dir = 1;
@@ -8703,14 +8703,14 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "rg" = (
 /turf/unsimulated/wall/void{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rh" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -8761,7 +8761,7 @@
 	icon_state = "deepcorners2";
 	name = "???"
 	},
-/area)
+/area/space)
 "rk" = (
 /turf/unsimulated/wall/void{
 	dir = 4;
@@ -8769,7 +8769,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rl" = (
 /turf/unsimulated/wall/void{
 	dir = 8;
@@ -8777,7 +8777,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rm" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -8794,7 +8794,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rn" = (
 /obj/decal{
 	tag = "icon-edgeoftransition-left (EAST)";
@@ -8833,7 +8833,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rp" = (
 /turf/unsimulated/wall/void{
 	dir = 1;
@@ -8841,7 +8841,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rq" = (
 /obj/decal{
 	tag = "icon-cornerofdarkness";
@@ -8866,7 +8866,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rs" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -8884,7 +8884,7 @@
 	icon_state = "deepcorners";
 	dir = 9
 	},
-/area)
+/area/space)
 "rt" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -8901,7 +8901,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "ru" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -8917,7 +8917,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rv" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -8941,7 +8941,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rx" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -8972,7 +8972,7 @@
 	opacity = 0;
 	tag = "icon-deepcorners (NORTHWEST)"
 	},
-/area)
+/area/space)
 "rz" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -8988,7 +8988,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rA" = (
 /obj/critter/shade/dread{
 	wanderer = 0
@@ -9016,7 +9016,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "rB" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9032,7 +9032,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rC" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9047,7 +9047,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "rD" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9070,7 +9070,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "rE" = (
 /obj/decal{
 	dir = 1;
@@ -9094,7 +9094,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rF" = (
 /obj/decal{
 	dir = 1;
@@ -9118,7 +9118,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rG" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (WEST)";
@@ -9148,7 +9148,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rI" = (
 /obj/disposalpipe/segment{
 	name = "air pipe";
@@ -9190,7 +9190,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "rK" = (
 /obj/disposalpipe/segment{
 	name = "air pipe";
@@ -9238,7 +9238,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "rN" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (EAST)";
@@ -9254,7 +9254,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rO" = (
 /obj/storage/secure/closet/medical/medicine,
 /turf/unsimulated/floor/concrete{
@@ -9287,7 +9287,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rR" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (WEST)";
@@ -9303,7 +9303,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rS" = (
 /obj/critter/shade,
 /obj/decal{
@@ -9328,7 +9328,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rT" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -9352,7 +9352,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rU" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -9376,7 +9376,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rV" = (
 /obj/critter/shade,
 /obj/decal{
@@ -9401,7 +9401,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "rW" = (
 /obj/decal{
 	dir = 1;
@@ -9417,7 +9417,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rX" = (
 /obj/decal{
 	tag = "icon-cornerofdarkness";
@@ -9433,7 +9433,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rY" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -9449,7 +9449,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "rZ" = (
 /obj/critter/shade/scientist/guard,
 /turf/unsimulated/floor/void{
@@ -9482,7 +9482,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sb" = (
 /obj/disposalpipe/segment{
 	name = "air pipe";
@@ -9527,7 +9527,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "se" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -9560,7 +9560,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sg" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";
@@ -9602,7 +9602,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "si" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -9641,7 +9641,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "sl" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (EAST)";
@@ -9673,7 +9673,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "sm" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (WEST)";
@@ -9697,7 +9697,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "sn" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9723,7 +9723,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "so" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9749,7 +9749,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sp" = (
 /obj/critter/shade/dread/guardian,
 /obj/map/light/dimred,
@@ -9760,7 +9760,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sq" = (
 /turf/unsimulated/wall/void{
 	dir = 5;
@@ -9769,7 +9769,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sr" = (
 /obj/machinery/camera{
 	network = "Bunker";
@@ -9785,7 +9785,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "st" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (EAST)";
@@ -9895,7 +9895,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sy" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9912,7 +9912,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sz" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -9928,7 +9928,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "sA" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -9945,7 +9945,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sB" = (
 /obj/machinery/door/airlock/bunker{
 	dir = 2;
@@ -9976,7 +9976,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sE" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (WEST)";
@@ -10014,7 +10014,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sG" = (
 /obj/map/light/dimred,
 /turf/unsimulated/floor/void{
@@ -10023,7 +10023,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sH" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (NORTH)";
@@ -10039,7 +10039,7 @@
 	icon_state = "deepcorners2";
 	name = "???"
 	},
-/area)
+/area/space)
 "sI" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -10090,7 +10090,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sL" = (
 /obj/decal/floatingtiles{
 	tag = "icon-floattiles5 (NORTH)";
@@ -10125,7 +10125,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sN" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/concrete{
@@ -10148,7 +10148,7 @@
 	icon_state = "deepcorners2";
 	name = "???"
 	},
-/area)
+/area/space)
 "sP" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -10198,7 +10198,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "sS" = (
 /obj/decal/fakeobjects/pipe/heat{
 	icon_state = "intact";
@@ -10222,7 +10222,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sU" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -10238,7 +10238,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sV" = (
 /turf/unsimulated/wall/void{
 	dir = 6;
@@ -10247,7 +10247,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sW" = (
 /turf/unsimulated/wall/void{
 	dir = 10;
@@ -10256,7 +10256,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "sX" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor";
@@ -10272,7 +10272,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sY" = (
 /obj/critter/shade/dread{
 	wanderer = 0
@@ -10308,7 +10308,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "sZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge";
@@ -10352,7 +10352,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tb" = (
 /obj/decal{
 	dir = 1;
@@ -10393,7 +10393,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tc" = (
 /obj/decal{
 	dir = 1;
@@ -10434,7 +10434,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "td" = (
 /obj/machinery/light/small{
 	icon_state = "bulb1";
@@ -10473,7 +10473,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tg" = (
 /obj/map/light/dimred,
 /obj/decal{
@@ -10489,7 +10489,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "th" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/packing{
@@ -10536,7 +10536,7 @@
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
-/area)
+/area/space)
 "tk" = (
 /obj/decal{
 	dir = 1;
@@ -10560,17 +10560,17 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tl" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
 	icon_state = "grass";
 	name = "deep brush"
 	},
-/area)
+/area/space)
 "tm" = (
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "tn" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -10602,7 +10602,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "to" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -10634,7 +10634,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tp" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -10658,7 +10658,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tq" = (
 /obj/decal{
 	tag = "icon-cornerofdarkfloor";
@@ -10682,7 +10682,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tr" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (WEST)";
@@ -10698,7 +10698,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "ts" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (EAST)";
@@ -10714,7 +10714,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tt" = (
 /obj/decal{
 	tag = "icon-cornerofdarkfloor (NORTH)";
@@ -10738,7 +10738,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tu" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (EAST)";
@@ -10786,7 +10786,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "tw" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (EAST)";
@@ -10818,13 +10818,13 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "tx" = (
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "ty" = (
 /turf/unsimulated/wall/adaptive/concrete,
-/area)
+/area/space)
 "tz" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness (WEST)";
@@ -10856,7 +10856,7 @@
 	icon_state = "black";
 	name = "???"
 	},
-/area)
+/area/space)
 "tA" = (
 /obj/decal/fakeobjects/terra8/vines,
 /turf/unsimulated/floor/setpieces/rootfloor,
@@ -10875,7 +10875,7 @@
 "tC" = (
 /obj/chainlink_fence,
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "tD" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -10915,7 +10915,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "tE" = (
 /obj/critter/mouse,
 /obj/decal/cleanable/dirt,
@@ -10959,7 +10959,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "tG" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -10999,25 +10999,25 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "tH" = (
 /obj/chainlink_fence{
 	icon_state = "chainlink";
 	dir = 9
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "tI" = (
 /obj/chainlink_fence{
 	icon_state = "chainlink";
 	dir = 5
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "tJ" = (
 /obj/decal/fakeobjects/terra8/vines,
 /turf/unsimulated/wall/adaptive/concrete,
-/area)
+/area/space)
 "tK" = (
 /obj/decal/cleanable/dirt,
 /obj/rack,
@@ -11039,14 +11039,14 @@
 /area/terraeight/fog/ground)
 "tM" = (
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area)
+/area/space)
 "tN" = (
 /obj/stone{
 	icon_state = "stone";
 	dir = 8
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "tO" = (
 /obj/stool/chair/comfy/red{
 	icon_state = "chair_comfy-red";
@@ -11070,7 +11070,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "tQ" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/concrete,
@@ -11085,13 +11085,13 @@
 /area/bunker/lv00)
 "tS" = (
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "tT" = (
 /turf/unsimulated/wall/setpieces/bunker_window{
 	dir = 4;
 	icon_state = "slot_window"
 	},
-/area)
+/area/space)
 "tU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -11102,7 +11102,7 @@
 	},
 /obj/decal/tile_edge/line/grey,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "tV" = (
 /obj/machinery/door/airlock/bunker{
 	dir = 2
@@ -11110,17 +11110,17 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-darktile"
 	},
-/area)
+/area/space)
 "tW" = (
 /turf/unsimulated/floor/setpieces/rootfloor,
 /turf/unsimulated/wall/setpieces/bunker_grille{
 	icon_state = "grille-burly";
 	dir = 8
 	},
-/area)
+/area/space)
 "tX" = (
 /turf/unsimulated/wall/setpieces/bunker_window,
-/area)
+/area/space)
 "tY" = (
 /obj/decal{
 	tag = "icon-edgeoftransition-right";
@@ -11154,7 +11154,7 @@
 	name = "air vent"
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "ua" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11278,7 +11278,7 @@
 	dir = 2
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "ul" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -11293,7 +11293,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "un" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
@@ -11304,7 +11304,7 @@
 	icon_state = "grille-burly";
 	dir = 8
 	},
-/area)
+/area/space)
 "uo" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/decal{
@@ -11327,7 +11327,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uq" = (
 /obj/decal/floatingtiles{
 	tag = "icon-floattiles1 (NORTH)";
@@ -11360,7 +11360,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "ut" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/concrete/cat{
@@ -11506,18 +11506,18 @@
 	},
 /obj/random_item_spawner/tools,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uD" = (
 /obj/shrub,
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "uE" = (
 /obj/shrub{
 	icon_state = "shrub";
 	dir = 10
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "uF" = (
 /obj/shrub{
 	dir = 8;
@@ -11525,7 +11525,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "uG" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -11540,7 +11540,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "uI" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -11552,7 +11552,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "uJ" = (
 /obj/table/wood/auto/desk,
 /obj/item/plantanalyzer,
@@ -11561,7 +11561,7 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uK" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
@@ -11574,20 +11574,20 @@
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uL" = (
 /obj/machinery/manufacturer/general,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uM" = (
 /obj/decal/cleanable/dirt,
 /obj/map/light/screen,
 /obj/machinery/space_heater,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uN" = (
 /turf/unsimulated/wall/setpieces/clouds,
-/area)
+/area/space)
 "uO" = (
 /turf/unsimulated/wall/void{
 	icon = 'icons/misc/worlds.dmi';
@@ -11595,7 +11595,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "uP" = (
 /obj/decal{
 	tag = "icon-edgeofdarkfloor (NORTH)";
@@ -11633,7 +11633,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "uR" = (
 /obj/decal{
 	dir = 1;
@@ -11649,7 +11649,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "uS" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -11666,7 +11666,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "uT" = (
 /obj/decal{
 	dir = 1;
@@ -11683,7 +11683,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "uU" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -11717,7 +11717,7 @@
 /obj/decal/tile_edge/line/grey,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "uX" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -11734,7 +11734,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "uY" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -11752,7 +11752,7 @@
 	opacity = 0;
 	tag = "icon-deepcorners (NORTHWEST)"
 	},
-/area)
+/area/space)
 "uZ" = (
 /obj/decal/fakeobjects/terra8/vines,
 /obj/decal/fakeobjects/terra8/indicators{
@@ -11778,7 +11778,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vb" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -11793,7 +11793,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vc" = (
 /obj/decal{
 	tag = "icon-edgeoftransition-left (WEST)";
@@ -11950,7 +11950,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vj" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -11964,12 +11964,12 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vk" = (
 /obj/map/light/screen,
 /obj/machinery/plantpot,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "vl" = (
 /obj/shrub{
 	dir = 4;
@@ -11977,7 +11977,7 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "vm" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/disk/data/cartridge/botanist,
@@ -11990,7 +11990,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vn" = (
 /obj/submachine/seed_manipulator,
 /obj/map/light/screen,
@@ -12000,7 +12000,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vo" = (
 /obj/submachine/chem_extractor,
 /obj/map/light/screen,
@@ -12010,7 +12010,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vp" = (
 /obj/submachine/seed_vendor,
 /obj/map/light/screen,
@@ -12020,7 +12020,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vq" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/plantanalyzer,
@@ -12032,7 +12032,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vr" = (
 /obj/machinery/camera{
 	dir = 1;
@@ -12063,7 +12063,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "vt" = (
 /turf/unsimulated/wall/void{
 	dir = 8;
@@ -12071,7 +12071,7 @@
 	icon_state = "deepcorners2";
 	name = "???"
 	},
-/area)
+/area/space)
 "vu" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/seedplanter,
@@ -12090,7 +12090,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vv" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/microscope{
@@ -12101,7 +12101,7 @@
 	icon_state = "white";
 	name = "lab floor"
 	},
-/area)
+/area/space)
 "vw" = (
 /obj/stool/chair/office/green{
 	icon_state = "office_chair_green";
@@ -12112,14 +12112,14 @@
 	icon_state = "white";
 	name = "lab floor"
 	},
-/area)
+/area/space)
 "vx" = (
 /turf/unsimulated/floor/concrete{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "white";
 	name = "lab floor"
 	},
-/area)
+/area/space)
 "vy" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/unsimulated/floor/concrete{
@@ -12127,7 +12127,7 @@
 	icon_state = "white";
 	name = "lab floor"
 	},
-/area)
+/area/space)
 "vz" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/glass/happyplant,
@@ -12142,7 +12142,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vA" = (
 /obj/decal{
 	tag = "icon-edgeofdarkness";
@@ -12159,7 +12159,7 @@
 	icon_state = "deepcorners";
 	dir = 9
 	},
-/area)
+/area/space)
 "vB" = (
 /turf/unsimulated/wall/void{
 	dir = 1;
@@ -12168,7 +12168,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "vC" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -12179,7 +12179,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vD" = (
 /obj/machinery/plantpot,
 /obj/decal/tile_edge/line/grey{
@@ -12193,7 +12193,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vE" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -12204,7 +12204,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vF" = (
 /turf/unsimulated/wall/void{
 	dir = 1;
@@ -12213,7 +12213,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "vG" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -12228,7 +12228,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vH" = (
 /obj/machinery/plantpot,
 /obj/decal/tile_edge/line/grey{
@@ -12243,7 +12243,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vI" = (
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
@@ -12254,7 +12254,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vJ" = (
 /turf/unsimulated/wall/void{
 	dir = 10;
@@ -12262,7 +12262,7 @@
 	icon_state = "deepcorners";
 	name = "???"
 	},
-/area)
+/area/space)
 "vK" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1 (NORTH)";
@@ -12287,7 +12287,7 @@
 	name = "???";
 	opacity = 0
 	},
-/area)
+/area/space)
 "vM" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -12338,7 +12338,7 @@
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
 	},
-/area)
+/area/space)
 "vS" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
@@ -12348,7 +12348,7 @@
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "vT" = (
 /obj/map/light/screen,
 /obj/stool/chair/comfy/red{
@@ -12370,13 +12370,13 @@
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
-/area)
+/area/space)
 "vV" = (
 /turf/unsimulated/floor/concrete{
 	icon_state = "stairs";
 	name = "concrete stairs"
 	},
-/area)
+/area/space)
 "vW" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "The foliage is too thick to see through here.";
@@ -12390,17 +12390,17 @@
 	status = 2
 	},
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "vY" = (
 /obj/stone{
 	dir = 10
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "vZ" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/concrete,
-/area)
+/area/space)
 "wa" = (
 /obj/chainlink_fence{
 	icon_state = "chainlink";
@@ -12948,7 +12948,7 @@
 	icon_state = "deeps";
 	name = "???"
 	},
-/area)
+/area/space)
 "wS" = (
 /obj/decal{
 	dir = 1;
@@ -13333,7 +13333,7 @@
 	icon_state = "grass";
 	name = "deep brush"
 	},
-/area)
+/area/space)
 "xt" = (
 /obj/chainlink_fence,
 /turf/unsimulated/wall/setpieces/rootwall{
@@ -13341,12 +13341,12 @@
 	icon_state = "grass";
 	name = "deep brush"
 	},
-/area)
+/area/space)
 "xu" = (
 /obj/decal/mushrooms/type1,
 /obj/chainlink_fence,
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xv" = (
 /obj/chainlink_fence{
 	icon_state = "chainlink";
@@ -13357,7 +13357,7 @@
 	icon_state = "grass";
 	name = "deep brush"
 	},
-/area)
+/area/space)
 "xw" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1";
@@ -13365,7 +13365,7 @@
 	dir = 2
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xx" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1 (SOUTHWEST)";
@@ -13373,21 +13373,21 @@
 	dir = 10
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xy" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
 	dir = 8
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xz" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
 	dir = 8
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xA" = (
 /obj/window/cubicle/railing{
 	dir = 8;
@@ -13422,7 +13422,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xD" = (
 /obj/stone{
 	icon_state = "stone";
@@ -13434,14 +13434,14 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xE" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
 	dir = 9
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xF" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1 (SOUTHEAST)";
@@ -13449,7 +13449,7 @@
 	dir = 6
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xG" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1";
@@ -13457,14 +13457,14 @@
 	dir = 2
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xH" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
 	dir = 4
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xI" = (
 /obj/machinery/light/small,
 /obj/window/cubicle/railing{
@@ -13496,14 +13496,14 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xL" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xM" = (
 /obj/decal/tile_edge/line/black{
 	tag = "icon-line1 (NORTH)";
@@ -13511,32 +13511,32 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/moss,
-/area)
+/area/space)
 "xN" = (
 /turf/unsimulated/dirt,
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete3";
 	icon_state = "concrete3"
 	},
-/area)
+/area/space)
 "xO" = (
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete12";
 	icon_state = "concrete12"
 	},
-/area)
+/area/space)
 "xP" = (
 /obj/machinery/door/poddoor/bunker{
 	name = "Front Gate"
 	},
 /turf/unsimulated/dirt,
-/area)
+/area/space)
 "xQ" = (
 /turf/unsimulated/wall/adaptive/concrete{
 	tag = "icon-concrete9";
 	icon_state = "concrete9"
 	},
-/area)
+/area/space)
 "xR" = (
 /obj/decal/fakeobjects{
 	anchored = 1;

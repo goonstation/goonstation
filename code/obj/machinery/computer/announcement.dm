@@ -96,7 +96,7 @@
 		else if(href_list["edit_message"])
 			inhibit_updates = 1
 			message = copytext( html_decode(trim(strip_html(html_decode(input("Select what you wish to announce.", "Announcement."))))), 1, 280 )
-			if(url_regex && url_regex.Find(message)) message = ""
+			if(url_regex?.Find(message)) message = ""
 			inhibit_updates = 0
 			playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -171,7 +171,7 @@
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
 			return
-		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION", "Custom Arrival Alert", src.arrivalalert) as null|text
+		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert) as null|text
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))
@@ -195,13 +195,14 @@
 			L = languages.language_cache["english"]
 		return L.get_messages(message)
 
-	proc/announce_arrival(var/name, var/rank)
+	proc/announce_arrival(var/mob/living/person)
 		if (!src.announces_arrivals)
 			return 1
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", rank), "$NAME", name)
+		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)

@@ -1,6 +1,8 @@
 import { useBackend } from '../backend';
-import { Divider, Box } from '../components';
+import { Component } from 'inferno';
+import { Divider, Box, Section, Flex } from '../components';
 import { Window } from '../layouts';
+import { PaperSheetView } from './PaperSheet';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReleaseValve } from './common/ReleaseValve';
 import { Detonator } from './GasCanister/Detonator';
@@ -20,6 +22,7 @@ export const GasCanister = (props, context) => {
     maxRelease,
     detonator,
     detonatorAttachments,
+    hasPaper,
   } = data;
 
   const handleSetPressure = releasePressure => {
@@ -70,52 +73,90 @@ export const GasCanister = (props, context) => {
   return (
     <Window
       resizable
-      width={hasDetonator ? 550 : 400}
-      height={hasDetonator ? 680 : 370}>
+      width={(hasDetonator ? (hasPaper ? 880 : 470) : 305)}
+      height={hasDetonator ? 685 : 340}>
       <Window.Content>
-        <PortableBasicInfo
-          connected={connected}
-          pressure={pressure}
-          maxPressure={maxPressure}>
-          <Divider />
-          {
-            hasValve
-              ? (
-                <ReleaseValve
-                  valveIsOpen={valveIsOpen}
-                  releasePressure={releasePressure}
-                  minRelease={minRelease}
-                  maxRelease={maxRelease}
-                  onToggleValve={handleToggleValve}
-                  onSetPressure={handleSetPressure} />
-              )
-              : (
-                <Box
-                  color="average">The release valve is missing.
-                </Box>
-              )
-          }
-        </PortableBasicInfo>
-        {
-          detonator
-            ? (
-              <Detonator
-                detonator={detonator}
-                detonatorAttachments={detonatorAttachments}
-                onToggleAnchor={handleToggleAnchor}
-                onToggleSafety={handleToggleSafety}
-                onWireInteract={handleWireInteract}
-                onPrimeDetonator={handlePrimeDetonator}
-                onTriggerActivate={handleTriggerActivate}
-                onSetTimer={handleSetTimer} />
-            )
-            : (
-              <PortableHoldingTank
-                holding={holding}
-                onEjectTank={handleEjectTank} />
-            )
-        }
+        <Flex>
+          <Flex.Item width="480px">
+            <PortableBasicInfo
+              connected={connected}
+              pressure={pressure}
+              maxPressure={maxPressure}>
+              <Divider />
+              {
+                hasValve
+                  ? (
+                    <ReleaseValve
+                      valveIsOpen={valveIsOpen}
+                      releasePressure={releasePressure}
+                      minRelease={minRelease}
+                      maxRelease={maxRelease}
+                      onToggleValve={handleToggleValve}
+                      onSetPressure={handleSetPressure} />
+                  )
+                  : (
+                    <Box
+                      color="average">The release valve is missing.
+                    </Box>
+                  )
+              }
+            </PortableBasicInfo>
+            {
+              detonator
+                ? (
+                  <Detonator
+                    detonator={detonator}
+                    detonatorAttachments={detonatorAttachments}
+                    onToggleAnchor={handleToggleAnchor}
+                    onToggleSafety={handleToggleSafety}
+                    onWireInteract={handleWireInteract}
+                    onPrimeDetonator={handlePrimeDetonator}
+                    onTriggerActivate={handleTriggerActivate}
+                    onSetTimer={handleSetTimer} />
+                )
+                : (
+                  <PortableHoldingTank
+                    holding={holding}
+                    onEjectTank={handleEjectTank} />
+                )
+            }
+          </Flex.Item>
+          {!!hasPaper && (
+            <Flex.Item width="410px">
+              <PaperView />
+            </Flex.Item>
+          )}
+        </Flex>
       </Window.Content>
     </Window>
   );
 };
+
+class PaperView extends Component {
+  constructor(props, context) {
+    super(props);
+    this.el = document.createElement('div');
+  }
+
+  render() {
+    const { data } = useBackend(this.context);
+    const {
+      text,
+      stamps,
+    } = data.paperData;
+    return (
+      <Section
+        scrollable
+        width="400px"
+        height="518px"
+        backgroundColor="white"
+        style={{ 'overflow-wrap': 'break-word' }}>
+        <PaperSheetView
+          value={text ? text : ""}
+          stamps={stamps}
+          readOnly />
+      </Section>
+    );
+  }
+}
+

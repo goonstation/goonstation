@@ -329,6 +329,12 @@
 		else
 			return ..()
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == 0)
+			if (temperature > (T0C + 430))
+				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
+				src.light()
+
 	process()
 		if (src.on)
 			var/turf/location = src.loc
@@ -443,3 +449,10 @@
 		else
 			set_icon_state(src.icon_off)
 			src.light.disable()
+
+/obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()

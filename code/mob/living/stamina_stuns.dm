@@ -155,8 +155,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar)
-		src.stamina_bar.update_value(src)
+	src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
@@ -364,6 +363,11 @@
 	else
 		.= 0
 		src.changeStatus("disorient", disorient)
+
+/mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY)
+	// Apply the twitching disorient animation for as long as the maximum stun duration is.
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	. = ..()
 
 //STAMINA UTILITY PROCS
 

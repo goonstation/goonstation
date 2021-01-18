@@ -95,13 +95,13 @@
 					T.target_list = src.target_list
 
 
-		if (target_list && target_list.len)
+		if (length(target_list))
 			if (!isPopping())
 				if (isDown())
 					popUp()
 				else
 					var/atom/target = pick(target_list)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					lastfired = world.time //Setting this here to prevent immediate firing when enabled
 					if (src.enabled)
 						//if (isliving(target))
@@ -127,6 +127,8 @@
 			continue
 		if (!istype(C.loc.loc,A))
 			continue
+		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+			continue //optional access whitelist
 		. += C
 
 	if (istype(A, /area/station/turret_protected))
@@ -383,12 +385,11 @@
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user) && !isAI(user) && !isAIeye(user))
-			boutput(user, text("Too far away."))
-			src.remove_dialog(user)
-			user.Browse(null, "window=turretid")
-			return
+	if(!in_range(src, user))
+		boutput(user, text("Too far away."))
+		src.remove_dialog(user)
+		user.Browse(null, "window=turretid")
+		return
 
 	src.add_dialog(user)
 	var/area/area = get_area(src)

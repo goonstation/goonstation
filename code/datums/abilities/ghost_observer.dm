@@ -155,9 +155,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
 
-#if ASS_JAM
-		src.addAbility(/datum/targetable/ghost_observer/ass_day_arena)
-#endif
+
 #ifdef HALLOWEEN
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_hud)
 
@@ -340,7 +338,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
 			displaying_buttons = 0
 		if (!displaying_buttons)

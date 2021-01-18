@@ -28,7 +28,7 @@ datum/controller/process/blob
 			scheck(currentTick)*/
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>Blob Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

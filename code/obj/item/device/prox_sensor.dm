@@ -90,7 +90,7 @@
 	user.u_equip(src)
 	src.set_loc(R)
 	R.part2 = src
-	R.dir = src.dir
+	R.set_dir(src.dir)
 	src.add_fingerprint(user)
 	return
 
@@ -172,6 +172,6 @@
 	return
 
 /obj/item/device/prox_sensor/Move()
-	..()
+	. = ..()
 	src.sense()
 	return

@@ -386,8 +386,7 @@
 		//Note: If you want your application to end intentionally, send the OS an "exit" signal.
 		//Use the mainframe_prog_exit macro.  The program will not exit otherwise, even if nothing bothers to send it more input
 		handle_quit()
-			if(src.master)
-				src.master.unload_program(src)
+			src.master?.unload_program(src)
 			return
 
 		process()
@@ -499,7 +498,7 @@
 			if(!data || !master)
 				return 1
 
-			if(useracc && useracc.user_file && ("id" in useracc.user_file.fields))
+			if(useracc?.user_file && ("id" in useracc.user_file.fields))
 				data["user"] = useracc.user_file.fields["id"]
 
 			return master.relay_progsignal(src, progid, data, file)

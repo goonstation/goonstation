@@ -337,7 +337,7 @@
 
 	frequencies_used += leaderMind.gang.gang_frequency
 
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		pick_name(leaderMind)
 		pick_theme(leaderMind)
 
@@ -468,7 +468,7 @@
 	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
 	var/list/potential_targets = list()
 	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && H.stat != 2 && H.mind?.gang != top_gang)
+		if (H.ckey && !isdead(H) && H.mind?.gang != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
 			potential_targets += H
 
 	if (!potential_targets.len)
@@ -487,7 +487,7 @@
 		if (G == top_gang)
 			broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!", G)
 		else
-			broadcast_to_gang("[target_name] is the target of a kidnapping by [G.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
+			broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!", G)
 
 	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
 
@@ -728,7 +728,7 @@
 		try
 			if (ismob(owner))
 				M = owner
-			if (M && M.mind && M.mind.gang)
+			if (M?.mind?.gang)
 				icon = 'icons/obj/decals/graffiti.dmi'
 				icon_state = "gangtag[M.mind.gang.gang_tag]"
 				var/speedup = M.mind.gang.gear_worn(M) + (owner.hasStatus("janktank") ? 1: 0)
@@ -1109,7 +1109,7 @@
 						//assign poitns, gangs
 
 						user.mind.gang.score_event += mode.kidnapping_score
-						mode.broadcast_to_all_gangs("[src.gang] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
+						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
 						mode.kidnapp_success = 1
@@ -1249,7 +1249,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
+		if(target.mind.assigned_role in list("Security Officer","Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 
@@ -1298,8 +1298,7 @@
 		//update gang overlays for all members so they can see the new join
 		for(var/datum/mind/M in src.gang.members)
 			if(M.current) M.current.antagonist_overlay_refresh(1, 0)
-		if(src.gang.leader.current)
-			src.gang.leader.current.antagonist_overlay_refresh(1, 0)
+		src.gang.leader.current?.antagonist_overlay_refresh(1, 0)
 
 		return
 

@@ -69,9 +69,9 @@
 				src.emote_allowed = 0
 
 			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch())
+				playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			else
-				playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+				playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
@@ -127,7 +127,7 @@
 									var/obj/decal/cleanable/blood/gibs/gib = null
 									gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
 									gib.streak(alldirs)
-						playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
+						playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 						src.stamina_stun()
 				if ("flex","flexmuscles")
@@ -292,7 +292,7 @@
 									message = "<B>[src]</B> farts oil and debris out of one of its sides! That's kinda grody!"
 									var/obj/decal/cleanable/machine_debris/gib = make_cleanable(/obj/decal/cleanable/machine_debris, src.loc)
 									gib.streak(alldirs)
-						playsound(src.loc, 'sound/voice/farts/poo2_robot.ogg', 50, 1)
+						playsound(src.loc, 'sound/voice/farts/poo2_robot.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 						src.stamina_stun()
 						return message

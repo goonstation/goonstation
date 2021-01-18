@@ -1,6 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/intact = 1
 	var/allows_vehicles = 1
 
@@ -10,10 +11,10 @@
 
 	unsimulated
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
+#ifdef RUNTIME_CHECKING
+		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
+#endif
 		allows_vehicles = 0
-
-	proc/set_dir(newdir)
-		dir = newdir
 
 	proc/burn_down()
 		return
@@ -21,11 +22,12 @@
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
+
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for both
 	var/temperature = T20C
@@ -56,7 +58,7 @@
 		..()
 
 	Del()
-		if (cameras && cameras.len)
+		if (length(cameras))
 			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
 				if(C.coveredTiles)
 					C.coveredTiles -= src
@@ -117,7 +119,7 @@
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
 			var/area/fuck_everything = thing?.loc
-			if(fuck_everything && fuck_everything.expandable && (fuck_everything.type != /area))
+			if(fuck_everything?.expandable && (fuck_everything.type != /area))
 				fuck_everything.contents += src
 				return
 
@@ -262,7 +264,7 @@
 		return 1
 
 	//First, check objects to block exit
-	if (cturf && cturf.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
+	if (cturf?.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in cturf)
 			var/obj/obstacle = thing
 			if(obstacle == mover)
@@ -295,6 +297,28 @@
 
 						mover.Bump(obstacle,1)
 						return 0
+
+	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
+		if (length(src.vis_contents))
+			var/turf/T = locate(/turf) in src.vis_contents
+			if (T)
+				for(var/thing in T)
+
+					var/atom/movable/obstacle = thing
+					if(obstacle == mover) continue
+					if(!mover)	return 0
+					if ((forget != obstacle))
+						if(obstacle.event_handler_flags & USE_CANPASS)
+							if(!obstacle.CanPass(mover, cturf, 1, 0))
+
+								mover.Bump(obstacle, 1)
+								return 0
+						else //cheaper, skip proc call lol lol
+							if (obstacle.density)
+
+								mover.Bump(obstacle,1)
+								return 0
+
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
@@ -305,6 +329,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == Obj)
+				continue
 			// I Said No sanity check
 			if(i >= 50)
 				break
@@ -320,10 +346,6 @@
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-#ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents -= Obj
-#endif
 
 	return ..(Obj, newloc)
 
@@ -334,8 +356,7 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	if(src.material)
-		src.material.triggerOnEntered(src, M)
+	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -348,6 +369,8 @@
 	if (src.checkinghasentered > 0)  //dont bother checking unless the turf actually contains a checkable :)
 		for(var/thing in src)
 			var/atom/A = thing
+			if(A == M)
+				continue
 			// I Said No sanity check
 			if(i++ >= 50)
 				break
@@ -367,14 +390,22 @@
 				if (A.event_handler_flags & USE_PROXIMITY)
 					A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
-	if(!src.throw_unlimited && M && M.no_gravity)
+	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents += M
 	if(warptarget)
-		M.set_loc(warptarget)
+		if(OldLoc)
+			switch (warptarget_modifier)
+				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+					if (ismob(M))
+						var/mob/mob = M
+						if (!mob.client?.holder && mob.last_client)
+							M.set_loc(warptarget)
+						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+							M.set_loc(warptarget)
+				else
+					M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -439,7 +470,6 @@
 	var/temp_old = null
 	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
 	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
-	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -450,9 +480,10 @@
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
 			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
-			#undef _OLD_GAS_VAR_ASSIGN
 			temp_old = src.temperature
+			#undef _OLD_GAS_VAR_ASSIGN
 
+	#undef _OLD_GAS_VAR_DEF
 
 	if (istype(src, /turf/simulated/floor))
 		icon_old = icon_state // a hack but OH WELL, leagues better than before
@@ -487,6 +518,10 @@
 	var/old_checkingcanpass = src.checkingcanpass
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_checkinghasproximity = src.checkinghasproximity
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/old_process_cell_operations = src.process_cell_operations
+#endif
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
@@ -526,7 +561,7 @@
 	new_turf.name_old = name_old
 
 	if (handle_dir)
-		new_turf.dir = old_dir
+		new_turf.set_dir(old_dir)
 
 	new_turf.levelupdate()
 
@@ -557,6 +592,10 @@
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	new_turf.process_cell_operations = old_process_cell_operations
+#endif
+
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
 	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
@@ -581,10 +620,12 @@
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
 					N.air.temperature = temp_old
+
+				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
@@ -651,6 +692,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -1008,14 +1053,6 @@ Other Goonstation servers:[serverList]"}
 				qdel(L)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
-		return
-	return
 
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
@@ -1044,8 +1081,8 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
-		if ((A && A.loc))
+	SPAWN_DBG(0)
+		if ((A?.loc))
 			A.loc.Entered(A)
 
 //Vr turf is a jerk and pretends to be broken.
@@ -1102,7 +1139,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/pool/no_animate
 	name = "pool floor"
@@ -1111,8 +1148,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
-
+		src.set_dir(pick(NORTH,SOUTH))
 /turf/simulated/pool
 	name = "water"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -1120,7 +1156,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/simulated/pool/no_animate
 	name = "pool floor"
@@ -1129,7 +1165,7 @@ Other Goonstation servers:[serverList]"}
 
 	New()
 		..()
-		dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/grasstodirt
 	name = "grass"
@@ -1154,7 +1190,7 @@ Other Goonstation servers:[serverList]"}
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
 			//todo: A digging sound effect.
-			if (do_after(user, 40) && src.icon_state != "dirt-dug")
+			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
 				src.icon_state = "dirt-dug"
 				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
 				for (var/obj/tombstone/grave in orange(src, 1))
@@ -1184,7 +1220,7 @@ Other Goonstation servers:[serverList]"}
 /turf/unsimulated/nicegrass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/unsimulated/floor/ballpit
 	name = "ball pit"

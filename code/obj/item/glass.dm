@@ -123,7 +123,7 @@ SHARDS
 
 				W.anchored = 0
 				W.state = 0
-				W.dir = 2
+				W.set_dir(2)
 				W.ini_dir = 2
 				if (src.amount < 1)
 					return
@@ -152,7 +152,7 @@ SHARDS
 					if(src.material) W.setMaterial(src.material)
 					logTheThing("station", usr, null, "builds a Full Reinforced Crystal Window in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
-				W.dir = SOUTHWEST
+				W.set_dir(SOUTHWEST)
 				W.ini_dir = SOUTHWEST
 				W.anchored = 0
 				W.state = 0
@@ -275,7 +275,7 @@ SHARDS
 			var/mob/living/carbon/human/H = M
 			if(isabomination(H))
 				return
-			if(!H.shoes)
+			if(!H.shoes && !iscow(H))
 				boutput(H, "<span class='alert'><B>You step in the broken glass!</B></span>")
 				playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
@@ -322,7 +322,7 @@ SHARDS
 			var/mob/M = AM
 			boutput(M, "<span class='alert'><B>You step on the crystal shard!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
-			if(ishuman(M))
+			if(ishuman(M) && !iscow(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 				H.weakened = max(3, H.weakened)

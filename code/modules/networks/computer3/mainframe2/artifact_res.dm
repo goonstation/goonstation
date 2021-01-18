@@ -405,7 +405,7 @@
 				if ("info")
 					var/formatted = "+---------------|Status|---------------+|n"
 					var/list/rawDataList = splittext(data["data"], ",")
-					if (rawDataList && rawDataList.len > 3)
+					if (length(rawDataList) > 3)
 						formatted += "| Active: [(rawDataList[1] == "1") ? "YES" : "NO"]|n| ID: [rawDataList[2]]|n| Enactor: [(rawDataList[3] == "1") ? "YES" : "NO"]|n| Sensor: [(rawDataList[4] == "1") ? "YES" : "NO"]|n+--------|Configuration Values|--------+|n"
 
 						. = ""
@@ -473,7 +473,7 @@
 		if (..())
 			return 1
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			update_known_devices()
 
 
@@ -757,7 +757,7 @@
 					var/formatted = ""//"+---------------|Status|---------------+|n"
 					var/list/rawDataList = splittext(data["data"], ",")
 					if (mode == MODE_DEVICE_INFO)
-						if (rawDataList && rawDataList.len > 3)
+						if (length(rawDataList) > 3)
 							formatted += "| Active: [(rawDataList[1] == "1") ? "YES" : "NO"]|n| ID: [rawDataList[2]]|n| Enactor: [(rawDataList[3] == "1") ? "YES" : "NO"]|n| Sensor: [(rawDataList[4] == "1") ? "YES" : "NO"]|n"
 
 

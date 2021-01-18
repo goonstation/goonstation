@@ -9,7 +9,7 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
@@ -65,8 +65,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -101,6 +100,28 @@
 		remove_dialogs()
 		..()
 
+	proc/can_access_remotely(mob/user)
+		. = FALSE
+
+	/**
+	* Determines whether or not the user can remote access devices.
+	* This is typically limited to Borgs and AI things that have
+	* inherent packet abilities.
+	*/
+	proc/can_access_remotely_default(mob/user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
+
+
+
 	proc/client_login(var/mob/user)
 		return
 
@@ -110,7 +131,7 @@
 		O.quality = quality
 		O.icon = icon
 		O.icon_state = icon_state
-		O.dir = dir
+		O.set_dir(src.dir)
 		O.desc = desc
 		O.pixel_x = pixel_x
 		O.pixel_y = pixel_y
@@ -196,7 +217,7 @@
 				if (I.w_class > 3)
 					return
 				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
-					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder		
+					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
 					if (GH.spooking)
 						src.throw_at(over_object, 7-I.w_class, 1)
 						logTheThing("combat", usr, null, "throws [src] with g_tk.")
@@ -314,8 +335,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)
@@ -337,10 +357,6 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
-
-			if (T.amount < 1 && !issilicon(user))
-				user.u_equip(T)
-				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
@@ -492,7 +508,7 @@
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x
 		replica.pixel_y = O.pixel_y
-		replica.dir = O.dir
+		replica.set_dir(O.dir)
 		qdel(O)
 
 
@@ -509,8 +525,8 @@
 			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 			user.drop_item()
 			if(W.dir != dirbuffer)
-				W.dir = dirbuffer
-			if (W && W.loc)
+				W.set_dir(dirbuffer)
+			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16

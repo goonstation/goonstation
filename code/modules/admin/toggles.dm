@@ -319,6 +319,27 @@ var/global/IP_alerts = 1
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
 
+/client/proc/cmd_admin_omnipresence()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Your Mob's Omnipresence"
+	set popup_menu = 0
+	admin_only
+
+	var/omnipresent
+	if(!length(by_cat[TR_CAT_OMNIPRESENT_MOBS]) || !(src.mob in by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		if(alert(usr, "Are you sure you want to see all messages from the whole world? This is very experimental, possibly laggy, clientcrashing and of dubious usefulness.", "Really???", "Yes", "No") != "Yes")
+			return
+		OTHER_START_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = TRUE
+	else
+		OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = FALSE
+	boutput(usr, "<span class='notice'><b>Your omnipresence is now [omnipresent ? "ON" : "OFF"]</b></span>")
+
+	logTheThing("admin", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+	logTheThing("diary", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Atom Verbs"
@@ -885,3 +906,21 @@ var/global/IP_alerts = 1
 		boutput(world, "<B>The Respawn Arena has been enabled! Use the go_to_respawn_arena verb as a ghost to compete for a new life!</B>")
 	else
 		boutput(world, "<B>The Respawn Arena has been disabled.</B>")
+
+/client/proc/toggle_vpn_blacklist()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle VPN Blacklist"
+	set desc = "Toggle the ability for new players to connect through a VPN or proxy server"
+	admin_only
+	if(rank_to_level(src.holder.rank) >= LEVEL_PA)
+#ifdef DO_VPN_CHECKS
+		vpn_blacklist_enabled = !vpn_blacklist_enabled
+
+		logTheThing("admin", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
+		logTheThing("diary", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
+		message_admins("[key_name(src)] toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
+#else
+		boutput(src, "VPN Checks are currently disabled on this server!")
+#endif
+	else
+		boutput(src, "You cannot perform this action. You must be of a higher administrative rank!")

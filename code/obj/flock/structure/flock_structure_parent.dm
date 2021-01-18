@@ -16,6 +16,10 @@
 	var/bruteVuln = 1.2
 	var/fireVuln = 0.2 // very flame-retardant
 	var/datum/flock/flock = null
+	var/poweruse = 0 //does this use(/how much) power? (negatives mean it makes power)
+	var/usesgroups = 0 //not everything needs a group so dont check for everysingle god damn structure
+	var/datum/flock_tile_group/group = null //what group are we connected to?
+	var/turf/simulated/floor/feather/grouptile = null //the tile which its "connected to" and handles the group
 
 /obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
 	..()
@@ -24,19 +28,26 @@
 	processing_items |= src
 	if(F)
 		src.flock = F
+	if(usesgroups && istype(get_turf(src), /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/f = get_turf(src)
+		grouptile = f
+		group = f.group
+		f.group.addstructure(src)
 
 /obj/flock_structure/disposing()
 	processing_items -= src
+	flock = null
+	group = null
 	..()
 
 /obj/flock_structure/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> [flock_id]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"
+		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> [flock_id]
+		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
 		var/info = building_specific_info()
-		if(info != "")
+		if(!isnull(info))
 			special_desc += "<br>[info]"
 		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
@@ -48,6 +59,23 @@
 
 /obj/flock_structure/proc/process()
 	// override
+
+/obj/flock_structure/proc/groupcheck() //rechecks if the tile under's group matches its own
+	if(!usesgroups) return
+	if(istype(get_turf(src), /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/f = get_turf(src)
+		if(src.grouptile == f && grouptile.group == src.group) return//no changes its all good
+		else if(!src.grouptile == f && f.group == src.group)//if the grouptile is different but the groups the same
+			src.grouptile = f//just move the connected tile, this should really rarely happen if the structure is moved somehow
+		else if(!src.grouptile == f && !f.group == src.group)//if both stuff is different.
+			src.grouptile = f
+			src.group?.removestructure(src)
+			src.group = f.group
+			src.group.addstructure(src)
+		else if(src.grouptile == f && !grouptile.group == src.group)//if just the tile's group is different
+			src.group?.removestructure(src)
+			src.group = grouptile.group
+			src.group.addstructure(src)
 
 /obj/flock_structure/proc/takeDamage(var/damageType, var/amount)
 	switch(damageType)
@@ -88,8 +116,7 @@
 				B.setMaterial(getMaterial("gnesisglass"))
 		if(prob(30))
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	qdel(src)
 
 /obj/flock_structure/attack_hand(var/mob/user)

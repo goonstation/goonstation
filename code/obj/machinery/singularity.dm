@@ -82,6 +82,7 @@ Contains:
 	bound_y = -32
 
 	var/has_moved = FALSE
+	var/maxboom = 0
 
 	var/active = 0
 	var/energy = 10
@@ -142,11 +143,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.active = 1
 			grav_pull = 8
 
+/obj/machinery/the_singularity/emp_act()
+	return // No action required this should be the one doing the EMPing
+
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in orange(grav_pull, src.get_center()))
+	for (var/X in range(grav_pull, src.get_center()))
 		LAGCHECK(LAG_LOW)
 		if (!X)
 			continue
+		if (X == src)
+			continue
+
 		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
@@ -182,8 +189,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		has_moved = TRUE
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(severity == 1 && (power ? prob(power*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-		qdel(src)
+	if(!maxboom)
+		SPAWN_DBG(0.1 SECONDS)
+			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+				qdel(src)
+			maxboom = 0
+	maxboom = max(power, maxboom)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -194,8 +205,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
 			return
 
+	// Don't bump that which no longer exists
+	if(A.disposed)
+		return
+
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
+		L.set_loc(src.get_center())
 		gain = 20
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = A
@@ -236,6 +252,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain = 2
 		else
 			var/obj/O = A
+			O.set_loc(src.get_center())
 			O.ex_act(1.0)
 			if (O)
 				qdel(O)
@@ -357,7 +374,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	pulse.icon_state = "emppulse"
 	pulse.name = "emp pulse"
 	pulse.anchored = 1
-	SPAWN_DBG (20)
+	SPAWN_DBG(2 SECONDS)
 		if (pulse)
 			qdel(pulse)
 
@@ -537,7 +554,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		T2 = T
 		var/obj/machinery/containment_field/CF = new/obj/machinery/containment_field/(src, G) //(ref to this gen, ref to connected gen)
 		CF.set_loc(T)
-		CF.dir = field_dir
+		CF.set_dir(field_dir)
 
 	active_dirs |= NSEW
 	G.active_dirs |= oNSEW
@@ -804,7 +821,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	// Added (Convair880).
 	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
 
-	if (user && user.bioHolder)
+	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric") == 2)
 			var/healing = 0
 			if (shock_damage)
@@ -979,7 +996,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
 	if (ispryingtool(W))
 		if(!anchored)
-			src.dir = turn(src.dir, -90)
+			src.set_dir(turn(src.dir, -90))
 			return
 		else
 			boutput(user, "The emitter is too firmly secured to be rotated!")
@@ -1192,16 +1209,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(src.active==1)
 		src.active = 0
 		icon_state = "ca_deactive"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn off the collector array.")
 		return
 
 	if(src.active==0)
 		src.active = 1
 		icon_state = "ca_active"
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		boutput(user, "You turn on the collector array.")
 		return
 
@@ -1226,8 +1241,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.P = W
 		W.set_loc(src)
 		user.u_equip(W)
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else if (ispryingtool(W))
 		if(!P)
@@ -1236,8 +1250,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.set_loc(get_turf(src))
 		Z.layer = initial(Z.layer)
 		src.P = null
-		if(CU)
-			CU.updatecons()
+		CU?.updatecons()
 		updateicon()
 	else
 		src.add_fingerprint(user)
@@ -1282,8 +1295,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_control/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(1 SECOND)
 		updatecons()
+
+/obj/machinery/power/collector_control/disposing()
+	. = ..()
+	STOP_TRACKING
 
 /obj/machinery/power/collector_control/proc/updatecons()
 
@@ -1371,7 +1389,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	updateicon()
 	..()
 
-/obj/machinery/power/collector_control/process()
+/obj/machinery/power/collector_control/process(mult)
 	if(magic != 1)
 		if(src.active == 1)
 			var/power_a = 0
@@ -1383,19 +1401,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
-					P1.air_contents.toxins -= 0.001
+					P1.air_contents.toxins -= 0.001 * mult
 			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
-					P2.air_contents.toxins -= 0.001
+					P2.air_contents.toxins -= 0.001 * mult
 			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
-					P3.air_contents.toxins -= 0.001
+					P3.air_contents.toxins -= 0.001 * mult
 			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
-					P4.air_contents.toxins -= 0.001
+					P4.air_contents.toxins -= 0.001 * mult
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
@@ -1696,10 +1714,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		var/seconds = src.time % 60
 		var/minutes = (src.time - seconds) / 60
+		var/flick_seperator = (seconds % 2 == 0)  || !src.timing
 		minutes = minutes < 10 ? "0[minutes]" : "[minutes]"
 		seconds = seconds < 10 ? "0[seconds]" : "[seconds]"
 
-		return "[minutes][seconds % 2 == 0 ? ":" : " "][seconds]"
+		return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 /obj/machinery/the_singularitybomb/proc/get_interface()
 	return {"<html>

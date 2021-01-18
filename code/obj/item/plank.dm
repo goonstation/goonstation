@@ -62,11 +62,37 @@
 		if (istype(C, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_build_door(C, src, 30), user)
 
+//bad copy paste, bad code. - kyle me made, bad
+/obj/item/plank/anti_zombie
+	construct(mob/user as mob, turf/T as turf)
+		if (!T)
+			T = user ? get_turf(user) : get_turf(src)
+			if (!T) // buh??
+				return
+		if (locate(/obj/structure/woodwall) in T)
+			return
+
+		var/obj/structure/woodwall/anti_zombie/newWall = new (T)
+		if (newWall)
+			if (src.material)
+				newWall.setMaterial(src.material)
+			if (user)
+				newWall.add_fingerprint(user)
+				newWall.builtby = user.real_name
+				logTheThing("station", user, null, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				user.u_equip(src)
+		qdel(src)
+		return
+
 /* -------------------- Actions -------------------- */
 /datum/action/bar/icon/plank_build
 	id = "plank_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	#ifdef HALLOWEEN
+	duration = 20
+	#else
 	duration = 30
+	#endif
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
@@ -79,7 +105,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -119,7 +145,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

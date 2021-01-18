@@ -24,11 +24,11 @@
 			continue
 		var/datum/preferences/P  = player.client.preferences
 		if(checktraitor(player))
-			if ((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
+			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue
-			else if((ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
+			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
@@ -155,12 +155,12 @@
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
-		if (!player.client.preferences || player.client.preferences.job_favorite == null)
+		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			if(checktraitor(player) && JOB.cant_spawn_as_rev)
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
@@ -402,7 +402,7 @@
 			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
-				if (V && V.lock && V.lock.code)
+				if (V?.lock?.code)
 					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 					if (src.mind)
 						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
@@ -422,7 +422,7 @@
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
 						else
-							A.announce_arrival(src.real_name, src.mind.assigned_role)
+							A.announce_arrival(src)
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
 		if (possible_new_mob)
@@ -466,6 +466,12 @@
 				R.fields["mind"] = src.mind
 				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
+
+				if (JOB.receives_security_disk)
+					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+					authrec.fields = list("SEC"="[netpass_security]")
+					D.root.add_file( authrec )
+
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
@@ -496,10 +502,7 @@
 		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
 
 	if (JOB.slot_belt)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_belt, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_belt, slot_belt)
+		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
 		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
 			for (var/X in JOB.items_in_belt)
 				if(ispath(X))
@@ -521,15 +524,9 @@
 	if (JOB.slot_head)
 		src.equip_new_if_possible(JOB.slot_head, slot_head)
 	if (JOB.slot_poc1)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_poc1, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
+		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
 	if (JOB.slot_poc2)
-		if (src.bioHolder && src.bioHolder.HasEffect("fat"))
-			src.equip_new_if_possible(JOB.slot_poc2, slot_in_backpack)
-		else
-			src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
+		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
 	if (JOB.slot_rhan)
 		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
 	if (JOB.slot_lhan)
@@ -614,7 +611,7 @@
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
 			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B && B.fields["name"])
+			if (B?.fields["name"])
 				B.fields["name"] = realName
 
 		C.registered = realName
@@ -622,10 +619,8 @@
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
 
-		if(src.bioHolder && src.bioHolder.HasEffect("fat"))
+		if(!src.equip_if_possible(C, slot_wear_id))
 			src.equip_if_possible(C, slot_in_backpack)
-		else
-			src.equip_if_possible(C, slot_wear_id)
 
 		if(src.pin)
 			C.pin = src.pin

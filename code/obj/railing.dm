@@ -12,6 +12,7 @@
 	dir = SOUTH
 	custom_suicide = 1
 	var/broken = 0
+	var/is_reinforced = 0
 
 	proc/layerify()
 		SPAWN_DBG(3 DECI SECONDS)
@@ -45,6 +46,14 @@
 		S = new (src.loc)
 		if (S && src.material)
 			S.setMaterial(src.material)
+		if(src.is_reinforced)
+			var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
+			R.amount = 1
+			if(src.material)
+				R.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				R.setMaterial(M)
 		qdel(src)
 
 	ex_act(severity)
@@ -84,24 +93,20 @@
 		if (O == null)
 			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
 			return 0
-		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
 		if (air_group || (height==0))
 			return 1
 		if (get_dir(loc, O) == dir)
 			return !density
-		else
-			return 1
+		return 1
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
-		if (!src.density)
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
-			return 1
-		else if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) == src.dir)
 			return 0
-		else
-			return 1
+		return 1
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -114,6 +119,29 @@
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_UNFASTEN, 2 SECONDS), user)
 			else
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_FASTEN, 2 SECONDS), user)
+		else if (issnippingtool(W))
+			if(src.is_reinforced)
+				user.show_text("You cut off the reinforcement on [src].", "blue")
+				src.icon_state = "railing"
+				src.is_reinforced = 0
+				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
+				R.amount = 1
+				if(src.material)
+					R.setMaterial(src.material)
+				else
+					var/datum/material/M = getMaterial("steel")
+					R.setMaterial(M)
+			else
+				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (istype(W,/obj/item/rods))
+			if(!src.is_reinforced)
+				var/obj/item/rods/R = W
+				if(R.consume_rods(1))
+					user.show_text("You reinforce [src] with the rods.", "blue")
+					src.is_reinforced = 1
+					src.icon_state = "railing-reinforced"
+			else
+				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
 		if (railing_is_broken(src))
@@ -121,26 +149,51 @@
 		else
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
+	reinforced
+		is_reinforced = 1
+		icon_state = "railing-reinforced"
+
 	orange
 		color = "#ff7b00"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	red
 		color = "#ff0000"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	green
 		color = "#09ff00"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	yellow
 		color = "#ffe600"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	cyan
 		color = "#00f7ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	purple
 		color = "#cc00ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	blue
 		color = "#0026ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 
 /datum/action/bar/icon/railing_jump
@@ -280,7 +333,7 @@
 		if (ishuman(owner))
 			//carpenter people can fiddle with railings faster!
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 		if (The_Interaction)
 			interaction = The_Interaction

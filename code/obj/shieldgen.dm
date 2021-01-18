@@ -148,7 +148,7 @@ Shield and graivty well generators
 
 /obj/shield
 	New()
-		src.dir = pick(1,2,3,4)
+		src.set_dir(pick(1,2,3,4))
 
 		..()
 

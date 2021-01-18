@@ -207,8 +207,7 @@
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
-				src.authorized -= W:registered
-				src.authorized += W:registered
+				src.authorized |= W:registered
 				if (src.auth_need - src.authorized.len > 0)
 					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else

@@ -29,7 +29,6 @@
 
 	if(!best_cam)
 		return
-	//usr:cameraFollow = null
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/anAI = usr
 		anAI.tracker.cease_track()
@@ -63,13 +62,6 @@
 		creatures.Remove(SORT)
 
 		creatures = sortList(creatures)
-
-		/* lol bubblesort FU
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-		*/
 
 		//redisplay sorted list
 		target_name = input(usr, "Which creature should you track?") as null|anything in creatures
@@ -190,7 +182,6 @@
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
 
 	if (!t || t == "Cancel")
-		//src.cameraFollow = null
 		src.tracker.cease_track()
 		src.switchCamera(null)
 		return 0
@@ -259,15 +250,6 @@
 			var/turf/T = get_turf(tracking)
 			if (T.cameras && T.cameras.len)
 				failedToTrack = 0
-			//for(var/obj/machinery/camera/C in range(7, tracking))
-			//	if(C.network == owner.network && C.camera_status) //The goodest camera
-			//		failedToTrack = 0
-			//		owner.switchCamera(C)
-			//		break
-		/*
-		else
-			sleep(rand(0,1)) //Hey it went real fast this time! Bet it's a syndie
-		*/
 
 		if (failedToTrack)
 			cease_track_temporary()
@@ -294,5 +276,5 @@
 				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
-				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
+				|| (hasvar(target, "wear_id") && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
 				||  !istype(target.loc, /turf)))

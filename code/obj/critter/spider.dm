@@ -52,7 +52,7 @@
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				if(prob(30))
 					src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, "rustle", 50, 1)
@@ -140,7 +140,7 @@
 		if (src.stepsound)
 			if(prob(30))
 				playsound(src.loc, src.stepsound, 50, 0)
-		..()
+		. = ..()
 
 	CritterAttack(mob/M)
 		if(ismob(M))
@@ -255,7 +255,8 @@
 			if(!M.stat) M.emote("scream") // don't scream while dead or KOd
 		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
 		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
@@ -271,7 +272,7 @@
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				if(prob(30))
 					src.visible_message("<span class='alert'><B>[src]</B> bites [src.target]!</span>")
 					playsound(src.loc, src.bitesound, 50, 1)
@@ -316,7 +317,7 @@
 
 	// don't ask
 	proc/streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, pick(directions)), 0))

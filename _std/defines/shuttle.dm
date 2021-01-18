@@ -15,3 +15,13 @@
 #define SHUTTLETRANSITTIME (2 MINUTES / (1 SECOND))
 
 // you might be asking "why in seconds?" the answer is that shuttle code uses seconds as a base unit and I'm too tired to refactor it
+
+
+#define SHUTTLE_SOUTH    "cogmap"
+#define SHUTTLE_EAST  	 "cogmap2"
+#define SHUTTLE_WEST   	 "donut2"
+#define SHUTTLE_DONUT3   "donut3"
+#define SHUTTLE_OSHAN    "oshan"
+#define SHUTTLE_MANTA    "manta"
+#define SHUTTLE_NORTH    "destiny"
+#define SHUTTLE_NODEF    "nodef"

@@ -280,11 +280,11 @@
 				card_name = "Chef"
 				card_data = "Some say he's crazy, others hold that he is a culinary genius. Whatever the case may be, one cannot overlook the fact that he cooks people."
 
-			barman
+			bartender
 				LVL = 1
 				ATK = 14
 				DEF = 12
-				card_name = "Barman"
+				card_name = "Bartender"
 				card_data = "A friendly face to talk to when your problems are too much to handle. A friendly face to talk to when you long for a cocktail with unparallelled lethality."
 
 			assistant
@@ -961,7 +961,7 @@
 
 		cafeteria
 			card_name = "Cafeteria"
-			card_data = "While this card is in play, all assistants, the barman and the chef gain 10 ATK, 10 DEF. If the Barman enters play while this card is active, or the Barman is in play when this card is played, the Barman's owner may play one Riot Shotgun from his deck, then shuffle his deck."
+			card_data = "While this card is in play, all assistants, the bartender and the chef gain 10 ATK, 10 DEF. If the Bartender enters play while this card is active, or the Bartender is in play when this card is played, the Bartender's owner may play one Riot Shotgun from his deck, then shuffle his deck."
 			field_icon_state = "cafeteria"
 
 		kitchen

@@ -91,3 +91,14 @@
 #define access_contrabandpermit 75
 
 #define access_syndicate_commander 76
+
+//nt retention center access
+#define access_retention_blue 77
+#define access_retention_green 78
+#define access_retention_yellow 79
+#define access_retention_orange 80
+#define access_retention_red 81
+#define access_retention_black 82
+
+//rancher job
+#define access_ranch 83

@@ -730,7 +730,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			//Body swapping
 			if((force_body_swap || prob(1)) && has_mob)
 				var/list/mob/body_list = list()
-				for(var/mob/living/M in src.contents) //Don't think you're gonna get lucky, ghosts!
+				for(var/mob/living/carbon/M in src.contents) //Don't think you're gonna get lucky, ghosts!
 					if(!isdead(M)) body_list += M
 				if(body_list.len > 1)
 
@@ -796,7 +796,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					if(1 to 2) //Hilarious accident
 						for(var/mob/living/carbon/human/M in src.contents)
 							M.set_mutantrace(/datum/mutantrace/roach)
-							M.bioHolder.mobAppearance.UpdateMob()
 							M.show_text("You feel different...", "red")
 
 
@@ -821,9 +820,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	New()
 		..()
 
-#if ASS_JAM
-		ADD_MORTY(8, 12, 10, 10)
-#endif
+
 
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))

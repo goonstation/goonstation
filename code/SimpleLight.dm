@@ -83,7 +83,7 @@
 		src.simple_light.invisibility = 101
 
 /atom/proc/destroy_simple_light()
-	if (simple_light_rgbas && simple_light_rgbas.len)
+	if (length(simple_light_rgbas))
 		hide_simple_light()
 	src:vis_contents -= simple_light
 	simple_light_rgbas = null
@@ -100,7 +100,7 @@
 	icon_state = "medium_dir"
 	New(loc, dir=0)
 		..()
-		src.dir = dir
+		src.set_dir(dir)
 		switch(dir)
 			if(NORTH)
 				pixel_y += 32
@@ -195,7 +195,7 @@
 		light.invisibility = 101
 
 /atom/proc/destroy_medium_light()
-	if (medium_light_rgbas && medium_light_rgbas.len)
+	if (length(medium_light_rgbas))
 		hide_medium_light()
 	for(var/obj/overlay/simple_light/medium/light in src.medium_lights)
 		src:vis_contents -= light
@@ -317,7 +317,7 @@
 		light.invisibility = 101
 
 /atom/proc/destroy_mdir_light()
-	if (mdir_light_rgbas && mdir_light_rgbas.len)
+	if (length(mdir_light_rgbas))
 		hide_mdir_light()
 	for(var/obj/overlay/simple_light/medium/directional/light in src.mdir_lights)
 		src:vis_contents -= light

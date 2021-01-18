@@ -92,10 +92,10 @@ var/global/obj/flashDummy
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
-/proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage)
+/proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage, var/volume = 30)
 	var/obj/O = getFlashDummy()
 	O.set_loc(target)
-	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
+	playsound(target, "sound/effects/elec_bigzap.ogg", volume, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -176,15 +176,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 proc/get_angle(atom/a, atom/b)
     .= arctan(b.y - a.y, b.x - a.x)
 
-//list2params without the dumb encoding
-/proc/list2params_noencode(var/list/L)
-	var/strbuild = ""
-	var/first = 1
-	for(var/x in L)
-		strbuild += "[first?"":"&"][x]=[L[x]]"
-		first = 0
-	return strbuild
-
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
 
@@ -237,7 +228,7 @@ proc/get_angle(atom/a, atom/b)
 	sleep(time)
 	if (!user || !target)
 		return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !is_incapacitated(user) && !user.lying )
 		return 1
 
 /proc/do_after(mob/M as mob, time as num)
@@ -245,9 +236,9 @@ proc/get_angle(atom/a, atom/b)
 		return 0
 	. = 0
 	var/turf/T = M.loc
-	var/holding = M.equipped()
+	var/atom/holding = M.equipped()
 	sleep(time)
-	if ((M.loc == T && M.equipped() == holding && !( M.stat )))
+	if (M.loc == T && M.equipped() == holding && isalive(M) && !holding.disposed)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
@@ -255,7 +246,7 @@ proc/get_angle(atom/a, atom/b)
 	if (!T) return 0
 	if(T.density) return 1
 	for(var/atom/A in T)
-		if(A && A.density)//&&A.anchored
+		if(A?.density)//&&A.anchored
 			return 1
 	return 0
 
@@ -832,7 +823,7 @@ proc/get_angle(atom/a, atom/b)
 	if(ref)
 		param = "\ref[ref]"
 
-	if (user && user.client) winset(user, windowid, "on-close=\".windowclose [param]\"")
+	if (user?.client) winset(user, windowid, "on-close=\".windowclose [param]\"")
 
 	//boutput(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
@@ -858,7 +849,7 @@ proc/get_angle(atom/a, atom/b)
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
+	if(src?.mob)
 		src.mob.remove_dialogs()
 	return
 
@@ -1224,8 +1215,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/thing in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
-		var/atom/A = thing
+	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1241,6 +1231,10 @@ proc/get_angle(atom/a, atom/b)
 
 				if (can_hear)
 					. += M
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
+				. |= M
 
 
 
@@ -1252,6 +1246,10 @@ proc/get_angle(atom/a, atom/b)
 		else if (isobj(A))
 			for(var/mob/M in A.contents)
 				. += M
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
+				. |= M
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
@@ -1316,7 +1314,7 @@ proc/get_angle(atom/a, atom/b)
 //Returns a list of minds that are some type of antagonist role
 //This may be a stop gap until a better solution can be figured out
 /proc/get_all_enemies()
-	if(ticker && ticker.mode && current_state >= GAME_STATE_PLAYING)
+	if(ticker?.mode && current_state >= GAME_STATE_PLAYING)
 		var/datum/mind/enemies[] = new()
 		var/datum/mind/someEnemies[] = new()
 
@@ -1749,8 +1747,8 @@ proc/countJob(rank)
 		return
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
-// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
-// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+/// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
+/// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0, var/require_client = FALSE)
 	var/list/candidates = list()
 
@@ -1784,7 +1782,7 @@ proc/countJob(rank)
 				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
 
-				SPAWN_DBG (0) // Don't lock up the entire proc.
+				SPAWN_DBG(0) // Don't lock up the entire proc.
 					M.current << csound("sound/misc/lawnotify.ogg")
 					boutput(M.current, text_chat_alert)
 
@@ -1849,7 +1847,7 @@ proc/countJob(rank)
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G || !ismob(G))
+	if (!G?.mind || G.mind.dnr)
 		return 0
 	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 		return 0
@@ -1876,7 +1874,7 @@ proc/countJob(rank)
 		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
-	if (!allow_dead_antags && (!G.mind || G.mind && (G.mind.dnr || !isnull(G.mind.special_role) || G.mind.former_antagonist_roles.len))) // Dead antagonists have had their chance.
+	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
 		return 0
 
 	return 1
@@ -1885,7 +1883,7 @@ proc/countJob(rank)
 	var/is_immune = 0
 
 	var/area/a = get_area( target )
-	if( a && a.sanctuary )
+	if( a?.sanctuary )
 		return 1
 
 	if (isliving(target))
@@ -2038,6 +2036,16 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Finds whoever's dead.
+	*/
+/proc/whodead()
+	var/list/found = new
+	for (var/mob/M in mobs)
+		if (M.ckey && isdead(M))
+			found += M
+	return found
+
+/**
   * Returns random hex value of length given
   */
 /proc/random_hex(var/digits as num)
@@ -2056,12 +2064,19 @@ var/global/lastDectalkUse = 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
-		var/res[] = world.Export("http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]")
-		if (!res || !res["CONTENT"])
-			return 0
 
-		var/audio = file2text(res["CONTENT"])
-		return list("audio" = audio, "message" = msg)
+		// Fetch via HTTP from goonhub
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[url_encode(ircbot.apikey)]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+
+		if (response.errored || !response.body)
+			logTheThing("debug", null, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+			return
+
+		return list("audio" = response.body, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
@@ -2099,10 +2114,11 @@ var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
 var/global/list/allowed_restricted_z_areas
+
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = typesof(/area/shuttle/escape) + typesof(/area/shuttle_transit_space)
+		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2274,7 +2290,7 @@ var/regex/nameRegex = regex("\\xFF.","g")
 /proc/isadmin(person)
 	if (ismob(person))
 		var/mob/M = person
-		return M.client ? M.client.holder ? TRUE : FALSE : FALSE
+		return !!(M?.client?.holder)
 
 	else if (isclient(person))
 		var/client/C = person
@@ -2282,7 +2298,7 @@ var/regex/nameRegex = regex("\\xFF.","g")
 
 	else if (ismind(person))
 		var/datum/mind/M = person
-		return M.current ? M.current.client ? M.current.client.holder ? TRUE : FALSE : FALSE : FALSE
+		return !!(M?.current?.client?.holder)
 
 	return FALSE
 
@@ -2334,6 +2350,12 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
+
+/**
+  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
+  */
+proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
+	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp
@@ -2422,6 +2444,9 @@ proc/angle_to_dir(angle)
 		else
 			.= SOUTH
 
+/**
+  * Transforms a cardinal/ordinal direction to an angle
+  */
 proc/dir_to_angle(dir)
 	.= 0
 	switch(dir)
@@ -2442,6 +2467,9 @@ proc/dir_to_angle(dir)
 		if(NORTHWEST)
 			.= 315
 
+/**
+  * Transforms a given angle to vec2 in a list
+  */
 proc/angle_to_vector(ang)
 	.= list()
 	. += cos(ang)
@@ -2519,8 +2547,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	*/
 /proc/lerp(var/a, var/b, var/t)
 		return a * (1 - t) + b * t
-
-
 
 /**
 	* Returns the passed decisecond-format time in the form of a text string
@@ -2621,3 +2647,11 @@ proc/keep_truthy(some_list)
 	for(var/x in some_list)
 		if(x)
 			. += x
+
+/// Returns true if the given mob is incapacitated
+proc/is_incapacitated(mob/M)
+	return (\
+		M.hasStatus("stunned") || \
+		M.hasStatus("weakened") || \
+		M.hasStatus("paralysis") || \
+		M.stat)

@@ -868,6 +868,15 @@
 	upperfluc = 5000
 	lowerfluc = -3000
 
+/datum/commodity/relics/bootlegfirework
+	comname = "Bootleg Firework (1x rocket)"
+	comtype = /obj/item/firework/bootleg
+	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
+	price = 60
+	baseprice = 60
+	upperfluc = 10
+	lowerfluc = -10
+
 ////////////////////////////////
 ///// syndicate trader /////////
 ////////////////////////////////
@@ -1242,6 +1251,15 @@
 	baseprice = 150
 	upperfluc = 50
 	lowerfluc = -50
+
+/datum/commodity/junk/pie_launcher
+	comname = "Pie Tool Module"
+	comtype = /obj/item/device/guardbot_tool/pie_launcher
+	desc = "A tool module compatible with guardbuddies. Are tool modules supposed to have cream on them?"
+	price = PAY_DOCTORATE/2
+	baseprice = PAY_DOCTORATE/2
+	upperfluc = PAY_DOCTORATE/6
+	lowerfluc = -PAY_DOCTORATE/6
 
 /datum/commodity/junk/laughbox
 	comname = "Box of Laughs"
@@ -2137,6 +2155,20 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/mime
+	comname = "Mime Clothes"
+	comtype = /obj/item/storage/box/costume/mime
+	desc = "No words can describe this. Only intricate gesticulation."
+	price = 100 //exactly what the clown spawns with in their account, three mimes on mondays.
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mime/alt
+	comname = "Alternate Mime Clothes."
+	comtype = /obj/item/storage/box/costume/mime/alt
+	desc = "This stuff will give you an edge in charades."
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
@@ -2157,7 +2189,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-#if ASS_JAM
+/*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
 	comtype = /obj/item/clothing/shoes/scream
@@ -2177,7 +2209,7 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-#endif
+*/
 
 /// pathology
 /datum/commodity/synthmodule

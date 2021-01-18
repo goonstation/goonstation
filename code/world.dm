@@ -18,9 +18,13 @@
 	turf = /turf/space
 	#endif
 
-	area = /area
+	area = /area/space
 
 	view = "15x15"
+
+	hub = "Exadv1.SpaceStation13"
+	hub_password = "kMZy3U5jJHSiBQjr"
+	name = "Goonstation 13"
 
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
@@ -169,25 +173,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-// drsingh for faster ban panel loads
-//Wire note: this has been gutted to only do stuff for jobbans until I get round to converting that system
-/world/proc/precache_unban_txt()
-	set background = 1
-	building_jobbans = 1
-
-	global_jobban_cache_built = world.timeofday
-
-	var/buf = ""
-	jobban_count = 0
-	for(var/t in jobban_keylist) if (t)
-		jobban_count++
-		buf += text("[t];")
-
-	global_jobban_cache = buf
-	global_jobban_cache_rev = 1
-
-	building_jobbans = 0
-
 var/f_color_selector_handler/F_Color_Selector
 
 /proc/buildMaterialPropertyCache()
@@ -217,7 +202,7 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
-		enable_extools_debugger()
+		enable_auxtools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
 #endif
@@ -272,18 +257,6 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
-
-		plmaster = new /obj/overlay(  )
-		plmaster.icon = 'icons/effects/tile_effects.dmi'
-		plmaster.icon_state = "plasma"
-		plmaster.layer = FLY_LAYER
-		plmaster.mouse_opacity = 0
-
-		slmaster = new /obj/overlay(  )
-		slmaster.icon = 'icons/effects/tile_effects.dmi'
-		slmaster.icon_state = "sleeping_agent"
-		slmaster.layer = FLY_LAYER
-		slmaster.mouse_opacity = 0
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -396,7 +369,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 		Z_LOG_DEBUG("Preload", "  /obj/trait")
 		for(var/A in childrentypesof(/obj/trait)) //Creating trait objects. I hate this.
-			var/obj/trait/T = new A( )
+			var/obj/trait/T = new A( )							//Sentiment shared -G
 			traitList.Add(T.id)
 			traitList[T.id] = T
 
@@ -449,8 +422,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	if (config)
 		Z_LOG_DEBUG("World/New", "Loading config...")
-		jobban_loadbanfile()
-		jobban_updatelegacybans()
 
 		oocban_loadbanfile()
 		// oocban_updatelegacybans() seems to do nothing. code\admin\oocban.dm -drsingh
@@ -487,9 +458,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	sun = new /datum/sun()
 
-	Z_LOG_DEBUG("World/Init", "Goonhub init")
-	goonhub = new()
-
 	Z_LOG_DEBUG("World/Init", "Vox init")
 	init_vox()
 	if (load_intra_round_value("solarium_complete") == 1)
@@ -507,7 +475,6 @@ var/f_color_selector_handler/F_Color_Selector
 		if (config.server_name != null && config.server_suffix && world.port > 0)
 			config.server_name += " #[serverKey]"
 
-		precache_unban_txt() //Wire: left in for now because jobbans still use the shitty system
 		precache_create_txt()
 
 	Z_LOG_DEBUG("World/Init", "Loading mode...")
@@ -563,7 +530,7 @@ var/f_color_selector_handler/F_Color_Selector
 	SetupOccupationsList()
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
-	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker && ticker.hide_mode) ? "secret" : master_mode))
+	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -596,7 +563,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
-	build_manufacturer_icons()
+	//build_manufacturer_icons()
 	clothingbooth_setup()
 #if ASS_JAM
 	ass_jam_init()
@@ -610,10 +577,6 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
-
-	UPDATE_TITLE_STATUS("Mapping spatials")
-	Z_LOG_DEBUG("World/New", "Setting up spatial map...")
-	init_spatial_map()
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
@@ -658,8 +621,15 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
-
+#ifdef PREFAB_CHECKING
+	placeAllPrefabs()
+#endif
+#ifdef RUNTIME_CHECKING
+	SPAWN_DBG(10 SECONDS)
+		Reboot_server()
+#endif
 #undef UPDATE_TITLE_STATUS
+	return
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
@@ -701,7 +671,26 @@ var/f_color_selector_handler/F_Color_Selector
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+#ifdef RUNTIME_CHECKING
+	for (var/client/C in clients)
+		ehjax.send(C, "browseroutput", "hardrestart")
 
+	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
+	if (isnull(runtimeDetails))
+		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+	else if (length(runtimeDetails) == 0)
+		text2file("No runtimes generated!", "no_runtimes.txt")
+	else
+		world.log << "[length(runtimeDetails)] runtimes generated:"
+		for (var/idx in runtimeDetails)
+			var/list/details = runtimeDetails[idx]
+			var/timestamp = details["seen"]
+			var/file = details["file"]
+			var/line = details["line"]
+			var/name = details["name"]
+			world.log << "\[[timestamp]\] [file],[line]: [name]"
+	shutdown()
+#endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
@@ -758,20 +747,23 @@ var/f_color_selector_handler/F_Color_Selector
 	//we start off with an animated bee gif because, well, this is who we are.
 	var/s = "<img src=\"https://i.imgur.com/XN0yOcf.gif\" alt=\"Bee\" /> "
 
-	if (config && config.server_name)
-		s += "<b>[config.server_name]</b> &#8212; "
-
-	if (ticker && ticker.mode)
-		s += "<b>[istype(ticker.mode, /datum/game_mode/construction) ? "Construction Mode" : station_name()]</b>"
+	if (config?.server_name)
+		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>[station_name()]</b>"
+		s += "<b>SERVER NAME HERE &#8212; "
+
+	s += "The classic SS13 experience. &#8212; (<a href=\"https://bit.ly/3pVRuTT\">Discord</a>)<br>"
+
+	if (map_settings)
+		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
+		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
+		s += "Map:<b> [map_name]</b><br>"
 
 	var/list/features = list()
 
 	if (!ticker)
 		features += "<b>STARTING</b>"
-
-	if (ticker && master_mode)
+	else if (ticker && master_mode)
 		if (ticker.hide_mode)
 			features += "Mode: <b>secret</b>"
 		else
@@ -787,17 +779,8 @@ var/f_color_selector_handler/F_Color_Selector
 	features += "Ass Jam"
 #endif
 
-	var/n = length(clients)
-
-	if(n == 1)
-		features += "~[n] player"
-	else
-		features += "~[n] players"
-
 	if(features)
-		s += ": [jointext(features, ", ")]"
-
-	s += " (<a href=\"https://ss13.co\">Website</a>)"
+		s += "[jointext(features, ", ")]"
 
 	/* does this help? I do not know */
 	if (src.status != s)
@@ -862,7 +845,7 @@ var/f_color_selector_handler/F_Color_Selector
 	else if (T == "status")
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = (ticker && ticker.hide_mode) ? "secret" : master_mode
+		s["mode"] = (ticker?.hide_mode) ? "secret" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
 		s["ai"] = config.allow_ai
@@ -1296,13 +1279,13 @@ var/f_color_selector_handler/F_Color_Selector
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a>
+								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a>
 							</div>
 							<div style="padding: 0.2em 0.5em;">
 								[game_msg]
 							</div>
 							<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								<a href=\"byond://?action=priv_msg_irc&nick=[nick]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
 						"})
@@ -1314,7 +1297,7 @@ var/f_color_selector_handler/F_Color_Selector
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[nick]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -1336,7 +1319,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = discord_emojify(msg)
 
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[nick]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1363,7 +1346,7 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["target"]) return 0
 
 				var/list/whom = splittext(plist["target"], ",")
-				if (whom && whom.len)
+				if (length(whom))
 					var/list/parsedWhois = list()
 					var/count = 0
 					var/list/whois_result
@@ -1432,7 +1415,7 @@ var/f_color_selector_handler/F_Color_Selector
 						ircmsg["msg"] = "Admin [nick] healed / revived [M.ckey]"
 						found.Add(ircmsg)
 
-				if (found && found.len > 0)
+				if (length(found))
 					return ircbot.response(found)
 				else
 					return 0
@@ -1653,6 +1636,16 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return 1
 
+/world/proc/setMaxZ(new_maxz)
+	if (!isnum(new_maxz) || new_maxz <= src.maxz)
+		return src.maxz
+	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
+		src.maxz++
+		src.setupZLevel(zlevel)
+	return src.maxz
+
+/world/proc/setupZLevel(new_zlevel)
+	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null
@@ -1668,9 +1661,6 @@ var/opt_inactive = null
 
 		sleep(10 SECONDS)
 
-
-
-
 /world/proc/KickInactiveClients()
 	for(var/client/C in clients)
 		if(!C.holder && ((C.inactivity/10)/60) >= 15)
@@ -1678,3 +1668,9 @@ var/opt_inactive = null
 			del(C)
 
 /// EXPERIMENTAL STUFF
+
+/world/Del()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
+	. = ..()

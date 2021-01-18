@@ -86,11 +86,11 @@
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1)
+					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
+					playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -382,7 +382,7 @@
 						I.throw_at(T, 12, 3)
 			src.gib(1)
 
-	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/atom/T as mob|obj, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		..()
 
 		//clownbabies can't fight clownqueens. but they can fight Cluwnequeens and vice versa
@@ -438,7 +438,7 @@
 	var/turf/Q = get_turf(location)
 	if (!Q)
 		return
-	if (ejectables && ejectables.len)
+	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
 			var/turf/target = null
 			var/tries = 0

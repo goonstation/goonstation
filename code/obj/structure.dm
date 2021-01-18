@@ -15,6 +15,7 @@ obj/structure
 			desc = "An unsecured support for an incomplete wall. A screwdriver would seperate the metal into sheets, or adding metal or reinforced metal could turn it into fake wall that could opened by hand."
 
 		reinforced
+			name = "reinforced girder"
 			icon_state = "reinforced"
 			state = 2
 			desc = "A reinforced metal support for an incomplete wall. Reinforced metal could turn it into a reinforced wall, or it could be disassembled with various tools."
@@ -78,133 +79,173 @@ obj/structure/ex_act(severity)
 
 /obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W) && state == 0 && anchored && !istype(src, /obj/structure/girder/displaced))
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-		var/turf/T = get_turf(user)
-		boutput(user, "<span class='notice'>Now disassembling the girder</span>")
-		sleep(4 SECONDS)
-		if(get_turf(user) == T)
-			boutput(user, "<span class='notice'>You dissasembled the girder!</span>")
-			var/atom/A = new /obj/item/sheet(get_turf(src))
-			if (src.material)
-				A.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-			qdel(src)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISASSEMBLE), user)
+
 
 	else if (isscrewingtool(W) && state == 2 && istype(src, /obj/structure/girder/reinforced))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-		var/turf/T = get_turf(user)
-		boutput(user, "<span class='notice'>Now unsecuring support struts</span>")
-		sleep(4 SECONDS)
-		if(get_turf(user) == T)
-			boutput(user, "<span class='notice'>You unsecured the support struts!</span>")
-			state = 1
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_UNSECURESUPPORT), user)
 
 	else if (issnippingtool(W) && istype(src, /obj/structure/girder/reinforced) && state == 1)
-		playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-		var/turf/T = get_turf(user)
-		boutput(user, "<span class='notice'>Now removing support struts</span>")
-		sleep(4 SECONDS)
-		if(get_turf(user) == T)
-			boutput(user, "<span class='notice'>You removed the support struts!</span>")
-			var/atom/A = new/obj/structure/girder( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			qdel(src)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REMOVESUPPORT), user)
 
 	else if (ispryingtool(W) && state == 0 && anchored )
-		playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-		var/turf/T = get_turf(user)
-		boutput(user, "<span class='notice'>Now dislodging the girder</span>")
-		sleep(4 SECONDS)
-		if(get_turf(user) == T)
-			boutput(user, "<span class='notice'>You dislodged the girder!</span>")
-			var/atom/A = new/obj/structure/girder/displaced( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			qdel(src)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISLODGE), user)
 
 	else if (iswrenchingtool(W) && state == 0 && !anchored )
 		if (!istype(src.loc, /turf/simulated/floor/))
 			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
 			return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-		var/turf/T = get_turf(user)
-		boutput(user, "<span class='notice'>Now securing the girder</span>")
-		sleep(4 SECONDS)
-		if (!istype(src.loc, /turf/simulated/floor/))
-			boutput(user, "<span class='alert'>You feel like your body is being ripped apart from the inside. Maybe you shouldn't try that again. For your own safety, I mean.</span>")
-			return
-		if(get_turf(user) == T)
-			boutput(user, "<span class='notice'>You secured the girder!</span>")
-			var/atom/A = new/obj/structure/girder( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			qdel(src)
-
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_SECURE), user)
 	else if (istype(W, /obj/item/sheet))
 		var/obj/item/sheet/S = W
 		if (S.amount < 2)
 			boutput(user, "<span class='alert'>You need at least two sheets on the stack to do this.</span>")
 			return
 
-		var/turf/T = get_turf(user)
-
 		if (src.icon_state != "reinforced" && S.reinforcement)
-			user.visible_message("<b>[user]</b> begins reinforcing [src].")
-			sleep(6 SECONDS)
-			if (user.loc == T)
-				boutput(user, "You finish reinforcing the girder.")
-				var/atom/A = new/obj/structure/girder/reinforced( src.loc )
-				if (W.material)
-					A.setMaterial(src.material)
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE), user)
+
+		else
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE), user)
+	else
+		..()
+
+/datum/action/bar/icon/girder_tool_interact
+	id = "girder_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 3 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/structure/girder/the_girder
+	var/obj/item/the_tool
+	var/interaction = GIRDER_DISASSEMBLE
+
+	New(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i)
+		..()
+		if (girdr)
+			the_girder = girdr
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (interact)
+			interaction = interact
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (the_girder == null || the_tool == null || owner == null || get_dist(owner, the_girder) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (istype(source) && the_tool != source.equipped() && the_tool.amount >= 2 && interaction == GIRDER_PLATE)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		var/verbing = ""
+		switch (interaction)
+			if (GIRDER_DISASSEMBLE)
+				verbing = "disassembling"
+				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+			if (GIRDER_UNSECURESUPPORT)
+				verbing = "unsecuring support struts from"
+				playsound(get_turf(the_girder), "sound/items/Screwdriver.ogg", 100, 1)
+			if (GIRDER_REMOVESUPPORT)
+				verbing = "removing support struts from"
+				playsound(get_turf(the_girder), "sound/items/Wirecutter.ogg", 100, 1)
+			if (GIRDER_DISLODGE)
+				verbing = "dislodging"
+				playsound(get_turf(the_girder), "sound/items/Crowbar.ogg", 100, 1)
+			if (GIRDER_REINFORCE)
+				verbing = "reinforcing"
+			if (GIRDER_SECURE)
+				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+				verbing = "securing"
+			if (GIRDER_PLATE)
+				verbing = "plating"
+		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_girder].</span>")
+
+	onEnd()
+		..()
+		var/verbens = "does something to"
+		switch (interaction)
+			if (GIRDER_DISASSEMBLE)
+				verbens = "disassembles"
+				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+				var/atom/A = new /obj/item/sheet(get_turf(the_girder))
+				if (the_girder.material)
+					A.setMaterial(the_girder.material)
 				else
 					var/datum/material/M = getMaterial("steel")
 					A.setMaterial(M)
-				qdel(src)
-				return
-			else
-				boutput(user, "<span class='alert'>You'll need to stand still while reinforcing the girder.</span>")
-				return
-
-		else
-			user.visible_message("<b>[user]</b> begins adding plating to [src].")
-			sleep(2 SECONDS)
-			if(!user)
-				return
-			// it was a good run, finishing all those walls with a sheet of 2 metal, but this is now causing runtimes
-			// so i'm going to be hitler yet again -- marquesas
-
-			var/obj/item/equippedThing = user.equipped()
-			if (equippedThing.useInnerItem && istype(equippedThing.holding, /obj/item/sheet))
-				equippedThing = equippedThing.holding
-
-			if (get_turf(user) == T && W && equippedThing == W && S.amount >= 2 && istype(src.loc, /turf/simulated/floor/))
-				boutput(user, "You finish building the wall.")
-				logTheThing("station", user, null, "builds a Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
-				var/turf/Tsrc = get_turf(src)
+				qdel(the_girder)
+			if (GIRDER_UNSECURESUPPORT)
+				verbens = "unsecured the support struts of"
+				the_girder.state = 1
+			if (GIRDER_REMOVESUPPORT)
+				verbens = "removed the support struts of"
+				var/atom/A = new/obj/structure/girder( the_girder.loc )
+				if(the_girder.material) A.setMaterial(the_girder.material)
+				qdel(the_girder)
+			if (GIRDER_DISLODGE)
+				verbens = "dislodged"
+				var/atom/A = new/obj/structure/girder/displaced( the_girder.loc )
+				if(the_girder.material) A.setMaterial(the_girder.material)
+				qdel(the_girder)
+			if (GIRDER_REINFORCE)
+				verbens = "reinforced"
+				var/atom/A = new/obj/structure/girder/reinforced( the_girder.loc )
+				if (the_tool.material)
+					A.setMaterial(the_girder.material)
+				else
+					var/datum/material/M = getMaterial("steel")
+					A.setMaterial(M)
+				qdel(the_girder)
+			if (GIRDER_SECURE)
+				if (!istype(the_girder.loc, /turf/simulated/floor/))
+					owner.visible_message("<span class='alert'>You feel like your body is being ripped apart from the inside. Maybe you shouldn't try that again. For your own safety, I mean.</span>")
+					return
+				verbens = "secured"
+				var/atom/A = new/obj/structure/girder( the_girder.loc )
+				if(the_girder.material) A.setMaterial(the_girder.material)
+				qdel(the_girder)
+			if (GIRDER_PLATE)
+				verbens = "finishes plating"
+				logTheThing("station", owner, null, "builds a Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
+				var/obj/item/sheet/S = the_tool
 				if (S.reinforcement)
 					WALL = Tsrc.ReplaceWithRWall()
 				else
 					WALL = Tsrc.ReplaceWithWall()
-				if (src.material)
-					WALL.setMaterial(src.material)
+				if (the_girder.material)
+					WALL.setMaterial(the_girder.material)
 				else
 					var/datum/material/M = getMaterial("steel")
 					WALL.setMaterial(M)
 				WALL.inherit_area()
 				// drsingh attempted fix for Cannot read null.amount
-				if (S != null)
+				if (!isnull(S))
 					S.amount -= 2
 					if (S.amount <= 0)
-						qdel(W)
+						qdel(the_tool)
 					else
 						S.inventory_counter.update_number(S.amount)
 
-				qdel(src)
-		return
-
-	else
-		..()
+				qdel(the_girder)
+		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
 
 /obj/structure/girder/displaced/attack_hand(mob/user as mob)
 	if (user.is_hulk())
@@ -215,7 +256,6 @@ obj/structure/ex_act(severity)
 			for (var/mob/N in AIviewers(usr, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
-
 		if (prob(70))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
 			qdel(src)
@@ -242,7 +282,10 @@ obj/structure/ex_act(severity)
 		var/FloorName = T.name
 		var/oldmat = src.material
 
-		var/atom/A = new /turf/simulated/wall/false_wall(src.loc)
+		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
+
+		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
+		var/atom/A = src.loc
 		if(oldmat)
 			A.setMaterial(oldmat)
 		else
@@ -254,11 +297,7 @@ obj/structure/ex_act(severity)
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
 		FW.known_by += user
-		if (S.reinforcement)
-			FW.icon_state = "rdoor1"
-		S.amount--
-		if (S.amount < 1)
-			qdel(S)
+		S.consume_sheets(1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		qdel(src)
@@ -287,9 +326,17 @@ obj/structure/ex_act(severity)
 	opacity = 1
 	var/health = 30
 	var/builtby = null
+	var/anti_z = 0
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
+
+	anti_zombie
+		name = "anti-zombie wooden barricade"
+		anti_z = 1
+		get_desc()
+			..()
+			. += "Looks like normal spacemen can easily pull themselves over it."
 
 	proc/checkhealth()
 		if (src.health <= 0)
@@ -309,8 +356,18 @@ obj/structure/ex_act(severity)
 			icon_state = "woodwall"
 
 	attack_hand(mob/user as mob)
-		user.lastattacked = src
+		if (ishuman(user) && !user.is_zombie)
+			var/mob/living/carbon/human/H = user
+			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
+				H.set_loc(get_turf(src))
+				H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
+				boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
+				random_brute_damage(H, 5)
+				src.health -= rand(0,2)
+				return
+
 		if (ishuman(user))
+			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user]</b> bashes [src]!</span>")
 			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
 			//Zombies do less damage

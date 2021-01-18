@@ -36,8 +36,8 @@
 	text2speech = 1
 
 
-/obj/machinery/bot/buttbot/process()
-	if (prob(10) && src.on == 1)
+/obj/machinery/bot/buttbot/process(mult)
+	if (prob(10*mult) && src.on == 1)
 		SPAWN_DBG(0)
 			var/message = pick("butts", "butt")
 			speak(message)
