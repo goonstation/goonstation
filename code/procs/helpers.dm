@@ -238,7 +238,7 @@ proc/get_angle(atom/a, atom/b)
 	var/turf/T = M.loc
 	var/atom/holding = M.equipped()
 	sleep(time)
-	if (M.loc == T && M.equipped() == holding && isalive(M) && !holding.disposed)
+	if (M.loc == T && M.equipped() == holding && isalive(M) && !holding?.disposed)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
