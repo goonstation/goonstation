@@ -1080,7 +1080,7 @@ WET FLOOR SIGN
 					last = T
 
 			afterUse(user)
-		playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
+			playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
 	anchored = 2
