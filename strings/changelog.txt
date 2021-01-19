@@ -1,5 +1,8 @@
 
 (t)tue jan 19 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)CPR now has a small chance to cure cardiac arrest, if the patient isn't too injured. Cardiac stimulants may help your odds.
 (u)zjdtmkhzt
 (p)3361
 (e)⚖🆕|balance, feature
