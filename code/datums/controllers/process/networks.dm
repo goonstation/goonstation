@@ -1,5 +1,5 @@
 datum/controller/process/networks
-	
+
 	setup()
 		name = "Networks"
 		schedule_interval = 11

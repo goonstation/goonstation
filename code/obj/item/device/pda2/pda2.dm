@@ -879,9 +879,7 @@
 							src.mailgroup_ringtones -= groupName
 						src.mailgroup_ringtones[groupName] = RT
 						var/datum/ringtone/RTone = src.mailgroup_ringtones[groupName]
-						boutput(world,"[RTone]")
 						RTone.holder = src
-						boutput(world,"[RTone.holder]")
 						if(overrideAlert)
 							RTone.overrideAlert = overrideAlert
 				if (ismob(src.loc))
