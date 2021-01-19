@@ -758,6 +758,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						else
 							QM_CDC.ready_to_analyze += A
 					QM_CDC.current_analysis = C
+					QM_CDC.ready_to_analyze -= C
 					C.begun_at = ticker.round_elapsed_ticks
 					C.description_available = C.begun_at + C.time_factor - C.time_done
 					C.cure_available = C.description_available + C.time_factor
