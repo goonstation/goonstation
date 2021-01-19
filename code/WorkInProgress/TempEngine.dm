@@ -45,6 +45,7 @@
 	var/repairstate = 0
 	var/repair_desc = ""
 	var/variant_b_active = FALSE
+	var/warning_active = FALSE
 
 	anchored = 1.0
 	density = 1
@@ -162,6 +163,12 @@
 				// Use maximum of minimum circulator pressure OR calculated pressure required to ensure an amount that won't get rounded away by quantization
 				// Note - ( 5 * ATMOS_EPSILON ) used to allow for a ratio of multiple gas specific heats to be utilized in the mixture
 				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
+
+				if(pressure_delta > desired_pressure)
+					//You have now entered shitty scaling.  You have fucked up
+					// TODO - Play sound? Flash Light? Klaxon sound?
+					playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
+					src.warning = TRUE
 
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
@@ -630,6 +637,34 @@ datum/pump_ui/circulator_ui
 			else
 				UpdateOverlays(null, "power")
 
+		if(src.variant_b)
+			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+		else
+			UpdateOverlays(null, "variant")
+
+		if(src.circ1?.warning_active || src.circ2?.warning_active )
+			var/warning_side = 0
+			if( src.circ1?.warning_active && src.circ2?.warning_active )
+				warning_side = NORTH
+			else if( src.circ1?.warning_active )
+				warning_side = WEST
+			else if( src.circ2?.warning_active )
+				warning_side = EAST
+
+			var/image/warning = image('icons/obj/power.dmi', src.variant_b ? "tegv_lights" : "teg_lights", dir=warning_side)
+			warning.color = "#ff0000"
+			UpdateOverlays(warning, "warning")
+
+			if(lastgenlev)
+				light.set_color(1, 0, 0)
+				light.set_brightness(0.6)
+				light.enable()
+			else
+				light.disable()
+
+		else
+			UpdateOverlays(null, "warning")
+
 			switch (lastgenlev)
 				if(0)
 					light.disable()
@@ -637,33 +672,29 @@ datum/pump_ui/circulator_ui
 					light.set_color(1, 1, 1)
 					light.set_brightness(0.3)
 				if(12 to 15)
-					light.set_color(0.30,0.30,0.90)
+					light.set_color(0.30, 0.30, 0.90)
 					light.set_brightness(0.6)
 					light.enable()
 				if(16 to 17)
-					light.set_color(0.90,0.90,0.10)
+					light.set_color(0.90, 0.90, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 22)
 					playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 25)
 					playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(1)
 					light.enable()
 				if(26 to INFINITY)
 					playsound(src.loc, "sound/effects/electric_shock.ogg", 50,0)
-					light.set_color(0.90,0.00,0.90)
+					light.set_color(0.90, 0.00, 0.90)
 					light.set_brightness(1.5)
 					light.enable()
 					// this needs a safer lightbust proc
-		if(src.variant_b)
-			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
-		else
-			UpdateOverlays(null, "variant")
 
 	process()
 		if(!src.circ1 || !src.circ2)
