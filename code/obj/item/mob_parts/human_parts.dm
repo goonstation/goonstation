@@ -2009,3 +2009,49 @@ obj/item/parts/human_parts/arm/right/stone
 	side = "right"
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
+
+/// SQUID LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/squid
+	icon = 'icons/mob/squid.dmi'
+	partIcon = 'icons/mob/squid.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/squid
+	icon = 'icons/mob/squid.dmi'
+	partIcon = 'icons/mob/squid.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/squid/left
+	name = "left squid arm"
+	desc = "A squid's left blub."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/squid/right
+	name = "left squid arm"
+	desc = "Blub squid's right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/leg/mutant/squid/left
+	name = "left squid leg"
+	desc = "A blub's left leg."
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/squid/right
+	name = "right squid leg"
+	desc = "A squid's blub leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+

@@ -1365,8 +1365,14 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
+	mutant_folder = 'icons/mob/squid.dmi'
+	special_head = HEAD_SQUID
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
-
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/squid/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/squid/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/squid/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/squid/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	say_verb()
 		return "glubs"

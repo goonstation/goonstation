@@ -15,6 +15,7 @@
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
 #define HEAD_HUNTER 14
+#define HEAD_SQUID 15
 
 //tail defines
 #define TAIL_NONE 0
