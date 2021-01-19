@@ -858,6 +858,19 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else // uses bullets
 		if(src.loaded_magazine.mag_contents.len >= 1 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
 			src.current_projectile = src.loaded_magazine.mag_contents[1]
+			if(length(src.loaded_magazine.projectile_items))
+				var/obj/item/GCG
+				if(istype(src.current_projectile.internal_grenade))
+					GCG = src.current_projectile.internal_grenade
+				else if(istype(src.current_projectile.internal_chem_grenade))
+					GCG = src.current_projectile.internal_chem_grenade
+				if(istype(GCG))
+					for(var/datum/projectile/L_P in src.loaded_magazine.projectile_items)
+						if(src.current_projectile != L_P)
+							continue
+						else
+							src.loaded_magazine.projectile_items -= L_P
+							break
 			src.loaded_magazine.mag_contents.Cut(1,2)
 			return TRUE
 	src.dry_fire(user)

@@ -636,6 +636,12 @@ datum/projectile
 			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
 				var/turf/T = get_turf(hit)
 				if (T)
+					if(T.density)
+						var/anti_angle = turn(angle2dir(angle), 180)
+						for(var/i in 1 to 10)
+							T = get_step(T, anti_angle)
+							if(!T.density)
+								break
 					src.internal_grenade?.set_loc(T)
 					src.internal_grenade?.prime()
 					src.internal_chem_grenade?.set_loc(T)
@@ -650,6 +656,9 @@ datum/projectile
 				src.internal_grenade = null
 			return
 		tick(var/obj/projectile/O)
+			return
+		/// When an object is put into this projectile, do this
+		on_object_insertion(var/obj/I)
 			return
 		on_launch(var/obj/projectile/O)
 			return

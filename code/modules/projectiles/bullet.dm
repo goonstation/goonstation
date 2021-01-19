@@ -1244,6 +1244,7 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
+/// While any other projectile'll work to hold a grenade, this one works best
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	ammo_ID = "bullet_grenade_conversion"
@@ -1260,82 +1261,30 @@ toxic - poisons
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
-	// proc/get_nade()
-	// 	if (src.has_grenade != 0)
-	// 		if (src.CHEM != null)
-	// 			return src.CHEM
-	// 		else if (src.OLD != null)
-	// 			return src.OLD
-	// 		else
-	// 			return null
-	// 	else
-	// 		return null
+	on_object_insertion(var/obj/I)
+		if(!istype(I)) return
+		if(I.name)
+			src.name = "[I.name] shell"
+			src.ammo_ID = "[ckey(I.name)]_shell"
+			src.ammo_name = "[ckey(I.name)]_shell"
+		src.icon = I.icon
+		if(istype(I, /obj/item/grenade))
+			var/obj/item/grenade/GG = I
+			if(GG.icon_state_exploding)
+				src.icon_state = GG.icon_state_exploding
+			else if(GG.icon_state_armed)
+				src.icon_state = GG.icon_state_armed
+			else
+				src.icon_state = GG.icon_state
+		if(istype(I, /obj/item/chem_grenade))
+			var/obj/item/chem_grenade/CG = I
+			if(CG.icon_state_armed)
+				src.icon_state = CG.icon_state_armed
+			else
+				src.icon_state = CG.icon_state
+		else
+			src.icon_state = I.icon_state
 
-	// proc/load_nade(var/obj/item/W)
-	// 	if (W)
-	// 		if (src.has_grenade == 0)
-	// 			if (istype(W,/obj/item/chem_grenade))
-	// 				src.CHEM = W
-	// 				src.has_grenade = 1
-	// 				return 1
-	// 			else if (istype(W, /obj/item/grenade/old_grenade))
-	// 				src.OLD = W
-	// 				src.has_grenade = 1
-	// 				return 1
-	// 			else
-	// 				return 0
-	// 		else
-	// 			return 0
-	// 	else
-	// 		return 0
-
-	// proc/unload_nade(var/turf/T)
-	// 	if (src.has_grenade !=0)
-	// 		if (src.CHEM != null)
-	// 			if (T)
-	// 				src.CHEM.set_loc(T)
-	// 			src.CHEM = null
-	// 			src.has_grenade = 0
-	// 			return 1
-	// 		else if (src.OLD != null)
-	// 			if (T)
-	// 				src.OLD.set_loc(T)
-	// 			src.OLD = null
-	// 			src.has_grenade = 0
-	// 			return 1
-	// 		else //how did this happen?
-	// 			return 0
-	// 	else
-	// 		return 0
-
-	// proc/det(var/turf/T)
-	// 	if (T && src.has_det == 0 && src.has_grenade != 0)
-	// 		if (src.CHEM != null)
-	// 			src.CHEM.set_loc(T)
-	// 			src.has_det = 1
-	// 			SPAWN_DBG(1 DECI SECOND)
-	// 				src.CHEM.explode()
-	// 			src.has_grenade = 0
-	// 			return
-	// 		else if (src.OLD != null)
-	// 			src.OLD.set_loc(T)
-	// 			src.has_det = 1
-	// 				src.OLD.prime()
-	// 			src.has_grenade = 0
-	// 			return
-	// 		else //what the hell happened
-	// 			return
-	// 	else
-	// 		return
-
-
-	// on_end(obj/projectile/O)
-	// 	if (O && src.has_det == 0)
-	// 		var/turf/T = get_turf(O)
-	// 		if (T)
-	// 			src.det(T)
-	// 	else if (O)
-	// 		src.has_det = 0
 
 /datum/projectile/bullet/flintlock
 	name = "bullet"

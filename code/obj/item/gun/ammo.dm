@@ -258,31 +258,36 @@
 			projOut.internal_grenade = nadeIn
 		else if(istype(nadeIn, /obj/item/chem_grenade))
 			projOut.internal_chem_grenade = nadeIn
+		projOut.on_object_insertion(nadeIn)
 		src.mag_contents.Insert(1, projOut)
 		src.update_bullet_manifest()
 		src.update_icon()
 		return TRUE
 
-	proc/ammo_to_grenade()
+	proc/ammo_to_grenade(var/atom/user)
 		if(length(src.projectile_items) < 1) return
-
+		var/turf/T = get_turf(usr)
+		boutput(world,"[usr] is usr, [T] is T.")
 		var/found_nades
 		for(var/datum/projectile/P in src.projectile_items)
-			var/found_the_nade = 0
 			// var/datum/projectile/L_P = src.mag_contents[src.mag_contents.Find(P)]
-			for(var/datum/projectile/L_P in src.mag_contents)
-				if(P != L_P)
-					continue
-				if(L_P.internal_grenade)
-					L_P.internal_grenade.set_loc(get_turf(src))
-				if(L_P.internal_chem_grenade)
-					L_P.internal_chem_grenade.set_loc(get_turf(src))
-				src.mag_contents -= L_P
-				qdel(L_P)
-				found_nades++
-				found_the_nade = 1
-			if(found_the_nade)
-				src.projectile_items -= P
+			// for(var/datum/projectile/L_P in src.mag_contents)
+			// 	if(P != L_P)
+			// 		continue
+			var/obj/item/nade = src.projectile_items[P]
+			if(!istype(nade))
+				continue
+			boutput(world,"A [nade] is at loc [nade.loc]")
+			nade.set_loc(T)
+			boutput(world,"B [nade] is at loc [nade.loc]")
+			P.internal_grenade = null
+			P.internal_chem_grenade = null
+			boutput(world,"[nade] exists. at [nade.loc]")
+			src.mag_contents -= P
+			src.projectile_items[P] = null
+			boutput(world,"[nade] still exists. at loc [nade.loc]")
+			//qdel(src.projectile_items[P])
+			found_nades++
 		src.update_bullet_manifest()
 		src.update_icon()
 		return found_nades

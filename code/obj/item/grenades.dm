@@ -341,12 +341,10 @@ PIPE BOMBS + CONSTRUCTION
 
 			if(src.is_firework)
 				if(src.is_firework != "slashed")
-					var/turf/location = get_turf(src.loc)
-					if(location)
-						if(prob(10))
-							explosion(src, location, 0, 0, 1, 1)
-						else
-							elecflash(src,power = 2)
+					if(prob(10))
+						explosion(src, T, 0, 0, 1, 1)
+					else
+						elecflash(src,power = 2)
 					src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 				else
 					boutput(usr, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
@@ -356,28 +354,27 @@ PIPE BOMBS + CONSTRUCTION
 				if (istype(src.target_atom, /obj/machinery))
 					src.target_atom.ex_act(1) // Reliably blasts through doors.
 				// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
-				var/turf/location = get_turf(src)
-				for (var/turf/simulated/wall/W in range(src.breach_range, location))
-					if (W && istype(W) && !location.loc:sanctuary)
+				for (var/turf/simulated/wall/W in range(src.breach_range, T))
+					if (W && istype(W) && !A_T.sanctuary)
 						W.ReplaceWithFloor()
-				for (var/obj/structure/girder/G in range(src.breach_range, location))
+				for (var/obj/structure/girder/G in range(src.breach_range, T))
 					var/area/a = get_area(G)
 					if (G && istype(G) && !a.sanctuary)
 						qdel(G)
-				for (var/obj/window/WD in range(src.breach_range, location))
+				for (var/obj/window/WD in range(src.breach_range, T))
 					var/area/a = get_area(WD)
 					if (WD && istype(WD) && prob(max(0, 100 - (WD.health / 3))) && !a.sanctuary)
 						WD.smash()
-				for (var/obj/grille/GR in range(src.breach_range, location))
+				for (var/obj/grille/GR in range(src.breach_range, T))
 					var/area/a = get_area(GR)
 					if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
 						GR.ex_act(2)
 
 			if(is_thermite_charge)
-				var/turf/location = get_turf(src)
 				src.invisibility = 101
-				for (var/turf/T_T in range(src.breach_range, location))
-					if( T_T?.loc:sanctuary ) continue
+				for (var/turf/T_T in range(src.breach_range, T))
+					var/area/T_T_A = get_area(T_T)
+					if( T_T_A.sanctuary ) continue
 					if (!istype(T_T, /turf/simulated/wall) && !istype(T_T, /turf/simulated/floor))
 						continue
 
@@ -400,7 +397,7 @@ PIPE BOMBS + CONSTRUCTION
 					else
 						O.set_density(0)
 
-					var/distance = get_dist(T_T, location)
+					var/distance = get_dist(T_T, T)
 					if (distance < 2)
 						var/turf/simulated/floor/F = null
 
@@ -420,20 +417,20 @@ PIPE BOMBS + CONSTRUCTION
 							var/turf/simulated/floor/F = T_T
 							F.burn_tile()
 
-				for (var/obj/structure/girder/G in range(src.breach_range, location))
+				for (var/obj/structure/girder/G in range(src.breach_range, T))
 					var/area/a = get_area(G)
 					if (G && istype(G) && !a.sanctuary)
 						qdel(G)
-				for (var/obj/window/W in range(src.breach_range, location))
+				for (var/obj/window/W in range(src.breach_range, T))
 					var/area/a = get_area(W)
 					if (W && istype(W) && !a.sanctuary)
 						W.damage_heat(500)
-				for (var/obj/grille/GR in range(src.breach_range, location))
+				for (var/obj/grille/GR in range(src.breach_range, T))
 					var/area/a = get_area(GR)
 					if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
 						GR.damage_heat(500)
 
-				for (var/mob/living/M in range(src.breach_range, location))
+				for (var/mob/living/M in range(src.breach_range, T))
 					if(check_target_immunity(M)) continue
 					var/damage = 30 / (get_dist(M, src) + 1)
 					M.TakeDamage("chest", 0, damage)
@@ -441,7 +438,7 @@ PIPE BOMBS + CONSTRUCTION
 
 				SPAWN_DBG (100)
 					if (src)
-						for (var/obj/overlay/O in range(src.breach_range, location))
+						for (var/obj/overlay/O in range(src.breach_range, T))
 							if (O.name == "Thermite")
 								qdel(O)
 						qdel(src)
@@ -500,7 +497,7 @@ PIPE BOMBS + CONSTRUCTION
 
 			if (src.is_explosive_grenade)
 				explosion_new(src, T, src.ex_power, src.ex_brisance)
-				var/obj/overlay/O = new/obj/overlay(get_turf(T))
+				var/obj/overlay/O = new/obj/overlay(T)
 				O.anchored = 1
 				O.name = "Explosion"
 				O.layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -554,14 +551,14 @@ PIPE BOMBS + CONSTRUCTION
 				src.clothe_victims()
 
 			if(is_owlgib_grenade)
-				for(var/mob/living/carbon/human/M in range(5, get_loc(src)))
+				for(var/mob/living/carbon/human/M in range(5, T))
 					var/area/t = get_area(M)
 					if(t?.sanctuary) continue
 					SPAWN_DBG(0)
 						M.owlgib()
 
 			if(explode_on_detonation)
-				var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
+				var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 				E.fingerprintslast = src.fingerprintslast
 
 			if(src.del_self_on_explode)
@@ -937,13 +934,14 @@ PIPE BOMBS + CONSTRUCTION
 	is_mat_change_grenade = TRUE
 
 	change_mats()
-		for(var/turf/G in range(5, src))
+		var/turf/Z = get_turf(src)
+		for(var/turf/G in range(5, Z))
 			G.setMaterial(getMaterial("gold"))
-		for(var/obj/item/I in range(5, src))
+		for(var/obj/item/I in range(5, Z))
 			I.setMaterial(getMaterial("gold"))
-		for(var/obj/machinery/T in range(5, src))
+		for(var/obj/machinery/T in range(5, Z))
 			T.setMaterial(getMaterial("gold"))
-		for(var/mob/living/carbon/human/M in range(3, src))
+		for(var/mob/living/carbon/human/M in range(3, Z))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
@@ -1225,6 +1223,26 @@ PIPE BOMBS + CONSTRUCTION
 			..()
 			return
 
+/obj/item/grenade/pipebomb/bomb/random
+	name = "Pipebomb PRO"
+	New()
+		. = ..()
+		strength = rand(5,20)
+
+		glowsticks = rand(0,3)
+		butt = rand(0,3)
+		confetti = rand(0,3)
+		meat = rand(0,3)
+		ghost = rand(0,3)
+		extra_shrapnel = rand(0,3)
+		charge = rand(0,100)
+		cable = rand(0,3)
+		bleed = rand(0,3)
+		tele = rand(0,3)
+		rcd = rand(0,3)
+		plasma = rand(0,3)
+		rcd_mat = "steel"
+
 /obj/item/grenade/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
@@ -1277,6 +1295,7 @@ PIPE BOMBS + CONSTRUCTION
 		do_explode()
 
 	do_explode()
+		var/turf/GZ = get_turf(src)
 		if (src.strength)
 			if (src.material)
 				var/strength_mult = 1
@@ -1288,72 +1307,70 @@ PIPE BOMBS + CONSTRUCTION
 
 			//do mod effects : pre-explosion
 			if (glowsticks)
-				var/turf/T = get_turf(src.loc)
-				make_cleanable( /obj/decal/cleanable/generic,T)
-				for (var/turf/splat in view(1,src.loc))
+				make_cleanable( /obj/decal/cleanable/generic,GZ)
+				for (var/turf/splat in view(1,GZ))
 					make_cleanable( /obj/decal/cleanable/greenglow,splat)
 				var/radium_amt = 6 * glowsticks
-				for (var/mob/M in view(3,src.loc))
+				for (var/mob/M in view(3,GZ))
 					if(iscarbon(M))
 						if (M.reagents)
 							M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
 					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1)
-					for (var/mob/M in view(3+butt,src.loc))
+					playsound(GZ, "sound/voice/farts/superfart.ogg", 90, 1)
+					for (var/mob/M in view(3+butt,GZ))
 						ass_explosion(M, 0, 5)
 				else
-					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1)
-					for (var/mob/M in view(3,src.loc))
+					playsound(GZ, "sound/voice/farts/poo2.ogg", 90, 1)
+					for (var/mob/M in view(3,GZ))
 						ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(GZ))
 				else
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(GZ))
 			if (meat)
 				if (meat > 1)
-					gibs(src.loc)
-				for (var/turf/splat in view(meat,src.loc))
+					gibs(GZ)
+				for (var/turf/splat in view(meat,GZ))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
-				var/turf/T = get_turf(src.loc)
 				if (ghost > 1)
-					for (var/mob/M in view(2+ghost,src.loc))
+					for (var/mob/M in view(2+ghost,GZ))
 						if(iscarbon(M))
 							boutput(M, "<span class='alert'>You are yanked by an unseen force!</span>")
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
-				for (var/obj/O in view(1,src.loc))
-					O.throw_at(T, 2, 2)
+							M.throw_at(GZ, yank_distance, 2)
+				for (var/obj/O in view(1,GZ))
+					O.throw_at(GZ, 2, 2)
 			if (extra_shrapnel)
-				throw_shrapnel(get_turf(src.loc), 4, extra_shrapnel * 3)
+				throw_shrapnel(get_turf(GZ), 4, extra_shrapnel * 3)
 			if (cable && charge) //arc flash
 				var/target_count = 0
-				for (var/mob/living/L in view(5, src.loc))
+				for (var/mob/living/L in view(5, GZ))
 					target_count++
 				if (target_count)
-					for (var/mob/living/L in oview(5, src.loc))
+					for (var/mob/living/L in oview(5, GZ))
 						arcFlash(src, L, max((charge*7) / target_count, 1))
 				else
-					for (var/turf/T in oview(3,src.loc))
+					for (var/turf/T in oview(3,GZ))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(3,src.loc))
+				for (var/mob/M in view(3,GZ))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12),src.loc) )
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12),GZ) )
 					src.reagents.reaction(T,1,5)
 
 			src.blowthefuckup(src.strength, 0)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(2+tele,src.loc))
+				for (var/mob/M in view(2+tele,GZ))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
 						var/turf/warp_to = get_turf(pick(orange(3 + tele, M.loc)))
 						if (isturf(warp_to))
@@ -1363,17 +1380,17 @@ PIPE BOMBS + CONSTRUCTION
 							M.set_loc(warp_to)
 			if (rcd)
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 70, 1)
-				for (var/turf/T in view(rcd,src.loc))
+				for (var/turf/T in view(rcd,GZ))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
 						F.setMaterial(getMaterial(rcd_mat))
 				if (rcd > 1)
-					for (var/turf/T in view(3,src.loc))
+					for (var/turf/T in view(3,GZ))
 						if (prob(rcd * 10))
 							new /obj/grille/steel(T)
 
 			if (plasma)
-				for (var/turf/simulated/floor/target in range(1,src.loc))
+				for (var/turf/simulated/floor/target in range(1,GZ))
 					if(!target.blocks_air && target.air)
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
@@ -1385,22 +1402,21 @@ PIPE BOMBS + CONSTRUCTION
 						target.air.merge(payload)
 
 			if (throw_objs.len && throw_objs.len > 0)
-				var/turf/T = get_turf(src.loc)
 				var/count = 6
 				var/obj/spawn_item
-				for (var/mob/living/L in oview(5, src.loc))
+				for (var/mob/living/L in oview(5, GZ))
 					spawn_item = pick(throw_objs)
-					var/obj/O = new spawn_item(T)
+					var/obj/O = new spawn_item(GZ)
 					if (istype(O,/obj/item/reagent_containers/patch))
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
 					O.throw_at(L,5,3)
 					count++
 				if (count > 0)
-					for (var/turf/target in oview(4,src.loc))
+					for (var/turf/target in oview(4,GZ))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
-							var/obj/O = new spawn_item(T)
+							var/obj/O = new spawn_item(GZ)
 							if (istype(O,/obj/item/reagent_containers/patch))
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
