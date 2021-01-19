@@ -451,14 +451,19 @@ var/datum/action_controller/actions
 		..()
 		if (!src.user)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (!src.target)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.user.loc != src.user_loc)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.target.loc != src.target_loc)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (src.user.equipped() != src.holding)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onInterrupt(flag)
 		. = ..()
