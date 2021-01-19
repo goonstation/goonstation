@@ -62,43 +62,49 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
 		for (var/R in sell_crate)
-			if (istype(R, /obj/item/reagent_containers) || ishuman(R)) //heh
+			var/list/patho = null
+			if (istype(R, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = R
-				var/list/patho = RC.reagents.aggregate_pathogens()
-				for (var/uid in patho)
-					if (!(uid in src.analysis_by_uid))
-						var/datum/pathogen/P = patho[uid]
-						var/datum/cdc_contact_analysis/D = new
-						D.uid = uid
-						var/sym_count = max(min(length(P.effects), 7), 2)
-						D.time_factor = sym_count * rand(10, 15) // 200, 600
-						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
-						D.name = P.name
-						var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
-						var/ds = "weak"
-						switch (P.stages)
-							if (4)
-								ds = "potent"
-							if (5)
-								ds = "deadly"
-						var/df = "a relatively one-sided"
-						switch (sym_count)
-							if (3 to 4)
-								df = "a somewhat colorful"
-							if (5 to 6)
-								df = "a rather diverse"
-							if (7)
-								df = "an incredibly symptomatic"
-						D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-						var/datum/pathogen/copy = unpool(/datum/pathogen)
-						copy.setup(0, P, 0, null)
-						D.assoc_pathogen = copy
-						src.analysis_by_uid[uid] = D
-						src.ready_to_analyze += D
-				if (ishuman(RC))
-					var/mob/living/carbon/human/H = RC
-					H.ghostize()
+				patho = RC.reagents.aggregate_pathogens()
 				qdel(RC)
+			else if (ishuman(R)) // heh
+				var/mob/living/carbon/human/H = R
+				patho = H.reagents.aggregate_pathogens()
+				H.ghostize()
+				qdel(H)
+			else
+				qdel(R)
+				continue
+			for (var/uid in patho)
+				if (!(uid in src.analysis_by_uid))
+					var/datum/pathogen/P = patho[uid]
+					var/datum/cdc_contact_analysis/D = new
+					D.uid = uid
+					var/sym_count = max(min(length(P.effects), 7), 2)
+					D.time_factor = sym_count * rand(10, 15) // 200, 600
+					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
+					D.name = P.name
+					var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
+					var/ds = "weak"
+					switch (P.stages)
+						if (4)
+							ds = "potent"
+						if (5)
+							ds = "deadly"
+					var/df = "a relatively one-sided"
+					switch (sym_count)
+						if (3 to 4)
+							df = "a somewhat colorful"
+						if (5 to 6)
+							df = "a rather diverse"
+						if (7)
+							df = "an incredibly symptomatic"
+					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
+					var/datum/pathogen/copy = unpool(/datum/pathogen)
+					copy.setup(0, P, 0, null)
+					D.assoc_pathogen = copy
+					src.analysis_by_uid[uid] = D
+					src.ready_to_analyze += D
 			qdel(sell_crate)
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
