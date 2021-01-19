@@ -7,6 +7,9 @@
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
+	if(voluntary && !src.emote_allowed)
+		return
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
@@ -41,14 +44,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if(src.bioHolder?.HasEffect("mute"))
-						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
-						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
-						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")]..."
-						message = "<B>[src]</B> [pre_message]"
-						maptext_out = "<i>[pre_message]</i>"
-						m_type = 1
-					else if (!muzzled)
+					if (!muzzled)
 						message = "<B>[src]</B> [istype(src.w_uniform, /obj/item/clothing/under/gimmick/frog) ? "croaks" : "screams"]!"
 						m_type = 2
 						if (narrator_mode)
@@ -2021,10 +2017,12 @@
 	//copy paste lol
 
 	if (maptext_out)
+		if(src.emote_allowed) // if no emote cooldowns triggered let's trigger one now (no spamming maptext emotes!)
+			src.emote_check(voluntary, 0.5 SECONDS)
 		var/image/chat_maptext/chat_text = null
 		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
 					chat_text.measure(src.client)
 					for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -2195,3 +2193,4 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
+
