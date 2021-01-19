@@ -55,12 +55,7 @@
 	proc/check_for_topping(var/obj/item/W)
 		var/tag = null
 		if(istype(W,/obj/item/device/light/candle)) //special handling for candles because they need to send unique information
-			var/obj/item/device/light/candle/candle = W
-			if(candle.on)
-				tag = "cake[clayer]-candle_lit"
-				src.ignite()
-			else
-				tag = "cake[clayer]-candle"
+			tag = "cake[clayer]-candle"
 			cake_candle = tag
 		else
 			switch(W.type)
@@ -80,7 +75,7 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-		. = tag //returns a list consisting of the new overlay tag and candle data
+		. = tag //returns a list consisting of the new overlay tag
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
@@ -137,7 +132,7 @@
 		var/replacetext //used to change layer identifiers to reformat from cake overlays to slice overlays
 		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
 		var/slices
-		var/slice_candle
+		var/candle_lit
 		switch(src.clayer) //checking the current layer of the cake
 			if(1)
 				layer_tag = "base" //the tag of the future overlay
@@ -154,7 +149,7 @@
 
 		var/list/returns = build_cake(s,user,CAKE_MODE_SLICE,layer_tag,replacetext)
 		slices = returns[1]
-		slice_candle = returns[2]
+		candle_lit = returns[2]
 
 		var/transferamount = (src.amount/src.clayer)/slices //amount of reagent to transfer to slices
 		var/deletionqueue //is the source cake deleted after slicing?
@@ -168,13 +163,13 @@
 			schild.icon_state = "slice-overlay"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
-			if(slice_candle) //making sure there's only one candle :)
-				if(slice_candle == 1)
+			if(cake_candle) //making sure there's only one candle :)
+				if(candle_lit == TRUE)
+					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"),"slice-candle")
+					candle_lit = FALSE
+				else
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
-				if(slice_candle == 2)
-					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"),"slice-candle_lit")
-				slice_candle = 0
-				cake_candle = 0 
+				cake_candle = null
 				schild.cake_candle = 1
 				if(src.litfam) //light update
 					src.put_out()
@@ -272,12 +267,13 @@
 		var/staticiterator = src.overlays.len //saves a static number of times for the loop to run, this number is offset when the loop encounters special conditions below. this makes sure that no matter how many weird overlays we have, toppings are always set as toppings and no layers are lost.
 		var/normal_topping = FALSE //there are special cases in rendering cake overlays that should only ever trigger once, afterward the toggle is switched to true, initiating the normal topping overlay handling
 		var/slices
-		var/candle //cute little wax stick that people light on fire for their own enjoyment <3
+		var/candle_light //cute little wax stick that people light on fire for their own enjoyment <3
 		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
 		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
 			cake = cake_transfer
 		for(var/i=1,i<=staticiterator,i++)
 			if(mode == CAKE_MODE_CAKE)
+				world.log << ("[src.overlay_refs[i]]")
 				if("[src.overlay_refs[i]]" == "base")
 					continue
 				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
@@ -330,14 +326,14 @@
 					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
 					var/toppingpath = replacetext("[src.overlay_refs[i]]","[replacetext]","slice")
 
-					if((toppingpath == "slice-candle") || (toppingpath == "slice-candle_lit")) //special case for candles :D
-						if(toppingpath == "slice-candle")
-							candle = 1
+					if((toppingpath == "slice-candle")) //special case for candles :D
+						if(litfam)
+							candle_light = TRUE
 						else
-							candle = 2
-							staticiterator--
-							i--
+							candle_light = FALSE
 						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
+						staticiterator--
+						i--
 						continue
 
 					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',toppingpath)
@@ -371,7 +367,7 @@
 
 		src.reagents.maximum_volume -= 100
 		if(mode == CAKE_MODE_SLICE)
-			return list(slices,candle)
+			return list(slices,candle_light)
 		else
 			src.clayer--
 			src.update_cake_context()
@@ -396,11 +392,9 @@
 			return
 
 		if(src.sliced && src.GetOverlayImage("slice-candle"))
-			src.ClearSpecificOverlays("slice-candle")
-			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle_lit")
+			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle")
 		else if(src.GetOverlayImage("cake[src.clayer]-candle"))
-			src.ClearSpecificOverlays("cake[src.clayer]-candle")
-			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle_lit")
+			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle")
 
 
 	proc/put_out(var/mob/user as mob)
@@ -455,12 +449,10 @@
 
 	proc/extinguish(var/mob/user)
 		var/blowout = FALSE
-		if(src.sliced && src.GetOverlayImage("slice-candle_lit"))
-			src.ClearSpecificOverlays("slice-candle_lit")
+		if(src.sliced && src.litfam)
 			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
 			blowout = TRUE
-		else if(src.GetOverlayImage("cake[src.clayer]-candle_lit"))
-			src.ClearSpecificOverlays("cake[src.clayer]-candle_lit")
+		else if(litfam)
 			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
 			blowout = TRUE
 		if(blowout)
@@ -486,7 +478,7 @@
 			return
 		else
 			var/topping = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
-			if(topping == 0) //if the item wasn't a valid topping, perfom the default action
+			if(!topping) //if the item wasn't a valid topping, perfom the default action
 				..()
 				return
 
@@ -498,6 +490,10 @@
 				toppingoverlay.alpha = 255
 				src.UpdateOverlays(toppingoverlay,topping)
 				user.u_equip(W)
+				if(istype(W,/obj/item/device/light/candle))
+					var/obj/item/device/light/candle/candle = W
+					if(candle.on)
+						src.ignite()
 				qdel(W)
 
 	attack_hand(mob/user as mob)
