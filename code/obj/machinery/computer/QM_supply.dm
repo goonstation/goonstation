@@ -437,9 +437,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.temp += "We have no unanalyzed pathogen samples from your station.<br>"
 	else
 		src.temp += "We're currently analyzing the pathogen sample [QM_CDC.current_analysis.name]. We can <A href='[topicLink("cdc_analyze")]'>analyze something different</A>, if you want."
-		if (QM_CDC.current_analysis.description_available > ticker.round_elapsed_ticks)
+		if (QM_CDC.current_analysis.description_available <= ticker.round_elapsed_ticks)
 			src.temp += "Here's what we have so far: <br>[QM_CDC.current_analysis.desc]<br>"
-			if (QM_CDC.current_analysis.cure_available > ticker.round_elapsed_ticks)
+			if (QM_CDC.current_analysis.cure_available <= ticker.round_elapsed_ticks)
 				src.temp += "We've also discovered a method to synthesize a cure for this pathogen.<br>"
 				QM_CDC.completed_analysis += QM_CDC.current_analysis
 				QM_CDC.current_analysis = null
@@ -753,7 +753,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					if (QM_CDC.current_analysis)
 						var/datum/cdc_contact_analysis/A = QM_CDC.current_analysis
 						A.time_done += ticker.round_elapsed_ticks - A.begun_at
-						if (A.cure_available >= ticker.round_elapsed_ticks)
+						if (A.cure_available <= ticker.round_elapsed_ticks)
 							QM_CDC.completed_analysis += A
 						else
 							QM_CDC.ready_to_analyze += A
