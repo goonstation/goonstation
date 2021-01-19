@@ -1,5 +1,9 @@
 
 (t)tue jan 19 21
+(u)pali
+(p)3397
+(e)🆕🎨|feature, sprites
+(*)Janitor closets now have a new handheld vacuum cleaner. It can suck up small items and smoke (like miasma). Temporary sprites unless <i>you</i> make me better ones.
 (u)UrsulaMajor
 (e)⚖🆕|balance, feature
 (*)The Pathology Research test has concluded. Thank you for your participation! Please give your thoughts here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
