@@ -353,6 +353,8 @@
 /obj/item/device/transfer_valve/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	var/obj/item/storage/briefcase/B = null
 	mats = 8
 

@@ -1253,19 +1253,16 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN_DBG(time)
 		target.filters -= filter
 
-/proc/animate_storage_thump(var/atom/A)
+/proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
 	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-	var/wiggle = 6
-	SPAWN_DBG(-1)
-		while(wiggle > 0)
-			wiggle--
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-3,3)
-			sleep(0.1 SECONDS)
-		A.pixel_x = 0
-		A.pixel_y = 0
+	var/orig_x = A.pixel_x
+	var/orig_y = A.pixel_y
+	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0)
+	for(var/i in 1 to wiggle)
+		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), flags=ANIMATION_PARALLEL, easing=JUMP_EASING, time=0.1 SECONDS)
+	animate(pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL)
 
 /obj/overlay/tile_effect/fake_fullbright
 	icon = 'icons/effects/white.dmi'

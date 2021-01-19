@@ -1901,7 +1901,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(src.loc)
+			new /obj/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
