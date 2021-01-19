@@ -32,8 +32,8 @@
 	var/last_found = 0
 	var/last_patient_cooldown = 10 SECONDS
 	/// For evil medbots, after doing their deed to a person, ignore them for this long (or the bot gets hurt)
-	var/hostile_last_patient_cooldown = 30 SECONDS
-	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
+	var/hostile_last_patient_cooldown = 15 SECONDS
+	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -51,6 +51,26 @@
 	/// They'll stop stop injecting that crap if the patient has the per-inject amount
 	var/override_reagent_limit_mult = 0.9
 	var/terrifying = 0 // for making the medbots all super fucked up
+	/// List of drugs that terrifying derelist bots will inject
+	var/static/list/terrifying_meds = list("formaldehyde" = 15,
+																				"ketamine" = 5,
+																				"pancuronium" = 5,
+																				"haloperidol" = 5,
+																				"atropine" = 30,
+																				"methamphetamine" = 20,
+																				"blood" = 20,
+																				"fog" = 20,
+																				"calomel" = 10,
+																				"ether" = 10,
+																				"mercury" = 5,
+																				"loose_screws" = 10,
+																				"salts1" = 10,
+																				"salmonella" = 10,
+																				"MRSA" = 10,
+																				"rat_venom" = 10,
+																				"green mucus" = 10,
+																				"mucus" = 10,
+																				"e.coli" = 10)
 
 /obj/machinery/bot/medbot/no_camera
 	no_camera = 1
@@ -352,14 +372,13 @@
 			if ((isdead(C)) || !ishuman(C))
 				continue
 
-			if ((C == src.oldpatient) && ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.oldpatient]", src.last_patient_cooldown))
+			if (C == src.oldpatient)
 				continue
 
 			if (src.assess_patient(C))
 				src.patient = C
-				src.oldpatient = C
 				src.doing_something = 1
-				if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[src.patient]", src.point_cooldown)) //Don't spam these messages!
+				if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 					src.point(src.patient, 1)
 					var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
 					src.speak(message)
@@ -419,6 +438,9 @@
 
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
 	//Time to see if they need medical help!
+	if(GET_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C.name)]") || GET_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(C.name)]"))
+		return 0 // Give them some time to heal!
+
 	if(isdead(C))
 		return 0 //welp too late for them!
 
@@ -426,8 +448,6 @@
 		return 0 //Kevorkian school of robotic medical assistants.
 
 	if(src.emagged || src.terrifying) //Everyone needs our medicine. (Our medicine is toxins)
-		if(ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[C.name]", src.hostile_last_patient_cooldown))
-			return 0 // cept people who already had our medicine
 		return 1
 
 	var/brute = C.get_brute_damage()
@@ -487,37 +507,38 @@
 		if ((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 			reagent_id = "internal_beaker"
 
-		if (length(reagent_id) < 1)
-			if (brute >= heal_threshold)
-				if(!C.reagents.has_reagent(src.treatment_brute))
-					reagent_id[src.treatment_brute] = 15
-			if (burn >= heal_threshold)
-				if(!C.reagents.has_reagent(src.treatment_fire))
-					reagent_id[src.treatment_fire] = 15
-			if (C.get_toxin_damage() >= heal_threshold)
-				if(!C.reagents.has_reagent(src.treatment_tox))
-					reagent_id[src.treatment_tox] = 15
-			if(!C.reagents.has_reagent(src.treatment_virus))
-				reagent_id[src.treatment_virus] = 15
-			if (C.get_oxygen_deprivation() >= (15 + heal_threshold))
-				if(!C.reagents.has_reagent(src.treatment_oxy))
-					reagent_id[src.treatment_oxy] = 15
-
 		if (src.terrifying)
-			reagent_id["haloperidol"] = 15
-			if(C.reagents.has_reagent("haloperidol", 10))
-				reagent_id["pancuronium"] = 5
-				if(C.reagents.has_reagent("pancuronium", 4))
-					reagent_id = null
-					ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[src.patient]", src.hostile_last_patient_cooldown)
+			for(var/i in 1 to rand(1,4))
+				var/badmed_id = pick(src.terrifying_meds)
+				reagent_id[badmed_id] += rand(1, src.terrifying_meds[badmed_id])
 
 		else if (src.emagged) //Emagged! Time to poison everybody.
 			var/reag_check = pick(src.dangerous_stuff)
 			if(!C.reagents.has_reagent(reag_check, src.dangerous_stuff[reag_check] * 1.5)) // *shrug* two-ish doses of our poison, on average
 				reagent_id = src.dangerous_stuff
 
+		else
+			if (length(reagent_id) < 1)
+				if (brute >= heal_threshold)
+					if(!C.reagents.has_reagent(src.treatment_brute))
+						reagent_id[src.treatment_brute] = 15
+				if (burn >= heal_threshold)
+					if(!C.reagents.has_reagent(src.treatment_fire))
+						reagent_id[src.treatment_fire] = 15
+				if (C.get_toxin_damage() >= heal_threshold)
+					if(!C.reagents.has_reagent(src.treatment_tox))
+						reagent_id[src.treatment_tox] = 15
+				if(!C.reagents.has_reagent(src.treatment_virus))
+					reagent_id[src.treatment_virus] = 15
+				if (C.get_oxygen_deprivation() >= (15 + heal_threshold))
+					if(!C.reagents.has_reagent(src.treatment_oxy))
+						reagent_id[src.treatment_oxy] = 15
+
 	if (length(reagent_id) < 1) //If they don't need any of that they're probably cured!
-		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[src.patient]", src.last_patient_cooldown)
+		if(src.terrifying || src.emagged)
+			ON_COOLDOWN(src, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(src.patient?.name)]", src.hostile_last_patient_cooldown)
+		else
+			ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(src.patient?.name)]", src.last_patient_cooldown)
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
@@ -541,7 +562,7 @@
 		src.path = null
 
 /datum/action/bar/icon/medbot_inject
-	duration = 30
+	duration = 30 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
@@ -554,48 +575,52 @@
 		src.master = the_bot
 		src.reagent_id = reagentid
 		if(master.terrifying)
-			duration += 20
+			duration = 2.5 SECONDS
+			REMOVE_FLAG(interrupt_flags, INTERRUPT_MOVE)
 		..()
 
 	onUpdate()
 		..()
-		if (!master.on || !IN_RANGE(master, master.patient, 1))
+		if (src.fail_check())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (master.terrifying && !src.did_spooky && prob(10))
-			if (prob(20))
-				var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.",\
-				"Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.",\
-				"Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.",\
-				"MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00",\
-				"ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a",\
-				"This will all be over soon.")
-				master.speak(message)
-			else
-				master.visible_message("<b>[master] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
-				var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg',\
-				'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
-				playsound(master.loc, glitchsound, 50, 1)
-				// let's grustle a bit
-				SPAWN_DBG(1 DECI SECOND)
-					master.pixel_x += rand(-2,2)
-					master.pixel_y += rand(-2,2)
-					sleep(0.1 SECONDS)
-					master.pixel_x += rand(-2,2)
-					master.pixel_y += rand(-2,2)
-					sleep(0.1 SECONDS)
-					master.pixel_x += rand(-2,2)
-					master.pixel_y += rand(-2,2)
-					sleep(0.1 SECONDS)
-					master.pixel_x = 0
-					master.pixel_y = 0
-				hit_twitch(master)
-			src.did_spooky = 1
+		if (master.terrifying)
+			if(!IN_RANGE(master, master.patient, 1) && !master.moving)
+				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
+			if(!src.did_spooky && prob(10))
+				if (prob(20))
+					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.",\
+					"Please calm down, sir.","You need to calm down.","CODE BLUE.","You're going to be just fine.","Hold stIll.",\
+					"Sedating patient.","ALERT.","I think we're losing them...","You're only hurting yourself.",\
+					"MEM ERR BLK 0  ADDR 30FC500 HAS 010F NOT 0000","MEM ERR BLK 3  ADDR 55005FF HAS 020A NOT FF00",\
+					"ERROR: Missing or corrupted resource filEs. Plea_-se contact a syst*m administrator.","ERROR: Corrupted kernel. Ple- - a",\
+					"This will all be over soon.")
+					master.speak(message)
+				else
+					master.visible_message("<b>[master] [pick("freaks out","glitches out","tweaks out", "malfunctions", "twitches")]!</b>")
+					var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg',\
+					'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
+					playsound(master.loc, glitchsound, 50, 1)
+					// let's grustle a bit
+					SPAWN_DBG(1 DECI SECOND)
+						master.pixel_x += rand(-2,2)
+						master.pixel_y += rand(-2,2)
+						sleep(0.1 SECONDS)
+						master.pixel_x += rand(-2,2)
+						master.pixel_y += rand(-2,2)
+						sleep(0.1 SECONDS)
+						master.pixel_x += rand(-2,2)
+						master.pixel_y += rand(-2,2)
+						sleep(0.1 SECONDS)
+						master.pixel_x = 0
+						master.pixel_y = 0
+					hit_twitch(master)
+				src.did_spooky = 1
 
 	onStart()
 		..()
-		if (!master.on)
+		if (src.fail_check())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -607,6 +632,7 @@
 	onInterrupt()
 		. = ..()
 		master.currently_healing = 0
+		master.update_icon()
 
 	onEnd()
 		..()
@@ -618,10 +644,28 @@
 				for(var/reagent in reagent_id)
 					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
 			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
-			playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
 
+		else if(master.terrifying)
+			var/list/sput_words = list()
+			var/datum/reagents/sput = new/datum/reagents(1)
+			for(var/reagent in reagent_id)
+				sput.maximum_volume += round(reagent_id[reagent] / length(reagent_id))
+				sput.add_reagent(reagent, round(reagent_id[reagent] / length(reagent_id)))
+				sput_words += reagent_id_to_name(reagent)
+			smoke_reaction(sput, 1, get_turf(master))
+			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
+		playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
+
+		if(master.terrifying || master.emagged)
+			ON_COOLDOWN(master, "[MEDBOT_HOSTILE_COOLDOWN]-[ckey(master.patient?.name)]", master.hostile_last_patient_cooldown)
+		master.KillPathAndGiveUp(1)
 		master.update_icon()
-		master.currently_healing = 0
+
+	proc/fail_check()
+		if(!master.on)
+			return TRUE
+		if(!master.terrifying && !IN_RANGE(master, master.patient, 1))
+			return TRUE
 
 // copied from transposed scientists
 

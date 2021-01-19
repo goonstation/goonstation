@@ -55,8 +55,6 @@
 	var/max_search_range = 7
 	/// Favor scanning from this spot, so that they'll tend to build out from here, and not just a bunch of metal spaghetti
 	var/turf/scan_origin
-	/// So we don't waste time scanning the same tiles when looking for tiles to fix
-	var/list/scanned_tiles = list()
 	/// They're designed to work best while nobody's looking
 	/// and they lag to shit at higher processing levels
 	dynamic_processing = 0
@@ -217,44 +215,62 @@
 
 			// Search for space turf
 			for (var/turf/space/D in view(src.search_range, src.scan_origin))
-				if(D in src.scanned_tiles)
+				var/coord = turf2coordinates(D)
+				if((coord in floorbottargets) || (coord in targets_invalid))
 					continue
-				if (!(D in targets_invalid) && D != src.oldtarget && !(D in floorbottargets) && !should_ignore_tile(D))
-					return D
+				else if (D == src.oldtarget || should_ignore_tile(D))
+					continue
 				else
-					src.scanned_tiles += D
+					src.floorbottargets += coord
+					return D
 
 			// Search for incomplete/damaged floor
 			if (src.improvefloors)
 				for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
-					if(F in src.scanned_tiles)
+					var/coord = turf2coordinates(F)
+					if((coord in floorbottargets) || (coord in targets_invalid))
 						continue
-					if (!(F in targets_invalid) && F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
+					else if (F == src.oldtarget || should_ignore_tile(F))
+						continue
+					else if (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam))
+						src.floorbottargets += coord
 						return F
-					else
-						src.scanned_tiles += F
 
 	if (src.emagged)
 		for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
-			if(F in src.scanned_tiles)
+			var/coord = turf2coordinates(F)
+			if((coord in floorbottargets) || (coord in targets_invalid))
 				continue
-			if (F != src.oldtarget && !(F in floorbottargets) && !should_ignore_tile(F))
-				return F
+			else if (F == src.oldtarget || should_ignore_tile(F))
+				continue
 			else
-				src.scanned_tiles += F
+				src.floorbottargets += coord
+				return F
 
 	// Only do this if we don't have our max already
 	if (src.amount < max_tiles)
 		if (src.eattiles)
 			for (var/obj/item/tile/T in view(src.search_range, src.scan_origin))
-				// T is /var/turf, not. tiles. does this even work? does BYOND care?
-				if (T != src.oldtarget && !(target in floorbottargets) && !should_ignore_tile(get_turf(T)))
+				var/coord = turf2coordinates(get_turf(T))
+				if((coord in floorbottargets) || (coord in targets_invalid))
+					continue
+				else if (T == src.oldtarget || should_ignore_tile(T))
+					continue
+				else
+					src.floorbottargets += coord
 					return T
+					// T is /var/turf, not. tiles. does this even work? does BYOND care? no, not really
 
 		if (src.maketiles)
 			if (src.target == null || !src.target)
 				for (var/obj/item/sheet/M in view(src.search_range, src.scan_origin))
-					if (M != src.oldtarget && !(M in floorbottargets) && M.amount >= 1 && !(istype(M.loc, /turf/simulated/wall)) && !should_ignore_tile(get_turf(M)))
+					var/coord = turf2coordinates(get_turf(M))
+					if((coord in floorbottargets) || (coord in targets_invalid))
+						continue
+					else if (M == src.oldtarget || should_ignore_tile(M))
+						continue
+					else if (M.amount >= 1 && !(istype(M.loc, /turf/simulated/wall)) && !should_ignore_tile(get_turf(M)))
+						src.floorbottargets += coord
 						return M
 
 	return null
@@ -262,7 +278,8 @@
 /obj/machinery/bot/floorbot/proc/should_ignore_tile(var/turf/T)
 	for (var/atom/A in T.contents)
 		if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
-			targets_invalid += T
+			var/coord = turf2coordinates(get_turf(A))
+			targets_invalid += coord
 			return true
 
 
@@ -276,6 +293,7 @@
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
 	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
+		src.floorbottargets = list()
 
 	if (!src.target)
 		// basically: try to find a target within 3 tiles
@@ -288,8 +306,7 @@
 	if (src.target)
 		src.point(src.target)
 		src.doing_something = 1
-		/// I'm targetting this, nobody else target it!
-		src.floorbottargets += src.target
+		src.search_range = 1
 
 		// are we there yet
 		if (get_turf(src.loc) == get_turf(src.target))
@@ -312,6 +329,7 @@
 	. = ..()
 	if(give_up)
 		src.targets_invalid += src.target
+		src.floorbottargets -= turf2coordinates(src.target)
 		src.target = null
 		src.anchored = 0
 		src.updateicon()
@@ -319,7 +337,6 @@
 		src.oldtarget = null
 		src.oldloc = null
 		src.search_range = 1
-		src.scanned_tiles = list()
 		src.scan_origin = null
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
@@ -332,7 +349,6 @@
 		src.maketile(src.target)
 	else if (istype(src.target, /turf/))
 		src.repair(src.target)
-	src.KillPathAndGiveUp(0)
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
 	if (src.repairing)
@@ -503,7 +519,7 @@
 	onInterrupt()
 		. = ..()
 		if(master.target) // release our claim on this target
-			master.floorbottargets -= src.target
+			master.floorbottargets -= master.turf2coordinates(master.target)
 		master.KillPathAndGiveUp(1)
 
 	onEnd()
@@ -524,7 +540,7 @@
 		master.amount -= 1
 		master.updateicon()
 		master.anchored = 0
-		master.floorbottargets -= master.target
+		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)
 
 /datum/action/bar/icon/floorbot_disrepair
@@ -563,7 +579,7 @@
 	onInterrupt()
 		. = ..()
 		if(master.target) // release our claim on this target
-			master.floorbottargets -= src.target
+			master.floorbottargets -= master.turf2coordinates(master.target)
 		master.KillPathAndGiveUp(1)
 
 	onEnd()
@@ -581,5 +597,5 @@
 		master.repairing = 0
 		master.updateicon()
 		master.anchored = 0
-		master.floorbottargets -= master.target
+		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)

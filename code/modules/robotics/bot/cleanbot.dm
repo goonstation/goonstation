@@ -58,7 +58,6 @@
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 5 MINUTES // How frequently?
 
-	var/idle = 1 // In relation to world time. In case there aren't any valid targets nearby.
 	var/idle_delay = 2 SECONDS // For how long?
 
 	var/cleaning = 0 // Are we currently cleaning something?
@@ -216,7 +215,7 @@
 
 	process()
 		. = ..()
-		if (!src.on || src.cleaning || src.moving || src.idle && ON_COOLDOWN(src, CLEANBOT_CLEAN_COOLDOWN, src.idle_delay))
+		if (!src.on || src.cleaning || src.moving && GET_COOLDOWN(src, CLEANBOT_CLEAN_COOLDOWN))
 			return
 
 		// Invalid targets may not be unreachable anymore. Clear list periodically.
@@ -233,9 +232,6 @@
 		if (src.target)
 			src.point(src.target)
 			src.doing_something = 1
-			/// I'm targetting this, nobody else target it!
-			if(!(src.target in src.cleanbottargets))
-				src.cleanbottargets += src.target
 
 			// are we there yet
 			if (IN_RANGE(src, src.target, 1))
@@ -249,8 +245,9 @@
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
 		else // No targets found in range? Increase the range!
-			if(src.search_range++ > src.max_search_range)
+			if(src.search_range++ > src.max_search_range) // No targets in our max range? Move our origin here and scan some more!
 				src.KillPathAndGiveUp(1)
+				src.scan_origin = get_turf(src)
 		if(frustration >= 8)
 			src.KillPathAndGiveUp(1)
 
@@ -259,51 +256,53 @@
 		if (prob(80))
 			src.visible_message("[src] sloshes.")
 		actions.start(new/datum/action/bar/icon/cleanbotclean(src, src.target), src)
-		src.KillPathAndGiveUp(0)
 
 	proc/find_target()
 		for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
-			if (F in src.targets_invalid)
+			var/coord = turf2coordinates(F)
+			if ((coord in src.cleanbottargets) || (coord in src.targets_invalid))
 				continue
 			if (src.is_it_invalid(F))
-				continue
-			if (F in src.cleanbottargets)
 				continue
 			if (src.emagged && F.wet)
 				continue
 			if (!F.messy && !F.active_liquid)
 				continue
+			src.cleanbottargets += coord
 			return F
 
 	proc/is_it_invalid(var/turf/simulated/floor/F)
+		var/coords = turf2coordinates(F)
 		for (var/atom/A in F.contents)
 			if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
-				if (!(F in src.targets_invalid))
-					src.targets_invalid += F
+				if (!(coords in src.targets_invalid))
+					src.targets_invalid += coords
 				return 1
 
 			if (!F || !isturf(F) || F.density)
-				if (!(F in src.targets_invalid))
-					src.targets_invalid += F
+				if (!(coords in src.targets_invalid))
+					src.targets_invalid += coords
 				return 1
 
 			if (istype(F, /turf/space))
-				if (!(F in src.targets_invalid))
-					src.targets_invalid += F
+				if (!(coords in src.targets_invalid))
+					src.targets_invalid += coords
 				return 1
 
 	KillPathAndGiveUp(var/give_up)
 		. = ..()
-		src.cleaning = 0
-		src.icon_state = "[src.icon_state_base][src.on]"
-		src.target = null
-		src.idle = TIME
-		src.anchored = 0
+		var/coords = turf2coordinates(get_turf(src.target))
 		if(give_up)
-			if (src.target && !(src.target in src.targets_invalid))
-				src.targets_invalid += src.target
+			if (src.target && !(coords in src.targets_invalid))
+				src.targets_invalid += coords
 			src.search_range = 1
 			src.scan_origin = null
+		src.cleaning = 0
+		src.icon_state = "[src.icon_state_base][src.on]"
+		src.cleanbottargets -= coords
+		src.target = null
+		src.anchored = 0
+
 
 	ex_act(severity)
 		switch (severity)
@@ -395,6 +394,7 @@
 			return
 
 	onInterrupt(flag)
+		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
 		master.KillPathAndGiveUp(1)
 		. = ..()
 
@@ -418,7 +418,8 @@
 				if (T.active_liquid.group)
 					T.active_liquid.group.drain(T.active_liquid,1,master)
 
-			master.cleanbottargets -= master.target
+			master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
+			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)
 			master.KillPathAndGiveUp(0)
 		..()
 

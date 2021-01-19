@@ -294,7 +294,7 @@
 			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
 			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
 			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=1'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=0'>\[-]</A><BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
 			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
 			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
 			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
@@ -354,7 +354,7 @@
 				src.speak("Ten-Four. [src.guard_area_lockdown ? "Will not restrain minor offenders" : "Treating all crimes equally"].")
 				updateUsrDialog()
 			if("adjwarn")
-				if(href_list["go"] == 1)
+				if(href_list["go"] == "1")
 					src.cuff_threat_threshold++
 					src.speak("!", just_float = 1)
 				else
@@ -772,7 +772,7 @@
 			if (IN_RANGE(src, src.target, 1))
 				/// Are they good and downed, and are we allowed to cuff em?
 				if(!src.arrest_type && src.target?.getStatusDuration("weakened") >= 3 SECONDS)
-					if(src.threatlevel >= src.cuff_threat_threshold)
+					if(!src.warn_minor_crime || (src.warn_minor_crime && src.threatlevel >= src.cuff_threat_threshold))
 						actions.start(new/datum/action/bar/icon/secbot_cuff(src, kpagu), src)
 					else
 						src.arrest_gloat()

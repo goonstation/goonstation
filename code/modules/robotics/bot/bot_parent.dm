@@ -240,6 +240,15 @@
 /obj/machinery/bot/emp_act()
 	src.emag_act()
 
+	/// Takes a turf and spits out string of coordinates
+/obj/machinery/bot/proc/turf2coordinates(var/turf/T)
+	if(isturf(T))
+		var/Tx = T.x
+		var/Ty = T.y
+		var/Tz = T.z
+		return jointext(list(Tx, Ty, Tz), ",")
+
+
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
 	src.KillPathAndGiveUp(0)
 	src.current_movepath = world.time
