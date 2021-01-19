@@ -1,5 +1,9 @@
 
 (t)tue jan 19 21
+(u)Flaborized
+(p)3370
+(e)🆕|feature
+(*)Musicians now have a guitar.
 (u)pali
 (p)3397
 (e)🆕🎨|feature, sprites
