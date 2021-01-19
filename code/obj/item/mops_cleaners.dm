@@ -883,6 +883,8 @@ WET FLOOR SIGN
 			boutput(user, "<span class='alert'>\The [src] has neither trashbag nor bucket.</span>")
 
 	afterattack(atom/target, mob/user, reach, params)
+		if(!isturf(user.loc))
+			return
 		if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
 			for(var/obj/item/I in src.trashbag)
@@ -1030,6 +1032,7 @@ WET FLOOR SIGN
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
+		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
 		if(params["left"] && master && get_dist(master_turf, target_turf) > 1)
