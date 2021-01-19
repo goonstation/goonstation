@@ -19235,17 +19235,27 @@
 /area/station/crew_quarters/quartersA)
 "aSa" = (
 /obj/table/wood/round/auto,
-/obj/random_item_spawner/desk_stuff,
 /obj/disposalpipe/segment,
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = 5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aSb" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/green,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/light/lamp/green{
+	pixel_x = -3;
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
@@ -19639,17 +19649,18 @@
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/unary/vent_pump/south,
 /obj/table/wood/round/auto,
-/obj/item/storage/box/cutlery,
+/obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aTf" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/reagent_containers/food/snacks/cereal_box,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/storage/box/nerd_kit{
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
@@ -21002,6 +21013,10 @@
 "aWe" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
+/obj/machinery/light/lamp/green{
+	pixel_x = 7;
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue1"
@@ -21009,9 +21024,15 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aWf" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
 /obj/disposalpipe/segment,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue1"
@@ -21445,7 +21466,13 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/item_box/assorted/stickers/stickers_limited,
+/obj/item/item_box/assorted/stickers/stickers_limited{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/storage/box/cutlery{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/quartersA)
 "aXf" = (
@@ -21463,6 +21490,14 @@
 /area/station/crew_quarters/quartersA)
 "aXg" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -21636,8 +21671,41 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aXD" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -21646,16 +21714,12 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aXE" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/pen,
-/obj/item/pen/fancy,
-/obj/item/dice/d20,
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/item/storage/box/nerd_kit{
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -22560,14 +22624,20 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aZp" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/dice/magic8ball{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
 "aZq" = (
-/obj/machinery/light/lamp/green,
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -23213,13 +23283,6 @@
 /area/station/crew_quarters/arcade/dungeon)
 "baL" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/clothing/head/apprentice,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue5"
@@ -23227,8 +23290,17 @@
 /area/station/crew_quarters/arcade/dungeon)
 "baM" = (
 /obj/table/wood/auto,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/clothing/mask/skull,
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue5"
 	},
@@ -79078,6 +79150,10 @@
 /obj/grille/steel,
 /turf/simulated/floor,
 /area/station/ranch)
+"jNp" = (
+/obj/item/paper/book/monster_manual_revised,
+/turf/simulated/wall/asteroid,
+/area/space)
 "lAy" = (
 /obj/machinery/light_switch/east,
 /obj/submachine/chicken_feed_grinder,
@@ -87205,7 +87281,7 @@ aaa
 aaa
 aaa
 aab
-aab
+jNp
 aaa
 aaa
 aaa

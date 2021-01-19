@@ -21466,21 +21466,17 @@
 /area/station/chapel/sanctuary)
 "aVe" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/cola{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/dice/magic8ball{
-	pixel_x = 7;
-	pixel_y = 9
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = -2;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aVf" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit{
+/obj/item/paper/book/monster_manual_revised{
 	pixel_x = -2;
-	pixel_y = 8
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -22133,9 +22129,9 @@
 /area/station/chapel/sanctuary)
 "aWx" = (
 /obj/table/wood/auto,
-/obj/item/clothing/mask/skull{
-	pixel_x = 5;
-	pixel_y = 6
+/obj/item/storage/box/nerd_kit{
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -22853,8 +22849,16 @@
 "aXO" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chips{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -23405,12 +23409,16 @@
 "aYV" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist/nerd{
-	pixel_x = 7
-	},
 /obj/item/clothing/head/apprentice{
 	pixel_x = -9;
 	pixel_y = 11
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 7
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"

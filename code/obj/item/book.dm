@@ -922,8 +922,8 @@
 	"}
 
 /obj/item/paper/book/monster_manual
-	name = "Creature Conspectus"
-	desc = "A large book detailing many creatures of myth and legend. Nerds."
+	name = "Creature Conspectus Original Edition"
+	desc = "A large book detailing many creatures of myth and legend. Wait a minute, there's only 2 entries! What a scam."
 	icon_state = "book3"
 
 	info = {"
@@ -971,6 +971,138 @@
 	The true danger of the armored greysuit, however, comes from its choice of weapon: many (65% chance) wield a fearsome shockmace into combat.<br>
 	The corpse of this fiend may yield its namesake armor (For details, see pg 289).</p>
 	<hr>
+"}
+
+/obj/item/paper/book/monster_manual_revised
+	name = "Creature Conspectus Revised Edition"
+	desc = "A large book detailing many creatures of myth and legend for the tabletop RPG, Stations and Syndicates."
+	icon_state = "book3"
+
+	info = {"
+<body>
+<h2>Note for the Game Master</h2>
+<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower it's stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
+<hr>
+<p>
+
+<b>Killer Tomato</b><br>
+Type : Plant<br>
+Size : Small<br>
+DC To Hit : 5<br>
+Resolve : 1<br>
+Damage per attack : 1 (Bite)<br>
+Vulnerability : Slashing / Blunt<br>
+<br>
+<b>Messy Death</b><br>
+<i>On death, the creature's body will splash it's boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
+<br>
+
+<b>Maneater plant</b><br>
+Type : Plant<br>
+Size : Medium<br>
+DC To Hit : 9<br>
+Resolve : 3<br>
+Damage per attack : 2 (Vine Whip / Bite)<br>
+Vulnerability : Fire<br>
+<br>
+<b>False Appearance</b><br>
+<i>While this plant remains motionless, it is indistinguishable from a normal shrub.</i>
+<br>
+<br>
+<b>Space Bear</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 12<br>
+Resolve : 6<br>
+Damage per attack : 3 (Claw Swipe)<br>
+Vulnerability : Slashing<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Wendigo</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 15<br>
+Resolve : 10<br>
+Damage Per Attack : 5 (Claw Swipe)<br>
+Vulnerability : Fire<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Zombie</b><br>
+Type : Undead<br>
+Size : Medium<br>
+DC To Hit : 10<br>
+Resolve : 4<br>
+Damage Per Attack : 1 (Flailing Punch)<br>
+Vulnerability : Holy<br>
+<br>
+<b>Zombie Bite</b><br>
+<i>The zombie lunges straight at you! When an undead latches onto its target, the target must make a Strength saving throw to throw the zombie off. If the target fails, the zombie will bite into them, dealing 1 resolve and healing 1 resolve on the zombie</i><br>
+<br>
+
+<b>Syndicate Agent</b><br>
+Type : Human<br>
+Size : Medium<br>
+DC To Hit : 15<br>
+Resolve : 15<br>
+Damage per attack : 5 (Revolver Fire)<br>
+Vulnerability : Blunt <br>
+<br>
+<b>Microbomb Implant</b><br>
+<i>On death, the creature will explode, damaging anyone in range for 5 resolve.</i>
+<br>
+
+</p>
+</body>
+"}
+
+/obj/item/paper/book/DNDrulebook
+	name = "Stations and Syndicates 8th Edition Rulebook"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
+	icon_state = "bookcc"
+
+	info = {"
+<body>
+<h2>Character Creation</h2>
+<hr>
+<p>
+<br>1 – Select your race as well as a job assignment appropriate to the setting of your session. Job assignments can be provided by your GM
+<br><b>Human/Lizard/Skeleton/Squid/Cow/Monkey</b>
+<br>
+<br>2 – Rank your attributes.<br>
+Apply one of each of the following modifiers to an attribute listed below.
+<br><b>+3, +2, +1, 0, -1, -2</b>
+<br><b>Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.</b>
+<br>
+<br>3 – Rank your archetypes.
+<br>These are skills corresponding to your attributes. Apply one of each of the modifiers to an attribute, just as you did above.
+<b>Fighter, Rogue, Explorer, Sage, Artist, Diplomat.</b>
+<br>
+<br>4 – Give yourself 10 points of resolve. How resolve works is explained in “Playing the game”
+<br>
+<br>5 – Choose a name and appearance.
+<br>
+<br>6 – Start with whatever basic gear makes sense for your race and job assigment.<br>
+<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausability and limit of what items you could possess should be consulted with your GM.
+
+<h2>Playing The Game</h2>
+<hr>
+<p>
+<br>1 – Start a quest<br>
+<br>2 – To take an action, describe what you want to do and then – if the GM asks – make a success check. If you fail, the GM can make a reaction against you.<br>
+<br><b>Success Check or Reaction = 1d20 +  Attribute +  Archetype vs Difficulty Class</b><br>
+<br>3 – If something attacks or acts against you, make a success check to defend.<br>
+<br>4 – If you suffer harm, you lose 1 resolve. If you deal harm, your target loses 1 resolve.<br>
+<br>5 – You can spend 1 resolve to roll with advantage or attempt an extraordinary feat.<br>
+<br>6 – If you have 0 resolve, you are knocked out. You gain 1 resolve when you finish a long rest.<br>
+<br>7 – You can carry 3 significant items at once.<br>
+<br>8 – When the quest is resolved, the game ends! If you survive, gain a perk. Choose either +1  Attribute point, +1 Archetype point or +1 maximum resolve.<br>
+
+This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found at https://giffyglyph.com/quickquest/
+</p>
 "}
 
 /obj/item/diary

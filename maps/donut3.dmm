@@ -20208,7 +20208,14 @@
 /area/station/library/reading2)
 "fIr" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "fIA" = (
@@ -53958,7 +53965,10 @@
 /area/station/crew_quarters/courtroom)
 "qaQ" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/storage/box/nerd_kit{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "qaT" = (
@@ -59781,6 +59791,25 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
+"rEW" = (
+/obj/table/wood/round/auto,
+/obj/item/clothing/suit/cultist{
+	desc = "Neeeeerds.";
+	name = "+2 robes of dungeon mastery";
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/clothing/head/apprentice{
+	desc = "NEEERRRRRDS.";
+	name = "+3 Cap of Sorcerous Origin";
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "rFa" = (
 /obj/railing/yellow{
 	dir = 4
@@ -68892,17 +68921,41 @@
 /area/station/crewquarters/fuq3)
 "uxc" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/head/apprentice{
-	desc = "NEEERRRRRDS.";
-	name = "+3 Cap of Sorcerous Origin";
-	pixel_x = -11;
-	pixel_y = 7
-	},
-/obj/item/clothing/suit/cultist{
-	desc = "Neeeeerds.";
-	name = "+2 robes of dungeon mastery";
+/obj/item/paper_bin{
 	pixel_x = 5;
-	pixel_y = 2
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -126558,7 +126611,7 @@ nNm
 hTi
 loH
 gmE
-qaQ
+fgQ
 uxc
 gmE
 fGQ
@@ -126860,7 +126913,7 @@ nNm
 hTi
 aNZ
 qND
-fgQ
+qaQ
 fgQ
 sLe
 bJK
@@ -127163,7 +127216,7 @@ hTi
 unS
 gmE
 fIr
-fgQ
+rEW
 gmE
 geI
 ltD
