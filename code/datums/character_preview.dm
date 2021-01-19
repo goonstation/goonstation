@@ -6,62 +6,6 @@ datum/character_preview
 	var/obj/screen/handler
 	var/mob/living/carbon/human/preview_mob
 
-	window
-		New(client/viewer)
-			var/winid = "preview_[max_preview_id]"
-
-			winclone(viewer, "blank-map", winid)
-
-			winset(viewer, winid, list2params(list(
-				"size" = "128,128",
-				"title" = "Character Preview",
-				"can-close" = FALSE,
-				"can-resize" = FALSE,
-			)))
-
-			. = ..(viewer, winid)
-
-		disposing()
-			. = ..()
-			SPAWN_DBG(0)
-				if (src.viewer)
-					winset(src.viewer, "[src.window_id]", "parent=")
-
-		proc/Show(shown = TRUE)
-			winshow(src.viewer, src.window_id, shown)
-
-	multiclient
-		var/list/viewers = list()
-
-		New(control_id = null)
-			. = ..(null, "unused", control_id)
-
-		disposing()
-			for (var/client/viewer in src.viewers)
-				if (viewer)
-					viewer.screen -= src.handler
-					viewer.screen -= src.preview_mob
-			. = ..()
-
-		proc/AddClient(client/viewer)
-			if (viewer && !(viewer in src.viewers))
-				src.viewers += viewer
-				viewer.screen += src.handler
-				viewer.screen += src.preview_mob
-
-		proc/RemoveClient(client/viewer)
-			if (viewer && (viewer in src.viewers))
-				src.viewers -= viewer
-				viewer.screen -= src.handler
-				viewer.screen -= src.preview_mob
-
-		proc/RemoveAllClients()
-			for (var/client/viewer in src.viewers)
-				if (viewer)
-					viewer.screen -= src.handler
-					viewer.screen -= src.preview_mob
-			src.viewers.len = 0
-
 	New(client/viewer, window_id, control_id = null)
 		. = ..()
 		START_TRACKING
@@ -117,3 +61,59 @@ datum/character_preview
 		src.preview_mob.update_colorful_parts()
 		src.preview_mob.set_body_icon_dirty()
 		src.preview_mob.set_face_icon_dirty()
+
+datum/character_preview/window
+	New(client/viewer)
+		var/winid = "preview_[max_preview_id]"
+
+		winclone(viewer, "blank-map", winid)
+
+		winset(viewer, winid, list2params(list(
+			"size" = "128,128",
+			"title" = "Character Preview",
+			"can-close" = FALSE,
+			"can-resize" = FALSE,
+		)))
+
+		. = ..(viewer, winid)
+
+	disposing()
+		. = ..()
+		SPAWN_DBG(0)
+			if (src.viewer)
+				winset(src.viewer, "[src.window_id]", "parent=")
+
+	proc/Show(shown = TRUE)
+		winshow(src.viewer, src.window_id, shown)
+
+datum/character_preview/multiclient
+	var/list/viewers = list()
+
+	New(control_id = null)
+		. = ..(null, "unused", control_id)
+
+	disposing()
+		for (var/client/viewer in src.viewers)
+			if (viewer)
+				viewer.screen -= src.handler
+				viewer.screen -= src.preview_mob
+		. = ..()
+
+	proc/AddClient(client/viewer)
+		if (viewer && !(viewer in src.viewers))
+			src.viewers += viewer
+			viewer.screen += src.handler
+			viewer.screen += src.preview_mob
+
+	proc/RemoveClient(client/viewer)
+		if (viewer && (viewer in src.viewers))
+			src.viewers -= viewer
+			viewer.screen -= src.handler
+			viewer.screen -= src.preview_mob
+
+	proc/RemoveAllClients()
+		for (var/client/viewer in src.viewers)
+			if (viewer)
+				viewer.screen -= src.handler
+				viewer.screen -= src.preview_mob
+		src.viewers.len = 0
