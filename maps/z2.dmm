@@ -83707,12 +83707,11 @@
 	desc = "A button set into the wall. You probably shouldn't press this.";
 	id = "virvadoor";
 	name = "curious button";
-	pixel_x = -7;
+	pixel_x = 24;
 	pixel_y = 9
 	},
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -164514,7 +164513,7 @@ dvy
 dvy
 dvy
 dvy
-dvy
+jJr
 dvy
 dvy
 dvy
@@ -164816,7 +164815,7 @@ dDP
 dvN
 dvV
 hVQ
-jJr
+dDP
 uAx
 uBJ
 ftk
