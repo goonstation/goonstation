@@ -822,7 +822,6 @@ WET FLOOR SIGN
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "vacuum"
-	mats = 10
 	w_class = 2
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
@@ -833,7 +832,6 @@ WET FLOOR SIGN
 		..()
 		src.bucket = new(src)
 		src.trashbag = new(src)
-		src.setItemSpecial(/datum/item_special/suck)
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -1009,6 +1007,7 @@ WET FLOOR SIGN
 	color = list(1,0,0, 0,1,0, 0,0,1, 0.3,0.1,0.0)
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/suck)
 		var/datum/item_special/suck/suck = src.special
 		suck.range = 10
 		suck.suck_in_range = 6
