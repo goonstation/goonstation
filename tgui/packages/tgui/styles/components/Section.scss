@@ -89,11 +89,11 @@ $shadow-offset: 0 0 !default;
 .Section--scrollable {
   overflow-x: hidden;
   overflow-y: hidden;
-}
 
-.Section--scrollable .Section__content {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  .Section__content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
 
 .Section--level--1 .Section__titleText {
