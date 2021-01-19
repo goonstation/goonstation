@@ -86640,7 +86640,7 @@
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
 	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
 	name = "mystical fun guy";
-	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20)
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20)
 	pixel_x = -4;
 	pixel_y = -3
 	},
