@@ -347,7 +347,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 					/obj/item/clothing/glasses/meson,
 					/obj/item/oreprospector,
 					/obj/item/satchel/mining = 2,
-					/obj/item/breaching_charge/mining = 3)
+					/obj/item/grenade/breaching_charge/mining = 3)
 	cost = 500
 	containertype = /obj/storage/secure/crate/plasma
 	containername = "Mining Equipment Crate"

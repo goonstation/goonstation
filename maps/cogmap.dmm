@@ -1029,7 +1029,7 @@
 /area/station/hallway/secondary/entry)
 "acO" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
@@ -1564,9 +1564,9 @@
 "adV" = (
 /obj/rack,
 /obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
 /turf/simulated/floor/caution/west,
 /area/station/security/armory)
 "adW" = (

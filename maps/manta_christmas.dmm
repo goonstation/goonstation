@@ -15526,9 +15526,9 @@
 /area/station/hallway/starboardupperhallway)
 "aHE" = (
 /obj/rack,
-/obj/item/breaching_charge/NT,
-/obj/item/breaching_charge/NT,
-/obj/item/breaching_charge/NT,
+/obj/item/grenade/breaching_charge/NT,
+/obj/item/grenade/breaching_charge/NT,
+/obj/item/grenade/breaching_charge/NT,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aHF" = (
@@ -20479,9 +20479,9 @@
 /area/station/hydroponics/bay)
 "aRH" = (
 /obj/rack,
-/obj/item/old_grenade/high_explosive,
-/obj/item/old_grenade/high_explosive,
-/obj/item/old_grenade/high_explosive,
+/obj/item/grenade/old_grenade/high_explosive,
+/obj/item/grenade/old_grenade/high_explosive,
+/obj/item/grenade/old_grenade/high_explosive,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aRI" = (

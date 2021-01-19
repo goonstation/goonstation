@@ -292,7 +292,7 @@
 		slot_glov = /obj/item/clothing/gloves/latex
 		slot_back = /obj/item/storage/backpack/NT
 		slot_eyes = /obj/item/clothing/glasses/thermal
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/laser_gun/pred)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/grenade/breaching_charge,/obj/item/grenade/breaching_charge,/obj/item/gun/energy/laser_gun/pred)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -489,7 +489,7 @@
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/laser_gun
 		slot_eyes = /obj/item/clothing/glasses/sunglasses
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/baton,/obj/item/breaching_charge,/obj/item/breaching_charge)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/baton,/obj/item/grenade/breaching_charge,/obj/item/grenade/breaching_charge)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -2213,8 +2213,8 @@
 	slot_rhan = /obj/item/tank/jetpack
 	items_in_backpack = list(/obj/item/gun/kinetic/assault_rifle,
 							/obj/item/device/pda2,
-							/obj/item/old_grenade/stinger/frag,
-							/obj/item/breaching_charge)
+							/obj/item/grenade/old_grenade/stinger/frag,
+							/obj/item/grenade/breaching_charge)
 
 	New()
 		..()
@@ -2271,7 +2271,7 @@
 	slot_poc2 = /obj/item/storage/pouch/bullet_9mm
 	items_in_backpack = list(/obj/item/gun/energy/ntgun,
 							/obj/item/device/pda2/heads,
-							/obj/item/old_grenade/stinger/frag,
+							/obj/item/grenade/old_grenade/stinger/frag,
 							/obj/item/storage/firstaid/regular,
 							/obj/item/storage/pouch/powercell_medium,
 							/obj/item/gun/kinetic/pistol)

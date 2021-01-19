@@ -1656,7 +1656,7 @@
 	item_paths = list("MET-1","CRY-1","CON-1")
 	item_names = list("Metal","Crystal","Conductive Material")
 	item_amounts = list(3,3,7)
-	item_outputs = list(/obj/item/breaching_charge/mining/light)
+	item_outputs = list(/obj/item/grenade/breaching_charge/mining/light)
 	time = 40 SECONDS
 	create = 5
 	category = "Resource"
@@ -1666,7 +1666,7 @@
 	item_paths = list("MET-1","CRY-1","CON-1")
 	item_names = list("Metal","Crystal","Conductive Material")
 	item_amounts = list(7,7,15)
-	item_outputs = list(/obj/item/breaching_charge/mining)
+	item_outputs = list(/obj/item/grenade/breaching_charge/mining)
 	time = 60 SECONDS
 	create = 5
 	category = "Resource"

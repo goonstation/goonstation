@@ -551,20 +551,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	ammo = /obj/item/ammo/bullets/internal/launcher/
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.loaded_magazine.mag_contents.len > 0)
-				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
-				return
-			else
-				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
-				TO_LOAD.attackby(b, user)
-				src.attackby(TO_LOAD, user)
-				return
-		else
-			..()
-
-
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
@@ -787,18 +773,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	ammo = /obj/item/ammo/bullets/internal/launcher/multi/explosive
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.loaded_magazine.mag_contents.len > 0)
-				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
-				return
-			else
-				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
-				TO_LOAD.attackby(b, user)
-				src.attackby(TO_LOAD, user)
-				return
-		else
-			..()
+	// attackby(obj/item/b as obj, mob/user as mob)
+	// 	if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/grenade/old_grenade))
+	// 		if(src.loaded_magazine.mag_contents.len > 0)
+	// 			boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
+	// 			return
+	// 		else
+	// 			var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
+	// 			TO_LOAD.attackby(b, user)
+	// 			src.attackby(TO_LOAD, user)
+	// 			return
+	// 	else
+	// 		..()
 
 // slamgun
 /obj/item/gun/kinetic/slamgun

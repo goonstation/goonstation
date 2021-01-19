@@ -251,7 +251,7 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
-	item = /obj/item/pipebomb/bomb/miniature_syndicate
+	item = /obj/item/grenade/pipebomb/bomb/miniature_syndicate
 	cost = 3
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -758,7 +758,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/moustache_grenade
 	name = "Moustache Grenade"
-	item = /obj/item/old_grenade/moustache
+	item = /obj/item/grenade/old_grenade/moustache
 	cost = 1
 	desc = "A disturbingly hairy grenade."
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
@@ -766,7 +766,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/hotdog_bomb
 	name = "Hotdog Bomb"
-	item = /obj/item/gimmickbomb/hotdog
+	item = /obj/item/grenade/gimmickbomb/hotdog
 	cost = 1
 	desc = "Turn your worst enemies into hotdogs."
 	job = list("Chef", "Sous-Chef", "Waiter", "Clown")
@@ -903,14 +903,14 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/breachingT
 	name = "Thermite Breaching Charge"
-	item = /obj/item/breaching_charge/thermite
+	item = /obj/item/grenade/breaching_charge/thermite
 	cost = 1
 	desc = "A self-contained thermite breaching charge, useful for destroying walls."
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/surplus/breaching
 	name = "Breaching Charge"
-	item = /obj/item/breaching_charge
+	item = /obj/item/grenade/breaching_charge
 	cost = 1
 	desc = "A self-contained explosive breaching charge, useful for destroying walls."
 	blockedmode = list(/datum/game_mode/spy)

@@ -562,7 +562,7 @@
 	if (iscarbon(usr) || issilicon(usr))
 		add_fingerprint(usr)
 
-	if (istype(src,/obj/item/old_grenade/light_gimmick))
+	if (istype(src,/obj/item/grenade/old_grenade/light_gimmick))
 		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
 		src.attack_hand(usr)
 		return

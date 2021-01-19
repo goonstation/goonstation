@@ -318,8 +318,8 @@ CONTAINS:
 	attackby(obj/item/W, mob/user)
 		..()
 
-		if (istype(W,/obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/F = W
+		if (istype(W,/obj/item/grenade/pipebomb/frame))
+			var/obj/item/grenade/pipebomb/frame/F = W
 			if (F.state < 2)
 				user.show_text("This might work better if [F] was hollowed out.")
 			else if (F.state == 2)

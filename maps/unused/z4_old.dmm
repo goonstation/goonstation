@@ -3760,13 +3760,13 @@
 /area/syndicate_station)
 "kx" = (
 /obj/table/auto,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},

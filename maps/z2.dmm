@@ -54360,9 +54360,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/gimmickbomb/owlclothes,
+/obj/item/grenade/gimmickbomb/owlclothes,
 /obj/item/gun/energy/wonkgun,
-/obj/item/gimmickbomb/owlclothes,
+/obj/item/grenade/gimmickbomb/owlclothes,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFg" = (
@@ -67145,10 +67145,10 @@
 /area/syndicate_station/battlecruiser)
 "dgs" = (
 /obj/table/auto,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -67161,10 +67161,10 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
@@ -74194,7 +74194,7 @@
 	icon_state = "line2"
 	},
 /obj/table/auto,
-/obj/item/pipebomb/bomb{
+/obj/item/grenade/pipebomb/bomb{
 	anchored = 1;
 	mouse_opacity = 0
 	},

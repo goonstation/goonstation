@@ -59,6 +59,9 @@
 	/// Prevents piles from having more than one. Only relevant on piles
 	var/has_big_projectile = 0
 
+	/// Format: Projectile datum = item associated with it
+	var/list/projectile_items = list()
+
 	/// For certain piles that should disappear when empty
 	/// Set to 0 for piles that are some kind of rigid container, like boxes of ammo
 	var/delete_when_empty = 0
@@ -238,14 +241,51 @@
 			boutput(user, "You couldn't find anything in [from_this_mag] to fit in [src]")
 			return FALSE
 
-	/// Turns an input atom into a usable form of ammo. Such as turning trash into bullets
-	/// Input atom can be anything. Will form the output projectile datum and configure it with set params
-	/// If load_it isnt set, it'll load the output into a new pile on the spot!
-	proc/transform_ammo(var/atom/atomIn, var/datum/projectile/projOut, var/load_it = 1, params)
-
 	/// Turns a grenade into a shootable projectile, typically a grenade-shell
 	/// Resulting projectile type can be overridden to be something else
-	proc/grenade_to_ammo(var/obj/nadeIn, var/datum/projectile/bullet/projOut = /datum/projectile/bullet/grenade_shell, var/load_it = 1)
+	proc/grenade_to_ammo(var/obj/item/nadeIn, var/datum/projectile/projType = /datum/projectile/bullet/grenade_shell, var/mob/user)
+		// if(!(CALIBER_ANY in src.caliber) & !(CALIBER_GRENADE in src.caliber))
+		// 	boutput(world,"[src] not accept [nadeIn] cus caliber")
+		// 	return FALSE
+		if(!istype(nadeIn, /obj/item/grenade) && !istype(nadeIn, /obj/item/chem_grenade))
+			return FALSE
+
+		nadeIn.set_loc(src)
+		user.u_equip(nadeIn)
+		var/datum/projectile/projOut = new projType(src)
+		src.projectile_items[projOut] = nadeIn
+		if(istype(nadeIn, /obj/item/grenade))
+			projOut.internal_grenade = nadeIn
+		else if(istype(nadeIn, /obj/item/chem_grenade))
+			projOut.internal_chem_grenade = nadeIn
+		src.mag_contents.Insert(1, projOut)
+		src.update_bullet_manifest()
+		src.update_icon()
+		return TRUE
+
+	proc/ammo_to_grenade()
+		if(length(src.projectile_items) < 1) return
+
+		var/found_nades
+		for(var/datum/projectile/P in src.projectile_items)
+			var/found_the_nade = 0
+			// var/datum/projectile/L_P = src.mag_contents[src.mag_contents.Find(P)]
+			for(var/datum/projectile/L_P in src.mag_contents)
+				if(P != L_P)
+					continue
+				if(L_P.internal_grenade)
+					L_P.internal_grenade.set_loc(get_turf(src))
+				if(L_P.internal_chem_grenade)
+					L_P.internal_chem_grenade.set_loc(get_turf(src))
+				src.mag_contents -= L_P
+				qdel(L_P)
+				found_nades++
+				found_the_nade = 1
+			if(found_the_nade)
+				src.projectile_items -= P
+		src.update_bullet_manifest()
+		src.update_icon()
+		return found_nades
 
 	/// Builds a user-readable list or line of whatever's in the supplied mag_manifest
 	proc/make_ammo_string(var/list/list_in, var/mode = "list")
@@ -275,6 +315,9 @@
 		if(src.mag_contents.len < 1)
 			boutput(user, "\The [src] is empty.")
 			return FALSE
+
+		if(length(src.projectile_items) >= 1)
+			src.ammo_to_grenade()
 
 		// Pile, pick a type of bullet, then a number to move, then move that many bullets to a new pile
 		// Mag, get the top bullet, move that to a new pile
@@ -420,6 +463,9 @@
 
 		if(isturf(over_object)) // Drag this ammo-thing to that turf? Unload it to there!
 			var/mob/user = usr
+			if(length(src.projectile_items) >= 1)
+				boutput(user, "You remove [length(src.projectile_items) == 1 ? "a grenade" : "some grenades"] from [src].")
+				src.grenade_to_ammo()
 			if(src.unload_magazine(user = user, put_that_here = over_object))
 				return
 
@@ -454,6 +500,8 @@
 			if(G.allowReverseReload)
 				G.load_gun(src, user = user)
 				return
+		else if(istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/grenade))
+			src.grenade_to_ammo(b, user = user)
 		else return ..()
 
 
@@ -1345,45 +1393,45 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	force_new_current_projectile = 1
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
-		if(!W || !user)
-			return
-		if (istype(W, /obj/item/chem_grenade) || istype(W, /obj/item/old_grenade))
-			if (AMMO.has_grenade == 0)
-				AMMO.load_nade(W)
-				user.u_equip(W)
-				W.layer = initial(W.layer)
-				W.set_loc(src)
-				src.update_icon()
-				boutput(user, "You load [W] into the [src].")
-				return
-			else
-				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
-				return
-		else
-			return ..()
+	// attackby(obj/item/W as obj, mob/living/user as mob)
+	// 	var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+	// 	if(!W || !user)
+	// 		return
+	// 	if (istype(W, /obj/item/chem_grenade) || istype(W, /obj/item/grenade/old_grenade))
+	// 		if (AMMO.has_grenade == 0)
+	// 			AMMO.load_nade(W)
+	// 			user.u_equip(W)
+	// 			W.layer = initial(W.layer)
+	// 			W.set_loc(src)
+	// 			src.update_icon()
+	// 			boutput(user, "You load [W] into the [src].")
+	// 			return
+	// 		else
+	// 			boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
+	// 			return
+	// 	else
+	// 		return ..()
 
-	attack_hand(mob/user as mob)
-		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
-		if(!user)
-			return
-		if (src.loc == user && AMMO.has_grenade != 0)
-			user.put_in_hand_or_drop(AMMO.get_nade())
-			AMMO.unload_nade()
-			boutput(user, "You pry the grenade out of [src].")
-			src.add_fingerprint(user)
-			src.update_icon()
-			return
-		return ..()
+	// attack_hand(mob/user as mob)
+	// 	var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+	// 	if(!user)
+	// 		return
+	// 	if (src.loc == user && AMMO.has_grenade != 0)
+	// 		user.put_in_hand_or_drop(AMMO.get_nade())
+	// 		AMMO.unload_nade()
+	// 		boutput(user, "You pry the grenade out of [src].")
+	// 		src.add_fingerprint(user)
+	// 		src.update_icon()
+	// 		return
+	// 	return ..()
 
-	update_icon()
-		inventory_counter.update_number(src.amount_left)
-		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
-		if (AMMO.has_grenade != 0)
-			src.icon_state = "40mmR"
-		else
-			src.icon_state = "40mmR-0"
+	// update_icon()
+	// 	inventory_counter.update_number(src.amount_left)
+	// 	var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+	// 	if (AMMO.has_grenade != 0)
+	// 		src.icon_state = "40mmR"
+	// 	else
+	// 		src.icon_state = "40mmR-0"
 
 
 

@@ -1260,97 +1260,82 @@ toxic - poisons
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
 
-	var/has_grenade = 0
-	var/obj/item/chem_grenade/CHEM = null
-	var/obj/item/old_grenade/OLD = null
-	var/has_det = 0 //have we detonated a grenade yet?
+	// proc/get_nade()
+	// 	if (src.has_grenade != 0)
+	// 		if (src.CHEM != null)
+	// 			return src.CHEM
+	// 		else if (src.OLD != null)
+	// 			return src.OLD
+	// 		else
+	// 			return null
+	// 	else
+	// 		return null
 
-	proc/get_nade()
-		if (src.has_grenade != 0)
-			if (src.CHEM != null)
-				return src.CHEM
-			else if (src.OLD != null)
-				return src.OLD
-			else
-				return null
-		else
-			return null
+	// proc/load_nade(var/obj/item/W)
+	// 	if (W)
+	// 		if (src.has_grenade == 0)
+	// 			if (istype(W,/obj/item/chem_grenade))
+	// 				src.CHEM = W
+	// 				src.has_grenade = 1
+	// 				return 1
+	// 			else if (istype(W, /obj/item/grenade/old_grenade))
+	// 				src.OLD = W
+	// 				src.has_grenade = 1
+	// 				return 1
+	// 			else
+	// 				return 0
+	// 		else
+	// 			return 0
+	// 	else
+	// 		return 0
 
-	proc/load_nade(var/obj/item/W)
-		if (W)
-			if (src.has_grenade == 0)
-				if (istype(W,/obj/item/chem_grenade))
-					src.CHEM = W
-					src.has_grenade = 1
-					return 1
-				else if (istype(W, /obj/item/old_grenade))
-					src.OLD = W
-					src.has_grenade = 1
-					return 1
-				else
-					return 0
-			else
-				return 0
-		else
-			return 0
+	// proc/unload_nade(var/turf/T)
+	// 	if (src.has_grenade !=0)
+	// 		if (src.CHEM != null)
+	// 			if (T)
+	// 				src.CHEM.set_loc(T)
+	// 			src.CHEM = null
+	// 			src.has_grenade = 0
+	// 			return 1
+	// 		else if (src.OLD != null)
+	// 			if (T)
+	// 				src.OLD.set_loc(T)
+	// 			src.OLD = null
+	// 			src.has_grenade = 0
+	// 			return 1
+	// 		else //how did this happen?
+	// 			return 0
+	// 	else
+	// 		return 0
 
-	proc/unload_nade(var/turf/T)
-		if (src.has_grenade !=0)
-			if (src.CHEM != null)
-				if (T)
-					src.CHEM.set_loc(T)
-				src.CHEM = null
-				src.has_grenade = 0
-				return 1
-			else if (src.OLD != null)
-				if (T)
-					src.OLD.set_loc(T)
-				src.OLD = null
-				src.has_grenade = 0
-				return 1
-			else //how did this happen?
-				return 0
-		else
-			return 0
+	// proc/det(var/turf/T)
+	// 	if (T && src.has_det == 0 && src.has_grenade != 0)
+	// 		if (src.CHEM != null)
+	// 			src.CHEM.set_loc(T)
+	// 			src.has_det = 1
+	// 			SPAWN_DBG(1 DECI SECOND)
+	// 				src.CHEM.explode()
+	// 			src.has_grenade = 0
+	// 			return
+	// 		else if (src.OLD != null)
+	// 			src.OLD.set_loc(T)
+	// 			src.has_det = 1
+	// 				src.OLD.prime()
+	// 			src.has_grenade = 0
+	// 			return
+	// 		else //what the hell happened
+	// 			return
+	// 	else
+	// 		return
 
-	proc/det(var/turf/T)
-		if (T && src.has_det == 0 && src.has_grenade != 0)
-			if (src.CHEM != null)
-				src.CHEM.set_loc(T)
-				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
-					src.CHEM.explode()
-				src.has_grenade = 0
-				return
-			else if (src.OLD != null)
-				src.OLD.set_loc(T)
-				src.has_det = 1
-				SPAWN_DBG(1 DECI SECOND)
-					src.OLD.prime()
-				src.has_grenade = 0
-				return
-			else //what the hell happened
-				return
-		else
-			return
 
-	on_hit(atom/hit, angle, obj/projectile/O)
-		var/turf/T = get_turf(hit)
-		if (T)
-			src.det(T)
-		else if (O)
-			var/turf/pT = get_turf(O)
-			if (pT)
-				src.det(pT)
-		return ..()
-
-	on_end(obj/projectile/O)
-		if (O && src.has_det == 0)
-			var/turf/T = get_turf(O)
-			if (T)
-				src.det(T)
-		else if (O)
-			src.has_det = 0
+	// on_end(obj/projectile/O)
+	// 	if (O && src.has_det == 0)
+	// 		var/turf/T = get_turf(O)
+	// 		if (T)
+	// 			src.det(T)
+	// 	else if (O)
+	// 		src.has_det = 0
 
 /datum/projectile/bullet/flintlock
 	name = "bullet"

@@ -32243,9 +32243,9 @@
 "buQ" = (
 /obj/rack,
 /obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
 /turf/simulated/floor/caution/west,
 /area/space)
 "buR" = (

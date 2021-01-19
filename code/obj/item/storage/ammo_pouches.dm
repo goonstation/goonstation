@@ -87,16 +87,16 @@
 	desc = "A sturdy fabric pouch used to carry several grenades."
 	w_class = 1.00
 	slots = 6
-	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
+	can_hold = list(/obj/item/grenade/old_grenade, /obj/item/chem_grenade)
 	does_not_open_in_pocket = 0
 
 	frag
 		name = "frag grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 6)
+		spawn_contents = list(/obj/item/grenade/old_grenade/stinger/frag = 6)
 
 	stinger
 		name = "stinger grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger = 6)
+		spawn_contents = list(/obj/item/grenade/old_grenade/stinger = 6)
 
 	incendiary
 		name = "incendiary grenade pouch"
@@ -104,22 +104,22 @@
 
 	high_explosive
 		name = "high explosive grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/high_explosive = 6)
+		spawn_contents = list(/obj/item/grenade/old_grenade/high_explosive = 6)
 
 	smoke
 		name = "smoke grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/smoke = 6)
+		spawn_contents = list(/obj/item/grenade/old_grenade/smoke = 6)
 
 	mixed_standard
 		name = "mixed grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/flashbang = 2,
-		/obj/item/old_grenade/stinger/frag = 2,
-		/obj/item/old_grenade/stinger = 2)
+		/obj/item/grenade/old_grenade/stinger/frag = 2,
+		/obj/item/grenade/old_grenade/stinger = 2)
 
 	mixed_explosive
 		name = "mixed grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
-		/obj/item/old_grenade/stinger = 3)
+		spawn_contents = list(/obj/item/grenade/old_grenade/stinger/frag = 3,
+		/obj/item/grenade/old_grenade/stinger = 3)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 

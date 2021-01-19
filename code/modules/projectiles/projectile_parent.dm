@@ -599,6 +599,10 @@ datum/projectile
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
+	/// This projectile holds a grenade. It'll call its prime() on impact!
+	var/obj/item/grenade/internal_grenade
+	/// And/or a chem grenade
+	var/obj/item/chem_grenade/internal_chem_grenade
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -629,9 +633,21 @@ datum/projectile
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			if(ks_ratio == 0) //stun projectiles only
 				impact_image_effect("T", hit)
-//				if (isliving(hit))
-//					var/mob/living/L = hit
-//					stun_bullet_hit(O,L)
+			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+				var/turf/T = get_turf(hit)
+				if (T)
+					src.internal_grenade?.set_loc(T)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(T)
+					src.internal_chem_grenade?.explode()
+				else if (O)
+					var/turf/pT = get_turf(O)
+					if (pT)
+						src.internal_grenade?.set_loc(T)
+						src.internal_grenade?.prime()
+						src.internal_chem_grenade?.set_loc(T)
+						src.internal_chem_grenade?.explode()
+				src.internal_grenade = null
 			return
 		tick(var/obj/projectile/O)
 			return
@@ -640,6 +656,16 @@ datum/projectile
 		on_pointblank(var/obj/projectile/O, var/mob/target)
 			return
 		on_end(var/obj/projectile/O)
+			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+				if (O)
+					var/turf/pT = get_turf(O)
+					if (pT)
+						src.internal_grenade?.set_loc(O)
+						src.internal_grenade?.prime()
+						src.internal_chem_grenade?.set_loc(O)
+						src.internal_chem_grenade?.explode()
+				src.internal_grenade = null
+
 			return
 		on_max_range_die(var/obj/projectile/O)
 			return

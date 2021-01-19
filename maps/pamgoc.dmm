@@ -52279,9 +52279,9 @@
 "bVd" = (
 /obj/rack,
 /obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "bVe" = (
@@ -53579,7 +53579,7 @@
 /area/station/hydroponics/bay)
 "bXY" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},

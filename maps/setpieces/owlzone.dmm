@@ -3332,8 +3332,8 @@
 	pixel_y = 8
 	},
 /obj/item/gun/energy/wonkgun,
-/obj/item/gimmickbomb/owlclothes,
-/obj/item/gimmickbomb/owlclothes,
+/obj/item/grenade/gimmickbomb/owlclothes,
+/obj/item/grenade/gimmickbomb/owlclothes,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "hY" = (

@@ -124,4 +124,4 @@
 		name = "engineering explosive crate"
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
-		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+		spawn_contents = list(/obj/item/grenade/pipebomb/bomb/engineering = 6)

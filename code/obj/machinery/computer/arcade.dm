@@ -206,7 +206,7 @@
 			if(6)
 				prize = new /obj/item/wrench/gold(src.loc)
 			if(7)
-				prize = new /obj/item/firework(src.loc)
+				prize = new /obj/item/grenade/firework(src.loc)
 				prize.icon = 'icons/obj/items/device.dmi'
 				prize.icon_state = "shield0"
 				prize.name = "decloaking device"

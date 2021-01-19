@@ -85,8 +85,8 @@
 	var/obj/item/assembly/anal_ignite/part_igniter = null // Just for show. Doesn't do anything here or in the igniter code.
 
 	var/obj/item/chem_grenade/grenade = null
-	var/obj/item/old_grenade/grenade_old = null
-	var/obj/item/pipebomb/bomb/pipebomb = null
+	var/obj/item/grenade/old_grenade/grenade_old = null
+	var/obj/item/grenade/pipebomb/bomb/pipebomb = null
 	var/obj/item/reagent_containers/glass/beaker/beaker = null
 	var/payload = ""
 
@@ -112,7 +112,7 @@
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.state)
+				if (CG.stage == 2 && !CG.stage)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -123,10 +123,10 @@
 				user.show_text("There's already a payload attached.", "red")
 				return
 
-		else if (istype(W, /obj/item/old_grenade/))
+		else if (istype(W, /obj/item/grenade/old_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
-				var/obj/item/old_grenade/OG = W
-				if (OG.not_in_mousetraps == 0 && !OG.state) // Same principle, okay.
+				var/obj/item/grenade/old_grenade/OG = W
+				if (OG.not_in_mousetraps == 0 && !OG.primed) // Same principle, okay.
 					user.u_equip(OG)
 					OG.set_loc(src)
 					src.grenade_old = OG
@@ -137,9 +137,9 @@
 				user.show_text("There's already a payload attached.", "red")
 				return
 
-		else if (istype(W, /obj/item/pipebomb/bomb/))
+		else if (istype(W, /obj/item/grenade/pipebomb/bomb/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
-				var/obj/item/pipebomb/bomb/PB = W
+				var/obj/item/grenade/pipebomb/bomb/PB = W
 				if (!PB.armed)
 					user.u_equip(PB)
 					PB.set_loc(src)

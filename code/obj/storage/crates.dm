@@ -378,7 +378,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/assault_rifle,
 		/obj/item/storage/pouch/assault_rifle/mixed,
 		/obj/item/storage/grenade_pouch/mixed_standard,
-		/obj/item/breaching_charge = 2,
+		/obj/item/grenade/breaching_charge = 2,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -389,7 +389,7 @@
 		/obj/item/storage/pouch/bullet_9mm,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
-		/obj/item/old_grenade/smoke = 2,
+		/obj/item/grenade/old_grenade/smoke = 2,
 		/obj/item/dagger/syndicate/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
@@ -599,7 +599,7 @@
 
 	weapons
 		spawn_contents = list(/obj/item/gun/energy/phaser_gun,
-		/obj/item/old_grenade/stinger = 2,
+		/obj/item/grenade/old_grenade/stinger = 2,
 		/obj/item/ammo/power_cell/med_power)
 
 	weapons2

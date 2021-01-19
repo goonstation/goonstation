@@ -1456,13 +1456,13 @@ var/list/fun_images = list()
 		return
 
 	if(new_grenade)
-		var/obj/item/old_grenade/thing_thrower/nade = new(usr.loc)
+		var/obj/item/grenade/old_grenade/thing_thrower/nade = new(usr.loc)
 		nade.count = input("How many things?", "How many things?", 8) as null|num
 		nade.payload = obj_path
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
+		var/obj/item/grenade/old_grenade/banana/nade = new /obj/item/grenade/old_grenade/banana(usr.loc)
 		nade.payload = obj_path
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."

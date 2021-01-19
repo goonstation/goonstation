@@ -1755,17 +1755,17 @@ obj/item/clothing/gloves/concussive
 			else
 				. = ..()
 
-/obj/item/breaching_charge/mining
+/obj/item/grenade/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
 	w_class = 1
 	var/emagged = 0
 	var/hacked = 0
-	expl_devas = 0
-	expl_heavy = 1
-	expl_light = 2
-	expl_flash = 4
+	var/expl_devas = 0
+	var/expl_heavy = 1
+	var/expl_light = 2
+	var/expl_flash = 4
 
 	light
 		name = "low-yield concussive charge"
@@ -1785,7 +1785,7 @@ obj/item/clothing/gloves/concussive
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
+			if (!src.primed)
 				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)

@@ -46,7 +46,7 @@
 /datum/matfab_part/charge
 	name = "Explosive Charge"
 	checkMatch(var/obj/item/I)
-		if(!istype(I, /obj/item/breaching_charge)) return 0
+		if(!istype(I, /obj/item/grenade/breaching_charge)) return 0
 		return ..()
 
 /datum/matfab_part/rubber

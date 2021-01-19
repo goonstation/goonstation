@@ -333,7 +333,7 @@ MATERIAL
 						boutput(usr, text("<span class='alert'>You need at least three metal to build pipe frames.</span>"))
 						return
 					src.amount -= 3
-					var/atom/A = new /obj/item/pipebomb/frame( usr.loc )
+					var/atom/A = new /obj/item/grenade/pipebomb/frame( usr.loc )
 					A.setMaterial(src.material)
 				if("bed")
 					if (src.amount < 2)

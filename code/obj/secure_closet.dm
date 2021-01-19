@@ -565,7 +565,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/scalpel(src)
 	new /obj/item/hand_tele(src)
-	//new /obj/item/old_grenade/emp(src)
+	//new /obj/item/grenade/old_grenade/emp(src)
 	new /obj/item/storage/box/zeta_boot_kit(src)
 	new /obj/item/device/radio/electropack(src)
 	new /obj/item/device/flash(src)

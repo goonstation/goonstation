@@ -119,6 +119,8 @@ PIPE BOMBS + CONSTRUCTION
 	var/beepy_chargeup = FALSE
 	/// Wants to do something to or with a certain atom
 	var/atom/target_atom
+	/// Fits in a grenade launcher
+	var/launcher_ready = FALSE
 
 	New()
 		..()
@@ -552,7 +554,7 @@ PIPE BOMBS + CONSTRUCTION
 				src.clothe_victims()
 
 			if(is_owlgib_grenade)
-				for(var/mob/living/carbon/human/M in range(5, src))
+				for(var/mob/living/carbon/human/M in range(5, get_loc(src)))
 					var/area/t = get_area(M)
 					if(t?.sanctuary) continue
 					SPAWN_DBG(0)
@@ -625,6 +627,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	launcher_ready = TRUE // Generally acts well just calling prime()
 
 /obj/item/grenade/old_grenade/banana
 	desc = "It is set to detonate in 3 seconds."
@@ -829,6 +832,8 @@ PIPE BOMBS + CONSTRUCTION
 	primed = 0
 	not_in_mousetraps = 1
 	is_light_grenade = TRUE
+	launcher_ready = FALSE // Does odd stuff with prime(), also might instagib people
+
 
 	New()
 		..()
@@ -852,6 +857,7 @@ PIPE BOMBS + CONSTRUCTION
 	beepy_chargeup = TRUE
 	explode_on_detonation = TRUE
 	sound_explode = 'sound/effects/Explosion2.ogg'
+	launcher_ready = TRUE // Might work!
 
 /obj/item/grenade/gimmickbomb/owlgib
 	name = "Owl Bomb"
@@ -993,6 +999,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_crit_chance = 5
 	is_firework = TRUE
 	sound_explode = "sound/effects/Explosion1.ogg"
+	launcher_ready = TRUE // Why the heck not?
 
 	New()
 		..()
@@ -1225,6 +1232,7 @@ PIPE BOMBS + CONSTRUCTION
 	contraband = 4
 
 	is_pipebomb = TRUE
+	launcher_ready = TRUE // Shrug!
 
 	var/strength = 5
 	var/armed = 0
@@ -1264,6 +1272,9 @@ PIPE BOMBS + CONSTRUCTION
 	ex_act(severity)
 		do_explode()
 		. = ..()
+
+	prime()
+		do_explode()
 
 	do_explode()
 		if (src.strength)

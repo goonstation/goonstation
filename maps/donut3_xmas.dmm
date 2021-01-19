@@ -16004,14 +16004,14 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 8
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 6;
 	pixel_y = -3
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 3;
 	pixel_y = -6
 	},
