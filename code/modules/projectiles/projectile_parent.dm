@@ -551,7 +551,7 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // standard visible message upon bullet_act
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
