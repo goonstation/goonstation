@@ -243,7 +243,11 @@
 				stored_mobs -= L
 
 	attack_hand(var/mob/user as mob)
-		if (!enter_prompt(user))
+		if(isgrab(user.l_hand))
+			src.attackby(user.l_hand, user)
+		else if(isgrab(user.r_hand))
+			src.attackby(user.r_hand, user)
+		else if (!enter_prompt(user))
 			return ..()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
