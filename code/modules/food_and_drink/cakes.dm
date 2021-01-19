@@ -54,12 +54,11 @@
 	/*‾‾‾‾‾‾‾*/
 	proc/check_for_topping(var/obj/item/W)
 		var/tag = null
-		var/pendinglight = 0
 		if(istype(W,/obj/item/device/light/candle)) //special handling for candles because they need to send unique information
 			var/obj/item/device/light/candle/candle = W
 			if(candle.on)
-				pendinglight = 1
 				tag = "cake[clayer]-candle_lit"
+				src.ignite()
 			else
 				tag = "cake[clayer]-candle"
 			cake_candle = tag
@@ -81,7 +80,7 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-		. = list(tag,pendinglight) //returns a list consisting of the new overlay tag and candle data
+		. = tag //returns a list consisting of the new overlay tag and candle data
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
@@ -469,8 +468,6 @@
 			user.visible_message("<b>[user.name]</b> blows out the candle!")
 
 	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
-		var/topping //the topping the player is adding (stored as a string reference to an icon_state)
-		var/pendinglight //a variable referenced later to check if the light source on a cake needs to be updated
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if(!src.sliced)
 				slice_cake(W,user)
@@ -488,12 +485,10 @@
 			W.firesource_interact()
 			return
 		else
-			var/list/returns = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
-			if(returns[1] == 0) //if the item wasn't a valid topping, perfom the default action
+			var/topping = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
+			if(topping == 0) //if the item wasn't a valid topping, perfom the default action
 				..()
 				return
-			topping = returns[1]
-			pendinglight = returns[2]
 
 			//adding topping overlays to the cake. Yay :D
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
@@ -504,9 +499,6 @@
 				src.UpdateOverlays(toppingoverlay,topping)
 				user.u_equip(W)
 				qdel(W)
-				if(pendinglight)
-					src.ignite()
-
 
 	attack_hand(mob/user as mob)
 		if(length(contextActions))
