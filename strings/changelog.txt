@@ -1,5 +1,9 @@
 
 (t)mon jan 18 21
+(u)BenLubar
+(p)3384
+(e)|
+(*)APCs are now able to automatically exit Fully Charged status. See the pull request for technical details.
 (u)Chickenish
 (p)3330
 (e)|
