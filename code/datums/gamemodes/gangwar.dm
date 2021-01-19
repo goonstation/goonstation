@@ -1316,6 +1316,9 @@
 	name = "gang recruitment flyer case"
 	desc = "A briefcase full of flyers advertising a gang."
 	icon_state = "briefcase_black"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "sec-case"
+
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 
