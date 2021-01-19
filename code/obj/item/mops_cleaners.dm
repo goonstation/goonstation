@@ -888,6 +888,7 @@ WET FLOOR SIGN
 			for(var/obj/item/I in src.trashbag)
 				I.set_loc(storage)
 			src.trashbag.current_stuff = 0
+			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			return
 		else if(istype(target, /obj/machinery/disposal))
@@ -896,6 +897,7 @@ WET FLOOR SIGN
 				for(var/obj/item/I in src.trashbag)
 					I.set_loc(disposal)
 				src.trashbag.current_stuff = 0
+			src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				disposal.update()
 				return
@@ -962,6 +964,7 @@ WET FLOOR SIGN
 					for(var/obj/item/I as() in items_to_suck) // yes, this can go over capacity of the bag, that's intended
 						I.set_loc(src.trashbag)
 						src.trashbag.current_stuff += I.w_class
+					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
 
