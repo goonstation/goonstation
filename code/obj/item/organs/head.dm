@@ -545,7 +545,7 @@
 					src.organ_name = "hunter head"
 					src.desc = "Ironic isn't it?"
 
-				if(HEAD_SQUID)
+				if(HEAD_ITHILLID)
 					src.organ_name = "squid head"
 					src.desc = "Blub, blub."
 

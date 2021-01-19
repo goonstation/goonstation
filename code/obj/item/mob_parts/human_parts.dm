@@ -2010,19 +2010,19 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
-/// SQUID LIMBS ///
+/// ITHILLID LIMBS ///
 ///// PARENT /////
-/obj/item/parts/human_parts/arm/mutant/squid
-	icon = 'icons/mob/squid.dmi'
-	partIcon = 'icons/mob/squid.dmi'
+/obj/item/parts/human_parts/arm/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
 
-/obj/item/parts/human_parts/leg/mutant/squid
-	icon = 'icons/mob/squid.dmi'
-	partIcon = 'icons/mob/squid.dmi'
+/obj/item/parts/human_parts/leg/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
 
 ///// LIMBS /////
 
-/obj/item/parts/human_parts/arm/mutant/squid/left
+/obj/item/parts/human_parts/arm/mutant/ithillid/left
 	name = "left squid arm"
 	desc = "A squid's left blub."
 	icon_state = "arm_left"
@@ -2030,15 +2030,15 @@ obj/item/parts/human_parts/arm/right/stone
 	side = "left"
 	handlistPart = "hand_left"
 
-/obj/item/parts/human_parts/arm/mutant/squid/right
+/obj/item/parts/human_parts/arm/mutant/ithillid/right
 	name = "left squid arm"
 	desc = "Blub squid's right arm"
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
-	handlistPart = "hand_left"
+	handlistPart = "hand_right"
 
-/obj/item/parts/human_parts/leg/mutant/squid/left
+/obj/item/parts/human_parts/leg/mutant/ithillid/left
 	name = "left squid leg"
 	desc = "A blub's left leg."
 	slot = "l_leg"
@@ -2046,7 +2046,7 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-/obj/item/parts/human_parts/leg/mutant/squid/right
+/obj/item/parts/human_parts/leg/mutant/ithillid/right
 	name = "right squid leg"
 	desc = "A squid's blub leg."
 	icon_state = "leg_right"
