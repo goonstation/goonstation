@@ -897,7 +897,7 @@ WET FLOOR SIGN
 				for(var/obj/item/I in src.trashbag)
 					I.set_loc(disposal)
 				src.trashbag.current_stuff = 0
-			src.trashbag.calc_w_class(null)
+				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				disposal.update()
 				return
