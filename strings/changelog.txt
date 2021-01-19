@@ -1,4 +1,9 @@
 
+(t)tue jan 19 21
+(u)zjdtmkhzt
+(p)3361
+(e)⚖🆕|balance, feature
+(+)Devastating artifact bombs now give a stationwide message when armed or disarmed (you can use an activator artifact on them to do that!).
 (t)mon jan 18 21
 (u)BenLubar
 (p)3384
