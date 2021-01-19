@@ -228,7 +228,7 @@ proc/get_angle(atom/a, atom/b)
 		sleep(1)
 	. = doer.success
 
-/proc/do_after(mob/M as mob, time as num)
+/proc/do_after(mob/M, time)
 	if (!ismob(M))
 		return 0
 	. = 0
