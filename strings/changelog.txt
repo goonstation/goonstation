@@ -3,7 +3,7 @@
 (u)BenLubar
 (p)3384
 (e)|
-(*)APCs are now able to automatically exit Fully Charged status. See the pull request for technical details.
+(+)Fixed a bug with APCs not exiting their "fully charged" status. See the pull request for technical details.
 (u)Chickenish
 (p)3330
 (e)|
