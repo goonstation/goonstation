@@ -34,7 +34,7 @@
 	heal_amt = 2
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	object_flags = IGNORE_CONTEXT_CLICK_HELD
+	object_flags = IGNORE_CONTEXT_CLICK_ATTACKBY | IGNORE_CONTEXT_CLICK_EQUIPPED
 	initial_volume = 100
 	w_class = 4.0
 	var/sliced = FALSE
@@ -264,41 +264,37 @@
 	proc/build_cake(var/obj/item/cake_transfer,var/mob/user,var/mode,var/layer_tag,var/replacetext)//cake_transfer : passes a reference to the cake that we are building //layer_tag and replacetext : references used with slicing //decompiles a full cake into slices or other cakes
 		if((mode != CAKE_MODE_CAKE) && (mode != CAKE_MODE_SLICE))
 			return
-		var/staticiterator = src.overlays.len //saves a static number of times for the loop to run, this number is offset when the loop encounters special conditions below. this makes sure that no matter how many weird overlays we have, toppings are always set as toppings and no layers are lost.
 		var/normal_topping = FALSE //there are special cases in rendering cake overlays that should only ever trigger once, afterward the toggle is switched to true, initiating the normal topping overlay handling
 		var/slices
 		var/candle_light //cute little wax stick that people light on fire for their own enjoyment <3
 		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
 		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
 			cake = cake_transfer
-		for(var/i=1,i<=staticiterator,i++)
+		for(var/overlay_ref in src.overlay_refs)
 			if(mode == CAKE_MODE_CAKE)
-				world.log << ("[src.overlay_refs[i]]")
-				if("[src.overlay_refs[i]]" == "base")
+				if("[overlay_ref]" == "base")
 					continue
-				if(("[src.overlay_refs[i]]" == "second") || ("[src.overlay_refs[i]]" == "third"))
-					if(("[src.overlay_refs[i]]" == "second") && (src.clayer == 2))
+				if(("[overlay_ref]" == "second") || ("[overlay_ref]" == "third"))
+					if(("[overlay_ref]" == "second") && (src.clayer == 2))
 						normal_topping = TRUE
 						cake.amount = src.amount2
 						src.amount2 = 0
-					else if(("[src.overlay_refs[i]]" == "third") && (src.clayer == 3))
+					else if(("[overlay_ref]" == "third") && (src.clayer == 3))
 						normal_topping = TRUE
 						cake.amount = src.amount3
 						src.amount3 = 0
 					if(normal_topping)
 						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
-						var/image/warningsuppression = src.GetOverlayImage(src.overlay_refs[i])
+						var/image/warningsuppression = src.GetOverlayImage(overlay_ref)
 						stack.color = warningsuppression.color
 						cake.UpdateOverlays(stack,"base")
-						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-						staticiterator--
-						i--
+						src.ClearSpecificOverlays("[overlay_ref]")
 						continue
 				if(normal_topping)
 					var/tag
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
 					var/list/newnumbers = src.overlay_number_convert(src.clayer,CAKE_MODE_BUILD)
-					tag = replacetext("[src.overlay_refs[i]]","[newnumbers[1]]","[newnumbers[2]]")
+					tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
 					if(src.cake_candle)
 						cake.cake_candle = replacetext("[src.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
 						src.cake_candle = 0
@@ -306,43 +302,35 @@
 					if(buffer.color)
 						newoverlay.color = buffer.color
 					cake.UpdateOverlays(newoverlay,tag)
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-					staticiterator--
-					i--
+					src.ClearSpecificOverlays("[overlay_ref]")
 					continue
 			else if(mode == CAKE_MODE_SLICE)
-				if("[src.overlay_refs[i]]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
+				if("[overlay_ref]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
 					normal_topping = TRUE
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
 					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
 					if(buffer.color)
 						slicecolor.color = buffer.color
 					cake.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
 					src.ClearSpecificOverlays(layer_tag)
-					staticiterator--
-					i--
 					continue
 				if(normal_topping) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/toppingpath = replacetext("[src.overlay_refs[i]]","[replacetext]","slice")
+					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
+					var/toppingpath = replacetext("[overlay_ref]","[replacetext]","slice")
 
 					if((toppingpath == "slice-candle")) //special case for candles :D
 						if(litfam)
 							candle_light = TRUE
 						else
 							candle_light = FALSE
-						src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-						staticiterator--
-						i--
+						src.ClearSpecificOverlays("[overlay_ref]")
 						continue
 
 					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',toppingpath)
 					if(buffer.color)
 						toppingimage.color = buffer.color
 					cake.UpdateOverlays(toppingimage,toppingpath)
-					src.ClearSpecificOverlays("[src.overlay_refs[i]]")
-					staticiterator--
-					i--
+					src.ClearSpecificOverlays("[overlay_ref]")
 			else
 				break
 		if(src.amount > 10)

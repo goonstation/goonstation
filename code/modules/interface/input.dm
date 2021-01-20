@@ -193,12 +193,14 @@ var/list/dirty_keystates = list()
 			var/list/contexts = mob.checkContextActions(object)
 
 			if(contexts.len)
-				var/obj/o = object
-				if((o.object_flags & IGNORE_CONTEXT_CLICK_HELD) && mob.equipped())
-					..()
-				else 
-					mob.showContextActions(contexts, object) //hmm...
-					return
+				if(istype(object,/obj))
+					var/obj/o = object
+					if(o.object_flags & IGNORE_CONTEXT_CLICK_ATTACKBY)
+						if((o.loc != mob) && (get_dist(o, mob) <= 1) && mob.equipped())
+							..()
+					else 
+						mob.showContextActions(contexts, o)
+						return
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me

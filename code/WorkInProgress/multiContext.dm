@@ -278,10 +278,11 @@ var/list/globalContextActions = null
 				if(action) applicable.Add(C)
 
 		var/obj/item/W = src.equipped()
-		if(W && W != target && length(W.contextActions))
-			for(var/datum/contextAction/C in W.contextActions)
-				var/action = C.checkRequirements(target, src)
-				if(action) applicable.Add(C)
+		if(W && !(W.object_flags & IGNORE_CONTEXT_CLICK_EQUIPPED))
+			if(W != target && length(W.contextActions))
+				for(var/datum/contextAction/C in W.contextActions)
+					var/action = C.checkRequirements(target, src)
+					if(action) applicable.Add(C)
 
 		if(src != target && length(src.contextActions))
 			for(var/datum/contextAction/C in src.contextActions)
