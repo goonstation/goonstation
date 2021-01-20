@@ -286,6 +286,7 @@
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
 	..()
+	src.AddComponent(/datum/component/consume/eat_thing, _edibility = src.edible, _heal_amt = 1, _need_utensil = NEED_NO_UTENSIL, _festivity = 0, _unlock_medal_when_eaten = null)
 
 /obj/item/unpooled()
 	..()
@@ -382,18 +383,25 @@
 	..()
 
 
-//disgusting proc. merge with foods later. PLEASE
+//disgusting proc. merge with foods later. PLEASE - ok
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
-	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
-	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
+	var/edibility_check
+	ADD_FLAG(edibility_check, SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)) // first check for edibility
+	ADD_FLAG(edibility_check, SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)) // Check if the mob overrides it
+	if(!HAS_FLAG(edibility_check, THING_IS_EDIBLE) || HAS_FLAG(edibility_check, THING_IS_INEDIBLE))
 		return 0
 
+	SEND_SIGNAL(src, COMSIG_ITEM_CONSUMING, M, user)
+	return
+
+
 	if (M == user)
+		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
@@ -412,7 +420,7 @@
 				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
+
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -428,6 +436,7 @@
 		if (get_dist(user,M) > 1)
 			return 0
 
+		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 		user, "<span class='alert'>You feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
@@ -448,7 +457,6 @@
 				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1

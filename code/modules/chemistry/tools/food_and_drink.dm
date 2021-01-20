@@ -36,44 +36,6 @@
 				return 1
 		return 0
 
-	proc/heal(var/mob/living/M)
-		var/healing = src.heal_amt
-
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 2)
-				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
-
-		if (quality >= 5)
-			boutput(M, "<span class='notice'>That tasted amazing!</span>")
-			healing *= 2
-
-		if (src.reagents && src.reagents.has_reagent("THC"))
-			boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
-			healing *= 2
-
-
-		if (quality <= 0.5)
-			boutput(M, "<span class='alert'>Ugh! That tasted horrible!</span>")
-			if (prob(20))
-				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
-			healing = 0
-
-		if (!isnull(src.unlock_medal_when_eaten))
-			M.unlock_medal(src.unlock_medal_when_eaten, 1)
-
-		var/cutOff = round(M.max_health / 1.8) // 100 / 1.8 is about 55.555...6 so this should work out to be around the original value of 55 for humans and the equivalent for mobs with different max_health
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.traitHolder && H.traitHolder.hasTrait("survivalist"))
-				cutOff = round(H.max_health / 10) // originally 10
-
-		if (M.health < cutOff)
-			boutput(M, "<span class='alert'>Your injuries are too severe to heal by nourishment alone!</span>")
-		else
-			M.HealDamage("All", healing, healing)
-
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
@@ -173,153 +135,7 @@
 		if (!src.Eat(M, user))
 			return ..()
 
-	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
-		// in this case m is the consumer and user is the one holding it
-		if (!src.edible)
-			return 0
-		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
-		if (!src.amount)
-			boutput(user, "<span class='alert'>None of [src] left, oh no!</span>")
-			user.u_equip(src)
-			qdel(src)
-			return 0
-		if (iscarbon(M) || ismobcritter(M))
-			if (M == user)
-				//can this person eat this food?
-				if(!M.can_eat(src))
-					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
-					return 0
-				if (!bypass_utensils)
-					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
-						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/fork/plastic/F in user.equipped_list(check_for_magtractor = 0))
-							F.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
-					if (src.needspoon && !user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
-							S.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
-						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
-						return 0
-				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-				"<span class='notice'>You take a bite of [src]!</span>")
-				logTheThing("combat", user, M, "takes a bite of [src] [log_reagents(src)] at [log_loc(user)].")
-
-				src.amount--
-				M.nutrition += src.heal_amt * 10
-				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-				on_bite(M)
-				if (src.festivity)
-					modify_christmas_cheer(src.festivity)
-				if (!src.amount)
-					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")*/
-					boutput(M, "<span class='alert'>You finish eating [src].</span>")
-					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
-						var/obj/item/reagent_containers/food/snacks/plant/P = src
-						var/doseed = 1
-						var/datum/plantgenes/SRCDNA = P.plantgenes
-						if (!SRCDNA || HYPCheckCommut(SRCDNA,"Seedless")) doseed = 0
-						if (doseed)
-							var/datum/plant/stored = P.planttype
-							if (istype(stored) && !stored.isgrass)
-								var/obj/item/seed/S
-								if (stored.unique_seed)
-									S = unpool(stored.unique_seed)
-									S.set_loc(user.loc)
-								else
-									S = unpool(/obj/item/seed)
-									S.set_loc(user.loc)
-									S.removecolor()
-
-								var/datum/plantgenes/DNA = P.plantgenes
-								var/datum/plantgenes/PDNA = S.plantgenes
-								S.generic_seed_setup(stored)
-								HYPpassplantgenes(DNA,PDNA)
-								if (stored.hybrid)
-									var/datum/plant/hybrid = new /datum/plant(S)
-									for (var/V in stored.vars)
-										if (issaved(stored.vars[V]) && V != "holder")
-											hybrid.vars[V] = stored.vars[V]
-									S.planttype = hybrid
-								user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
-								"<span class='notice'>You spit out a seed.</span>")
-					if(src.dropped_item)
-						drop_item(dropped_item)
-					user.u_equip(src)
-					on_finish(M, user)
-					qdel(src)
-				return 1
-			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
-			else if(!M.can_eat(src))
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
-				return 0
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
-
-				if (!do_mob(user, M))
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-					return
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
-						return 0
-
-				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-				user, "<span class='alert'>You feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-				logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
-
-
-				on_bite(M)
-				src.amount--
-				M.nutrition += src.heal_amt * 10
-				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
-				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
-					if(src.dropped_item)
-						drop_item(dropped_item)
-					user.u_equip(src)
-					on_finish(M, user)
-					qdel(src)
-				return 1
 
 // I don't know if this was used for something but it was breaking my important "shake salt and pepper onto things" feature
 // so it's getting commented out until I get yelled at for breaking something
@@ -333,29 +149,8 @@
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
-		if (isliving(eater))
-			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
-				var/obj/item/reagent_containers/food/snacks/bite/B = unpool(/obj/item/reagent_containers/food/snacks/bite)
-				B.set_loc(eater)
-				B.reagents.maximum_volume = reagents.total_volume/(src.amount ? src.amount : 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
-				var/mob/living/L = eater
-				L.stomach_process += B
 
-			if (src.food_effects.len && isliving(eater) && eater.bioHolder)
-				var/mob/living/L = eater
-				for (var/effect in src.food_effects)
-					L.add_food_bonus(effect, src)
 
-		if (use_bite_mask)
-			var/desired_mask = (amount / start_amount) * 5
-			desired_mask = round(desired_mask)
-			desired_mask = max(1,desired_mask)
-			desired_mask = min(desired_mask, 5)
-
-			if (desired_mask != current_mask)
-				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 		eater.on_eat(src)
