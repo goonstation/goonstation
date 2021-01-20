@@ -38,5 +38,3 @@ toxic - poisons
 	silentshot = 1
 	//Bullet equivalent impact_range
 	impact_range = 0
-	//No armor block messages
-	nomsg = 1
