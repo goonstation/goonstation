@@ -121,6 +121,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
@@ -1099,6 +1100,7 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	intact = 0
+	layer = PLATING_LAYER
 	allows_vehicles = 1 // let the constructor pods move around on these
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1274,7 +1276,7 @@
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
-	intact = 0
+	setIntact(FALSE)
 	broken = 0
 	burnt = 0
 	if(plate_mat)
@@ -1319,7 +1321,7 @@
 
 /turf/simulated/floor/proc/restore_tile()
 	if(intact) return
-	intact = 1
+	setIntact(TRUE)
 	broken = 0
 	burnt = 0
 	icon = initial(icon)
