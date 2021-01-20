@@ -41,6 +41,11 @@
 			boutput( user, "<span class='notice'>You attach the [CLEAN(src)] to the [CLEAN(what)].</span>" )
 		*/
 
+/// Define: GPS_MAP_TESTING
+/// Enable definition to provide the following information for MAP review when the GPS verb is used:
+/// * Sorted List of GPS Waypoints
+/// * Duplicate GPS waypoints with the same name (provides X,Y)
+/// * List of AREAs that would NOT be listed in GPS list due to distance and what criteria would allow them to be (up to 1000 iterations)
 //#define GPS_MAP_TESTING
 
 
@@ -79,6 +84,7 @@
 
 			targets[name] = wp
 			wtfbyond[++wtfbyond.len] = name
+
 #ifdef GPS_MAP_TESTING
 		else
 			var/area/area = get_area(wp)
