@@ -489,16 +489,8 @@
 			miscvuln = 0.2
 
 
-//DELETE THIS SHIT LATER, ITS FOR TESTS YOU DUMMY.
+//-MISCELLANEOUS-//
 
-/obj/big_thing_test
-	icon = 'icons/misc/retribution/SWORD/base.dmi'
-	icon_state = "beacon"
-	bound_height = 96
-	bound_width = 96
-
-	New()
-		..()
-		src.set_dir(WEST)
-		var/turf/center = get_step(get_turf(src), NORTHEAST)
-		new /obj/item/space_thing(center)
+	proc/get_center()
+		var/turf/center_tile = get_step(get_turf(src), NORTHEAST)
+		return center_tile
