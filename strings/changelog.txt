@@ -1,4 +1,7 @@
 
+(t)wed jan 20 21
+(u)pali
+(*)The handheld vacuum cleaner got new sprites and its special attack got rebalanced. Also fixed a bunch of things. Oh and also experimentally adding an overcharged version of the vacuum cleaner to janitor's traitor uplink.
 (t)tue jan 19 21
 (u)Flourish
 (*)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).

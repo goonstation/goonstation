@@ -1070,6 +1070,9 @@ WET FLOOR SIGN
 					if(!A.anchored)
 						if(!ismob(A) || src.suck_mobs)
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
+							if(ismob(A))
+								var/mob/M = A
+								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A
 							if(M.equipped() && prob(25))
