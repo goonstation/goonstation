@@ -426,7 +426,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -469,7 +469,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_range(usr))
 							return
 
 						if(!(src.holder in src.master))
