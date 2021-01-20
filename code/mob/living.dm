@@ -1788,8 +1788,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (isalive(src))
 					lastgasp()
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
@@ -1800,8 +1799,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (isalive(src))
 					lastgasp()
 				if (rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but [P] pierces through your armor!"
+					armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
@@ -1810,8 +1808,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (rangedprot > 1)
 					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1826,8 +1823,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stuttering = stun
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1841,8 +1837,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
@@ -1854,8 +1849,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					SPAWN_DBG(30 SECONDS)
 						src.remove_stam_mod_regen("projectile")
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
@@ -1870,10 +1864,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				else
 					src.take_toxin_damage(damage)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
-	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
+	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
 
 
