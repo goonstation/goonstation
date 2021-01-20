@@ -619,7 +619,6 @@
 					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
-
 		return
 
 	attack_hand(var/mob/user)
