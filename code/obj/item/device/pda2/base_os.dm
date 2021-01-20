@@ -307,7 +307,7 @@
 							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
-							else if(!src.clipboard || !src.clipboard?.dont_copy)
+							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
 							var/msgButton = "<a href='byond://?src=\ref[src];input=message;target=[mailgrp];department=1'>Mail</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
