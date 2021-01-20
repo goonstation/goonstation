@@ -1,7 +1,9 @@
 
 (t)tue jan 19 21
 (u)Flourish
-(+)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).
+(*)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).
+(u)Flourish
+(+)When you send a crate of credits out QM, the traders will now take a 10% fee. Meaning if you send out 100 credits, you'll get 90 added to your shipping budget.
 (u)Flaborized
 (p)3370
 (e)🆕|feature
