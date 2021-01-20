@@ -1,5 +1,7 @@
 
 (t)tue jan 19 21
+(u)Flourish
+(+)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).
 (u)Flaborized
 (p)3370
 (e)🆕|feature
