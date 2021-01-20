@@ -469,6 +469,18 @@
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
 
+/obj/item/clothing/suit/labcoat/pathology
+	name = "pathologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	icon_state = "PTlabcoat"
+	item_state = "MDlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "MDlabcoat-alt"
+		item_state = "MDlabcoat-alt"
+		coat_style = "MDlabcoat-alt"
+
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
 	desc = "A protective laboratory coat with the purple markings of a Scientist."

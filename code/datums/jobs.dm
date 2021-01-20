@@ -565,7 +565,7 @@
 	slot_belt = /obj/item/device/pda2/genetics
 	slot_jump = /obj/item/clothing/under/rank/medical
 	slot_foot = /obj/item/clothing/shoes/white
-	slot_suit = /obj/item/clothing/suit/labcoatlong
+	slot_suit = /obj/item/clothing/suit/labcoat/pathology
 	slot_ears = /obj/item/device/radio/headset/medical
 
 	New()
