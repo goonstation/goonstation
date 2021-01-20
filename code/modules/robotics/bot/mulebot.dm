@@ -411,7 +411,7 @@
 
 	// returns true if the bot has power
 	proc/has_power()
-		return !open && cell && cell.charge>0 && (wires & wire_power1) && (wires & wire_power2)
+		return !open && cell?.charge>0 && (wires & wire_power1) && (wires & wire_power2)
 
 	// mousedrop a crate to load the bot
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -526,7 +526,7 @@
 					at_target()
 					return
 
-				else if(path && path.len > 0 && target) // valid path
+				else if(length(path) && target) // valid path
 					var/turf/next = path[1]
 					reached_target = 0
 					if(next == loc)
@@ -540,14 +540,14 @@
 							var/obj/decal/cleanable/blood/tracks/B = make_cleanable(/obj/decal/cleanable/blood/tracks, loc)
 							var/newdir = get_dir(next, loc)
 							if(newdir == dir)
-								B.dir = newdir
+								B.set_dir(newdir)
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
 									newdir = 1
 								else if(newdir == 12)
 									newdir = 4
-								B.dir = newdir
+								B.set_dir(newdir)
 							bloodiness--
 
 						step_towards(src, next)	// attempt to move

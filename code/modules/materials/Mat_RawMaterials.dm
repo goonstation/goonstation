@@ -65,8 +65,8 @@
 
 		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
-			targetObject.stack_item(src)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
 				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
@@ -95,7 +95,7 @@
 							var/obj/item/material_piece/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -109,7 +109,7 @@
 							var/obj/item/material_piece/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -172,6 +172,33 @@
 	amount = 5
 	setup_material()
 		src.setMaterial(getMaterial("frozenfart"), appearance = 0, setname = 0)
+		..()
+
+/obj/item/material_piece/steel
+	desc = "A processed bar of Steel, a common metal."
+	default_material = "steel"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
+		..()
+
+/obj/item/material_piece/glass
+	desc = "A cut block of glass, a common crystalline substance."
+	default_material = "glass"
+	icon_state = "block"
+
+	setup_material()
+		src.setMaterial(getMaterial("glass"), appearance = 1, setname = 1)
+		..()
+
+/obj/item/material_piece/copper
+	desc = "A processed bar of copper, a conductive metal."
+	default_material = "copper"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("copper"), appearance = 1, setname = 1)
 		..()
 
 /obj/item/material_piece/iridiumalloy

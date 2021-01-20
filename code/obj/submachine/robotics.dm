@@ -145,10 +145,12 @@
 			return
 
 		working = 1
+		var/holder = src.loc
 		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
-		if (!the_reagent) return
+		if (src.loc != holder || !the_reagent)
+			return
 		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Do Nothing")
-		if (!action || action == "Do Nothing")
+		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
 
@@ -198,7 +200,10 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
+			var/holder = src.loc
 			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
+			if (src.loc != holder)
+				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return
@@ -387,7 +392,7 @@ ported and crapped up by: haine
 	proc/regenerate_reagents()
 		if (isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc // I'm not sure why it's src.loc and not src. (src is the hose, src.loc is where the hose is)
-			if (R && R.cell) // If the robot's alive and there's power.
+			if (R?.cell) // If the robot's alive and there's power.
 				var/full_tanks = 0 // to keep track of when we're good to remove ourselves from processing_items
 				for (var/obj/item/reagent_containers/borghose_tank/tank in src.tanks) // Regenerate all formulas at once.
 					var/tank_max = tank.reagents.maximum_volume // easier than writing tank.reagents.total_volume/etc over and over

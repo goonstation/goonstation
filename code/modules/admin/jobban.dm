@@ -1,82 +1,94 @@
-var
-	jobban_runonce	// Updates legacy bans with new info
-	jobban_keylist[0]		//to store the keys & ranks
+//Job Ban Handling, Modified to utilize code written within the past 6 years.
 
-/proc/jobban_fullban(mob/M, rank)
-	if (!M || !M.ckey) return
-	jobban_keylist.Add(text("[M.ckey] - [rank]"))
-	jobban_savebanfile()
+/proc/jobban_fullban(M, rank, akey)
+	if (!M || !akey) return
+	if(ismob(M)) //Correct to ckey if provided a mob.
+		var/mob/keysource = M
+		M = keysource.ckey
+	var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main", "Roleplay Overflow", "Main Overflow")
+	var/server = null //heehoo copy pasta
+	switch (server_nice)
+		if ("Roleplay")
+			server = "rp"
+		if ("Main")
+			server = "main"
+		if ("Roleplay Overflow")
+			server = "main2"
+		if ("Main Overflow")
+			server = "main3"
+	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server)))
+		var/datum/player/player = make_player(M) //Recache the player.
+		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		return 1
+	return 0 //Errored.
 
-/proc/jobban_isbanned(mob/M, rank)
-	if (!M || !M.ckey ) return
 
-	//you cant be banned from nothing!!
-	if (!rank)
-		return 0
+///Can be provided with a mob, a raw cache list, or a ckey. Prefer providing a cache if you can't use a mob, as that reduces API load.
+/proc/jobban_isbanned(M, rank)
+	var/list/cache
+	if(!M)
+		return FALSE
+	if(ismob(M))
+		var/mob/M2 = M
+		if(isnull(M2.client))
+			return FALSE
+		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
+		if(player.cached_jobbans == null) // Shit they aren't cached.
+			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
+			if(!length(api_response)) // API unavailable or something
+				return FALSE
+			player.cached_jobbans = api_response[M2.ckey]
+		cache = player.cached_jobbans
+	else if(islist(M))
+		cache = M
+	else //If we aren't a string this is going to explode.
+		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
-	if (J && J.no_jobban_from_this_job)
-		return 0
+	if (J?.no_jobban_from_this_job)
+		return FALSE
 
-	if(jobban_keylist.Find(text("[M.ckey] - Everything Except Assistant")))
+
+
+	if(cache.Find("Everything Except Assistant"))
 		if(rank != "Staff Assistant" && rank != "Technical Assistant" && rank != "Medical Assistant")
-			return 1
+			return TRUE
 
-	if(jobban_keylist.Find(text("[M.ckey] - Engineering Department")))
+	if(cache.Find("Engineering Department"))
 		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
-			return 1
+			return TRUE
 
-	if(jobban_keylist.Find(text("[M.ckey] - Security Department")) || jobban_keylist.Find(text("[M.ckey] - Security Officer")))
+	if(cache.Find("Security Department") || cache.Find("Security Officer"))
 		if(rank in list("Security Officer","Vice Officer","Detective"))
-			return 1
+			return TRUE
 
-	if(jobban_keylist.Find(text("[M.ckey] - Heads of Staff")))
+	if(cache.Find("Heads of Staff"))
 		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
-			return 1
+			return TRUE
 
-	if(jobban_keylist.Find(text("[M.ckey] - [rank]")))
-		return 1
+	if(cache.Find("[rank]"))
+		return TRUE
 	else
-		return 0
+		return FALSE
 
-/proc/jobban_loadbanfile()
-	var/savefile/S=new("data/job_full.ban")
-	S["keys[0]"] >> jobban_keylist
-	logTheThing("admin", null, null, "Loading jobban_rank")
-	logTheThing("diary", null, null, "Loading jobban_rank", "admin")
-	S["runonce"] >> jobban_runonce
-	if (!length(jobban_keylist))
-		jobban_keylist=list()
-		logTheThing("admin", null, null, "Jobban_keylist was empty")
-		logTheThing("diary", null, null, "Jobban_keylist was empty", "admin")
+/proc/jobban_unban(mob/M, rank)//This is full of faff to try and account for raw ckeys and actual players.
+	var/checkey
+	var/list/cache
 
-/proc/jobban_savebanfile()
-	var/savefile/S=new("data/job_full.ban")
-	S["keys[0]"] << jobban_keylist
+	if (!ismob(M))
+		checkey = M
+		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=checkey), 1)[checkey]
+	else if (M.ckey)
+		checkey = M.ckey
+		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
+		cache = player.cached_jobbans
+		player.cached_jobbans = null //Invalidate their cache.
+	else
+		return //Mob but no key.
+	if(!cache.Find("[rank]"))
+		return
 
-/proc/jobban_unban(mob/M, rank)
-	if (!M || !M.ckey ) return
-
-	jobban_keylist.Remove(text("[M.ckey] - [rank]"))
-
+	apiHandler.queryAPI("jobbans/del", list("ckey"=checkey,"rank"=rank))
 	if(rank == "Security Department")
-		if(jobban_keylist.Find(text("[M.ckey] - Security Officer")))
-			jobban_unban(M.ckey, "Security Officer")
-
-	jobban_savebanfile()
-
-/proc/jobban_updatelegacybans()
-	if(!jobban_runonce)
-		logTheThing("admin", null, null, "Updating jobbanfile!")
-		logTheThing("diary", null, null, "Updating jobbanfile!", "admin")
-		// Updates bans.. Or fixes them. Either way.
-		for(var/T in jobban_keylist)
-			if(!T)	continue
-		jobban_runonce++	//don't run this update again
-
-/proc/jobban_remove(X)
-	if(jobban_keylist.Find(X))
-		jobban_keylist.Remove(X)
-		jobban_savebanfile()
-		return 1
-	return 0
+		if(cache.Find("Security Officer"))
+			apiHandler.queryAPI("jobbans/del", list("ckey"=checkey, "rank"="Security Officer"))

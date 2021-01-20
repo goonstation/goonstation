@@ -31,8 +31,7 @@ client/proc/delete_fluids()
 			if(fluid.group)
 				fluid.group.evaporate()
 			else
-				if( fluid.loc )//for some reason there's a chance for this to be null.
-					fluid.loc:active_liquid = null
+				fluid.turf_remove_cleanup(fluid.loc)
 				fluid.removed()
 			i++
 			if(!(i%30))
@@ -147,10 +146,12 @@ client/proc/replace_space_exclusive()
 		for(var/turf/space/S in world)
 			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
 
-#ifdef MOVING_SUB_MAP
+#if defined(MOVING_SUB_MAP)
 			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
-#else
+#elif defined(UNDERWATER_MAP)
 			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
+#else //space map
+			var/turf/space/fluid/T = new /turf/space/fluid/fullbright( locate(S.x, S.y, S.z) )
 #endif
 
 #ifdef UNDERWATER_MAP

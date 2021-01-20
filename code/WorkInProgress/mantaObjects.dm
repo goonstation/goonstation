@@ -18,8 +18,9 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 1
+	anchored = 2
 	layer =  EFFECTS_LAYER_4
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -161,7 +162,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
+			if(M?.z == 1) shake_camera(M, 5, 32, 0.2)
 
 	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
@@ -946,6 +947,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 
 	Entered(atom/movable/Obj,atom/OldLoc)
+		if(isnull(OldLoc)) // hack, remove later pls thx
+			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
 			if (!L || L.len == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
@@ -956,7 +959,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 			return_if_overlay_or_effect(Obj)
 
-			if (L && L.len && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
+			if (length(L) && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
 				Obj.set_loc(pick(L))
 		..(Obj,OldLoc)
 
@@ -1359,7 +1362,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING))
+			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
 				mantaPushList.Add(Obj)
 				Obj.temp_flags |= MANTA_PUSHING
 		return
@@ -1541,29 +1544,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	else
 		boutput(user, "<span class='alert'>The door has already been opened. It looks like the mechanism has jammed for good.</span>")
 
-/obj/machinery/reliquaryscout
-	name = "????"
-	desc = "What the fuck is that!?"
-	icon = null
-	icon_state = "scoutbot"
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
-		light.set_color(0.2, 0.7, 0.2)
-		light.attach(src)
-		light.enable()
-
-	process()
-		for(var/mob/living/carbon/human/H in oview(11,src))
-			src.visible_message("<span class='alert'>[src] spots [H], and rapidly speeds off into the trench.</span>")
-			playsound(src.loc, "sound/misc/ancientbot_beep1.ogg", 80, 1)
-			SPAWN_DBG(2 SECONDS)
-				flick("scoutbot_teleport", src)
-				qdel(src)
-
 
 /obj/item/storage/secure/ssafe/polaris
 	name = "captain's lockbox"
@@ -1609,6 +1589,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "pit"
 	fullbright = 0
 	pathable = 0
+	var/spot_to_fall_to = LANDMARK_FALL_POLARIS
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	Entered(atom/A as mob|obj)
@@ -1619,7 +1600,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(AM.anchored)
 				return ..()
 
-		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		var/turf/T = pick_landmark(spot_to_fall_to)
 		if(T)
 			fall_to(T, A)
 			return
@@ -1627,6 +1608,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	polarispitwall
 		icon_state = "pit_wall"
+
+	marj
+		name = "dank abyss"
+		desc = "The smell rising from it somehow permeates the surrounding water."
+		spot_to_fall_to = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
 
 //******************************************** NSS MANTA SECRET VAULT********************************************
 

@@ -21,7 +21,7 @@
 	get_desc(dist, mob/user)
 		. = ..()
 		var/charge_percentage = 0
-		if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+		if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 			charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 		else
@@ -113,17 +113,17 @@
 		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (locate((src.x + xa),(src.y + ya),src.z), src, 1 ) //1 update tiles
 		S.layer = 2
 		if (xa == -range)
-			S.dir = SOUTHWEST
+			S.set_dir(SOUTHWEST)
 		else if (xa == range)
-			S.dir = SOUTHEAST
+			S.set_dir(SOUTHEAST)
 		else if (ya == -range)
-			S.dir = NORTHWEST
+			S.set_dir(NORTHWEST)
 		else if (ya == range)
-			S.dir = NORTHEAST
+			S.set_dir(NORTHEAST)
 		else if (orientation)
-			S.dir = NORTH
+			S.set_dir(NORTH)
 		else if (!orientation)
-			S.dir = EAST
+			S.set_dir(EAST)
 
 		src.deployed_shields += S
 

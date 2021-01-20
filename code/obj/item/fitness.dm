@@ -62,8 +62,9 @@
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.transforming = 1
-			user.dir = SOUTH
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
@@ -81,6 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -109,7 +111,8 @@
 			in_use = 1
 			icon_state = "fitnessweight-c"
 			user.transforming = 1
-			user.dir = SOUTH
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/obj/decal/W = new /obj/decal/
 			W.icon = 'icons/obj/stationobjs.dmi'
@@ -137,6 +140,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

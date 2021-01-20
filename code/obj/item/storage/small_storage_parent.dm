@@ -94,7 +94,7 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user)
+			src.attackby(O, user, O.loc)
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -121,7 +121,11 @@
 		if (my_contents.len >= slots)
 			return -2
 
-	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+	attackby(obj/item/W, mob/user, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+		if (W == src)
+			// Putting self in self! Was possible if weight class allows it, causing storage to disappear
+			boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
+			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
 			switch (canhold)
@@ -285,11 +289,11 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = 2
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
@@ -299,8 +303,10 @@
 	spawn_contents = list(/obj/item/clothing/mask/breath)
 	make_my_stuff()
 		..()
-		if (prob(15))
+		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES) //aaaaaa
 			new /obj/item/tank/emergency_oxygen(src)
+		if (ticker?.round_elapsed_ticks > 20 MINUTES)
+			new /obj/item/crowbar/red(src)
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
 			new /obj/item/clothing/head/emerg(src)
@@ -321,6 +327,7 @@
 /obj/item/storage/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
@@ -353,7 +360,7 @@
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)

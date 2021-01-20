@@ -98,6 +98,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	var/danny_index = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -599,7 +600,7 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
-	probability = 10 // yes... ha ha ha... YES
+	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
 	lockedGaps = 2

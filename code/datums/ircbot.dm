@@ -68,7 +68,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 						src.load()
 				return "queued"
 			else
-				if (config.env == "dev") return 0
+				if (config.env == "dev" || !apikey) // If we have no API key, why even bother
+					return 0
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
@@ -78,12 +79,18 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, final args: [list2params(args)]. Final route: [src.interface]/[iface]?[list2params(args)]")
 
-				var/http[] = world.Export("[src.interface]/[iface]?[list2params(args)]")
-				if (!http || !http["CONTENT"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>iface:</b> [iface]. <b>args</b> [list2params(args)]")
-					return 0
+				// Via rust-g HTTP
+				var/datum/http_request/request = new()
+				request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
+				request.begin_async()
+				UNTIL(request.is_complete())
+				var/datum/http_response/response = request.into_response()
 
-				var/content = file2text(http["CONTENT"])
+				if (response.errored || !response.body)
+					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]")
+					return
+
+				var/content = response.body
 
 				if (src.debugging)
 					src.logDebug("Export, returned data: [content]")
@@ -112,7 +119,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			//args["api_key"] = (src.apikey ? src.apikey : null)
 			//WHY WAS THAT A THING?
 
-			if (config && config.server_name)
+			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 

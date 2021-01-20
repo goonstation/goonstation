@@ -50,12 +50,12 @@
 
 	proc/spray()
 		src.last_spray = world.time
-		if (src && src.default_reagent)
+		if (src?.default_reagent)
 			src.reagents.add_reagent(default_reagent,120)
 			//also add some water for ~wet floor~ immersion
 			src.reagents.add_reagent("water",40)
 
-		if (src && src.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
+		if (src?.reagents.total_volume) //We still have reagents after, I dunno, a potassium reaction
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
@@ -84,7 +84,7 @@
 					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
 
 		SPAWN_DBG(5 SECONDS)
-			if (src && src.reagents && src.reagents.total_volume)
+			if (src?.reagents?.total_volume)
 				src.reagents.del_reagent(default_reagent)
 				src.reagents.remove_any(40)
 

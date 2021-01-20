@@ -16,14 +16,14 @@
 	// if not set, help intent will still attempt tool, but you'll shank them if it doesn't work out
 /datum/component/toggle_tool_use/proc/on_drop_or_pickup(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = 0
-	thing.dir = TOOLMODE_DEACTIVATED
+	thing.set_dir(TOOLMODE_DEACTIVATED)
 
 /datum/component/toggle_tool_use/proc/toggle_force_use_as_tool(var/obj/item/thing, mob/user)
 	thing.force_use_as_tool = !thing.force_use_as_tool
 	if (thing.force_use_as_tool)
-		thing.dir = TOOLMODE_ACTIVATED // We're just flipping the tool around to we don't hurt anyone
+		thing.set_dir(TOOLMODE_ACTIVATED) // We're just flipping the tool around to we don't hurt anyone
 	else
-		thing.dir = TOOLMODE_DEACTIVATED // Flip it back around so we can actually hurt people if we want to
+		thing.set_dir(TOOLMODE_DEACTIVATED) // Flip it back around so we can actually hurt people if we want to
 
 	var/list/cool_grip_adj = list("a sick", "a wicked", "a deadly", "a menacing", "an edgy", "a tacticool", "a sweaty", "an awkward")
 	var/list/cool_grip1 = list("combat", "fightlord", "guerilla", "hidden", "space", "syndie", "double-reverse", "\"triple-dog-dare-ya\"", "stain-buster's")
@@ -139,6 +139,8 @@
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
+		if (M.organHolder?.head)
+			M.organHolder.head.update_icon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 
@@ -234,8 +236,8 @@
 											M, "[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
 									user, "You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
-	else if(!M.mutantrace)
-		return 1 // is human, not mutant, should be fine
+	else if(!M.mutantrace || M.hair_override)
+		return 1 // is human or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
@@ -399,13 +401,6 @@
 				return 0
 			if("kudzu")
 				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
-			if("reliquary_soldier")
-				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s robot cyborg mechanical metal... head?")
-				return 0
 			if("cow")
 				if(barbery_type == "haircut")
 					playsound(M, "sound/items/Scissor.ogg", 100, 1)
@@ -526,6 +521,7 @@
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		M.update_colorful_parts()
 		..()
 
 	onInterrupt()
@@ -625,6 +621,7 @@
 							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
+		M.update_colorful_parts()
 		..()
 
 	onInterrupt()

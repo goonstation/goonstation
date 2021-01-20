@@ -207,7 +207,6 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			src.is_playing = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
@@ -215,17 +214,18 @@
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
 			//////
+			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-				sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
 #else
-				sleep(3000)
+			sleep(3000)
 #endif
-			is_playing = 0
+			src.is_playing = 0
 	else
 		..()
 
@@ -280,6 +280,13 @@
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+
+ABSTRACT_TYPE(/obj/item/record/random)
+
+/obj/item/record/random/dance_on_a_space_volcano
+	name = "record - \"Dance On A Space Volcano\""
+	record_name = "Dance On A Space Volcano"
+	song = "sound/radio_station/dance_on_a_space_volcano.ogg"
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
@@ -393,6 +400,42 @@
 	add_overlay = 0
 	icon_state = "record_red"
 
+ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
+/obj/item/record/random/chronoquest
+	New()
+		. = ..()
+		src.desc += {" Created by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+
+/obj/item/record/random/chronoquest/waystations
+	record_name = "Waystations"
+	name = "record - \"Waystations\""
+	song = "sound/radio_station/waystations.ogg"
+
+/obj/item/record/random/chronoquest/planets
+	record_name = "Planets"
+	name = "record - \"Planets\""
+	song = "sound/radio_station/planets.ogg"
+
+/obj/item/record/random/chronoquest/oh_no_evil_star
+	record_name = "Oh No Evil Star"
+	name = "record - \"Oh No Evil Star\""
+	song = "sound/radio_station/oh_no_evil_star.ogg"
+
+/obj/item/record/random/chronoquest/cloudskymanguy
+	record_name = "Cloudskymanguy"
+	name = "record - \"Cloudskymanguy\""
+	song = "sound/radio_station/cloudskymanguy.ogg"
+
+/obj/item/record/random/chronoquest/black_wing_interface
+	record_name = "Black Wing Interface"
+	name = "record - \"Black Wing Interface\""
+	song = "sound/radio_station/black_wing_interface.ogg"
+
+/obj/item/record/random/chronoquest/riverdancer
+	name = "record - \"Riverdancer\""
+	record_name = "Riverdancer"
+	song = "sound/radio_station/riverdancer.ogg"
+
 /obj/item/record/random/key_lime
 	name = "record - \"key_lime #1\""
 	record_name = "key lime #1"
@@ -405,14 +448,13 @@
 
 /obj/item/record/spacebux/New()
 	..()
-	var/pick_song = rand(1,3)
-	switch(pick_song)
-		if(1)
-			src.song = "sound/radio_station/buttris.ogg"
-		if(2)
-			src.song = "sound/radio_station/fart_elise.ogg"
-		if(3)
-			src.song = "sound/radio_station/we_are_number_two.ogg" // poo, more like, hah.
+	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
+	src.name = initial(record_type.name)
+	src.record_name = initial(record_type.record_name)
+	src.name = initial(record_type.name)
+	src.song = initial(record_type.song)
+	if(src.record_name)
+		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
 /obj/item/record/poo
 	desc = "A fairly large record. It has a scratch on one side."
@@ -513,12 +555,24 @@
 	/obj/item/record/november,
 	/obj/item/record/december)
 
+/obj/item/storage/box/record/radio/chronoquest
+	name = "\improper Chronoquest record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records made by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+	spawn_contents = list(
+		/obj/item/record/random/chronoquest/waystations,
+		/obj/item/record/random/chronoquest/planets,
+		/obj/item/record/random/chronoquest/oh_no_evil_star,
+		/obj/item/record/random/chronoquest/cloudskymanguy,
+		/obj/item/record/random/chronoquest/black_wing_interface,
+		/obj/item/record/random/chronoquest/riverdancer)
+
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
 /obj/item/storage/box/record/radio/host/New()
 	..()
-	var/list/possibilities = childrentypesof(/obj/item/record/random)
+	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
+	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
 	for (var/i = 1, i < 8, i++)
 		var/obj/item/record/R = pick(possibilities)
 		new R(src)
@@ -552,7 +606,7 @@
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
@@ -600,13 +654,15 @@
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
 	audio = "sound/radio_station/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	The music is "Palast Rock by Stefan Kartenberg (CC BY-NC 3.0)"}
 
 /obj/item/radio_tape/advertisement/danitos_burritos
 	name = "compact tape - 'Descuento Danito's Burritos'"
 	audio = "sound/radio_station/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danito's Burritos"
-	desc = {"A small audio tape. Though, it looks too big to fit in an audio log.<br>
-	The music is Requiem for a Fish by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	The music is "Requiem for a Fish" by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
@@ -617,16 +673,41 @@
 	name = "compact tape - 'Pope Crunch'"
 	audio = "sound/radio_station/pope_crunch_cereal.ogg"
 	name_of_thing = "Pope Crunch Cereal"
-	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Puppet Master and HeadsmanStukka of the Black Pants Legion. <br>
 	The music is Smooth Talker by Apoxode (CC BY 3.0)"}
 
 /obj/item/radio_tape/advertisement/cloning_psa
 	name = "compact tape - 'Cloning PSA'"
 	audio = "sound/radio_station/cloning_psa.ogg"
 	name_of_thing = "Cloning Public Service Announcement"
-	desc = {"A small audio tape. Though, it looks to big to fit in an audio log.<br>
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Cenith of the Black Pants Legion<br>
-	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-NO 3.0)"}
+	Musical backing is "Inspretional Wave" by khalafnasirs 2020 (CC-BY-NC 3.0)"}
+
+/obj/item/radio_tape/advertisement/captain_psa
+	name = "compact tape - 'Captain's Training Program'"
+	audio = "sound/radio_station/captain_training.ogg"
+	name_of_thing = "Nanotrasen Captain's Training Promotional Tape"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Tex of the Black Pants Legion<br>
+	Musical backing is "Out of Space" by Javolenus 2019 CC-BY NC 3.0"}
+
+/obj/item/radio_tape/advertisement/security_psa
+	name = "compact tape - 'Nanotrasen Security PSA'"
+	audio = "sound/radio_station/security_psa.ogg"
+	name_of_thing = "Security Department Public Service Announcement"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Squidchild of the Black Pants Legion"}
+
+/obj/item/radio_tape/advertisement/cargonia
+	name = "compact tape - 'Scuffed Compact Tape'"
+	audio = "sound/radio_station/Cargonia.ogg"
+	name_of_thing = "Cargo Union Advertisement <VERY ILLEGAL>"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	You found this in a locked up chest in the depths. Someone went to a lot of trouble to get rid of it.<br>
+	Voiceover by Tex of the Black Pants Legion<br>
+	Musical Backing is "Valor" by David Fesliyan"}
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"

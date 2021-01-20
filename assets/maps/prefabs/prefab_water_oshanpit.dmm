@@ -1,6 +1,6 @@
-"a" = (/turf/variableTurf/clear,/area)
+"a" = (/turf/variableTurf/clear,/area/space)
 "b" = (/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/turf/variableTurf/wall,/area)
+"c" = (/turf/variableTurf/wall,/area/space)
 "d" = (/obj/decal/lightshaft,/turf/variableTurf/clear,/area/trench_landing)
 "e" = (/turf/variableTurf/wall,/area/noGenerate)
 "f" = (/turf/variableTurf/clear,/area/trench_landing)

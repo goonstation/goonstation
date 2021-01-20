@@ -309,14 +309,13 @@ Broken RCD + Effects
 				if(N.client && N != user && N != H)
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
 			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
 				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 				playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-				if(H.mind)
-					H.mind.transfer_to(W)
+				H.mind?.transfer_to(W)
 				H.gib()
 				matter -= 3
 				boutput(user, "\the [src] now holds [matter]/30 matter-units.")
@@ -382,7 +381,7 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
 
-			//if(map_setting == "COG2") T.dir = user.dir
+			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
 	proc/update_icon() //we got fancy rcds now
@@ -468,7 +467,7 @@ Broken RCD + Effects
 				if (findtext(B.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
 					playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
 							playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
@@ -484,7 +483,7 @@ Broken RCD + Effects
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
 					playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-					if(do_after(user, 50))
+					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
 							playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
@@ -507,7 +506,7 @@ Broken RCD + Effects
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
 				playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-				if(do_after(user, 50))
+				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
 						playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 						src.shitSparks()
@@ -527,7 +526,7 @@ Broken RCD + Effects
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
 				playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-				if(do_after(user, 50))
+				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
 						playsound(get_turf(src), "sound/items/Deconstruct.ogg", 50, 1)
 						src.shitSparks()
@@ -535,7 +534,7 @@ Broken RCD + Effects
 						var/poddir = turn(stepdir, 90)
 						var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
 						B.id = "[hangar_id]"
-						B.dir = poddir
+						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
 						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
@@ -580,7 +579,7 @@ Broken RCD + Effects
 		if (do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
 			var/obj/machinery/door/airlock/T = new door_type(A)
 			log_construction(user, null, "builds an airlock ([T], name: [door_name], access: [door_access], type: [door_type])")
-			T.dir = door_dir
+			T.set_dir(door_dir)
 			T.autoclose = 1
 			T.name = door_name
 			if (door_access)
@@ -707,7 +706,7 @@ Broken RCD + Effects
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
 
 			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 20))
+			if(do_after(user, 2 SECONDS))
 				if (src.broken)
 					return
 

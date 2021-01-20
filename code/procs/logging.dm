@@ -134,7 +134,7 @@ var/global/first_adminhelp_happened = 0
 	else if(window)
 		entry += " in [window.id]"
 	// Resolve src_object
-	if(!src_object && window && window.locked_by)
+	if(!src_object && window?.locked_by)
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
@@ -142,6 +142,7 @@ var/global/first_adminhelp_happened = 0
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

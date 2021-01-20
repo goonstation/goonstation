@@ -199,6 +199,7 @@
 			selfmob.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 
@@ -229,6 +230,7 @@
 	//else O.cell.charge = 7500
 
 	O.gender = src.gender
+	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
@@ -251,7 +253,7 @@
 	O.job = "Cyborg"
 	if (O.mind) O.mind.assigned_role = "Cyborg"
 
-	if(O.mind && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+	if(O.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if ((O.mind in ticker.mode:revolutionaries) || (O.mind in ticker.mode:head_revolutionaries))
 			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
@@ -286,8 +288,7 @@
 	var/mob/living/carbon/alien/humanoid/O = new /mob/living/carbon/alien/humanoid( src.loc )
 	O.name = "alien"
 	O.dna = src.dna
-	if(src.mind)
-		src.mind.transfer_to(O)
+	src.mind?.transfer_to(O)
 	src.dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
@@ -320,8 +321,7 @@
 	var/mob/living/carbon/alien/humanoid/queen/O = new /mob/living/carbon/alien/humanoid/queen( src.loc )
 	O.name = "alien queen"
 	O.dna = src.dna
-	if(src.mind)
-		src.mind.transfer_to(O)
+	src.mind?.transfer_to(O)
 	src.dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
@@ -355,8 +355,7 @@
 		O.lastKnownIP = src.client.address
 		if (src.client)
 			src.client.mob = O
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		O.set_loc(src.loc)
 		boutput(O, "<B>You are a Robot.</B>")
 		boutput(O, "<B>You're more or less a Cyborg but have no organic parts.</B>")
@@ -377,8 +376,7 @@
 		O.lastKnownIP = src.client.address
 		if (src.client)
 			src.client.mob = O
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		O.Namepick()
 		O.set_loc(src.loc)
 		boutput(O, "<B>You are a Mainframe Unit.</B>")
@@ -432,11 +430,12 @@
 				src.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 		qdel(src)
 
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (W) W.assign_gimmick_skull()
 
 		if(shitty)
@@ -511,6 +510,7 @@
 			src.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 	SPAWN_DBG(1 DECI SECOND)
@@ -556,7 +556,7 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -576,7 +576,7 @@
 	set name = "Enter VR"
 	set category = "Ghost"
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
@@ -597,7 +597,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -646,7 +646,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/critter/C
 	var/traitor = 0
 
-	if (types && types.len)
+	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint)
 	else
 		traitor = checktraitor(selfmob)
@@ -689,7 +689,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!ticker || !ticker.mode)
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
 		return
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 
@@ -799,7 +799,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
@@ -846,7 +846,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// src.abilityHolder = null
 
 
-	newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(target_turf)
 
@@ -934,6 +934,7 @@ var/respawn_arena_enabled = 0
 		if (src.client)
 			src.client.mob = O
 		O.mind = new /datum/mind()
+		O.mind.ckey = ckey
 		O.mind.key = key
 		O.mind.current = O
 		ticker.minds += O.mind
@@ -959,6 +960,7 @@ var/respawn_arena_enabled = 0
 			if (src.client)
 				src.client.mob = O
 			O.mind = new /datum/mind()
+			O.mind.ckey = ckey
 			O.mind.key = key
 			O.mind.current = O
 			ticker.minds += O.mind

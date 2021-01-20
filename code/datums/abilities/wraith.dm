@@ -89,7 +89,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 20
-	cooldown = 450 //Starts at 45 seconds and scales upward exponentially
+	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 
 	cast(atom/T)
 		if (..())
@@ -127,7 +127,6 @@
 		if (!M && error)
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
-
 		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 		//Make the corpse all grody and skeleton-y
@@ -142,8 +141,10 @@
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
+		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 75, 0)
 		for (var/mob/living/V in viewers(7, holder.owner))
 			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
+
 
 		return 0
 
@@ -154,7 +155,7 @@
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
-				cooldown = 450
+				cooldown = 45 SECONDS
 				W.corpsecount += 1
 			else
 				cooldown += W.corpsecount * 150
@@ -172,7 +173,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 300
-	cooldown = 1500 //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
+	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
 	cast(atom/T)
 		if (..())
@@ -187,16 +188,16 @@
 			return 1
 
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
 		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-
-		SPAWN_DBG (450)
+		SPAWN_DBG(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN_DBG (600) //time limit on possession: 1 minute
+		SPAWN_DBG(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
 				O.death(0)
-
 		return 0
 
 
@@ -207,7 +208,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 1000
-	cooldown = 5000 //5 minutes
+	cooldown = 5 MINUTES
 
 	cast(atom/T)
 		if (..())
@@ -226,8 +227,10 @@
 
 		if (ishuman(T))
 			var/mob/wraith/W = holder.owner
-			return W.makeRevenant(T)
-			//return 0
+			. = W.makeRevenant(T)		//return 0
+			if(!.)
+				playsound(W.loc, "sound/voice/wraith/reventer.ogg", 86, 0)
+			return
 		else
 			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
 			return 1
@@ -239,7 +242,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 30
-	cooldown = 600 //1 minute
+	cooldown = 1 MINUTE //1 minute
 
 	cast(atom/T)
 		if (..())
@@ -267,6 +270,7 @@
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 75, 0)
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
@@ -294,12 +298,13 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
-	cooldown = 200 // 20 seconds
+	cooldown = 20 SECONDS
 
 	cast(atom/T)
 		var/list/thrown = list()
 		var/current_prob = 100
 		if (ishuman(T))
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
@@ -329,7 +334,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 150
-	cooldown = 600 // 1 minute
+	cooldown = 1 MINUTE
 
 	cast(atom/T)
 		if (..())
@@ -352,6 +357,7 @@
 			S.name = "[personname]'s skeleton"
 			S.health = 1
 			H.gib()
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
@@ -364,7 +370,7 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 100
-	cooldown = 300 //30 seconds
+	cooldown = 30 SECONDS
 
 	cast(atom/T)
 		if (..())
@@ -399,6 +405,7 @@
 			L.stunprob = 15
 			L.original_object = O
 			animate_levitate(L, -1, 30)
+			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
@@ -410,13 +417,14 @@
 	desc = "Become corporeal for 30 seconds. During this time, you gain additional biopoints, depending on the amount of humans in your vicinity. You cannot use this ability while already corporeal."
 	targeted = 0
 	pointCost = 0
-	cooldown = 600 //1 minute
+	cooldown = 1 MINUTE
 
 	cast()
 		if (..())
 			return 1
 
 		var/mob/wraith/W = src.holder.owner
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 100, 0)
 		return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -425,7 +433,7 @@
 	desc = "Cause freaky, weird, creepy or spooky stuff to happen in an area around you. Use this ability to mark your current tile as the origin of these events, then activate it by using this ability again."
 	targeted = 0
 	pointCost = 0
-	cooldown = 200
+	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
 
 	var/datum/radio_frequency/pda_connection
@@ -580,6 +588,8 @@
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")
 				boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		else
 			boutput(usr, "<span class='alert'>It would be futile to attempt to force your voice to the consciousness of that.</span>")
 			return 1
@@ -627,7 +637,7 @@
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 0)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -671,6 +681,7 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)
@@ -695,8 +706,8 @@
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
 		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
-
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")

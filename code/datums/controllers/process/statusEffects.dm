@@ -8,6 +8,11 @@ datum/controller/process/statusEffects
 		schedule_interval = 3 //Adjust as needed; Wouldnt go over 10.
 		lastUpdate = world.timeofday
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/statusEffects/old_statusEffects = target
+		src.lastUpdate = old_statusEffects.lastUpdate
+		src.lastProcessLength = old_statusEffects.lastProcessLength
+
 	doWork()
 		lastProcessLength = world.timeofday
 		var/actual = (world.timeofday - lastUpdate)
@@ -41,7 +46,7 @@ datum/controller/process/statusEffects
 				if(globalStatusInstances.Find(S)) globalStatusInstances.Remove(S)
 
 		for(var/atom/A in notifyUiUpdate)
-			SPAWN_DBG(0) if(A && A.statusEffects) A.updateStatusUi()
+			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()
 
 		lastUpdate = world.timeofday
 		lastProcessLength =  (world.timeofday - lastProcessLength)

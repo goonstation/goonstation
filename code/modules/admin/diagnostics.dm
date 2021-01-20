@@ -147,7 +147,7 @@ proc/debug_color_of(var/thing)
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas in GM.trace_gases)
+			for(var/datum/gas/trace_gas as() in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
@@ -400,8 +400,7 @@ proc/debug_color_of(var/thing)
 				else
 
 					var/pressure = MIXTURE_PRESSURE(air)
-					img.app.desc = ""
-
+					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(air)]Temperature=[air.temperature]<br/>"
 
 					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
 					//Partial pressure of the O2 in our breath
@@ -445,7 +444,7 @@ proc/debug_color_of(var/thing)
 						gt.color = is_group
 						img.app.overlays += gt
 
-					if (group && group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
 
 					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
 
@@ -562,6 +561,7 @@ proc/debug_color_of(var/thing)
 						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
 							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
+							img.app.desc = "[MOLES_REPORT(air)]"
 						else if(TOTAL_MOLES(air) > 0)
 							pipe_image.maptext = "<span class='pixel r ol'>&gt;0</span>"
 							pipe_image.maptext_x = -3
@@ -680,11 +680,11 @@ proc/debug_color_of(var/thing)
 			var/direct_trace = 0
 			var/turf/simulated/sim = theTurf
 			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg in sim.air.trace_gases)
+				for(var/datum/gas/tg as() in sim.air.trace_gases)
 					img.app.desc += "[tg.type] [tg.moles]<br>"
 					direct_trace = 1
 				if(sim?.parent?.air)
-					for(var/datum/gas/tg in sim.parent.air.trace_gases)
+					for(var/datum/gas/tg as() in sim.parent.air.trace_gases)
 						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
 						air_group_trace = 1
 			if(air_group_trace && direct_trace)
@@ -784,10 +784,78 @@ proc/debug_color_of(var/thing)
 		proc/is_ok(atom/A)
 			return TRUE
 
+	checkingcanpass
+		name = "checkingcanpass"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkingcanpass ? "#0f0" : "#f00"
+
+	checkingexit
+		name = "checkingexit"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
+
+	checkinghasentered
+		name = "checkinghasentered"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
+
+	checkinghasproximity
+		name = "checkinghasproximity"
+		help = "Green = yes."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.checkinghasproximity ? "#0f0" : "#f00"
+
 	blood_owner/no_items
 		name = "blood owner - no items"
 		is_ok(atom/A)
 			return !istype(A, /obj/item)
+
+	temperature
+		name = "temperature"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/temp = null
+			if(issimulatedturf(theTurf))
+				var/turf/simulated/sim = theTurf
+				if(sim.air)
+					temp = sim.air.temperature
+			if(isnull(temp))
+				temp = theTurf.temperature
+			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
+			var/p = clamp(temp / (T0C * 2), 0, 1)
+			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	process_cell_operations
+		name = "process cell stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.process_cell_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.process_cell_operations]<br>[round(theTurf.process_cell_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.process_cell_operations / theTurf.max_process_cell_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
+
+#ifdef ATMOS_TILE_STATS_TRACKING
+	total_atmos_operations_stats
+		name = "total atmos operations stats"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			img.app.alpha = 0
+			if(!air_master?.current_cycle)
+				return
+			if(!theTurf.atmos_operations)
+				return
+			img.app.overlays = list(src.makeText("[theTurf.atmos_operations]<br>[round(theTurf.atmos_operations/air_master.current_cycle*100, 0.01)]%", RESET_ALPHA | RESET_COLOR))
+			var/p = theTurf.atmos_operations / theTurf.max_atmos_operations
+			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
+			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
+#endif
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -895,8 +963,7 @@ proc/debug_color_of(var/thing)
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
 	var/name = input("Choose an overlay") in (available_overlays + "REMOVE")
-	if(activeOverlay)
-		activeOverlay.OnDisabled(src)
+	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)
@@ -917,7 +984,7 @@ proc/debug_color_of(var/thing)
 		RenderOverlay()
 		SPAWN_DBG(1 DECI SECOND)
 			var/client/X = src
-			while (X && X.activeOverlay)
+			while (X?.activeOverlay)
 				// its a debug overlay so f u
 				X.RenderOverlay()
 				sleep(1 SECOND)
@@ -930,7 +997,7 @@ proc/debug_color_of(var/thing)
 			var/x = text2num(splittext(offs[1], ":")[1])
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
-			if(im && im.desc)
+			if(im?.desc)
 				usr.client.tooltipHolder.transient.show(src, list(
 					"params" = params,
 					"title" = "Diagnostics",
@@ -947,7 +1014,7 @@ proc/debug_color_of(var/thing)
 /*
 // having to wiggle around to update the overlay dumb, bad, esp when you can move real fast
 /mob/OnMove()
-	if(client && client.activeOverlay)
+	if(client?.activeOverlay)
 		client.GenerateOverlay()
 		client.RenderOverlay()
 	.=..()

@@ -533,7 +533,7 @@ datum
 
 				if (method == TOUCH)
 					var/silent = 0
-					if (paramslist && paramslist.len)
+					if (length(paramslist))
 						if ("silent" in paramslist)
 							silent = 1
 
@@ -585,8 +585,7 @@ datum
 									E.name = "Pirate Eyepatch"
 									E.desc = "Arr!"
 									H.equip_if_possible(E,H.slot_glasses)
-						H.set_face_icon_dirty()
-						H.set_body_icon_dirty()
+					H.update_colorful_parts()
 				else
 					random_brute_damage(M, 5)
 
@@ -769,7 +768,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -781,7 +780,7 @@ datum
 				var/power_time = rand(1,10)
 				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
 				SPAWN_DBG(power_time*10)
-					if (M && M.bioHolder)
+					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
 				..()
 				return
@@ -1036,7 +1035,6 @@ datum
 			transparency = 190
 			alch_strength = 1 //its literally methanol
 			depletion_rate = 0.4
-			thirst_value = 0.6
 			thirst_value = -0.3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -1048,9 +1046,9 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 1)
-					do_stunny = prob(100/covered.len)
+				var/list/covered = holder?.covered_turf()
+				if (length(covered) > 1)
+					do_stunny = prob(100/length(covered))
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
@@ -1076,7 +1074,7 @@ datum
 			alch_strength = 0.1
 			description = "An alleged cocktail invented by a notorious scientist. Useful in a pinch as an impromptu purgative, or interrogation tool."
 			reagent_state = LIQUID
-			//Acts like ghetto calomel that can be made outside medbay, chance to give food poisoning, vomit constantly and explosively while racking up moderate toxin damage that has no/very low HP cap and burning out other chemicals in the body at a rate equal to/greater than calomel - more potent, more dangerous/weaponizable, alternate sleepypen fuel for barman
+			//Acts like ghetto calomel that can be made outside medbay, chance to give food poisoning, vomit constantly and explosively while racking up moderate toxin damage that has no/very low HP cap and burning out other chemicals in the body at a rate equal to/greater than calomel - more potent, more dangerous/weaponizable, alternate sleepypen fuel for bartender
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1877,7 +1875,6 @@ datum
 			transparency = 190
 			taste = "sugary"
 			thirst_value = 0.75
-			bladder_value = -0.03
 			viscosity = 0.4
 			bladder_value = -0.2
 
@@ -1923,11 +1920,7 @@ datum
 			viscosity = 0.5
 			minimum_reaction_temperature = -INFINITY
 
-#if ASS_JAM
-			reaction_temperature(exposed_temperature, exposed_volume)
-				if (exposed_temperature > (T0C + 50))
-					holder.add_reagent("chemilin", 10, donotreact = 1)
-#endif
+
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -2222,7 +2215,6 @@ datum
 			fluid_r = 117
 			fluid_g = 120
 			fluid_b = 65
-			thirst_value = 0.075
 			bladder_value = 0.04
 			energy_value = 0.04
 			transparency = 232
@@ -3059,12 +3051,23 @@ datum
 			fluid_r = 235
 			fluid_g = 0
 			fluid_b = 0
-			description = "The juice from a thousand screaming cherries.  Silent screams."
+			description = "The juice from a thousand screaming cherries. Silent screams."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
 
-		fooddrink/juice_pinapple
+		fooddrink/juice_raspberry
+			name = "raspberry juice"
+			id = "juice_raspberry"
+			fluid_r = 101
+			fluid_g = 216
+			fluid_b = 230
+			description = "What do you mean? Rapsberries have always been this shade of blue."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_pineapple
 			name = "pineapple juice"
 			id = "juice_pineapple"
 			fluid_r = 255
@@ -3073,6 +3076,17 @@ datum
 			description = "Juice from a pineapple. A surprise, considering the name!"
 			reagent_state = LIQUID
 			thirst_value = 1.5
+			bladder_value = -1.5
+
+		fooddrink/juice_watermelon
+			name = "watermelon juice"
+			id = "juice_watermelon"
+			fluid_r = 238
+			fluid_g = 93
+			fluid_b = 121
+			description = "A delicious summer drink!"
+			reagent_state = LIQUID
+			thirst_value = 2
 			bladder_value = -1.5
 
 		fooddrink/juice_apple
@@ -3207,10 +3221,22 @@ datum
 			hunger_value = -2
 			thirst_value = -2
 			bladder_value = -2
+			stun_resist = 100
+			var/remove_buff = 0
 
-			on_add(var/mob/M)
-				if (ismob(M))
+			pooled()
+				..()
+				remove_buff = 0
+
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
 					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/cocktail_triple, src.type)
+				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
 				if(method == INGEST)
@@ -3227,16 +3253,15 @@ datum
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
 
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("tripletriple")
-
-				return
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					remove_buff = M.remove_stam_mod_regen("tripletriple")
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 
-					M.add_stam_mod_regen("tripletriple", 3333)
 				if(probmult(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
@@ -3432,6 +3457,16 @@ datum
 					M.take_brain_damage(rand(1,2) * mult)
 
 				return
+
+		fooddrink/temp_bioeffect/worcestershire_sauce
+			name = "Worcestershire sauce"
+			id = "worcestershire_sauce"
+			description = "Just looking at this substance makes you want to break for Tea."
+			fluid_r = 119
+			fluid_g = 51
+			fluid_b = 34
+			transparency = 60
+			bioeffect_id = "accent_tyke"
 
 		fooddrink/bonerjuice
 			name = "the satisfaction of making spaghetti"

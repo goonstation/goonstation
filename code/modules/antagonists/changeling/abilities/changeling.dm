@@ -39,7 +39,7 @@
 	if (src.mind)
 		src.mind.is_changeling = C
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (src) src.assign_gimmick_skull()
 
 	return
@@ -96,15 +96,14 @@
 	var/original_controller_name = null
 	var/original_controller_real_name = null
 
-	New(var/mob/living/M)
+	New(var/mob/living/carbon/human/M)
 		..()
 		if (M)
-			var/datum/bioHolder/original = new/datum/bioHolder(M)
-			original.CopyOther(M.bioHolder)
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
+			originalBHolder.CopyOther(M.bioHolder)
+			absorbed_dna = list("[M.name]" = originalBHolder)
 
-			absorbed_dna = list("[M.name]" = original)
-
-	proc/addDna(var/mob/living/M, var/headspider_override = 0)
+	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
 			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
@@ -128,10 +127,14 @@
 				src.insert_into_hivemind(H)
 			O.hivemind = list()
 
+		/* LAGG NOTE:
+			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */
+
 		else
-			var/datum/bioHolder/original = new/datum/bioHolder(M)
-			original.CopyOther(M.bioHolder)
-			src.absorbed_dna[M.real_name] = original
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
+			originalBHolder.CopyOther(M.bioHolder)
+			src.absorbed_dna[M.real_name] = originalBHolder
+
 			if (headspider_override != 1)
 				src.points += M.dna_to_absorb
 			src.absorbtions++

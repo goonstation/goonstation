@@ -298,25 +298,20 @@
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 					if(!in_range(parent, user) || user.stat)
-						return 0
+						return
 					inp = trim(adminscrub(inp), 1)
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, "Signal set to [inp]")
-					return COMSIGBIT_ATTACKBY_COMPLETE
 				if(DC_ALL)
 					WipeConnections()
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
-					return COMSIGBIT_ATTACKBY_COMPLETE
 				else
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
-					var/ret = call(parent, path)(W, user)
-					if(ret) ret = COMSIGBIT_ATTACKBY_COMPLETE
-					return ret
-	return 0
+					call(parent, path)(W, user)
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/compatible()

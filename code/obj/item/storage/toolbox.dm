@@ -41,11 +41,11 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
@@ -56,7 +56,7 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
-	spawn_contents = list(/obj/item/crowbar,\
+	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/device/radio)
@@ -81,6 +81,14 @@
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
 		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
+
+	yellow_tools
+		spawn_contents = list(/obj/item/screwdriver/yellow,\
+		/obj/item/wrench/yellow,\
+		/obj/item/weldingtool,\
+		/obj/item/crowbar/yellow,\
+		/obj/item/wirecutters/yellow,\
+		/obj/item/device/analyzer/atmospheric)
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"

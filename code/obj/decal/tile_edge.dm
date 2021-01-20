@@ -128,7 +128,7 @@
 
 	New()
 		src.icon_state = "flowers[rand(1,4)]"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 		..()
 
 /obj/decal/stage_edge

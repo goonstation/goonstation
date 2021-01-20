@@ -10,7 +10,7 @@
 		if(flourish)
 			shrink_teleport(src.mob)
 		var/list/turfs = get_area_turfs(A, 1)
-		if (turfs && turfs.len)
+		if (length(turfs))
 			usr.set_loc(pick(turfs))
 		else
 			boutput(src, "Can't jump there, zero turfs in that area.")

@@ -14,7 +14,6 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"carbon",\
 	"ash",\
 	"blackpowder",\
-	"reliquary_blood",\
 	"leaves",\
 	"poo",\
 )
@@ -139,6 +138,8 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/turf_remove_cleanup(turf/the_turf)
+		the_turf.active_liquid = null
 
 	disposing()
 		src.pooled = 1
@@ -155,7 +156,7 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = null
+			src.turf_remove_cleanup(src.loc)
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
@@ -193,8 +194,7 @@ var/mutable_appearance/fluid_ma
 		src.step_sound = "sound/misc/splash_1.ogg"
 
 		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_liquid = null
+			turf_remove_cleanup(src.loc)
 		..()
 
 	get_desc(dist, mob/user)
@@ -794,7 +794,7 @@ var/mutable_appearance/fluid_ma
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
+		if (length(reacted_ids))
 			src.update_icon()
 		*/
 
@@ -805,12 +805,12 @@ var/mutable_appearance/fluid_ma
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "reliquary_blood")
-		if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "reliquary_blood")
+	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
+		if (F.group.master_reagent_id == "blood")
 			//if (ishuman(M))
 			if (src.lying)
 				if (src.wear_suit)

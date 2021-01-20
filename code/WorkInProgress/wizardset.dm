@@ -562,7 +562,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		else if (ishuman(target))
 			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
 			logTheThing("combat", user, target, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
-			if (do_after(user, 30))
+			if (do_after(user, 3 SECONDS))
 				if (reagent)
 					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
 					logTheThing("combat", user, target, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
@@ -576,6 +576,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	attack()
 		return
 
+ABSTRACT_TYPE(/obj/item/wizard_crystal)
 /obj/item/wizard_crystal
 	name = "enchanted quartz"
 	desc = "A magically infused piece of crystal. It seems to emit a minimal amount of light. Some magical object could perhaps amplify this."
@@ -692,23 +693,23 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		light = new /datum/light/point
 		light.attach(src)
 		if (D)
-			set_dir(D)
+			update_dir(D)
 		if (initial_crystal)
 			crystal = new initial_crystal()
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 			apply_crystal()
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (wall_mount)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				dir = 2
+				src.set_dir(2)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -829,21 +830,21 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	New(var/L)
 		..()
 		set_effect()
-		set_dir(dir)
+		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 
 	proc/set_effect()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (!(dir & 2))
-			dir = 2
+			src.set_dir(2)
 		pixel_y = 28
-		effect_overlay.dir = dir
+		effect_overlay.set_dir(dir)
 
 	button
 		var/pressed = 0

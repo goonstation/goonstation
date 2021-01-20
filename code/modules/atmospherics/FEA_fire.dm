@@ -74,12 +74,13 @@
 	mouse_opacity = 0
 	anchored = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"
 
 	//layer = TURF_LAYER
-	alpha = 250
+	alpha = 160
 	blend_mode = BLEND_ADD
 	var/datum/light/light
 
@@ -94,7 +95,7 @@
 
 	New()
 		..()
-		dir = pick(cardinal)
+		set_dir(pick(cardinal))
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
 		light.attach(src)
@@ -185,15 +186,15 @@
 		if(bypassing)
 			if(!just_spawned)
 				volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
-				temperature = location.air.temperature
+				src.temperature = location.air.temperature
 		else
 			var/datum/gas_mixture/affected = location.air.remove_ratio(volume/max((location.air.volume/5),1))
 
 			affected.temperature = temperature
 
 			affected.react()
+			src.temperature = affected.temperature
 
-			temperature = affected.temperature
 			volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 
 			location.assume_air(affected)

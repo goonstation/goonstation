@@ -167,8 +167,7 @@
 		if(!T)
 			qdel(src)
 			return
-		if(src.reagents)
-			src.reagents.reaction(T)
+		src.reagents?.reaction(T)
 		if (src.in_glass)
 			src.in_glass.set_loc(T)
 			src.in_glass = null

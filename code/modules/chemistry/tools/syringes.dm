@@ -188,8 +188,8 @@
 						boutput(user, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 						P.medical = 0
 
-				SPAWN_DBG (5)
-					if (src && src.reagents && target && target.reagents)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src?.reagents && target?.reagents)
 						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 						// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).

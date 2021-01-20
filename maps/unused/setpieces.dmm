@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "ac" = (
 /obj/machinery/power/monitor,
 /obj/cable{
@@ -13,7 +13,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ad" = (
 /obj/machinery/power/smes{
 	charge = 0;
@@ -25,7 +25,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ae" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -36,7 +36,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "af" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -49,7 +49,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ag" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -57,27 +57,27 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ah" = (
 /obj/grille,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ai" = (
 /obj/grille,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "aj" = (
 /obj/grille,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ak" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -85,10 +85,10 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "al" = (
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "am" = (
 /obj/cable{
 	d1 = 1;
@@ -96,7 +96,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "an" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -105,10 +105,10 @@
 	tag = "icon-bdoorleft1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "ao" = (
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "ap" = (
 /obj/grille,
 /obj/window/reinforced/north,
@@ -124,15 +124,15 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "aq" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "ar" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "as" = (
 /obj/machinery/door/airlock,
 /obj/cable{
@@ -141,7 +141,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "at" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -150,16 +150,16 @@
 	tag = "icon-bdoormid1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "au" = (
 /obj/machinery/door/window/eastright,
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area)
+/area/space)
 "av" = (
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aw" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -167,15 +167,15 @@
 	d2 = 2
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "ax" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "ay" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "az" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -183,26 +183,26 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aA" = (
 /obj/secure_closet/kitchen,
 /obj/item/kitchen/rollingpin,
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "aB" = (
 /obj/table/reinforced,
 /obj/item/storage/glassbox,
 /obj/item/storage/cutlery,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aC" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aD" = (
 /obj/submachine/chef_oven,
 /turf/simulated/floor/scorched,
-/area)
+/area/space)
 "aE" = (
 /obj/submachine/chef_sink,
 /obj/machinery/light{
@@ -210,16 +210,16 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "aF" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "aG" = (
 /obj/table/reinforced,
 /obj/submachine/mixer,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aH" = (
 /obj/item/storage/toilet,
 /obj/window/cubicle{
@@ -229,10 +229,10 @@
 	},
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor/scorched,
-/area)
+/area/space)
 "aI" = (
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aJ" = (
 /obj/item/clothing/head/plunger,
 /obj/machinery/light{
@@ -240,11 +240,11 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aK" = (
 /obj/chem_sink,
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "aL" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -253,7 +253,7 @@
 	tag = "icon-bdoorright1 (NORTH)"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "aM" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
@@ -269,21 +269,21 @@
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
-/area)
+/area/space)
 "aN" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aO" = (
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "aP" = (
 /obj/secure_closet/fridge,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aQ" = (
 /obj/item/storage/toilet,
 /obj/window/cubicle{
@@ -293,7 +293,7 @@
 	},
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aS" = (
 /obj/chem_sink,
 /obj/securearea{
@@ -304,14 +304,14 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/scorched,
-/area)
+/area/space)
 "aT" = (
 /obj/table/reinforced{
 	tag = "icon-reinf_tabledir";
 	icon_state = "reinf_tabledir"
 	},
 /turf/simulated/floor/shuttlebay,
-/area)
+/area/space)
 "aU" = (
 /obj/window/reinforced/west,
 /obj/table/reinforced{
@@ -320,7 +320,7 @@
 	tag = "icon-reinf_tabledir"
 	},
 /turf/simulated/floor/caution/west,
-/area)
+/area/space)
 "aV" = (
 /obj/machinery/dispenser,
 /obj/window/reinforced/west{
@@ -330,16 +330,16 @@
 	},
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aX" = (
 /obj/machinery/light,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "aY" = (
 /obj/table/reinforced,
 /obj/machinery/microwave,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "aZ" = (
 /obj/item/storage/toilet,
 /obj/window/cubicle{
@@ -349,15 +349,15 @@
 	},
 /obj/machinery/door/window/eastleft,
 /turf/simulated/floor/damaged2,
-/area)
+/area/space)
 "ba" = (
 /obj/machinery/light,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "bb" = (
 /obj/chem_sink,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "bc" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
@@ -373,11 +373,11 @@
 /turf/simulated/floor/caution/corner/sw{
 	dir = 2
 	},
-/area)
+/area/space)
 "bd" = (
 /obj/crate/freezer,
 /turf/simulated/floor/scorched2,
-/area)
+/area/space)
 "be" = (
 /obj/table/reinforced/bar,
 /obj/machinery/cashreg,
@@ -391,7 +391,7 @@
 	icon_state = "carpetNW";
 	dir = 4
 	},
-/area)
+/area/space)
 "bf" = (
 /obj/table/reinforced/bar,
 /turf/simulated/floor{
@@ -399,7 +399,7 @@
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area)
+/area/space)
 "bg" = (
 /obj/table/reinforced/bar,
 /obj/item/plate,
@@ -408,7 +408,7 @@
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area)
+/area/space)
 "bh" = (
 /obj/table/reinforced/bar,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -417,7 +417,7 @@
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area)
+/area/space)
 "bi" = (
 /obj/table/reinforced/bar,
 /obj/machinery/glass_recycler,
@@ -433,14 +433,14 @@
 	icon_state = "carpetNE";
 	dir = 4
 	},
-/area)
+/area/space)
 "bj" = (
 /turf/simulated/floor{
 	tag = "icon-carpetSW (WEST)";
 	icon_state = "carpetSW";
 	dir = 8
 	},
-/area)
+/area/space)
 "bk" = (
 /obj/stool/bar,
 /turf/simulated/floor{
@@ -448,14 +448,14 @@
 	icon_state = "carpetS";
 	dir = 8
 	},
-/area)
+/area/space)
 "bl" = (
 /turf/simulated/floor{
 	tag = "icon-carpetSE (WEST)";
 	icon_state = "carpetSE";
 	dir = 8
 	},
-/area)
+/area/space)
 "bm" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (NORTH)";
@@ -463,7 +463,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "bn" = (
 /obj/stool/chair{
 	dir = 4
@@ -473,7 +473,7 @@
 	icon_state = "carpetSW";
 	dir = 8
 	},
-/area)
+/area/space)
 "bo" = (
 /obj/table/reinforced/bar{
 	tag = "icon-bar (SOUTHWEST)";
@@ -486,7 +486,7 @@
 	icon_state = "carpetS";
 	dir = 8
 	},
-/area)
+/area/space)
 "bp" = (
 /obj/table/reinforced/bar{
 	tag = "icon-bar (SOUTHEAST)";
@@ -499,7 +499,7 @@
 	icon_state = "carpetS";
 	dir = 8
 	},
-/area)
+/area/space)
 "bq" = (
 /obj/stool/chair{
 	dir = 8
@@ -509,10 +509,10 @@
 	icon_state = "carpetSE";
 	dir = 8
 	},
-/area)
+/area/space)
 "br" = (
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "bs" = (
 /obj/machinery/light{
 	dir = 1;
@@ -523,7 +523,7 @@
 	icon_state = "carpetNW";
 	dir = 4
 	},
-/area)
+/area/space)
 "bt" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
@@ -531,14 +531,14 @@
 	icon_state = "carpetNE";
 	dir = 4
 	},
-/area)
+/area/space)
 "bu" = (
 /turf/simulated/floor{
 	tag = "icon-carpetW (EAST)";
 	icon_state = "carpetW";
 	dir = 4
 	},
-/area)
+/area/space)
 "bv" = (
 /obj/table/reinforced/bar{
 	dir = 9;
@@ -550,7 +550,7 @@
 	icon_state = "carpetE";
 	dir = 8
 	},
-/area)
+/area/space)
 "bw" = (
 /obj/stool/chair{
 	dir = 4
@@ -560,7 +560,7 @@
 	icon_state = "carpetW";
 	dir = 4
 	},
-/area)
+/area/space)
 "bx" = (
 /obj/table/reinforced/bar{
 	tag = "icon-bar (WEST)";
@@ -578,7 +578,7 @@
 	icon_state = "carpetE";
 	dir = 8
 	},
-/area)
+/area/space)
 "by" = (
 /obj/stool/chair,
 /turf/simulated/floor{
@@ -586,7 +586,7 @@
 	icon_state = "carpetNW";
 	dir = 4
 	},
-/area)
+/area/space)
 "bz" = (
 /obj/stool/chair,
 /turf/simulated/floor{
@@ -594,14 +594,14 @@
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area)
+/area/space)
 "bA" = (
 /turf/simulated/floor{
 	tag = "icon-carpetN (EAST)";
 	icon_state = "carpetN";
 	dir = 4
 	},
-/area)
+/area/space)
 "bB" = (
 /obj/stool/chair,
 /turf/simulated/floor{
@@ -609,7 +609,7 @@
 	icon_state = "carpetNE";
 	dir = 4
 	},
-/area)
+/area/space)
 "bC" = (
 /obj/table/reinforced/bar{
 	tag = "icon-bar (WEST)";
@@ -622,7 +622,7 @@
 	icon_state = "carpetE";
 	dir = 8
 	},
-/area)
+/area/space)
 "bD" = (
 /obj/grille,
 /obj/window/reinforced/north,
@@ -633,7 +633,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bE" = (
 /obj/table/reinforced/bar{
 	dir = 9;
@@ -646,7 +646,7 @@
 	icon_state = "carpetSW";
 	dir = 8
 	},
-/area)
+/area/space)
 "bF" = (
 /obj/table/reinforced/bar{
 	dir = 5;
@@ -660,14 +660,14 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bG" = (
 /turf/simulated/floor{
 	tag = "icon-carpetS (EAST)";
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bH" = (
 /obj/table/reinforced/bar{
 	dir = 9;
@@ -680,7 +680,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bI" = (
 /obj/table/reinforced/bar{
 	dir = 5;
@@ -692,7 +692,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bJ" = (
 /obj/table/reinforced/bar{
 	dir = 9;
@@ -705,7 +705,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bK" = (
 /obj/table/reinforced/bar{
 	dir = 5;
@@ -718,7 +718,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bL" = (
 /obj/table/reinforced/bar{
 	dir = 9;
@@ -730,7 +730,7 @@
 	icon_state = "carpetS";
 	dir = 4
 	},
-/area)
+/area/space)
 "bM" = (
 /obj/table/reinforced/bar{
 	dir = 5;
@@ -742,11 +742,11 @@
 	icon_state = "carpetSE";
 	dir = 4
 	},
-/area)
+/area/space)
 "bN" = (
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/bar,
-/area)
+/area/space)
 "bO" = (
 /obj/table/reinforced/bar{
 	tag = "icon-bar (SOUTHWEST)";
@@ -758,34 +758,34 @@
 	icon_state = "carpetSE";
 	dir = 4
 	},
-/area)
+/area/space)
 "bP" = (
 /obj/grille,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bQ" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "bR" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/grime,
-/area)
+/area/space)
 "bS" = (
 /obj/grille,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bT" = (
 /obj/grille,
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

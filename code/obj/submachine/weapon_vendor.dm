@@ -197,6 +197,10 @@
 		materiel_stock += new/datum/materiel/utility/belt
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
+		materiel_stock += new/datum/materiel/utility/donk
+		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/noslip_boots
+		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
 	accepted_token()
 		src.current_sidearm_credits++
@@ -261,7 +265,7 @@
 //SYNDIE
 
 /datum/materiel/sidearm/pistol
-	name = "M1992 Pistol"
+	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/pistol
 	catagory = "Sidearm"
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
@@ -276,7 +280,7 @@
 	name = "Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
 	catagory = "Loadout"
-	description = "Bullpup assault rifle with single shot and burst fire modes, mag pouch containing standard and AP magazines, mixed grenade pouch and breaching charges."
+	description = "A good all-rounder combat class centered around an assault rifle with selectable fire-modes as well as standard and armor-piercing rounds."
 
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
@@ -294,13 +298,13 @@
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/agent_rework
 	catagory = "Loadout"
-	description = "Tranquilizer pistol with a pouch of dart magazines, combat knife which increases run speed when held, five use cloaking device, electromagnetic card and night-vision goggles."
+	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
 
 /datum/materiel/loadout/medic
-	name = "Combat Medic"
-	path = /obj/storage/crate/classcrate/medic
+	name = "Field Medic"
+	path = /obj/storage/crate/classcrate/medic_rework
 	catagory = "Loadout"
-	description = "Comprehensive medical supplies in a satchel, belt and pouch, including donk pockets and an experimental Juggernaut injector."
+	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
@@ -360,7 +364,31 @@
 	name = "MPRT Rocket Ammunition"
 	path = /obj/item/storage/pouch/rpg
 	catagory = "Utility"
-	description = "An additional four MPRT rockets."
+	description = "A pouch for keeping MPRT ammunition in. Comes with two additional rockets."
+
+/datum/materiel/utility/donk
+	name = "Warm Donk Pocket"
+	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
+	catagory = "Utility"
+	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
+
+/datum/materiel/utility/sarin_grenade
+	name = "Sarin Grenade"
+	path = /obj/item/chem_grenade/sarin
+	catagory = "Utility"
+	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
+
+/datum/materiel/utility/noslip_boots
+	name = "Hi-grip Assault Boots"
+	path = /obj/item/clothing/shoes/swat/noslip
+	catagory = "Utility"
+	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
+
+/datum/materiel/utility/bomb_decoy
+	name = "Decoy Bomb Balloon"
+	path = /obj/bomb_decoy
+	catagory = "Utility"
+	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
 // Requisition tokens
 

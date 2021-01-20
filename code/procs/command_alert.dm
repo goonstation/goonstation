@@ -5,7 +5,7 @@
 	if (title && length(title) > 0)
 		boutput(world, "<h2 class='alert'>[title]</h2>")
 
-	boutput(world, "<span class='alert'>[text]</span>")
+	boutput(world, "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
 		world << csound(sound_to_play)
@@ -41,7 +41,7 @@
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)
 				var/mob/rand_mob_mult
-				if (rand_client_mult && rand_client_mult.mob) //ZeWaka: Fix for null.mob
+				if (rand_client_mult?.mob) //ZeWaka: Fix for null.mob
 					rand_mob_mult = rand_client_mult.mob //A randomly selected player that's different to each viewer
 
 

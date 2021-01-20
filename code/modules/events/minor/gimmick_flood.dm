@@ -1,6 +1,6 @@
 /datum/random_event/minor/gimmick_flood
 	name = "Random Flood"
-	disabled = !ASS_JAM
+	disabled = 1 // disabled for now as we dismantle old Ass Jam stuff, find a reason to enable it later, this would be a good player-triggerable event. -warc
 	weight = 30
 	customization_available = 1
 	var/reagent_type = null

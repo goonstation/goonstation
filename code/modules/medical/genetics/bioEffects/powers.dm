@@ -319,12 +319,6 @@
 
 			usr.pixel_y = 0
 
-			if (owner.bioHolder.HasEffect("fat") && prob(66) && !linked_power.safety)
-				owner.visible_message("<span class='alert'><b>[owner]</b> crashes due to their heavy weight!</span>")
-				playsound(usr.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-				owner.changeStatus("weakened", 10 SECONDS)
-				owner.changeStatus("stunned", 50)
-
 			owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
@@ -454,9 +448,12 @@
 				owner.real_name = H.real_name
 				owner.name = H.name
 				if(owner.bioHolder?.mobAppearance?.mutant_race)
-					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race)
+					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
 				else
 					owner.set_mutantrace(null)
+				if(ishuman(owner))
+					var/mob/living/carbon/human/O = owner
+					O.update_colorful_parts()
 		return
 
 	cast_misfire(atom/target)
@@ -536,9 +533,7 @@
 			AHs.customization_third_color = col2
 
 			H.visible_message("<span class='notice'><b>[H.name]</b>'s hair changes colors!</span>")
-			H.update_clothing()
-			H.update_body()
-			H.update_face()
+			H.update_colorful_parts()
 
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
@@ -980,7 +975,7 @@
 			owner.visible_message("<span class='alert'><b>[owner.name]</b>[fart_string]</span>")
 			while (sound_repeat > 0)
 				sound_repeat--
-				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1)
+				playsound(owner.loc, "sound/voice/farts/superfart.ogg", sound_volume, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			for(var/mob/living/V in range(get_turf(owner),fart_range))
 				shake_camera(V,10,64)
@@ -1080,6 +1075,7 @@
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/eyebeams
 	var/projectile_path = "/datum/projectile/laser/eyebeams"
+	var/stun_mode = 0
 
 /datum/targetable/geneticsAbility/eyebeams
 	name = "Eyebeams"
@@ -1099,6 +1095,8 @@
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power)
 			projectile_path = /datum/projectile/laser
+		else if(EB.stun_mode) //used by superhero for nonlethal stun
+			projectile_path = /datum/projectile/laser/eyebeams/stun
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
 
@@ -1126,6 +1124,9 @@
 	color_red = 1
 	color_green = 0
 	color_blue = 1
+
+/datum/projectile/laser/eyebeams/stun
+	ks_ratio = 0.0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1704,8 +1705,7 @@
 		if (disposed)
 			return
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[H.bioHolder.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		return
 
 	OnAdd()
@@ -2131,6 +2131,7 @@
 	var/count = 0
 	var/const/ticks_to_explode = 200
 	var/datum/targetable/geneticsAbility/shoot_limb/AB = null
+	var/stun_mode = 0 // used by discount superhero
 
 	OnLife()
 		..()
@@ -2168,6 +2169,13 @@
 	var/throw_power = 1
 	var/limb_force = 20
 
+	proc/hit_callback(var/datum/thrown_thing/thr)
+		for(var/mob/living/carbon/hit in get_turf(thr.thing))
+			hit.changeStatus("weakened", 150)
+			hit.changeStatus("stunned", 50)
+			break
+		return 0
+
 	cast(atom/target)
 		if (..())
 			return 1
@@ -2175,6 +2183,7 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/obj/item/parts/thrown_limb = null
+			var/datum/bioEffect/power/shoot_limb/SL = linked_power
 
 			if (H.has_limb("l_arm"))
 				thrown_limb = H.limbs.l_arm.remove(0)
@@ -2191,7 +2200,8 @@
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
-					thrown_limb.throw_at(target, range, throw_power * (linked_power.power+1))
+					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
+					thrown_limb.throw_at(target, range, throw_power * (linked_power.power+1), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)

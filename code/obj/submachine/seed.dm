@@ -534,11 +534,11 @@
 				else
 					P.name = dominantspecies.name
 
-				if (dominantspecies.sprite)
-					P.sprite = dominantspecies.sprite
+				P.sprite = dominantspecies.sprite
+				if(dominantspecies.override_icon_state)
+					P.override_icon_state = dominantspecies.override_icon_state
 				else
-					P.sprite = dominantspecies.name
-				P.override_icon_state = dominantspecies.override_icon_state
+					P.override_icon_state = dominantspecies.name
 				P.plant_icon = dominantspecies.plant_icon
 				P.crop = dominantspecies.crop
 				P.force_seed_on_harvest = dominantspecies.force_seed_on_harvest
@@ -727,6 +727,7 @@
 	density = 1
 	anchored = 1
 	mats = 6
+	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
@@ -896,14 +897,14 @@
 
 		else if (href_list["flush_reagent"])
 			var/id = href_list["flush_reagent"]
-			var/obj/item/reagent_containers/glass/T = locate(href_list["flush"]) in src
-			if (istype(T) && T.reagents)
+			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
+			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
 				T.reagents.remove_reagent(id, 500)
 			src.updateUsrDialog()
 
 		else if (href_list["flush"])
-			var/obj/item/reagent_containers/glass/T = locate(href_list["flush"]) in src
-			if (istype(T) && T.reagents)
+			var/obj/item/reagent_containers/T = locate(href_list["flush"]) in src
+			if (istype(T, /obj/item/reagent_containers/food/drinks) || istype(T, /obj/item/reagent_containers/glass) && T.reagents)
 				T.reagents.clear_reagents()
 			src.updateUsrDialog()
 
@@ -1115,7 +1116,7 @@
 
 	New()
 		..()
-		for (var/A in typesof(/datum/plant)) src.available += new A(src)
+		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 
 		/*for (var/datum/plant/P in src.available)
 			if (!P.vending || P.type == /datum/plant)

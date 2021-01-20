@@ -3,7 +3,7 @@
 	desc = "A simple phaser designed for scout vehicles."
 	var/r_gunner = 0
 	var/mob/gunner = null
-	var/datum/projectile/current_projectile = new/datum/projectile/laser/light
+	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
 	var/isfiring = 0
 	var/weapon_score = 0.1
@@ -126,7 +126,7 @@
 	desc = "A basic, light weight phaser designed for scout vehicles."
 	weapon_score = 0.3
 	appearanceString = "pod_weapon_ltlaser"
-	current_projectile = new/datum/projectile/laser/light
+	current_projectile = new/datum/projectile/laser/light/pod
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
@@ -165,10 +165,10 @@
 	firerate = 25
 
 /obj/item/shipcomponent/mainweapon/gun
-	name = "SPK-12 Ballistic System"
+	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
-	current_projectile = new/datum/projectile/bullet/a12
+	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"
@@ -287,9 +287,9 @@
 				if(isfiring) return
 				isfiring = 1
 				var/obj/decal/D = new/obj/decal(ship.loc)
-				D.dir = ship.dir
+				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
-					D.dir = shot_dir_override
+					D.set_dir(shot_dir_override)
 
 				D.name = "metal foam spray"
 				D.icon = 'icons/obj/chemical.dmi'
@@ -356,3 +356,25 @@
 
 		opencomputer(usr)
 		return
+
+
+/datum/projectile/laser/pod
+	dissipation_rate = 2
+	dissipation_delay = 16
+	projectile_speed = 32
+
+/datum/projectile/laser/light/pod
+	impact_range = 2
+	dissipation_rate = 1
+	dissipation_delay = 14
+	projectile_speed = 32
+
+/datum/projectile/disruptor
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 32
+
+/datum/projectile/disruptor/high
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 32

@@ -67,6 +67,15 @@
 /obj/machinery/proc/UnsubscribeProcess()
 	STOP_PROCESSING(src)
 
+/**
+* Determines whether or not the user can remote access devices.
+* This is typically limited to Borgs and AI things
+*/
+/obj/machinery/can_access_remotely(mob/user)
+	if (src.status & REQ_PHYSICAL_ACCESS)
+		. = ..()
+	else
+		. = can_access_remotely_default(user)
 
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
@@ -155,7 +164,7 @@
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
-	if (user && (get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user) && !isAI(usr))
+	if(!in_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 	if (user)
@@ -169,14 +178,22 @@
 	return 0
 
 /obj/machinery/ui_state(mob/user)
-	return tgui_physical_state
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = tgui_physical_state
+	else
+		. = tgui_default_state
 
-/obj/machinery/ui_status(mob/user)
-  return min(
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+/obj/machinery/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
 
 /obj/machinery/ex_act(severity)
 	// Called when an object is in an explosion
@@ -271,6 +288,9 @@
 	return
 
 /obj/machinery/emp_act()
+	if(src.flags & EMP_SHORT) return
+	src.flags |= EMP_SHORT
+
 	src.use_power(7500)
 
 	var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
@@ -278,9 +298,10 @@
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
+	pulse2.set_dir(pick(cardinal))
 
 	SPAWN_DBG(1 SECOND)
+		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return
 
@@ -368,6 +389,6 @@
 	var/area/A1 = get_area(src)
 	. = ..()
 	var/area/A2 = get_area(src)
-	if(A1 != A2)
+	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src

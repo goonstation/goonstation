@@ -23,14 +23,17 @@
 	proc/update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[src.icon_style]", -1)
-			icon_state = "[src.icon_style]1"
+				src.fluid_image = image(src.icon, "fluid-[src.icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.icon_state = "[src.icon_style][fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
 		else
-			icon_state = src.icon_style
+			src.icon_state = src.icon_style
 
 		if (istype(src.master,/obj/item/assembly))
 			var/obj/item/assembly/A = src.master
@@ -191,6 +194,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "eflask"
 	item_state = "flask"
+	var/icon_style = "eflask"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	initial_volume = 15
 	var/smashed = 0
@@ -201,17 +205,27 @@
 		src.update_icon()
 
 	proc/update_icon() //updates icon based on fluids inside
+		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()
+			src.icon_state = "[src.icon_style][fluid_state]"
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-eflask", -1)
-				src.fluid_image.color = average_rgb
-				src.UpdateOverlays(src.fluid_image, "fluid")
+				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-[icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.fluid_image.color = average_rgb
+			src.underlays += fluid_image
 		else
-			src.UpdateOverlays(null, "fluid")
+			src.icon_state = src.icon_style
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
+
+/obj/item/reagent_containers/glass/flask/round
+	name = "round flask"
+	icon_state = "roundflask"
+	icon_style = "roundflask"

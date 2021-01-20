@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/wall/setpieces/lunar,
 /area/moon/underground/hemera)
@@ -37,7 +37,7 @@
 /area/moon/underground/hemera)
 "ag" = (
 /turf/unsimulated/wall/setpieces/lunar,
-/area)
+/area/space)
 "ah" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	dir = 9
@@ -2546,8 +2546,7 @@
 "gL" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -3977,8 +3976,7 @@
 "jt" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -4791,8 +4789,7 @@
 "kU" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -5415,8 +5412,7 @@
 "mn" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
@@ -5505,8 +5501,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
@@ -6032,29 +6027,29 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area)
+/area/sim/test_area)
 "nA" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "nB" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area)
+/area/sim/test_area)
 "nC" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "nD" = (
 /turf/unsimulated/wall/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -6063,7 +6058,7 @@
 	name = "bombtest-bomb"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -6073,7 +6068,7 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -6082,20 +6077,20 @@
 	name = "bombtest"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "nH" = (
 /turf/unsimulated/wall,
-/area)
+/area/space)
 "nI" = (
 /obj/landmark/start,
 /obj/landmark/start{
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/space)
 "nJ" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -6107,7 +6102,7 @@
 	name = "Space Station 13";
 	tag = "the_ss13_screen"
 	},
-/area)
+/area/space)
 "nL" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -6159,7 +6154,7 @@
 /area/station/crew_quarters/kitchen)
 "nT" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "nU" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -7161,7 +7156,7 @@
 /area/station/crew_quarters/kitchen)
 "qo" = (
 /turf/simulated/wall,
-/area/sim)
+/area/sim/area1)
 "qp" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -7264,23 +7259,22 @@
 "qA" = (
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qB" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qC" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qD" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qE" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light{
@@ -7288,18 +7282,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qF" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qG" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qH" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qI" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -7307,21 +7301,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qJ" = (
 /obj/storage/secure/closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qK" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "qL" = (
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "qM" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7347,11 +7341,11 @@
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qP" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "qQ" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -7458,7 +7452,7 @@
 /obj/table/auto,
 /obj/machinery/computer/tour_console,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rd" = (
 /obj/machinery/guardbot_dock{
 	autoeject = 0;
@@ -7472,7 +7466,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "re" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -7481,7 +7475,7 @@
 	name = "Test Kitchen"
 	},
 /turf/simulated/floor/plating,
-/area/sim)
+/area/sim/area1)
 "rf" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
@@ -7527,7 +7521,7 @@
 /obj/table/auto,
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rl" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour0;desc=Test! ";
@@ -7536,14 +7530,14 @@
 	name = "station tour beacon"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rm" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol";
 	location = "bar"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rn" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour1;desc=Hello! Welcome to to the Nanotrasen C-Class Orbital Facility Tour! I will be your tourguide today on this adventure! Let's get started!";
@@ -7552,14 +7546,14 @@
 	name = "tour beacon - start"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ro" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rp" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -7663,7 +7657,7 @@
 "rA" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rB" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -7714,43 +7708,43 @@
 /obj/table/auto,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rH" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rI" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rJ" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rK" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rL" = (
 /obj/table/auto,
 /obj/item/clothing/head/void_crown,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rM" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/clothing/suit/armor/ancient,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rN" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "rO" = (
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/item/reagent_containers/food/snacks/burrito,
@@ -7759,7 +7753,7 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 
 (1,1,1) = {"
 aa

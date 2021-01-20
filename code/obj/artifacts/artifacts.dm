@@ -137,7 +137,6 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
@@ -284,7 +283,6 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
@@ -330,7 +328,6 @@
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
@@ -374,5 +371,6 @@
 		/datum/artifact/melee,
 		/datum/artifact/telewand,
 		/datum/artifact/energygun,
-		/datum/artifact/watercan
+		/datum/artifact/watercan,
+		/datum/artifact/pitcher
 		)

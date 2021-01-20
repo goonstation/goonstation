@@ -20,8 +20,12 @@
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32
-	pixel_x = -32
 	bound_height = 64
+#ifdef IN_MAP_EDITOR
+	pixel_x = 0
+#else
+	pixel_x = -32
+#endif
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
@@ -109,7 +113,7 @@
 		SPAWN_DBG(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
 				busy = 0
-				return (folks_to_spawn.len != 0)
+				return
 			var/turf/firstLoc = locate(src.x, src.y, src.z)
 			thePerson.set_loc( firstLoc )
 			playsound(src, 'sound/vox/decompression.ogg',be_loud ? 50 : 2)
@@ -119,7 +123,7 @@
 			sleep(1 SECOND)
 			if (!thePerson)
 				busy = 0
-				return (folks_to_spawn.len != 0)
+				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
 			src.icon_state = "cryotron_up"
@@ -130,11 +134,11 @@
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
 					for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
-							A.announce_arrival(thePerson.real_name, thePerson.mind.assigned_role)
+							A.announce_arrival(thePerson)
 
 			sleep(0.9 SECONDS)
 			busy = 0
-			return (folks_to_spawn.len != 0)
+			return
 
 //#ifdef MAP_OVERRIDE_DESTINY
 	proc/add_person_to_storage(var/mob/living/L as mob, var/voluntary = 1)
@@ -171,8 +175,9 @@
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
 			if (alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 15 minutes have passed.", "Confirmation", "Yes", "No") == "Yes")
-				if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
-					add_person_to_storage(user)
+				if (alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", "Yes", "No") == "Yes")
+					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
+						add_person_to_storage(user)
 					return 1
 		return 0
 
@@ -190,10 +195,10 @@
 			return 0
 		if (L.stat || L.restrained() || L.getStatusDuration("paralysis") || L.sleeping)
 			boutput(L, "<b>You can't enter cryogenic storage while incapacitated!</b>")
-			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while they're incapacitated or restrained!</b>")
 			return 0
 		if (user && (user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping))
-			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated!</b>")
+			boutput(user, "<b>You can't put someone in cryogenic storage while you're incapacitated or restrained!</b>")
 			return 0
 		if (get_dist(src, L) > 1)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
@@ -238,7 +243,11 @@
 				stored_mobs -= L
 
 	attack_hand(var/mob/user as mob)
-		if (!enter_prompt(user))
+		if(isgrab(user.l_hand))
+			src.attackby(user.l_hand, user)
+		else if(isgrab(user.r_hand))
+			src.attackby(user.r_hand, user)
+		else if (!enter_prompt(user))
 			return ..()
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)

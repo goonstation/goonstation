@@ -11,7 +11,7 @@
 
 			var/mult = get_multiplier()
 
-			if (H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
+			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
 			if (H.mutantrace && !H.mutantrace.decomposes)
@@ -54,4 +54,4 @@
 				max_produce_miasma = 0
 
 		if (max_produce_miasma)
-			T.fluid_react_single("miasma", 10, airborne = 1)
+			T.fluid_react_single("miasma", 3, airborne = 1)

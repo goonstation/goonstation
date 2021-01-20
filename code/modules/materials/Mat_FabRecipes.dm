@@ -110,7 +110,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/pick/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -130,7 +130,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/blaster/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -149,7 +149,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/hammer/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -168,7 +168,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/mining_head/drill/newObj = new()
 			var/obj/item/source = getObjectByPartName("Base")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -202,7 +202,7 @@
 			else if(istype(head, /obj/item/mining_head/pick))
 				newtype = /obj/item/mining_tools/pick
 
-			if(newtype && body && body.material && head && head.material)
+			if(newtype && body?.material && head?.material)
 				newObj = new newtype(src)
 				if(istype(opt, /obj/item/mining_mod/conc))
 					newObj.blasting = 1
@@ -242,7 +242,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/coil/small/newObj = new()
 			var/obj/item/source = getObjectByPartName("Coil")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -261,7 +261,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/coil/large/newObj = new()
 			var/obj/item/source = getObjectByPartName("Coil")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -279,7 +279,7 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		var/obj/item/arrowhead/newObj = new()
 		var/obj/item/source = getObjectByPartName("Arrowhead")
-		if(source && source.material)
+		if(source?.material)
 			newObj.setMaterial(source.material)
 		newObj.change_stack_amount((amount) - newObj.amount)
 		newObj.set_loc(getOutputLocation(owner))
@@ -300,7 +300,7 @@
 			var/obj/item/experimental/melee/spear/newObj = new()
 			var/obj/item/shaft = getObjectByPartName("Shaft")
 			var/obj/item/head = getObjectByPartName("Head")
-			if(shaft && shaft.material && head && head.material)
+			if(shaft?.material && head?.material)
 				newObj.setShaftMaterial(shaft.material)
 				newObj.setHeadMaterial(head.material)
 				newObj.buildOverlays()
@@ -323,7 +323,7 @@
 		var/obj/item/arrowhead = getObjectByPartName("Arrowhead")
 		var/obj/item/shaft = getObjectByPartName("Shaft")
 
-		if(arrowhead && arrowhead.material && shaft && shaft.material)
+		if(arrowhead?.material && shaft?.material)
 			newObj.setHeadMaterial(arrowhead.material)
 			newObj.setShaftMaterial(shaft.material)
 
@@ -345,7 +345,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/gun/bow/newObj = new()
 			var/obj/item/source = getObjectByPartName("Bow")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -364,7 +364,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/quiver/newObj = new()
 			var/obj/item/source = getObjectByPartName("Quiver")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -383,7 +383,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/lens/newObj = new()
 			var/obj/item/source = getObjectByPartName("Lens")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -402,7 +402,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/gears/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gears")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -421,7 +421,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -440,7 +440,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/aplate/newObj = new()
 			var/obj/item/source = getObjectByPartName("Armor")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -459,7 +459,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/glasses/crafted/newObj = new()
 			var/obj/item/source = getObjectByPartName("Glasses")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 				newObj.color_r = GetRedPart(source.material.color) / 255
 				newObj.color_g = GetGreenPart(source.material.color) / 255
@@ -481,7 +481,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/under/crafted/newObj = new()
 			var/obj/item/source = getObjectByPartName("Jumpsuit")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -500,7 +500,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/gloves/crafted/insulating/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gloves")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -519,8 +519,35 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/gloves/crafted/armored/newObj = new()
 			var/obj/item/source = getObjectByPartName("Gloves")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
+
+			newObj.set_loc(getOutputLocation(owner))
+		return
+
+/datum/matfab_recipe/shoes
+	name = "Shoes"
+	desc = "A custom pair of shoes."
+	category = "Clothing"
+
+	New()
+		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Upper"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Sole"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/optionalanymat {part_name = "Optional Toe Tip"; required_amount = 2} ())
+		..()
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		for(var/i=0, i<amount, i++)
+			var/obj/item/clothing/shoes/crafted/newObj = new()
+			var/obj/item/upper = getObjectByPartName("Upper")
+			var/obj/item/sole = getObjectByPartName("Sole")
+			var/obj/item/toe = getObjectByPartName("Optional Toe Tip")
+			if(toe && toe.material)
+				newObj.setMaterial(toe.material)
+				newObj.desc = "[toe.material.name]-toed [upper.material.name] shoes. The soles are made of [sole.material.name]."
+			else if(upper && upper.material)
+				newObj.setMaterial(upper.material)
+				newObj.desc = newObj.desc + " The soles are made of [sole.material.name]."
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -547,7 +574,7 @@
 				newObj = new(null, R, G, B)
 			else
 				newObj = new
-			if(casingObj && casingObj.material)
+			if(casingObj?.material)
 				newObj.setMaterial(casingObj.material)
 				newObj.desc = newObj.desc + " It has a [lensObj.material.name] lens."
 
@@ -569,7 +596,7 @@
 			var/obj/item/light/tube/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
-			if(casingObj && casingObj.material && lensObj && lensObj.material)
+			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
 				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
 				newObj.color_r = GetRedPart(lensObj.material.color) / 255
@@ -595,7 +622,7 @@
 			var/obj/item/light/bulb/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
-			if(casingObj && casingObj.material && lensObj && lensObj.material)
+			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
 				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
 				newObj.color_r = GetRedPart(lensObj.material.color) / 255
@@ -621,7 +648,7 @@
 			var/obj/item/tripod_bulb/light/newObj = new()
 			var/obj/item/lensObj = getObjectByPartName("Lens")
 			var/obj/item/casingObj = getObjectByPartName("Casing")
-			if(casingObj && casingObj.material && lensObj && lensObj.material)
+			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
 				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
 				newObj.light.set_color(GetRedPart(lensObj.material.color) / 255, GetGreenPart(lensObj.material.color) / 255, GetBluePart(lensObj.material.color) / 255)
@@ -641,7 +668,7 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		var/obj/item/sheet/newObj = new()
 		var/obj/item/source = getObjectByPartName("Sheet")
-		if(source && source.material)
+		if(source?.material)
 			newObj.setMaterial(source.material)
 		newObj.change_stack_amount((amount * 10) - newObj.amount)
 		newObj.set_loc(getOutputLocation(owner))
@@ -660,7 +687,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/ammo/power_cell/self_charging/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -679,7 +706,7 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/cell/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
-			if(source && source.material)
+			if(source?.material)
 				newObj.setMaterial(source.material)
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -714,7 +741,7 @@
 
 			var/obj/item/material_piece/wad/W = unpool(/obj/item/material_piece/wad)
 
-			if(refined && refined.material)
+			if(refined?.material)
 				refined.material.canMix = 0
 				refined.material.name = "[master_chem_name]-infused [refined.material.name]"
 				refined.material.mat_id = "[master_chem_name][refined.material.mat_id]"
@@ -922,7 +949,7 @@
 
 		if(stack)
 			var/obj/item/newObj = new result()
-			if(finishMaterial && finishMaterial.assigned && finishMaterial.assigned.material)
+			if(finishMaterial?.assigned?.material)
 				newObj.setMaterial(finishMaterial.assigned.material)
 			postProcess(newObj)
 			newObj.change_stack_amount(round(amount*createMultiplier,1) - newObj.amount)
@@ -930,7 +957,7 @@
 		else
 			for(var/i=0, i<round(amount*createMultiplier,1), i++)
 				var/obj/item/newObj = new result()
-				if(finishMaterial && finishMaterial.assigned && finishMaterial.assigned.material)
+				if(finishMaterial?.assigned?.material)
 					newObj.setMaterial(finishMaterial.assigned.material)
 				postProcess(newObj)
 				newObj.set_loc(getOutputLocation(owner))

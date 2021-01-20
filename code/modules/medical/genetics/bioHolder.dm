@@ -1,4 +1,3 @@
-
 var/list/bioUids = new/list() //Global list of all uids and their respective mobs
 
 var/numbersAndLetters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
@@ -16,27 +15,108 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 /// Holds all the appearance information.
 /datum/appearanceHolder
+	/** Mob Appearance Flags - used to modify how the mob is drawn
+	*
+	* These flags help define what features get drawn when the mob's sprite is assembled
+	*
+	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	*
+	* SEE: appearance.dm for more flags and details!
+	*/
+	var/mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
 
-	//_carry holds our "actual" color, in case it changes and we want the old one back
-	var/mob_color_flags = (HAS_HAIR_COLORED_HAIR)
 
-	var/customization_first_color_carry = "#101010" //Holds someone's original colors if they need to be changed temporarily
+	/// tells update_body() which DMI to use for rendering the chest/groin, torso-details, and oversuit tails
+	var/body_icon = 'icons/mob/human.dmi'
+	/// for mutant races that are rendered using a static icon. Ignored if BUILT_FROM_PIECES is set in mob_appearance_flags
+	var/body_icon_state = "skeleton"
+	/// What DMI holds the mob's head sprite
+	var/head_icon = 'icons/mob/human_head.dmi'
+	/// What icon state is our mob's head?
+	var/head_icon_state = "head"
+
+	/// What DMI holds the mob's hair sprites
+	var/customization_icon = 'icons/mob/human_hair.dmi'
+
+	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
+	/// The color that was set by the player's preferences
+	var/customization_first_color_original = "#101010"
+	/// The hair style / detail thing that gets displayed on your spaceperson
 	var/customization_first = "Trimmed"
+	/// The hair style / detail thing that was set by the player in their settings
+	var/customization_first_original = "None"
+	/// The Y offset to display this image
+	var/customization_first_offset_y = 0
 
-	var/customization_second_color_carry = "#101010" // This way, they can return to their orignal colors
 	var/customization_second_color = "#101010"
+	var/customization_second_color_original = "#101010"
 	var/customization_second = "None"
+	var/customization_second_original = "None"
+	var/customization_second_offset_y = 0
 
-	var/customization_third_color_carry = "#101010"
 	var/customization_third_color = "#101010"
+	var/customization_third_color_original = "#101010"
 	var/customization_third = "None"
+	var/customization_third_original = "None"
+	var/customization_third_offset_y = 0
+
+	/// Intended for extra head features that may or may not be hair
+	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/special_hair_1_color_ref = CUST_1
+	var/special_hair_1_layer = MOB_HAIR_LAYER2
+	var/special_hair_1_offset_y = 0
+	var/special_hair_2_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_2_state = "none"
+	var/special_hair_2_color_ref = CUST_2
+	var/special_hair_2_layer = MOB_HAIR_LAYER2
+	var/special_hair_2_offset_y = 0
+	var/special_hair_3_icon = 'icons/mob/human_hair.dmi'
+	var/special_hair_3_state = "none"
+	var/special_hair_3_color_ref = CUST_3
+	var/special_hair_3_layer = MOB_HAIR_LAYER2
+	var/special_hair_3_offset_y = 0
+
+	/// Intended for extra, non-head body features that may or may not be hair (just not on their head)
+	/// An image to be overlaid on the mob just above their skin
+	var/mob_detail_1_icon = 'icons/mob/human_hair.dmi'
+	var/mob_detail_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/mob_detail_1_color_ref = CUST_1
+	var/mob_detail_1_offset_y = 0
+
+	/// An image to be overlaid on the mob between their outer-suit and backpack
+	/// Not to be used to define a tail oversuit, that's done by the tail organ.
+	/// This is for things like the cow having a muzzle that shows up over their outer-suit
+	var/mob_oversuit_1_icon = 'icons/mob/human_hair.dmi'
+	var/mob_oversuit_1_state = "none"
+	/// Which of the three customization colors to use (CUST_1, CUST_2, CUST_3)
+	var/mob_oversuit_1_color_ref = CUST_1
+	var/mob_oversuit_1_offset_y = 0
+
+	/// Used by changelings to determine which type of limbs their victim had
+	var/datum/mutantrace/mutant_race = null
 
 	var/e_color = "#101010"
-	var/e_color_carry = "#101010"
+	var/e_color_original = "#101010"
+	/// Eye icon
+	var/e_icon = 'icons/mob/human_hair.dmi'
+	/// Eye icon state
+	var/e_state = "eyes"
+	/// How far up or down to move the eyes
+	var/e_offset_y = 0
 
-	var/s_tone_carry = "#FFCC99"
+	var/s_tone_original = "#FFCC99"
 	var/s_tone = "#FFCC99"
+
+	var/mob_head_offset = 0
+	var/mob_hand_offset = 0
+	var/mob_body_offset = 0
+	var/mob_arm_offset = 0
+	var/mob_leg_offset = 0
+
 	// Standard tone reference:
 	// FAD7D0 - Albino
 	// FFCC99 - White
@@ -55,8 +135,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
-
-	var/datum/mutantrace/mutant_race = null
 
 	var/gender = MALE
 	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
@@ -92,37 +170,89 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
-		customization_first_color_carry = toCopy.customization_first_color_carry
+		mob_appearance_flags = toCopy.mob_appearance_flags
+
+		body_icon = toCopy.body_icon
+		body_icon_state = toCopy.body_icon_state
+		head_icon = toCopy.head_icon
+		head_icon_state = toCopy.head_icon_state
+
+		customization_icon = toCopy.customization_icon
+
+		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
 		customization_first = toCopy.customization_first
+		customization_first_offset_y = toCopy.customization_first_offset_y
+		customization_first_original = toCopy.customization_first_original
 
-		customization_second_color_carry = toCopy.customization_second_color_carry
+		customization_second_color_original = toCopy.customization_second_color_original
 		customization_second_color = toCopy.customization_second_color
 		customization_second = toCopy.customization_second
+		customization_second_offset_y = toCopy.customization_second_offset_y
+		customization_second_original = toCopy.customization_second_original
 
-		customization_third_color_carry = toCopy.customization_third_color_carry
+		customization_third_color_original = toCopy.customization_third_color_original
 		customization_third_color = toCopy.customization_third_color
 		customization_third = toCopy.customization_third
+		customization_third_offset_y = toCopy.customization_third_offset_y
+		customization_third_original = toCopy.customization_third_original
 
-		mob_color_flags = toCopy.mob_color_flags
+		special_hair_1_icon = toCopy.special_hair_1_icon
+		special_hair_1_state = toCopy.special_hair_1_state
+		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
+		special_hair_1_offset_y = toCopy.special_hair_1_offset_y
+
+		special_hair_2_icon = toCopy.special_hair_2_icon
+		special_hair_2_state = toCopy.special_hair_2_state
+		special_hair_2_color_ref = toCopy.special_hair_2_color_ref
+		special_hair_2_offset_y = toCopy.special_hair_2_offset_y
+
+		special_hair_3_icon = toCopy.special_hair_3_icon
+		special_hair_3_state = toCopy.special_hair_3_state
+		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
+		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
+
+		mob_detail_1_icon = toCopy.mob_detail_1_icon
+		mob_detail_1_state = toCopy.mob_detail_1_state
+		mob_detail_1_color_ref = toCopy.mob_detail_1_color_ref
+		mob_detail_1_offset_y = toCopy.mob_detail_1_offset_y
+
+		mob_oversuit_1_icon = toCopy.mob_oversuit_1_icon
+		mob_oversuit_1_state = toCopy.mob_oversuit_1_state
+		mob_oversuit_1_color_ref = toCopy.mob_oversuit_1_color_ref
+		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
+
+		mutant_race = toCopy.mutant_race
 
 		e_color = toCopy.e_color
+		e_icon = toCopy.e_icon
+		e_state = toCopy.e_state
+		e_offset_y = toCopy.e_offset_y
+		e_color_original = toCopy.e_color_original
 
-		s_tone = toCopy.s_tone
-		s_tone_carry = toCopy.s_tone_carry
+		s_tone = toCopy.s_tone_original // *usually* we want to have a normal skintone by default. *usually*
+		s_tone_original = toCopy.s_tone_original
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
+		mob_head_offset = toCopy.mob_head_offset
+		mob_hand_offset = toCopy.mob_hand_offset
+		mob_body_offset = toCopy.mob_body_offset
+		mob_arm_offset = toCopy.mob_arm_offset
+		mob_leg_offset = toCopy.mob_leg_offset
+
 		gender = toCopy.gender
 		pronouns = toCopy.pronouns
-		mutant_race = toCopy.mutant_race
 
 		screamsound = toCopy.screamsound
 		fartsound = toCopy.fartsound
 		voicetype = toCopy.voicetype
 
 		flavor_text = toCopy.flavor_text
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_colorful_parts()
 		return src
 
 	disposing()
@@ -138,7 +268,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
-		//customization_first_color += (toCopy.customization_first_color - customization_first_color) / adjust_denominator
 		customization_first_color = StaggeredCopyHex(customization_first_color, toCopy.customization_first_color, adjust_denominator)
 
 		if (progress >= 9 || prob(progress * 10))
@@ -146,11 +275,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			customization_second = toCopy.customization_second
 			customization_third = toCopy.customization_third
 
-		//customization_second_color += (toCopy.customization_second_color - customization_second_color) / adjust_denominator
 		customization_second_color = StaggeredCopyHex(customization_second_color, toCopy.customization_second_color, adjust_denominator)
-		//customization_third_color += (toCopy.customization_third_color - customization_third_color) / adjust_denominator
 		customization_third_color = StaggeredCopyHex(customization_third_color, toCopy.customization_third_color, adjust_denominator)
-		//e_color += (toCopy.e_color - e_color) / adjust_denominator
 		e_color = StaggeredCopyHex(e_color, toCopy.e_color, adjust_denominator)
 
 		s_tone = StaggeredCopyHex(s_tone, toCopy.s_tone, adjust_denominator)
@@ -162,11 +288,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_colorful_parts()
 		return
 
 	proc/StaggeredCopyHex(var/hex, var/targetHex, var/adjust_denominator)
 
-		if(adjust_denominator < 1) adjust_denominator = 1
+		adjust_denominator = clamp(adjust_denominator, 1, 10)
 
 		. = "#"
 		for(var/i = 0, i < 3, i++)
@@ -183,19 +312,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/UpdateMob() //Rebuild the appearance of the mob from the settings in this holder.
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
 
-			var/list/hair_list = customization_styles + customization_styles_gimmick
-			H.cust_one_state = hair_list[customization_first]
-
-			var/list/beard_list = customization_styles + customization_styles_gimmick
-			H.cust_two_state = beard_list[customization_second]
-
-			var/list/detail_list = customization_styles + customization_styles_gimmick
-			H.cust_three_state = detail_list[customization_third]
+			var/mob/living/carbon/human/H = owner	// hair is handled by the head, applied by update_face
 
 			H.gender = src.gender
-			H.update_face()
+
+			H.update_face() // wont get called if they dont have a head. probably wont do anything anyway, but best to be safe
 			H.update_body()
 			H.update_clothing()
 
@@ -498,7 +620,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
-			return CopyOther(toCopy)
+			src.CopyOther(toCopy)
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)
@@ -523,7 +645,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if(istype(newEffect))
 			for(var/datum/bioEffect/curr_id in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
-				if(curr && curr.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
+				if(curr?.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
 					RemoveEffect(curr.id)
 					break //Since this cleaning is always done we just ousted the only mutantrace in effects

@@ -17,7 +17,7 @@
 	//var/obj/o_shooter = null
 	var/list/targets = list()
 	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
-	var/max_range = 0 //max range
+	var/max_range = PROJ_INFINITE_RANGE //max range
 	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
 	var/forensic_ID = null
@@ -55,9 +55,7 @@
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 	var/is_detonating = 0//to start modeling fuses
-#if ASS_JAM
-	var/projectile_paused = FALSE //for time stopping
-#endif
+
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -91,15 +89,12 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!disposed && !pooled)
-#if ASS_JAM //dont move while in timestop
-			while(src.projectile_paused)
-				sleep(1 SECOND)
-#endif
+
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
-	proc/collide(atom/A as mob|obj|turf|area)
+	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
@@ -113,6 +108,7 @@
 				return
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				ticks_until_can_hit_mob = src.proj_data.ticks_between_mob_hits
+		var/turf/T = get_turf(A)
 		src.power = src.proj_data.get_power(src, A)
 		if(src.power <= 0 && src.proj_data.power != 0) return //we have run out of power
 		// Necessary because the check in human.dm is ineffective (Convair880).
@@ -125,6 +121,9 @@
 			return
 
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
+		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
+		if(pooled) //maybe a signal proc pooled us
+			return
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
@@ -138,16 +137,16 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		if(proj_data && proj_data.material) //ZeWaka: Fix for null.material
+		if(proj_data?.material) //ZeWaka: Fix for null.material
 			proj_data.material.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
 			for (var/obj/O in A)
 				O.bullet_act(src)
-			var/turf/T = A
-			if (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL))
-				if (proj_data && proj_data.icon_turf_hit && istype(A, /turf/simulated/wall))
+			T = A
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
 						W.forensic_impacts += src.forensic_ID
@@ -159,38 +158,10 @@
 						impact.pixel_y += rand(-12,12)
 						W.proj_impacts += impact
 						W.update_projectile_image(ticker.round_elapsed_ticks)
-				if (proj_data && proj_data.hit_object_sound)
+				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
 		else if (ismob(A))
-			if(pierces_left != 0) //try to hit other targets on the tile
-				var/turf/T = get_turf(A)
-				for (var/mob/X in T.contents)
-					if (X != A)
-						X.bullet_act(src)
-						pierces_left--
-						//holy duplicate code batman. If someone can come up with a better solution, be my guest
-						if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
-							if (proj_data.hit_mob_sound)
-								playsound(X.loc, proj_data.hit_mob_sound, 60, 0.5)
-							proj_data.on_hit(X, angle_to_dir(src.angle), src)
-						for (var/obj/item/cloaking_device/S in X.contents)
-							if (S.active)
-								S.deactivate(X)
-								src.visible_message("<span class='notice'><b>[X]'s cloak is disrupted!</b></span>")
-						for (var/obj/item/device/disguiser/D in A.contents)
-							if (D.on)
-								D.disrupt(X)
-								src.visible_message("<span class='notice'><b>[X]'s disguiser is disrupted!</b></span>")
-						if (isliving(X))
-							var/mob/living/H = X
-							H.stamina_stun()
-							if (istype(X, /mob/living/carbon/human/npc/monkey))
-								var/mob/living/carbon/human/npc/monkey/M = X
-								M.shot_by(shooter)
-
-					if(pierces_left == 0)
-						break
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -209,20 +180,35 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if (pierces_left == 0)
+			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+				for (var/mob/X in T.contents)
+					if(!(X in src.hitlist))
+						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+							src.collide(X, first = 0)
+					if(src.pooled)
+						return
+			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
 				die()
 			else
-				pierces_left--
+				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+					pierces_left--
 
 		else if (isobj(A))
-			if (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
 				if (iscritter(A))
-					if (proj_data && proj_data.hit_mob_sound)
+					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
 				else
-					if (proj_data && proj_data.hit_object_sound)
+					if (proj_data?.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)
 				die()
+			if(first && (sigreturn & PROJ_OBJ_HIT_OTHER_OBJS))
+				for (var/obj/X in T.contents)
+					if(!(X in src.hitlist))
+						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
+							src.collide(X, first = 0)
+					if(src.pooled)
+						return
 		else
 			die()
 
@@ -424,12 +410,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-
-		// The bullet has expired/decayed.
-		if (src.travelled > src.max_range * 32)
-			proj_data.on_max_range_die(src)
-			die()
-			return
 		proj_data.tick(src)
 		if (disposed || pooled)
 			return
@@ -448,6 +428,12 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			src.travelled += src.proj_data.projectile_speed
+
+		// The bullet would be expired/decayed.
+		if (src.travelled >= src.max_range * 32)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 
 		if (proj_data.precalculated)
 			for (var/i = 1, i < crossing.len, i++)
@@ -505,7 +491,7 @@
 				die()
 				return
 
-		dir = facing_dir
+		set_dir(facing_dir)
 		incidence = turn(incidence, 180)
 
 		var/dx = loc.x - orig_turf.x
@@ -547,7 +533,7 @@ datum/projectile
 		override_color = 0
 		power = 20               // How much of a punch this has
 		cost = 1                 // How much ammo this costs
-		max_range = 0            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
+		max_range = PROJ_INFINITE_RANGE            // How many ticks can this projectile go for if not stopped, if it doesn't die from falloff
 		dissipation_rate = 2     // How fast the power goes away
 		dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 		                         // When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
@@ -565,12 +551,11 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
-		nomsg = 0
 
 		datum/material/material = null
 
@@ -606,6 +591,7 @@ datum/projectile
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
+	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
 	proc
@@ -635,8 +621,7 @@ datum/projectile
 			return
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-			if(ks_ratio == 0) //stun projectiles only
-				impact_image_effect("T", hit)
+			impact_image_effect(ie_type, hit)
 //				if (isliving(hit))
 //					var/mob/living/L = hit
 //					stun_bullet_hit(O,L)
@@ -663,10 +648,7 @@ datum/projectile
 
 datum/projectile/laser
 	impact_range = 16
-
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/laser/pred
 	impact_range = 2
@@ -703,9 +685,7 @@ datum/projectile/bfg
 
 datum/projectile/bullet
 	impact_range = 0
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("K", hit)
+	ie_type = "K"
 
 datum/projectile/bullet/autocannon
 	impact_range = 2
@@ -743,9 +723,7 @@ datum/projectile/owl
 
 datum/projectile/disruptor
 	impact_range = 4
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/disruptor/high
 	impact_range = 4
@@ -940,8 +918,7 @@ datum/projectile/snowball
 	P.power = DATA.power
 
 	P.proj_data = DATA
-	if(!isnull(alter_proj))
-		alter_proj.Invoke(P)
+	alter_proj?.Invoke(P)
 
 
 	if(P.proj_data == DATA)
@@ -980,13 +957,10 @@ datum/projectile/snowball
 	P.xo = xo
 	P.yo = yo
 
-	if(!DATA.max_range)
-		if(DATA.dissipation_rate <= 0)
-			P.max_range = 500
-		else
-			P.max_range = DATA.dissipation_delay + round(P.power / DATA.dissipation_rate)
-	else
+	if(DATA.dissipation_rate <= 0)
 		P.max_range = DATA.max_range
+	else
+		P.max_range = min(DATA.dissipation_delay + round(P.power / DATA.dissipation_rate), DATA.max_range)
 
 	return P
 
@@ -999,36 +973,6 @@ datum/projectile/snowball
 	if(P.reflectcount >= max_reflects)
 		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
-	if (!Q)
-		return null
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
-	Q.name = "reflected [Q.name]"
-	Q.launch()
-	return Q
-
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
-	if (!P.incidence || !(P.incidence in cardinal))
-		return null
-	if(P.reflectcount >= max_reflects)
-		return
-
-	var/rx = 0
-	var/ry = 0
-
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
-
-	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
-	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
-	ry = P.yo - dn * ny
-
-	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Marquesas/Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
-
-	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
 	Q.reflectcount = P.reflectcount + 1

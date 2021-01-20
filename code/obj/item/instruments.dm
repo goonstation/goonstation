@@ -82,9 +82,9 @@
 		.= 1
 
 	proc/play(var/mob/user)
-		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions?.len)
+		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
@@ -238,6 +238,27 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+
+/* -------------------- Guitar -------------------- */
+
+/obj/item/instrument/guitar
+	name = "guitar"
+	desc = "This machine kills syndicates."
+	icon_state = "guitar"
+	item_state = "guitar"
+	two_handed = 1
+	force = 10.0
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+
+	New()
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
+		..()
+
 
 /* -------------------- Bike Horn -------------------- */
 
@@ -564,7 +585,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

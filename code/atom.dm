@@ -54,20 +54,26 @@
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
 
-	proc/name_prefix(var/text_to_add, var/return_prefixes = 0)
+	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_prefixes))
 			if (src.name_prefixes.len >= src.num_allowed_prefixes)
 				src.remove_prefixes(1)
-			src.name_prefixes += strip_html(text_to_add)
+			if(prepend)
+				src.name_prefixes.Insert(1, strip_html(text_to_add))
+			else
+				src.name_prefixes += strip_html(text_to_add)
 		if (return_prefixes)
 			var/amt_prefixes = 0
 			for (var/i in src.name_prefixes)
 				if (amt_prefixes >= src.num_allowed_prefixes)
 					prefix += " "
 					break
-				prefix += i + " "
+				if(prepend)
+					prefix = i + " " + prefix
+				else
+					prefix += i + " "
 				amt_prefixes ++
 			return prefix
 
@@ -157,6 +163,11 @@
 
 	proc/Scale(var/scalex = 1, var/scaley = 1)
 		src.transform = matrix(src.transform, scalex, scaley, MATRIX_SCALE)
+
+	// a turn-safe scale, for temporary anisotropic scales
+	proc/SafeScale(var/scalex = 1, var/scaley = 1)
+		var/rot = arctan(src.transform.b, src.transform.a)
+		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
@@ -287,6 +298,13 @@
 	src.icon_state = new_state
 	signal_event("icon_updated")
 
+/atom/proc/set_dir(var/new_dir)
+#ifdef COMSIG_ATOM_DIR_CHANGED
+	if (src.dir != new_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGED, src.dir, new_dir)
+#endif
+	src.dir = new_dir
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -335,9 +353,7 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/throwforce = 1
-#if ASS_JAM //timestop var used for pausing thrown stuff midair
-	var/throwing_paused = FALSE
-#endif
+
 	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
@@ -372,6 +388,10 @@
 			T.checkinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+	if(!isnull(src.loc))
+		src.loc.Entered(src, null)
+		if(isturf(src.loc)) // call it on the area too
+			src.loc.loc.Entered(src, null)
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
@@ -559,6 +579,13 @@
 				G.shoot()
 	return
 
+/atom/movable/set_dir(new_dir)
+	..()
+	if(src.medium_lights)
+		update_medium_light_visibility()
+	if (src.mdir_lights)
+		update_mdir_light_visibility(src.dir)
+
 /atom/proc/get_desc(dist)
 
 /**
@@ -570,7 +597,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && hiddenFrom.Find(user.client)) //invislist
+	if(src.hiddenFrom?.Find(user.client)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -615,6 +642,8 @@
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
+		return
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return
@@ -695,7 +724,7 @@
 		else
 			tex = icon('icons/effects/atom_textures_32.dmi', texture)
 
-	if (A && A.wear_image) //Wire: Fix for: Cannot read null.icon
+	if (A?.wear_image) //Wire: Fix for: Cannot read null.icon
 		var/icon/mask = null
 		mask = icon(A.wear_image.icon, A.wear_image.icon_state)
 		mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
@@ -773,7 +802,7 @@
   * there are lots of old places in the code that set loc directly.
 	* ignore them they'll be fixed later, please use this proc in the future
   */
-/atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+/atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
@@ -783,24 +812,27 @@
 			loc = src:client:player:shamecubed
 			return
 
-	if (isturf(loc))
-		loc.Exited(src, newloc)
-
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
 
-	if(my_area != new_area && my_area)
+	var/atom/oldloc = loc
+	loc = newloc
+
+	src.last_move = 0
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+
+	oldloc?.Exited(src, newloc)
+
+	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
-	var/oldloc = loc
-	loc = newloc
-	 //Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
-	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
-		new_area.Entered(src, oldloc)
+	newloc?.Entered(src, oldloc)
 
-	if(isturf(newloc))
-		var/turf/nloc = newloc
-		nloc.Entered(src, oldloc)
+	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
+		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
 		for (var/atom/movable/M in src.attached_objs)
@@ -880,21 +912,30 @@
 //same as above :)
 /atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
 	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/prev_added_hasentered = src.material?.owner_hasentered_added
 	..(mat1,appearance,setname,copy,use_descriptors)
 	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	src.material?.owner_hasentered_added = prev_added_hasentered
 
 	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_HASENTERED)
-				if(cur_mat_triggeronentered)
-					var/turf/T = src.loc
-					if (T)
-						T.checkinghasentered++
-				else
+			// Check if USE_HASENTERED needs to be added if atom is missing the flag and onEnter trigger was added
+			if (!(src.event_handler_flags & USE_HASENTERED) && cur_mat_triggeronentered)
+				var/turf/T = src.loc
+				if (T)
+					T.checkinghasentered++
+				//Slap flag on so moving the atom will properly adjust checkinghasentered
+				src.event_handler_flags |= USE_HASENTERED
+				src.material.owner_hasentered_added = TRUE
+			// Check USE_HASENTERED needs to be removed when current material doesn't have onEnter trigger now and flag was added
+			else
+				if (!cur_mat_triggeronentered && prev_added_hasentered)
 					var/turf/T = src.loc
 					if (T)
 						T.checkinghasentered = max(T.checkinghasentered-1, 0)
 
+					src.event_handler_flags &= ~USE_HASENTERED
+					src.material.owner_hasentered_added = FALSE
 
 // standardized damage procs
 
@@ -967,7 +1008,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

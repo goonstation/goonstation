@@ -26,7 +26,7 @@
 			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
-			user.show_text("You can't put that in [src] when it's attached to you!", "red")
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if (src.fryitem)
 			boutput(user, "<span class='alert'>There is already something in the fryer!</span>")
@@ -87,6 +87,11 @@
 		src.icon_state = "fryer1"
 		SubscribeToProcess()
 		return
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W) && in_range(W, user) && in_range(src, user))
+			return src.attackby(W, user)
+		return ..()
 
 	onVarChanged(variable, oldval, newval)
 		if (variable == "fryitem")

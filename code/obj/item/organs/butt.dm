@@ -32,7 +32,7 @@
 	var/made_from = "butt"
 
 	disposing()
-		if (donor && donor.organs)
+		if (donor?.organs)
 			donor.organs -= src
 		if (holder)
 			holder.butt = null
@@ -96,7 +96,7 @@
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
 		if (H.butt_op_stage == 4.0)
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
 
@@ -106,7 +106,7 @@
 			H.butt_op_stage = 3.0
 			return 1
 		else if (H.butt_op_stage == 5.0)
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))

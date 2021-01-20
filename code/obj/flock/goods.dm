@@ -75,12 +75,11 @@
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Incapacitor"
-		special_desc += "<br><span class='bold'>Energy:</span> [src.cell.charge]"
-		special_desc += "<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Incapacitor
+		<br><span class='bold'>Energy:</span> [src.cell.charge]
+		<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]
+		<br><span class='bold'>###=-</span></span><br>"}
 	else
 		return null // give the standard description
 
@@ -96,10 +95,9 @@
 
 /obj/item/flockcache/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Resource Cache"
-		special_desc += "<br><span class='bold'>Resources:</span> [resources]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received.
+		<br><span class='bold'>ID:</span> Resource Cache
+		<br><span class='bold'>Resources:</span> [resources]
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null

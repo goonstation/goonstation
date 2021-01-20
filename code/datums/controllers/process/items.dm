@@ -32,6 +32,11 @@ datum/controller/process/items
 
 		src.processing_items = global.processing_items
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/items/old_items = target
+		src.processing_items = old_items.processing_items
+		src.detailed_count = old_items.detailed_count
+
 	doWork()
 		var/c
 		for(var/i in global.processing_items)
@@ -54,7 +59,7 @@ datum/controller/process/items
 			scheck(currentTick)
 */
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

@@ -19,9 +19,6 @@
 #elif defined(MAP_OVERRIDE_DONUT3)
 
 
-#elif defined(MAP_OVERRIDE_LINEMAP)
-
-
 #elif defined(MAP_OVERRIDE_MUSHROOM)
 
 
@@ -29,9 +26,6 @@
 
 
 #elif defined(MAP_OVERRIDE_CHIRON)
-
-
-#elif defined(MAP_OVERRIDE_SAMEDI)
 
 
 #elif defined(MAP_OVERRIDE_PAMGOC)
@@ -53,7 +47,13 @@
 #define UNDERWATER_MAP 1
 #define MOVING_SUB_MAP 1
 #define SUBMARINE_MAP 1
-
+#elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#define RUNTIME_CHECKING 1
+#define PREFAB_CHECKING 1
+#elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
+#define UNDERWATER_MAP 1
+#define RUNTIME_CHECKING 1
+#define PREFAB_CHECKING 1
 //Entry below is the "default" map
 #else
 

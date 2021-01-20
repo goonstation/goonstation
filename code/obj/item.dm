@@ -69,6 +69,8 @@
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 
+	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
+
 	var/list/module_research = null//list()
 	var/module_research_type = null
 	var/module_research_no_diminish = 0
@@ -121,6 +123,10 @@
 	/// Inventory count display. Call create_inventory_counter in New()
 	var/inventory_counter_enabled = 0
 	var/obj/overlay/inventory_counter/inventory_counter = null
+
+	// amount of time spent between previous tick and this one (1 = normal)
+	var/last_tick_duration = 1
+	var/last_processing_tick = -1
 
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
@@ -249,17 +255,17 @@
 				burn_type = 0
 
 		if (src.material.triggersOnLife.len)
-			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
 		if (src.material && src.material.triggersOnLife.len)
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
 /obj/item/New()
@@ -396,13 +402,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -411,9 +418,6 @@
 		return 1
 
 	else
-		if(M.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
-			return 0
 		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
@@ -434,14 +438,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
-		SPAWN_DBG (10)
+		eat_twitch(M)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -476,12 +480,7 @@
 		else
 			src.overlays += image('icons/effects/fire.dmi', "1old")
 		processing_items.Add(src)
-#if ASS_JAM
-		if(src.reagents)
-			SPAWN_DBG(3 SECONDS)
-				if(src.reagents)
-					smoke_reaction(src.reagents, 0, get_turf(src), do_sfx=FALSE) // bring back infinicheese 2020
-#endif
+
 		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
@@ -538,16 +537,11 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if (!issilicon(usr))
-		// Zamu change - added if (!issilicon(usr))
-		// I have no idea if this matters - issilicon() is used in other places to prevent
-		// dropping or deleting items in some places.
-		// good thing I have no clue what I'm doing
-		// Potential issue for later: may end up not deleting external-to-player stacks
-		// maybe check for src.loc = usr? ???
-		SPAWN_DBG(0)
-			usr.u_equip(src)
-			pool(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
+		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
@@ -696,7 +690,8 @@
 			if (!(in_range(src,user) && in_range(storage,user)))
 				return
 
-		var/succ = src.try_put_hand_mousedrop(user, storage)
+		src.pick_up_by(user)
+		var/succ = user.is_in_hands(src)
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
@@ -707,7 +702,9 @@
 		if (src.cant_self_remove)
 			return
 		if ( !user.restrained() && !user.stat )
-			var/succ = src.try_put_hand_mousedrop(user)
+
+			src.pick_up_by(user)
+			var/succ = user.is_in_hands(src)
 			if (succ)
 				SPAWN_DBG(1 DECI SECOND)
 					if (user.is_in_hands(src))
@@ -773,6 +770,11 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	if (src.last_processing_tick < 0)
+		src.last_tick_duration = 1
+	else
+		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
+	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
 		if (src.material)
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
@@ -783,10 +785,11 @@
 		if (prob(7))
 			elecflash(src)
 		if (prob(7))
-			var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-			smoke.set_up(1, 0, src.loc)
-			smoke.attach(src)
-			smoke.start()
+			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
+				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
 		if (prob(7))
 			fireflash(src, 0)
 
@@ -839,8 +842,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
-	if(chokehold)
-		chokehold.attack_self(user)
+	chokehold?.attack_self(user)
 
 	return
 
@@ -909,19 +911,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (1.0)
-			if (istype(src,/obj/item/parts/human_parts))
-				src:holder = null
-			qdel(src)
-			return
 		if (2.0)
-			if (prob(50))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -931,13 +921,6 @@
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
 		if (3.0)
-			if (prob(5))
-
-				if (istype(src,/obj/item/parts/human_parts))
-					src:holder = null
-
-				qdel(src)
-				return
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -947,7 +930,7 @@
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		else
-	return
+	return ..()
 
 /obj/item/blob_act(var/power)
 	if (src.artifact)
@@ -980,13 +963,14 @@
 		src.pick_up_by(user)
 
 /obj/item/proc/pick_up_by(var/mob/M)
+
 	if (world.time < M.next_click)
 		return //fuck youuuuu
 
 	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
+	if (!istype(src.loc, /turf) || is_incapacitated(M) || M.restrained())
 		return
 
 	if (!can_reach(M, src))
@@ -1029,7 +1013,7 @@
 		if (4.0) t = "bulky"
 		if (5.0 to INFINITY) t = "huge"
 		else
-	if (usr && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user as mob)
@@ -1136,19 +1120,8 @@
 			return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area
-	var/d_zone
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		hit_area = parse_zone(O.organ_name)
-		d_zone = O.organ_name
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		hit_area = parse_zone(P.slot)
-		d_zone = P.slot
-	else
-		hit_area = parse_zone(affecting)
-		d_zone = affecting
+	var/hit_area = parse_zone(affecting)
+	var/d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
@@ -1353,10 +1326,10 @@
 	if (attacher.zone_sel.selecting == "l_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
 		attachee.limbs.l_arm = new_arm
-	else
+	else if (attacher.zone_sel.selecting == "r_arm")
 		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
 		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows
+	if (!new_arm) return //who knows - or they aren't targetting an arm!
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)
@@ -1483,7 +1456,7 @@
 
 /obj/item/proc/dropped(mob/user)
 	if (user)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
@@ -1512,8 +1485,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	if(src.material)
-		src.material.triggerPickup(user, src)
+	src.material?.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

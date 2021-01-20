@@ -7,6 +7,16 @@
 	anchored = 1.0
 	dir = EAST
 
+	disposing()
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		if (length(src.contents))
+			var/turf/T = get_turf(src)
+			for (var/atom/movable/AM in contents)
+				AM.set_loc(T)
+		. = ..()
+
 /obj/morgue/proc/update()
 	if (src.connected.loc != src)
 		src.icon_state = "morgue0"
@@ -120,6 +130,12 @@
 	anchored = 1.0
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
+	disposing()
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		. = ..()
+
 /obj/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/dummy))
 		return 1
@@ -163,12 +179,22 @@
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
+	var/obj/machinery/crema_switch/igniter = null
 
 	New()
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		src.igniter?.crematoriums -= src
+		src.igniter = null
+		src.connected?.connected = null
+		qdel(src.connected)
+		src.connected = null
+		if (length(src.contents))
+			var/turf/T = get_turf(src)
+			for (var/atom/movable/AM in contents)
+				AM.set_loc(T)
 		. = ..()
 		STOP_TRACKING
 
@@ -301,7 +327,7 @@
 		if (M == src.connected) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -348,6 +374,13 @@
 	var/datum/light/light //Only used for tanning beds.
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
+	disposing()
+		src.connected?.connected = null
+		src.light = null
+		qdel(src.connected)
+		src.connected = null
+		. = ..()
+
 /obj/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover, /obj/item/dummy))
 		return 1
@@ -391,6 +424,12 @@
 	var/id = 1
 	var/list/obj/crematorium/crematoriums = null
 
+	disposing()
+		for (var/obj/crematorium/O in src.crematoriums)
+			O.igniter = null
+		src.crematoriums = null
+		. = ..()
+
 /obj/machinery/crema_switch/New()
 	..()
 	UnsubscribeProcess()
@@ -402,6 +441,7 @@
 			for_by_tcl(C, /obj/crematorium)
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
+					C.igniter = src
 		for (var/obj/crematorium/C as() in src.crematoriums)
 			if (!C.cremating)
 				C.cremate(user)
@@ -425,6 +465,12 @@
 	var/settime = 10 //How long? (s)
 	var/tanningcolor = rgb(205,88,34) //Change to tan people into hillarious colors!
 	var/tanningmodifier = 0.03 //How fast do you want to go to your tanningcolor?
+	var/obj/machinery/computer/tanning/linked = null
+
+	disposing()
+		src.linked?.linked = null
+		src.linked = null
+		. = ..()
 
 	update()
 		if (src.contents.len)
@@ -553,6 +599,7 @@
 							H.set_body_icon_dirty()
 							if (H.limbs)
 								H.limbs.reset_stone()
+							H.update_colorful_parts()
 				if (emagged && isdead(M))
 					qdel(M)
 					make_cleanable( /obj/decal/cleanable/ash,src)
@@ -607,6 +654,11 @@
 
 		send_new_tancolor(tanningtubecolor)
 
+	disposing()
+		src.tanningtube = null
+		src.trayoverlay = null
+		. = ..()
+
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		..()
 		if (istype(P, /obj/item/light/tube) && !src.contents.len)
@@ -649,10 +701,16 @@
 		..()
 		get_link()
 
+	disposing()
+		src.linked?.linked = null
+		src.linked = null
+		. = ..()
+
 	proc/get_link()
 		for(var/obj/crematorium/tanning/C in by_type[/obj/crematorium])
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
+				C.linked = src
 				break
 
 	proc/find_tray_tube()

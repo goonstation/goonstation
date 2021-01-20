@@ -62,7 +62,7 @@
 		else if (isliving(AM))
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
-			if (S && S.satchel && S.satchel.contents.len < S.satchel.maxitems && src.scoopable)
+			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
@@ -103,8 +103,8 @@
 
 		if (istype(over_object,/obj/item/raw_material)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
-			targetObject.stack_item(src)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
 				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
@@ -133,7 +133,7 @@
 							var/obj/item/raw_material/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -147,7 +147,7 @@
 							var/obj/item/raw_material/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -560,28 +560,31 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
+	unpooled()
+		. = ..()
+		src.setItemSpecial(/datum/item_special/double)
+
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
 	HasEntered(AM as mob|obj)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+				return
+			if(isabomination(H))
+				return
+			if(H.lying)
+				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+				step_on(H)
+			else
+				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if(isabomination(H))
-					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
+				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70)) && !iscow(H))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					playsound(src.loc, src.sound_stepped, 50, 1)
-					var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-					H.changeStatus("weakened", 3 SECONDS)
-					H.force_laydown_standup()
-					var/shard_damage = force
-					affecting.take_damage(shard_damage, 0)
-					H.UpdateDamageIcon()
+					step_on(H)
 		..()
 
 	custom_suicide = 1
@@ -607,6 +610,15 @@
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M, appearance = 1, setname = 1)
+
+/obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
+	playsound(src.loc, src.sound_stepped, 50, 1)
+	H.changeStatus("weakened", 3 SECONDS)
+	H.force_laydown_standup()
+	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
+	affecting.take_damage(force, 0)
+	H.UpdateDamageIcon()
+
 
 /obj/item/raw_material/chitin
 	name = "chitin chunk"
@@ -635,7 +647,7 @@
 /obj/item/material_piece/pharosium
 	desc = "A processed bar of Pharosium, a conductive metal."
 	default_material = "pharosium"
-	icon_state = "cobryl-bar"
+	icon_state = "pharosium-bar"
 
 /obj/item/material_piece/cobryl
 	desc = "A processed bar of Cobryl, a somewhat valuable metal."
@@ -721,6 +733,7 @@
 	icon_state = "reclaimer"
 	anchored = 0
 	density = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	var/active = 0
 	var/reject = 0
 	var/insufficient = 0
@@ -794,7 +807,7 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_modifier, var/extra_mat)
+	proc/output_bar_from_item(obj/item/O, var/amount_modifier = 1, var/extra_mat)
 		if (!O || !O.material)
 			return
 
@@ -841,6 +854,9 @@
 		playsound(src.loc, sound_process, 40, 1)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
 			boutput(user, "You load [W] into [src].")
 			W.set_loc(src)
@@ -942,7 +958,7 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
-			if (!M)
+			if (!M || M.loc == user)
 				continue
 			if (M.name != O.name)
 				continue

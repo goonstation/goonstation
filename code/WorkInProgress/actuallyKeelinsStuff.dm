@@ -648,7 +648,7 @@ Returns:
 			if(count <= 5)
 				continue
 
-			if(A && A.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
+			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
 	while(areas.len >= 2)
@@ -884,7 +884,7 @@ Returns:
 
 	proc/start(var/mob/source_mob, var/remove, var/freeze)
 		if(source_mob == src) return
-		if(source_mob && source_mob.client)
+		if(source_mob?.client)
 			source = source_mob
 			remove_source = remove
 			freeze_source = freeze
@@ -1208,7 +1208,7 @@ Returns:
 		if(ismob(target.loc) || istype(target, /obj/screen)) return
 		if(parameters["left"])
 			var/attackDir =  getAttackDir(user, target)
-			user.dir = attackDir
+			user.set_dir(attackDir)
 			stabAction = new(src, user, get_step(user, attackDir))
 			actions.start(stabAction, user)
 		return
@@ -1276,7 +1276,7 @@ Returns:
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
 		var/obj/meleeeffect/dagger/M
 		M = new/obj/meleeeffect/dagger(target)
-		M.dir = direction
+		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
 /obj/item/experimental/melee/spear
@@ -1293,14 +1293,14 @@ Returns:
 	var/datum/material/head = null
 	var/image/shaftImg = null
 	var/image/headImg = null
+	var/prefix = null
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	hit_type = DAMAGE_STAB
 
 	New()
-		setShaftMaterial(getMaterial("bohrum"))
 		setHeadMaterial(getMaterial("telecrystal"))
+		setShaftMaterial(getMaterial("bohrum"))
 		buildOverlays()
-		setName()
 
 		..()
 
@@ -1321,23 +1321,32 @@ Returns:
 
 	proc/setShaftMaterial(var/datum/material/M)
 		shaft = M
+		SetPrefix()
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
-		setName()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
 		head = M
-		setMaterial(M)
+		SetPrefix()
+		setMaterial(M, setname = 0)
 		if(shaft)
 			src.color = shaft.color
 			src.alpha = shaft.alpha
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") / 5)
 			src.throwforce = round(src.material.getProperty("hard") / 3)
-		setName()
 		return
+
+	proc/SetPrefix()
+		src.remove_prefixes(prefix)
+		prefix = ""
+		if(head)
+			prefix += "[head.name]-tipped[shaft?" ":""]"
+		if (shaft)
+			prefix += "[shaft.name]"
+		src.name_prefix(prefix)
 
 	proc/buildOverlays()
 		overlays.Cut()
@@ -1355,17 +1364,6 @@ Returns:
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
-		return
-
-	proc/setName()
-		if(shaft && head)
-			name = "[head.name]-tipped [shaft.name] Spear"
-		else if (shaft && !head)
-			name = "[shaft.name] Spear"
-		else if (!shaft && head)
-			name = "[head.name]-tipped Spear"
-		else
-			name = "Spear"
 		return
 
 	getAffectedTiles(var/mob/user, var/atom/target, var/direction)
@@ -1431,48 +1429,48 @@ Returns:
 				effectLoc = locate(user.x, user.y + 1, user.z)
 				/*
 				I = new(src, effectLoc)
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_y = 32, time = 10, alpha= 175)
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
 				/*
 				I = new(src, effectLoc)
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_x = 32, time = 10, alpha= 175)
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
 				/*
 				I = new(src, locate(user.x, user.y - 1, user.z))
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_y = -32, time = 10, alpha= 175)
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
 				/*
 				I = new(src, locate(user.x - 1, user.y, user.z))
-				I.dir = direction
+				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
 				M = new/obj/meleeeffect/spear(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 				animate(M, pixel_x = -32, time = 10, alpha= 175)
 
@@ -1517,25 +1515,25 @@ Returns:
 				effectLoc = locate(user.x, user.y + 1, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_x = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
 				M = new/obj/meleeeffect(effectLoc)
 				M.pixel_y = -32
-				M.dir = direction
+				M.set_dir(direction)
 				M.color = color_new
 
 /obj/floorpillstatue
@@ -2167,7 +2165,7 @@ Returns:
 		while(current != trg_loc)
 			playsound(get_turf(user), pick(sounds), 15, 1)
 			current = get_step(current, get_dir(current, trg_loc))
-			user.dir = get_dir(user, current)
+			user.set_dir(get_dir(user, current))
 			var/obj/beam_dummy/B = showLine(get_turf(user), current, "lght", 5)
 			var/list/affected = B.affected
 			for(var/turf/T in affected)
@@ -2823,11 +2821,9 @@ Returns:
 	if(eligible.len > 0)
 		picked2 = pick(eligible)
 
-	if(picked1)
-		picked1.zombify()
+	picked1?.zombify()
 
-	if(picked2)
-		picked2.zombify()
+	picked2?.zombify()
 
 	for(var/turf/T in wormholeturfs)
 		if(prob(3))
@@ -3115,8 +3111,8 @@ Returns:
 	var/my_dir=1
 
 	Move(NewLoc,Dir=0)
-		..(NewLoc,Dir)
-		src.dir = my_dir
+		. = ..(NewLoc,Dir)
+		src.set_dir(my_dir)
 
 	unpooled(var/poolname)
 		..()
@@ -3124,7 +3120,7 @@ Returns:
 			var/atom/myloc = loc
 			if(myloc && !istype(myloc,/turf/space))
 				my_dir = pick(alldirs)
-				src.dir = my_dir
+				src.set_dir(my_dir)
 
 /obj/shifting_wall
 	name = "r wall"
@@ -3222,7 +3218,7 @@ Returns:
 	event_handler_flags = USE_CANPASS
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (mover && mover.throwing)
+		if (mover?.throwing)
 			return 1
 		return ..()
 
@@ -3272,8 +3268,8 @@ Returns:
 			for(var/i = 0, i<range, i++)
 				if(!suiciding && !deadly) target = get_step(target,WEST)
 				else target = get_step(target,EAST)
-			if(!suiciding && !deadly) user.dir = WEST
-			else user.dir = EAST
+			if(!suiciding && !deadly) user.set_dir(WEST)
+			else user.set_dir(EAST)
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
@@ -3704,7 +3700,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Light - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/light/small/L = new/obj/machinery/light/small(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		L.on = 1
 		L.update()
 		return
@@ -3714,7 +3710,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Button that can control mass-drivers & pod-doors."
 	used(atom/user, atom/target)
 		var/obj/machinery/driver_button/L = new/obj/machinery/driver_button(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/buttonconvey
@@ -3722,7 +3718,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor switch that can control a conveyor belt."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor_switch/L = new/obj/machinery/conveyor_switch(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/conveyor
@@ -3730,7 +3726,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		L.basedir = L.dir
 		return
 
@@ -3739,7 +3735,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Pod-Door."
 	used(atom/user, atom/target)
 		var/obj/machinery/door/poddoor/L = new/obj/machinery/door/poddoor(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/driver
@@ -3747,7 +3743,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Mass-Driver - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/mass_driver/L = new/obj/machinery/mass_driver(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/cam
@@ -3755,7 +3751,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Security Camera - using your direction."
 	used(atom/user, atom/target)
 		var/obj/machinery/camera/L = new/obj/machinery/camera(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/window
@@ -3773,7 +3769,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
 		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/table
@@ -3781,7 +3777,7 @@ var/list/lag_list = new/list()
 	desc = "Places a Reinforced Table."
 	used(atom/user, atom/target)
 		var/obj/table/reinforced/L = new/obj/table/reinforced(get_turf(target))
-		L.dir = user:dir
+		L.set_dir(user:dir)
 		return
 
 /datum/engibox_mode/paint
@@ -3856,8 +3852,7 @@ var/list/lag_list = new/list()
 		if(z_level_lock && T.z != z_level_lock)
 			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
 			return
-		if(active_mode)
-			active_mode.used(user, target)
+		active_mode?.used(user, target)
 		return
 
 	attack()
@@ -4009,17 +4004,17 @@ var/list/lag_list = new/list()
 	var/blocking = 0
 
 	MouseEntered(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 0
 		return ..()
 
 	MouseExited(location,control,params)
-		if(usr && usr.client)
+		if(usr?.client)
 			usr.client.show_popup_menus = 1
 		return ..()
 
 	MouseDrop_T()
-		if(usr && usr.client && blocking)
+		if(usr?.client && blocking)
 			usr.client.show_popup_menus = 0
 		return ..()
 

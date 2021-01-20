@@ -114,13 +114,21 @@ mob/verb/checkrewards()
 	desc = "A bucket! And it's red! Wow."
 	required_levels = list("Janitor"=5)
 	claimable = 1
-	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red/
 
 	activate(var/client/C)
-		var/obj/item/reagent_containers/glass/bucket/red/T = new/obj/item/reagent_containers/glass/bucket/red(get_turf(C.mob))
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+		var/obj/item/reagent_containers/glass/bucket/bucket = locate(/obj/item/reagent_containers/glass/bucket) in C.mob.contents
+
+		if (istype(bucket))
+			C.mob.remove_item(bucket)
+			qdel(bucket)
+		else
+			boutput(C.mob, "You need to be holding a bucket in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You turn around for just a second and your bucket is suddenly all red!")
 
 /datum/jobXpReward/janitor10
 	name = "Holographic Signs "
@@ -142,13 +150,21 @@ mob/verb/checkrewards()
 	desc = "A mop! And it's orange! Amazing."
 	required_levels = list("Janitor"=15)
 	claimable = 1
-	claimPerRound = 1
+	var/path_to_spawn = /obj/item/mop/orange
 
 	activate(var/client/C)
-		var/obj/item/mop/orange/T = new/obj/item/mop/orange(get_turf(C.mob))
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+		var/obj/item/mop/mop = locate(/obj/item/mop/) in C.mob.contents
+
+		if (istype(mop))
+			C.mob.remove_item(mop)
+			qdel(mop)
+		else
+			boutput(C.mob, "You need to be holding a mop in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "An orange shade starts to crawl all over the mop's head.")
 
 /datum/jobXpReward/janitor20
 	name = "Head of Sanitation beret"
@@ -200,6 +216,21 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You blink and your watering can seems different...")
+
+/datum/jobXpReward/botanist/apron
+	name = "Blue apron"
+	desc = "An apron to protect yourself from any workplace spills and messes."
+	required_levels = list("Botanist"=5)
+	icon_state
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "The apron pops into existance!")
+		var/obj/item/I = new/obj/item/clothing/suit/apron/botanist()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
 
 /datum/jobXpReward/botanist/wateringcan/weed
 	name = "Weed Watering Can"
@@ -301,6 +332,10 @@ mob/verb/checkrewards()
 			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
+				return
+			if (isnull(K.cell) || K.cell.charge < K.cell.max_charge * 0.9)
+				boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+				src.claimedNumbers[usr.key]--
 				return
 			C.mob.remove_item(K)
 			found = 1
@@ -442,16 +477,18 @@ mob/verb/checkrewards()
 		return
 
 /datum/jobXpReward/clown10
-	name = "Nothing!!"
-	desc = "Nothing Again Again!!"
+	name = "Rubber Hammer"
+	desc = "Haha, hammer go 'boing'"
 	required_levels = list("Clown"=10)
 	icon_state = "?"
 	claimable = 1
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "Nothing seems to happen!")
+		boutput(C, "You pull your rubber hammer out from your nose!")
+		new /obj/item/rubber_hammer(get_turf(C.mob))
 		return
+
 /datum/jobXpReward/clown15
 	name = "Nothing!!!"
 	desc = "Nothing Again Again Again!!!"
@@ -482,3 +519,26 @@ mob/verb/checkrewards()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
 		return
+
+/////////////Bartender////////////////
+
+/datum/jobXpReward/bartender/goldenshaker
+	name = "Golden Cocktail Shaker"
+	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
+	required_levels = list("Bartender"=20)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = locate(/obj/item/reagent_containers/food/drinks/cocktailshaker) in C.mob.contents
+
+		if(!istype(shaker))
+			return
+		C.mob.remove_item(shaker)
+		qdel(shaker)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")

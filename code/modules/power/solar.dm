@@ -46,7 +46,7 @@
 		sun_angle = angle
 
 		//set icon dir to show sun illumination
-		dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
+		set_dir(turn(NORTH, -angle - 22.5))	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 		// find all solar controls and update them
 		// currently, just update all controllers in world
@@ -146,8 +146,8 @@
 	else
 		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 		src.icon_state = "solar_panel"
-		// src.dir = angle2dir(adir)
-		src.dir = NORTH
+		// src.set_dir(angle2dir(adir))
+		src.set_dir(NORTH)
 		animate(src, time=rand(0.1 SECONDS, 9 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
 
@@ -286,7 +286,7 @@
 		if (!solcon)
 			solcon = new /obj/overlay {icon='icons/obj/computer.dmi'; icon_state="solcon-o";} (src)
 
-		solcon.dir = angle2dir(cdir)
+		solcon.set_dir(angle2dir(cdir))
 		overlays += solcon
 	*/
 	return

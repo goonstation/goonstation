@@ -71,7 +71,7 @@
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
-				cl.images -= I
+				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
 
@@ -95,6 +95,10 @@
 	Move(NewLoc, direct)//Ewww!
 		last_loc = src.loc
 
+		src.closeContextActions()
+		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
+		src.mainframe.closeContextActions()
+
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
 
@@ -102,11 +106,11 @@
 			src.cancel_camera()
 
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			src.set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
 		else
 
-			dir = direct
+			src.set_dir(direct)
 			if((direct & NORTH) && src.y < world.maxy)
 				src.y++
 			if((direct & SOUTH) && src.y > 1)
@@ -143,7 +147,7 @@
 		//var/inrange = in_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
-		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK) ) // ugh
+		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
 				mainframe.ai_actual_track(target)
@@ -156,10 +160,15 @@
 				set_loc(src, target)
 
 			if (get_dist(src, target) > 0)
-				dir = get_dir(src, target)
+				src.set_dir(get_dir(src, target))
 
 
 			target.attack_ai(src, params, location, control)
+
+		if (src.client.check_any_key(KEY_POINT))
+			var/turf/T = get_turf(target)
+			mainframe.show_hologram_context(T)
+			return
 
 		if (src.client.check_any_key(KEY_EXAMINE))
 			. = ..()
@@ -169,11 +178,14 @@
 			if (src.client.check_key(KEY_OPEN))
 				src.set_cursor('icons/cursors/open.dmi')
 				return
-			if (src.client.check_key(KEY_BOLT))
+			else if (src.client.check_key(KEY_BOLT))
 				src.set_cursor('icons/cursors/bolt.dmi')
 				return
-			if(src.client.check_key(KEY_SHOCK))
+			else if(src.client.check_key(KEY_SHOCK))
 				src.set_cursor('icons/cursors/shock.dmi')
+				return
+			else if(src.client.check_key(KEY_POINT))
+				src.set_cursor('icons/cursors/point.dmi')
 				return
 		return ..()
 
@@ -346,7 +358,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P && P.operating)
+			if(P?.operating)
 				P.attack_ai(src)
 				return
 
@@ -387,8 +399,7 @@
 		set name = "Cancel Camera View"
 
 		..()
-		if(mainframe)
-			mainframe.cancel_camera()
+		mainframe?.cancel_camera()
 		SPAWN_DBG(1 DECI SECOND)
 			src.return_mainframe()
 
@@ -478,7 +489,7 @@
 	.=..()
 	if(istype(usr,/mob/dead/aieye))//todo, make this a var for cheapernesseress?
 		if(aiImage)
-			usr.client.show_popup_menus = (cameras && cameras.len)
+			usr.client.show_popup_menus = (length(cameras))
 */
 
 //---TURF---//
@@ -579,10 +590,12 @@ var/list/camImages = list()
 var/aiDirty = 2
 world/proc/updateCameraVisibility()
 	if(!aiDirty) return
+
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
 #endif
+
 	if(aiDirty == 2)
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 		ma.plane = PLANE_HUD
@@ -604,10 +617,7 @@ world/proc/updateCameraVisibility()
 			cam_candidates += t
 
 
-		for(var/turf/t as() in cam_candidates)//ugh
-			//if( t.z != 1 ) continue
-			//t.aiImage = new /obj/overlay/tile_effect/camstatic(t)
-
+		for(var/turf/t as() in cam_candidates) //ugh
 			t.aiImage = new
 			t.aiImage.appearance = ma
 			t.aiImage.dir = pick(alldirs)
@@ -629,7 +639,6 @@ world/proc/updateCameraVisibility()
 		for(var/turf/t in view(CAM_RANGE, get_turf(C)))
 			LAGCHECK(LAG_HIGH)
 			if (!t.aiImage) continue
-			//var/dist = get_dist(t, C)
 			if (t.cameras && t.cameras.len)
 				t.aiImage.loc = null
 			else
@@ -644,7 +653,8 @@ world/proc/updateCameraVisibility()
 			t.aiImage.loc = t
 	aiDirty = 1
 
-	world.updateCameraVisibility()
+	if(!global.explosions.exploding)
+		world.updateCameraVisibility()
 
 /obj/machinery/camera/proc/add_to_turfs() //chck if turf cameras is 1
 	aiDirty = 1

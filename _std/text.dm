@@ -17,6 +17,7 @@
 /proc/capitalize(var/t as text)
 	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
 
+/// Returns true if the given string has a vowel
 /proc/isVowel(var/t as text)
 	return findtextEx(lowertext(t), "aeiouåäö") > 0
 

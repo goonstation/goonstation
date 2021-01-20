@@ -16,7 +16,9 @@
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
+#define isnpcmonkey(x) (istype(x,/mob/living/carbon/human/npc/monkey) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
+#define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
@@ -42,4 +44,4 @@
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
-#define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS)))
+#define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS) || isdead(x)))

@@ -25,7 +25,7 @@
 	iceman.anchored = 0
 	iceman.set_density(1)
 	iceman.layer = MOB_LAYER
-	iceman.dir = src.dir
+	iceman.set_dir(src.dir)
 	iceman.alpha = 128
 
 	var/ist = "body_f"
@@ -53,7 +53,7 @@
 	iceman.anchored = 0
 	iceman.set_density(1)
 	iceman.layer = MOB_LAYER
-	iceman.dir = src.dir
+	iceman.set_dir(src.dir)
 
 	var/ist = "body_f"
 	if (src.gender == "male")

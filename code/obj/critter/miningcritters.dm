@@ -18,6 +18,7 @@
 	death_text = null //has custom death message logic
 	butcherable = 1
 	var/eaten = 0
+	var/const/rocks_per_gem = 10
 
 	seek_target()
 		src.anchored = 0
@@ -40,10 +41,11 @@
 		src.attacking = 1
 
 		if(istype(M, /obj/item/raw_material/))
+			var/obj/item/raw_material/material = M
 			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
 			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			src.eaten += material.amount
 			pool(src.target)
-			src.eaten++
 			src.target = null
 			src.task = "thinking"
 
@@ -55,23 +57,21 @@
 		..()
 		src.target = null
 		src.task = "dead"
-		if (eaten >= 10)
+
+		if (src.eaten >= rocks_per_gem)
 			src.visible_message("<b>[src]</b> vomits something up and dies!")
 		else
 			src.visible_message("<b>[src]</b> dies!")
-		var/countstones = 0
-		while (src.eaten)
-			countstones++
-			if (countstones == 10)
-				var/pickgem = rand(1,3)
-				var/obj/item/created = 0
-				switch(pickgem)
-					if(1) unpool(/obj/item/raw_material/gemstone)
-					if(2) unpool(/obj/item/raw_material/uqill)
-					if(3) unpool(/obj/item/raw_material/fibrilith)
-				created.set_loc(src.loc)
-				countstones = 0
-			src.eaten--
+
+		while (src.eaten >= rocks_per_gem)
+			var/pickgem = rand(1,3)
+			var/obj/item/created = null
+			switch(pickgem)
+				if(1) created = unpool(/obj/item/raw_material/gemstone)
+				if(2) created = unpool(/obj/item/raw_material/uqill)
+				if(3) created = unpool(/obj/item/raw_material/fibrilith)
+			created.set_loc(src.loc)
+			src.eaten -= rocks_per_gem
 
 /obj/critter/rockworm/gary
 	name = "Gary the rockworm"

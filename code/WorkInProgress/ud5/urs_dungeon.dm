@@ -13,7 +13,7 @@
 	New()
 		..()
 		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(1)
+			SPAWN_DBG(0.1 SECONDS)
 				src.initialize()
 
 	initialize()
@@ -163,11 +163,12 @@
 
 /obj/item/clothing/glasses/urs_dungeon_entry
 	name = "\improper VR goggles"
-	desc = "These goggles don't look quite right..."
+	desc = "On the side it says \"A game for 2-4 Players\". Guess you'll need some friends to play with you."
 	icon_state = "vr"
 	item_state = "sunglasses"
 	color = "#550000"
 	var/target = null
+	var/doing_login = 0
 
 	New()
 		..()
@@ -189,23 +190,39 @@
 
 	proc/enter_urs_dungeon(var/mob/living/carbon/human/H)
 		if(target)
+			if(doing_login)
+				return
+			doing_login = 1
+
 			H.u_equip(src)
 			src.set_loc(get_turf(H))
+			H.unequip_all()
 
+			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
+			H.client.preferences.copy_to(V,H,1)
+			if (!H.mind)
+				H.mind = new /datum/mind()
+				H.mind.ckey = H.ckey
+				H.mind.key = H.key
+				H.mind.current = H
+				ticker.minds += H.mind
+
+			V.update_colorful_parts()
 			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
-			playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+			H.emote("scream")
+			playsound(H.loc, "sound/weapons/flashbang.ogg", 25, 1)
 			for (var/mob/N in viewers(src, null))
 				if (get_dist(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
 					shake_camera(N, 6, 32)
-
-			H.unequip_all()
-			H.set_loc(src.target)
-			playsound(H.loc, "sound/ambience/music/VRtunes_edited.ogg", 75, 0)
-
-		return
-
+			V.apply_flash(20,1)
+			if (V.client)
+				shake_camera(V, 6, 32)
+			H.mind.transfer_to(V)
+			playsound(V.loc, "sound/ambience/music/VRtunes_edited.ogg", 10, 0)
+			H.elecgib()
+			doing_login = 0
 
 /obj/item/clothing/glasses/urs_dungeon_exit
 	name = "\improper VR goggles"
@@ -299,7 +316,7 @@
 				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
 
 /area/adventure/urs_dungeon
-	teleport_blocked = 1
+	teleport_blocked = 2
 	virtual = 0
 
 
@@ -483,6 +500,9 @@
 				return
 
 /obj/storage/closet/syndi/hidden/shovel_me
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		return
 
 	attack_hand(mob/user as mob)
 		return

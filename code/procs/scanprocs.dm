@@ -1,4 +1,5 @@
 
+
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
@@ -161,6 +162,8 @@
 				organ_data1 += organ_health_scan("spleen", H, obfuscate)
 				organ_data1 += organ_health_scan("pancreas", H, obfuscate)
 				organ_data1 += organ_health_scan("appendix", H, obfuscate)
+				if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
+					organ_data1 += organ_health_scan("tail", H, obfuscate)
 
 				//Don't give organ readings for Vamps.
 				if (organ_data1 && !isvampire(H))
@@ -246,20 +249,23 @@
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
 	if (!O)
 		return null
+	var/list/ret = list()
 	var/damage = O.get_damage()
-
 	if (damage >= O.MAX_DAMAGE)
-		return "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
 	else if (damage >= O.MAX_DAMAGE*0.9)
-		return "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
-		return "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
 	else if (damage >= O.MAX_DAMAGE*0.30)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
-		return "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-
-	return null
+		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
+	else if (O.robotic)
+		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
+	if (O.robotic)
+		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	return ret.Join()
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
@@ -273,8 +279,8 @@
 		if (E.fields["name"] == patientname)
 			switch (M.stat)
 				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("fat"))
-						E.fields["p_stat"] = "Physically Unfit"
+					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+						E.fields["p_stat"] = "Very Active"
 					else
 						E.fields["p_stat"] = "Active"
 				if (1)

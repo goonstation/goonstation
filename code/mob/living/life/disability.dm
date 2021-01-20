@@ -41,12 +41,7 @@
 		if (owner.loc && isarea(owner.loc.loc))
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
-				if (owner.get_rad_protection())
-					if (ishuman(owner) && istype(owner:wear_suit, /obj/item/clothing/suit/rad) && prob(33))
-						boutput(owner, "<span class='alert'>Your geiger counter ticks...</span>")
-					return ..()
-				else
-					owner.changeStatus("radiation", (A.irradiated * 10) SECONDS)
+				owner.changeStatus("radiation", (A.irradiated * 10) SECONDS)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

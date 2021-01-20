@@ -34,7 +34,7 @@
 					input_x /= input_magnitude
 					input_y /= input_magnitude
 
-					owner.attempt_move()
+					attempt_move(owner)
 
 	process_move(mob/owner, keys)
 		if (owner.client)

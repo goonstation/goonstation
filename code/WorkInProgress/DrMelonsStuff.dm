@@ -132,7 +132,7 @@
 		src.overlays += bath_edge
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user)) return
+		if (is_incapacitated(user) || isAI(user)) return
 		if (src.myuser)
 			boutput(user, "<span class='alert'>You pull [src.myuser] out of the bath!</span>")
 			src.eject_user()
@@ -183,7 +183,7 @@
 		return
 
 	MouseDrop_T(mob/living/carbon/human/target, mob/user)
-		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+		if (src.myuser || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		var/msg
@@ -226,7 +226,7 @@
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()
-		if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/wizard))
+		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/wizard))
 			for (var/obj/item/mop/M in orange(5,src))
 				src.visible_message("<span class='alert'>[src] begins to twitch and move!</span>")
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)
