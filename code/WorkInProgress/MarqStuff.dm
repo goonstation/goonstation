@@ -619,14 +619,7 @@
 					I.set_loc(src)
 					overlays += I
 					Q.updateApperance()
-			if(istype(H.belt, /obj/item/quiver))
-				var/obj/item/quiver/Q = H.belt
-				var/obj/item/arrow/I = Q.getArrow(user)
-				if(I)
-					loaded = I
-					I.loc = src
-					overlays += I
-					Q.updateApperance()
+
 		return
 
 	attack_hand(var/mob/user)
