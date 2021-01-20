@@ -30,7 +30,7 @@
 	name = "cake"
 	desc = "a cake"
 	icon_state = "cake_batter"
-	amount = 10
+	amount = 0
 	heal_amt = 2
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
@@ -40,8 +40,6 @@
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
-	var/amount2 //holds the amount of slices in cake 2 (not entirely, but its used for a bit of math later)
-	var/amount3 //same for cake 3
 	var/cake_candle
 	var/litfam = FALSE //is the cake lit (candle)
 
@@ -131,34 +129,28 @@
 		var/layer_tag //passes layer information to the build_cake function
 		var/replacetext //used to change layer identifiers to reformat from cake overlays to slice overlays
 		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
-		var/slices
 		var/candle_lit
 		switch(src.clayer) //checking the current layer of the cake
 			if(1)
 				layer_tag = "base" //the tag of the future overlay
 				replacetext = "cake1" //used in replacetext below to assign overlays
-				slices = src.amount //defaults to the amount of the base cake because no additional cakes are present
 			if(2)
 				layer_tag = "second"
 				replacetext = "cake2"
-				slices = src.amount2 //one of the cases amount2 and amount3 are used
 			if(3)
 				layer_tag = "third"
 				replacetext = "cake3"
-				slices = src.amount3
 
-		var/list/returns = build_cake(s,user,CAKE_MODE_SLICE,layer_tag,replacetext)
-		slices = returns[1]
-		candle_lit = returns[2]
+		candle_lit = build_cake(s,user,CAKE_MODE_SLICE,layer_tag,replacetext)
 
-		var/transferamount = (src.amount/src.clayer)/slices //amount of reagent to transfer to slices
+		var/transferamount = (src.reagents.total_volume/10)/clayer //amount of reagent to transfer to slices
 		var/deletionqueue //is the source cake deleted after slicing?
 		if(src.clayer == 1) //qdel(src) if there was only one layer to the cake, otherwise, decrement the layer
 			deletionqueue = 1
 		else
 			src.clayer--
 			src.update_cake_context()
-		for(var/i=1,i<=slices,i++) //generating child slices of the parent template
+		for(var/i=1,i<=10,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/custom/schild = new /obj/item/reagent_containers/food/snacks/cake/custom
 			schild.icon_state = "slice-overlay"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
@@ -204,7 +196,6 @@
 		c.set_loc(user)
 		src.clayer++
 		src.reagents.maximum_volume += 100
-		src.amount += 10
 		c.reagents.trans_to(src,c.reagents.total_volume)
 
 		for(var/food_effect in c.food_effects) //adding food effects to the src that arent already present
@@ -229,16 +220,12 @@
 				if("[overlay_ref]" == "base")
 					if(src.clayer == 2)
 						overlay_layer = "second"
-						src.amount2 = c.amount
 					else if(src.clayer == 3)
 						overlay_layer = "third"
-						src.amount3 = c.amount
 				else if("[overlay_ref]" == "second")
 					overlay_layer = "third"
-					src.amount3 = c.amount
 					src.clayer++
 					src.reagents.maximum_volume += 100
-					src.amount += 10
 				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-overlay")
 				var/image/ov_image = c.GetOverlayImage(overlay_ref)
 				stack.color = ov_image.color
@@ -265,7 +252,6 @@
 		if((mode != CAKE_MODE_CAKE) && (mode != CAKE_MODE_SLICE))
 			return
 		var/normal_topping = FALSE //there are special cases in rendering cake overlays that should only ever trigger once, afterward the toggle is switched to true, initiating the normal topping overlay handling
-		var/slices
 		var/candle_light //cute little wax stick that people light on fire for their own enjoyment <3
 		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
 		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
@@ -277,12 +263,8 @@
 				if(("[overlay_ref]" == "second") || ("[overlay_ref]" == "third"))
 					if(("[overlay_ref]" == "second") && (src.clayer == 2))
 						normal_topping = TRUE
-						cake.amount = src.amount2
-						src.amount2 = 0
 					else if(("[overlay_ref]" == "third") && (src.clayer == 3))
 						normal_topping = TRUE
-						cake.amount = src.amount3
-						src.amount3 = 0
 					if(normal_topping)
 						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
 						var/image/warningsuppression = src.GetOverlayImage(overlay_ref)
@@ -333,29 +315,10 @@
 					src.ClearSpecificOverlays("[overlay_ref]")
 			else
 				break
-		if(src.amount > 10)
-			src.amount -= 10
-			switch(src.clayer)
-				if(2)
-					src.amount2 = 0
-				if(3)
-					src.amount3 = 0
-			if(mode == CAKE_MODE_CAKE)
-				cake.amount = 10
-			else
-				slices = 10
-		else if((mode == CAKE_MODE_SLICE) && (src.clayer == 1))
-			slices = src.amount
-		else
-			qdel(cake) //this will happen if someone eats a cake without slicing it and the amount math has to recalculate past an entire layer (i.e. someone takes 11 bites)
-			user.show_text("<b>OH NO! The cake was a lie!</b>","red")
-			src.clayer--
-			src.reagents.maximum_volume -= 100
-			return
 
 		src.reagents.maximum_volume -= 100
 		if(mode == CAKE_MODE_SLICE)
-			return list(slices,candle_light)
+			return candle_light
 		else
 			src.clayer--
 			src.update_cake_context()
@@ -490,9 +453,16 @@
 		else
 			..()
 
+	attack_self(mob/user)
+		if(src.sliced)
+			..()
+		else
+			return
+		
+
 	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
-		if (!src.sliced)
-			if (user == M)
+		if(!src.sliced)
+			if(user == M)
 				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
