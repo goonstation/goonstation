@@ -265,7 +265,7 @@
 			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering,
 			access_chemistry, access_bar, access_kitchen, access_hydro)
 #endif
-		if("Vice Officer")
+		if("Security Trainee")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,access_hydro,access_bar,access_kitchen, access_ranch)
 		if("Detective", "Forensic Technician")
 			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
