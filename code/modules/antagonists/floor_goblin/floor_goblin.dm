@@ -92,12 +92,13 @@
 		. = ..()
 
 	cast(atom/T)
-		var/turf/floorturf = get_turf(src.holder.owner)
+		var/mob/M = src.holder.owner
+		if (!M) return
+		var/turf/floorturf = get_turf(M)
 		var/x_coeff = rand(0, 1)	// open the floor horizontally
 		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
-		var/mob/M = src.holder.owner
-		if (!M) return
+
 		if(M.layer == BETWEEN_FLOORS_LAYER)
 			M.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
