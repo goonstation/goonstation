@@ -40,7 +40,7 @@
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
-	var/cake_candle
+	var/list/cake_candle = list()
 	var/litfam = FALSE //is the cake lit (candle)
 
 	New()
@@ -52,9 +52,9 @@
 	/*‾‾‾‾‾‾‾*/
 	proc/check_for_topping(var/obj/item/W)
 		var/tag = null
-		if(istype(W,/obj/item/device/light/candle)) //special handling for candles because they need to send unique information
-			tag = "cake[clayer]-candle"
-			cake_candle = tag
+		if(istype(W,/obj/item/device/light/candle)) //istype check for candles because there are maaaany types of candles to choose from
+			tag = "cake[clayer]-candle" //which cake layer is this candle going to?
+			cake_candle = list(tag,"[W.type]") //what type of candle is it?
 		else
 			switch(W.type)
 				if(/obj/item/reagent_containers/food/snacks/condiment/chocchips) //checks for item paths and assigns an overlay tag to it
@@ -155,14 +155,14 @@
 			schild.icon_state = "slice-overlay"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
-			if(cake_candle) //making sure there's only one candle :)
+			if(cake_candle.len) //making sure there's only one candle :)
 				if(candle_lit == TRUE)
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"),"slice-candle")
 					candle_lit = FALSE
 				else
 					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
-				cake_candle = null
-				schild.cake_candle = 1
+				schild.cake_candle = cake_candle
+				cake_candle = list()
 				if(src.litfam) //light update
 					src.put_out()
 					schild.ignite()
@@ -205,12 +205,13 @@
 		if(c.clayer == 1)
 			singlecake = 1
 
-		if(src.cake_candle)	//looking for candles and if you set a cake on top of it, it pops off!
-			src.ClearSpecificOverlays("[src.cake_candle]")
-			var/obj/item/device/light/candle/can = new /obj/item/device/light/candle/small
+		if(src.cake_candle.len)	//looking for candles and if you set a cake on top of it, it pops off!
+			src.ClearSpecificOverlays("[src.cake_candle[1]]")
+			var/candle_path = text2path(src.cake_candle[2])
+			var/obj/item/device/light/candle/can = new candle_path
 			can.set_loc(get_turf(src.loc))
 			user.show_text("<b>The candle pops off! Oh no!</b>","red")
-			cake_candle = 0
+			cake_candle = list()
 			if(src.litfam)
 				src.put_out()
 
@@ -235,9 +236,10 @@
 			var/list/tag
 			var/list/newnumbers = c.overlay_number_convert(src.clayer,CAKE_MODE_STACK,singlecake)
 			tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
-			if(c.cake_candle)
-				src.cake_candle = replacetext("[c.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
-				c.cake_candle = 0
+			if(c.cake_candle.len)
+				src.cake_candle = c.cake_candle
+				src.cake_candle[1] = replacetext("[c.cake_candle[1]]","[newnumbers[1]]","[newnumbers[2]]")
+				c.cake_candle = list()
 			var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 			if(buffer.color)
 				newoverlay.color = buffer.color
@@ -277,9 +279,10 @@
 					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
 					var/list/newnumbers = src.overlay_number_convert(src.clayer,CAKE_MODE_BUILD)
 					tag = replacetext("[overlay_ref]","[newnumbers[1]]","[newnumbers[2]]")
-					if(src.cake_candle)
-						cake.cake_candle = replacetext("[src.cake_candle]","[newnumbers[1]]","[newnumbers[2]]")
-						src.cake_candle = 0
+					if(src.cake_candle.len)
+						cake.cake_candle = src.cake_candle
+						cake.cake_candle[1] = replacetext("[src.cake_candle[1]]","[newnumbers[1]]","[newnumbers[2]]")
+						src.cake_candle = list()
 					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
 					if(buffer.color)
 						newoverlay.color = buffer.color
@@ -423,7 +426,7 @@
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake/custom))
 			stack_cake(W,user)
 			return
-		else if(cake_candle && !(litfam) && (W.firesource))
+		else if(cake_candle.len && !(litfam) && (W.firesource))
 			src.ignite()
 			W.firesource_interact()
 			return
