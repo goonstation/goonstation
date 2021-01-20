@@ -19,7 +19,6 @@
 
 	abilityHolder.addAbility(/datum/targetable/steal_shoes)
 	abilityHolder.addAbility(/datum/targetable/hide_between_floors)
-	abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
 	abilityHolder.addAbility(/datum/targetable/ankle_bite)
 	ticker.mode.Agimmicks.Add(H)
 
