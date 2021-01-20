@@ -208,6 +208,7 @@
 /obj/item/storage/briefcase/satan
 	name = "devilish briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	color = "#FF0000"
