@@ -298,12 +298,12 @@
 			AM.set_loc(get_turf(src))
 			if(AM.density)
 				to_densify += AM
-			AM.density = 0
+			AM.set_density(0)
 			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
 		SPAWN_DBG(1 SECOND)
 			for(var/atom/movable/AM in to_densify)
-				AM.density = TRUE
+				AM.set_density(TRUE)
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null

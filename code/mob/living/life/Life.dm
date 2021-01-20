@@ -56,13 +56,9 @@
 		lifeprocesses[type] = L
 
 	proc/remove_lifeprocess(type)
-		for (var/thing in lifeprocesses)
-			if (thing)
-				if (thing == type)
-					var/datum/lifeprocess/L = lifeprocesses[thing]
-					lifeprocesses -= thing
-					qdel(L)
-					L = null
+		var/datum/lifeprocess/L = lifeprocesses[type]
+		lifeprocesses -= type
+		qdel(L)
 
 	proc/get_heat_protection()
 		.= 0
@@ -87,7 +83,6 @@
 
 /mob/living/critter/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
 	//add_lifeprocess(/datum/lifeprocess/breath) //most of them cant even wear internals
@@ -103,11 +98,11 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/human/New()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/blood)
 	add_lifeprocess(/datum/lifeprocess/bodytemp)
 	add_lifeprocess(/datum/lifeprocess/breath)
@@ -126,10 +121,10 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/carbon/cube/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
 	add_lifeprocess(/datum/lifeprocess/disability)
@@ -138,31 +133,33 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/ai/New()
 	..()
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/sight)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/hivebot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
 	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
-	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
+	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/robot_oil)
 
 
 /mob/living/silicon/drone/New()
@@ -198,6 +195,7 @@
 		var/datum/lifeprocess/L
 		for (var/thing in src.lifeprocesses)
 			if (!thing) continue
+			if(src.disposed) return
 			L = src.lifeprocesses[thing]
 			L.process(environment)
 
@@ -334,7 +332,6 @@
 
 	process_killswitch()
 	process_locks()
-	process_oil()
 	update_canmove()
 
 	if (metalman_skin && prob(1))

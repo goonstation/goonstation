@@ -12,34 +12,37 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 'sound/voice/macho/macho_idle_breath_01.ogg', 'sound/voice/macho/macho_mumbling04.ogg', 'sound/voice/macho/macho_moan03.ogg',\
 'sound/voice/macho/macho_mumbling05.ogg', 'sound/voice/macho/macho_mumbling07.ogg', 'sound/voice/macho/macho_shout08.ogg')
 
+/datum/targetable/macho
+
 /mob/living/carbon/human/machoman
 	var/list/macho_arena_turfs
 	New()
 		..()
-		SPAWN_DBG(0)
-			if(src.bioHolder && src.bioHolder.mobAppearance)
-				src.bioHolder.mobAppearance.customization_first = "Dreadlocks"
-				src.bioHolder.mobAppearance.customization_second = "Full Beard"
+		//src.mind = new
+		src.gender = "male"
+		src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
-				SPAWN_DBG(1 SECOND)
-					src.bioHolder.mobAppearance.UpdateMob()
+		if (!src.reagents)
+			src.create_reagents(1000)
 
-			//src.mind = new
-			src.gender = "male"
-			src.real_name = pick("M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
+		src.reagents.add_reagent("stimulants", 200)
 
-			if (!src.reagents)
-				src.create_reagents(1000)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/macho, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
 
-			src.reagents.add_reagent("stimulants", 200)
+		for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+			src.abilityHolder.addAbility(A)
+		src.abilityHolder.updateButtons()
 
-			src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/macho, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
-			src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+	initializeBioholder()
+		src.bioHolder.mobAppearance.customization_first = "Dreadlocks"
+		src.bioHolder.mobAppearance.customization_second = "Full Beard"
+		. = ..()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -62,8 +65,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			sleep(0.2 SECONDS)
-			macho_parry(user)
+			SPAWN_DBG(0.2 SECONDS)
+				macho_parry(user)
 			return
 		..()
 		return
@@ -480,7 +483,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 					if(isfloor(T))
 						animate_buff_out(T)
-						SPAWN_DBG(10)
+						SPAWN_DBG(1 SECOND)
 							var/floor_type = T.type
 							var/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf = T.ReplaceWith("/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf", 1)
 							new_turf.previous_turf_type = floor_type
@@ -1142,13 +1145,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 			else //Uh?
 				src.show_text("Man, this poor sucker ain't even got a chest to punch, whatta chump.", "blue")
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (!src.stat)
 						src.emote("sigh")
 
 		else
 			src.show_text("You're not entirely sure where the heart is on this thing. Better leave it alone.", "blue")
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (!src.stat)
 					src.emote("sigh")
 

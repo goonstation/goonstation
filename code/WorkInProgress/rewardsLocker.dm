@@ -132,6 +132,9 @@
 			M.name = "SWAT Gas Mask"
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
+			M.color_r = 1
+			M.color_g = 0.8
+			M.color_b = 0.8
 			activator.set_clothing_icon_dirty()
 			return 1
 		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
@@ -583,6 +586,16 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat"
+					M.item_state = "centcoat"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/suit/space/captain))
 					var/prev = M.name
 					M.icon_state = "spacecap-blue"
@@ -685,6 +698,16 @@
 					M.name = "administrator's armor"
 					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat-red"
+					M.item_state = "centcoat-red"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM administrators.(Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 				else if (istype(M, /obj/item/clothing/suit/space/captain))
 					var/prev = M.name
@@ -907,7 +930,7 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
-		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+		if (activator.restrained() || is_incapacitated(activator))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"

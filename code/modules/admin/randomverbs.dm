@@ -607,8 +607,7 @@
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			if(T.air.trace_gases)
-				T.air.trace_gases = null
+			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 
@@ -675,7 +674,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -1710,6 +1709,7 @@
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
+	newMind.ckey = M.ckey
 	newMind.key = M.key
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
@@ -2617,6 +2617,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				if (T.vistarget)
 					T.vistarget.vis_contents -= T
 					T.vistarget.warptarget = null
+					T.vistarget.fullbright = initial(T.vistarget.fullbright)
+					T.vistarget.RL_Init()
+					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE
@@ -2654,7 +2657,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
-					W.density = 0
+					W.set_density(0)
 
 				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
 				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")

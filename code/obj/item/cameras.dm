@@ -4,7 +4,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
@@ -242,7 +242,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG (50)
+	SPAWN_DBG(5 SECONDS)
 		if (src)
 			src.can_use = 1
 

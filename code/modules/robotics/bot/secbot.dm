@@ -778,6 +778,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.target = C
 				src.oldtarget_name = C.name
 				src.speak("Level [src.threatlevel] infraction alert!")
+				if(istype(C, /mob/living/carbon/human/npc/monkey))
+					var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+					npcmonkey.pursuited_by(src)
 				playsound(src.loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 				src.visible_message("<b>[src]</b> points at [C.name]!")
 				mode = SECBOT_HUNT
@@ -938,7 +941,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	speak(var/message)
 		if (src.emagged >= 2)
 			message = capitalize(ckeyEx(message))
-			..(message)
+		..(message)
 
 	//Generally we want to explode() instead of just deleting the securitron.
 	ex_act(severity)
@@ -972,7 +975,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				message2send = "Notification: Tactical law intervention agent [src] codename [src.badge_number] status KIA in [bot_location]!"
 			else
 				message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="[message2send]")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=list(MGD_SECURITY, MGA_DEATH), "sender"="00000000", "message"="[message2send]")
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
@@ -1050,7 +1053,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				master.frustration = INFINITY
 				master.mover = null
 				master = null
-				return 1
+				return
 
 			master.moving = 1
 
@@ -1177,8 +1180,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 					master.speak(message2send)
 				else
 					message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000",\
-				"message"="[message2send]")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=list(MGD_SECURITY, MGA_ARREST), "sender"="00000000", "message"="[message2send]")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(master, pdaSignal)

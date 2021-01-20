@@ -47,7 +47,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				src.update_icon()
 		BLOCK_SETUP(BLOCK_ROD)
@@ -55,7 +55,7 @@
 
 	proc/check_health()
 		if (src.health <= 0 && src.takes_damage)
-			SPAWN_DBG (2)
+			SPAWN_DBG(0.2 SECONDS)
 				if (src)
 					usr.u_equip(src)
 					usr.update_inhands()
@@ -368,7 +368,10 @@
 				continue
 			usable += A
 
+		var/holder = src.loc
 		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		if (src.loc != holder)
+			return
 		src.selected = pick
 
 	afterattack(atom/target as obj|mob|turf, mob/user as mob, flag)

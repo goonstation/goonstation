@@ -915,7 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			processing_items |= src
+			processing_items |= T
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -4750,7 +4750,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as() in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else

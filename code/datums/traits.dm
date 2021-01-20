@@ -129,8 +129,8 @@
 
 	proc/addTrait(id)
 		if(!traits.Find(id) && owner)
-			traits.Add(id)
 			var/obj/trait/T = traitList[id]
+			traits[id] = T
 			if(T.isMoveTrait)
 				moveTraits.Add(id)
 			T.onAdd(owner)
@@ -167,8 +167,12 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/cleanName = ""   //Name without any additional information.
 	var/isMoveTrait = 0 // If 1, onMove will be called each movement step from the holder's mob
+	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 
 	proc/onAdd(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(mutantRace)
 		return
 
 	proc/onRemove(var/mob/owner)
@@ -302,8 +306,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_swedish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
 		return
 
 /obj/trait/french
@@ -317,8 +320,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_french", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
 		return
 
 /obj/trait/scots
@@ -331,8 +333,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_scots", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
 		return
 
 /obj/trait/chav
@@ -346,8 +347,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_chav", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
 		return
 
 /obj/trait/elvis
@@ -360,8 +360,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_elvis", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
 		return
 
 /obj/trait/tommy // please do not re-enable this without talking to spy tia
@@ -376,8 +375,7 @@
 	unselectable = 1 // this was not supposed to be a common thing!!
 /*
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tommy")
+		owner.bioHolder?.AddEffect("accent_tommy")
 		return
 */
 
@@ -392,8 +390,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_finnish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
 		return
 
 /obj/trait/tyke
@@ -407,8 +404,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke")
 		return
 
 // VISION/SENSES - Green Border
@@ -491,8 +487,7 @@
 	category = "genetics"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.genetic_stability = 120
+		owner.bioHolder?.genetic_stability = 120
 		return
 
 /obj/trait/stablegenes
@@ -590,6 +585,15 @@
 	cleanName = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
+	category = "skill"
+	points = -1
+	isPositive = 1
+
+/obj/trait/claw
+	name = "Claw School Graduate (-1) \[Skill\]"
+	cleanName = "Claw School Graduate"
+	desc = "Your skill at claw machines is unparalleled."
+	id = "claw"
 	category = "skill"
 	points = -1
 	isPositive = 1
@@ -707,8 +711,6 @@
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			H.add_stam_mod_regen("trait", STAMINA_REGEN * 0.1)
-			H.max_health = 60
-			H.health = 60
 		return
 
 /obj/trait/bigbruiser
@@ -784,8 +786,7 @@ obj/trait/pilot
 	isPositive = 1
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("resist_alcohol", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 		return
 
 
@@ -797,8 +798,6 @@ obj/trait/pilot
 	points = 0
 	isPositive = 0
 
-	var/allergen = ""
-	var/allergen_name = ""  //No idea what this var is doing, mind if someone explains?
 	var/list/allergic_players = list()
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -809,19 +808,10 @@ obj/trait/pilot
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
 	onAdd(var/mob/owner)
-		allergen = pick(allergen_id_list)
-		allergic_players[owner] = allergen
-		if (reagents_cache.len <= 0)
-			build_reagent_cache()
-		var/datum/reagent/R = reagents_cache[allergen]
-		if(R)
-			allergen_name = R.name
-		else
-			throw EXCEPTION("Could not find reagent for id:[allergen]")
+		allergic_players[owner] = pick(allergen_id_list)
 
 	onLife(var/mob/owner)
-		allergen = allergic_players[owner]
-		if (owner?.reagents?.has_reagent(allergen))
+		if (owner?.reagents?.has_reagent(allergic_players[owner]))
 			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
@@ -1039,12 +1029,12 @@ obj/trait/pilot
 	isPositive = 0
 
 /obj/trait/allears
-	name = "All Ears (+1) \[Trinkets\]"
+	name = "All Ears (0) \[Trinkets\]"
 	cleanName="All ears"
 	desc = "You lost your headset on the way to work."
 	category = "trinkets"
 	id = "allears"
-	points = 1
+	points = 0
 	isPositive = 0
 
 /obj/trait/atheist
@@ -1064,12 +1054,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/lizard)
-		return
+	mutantRace = /datum/mutantrace/lizard
 
 /obj/trait/cow
 	name = "Bovine (-1) \[Species\]"
@@ -1080,12 +1065,7 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/cow)
-		return
+	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
 	name = "Skeleton (-2) \[Species\]"
@@ -1096,12 +1076,7 @@ obj/trait/pilot
 	points = -2
 	isPositive = 1
 	category = "species"
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/skeleton)
-		return
+	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
 	name = "Roach (-1) \[Species\]"
@@ -1112,9 +1087,5 @@ obj/trait/pilot
 	points = -1
 	isPositive = 1
 	category = "species"
+	mutantRace = /datum/mutantrace/roach
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.set_mutantrace(/datum/mutantrace/roach)
-		return

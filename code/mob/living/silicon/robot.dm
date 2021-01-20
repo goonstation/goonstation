@@ -81,7 +81,7 @@
 
 	// moved up to silicon.dm
 	killswitch = 0
-	killswitch_time = 60
+	killswitch_at = 0
 	weapon_lock = 0
 	weaponlock_time = 120
 	var/oil = 0
@@ -171,12 +171,12 @@
 			if (!src.ai_interface)
 				src.ai_interface = new(src)
 
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			if (!src.dependent && !src.shell)
 				boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 				src.syndicate = syndie
 				src.emagged = frame_emagged
-		SPAWN_DBG (4)
+		SPAWN_DBG(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
 					src.connected_ai = A
@@ -195,7 +195,7 @@
 			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 
-		SPAWN_DBG (15)
+		SPAWN_DBG(1.5 SECONDS)
 			if (!src.brain && src.key && !(src.dependent || src.shell || src.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
@@ -203,6 +203,7 @@
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
 					var/datum/mind/newmind = new
+					newmind.ckey = ckey
 					newmind.key = src.key
 					newmind.current = src
 					B.owner = newmind
@@ -278,6 +279,8 @@
 
 		var/m_type = 1
 		var/message
+		var/maptext_out = 0
+		var/custom = 0
 
 		switch(lowertext(act))
 
@@ -287,12 +290,12 @@
 
 			if ("list")
 				src.show_text("Basic emotes:")
-				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 				src.show_text("Targetable emotes:")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
 
 			if ("listbasic")
-				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+				src.show_text("clap, flap, aflap, twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, point")
@@ -310,6 +313,7 @@
 						param = null
 
 					act = lowertext(act)
+					maptext_out = "<I>[act]s</I>"
 					if (param)
 						switch(act)
 							if ("bow","wave","nod")
@@ -322,10 +326,12 @@
 						switch(act)
 							if ("hug")
 								message = "<B>[src]</b> [act]s itself."
+								maptext_out = "<I>[act]s itself</I>"
 							else
 								message = "<B>[src]</b> [act]s."
 				else
 					message = "<B>[src]</B> struggles to move."
+					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
 			if ("point")
@@ -350,23 +356,28 @@
 			if ("panic","freakout")
 				if (!src.restrained())
 					message = "<B>[src]</B> enters a state of hysterical panic!"
+					maptext_out = "<I>enters a state of hysterical panic!</I>"
 				else
 					message = "<B>[src]</B> starts writhing around in manic terror!"
+					maptext_out = "<I>starts writhing around in manic terror!</I>"
 				m_type = 1
 
 			if ("clap")
 				if (!src.restrained())
 					message = "<B>[src]</B> claps."
+					maptext_out = "<I>claps</I>"
 					m_type = 2
 
 			if ("flap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps its wings."
+					maptext_out = "<I>flaps its wings</I>"
 					m_type = 2
 
 			if ("aflap")
 				if (!src.restrained())
 					message = "<B>[src]</B> flaps its wings ANGRILY!"
+					maptext_out = "<I>flaps its wings ANGRILY!</I>"
 					m_type = 2
 
 			if ("custom")
@@ -380,6 +391,8 @@
 					alert("Unable to use this emote, must be either hearable or visible.")
 					return
 				message = "<B>[src]</B> [input]"
+				maptext_out = "<I>[input]</I>"
+				custom = copytext(input, 1, 10)
 
 			if ("customv")
 				if (!param)
@@ -387,6 +400,8 @@
 					if(!param) return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 1
 
 			if ("customh")
@@ -395,6 +410,8 @@
 					if(!param) return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 2
 
 			if ("me")
@@ -402,19 +419,30 @@
 					return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[param]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 1
 
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				message = "<B>[src]</B> [act]s."
+				maptext_out = "<I>[act]s</I>"
 				m_type = 1
+
+			if ("sigh","laugh","chuckle","giggle","chortle","guffaw","cackle")
+				// basic audible single-word emotes
+				message = "<B>[src]</B> [act]s."
+				maptext_out = "<I>[act]s</I>"
+				m_type = 2
 
 			if ("flipout")
 				message = "<B>[src]</B> flips the fuck out!"
+				maptext_out = "<I>flips the fuck out!</I>"
 				m_type = 1
 
 			if ("rage","fury","angry")
 				message = "<B>[src]</B> becomes utterly furious!"
+				maptext_out = "<I>becomes utterly furious!</I>"
 				m_type = 1
 
 			if ("twitch")
@@ -504,6 +532,12 @@
 							message = "<B>[src]</B> beep-bops at [M]."
 							break
 
+						if (istype(src.buckled, /obj/machinery/conveyor))
+							message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
+							src.buckled = null
+							if(isunconscious(src))
+								setalive(src) //reset stat to ensure emote comes out
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
@@ -567,14 +601,40 @@
 			else
 				src.show_text("Invalid Emote: [act]")
 				return
-		if ((message && isalive(src)))
-			logTheThing("say", src, null, "EMOTE: [message]")
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
-			else
-				for (var/mob/O in hearers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+		if (!isalive(src))
+			return
+		if (maptext_out)
+			var/image/chat_maptext/chat_text = null
+			SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
+				if (speechpopups && src.chat_text)
+					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+					if(chat_text)
+						chat_text.measure(src.client)
+						for(var/image/chat_maptext/I in src.chat_text.lines)
+							if(I != chat_text)
+								I.bump_up(chat_text.measured_height)
+				if (message)
+					logTheThing("say", src, null, "EMOTE: [message]")
+					act = lowertext(act)
+					if (m_type & 1)
+						for (var/mob/O in viewers(src, null))
+							O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+					else if (m_type & 2)
+						for (var/mob/O in hearers(src, null))
+							O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+					else if (!isturf(src.loc))
+						var/atom/A = src.loc
+						for (var/mob/O in A.contents)
+							O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+		else
+			if (message)
+				logTheThing("say", src, null, "EMOTE: [message]")
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type)
+				else
+					for (var/mob/O in hearers(src, null))
+						O.show_message("<span class='emote'>[message]</span>", m_type)
 		return
 
 	examine()
@@ -921,8 +981,7 @@
 	temperature_expose(null, temp, volume)
 		var/Fshield = 0
 
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)
@@ -1126,7 +1185,7 @@
 					src.part_head.brain = B
 					B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/M = find_ghost_by_key(B.owner.ckey)
+					var/mob/M = find_ghost_by_key(B.owner.key)
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 						src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 						return
@@ -1518,6 +1577,7 @@
 			src.brain.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 16, 3) // heh
 
 		src.brain = null
+		src.part_head?.brain = null
 		src.update_appearance()
 
 	Topic(href, href_list)
@@ -1839,6 +1899,8 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = RM.radio
+				src.internal_pda.mailgroups = RM.mailgroups
+				src.internal_pda.alertgroups = RM.alertgroups
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1859,6 +1921,8 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
+				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
 			src.ears = src.radio
 		return RM
 
@@ -2052,7 +2116,7 @@
 		sleep(1 SECOND)
 		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 		sleep(1 SECOND)
-		src?.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
@@ -2093,13 +2157,33 @@
 		else if (!src.locked && !src.opened && !src.wiresexposed && !src.brainexposed && !src.locking)
 			src.locking = 1
 			boutput(src, "<span class='alert'>Locking interface...</span>")
-			SPAWN_DBG (120)
+			SPAWN_DBG(12 SECONDS)
 				if (!src.locking)
 					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
 				else
 					src.locked = 1
 					src.locking = 0
 					boutput(src, "<span class='alert'>You have locked your interface.</span>")
+
+	verb/cmd_alter_head_screen()
+		set category = "Robot Commands"
+		set name = "Change facial expression (screen head only)"
+		var/obj/item/parts/robot_parts/head/screen/targethead = locate(/obj/item/parts/robot_parts/head/screen) in src.contents
+		if (!istype(targethead))
+			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
+			return 0
+
+		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
+		if (!newFace) return 0
+		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
+		if (!newMode) return 0
+		newFace = (newFace ? lowertext(newFace) : targethead.face)
+		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
+		newMode = (newMode ? newMode : targethead.mode)
+		targethead.face = newFace
+		targethead.mode = newMode
+		update_bodypart(part = "head")
+		return 1
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
@@ -2318,7 +2402,8 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-				setalive(src)
+				if(src.health > 0)
+					setalive(src)
 
 			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
 				batteryDistress() // Execute distress mode
@@ -2339,7 +2424,10 @@
 				src.lastgasp() // calling lastgasp() here because we just got knocked out
 			setunconscious(src)
 		else
-			setalive(src)
+			if(src.health > 0)
+				setalive(src)
+			else
+				setdead(src)
 		if (src.misstep_chance > 0)
 			switch(misstep_chance)
 				if(50 to INFINITY)
@@ -2357,16 +2445,8 @@
 			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
 		src.oil += amt
 
-	proc/process_oil()
-		src.oil -= 1
-		if (oil <= 0)
-			oil = 0
-			src.remove_stun_resist_mod("robot_oil", 25)
-			REMOVE_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
-
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
-		var/mailgroup = MGD_MEDRESEACH
 		var/net_id = generate_net_id(src)
 		var/frequency = 1149
 		var/datum/radio_frequency/radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -2382,7 +2462,7 @@
 			else	//Someone passed us an unkown modifier
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
-		if (message && mailgroup && radio_connection)
+		if (message && radio_connection)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -2390,7 +2470,7 @@
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -2407,8 +2487,7 @@
 
 	process_killswitch()
 		if(killswitch)
-			killswitch_time --
-			if(killswitch_time <= 0)
+			if(killswitch_at <= TIME)
 				if(src.client)
 					boutput(src, "<span class='alert'><B>Killswitch Activated!</B></span>")
 				killswitch = 0
@@ -2478,11 +2557,17 @@
 				i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
 				if(color_matrix) src.internal_paint_part(i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
-					var/icon/eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+					var/icon/eyesovl = null
+					var/image/eye_light = null
+					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+					else
+						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
+						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eyesovl.Blend(rgb(C.fx[1], C.fx[2], C.fx[3]), ICON_ADD)
 					i_head.overlays += image("icon" = eyesovl, "layer" = FLOAT_LAYER)
 
-					var/image/eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
@@ -2836,11 +2921,11 @@
 				src.part_leg_l = null
 				src.compborg_force_unequip(1)
 				src.compborg_force_unequip(3)
-			if (part.slot == "arm_left")
+			if (part.slot == "l_arm")
 				src.visible_message("<b>[src]'s</b> left arm breaks off!")
 				src.part_arm_l = null
 				src.compborg_force_unequip(1)
-			if (part.slot == "arm_right")
+			if (part.slot == "r_arm")
 				src.visible_message("<b>[src]'s</b> right arm breaks off!")
 				src.part_arm_r = null
 				src.compborg_force_unequip(3)
@@ -2849,10 +2934,10 @@
 				src.visible_message("<b>[src]'s</b> legs are destroyed!")
 				src.part_leg_r = null
 				src.part_leg_l = null
-			if (part.slot == "leg_left")
+			if (part.slot == "l_leg")
 				src.visible_message("<b>[src]'s</b> left leg breaks off!")
 				src.part_leg_l = null
-			if (part.slot == "leg_right")
+			if (part.slot == "r_leg")
 				src.visible_message("<b>[src]'s</b> right leg breaks off!")
 				src.part_leg_r = null
 		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
@@ -3186,7 +3271,7 @@
 	New()
 		..(usr.loc, null, 1)
 
-	update_bodypart()
+	update_bodypart(var/part)
 		return
 	update_appearance()
 		return

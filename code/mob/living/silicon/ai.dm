@@ -553,6 +553,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 						foot = M.organs["l_leg"]
 					foot.take_damage(3, 0)
 					user.changeStatus("weakened", 2 SECONDS)
+		user.lastattacked = src
 	src.update_appearance()
 
 /mob/living/silicon/ai/blob_act(var/power)
@@ -1195,8 +1196,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/process_killswitch()
 	var/message_mob = get_message_mob()
 
-	if(killswitch)
-		killswitch_time --
+	if(killswitch_at && killswitch)
+		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
+
 		if(killswitch_time <= 10)
 			if(src.client)
 				boutput(message_mob, "<span class='alert'><b>Time left until Killswitch: [killswitch_time]</b></span>")
@@ -1376,7 +1378,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	sleep(1 SECOND)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 	sleep(1 SECOND)
-	src.say("3. You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
 /mob/living/silicon/ai/proc/ai_state_laws_advanced()
@@ -1632,7 +1634,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && D.secondsElectrified != 0 )
+			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
 
@@ -1654,7 +1656,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	if(alert("Are you sure?",,"Yes","No") == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && D.locked && D.arePowerSystemsOn())
+			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
 				D.update_icon()
 				count++
@@ -2016,7 +2018,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
-		if (istype(M,/mob/living/critter/aquatic))
+		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/chicken))
 			continue
 		if(M.z != 1 && M.z != usr.z)
 			continue

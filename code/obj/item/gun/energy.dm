@@ -1347,8 +1347,8 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(0.4 SECONDS)
-					playsound(M, "sound/vox/explosive.ogg", 50)
+					SPAWN_DBG(0.4 SECONDS)
+						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
 					item_state = "lawg-clownshot"
@@ -1620,9 +1620,13 @@
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
-		if(++shotcount == 2)
+		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
 			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
 
 	shoot()
+		shotcount = 0
+		. = ..()
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
 		shotcount = 0
 		. = ..()

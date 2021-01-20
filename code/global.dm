@@ -29,9 +29,6 @@ var/global
 
 	datum/datacore/data_core = null
 
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
-
 	turf/buzztile = null
 
 	obj/screen/renderSourceHolder
@@ -452,6 +449,11 @@ var/global
 	netpass_banking = null
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
+
+	///////////////
+	//cyberorgan damage thresholds for emagging without emag
+	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs

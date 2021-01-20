@@ -67,8 +67,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(M)
-			M.bodytemperature = 310
+		M?.bodytemperature = 310
 		return
 
 /datum/materialProc/fail_explosive
@@ -460,11 +459,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
-/datum/materialProc/soulsteel_add
-	execute(var/atom/owner)
-		owner.event_handler_flags |= USE_HASENTERED
-		return
-
 /datum/materialProc/soulsteel_entered
 	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
@@ -488,7 +482,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_true(projectile, projectile) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add

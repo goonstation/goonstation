@@ -134,6 +134,16 @@ same thing. You may need to reboot after this.
 
 Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
 
+**Webpack errors out with some cryptic messages!**
+
+> Example: `No template for dependency: PureExpressionDependency`
+Webpack stores its cache on disk since tgui 4.3, and it is very sensitive
+to build configuration. So if you update webpack, or share the same cache
+directory between development and production build, it will start
+hallucinating.
+
+To fix this kind of problem, run `bin/tgui --clean` and try again.
+
 ## Developer Tools
 
 When developing with `tgui-dev-server`, you will have access to certain

@@ -1561,28 +1561,46 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "sendstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", "clrbff")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingString")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingString")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", "setStartingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", "setEndingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingStringManual")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingStringManual")
 
-	proc/setStartingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
-		inp = strip_html(inp)
-		bstr = inp
-		boutput(user, "String set to [inp]")
-		tooltip_rebuild = 1
+		setStartingString(inp)
+		boutput(user, "String set to [bstr]")
 		return 1
 
-	proc/setEndingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setStartingString(input.signal)
+
+	proc/setStartingString(var/inp)
+		inp = strip_html(inp)
+		bstr = inp
+		tooltip_rebuild = 1
+
+	proc/setEndingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
+		setEndingString(inp)
+		boutput(user, "String set to [astr]")
+		return 1
+
+	proc/setEndingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setEndingString(input.signal)
+
+	proc/setEndingString(var/inp)
 		inp = strip_html(inp)
 		astr = inp
-		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
-		return 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1839,7 +1857,7 @@
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params_noencode(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
@@ -3139,5 +3157,71 @@
 	name = ""
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "connectionArrow"
+
+
+/obj/item/mechanics/screen
+	name = "Letter Display Component"
+	desc = ""
+	icon_state = "comp_screen"
+	cabinet_banned = true
+
+	var/letter_index = 1
+	var/display_letter = null
+
+	get_desc()
+		. = ..()
+		. += "<br><span class='notice'>Letter Index: [src.letter_index]"
+		if (src.level == 2 || src.display_letter != null)
+			. += " | Currently Displaying: '[src.display_letter]'"
+		. += "</span>"
+
+	secure()
+		src.display(" ")
+
+	loosen()
+		src.display_letter = null
+		src.icon_state = "comp_screen"
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")
+
+	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
+		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
+		if (!in_range(src, user) || user.stat || isnull(input)) 
+			return FALSE
+		if (letter_index < 1)
+			return FALSE
+		letter_index = input
+		tooltip_rebuild = TRUE
+		. = TRUE
+
+	proc/fire(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		if (length(signal) < src.letter_index)
+			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
+			return
+		var/letter = copytext(signal, src.letter_index, src.letter_index + 1)
+		src.display(letter)
+
+	proc/display(var/letter as text)
+		letter = uppertext(letter)
+		switch(letter)
+			if (" ") src.setDisplayState(" ", "comp_screen_blank")
+			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
+			else
+				var/ascii = text2ascii(letter)
+				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z")) || (ascii >= text2ascii("0") && ascii <= text2ascii("9")))
+					src.setDisplayState(letter, "comp_screen_[letter]")
+				else
+					src.setDisplayState("?", "comp_screen_question_mark") // Any unknown characters should display as ? instead.
+
+	proc/setDisplayState(var/new_letter as text, var/new_icon_state as text)
+		src.display_letter = new_letter
+		src.icon_state = new_icon_state
+
+
+
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

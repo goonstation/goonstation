@@ -11,6 +11,7 @@
 	w_class = 2
 	is_syndicate = 1
 	mats = 8
+	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
 	var/on = 0
 
@@ -73,37 +74,26 @@
 
 		// Store current appearance and generate new one.
 		if (!reset_to_normal)
+			oldAH.CopyOther(AH)
+			if (AH.mob_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
+				AH.customization_first_color = fix_colors(AH.customization_first_color)
+				AH.customization_second_color = fix_colors(AH.customization_second_color)
+				AH.customization_third_color = fix_colors(AH.customization_third_color)
 			src.real_name = user.real_name
-			src.s_tone = AH.s_tone
-			src.cust1 = AH.customization_first
-			src.cust2 = AH.customization_second
-			src.cust3 = AH.customization_third
-			src.customization_first_color = AH.customization_first_color
-			src.customization_second_color = AH.customization_second_color
-			src.customization_third_color = AH.customization_third_color
-			src.e_color = AH.e_color
-
 			randomize_look(user, 0, 0, 0, 1, 0, 0) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
+			user.update_colorful_parts()
 
 		// Restore original appearance.
 		else
 			user.real_name = src.real_name
-			AH.s_tone = src.s_tone
-			AH.customization_first = src.cust1
-			AH.customization_second = src.cust2
-			AH.customization_third = src.cust3
-			AH.customization_first_color = src.customization_first_color
-			AH.customization_second_color = src.customization_second_color
-			AH.customization_third_color = src.customization_third_color
-			AH.e_color = src.e_color
-
-			AH.UpdateMob()
+			AH.CopyOther(oldAH)
 			if (user.limbs)
 				user.limbs.reset_stone()
 			user.set_face_icon_dirty()
 			user.set_body_icon_dirty()
 			user.update_inhands()
 			user.update_clothing()
+			user.update_colorful_parts()
 
 		return
 
@@ -146,7 +136,7 @@
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
-			SPAWN_DBG (8)
+			SPAWN_DBG(0.8 SECONDS)
 				if (T) qdel(T)
 
 		else
@@ -170,7 +160,7 @@
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
 			flick("emppulse",T)
-			SPAWN_DBG (8)
+			SPAWN_DBG(0.8 SECONDS)
 				if (T) qdel(T)
 
 		return

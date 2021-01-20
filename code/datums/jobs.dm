@@ -20,6 +20,7 @@
 	var/recieves_miranda = 0
 	var/recieves_implant = null //Will be a path.
 	var/receives_disk = 0
+	var/receives_security_disk = 0
 	var/receives_badge = 0
 	var/announce_on_join = 0 // that's the head of staff announcement thing
 	var/radio_announcement = 1 // that's the latejoin announcement thing
@@ -236,8 +237,9 @@
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP
@@ -455,6 +457,7 @@
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
+	receives_security_disk = 1
 	receives_badge = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/security
@@ -634,14 +637,15 @@
 	limit = 5
 	wages = PAY_DOCTORATE
 	slot_back = /obj/item/storage/backpack/medic
-	slot_belt = /obj/item/device/pda2/medical
+	slot_belt = /obj/item/storage/belt/medical
 	slot_jump = /obj/item/clothing/under/rank/medical
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_foot = /obj/item/clothing/shoes/red
 	slot_lhan = /obj/item/storage/firstaid/regular/doctor_spawn
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
-	slot_poc1 = /obj/item/paper/book/pocketguide/medical
+	slot_poc1 = /obj/item/device/pda2/medical
+	slot_poc2 = /obj/item/paper/book/pocketguide/medical
 	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
@@ -851,8 +855,6 @@
 		..()
 		if (!M)
 			return
-		if (prob(20))
-			M.bioHolder.AddEffect("accent_swedish", do_stability=0)
 
 /datum/job/civilian/bartender
 	name = "Bartender"
@@ -891,11 +893,28 @@
 	slot_jump = /obj/item/clothing/under/rank/hydroponics
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
+	slot_poc1 = /obj/item/paper/botany_guide
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
 		..()
 		src.access = get_access("Botanist")
+		return
+
+/datum/job/civilian/rancher
+	name = "Rancher"
+	limit = 1
+	wages = PAY_TRADESMAN
+	slot_belt = /obj/item/device/pda2/botanist
+	slot_jump = /obj/item/clothing/under/rank/rancher
+	slot_head = /obj/item/clothing/head/cowboy
+	slot_foot = /obj/item/clothing/shoes/brown
+	slot_glov = /obj/item/clothing/gloves/black
+	slot_ears = /obj/item/device/radio/headset/civilian
+
+	New()
+		..()
+		src.access = get_access("Rancher")
 		return
 
 /datum/job/civilian/janitor
@@ -1325,6 +1344,8 @@
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
+		if(prob(20))
+			M.bioHolder.AddEffect("noir", magical=1)
 
 // randomizd gimmick jobs
 
@@ -1464,7 +1485,7 @@
 	slot_jump = /obj/item/clothing/under/suit/pinstripe
 	slot_head = /obj/item/clothing/head/flatcap
 	slot_foot = /obj/item/clothing/shoes/brown
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/harmonica,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -1585,10 +1606,10 @@
 	name = "Sous-Chef"
 	wages = PAY_UNTRAINED
 	slot_belt = /obj/item/device/pda2/chef
-	slot_jump = /obj/item/clothing/under/rank/chef
+	slot_jump = /obj/item/clothing/under/misc/souschef
 	slot_foot = /obj/item/clothing/shoes/chef
 	slot_head = /obj/item/clothing/head/souschefhat
-	slot_suit = /obj/item/clothing/suit/chef
+	slot_suit = /obj/item/clothing/suit/apron
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -1666,8 +1687,8 @@
 		src.access = get_access("Radio Show Host")
 		return
 
-/datum/job/special/random/psychologist
-	name = "Psychologist"
+/datum/job/special/random/psychiatrist
+	name = "Psychiatrist"
 	wages = PAY_DOCTORATE
 	slot_eyes = /obj/item/clothing/glasses/regular
 	slot_card = /obj/item/card/id/research
@@ -1677,12 +1698,13 @@
 	slot_suit = /obj/item/clothing/suit/labcoat
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_poc1 = /obj/item/reagent_containers/food/drinks/tea
-	items_in_backpack = list(/obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/item_box/gold_star, /obj/item/storage/box/cookie_tin/sugar)
-	alt_names = list("Psychologist", "Psychiatrist", "Psychotherapist", "Therapist") // All with slightly different connotations
+	slot_poc2 = /obj/item/reagent_containers/food/drinks/bottle/gin
+	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp)
+	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 
 	New()
 		..()
-		src.access = get_access("Psychologist")
+		src.access = get_access("Psychiatrist")
 		return
 
 #ifdef HALLOWEEN

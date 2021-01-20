@@ -1027,11 +1027,6 @@
 	dir = 8;
 	pixel_x = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2095,7 +2090,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "adT" = (
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -2410,7 +2404,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "aeq" = (
-/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -2746,7 +2739,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "aeM" = (
-/obj/storage/secure/closet/command/research_director,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -3037,7 +3029,6 @@
 	},
 /area/station/crew_quarters/quarters_north)
 "afg" = (
-/obj/storage/secure/closet/command/medical_director,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -4748,11 +4739,6 @@
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -8967,7 +8953,6 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqn" = (
@@ -8976,6 +8961,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqo" = (
@@ -10196,11 +10182,6 @@
 "ast" = (
 /obj/table/auto,
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13"
-	},
 /obj/towelbin{
 	pixel_y = 2
 	},
@@ -11125,9 +11106,9 @@
 /area/station/hydroponics/bay)
 "auu" = (
 /obj/machinery/power/apc{
-	areastring = "Hydroponics";
+	areastring = "Hydroponics Bay";
 	dir = 8;
-	name = "Hydroponics APC";
+	name = "Hydroponics Bay APC";
 	pixel_x = -24
 	},
 /obj/cable,
@@ -25220,11 +25201,6 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
-	},
 /obj/decal/poster/wallsign/chsl{
 	pixel_y = 32
 	},
@@ -27598,16 +27574,15 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "aWt" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
+/obj/stool/bed/moveable,
+/obj/iv_stand,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 1;
+	dir = 4;
 	name = "autoname - SS13"
 	},
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/lab)
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aWu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -30073,11 +30048,6 @@
 /area/station/science/chemistry)
 "baM" = (
 /obj/machinery/door/window/eastleft,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "baN" = (
@@ -35387,9 +35357,9 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Research Sector";
+	areastring = "Science Lobby";
 	dir = 1;
-	name = "Research Sector APC";
+	name = "Science Lobby APC";
 	pixel_y = 24
 	},
 /obj/cable{
@@ -35801,11 +35771,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/white/grime,
 /area/station/crew_quarters/showers{
 	name = "Pool Shower Room"
@@ -36376,7 +36341,6 @@
 	},
 /obj/machinery/computer/riotgear{
 	dir = 8;
-	icon_state = "drawbr0";
 	pixel_x = 28
 	},
 /obj/submachine/weapon_vendor/security,
@@ -80044,7 +80008,7 @@ aMW
 aOK
 aQw
 aSh
-aSh
+aWt
 aVj
 aWR
 aYs
@@ -93550,9 +93514,9 @@ aaa
 aaa
 aaa
 ahv
-aaa
-aaa
 ahJ
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -105111,7 +105075,7 @@ aPU
 aRC
 aDB
 aUJ
-aWt
+aWp
 aYa
 aZm
 baM

@@ -84,7 +84,7 @@
 		if(!emote)
 			var/list/messages = process_language(message)
 			for (var/obj/O in (all_view(message_range, T)) | src.container.contents)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 
@@ -99,7 +99,7 @@
 						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 					if (isobserver(M) && M.client) //if a ghooooost (dead) (and online)
-						if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+						if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 							if (M in range(M.client.view, src))
 								M.show_message(thisR, 2)
 						else

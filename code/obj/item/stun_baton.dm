@@ -648,7 +648,7 @@
 	throwforce = 6
 	w_class = 2
 	mats = 8
-	stamina_damage = 25
+	stamina_damage = 40
 	stamina_cost = 10
 	stamina_crit_chance = 0
 	hitsound = 0

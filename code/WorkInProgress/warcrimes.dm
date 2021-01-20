@@ -134,7 +134,6 @@ var/fartcount = 0
 		..()
 
 	initializeBioholder()
-		. = ..()
 		bioHolder.mobAppearance.customization_first = "Tramp"
 		bioHolder.mobAppearance.customization_first_color = "#281400"
 		bioHolder.mobAppearance.customization_second = "Pompadour"
@@ -146,8 +145,7 @@ var/fartcount = 0
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.mobAppearance.u_color = "#996633"
-
-		bioHolder.mobAppearance.UpdateMob()
+		. = ..()
 
 	// John Bill always goes to the afterlife bar.
 	death(gibbed)
@@ -433,10 +431,10 @@ var/fartcount = 0
 			return
 		..()
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.a_intent = INTENT_HARM

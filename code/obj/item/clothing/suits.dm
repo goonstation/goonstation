@@ -579,7 +579,7 @@
 				return
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -611,7 +611,7 @@
 			switch (action)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
@@ -1088,6 +1088,13 @@
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
+
+		body_parts_covered = TORSO|LEGS|ARMS
+		permeability_coefficient = 0.01
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"

@@ -110,11 +110,11 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
+	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
 		return
 
 	// if they didn't move, put it up

@@ -26,6 +26,9 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/list/active_color_matrix = list()
+	var/list/color_matrices = list()
+
 	var/last_resist = 0
 
 	//var/obj/screen/zone_sel/zone_sel = null
@@ -68,6 +71,7 @@
 	var/lying_old = 0
 	var/can_lie = 0
 	var/canmove = 1.0
+	var/incrit = 0
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
@@ -247,13 +251,14 @@
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
 	SHOULD_CALL_PARENT(TRUE)
+	src.bioHolder?.mobAppearance.gender = src.gender
 	return
 
 /mob/proc/is_spacefaring()
 	return 0
 
 /mob/Move(a, b, flag)
-	if (src.buckled && src.buckled.anchored)
+	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
 	if (src.dir_locked)
@@ -263,7 +268,7 @@
 	if (src.restrain_time > TIME)
 		return
 
-	if (src.buckled)
+	if (src.buckled && istype(src.buckled))
 		var/glide_size = src.glide_size
 		src.buckled.Move(a, b, flag)
 		src.buckled.glide_size = glide_size // dumb hack
@@ -377,6 +382,7 @@
 	cooldowns = null
 	lastattacked = null
 	lastattacker = null
+	health_update_queue -= src
 	..()
 
 /mob/Login()
@@ -471,8 +477,11 @@
 	if (!src.mind)
 		src.mind = new (src)
 
-	if (src.mind && !src.mind.key)
-		src.mind.key = src.key
+	if (src.mind)
+		if (!src.mind.ckey)
+			src.mind.ckey = src.ckey
+		if (!src.mind.key)
+			src.mind.key = src.key
 
 	if (isobj(src.loc))
 		var/obj/O = src.loc
@@ -486,10 +495,9 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	if(HAS_MOB_PROPERTY(src, PROP_PROTANOPIA))
-		// creating a local var for this is actually necessary, byond freaks the fuck out if you do `color = list(blahblah)`. Why? I wish I knew.
-		var/list/matrix_protanopia = list(MATRIX_PROTANOPIA)
-		src.client?.color = matrix_protanopia
+	src.client?.color = src.active_color_matrix
+
+	return
 
 /mob/Logout()
 
@@ -791,7 +799,7 @@
 		return
 
 	var/key = src.key
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -1113,8 +1121,7 @@
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 
 /mob/proc/restrained()
-	if (src.hasStatus("handcuffed"))
-		return 1
+	. = src.hasStatus("handcuffed")
 
 /mob/proc/drop_from_slot(obj/item/item, turf/T)
 	if (!item)
@@ -1526,9 +1533,60 @@
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
+		if (src.health < 0 && !src.incrit)
+			src.incrit = 1
+			logTheThing("combat", src, null, "goes into crit [log_health(src)] at [log_loc(src)].")
+		else if (src.incrit && src.health >= 0)
+			src.incrit = 0
 	else
 		src.health = max_health
 		setalive(src)
+
+/// Adds a 20-length color matrix to the mob's list of color matrices
+/// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+	if (!cmatrix || !label)
+		return
+
+	if(label in src.color_matrices) // Do we already have this matrix?
+		return
+
+	src.color_matrices[label] = cmatrix
+
+	src.update_active_matrix()
+
+/// Removes whichever matrix is associated with the label. Must be a string!
+/mob/proc/remove_color_matrix(var/label)
+	if (!label || !src.color_matrices.len)
+		return
+
+	if(label == "all")
+		src.color_matrices.len = 0
+	else if(!(label in src.color_matrices)) // Do we have this matrix?
+		return
+	else
+		src.color_matrices -= label
+
+	src.update_active_matrix()
+
+/// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
+/// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
+/mob/proc/update_active_matrix()
+	if (!src.color_matrices.len)
+		src.active_color_matrix = null
+	else
+		var/first_entry = src.color_matrices[1]
+		if (src.color_matrices.len == 1) // Just one matrix?
+			src.active_color_matrix = src.color_matrices[first_entry]
+		else
+			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
+			for(var/cmatrix in src.color_matrices)
+				if (cmatrix == first_entry)
+					continue // dont multiply the first matrix by itself
+				else
+					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
+			src.active_color_matrix = color_matrix_2_apply
+	src.client?.color = src.active_color_matrix
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
@@ -1617,6 +1675,37 @@
 		ejectables = list_ejectables()
 		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
 
+	// splash our fluids around
+	if(src.reagents && src.reagents.total_volume)
+		var/list/obj/get_our_fluids_here = list()
+		for(var/obj/O in (. + ejectables))
+			if(istype(O, /obj/decal/cleanable))
+				var/obj/decal/cleanable/decal = O
+				if(!decal.can_fluid_absorb)
+					continue
+			else if(istype(O, /obj/item/organ/heart))
+				// heart can have a little reagents, as a treat
+			else if(istype(O, /obj/item/reagent_containers))
+				// some of our fluids got into a beaker, oh no!
+			else
+				continue
+			get_our_fluids_here += O
+		get_our_fluids_here += get_turf(src)
+
+		var/transfer_amount = src.reagents.total_volume / length(get_our_fluids_here)
+		for(var/atom/A in get_our_fluids_here)
+			if(isturf(A))
+				var/turf/T = A
+				T.fluid_react(src.reagents, src.reagents.total_volume, airborne=prob(10))
+				continue
+			if(istype(A, /obj/decal/cleanable)) // expand reagents
+				if(isnull(A.reagents))
+					A.create_reagents(transfer_amount)
+				else if(A.reagents.maximum_volume - A.reagents.total_volume < transfer_amount)
+					A.reagents.maximum_volume = A.reagents.total_volume + transfer_amount
+			if(A.reagents)
+				src.reagents.trans_to(A, transfer_amount)
+
 	for(var/obj/item/implant/I in src) qdel(I)
 
 	if (animation)
@@ -1624,7 +1713,6 @@
 	qdel(src)
 	if( include_ejectables )
 		. += ejectables
-	//return .
 
 /mob/proc/elecgib()
 	if (isobserver(src)) return
@@ -1813,7 +1901,7 @@
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
 
 		if (!forbid_abberation && prob(50))
-			new /obj/critter/aberration(src.loc)
+			new /obj/critter/aberration(get_turf(src))
 
 	else
 		gibs(src.loc)
@@ -2863,7 +2951,7 @@
 	boutput(src, result.Join("\n"))
 
 
-/mob/living/verb/interact_verb(obj/A as obj in view(1))
+/mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
 	A.interact(src)
@@ -2882,3 +2970,12 @@
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
+
+/mob/proc/on_eat(var/atom/A)
+	return
+
+/mob/set_density(var/newdensity)
+	if(HAS_MOB_PROPERTY(src, PROP_NEVER_DENSE))
+		..(0)
+	else
+		..(newdensity)

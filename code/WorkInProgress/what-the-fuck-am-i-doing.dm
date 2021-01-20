@@ -138,8 +138,7 @@
 		if(!src.occupant)
 			src.occupant = M
 
-			if(M.bioHolder)
-				M.bioHolder.AddEffect("stinky")
+			M.bioHolder?.AddEffect("stinky")
 
 			for(var/obj/O in src)
 				O.set_loc(get_turf(src))

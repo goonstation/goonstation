@@ -117,7 +117,6 @@
 						<a href='?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
 						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
 					</div>
@@ -185,7 +184,11 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
 					</div>
-				 </div>
+					<div class='l'>Misc</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+					</div>
+				</div>
 			</div>
 				"}
 
@@ -292,7 +295,8 @@
 						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
 						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
 						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"]
+						[isflock(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
+						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"]
 					</div>
 				</div>
 			</div>

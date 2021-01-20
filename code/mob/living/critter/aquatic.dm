@@ -43,8 +43,7 @@
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/disposing()
-	if(ai)
-		ai.dispose()
+	ai?.dispose()
 	ai = null
 	if(src.is_pet)
 		STOP_TRACKING_CAT(TR_CAT_PETS)
@@ -64,11 +63,11 @@
 		return
 	if (..())
 		return 1
+	src.update_water_status()
 	if(src.water_need)
 		if(prob(10 * src.water_need) && !src.nodamage) // question: this gets rid of like one proc call; worth it?
 			var/datum/healthHolder/Br = get_health_holder("brute")
-			if(Br)
-				Br.TakeDamage(water_need * out_of_water_debuff)
+			Br?.TakeDamage(water_need * out_of_water_debuff)
 			var/datum/healthHolder/Bu = get_health_holder("burn")
 			if(Bu && !is_heat_resistant())
 				Bu.TakeDamage(water_need * out_of_water_debuff)
@@ -80,18 +79,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
-
-/mob/living/critter/aquatic/set_loc(newloc)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/Move(NewLoc, direct)
-	. = ..()
-	src.update_water_status()
 
 /mob/living/critter/aquatic/proc/update_water_status(loc = null)
 	if(isnull(loc))

@@ -157,7 +157,6 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-	var/message = null
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 	var/net_id = null
 	var/frequency = 1149
@@ -268,9 +267,8 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		src.message = "HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]"
 		//DEBUG_MESSAGE("implant reporting crit")
-		src.send_message()
+		src.send_message("HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]", MGA_MEDCRIT)
 
 	proc/death_alert()
 		if (!src.owner)
@@ -278,15 +276,15 @@ THROWING DARTS
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
 		var/has_record = src.check_for_valid_record()
-		src.message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
 		if (has_record) //the title for this next section of code is grammar sucks
 			if (he_or_she(src.owner) == "they")
-				src.message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
+				message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
 			else
-				src.message += "[he_or_she(src.owner)] [has_record ? "has a record in the cloner at [has_record]" : "does not have a cloning record."]"
+				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
 		//DEBUG_MESSAGE("implant reporting death")
-		src.send_message()
+		src.send_message(message, MGA_DEATH)
 
 	proc/get_coords()
 		if (ishuman(src.owner))
@@ -309,24 +307,22 @@ THROWING DARTS
 					return get_area(comp)
 		return null
 
-	proc/send_message()
-		DEBUG_MESSAGE("sending message: [src.message]")
+	proc/send_message(var/message, var/alertgroup)
+		DEBUG_MESSAGE("sending message: [message]")
 		if(!radio_connection)
 			return
-		for(var/mailgroup in mailgroups)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "HEALTH-MAILBOT"
-			newsignal.data["message"] = "[src.message]"
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
+		newsignal.data["message"] = "[message]"
 
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups + alertgroup
+		newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
-			//DEBUG_MESSAGE("message sent to [src.mailgroup]")
+		radio_connection.post_signal(src, newsignal)
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -334,6 +330,11 @@ THROWING DARTS
 	New()
 		mailgroups.Add(MGD_SECURITY)
 		..()
+
+/obj/item/implant/health/security/anti_mindslave //HoS implant
+	name = "mind protection health implant"
+	icon_state = "implant-b"
+	impcolor = "b"
 
 /obj/item/implant/freedom
 	name = "freedom implant"
@@ -562,8 +563,7 @@ THROWING DARTS
 					throwjunk += I
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
-				if(source)
-					source.gib()
+				source?.gib()
 
 				for(var/obj/O in throwjunk) //Throw this junk around
 					var/edge = get_edge_target_turf(T, pick(alldirs))
@@ -641,6 +641,9 @@ THROWING DARTS
 			return 0
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
+			return 0
+		for(var/obj/item/implant/health/security/anti_mindslave/AM in H.implant)
+			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))

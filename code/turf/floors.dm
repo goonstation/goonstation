@@ -1042,6 +1042,22 @@
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
+/turf/simulated/floor/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
 /////////////////////////////////////////
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
@@ -1142,12 +1158,6 @@
 		if (T.amount >= 1)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
 		return
 
 	if(prob(75 - metal * 25))
@@ -1336,7 +1346,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -1402,7 +1412,7 @@
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
 			var/obj/R1 = new /obj/item/rods(src)
@@ -1421,7 +1431,7 @@
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
@@ -1441,11 +1451,6 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
-		if (T.amount < 1)
-			if(!issilicon(user))
-				user.u_equip(T)
-				qdel(T)
-			return
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)

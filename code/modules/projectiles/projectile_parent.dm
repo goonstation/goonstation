@@ -410,12 +410,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-
-		// The bullet has expired/decayed.
-		if (src.travelled > src.max_range * 32)
-			proj_data.on_max_range_die(src)
-			die()
-			return
 		proj_data.tick(src)
 		if (disposed || pooled)
 			return
@@ -434,6 +428,12 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			src.travelled += src.proj_data.projectile_speed
+
+		// The bullet would be expired/decayed.
+		if (src.travelled >= src.max_range * 32)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 
 		if (proj_data.precalculated)
 			for (var/i = 1, i < crossing.len, i++)
@@ -551,12 +551,11 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
-		nomsg = 0
 
 		datum/material/material = null
 
@@ -919,8 +918,7 @@ datum/projectile/snowball
 	P.power = DATA.power
 
 	P.proj_data = DATA
-	if(!isnull(alter_proj))
-		alter_proj.Invoke(P)
+	alter_proj?.Invoke(P)
 
 
 	if(P.proj_data == DATA)
@@ -975,36 +973,6 @@ datum/projectile/snowball
 	if(P.reflectcount >= max_reflects)
 		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
-	if (!Q)
-		return null
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
-	Q.name = "reflected [Q.name]"
-	Q.launch()
-	return Q
-
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
-	if (!P.incidence || !(P.incidence in cardinal))
-		return null
-	if(P.reflectcount >= max_reflects)
-		return
-
-	var/rx = 0
-	var/ry = 0
-
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
-
-	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
-	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
-	ry = P.yo - dn * ny
-
-	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Marquesas/Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
-
-	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
 	Q.reflectcount = P.reflectcount + 1

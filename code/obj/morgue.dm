@@ -327,7 +327,7 @@
 		if (M == src.connected) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
