@@ -43620,8 +43620,8 @@
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "ccY" = (
-/obj/reagent_dispensers/still/shittystill,
 /obj/decal/cleanable/dirt,
+/obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "ccZ" = (

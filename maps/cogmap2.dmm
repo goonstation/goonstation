@@ -5780,7 +5780,7 @@
 /obj/item/football,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
-/obj/reagent_dispensers/still/shittystill,
+/obj/storage/crate,
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amH" = (
@@ -44919,7 +44919,6 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bSy" = (
-/obj/reagent_dispensers/still/shittystill,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
