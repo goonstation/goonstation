@@ -1228,6 +1228,7 @@
 	lr = 1
 	lg = 0.8
 	lb = 0.9
+	is_syndicate = 1
 
 	create_products()
 		..()
