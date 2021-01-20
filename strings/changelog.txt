@@ -1,5 +1,9 @@
 
 (t)wed jan 20 21
+(u)Sovexe
+(p)3412
+(e)🆕|feature
+(+)Floor goblins now hide between the floor tiles and plating instead of under the floor.
 (u)pali & Cookie
 (*)The handheld vacuum cleaner got new sprites and its special attack got rebalanced. Also fixed a bunch of things. Oh and also experimentally adding an overcharged version of the vacuum cleaner to janitor's traitor uplink.
 (t)tue jan 19 21
