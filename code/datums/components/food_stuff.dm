@@ -26,7 +26,7 @@
 
 /datum/component/consume/organpoints
 	var/target_abilityholder = /datum/abilityHolder/lizard
-	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
+	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=1,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
 
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
@@ -130,7 +130,10 @@
 		boutput(L, "<span class='notice'>That [I] wasn't half bad.</span>")
 
 	if(add_these_points)
-		L.abilityHolder.addPoints(add_these_points, target_abilityholder)
+		if(prob(30 * add_these_points))
+			L.abilityHolder.addPoints(add_these_points, target_abilityholder)
+		else
+			boutput(L, "<span class='alert'>...that wasn't particularly satisfying, though.</span>")
 
 /datum/component/consume/organpoints/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
@@ -138,7 +141,7 @@
 
 
 /datum/component/consume/organheal
-	var/static/list/organ2hp = list(/obj/item/organ/head=20,/obj/item/skull=0,/obj/item/organ/brain=30,/obj/item/organ/chest=30,/obj/item/organ/heart=20,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=6)
+	var/static/list/organ2hp = list(/obj/item/organ/head=10,/obj/item/skull=0,/obj/item/organ/brain=20,/obj/item/organ/chest=30,/obj/item/organ/heart=20,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=6)
 	var/base_HPup = 5
 	var/mod_mult = 1
 
