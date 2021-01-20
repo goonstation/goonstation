@@ -14,6 +14,7 @@
 	edible = 0
 	module_research = list("medicine" = 1, "efficiency" = 10)
 	module_research_type = /obj/item/organ/brain
+	bite_damage = 50
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
@@ -37,7 +38,6 @@
 			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No") == "Yes")
 				logTheThing("combat", user, null, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [M].")
 				return ..()
-		return 0
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))

@@ -393,65 +393,147 @@
 	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
 		return 0
 
-	if (M == user)
-		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-		"<span class='notice'>You take a bite of [src]!</span>")
+	actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
+	return 1
 
-		if (src.material && src.material.edible)
-			src.material.triggerEat(M, src)
+/datum/action/bar/icon/eatstuff
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "eatstuff"
+	var/obj/item/master
+	/// the one eating the thing
+	var/mob/M
+	/// the one using the thing
+	var/mob/user
+	var/is_it_organs = 0
+	var/M_is_user = 0
+	var/is_awful_monsterthing = 0
+	var/static/list/grody_adj = list("horrifying", "disgusting", "monstrous", "soulless", "grody", "depraved", "wild", "savage", "big, bad")
+	var/static/list/grody_noun = list("animal", "beast", "monster", "ghoul", "abomination", "bear", "lizard", "weirdo", "creep")
+	New(var/obj/item/thing2eat, var/mob/_M, var/mob/_user)
+		..()
+		src.master = thing2eat
+		src.M = _M
+		src.user = _user
+		src.icon = master.icon
+		src.icon_state = master.icon_state
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(istype(H?.mutantrace, /datum/mutantrace/lizard) || istype(H?.mutantrace, /datum/mutantrace/werewolf))
+				src.is_awful_monsterthing = 1
+		src.is_it_organs = (istype(master, /obj/item/organ) || istype(master, /obj/item/clothing/head/butt))
+		src.M_is_user = (M == user)
+		if(M_is_user)
+			duration = 1 SECOND
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT)
+		if(is_it_organs)
+			src.duration *= 1.3
 
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
+	onStart()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (src.M_is_user)
+			if(is_it_organs)
+				M.visible_message("<span class='alert'><b>[M]</b> starts cramming \the [master] into [his_or_her(M)] mouth[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You start cramming \the [master] into your mouth!</span>")
+			else
+				boutput(M, "<span class='notice'>You go to take a bite out of [master].</span>")
+		else
+			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [master]!</span>",\
+			user, "<span class='alert'>You try to feed [M] [master]!</span>",\
+			M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> tries to feed you [master]!</span>")
+		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+
+	onInterrupt(flag)
+		. = ..()
+		if(src.M_is_user)
+			if(src.is_it_organs)
+				M.visible_message("<span class='alert'>[M] spits out \the [master].</span>","<span class='[is_awful_monsterthing ? "alert" : "notice"]'>You spit out \the [master].</span>")
+			else
+				boutput(M, "<span class='notice'>You stop trying to eat [master].</span>")
+		else
+			if(src.is_it_organs)
+				user.tri_message("<span class='alert'><b>[user]</b> stops forcing \the [master] down [M]'s throat!</span>",\
+				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
+				M, "<span class='[is_awful_monsterthing ? "alert" : "notice"]'><b>[user]</b> stops forcing \the [master] down your throat!</span>")
+			else
+				user.tri_message("<span class='alert'><b>[user]</b> stops trying to shove \the [master] down [M]'s throat!</span>",\
+				user, "<span class='alert'>You remove \the [master] from [M]'s face!</span>",\
+				M, "<span class='alert'><b>[user]</b> stops trying to shove \the [master] down your throat!</span>")
+
+	onUpdate()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(src.failchecks())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(src.M_is_user)
+			if(src.is_it_organs)
+				M.visible_message("<span class='alert'>[M] takes a visceral bite out of \the [master][prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				"<span class='[is_awful_monsterthing ? "notice" : "alert"]'>You take a bite of [master][(prob(30) && !is_awful_monsterthing )? ", you [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>")
+			else
+				M.visible_message("<span class='notice'>[M] takes a bite of \the [master].</span>",\
+				"<span class='notice'>You take a bite of [master].</span>")
+
+		else
+			if(src.is_it_organs)
+				user.tri_message("<span class='alert'><b>[user]</b> forces a chunk of [master] down [M]'s throat[prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
+				user, "<span class='alert'>You force [M] too eat a chunk of [master]!</span>",\
+				M, "<span class='[is_awful_monsterthing ? "notice" : "alert"]'><b>[user]</b> feeds you [master]!</span>")
+			else
+				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [master]!</span>",\
+				user, "<span class='alert'>You feed [M] [master]!</span>",\
+				M, "<span class='alert'><b>[user]</b> feeds you [master]!</span>")
+			logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [master] [log_reagents(master)]")
+
+		if (master.material && master.material.edible)
+			master.material.triggerEat(M, master)
+
+		if (master.reagents && master.reagents.total_volume)
+			master.reagents.reaction(M, INGEST)
 			SPAWN_DBG(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
+				master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
+
+		if (!master || !M || !user)
+			return
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
-			if (!src || !M || !user)
-				return
-			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
-			user.u_equip(src)
-			qdel(src)
+
+		var/ate_the_whole_thing = 0
+		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
+			var/obj/item/organ/O = master
+			O.take_damage(O.bite_damage)
+			if(O.get_damage() > O.MAX_DAMAGE)
+				ate_the_whole_thing = 1
+		else if((master.amount -= 1) < 1)
+			ate_the_whole_thing = 1
+		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, master)
+		if(ate_the_whole_thing)
+			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
+			"<span class='alert'>You finish eating [master].</span>")
+			user.u_equip(master)
+			qdel(master)
+		else
+			boutput(user, "<span class='notice'>There's still some left!</span>")
 		return 1
 
-	else
-		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		if (!do_mob(user, M))
-			return 0
-		if (get_dist(user,M) > 1)
-			return 0
-
-		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span class='alert'>You feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		if (src.material && src.material.edible)
-			src.material.triggerEat(M, src)
-
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume)
-
-		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
-		eat_twitch(M)
-		SPAWN_DBG(1 SECOND)
-			if (!src || !M || !user)
-				return
-			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-			"<span class='alert'>You finish eating [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
-			user.u_equip(src)
-			qdel(src)
-		return 1
+	proc/failchecks()
+		if(!M || !user || !master)
+			return 1
+		if(!IN_RANGE(get_turf(M), get_turf(user), 1))
+			return 1
+		if(is_incapacitated(user))
+			return 1
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs

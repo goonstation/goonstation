@@ -51,6 +51,10 @@
 	var/burn_dam = 0
 	var/tox_dam = 0
 
+	/// How much damage does this take if someone takes a bite out of it?
+	/// Set to 0 to default to 110% of FAIL_DAMAGE
+	var/bite_damage = 0
+
 	var/robotic = 0
 	var/emagged = 0
 	var/synthetic = 0
@@ -130,6 +134,8 @@
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if(src.bite_damage == 0)
+			src.bite_damage = src.FAIL_DAMAGE * 1.1
 
 	disposing()
 		if (src.holder)
@@ -374,3 +380,8 @@
 			for (var/abil in src.organ_abilities)
 				src.add_ability(A, abil)
 		src.broken = 0
+
+	get_desc()
+		. = ..()
+		if(src.broken || src.get_damage() > src.FAIL_DAMAGE)
+			. +="<br>It looks pretty banged up."

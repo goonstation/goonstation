@@ -12,6 +12,7 @@
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
 	made_from = "flesh"
+	bite_damage = 40
 	var/tail_num = TAIL_NONE
 	var/colorful = 0 // if we need to colorize it
 	var/multipart_icon = 0 // if we need to run update_tail_icon
