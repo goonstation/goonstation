@@ -239,7 +239,7 @@
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP

@@ -331,6 +331,11 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
+/obj/item/implant/health/security/anti_mindslave //HoS implant
+	name = "mind protection health implant"
+	icon_state = "implant-b"
+	impcolor = "b"
+
 /obj/item/implant/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
@@ -636,6 +641,9 @@ THROWING DARTS
 			return 0
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
+			return 0
+		for(var/obj/item/implant/health/security/anti_mindslave/AM in H.implant)
+			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
