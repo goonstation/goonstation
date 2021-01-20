@@ -2041,6 +2041,7 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	name = "left squid leg"
 	desc = "A blub's left leg."
+	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
 	partlistPart = "foot_left"
