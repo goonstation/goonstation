@@ -99,23 +99,17 @@
 #define ITEM_RARITY_MYTHIC 7
 
 // item comp defs
+// For COMSIG_ITEM_CONSUMED_PRE returns
 /// Turns out its edible
-#define THING_IS_EDIBLE 1
+#define THING_IS_EDIBLE		(1<<0)
 /// The eat-stuff component told us not to eat it
-#define FORCE_INEDIBILITY 2
-/// The component ate the whole thing
-#define COMPONENT_ATE_THE_WHOLE_THING 4
+#define FORCE_INEDIBILITY (1<<1)
+/// Needs a fork
+#define NEED_FORK					(1<<2)
+/// Needs a spoon
+#define NEED_SPOON				(1<<3)
+
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
-
-// Utensil flags
-/// Needs no utensil
-#define NEED_NO_UTENSIL		(1<<0)
-/// Needs a fork
-#define NEED_FORK					(1<<1)
-/// Needs a spoon
-#define NEED_SPOON				(1<<2)
-/// Needs either a fork or a spoon
-#define NEED_ANY_UTENSIL	(1<<3)
 

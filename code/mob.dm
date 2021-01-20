@@ -2968,8 +2968,97 @@
 		var/atom/A = input(usr, "What do you want to pick up?") as() in items
 		A.interact(src)
 
-/mob/proc/can_eat(var/atom/A)
-	return 1
+/// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
+/mob/proc/can_eat(var/atom/A, var/mob/user, var/bypass_utensils = 0)
+	if(!istype(A) || !user)
+		return FALSE // who's eating what, now?
+
+	/// Making sure the thing actually exists and isn't cheating the bite-rate
+	if(!src.bioHolder?.HasEffect("mattereater") && ON_COOLDOWN(src, "eat", EAT_COOLDOWN))
+		return src.can_not_eat(A, user, "on_cooldown")
+	if (!src.amount)
+		return src.can_not_eat(A, user, "all_gone")
+
+	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
+	var/edibility_check = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, F)
+	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
+		return TRUE
+
+	/// Now we can check if the thing is actually, in fact, supposed to be edible
+	if(!F.material?.edible)
+		return src.can_not_eat(A, user, "inedible_material")
+	if(!F.edible)
+		return src.can_not_eat(A, user, "inedible_object")
+
+	/// Godmode
+	if(src != M && check_target_immunity(src))
+		return src.can_not_eat(A, user, "godmode")
+
+	/// Finally, if it should actually be edible, do we have somewhere to put it?
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
+		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+			return src.can_not_eat(A, user, "busted_guts")
+
+	/// And finally finally, check if we have proper etiquette
+	if(HAS_FLAG(edibility_check, NEED_FORK))
+		return src.can_not_eat(A, user, "lack_fork")
+	if(HAS_FLAG(edibility_check, NEED_SPOON))
+		return src.can_not_eat(A, user, "lack_spoon")
+
+	/// okay eat the darn thing
+	return TRUE
+
+/// Oh no, we can't eat that! Let's tell the mob why
+/mob/proc/can_not_eat(var/atom/A, var/mob/user, var/fail_reason)
+	if(!istype(A) || !user) return FALSE
+	switch(fail_reason)
+		if("on_cooldown")
+			if(src == user)
+				boutput(src, "<span class='alert'>Hold on! You're still getting the last bit down!</span>")
+			else
+				user.tri_message("<span class='notice'>[user] tries to stuff [A] into [src]'s mouth, but it's still full!</span>",\
+				user, "<span class='notice'>You try to stuff [A] into [src]'s mouth, but it's still full!</span>",\
+				src, "<span class='notice'>[user] tries to stuff [A] into your mouth, but you're still working on the last bite!</span>")
+		if("all_gone")
+			if(src == user)
+				boutput(src, "<span class='alert'>None of [A] left, oh no!</span>")
+			else
+				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nothing left of it!</span>",\
+				user, "<span class='alert'>You try to feed [A] to [src], but there's nothing left of it!</span>",\
+				src, "<span class='alert'>[user] tries to feed [A] to you, but there's nothing left of it!</span>")
+			user.u_equip(A)
+			qdel(A)
+		if("inedible_material")
+			if(src == user)
+				boutput(src, "<span class='alert'>You can't eat that! You'll break your teeth!</span>")
+			else
+				boutput(user, "<span class='alert'>[src] can't eat that! You'll break [his_or_her(src)] teeth!</span>")
+		if("inedible_object")
+			if(src == user)
+				boutput(src, "<span class='alert'>You can't eat that! It's a choking hazard!</span>")
+			else
+				boutput(user, "<span class='alert'>[src] can't eat that! It's a choking hazard!</span>")
+		if("busted_guts")
+			if(src == user)
+				boutput(src, "<span class='alert'>You can't eat that! Or anything else, at least until you fix your stomach!</span>")
+			else
+				user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but there's nowhere for it to go!</span>",\
+				user, "<span class='alert'>You try to feed [A] to [src], but [his_or_her(src)] throat seems blocked off!</span>",\
+				src, "<span class='alert'>[user] tries to feed [A] to you, but your lack of a working stomach bounces it off the back of your mouth!</span>")
+		if("lack_fork", "lack_spoon")
+			var/missing = fail_reason == "lack_fork" ? "fork" : "spoon"
+			var/literal_beast = HAS_FLAG(src.mob_flags, SHOULD_HAVE_A_TAIL)
+			user.visible_message("<span class='alert'>[user] stares glumly at [src].</span>",
+			"<span class='alert'>You can't just cram that in your [literal_beast ? "filthy snout" : "mouth"] you [literal_beast ? "literal" : "greedy"] beast! You need a [missing] to eat [A]!</span>")
+		if("godmode")
+			user.tri_message("<span class='alert'>[user] tries to feed [A] to [src], but nothing happens!</span>",\
+			user, "<span class='alert'>You try to feed [A] to [src], but nothing happens!</span>",\
+			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
+		else
+			boutput(user, "<span class='alert'>You can't eat that!</span>")
+	return FALSE
 
 /mob/proc/on_eat(var/atom/A)
 	return

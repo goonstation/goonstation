@@ -11,6 +11,9 @@
 /datum/component/consume/Initialize()
 	if(!istype(parent, /atom))
 		return COMPONENT_INCOMPATIBLE
+
+/// These require a mob as the parent
+/// Overrides inedibility when eating skulls and maybe heads
 /datum/component/consume/can_eat_inedible_organs
 	var/can_eat_heads = 0
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
@@ -29,6 +32,8 @@
 	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PRE)
 	. = ..()
 
+
+/// Gives points to a mob's abilityholder when eating some kind of organ
 /datum/component/consume/organpoints
 	var/target_abilityholder = /datum/abilityHolder/lizard
 	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
@@ -143,7 +148,7 @@
 	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
 	. = ..()
 
-
+/// Heals the mob when they eat organs
 /datum/component/consume/organheal
 	var/static/list/organ2hp = list(/obj/item/organ/head=20,/obj/item/skull=0,/obj/item/organ/brain=30,/obj/item/organ/chest=30,/obj/item/organ/heart=20,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=6)
 	var/base_HPup = 5
@@ -252,6 +257,45 @@
 
 
 
+/// Makes it need a utensil
+/datum/component/consume/need_utensil
+	var/obj/item/F
+	var/utensils_needed = NEED_NO_UTENSIL
+
+/datum/component/consume/need_utensil/Initialize(var/utensil_bitmask)
+	..()
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
+	src.F = parent
+	src.utensils_needed = utensil_bitmask
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PRE), .proc/utensil_check)
+
+/datum/component/consume/need_utensil/proc/utensil_check(var/mob/M, var/mob/user)
+	if ((iscarbon(M) || ismobcritter(M)) && M == user)
+
+		var/remaining_flags = src.utensils_needed
+
+		if (HAS_FLAG(src.remaining_flags, NEED_FORK)
+			var/obj/item/kitchen/utensil/fork/Y = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
+			if(prob(20) && istype(Y, /obj/item/kitchen/utensil/fork/plastic))
+				Y.break_utensil(user)
+			if(istype(Y))
+				REMOVE_FLAG(remaining_flags, NEED_FORK)
+
+		if (HAS_FLAG(src.remaining_flags, NEED_SPOON)
+			var/obj/item/kitchen/utensil/spoon/P = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
+			if(prob(20) && istype(P, /obj/item/kitchen/utensil/spoon/plastic))
+				P.break_utensil(user)
+			if(istype(P))
+				REMOVE_FLAG(remaining_flags, NEED_SPOON)
+
+		return remaining_flags
+
+/datum/component/consume/need_utensil/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PRE)
+	. = ..()
+
+
 
 
 
@@ -293,7 +337,7 @@
 
 	// if (!isnull(F.unlock_medal_when_eaten))
 	// 	M.unlock_medal(F.unlock_medal_when_eaten, 1)
-
+	M.nutrition += healing * 10
 	var/cutOff = round(M.max_health / 1.8) // 100 / 1.8 is about 55.555...6 so this should work out to be around the original value of 55 for humans and the equivalent for mobs with different max_health
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -316,7 +360,7 @@
 	var/current_mask = 5
 	var/list/original_filters = list()
 
-/datum/component/consume/bitemask/Initialize(var/_base_heal)
+/datum/component/consume/bitemask/Initialize()
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
@@ -345,7 +389,7 @@
 	var/current_mask = 5
 	var/list/original_filters = list()
 
-/datum/component/consume/food_chunk/Initialize(var/_base_heal)
+/datum/component/consume/food_chunk/Initialize()
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
@@ -391,6 +435,27 @@
 	. = ..()
 
 
+/datum/component/consume/festive_food
+	var/obj/item/F
+	var/festiveness = 1
+
+/datum/component/consume/festive_food/Initialize(var/_festiveness)
+	..()
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
+	src.F = parent
+	src.festiveness = _festiveness
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/alter_festivity)
+
+/datum/component/consume/festive_food/proc/alter_festivity(var/mob/M)
+	if (src.festiveness)
+		modify_christmas_cheer(src.festiveness)
+
+/datum/component/consume/festive_food/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	. = ..()
+
+
 
 
 
@@ -413,7 +478,6 @@
 	src.festivity = _festivity
 	src.unlock_medal_when_eaten = _unlock_medal_when_eaten
 
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PRE), .proc/can_eat)
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMING), .proc/do_eat)
 	..()
 
@@ -429,86 +493,18 @@
 	if(_unlock_medal_when_eaten)
 		src.unlock_medal_when_eaten = _unlock_medal_when_eaten
 
-/datum/component/consume/eat_thing/proc/can_eat(var/mob/M, var/mob/user)
-	if(!istype(F)) return
-
-	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, F)
-	if(edibility_override & FORCE_INEDIBILITY)
-		return FALSE
-	else if(edibility_override & THING_IS_EDIBLE)
-		return TRUE
-	else if(F.material?.edible)
-		return TRUE
-	else if(F.edible)
-		return TRUE
-
-
-
 /datum/component/consume/eat_thing/proc/do_eat(var/mob/M, var/mob/user, var/obj/item/I)
 
 
 
 	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
 		// in this case m is the consumer and user is the one holding it
-		if (!src.edible)
-			return 0
-		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
-		if (!src.amount)
-			boutput(user, "<span class='alert'>None of [src] left, oh no!</span>")
-			user.u_equip(src)
-			qdel(src)
-			return 0
-		if (iscarbon(M) || ismobcritter(M))
-			if (M == user)
-				//can this person eat this food?
-				if(!M.can_eat(src))
-					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
-					return 0
-				if (!bypass_utensils)
-					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
-						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/fork/plastic/F in user.equipped_list(check_for_magtractor = 0))
-							F.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
-					if (src.needspoon && !user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
-							S.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
-						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
-						return 0
-				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-				"<span class='notice'>You take a bite of [src]!</span>")
-				logTheThing("combat", user, M, "takes a bite of [src] [log_reagents(src)] at [log_loc(user)].")
 
-				src.amount--
-				M.nutrition += src.base_heal * 10
-				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+
+
 				on_bite(M)
-				if (src.festivity)
-					modify_christmas_cheer(src.festivity)
+
 				if (!src.amount)
 					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 					"<span class='alert'>You finish eating [src].</span>")*/
@@ -548,38 +544,6 @@
 					on_finish(M, user)
 					qdel(src)
 				return 1
-			if (check_target_immunity(M))
-				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
-			else if(!M.can_eat(src))
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
-				return 0
-			else
-				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
-
-				if (!do_mob(user, M))
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-					return
-				//no or broken stomach
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-						user.tri_message("<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						user, "<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
-						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
-						return 0
-
-				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-				user, "<span class='alert'>You feed [M] [src]!</span>",\
-				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-				logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
-
 
 				on_bite(M)
 				src.amount--

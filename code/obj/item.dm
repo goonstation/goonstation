@@ -384,16 +384,8 @@
 
 
 //disgusting proc. merge with foods later. PLEASE - ok
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
-	if (!iscarbon(M) && !ismobcritter(M))
-		return 0
-	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
-		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
-	var/edibility_check
-	ADD_FLAG(edibility_check, SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)) // first check for edibility
-	ADD_FLAG(edibility_check, SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)) // Check if the mob overrides it
-	if(!HAS_FLAG(edibility_check, THING_IS_EDIBLE) || HAS_FLAG(edibility_check, THING_IS_INEDIBLE))
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
+	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
 
 	SEND_SIGNAL(src, COMSIG_ITEM_CONSUMING, M, user)
