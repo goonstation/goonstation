@@ -14,6 +14,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
 	var/haswiretap
+	hardened = 0
 
 	attackby(obj/item/R as obj, mob/user as mob)
 		if (istype(R, /obj/item/device/radio_upgrade))
@@ -268,6 +269,19 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "qm"
+
+/obj/item/device/radio/headset/mail
+	name = "Mailman's Headset"
+	desc = "A radio headset that is also capable of communicating over the Engineering and Command channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+	"h" = R_FREQ_COMMAND,
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "mail"
 
 /obj/item/device/radio/headset/clown
 	name = "Clown's Headset"

@@ -6,6 +6,7 @@
 	var/datum/particle_maker_var_holder/P = null
 
 	New()
+		..()
 		P = new /datum/particle_maker_var_holder
 
 	proc/Run()
@@ -125,7 +126,7 @@
 		dat += "<B>Current Jumpsuit:</B><BR>"
 		var/list_counter = 0
 		if (current_pieces.len > 0)
-			for (var/X as anything in current_pieces)
+			for (var/X as() in current_pieces)
 				list_counter++
 				dat += "<b>Piece:</b> [X], <b>Color:</b> [current_colors[list_counter]], <b>Alpha:</b> [current_alphas[list_counter]]<br>"
 		dat += "<HR>"
@@ -150,7 +151,7 @@
 			E.update_images()
 
 		else if (href_list["add"])
-			src.current_pieces += input("Select Piece","Jumpsuit Maker") as anything in src.components
+			src.current_pieces += input("Select Piece","Jumpsuit Maker") as() in src.components
 			src.current_colors += input("Select Color","Jumpsuit Maker") as color
 			var/new_alpha = input("Input Alpha","Jumpsuit Maker") as num
 			new_alpha = max(0,min(255,new_alpha))

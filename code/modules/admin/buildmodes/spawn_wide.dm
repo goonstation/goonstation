@@ -54,7 +54,7 @@ change the direction of created objects.<br>
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)
 				//if (isobj(sp) || ismob(sp) || isturf(sp))
-					//sp.dir = holder.dir
+					//sp.set_dir(holder.dir)
 					//sp.onVarChanged("dir", 2, holder.dir)
 				switch(cinematic)
 					if("Telepad")
@@ -79,7 +79,7 @@ change the direction of created objects.<br>
 								A = new objpath(Q)
 
 							if (isobj(A) || ismob(A))
-								A.dir = holder.dir
+								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
 							mtx.Reset()
@@ -102,28 +102,28 @@ change the direction of created objects.<br>
 							mtx.Translate(0, 64)
 							pad.transform = mtx
 							animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
-							SPAWN_DBG(0.7 SECONDS)
-								swirl.loc = Q
-								flick("portswirl", swirl)
+							sleep(0.7 SECONDS)
+							swirl.loc = Q
+							flick("portswirl", swirl)
 
-								var/atom/A = 0
-								if(ispath(objpath, /turf))
-									A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
-								else
-									A = new objpath(Q)
+							var/atom/A = 0
+							if(ispath(objpath, /turf))
+								A = Q.ReplaceWith(objpath, 0, 0, 1, force=1)
+							else
+								A = new objpath(Q)
 
-								if (isobj(A) || ismob(A))
-									A.dir = holder.dir
-									A.onVarChanged("dir", SOUTH, A.dir)
-								sleep(0.5 SECONDS)
-								mtx.Reset()
-								mtx.Translate(0,64)
-								animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
-								sleep(0.5 SECONDS)
-								swirl.mouse_opacity = 1
-								pad.mouse_opacity = 1
-								pool(swirl)
-								pool(pad)
+							if (isobj(A) || ismob(A))
+								A.set_dir(holder.dir)
+								A.onVarChanged("dir", SOUTH, A.dir)
+							sleep(0.5 SECONDS)
+							mtx.Reset()
+							mtx.Translate(0,64)
+							animate(pad, transform=mtx, alpha = 0, time = 5, easing = SINE_EASING)
+							sleep(0.5 SECONDS)
+							swirl.mouse_opacity = 1
+							pad.mouse_opacity = 1
+							pool(swirl)
+							pool(pad)
 
 					if("Blink")
 						var/atom/A = 0
@@ -133,7 +133,7 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					if("Supplydrop")
@@ -152,7 +152,7 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++
 				if (cnt > 499)

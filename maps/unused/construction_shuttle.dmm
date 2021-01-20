@@ -1,43 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area)
+/area/space)
 "ac" = (
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "ad" = (
 /obj/warp_beacon,
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "ae" = (
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "af" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "ag" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "ah" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -547,7 +547,7 @@
 	d2 = 4
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bA" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
@@ -584,7 +584,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "bE" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall_space"
@@ -671,7 +671,7 @@
 	name = "CONSTRUCTION"
 	},
 /turf/space,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

@@ -30,6 +30,7 @@
 		sv_ratio = 1.22
 
 		New()
+			..()
 			var/datum/material/fissile/u238/m1 = new/datum/material/fissile/u235()
 			material = m1
 			setMaterial(/datum/material/fissile/u238)
@@ -43,6 +44,7 @@
 		sv_ratio = 1.22
 
 		New()
+			..()
 			var/datum/material/fissile/pu239/D = new/datum/material/fissile/pu239()
 			material = D
 			setMaterial(/datum/material/fissile/pu239)
@@ -57,6 +59,7 @@
 		sv_ratio = 1.22
 
 		New()
+			..()
 			var/datum/material/fissile/kremfuel/D = new/datum/material/fissile/kremfuel
 			material = D
 			setMaterial(/datum/material/fissile/kremfuel)

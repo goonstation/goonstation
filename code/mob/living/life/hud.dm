@@ -33,28 +33,29 @@
 			var/color_mod_r = 255
 			var/color_mod_g = 255
 			var/color_mod_b = 255
-			if (istype(human_owner.glasses))
-				color_mod_r *= human_owner.glasses.color_r
-				color_mod_g *= human_owner.glasses.color_g
-				color_mod_b *= human_owner.glasses.color_b
-			if (istype(human_owner.wear_mask))
-				color_mod_r *= human_owner.wear_mask.color_r
-				color_mod_g *= human_owner.wear_mask.color_g
-				color_mod_b *= human_owner.wear_mask.color_b
-			if (istype(human_owner.head))
-				color_mod_r *= human_owner.head.color_r
-				color_mod_g *= human_owner.head.color_g
-				color_mod_b *= human_owner.head.color_b
-			var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
-			if (istype(L_E))
-				color_mod_r *= L_E.color_r
-				color_mod_g *= L_E.color_g
-				color_mod_b *= L_E.color_b
-			var/obj/item/organ/eye/R_E = human_owner.get_organ("right_eye")
-			if (istype(R_E))
-				color_mod_r *= R_E.color_r
-				color_mod_g *= R_E.color_g
-				color_mod_b *= R_E.color_b
+			if ( human_owner.client.view_tint )
+				if (istype(human_owner.glasses))
+					color_mod_r *= human_owner.glasses.color_r
+					color_mod_g *= human_owner.glasses.color_g
+					color_mod_b *= human_owner.glasses.color_b
+				if (istype(human_owner.wear_mask))
+					color_mod_r *= human_owner.wear_mask.color_r
+					color_mod_g *= human_owner.wear_mask.color_g
+					color_mod_b *= human_owner.wear_mask.color_b
+				if (istype(human_owner.head))
+					color_mod_r *= human_owner.head.color_r
+					color_mod_g *= human_owner.head.color_g
+					color_mod_b *= human_owner.head.color_b
+				var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
+				if (istype(L_E))
+					color_mod_r *= L_E.color_r
+					color_mod_g *= L_E.color_g
+					color_mod_b *= L_E.color_b
+				var/obj/item/organ/eye/R_E = human_owner.get_organ("right_eye")
+				if (istype(R_E))
+					color_mod_r *= R_E.color_r
+					color_mod_g *= R_E.color_g
+					color_mod_b *= R_E.color_b
 
 			if (human_owner.druggy)
 				human_owner.vision.animate_color_mod(rgb(rand(80, 255), rand(80, 255), rand(80, 255)), 15)
@@ -65,31 +66,27 @@
 				var/obj/item/clothing/glasses/healthgoggles/G = human_owner.glasses
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 
 			if (istype(human_owner.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
 				var/obj/item/clothing/head/helmet/space/syndicate/specialist/medic/M = human_owner.head
 				if (human_owner.client && !(M.assigned || M.assigned == human_owner.client))
 					M.assigned = human_owner.client
-					if (!(M in processing_items))
-						processing_items.Add(M)
+					processing_items |= M
 					//G.updateIcons()
 
 			else if (human_owner.organHolder && istype(human_owner.organHolder.left_eye, /obj/item/organ/eye/cyber/prodoc))
 				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.left_eye
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 			else if (human_owner.organHolder && istype(human_owner.organHolder.right_eye, /obj/item/organ/eye/cyber/prodoc))
 				var/obj/item/organ/eye/cyber/prodoc/G = human_owner.organHolder.right_eye
 				if (human_owner.client && !(G.assigned || G.assigned == human_owner.client))
 					G.assigned = human_owner.client
-					if (!(G in processing_items))
-						processing_items.Add(G)
+					processing_items |= G
 					//G.updateIcons()
 		else
 			if (owner.druggy)

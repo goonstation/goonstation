@@ -8,6 +8,7 @@
 	var/empty_obj_loc = null
 
 	New(master)
+		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", ui_storage_close, HUD_LAYER+1)
@@ -127,13 +128,13 @@
 
 		if (istype(usr,/mob/living/carbon/human))
 			if (usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
-				x = 1 + master.slots
+				x = 11 - round(master.slots / 2)
 				y = 3
 				sx = master.slots + 1
 				sy = 1
 
 				if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
-					x = 7
+					x = 8
 					y = 8
 					sx = (master.slots + 1) / 2
 					sy = 2
@@ -156,7 +157,7 @@
 		close.screen_loc = "[x+sx-1]:[pixel_y_adjust],[y-sy+1]:[pixel_y_adjust]"
 
 		if (!turfd && istype(usr,/mob/living/carbon/human))
-			if (usr && usr.client && usr.client.tg_layout) //MBC TG OVERRIDE IM SORTY
+			if (usr && usr.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
 				boxes.screen_loc = "[x-1],[y]:[pixel_y_adjust] to [x+sx-2],[y-sy+1]:[pixel_y_adjust]"
 				close.screen_loc = "[x-1],[y-sy+1]:[pixel_y_adjust]"
 

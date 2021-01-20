@@ -23,7 +23,7 @@
 	..()
 	src.add_default_law("You may not injure a human being or cause one to come to harm.")
 	src.add_default_law("You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	src.add_default_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	src.add_default_law("You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/robocop/New()
 	..()
@@ -89,32 +89,19 @@
 /datum/ai_laws/proc/clear_supplied_laws()
 	src.supplied = list()
 
+/datum/ai_laws/proc/laws_sanity_check()
+	if (!ticker.centralized_ai_laws)
+		ticker.centralized_ai_laws = new /datum/ai_laws/asimov
+
 /datum/ai_laws/proc/show_laws(var/who)
 	var/list/L = who
 	if (!istype(who, /list))
 		L = list(who)
 
+	var/laws_text = src.format_for_logs()
 	for (var/W in L)
-		if (src.zeroth)
-			boutput(W, "0. [src.zeroth]")
+		boutput(W, laws_text)
 
-		var/number = 1
-		for (var/index = 1, index <= src.inherent.len, index++)
-			var/law = src.inherent[index]
-
-			if (length(law) > 0)
-				boutput(W, "[number]. [law]")
-				number++
-
-		for (var/index = 1, index <= src.supplied.len, index++)
-			var/law = src.supplied[index]
-			if (length(law) > 0)
-				boutput(W, "[number]. [law]")
-				number++
-
-/datum/ai_laws/proc/laws_sanity_check()
-	if (!ticker.centralized_ai_laws)
-		ticker.centralized_ai_laws = new /datum/ai_laws/asimov
 
 /datum/ai_laws/proc/format_for_irc()
 	var/list/laws = list()
@@ -137,3 +124,23 @@
 			number++
 
 	return laws
+
+
+/datum/ai_laws/proc/format_for_logs(var/glue = "<br>")
+	var/list/laws = list()
+
+	if (src.zeroth)
+		laws += "0. [src.zeroth]"
+
+	var/number = 1
+	for (var/index = 1, index <= src.inherent.len, index++)
+		if (length(src.inherent[index]) > 0)
+			laws += "[number]. [src.inherent[index]]"
+			number++
+
+	for (var/index = 1, index <= src.supplied.len, index++)
+		if (length(src.supplied[index]) > 0)
+			laws += "[number]. [src.supplied[index]]"
+			number++
+
+	return laws.Join(glue)

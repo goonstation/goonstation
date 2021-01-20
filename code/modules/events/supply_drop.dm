@@ -12,7 +12,7 @@
 		..()
 
 		if (!A) //manually called outside of BR gamemode
-			A = get_area(pick(peststart))
+			A = get_area(pick_landmark(LANDMARK_PESTSTART))
 		logTheThing("admin",null,null,"Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
@@ -64,7 +64,7 @@
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			for(var/mob/M in view(7, src.loc))
-				shake_camera(M, 20, 1)
+				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc)
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)

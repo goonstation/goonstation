@@ -9,11 +9,11 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		//src.artifact = new /datum/artifact/powercell(src)
 		var/datum/artifact/powercell/AS = new /datum/artifact/powercell(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 		SPAWN_DBG(0)
 			src.ArtifactSetup()

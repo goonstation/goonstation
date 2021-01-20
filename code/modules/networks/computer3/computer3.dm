@@ -63,11 +63,7 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/printer
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
-#if ASS_JAM
-			New()
-				. = ..()
-				ADD_MORTY(6, 13, 9, 9)
-#endif
+
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -587,7 +583,6 @@ function lineEnter (ev)
 				P.disk_ejected(src.diskette)
 
 			usr.put_in_hand_or_eject(src.diskette) // try to eject it into the users hand, if we can
-			src.diskette.set_loc(get_turf(src))
 			src.diskette = null
 			usr << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>-----</a>"),"comp3.browser:setInternalDisk")
 		else
@@ -652,18 +647,22 @@ function lineEnter (ev)
 /obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
-			src.add_dialog(user)
 			user.drop_item()
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
-			src.updateUsrDialog()
-			user << output(url_encode("Disk: <a href='byond://?src=\ref[src];eject=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+			if(user.using_dialog_of(src))
+				src.updateUsrDialog()
+				user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 			return
+		else if(src.diskette)
+			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+		else if(!src.setup_has_internal_disk)
+			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if(!ispath(setup_frame_type, /obj/computer3frame))
 				src.setup_frame_type = /obj/computer3frame
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
@@ -874,8 +873,7 @@ function lineEnter (ev)
 			return
 		src.restarting = 1
 		src.active_program = null
-		if(src.host_program)
-			src.host_program.restart()
+		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = null
@@ -968,6 +966,8 @@ function lineEnter (ev)
 	name = "briefcase"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
@@ -984,7 +984,7 @@ function lineEnter (ev)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src
 				src.luggable.deployed = 0
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		return
 
 	attack_self(mob/user as mob)
@@ -1068,13 +1068,18 @@ function lineEnter (ev)
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
-				src.add_dialog(user)
 				user.drop_item()
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
-				src.updateUsrDialog()
+				if(user.using_dialog_of(src))
+					src.updateUsrDialog()
+					user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
 				return
+			else if(src.diskette)
+				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+			else if(!src.setup_has_internal_disk)
+				boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 		else if (ispryingtool(W))
 			if(!src.cell)

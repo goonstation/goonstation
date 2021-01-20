@@ -158,9 +158,10 @@ proc/list_frozen()
 		var/datum/article/product_article = null
 		var/effect = 0
 		New(var/datum/stock/S)
+			..()
 			company = S
 			var/mins = rand(5,20)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = "Product demo"
 			current_desc = S.industry.detokenize("[S.name] will unveil a new product on an upcoming %industrial% conference held at spacetime [spacetime(next_phase)]")
 			S.addEvent(src)
@@ -194,11 +195,12 @@ proc/list_frozen()
 		var/bailout_millions = 0
 
 		New(var/datum/stock/S)
+			..()
 			hidden = 1
 			company = S
 			var/mins = rand(9,60)
 			bailout_millions = rand(70, 190)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = ""
 			current_desc = ""
 			S.addEvent(src)
@@ -273,10 +275,11 @@ proc/list_frozen()
 		var/effect = 0
 
 		New(var/datum/stock/S)
+			..()
 			hidden = 1
 			company = S
 			var/mins = rand(10, 35)
-			next_phase = mins * 600 + (ticker && ticker.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
+			next_phase = mins * 600 + (ticker?.round_elapsed_ticks ? ticker.round_elapsed_ticks : 0)
 			current_title = ""
 			current_desc = ""
 			female = prob(50)

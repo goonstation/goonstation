@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-python@v2
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1
+        uses: hecrj/setup-rust-action@v1.3.3
 
       - name: Install Dependencies
         run: |
@@ -42,19 +42,15 @@ jobs:
           tools/ci/check_grep.sh
 
       - name: Run Linter
+        id: linter
         run: |
-          ~/dreamchecker
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
-#       - name: Annotate Errors
-#         uses: yogstation13/add-annotations-github-action@master
-#         with:
-#           check_name: "Run Linters"
-#           linter_output_path: 'output-annotations.txt'
-#           commit_sha: ${{ github.sha }}
-#           regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
-#         if: always()
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Annotate Linter
+        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3 # v1 - security concerns and all that shit
+        if: always()
+        with:
+          outputFile: output-annotations.txt
 
   compile:
     name: Compile
@@ -82,10 +78,10 @@ jobs:
           tools/ci/install_byond.sh
           cd $GITHUB_WORKSPACE
           printenv
-          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
-          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
-          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
-          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
 
       - name: Compile
@@ -132,10 +128,10 @@ jobs:
           tools/ci/install_byond.sh
           cd $GITHUB_WORKSPACE
           printenv
-          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
-          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
-          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
-          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
           touch +secret/__secret.dme
           sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
 
@@ -151,6 +147,9 @@ jobs:
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
       - name: Install Dependencies
         run: |
@@ -171,16 +170,10 @@ jobs:
           tools/ci/install_byond.sh
           cd $GITHUB_WORKSPACE
           printenv
-          echo "::set-env name=BYOND_SYSTEM::/home/runner/BYOND/byond"
-          echo "::set-env name=PATH::/home/runner/BYOND/byond/bin:$PATH"
-          echo "::set-env name=LD_LIBRARY_PATH::/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH"
-          echo "::set-env name=MANPATH::/home/runner/BYOND/byond/man:$MANPATH"
-
-      - name: Set up Submodule
-        run: tools/ci/setup_submodule.sh
-        env:
-          secret_iv: ${{ secrets.SECRET_REPO_IV }}
-          secret_key: ${{ secrets.SECRET_REPO_KEY }}
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Cache SpacemanDMM
         uses: actions/cache@v1
@@ -193,7 +186,7 @@ jobs:
         uses: actions/setup-python@v2
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1
+        uses: hecrj/setup-rust-action@v1.3.3
 
       - name: Install Dependencies
         run: |
@@ -206,20 +199,16 @@ jobs:
           tools/ci/check_grep.sh
 
       - name: Run Linter
+        id: linter
         run: |
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_SUB goonstation.dme > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          tools/ci/dm.sh -DTRAVISBUILDING -DTRAVIS_SUB goonstation.dme
 
-      - name: Annotate Errors
-        uses: zewaka/add-annotations-github-action@master
-        with:
-          check_name: "Run Linters"
-          linter_output_path: 'output-annotations.txt'
-          commit_sha: ${{ github.sha }}
-          regex: '(?<filename>.*?), line (?<lineNumber>\d+), column (?<columnNumber>\d+):\n(?<errorCode>\w+): (?<errorDesc>.*)'
+      - name: Annotate Linter
+        uses: yogstation13/DreamAnnotate@9f2dbe51421affdecc6973c47d34b7f1009d77d3 # v1 - security concerns and all that shit
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          outputFile: output-annotations.txt

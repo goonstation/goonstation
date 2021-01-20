@@ -98,6 +98,8 @@
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -135,92 +137,39 @@
 			return
 
 		/* ----- Deconstruction ----- */
-		if (issnippingtool(W))
-			if (src.d_state == 0)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-				src.d_state = 1
-				boutput(user, "<span class='notice'>You remove some reinforcing rods.</span>")
-				var/atom/A = new /obj/item/rods(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"))
-				src.update_icon()
+		if (src.d_state == 0 && issnippingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVERERODS), user)
+			return
+
+		else if (src.d_state == 1 && isscrewingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVESUPPORTLINES), user)
+			return
+
+		else if (src.d_state == 2 && isweldingtool(W))
+			if(!W:try_weld(user,1,-1,1,1))
 				return
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_SLICECOVER), user)
+			return
 
-		else if (isscrewingtool(W))
-			if (src.d_state == 1)
-				var/turf/T = user.loc
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				boutput(user, "<span class='notice'>Removing support lines.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 2
-					boutput(user, "<span class='notice'>You removed the support lines.</span>")
-					return
+		else if (src.d_state == 3 && ispryingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_PRYCOVER), user)
+			return
 
-		else if (isweldingtool(W))
-			var/turf/T = user.loc
-			if (!(istype(T, /turf)))
+		else if (src.d_state == 4 && iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_DETATCHSUPPORTRODS), user)
+			return
+
+		else if (src.d_state == 5 && isweldingtool(W))
+			if(!W:try_weld(user,1,-1,1,1))
 				return
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVESUPPORTRODS), user)
+			return
 
-			if (src.d_state == 2)
-				if(!W:try_weld(user,1,-1,1,1))
-					return
-				boutput(user, "<span class='notice'>Slicing metal cover.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 3
-					boutput(user, "<span class='notice'>You removed the metal cover.</span>")
-					return
+		else if (src.d_state == 6 && ispryingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_PRYSHEATH), user)
+			return
 
-			else if (src.d_state == 5)
-				if(!W:try_weld(user,1,-1,1,1))
-					return
-				boutput(user, "<span class='notice'>Removing support rods.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 6
-					var/atom/A = new /obj/item/rods( src )
-					if (src.material)
-						A.setMaterial(src.material)
-					else
-						A.setMaterial(getMaterial("steel"))
-					boutput(user, "<span class='notice'>You removed the support rods.</span>")
-					return
 
-		else if (ispryingtool(W))
-			if (src.d_state == 3)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Prying cover off.</span>")
-				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 4
-					boutput(user, "<span class='notice'>You removed the cover.</span>")
-					return
-
-			else if (src.d_state == 6)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
-					logTheThing("station", user, null, "dismantles a Reinforced Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
-					dismantle_wall()
-					return
-
-		else if (iswrenchingtool(W))
-			if (src.d_state == 4)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Detaching support rods.</span>")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 5
-					boutput(user, "<span class='notice'>You detach the support rods.</span>")
-					return
 	/* ----- End Deconstruction ----- */
 
 		else if (istype(W, /obj/item/device/key/haunted))
@@ -437,6 +386,9 @@
 	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,)
+
+	connects_with_overlay_exceptions = list(/turf/simulated/wall/false_wall/reinforced)
+
 	the_tuff_stuff
 		explosion_resistance = 11
 
@@ -618,6 +570,8 @@
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/unsimulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -664,3 +618,108 @@
 	New()
 		..()
 		setMaterial(getMaterial("coral"))
+
+
+/datum/action/bar/icon/wall_tool_interact
+	id = "wall_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/turf/simulated/wall/auto/the_wall
+	var/obj/item/the_tool
+	var/interaction = WALL_REMOVERERODS
+
+	New(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
+		..()
+		if (wall)
+			the_wall = wall
+		if (usr)
+			owner = usr
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (interact)
+			interaction = interact
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && (the_tool != source.equipped() || isrobot(source)))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		var/message = ""
+		switch (interaction)
+			if (WALL_REMOVERERODS)
+				message = "Removing some reinforcing rods."
+				playsound(get_turf(the_wall), "sound/items/Wirecutter.ogg", 100, 1)
+			if (WALL_REMOVESUPPORTLINES)
+				message = "Removing support lines."
+				playsound(get_turf(the_wall), "sound/items/Screwdriver.ogg", 100, 1)
+			if (WALL_SLICECOVER)
+				message = "Slicing metal cover."
+			if (WALL_REMOVESUPPORTRODS)
+				message = "Removing support rods."
+			if (WALL_PRYCOVER)
+				message = "Prying cover off."
+				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
+			if (WALL_PRYSHEATH)
+				message = "Prying outer sheath off."
+				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
+			if (WALL_DETATCHSUPPORTRODS)
+				playsound(get_turf(the_wall), "sound/items/Ratchet.ogg", 100, 1)
+				message = "Detaching support rods."
+		owner.visible_message("<span class='notice'>[message].</span>")
+
+	onEnd()
+		..()
+		var/message = ""
+		switch (interaction)
+			if (WALL_REMOVERERODS)
+				message = "You remove some reinforcing rods."
+				var/atom/A = new /obj/item/rods( the_wall )
+				if (the_wall.material)
+					A.setMaterial(the_wall.material)
+				else
+					A.setMaterial(getMaterial("steel"))
+				the_wall.d_state = 1
+				the_wall.update_icon()
+			if (WALL_REMOVESUPPORTLINES)
+				message = "You removed the support lines."
+				the_wall.d_state = 2
+			if (WALL_SLICECOVER)
+				message = "You removed the metal cover."
+				the_wall.d_state = 3
+			if (WALL_REMOVESUPPORTRODS)
+				message = "You removed the support rods."
+				the_wall.d_state = 6
+				var/atom/A = new /obj/item/rods( the_wall )
+				if (the_wall.material)
+					A.setMaterial(the_wall.material)
+				else
+					A.setMaterial(getMaterial("steel"))
+			if (WALL_PRYCOVER)
+				message = "You removed the cover."
+				the_wall.d_state = 4
+			if (WALL_PRYSHEATH)
+				message = "You removed the outer sheath."
+				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				the_wall.dismantle_wall()
+			if (WALL_DETATCHSUPPORTRODS)
+				message = "You detach the support rods."
+				the_wall.d_state = 5
+		owner.visible_message("<span class='notice'>[message].</span>")

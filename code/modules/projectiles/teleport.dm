@@ -44,7 +44,7 @@
 			if(!target || prob(failchance)) //Just like portals!
 				do_teleport(hit, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
 			else
-				var/turf/destination = find_loc(src.target) // Beacons and tracking implant might have been moved.
+				var/turf/destination = get_turf(src.target) // Beacons and tracking implant might have been moved.
 				if (destination)
 					do_teleport(hit, destination, 1) ///You will appear adjacent to the beacon
 				else

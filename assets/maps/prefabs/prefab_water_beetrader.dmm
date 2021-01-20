@@ -1,5 +1,5 @@
 "a" = (/turf/unsimulated/wall/setpieces/hive,/area/bee_trader)
-"b" = (/turf/variableTurf/clear,/area)
+"b" = (/turf/variableTurf/clear,/area/space)
 "c" = (/obj/item/cigbutt,/obj/item/cigbutt{pixel_x = -6; pixel_y = 8},/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/ice_cream/random,/obj/machinery/light/incandescent/warm{icon_state = "tube1"; dir = 1},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
 "d" = (/obj/table/wood/auto,/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey,/obj/item/reagent_containers/food/snacks/breadloaf/honeywheat{pixel_x = -2; pixel_y = 4},/obj/item/reagent_containers/food/snacks/cake/cream{pixel_y = 4},/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)
 "e" = (/obj/storage/crate/freezer,/obj/item/reagent_containers/food/snacks/beefood{pixel_x = 3; pixel_y = -3},/obj/item/reagent_containers/food/snacks/beefood,/obj/item/reagent_containers/food/snacks/beefood{pixel_x = -2; pixel_y = 2},/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly,/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{pixel_x = 4; pixel_y = 2},/obj/item/reagent_containers/food/snacks/ingredient/honey{pixel_x = 3; pixel_y = -3},/obj/item/reagent_containers/food/snacks/ingredient/honey,/turf/simulated/floor/specialroom/cafeteria,/area/bee_trader)

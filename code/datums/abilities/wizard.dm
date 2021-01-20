@@ -1,4 +1,4 @@
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
 /proc/equip_wizard(mob/living/carbon/human/wizard_mob, var/robe = 0, var/vr = 0)
 	if (!ishuman(wizard_mob)) return
@@ -18,13 +18,13 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 	wizard_mob.cust_two_state = "wiz"
-	wizard_mob.set_face_icon_dirty()
+	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
 	if (wizard_mob.mind)
@@ -215,7 +215,7 @@
 	proc/calculate_cooldown()
 		var/cool = src.cooldown
 		var/mob/user = src.holder.owner
-		if (user && user.bioHolder)
+		if (user?.bioHolder)
 			switch (user.bioHolder.HasEffect("arcane_power"))
 				if (1)
 					cool /= 2
@@ -304,12 +304,12 @@
 	cast(atom/target)
 		if(ishuman(holder.owner))
 			var/mob/living/carbon/human/O = holder.owner
-			if(O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
-				playsound(holder.owner.loc, voice_grim, 50, 0, -1)
-			else if(holder.owner.gender == "female")
-				playsound(holder.owner.loc, voice_fem, 50, 0, -1)
-			else
-				playsound(holder.owner.loc, voice_other, 50, 0, -1)
+			if(src.voice_grim && O && istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
+				playsound(O.loc, src.voice_grim, 50, 0, -1)
+			else if(src.voice_fem && O.gender == "female")
+				playsound(O.loc, src.voice_fem, 50, 0, -1)
+			else if (src.voice_other)
+				playsound(O.loc, src.voice_other, 50, 0, -1)
 
 		if (offensive)
 			logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)], at [target].")

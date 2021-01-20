@@ -10,8 +10,7 @@
 
 /obj/screen/proc/add_to_client(var/client/C)
 	if (clients)
-		clients -= C
-		clients += C
+		clients |= C
 	C.screen += src
 
 /obj/screen/disposing()
@@ -63,7 +62,8 @@
 	layer = HUD_LAYER-1
 
 	New(var/mob/living/carbon/C)
-		..()
+		..(null)
+		src.loc = null
 		if (C && istype(C))
 			src.desc = src.getDesc(C)
 		if (ishuman(C))

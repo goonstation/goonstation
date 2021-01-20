@@ -1,9 +1,13 @@
-export const updateSettings = (settings = {}) => ({
-  type: 'settings/update',
-  payload: settings,
-});
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
 
-export const loadSettings = (settings = {}) => ({
-  type: 'settings/load',
-  payload: settings,
-});
+import { createAction } from 'common/redux';
+
+export const updateSettings = createAction('settings/update');
+export const loadSettings = createAction('settings/load');
+export const changeSettingsTab = createAction('settings/changeTab');
+export const toggleSettings = createAction('settings/toggle');
+export const openChatSettings = createAction('settings/openChatTab');

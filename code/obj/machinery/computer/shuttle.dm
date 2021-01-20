@@ -207,8 +207,7 @@
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
-				src.authorized -= W:registered
-				src.authorized += W:registered
+				src.authorized |= W:registered
 				if (src.auth_need - src.authorized.len > 0)
 					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
 				else
@@ -420,7 +419,7 @@
 	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["send"])
-			for(var/obj/machinery/shuttle/engine/propulsion/eng in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
+			for(var/obj/machinery/shuttle/engine/propulsion/eng as() in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
 					boutput(usr, "<span class='alert'>Propulsion thruster damaged. Unable to move shuttle.</span>")
 					return

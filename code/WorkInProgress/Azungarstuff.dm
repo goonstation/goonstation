@@ -110,6 +110,8 @@
 	Entered(var/mob/M)
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
+		if(!ismob(M))
+			return
 		return_if_overlay_or_effect(M)
 
 
@@ -132,52 +134,52 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
-			SPAWN_DBG(5 SECONDS)
-				if(M.loc == src)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						M.changeStatus("weakened", 10 SECONDS)
-						M.set_body_icon_dirty()
-						H.set_burning(1000)
-						playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
-						M.emote("scream")
-						if (H.limbs.l_leg && H.limbs.r_leg)
-							if (H.limbs.l_leg)
-								H.limbs.l_leg.delete()
-							if (H.limbs.r_leg)
-								H.limbs.r_leg.delete()
-							boutput(M, "You can feel how both of your legs melt away!")
-							visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
-						else
-							boutput(M, "You can feel intense heat on the lower part of your torso.")
-							visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
-
-					if (isrobot(M))
-						var/mob/living/silicon/robot/R = M
-						R.canmove = 0
-						R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
-						R.emote("scream")
-						playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
-						R.changeStatus("stunned", 10 SECONDS)
-						R.part_leg_r.holder = null
-						qdel(R.part_leg_r)
-						if (R.part_leg_r.slot == "leg_both")
-							R.part_leg_l = null
-							R.update_bodypart("l_leg")
-						R.part_leg_r = null
-						R.update_bodypart("r_leg")
-						R.part_leg_l.holder = null
-						qdel(R.part_leg_l)
-						if (R.part_leg_l.slot == "leg_both")
-							R.part_leg_r = null
-							R.update_bodypart("r_leg")
-						R.part_leg_l = null
-						R.update_bodypart("l_leg")
-						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+			sleep(5 SECONDS)
+			if(M.loc == src)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					M.changeStatus("weakened", 10 SECONDS)
+					M.set_body_icon_dirty()
+					H.set_burning(1000)
+					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					M.emote("scream")
+					if (H.limbs.l_leg && H.limbs.r_leg)
+						if (H.limbs.l_leg)
+							H.limbs.l_leg.delete()
+						if (H.limbs.r_leg)
+							H.limbs.r_leg.delete()
 						boutput(M, "You can feel how both of your legs melt away!")
+						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
 					else
 						boutput(M, "You can feel intense heat on the lower part of your torso.")
 						visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+
+				if (isrobot(M))
+					var/mob/living/silicon/robot/R = M
+					R.canmove = 0
+					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
+					R.emote("scream")
+					playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					R.changeStatus("stunned", 10 SECONDS)
+					R.part_leg_r.holder = null
+					qdel(R.part_leg_r)
+					if (R.part_leg_r.slot == "leg_both")
+						R.part_leg_l = null
+						R.update_bodypart("l_leg")
+					R.part_leg_r = null
+					R.update_bodypart("r_leg")
+					R.part_leg_l.holder = null
+					qdel(R.part_leg_l)
+					if (R.part_leg_l.slot == "leg_both")
+						R.part_leg_r = null
+						R.update_bodypart("r_leg")
+					R.part_leg_l = null
+					R.update_bodypart("l_leg")
+					visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+					boutput(M, "You can feel how both of your legs melt away!")
+				else
+					boutput(M, "You can feel intense heat on the lower part of your torso.")
+					visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
 
 	corners
 		icon_state = "lava_corners"
@@ -856,9 +858,9 @@
 			//src.equip_new_if_possible(/obj/item/clothing/suit/cultistblack/cursed, slot_wear_suit)
 			//src.equip_new_if_possible(/obj/item/clothing/mask/eldritchskull {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_wear_mask)
 			//src.equip_new_if_possible(/obj/item/dagger/azarakknife {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_r_hand)
-			SPAWN_DBG(0)
-				var/obj/item/organ/heart/eldritchadventure/H = new /obj/item/organ/heart/eldritchadventure
-				receive_organ(H, "heart", 0, 1)
+
+			var/obj/item/organ/heart/eldritchadventure/H = new /obj/item/organ/heart/eldritchadventure
+			receive_organ(H, "heart", 0, 1)
 			return
 
 
@@ -1110,14 +1112,14 @@
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	throw_begin(atom/target)
 		icon_state = "lawspin"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "lawbook"
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
@@ -1310,21 +1312,3 @@
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
 		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
-
-
-/obj/decal/fakeobjects/unfinished
-	name = "never-to-be-finished robot"
-	desc = "There was always enormous passion for things. But sadly sometimes those passions clash in such a way where conflict and painful resolutions are in order. For some, that becomes too much."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "unfinished"
-	anchored = 1
-	density = 1
-
-/obj/decal/fakeobjects/trophy
-	name = "dusty meaningless trophy"
-	desc = "A fleeting reminder of times of old when a dumb number was the biggest worry in the world. Those times are now long gone."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "trophyfucked"
-	anchored = 1
-	density = 1
-	pixel_y = 14

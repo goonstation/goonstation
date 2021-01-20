@@ -26,7 +26,7 @@ proc/build_syndi_buylist_cache()
 	var/vr_allowed = 1
 	var/not_in_crates = 0 // This should not go in surplus crates.
 
-	proc/run_on_spawn(var/obj/item, var/mob/living/owner) // Use this to run code when the item is spawned.
+	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate=FALSE) // Use this to run code when the item is spawned.
 		return
 
 ////////////////////////////////////////// Standard items (generic & nukeops uplink) ///////////////////////////////
@@ -75,13 +75,7 @@ proc/build_syndi_buylist_cache()
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 	blockedmode = list(/datum/game_mode/revolution)
 
-#if ASS_JAM
-/datum/syndicate_buylist/generic/crabgun
-	name = "Crabgun"
-	item = /obj/item/gun/energy/crabgun
-	cost = 6
-	desc = "This genetically modified crab can shoot claws containing strands of part its own DNA, allowing you to instantly transform targets into crabs. No need to feed it, it's battery powered."
-#endif
+
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
@@ -342,6 +336,12 @@ proc/build_syndi_buylist_cache()
 	cost = 4
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 
+/datum/syndicate_buylist/traitor/ringtone
+	name = "SounDreamS PRO cartridge"
+	item = /obj/item/disk/data/cartridge/ringtone_syndie
+	cost = 1
+	desc = "A pirated copy of SounDreamS PRO, a PDA cartridge loaded with dozens of realistic, illegal-sounding sound effects that'll play whenever someone sends a message to your PDA."
+
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
 	item = /obj/item/storage/box/sonic_grenade_kit
@@ -357,7 +357,7 @@ proc/build_syndi_buylist_cache()
 	desc = "A crate containing 18-24 credits worth of whatever junk we had lying around."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner)
+	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate)
 		crate.spawn_items(owner)
 /*
 This is basically useless for anyone but miners.
@@ -383,7 +383,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	objective = /datum/objective/regular/assassinate
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner)
+	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
 		return
 
@@ -396,7 +396,7 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	objective = /datum/objective/spy_theft/assasinate
 
-	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner)
+	run_on_spawn(var/obj/item/idtracker/tracker,var/mob/living/owner, in_surplus_crate)
 		tracker.owner = owner
 		return
 
@@ -533,7 +533,7 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	blockedmode = list(/datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner)
+	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner, in_surplus_crate)
 		if (istype(Q) && owner)
 			owner.make_merchant() //give them the power to summon more contracts
 			Q.merchant = owner
@@ -609,9 +609,28 @@ This is basically useless for anyone but miners.
 	job = list("Janitor")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner)
+	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner, in_surplus_crate)
 		if (istype(cart) && owner)
 			cart.owner_ckey = owner.ckey
+
+/datum/syndicate_buylist/traitor/slip_and_sign
+	name = "Slip and Sign"
+	item = /obj/item/caution/traitor
+	cost = 2
+	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
+	job = list("Janitor")
+
+	run_on_spawn(obj/item/caution/traitor/sign, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/clothing/shoes/galoshes(sign.loc)
+			new /obj/item/clothing/gloves/long(sign.loc)
+
+/datum/syndicate_buylist/traitor/overcharged_vacuum
+	name = "Overcharged Vacuum Cleaner"
+	item = /obj/item/handheld_vacuum/overcharged
+	cost = 5
+	desc = "This vacuum cleaner's special attack is way more powerful than the regular thing."
+	job = list("Janitor")
 
 /datum/syndicate_buylist/traitor/syndanalyser
 	name = "Syndicate Device Analyzer"
@@ -636,7 +655,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/reagent/syringe
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Barman")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/powergloves
@@ -661,7 +680,15 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/glass/bottle/poison
 	cost = 1
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Barman")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/poisonbundle
+	name = "Poison Bottle Bundle"
+	item = /obj/item/storage/box/poison
+	cost = 7
+	desc = "A box filled with seven random poison bottles."
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/chemicompiler
@@ -706,7 +733,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/food/snacks/condiment/syndisauce
 	cost = 1
 	desc = "Our patented secret blend of herbs and spices! Guaranteed to knock even the harshest food critic right off their feet! And into the grave. Because this is poison."
-	job = list("Chef", "Barman")
+	job = list("Chef", "Bartender")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/donkpockets
@@ -731,7 +758,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/reagent_containers/food/drinks/moonshine
 	cost = 2
 	desc = "A jug full of incredibly potent alcohol. Not recommended for human consumption."
-	job = list("Barman")
+	job = list("Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/shotglass
@@ -739,7 +766,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
-	job = list("Barman")
+	job = list("Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/vuvuzelagun
@@ -821,7 +848,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/lawndart_kit
 	cost = 4
 	desc = "Three deadly throwing darts that embed themselves into your target."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Barman","Clown")
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant","Bartender","Clown")
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/monkey_barrel

@@ -12,7 +12,7 @@
 /obj/machinery/power/New(var/new_loc)
 	..()
 	if (current_state > GAME_STATE_PREGAME)
-		SPAWN_DBG(1) // aaaaaaaaaaaaaaaa
+		SPAWN_DBG(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			src.netnum = 0
 			if(makingpowernets)
 				return // TODO queue instead
@@ -84,16 +84,16 @@ var/makingpowernetssince = 0
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/cable/PC in by_type[/obj/cable])
+	for_by_tcl(PC, /obj/cable)
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/cable/PC in by_type[/obj/cable])
+	for_by_tcl(PC, /obj/cable)
 		if(!PC.netnum)
 			powernet_nextlink(PC, ++netcount)
 		LAGCHECK(LAG_MED)
@@ -104,13 +104,13 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = L
 
-	for(var/obj/cable/C in by_type[/obj/cable])
+	for_by_tcl(C, /obj/cable)
 		if(!C.netnum) continue
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
 		LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 
@@ -257,7 +257,7 @@ var/makingpowernetssince = 0
             P = M.get_connections(1)
 
         if(P.len == 0)
-            if(more && more.len)
+            if(length(more))
                 O = more[more.len]
                 more -= O
                 continue
@@ -295,9 +295,9 @@ var/makingpowernetssince = 0
 
 	// zero the netnum of all cables & nodes in this powernet
 
-	for(var/obj/cable/OC in cables)
+	for(var/obj/cable/OC as() in cables)
 		OC.netnum = 0
-	for(var/obj/machinery/power/OM in nodes)
+	for(var/obj/machinery/power/OM as() in nodes)
 		OM.netnum = 0
 
 
@@ -333,14 +333,14 @@ var/makingpowernetssince = 0
 		powernets += PN
 		PN.number = powernets.len
 
-		for(var/obj/cable/OC in cables)
+		for(var/obj/cable/OC as() in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
 				cables -= OC
 				PN.cables += OC		// remove from old network & add to new one
 			LAGCHECK(LAG_MED)
 
-		for(var/obj/machinery/power/OM in nodes)
+		for(var/obj/machinery/power/OM as() in nodes)
 			if(!OM.netnum)
 				OM.netnum = PN.number
 				OM.powernet = PN
@@ -358,11 +358,11 @@ var/makingpowernetssince = 0
 	return
 
 /datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
-	for(var/obj/cable/C in src.cables)
+	for(var/obj/cable/C as() in src.cables)
 		C.netnum = PN.number
 		PN.cables += C
 
-	for(var/obj/machinery/power/M in src.nodes)
+	for(var/obj/machinery/power/M as() in src.nodes)
 		M.netnum = PN.number
 		M.powernet = PN
 		PN.nodes += M

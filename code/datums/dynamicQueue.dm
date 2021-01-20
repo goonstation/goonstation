@@ -6,6 +6,7 @@
 	var/binSize
 
 	New(var/BinSize = QUEUE_BIN_SIZE)
+		..()
 		src.binSize = BinSize
 
 	proc

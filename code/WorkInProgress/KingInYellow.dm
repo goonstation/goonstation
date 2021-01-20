@@ -36,6 +36,7 @@
 	var/image/effect = null
 
 	New(var/atom/location, var/atom/trg)
+		..()
 		if(trg != null)
 			set_loc(location)
 			effect = image('icons/effects/effects.dmi', src, "ykingvanish", 4)
@@ -54,12 +55,13 @@
 	var/created = null
 
 	New(var/atom/location, var/atom/trg)
+		..()
 		set_loc(location)
 		target = trg
 		created = world.time
 		showimg = image('icons/misc/critter.dmi', src, "kingyellow", 3)
 		target << showimg
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG(0.5 SECONDS) update()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -72,7 +74,7 @@
 		if(!target) vanish()
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
 		if(get_dist(src,target) <= 2) vanish()
-		src.dir = get_dir(src, target)
+		src.set_dir(get_dir(src, target))
 		SPAWN_DBG(0.5 SECONDS) update()
 
 	proc/vanish()
@@ -94,8 +96,8 @@
 	var/processing = 0
 
 	New()
-		BLOCK_BOOK
-		return
+		..()
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	process()
 		..()

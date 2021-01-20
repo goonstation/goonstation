@@ -7,7 +7,7 @@
 		if (islist(path))
 			path = pick(path)
 		var/obj/O = new path(get_turf(object))
-		O.dir = holder.dir
+		O.set_dir(holder.dir)
 		O.onVarChanged("dir", SOUTH, O.dir)
 		blink(O.loc)
 

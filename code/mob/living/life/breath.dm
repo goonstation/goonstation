@@ -71,14 +71,14 @@
 						owner.show_submerged_image(4)
 
 			else if (T.active_airborne_liquid)
-				if (!(human_owner?.wear_mask && (human_owner?.wear_mask.c_flags & BLOCKSMOKE || (human_owner?.wear_mask.c_flags & MASKINTERNALS && human_owner?.internal))))
+				if (!issmokeimmune(owner))
 					//underwater = T.active_airborne_liquid
 					var/obj/fluid/F = T.active_airborne_liquid
-					F.force_mob_to_ingest(owner)
+					F.force_mob_to_ingest(owner, mult)
 				else
 					if (!owner.clothing_protects_from_chems())
 						var/obj/fluid/airborne/F = T.active_airborne_liquid
-						F.just_do_the_apply_thing(owner, hasmask = 1)
+						F.just_do_the_apply_thing(owner, mult, hasmask = 1)
 
 		else if (istype(owner.loc, /mob/living/object))
 			return // no breathing inside possessed objects
@@ -87,8 +87,8 @@
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 
-		if (owner.reagents)
-			if (owner.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(owner, PROP_REBREATHING)) return
+		if (HAS_MOB_PROPERTY(owner, PROP_REBREATHING))
+			return
 
 		// Changelings generally can't take OXY/LOSEBREATH damage...except when they do.
 		// And because they're excluded from the breathing procs, said damage didn't heal
@@ -97,7 +97,7 @@
 		// If you have the breathless effect, same deal - you'd never heal oxy damage
 		// If your mutant race doesn't need oxygen from breathing, ya no losebreath
 		// so, now you do
-		if (ischangeling(owner) || (owner.bioHolder && owner.bioHolder.HasEffect("breathless") || (human_owner?.mutantrace && !human_owner?.mutantrace.needs_oxy)))
+		if (ischangeling(owner) || HAS_MOB_PROPERTY(owner, PROP_BREATHLESS))
 			if (owner.losebreath)
 				owner.losebreath = 0
 			if (owner.get_oxygen_deprivation())
@@ -187,7 +187,7 @@
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (owner.nodamage) return
 		var/area/A = get_area(owner)
-		if( A && A.sanctuary )
+		if( A?.sanctuary )
 			return
 		// Looks like we're in space
 		// or with recent atmos changes, in a room that's had a hole in it for any amount of time, so now we check src.loc
@@ -202,10 +202,10 @@
 			if (underwater && (owner.get_oxygen_deprivation() > 40 || underwater.type == /obj/fluid/airborne))
 				if (istype(underwater,/obj/fluid))
 					var/obj/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 				else if (istype(underwater, /turf/space/fluid))
 					var/turf/space/fluid/F = underwater
-					F.force_mob_to_ingest(owner)// * mult
+					F.force_mob_to_ingest(owner, mult)// * mult
 
 
 			return 0
@@ -272,7 +272,7 @@
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)
-			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
 		else
 			owner.co2overloadtime = 0
@@ -285,14 +285,15 @@
 			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+			if(SA)
 				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					owner.changeStatus("paralysis", 5 SECONDS)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						owner.sleeping = max(owner.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(20))
+					if (prob(percentmult(20, mult)))
 						owner.emote(pick("giggle", "laugh"))
 
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
@@ -311,10 +312,11 @@
 
 			//cyber lungs beat radiation. Is there anything they can't do?
 			if (!has_cyberlungs)
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if (RV)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (human_owner)
+		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
 				//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
 				var/lung_burn_left = min(max(breath.temperature - human_owner.organHolder.left_lung?.temp_tolerance, 0) / 3, 10)

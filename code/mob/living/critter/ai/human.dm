@@ -3,13 +3,12 @@
 /datum/aiHolder/human
 
 /datum/aiTask/timed/targeted/human/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(M == holder.owner) continue
 			if(isalive(M))
-				targets += M
-	return targets
+				. += M
 
 
 
@@ -88,9 +87,9 @@
 	var/last_seek = 0
 
 	frustration_check()
-		.= 0
+		. = 0
 		if (IN_RANGE(holder.owner, holder.target, target_range))
-			return 1
+			. = 1
 
 	on_tick()
 		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
@@ -107,7 +106,7 @@
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
 				holder.ownhuman.a_intent = INTENT_DISARM
-				holder.ownhuman.dir = get_dir(holder.ownhuman, holder.target)
+				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
 				holder.ownhuman.hand_attack(holder.target, params)
@@ -129,7 +128,6 @@
 	var/last_seek = 0
 
 	on_tick()
-
 		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
@@ -159,11 +157,11 @@
 					if(!holder.target)
 						return ..() // try again next tick
 				if ((dist <= 3) && holder.ownhuman.equipped())
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 					holder.ownhuman.throw_item(holder.target,params)
 				if (dist <= 1)
 					holder.ownhuman.a_intent = INTENT_HARM
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					holder.ownhuman.hand_attack(M, params)
 				if(prob(25))
@@ -171,11 +169,10 @@
 
 		..()
 
-/datum/aiTask/timed/targeted/human/suplex/
+/datum/aiTask/timed/targeted/human/suplex
 	name = "suplex"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 16
-	//var/weight = 15
 	target_range = 8
 	frustration_threshold = 5
 	var/last_seek = 0
@@ -211,7 +208,7 @@
 				if (dist <= 1)
 					holder.ownhuman.a_intent = INTENT_GRAB
 
-					holder.ownhuman.dir = get_dir(holder.ownhuman, M)
+					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					var/list/params = list()
 					params["left"] = 1
@@ -236,3 +233,32 @@
 
 		..()
 
+/*
+ * Chicken man
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W

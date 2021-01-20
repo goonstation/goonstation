@@ -34,8 +34,7 @@
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
@@ -148,8 +147,8 @@
 			if(src.welded)
 				src.icon_state=initial(src.icon_state)+"_w"
 			else if(src.open)
-				// ugly warning, the istype() is 1 when there's a trigger in the container\
-				//	it subtracts 1 from the list of contents when there's a trigger \
+				// ugly warning, the istype() is 1 when there's a trigger in the container
+				//	it subtracts 1 from the list of contents when there's a trigger
 				//	doing arithmatic on bools is probably not good!
 				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
 				var/len_contents = src.contents.len - has_trigger
@@ -217,7 +216,7 @@
 		can_be_welded=true
 		can_be_anchored=true
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
-		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond \
+		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
@@ -252,8 +251,8 @@
 		slots=HANDHELD_CAPACITY + 1 // One slot used by the permanent button
 		name="Device Frame"
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
-		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above\
-		 												if you change the capacity, remember to manually update this string
+		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
+		 												//if you change the capacity, remember to manually update this string
 		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
@@ -343,7 +342,10 @@
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = 1.0
 	level = 2
-	var/cabinet_banned = false // whether or not this component is prevented from being anchored in cabinets
+	/// whether or not this component is prevented from being anchored in cabinets
+	var/cabinet_banned = FALSE
+	/// if true makes it so that only one component can be wrenched on the tile
+	var/one_per_tile = FALSE
 	var/under_floor = 0
 	var/can_rotate = 0
 	var/cooldown_time = 3 SECONDS
@@ -353,8 +355,7 @@
 	New()
 		particles = new/list()
 		AddComponent(/datum/component/mechanics_holder)
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		return ..()
 
 
@@ -402,7 +403,7 @@
 	proc/loosen()
 
 	proc/rotate()
-		src.dir = turn(src.dir, -90)
+		src.set_dir(turn(src.dir, -90))
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispryingtool(W))
@@ -427,6 +428,11 @@
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(usr,"<span class='alert'>[src] is not allowed in component housings.</span>")
 						return
+					if(src.one_per_tile)
+						for(var/obj/item/mechanics/Z in src.loc)
+							if (Z.type == src.type && Z.level == 1)
+								boutput(usr,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
+								return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing("station", usr, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
@@ -441,7 +447,7 @@
 
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
-		return SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user) & COMSIGBIT_ATTACKBY_COMPLETE ? 1 : 0
+		return ..()
 
 	pick_up_by(var/mob/M)
 		if(level != 1) return ..()
@@ -652,7 +658,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input && input.signal && isReady() && trunk)
+		if(input?.signal && isReady() && trunk)
 			unReady()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
@@ -872,7 +878,7 @@
 			if(lastturf.opacity || !lastturf.canpass())
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
-			newbeam.dir = src.dir
+			newbeam.set_dir(src.dir)
 			beamobjs[++beamobjs.len] = newbeam
 			lastturf = get_step(lastturf, dir)
 
@@ -969,6 +975,39 @@
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+
+/// Tesla Coil mechanics component - zaps people
+/obj/item/mechanics/zapper
+	name = "Tesla Coil"
+	desc = ""
+	icon_state = "comp_zap"
+	cooldown_time = 1 SECOND
+	cabinet_banned = true
+	one_per_tile = true
+	var/zap_power = 2
+
+	New()
+		..()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
+
+	proc/eleczap(var/datum/mechanicsMessage/input)
+		if(level == 2 || !isReady()) return
+		unReady()
+		LIGHT_UP_HOUSING
+		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
+
+	proc/setPower(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
+		if(!in_range(src, user) || !isalive(user))
+			return 0
+		inp = clamp(round(inp), 1, 3)
+		zap_power = inp
+		boutput(user, "Power set to [inp]")
+		return 1
+
+	updateIcon()
+		icon_state = "[under_floor ? "u":""]comp_zap"
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"
@@ -1522,28 +1561,46 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "sendstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", "clrbff")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingString")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingString")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", "setStartingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", "setEndingStringSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingStringManual")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingStringManual")
 
-	proc/setStartingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
-		inp = strip_html(inp)
-		bstr = inp
-		boutput(user, "String set to [inp]")
-		tooltip_rebuild = 1
+		setStartingString(inp)
+		boutput(user, "String set to [bstr]")
 		return 1
 
-	proc/setEndingString(obj/item/W as obj, mob/user as mob)
+	proc/setStartingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setStartingString(input.signal)
+
+	proc/setStartingString(var/inp)
+		inp = strip_html(inp)
+		bstr = inp
+		tooltip_rebuild = 1
+
+	proc/setEndingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", astr) as text
 		if(!in_range(src, user) || user.stat)
 			return 0
+		setEndingString(inp)
+		boutput(user, "String set to [astr]")
+		return 1
+
+	proc/setEndingStringSignal(var/datum/mechanicsMessage/input)
+		if (level == 2) return
+		LIGHT_UP_HOUSING
+		setEndingString(input.signal)
+
+	proc/setEndingString(var/inp)
 		inp = strip_html(inp)
 		astr = inp
-		boutput(user, "String set to [inp]")
 		tooltip_rebuild = 1
-		return 1
 
 	proc/addstr(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1791,8 +1848,16 @@
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
 
+			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
+				var/packets = ""
+				for(var/d in signal.data)
+					packets += "[d]=[signal.data[d]]; "
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				animate_flash_color_fill(src,"#ff0000",2, 2)
+				return
+
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params_noencode(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
@@ -1857,6 +1922,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", "nextplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", "previousplus")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", "popitem")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List","setSignalList")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)","setDelimetedList")
@@ -1954,10 +2020,15 @@
 		if(input.signal in signals)
 			signals.Remove(input.signal)
 			if(current_index > length(signals))
-				current_index = length(signals)
+				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
 			tooltip_rebuild = 1
 			if(announce)
 				componentSay("Removed : [input.signal]")
+		return
+
+	proc/popitem(var/datum/mechanicsMessage/input)
+		sendCurrent(input)
+		remitem(input)
 		return
 
 	proc/remallitem(var/datum/mechanicsMessage/input)
@@ -2212,7 +2283,7 @@
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
-		for(var/obj/item/mechanics/telecomp/T in by_type[/obj/item/mechanics/telecomp])
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
 			if(T == src || T.level == 2 || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
 
 #ifdef UNDERWATER_MAP
@@ -2415,16 +2486,27 @@
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, "[frequency]")
 		tooltip_rebuild = 1
-	proc/hear_radio(mob/M as mob, msg, lang_id)
+	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
 		LIGHT_UP_HOUSING
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
 		message = strip_html(html_decode(message))
-		var/heardname = M.real_name
-		if (M.wear_mask && M.wear_mask.vchange)
-			heardname = M:wear_id ? M:wear_id:registered : "Unknown"
+		var/heardname = null
+		if (isobj(AM))
+			heardname = AM.name
+		else if (ismob(AM))
+			heardname = AM:real_name
+			if (ishuman(AM))
+				var/mob/living/carbon/human/H = AM
+				if (H.wear_mask && H.wear_mask.vchange)
+					if (istype(H.wear_id, /obj/item/card/id))
+						var/obj/item/card/id/ID = H.wear_id
+						heardname = ID.registered
+					else
+						heardname = "Unknown"
+
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
@@ -3075,5 +3157,71 @@
 	name = ""
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "connectionArrow"
+
+
+/obj/item/mechanics/screen
+	name = "Letter Display Component"
+	desc = ""
+	icon_state = "comp_screen"
+	cabinet_banned = true
+
+	var/letter_index = 1
+	var/display_letter = null
+
+	get_desc()
+		. = ..()
+		. += "<br><span class='notice'>Letter Index: [src.letter_index]"
+		if (src.level == 2 || src.display_letter != null)
+			. += " | Currently Displaying: '[src.display_letter]'"
+		. += "</span>"
+
+	secure()
+		src.display(" ")
+
+	loosen()
+		src.display_letter = null
+		src.icon_state = "comp_screen"
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")
+
+	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
+		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
+		if (!in_range(src, user) || user.stat || isnull(input)) 
+			return FALSE
+		if (letter_index < 1)
+			return FALSE
+		letter_index = input
+		tooltip_rebuild = TRUE
+		. = TRUE
+
+	proc/fire(var/datum/mechanicsMessage/input)
+		if(level == 2 || !input) return
+		var/signal = input.signal
+		if (length(signal) < src.letter_index)
+			src.display(" ") // If the string is shorter than we expect, fill excess screens with spaces
+			return
+		var/letter = copytext(signal, src.letter_index, src.letter_index + 1)
+		src.display(letter)
+
+	proc/display(var/letter as text)
+		letter = uppertext(letter)
+		switch(letter)
+			if (" ") src.setDisplayState(" ", "comp_screen_blank")
+			if ("!") src.setDisplayState("!", "comp_screen_exclamation_mark")
+			else
+				var/ascii = text2ascii(letter)
+				if((ascii >= text2ascii("A") && ascii <= text2ascii("Z")) || (ascii >= text2ascii("0") && ascii <= text2ascii("9")))
+					src.setDisplayState(letter, "comp_screen_[letter]")
+				else
+					src.setDisplayState("?", "comp_screen_question_mark") // Any unknown characters should display as ? instead.
+
+	proc/setDisplayState(var/new_letter as text, var/new_icon_state as text)
+		src.display_letter = new_letter
+		src.icon_state = new_icon_state
+
+
+
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING

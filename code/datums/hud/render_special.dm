@@ -9,6 +9,7 @@
 		obj/screen/right_fill
 
 	New()
+		..()
 		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1, CENTER-1", LIGHTING_LAYER_BASE)
 		center_light.mouse_opacity = 0 // this is really a giant hack and shouldn't be in the HUD system, but there aren't many good ways to handle this
 		center_light.blend_mode = BLEND_ADD

@@ -15,6 +15,7 @@
 	var/image/shield_overlay = null
 
 	New()
+		..()
 		work()
 
 	dropped(mob/user as mob)
@@ -77,4 +78,7 @@
 			SPAWN_DBG(1 SECOND) work()
 
 		can_use()
-			if(!user || !ismob(loc) || user != loc) return 0
+			if(!user || !ismob(loc) || user != loc)
+				return 0
+			else
+				return 1

@@ -105,11 +105,7 @@
 	/obj/item/storage/box/lglo_kit/random = 2,
 	/obj/item/storage/box/clothing/patient_gowns = 2)
 
-#if ASS_JAM
-	New()
-		. = ..()
-		ADD_MORTY(11, 8, 11, 11)
-#endif
+
 
 /obj/item/storage/wall/research_supplies
 	name = "research supplies"
@@ -301,18 +297,18 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
-		/obj/item/clothing/head/veil = 1,
+		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/serpico = 1,
-		/obj/item/clothing/head/sailormoon = 1)
+		/obj/item/clothing/head/cowboy = 1)
 
 	hatrack_3
 		spawn_contents = list(/obj/item/clothing/head/raccoon = 1,
 		/obj/item/clothing/head/mj_hat = 1,
+		/obj/item/clothing/head/veil = 1,
 		/obj/item/clothing/head/sunhat = 1,
 		/obj/item/clothing/head/sunhat/sunhatr = 1,
-		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/aviator = 1,
-		/obj/item/clothing/head/cowboy = 1)
+		/obj/item/clothing/head/sailormoon = 1)
 
 /obj/item/storage/wall/toolshelf
 	name = "tool shelf"

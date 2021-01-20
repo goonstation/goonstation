@@ -32,12 +32,18 @@ datum/controller/process/items
 
 		src.processing_items = global.processing_items
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/items/old_items = target
+		src.processing_items = old_items.processing_items
+		src.detailed_count = old_items.detailed_count
+
 	doWork()
 		var/c
-		for(var/datum/i in global.processing_items)
+		for(var/i in global.processing_items)
+			if (!i || i:pooled || i:qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
+				global.processing_items -= i
+				continue
 			i:process()
-			if (i.pooled || i.qdeled) //if the object was pooled or qdeled we have to remove it from this list... otherwise the lagchecks cause this loop to hold refs and block GC!!!
-				i = null //this might not even be working consistenlty after testing? or somethin else has a lingering ref >:(
 			if (!(c++ % 20))
 				scheck()
 
@@ -53,7 +59,7 @@ datum/controller/process/items
 			scheck(currentTick)
 */
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

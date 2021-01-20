@@ -29,14 +29,13 @@
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
 		src.set_loc(null)
 		SPAWN_DBG(1 SECOND)
-			if(src.flock)
-				src.flock.removeDrone(src)
+			src.flock?.removeDrone(src)
 			qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
 
-/obj/flock_structure/egg/throw_impact(var/atom/A)
+/obj/flock_structure/egg/throw_impact(atom/A, datum/thrown_thing/thr)
 	var/turf/T = get_turf(A)
 	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 	if (T && !decal_made)

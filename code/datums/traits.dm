@@ -1,6 +1,6 @@
 //Unlockable traits? tied to achievements?
 #define TRAIT_STARTING_POINTS 1 //How many "free" points you get
-#define TRAIT_MAX 6			    //How many traits people can select at most.
+#define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
 	return traitList[id]
@@ -62,6 +62,9 @@
 			if (!user)
 				return
 
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -102,6 +105,9 @@
 		return
 
 	proc/showTraits(var/mob/user)
+		if(!user.client)
+			return
+
 		if(!winexists(user, "traitssetup_[user.ckey]"))
 			winclone(user, "traitssetup", "traitssetup_[user.ckey]")
 
@@ -123,8 +129,8 @@
 
 	proc/addTrait(id)
 		if(!traits.Find(id) && owner)
-			traits.Add(id)
 			var/obj/trait/T = traitList[id]
+			traits[id] = T
 			if(T.isMoveTrait)
 				moveTraits.Add(id)
 			T.onAdd(owner)
@@ -161,8 +167,12 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/cleanName = ""   //Name without any additional information.
 	var/isMoveTrait = 0 // If 1, onMove will be called each movement step from the holder's mob
+	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 
 	proc/onAdd(var/mob/owner)
+		if(mutantRace && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.set_mutantrace(mutantRace)
 		return
 
 	proc/onRemove(var/mob/owner)
@@ -296,8 +306,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_swedish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
 		return
 
 /obj/trait/french
@@ -311,8 +320,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_french", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
 		return
 
 /obj/trait/scots
@@ -325,8 +333,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_scots", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
 		return
 
 /obj/trait/chav
@@ -340,8 +347,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_chav", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
 		return
 
 /obj/trait/elvis
@@ -354,8 +360,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_elvis", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
 		return
 
 /obj/trait/tommy // please do not re-enable this without talking to spy tia
@@ -370,8 +375,7 @@
 	unselectable = 1 // this was not supposed to be a common thing!!
 /*
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tommy")
+		owner.bioHolder?.AddEffect("accent_tommy")
 		return
 */
 
@@ -386,8 +390,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_finnish", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
 		return
 
 /obj/trait/tyke
@@ -401,8 +404,7 @@
 	category = "language"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("accent_tyke")
+		owner.bioHolder?.AddEffect("accent_tyke")
 		return
 
 // VISION/SENSES - Green Border
@@ -485,8 +487,7 @@
 	category = "genetics"
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.genetic_stability = 120
+		owner.bioHolder?.genetic_stability = 120
 		return
 
 /obj/trait/stablegenes
@@ -588,6 +589,15 @@
 	points = -1
 	isPositive = 1
 
+/obj/trait/claw
+	name = "Claw School Graduate (-1) \[Skill\]"
+	cleanName = "Claw School Graduate"
+	desc = "Your skill at claw machines is unparalleled."
+	id = "claw"
+	category = "skill"
+	points = -1
+	isPositive = 1
+
 /* Hey dudes, I moved these over from the old bioEffect/Genetics system so they work on clone */
 
 /obj/trait/job
@@ -617,13 +627,19 @@
 	desc = "Subject is a proficient surgeon."
 	id = "training_medical"
 
+/obj/trait/job/engineer
+	name = "Engineering Training"
+	cleanName = "Engineering Training"
+	desc = "Subject is trained in engineering."
+	id = "training_engineer"
+
 /obj/trait/job/security
 	name = "Security Training"
 	cleanName = "Security Training"
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
 
-// barman, detective, HoS
+// bartender, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"
 	cleanName = "Professional Drinker"
@@ -695,8 +711,6 @@
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			H.add_stam_mod_regen("trait", STAMINA_REGEN * 0.1)
-			H.max_health = 60
-			H.health = 60
 		return
 
 /obj/trait/bigbruiser
@@ -708,6 +722,28 @@
 	points = -2
 	isPositive = 1
 
+//Category: Background.
+
+/obj/trait/immigrant
+	name = "Stowaway (+1) \[Background\]"
+	cleanName = "Stowaway"
+	desc = "You spawn hidden away on-station without an ID or PDA."
+	id = "immigrant"
+	icon_state = "stowaway"
+	category = "background"
+	points = 1
+	isPositive = 0
+
+obj/trait/pilot
+	name = "Pilot (0) \[Background\]"
+	cleanName = "Pilot"
+	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection but without a PDA."
+	id = "pilot"
+	icon_state = "pilot"
+	category = "background"
+	points = 0
+	isPositive = 0
+
 // NO CATEGORY - Grey Border
 
 /obj/trait/hemo
@@ -717,6 +753,20 @@
 	id = "hemophilia"
 	points = 1
 	isPositive = 0
+
+//Flourish felt like this was bloating the traits so I've disabled it for now.
+///obj/trait/color_shift
+//	name = "Color Shift (0)"
+//	cleanName = "Color Shift"
+//	desc = "You are more depressing on the outside but more colorful on the inside."
+//	id = "color_shift"
+//	points = 0
+//	isPositive = 1
+//
+//	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
+//		if(owner.bioHolder)
+//			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+//			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
@@ -736,8 +786,7 @@
 	isPositive = 1
 
 	onAdd(var/mob/owner)
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("resist_alcohol", 0, 0, 0, 1)
+		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 		return
 
 
@@ -749,29 +798,21 @@
 	points = 0
 	isPositive = 0
 
-	var/allergen = ""
-	var/allergen_name = ""
+	var/list/allergic_players = list()
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
 	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","jenkem","crank",\
-	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","sarin","smokepowder","infernite","napalm", "fuel",\
+	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","sarin","smokepowder","infernite","phlogiston","fuel",\
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
 	onAdd(var/mob/owner)
-		allergen = pick(allergen_id_list)
-		if (reagents_cache.len <= 0)
-			build_reagent_cache()
-		var/datum/reagent/R = reagents_cache[allergen]
-		if(R)
-			allergen_name = R.name
-		else
-			throw EXCEPTION("Could not find reagent for id:[allergen]")
+		allergic_players[owner] = pick(allergen_id_list)
 
 	onLife(var/mob/owner)
-		if (owner?.reagents?.has_reagent(allergen))
-			owner.reagents.add_reagent("histamine", 1.4) //1.4 units of histamine per life cycle? is that too much?
+		if (owner?.reagents?.has_reagent(allergic_players[owner]))
+			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
 	name = "Medical Allergy (+1)"
@@ -793,19 +834,20 @@
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
-
-	New()
-		selected_reagent = pick("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-		. = ..()
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
+	var/list/addicted_players = list()
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
+			addicted_players[owner] = pick(addictive_reagents)
+			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(isliving(owner) && prob(1))
 			var/mob/living/M = owner
+			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -899,14 +941,6 @@
 	points = -1
 	isPositive = 1
 
-/obj/trait/immigrant
-	name = "Stowaway (+1)"
-	cleanName = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID or PDA."
-	id = "immigrant"
-	points = 1
-	isPositive = 0
-
 /obj/trait/nervous
 	name = "Nervous (+1)"
 	cleanName = "Nervous"
@@ -918,11 +952,11 @@
 
 	onAdd(var/mob/owner)
 		..()
-		nervous_mobs += owner
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 	onRemove(var/mob/owner)
 		..()
-		nervous_mobs -= owner
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_NERVOUS_MOBS)
 
 /obj/trait/burning
 	name = "Human Torch (+1)"
@@ -994,28 +1028,64 @@
 	points = 1
 	isPositive = 0
 
-/obj/trait/bigbutt
-	name = "Dummy Thick (-2)"
-	desc = "Your buttocks are stubbornly chunky, and they clap together even when sneaking around."
-	id = "bigbutt"
-	icon_state = "bigbutt"
-	points = -2
-	isPositive = 0
-	isMoveTrait = 1
-
-	onMove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.footstep >= 3)
-				playsound(H.loc, "sound/impact_sounds/Slap.ogg", 40, 1)
-		return
-
 /obj/trait/allears
-	name = "All Ears (+1) \[Trinkets\]"
+	name = "All Ears (0) \[Trinkets\]"
 	cleanName="All ears"
 	desc = "You lost your headset on the way to work."
 	category = "trinkets"
 	id = "allears"
-	points = 1
+	points = 0
 	isPositive = 0
+
+/obj/trait/atheist
+	name = "Atheist (0)"
+	cleanName = "Atheist"
+	desc = "In this moment, you are euphoric. You cannot receive faith healing, and prayer makes you feel silly."
+	id = "atheist"
+	points = 0
+	isPositive = 0
+
+/obj/trait/lizard
+	name = "Reptilian (-1) \[Species\]"
+	cleanName = "Reptilian"
+	icon_state = "lizardT"
+	desc = "You are an abhorrent humanoid reptile, cold-blooded and ssssibilant."
+	id = "lizard"
+	points = -1
+	isPositive = 1
+	category = "species"
+	mutantRace = /datum/mutantrace/lizard
+
+/obj/trait/cow
+	name = "Bovine (-1) \[Species\]"
+	cleanName = "Bovine"
+	icon_state = "cowT"
+	desc = "You are a hummman, always have been, always will be, and any claimmms to the contrary are mmmoooonstrous lies."
+	id = "cow"
+	points = -1
+	isPositive = 1
+	category = "species"
+	mutantRace = /datum/mutantrace/cow
+
+/obj/trait/skeleton
+	name = "Skeleton (-2) \[Species\]"
+	cleanName = "Skeleton"
+	icon_state = "skeletonT"
+	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
+	id = "skeleton"
+	points = -2
+	isPositive = 1
+	category = "species"
+	mutantRace = /datum/mutantrace/skeleton
+
+/obj/trait/roach
+	name = "Roach (-1) \[Species\]"
+	cleanName = "Roach"
+	icon_state = "roachT"
+	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
+	id = "roach"
+	points = -1
+	isPositive = 1
+	category = "species"
+	mutantRace = /datum/mutantrace/roach
 

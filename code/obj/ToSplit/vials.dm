@@ -24,16 +24,12 @@
 	throw_range = 8
 	force = 3.0
 	w_class = 1.0
+	initial_volume = 30
 
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/contained = null
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
 
 /obj/item/reagent_containers/glass/vial/green
 	name = "glass test tube"
@@ -55,7 +51,7 @@
 //////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////***
-/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.shatter()
 

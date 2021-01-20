@@ -1,21 +1,22 @@
 // MASTER DATUMS
 
+ABSTRACT_TYPE(/datum/artifact/)
 /datum/artifact/
 	var/associated_object = null
 	var/rarity_class = 0
-	//Bigger rarity means its less likely to show up. Thanks for documenting this, guys. - Azungar
+	// Bigger rarity means its less likely to show up. Thanks for documenting this, guys. - Azungar
 	// Also note that rarity 0 means the artifact does not randomly spawn.
 	// Tweaked rarity 1 to contain all the uninteresting garbage artifacts. Explosion artifacts still appear at 3/4 because explodey is not boring - Phyvo
 
 	var/datum/artifact_origin/artitype = null
-	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor",/*"reliquary"*/)
+	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	// During setup, artitype will be set from a pick() from within the validtypes list.
 	// Keep it to only the five here or shit will probably get a bit weird. This allows us to exclude things that don't make
 	// any sense such as martian robot builders or ancient robot plant seeds.
 
 	var/internal_name = null
 	var/image/fx_image = null
-	//var/image/effects_overlay = null
+	// var/image/effects_overlay = null
 	var/obj/holder = null
 	// These are automatically handled. They're used to make the artifact glow different colors.
 
@@ -133,8 +134,9 @@
 
 // SPECIFIC DATUMS
 
+ABSTRACT_TYPE(/datum/artifact/art)
 /datum/artifact/art
-	validtypes = list("ancient","martian","wizard","eldritch","precursor",/*"reliquary"*/)
+	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	activated = 0
 	min_triggers = 0
 	max_triggers = 0

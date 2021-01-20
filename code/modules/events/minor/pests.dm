@@ -3,15 +3,9 @@
 
 	event_effect()
 		..()
-		var/list/EV = list()
-		for(var/obj/landmark/S in landmarks)//world)
-			if (S.name == "peststart")
-				EV.Add(S.loc)
-
-			LAGCHECK(LAG_LOW)
-		if(!EV.len)
+		var/pestlandmark = pick_landmark(LANDMARK_PESTSTART)
+		if(!pestlandmark)
 			return
-		var/pestlandmark = pick(EV)
 		var/masterspawnamount = rand(4,12)
 		var/spawnamount = masterspawnamount
 		var/type = rand(1,12)

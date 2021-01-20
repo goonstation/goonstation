@@ -132,11 +132,6 @@
 					else if (on)
 						user.remove_sm_light("pda\ref[src]")
 						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
-				else
-					if (!use_simple_light && !use_medium_light)
-						light.detach()
-					else if (on)
-						user.remove_sm_light("pda\ref[src]")
 
 
 	return_menu_badge()
@@ -249,8 +244,7 @@
 
 	proc/toggle_scan()
 		src.on = !src.on
-		if (src.on && !(src in processing_items))
-			processing_items.Add(src)
+		if(src.on) processing_items |= src
 		for (var/obj/ability_button/pda_tray_toggle/B in src.ability_buttons)
 			B.icon_state = "pda[src.on]"
 		if (src.host)
@@ -290,7 +284,7 @@
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.2 SECONDS)
 					if(M)

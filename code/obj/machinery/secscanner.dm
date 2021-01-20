@@ -66,7 +66,7 @@
 
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
 				pdaSignal.transmission_method = TRANSMISSION_RADIO
 				if(transmit_connection != null)
 					transmit_connection.post_signal(src, pdaSignal)
@@ -113,7 +113,7 @@
 						if (perpname != last_perp || contraband != last_contraband)
 							var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 							var/datum/signal/pdaSignal = get_free_signal()
-							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
+							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
 							pdaSignal.transmission_method = TRANSMISSION_RADIO
 							if(transmit_connection != null)
 								transmit_connection.post_signal(src, pdaSignal)
@@ -155,7 +155,7 @@
 					if (perpname != last_perp || contraband != last_contraband)
 						var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=MGD_SECURITY, "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
 						pdaSignal.transmission_method = TRANSMISSION_RADIO
 						if(transmit_connection != null)
 							transmit_connection.post_signal(src, pdaSignal)
@@ -298,11 +298,9 @@
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/i in data_core.general)
-				var/datum/data/record/E = i
+			for (var/datum/data/record/E as() in data_core.general)
 				if (E.fields["name"] == perpname)
-					for (var/j in data_core.security)
-						var/datum/data/record/R = j
+					for (var/datum/data/record/R as() in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = max(4,threatcount)
 							break

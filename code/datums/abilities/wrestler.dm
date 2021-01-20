@@ -1,7 +1,7 @@
 // Converted everything related to wrestlers from client procs to ability holders and used
 // the opportunity to do some clean-up as well (Convair880).
 
-//////////////////////////////////////////// Setup //////////////////////////////////////////////////
+/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 //fake_wrestler - For the fake wrestling belt, make it so all abilities do no damage or stuns.
 /mob/proc/make_wrestler(var/make_inherent = 0, var/belt_check = 0, var/remove_powers = 0, var/fake_wrestler = 0)
 	if (ishuman(src) || ismobcritter(src))
@@ -95,7 +95,7 @@
 
 	else return
 
-//////////////////////////////////////////// Ability holder /////////////////////////////////////////
+/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /obj/screen/ability/topBar/wrestler
 	clicked(params)

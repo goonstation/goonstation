@@ -10,7 +10,7 @@
 	var/list/req_access = list()
 
 	var/killswitch = 0
-	var/killswitch_time = 60
+	var/killswitch_at = 0
 	var/weapon_lock = 0
 	var/weaponlock_time = 120
 	var/obj/item/card/id/botcard //An ID card that the robot "holds" invisibly
@@ -177,7 +177,7 @@
 		..()
 	else
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		target.attack_ai(src, params, location, control)
 
@@ -257,10 +257,14 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
+			else if(istype(S, /mob/living/intangible/flock))
+				var/mob/living/intangible/flock/f = S
+				if(f.flock?.snooping)
+					var/flockrendered = "<i><span class='game say'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span></i>"
+					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
-	listening -= src
-	listening += src
+	listening |= src
 
 	var/list/heard = list()
 	for (var/mob/M in listening)
@@ -614,7 +618,7 @@ var/global/list/module_editors = list()
 		else if (src.syndicate && src.syndicate_possible && !src.emagged) // Syndie laws don't matter if we're emagged.
 			boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 			boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
 			switch (action)
@@ -693,7 +697,7 @@ var/global/list/module_editors = list()
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
 
-/mob/living/silicon/hitby(atom/movable/AM)
+/mob/living/silicon/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
@@ -708,3 +712,11 @@ var/global/list/module_editors = list()
 		src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 
 	. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+
+/mob/living/silicon/proc/singify_text(var/text)
+	var/adverb = pick("robotically", "synthetically", "electronically")
+	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
+	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
+	if (src.singing & LOUD_SINGING)
+		note_img = "[note_img][note_img]"
+	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"

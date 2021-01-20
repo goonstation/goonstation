@@ -200,7 +200,7 @@
 				boutput(user, "There is already a tape loaded.")
 				return
 
-			user.drop_item()
+			user.drop_item(I)
 			I.set_loc(src)
 			src.tape = I
 			src.tape.log_line = 1
@@ -211,6 +211,11 @@
 
 		else
 			..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/audio_tape) && in_range(src, user) && in_range(W, user))
+			return src.attackby(W, user)
+		return ..()
 
 	New()
 		..()
@@ -236,8 +241,7 @@
 					processing_items.Remove(src)
 				if("play")
 					src.mode = 2
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 				if("stop")
 					src.mode = 0
 					processing_items.Remove(src)

@@ -20,6 +20,7 @@ var/list/observers = list()
 		..()
 		observers += src
 		mobs += src
+		src.move_dir = 0
 
 	pooled()
 		mobs -= src
@@ -80,7 +81,8 @@ var/list/observers = list()
 		return
 
 	process_move(keys)
-		src.stop_observing()
+		if(keys && src.move_dir)
+			src.stop_observing()
 
 	apply_camera(client/C)
 		var/mob/living/M = src.target
@@ -160,7 +162,7 @@ var/list/observers = list()
 			if (src.mind)
 				mind.transfer_to(my_ghost)
 
-			var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (target)
 				var/turf/T = get_turf(target)
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && (restricted_z_allowed(my_ghost, T) || (my_ghost.client && my_ghost.client.holder)))))

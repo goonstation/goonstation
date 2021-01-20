@@ -1,7 +1,12 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
-import { Button, Flex, Slider, Knob } from 'tgui/components';
-import { useDispatch, useSelector } from 'tgui/store';
+import { useDispatch, useSelector } from 'common/redux';
+import { Button, Flex, Knob } from 'tgui/components';
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
 
@@ -11,9 +16,9 @@ export const NowPlayingWidget = (props, context) => {
   const settings = useSettings(context);
   const title = audio.meta?.title;
   return (
-    <Flex mx={-0.5} align="center">
+    <Flex align="center">
       {audio.playing && (
-        <Fragment>
+        <>
           <Flex.Item
             shrink={0}
             mx={0.5}
@@ -30,7 +35,7 @@ export const NowPlayingWidget = (props, context) => {
             }}>
             {title || 'Unknown Track'}
           </Flex.Item>
-        </Fragment>
+        </>
       ) || (
         <Flex.Item grow={1} color="label">
           Nothing to play.

@@ -122,6 +122,7 @@
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
+	made_from = "pharosium"
 	robotic = 1
 	edible = 0
 	mats = 6
@@ -132,7 +133,7 @@
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
 			return ..()
 		var/datum/targetable/organAbility/rebreather/OA = aholder.getAbility(abil)//addAbility(abil)
-		if (istype(OA)) // already has an emagged lung. You need both for the ability to function 
+		if (istype(OA)) // already has an emagged lung. You need both for the ability to function
 			OA.linked_organ = list(OA.linked_organ, src)
 		else
 			OA = aholder.addAbility(abil)
@@ -157,7 +158,7 @@
 	on_life(var/mult = 1)
 		if(!..())
 			return 0
-			
+
 		if(overloading)
 			src.take_damage(0, 1 * mult)
 		return 1
@@ -166,7 +167,7 @@
 		if(donor)
 			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
 		..()
-		
+
 	emag_act(mob/user, obj/item/card/emag/E)
 		..()
 		organ_abilities = list(/datum/targetable/organAbility/rebreather)

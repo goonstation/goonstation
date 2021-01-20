@@ -38,7 +38,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
 
 /obj/item/flamethrower/assembled
@@ -68,12 +68,11 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
 	var/obj/item/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
+	move_triggered = 1
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(4000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 	on_reagent_change(add)
@@ -152,13 +151,12 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			boutput(usr, "<span class='alert'>There's nothing inside to drain!</span>")
 
 	disposing()
-		if(linkedflamer)
-			linkedflamer.gastank = null
+		linkedflamer?.gastank = null
 		..()
 
 /obj/item/flamethrower/backtank
-	name = "tactical flamethrower"
-	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack."
+	name = "Vega flamethrower"
+	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
 	uses_multiple_icon_states = 1
@@ -212,6 +210,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/weld_rod/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 
@@ -232,6 +231,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	w_class = 2.0
 
 /obj/item/assembly/w_r_ignite/New()
+	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
 	igniter = new /obj/item/device/igniter
@@ -459,7 +459,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 /obj/item/flamethrower/afterattack(atom/target, mob/user, inrange)
 	if (inrange)
 		return
-	user.lastattacked = src
+	if(istype(user)) user.lastattacked = src
 	src.flame_turf(getline(user, target), user, target)
 
 
@@ -479,8 +479,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 			item_state = "flamethrower1"
 			force = 10
 			hit_type = DAMAGE_BURN
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 		else
 			icon_state = "flamethrower_oxy_fuel"
 			force = 3
@@ -566,8 +565,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	if(lit)
 		force = 12
 		hit_type = DAMAGE_BURN
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 	else
 		force = 6
 		hit_type = DAMAGE_BLUNT
@@ -672,8 +670,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		spray_turf(currentturf,reagentperturf, reagsource)
 		reagentperturf += increment
 		if(lit)
-			//currentturf.hotspot_expose(spray_temperature,2)
-			currentturf.reagents.set_reagent_temp(spray_temperature, TRUE)
+			currentturf?.reagents?.set_reagent_temp(spray_temperature, TRUE)
 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
 
 		var/logString = log_reagents(reagsource)
@@ -704,13 +701,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	//Transfer reagents
 	var/datum/reagents/copied = new/datum/reagents(transferamt)
-	copied = reagsource.copy_to(copied, transferamt/reagsource.maximum_volume)
+	copied = reagsource.copy_to(copied, transferamt/reagsource.maximum_volume, copy_temperature = 1)
 	if(!target.reagents)
 		target.create_reagents(50)
 	for(var/atom/A in target.contents)
-		copied.reaction(A, TOUCH, 0, 0)
-		if(A.reagents)
-			copied.copy_to(A.reagents, 1)
+		if(!istype(A, /obj/overlay))
+			copied.reaction(A, TOUCH, 0, 0)
+			if(A.reagents)
+				copied.copy_to(A.reagents, 1, copy_temperature = 1)
 	copied.reaction(target, TOUCH, 0, 0)
 	reagsource.trans_to(target, transferamt, 1, 0)
 

@@ -22,10 +22,8 @@
 		var/my_seashell = rand(1,14)
 		src.icon_state = "shell_[my_seashell]"
 		src.database_id = "seashell_[my_seashell]"
-		var/datum/reagents/R = new/datum/reagents(10)
-		src.reagents = R
-		R.my_atom = src
-		R.add_reagent("calcium_carbonate", 10)
+		src.create_reagents(10)
+		reagents.add_reagent("calcium_carbonate", 10)
 
 
 //PLANTS
@@ -51,9 +49,10 @@
 			src.pixel_y = rand(-8,8)
 
 	attackby(obj/item/W, mob/user)
-		if (drop_type && issnippingtool(W))
-			var/obj/item/drop = new drop_type
-			drop.set_loc(src.loc)
+		if (issnippingtool(W))
+			if(drop_type)
+				var/obj/item/drop = new drop_type
+				drop.set_loc(src.loc)
 			src.visible_message("<span class='alert'>[user] cuts down [src].</span>")
 			qdel(src)
 		..()

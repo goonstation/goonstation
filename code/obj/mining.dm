@@ -26,19 +26,19 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
-			var/turf/T = get_turf(user)
-			sleep(24 SECONDS)
-			if (user.loc == T && user.equipped() == W && !user.stat)
+			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
-				magnet.dir = src.dir
+				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
+		#endif
 
 	ex_act()
 		return
@@ -60,6 +60,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -73,6 +74,7 @@
 	small
 		name = "small mineral magnet parts"
 		constructed_magnet = /obj/machinery/mining_magnet/construction/small
+#endif
 
 /obj/magnet_target_marker
 	name = "mineral magnet target"
@@ -252,7 +254,7 @@
 			var/turf/B = M.DR()
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
-			var/turf/O = get_turf(magnet)
+			var/turf/O = get_turf(target)
 			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
@@ -287,6 +289,8 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
+	var/uses_global_controls = TRUE
+
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
 	var/sound_activate = 'sound/machines/ArtifactAnc1.ogg'
@@ -306,6 +310,7 @@
 		var/marker_type = /obj/magnet_target_marker
 		var/obj/magnet_target_marker/target = null
 		var/list/wall_bits = list()
+		uses_global_controls = FALSE
 
 		get_magnetic_center()
 			if (target)
@@ -720,7 +725,7 @@
 			src.generate_interface(usr)
 
 		else if (href_list["show_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
@@ -736,25 +741,25 @@
 			return
 
 		else if (href_list["activate_selectable"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (src) src.pull_new_source(href_list["activate_selectable"])
 
 		else if (href_list["activate_magnet"])
-			if (ticker.mode && !istype(ticker.mode, /datum/game_mode/construction) && !istype(mining_controls.magnet_area))
+			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 				return
 
 			if (src.check_for_unacceptable_content())
 				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 			else
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					if (src) src.pull_new_source()
 
 		else if (href_list["override_cooldown"])
@@ -791,6 +796,7 @@
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
 		..()
@@ -800,7 +806,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (isscrewingtool(I))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 20))
+			if (do_after(user, 2 SECONDS))
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
 					var/obj/computerframe/A = new /obj/computerframe(src.loc)
@@ -830,7 +836,7 @@
 					A.anchored = 1
 					qdel(src)
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -888,19 +894,19 @@
 		src.updateUsrDialog()
 		return
 
-	proc/connection_scan()
-		linked_magnets = list()
-		var/badmagnets = 0
-		for (var/obj/machinery/magnet_chassis/MC in range(20,src))
-			if (MC.linked_magnet)
-				linked_magnets += MC.linked_magnet
-			else
-				badmagnets++
-		if (linked_magnets.len)
-			return 0
-		if (badmagnets)
-			return 1
-		return 2
+/obj/machinery/computer/magnet/connection_scan()
+	linked_magnets = list()
+	var/badmagnets = 0
+	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+		if (MC.linked_magnet)
+			linked_magnets += MC.linked_magnet
+		else
+			badmagnets++
+	if (linked_magnets.len)
+		return 0
+	if (badmagnets)
+		return 1
+	return 2
 
 // Turf Defines
 
@@ -938,6 +944,9 @@
 #else
 	fullbright = 1
 #endif
+
+	consider_superconductivity(starting)
+		return FALSE
 
 	trench
 		name = "cavern wall"
@@ -1459,7 +1468,7 @@
 
 	New()
 		..()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
@@ -1557,6 +1566,7 @@ obj/item/clothing/gloves/concussive
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1646,6 +1656,7 @@ obj/item/clothing/gloves/concussive
 		src.setItemSpecial(/datum/item_special/simple)
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1695,6 +1706,7 @@ obj/item/clothing/gloves/concussive
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
+		tooltip_rebuild = 1
 		if (src.process_charges(0))
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
@@ -1784,10 +1796,10 @@ obj/item/clothing/gloves/concussive
 						user.drop_item()
 
 						// Yes, please (Convair880).
-						if (src && src.hacked)
+						if (src?.hacked)
 							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
-						user.dir = get_dir(user, target)
+						user.set_dir(get_dir(user, target))
 						user.drop_item()
 						var/t = (isturf(target) ? target : target.loc)
 						step_towards(src, t)
@@ -1855,7 +1867,7 @@ obj/item/clothing/gloves/concussive
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
 			if(get_dist(src,C) <= src.expl_heavy)
-				C.TakeDamage("All",rand(15,25)/C.get_explosion_resistance(),0)
+				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
 /obj/item/cargotele
@@ -1883,9 +1895,10 @@ obj/item/clothing/gloves/concussive
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
 		else
-		//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
+			var/holder = src.loc
+			//here i set up an empty var that can take any object, and tell it to look for absolutely anything in the list
 			var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
-			if(!selection)
+			if (src.loc != holder || !selection)
 				return
 			var/turf/T = get_turf(selection)
 			//get the turf of the pad itself
@@ -1924,15 +1937,8 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 			// And these too (Convair880).
-			if(src.target)
-				var/turf/t = get_turf(src.target)
-				if(isrestrictedz(t.z))
-					if(user)
-						user.show_text("<span class='alert'>The [src] fails to power on!")
-						logTheThing("station", user, null, "tried to cargo transport to a restricted z-level: [log_loc(src.target)].")
-					return
 			if (ismob(T.loc) && T.loc == user)
 				user.u_equip(T)
 			if (istype(T.loc, /obj/item/storage))
@@ -1973,6 +1979,7 @@ obj/item/clothing/gloves/concussive
 	var/list/possible_targets = list()
 
 	New()
+		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
 			if(istype(T,/turf/space) && T.z != 1 && !isrestrictedz(T.z))
@@ -1992,7 +1999,7 @@ obj/item/clothing/gloves/concussive
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
 
-		if(do_after(user, 50))
+		if(do_after(user, 5 SECONDS))
 
 			// Logs for good measure (Convair880).
 			for (var/mob/M in T.contents)
@@ -2067,7 +2074,7 @@ obj/item/clothing/gloves/concussive
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,AREA_LAYER+1)
 	user << O
 	SPAWN_DBG(2 MINUTES)
-		if (user && user.client)
+		if (user?.client)
 			user.client.images -= O
 			user.client.screen -= O
 		qdel (O)

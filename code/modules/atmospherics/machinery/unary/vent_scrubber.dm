@@ -75,14 +75,11 @@
 				#undef _FILTER_OUT_GAS
 
 				if(length(removed.trace_gases))
-					for(var/datum/gas/trace_gas in removed.trace_gases)
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							if(!removed.trace_gases.len)
-								removed.trace_gases = null
-							if(!filtered_out.trace_gases)
-								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+					var/datum/gas/trace_gas = removed.get_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+					if(trace_gas)
+						var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+						filtered_gas.moles = trace_gas.moles
+						removed.remove_trace_gas(trace_gas)
 
 				//Remix the resulting gases
 				air_contents.merge(filtered_out)

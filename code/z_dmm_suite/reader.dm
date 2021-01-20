@@ -74,7 +74,8 @@ dmm_suite
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
 		// Create all Atoms at map location, from model key
-		world.maxz = max(world.maxz, coordZ+maxZFound-1)
+		if ((coordZ+maxZFound-1) > world.maxz)
+			world.setMaxZ(coordZ+maxZFound-1)
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
@@ -219,7 +220,8 @@ dmm_suite
 					//instance = new atomPath(location)
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0)
 				else
-					instance = new atomPath(location)
+					if (atomPath)
+						instance = new atomPath(location)
 			// Handle cases where Atom/New was redifined without calling Super()
 			if(preloader && instance) // Atom could delete itself in New()
 				preloader.load(instance)

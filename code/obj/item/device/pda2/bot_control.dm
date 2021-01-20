@@ -35,7 +35,18 @@
 
 /datum/computer/file/pda_program/bot_control/secbot
 	name = "Securitron Access"
+	var/header_thing = "Securitron Interlink"
 	size = 8.0
+	var/list/inactive_commands = list()
+	var/list/active_commands = list()
+
+	New(obj/holding)
+		. = ..()
+		inactive_commands = list("<BR><A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A><BR>")
+		active_commands = list("<BR>\[<A href='byond://?src=\ref[src];op=stop'>Stop Patrol</A>\] ",\
+		"\[<A href='byond://?src=\ref[src];op=go'>Start Patrol</A>\] ",\
+		"\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>",\
+		"<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>")
 
 	return_text()
 		if(..())
@@ -43,7 +54,7 @@
 
 		. = src.return_text_header()
 
-		. += "<h4>Securitron Interlink</h4>"
+		. += "<h4>[header_thing]</h4>"
 
 		if(!src.active)
 			// list of bots
@@ -54,7 +65,8 @@
 				for(var/obj/machinery/bot/secbot/B in src.botlist)
 					. += "<A href='byond://?src=\ref[src];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
 
-			. += "<BR><A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A><BR>"
+			for(var/cmd in inactive_commands)
+				. += cmd
 
 		else	// bot selected, control it
 
@@ -82,10 +94,8 @@
 					if(6)
 						. += "Responding to summons"
 
-				. += "<BR>\[<A href='byond://?src=\ref[src];op=stop'>Stop Patrol</A>\] "
-				. += "\[<A href='byond://?src=\ref[src];op=go'>Start Patrol</A>\] "
-				. += "\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>"
-				. += "<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>"
+			for(var/cmd in active_commands)
+				. += cmd
 
 
 	Topic(href, href_list)
@@ -121,6 +131,17 @@
 				post_status(control_freq, "command", "summon", "active", active, "target", summon_turf )
 				post_status(control_freq, "command", "bot_status", "active", active)
 
+			if("proc")
+				post_status(control_freq, "command", "proc", "active", active)
+				post_status(control_freq, "command", "bot_status", "active", active)
+
+			if("summonall")
+				if (!botlist.len)
+					return
+				for(var/obj/machinery/bot/secbot/bot in src.botlist)
+					post_status(control_freq, "command", "summon", "active", bot, "target", summon_turf )
+					post_status(control_freq, "command", "bot_status", "active", bot)
+
 		return
 
 	receive_signal(datum/signal/signal)
@@ -135,8 +156,7 @@
 			if(!botlist)
 				botlist = new()
 
-			if(!(signal.source in botlist))
-				botlist += signal.source
+			botlist |= signal.source
 
 			if(active == signal.source)
 				var/list/b = signal.data
@@ -146,6 +166,20 @@
 
 		return
 
+/datum/computer/file/pda_program/bot_control/secbot/pro
+	name = "Securitron Access PRO"
+	size = 8.0
+	header_thing = "Securitron Interlink PRO"
+
+	New(obj/holding)
+		. = ..()
+		inactive_commands = list("<BR><A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A><BR>",\
+	"<BR><A href='byond://?src=\ref[src];op=summonall'>Summon all active bots</A><BR>")
+		active_commands = list("<BR>\[<A href='byond://?src=\ref[src];op=stop'>Stop Patrol</A>\] ",\
+		"\[<A href='byond://?src=\ref[src];op=go'>Start Patrol</A>\] ",\
+		"\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>",\
+		"\[<A href='byond://?src=\ref[src];op=proc'>Force Bot Action</A>\]<BR>",\
+		"<HR><A href='byond://?src=\ref[src];op=botlist'>Return to bot list</A>")
 
 /datum/computer/file/pda_program/bot_control/mulebot
 	name = "MULE Bot Control"
@@ -277,8 +311,7 @@
 			if(!botlist)
 				botlist = new()
 
-			if(!(signal.source in botlist))
-				botlist += signal.source
+			botlist |= signal.source
 
 			if(active == signal.source)
 				var/list/b = signal.data

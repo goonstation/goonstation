@@ -80,7 +80,7 @@
 	initial_reagents = list("pizza" = 40, "salt" = 10)
 
 /obj/item/reagent_containers/food/drinks/bottle/grones
-	name = "Grones Soda"
+	name = "Grones Soda "
 	desc = "They make all kinds of flavors these days, good lord."
 	label = "grones"
 	heal_amt = 1
@@ -89,48 +89,42 @@
 	initial_reagents = list("cola"=20)
 
 	New()
-		switch(rand(1,14))
+		switch(rand(1,12))
 			if (1)
-				src.desc = "Wicked Sick Pumpkin Prolapse flavor."
-				src.initial_reagents["diarrhea"] = 10
-			if (2)
-				src.desc = "Ballin' Banana Testicular Torsion flavor."
+				src.name += "Ballin' Banana Testicular Torsion flavor"
 				src.initial_reagents["urine"] = 10
-			if (3)
-				src.desc = "Radical Roadkill Rampage flavor."
+			if (2)
+				src.name += "Radical Roadkill Rampage flavor"
 				src.initial_reagents["bloodc"] = 10 // heh
-			if (4)
-				src.desc = "Sweet Cherry Brain Haemorrhage flavor."
-				src.initial_reagents["impedrezine"] = 10
-			if (5)
-				src.desc = "Awesome Asbestos Candy Apple flavor."
+			if (3)
+				src.name += "Awesome Asbestos Candy Apple flavor"
 				src.initial_reagents["lithium"] = 10
-			if (6)
-				src.desc = "Salt-Free Senile Dementia flavor."
+			if (4)
+				src.name += "Salt-Free Senile Dementia flavor"
 				src.initial_reagents["mercury"] = 10
-			if (7)
-				src.desc = "High Fructose Traumatic Stress Disorder flavor."
+			if (5)
+				src.name += "High Fructose Traumatic Stress Disorder flavor"
 				src.initial_reagents["atropine"] = 10
-			if (8)
-				src.desc = "Tangy Dismembered Orphan Tears flavor."
+			if (6)
+				src.name += "Tangy Dismembered Orphan Tears flavor"
 				src.initial_reagents["epinephrine"] = 10
-			if (9)
-				src.desc = "Chunky Infected Laceration Salsa flavor."
+			if (7)
+				src.name += "Chunky Infected Laceration Salsa flavor"
 				src.initial_reagents["charcoal"] = 10
-			if (10)
-				src.desc = "Manic Depressive Multivitamin Dewberry flavor."
+			if (8)
+				src.name += "Manic Depressive Multivitamin Dewberry flavor"
 				src.initial_reagents["ephedrine"] = 10
-			if (11)
-				src.desc = "Anti-Bacterial Air Freshener flavor."
+			if (9)
+				src.name += "Anti-Bacterial Air Freshener flavor"
 				src.initial_reagents["spaceacillin"] = 10
-			if (12)
-				src.desc = "Old Country Hay Fever flavor."
+			if (10)
+				src.name += "Old Country Hay Fever flavor"
 				src.initial_reagents["antihistamine"] = 10
-			if (13)
-				src.desc = "Minty Restraining Order Pepper Spray flavor."
+			if (11)
+				src.name += "Minty Restraining Order Pepper Spray flavor"
 				src.initial_reagents["capsaicin"] = 10
-			if (14)
-				src.desc = "Cool Keratin Rush flavor."
+			if (12)
+				src.name += "Cool Keratin Rush flavor"
 				src.initial_reagents["hairgrownium"] = 10
 		..()
 

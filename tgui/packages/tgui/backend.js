@@ -13,7 +13,7 @@
 
 import { perf } from 'common/perf';
 import { setupDrag } from './drag';
-import { releaseHeldKeys } from './hotkeys';
+import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
@@ -164,10 +164,10 @@ export const backendMiddleware = store => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      releaseHeldKeys();
       Byond.winset(window.__windowId__, {
         'is-visible': false,
       });
+      setImmediate(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -189,6 +189,9 @@ export const backendMiddleware = store => {
 
     // Resume on incoming update
     if (type === 'backend/update' && suspended) {
+      // Show the payload
+      logger.log('backend/update', payload);
+      // Signal renderer that we have resumed
       resumeRenderer();
       // Setup drag
       setupDrag();
@@ -261,16 +264,20 @@ export const sendAct = (action, payload = {}) => {
  *     title: string,
  *     status: number,
  *     interface: string,
- *     user: {
- *       name: string,
- *       ckey: string,
- *       observer: number,
- *     },
  *     window: {
  *       key: string,
  *       size: [number, number],
  *       fancy: boolean,
  *       locked: boolean,
+ *     },
+ *     client: {
+ *       ckey: string,
+ *       address: string,
+ *       computer_id: string,
+ *     },
+ *     user: {
+ *       name: string,
+ *       observer: number,
  *     },
  *   },
  *   data: any,

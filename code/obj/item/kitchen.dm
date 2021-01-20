@@ -26,7 +26,7 @@ TRAYS
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
@@ -52,9 +52,10 @@ TRAYS
 	var/snapped
 
 	New()
+		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
-		BLOCK_KNIFE
+		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
 	attack_self(mob/user as mob)
@@ -63,7 +64,7 @@ TRAYS
 	proc/rotate()
 		if(rotatable)
 			//set src in oview(1)
-			src.dir = turn(src.dir, -90)
+			src.set_dir(turn(src.dir, -90))
 		return
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
@@ -100,7 +101,7 @@ TRAYS
 	icon_state = "spoon"
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
 			random_brute_damage(user, 5)
 		if (!spoon_surgery(M,user))
@@ -129,7 +130,7 @@ TRAYS
 	throwforce = 7
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
@@ -165,7 +166,7 @@ TRAYS
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
@@ -189,10 +190,11 @@ TRAYS
 	throwforce = 1.0
 
 	New()
+		..()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs \himself.</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
@@ -217,10 +219,11 @@ TRAYS
 	throwforce = 1.0
 
 	New()
+		..()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if (user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs \himself.</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
@@ -245,10 +248,11 @@ TRAYS
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 
 	New()
+		..()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
@@ -339,7 +343,7 @@ TRAYS
 	icon_state = "chop_open"
 	item_state = "chop"
 	rotatable = 0
-	tool_flags = null
+	tool_flags = 0
 
 	attack_self(mob/user as mob)
 		var/obj/item/kitchen/chopsticks_package/chop = new /obj/item/kitchen/chopsticks_package
@@ -360,7 +364,7 @@ TRAYS
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	attack(mob/living/carbon/human/target as mob, mob/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
@@ -374,7 +378,7 @@ TRAYS
 			return ..()
 
 
-	throw_impact(atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if(ismob(usr))
@@ -407,7 +411,7 @@ TRAYS
 	tool_flags = TOOL_SAWING
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
@@ -536,7 +540,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	proc/add_contents(var/obj/item/W)
 		ordered_contents += W
@@ -604,7 +608,7 @@ TRAYS
 	proc/unique_tap_garbage_fluck(mob/M as mob, mob/user as mob)
 		playsound(get_turf(src), "sound/items/plate_tap.ogg", 30, 1)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if(ordered_contents.len == 0)
 			return
@@ -732,7 +736,7 @@ TRAYS
 			if(ordered_contents.len == 0)
 				return
 			src.shit_goes_everywhere()
-		if(user && user.bioHolder.HasEffect("clumsy") && prob(25))
+		if(user?.bioHolder.HasEffect("clumsy") && prob(25))
 			user.visible_message("<span class='alert'>[user] clumsily drops \the [src]!</span>")
 			if(ordered_contents.len == 0)
 				return
@@ -781,7 +785,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/update_inhand_icon()
 		var/weighted_num = round(ordered_contents.len / 5) //6 inhand sprites, 30 possible foods on the tray
@@ -912,7 +916,7 @@ TRAYS
 		icon_state = "red_herring"
 
 /obj/item/fish/attack(mob/M as mob, mob/user as mob)
-	if(user && user.bioHolder.HasEffect("clumsy") && prob(50))
+	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
 		user.changeStatus("weakened", 20 * src.force)
 		JOB_XP(user, "Clown", 1)
@@ -955,7 +959,7 @@ TRAYS
 
 	New()
 		..()
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 
@@ -1002,8 +1006,7 @@ TRAYS
 				foodoverlay.color = FOOD.food_color
 				foodoverlay.layer = (src.layer+3)
 				toppingdata.Add(FOOD.food_color)
-				if(FOOD.reagents)
-					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
+				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)
 						continue
@@ -1102,6 +1105,7 @@ TRAYS
 
 /obj/item/fish/random // used by the Wholetuna Cordata plant
 	New()
+		..()
 		SPAWN_DBG(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 			new fish(get_turf(src))
@@ -1117,11 +1121,9 @@ TRAYS
 	item_state = "platestack1"
 	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
-#if ASS_JAM
-	var/platemax = 13
-#else
+
 	var/platemax = 8
-#endif
+
 
 	proc/update_icon(mob/user as mob)
 		src.icon_state = "platestack[src.platenum]"
@@ -1173,7 +1175,7 @@ TRAYS
 		else
 			..()
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		var/list/throw_targets = list()
 		if(platenum == 0)
@@ -1206,7 +1208,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(2)
+			SPAWN_DBG(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1234,7 +1236,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(2)
+		SPAWN_DBG(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))

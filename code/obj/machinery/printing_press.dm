@@ -120,7 +120,7 @@
 				new/obj/effect/supplyexplosion(src.loc)
 				playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 				for(var/mob/M in view(7, src.loc))
-					shake_camera(M, 20, 1)
+					shake_camera(M, 20, 16)
 
 				sleep(2 SECONDS)
 				new /obj/item/electronics/frame/press_frame(src.loc)

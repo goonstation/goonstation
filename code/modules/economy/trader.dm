@@ -275,14 +275,6 @@
 							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-				sellitem = /obj/item/reagent_containers/food/snacks/ingredient/meat
-			if(ispath(sellitem, /obj/item/reagent_containers/food/snacks/plant))
-				sellitem = /obj/item/reagent_containers/food/snacks/plant
-			if(ispath(sellitem, /obj/item/electronics))
-				sellitem = /obj/item/electronics
-			if(ispath(sellitem, /obj/item/parts/robot_parts))
-				sellitem = /obj/item/parts/robot_parts
 			var/list/goods_buy_types
 			goods_buy_types = new /list(0)
 			for(var/datum/commodity/N in goods_buy)
@@ -750,6 +742,8 @@
 				src.goods_sell += new /datum/commodity/drugs/morphine(src)
 				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 				src.goods_sell += new /datum/commodity/drugs/lsd(src)
+				src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
+				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 				src.goods_sell += new /datum/commodity/pills/uranium(src)
 
 				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
@@ -1043,10 +1037,15 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/mime(src)
+		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
+		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+
+
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
@@ -1223,6 +1222,7 @@
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1273,7 +1273,7 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/mobius"
+	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32

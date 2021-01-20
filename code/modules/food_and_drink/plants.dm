@@ -58,7 +58,7 @@
 		..()
 
 	streak(var/list/directions)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			var/direction = pick(directions)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				sleep(0.3 SECONDS)
@@ -97,7 +97,7 @@
 	plant_reagent = "juice_tomato"
 	validforhat = 1
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
@@ -112,7 +112,7 @@
 	crop_prefix = "seething "
 	desc = "You say tomato, I toolbox you."
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		var/mob/living/carbon/human/H = A
 		var/datum/plantgenes/DNA = src.plantgenes
@@ -250,7 +250,8 @@
 			user.put_in_hand_or_drop(P)
 			var/datum/plantgenes/DNA = src.plantgenes
 			var/datum/plantgenes/PDNA = P.plantgenes
-			HYPpassplantgenes(DNA,PDNA)
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			pool(src)
 		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
@@ -266,7 +267,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -352,7 +354,8 @@
 				var/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge/P = new(T)
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -407,7 +410,8 @@
 				P.name = "[src.name] slice"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
 					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
@@ -457,7 +461,8 @@
 				P.name = "[src.name] slice"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
 					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
@@ -467,7 +472,7 @@
 			pool (src)
 		..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
 		if (ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
@@ -538,7 +543,7 @@
 		var/dmg = min(20, src.plantgenes.endurance / 5 + 3)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		var/mob/living/carbon/human/user = usr
 
 		if(hit_atom)
@@ -578,7 +583,8 @@
 					slice.reagents.inert = 0
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = slice.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				if(istype(hit_atom, /mob/living) && prob(1))
 					var/mob/living/dork = hit_atom
 					boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
@@ -712,7 +718,8 @@
 	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
-#if ASS_JAM
+
+
 /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	name = "sickly pear"
 	desc = "You'd definitely become terribly ill if you ate this."
@@ -729,7 +736,8 @@
 	make_reagents()
 		..()
 		reagents.add_reagent("too much",25)
-#endif
+
+
 /obj/item/reagent_containers/food/snacks/plant/peach/
 	name = "peach"
 	desc = "Feelin' peachy now, but after you eat it it's the pits."
@@ -766,19 +774,36 @@
 		M.take_brain_damage(0 - src.heal_amt)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/stick))
-			var/obj/item/stick/S = W
-			if(S.broken)
-				boutput(user, __red("You can't use a broken stick!"))
+		// Apple on a stick
+		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
+			// Fail if already an apple on a stick
+			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
+				boutput(user, __red("This apple already has a stick!"))
 				return
+
+			// Check for broken sticks
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, __red("You can't use a broken stick!"))
+					return
+
+			// Create apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
 				boutput(user, "<span class='notice'>You create an apple on a stick...</span>")
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
 			else
 				boutput(user, "<span class='notice'>You create a delicious apple on a stick...</span>")
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
-			W.amount--
+
+			// Consume a rod or stick
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+
+			// If no rods or sticks left, delete item
 			if(!W.amount) qdel(W)
+
+			// Consume apple
 			pool(src)
 		else ..()
 
@@ -934,7 +959,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -977,7 +1003,8 @@
 				P.name = "[src.name] wedge"
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			pool (src)
 		..()
@@ -1080,7 +1107,7 @@
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] sticks some wire into [src].", "You stick some wire into [src], creating a makeshift battery.")
 				var/datum/plantgenes/DNA = src.plantgenes
-				var/obj/item/ammo/power_cell/potato/P = new /obj/item/ammo/power_cell/potato(get_turf(src),DNA.potency)
+				var/obj/item/ammo/power_cell/self_charging/potato/P = new /obj/item/ammo/power_cell/self_charging/potato(get_turf(src),DNA.potency,DNA.endurance)
 				P.name = "[src.name] battery"
 				P.transform = src.transform
 				W:amount -= 1
@@ -1186,7 +1213,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 				makeslices -= 1
 			new /obj/item/reagent_containers/food/drinks/coconut(T)
 			pool (src)
@@ -1231,7 +1259,8 @@
 				P.transform = src.transform
 				var/datum/plantgenes/DNA = src.plantgenes
 				var/datum/plantgenes/PDNA = P.plantgenes
-				HYPpassplantgenes(DNA,PDNA)
+				if(DNA)
+					HYPpassplantgenes(DNA,PDNA)
 			pool (src)
 		..()
 

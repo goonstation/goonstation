@@ -8,12 +8,18 @@
 	var/client/client
 	var/tgui_pooled
 	var/pool_index
+	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
 	var/locked = FALSE
 	var/datum/tgui/locked_by
+	var/datum/subscriber_object
+	var/subscriber_delegate
 	var/fatally_errored = FALSE
 	var/message_queue
 	var/list/sent_assets
+	// Vars passed to initialize proc (and saved for later)
+	var/inline_assets
+	var/fancy
 
 /**
  * public
@@ -24,6 +30,7 @@
  * required id string A unique window identifier.
  */
 /datum/tgui_window/New(client/client, id, tgui_pooled = FALSE)
+	..()
 	src.id = id
 	src.client = client
 	src.tgui_pooled = tgui_pooled
@@ -41,17 +48,20 @@
  *
  * optional inline_assets list List of assets to inline into the html.
  */
-/datum/tgui_window/proc/initialize(inline_assets = list())
-	log_tgui(client, "[id]/initialize")
+/datum/tgui_window/proc/initialize(inline_assets = list(), inline_html = "", fancy = FALSE)
+	log_tgui(client,
+		context = "[id]/initialize",
+		window = src)
 	if(!client)
 		return
+	src.inline_assets = inline_assets
+	src.fancy = fancy
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
-	message_queue = null
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
 	// Remove titlebar and resize handles for a fancy window
-	if(client.preferences.tgui_fancy)
+	if(fancy)
 		options += "titlebar=0;can_resize=0;"
 	else
 		options += "titlebar=1;can_resize=1;"
@@ -59,53 +69,61 @@
 	var/html = tgui_process.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
 
-	// Process inline assets |GOONSTATION-CHANGE|
-	var/list/inline_styles = list()
-	var/list/inline_scripts = list()
+	// Inject inline assets
+	var/inline_assets_str = ""
 
 	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
 	for(var/datum/asset/asset in inline_assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
-				handle_cdn_asset(get_assets(subasset), inline_styles, inline_scripts)
+				inline_assets_str += handle_cdn_asset(get_assets(subasset))
 		else
-			handle_cdn_asset(get_assets(asset.type), inline_styles, inline_scripts)
+			inline_assets_str += handle_cdn_asset(get_assets(asset.type))
 
-	html = replacetextEx(html, "<!-- tgui:styles -->", inline_styles.Join())
-	html = replacetextEx(html, "<!-- tgui:scripts -->", inline_scripts.Join())
-
+	if(length(inline_assets_str))
+		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
+	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
+	// Inject custom HTML
+	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
+	// Detect whether the control is a browser
+	is_browser = winexists(client, id) == "BROWSER"
 	// Instruct the client to signal UI when the window is closed.
-	winset(client, id, "on-close=\"uiclose [id]\"")
+	if(!is_browser)
+		winset(client, id, "on-close=\"uiclose [id]\"")
 
-/** |GOONSTATION-ADD|
+// |GOONSTATION-ADD|
+/**
  * private
  *
- * Does Goonstation CDN shit to assets, essentially either throws in the url or the filepath to the asset.
+ * Parses our asset structures for the Goonstation CDN setup
  *
+ * return: the string to put in the html window
  */
-/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset, list/inline_styles, list/inline_scripts)
+/datum/tgui_window/proc/handle_cdn_asset(datum/asset/asset)
+	var/list/loadAssetStrings = list()
 	// Operating locally. Deliver what assets we can manually.
 	if (!cdn)
 		asset.deliver(client)
 		if (istype(asset, /datum/asset/basic))
 			var/datum/asset/basic/b = asset
-			for (var/file in b.local_assets)
-				if(copytext(file, -4) == ".css")
-					inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[file]\">\n"
-				else if(copytext(file, -3) == ".js")
-					inline_scripts += "<script type=\"text/javascript\" defer src=\"[file]\"></script>\n"
+			for (var/url in b.local_assets)
+				if(copytext(url, -4) == ".css")
+					loadAssetStrings += "Byond.loadCss('[url]', true);\n"
+				else if(copytext(url, -3) == ".js")
+					loadAssetStrings += "Byond.loadJs('[url]', true);\n"
 	else
 		var/url_map = asset.get_associated_urls()
 		for(var/name in url_map)
 			var/url = url_map[name]
-			// Not urlencoding since asset strings are considered safe
+			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+				loadAssetStrings += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
+				loadAssetStrings += "Byond.loadJs('[url]', true);\n"
+	. = loadAssetStrings.Join("")
 
 /**
  * public
@@ -159,6 +177,28 @@
 /**
  * public
  *
+ * Subscribes the datum to consume window messages on a specified proc.
+ *
+ * Note, that this supports only one subscriber, because code for that
+ * is simpler and therefore faster. If necessary, this can be rewritten
+ * to support multiple subscribers.
+ */
+/datum/tgui_window/proc/subscribe(datum/object, delegate)
+	subscriber_object = object
+	subscriber_delegate = delegate
+
+/**
+ * public
+ *
+ * Unsubscribes the datum. Do not forget to call this when cleaning up.
+ */
+/datum/tgui_window/proc/unsubscribe(datum/object)
+	subscriber_object = null
+	subscriber_delegate = null
+
+/**
+ * public
+ *
  * Close the UI.
  *
  * optional can_be_suspended bool
@@ -167,11 +207,15 @@
 	if(!client)
 		return
 	if(can_be_suspended && can_be_suspended())
-		log_tgui(client, "[id]/close: suspending")
+		log_tgui(client,
+			context = "[id]/close (suspending)",
+			window = src)
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
-	log_tgui(client, "[id]/close")
+	log_tgui(client,
+		context = "[id]/close",
+		window = src)
 	release_lock()
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null
@@ -189,22 +233,40 @@
  * required payload list Message payload
  * optional force bool Send regardless of the ready status.
  */
-/datum/tgui_window/proc/send_message(type, list/payload, force)
+/datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
-	var/message = json_encode(list(
-		"type" = type,
-		"payload" = payload,
-	))
-	// Pack for sending via output()
-	message = url_encode(message)
+	var/message = TGUI_CREATE_MESSAGE(type, payload)
 	// Place into queue if window is still loading
 	if(!force && status != TGUI_WINDOW_READY)
 		if(!message_queue)
 			message_queue = list()
 		message_queue += list(message)
 		return
-	client << output(message, "[id].browser:update")
+	client << output(message, is_browser \
+		? "[id]:update" \
+		: "[id].browser:update")
+
+/**
+ * public
+ *
+ * Sends a raw payload to tgui window.
+ *
+ * required message string JSON+urlencoded blob to send.
+ * optional force bool Send regardless of the ready status.
+ */
+/datum/tgui_window/proc/send_raw_message(message, force)
+	if(!client)
+		return
+	// Place into queue if window is still loading
+	if(!force && status != TGUI_WINDOW_READY)
+		if(!message_queue)
+			message_queue = list()
+		message_queue += list(message)
+		return
+	client << output(message, is_browser \
+		? "[id]:update" \
+		: "[id].browser:update")
 
 /**
  * public
@@ -229,7 +291,9 @@
 	if(!client || !message_queue)
 		return
 	for(var/message in message_queue)
-		client << output(message, "[id].browser:update")
+		client << output(message, is_browser \
+			? "[id]:update" \
+			: "[id].browser:update")
 	message_queue = null
 
 /**
@@ -238,25 +302,44 @@
  * Callback for handling incoming tgui messages.
  */
 /datum/tgui_window/proc/on_message(type, list/payload, list/href_list)
-	switch(type)
-		if("ready")
-			// Status can be READY if user has refreshed the window.
-			if(status == TGUI_WINDOW_READY)
-				// Resend the assets
-				for(var/asset in sent_assets)
-					send_asset(asset)
-			status = TGUI_WINDOW_READY
-		if("log")
-			if(href_list["fatal"])
-				fatally_errored = TRUE
+	// Status can be READY if user has refreshed the window.
+	if(type == "ready" && status == TGUI_WINDOW_READY)
+		// Resend the assets
+		for(var/asset in sent_assets)
+			send_asset(asset)
+	// Mark this window as fatally errored which prevents it from
+	// being suspended.
+	if(type == "log" && href_list["fatal"])
+		fatally_errored = TRUE
+	// Mark window as ready since we received this message from somewhere
+	if(status != TGUI_WINDOW_READY)
+		status = TGUI_WINDOW_READY
+		flush_message_queue()
 	// Pass message to UI that requested the lock
 	if(locked && locked_by)
-		locked_by.on_message(type, payload, href_list)
-		flush_message_queue()
-		return
+		var/prevent_default = locked_by.on_message(type, payload, href_list)
+		if(prevent_default)
+			return
+	// Pass message to the subscriber
+	else if(subscriber_object)
+		var/prevent_default = call(
+			subscriber_object,
+			subscriber_delegate)(type, payload, href_list)
+		if(prevent_default)
+			return
 	// If not locked, handle these message types
 	switch(type)
+		if("ping")
+			send_message("pingReply", payload)
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
 			close(can_be_suspended = FALSE)
+		if("openLink")
+			client << link(href_list["url"])
+		if("cacheReloaded")
+			// Reinitialize
+			initialize(inline_assets = inline_assets, fancy = fancy)
+			// Resend the assets
+			for(var/asset in sent_assets)
+				send_asset(asset)

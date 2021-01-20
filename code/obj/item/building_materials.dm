@@ -19,7 +19,7 @@ MATERIAL
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/window_reinforce_full_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
-	W.dir = SOUTHWEST
+	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
 	if (!istype(W))
 		return
@@ -56,7 +56,7 @@ MATERIAL
 		SPAWN_DBG(0)
 			update_appearance()
 		create_inventory_counter()
-		BLOCK_ALL
+		BLOCK_SETUP(BLOCK_ALL)
 
 	proc/amount_check(var/use_amount,var/mob/user)
 		if (src.amount < use_amount)
@@ -133,7 +133,7 @@ MATERIAL
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+			if (S.material && src.material && !isSameMaterial(S.material, src.material))
 				// build glass tables
 				if (src.material.material_flags & MATERIAL_METAL && S.material.material_flags & MATERIAL_CRYSTAL) // we're a metal and they're a glass
 					if (src.amount_check(1,usr) && S.amount_check(2,usr))
@@ -155,7 +155,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && (S.reinforcement.mat_id != src.reinforcement.mat_id)))
+			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
@@ -219,12 +219,12 @@ MATERIAL
 			//boutput(world, "check valid stack check 1 failed")
 			return 0
 		var/obj/item/sheet/S = O
-		if (!S.material)
+		if (!S.material || !src.material)
 			return 0
 		if (S.material.type != src.material.type)
 			//boutput(world, "check valid stack check 2 failed")
 			return 0
-		if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+		if (S.material && src.material && !isSameMaterial(S.material, src.material))
 			//boutput(world, "check valid stack check 3 failed")
 			return 0
 		if ((src.reinforcement && !S.reinforcement) || (S.reinforcement && !src.reinforcement))
@@ -234,7 +234,7 @@ MATERIAL
 			if (src.reinforcement.type != S.reinforcement.type)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (S.reinforcement.mat_id != src.reinforcement.mat_id)
+			if (!isSameMaterial(S.reinforcement, src.reinforcement))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -624,7 +624,7 @@ MATERIAL
 	New()
 		..()
 		update_icon()
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
 
 	check_valid_stack(atom/movable/O as obj)
 		if (!istype(O,/obj/item/rods/))
@@ -634,7 +634,7 @@ MATERIAL
 			return 0
 		if (S.material.type != src.material.type)
 			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
@@ -712,7 +712,7 @@ MATERIAL
 			if (R.amount == src.max_stack)
 				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
-			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+			if (W.material && src.material && !isSameMaterial(W.material, src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
@@ -772,7 +772,7 @@ MATERIAL
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = usr.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned"))
+				if (T == usr.loc && !usr.getStatusDuration("weakened") && !usr.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(usr.loc)
 					G.setMaterial(src.material)
 					src.consume_rods(2)
@@ -781,9 +781,16 @@ MATERIAL
 		return
 
 	proc/consume_rods(var/use_amount)
+		. = 0
 		if (!isnum(amount))
-			return
-		src.amount = max(0,amount - use_amount)
+			return 0
+		if(amount < 1)
+			return 0
+		if(amount < use_amount)
+			. = 0
+		else
+			src.amount = max(0,amount - use_amount)
+			. = 1
 		if (amount < 1)
 			if (isliving(src.loc))
 				var/mob/living/L = src.loc
@@ -791,7 +798,6 @@ MATERIAL
 			qdel(src)
 		else
 			update_icon()
-		return
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -805,6 +811,7 @@ MATERIAL
 	var/bloodiness = 0 //
 
 	New()
+		..()
 		SPAWN_DBG(0) //wait for the head to be added
 			update()
 
@@ -901,7 +908,7 @@ MATERIAL
 				H.pixel_x = 0
 				H.pixel_y = pixely
 				pixely += 8
-				H.dir = SOUTH
+				H.set_dir(SOUTH)
 				src.overlays += H
 
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_flies")
@@ -987,9 +994,7 @@ MATERIAL
 		var/obj/item/tile/S = O
 		if (!S.material || !src.material)
 			return 0
-		if (S.material.type != src.material.type)
-			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
@@ -1036,11 +1041,6 @@ MATERIAL
 			else
 				src.build(S)
 				tooltip_rebuild = 1
-		if (src.amount < 1)
-			if (!issilicon(user))
-				user.u_equip(src)
-				qdel(src)
-			return
 		src.add_fingerprint(user)
 		return
 
@@ -1081,7 +1081,7 @@ MATERIAL
 
 	proc/build(turf/S as turf)
 		if (src.amount < 1)
-			return
+			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
 		if (W) //Wire: Fix for: Cannot read null.icon_old
 			W.inherit_area()
@@ -1091,9 +1091,10 @@ MATERIAL
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
-		src.amount--
-		inventory_counter?.update_number(amount)
-		return
+		if(src.material)
+			W.setMaterial(src.material)
+		src.change_stack_amount(-1)
+		return TRUE
 
 /obj/item/tile/steel
 

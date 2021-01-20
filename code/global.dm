@@ -25,37 +25,31 @@ var/global
 
 	lagcheck_enabled = 0
 
+	vpn_blacklist_enabled = TRUE
+
 	datum/datacore/data_core = null
 
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
-
 	turf/buzztile = null
-
-	list/list/by_type = list() // contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
 
 	obj/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
+	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/mobs = list()
 	list/ai_mobs = list()
-	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
 	list/processing_items = list()
 	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
 	list/processing_fluid_turfs = list()
-	list/light_generating_fluid_turfs = list()
 	list/warping_mobs = list()
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	list/critters = list()
-	list/pets = list() //station pets
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -72,6 +66,10 @@ var/global
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 
+	list/browse_item_icons = list()
+	list/browse_item_clients = list()
+	browse_item_initial_done = 0
+
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
 	list/materialProps = list() //Contains instances of the material property datums
@@ -84,11 +82,7 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/pods_and_cruisers = list() //things that we want enemy gunbots or turrets etc to target that are not mobs (keep this list small and use it for vehicles mainly)
-
 	list/spacePushList = list()
-
-	list/nervous_mobs = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -111,7 +105,6 @@ var/global
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/customization_styles = list("None" = "none",
@@ -232,6 +225,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
 	"Tramp" = "tramp",
@@ -397,7 +391,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goon Station 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + vcs_revision + ")"
 
 	master_mode = "traitor"
 
@@ -457,6 +451,11 @@ var/global
 	netpass_syndicate = null //Detomatix
 
 	///////////////
+	//cyberorgan damage thresholds for emagging without emag
+	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+
+	///////////////
 	list/logs = list ( //Loooooooooogs
 		"admin_help" = list (  ),
 		"speech" = list (  ),
@@ -487,52 +486,10 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 
-	list/monkeystart = list()
-	list/wizardstart = list()
-	list/predstart = list()
-	list/syndicatestart = list()
-	list/battle_royale_spawn = list()
-	list/newplayer_start = list()
-	list/latejoin = list()
-	list/rp_latejoin = list()
-	list/observer_start = list()
-	list/clownstart = list()
-	list/prisonwarp = list()	//prisoners go to these
-	//list/mazewarp = list()
-	list/tdome1 = list()
-	list/tdome2 = list()
-	list/prisonsecuritywarp = list()	//prison security goes to these
 	list/prisonwarped = list()	//list of players already warped
-	list/blobstart = list()
-	list/kudzustart = list()
-	list/peststart = list()
 	list/wormholeturfs = list()
-	list/halloweenspawn = list()
-	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
-						  // telesci landmarks add a 3z3 area centered on themselves to this list
-	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
-	list/iceelefall = list() // list of locations for people to fall if they enter the ice moon elevator shaft
-	list/deepfall = list() // list of locations for people to fall into the precursor pit area
-	list/ancientfall = list() // list of locations for people to fall into the ancient pit area
-	list/greekfall = list() // list of locations for people to fall into the greek pit area
-	list/bioelefall = list() // biodome elevator shaft
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-	list/moonfall_hemera = list() //Hemera lunar office elevator shaft
-	list/moonfall_museum = list() //Lunar museum elevator shaft
-	list/seafall = list() // oshan trench elevator
-	list/escape_pod_success = list() // escape pods flying to the shuttle
-	list/polarisfall = list() // list of locations for people to fall if they enter the deep in the trench
-
-#ifdef TWITCH_BOT_ALLOWED
-	list/billspawn = list() // shitty bill twitch bot respawn
-#endif
-	list/shittybills = list()
-	list/johnbills = list()
-	list/otherbills = list()
-	list/teleport_jammers = list()
-
-
 
 	// Controllers
 	datum/research/disease/disease_research = new()
@@ -579,13 +536,6 @@ var/global
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
 
-	global_jobban_cache = ""		// once jobban list is ready this is set to a giant string of all the jobban data. the new panel chops it up for use client side with javascript
-	global_jobban_cache_rev = 0 	// increments every time the ban panel is built so clients know if they have the latest
-	global_jobban_cache_built = 0	// set to world.timeofday when the cache is built
-
-	building_jobbans = 0	// ditto
-	jobban_count = 0		// ditto
-
 	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
 	list/chemical_reactions_cache = list()
 
@@ -598,9 +548,6 @@ var/global
 
 	// list of miscreants since mode is irrelevant
 	list/miscreants = list()
-
-	// list of ghost-respawn critters for objective tracking
-	list/reincarnated_critters = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
@@ -674,7 +621,7 @@ var/global
 
 	pregameHTML = null
 
-	list/cooldowns = list()
+	list/cooldowns
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
 
@@ -722,10 +669,13 @@ var/global
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key)
+/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
 	if(I && length(key))
-		aiImages[key] = I
-		for(var/mob/M in by_type[/mob/living/silicon/ai])
+		if(low_priority)
+			aiImagesLowPriority[key] = I
+		else
+			aiImages[key] = I
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.client)
 				M << I
 		return I
@@ -733,6 +683,7 @@ var/global
 
 /proc/getAIImage(var/key)
 	if(length(key) && aiImages[key]) return aiImages[key]
+	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
 	else return null
 
 /proc/removeAIImage(var/key)
@@ -741,4 +692,43 @@ var/global
 			C.images -= aiImages[key]
 		aiImages[key] = null
 		aiImages.Remove(key)
+	if(length(key) && aiImagesLowPriority[key])
+		for(var/client/C in clients)
+			C.images -= aiImagesLowPriority[key]
+		aiImagesLowPriority[key] = null
+		aiImagesLowPriority.Remove(key)
 	return
+
+/// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
+// Note that a client that clears its cache won't get new icons. Deal with it. BYOND's browse_rsc is shite.
+/proc/getItemIcon(var/atom/path, var/state, var/dir, var/key = null, var/client/C)
+	if (!key)
+		if (!state)
+			state = initial(path.icon_state)
+		if (!dir)
+			dir = initial(path.dir)
+
+		key = replacetext("[path]-[state]-[dir].png", "/", "~")
+		if (!browse_item_icons[key])
+			browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
+
+	if (C && !(C in browse_item_clients[key]))
+		if (!browse_item_clients[key])
+			browse_item_clients[key] = list()
+		C << browse_rsc(browse_item_icons[key], key)
+		browse_item_clients[key] += C
+
+	return key
+
+/// Sends all of the item icons to a client. Kinda gross, but whatever.
+// The worst part of this is that client latency impacts this, so someone who is running slow
+// is probably gonna break everything.
+/proc/sendItemIcons(var/client/C)
+	for (var/key in browse_item_icons)
+		getItemIcon(key = key, C = C)
+
+/// Sends all item icons to all clients. Used at world startup to preload things.
+/proc/sendItemIconsToAll()
+	browse_item_initial_done = 1
+	for (var/client/C in clients)
+		sendItemIcons(C)

@@ -206,13 +206,13 @@
 					var/turf/newTile = get_turf(pos)
 					newTile.ReplaceWith(T.tiletype)
 					newTile.icon_state = T.state
-					newTile.dir = T.direction
+					newTile.set_dir(T.direction)
 					newTile.inherit_area()
 
 				for(var/datum/objectinfo/O in T.objects)
 					if(O.objecttype == null) continue
 					var/atom/A = new O.objecttype(pos)
-					A.dir = O.direction
+					A.set_dir(O.direction)
 					A.layer = O.layer
 					A.pixel_x = O.px
 					A.pixel_y = O.py
@@ -322,7 +322,7 @@
 				//boutput(world, newObjType + " - " + O.objecttype)
 				if(O.objecttype == null) continue
 				var/atom/A = new O.objecttype(pos)
-				A.dir = O.direction
+				A.set_dir(O.direction)
 				A.layer = O.layer
 				A.pixel_x = O.px
 				A.pixel_y = O.py
@@ -351,7 +351,7 @@
 	var/mob/using = null
 
 	var/roomname = "NewRoom"
-	var/list/roomList = new/list()
+	var/list/turf/roomList = new/list()
 
 	var/list/permittedObjectTypes = list(\
 	"/obj/closet", \
@@ -430,8 +430,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/a in roomList)
-			var/turf/t = a
+		for(var/turf/t as() in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -451,7 +450,7 @@
 			return
 
 		if(roomList.Find(target))
-			if (using && using.client)
+			if (using?.client)
 				using.client.images -= roomList[target]
 			roomList.Remove(target)
 		else
@@ -462,18 +461,17 @@
 		return
 
 	New()
-
-		return
+		..()
 
 	proc/removeOverlays()
-		if (using && using.client)
+		if (using?.client)
 			for(var/a in roomList)
 				var/image/i = roomList[a]
 				using.client.images -= i
 		return
 
 	proc/updateOverlays()
-		if (using && using.client)
+		if (using?.client)
 			removeOverlays()
 			for(var/a in roomList)
 				var/image/i = roomList[a]
@@ -500,8 +498,7 @@
 		var/maxx = 0
 		var/maxy = 0
 
-		for(var/a in roomList)
-			var/turf/t = a
+		for(var/turf/t as() in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 

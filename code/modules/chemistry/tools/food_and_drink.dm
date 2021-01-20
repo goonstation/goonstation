@@ -92,6 +92,7 @@
 	module_research = list("cuisine" = 6)
 	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
+	var/has_cigs = 0
 
 	var/use_bite_mask = 1
 	var/current_mask = 5
@@ -139,8 +140,8 @@
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
-					if (!(locate(/obj/reagent_dispensers/ants) in src.loc))
-						new/obj/reagent_dispensers/ants(src.loc)
+					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
+						new/obj/reagent_dispensers/cleanable/ants(src.loc)
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -176,8 +177,7 @@
 		// in this case m is the consumer and user is the one holding it
 		if (!src.edible)
 			return 0
-		if (M == user && user.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
+		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
 		if (!src.amount)
 			boutput(user, "<span class='alert'>None of [src] left, oh no!</span>")
@@ -186,6 +186,10 @@
 			return 0
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
+				//can this person eat this food?
+				if(!M.can_eat(src))
+					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
+					return 0
 				if (!bypass_utensils)
 					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
@@ -210,7 +214,6 @@
 						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
 							S.break_utensil(M)
 							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
 
 				//no or broken stomach
 				if (ishuman(M))
@@ -232,8 +235,8 @@
 				if (src.festivity)
 					modify_christmas_cheer(src.festivity)
 				if (!src.amount)
-					//M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					//"<span class='alert'>You finish eating [src].</span>")
+					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
+					"<span class='alert'>You finish eating [src].</span>")*/
 					boutput(M, "<span class='alert'>You finish eating [src].</span>")
 					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 						var/obj/item/reagent_containers/food/snacks/plant/P = src
@@ -270,11 +273,13 @@
 					on_finish(M, user)
 					qdel(src)
 				return 1
-			if (M.mob_flags & IS_RELIQUARY)
-				boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
-				return
-			else if (check_target_immunity(M))
+			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+			else if(!M.can_eat(src))
+				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
+				user, "<span class='alert'>You try to feed [M] [src], but they can't eat that!</span>",\
+				M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't eat that!</span>")
+				return 0
 			else
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 				user, "<span class='alert'>You try to feed [M] [src]!</span>",\
@@ -324,7 +329,7 @@
 		return
 
 	proc/on_bite(mob/eater)
-		//if (reagents && reagents.total_volume)
+		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
 		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
 
@@ -353,6 +358,7 @@
 				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
+		eater.on_eat(src)
 
 	proc/on_finish(mob/eater)
 		return
@@ -468,9 +474,6 @@
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
-		if (M == user && user.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in drinking this.</span>")
-			return 0
 		if (!src.reagents || !src.reagents.total_volume)
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
@@ -478,9 +481,6 @@
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
-			else if (M.mob_flags & IS_RELIQUARY)
-				boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to make them drink.</span>")
-				return 0
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
@@ -494,7 +494,7 @@
 					return
 				user.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>")
 
-			if (M.mind && M.mind.assigned_role == "Barman")
+			if (M.mind && M.mind.assigned_role == "Bartender")
 				var/reag_list = ""
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
@@ -516,8 +516,8 @@
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
-				SPAWN_DBG (5)
-					if (src && src.reagents && M && M.reagents)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
 			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)
@@ -891,11 +891,11 @@
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Barman")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Barman")
+		else if (user.mind && user.mind.assigned_role == "Bartender")
 			success_prob = 50
 			hurt_prob = 10
 
@@ -1046,6 +1046,8 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1058,6 +1060,8 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
+			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				JOB_XP(user, "Bartender", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1102,6 +1106,8 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1127,7 +1133,7 @@
 			return ..()
 
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with [src].</span>")
 			return
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
@@ -1140,13 +1146,13 @@
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
 				choices += "eat [src.in_glass]"
 		if (src.wedge)
-			choices += "remove [src.wedge] wedge"
-			choices += "eat [src.wedge] wedge"
+			choices += "remove [src.wedge]"
+			choices += "eat [src.wedge]"
 		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with the glass.</span>")
+			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
 
-		var/selection = input(user, "What do you want to do with the glass?") as null|anything in choices
+		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
 		if (isnull(selection) || get_dist(src, user) > 1)
 			return
 
@@ -1171,7 +1177,7 @@
 			remove_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "remove [src.wedge] wedge")
+		else if (selection == "remove [src.wedge]")
 			remove_thing = src.wedge
 			src.wedge = null
 
@@ -1179,7 +1185,7 @@
 			eat_thing = src.in_glass
 			src.in_glass = null
 
-		else if (selection == "eat [src.wedge] wedge")
+		else if (selection == "eat [src.wedge]")
 			eat_thing = src.wedge
 			src.wedge = null
 
@@ -1262,7 +1268,7 @@
 			actions.start(new /datum/action/bar/icon/drinkingglass_chug(C, src), C)
 		return
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
 
@@ -1275,11 +1281,11 @@
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/glass
 
 	New(mob/Target, obj/item/reagent_containers/food/drinks/drinkingglass/Glass)
-		target= Target
+		..()
+		target = Target
 		glass = Glass
 		icon = glass.icon
 		icon_state = glass.icon_state
-		return
 
 	proc/checkContinue()
 		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
@@ -1553,6 +1559,7 @@
 	item_state = "drink_glass"
 	rc_flags = RC_SPECTRO
 	initial_volume = 15
+	can_recycle = 0
 
 /obj/item/reagent_containers/food/drinks/espressocup
 	name = "espresso cup"
@@ -1599,8 +1606,8 @@
 			var/average_rgb = average.to_rgba()
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-carafe", -1)
-				src.fluid_image.color = average_rgb
-				src.UpdateOverlays(src.fluid_image, "fluid")
+			src.fluid_image.color = average_rgb
+			src.UpdateOverlays(src.fluid_image, "fluid")
 			if (istype(src.loc, /obj/machinery/coffeemaker))
 				var/obj/machinery/coffeemaker/CM = src.loc
 				CM.update(average_rgb)
@@ -1625,7 +1632,7 @@
 			G.set_loc(src.loc)
 		qdel(src)
 
-	throw_impact(var/atom/A)
+	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
@@ -1707,7 +1714,7 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "GannetsCocktailer"
+	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
 
@@ -1723,5 +1730,12 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
+				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+	name = "golden cocktail shaker"
+	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	icon_state = "golden_cocktailshaker"

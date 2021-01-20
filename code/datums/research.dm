@@ -28,7 +28,8 @@
 
 
 	New()
-	//Max tiers is the maximum, make sure this is kept whenever research is created
+		..()
+		//Max tiers is the maximum, make sure this is kept whenever research is created
 		if(src.starting_tier > src.max_tiers)
 			src.starting_tier = src.max_tiers
 		src.tier = src.starting_tier

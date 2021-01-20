@@ -43,49 +43,48 @@
 
 
 /obj/landmark/gps_waypoint
-	name = "GPS Waypoint"
-	New()
-		..()
-		if(name != "GPS Waypoint") return
-		var/area/A = get_area(src)
-		name = A.name
+	icon_state = "gps"
+	name = LANDMARK_GPS_WAYPOINT
 
 /client/var/list/GPS_Path
 /client/var/list/GPS_Images
 /mob/proc/DoGPS(var/ID)
-	if( client.GPS_Path )
-		client.GPS_Path = null
-		for( var/image/img in client.GPS_Images )
-			client.images -= img
-		client.GPS_Images = list()
-		boutput( usr, "Path removed!" )
+	if(removeGpsPath())
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
-	for( var/obj/landmark/gps_waypoint/wp in landmarks)//world )
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175)
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
+		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=300)
 		if(path)
-			targets[wp.name] = wp
-			wtfbyond[++wtfbyond.len] = wp.name
+			var/area/area = get_area(wp)
+			var/name = area.name
+			targets[name] = wp
+			wtfbyond[++wtfbyond.len] = name
 
 	if(!targets.len)
 		boutput( usr, "No targets found! Try again later!" )
 		return
-	world << targets.len
+
 	var/target = input("Choose a destination!") in wtfbyond|null
 	if(!target || !src.client) return
 	target = targets[target]
-	var/turf/dest = get_turf(target)
-	if(dest.z != OT.z)
-		boutput(usr, "You are on a different z-level!")
+	gpsToTurf(target, param = ID)
+
+/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, var/heuristic = /turf/proc/AllDirsTurfsWithAccess, param = null)
+	removeGpsPath(doText)
+	var/turf/start = get_turf(src)
+	if(dest.z != start.z)
+		if(doText)
+			boutput(usr, "You are on a different z-level!")
 		return
-	OT = get_turf(src)
-	client.GPS_Path = AStar( OT, dest, /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=175 )
-	if( client.GPS_Path )
-		boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
+	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=175 )
+	if(client.GPS_Path)
+		if(doText)
+			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
 	else
-		boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
+		if(doText)
+			boutput( usr, "Could not locate a path! Try moving around, or if its an area you don't have access to, get more access!" )
 		return
 	client.GPS_Images = list()
 	SPAWN_DBG(0)
@@ -113,12 +112,23 @@
 			animate(img,alpha=255,transform=xf,time=2)
 			sleep(0.1 SECONDS)
 
+/mob/proc/removeGpsPath(doText = 1)
+	if( client.GPS_Path )
+		client.GPS_Path = null
+		for( var/image/img in client.GPS_Images )
+			client.images -= img
+		client.GPS_Images = list()
+		if(doText)
+			boutput( usr, "Path removed!" )
+		return 1
+	return 0
+
 /mob/living/carbon/verb/GPS()
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 10 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/carbon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0))].")
 		return
 	if(hasvar(src,"wear_id"))
 		DoGPS(src:wear_id)
@@ -126,8 +136,8 @@
 	set name = "GPS"
 	set category = "Commands"
 	set desc = "Find your way around with ease!"
-	if(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 10 SECONDS)) // using ..... is very wacked
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, /mob/living/silicon/verb/GPS, 0))].")
+	if(PROC_ON_COOLDOWN(10 SECONDS))
+		boutput(src, "Verb on cooldown for [time_to_text(PROC_ON_COOLDOWN(0 SECONDS))].")
 		return
 	DoGPS(src.botcard)
 /*
@@ -172,7 +182,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.override = 1
 			t.aiImage.name = " "
 		aiDirty = 1
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		for(var/turf/t in view(7, C))
 			//var/dist = get_dist(t, C)
 			t.aiImage.alpha = 0
@@ -231,11 +241,11 @@ world/proc/updateCameraVisibility()
 		if (!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if (NewLoc)
-			dir = get_dir(loc, NewLoc)
+			set_dir(get_dir(loc, NewLoc))
 			src.set_loc(NewLoc)
 		else
 
-			dir = direct
+			set_dir(direct)
 			if((direct & NORTH) && src.y < world.maxy)
 				src.y++
 			if((direct & SOUTH) && src.y > 1)
@@ -264,7 +274,7 @@ world/proc/updateCameraVisibility()
 	.=..()
 	for(var/turf/t in range(7, src))
 		t.cameraTotal = 0
-	for(var/obj/machinery/camera/C in by_type[/obj/machinery/camera])
+	for_by_tcl(C, /obj/machinery/camera)
 		if( get_dist(C.loc, src) <= 7 )
 			var/list/inview = view(7,C)
 			for(var/turf/t in range(7, C))
@@ -294,7 +304,6 @@ world/proc/updateCameraVisibility()
 	desc = "To avoid arousing too much suspicion, this fella converts single-phase power to three-phase. Sure, that power is passed down via a 24 AWG USB cable, but it's probably fine."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "vfd"
-	New()
 /obj/somepotato/billiards
 	name = "Billiards Table"
 	desc = "Who in God's name would get enjoyment at beating polyester spheres with wooden sticks???"

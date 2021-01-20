@@ -295,7 +295,7 @@
 				return
 
 			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 				if (OS)
 					src.set_loc(OS)
 				else
@@ -658,7 +658,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else
@@ -756,6 +756,10 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
+/mob/living/intangible/blob_overmind/checkContextActions(atom/target)
+	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
+	return list()
+
 /mob/proc/make_blob()
 	if (!src.client && !src.mind)
 		return null
@@ -763,13 +767,13 @@
 
 	var/turf/T = get_turf(src)
 	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = observer_start.len ? pick(observer_start) : locate(1, 1, 1)
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (ASLoc)
 			W.set_loc(ASLoc)
 		else
 			W.z = 1
 	else
-		W.set_loc(pick(latejoin))
+		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 	if (src.mind)
 		src.mind.transfer_to(W)
@@ -778,6 +782,7 @@
 		if (src.client)
 			src.client.mob = W
 		W.mind = new /datum/mind()
+		W.mind.ckey = ckey
 		W.mind.key = key
 		W.mind.current = W
 		ticker.minds += W.mind

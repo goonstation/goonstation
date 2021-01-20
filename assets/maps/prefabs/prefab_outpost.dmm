@@ -1,4 +1,4 @@
-"aa" = (/turf/space,/area)
+"aa" = (/turf/space,/area/space)
 "ab" = (/turf/space,/area/noGenerate)
 "ac" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)
 "ad" = (/obj/decal/poster/wallsign/poster_discount,/turf/simulated/wall/auto/reinforced/supernorn,/area/mining/miningoutpost)

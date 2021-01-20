@@ -28,7 +28,7 @@
 		if (isobj(target))
 			var/obj/O = target
 			for (var/mob/C in oviewers(ow))
-				shake_camera(C, 2, 1)
+				shake_camera(C, 2, 8)
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws", "flings", "launches")
 			var/kicktype = pick("kick", "roundhouse", "thrust")
@@ -67,10 +67,10 @@
 
 			M.emote("scream")
 			M.emote("flip")
-			M.dir = turn(M.dir, 90)
+			M.set_dir(turn(M.dir, 90))
 
 			for (var/mob/C in oviewers(M))
-				shake_camera(C, 2, 1)
+				shake_camera(C, 2, 8)
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws")
 			var/kicktype = pick("kick", "roundhouse", "thrust")

@@ -67,7 +67,7 @@
 	var/fingerprints
 	var/traitor_name
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
-	if(prob(prob_right_dude) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/traitor)))
+	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/traitor)))
 		if (correct_mob)
 			traitor_name = correct_mob:current
 	else if(prob(prob_right_dude))
@@ -98,7 +98,7 @@
 		var/list/job_tmp = get_all_jobs()
 		job_tmp.Remove("Captain", "Security Officer", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
 		traitor_job = pick(job_tmp)
-	if(prob(prob_right_dude) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if (correct_mob)
 			traitor_name = correct_mob:current
 	else

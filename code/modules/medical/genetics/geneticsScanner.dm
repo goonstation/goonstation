@@ -35,7 +35,9 @@ var/list/genescanner_addresses = list()
 		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
-		occupant = null
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
 		..()
 
 	allow_drop()
@@ -244,11 +246,14 @@ var/list/genescanner_addresses = list()
 		if (src.locked)
 			return
 
-		for(var/obj/O in src)
-			O.set_loc(src.loc)
+		if(!src.occupant.disposed)
+			src.occupant.set_loc(src.loc)
 
-		src.occupant.set_loc(src.loc)
 		src.occupant = null
+
+		for(var/atom/movable/A in src)
+			A.set_loc(src.loc)
+
 		src.icon_state = "scanner_0"
 
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
@@ -293,7 +298,7 @@ var/list/genescanner_addresses = list()
 		return
 
 	disposing()
-		if(usercl && usercl.mob)
+		if(usercl?.mob)
 			usercl.mob.Browse(null, "window=geneticsappearance")
 			usercl = null
 		target_mob = null
@@ -434,6 +439,7 @@ var/list/genescanner_addresses = list()
 			target_mob.bioHolder.mobAppearance.customization_third_color = customization_third_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
+			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
 			if (target_mob.limbs)
 				target_mob.limbs.reset_stone()
 
@@ -459,6 +465,7 @@ var/list/genescanner_addresses = list()
 				if(!target_mob.cust_three_state)
 					target_mob.cust_three_state = "None"
 
+			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
 

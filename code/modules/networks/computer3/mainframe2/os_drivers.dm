@@ -360,7 +360,7 @@
 				F.holding_folder = src
 				src.contents_mirror += F
 				arc.contained_files -= F
-				//boutput(world, "Scooting over \ref[F] [F && F.disposed]")
+				//boutput(world, "Scooting over \ref[F] [F?.disposed]")
 				if (!F.metadata)
 					F.metadata = list()
 

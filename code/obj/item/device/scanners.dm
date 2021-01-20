@@ -29,8 +29,7 @@ Contains:
 		set_icon_state("t-ray[on]")
 		boutput(user, "You switch [src] [on ? "on" : "off"].")
 
-		if(on && !(src in processing_items))
-			processing_items.Add(src)
+		if(on) processing_items |= src
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -77,7 +76,7 @@ Contains:
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -112,7 +111,7 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M && M.invisibility == 2)
+			if(M?.invisibility == 2)
 				M.invisibility = 0
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
@@ -146,8 +145,9 @@ that cannot be itched
 
 		src.add_fingerprint(user)
 
+		var/holder = src.loc
 		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-		if (!search || user.stat)
+		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
 		search = lowertext(search)
@@ -169,7 +169,7 @@ that cannot be itched
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
-		if (get_dist(A,user) > 1) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
+		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
@@ -201,7 +201,7 @@ that cannot be itched
 			icon_state = "fs"
 			active = 0
 			return
-		src.dir = get_dir(src,target)
+		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
 			if(0)
 				icon_state = "fs_pindirect"
@@ -439,7 +439,7 @@ that cannot be itched
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1)
+		if (get_dist(A, user) > 1 || istype(A, /obj/ability_button))
 			return
 
 		if (istype(A, /obj) || isturf(A))
@@ -523,14 +523,14 @@ that cannot be itched
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////
 
 /obj/item/device/prisoner_scanner
-	name = "Securotron-5000"
-	desc = "Used to scan in prisoners and update their security records."
-	icon_state = "forensic0"
+	name = "Security RecordTrak"
+	desc = "A device used to scan in prisoners and update their security records."
+	icon_state = "recordtrak"
 	var/mode = 1
 	var/datum/data/record/active1 = null
 	var/datum/data/record/active2 = null
 	w_class = 3.0
-	item_state = "electronic"
+	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 

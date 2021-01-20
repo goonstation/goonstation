@@ -87,8 +87,7 @@ export const formatMoney = (value, precision = 0) => {
   let result = '';
   for (let i = 0; i < length; i++) {
     if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
-      // Thin space
-      result += '\u2009';
+      result += ',';
     }
     result += fixed.charAt(i);
   }
@@ -135,6 +134,16 @@ export const formatTime = (time, msg = "") => {
 
   return `${minutes}:${seconds}`;
 };
+/**
+ * Formats pressure in terms of kPa, or scientific Pa if very large.
+ */
+export const formatPressure = value => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
+
 /**
  * Truncates a string with an ellipsis after n characters. Default is 25.
  */

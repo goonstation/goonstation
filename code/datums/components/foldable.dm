@@ -63,8 +63,8 @@
 	name = "briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	item_state = "briefcase"
-	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	icon_state = "briefcase"
 	desc = "A briefcase."
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
@@ -85,7 +85,7 @@
 		src.thingInside = object
 		src.name = "foldable [object.name]"
 		src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
-		BLOCK_BOOK
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user)
 		deploy(user)

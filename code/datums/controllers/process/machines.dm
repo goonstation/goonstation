@@ -13,6 +13,15 @@ datum/controller/process/machines
 
 		Station_VNet = new /datum/v_space/v_space_network()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/machines/old_machines = target
+		src.machines = old_machines.machines
+		src.pipe_networks = old_machines.pipe_networks
+		src.powernets = old_machines.powernets
+		src.atmos_machines = old_machines.atmos_machines
+		src.ticker = old_machines.ticker
+		src.mult = old_machines.mult
+
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
 			boutput(world,"[machine.name] : [machine.type]")
@@ -21,9 +30,8 @@ datum/controller/process/machines
 		var/c = 0
 
 		if (ticker % 8 == 0)
-			src.atmos_machines = global.atmos_machines
-			for(var/X in atmos_machines)
-				var/obj/machinery/machine = X
+			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
+			for (var/obj/machinery/machine as() in atmos_machines)
 				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue
 	#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time

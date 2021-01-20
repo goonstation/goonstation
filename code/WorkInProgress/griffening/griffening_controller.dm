@@ -39,6 +39,7 @@
 	var/phase_arguments = null
 
 	New(var/obj/griffening_central/F)
+		..()
 		field_center = F
 
 	proc/announce(message)
@@ -459,10 +460,10 @@
 			field_decoration += R
 			if (R.x == x - 3 && !(abs(R.y - y) % 3))
 				var/obj/LT = new /obj/machinery/light(R)
-				LT.dir = 8
+				LT.set_dir(8)
 			if (R.x == x + 3 && !(abs(R.y - y) % 3))
 				var/obj/LT = new /obj/machinery/light(R)
-				LT.dir = 4
+				LT.set_dir(4)
 			if (R.y == y - 5 || R.y == y + 4 || R.y == y + 5 || R.y == y - 4)
 				var/obj/griffening_card_holder/GCH = new /obj/griffening_card_holder(R, src)
 				if (R.y > y)
@@ -847,6 +848,7 @@ td, th {
 	var/datum/griffening_controller/controller = null
 
 	New()
+		..()
 		controller = new(src)
 		controller.spawn_field()
 

@@ -75,8 +75,10 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
+							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
-							/obj/item/clothing/gloves/long)
+							/obj/item/clothing/gloves/long,
+							/obj/item/handheld_vacuum)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -301,7 +303,7 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throw_count || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
+		if (M.throwing || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
 			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return
@@ -368,7 +370,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in by_type[/obj/storage])
+				for_by_tcl(O, /obj/storage)
 					LAGCHECK(LAG_LOW)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
@@ -508,8 +510,8 @@
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
 	icon = 'icons/obj/large_storage.dmi'
-	icon_closed = "medicalclothes"
-	icon_state = "medicalclothes"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,

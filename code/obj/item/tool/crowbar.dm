@@ -25,7 +25,11 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/tile_fling)
-		BLOCK_ROD
+		BLOCK_SETUP(BLOCK_ROD)
+
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (!pry_surgery(M, user))
+			return ..()
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -37,3 +41,12 @@
 
 /obj/item/crowbar/vr
 	icon_state = "crowbar-vr"
+
+/obj/item/crowbar/red
+	name = "crowbar"
+	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of it's important emergency tool status, or maybe someone forgot to clean the blood off."
+	icon_state = "crowbar-red"
+
+/obj/item/crowbar/yellow
+	desc = "A tool used as a lever to pry objects. This one's a nice lemon color."
+	icon_state = "crowbar-yellow"

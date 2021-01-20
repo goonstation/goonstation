@@ -77,7 +77,7 @@
 			var/obj/stool/chair/C = M.buckled
 			M.buckled.unbuckle()
 			C.buckledIn = 0
-			C.buckled_guy = 0
+			C.buckled_guy = null
 		M.pixel_y = 0
 		M.buckled = null
 		reset_anchored(M)
@@ -101,8 +101,8 @@
 			//animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 
-/mob/throw_impact(atom/hit_atom, list/params)
-	..(hit_atom,params)
+/mob/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+	..()
 
 	if (src.throwing & THROW_CHAIRFLIP)
 		var/turf/T = locate(src.last_throw_x, src.last_throw_y, src.z)

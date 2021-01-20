@@ -15,6 +15,7 @@
 	var/style = "r"
 
 	New()
+		..()
 		src.style = rand(1,8)
 		src.icon_state = "wrap_paper-[src.style]"
 
@@ -22,6 +23,7 @@
 	desc = "This wrapping paper is especially festive."
 
 	New()
+		..()
 		src.style = pick("r", "rs", "g", "gs")
 		src.icon_state = "wrap_paper-[src.style]"
 
@@ -145,6 +147,13 @@
 			if (!islist(giftpaths) || !giftpaths.len)
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
+
+		ephemeral //Disappears except on xmas
+#ifndef XMAS
+			New()
+				qdel(src)
+				..()
+#endif
 
 	easter
 		name = "easter egg"

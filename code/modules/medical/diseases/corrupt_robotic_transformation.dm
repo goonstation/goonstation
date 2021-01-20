@@ -68,7 +68,7 @@
 					bdna = affected_mob.bioHolder.Uid
 					btype = affected_mob.bioHolder.bloodType
 
-				var/turf/T = find_loc(affected_mob)
+				var/turf/T = get_turf(affected_mob)
 				gibs(T, null, null, bdna, btype)
 
 				if (ismonkey(affected_mob))

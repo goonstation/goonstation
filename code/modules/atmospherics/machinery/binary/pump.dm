@@ -64,11 +64,9 @@ obj/machinery/atmospherics/binary/pump
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 			air2.merge(removed)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
-			if(network2)
-				network2.update = 1
+			network2?.update = 1
 
 			use_power((target_pressure) * (0.10)) // cogwerks: adjust the multiplier if needed
 
@@ -143,7 +141,7 @@ obj/machinery/atmospherics/binary/pump
 		update_icon()
 
 obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsingtool(W))
+	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
 datum/pump_ui/basic_pump_ui
@@ -156,6 +154,7 @@ datum/pump_ui/basic_pump_ui
 	var/obj/machinery/atmospherics/binary/pump/our_pump
 
 datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
+	..()
 	src.our_pump = our_pump
 	pump_name = our_pump.name
 

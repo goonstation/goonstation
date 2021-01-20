@@ -17,15 +17,17 @@
 
 		if (owner.sleeping)
 			if (owner.hasStatus("resting"))
-				owner.sleeping = 4
+				owner.sleeping = 2
 			else
 				owner.sleeping--
-			owner.changeStatus("paralysis", 4 SECONDS * mult)
+			owner.changeStatus("paralysis", 3 SECONDS * mult)
 			if (prob(10) && (owner.health > 0))
 				owner.emote("snore")
 			if (!owner.last_sleep) // we are asleep but weren't previously
 				owner.last_sleep = 1
 				owner.UpdateOverlays(owner.sleep_bubble, "sleep_bubble")
+				if (critter_owner)
+					critter_owner.on_sleep()
 		else
 			if (owner.last_sleep) // we were previously asleep but aren't anymore
 				owner.last_sleep = 0
@@ -172,7 +174,7 @@
 					var/mob/dead/observer/newmob = robot_owner.ghostize()
 					if (newmob)
 						newmob.corpse = null
-				
+
 				new /obj/item/parts/robot_parts/robot_frame(get_turf(robot_owner))
 
 				qdel(robot_owner)

@@ -37,16 +37,16 @@
 	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 		src.is_pet = 0
 	if(src.is_pet)
-		pets += src
+		START_TRACKING_CAT(TR_CAT_PETS)
 	src.update_water_status(loc)
 	..()
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
 /mob/living/critter/aquatic/disposing()
-	if(ai)
-		ai.dispose()
+	ai?.dispose()
 	ai = null
 	if(src.is_pet)
-		pets -= src
+		STOP_TRACKING_CAT(TR_CAT_PETS)
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
@@ -63,11 +63,11 @@
 		return
 	if (..())
 		return 1
+	src.update_water_status()
 	if(src.water_need)
 		if(prob(10 * src.water_need) && !src.nodamage) // question: this gets rid of like one proc call; worth it?
 			var/datum/healthHolder/Br = get_health_holder("brute")
-			if(Br)
-				Br.TakeDamage(water_need * out_of_water_debuff)
+			Br?.TakeDamage(water_need * out_of_water_debuff)
 			var/datum/healthHolder/Bu = get_health_holder("burn")
 			if(Bu && !is_heat_resistant())
 				Bu.TakeDamage(water_need * out_of_water_debuff)
@@ -79,14 +79,6 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
 			Bu.TakeDamage(-in_water_buff)
-
-/mob/living/critter/aquatic/set_loc(newloc)
-	. = ..()
-	src.update_water_status()
-
-/mob/living/critter/aquatic/Move(NewLoc, direct)
-	. = ..()
-	src.update_water_status()
 
 /mob/living/critter/aquatic/proc/update_water_status(loc = null)
 	if(isnull(loc))
@@ -203,7 +195,7 @@
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
 	if(!water_need && !isdead(src))
 		animate_bumble(src)
@@ -236,11 +228,11 @@
 				SPAWN_DBG(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
-						src.dir = turn(src.dir, 90)
+						src.set_dir(turn(src.dir, 90))
 						sleep(0.2 SECONDS)
 					if(!src.water_need)
 						animate_bumble(src)
@@ -449,7 +441,7 @@
 	switch (act)
 		if ("scream")
 			if (src.emote_check(voluntary, 300))
-				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
+				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7, channel=VOLUME_CHANNEL_EMOTE)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
 				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"
@@ -457,11 +449,11 @@
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
-					src.dir = turn(src.dir, 90)
+					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
 				SPAWN_DBG(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))

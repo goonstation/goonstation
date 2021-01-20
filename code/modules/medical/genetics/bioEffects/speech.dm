@@ -98,6 +98,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	var/danny_index = 0
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -599,7 +600,7 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
-	probability = 10 // yes... ha ha ha... YES
+	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
 	lockedGaps = 2
@@ -717,4 +718,29 @@
 		if (!istext(message))
 			return ""
 		message = scoobify(message)
+		return message
+
+/datum/bioEffect/speech/scoob/less_dog
+	name = "Frontal Gyrus Alteration Type-BD" // bad dog 3=
+	desc = "Influences select language centers of the subject's brain to bark out sentences like a dog."
+	id = "accent_scoob_nerf"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "You feel like you're talking through a dog's snout."
+	msgLose = "You feel less vocally canine."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 0
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = scoobify(message, 1)
 		return message

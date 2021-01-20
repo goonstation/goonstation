@@ -25,6 +25,7 @@
 	var/solitaire_offset = 3
 
 	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc
 		if (cardback) src.card_back = cardback
@@ -101,19 +102,19 @@
 				if (src.face_up)
 					if (src.card_reversible && src.card_reversed)
 						src.name = "reversed [src.card_name]"
-						src.dir = NORTH
+						src.set_dir(NORTH)
 					else if (src.card_tappable && src.card_tapped)
 						src.name = "tapped [src.card_name]"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = src.card_name
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 					src.desc = "[src.card_desc] It's \an [src.name]."
 					src.icon_state = "card-[src.card_face]"
 					if (src.card_foil)
@@ -124,15 +125,15 @@
 					if (src.card_tappable && src.card_tapped)
 						src.name = "tapped playing card"
 						if (src.card_tapped == EAST)
-							src.dir = EAST
+							src.set_dir(EAST)
 						else if (src.card_tapped == WEST)
-							src.dir = WEST
+							src.set_dir(WEST)
 						else
-							src.dir = pick(EAST, WEST)
+							src.set_dir(pick(EAST, WEST))
 							src.card_tapped = src.dir
 					else
 						src.name = "playing card"
-						src.dir = SOUTH
+						src.set_dir(SOUTH)
 			if (2 to 4)
 				src.name = "hand of cards"
 				src.desc = "Some cards, for playing some kinda game with."
@@ -622,7 +623,7 @@
 		src.card_cyborg = list()
 		src.card_ai = list()
 		for (var/mob/living/carbon/human/H in mobs)
-			if (ismonkey(H))
+			if (isnpcmonkey(H))
 				continue
 			if (iswizard(H))
 				continue
@@ -631,7 +632,7 @@
 			src.card_human += H
 		for (var/mob/living/silicon/robot/R in mobs)
 			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in by_type[/mob/living/silicon/ai])
+		for_by_tcl(A, /mob/living/silicon/ai)
 			src.card_ai += A
 		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
 		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)

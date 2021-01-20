@@ -681,7 +681,7 @@
 	var/sim_delay = 300 //Time until next simulation.
 	power_usage = 200
 
-	var/vr_landmark = "bombtest-bomb" //Landmark where the ~vr bomb~ spawns.
+	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
 		if(powered())
@@ -882,14 +882,14 @@
 			if(vrbomb)
 				qdel(vrbomb)
 
-			var/obj/landmark/B = locate("landmark*[vr_landmark]")
+			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
 			vrbomb = new
-			vrbomb.set_loc(B.loc)
+			vrbomb.set_loc(B)
 			vrbomb.anchored = 1
 			vrbomb.tester = src
 
@@ -915,8 +915,7 @@
 
 			T.timing = 1
 			T.c_state(1)
-			if (!(T in processing_items))
-				processing_items.Add(T)
+			processing_items |= T
 			src.last_sim = world.time
 
 			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
@@ -1606,7 +1605,7 @@
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
 				SPAWN_DBG(0.5 SECONDS) //Sign up with the driver (if a mainframe contacted us)
-					src.post_status(target,"command","term_message","data","command=register[(frequencies && frequencies.len) ? "&freqs=[jointext(frequencies,",")]" : ""]")
+					src.post_status(target,"command","term_message","data","command=register[(length(frequencies)) ? "&freqs=[jointext(frequencies,",")]" : ""]")
 				return
 
 			if("term_message","term_file")
@@ -2536,7 +2535,7 @@
 						return
 					src.scan_beam = new /obj/beam/ir_beam(beamTurf, setup_beam_length)
 					src.scan_beam.master = src
-					src.scan_beam.dir = src.dir
+					src.scan_beam.set_dir(src.dir)
 
 				return
 			if (2)
@@ -2774,7 +2773,7 @@
 
 				src.next = new src.type(nextTurf, src.limit-1)
 				//next.master = src.master
-				next.dir = src.dir
+				next.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in nextTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.hit(hitAtom)
@@ -2845,7 +2844,7 @@
 
 			src.next = new /obj/beam/ir_beam(nextTurf, src.limit-1)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 		return
 
 //Rather fancy science emitter gizmo
@@ -3190,7 +3189,7 @@
 					return 0
 				src.beam = new /obj/beam/h7_beam(beamTurf, setup_beam_length, crystalCount)
 				src.beam.master = src
-				src.beam.dir = src.dir
+				src.beam.set_dir(src.dir)
 				for (var/atom/movable/hitAtom in beamTurf)
 					if (hitAtom.density && !hitAtom.anchored)
 						src.beam.hit(hitAtom)
@@ -3369,7 +3368,7 @@
 
 			src.next = new /obj/beam/h7_beam(nextTurf, src.limit-1, src.power)
 			next:master = src.master
-			next.dir = src.dir
+			next.set_dir(src.dir)
 			for (var/atom/movable/hitAtom in nextTurf)
 				if (hitAtom.density && !hitAtom.anchored)
 					src.hit(hitAtom)
@@ -3914,15 +3913,15 @@
 
 		return
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
 			for (var/obj/item/I in src.loc.contents)
-				I.Bumped(M)
+				I.hitby(M)
 				if (istype(I.artifact,/datum/artifact/) && isitem(M))
 					var/obj/item/ITM = M
 					var/obj/ART = I
 					src.impactpad_senseforce(ART, ITM)
-				return
+		..()
 
 	bullet_act(var/obj/projectile/P)
 		if (src.density)
@@ -3937,7 +3936,6 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = M.throwforce
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 			if (src.sensed[2] != 0 && ARTDATA.faults.len)
@@ -3956,7 +3954,6 @@
 		if (istype(I.artifact,/datum/artifact/))
 			var/datum/artifact/ARTDATA = I.artifact
 			var/stimforce = P.power
-			I.ArtifactStimulus("force", stimforce)
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
@@ -4420,7 +4417,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (230 to -99)
+			if (249 to -99)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4741,7 +4738,9 @@
 			if ("sense")
 				var/datum/gas_mixture/air_sample = return_air()
 				var/total_moles = max(TOTAL_MOLES(air_sample), 1)
-				sensed.Cut()
+				sensed?.Cut()
+				if(isnull(sensed))
+					sensed = list()
 				if (air_sample)
 					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
 					sensed.Add(round(air_sample.temperature, 0.1))
@@ -4751,7 +4750,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as() in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
@@ -4934,7 +4933,7 @@
 	proc
 		fire0(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 1
 
 			else
@@ -4944,7 +4943,7 @@
 
 		fire1(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 2
 
 			else
@@ -4954,7 +4953,7 @@
 
 		fire2(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 4
 
 			else
@@ -4964,7 +4963,7 @@
 
 		fire3(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 8
 
 			else
@@ -4974,7 +4973,7 @@
 
 		fire4(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 16
 
 			else
@@ -4984,7 +4983,7 @@
 
 		fire5(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 32
 
 			else
@@ -4992,7 +4991,7 @@
 
 		fire6(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 64
 
 			else
@@ -5002,7 +5001,7 @@
 
 		fire7(var/datum/mechanicsMessage/anInput)
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				input_word |= 128
 
 			else

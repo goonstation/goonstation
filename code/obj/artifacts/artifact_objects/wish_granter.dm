@@ -55,7 +55,7 @@
 					for(var/mob/N in viewers(user, null))
 						N.flash(3 SECONDS)
 						if(N.client)
-							shake_camera(N, 6, 4)
+							shake_camera(N, 6, 16)
 					user.desc = "A statue of someone very wealthy"
 					user.become_gold_statue()
 

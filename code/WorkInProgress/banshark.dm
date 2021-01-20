@@ -195,7 +195,7 @@
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
-			if(sharktarget2 && sharktarget2.client)
+			if(sharktarget2?.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
 				message_admins("<span class='internal'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")

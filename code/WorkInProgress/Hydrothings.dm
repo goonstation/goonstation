@@ -13,8 +13,8 @@ obj/decal/floor/displays/owlsign
 	icon_state = "postcard-owlery"
 	interesting = "There are traces of hydrocarbons, collagens, proteins, and sugars deposited in the cellulose of the card"
 
-	sizex = 1066
-	sizey = 735
+	sizex = 1040
+	sizey = 705
 
 	New()
 		..()
@@ -531,7 +531,7 @@ obj/item/gnomechompski/elf
 /obj/item/poster/titled_photo/bee
 	name = "Er- Found? Poster"
 	desc = "A poster of a m------ Bee loved by all."
-	poster_image = 'icons/missingbee.png'
+	poster_image = 'icons/misc/missingbee.png'
 	line_b1 = "<center><b> THANK YOU </b></center>"
 	line_b2 = "<b>LAST SEEN:</b> New Store!"
 	line_b3 = "<b>NOTES:</b> Responds to being called Bombini"
@@ -800,7 +800,7 @@ obj/item/gnomechompski/elf
 		if (prob(5))
 			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-			src.dir = pick(alldirs)
+			src.set_dir(pick(alldirs))
 
 obj/critter/madnessowl
 	name = "space owl"
@@ -1054,7 +1054,7 @@ obj/critter/madnessowl/switchblade
 				if(iswerewolf(H))
 					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
 					step_away(src, H, 15)
-					src.dir = get_dir(src, H)
+					src.set_dir(get_dir(src, H))
 					continue
 
 			src.boredom_countdown = rand(1,4)
@@ -1132,7 +1132,7 @@ obj/critter/madnessowl/switchblade
 			on_damaged(src)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("<span class='alert'><b>[user]</b> punches [src]!</span>", 1)
-			playsound(src.loc, "sound/impact_sounds/Generic_Punch_[(rand(1, 5))].ogg", 50, 1)
+			playsound(src.loc, pick(sounds_punch), 50, 1)
 			if(prob(30))
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 60, 1)
 				src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
@@ -1194,7 +1194,8 @@ obj/critter/madnessowl/switchblade
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
 					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-					BORG.part_head.ropart_take_damage(rand(20,40),0)
+					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+						BORG.compborg_lose_limb(BORG.part_head)
 					if (prob(33)) playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 					attack_delay = 5
 		else
@@ -1246,7 +1247,7 @@ obj/critter/madnessowl/switchblade
 			while(flailing-- > 0)
 				src.pixel_x = rand(-2,2) * 2
 				src.pixel_y = rand(-2,2) * 2
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 				sleep(0.4 SECONDS)
 			src.pixel_x = 0
 			src.pixel_y = 0
@@ -1262,10 +1263,10 @@ obj/critter/madnessowl/switchblade
 		SPAWN_DBG(0)
 			src.visible_message("<span class='alert'><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
 			playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
-			SPAWN_DBG(1 DECI SECOND)
-				if(!flailing) src.flail()
 			src.set_loc(M.loc)
 			src.frenzied = 20
+			sleep(1 DECI SECOND)
+			if(!flailing) src.flail()
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
 				src.visible_message("<span class='alert'><b>[src] [pick("pecks", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
 				random_brute_damage(target, 10,1)
@@ -1405,7 +1406,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
@@ -1415,7 +1416,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. A Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 	for(var/mob/N in mobs)
 		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
+			shake_camera(N, 120, 24)
 	SPAWN_DBG(0)
 		var/thunder = 70
 		while(thunder > 0)
@@ -1430,7 +1431,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	sleep(0.1 SECONDS)
 	siren.repeat = 0

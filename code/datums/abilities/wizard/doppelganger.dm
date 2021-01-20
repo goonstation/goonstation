@@ -39,7 +39,7 @@
 
 		var/turf/curr_turf = get_turf(holder.owner)
 
-		P.dir = the_dir
+		P.set_dir(the_dir)
 		P.set_loc(curr_turf)
 		D.set_loc(curr_turf)
 		holder.owner.set_loc(D)

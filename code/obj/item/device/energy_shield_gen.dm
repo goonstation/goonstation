@@ -90,7 +90,7 @@
 				A = locate((src.x + xa),(src.y + ya),src.z)
 				if (!A.density)
 					var/obj/shieldwall/created = new /obj/shieldwall ( locate((src.x + xa),(src.y + ya),src.z) )
-					created.dir = piece
+					created.set_dir(piece)
 					tiles += created
 					created.health_max = 16 - (range*2)
 					created.health = 16 - (range*2)

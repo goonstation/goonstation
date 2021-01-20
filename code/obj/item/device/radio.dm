@@ -24,6 +24,8 @@
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
@@ -250,7 +252,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	// According to a pair of DEBUG calls set up for testing, no radio jammer check for the src radio was performed.
 	// As improbable as this sounds, there are bug reports too to back up the findings. So uhm...
-	if (src.radio_connection.check_for_jammer(src) != 0)
+	if (radio_controller.active_jammers.len && src.radio_connection.check_for_jammer(src) != 0)	//First bit is basically can_check_jammer but on this connection
 		return
 	if (!(src.wires & WIRE_TRANSMIT))
 		return
@@ -293,7 +295,11 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			var/obj/item/device/radio/R = I
 			//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
 			if (can_check_jammer)
-				if (connection.check_for_jammer_bare(R))
+				if (connection.check_for_jammer(R))
+					continue
+			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
+			if (signal_loss && !src.hardened && !secure)
+				if (text2num(connection.frequency) >= R_FREQ_MINIMUM && text2num(connection.frequency) <= R_FREQ_MAXIMUM)
 					continue
 
 			if (R.accept_rad(src, messages, connection))
@@ -314,6 +320,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				else
 					for (var/i in R.send_hear())
 						if (!(i in receive))
+							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
+								continue
 							receive += i
 
 							if (ai_sender)
@@ -338,7 +346,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 		// hi it's me cirr here to shoehorn in another thing
 		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(flocks && flocks.len)
+		if(length(flocks))
 			for(var/F in flocks)
 				var/datum/flock/flock = flocks[F]
 				if(flock)
@@ -354,7 +362,8 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		var/mob/dead/D = C.mob
 
 		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
-			if (!(D in receive))
+
+			if (!C.mute_ghost_radio && !(D in receive))
 				receive += D
 
 	var/list/heard_masked = list() // masked name or no real name
@@ -401,9 +410,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -719,7 +728,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
 			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
-			if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
 
@@ -997,9 +1006,6 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
 
-	New()
-		// active_light = new ()
-
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
@@ -1042,7 +1048,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	desc = "A Loudspeaker."
 
 	New()
-		//..()
+		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)

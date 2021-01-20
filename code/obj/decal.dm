@@ -9,9 +9,9 @@
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
 			if (random_dir >= 8)
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 			else
-				src.dir = pick(cardinal)
+				src.set_dir(pick(cardinal))
 
 		if (!real_name)
 			real_name = name
@@ -30,9 +30,9 @@
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
 			if (random_dir >= 8)
-				src.dir = pick(alldirs)
+				src.set_dir(pick(alldirs))
 			else
-				src.dir = pick(cardinal)
+				src.set_dir(pick(cardinal))
 
 		if (!real_name)
 			real_name = name
@@ -485,7 +485,7 @@ obj/decal/fakeobjects/teleport_pad
 
 	New()
 		..()
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
 		src.pixel_x += rand(-8,8)
 
@@ -496,13 +496,13 @@ obj/decal/fakeobjects/teleport_pad
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 
 	unpooled()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 		if (prob(20))
 			new /obj/decal/alienflower(src.loc)
 

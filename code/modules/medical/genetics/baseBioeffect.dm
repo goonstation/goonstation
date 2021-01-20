@@ -1,5 +1,6 @@
 //Effect type defines in _std/_defines/bioeffect.dm
 
+ABSTRACT_TYPE(/datum/bioEffect)
 /datum/bioEffect
 	var/name = "" //Name of the effect.
 	var/id = "goddamn_it"   //Internal ID of the effect.
@@ -84,8 +85,7 @@
 			src.OnRemove()
 		holder = null
 		owner = null
-		if(dnaBlocks)
-			dnaBlocks.dispose()
+		dnaBlocks?.dispose()
 		dnaBlocks = null
 		..()
 
@@ -324,7 +324,7 @@
 			last_cast = world.time + linked_power.cooldown
 			if (linked_power.cooldown > 0)
 				SPAWN_DBG(linked_power.cooldown)
-					if (src && H && H.hud)
+					if (src && H?.hud)
 						H.hud.update_ability_hotbar()
 
 	tryCast(atom/target)
@@ -387,6 +387,6 @@
 	afterCast()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H && H.hud)
+			if (H?.hud)
 				H.hud.update_ability_hotbar()
 		return 0
