@@ -473,7 +473,7 @@
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
 	icon_state = "PTlabcoat"
-	item_state = "MDlabcoat"
+	item_state = "PTlabcoat"
 	coat_style = "PTlabcoat"
 
 	april_fools
