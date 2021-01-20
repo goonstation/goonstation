@@ -566,7 +566,11 @@
 	slot_jump = /obj/item/clothing/under/rank/medical
 	slot_foot = /obj/item/clothing/shoes/white
 	slot_suit = /obj/item/clothing/suit/labcoat/pathology
+	#ifdef SCIENCE_PATHO_MAP
+	slot_ears = /obj/item/device/radio/headset/research
+	#else
 	slot_ears = /obj/item/device/radio/headset/medical
+	#endif
 
 	New()
 		..()
