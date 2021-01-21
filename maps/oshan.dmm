@@ -43617,6 +43617,7 @@
 /area/diner/kitchen)
 "ccX" = (
 /obj/decal/cleanable/blood,
+/obj/reagent_dispensers/still/shittystill,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
 "ccY" = (

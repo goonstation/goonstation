@@ -1707,6 +1707,7 @@
 "aed" = (
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/blood/splatter,
+/obj/reagent_dispensers/still/shittystill,
 /turf/simulated/floor/plating/random,
 /area/diner/kitchen)
 "aee" = (
