@@ -418,6 +418,12 @@
 	icon_state = "security"
 	item_state = "security"
 
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
