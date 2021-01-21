@@ -500,7 +500,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					player.unlock_medal("Guardin' gnome", 1)
 
 				if (player.mind.assigned_role == "Security Assistant")
-					src.unlock_medal("I helped!", 1)
+					player.unlock_medal("I helped!", 1)
 
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
