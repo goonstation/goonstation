@@ -1,5 +1,10 @@
 
 (t)thu jan 21 21
+(u)BatElite
+(p)3354
+(e)🆕🎨|feature, sprites
+(+)Implants cut out of or reclaimed from people now come in disposable paper wads instead of mysterious glass cases. Implant cases should also now be coloured properly based on their contents.
+(+)Said wads also have a forensic blood trace of the implant's previous owner, in case you need to be mindful of your traces.
 (u)Flourish
 (p)3404
 (e)⚖|balance
