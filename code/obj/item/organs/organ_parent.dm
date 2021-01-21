@@ -136,6 +136,7 @@
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 		if(src.bite_damage == 0)
 			src.bite_damage = src.FAIL_DAMAGE * 1.1
+		src.AddComponent(/datum/component/consume/bitemask)
 
 	disposing()
 		if (src.holder)
@@ -156,6 +157,8 @@
 			bones.dispose()
 
 		holder = null
+		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
+		D?.RemoveComponent(/datum/component/consume/bitemask)
 		..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)

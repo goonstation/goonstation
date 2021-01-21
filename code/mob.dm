@@ -2969,43 +2969,42 @@
 		A.interact(src)
 
 /// 'A' is the thing being eaten, user is the thing using the thing, and src is of course the thing eating it
-/mob/proc/can_eat(var/atom/A, var/mob/user, var/bypass_utensils = 0)
+/mob/proc/can_eat(var/obj/item/A, var/mob/user, var/bypass_utensils = 0)
 	if(!istype(A) || !user)
 		return FALSE // who's eating what, now?
 
-	/// Making sure the thing actually exists and isn't cheating the bite-rate
-	if(!src.bioHolder?.HasEffect("mattereater") && ON_COOLDOWN(src, "eat", EAT_COOLDOWN))
+	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
+	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
 		return src.can_not_eat(A, user, "on_cooldown")
-	if (!src.amount)
+	else if (!A.amount)
 		return src.can_not_eat(A, user, "all_gone")
 
 	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
-	var/edibility_check = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, F)
-	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
-		return TRUE
+	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
 
 	/// Now we can check if the thing is actually, in fact, supposed to be edible
-	if(!F.material?.edible)
-		return src.can_not_eat(A, user, "inedible_material")
-	if(!F.edible)
-		return src.can_not_eat(A, user, "inedible_object")
+	if((A.material && !A.material.edible) || !A.edible)
+		if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
+			return TRUE
+		else
+			return FALSE
 
 	/// Godmode
-	if(src != M && check_target_immunity(src))
+	if(src != user && check_target_immunity(src))
 		return src.can_not_eat(A, user, "godmode")
 
-	/// Finally, if it should actually be edible, do we have somewhere to put it?
+	/// Finally, check if we have proper etiquette
+	if(HAS_FLAG(edibility_check, NEED_FORK))
+		return src.can_not_eat(A, user, "lack_fork")
+	if(HAS_FLAG(edibility_check, NEED_SPOON))
+		return src.can_not_eat(A, user, "lack_spoon")
+
+	/// And finally finally, if it should actually be edible, do we have somewhere to put it?
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
 		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
 			return src.can_not_eat(A, user, "busted_guts")
-
-	/// And finally finally, check if we have proper etiquette
-	if(HAS_FLAG(edibility_check, NEED_FORK))
-		return src.can_not_eat(A, user, "lack_fork")
-	if(HAS_FLAG(edibility_check, NEED_SPOON))
-		return src.can_not_eat(A, user, "lack_spoon")
 
 	/// okay eat the darn thing
 	return TRUE
@@ -3030,16 +3029,6 @@
 				src, "<span class='alert'>[user] tries to feed [A] to you, but there's nothing left of it!</span>")
 			user.u_equip(A)
 			qdel(A)
-		if("inedible_material")
-			if(src == user)
-				boutput(src, "<span class='alert'>You can't eat that! You'll break your teeth!</span>")
-			else
-				boutput(user, "<span class='alert'>[src] can't eat that! You'll break [his_or_her(src)] teeth!</span>")
-		if("inedible_object")
-			if(src == user)
-				boutput(src, "<span class='alert'>You can't eat that! It's a choking hazard!</span>")
-			else
-				boutput(user, "<span class='alert'>[src] can't eat that! It's a choking hazard!</span>")
 		if("busted_guts")
 			if(src == user)
 				boutput(src, "<span class='alert'>You can't eat that! Or anything else, at least until you fix your stomach!</span>")

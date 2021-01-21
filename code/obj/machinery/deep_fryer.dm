@@ -203,6 +203,8 @@
 		else
 			if (istype(src.fryitem, /obj/item/reagent_containers/food/snacks))
 				fryholder.food_effects += fryitem:food_effects
+				fryholder.AddComponent(/datum/component/consume/food_effects, fryholder.food_effects)
+
 
 		var/icon/composite = new(src.fryitem.icon, src.fryitem.icon_state)//, src.fryitem.dir, 1)
 		for(var/O in src.fryitem.underlays + src.fryitem.overlays)

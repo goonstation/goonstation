@@ -3,6 +3,7 @@
 
 /// M = mob eating the thing
 /// user = mob using the thing
+/// I = thing being eaten -- only does anything on components with a mob parent
 
 /datum/component/consume
 	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
@@ -36,14 +37,14 @@
 /// Gives points to a mob's abilityholder when eating some kind of organ
 /datum/component/consume/organpoints
 	var/target_abilityholder = /datum/abilityHolder/lizard
-	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=1,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
+	var/static/list/organ2points = list(/obj/item/organ/head=4,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
 
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
 	src.target_abilityholder = target_abilityholder
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_points)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eat_organ_get_points)
 
 /datum/component/consume/organpoints/proc/eat_organ_get_points(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !ishuman(M) || !user)
@@ -148,7 +149,7 @@
 			boutput(L, "<span class='alert'>...that wasn't particularly satisfying, though.</span>")
 
 /datum/component/consume/organpoints/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
 
 /// Heals the mob when they eat organs
@@ -162,7 +163,7 @@
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
 	src.mod_mult = mod_mult
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_heal)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eat_organ_get_heal)
 
 /datum/component/consume/organheal/proc/eat_organ_get_heal(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !user)
@@ -255,15 +256,13 @@
 
 
 /datum/component/consume/organheal/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
-
-
 
 /// Makes it need a utensil
 /datum/component/consume/need_utensil
 	var/obj/item/F
-	var/utensils_needed = NEED_NO_UTENSIL
+	var/utensils_needed = 0
 
 /datum/component/consume/need_utensil/Initialize(var/utensil_bitmask)
 	..()
@@ -273,19 +272,19 @@
 	src.utensils_needed = utensil_bitmask
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PRE), .proc/utensil_check)
 
-/datum/component/consume/need_utensil/proc/utensil_check(var/mob/M, var/mob/user)
+/datum/component/consume/need_utensil/proc/utensil_check(var/obj/item/I, var/mob/M, var/mob/user)
 	if ((iscarbon(M) || ismobcritter(M)) && M == user)
 
 		var/remaining_flags = src.utensils_needed
 
-		if (HAS_FLAG(src.remaining_flags, NEED_FORK)
+		if (HAS_FLAG(remaining_flags, NEED_FORK))
 			var/obj/item/kitchen/utensil/fork/Y = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
 			if(prob(20) && istype(Y, /obj/item/kitchen/utensil/fork/plastic))
 				Y.break_utensil(user)
 			if(istype(Y))
 				REMOVE_FLAG(remaining_flags, NEED_FORK)
 
-		if (HAS_FLAG(src.remaining_flags, NEED_SPOON)
+		if (HAS_FLAG(remaining_flags, NEED_SPOON))
 			var/obj/item/kitchen/utensil/spoon/P = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
 			if(prob(20) && istype(P, /obj/item/kitchen/utensil/spoon/plastic))
 				P.break_utensil(user)
@@ -298,10 +297,7 @@
 	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PRE)
 	. = ..()
 
-
-
-
-
+/// Makes the food heal you every bite
 /datum/component/consume/foodheal
 	var/obj/item/F
 	var/base_heal = 1
@@ -312,9 +308,9 @@
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
 	src.base_heal = _base_heal
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_stuff_get_heal)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/eat_stuff_get_heal)
 
-/datum/component/consume/foodheal/proc/eat_stuff_get_heal(var/mob/M)
+/datum/component/consume/foodheal/proc/eat_stuff_get_heal(var/obj/item/I, var/obj/item/I, var/mob/M)
 	var/healing = src.base_heal
 
 	if (ishuman(M))
@@ -332,14 +328,13 @@
 		healing *= 2
 
 
-	if (quality <= 0.5)
+	if (F.quality <= 0.5)
 		boutput(M, "<span class='alert'>Ugh! That tasted horrible!</span>")
-		if (prob(20))
-			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
+		if (prob(20) && isliving(M))
+			var/mob/living/L = M
+			L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 		healing = 0
 
-	// if (!isnull(F.unlock_medal_when_eaten))
-	// 	M.unlock_medal(F.unlock_medal_when_eaten, 1)
 	M.nutrition += healing * 10
 	var/cutOff = round(M.max_health / 1.8) // 100 / 1.8 is about 55.555...6 so this should work out to be around the original value of 55 for humans and the equivalent for mobs with different max_health
 	if (ishuman(M))
@@ -347,33 +342,48 @@
 		if (H.traitHolder && H.traitHolder.hasTrait("survivalist"))
 			cutOff = round(H.max_health / 10) // originally 10
 
+	if(istype(F, /obj/item/reagent_containers/food/snacks/donut))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
+			healing *= 2
+
+	if(istype(F, /obj/item/reagent_containers/food/snacks/haggis))
+		if (M.bioHolder.HasEffect("accent_scots"))
+			healing *= 2
+			boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
+
 	if (M.health < cutOff)
 		boutput(M, "<span class='alert'>Your injuries are too severe to heal by nourishment alone!</span>")
 	else
 		M.HealDamage("All", healing, healing)
 
-
 /datum/component/consume/foodheal/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
 
+/// Makes thing look like it had some bites taken out of it
 /datum/component/consume/bitemask
 	var/obj/item/F
 	var/start_amount = 1
 	var/current_mask = 5
 	var/list/original_filters = list()
+	var/desired_mask = 5
 
 /datum/component/consume/bitemask/Initialize()
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
-	src.start_amount = F.amount
+
 	src.original_filters = F.filters
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/apply_bitemask)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL), .proc/apply_bitemask)
 
 /datum/component/consume/bitemask/proc/apply_bitemask()
-	var/desired_mask = (F.amount / src.start_amount) * 5
+	if(istype(src.F, /obj/item/organ))
+		var/obj/item/organ/O = src.F
+		var/damorg = max(O.MAX_DAMAGE - O.get_damage(), 1)
+		desired_mask = (damorg / O.MAX_DAMAGE) * 5
+	else
+		desired_mask = (F.amount / src.start_amount) * 5
 	desired_mask = round(desired_mask)
 	desired_mask = clamp(desired_mask, 1, 5)
 	if (desired_mask != current_mask)
@@ -381,11 +391,11 @@
 		F.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 /datum/component/consume/bitemask/UnregisterFromParent()
-	F.filters = src.original_filters
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	F?.filters = src.original_filters
+	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PARTIAL)
 	. = ..()
 
-
+/// Puts partially digested chunks in your mob
 /datum/component/consume/food_chunk
 	var/obj/item/F
 	var/start_amount = 1
@@ -399,45 +409,46 @@
 	src.F = parent
 	src.start_amount = F.amount
 	src.original_filters = F.filters
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/make_food_chunk)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/make_food_chunk)
 
-/datum/component/consume/food_chunk/proc/make_food_chunk(var/mob/M)
+/datum/component/consume/food_chunk/proc/make_food_chunk(var/obj/item/I, var/mob/M)
 	if (isliving(M))
 		if (F.reagents && F.reagents.total_volume) //only create food chunks for reagents
 			var/obj/item/reagent_containers/food/snacks/bite/B = unpool(/obj/item/reagent_containers/food/snacks/bite)
 			B.set_loc(M)
-			B.reagents.maximum_volume = reagents.total_volume/(F.amount ? F.amount : 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+			B.reagents.maximum_volume = F.reagents.total_volume/(F.amount ? F.amount : 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 			F.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 			var/mob/living/L = M
 			L.stomach_process += B
 
 /datum/component/consume/food_chunk/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
 
+/// Applies some status effects when eaten
 /datum/component/consume/food_effects
 	var/obj/item/F
-	var/list/status_effects = list
+	var/list/status_effects = list()
 
 /datum/component/consume/food_effects/Initialize(var/list/_status_effects)
 	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
-	src.status_effects = _status_effects
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/apply_food_effects)
+	src.status_effects |= _status_effects
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
 
-/datum/component/consume/food_effects/proc/apply_food_effects(var/mob/M)
-	if (F.food_effects.len && isliving(M) && M.bioHolder)
+/datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
+	if (src.status_effects.len && isliving(M) && M.bioHolder)
 		var/mob/living/L = M
-		for (var/effect in F.food_effects)
+		for (var/effect in src.status_effects)
 			L.add_food_bonus(effect, F)
 
 /datum/component/consume/food_effects/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
 
-
+/// Alters spacefestivity when eaten
 /datum/component/consume/festive_food
 	var/obj/item/F
 	var/festiveness = 1
@@ -448,122 +459,70 @@
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
 	src.festiveness = _festiveness
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/alter_festivity)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/alter_festivity)
 
-/datum/component/consume/festive_food/proc/alter_festivity(var/mob/M)
+/datum/component/consume/festive_food/proc/alter_festivity(var/obj/item/I, var/mob/M)
 	if (src.festiveness)
 		modify_christmas_cheer(src.festiveness)
 
 /datum/component/consume/festive_food/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()
 
+/// Drops a thing when eaten and tries to force it into your hand
+/datum/component/consume/drop_on_eaten
+	var/obj/item/F
+	var/obj/item/D
+	var/festiveness = 1
 
-
-
-
-
-/datum/component/consume/eat_thing
-	var/obj/item/F // f is for food
-	var/edibility = 0
-	var/base_heal = 0
-	var/need_utensil = 0
-	var/festivity = 0
-	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
-
-/datum/component/consume/eat_thing/Initialize(var/_edibility, var/_base_heal, var/_need_utensil, var/_festivity, var/_unlock_medal_when_eaten)
+/datum/component/consume/drop_on_eaten/Initialize(var/obj/thing_to_drop)
+	..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
-	src.edibility = _edibility
-	src.base_heal = _base_heal
-	src.need_utensil = _need_utensil
-	src.festivity = _festivity
-	src.unlock_medal_when_eaten = _unlock_medal_when_eaten
+	if(istype(thing_to_drop))
+		src.D = thing_to_drop.type
+	else if(ispath(thing_to_drop))
+		src.D = thing_to_drop
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL), .proc/drop_thing)
 
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMING), .proc/do_eat)
+/datum/component/consume/drop_on_eaten/proc/drop_thing(var/obj/item/I, var/mob/M, var/mob/user)
+	var/obj/item/drop = new D
+	if(istype(drop))
+		drop.pixel_x = F.pixel_x
+		drop.pixel_y = F.pixel_y
+		var/obj/item/R = drop
+		if(istype(R) && ismob(user))
+			var/item_slot = user.get_slot_from_item(F)
+			if(item_slot)
+				user.u_equip(F)
+				F.set_loc(null)
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					H.force_equip(R,item_slot) // mobs don't have force_equip
+					return
+		drop.set_loc(get_turf(F.loc))
+
+/datum/component/consume/drop_on_eaten/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_ALL)
+	. = ..()
+
+/// Unlocks some kind of medal when eaten
+/datum/component/consume/unlock_medal_on_eaten
+	var/obj/item/F
+	var/medal
+
+/datum/component/consume/unlock_medal_on_eaten/Initialize(var/_medal)
 	..()
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
+	src.F = parent
+	src.medal = _medal
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL), .proc/give_medal)
 
-/datum/component/consume/eat_thing/proc/mod_vars(var/_edibility, var/_base_heal, var/_need_utensil, var/_festivity, var/_unlock_medal_when_eaten)
-	if(_edibility)
-		src.edibility = _edibility
-	if(_base_heal)
-		src.base_heal = _base_heal
-	if(_need_utensil)
-		src.need_utensil = _need_utensil
-	if(_festivity)
-		src.festivity = _festivity
-	if(_unlock_medal_when_eaten)
-		src.unlock_medal_when_eaten = _unlock_medal_when_eaten
+/datum/component/consume/unlock_medal_on_eaten/proc/give_medal(var/obj/item/I, var/mob/M)
+	M.unlock_medal(src.medal, 1)
 
-/datum/component/consume/eat_thing/proc/do_eat(var/mob/M, var/mob/user, var/obj/item/I)
-
-
-
-	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = 0)
-		// in this case m is the consumer and user is the one holding it
-
-
-
-
-				on_bite(M)
-
-				if (!src.amount)
-					/*M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")*/
-					boutput(M, "<span class='alert'>You finish eating [src].</span>")
-					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
-						var/obj/item/reagent_containers/food/snacks/plant/P = src
-						var/doseed = 1
-						var/datum/plantgenes/SRCDNA = P.plantgenes
-						if (!SRCDNA || HYPCheckCommut(SRCDNA,"Seedless")) doseed = 0
-						if (doseed)
-							var/datum/plant/stored = P.planttype
-							if (istype(stored) && !stored.isgrass)
-								var/obj/item/seed/S
-								if (stored.unique_seed)
-									S = unpool(stored.unique_seed)
-									S.set_loc(user.loc)
-								else
-									S = unpool(/obj/item/seed)
-									S.set_loc(user.loc)
-									S.removecolor()
-
-								var/datum/plantgenes/DNA = P.plantgenes
-								var/datum/plantgenes/PDNA = S.plantgenes
-								S.generic_seed_setup(stored)
-								HYPpassplantgenes(DNA,PDNA)
-								if (stored.hybrid)
-									var/datum/plant/hybrid = new /datum/plant(S)
-									for (var/V in stored.vars)
-										if (issaved(stored.vars[V]) && V != "holder")
-											hybrid.vars[V] = stored.vars[V]
-									S.planttype = hybrid
-								user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
-								"<span class='notice'>You spit out a seed.</span>")
-					if(src.dropped_item)
-						drop_item(dropped_item)
-					user.u_equip(src)
-					on_finish(M, user)
-					qdel(src)
-				return 1
-
-				on_bite(M)
-				src.amount--
-				M.nutrition += src.base_heal * 10
-				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
-				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
-					if(src.dropped_item)
-						drop_item(dropped_item)
-					user.u_equip(src)
-					on_finish(M, user)
-					qdel(src)
-				return 1
-
-
-/datum/component/consume/eat_thing/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMING)
+/datum/component/consume/unlock_medal_on_eaten/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_ALL)
 	. = ..()

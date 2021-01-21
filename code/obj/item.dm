@@ -286,7 +286,6 @@
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
 	..()
-	src.AddComponent(/datum/component/consume/eat_thing, _edibility = src.edible, _heal_amt = 1, _need_utensil = NEED_NO_UTENSIL, _festivity = 0, _unlock_medal_when_eaten = null)
 
 /obj/item/unpooled()
 	..()
@@ -388,17 +387,6 @@
 	if(!M.can_eat(src, user, bypass_utensils))
 		return 0
 
-	SEND_SIGNAL(src, COMSIG_ITEM_CONSUMING, M, user)
-	return
-
-
-	if (M == user)
-		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
-		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-		"<span class='notice'>You take a bite of [src]!</span>")
-
-		if (src.material && src.material.edible)
-			src.material.triggerEat(M, src)
 	actions.start(new/datum/action/bar/icon/eatstuff(src, M, user), user)
 	return 1
 
@@ -432,7 +420,7 @@
 		if(M_is_user)
 			duration = 1 SECOND
 			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT)
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT) // And spam it if you want
 		if(is_it_organs)
 			src.duration *= 1.3
 
@@ -441,6 +429,9 @@
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 			return
+
+		eat_twitch(M)
+		M.on_eat(master)
 
 		if (src.M_is_user)
 			if(is_it_organs)
@@ -506,14 +497,17 @@
 
 		if (master.reagents && master.reagents.total_volume)
 			master.reagents.reaction(M, INGEST)
-			SPAWN_DBG(0.5 SECONDS) // Necessary.
-				master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
+			master.reagents.trans_to(M, master.reagents.total_volume/master.amount)
 
 		if (!master || !M || !user)
 			return
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
+		M.on_eat(master)
+
+		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
+		SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
 
 		var/ate_the_whole_thing = 0
 		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
@@ -523,10 +517,38 @@
 				ate_the_whole_thing = 1
 		else if((master.amount -= 1) < 1)
 			ate_the_whole_thing = 1
-		SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, master)
+
 		if(ate_the_whole_thing)
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
 			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
 			"<span class='alert'>You finish eating [master].</span>")
+
+			if (istype(master, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
+				var/obj/item/reagent_containers/food/snacks/plant/P = master
+				var/datum/plantgenes/SRCDNA = P?.plantgenes
+				if (SRCDNA && !HYPCheckCommut(SRCDNA,"Seedless"))
+					var/datum/plant/stored = P.planttype
+					if (istype(stored) && !stored.isgrass)
+						var/obj/item/seed/S
+						if (stored.unique_seed)
+							S = unpool(stored.unique_seed)
+							S.set_loc(user.loc)
+						else
+							S = unpool(/obj/item/seed)
+							S.set_loc(user.loc)
+							S.removecolor()
+						var/datum/plantgenes/DNA = P.plantgenes
+						var/datum/plantgenes/PDNA = S.plantgenes
+						S.generic_seed_setup(stored)
+						HYPpassplantgenes(DNA,PDNA)
+						if (stored.hybrid)
+							var/datum/plant/hybrid = new /datum/plant(S)
+							for (var/V in stored.vars)
+								if (issaved(stored.vars[V]) && V != "holder")
+									hybrid.vars[V] = stored.vars[V]
+							S.planttype = hybrid
+						user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
+						"<span class='notice'>You spit out a seed.</span>")
 			user.u_equip(master)
 			qdel(master)
 		else

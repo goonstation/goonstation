@@ -33,6 +33,8 @@
 		else
 			build_mob_tail_image()
 			update_tail_icon()
+		if(src.icon_piece_1 || src.icon_piece_2)
+			RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/update_tail_icon)
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
@@ -171,11 +173,13 @@
 		if (src.icon_piece_1)
 			var/image/organ_piece_1 = image(src.icon, src.icon_piece_1)
 			organ_piece_1.color = src.organ_color_1
+			organ_piece_1.filters = src.filters
 			src.overlays += organ_piece_1
 
 		if (src.icon_piece_2)
 			var/image/organ_piece_2 = image(src.icon, src.icon_piece_2)
 			organ_piece_2.color = src.organ_color_2
+			organ_piece_2.filters = src.filters
 			src.overlays += organ_piece_2
 
 

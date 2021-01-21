@@ -47,6 +47,7 @@
 			while (makeslices > 0)
 				var/obj/item/reagent_containers/food/snacks/cake/custom/P = new src.type(get_turf(src))
 				P.food_effects += src.food_effects
+				P.AddComponent(/datum/component/consume/food_effects, P.food_effects)
 				P.sliced = 1
 				P.amount = 1
 				P.w_class = 1
@@ -176,11 +177,11 @@
 	initial_reagents = "yuck"
 	festivity = 10
 
-	on_finish(mob/eater)
+	on_finish_eating(var/mob/M)
 		..()
-		boutput(eater, "<span class='alert'>It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?</span>")
-		random_brute_damage(eater, 3)
-		eater.emote("scream")
+		boutput(M, "<span class='alert'>It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?</span>")
+		random_brute_damage(M, 3)
+		M.emote("scream")
 		return
 
 #endif
@@ -194,7 +195,7 @@
 	initial_volume = 250
 	initial_reagents = "porktonium"
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		M.nutrition += 500
 		return
 

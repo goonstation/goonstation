@@ -1633,6 +1633,7 @@
 					var/obj/item/reagent_containers/food/snacks/pizza/P = new /obj/item/reagent_containers/food/snacks/pizza(src.loc)
 					P.quality = 0.6
 					P.heal_amt = 2
+					P.AddComponent(/datum/component/consume/foodheal, P.heal_amt)
 					P.desc = "A typical [piztopping] pizza."
 					P.name = "[piztopping] pizza"
 					sleep(0.2)

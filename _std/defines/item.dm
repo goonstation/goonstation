@@ -102,12 +102,10 @@
 // For COMSIG_ITEM_CONSUMED_PRE returns
 /// Turns out its edible
 #define THING_IS_EDIBLE		(1<<0)
-/// The eat-stuff component told us not to eat it
-#define FORCE_INEDIBILITY (1<<1)
 /// Needs a fork
-#define NEED_FORK					(1<<2)
+#define NEED_FORK					(1<<1)
 /// Needs a spoon
-#define NEED_SPOON				(1<<3)
+#define NEED_SPOON				(1<<2)
 
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't

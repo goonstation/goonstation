@@ -21,13 +21,69 @@
 
 	New()
 		..()
+		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_PARTIAL), .proc/on_bite)
+		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL), .proc/on_finish_eating)
+		if(src.heal_amt)
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+		if(src.needfork || src.needspoon)
+			var/utensils
+			if(src.needfork)
+				ADD_FLAG(utensils, NEED_FORK)
+			if(src.needspoon)
+				ADD_FLAG(utensils, NEED_SPOON)
+			if(utensils)
+				src.AddComponent(/datum/component/consume/need_utensil, utensils)
+		if(src.festivity)
+			src.AddComponent(/datum/component/consume/festive_food, src.festivity)
+		src.AddComponent(/datum/component/consume/food_chunk)
+
+	disposing()
+		UnregisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL))
+		var/datum/component/C = src.GetComponent(/datum/component/consume/foodheal)
+		C?.RemoveComponent(/datum/component/consume/foodheal)
+		var/datum/component/D = src.GetComponent(/datum/component/consume/need_utensil)
+		D?.RemoveComponent(/datum/component/consume/need_utensil)
+		var/datum/component/E = src.GetComponent(/datum/component/consume/festive_food)
+		E?.RemoveComponent(/datum/component/consume/festive_food)
+		var/datum/component/F = src.GetComponent(/datum/component/consume/festive_food)
+		F?.RemoveComponent(/datum/component/consume/food_chunk)
+		..()
+		. = ..()
+
 
 	pooled()
+		UnregisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL))
+		var/datum/component/C = src.GetComponent(/datum/component/consume/foodheal)
+		C?.RemoveComponent(/datum/component/consume/foodheal)
+		var/datum/component/D = src.GetComponent(/datum/component/consume/need_utensil)
+		D?.RemoveComponent(/datum/component/consume/need_utensil)
+		var/datum/component/E = src.GetComponent(/datum/component/consume/festive_food)
+		E?.RemoveComponent(/datum/component/consume/festive_food)
+		var/datum/component/F = src.GetComponent(/datum/component/consume/festive_food)
+		F?.RemoveComponent(/datum/component/consume/food_chunk)
 		..()
 
 	unpooled()
 		made_ants = 0
+		if(src.heal_amt)
+			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
+		if(src.needfork || src.needspoon)
+			var/utensils
+			if(src.needfork)
+				ADD_FLAG(utensils, NEED_FORK)
+			if(src.needspoon)
+				ADD_FLAG(utensils, NEED_SPOON)
+			if(utensils)
+				src.AddComponent(/datum/component/consume/need_utensil, utensils)
+		if(src.festivity)
+			src.AddComponent(/datum/component/consume/festive_food, src.festivity)
+		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/on_bite)
+		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL), .proc/on_finish_eating)
+
 		..()
+
+	proc/on_finish_eating(var/mob/M)
+		return
 
 	proc/on_table()
 		if (!isturf(src.loc)) return 0
@@ -35,6 +91,9 @@
 			if (istype(M, /obj/table))
 				return 1
 		return 0
+
+	proc/on_bite(var/mob/M, var/mob/user)
+		return
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
@@ -74,9 +133,21 @@
 		if (doants)
 			processing_items.Add(src)
 		create_time = world.time
+		if(length(src.food_effects))
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
+		if(src.use_bite_mask)
+			src.AddComponent(/datum/component/consume/bitemask)
+		if(src.dropped_item)
+			src.AddComponent(/datum/component/consume/drop_on_eaten, src.dropped_item)
 
 	unpooled()
 		..()
+		if(length(src.food_effects))
+			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
+		if(src.use_bite_mask)
+			src.AddComponent(/datum/component/consume/bitemask)
+		if(src.dropped_item)
+			src.AddComponent(/datum/component/consume/drop_on_eaten, src.dropped_item)
 		src.icon = start_icon
 		src.icon_state = start_icon_state
 		amount = initial(amount)
@@ -85,12 +156,22 @@
 			processing_items.Add(src)
 		create_time = world.time
 
-//	pooled()
-//		if(!made_ants)
-//			processing_items -= src
-//		..()
+	pooled()
+		var/datum/component/C = src.GetComponent(/datum/component/consume/food_effects)
+		C?.RemoveComponent(/datum/component/consume/food_effects)
+		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
+		D?.RemoveComponent(/datum/component/consume/bitemask)
+		var/datum/component/E = src.GetComponent(/datum/component/consume/drop_on_eaten)
+		E?.RemoveComponent(/datum/component/consume/drop_on_eaten)
+		..()
 
 	disposing()
+		var/datum/component/C = src.GetComponent(/datum/component/consume/food_effects)
+		C?.RemoveComponent(/datum/component/consume/food_effects)
+		var/datum/component/D = src.GetComponent(/datum/component/consume/bitemask)
+		D?.RemoveComponent(/datum/component/consume/bitemask)
+		var/datum/component/E = src.GetComponent(/datum/component/consume/drop_on_eaten)
+		E?.RemoveComponent(/datum/component/consume/drop_on_eaten)
 		if(!made_ants)
 			processing_items -= src
 		..()
@@ -144,38 +225,6 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
-	proc/on_bite(mob/eater)
-		//if (reagents?.total_volume)
-		//	reagents.reaction(M, INGEST)
-		//	reagents.trans_to(M, reagents.total_volume/(src.amount ? src.amount : 1))
-
-
-
-
-		eat_twitch(eater)
-		eater.on_eat(src)
-
-	proc/on_finish(mob/eater)
-		return
-
-	proc/drop_item(var/path)
-		var/obj/drop = new path
-		if(istype(drop))
-			drop.pixel_x = src.pixel_x
-			drop.pixel_y = src.pixel_y
-			var/obj/item/I = drop
-			if(istype(I))
-				var/mob/M = src.loc
-				if(istype(M))
-					var/item_slot = M.get_slot_from_item(src)
-					if(item_slot)
-						M.u_equip(src)
-						src.set_loc(null)
-						if(ishuman(M))
-							var/mob/living/carbon/human/H = M
-							H.force_equip(I,item_slot) // mobs don't have force_equip
-							return
-			drop.set_loc(get_turf(src.loc))
 
 /obj/item/reagent_containers/food/snacks/bite
 	name = "half-digested food chunk"

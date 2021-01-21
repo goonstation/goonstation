@@ -297,7 +297,7 @@
 	get_desc()
 		. += "[pick("The time is", "It's", "It's currently", "It reads", "It says")] [o_clock_time()]."
 
-	heal(var/mob/living/M)
+	on_bite(var/mob/M)
 		..()
 		boutput(M, "<span class='alert'>Eating that was a terrible idea!</span>")
 		random_brute_damage(M, rand(5, 15))
@@ -633,7 +633,7 @@
 		var/datum/plantgenes/DNA = src.plantgenes
 		reagents.add_reagent("cryostylane", DNA.potency)
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA.potency
@@ -656,7 +656,7 @@
 		..()
 		reagents.add_reagent("ghostchilijuice",25)
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
@@ -767,7 +767,7 @@
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		M.HealDamage("All", src.heal_amt, src.heal_amt)
 		M.take_toxin_damage(0 - src.heal_amt)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
@@ -851,7 +851,7 @@
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		if (src.icon_state == "banana")
 			M.visible_message("<span class='alert'>[M] eats [src] without peeling it. What a dumb beast!</span>")
 			M.take_toxin_damage(5)
@@ -1115,7 +1115,7 @@
 				qdel (src)
 		else ..()
 
-	heal(var/mob/M)
+	on_bite(var/mob/M)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
 
 /obj/item/reagent_containers/food/snacks/plant/onion
