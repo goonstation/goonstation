@@ -563,7 +563,7 @@
 	#endif
 	wages = PAY_DOCTORATE
 	slot_belt = /obj/item/device/pda2/genetics
-	slot_jump = /obj/item/clothing/under/rank/medical
+	slot_jump = /obj/item/clothing/under/rank/pathologist
 	slot_foot = /obj/item/clothing/shoes/white
 	slot_suit = /obj/item/clothing/suit/labcoat/pathology
 	#ifdef SCIENCE_PATHO_MAP

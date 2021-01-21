@@ -474,6 +474,17 @@
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+/obj/item/clothing/under/rank/pathologist
+	name = "pathologist's jumpsuit"
+	desc = "Scientifically proven to block up to 99% of pathogens."
+	icon_state = "pathology"
+	item_state = "pathology"
+	permeability_coefficient = 0.50
+
+	april_fools
+		icon_state = "medical-alt"
+		item_state = "medical-alt"
+
 // Engineering
 
 /obj/item/clothing/under/rank/engineer

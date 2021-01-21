@@ -477,9 +477,9 @@
 	coat_style = "PTlabcoat"
 
 	april_fools
-		icon_state = "MDlabcoat-alt"
-		item_state = "MDlabcoat-alt"
-		coat_style = "MDlabcoat-alt"
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
