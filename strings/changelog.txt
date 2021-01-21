@@ -1,6 +1,17 @@
-
+(t)thu jan 21 21
+(u)Emily
+(e)🆕|feature
+(*)New silkie breed! Be sure to give it a tank with lots of water, or you'll regret it.
 (t)wed jan 20 21
-(u)pali
+(u)BenLubar
+(p)3395
+(e)🐛|bug
+(+)The CDC now has a more conventional understanding of how time and causality work.
+(u)Sovexe
+(p)3412
+(e)🆕|feature
+(+)Floor goblins now hide between the floor tiles and plating instead of under the floor.
+(u)pali & Cookie
 (*)The handheld vacuum cleaner got new sprites and its special attack got rebalanced. Also fixed a bunch of things. Oh and also experimentally adding an overcharged version of the vacuum cleaner to janitor's traitor uplink.
 (t)tue jan 19 21
 (u)Flourish
