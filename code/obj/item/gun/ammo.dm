@@ -933,11 +933,11 @@
 			return 0
 		var/obj/item/ammo/power_cell/swapped_cell = E.cell
 		var/mob/living/M = src.loc
-		if (!istype(M))
+		if (!ismob(M))
 			M = user
 		var/atom/old_loc = src.loc
 
-		if(istype(M) && src == M.equipped())
+		if(istype(M) && (src in M.get_all_items_on_mob()))
 			M.u_equip(src)
 
 		src.set_loc(E)

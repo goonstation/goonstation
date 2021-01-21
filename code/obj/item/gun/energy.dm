@@ -1346,8 +1346,8 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(0.4 SECONDS)
-					playsound(M, "sound/vox/explosive.ogg", 50)
+					SPAWN_DBG(0.4 SECONDS)
+						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
 					item_state = "lawg-clownshot"
