@@ -33,11 +33,13 @@
 		if(M == user)
 			if(alert(user, "Are you sure you want to eat [src]?", "Eat brain?", "Yes", "No") == "Yes")
 				logTheThing("combat", user, null, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
-				return ..()
+				. = TRUE
+				..()
 		else
 			if(alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", "Yes", "No") == "Yes")
 				logTheThing("combat", user, null, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [M].")
-				return ..()
+				. = TRUE
+				..()
 
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))

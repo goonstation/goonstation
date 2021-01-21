@@ -506,8 +506,6 @@
 		eat_twitch(M)
 		M.on_eat(master)
 
-		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
-		SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
 
 		var/ate_the_whole_thing = 0
 		if(src.is_it_organs && !istype(master, /obj/item/clothing/head/butt))
@@ -517,9 +515,11 @@
 				ate_the_whole_thing = 1
 		else if((master.amount -= 1) < 1)
 			ate_the_whole_thing = 1
+		ON_COOLDOWN(M, "eat", EAT_COOLDOWN)
 
 		if(ate_the_whole_thing)
 			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_ALL, M, user)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_ALL, user, master)
 			M.visible_message("<span class='alert'>[M] finishes eating [master].</span>",\
 			"<span class='alert'>You finish eating [master].</span>")
 
@@ -552,6 +552,8 @@
 			user.u_equip(master)
 			qdel(master)
 		else
+			SEND_SIGNAL(master, COMSIG_ITEM_CONSUMED_PARTIAL, M, user)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PARTIAL, user, master)
 			boutput(user, "<span class='notice'>There's still some left!</span>")
 		return 1
 

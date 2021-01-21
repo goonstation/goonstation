@@ -2981,13 +2981,12 @@
 
 	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
 	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
+	if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
+		return TRUE
 
 	/// Now we can check if the thing is actually, in fact, supposed to be edible
-	if((A.material && !A.material.edible) || !A.edible)
-		if(HAS_FLAG(edibility_check, THING_IS_EDIBLE))
-			return TRUE
-		else
-			return FALSE
+	if(!(A.edible || (A.material && A.material.edible)))
+		return FALSE
 
 	/// Godmode
 	if(src != user && check_target_immunity(src))
