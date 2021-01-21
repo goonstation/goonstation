@@ -154,7 +154,7 @@
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
 		materiel_stock += new/datum/materiel/utility/detscanner
-		materiel_stock += new/datum/materiel/utility/highcappowercell
+		materiel_stock += new/datum/materiel/utility/medcappowercell
 		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 
@@ -299,9 +299,9 @@
 	catagory = "Utility"
 	description = "An advanced first aid kit, typically used in first responder scenarios before doctors arrive"
 
-/datum/materiel/utility/highcappowercell
+/datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
-	path = /obj/item/ammo/power_cell/high_power
+	path = /obj/item/ammo/power_cell/med_power
 	catagory = "Utility"
 	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
 
