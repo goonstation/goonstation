@@ -981,7 +981,7 @@
 	info = {"
 <body>
 <h2>Note for the Game Master</h2>
-<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower it's stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
+<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower its stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
 <hr>
 <p>
 
@@ -994,7 +994,7 @@ Damage per attack : 1 (Bite)<br>
 Vulnerability : Slashing / Blunt<br>
 <br>
 <b>Messy Death</b><br>
-<i>On death, the creature's body will splash it's boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
+<i>On death, the creature's body will splash its boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
 <br>
 
 <b>Maneater plant</b><br>
@@ -1101,7 +1101,7 @@ Apply one of each of the following modifiers to an attribute listed below.
 <br>7 – You can carry 3 significant items at once.<br>
 <br>8 – When the quest is resolved, the game ends! If you survive, gain a perk. Choose either +1  Attribute point, +1 Archetype point or +1 maximum resolve.<br>
 
-This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found at https://giffyglyph.com/quickquest/
+This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found <a href="https://giffyglyph.com/quickquest" target="_blank">here</a>.
 </p>
 "}
 
