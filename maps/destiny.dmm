@@ -14070,28 +14070,72 @@
 /area/station/hallway/primary/east)
 "aAa" = (
 /obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/clipboard,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/pen,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAb" = (
 /obj/table/wood/auto,
-/obj/item/paper_bin,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/dice/magic8ball,
+/obj/item/storage/box/nerd_kit{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAc" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit,
-/obj/item/clothing/head/apprentice,
-/obj/item/clothing/mask/skull,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aAd" = (

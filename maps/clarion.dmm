@@ -273,8 +273,42 @@
 /area/station/garden/aviary)
 "aaN" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/mask/skull,
-/obj/item/clothing/head/apprentice,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clipboard{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen1"
@@ -285,10 +319,8 @@
 	icon_state = "1-2"
 	},
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp{
-	pixel_x = 4;
-	pixel_y = 3;
-	switchon = 1
+/obj/item/storage/box/nerd_kit{
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -388,9 +420,17 @@
 	icon_state = "1-2"
 	},
 /obj/table/wood/round/auto,
-/obj/item/paper_bin,
-/obj/item/clothing/suit/cultist/nerd,
-/obj/item/pen,
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/apprentice{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -4
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen1"
@@ -10186,8 +10226,14 @@
 	})
 "aqt" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/paper/book/monster_manual_revised{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen1"
@@ -10600,8 +10646,10 @@
 /area/station/hallway/primary/central)
 "art" = (
 /obj/table/wood/round/auto,
-/obj/item/dice/magic8ball,
-/obj/item/pen,
+/obj/item/dice/magic8ball{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen1"
@@ -11050,7 +11098,14 @@
 /area/station/hallway/primary/central)
 "ase" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/nerd_kit,
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen1"
