@@ -108,7 +108,7 @@ hello I've lost my remaining sanity by dredging this code from the depths of hel
 for some reason I brought it back and tried to clean it up a bit and I regret everything but it's too late now I can't put it back please forgive me
 - haine
 */
-/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 0)
+/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
 	src.energy = E
 	radius=rad
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
