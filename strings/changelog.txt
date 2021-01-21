@@ -1,5 +1,9 @@
 
 (t)thu jan 21 21
+(u)Carbadox
+(p)3390
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Added an "official" Stations and Syndicates rulebook to the game, the SS13 version of Dungeons and Dragons. It's been made to accommodate SS13 virtual environment with a much light ruleset. It comes along with a basic monster manual. Check out your local nerd dungeons for a copy or a book/gaming vendor.
 (u)zjdtmkhzt
 (p)3316
 (e)⚖🆕|balance, feature
