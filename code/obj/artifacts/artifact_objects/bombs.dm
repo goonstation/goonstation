@@ -25,6 +25,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/animationScale = 3
 	var/detonation_time = INFINITY
 	var/lightColor = list(255,255,255,255)
+	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
@@ -40,7 +41,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		src.detonation_time = TIME + src.explode_delay
-		if(doAlert && ON_COOLDOWN(O, "alertArm", 10 MINUTES))
+		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
 			playsound(T, sound_cooldown, 100, 1)
 			SPAWN_DBG(3 SECONDS)
@@ -66,6 +67,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	effect_process(var/obj/O)
 		if(!src.activated)
+			return
+		if(src.explode_delay < 1)
 			return
 		var/turf/T = get_turf(O)
 		playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
@@ -162,6 +165,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	associated_object = /obj/machinery/artifact/bomb/devastating
 	rarity_class = 4
 	doAlert = 1
+	recharge_delay = 10 MINUTES
 	animationScale = 6
 
 	New()
@@ -212,7 +216,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
 	var/payload_type = 0 // 0 for smoke, 1 for foam, 2 for propellant, 3 for just dumping fluids
-	var/recharge_delay = 600
+	recharge_delay = 600
 	var/list/payload_reagents = list()
 
 	post_setup()
