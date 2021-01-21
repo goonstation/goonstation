@@ -150,6 +150,7 @@
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/control
+		materiel_stock += new/datum/materiel/loadout/justabaton
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/crowdgrenades
@@ -269,6 +270,12 @@
 	catagory = "Loadout"
 	description = "One belt containing a taser shotgun, a baton, and a barrier."
 
+/datum/materiel/loadout/justabaton
+	name = "Just a Baton"
+	path = /obj/item/storage/belt/security/baton
+	catagory = "Loadout"
+	description = "One belt containing a baton and barrier. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
 	path = /obj/item/storage/box/morphineinjectors
@@ -301,7 +308,7 @@
 
 /datum/materiel/utility/medcappowercell
 	name = "Spare Power Cell"
-	path = /obj/item/ammo/power_cell/med_power
+	path = /obj/item/ammo/power_cell/high_power
 	catagory = "Utility"
 	description = "An additional high capacity power cell for your weapons. Note: Security Officers already spawn with one in their Security Pouch"
 
