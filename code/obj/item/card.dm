@@ -82,6 +82,7 @@ GAUNTLET CARDS
 	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
+	var/keep_icon = 0
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -124,12 +125,14 @@ GAUNTLET CARDS
 /obj/item/card/id/clown
 	icon_state = "id_clown"
 	desc = "Wait, this isn't even an ID Card. It's a piece of a Chips Ahoy wrapper with crayon scribbles on it. What the fuck?"
+	keep_icon = 1
 
 /obj/item/card/id/gold
 	name = "identification card"
 	icon_state = "gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
+	keep_icon = 1
 
 /obj/item/card/id/blank_deluxe
 	name = "Deluxe ID"
@@ -137,6 +140,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Member"
 	assignment = "Member"
+	keep_icon = 1
 	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
@@ -145,6 +149,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	registered = "Captain"
 	assignment = "Captain"
+	keep_icon = 1
 	New()
 		access = get_access("Captain")
 		..()
@@ -155,6 +160,7 @@ GAUNTLET CARDS
 	registered = "Dabber"
 	assignment = "Dabber"
 	desc = "This card authorizes the person wearing it to perform sick dabs."
+	keep_icon = 1
 	var/dab_count = 0
 	var/dabbed_on_count = 0
 	var/arm_count = 0
