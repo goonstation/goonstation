@@ -107,8 +107,7 @@
 			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
 				processing_items.Add(src)
 			if (src.cell)
-				if (pcell.swap(src))
-					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
+				actions.start(new/datum/action/bar/icon/powercellswap(user,pcell,src), user)
 			else
 				src.cell = pcell
 				user.drop_item()
@@ -1347,8 +1346,8 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					SPAWN_DBG(0.4 SECONDS)
-						playsound(M, "sound/vox/explosive.ogg", 50)
+					sleep(0.4 SECONDS)
+					playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
 					item_state = "lawg-clownshot"
