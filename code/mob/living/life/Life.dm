@@ -10,7 +10,7 @@
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
 
-	New(new_owner)
+	New(new_owner,arguments)
 		..()
 		last_process = TIME
 
@@ -51,9 +51,15 @@
 
 	var/last_no_gravity = 0
 
-	proc/add_lifeprocess(type)
-		var/datum/lifeprocess/L = new type(src)
+	proc/add_lifeprocess(type,...)
+		var/datum/lifeprocess/L = null
+		if (length(args) > 1)
+			var/arguments = args.Copy(2)
+			L = new type(src,arguments)
+		else
+			L = new type(src)
 		lifeprocesses[type] = L
+		return L
 
 	proc/remove_lifeprocess(type)
 		var/datum/lifeprocess/L = lifeprocesses[type]
