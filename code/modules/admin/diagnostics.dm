@@ -962,7 +962,7 @@ proc/debug_color_of(var/thing)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") as anything|null in (available_overlays + "REMOVE")
+	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
 		if(infoOverlayImages)
