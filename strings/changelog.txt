@@ -1,5 +1,9 @@
 
 (t)wed jan 20 21
+(u)BenLubar
+(p)3395
+(e)🐛|bug
+(+)The CDC now has a more conventional understanding of how time and causality work.
 (u)Sovexe
 (p)3412
 (e)🆕|feature
