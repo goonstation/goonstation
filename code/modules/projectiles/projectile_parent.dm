@@ -738,11 +738,11 @@ datum/projectile/energy_bolt_antighost
 	impact_range = 16
 	hits_ghosts = 1 // do it.
 
-datum/projectile/rad_bolt
-	impact_range = 0
-
 datum/projectile/tele_bolt
 	impact_range = 4
+
+datum/projectile/rad_bolt
+	impact_range = 0
 
 datum/projectile/wavegun
 	impact_range = 4
