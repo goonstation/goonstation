@@ -273,7 +273,7 @@
 	name = "Morphine Autoinjectors"
 	path = /obj/item/storage/box/morphineinjectors
 	catagory = "Utility"
-	description = "Four Morphine Autoinjectors, capable of holding a dying person over until further medical aid can be delivered...or used as a makeshift tranquilizer."
+	description = "Four Morphine Autoinjectors, capable of ensuring you move at the best possible speed while injured without slowdowns...or used as a makeshift tranquilizer if overdosed."
 
 /datum/materiel/utility/donuts
 	name = "Robust Donuts"
