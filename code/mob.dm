@@ -525,13 +525,26 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/movable/AM as mob|obj, yes)
+/mob/Bump(atom/A, yes)
 	if ((!( yes ) || src.now_pushing))
 		return
+
+	var/atom/movable/AM = A
 
 	if(istype(AM, /mob/dead/target_observer) || istype(src, /mob/dead/target_observer))
 		return
 	src.now_pushing = 1
+
+	if(isturf(A))
+		if((A.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || A.hasStatus("sugar_rush"))
+			if(!(src.next_spammable_chem_reaction_time > world.time) || src.hasStatus("sugar_rush"))
+				src.next_spammable_chem_reaction_time = world.time + 1
+				src.now_pushing = 0
+				var/atom/source = A
+				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
+				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				src.throw_at(get_edge_cheap(source, turn(get_dir(A, src),rand(-1,1)*45)),  20, 3)
+				return
 
 	if (ismob(AM))
 		var/mob/tmob = AM
@@ -559,7 +572,7 @@
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
-			if(tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0)
+			if((tmob.reagents?.get_reagent_amount("flubber") + src.reagents?.get_reagent_amount("flubber") > 0) || src.hasStatus("sugar_rush") || tmob.hasStatus("sugar_rush"))
 				if(src.next_spammable_chem_reaction_time > world.time || tmob.next_spammable_chem_reaction_time > world.time)
 					src.now_pushing = 0
 					return
@@ -680,19 +693,19 @@
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				pulling += G.affecting
-			for (var/atom/movable/A in pulling)
-				if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			for (var/atom/movable/pulled in pulling)
+				if (get_dist(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 					continue
-				if (A == src || A == AM)
+				if (pulled == src || pulled == AM)
 					continue
-				if (!isturf(A.loc) || A.anchored)
+				if (!isturf(pulled.loc) || pulled.anchored)
 					src.now_pushing = null
 					continue // whoops
-				A.animate_movement = SYNC_STEPS
-				A.glide_size = src.glide_size
-				step(A, get_dir(A, old_loc))
-				A.glide_size = src.glide_size
-				A.OnMove(src)
+				pulled.animate_movement = SYNC_STEPS
+				pulled.glide_size = src.glide_size
+				step(pulled, get_dir(pulled, old_loc))
+				pulled.glide_size = src.glide_size
+				pulled.OnMove(src)
 		////////////////////////////////////// end suck
 		src.now_pushing = null
 
