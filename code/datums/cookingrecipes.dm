@@ -1073,6 +1073,13 @@
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/ass
 
+/datum/cookingrecipe/pot_pie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/pot
+
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
