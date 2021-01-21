@@ -890,6 +890,31 @@ datum
 			hygiene_value = 0.3
 			bladder_value = -0.5
 			taste = "gross"
+		water/hotdog
+			name = "Hotdog water"
+			id = "hotdogwater"
+			description = "The leftover water from a hotdog being boiled. Gross." // gross
+			reagent_state = LIQUID
+			transparency = 80
+			fluid_r = 159
+			fluid_b = 118
+			fluid_g = 88
+			addiction_prob = 50
+			addiction_prob2 = 100
+			addiction_min = 1
+			max_addiction_severity = "LOW"
+			depletion_rate = 0.2
+			taste = "disgusting"
+			thirst_value = 0.5
+			hunger_value = 0.5
+			bladder_value = 1
+			minimum_reaction_temperature = -INFINITY
+			reaction_mob(mob/M, method=TOUCH, volume_passed, mult = 1)
+				if(!volume_passed) return 1
+				if(method == INGEST)
+					M.take_toxin_damage(min(10, mult * volume_passed))
+					return 0
+				return 1
 
 		ice
 			name = "ice"

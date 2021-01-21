@@ -4090,3 +4090,11 @@ datum
 			mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
+		hotdogwater
+			name = "Hotdog Water"
+			id = "hotdogwater"
+			result = "hotdogwater"
+			required_reagents = list("porktonium" = 1, "salt" = 1, "water" = 1)
+			result_amount = 3
+			mix_phrase = "Smells like of really cheap meat. Looks like it too."
+
