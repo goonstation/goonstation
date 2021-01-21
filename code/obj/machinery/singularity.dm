@@ -88,11 +88,8 @@ Contains:
 	bound_x = 16
 	bound_y = 16
 
-<<<<<<< HEAD
-=======
-	var/has_moved = FALSE
-	var/maxboom = 0
->>>>>>> master
+	pixel_x = -64
+	pixel_y = -64
 
 	var/active = 0
 	var/energy = 10
