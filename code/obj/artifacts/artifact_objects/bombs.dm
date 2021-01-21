@@ -81,7 +81,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if (alarm_final)
 				playsound(T, alarm_final, 100, 1, -1)
 			animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
-			animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
+			if(O.simple_light)
+				animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
 
 			// actual boom
 			SPAWN_DBG(10 SECONDS)
