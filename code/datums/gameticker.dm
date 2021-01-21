@@ -499,6 +499,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (player.check_contents_for(/obj/item/gnomechompski))
 					player.unlock_medal("Guardin' gnome", 1)
 
+				if (player.mind.assigned_role == "Security Assistant")
+					src.unlock_medal("I helped!", 1)
+
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
 					if (H && istype(H) && H.implant && H.implant.len > 0)

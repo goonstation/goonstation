@@ -482,7 +482,7 @@
 			return
 		M.traitHolder.addTrait("training_security")
 
-	trainee
+	assistant
 		name = "Security Assistant"
 		limit = 2
 		wages = PAY_UNTRAINED
