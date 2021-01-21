@@ -1377,7 +1377,6 @@
 				src.bun = 1
 				src.desc = "A hotdog! A staple of both sporting events and space stations."
 				food_effects = list("food_all")
-
 			src.AddComponent(/datum/component/consume/foodheal, src.heal_amt)
 			src.AddComponent(/datum/component/consume/food_effects, src.food_effects)
 

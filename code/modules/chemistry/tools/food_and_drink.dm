@@ -45,7 +45,7 @@
 		D?.RemoveComponent(/datum/component/consume/need_utensil)
 		var/datum/component/E = src.GetComponent(/datum/component/consume/festive_food)
 		E?.RemoveComponent(/datum/component/consume/festive_food)
-		var/datum/component/F = src.GetComponent(/datum/component/consume/festive_food)
+		var/datum/component/F = src.GetComponent(/datum/component/consume/food_chunk)
 		F?.RemoveComponent(/datum/component/consume/food_chunk)
 		..()
 		. = ..()
@@ -59,7 +59,7 @@
 		D?.RemoveComponent(/datum/component/consume/need_utensil)
 		var/datum/component/E = src.GetComponent(/datum/component/consume/festive_food)
 		E?.RemoveComponent(/datum/component/consume/festive_food)
-		var/datum/component/F = src.GetComponent(/datum/component/consume/festive_food)
+		var/datum/component/F = src.GetComponent(/datum/component/consume/food_chunk)
 		F?.RemoveComponent(/datum/component/consume/food_chunk)
 		..()
 
@@ -77,7 +77,8 @@
 				src.AddComponent(/datum/component/consume/need_utensil, utensils)
 		if(src.festivity)
 			src.AddComponent(/datum/component/consume/festive_food, src.festivity)
-		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/on_bite)
+		src.AddComponent(/datum/component/consume/food_chunk)
+		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_PARTIAL), .proc/on_bite)
 		RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL), .proc/on_finish_eating)
 
 		..()

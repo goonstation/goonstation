@@ -5,7 +5,22 @@
 /// user = mob using the thing
 /// I = thing being eaten -- only does anything on components with a mob parent
 
+/* CONTENTS:
+* Can-eat inedible organs						- mob parent	-	pre-eat check							- (Can it eat heads too?)
+* Eat-organ get-points							- mob parent	-	post-eat all/part effect	- (which abilityholder to give points to)
+* Eat-organ get-healed							- mob parent	-	post-eat all/part effect	- (Multiplier against amount healed)
+* Which utensils are needed					- item parent	-	pre-eat check							- (Which utensil bitflags to check)
+* Eat-food get-healed								- item parent	-	post-eat all/part effect	- (Amount to heal on nibble)
+* Make things look partially eaten	- item parent	-	post-eat all/part effect	- (No vars)
+* Add a food chunk when eaten				- item parent	-	post-eat all/part effect	- (No vars)
+* Status effects granted on nibble	- item parent	-	post-eat all/part effect	- (list of effects)
+* Alter festivity on nibble 				- item parent	-	post-eat all/part effect	- (Amount to alter festivity)
+* Drop and hand the eater an item		- item parent	-	post-eat all effect				- (Path of thing to drop)
+* Unlock a medal when eaten					- item parent	-	post-eat all effect				- (Medal to unlock)
+ */
+
 /datum/component/consume
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
 	var/static/list/flock_adjectives_2 = list("pulsating", "jiggling", "quivering", "flapping")
 	var/static/list/flock_adjectives_3 = list("</span><span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span><span class='notice'>", "electric", "ferrofluid", "assimilatory")
@@ -310,6 +325,13 @@
 	src.base_heal = _base_heal
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/eat_stuff_get_heal)
 
+/datum/component/consume/foodheal/InheritComponent(datum/component/consume/foodheal/C, i_am_original, _new_base_heal)
+	if(C?.base_heal)
+		src.base_heal = C.base_heal
+	else
+		if (isnum_safe(_new_base_heal)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_base_heal is actually a number
+			src.base_heal = _new_base_heal
+
 /datum/component/consume/foodheal/proc/eat_stuff_get_heal(var/obj/item/I, var/obj/item/I, var/mob/M)
 	var/healing = src.base_heal
 
@@ -435,8 +457,22 @@
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.F = parent
-	src.status_effects |= _status_effects
+	src.status_effects = _status_effects
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+
+/datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
+	if(C?.status_effects)
+		src.status_effects = C.status_effects
+		boutput(world, "[C] was already init'd. heal amt on it was [C.status_effects] is now [src.status_effects], supposed to be [_new_status_effects]")
+	else
+		if (islist(_new_status_effects)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_status_effects is a string / list
+			src.status_effects |= _new_status_effects
+			boutput(world, "[_new_status_effects] was list. [src.status_effects]")
+		else if(istext(_new_status_effects))
+			var/list/new_sfx = list(_new_status_effects)
+			src.status_effects |= new_sfx
+			boutput(world, "[_new_status_effects] not list. [src.status_effects]")
+
 
 /datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
 	if (src.status_effects.len && isliving(M) && M.bioHolder)
@@ -460,6 +496,13 @@
 	src.F = parent
 	src.festiveness = _festiveness
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/alter_festivity)
+
+/datum/component/consume/festive_food/InheritComponent(datum/component/consume/festive_food/C, i_am_original, _new_festivity)
+	if(C?.festiveness)
+		src.festiveness = C.festiveness
+	else
+		if (isnum_safe(_new_festivity))
+			src.festiveness = _new_festivity
 
 /datum/component/consume/festive_food/proc/alter_festivity(var/obj/item/I, var/mob/M)
 	if (src.festiveness)
@@ -485,6 +528,15 @@
 	else if(ispath(thing_to_drop))
 		src.D = thing_to_drop
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL), .proc/drop_thing)
+
+/datum/component/consume/drop_on_eaten/InheritComponent(datum/component/consume/drop_on_eaten/C, i_am_original, var/obj/item/_new_thing)
+	if(C?.D)
+		src.D = C.D
+	else
+		if(istype(_new_thing))
+			src.D = _new_thing.type
+		else if(ispath(_new_thing))
+			src.D = _new_thing
 
 /datum/component/consume/drop_on_eaten/proc/drop_thing(var/obj/item/I, var/mob/M, var/mob/user)
 	var/obj/item/drop = new D
@@ -519,6 +571,13 @@
 	src.F = parent
 	src.medal = _medal
 	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_ALL), .proc/give_medal)
+
+/datum/component/consume/unlock_medal_on_eaten/InheritComponent(datum/component/consume/unlock_medal_on_eaten/C, i_am_original, _new_medal)
+	if(C?.medal)
+		src.medal = C.medal
+	else
+		if (_new_medal)
+			src.medal = _new_medal
 
 /datum/component/consume/unlock_medal_on_eaten/proc/give_medal(var/obj/item/I, var/mob/M)
 	M.unlock_medal(src.medal, 1)
