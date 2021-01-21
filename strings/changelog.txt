@@ -1,5 +1,9 @@
 
 (t)thu jan 21 21
+(u)Flourish
+(p)3404
+(e)⚖|balance
+(+)NTSOs now only have access to command and security channels on their headset.
 (u)Carbadox
 (p)3390
 (e)🆕🗺🔄|feature, mapping, rework
