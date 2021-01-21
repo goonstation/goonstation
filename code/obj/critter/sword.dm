@@ -413,7 +413,7 @@
 			miscvuln = 0.2
 
 
-	proc/destructive_flight()								//Charges at the target using it's thrusters thrice, dealing damage at the locations of each one's end.
+	proc/destructive_flight()								//Charges at the target using it's thrusters twice, dealing damage at the locations of each one's end.
 		walk_towards(src, src.target)
 		walk(src,0)
 		for (var/mob/B in range(3,get_center()))
@@ -430,15 +430,39 @@
 		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
-
-
-
-//FIND OUT HOW TO BREAK WALLS IN FRONT OF THE SWORD.
-//YES YOU STILL HAVE TO DO THIS.
-
+		var/increment
+		var/turf/T
 
 		SPAWN_DBG(1)
 			for(var/i=0, i < 6, i++)
+				switch (src.dir)
+					if (1)	//N
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
+
+					if (4)	//E
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
+
+					if (2)	//S
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
+
+					if (8)	//W
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.5)
 			for (var/mob/M in range(3,get_center()))
@@ -448,6 +472,34 @@
 			walk_towards(src, src.target)
 			walk(src,0)
 			for(var/l=0, l < 6, l++)
+				switch (src.dir)
+					if (1)	//N
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
+
+					if (4)	//E
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
+
+					if (2)	//S
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
+
+					if (8)	//W
+						for(increment = -1; increment <= 1; increment++)
+							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
+							if(T)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
 				sleep(0.5)
 			for (var/mob/O in range(3,get_center()))
@@ -467,7 +519,7 @@
 
 //-MISCELLANEOUS-//
 		
-	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge and Destructive Leap.
+	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge, Destructive Leap and Destructive Flight.
 		for (var/mob/M in locate(point_x,point_y,src.z))
 			if(!dam_type)
 				if (isrobot(M))
@@ -477,18 +529,21 @@
 				playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
 			else
 				if (isrobot(M))
-					M.health = M.health * rand(0.10, 0.20)
+					M.health = M.health * rand(0.10 / dam_type, 0.20 / dam_type)
 				else
-					random_brute_damage(M, 80)
+					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("weakened", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
 			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
-		if(T && prob(90))
+		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			T.ex_act(1)
-		for (var/obj/S in locate(point_x,point_y,src.z))
-			if(prob(45) && istype(S, /obj/critter/sword))
-				S.ex_act(1)
+		else
+			if(T && prob(90))
+				T.ex_act(1)
+			for (var/obj/S in locate(point_x,point_y,src.z))
+				if(prob(45) && istype(S, /obj/critter/sword))
+					S.ex_act(1)
 		return
 
 
