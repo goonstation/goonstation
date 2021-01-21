@@ -1155,7 +1155,6 @@
 		if (item)
 			item.layer = initial(item.layer)
 	T.Entered(item)
-	return
 
 /mob/proc/drop_item(obj/item/W)
 	.= 0
@@ -1278,11 +1277,6 @@
 	return
 
 /mob/proc/u_equip(obj/item/W)
-
-// I think this bit is handled by each method of dropping it, and it prevents dropping items in your hands and other procs using u_equip so I'll get rid of it for now.
-//	if (hasvar(W,"cant_self_remove"))
-//		if (W:cant_self_remove) return
-
 	if (W == src.r_hand)
 		src.r_hand = null
 	if (W == src.l_hand)
@@ -1303,16 +1297,6 @@
 
 	W.dropped(src)
 
-/*
-/mob/verb/dump_source()
-
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]<br>", t)
-		//Foreach goto(26)
-	src.Browse(master)
-	return
-*/
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -1461,10 +1445,10 @@
 /mob/proc/update_inhands()
 
 /mob/proc/put_in_hand(obj/item/I, hand)
-	return 0
+	. = 0
 
 /mob/proc/get_damage()
-	return src.health
+	. = src.health
 
 /mob/bullet_act(var/obj/projectile/P)
 	var/damage = 0
@@ -1534,14 +1518,14 @@
 	return
 
 /mob/proc/can_use_hands()
+	. = TRUE
 	if (src.hasStatus("handcuffed"))
-		return 0
+		return FALSE
 	if (src.buckled && istype(src.buckled, /obj/stool/bed)) // buckling does not restrict hands
-		return 0
-	return 1
+		return FALSE
 
 /mob/proc/is_active()
-	return (0 >= usr.stat)
+	. = (0 >= usr.stat)
 
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
@@ -2089,84 +2073,83 @@
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
-	if (!src || !ismob(src))
-		return 0
+	if (!src)
+		return null
 
-	var/list/L = list()
-	L += src.contents // Item slots.
+	. = list()
+	. += src.contents // Item slots.
 
 	for (var/obj/item/storage/S in src.contents) // Backpack, belt, briefcases etc.
 		var/list/T1 = S.get_all_contents()
 		for (var/obj/O1 in T1)
-			if (!L.Find(O1)) L.Add(O1)
+			. |= O1
 
 	for (var/obj/item/gift/G in src.contents)
-		if (!L.Find(G.gift)) L += G.gift
+		. |= G.gift
 		if (istype(G.gift, /obj/item/storage))
 			var/obj/item/storage/S2 = G.gift
 			var/list/T2 = S2.get_all_contents()
 			for (var/obj/O2 in T2)
-				if (!L.Find(O2)) L.Add(O2)
+				. |= O2
 
 	for (var/obj/item/storage/backpack/BP in src.contents) // Backpack boxes etc.
 		for (var/obj/item/storage/S3 in BP.contents)
 			var/list/T3 = S3.get_all_contents()
 			for (var/obj/O3 in T3)
-				if (!L.Find(O3)) L.Add(O3)
+				. |= O3
 
 		for (var/obj/item/gift/G2 in BP.contents)
-			if (!L.Find(G2.gift)) L += G2.gift
+			. |= G2.gift
 			if (istype(G2.gift, /obj/item/storage))
 				var/obj/item/storage/S4 = G2.gift
 				var/list/T4 = S4.get_all_contents()
 				for (var/obj/O4 in T4)
-					if (!L.Find(O4)) L.Add(O4)
+					. |= 04
 
 	for (var/obj/item/storage/belt/BL in src.contents) // Stealth storage in belts etc.
 		for (var/obj/item/storage/S5 in BL.contents)
 			var/list/T5 = S5.get_all_contents()
 			for (var/obj/O5 in T5)
-				if (!L.Find(O5)) L.Add(O5)
+				. |= O5
 
 		for (var/obj/item/gift/G3 in BL.contents)
-			if (!L.Find(G3.gift)) L += G3.gift
+			. |= G3.gift
 			if (istype(G3.gift, /obj/item/storage))
 				var/obj/item/storage/S6 = G3.gift
 				var/list/T6 = S6.get_all_contents()
 				for (var/obj/O6 in T6)
-					if (!L.Find(O6)) L.Add(O6)
+					. |= O6
 
-	for (var/obj/item/storage/box/syndibox/SB in L) // For those "belt-in-stealth storage-in-backpack" situations.
+	for (var/obj/item/storage/box/syndibox/SB in .) // For those "belt-in-stealth storage-in-backpack" situations.
 		for (var/obj/item/storage/S7 in SB.contents)
 			var/list/T7 = S7.get_all_contents()
 			for (var/obj/O7 in T7)
-				if (!L.Find(O7)) L.Add(O7)
+				. |= O7
 
 		for (var/obj/item/gift/G4 in SB.contents)
-			if (!L.Find(G4.gift)) L += G4.gift
+			. |= G4.gift
 			if (istype(G4.gift, /obj/item/storage))
 				var/obj/item/storage/S8 = G4.gift
 				var/list/T8 = S8.get_all_contents()
 				for (var/obj/O8 in T8)
-					if (!L.Find(O8)) L.Add(O8)
-
-	return L
+					. |= O8
 
 // Made these three procs use get_all_items_on_mob(). "Steal X" objective should work more reliably as a result (Convair880).
 /mob/proc/check_contents_for(A, var/accept_subtypes = 0)
-	if (!src || !ismob(src) || !A)
-		return 0
+ . = FALSE
+	if (!src || !A)
+		return
 
 	var/list/L = src.get_all_items_on_mob()
 	if (length(L))
 		for (var/obj/B in L)
 			if (B.type == A || (accept_subtypes && istype(B, A)))
-				return 1
-	return 0
+				return TRUE
 
 /mob/proc/check_contents_for_num(A, X, var/accept_subtypes = 0)
-	if (!src || !ismob(src) || !A)
-		return 0
+	. = FALSE
+	if (!src || !A)
+		return
 
 	var/tally = 0
 	var/list/L = src.get_all_items_on_mob()
@@ -2176,9 +2159,7 @@
 				tally++
 
 	if (tally >= X)
-		return 1
-
-	return 0
+		. = TRUE
 
 #define REFRESH "* Refresh list"
 /mob/proc/print_contents(var/mob/output_target)
@@ -2721,25 +2702,24 @@
 		last_pulled_time = world.time
 
 /mob/proc/on_centcom()
-	var mob_loc = src.loc
+	. = FALSE
+	var/mob_loc = src.loc
 	if (isobj(src.loc))
 		var/obj/O = src.loc
 		mob_loc = O.loc
 
 	var/turf/location = get_turf(mob_loc)
 	if (!location)
-		return 0
+		return
 
 	var/area/check_area = location.loc
 	if (istype(check_area, map_settings.escape_centcom))
-		return 1
-
-	return 0
+		. = TRUE
 
 /mob/proc/is_hulk()
+	. = FALSE
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
-		return 1
-	return 0
+		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
 
