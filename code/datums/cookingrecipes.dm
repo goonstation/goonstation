@@ -1231,7 +1231,7 @@
 		if(docakeitem.custom_item)
 			S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
-		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
+		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
 		B.food_color = S ? S.food_color : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255

@@ -51,7 +51,8 @@
 	/*Utility*/
 	/*‾‾‾‾‾‾‾*/
 	proc/check_for_topping(var/obj/item/W)
-		var/tag = null
+		var/tag = null //the name of the overlay (corresponds to the icon_state name)
+		var/overlay_color //does the overlay need a color passed to it?
 		if(istype(W,/obj/item/device/light/candle)) //istype check for candles because there are maaaany types of candles to choose from
 			tag = "cake[clayer]-candle" //which cake layer is this candle going to?
 			cake_candle = list(tag,"[W.type]") //what type of candle is it?
@@ -73,7 +74,29 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-		. = tag //returns a list consisting of the new overlay tag
+
+		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data
+			return list(0,0)
+
+		if(istype(W,/obj/item/reagent_containers/food/snacks))
+			var/obj/item/reagent_containers/food/snacks/F = W
+			if(!tag)
+				var/generic_number //which generic overlay are we using?
+				if(!src.GetOverlayImage("cake[clayer]-generic[1]")) //check for no generics first to save resources
+					generic_number = 1
+				else if(src.GetOverlayImage("cake[clayer]-generic[3]")) //check for maxed cake next to save more resources
+					return list(0,0)
+				else if(src.GetOverlayImage("cake[clayer]-generic[2]"))
+					generic_number = 3
+				else 
+					generic_number = 2
+				tag = "cake[clayer]-generic[generic_number]"
+				overlay_color = F.food_color
+			
+			for(var/food_effect in F.food_effects)
+				src.food_effects |= food_effect
+
+		. = list(tag,overlay_color) //returns a list consisting of the new overlay tag
 
 
 	proc/frost_cake(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube,var/mob/user)
@@ -152,7 +175,7 @@
 			src.update_cake_context()
 		for(var/i=1,i<=10,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/custom/schild = new /obj/item/reagent_containers/food/snacks/cake/custom
-			schild.icon_state = "slice-overlay"
+			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(cake_candle.len) //making sure there's only one candle :)
@@ -170,9 +193,7 @@
 			schild.pixel_x = rand(-6, 6)
 			schild.pixel_y = rand(-6, 6)
 			for(var/food_effect in src.food_effects)
-				if(food_effect in schild.food_effects)
-					continue
-				schild.food_effects += food_effect
+				schild.food_effects |= food_effect
 			schild.w_class = 1
 			schild.quality = src.quality
 			schild.name = "slice of [src.name]"
@@ -227,7 +248,7 @@
 					overlay_layer = "third"
 					src.clayer++
 					src.reagents.maximum_volume += 100
-				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-overlay")
+				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-base_custom")
 				var/image/ov_image = c.GetOverlayImage(overlay_ref)
 				stack.color = ov_image.color
 				src.UpdateOverlays(stack, overlay_layer)
@@ -268,7 +289,7 @@
 					else if(("[overlay_ref]" == "third") && (src.clayer == 3))
 						normal_topping = TRUE
 					if(normal_topping)
-						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-overlay")
+						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
 						var/image/warningsuppression = src.GetOverlayImage(overlay_ref)
 						stack.color = warningsuppression.color
 						cake.UpdateOverlays(stack,"base")
@@ -293,7 +314,7 @@
 				if("[overlay_ref]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
 					normal_topping = TRUE
 					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
-					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-overlay")
+					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-base_custom")
 					if(buffer.color)
 						slicecolor.color = buffer.color
 					cake.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
@@ -385,9 +406,7 @@
 
 		src.reagents.trans_to(s,(src.reagents.total_volume/3))
 		for(var/food_effect in src.food_effects)
-			if(food_effect in s.food_effects)
-				continue
-			s.food_effects += food_effect
+			s.food_effects |= food_effect
 		s.quality = src.quality
 		s.food_color = src.food_color
 
@@ -431,18 +450,20 @@
 			W.firesource_interact()
 			return
 		else
-			var/topping = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
-			if(!topping) //if the item wasn't a valid topping, perfom the default action
+			var/list/topping = check_for_topping(W) //if the item used on the cake wasn't handled previously, check for valid toppings next
+			if(!topping[1]) //if the item wasn't a valid topping, perfom the default action
 				..()
 				return
 
 			//adding topping overlays to the cake. Yay :D
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
-				topping = replacetext(topping,"cake[clayer]","slice")
-			if(topping && !(src.GetOverlayImage(topping))) //actually adding the topping overlay to the cake
-				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',topping)
+				topping[1] = replacetext(topping[1],"cake[clayer]","slice")
+			if(topping[1]) //actually adding the topping overlay to the cake
+				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',topping[1])
 				toppingoverlay.alpha = 255
-				src.UpdateOverlays(toppingoverlay,topping)
+				if(topping[2])
+					toppingoverlay.color = topping[2]
+				src.UpdateOverlays(toppingoverlay,topping[1])
 				user.u_equip(W)
 				if(istype(W,/obj/item/device/light/candle))
 					var/obj/item/device/light/candle/candle = W
