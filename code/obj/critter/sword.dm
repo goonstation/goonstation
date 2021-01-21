@@ -47,6 +47,7 @@
 		if(mode == 0 && !changing_modes)
 			SPAWN_DBG(2 MINUTES)
 				transformation(0)
+		return
 
 
 //-TRANSFORMATIONS-//
@@ -118,7 +119,7 @@
 			return
 
 		var/pathable_turfs = 0
-		for (var/turf/T in range(1, src))
+		for (var/turf/T in range(1, get_center()))
 			if (T && (T.pathable || istype(T, /turf/space)))
 				pathable_turfs++
 
@@ -142,45 +143,45 @@
 			var/increment
 			switch (src.dir)
 				if (1)	//N
-					var/turf/T = locate(src.loc.x,src.loc.y + 2,src.loc.z)
+					var/turf/T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 					for (var/mob/M in T)
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + increment,src.loc.y + 3,src.loc.z))
+						for(var/mob/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (4)	//E
-					var/turf/T = locate(src.loc.x + 2,src.loc.y,src.loc.z)
+					var/turf/T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 					for (var/mob/M in T)
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + 3,src.loc.y + increment,src.loc.z))
+						for(var/mob/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (2)	//S
-					var/turf/T = locate(src.loc.x,src.loc.y - 2,src.loc.z)
+					var/turf/T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 					for (var/mob/M in T)
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x + increment,src.loc.y - 3,src.loc.z))
+						for(var/mob/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
 
 				if (8)	//W
-					var/turf/T = locate(src.loc.x - 2,src.loc.y,src.loc.z)
+					var/turf/T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 					for (var/mob/M in T)
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
-						for(var/mob/M in locate(src.loc.x - 3,src.loc.y + increment,src.loc.z))
+						for(var/mob/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -196,31 +197,6 @@
 
 
 //-ANCHORED ABILITIES-//
-		
-	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge and Destructive Leap.
-		for (var/mob/M in locate(point_x,point_y,src.z))
-			if(!dam_type)
-				if (isrobot(M))
-					M.health = M.health * rand(0.10, 0.20)
-				else
-					random_burn_damage(M, 80)
-				playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
-			else
-				if (isrobot(M))
-					M.health = M.health * rand(0.10, 0.20)
-				else
-					random_brute_damage(M, 80)
-			M.changeStatus("weakened", 4 SECOND)
-			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-		var/turf/simulated/T = locate(point_x,point_y,src.z)
-		if(T && prob(90))
-			T.ex_act(1)
-		for (var/obj/S in locate(point_x,point_y,src.z))
-			if(prob(45))
-				S.ex_act(1)
-		return
-
 
 	proc/linear_purge()										//After 1.5 seconds, unleashes a destructive beam.
 		firevuln = 1.5
@@ -229,7 +205,7 @@
 
 		walk_towards(src, src.target)
 		walk(src,0)
-		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
+		playsound(get_center(), "sound/weapons/heavyioncharge.ogg", 75, 1)
 		mobile = 0
 
 		var/increment
@@ -238,35 +214,35 @@
 		switch (src.dir)
 			if (1)	//N
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
+					T = locate(src.loc.x + 1,src.loc.y + 1 + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
-						tile_purge(src.loc.x,src.loc.y + increment,0)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x + 1,src.loc.y + 1 + increment,0)
 
 			if (4)	//E
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
+					T = locate(src.loc.x + 1 + increment,src.loc.y + 1,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
-						tile_purge(src.loc.x + increment,src.loc.y,0)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x + 1 + increment,src.loc.y + 1,0)
 
 			if (2)	//S
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
+					T = locate(src.loc.x + 1,src.loc.y + 1 - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
-						tile_purge(src.loc.x,src.loc.y - increment,0)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x + 1,src.loc.y + 1 - increment,0)
 
 			if (8)	//W
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
+					T = locate(src.loc.x + 1 - increment,src.loc.y + 1,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
-						playsound(src.loc, 'sound/weapons/laserultra.ogg', 100, 1)
-						tile_purge(src.loc.x - increment,src.loc.y,0)
+						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
+						tile_purge(src.loc.x + 1 - increment,src.loc.y + 1,0)
 
 		SPAWN_DBG(10)
 			rotation_locked = true
@@ -291,7 +267,7 @@
 
 		var/spin_dir = prob(50) ? "L" : "R"
 		animate_spin(src, spin_dir, 5, 0)
-		playsound(src.loc, "sound/effects/flameswoosh.ogg", 60, 1)
+		playsound(get_center(), "sound/effects/flameswoosh.ogg", 60, 1)
 		if(spin_dir == "L")
 			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_L")
 		else
@@ -299,7 +275,7 @@
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(1)
-			for (var/mob/M in range(5,src.loc))
+			for (var/mob/M in range(5,get_center()))
 				random_brute_damage(M, 32)
 				random_burn_damage(M, 16)
 
@@ -307,7 +283,7 @@
 			animate_spin(src, spin_dir, 5, 0)
 
 		SPAWN_DBG(6)
-			for (var/mob/M in range(5,src.loc))
+			for (var/mob/M in range(5,get_center()))
 				random_brute_damage(M, 16)
 				random_burn_damage(M, 32)
 
@@ -324,7 +300,7 @@
 	proc/destructive_leap()									//Leaps at the target using it's thrusters, dealing damage at the landing location and probably gibbing anyone at the center of said location.
 		walk_towards(src, src.target)
 		walk(src,0)
-		for (var/mob/B in range(3,src.loc))
+		for (var/mob/B in range(3,get_center()))
 			random_burn_damage(B, 30)
 			B.changeStatus("burning", 3 SECONDS)
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
@@ -337,7 +313,7 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		animate_float(src, -1, 5, 1)
-		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)
+		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		SPAWN_DBG(2)
 			for(var/i=0, i < 6, i++)
@@ -347,10 +323,10 @@
 				else
 					src.pixel_y -= 4
 				sleep(1)
-			for (var/mob/M in range(3,src.loc))
+			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
-			tile_purge(src.loc.x,src.loc.y,1)
-			for (var/mob/M in src.loc)
+			tile_purge(src.loc.x + 1,src.loc.y + 1,1)
+			for (var/mob/M in get_center())
 				if(prob(69))								//Nice.
 					M.gib()
 				else
@@ -377,22 +353,22 @@
 		brutevuln = 1.25
 		miscvuln = 0.25
 
-		playsound(src.loc, "sound/effects/gust.ogg", 60, 1)
+		playsound(get_center(), "sound/effects/gust.ogg", 60, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "heatReallocation")
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(2)
-			for (var/mob/M in range(3,src.loc))
+			for (var/mob/M in range(3,get_center()))
 				random_burn_damage(M, (current_heat_level / 5))
 				M.changeStatus("burning", 4 SECONDS)
 
 		SPAWN_DBG(4)
-			for (var/mob/M in range(3,src.loc))
+			for (var/mob/M in range(3,get_center()))
 				random_burn_damage(M, (current_heat_level / 4))
 				M.changeStatus("burning", 6 SECONDS)
 
 		SPAWN_DBG(6)
-			for (var/mob/M in range(3,src.loc))
+			for (var/mob/M in range(3,get_center()))
 				random_burn_damage(M, (current_heat_level / 3))
 				M.changeStatus("burning", 8 SECONDS)
 
@@ -417,7 +393,7 @@
 		miscvuln = 0.25
 
 		var/health_before_absorption = health
-		playsound(src.loc, "sound/effects/shieldup.ogg", 80, 1)
+		playsound(get_center(), "sound/effects/shieldup.ogg", 80, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "energyAbsorption")
 		src.UpdateOverlays(glow, "glow")
 
@@ -440,7 +416,7 @@
 	proc/destructive_flight()								//Charges at the target using it's thrusters thrice, dealing damage at the locations of each one's end.
 		walk_towards(src, src.target)
 		walk(src,0)
-		for (var/mob/B in range(3,src.loc))
+		for (var/mob/B in range(3,get_center()))
 			random_burn_damage(B, 30)
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
 		icon_state = "destructiveFlight"
@@ -452,20 +428,20 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		animate_float(src, -1, 5, 1)
-		playsound(src.loc, "sound/effects/flame.ogg", 80, 1)
+		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 
 
 
 //FIND OUT HOW TO BREAK WALLS IN FRONT OF THE SWORD.
-
+//YES YOU STILL HAVE TO DO THIS.
 
 
 		SPAWN_DBG(1)
 			for(var/i=0, i < 6, i++)
 				step(src, src.dir)
 				sleep(0.5)
-			for (var/mob/M in range(3,src.loc))
+			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
 
 		SPAWN_DBG(8)
@@ -474,7 +450,7 @@
 			for(var/l=0, l < 6, l++)
 				step(src, src.dir)
 				sleep(0.5)
-			for (var/mob/O in range(3,src.loc))
+			for (var/mob/O in range(3,get_center()))
 				random_brute_damage(O, 45)
 
 		SPAWN_DBG(15)
@@ -490,7 +466,32 @@
 
 
 //-MISCELLANEOUS-//
+		
+	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge and Destructive Leap.
+		for (var/mob/M in locate(point_x,point_y,src.z))
+			if(!dam_type)
+				if (isrobot(M))
+					M.health = M.health * rand(0.10, 0.20)
+				else
+					random_burn_damage(M, 80)
+				playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			else
+				if (isrobot(M))
+					M.health = M.health * rand(0.10, 0.20)
+				else
+					random_brute_damage(M, 80)
+			M.changeStatus("weakened", 4 SECOND)
+			M.changeStatus("stunned", 1 SECOND)
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+		var/turf/simulated/T = locate(point_x,point_y,src.z)
+		if(T && prob(90))
+			T.ex_act(1)
+		for (var/obj/S in locate(point_x,point_y,src.z))
+			if(prob(45) && istype(S, /obj/critter/sword))
+				S.ex_act(1)
+		return
 
-	proc/get_center()
+
+	proc/get_center()										//Returns the central turf.
 		var/turf/center_tile = get_step(get_turf(src), NORTHEAST)
 		return center_tile
