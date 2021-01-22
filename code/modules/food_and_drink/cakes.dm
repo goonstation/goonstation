@@ -30,6 +30,7 @@
 	name = "cake"
 	desc = "a cake"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	amount = 0
 	heal_amt = 2
@@ -179,6 +180,7 @@
 			src.update_cake_context()
 		for(var/i=1,i<=10,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
+			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(cake_candle.len) //making sure there's only one candle :)
