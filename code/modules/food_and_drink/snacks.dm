@@ -1310,6 +1310,8 @@
 	var/herb = 0
 	initial_volume = 30
 	initial_reagents = list("porktonium"=10)
+	brewable = 1
+	brew_result = "hotdogwater"
 
 	on_reagent_change()
 		src.update_icon()
