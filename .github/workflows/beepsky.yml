@@ -197,7 +197,9 @@ jobs:
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
+          python3 -m pip install -r tools/mapmerge2/requirements.txt && python3 tools/mapmerge2/dmi.py --test
 
       - name: Run Linter
         id: linter
