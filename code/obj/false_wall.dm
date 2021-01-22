@@ -126,7 +126,7 @@
 				F.name = floorname1
 				F.icon = flooricon1
 				F.icon_state = flooricon_state1
-				F.intact = floorintact1
+				F.setIntact(floorintact1)
 				F.burnt = floorburnt1
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(F)
@@ -167,7 +167,7 @@
 			src.update_air_properties()
 			src.RL_SetOpacity(0)
 			if(!floorintact)
-				src.intact = 0
+				src.setIntact(FALSE)
 				src.levelupdate()
 			if(checkForMultipleDoors())
 				update_nearby_tiles()
@@ -186,7 +186,7 @@
 		src.update_air_properties()
 		if (src.visible)
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN_DBG(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -243,7 +243,7 @@
 		if (src.visible)
 			src.opacity = 0
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		if(src.was_rwall)
 			src.ReplaceWithRWall()

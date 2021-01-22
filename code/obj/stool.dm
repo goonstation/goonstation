@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 
-	Move()
+	Move(atom/target)
 		. = ..()
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
@@ -287,9 +287,12 @@
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
-			C.Move(src.loc)
-			C.buckled = src
+			if(src.buckled_guy.loc == src.loc)
+				C.buckled = null
+				C.Move(src.loc)
+				C.buckled = src
+			else
+				src.unbuckle()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -763,6 +766,13 @@
 		..()
 		return
 
+	Move(atom/target)
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+		. = ..()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+
 	Click(location,control,params)
 		var/lpm = params2list(params)
 		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
@@ -1048,7 +1058,8 @@
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
 
 	unbuckle()
-		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		if(src.buckled_guy)
+			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
 /* ======================================================= */

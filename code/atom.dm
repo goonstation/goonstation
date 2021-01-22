@@ -818,6 +818,8 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
+	src.last_move = 0
+
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
 
 	oldloc?.Exited(src, newloc)
@@ -1006,7 +1008,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

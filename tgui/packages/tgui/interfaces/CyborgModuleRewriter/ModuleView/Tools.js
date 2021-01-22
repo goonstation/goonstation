@@ -29,7 +29,8 @@ const Tools = props => {
                 onMoveToolDown={() => onMoveToolDown(toolRef)}
                 onMoveToolUp={() => onMoveToolUp(toolRef)}
                 onRemoveTool={() => onRemoveTool(toolRef)}
-                key={toolRef}>
+                key={toolRef}
+              >
                 {name}
               </Tool>
             );

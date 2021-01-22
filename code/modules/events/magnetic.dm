@@ -36,16 +36,16 @@
 			negative_mobs += H
 			eligible_mobs -= H
 
-		sleep(5 SECONDS)
+		SPAWN_DBG(5 SECONDS)
 
-		for (var/mob/living/carbon/human/H in positive_mobs)
-			H.bioHolder.AddEffect("magnets_pos")
-		for (var/mob/living/carbon/human/H in negative_mobs)
-			H.bioHolder.AddEffect("magnets_neg")
+			for (var/mob/living/carbon/human/H in positive_mobs)
+				H.bioHolder.AddEffect("magnets_pos")
+			for (var/mob/living/carbon/human/H in negative_mobs)
+				H.bioHolder.AddEffect("magnets_neg")
 
-		sleep(rand(1200,1800))
+			sleep(rand(1200,1800))
 
-		for (var/mob/living/carbon/human/H in positive_mobs)
-			if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_pos")
-		for (var/mob/living/carbon/human/H in negative_mobs)
-			if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_neg")
+			for (var/mob/living/carbon/human/H in positive_mobs)
+				if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_pos")
+			for (var/mob/living/carbon/human/H in negative_mobs)
+				if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_neg")

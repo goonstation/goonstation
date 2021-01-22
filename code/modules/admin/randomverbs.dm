@@ -607,8 +607,7 @@
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			if(T.air.trace_gases)
-				T.air.trace_gases = null
+			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 
@@ -2618,6 +2617,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				if (T.vistarget)
 					T.vistarget.vis_contents -= T
 					T.vistarget.warptarget = null
+					T.vistarget.fullbright = initial(T.vistarget.fullbright)
+					T.vistarget.RL_Init()
+					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE
@@ -2663,5 +2665,35 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 
 			if("No")
 				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")
+
+/client/proc/cmd_disco_lights()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Disco Lights"
+	set desc = "Set every light on the station to a random color"
+	var/R = null
+	var/G = null
+	var/B = null
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
+			if("Yes")
+				for (var/obj/machinery/light/L as() in stationLights)
+					R = rand(100)/100
+					G = rand(100)/100
+					B = rand(100)/100
+					if ((R + G + B) < 1)
+						switch (rand(1,3))
+							if (1)
+								R = 1
+							if (2)
+								G = 1
+							if (3)
+								B = 1
+					L.light?.set_color(R, G, B)
+				logTheThing("admin", src, null, "set every light on the station to a random color.")
+				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
+				message_admins("[key_name(src)] set every light on the station to a random color.")
 	else
 		boutput(src, "You must be at least a Administrator to use this command.")

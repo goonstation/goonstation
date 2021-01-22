@@ -20,6 +20,9 @@ datum/shuttle_controller
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall()
+		if (!online || direction != 1)
+			world << csound("sound/misc/shuttle_enroute.ogg")
+
 		if (online)
 			if(direction == -1)
 				setdirection(1)
@@ -31,6 +34,7 @@ datum/shuttle_controller
 
 	proc/recall()
 		if (online && direction == 1)
+			world << csound("sound/misc/shuttle_recalled.ogg")
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
 

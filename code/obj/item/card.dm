@@ -49,7 +49,7 @@ GAUNTLET CARDS
 /obj/item/card/emag/fake
 //delicious fake emag
 	attack_hand(mob/user as mob)
-		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","sex toy that George Melons likes to use","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
+		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
 		user.changeStatus("paralysis", 100)
 		SPAWN_DBG(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
@@ -74,6 +74,8 @@ GAUNTLET CARDS
 	uses_multiple_icon_states = 1
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
+	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
+	click_delay = 0.4 SECONDS
 	var/access = list()
 	var/registered = null
 	var/assignment = null

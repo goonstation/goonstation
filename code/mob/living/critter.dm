@@ -686,6 +686,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -699,6 +700,7 @@
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -737,6 +739,15 @@
 		if (assoc in healthlist)
 			return healthlist[assoc]
 		return null
+
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+		random_brute_damage(src, AM.throwforce, TRUE)
+		if (src.client)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+		if(thr?.user)
+			src.was_harmed(thr.user, AM)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		hit_twitch(src)

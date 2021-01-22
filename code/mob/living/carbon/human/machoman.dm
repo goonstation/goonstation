@@ -65,8 +65,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (src.stance == "defensive")
 			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
-			sleep(0.2 SECONDS)
-			macho_parry(user)
+			SPAWN_DBG(0.2 SECONDS)
+				macho_parry(user)
 			return
 		..()
 		return

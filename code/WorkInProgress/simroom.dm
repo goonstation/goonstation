@@ -252,7 +252,7 @@
 		boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
 		return
 
-	if (!isobserver(M))
+	if (!isobserver(M) || isAIeye(M))
 		M.set_loc(src)
 		M.network_device = src
 		//M.verbs += /mob/proc/jack_in
@@ -335,19 +335,22 @@
 	return
 
 /obj/machinery/sim/vr_bed/proc/go_out()
-	if (!src.occupant)
-		return
 	for(var/obj/O in src)
 		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
-	src.occupant.set_loc(get_turf(src.loc))
-	src.occupant.changeStatus("weakened", 2 SECONDS)
-	src.occupant.network_device = null
+	src.occupant?.set_loc(get_turf(src.loc))
+	src.occupant?.changeStatus("weakened", 2 SECONDS)
+	src.occupant?.network_device = null
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
 	src.update_icon()
 	return
+
+/obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
+	. = ..()
+	if(thing == src.occupant && (!isobserver(thing) || isAIeye(thing)))
+		src.go_out()
 
 /obj/machinery/sim/vr_bed/process()
 	..()
