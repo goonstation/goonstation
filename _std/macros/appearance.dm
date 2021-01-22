@@ -14,7 +14,6 @@
 #define HEAD_VAMPZOMBIE 11
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
-#define HEAD_HUNTER 14
 #define HEAD_ITHILLID 15
 
 //tail defines
