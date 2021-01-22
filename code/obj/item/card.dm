@@ -82,7 +82,8 @@ GAUNTLET CARDS
 	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
-	var/keep_icon = FALSE // this determines if the icon_state of the ID changes if it is given a new job
+	/// this determines if the icon_state of the ID changes if it is given a new job
+	var/keep_icon = FALSE 
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
