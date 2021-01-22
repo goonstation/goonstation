@@ -345,7 +345,7 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
 	power = 20
-	cost = 75
+	cost = 100
 	sname = "electromagnetic pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_SPECIAL
