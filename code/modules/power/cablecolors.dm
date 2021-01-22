@@ -32,7 +32,7 @@
 colorcable(yellow, "#fffb00")
 colorcable(orange, "#FF5D06")
 colorcable(blue, "#00aaff")
-colorcable(green, "#08ff52")
+colorcable(green, "#03c53d")
 colorcable(purple, "#9b59b6")
 colorcable(black, "#414A4C")
 colorcable(hotpink, "#FF69B4")
