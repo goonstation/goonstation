@@ -330,8 +330,6 @@
 			member.process_cell()
 			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
 			maxTemperature = max(maxTemperature, member.air.temperature)
-			if(maxTemperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-				break
 			LAGCHECK(LAG_REALTIME)
 
 		if(totalPressure / members.len < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
