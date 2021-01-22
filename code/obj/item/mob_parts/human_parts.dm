@@ -1092,6 +1092,7 @@
 			set_loc(holder)
 		..()
 
+
 /obj/item/parts/human_parts/arm/left/hunter
 	name = "left hunter arm"
 	desc = "A muscular and strong arm."

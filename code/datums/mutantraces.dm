@@ -1329,6 +1329,7 @@
 						mob.emote_allowed = 1
 		return message
 
+
 /datum/mutantrace/hunter
 	name = "hunter"
 	icon_state = "hunter"
@@ -1367,6 +1368,7 @@
 	aquatic = 1
 	voice_override = "blub"
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
+
 
 	say_verb()
 		return "glubs"
