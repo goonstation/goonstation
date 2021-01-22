@@ -101,16 +101,17 @@
 	/obj/item/crowbar)
 
 	make_my_stuff()
-		spawn_contents[ pick(/obj/item/cable_coil,\
-    /obj/item/cable_coil/colored/yellow,\
-    /obj/item/cable_coil/colored/orange,\
-    /obj/item/cable_coil/colored/blue,\
-    /obj/item/cable_coil/colored/green,\
-    /obj/item/cable_coil/colored/purple,\
-    /obj/item/cable_coil/colored/black,\
-    /obj/item/cable_coil/colored/hotpink,\
-    /obj/item/cable_coil/colored/brown,\
-    /obj/item/cable_coil/colored/white) ] = 3
+		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
+			spawn_contents[ pick(/obj/item/cable_coil,\
+			/obj/item/cable_coil/colored/yellow,\
+			/obj/item/cable_coil/colored/orange,\
+			/obj/item/cable_coil/colored/blue,\
+			/obj/item/cable_coil/colored/green,\
+			/obj/item/cable_coil/colored/purple,\
+			/obj/item/cable_coil/colored/black,\
+			/obj/item/cable_coil/colored/hotpink,\
+			/obj/item/cable_coil/colored/brown,\
+			/obj/item/cable_coil/colored/white) ] = 3
 		. = ..()
 
 
