@@ -12282,6 +12282,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint{
+	name = "Bar"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aBS" = (
@@ -22477,6 +22480,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aXf" = (
@@ -23594,7 +23598,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aZs" = (
@@ -44307,6 +44310,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQk" = (
@@ -52207,6 +52211,7 @@
 /area/station/medical/medbay/lobby)
 "cid" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cie" = (
@@ -52989,6 +52994,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cjN" = (
@@ -61747,6 +61753,9 @@
 	},
 /obj/landmark/start{
 	name = "Geneticist"
+	},
+/obj/landmark/gps_waypoint{
+	name = "Cloning"
 	},
 /turf/simulated/floor,
 /area/station/medical/research)

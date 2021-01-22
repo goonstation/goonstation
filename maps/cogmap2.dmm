@@ -1369,6 +1369,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
@@ -1729,6 +1730,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "adB" = (
@@ -2284,6 +2286,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup2)
 "aeL" = (
@@ -2400,6 +2403,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -2968,6 +2972,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -22165,6 +22170,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
@@ -37962,14 +37968,9 @@
 	},
 /area/station/security/checkpoint/podbay)
 "bFV" = (
-/obj/window/auto/reinforced,
-/obj/grille/steel,
-/obj/decal/poster/wallsign/hazard_caution{
-	desc = "High-intensity laser beamline. Approach with extreme caution."
-	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
 "bFW" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -40073,6 +40074,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "bJy" = (
@@ -40217,7 +40219,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue3"
@@ -47886,6 +47887,7 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bYJ" = (
@@ -53138,6 +53140,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "ckY" = (
@@ -57412,6 +57415,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cuf" = (
@@ -59050,6 +59054,7 @@
 /area/station/medical/robotics)
 "cxQ" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cxR" = (
@@ -59085,6 +59090,7 @@
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cxV" = (
@@ -60752,6 +60758,7 @@
 /area/station/engine/elect)
 "cBz" = (
 /obj/disposalpipe/segment/mail/bent/east,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBA" = (
@@ -64131,6 +64138,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cJp" = (
@@ -65892,6 +65900,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -66140,6 +66149,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -70201,6 +70211,7 @@
 	})
 "cWC" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue2"
@@ -70748,6 +70759,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "cXE" = (
@@ -74811,6 +74823,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dgp" = (
@@ -79096,6 +79109,10 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"gGV" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
 "hRi" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -79207,6 +79224,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"mtx" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "mBI" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -79240,6 +79261,10 @@
 	dir = 9
 	},
 /area/station/ranch)
+"oHZ" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "pdE" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -79266,6 +79291,13 @@
 /obj/machinery/light,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"qKy" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/science/lab)
 "rsz" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -79296,6 +79328,10 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics)
+"tGo" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/purple,
+/area/station/teleporter)
 "tPC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -103210,7 +103246,7 @@ cyJ
 cAe
 cBK
 cCZ
-cBK
+qKy
 cCZ
 cBK
 cIM
@@ -111021,7 +111057,7 @@ byI
 bAl
 bFR
 bDY
-bFV
+bJO
 bHS
 bJO
 bLt
@@ -117410,7 +117446,7 @@ cIk
 cJy
 cJy
 cJy
-cJy
+oHZ
 cOh
 cQR
 cNU
@@ -121563,7 +121599,7 @@ aDQ
 aNG
 aTV
 aVn
-aVn
+bFV
 aYk
 aZQ
 bbl
@@ -127073,7 +127109,7 @@ cHn
 cIy
 cJS
 cLw
-cMY
+mtx
 cIu
 cPO
 cRp
@@ -142422,7 +142458,7 @@ bjj
 bjq
 bqZ
 bsN
-buG
+gGV
 bwq
 byr
 bzX
@@ -142739,7 +142775,7 @@ bOr
 bBw
 bRx
 bTa
-bUB
+tGo
 bWl
 bRv
 bNm
