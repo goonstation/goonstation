@@ -59,7 +59,7 @@
 	sname = "reflection wave"
 	power = 10
 	projectile_speed = 28
-	cost = 75
+	cost = 50
 	max_range = 7
 	icon_state = "wave-emp"
 
