@@ -1557,3 +1557,37 @@ datum
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 				..()
 				return
+
+		medical/dmso
+			name = "dmso"
+			id = "dmso"
+			description = "A sweet, non-toxic, viscous liquid. It is widely used as an additive."
+			reagent_state = LIQUID
+			fluid_r = 220
+			fluid_g = 220
+			fluid_b = 220
+			transparency = 20
+			viscosity = 0.85
+			touch_modifier = 0.8
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				if (method == TOUCH)
+					for(var/ID in holder?.reagent_list)
+						var/datum/reagent/R = holder?.reagent_list[ID]
+						if (penetrates_skin || istype(R,src.type))
+							continue
+						if (!("nopenetrate" in paramslist))
+							var/modifier = touch_modifier
+							if(!src.pierces_outerwear)
+								for(var/atom in M.get_equipped_items())
+									if (istype(atom, /obj/item/clothing))
+										var/obj/item/clothing/C = atom
+										modifier -= (1 - C.permeability_coefficient)/3
+							modifier = clamp(modifier, 0, 1)
+							if(M.reagents)
+								M.reagents.add_reagent(ID,R.volume*modifier,R.data)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.take_toxin_damage(1 * mult)
+				M.HealDamage("All", 0.5 * mult)
