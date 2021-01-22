@@ -103,9 +103,9 @@
 /// Turns out its edible
 #define THING_IS_EDIBLE		(1<<0)
 /// Needs a fork
-#define NEED_FORK					(1<<1)
+#define EATING_NEEDS_A_FORK					(1<<1)
 /// Needs a spoon
-#define NEED_SPOON				(1<<2)
+#define EATING_NEEDS_A_SPOON				(1<<2)
 
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't

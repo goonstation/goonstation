@@ -28,9 +28,9 @@
 		if(src.needfork || src.needspoon)
 			var/utensils
 			if(src.needfork)
-				ADD_FLAG(utensils, NEED_FORK)
+				ADD_FLAG(utensils, EATING_NEEDS_A_FORK)
 			if(src.needspoon)
-				ADD_FLAG(utensils, NEED_SPOON)
+				ADD_FLAG(utensils, EATING_NEEDS_A_SPOON)
 			if(utensils)
 				src.AddComponent(/datum/component/consume/need_utensil, utensils)
 		if(src.festivity)
@@ -70,9 +70,9 @@
 		if(src.needfork || src.needspoon)
 			var/utensils
 			if(src.needfork)
-				ADD_FLAG(utensils, NEED_FORK)
+				ADD_FLAG(utensils, EATING_NEEDS_A_FORK)
 			if(src.needspoon)
-				ADD_FLAG(utensils, NEED_SPOON)
+				ADD_FLAG(utensils, EATING_NEEDS_A_SPOON)
 			if(utensils)
 				src.AddComponent(/datum/component/consume/need_utensil, utensils)
 		if(src.festivity)

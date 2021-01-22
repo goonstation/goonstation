@@ -2993,9 +2993,9 @@
 		return src.can_not_eat(A, user, "godmode")
 
 	/// Finally, check if we have proper etiquette
-	if(HAS_FLAG(edibility_check, NEED_FORK))
+	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_FORK))
 		return src.can_not_eat(A, user, "lack_fork")
-	if(HAS_FLAG(edibility_check, NEED_SPOON))
+	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_SPOON))
 		return src.can_not_eat(A, user, "lack_spoon")
 
 	/// And finally finally, if it should actually be edible, do we have somewhere to put it?

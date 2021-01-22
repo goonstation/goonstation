@@ -6,17 +6,17 @@
 /// I = thing being eaten -- only does anything on components with a mob parent
 
 /* CONTENTS:
-* Can-eat inedible organs						- mob parent	-	pre-eat check							- (Can it eat heads too?)
-* Eat-organ get-points							- mob parent	-	post-eat all/part effect	- (which abilityholder to give points to)
-* Eat-organ get-healed							- mob parent	-	post-eat all/part effect	- (Multiplier against amount healed)
-* Which utensils are needed					- item parent	-	pre-eat check							- (Which utensil bitflags to check)
-* Eat-food get-healed								- item parent	-	post-eat all/part effect	- (Amount to heal on nibble)
-* Make things look partially eaten	- item parent	-	post-eat all/part effect	- (No vars)
-* Add a food chunk when eaten				- item parent	-	post-eat all/part effect	- (No vars)
-* Status effects granted on nibble	- item parent	-	post-eat all/part effect	- (list of effects)
-* Alter festivity on nibble 				- item parent	-	post-eat all/part effect	- (Amount to alter festivity)
-* Drop and hand the eater an item		- item parent	-	post-eat all effect				- (Path of thing to drop)
-* Unlock a medal when eaten					- item parent	-	post-eat all effect				- (Medal to unlock)
+* Can-eat inedible organs          - mob parent  - pre-eat check            - (Can it eat heads too?)
+* Eat-organ get-points             - mob parent  - post-eat all/part effect - (which abilityholder to give points to)
+* Eat-organ get-healed             - mob parent  - post-eat all/part effect - (Multiplier against amount healed)
+* Which utensils are needed        - item parent - pre-eat check            - (Which utensil bitflags to check)
+* Eat-food get-healed              - item parent - post-eat all/part effect - (Amount to heal on nibble)
+* Make things look partially eaten - item parent - post-eat all/part effect - (No vars)
+* Add a food chunk when eaten      - item parent - post-eat all/part effect - (No vars)
+* Status effects granted on nibble - item parent - post-eat all/part effect - (list of effects)
+* Alter festivity on nibble        - item parent - post-eat all/part effect - (Amount to alter festivity)
+* Drop and hand the eater an item  - item parent - post-eat all effect      - (Path of thing to drop)
+* Unlock a medal when eaten        - item parent - post-eat all effect      - (Medal to unlock)
  */
 
 /datum/component/consume
@@ -292,19 +292,19 @@
 
 		var/remaining_flags = src.utensils_needed
 
-		if (HAS_FLAG(remaining_flags, NEED_FORK))
+		if (HAS_FLAG(remaining_flags, EATING_NEEDS_A_FORK))
 			var/obj/item/kitchen/utensil/fork/Y = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
 			if(prob(20) && istype(Y, /obj/item/kitchen/utensil/fork/plastic))
 				Y.break_utensil(user)
 			if(istype(Y))
-				REMOVE_FLAG(remaining_flags, NEED_FORK)
+				REMOVE_FLAG(remaining_flags, EATING_NEEDS_A_FORK)
 
-		if (HAS_FLAG(remaining_flags, NEED_SPOON))
+		if (HAS_FLAG(remaining_flags, EATING_NEEDS_A_SPOON))
 			var/obj/item/kitchen/utensil/spoon/P = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
 			if(prob(20) && istype(P, /obj/item/kitchen/utensil/spoon/plastic))
 				P.break_utensil(user)
 			if(istype(P))
-				REMOVE_FLAG(remaining_flags, NEED_SPOON)
+				REMOVE_FLAG(remaining_flags, EATING_NEEDS_A_SPOON)
 
 		return remaining_flags
 
