@@ -78,9 +78,11 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(
-			get_assets(/datum/asset/basic/tgui_common),
-			get_assets(/datum/asset/group/base_tgui)
+		window.initialize(
+			fancy = user.client.preferences.tgui_fancy,
+			inline_assets = list(
+				get_assets(/datum/asset/basic/tgui_common),
+				get_assets(/datum/asset/group/base_tgui)
 			))
 	else
 		window.send_message("ping")

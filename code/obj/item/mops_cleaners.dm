@@ -821,8 +821,8 @@ WET FLOOR SIGN
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "vacuum"
-	mats = 10
+	icon_state = "handvac"
+	mats = list("bamboo"=3, "MET-1"=10)
 	w_class = 2
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
@@ -831,9 +831,9 @@ WET FLOOR SIGN
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/suck)
 		src.bucket = new(src)
 		src.trashbag = new(src)
-		src.setItemSpecial(/datum/item_special/suck)
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -883,11 +883,13 @@ WET FLOOR SIGN
 			boutput(user, "<span class='alert'>\The [src] has neither trashbag nor bucket.</span>")
 
 	afterattack(atom/target, mob/user, reach, params)
+		if(!isturf(user.loc))
+			return
 		if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
 			for(var/obj/item/I in src.trashbag)
 				I.set_loc(storage)
-			src.trashbag.current_stuff = 0
+			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			return
 		else if(istype(target, /obj/machinery/disposal))
@@ -895,7 +897,7 @@ WET FLOOR SIGN
 			if(src.trashbag)
 				for(var/obj/item/I in src.trashbag)
 					I.set_loc(disposal)
-				src.trashbag.current_stuff = 0
+				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				disposal.update()
 				return
@@ -944,7 +946,7 @@ WET FLOOR SIGN
 
 		var/list/obj/item/items_to_suck = list()
 		for(var/obj/item/I in T)
-			if(I.w_class <= 1 && !I.anchored)
+			if((I.w_class <= 1 || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
 				items_to_suck += I
 		if(length(items_to_suck))
 			var/item_desc = length(items_to_suck) > 1 ? "some items" : "\the [items_to_suck[1]]"
@@ -961,7 +963,7 @@ WET FLOOR SIGN
 				SPAWN_DBG(0.5 SECONDS)
 					for(var/obj/item/I as() in items_to_suck) // yes, this can go over capacity of the bag, that's intended
 						I.set_loc(src.trashbag)
-						src.trashbag.current_stuff += I.w_class
+					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
 
@@ -1001,24 +1003,27 @@ WET FLOOR SIGN
 
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
-	color = list(1,0,0, 0,1,0, 0,0,1, 0.3,0.1,0.0)
+	mats = list("neutronium"=3, "MET-1"=10)
+	color = list(0,0,1, 0,1,0, 1,0,0)
 	New()
 		..()
 		var/datum/item_special/suck/suck = src.special
+		suck.suck_mobs = TRUE
 		suck.range = 10
-		suck.suck_in_range = 6
+		suck.suck_in_range = 3
 		suck.throw_range = 10
 		suck.throw_speed = 1
 
 /datum/item_special/suck
-	cooldown = 20
-	staminaCost = 5
-	moveDelay = 5
-	moveDelayDuration = 5
+	cooldown = 30
+	staminaCost = 10
+	moveDelay = 8
+	moveDelayDuration = 10
 	var/range = 3
-	var/suck_in_range = 2
+	var/suck_in_range = 1
 	var/throw_range = 2
 	var/throw_speed = 0.3
+	var/suck_mobs = FALSE
 
 	image = "suck"
 	name = "Suck"
@@ -1027,10 +1032,11 @@ WET FLOOR SIGN
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
+		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
 		if(params["left"] && master && get_dist(master_turf, target_turf) > 1)
-			if(ON_COOLDOWN(master, "suck", 2 SECONDS)) return
+			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 
@@ -1062,11 +1068,19 @@ WET FLOOR SIGN
 					if(A.density && !istype(A, /obj/table))
 						end_now = TRUE
 					if(!A.anchored)
-						A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
-						if(ismob(A))
-							var/mob/M = A
-							if(isclient(M.client))
+						if(!ismob(A) || src.suck_mobs)
+							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
+							if(ismob(A))
+								var/mob/M = A
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
+						else
+							var/mob/M = A
+							if(M.equipped() && prob(25))
+								var/obj/item/I = M.equipped()
+								I.set_loc(M.loc)
+								M.u_equip(I)
+								I.dropped()
+								boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				if(end_now)
 					break
 				else
@@ -1074,7 +1088,7 @@ WET FLOOR SIGN
 					last = T
 
 			afterUse(user)
-		playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
+			playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
 	anchored = 2

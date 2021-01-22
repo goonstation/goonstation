@@ -22,7 +22,6 @@
 		if (dist <= 2)
 			if (src.current_stuff > src.max_stuff)
 				. += "All the stuff inside is spilling out!"
-				src.remove_random_item() // dunno how this would even happen but uhh there, there you go. a way to remove items if there's too much in there! :v
 			else if (src.current_stuff == src.max_stuff)
 				. += "It's totally full."
 			else
@@ -101,7 +100,7 @@
 			src.w_class = max(I.w_class, src.w_class) // as it turns out there are some w_class things above 5 so fuck it this is just a max() now
 			src.current_stuff += I.w_class
 			tooltip_rebuild = 1
-		if (src.contents.len == 1)
+		if (src.contents.len >= 1)
 			src.icon_state = src.base_state
 			src.item_state = src.base_state
 			if (ismob(user))
