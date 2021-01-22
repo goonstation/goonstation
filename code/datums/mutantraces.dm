@@ -1329,7 +1329,6 @@
 						mob.emote_allowed = 1
 		return message
 
-
 /datum/mutantrace/hunter
 	name = "hunter"
 	icon_state = "hunter"
@@ -1359,6 +1358,7 @@
 
 	say_verb()
 		return "snarls"
+
 
 /datum/mutantrace/ithillid
 	name = "ithillid"
