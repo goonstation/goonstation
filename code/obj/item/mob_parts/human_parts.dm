@@ -1093,7 +1093,7 @@
 		..()
 
 
-obj/item/parts/human_parts/arm/left/hunter
+/obj/item/parts/human_parts/arm/left/hunter
 	name = "left hunter arm"
 	desc = "A muscular and strong arm."
 	icon_state = "arm_left_hunter"
