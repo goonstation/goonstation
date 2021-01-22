@@ -158,6 +158,7 @@
 		materiel_stock += new/datum/materiel/utility/medcappowercell
 		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/riotrounds
 
 	vended(var/atom/A)
 		..()
@@ -317,6 +318,12 @@
 	path = /obj/item/clothing/glasses/nightvision
 	catagory = "Utility"
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
+
+/datum/materiel/utility/riotrounds
+	name = "40mm Riot Rounds"
+	path = /obj/item/storage/box/riotrounds
+	catagory = "Utility"
+	description = "Two boxes of 40mm Riot Rounds, totalling 4 shots, for the Riot Launcher."
 
 
 //SYNDIE
