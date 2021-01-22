@@ -541,14 +541,6 @@
 					src.organ_name = "chicken head"
 					src.desc = "Mike would be proud."
 
-				if(HEAD_HUNTER)
-					src.organ_name = "hunter head"
-					src.desc = "Ironic isn't it?"
-
-				if(HEAD_ITHILLID)
-					src.organ_name = "squid head"
-					src.desc = "Blub, blub."
-
 				if(HEAD_VIRTUAL)
 					src.organ_name = "virtual head"
 					src.desc = "W311, 5h17." // 1337 5p34k

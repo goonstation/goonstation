@@ -1335,14 +1335,9 @@
 	human_compatible = 0
 	jerk = 1
 	override_attack = 0
-	mutant_folder = 'icons/mob/hunter.dmi'
-	special_head = HEAD_HUNTER //heh
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/hunter/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/hunter
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/hunter
 	ignore_missing_limbs = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	// Gave them a minor stamina boost (Convair880).
 	New(var/mob/living/carbon/human/M)
@@ -1371,17 +1366,7 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
-	mutant_folder = 'icons/mob/ithillid.dmi'
-	special_head = HEAD_ITHILLID
-	special_hair_1_icon = 'icons/mob/ithillid.dmi'
-	special_hair_1_state = "head_detail_1"
-	special_hair_1_color = null
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS)
 
 	say_verb()
 		return "glubs"

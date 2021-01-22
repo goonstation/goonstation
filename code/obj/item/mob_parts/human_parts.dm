@@ -1092,6 +1092,57 @@
 			set_loc(holder)
 		..()
 
+/obj/item/parts/human_parts/arm/left/hunter
+	name = "left hunter arm"
+	desc = "A muscular and strong arm."
+	icon_state = "arm_left_hunter"
+	slot = "l_arm"
+	side = "left"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/hunter
+	handlistPart = "l_hand_hunter"
+	show_on_examine = 1
+	limb_is_unnatural = TRUE
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_hunter")
+		return standImage
+
+/obj/item/parts/human_parts/arm/right/hunter
+	name = "right hunter arm"
+	desc = "A muscular and strong arm."
+	icon_state = "arm_right_hunter"
+	slot = "r_arm"
+	side = "right"
+	decomp_affected = 0
+	skintoned = 0
+	override_attack_hand = 1
+	limb_type = /datum/limb/hunter
+	handlistPart = "r_hand_hunter"
+	show_on_examine = 1
+	limb_is_unnatural = TRUE
+
+	New(var/atom/holder)
+		if (holder != null)
+			set_loc(holder)
+		..()
+
+	getMobIcon(var/lying, var/decomp_stage = 0)
+		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.standImage
+		current_decomp_stage_s = decomp_stage
+		src.standImage = image('icons/mob/human.dmi', "[src.slot]_hunter")
+		return standImage
 
 /obj/item/parts/human_parts/arm/left/claw
 	name = "left claw arm"
@@ -1935,120 +1986,6 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/kudzu/right
 	name = "right kudzu leg"
 	desc = "A kudzu'sssss right leg."
-	icon_state = "leg_right"
-	slot = "r_leg"
-	side = "right"
-	partlistPart = "foot_right"
-	step_image_state = "footprintsR"
-
-/// HUNTER LIMBS ///
-///// PARENT /////
-
-/obj/item/parts/human_parts/arm/mutant/hunter
-	icon = 'icons/mob/hunter.dmi'
-	partIcon = 'icons/mob/hunter.dmi'
-
-/obj/item/parts/human_parts/leg/mutant/hunter
-	icon = 'icons/mob/hunter.dmi'
-	partIcon = 'icons/mob/hunter.dmi'
-
-///// LIMBS /////
-
-/obj/item/parts/human_parts/arm/mutant/hunter/left
-	name = "left hunter arm"
-	desc = "A muscular and strong arm."
-	icon_state = "arm_left"
-	slot = "l_arm"
-	side = "left"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/hunter
-	handlistPart = "hand_left"
-	show_on_examine = 1
-	limb_is_unnatural = TRUE
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-/obj/item/parts/human_parts/arm/mutant/hunter/right
-	name = "right hunter arm"
-	desc = "A muscular and strong arm."
-	icon_state = "arm_right"
-	slot = "r_arm"
-	side = "right"
-	decomp_affected = 0
-	skintoned = 0
-	override_attack_hand = 1
-	limb_type = /datum/limb/hunter
-	handlistPart = "hand_right"
-	show_on_examine = 1
-	limb_is_unnatural = TRUE
-
-	New(var/atom/holder)
-		if (holder != null)
-			set_loc(holder)
-		..()
-
-/obj/item/parts/human_parts/leg/mutant/hunter/left
-	name = "left hunter leg"
-	desc = "A muscular and strong left leg."
-	icon_state = "leg_left"
-	slot = "l_leg"
-	side = "left"
-	partlistPart = "foot_left"
-	step_image_state = "footprintsL"
-
-/obj/item/parts/human_parts/leg/mutant/hunter/right
-	name = "right hunter leg"
-	desc = "A muscular and strong right leg."
-	icon_state = "leg_right"
-	slot = "r_leg"
-	side = "right"
-	partlistPart = "foot_right"
-	step_image_state = "footprintsR"
-
-/// ITHILLID LIMBS ///
-///// PARENT /////
-/obj/item/parts/human_parts/arm/mutant/ithillid
-	icon = 'icons/mob/ithillid.dmi'
-	partIcon = 'icons/mob/ithillid.dmi'
-
-/obj/item/parts/human_parts/leg/mutant/ithillid
-	icon = 'icons/mob/ithillid.dmi'
-	partIcon = 'icons/mob/ithillid.dmi'
-
-///// LIMBS /////
-
-/obj/item/parts/human_parts/arm/mutant/ithillid/left
-	name = "left squid arm"
-	desc = "A squid's left blub."
-	icon_state = "arm_left"
-	slot = "l_arm"
-	side = "left"
-	handlistPart = "hand_left"
-
-/obj/item/parts/human_parts/arm/mutant/ithillid/right
-	name = "left squid arm"
-	desc = "Blub squid's right arm"
-	icon_state = "arm_right"
-	slot = "r_arm"
-	side = "right"
-	handlistPart = "hand_right"
-
-/obj/item/parts/human_parts/leg/mutant/ithillid/left
-	name = "left squid leg"
-	desc = "A blub's left leg."
-	slot = "l_leg"
-	side = "left"
-	partlistPart = "foot_left"
-	step_image_state = "footprintsL"
-
-/obj/item/parts/human_parts/leg/mutant/ithillid/right
-	name = "right squid leg"
-	desc = "A squid's blub leg."
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
