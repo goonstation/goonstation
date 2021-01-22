@@ -324,13 +324,17 @@
 				return
 
 		var/totalPressure = 0
+		var/maxTemperature = 0
 		for(var/turf/simulated/member as() in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
 			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
+			maxTemperature = max(maxTemperature, member.air.temperature)
+			if(maxTemperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+				break
 			LAGCHECK(LAG_REALTIME)
 
-		if(totalPressure / members.len < 5)
+		if(totalPressure / members.len < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			resume_group_processing()
 			return
 	else
