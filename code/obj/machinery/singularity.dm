@@ -110,6 +110,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 - haine
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
+  START_TRACKING
 	src.energy = E
 	radius=rad
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
@@ -118,6 +119,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (Ti)
 		src.Dtime = Ti
 	..()
+
+/obj/machinery/the_singularity/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/the_singularity/process()
 	eat()
@@ -349,7 +354,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == 4 || get_dist(src.get_center(),T) == 5)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -1332,8 +1337,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAS = locate(/obj/machinery/power/collector_array) in get_step(src,SOUTH)
 		CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
-		for(var/obj/machinery/the_singularity/S in orange(18,src))
-			S1 = S
+		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
+			if(get_dist(singu,loc)<15)
+				S1 = singu
 
 		if(!isnull(CAN))
 			CA1 = CAN
