@@ -129,11 +129,11 @@ Returns:
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
 /proc/raytrace(var/atom/source, var/atom/target)
+	. = list()
 	var/x0 = source.x
 	var/y0 = source.y
 	var/x1 = target.x
 	var/y1 = target.y
-	var/list/crossed = list()
 	var/dx = abs(x1 - x0)
 	var/dy = abs(y1 - y0)
 	var/x = x0
@@ -145,7 +145,7 @@ Returns:
 	dx *= 2
 	dy *= 2
 	while(n>0)
-		crossed += get_turf(locate(x, y, source.z))
+		. += get_turf(locate(x, y, source.z))
 		if(error > 0)
 			x += x_inc
 			error -= dy
@@ -159,7 +159,6 @@ Returns:
 			error += dx
 			n--
 		n--
-	return crossed
 
 /proc/testLine()
 	var/atom/source = get_turf(usr)

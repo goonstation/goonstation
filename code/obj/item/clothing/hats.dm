@@ -1225,3 +1225,9 @@
 	item_state = "antlers"
 	w_class = 1.0
 	throwforce = 0
+
+/obj/item/clothing/head/pajama_cap
+	name = "nightcap"
+	desc = "Is it truly a good night without one?"
+	icon_state = "pajama_hat"
+	item_state = "pajama_hat"
