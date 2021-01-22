@@ -33,6 +33,7 @@ jobs:
         run: |
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
+          pip3 install -r tools/requirements.txt
           touch +secret/__secret.dme
 
       - name: Misc Checks
@@ -40,7 +41,7 @@ jobs:
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
-          python3 -m pip install -r tools/mapmerge2/requirements.txt && python3 tools/mapmerge2/dmi.py --test
+          tools/bootstrap/python -m dmi.test
 
       - name: Run Linter
         id: linter
@@ -191,7 +192,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
+          pip3 install -r tools/requirements.txt
           touch +secret/__secret.dme
 
       - name: Misc Checks
@@ -199,7 +202,7 @@ jobs:
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
-          python3 -m pip install -r tools/mapmerge2/requirements.txt && python3 tools/mapmerge2/dmi.py --test
+          tools/bootstrap/python -m dmi.test
 
       - name: Run Linter
         id: linter

@@ -1,5 +1,5 @@
 @echo off
-set MAPROOT=../../maps/
+set MAPROOT=%~dp0/../../maps/
 set TGM=1
-python mapmerge.py
+call "%~dp0\..\bootstrap\python" -m mapmerge2.mapmerge %*
 pause
