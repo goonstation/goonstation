@@ -98,8 +98,21 @@
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wirecutters,\
 	/obj/item/device/t_scanner,\
-	/obj/item/crowbar,\
-	/obj/item/cable_coil = 3)
+	/obj/item/crowbar)
+
+	make_my_stuff()
+		spawn_contents[ pick(/obj/item/cable_coil,\
+    /obj/item/cable_coil/colored/yellow,\
+    /obj/item/cable_coil/colored/orange,\
+    /obj/item/cable_coil/colored/blue,\
+    /obj/item/cable_coil/colored/green,\
+    /obj/item/cable_coil/colored/purple,\
+    /obj/item/cable_coil/colored/black,\
+    /obj/item/cable_coil/colored/hotpink,\
+    /obj/item/cable_coil/colored/brown,\
+    /obj/item/cable_coil/colored/white) ] = 3
+		. = ..()
+
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
