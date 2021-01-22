@@ -23,14 +23,16 @@
 	atksilicon = 1
 	aggressive = 1
 	flying = 1
-	seekrange = 256					//A perk of being a high-tech prototype - incredibly large detection range.
-	var/mode = 0					//0 - Beacon. 1 - Unanchored. 2 - Anchored.
-	var/changing_modes = false		//Used to prevent some things during transformation sequences.
-	var/rotation_locked = false		//Used to lock the SWORD's rotation in place, for example during transformations or in the second stage of Linear Purge.
-	var/current_ability = null		//Used to keep track of what ability the SWORD is currently using.
-	var/previous_ability = null		//Used to prevent using the same ability twice in a row.
-	var/rotation_current = 0		//Used to keep track which of the 16 different orientations the SWORD is currently facing.
-	var/current_heat_level = 0		//Used to keep track of the SWORD's heat for Heat Reallocation.
+	generic = 0
+	seekrange = 256						//A perk of being a high-tech prototype - incredibly large detection range.
+	var/mode = 0						//0 - Beacon. 1 - Unanchored. 2 - Anchored.
+	var/transformation_triggered = false//Used to check if the initial transformation has already been started or not.
+	var/changing_modes = false			//Used to prevent some things during transformation sequences.
+	var/rotation_locked = false			//Used to lock the SWORD's rotation in place, for example during transformations or in the second stage of Linear Purge.
+	var/current_ability = null			//Used to keep track of what ability the SWORD is currently using.
+	var/previous_ability = null			//Used to prevent using the same ability twice in a row.
+	var/rotation_current = 0			//Used to keep track which of the 16 different orientations the SWORD is currently facing.
+	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/image/glow
 
 	New()
@@ -39,15 +41,33 @@
 		firevuln = 0
 		brutevuln = 0
 		miscvuln = 0
-
 		glow.plane = PLANE_SELFILLUM
+
+		SPAWN_DBG(1 MINUTE)
+			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
+				transformation_triggered = true								//...the countdown starts.
+				name = transformation_name
+				desc = transformation_desc
+				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
+				SPAWN_DBG(2 MINUTES)
+					transformation(0)
+		return
 	
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
-		if(mode == 0 && !changing_modes)
+		if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
+				transformation_triggered = true							//...the countdown starts.
+			name = transformation_name
+			desc = transformation_desc
+			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
 			SPAWN_DBG(2 MINUTES)
 				transformation(0)
 		return
+
+
+//-ABILITY SELECTION-//
+
+	//Some proc.
 
 
 //-TRANSFORMATIONS-//
@@ -73,6 +93,8 @@
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
+					name = true_name
+					desc = true_desc
 
 			if(1)
 				rotation_locked = true
