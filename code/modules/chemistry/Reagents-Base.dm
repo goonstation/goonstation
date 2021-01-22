@@ -891,7 +891,7 @@ datum
 			bladder_value = -0.5
 			taste = "gross"
 		water/hotdog
-			name = "Hotdog water"
+			name = "hotdog water"
 			id = "hotdogwater"
 			description = "The leftover water from a hotdog being boiled. Gross." // gross
 			reagent_state = LIQUID
