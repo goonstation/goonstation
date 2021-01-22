@@ -10,7 +10,7 @@
 	dissipation_rate = 0 //doesn't use standard falloff
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
 //Kill/Stun ratio
-	ks_ratio = 1.0
+	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "inversion wave"
 //file location for the sound you want it to play
