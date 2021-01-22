@@ -110,7 +110,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 - haine
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
-	START_TRACKING
+  START_TRACKING
 	src.energy = E
 	radius=rad
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
@@ -118,10 +118,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	event()
 	if (Ti)
 		src.Dtime = Ti
-	bound_height*=(rad*2)+1 //scales bound height with the radius
-	bound_width*=(rad*2)+1
-	bound_x*=(rad*2)+1
-	bound_y*=(rad*2)+1
 	..()
 
 /obj/machinery/the_singularity/disposing()
