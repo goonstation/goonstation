@@ -1,5 +1,9 @@
 
 (t)thu jan 21 21
+(u)Tarmunora
+(p)3415
+(e)⚖🆕|balance, feature
+(*)Added bouncy mode to wave guns, moves old EMP mode to pulse rifles.
 (u)BatElite
 (p)3354
 (e)🆕🎨|feature, sprites
