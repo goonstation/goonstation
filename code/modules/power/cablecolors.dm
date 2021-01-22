@@ -36,7 +36,7 @@ colorcable(green, "#08ff52")
 colorcable(purple, "#9370DB")
 colorcable(black, "#414A4C")
 colorcable(hotpink, "#FF69B4")
-colorcable(brown, "#832A0D")
+colorcable(brown, "#633221")
 colorcable(white, "#ffffff")
 
 #undef colorcable
