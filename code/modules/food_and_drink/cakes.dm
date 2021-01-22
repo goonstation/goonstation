@@ -30,7 +30,6 @@
 	name = "cake"
 	desc = "a cake"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "cake_batter"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	amount = 0
 	heal_amt = 2
@@ -180,7 +179,6 @@
 			src.update_cake_context()
 		for(var/i=1,i<=10,i++) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
-			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(cake_candle.len) //making sure there's only one candle :)
@@ -541,7 +539,6 @@
 /obj/item/reagent_containers/food/snacks/cake/cream
 	name = "cream sponge cake"
 	desc = "Mmm! A delicious-looking cream sponge cake!"
-	amount = 12
 	heal_amt = 2
 	initial_volume = 50
 	initial_reagents = list("sugar"=30)
@@ -554,7 +551,6 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate
 	name = "chocolate cake"
 	desc = "Mmm! A delicious-looking chocolate sponge cake!"
-	amount = 12
 	heal_amt = 3
 	initial_volume = 50
 	initial_reagents = "chocolate"
@@ -568,13 +564,24 @@
 	name = "Extravagant Chocolate Gateau"
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
 
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_gateau"),"first")
+		UpdateOverlays(new /image(src.icon,"cake1-cherry"),"cake1-cherry")
+		UpdateOverlays(new /image(src.icon,"cake2-base_gateau"),"second")
+		UpdateOverlays(new /image(src.icon,"cake2-cherry"),"cake2-cherry")
+		UpdateOverlays(new /image(src.icon,"cake3-base_gateau"),"third")
+		UpdateOverlays(new /image(src.icon,"cake3-cherry"),"cake3-cherry")
+		UpdateOverlays(new /image(src.icon,"cake3-strawberry"),"cake3-strawberry")
+		cake_bases = list("base_gateau","base_gateau","base_gateau")
+		clayer = 3
+		update_cake_context()
+
 /obj/item/reagent_containers/food/snacks/cake/meat
 	name = "meat cake"
 	desc = "Uh... well... wow. What is this?"
 	var/hname = ""
 	var/job = null
-	icon_state = "cake_meat"
-	amount = 12
 	heal_amt = 3
 	initial_volume = 50
 	initial_reagents = "blood"
@@ -587,7 +594,6 @@
 /obj/item/reagent_containers/food/snacks/cake/bacon
 	name = "bacon cake"
 	desc = "This...this is just terrible."
-	amount = 12
 	heal_amt = 4
 	initial_volume = 250
 	initial_reagents = "porktonium"
@@ -597,9 +603,17 @@
 		UpdateOverlays(new /image(src.icon,"cake1-base_bacon"),"first")
 		cake_bases = list("base_bacon")
 
-	heal(var/mob/M)
-		M.nutrition += 500
-		return
+/obj/item/reagent_containers/food/snacks/cake/true_bacon
+	name = "True Bacon (TM)"
+	desc = "this bacon is too dense for the universe to contain..."
+	initial_reagents = list("badgrease"=20,"msg"=40)
+
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_true"),"first")
+		cake_bases = list("base_true")
+		food_effects.Add("food_fireburp")
+		food_effects.Add("food_deep_burp")
 
 #ifdef XMAS
 
