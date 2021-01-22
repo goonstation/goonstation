@@ -1243,7 +1243,7 @@ var/list/globalContextActions = null
 			icon_state = "unstack"
 
 			execute(var/atom/target, var/mob/user)
-				var/obj/item/reagent_containers/food/snacks/cake/custom/c = target
+				var/obj/item/reagent_containers/food/snacks/cake/c = target
 				c.unstack(user)
 
 		candle
@@ -1252,7 +1252,7 @@ var/list/globalContextActions = null
 			icon_state = "candle"
 
 			execute(var/atom/target, var/mob/user)
-				var/obj/item/reagent_containers/food/snacks/cake/custom/c = target
+				var/obj/item/reagent_containers/food/snacks/cake/c = target
 				c.extinguish(user)
 
 		pickup

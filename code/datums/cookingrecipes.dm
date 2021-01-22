@@ -1170,28 +1170,28 @@
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
 	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/cake/batter
+	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
 /datum/cookingrecipe/cake_cream
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/cream
 
 /datum/cookingrecipe/cake_chocolate
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/candy
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
+	output = /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
 
 /datum/cookingrecipe/cake_meat
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/meat
 
 /datum/cookingrecipe/cake_bacon
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	amt2 = 3
 	cookbonus = 14
@@ -1209,7 +1209,7 @@
 		if (!ourCooker)
 			return null
 
-		var fruitcake = new /obj/item/reagent_containers/food/snacks/cake/fruit
+		var fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
 		playsound(ourCooker.loc, "sound/effects/splat.ogg", 50, 1)
 
 		return fruitcake
@@ -1217,7 +1217,7 @@
 #endif
 
 /datum/cookingrecipe/cake_custom
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	cookbonus = 14
 	output = null
 
@@ -1225,17 +1225,18 @@
 		if(!ourCooker)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/cake/batter/docakeitem = locate() in ourCooker.contents
+		var/obj/item/reagent_containers/food/snacks/cake_batter/docakeitem = locate() in ourCooker.contents
 
 		var/obj/item/reagent_containers/food/snacks/S
 		if(docakeitem.custom_item)
 			S = docakeitem.custom_item
-		var/obj/item/reagent_containers/food/snacks/cake/custom/B = new /obj/item/reagent_containers/food/snacks/cake/custom(ourCooker)
+		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake(ourCooker)
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
 		B.food_color = S ? S.food_color : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
-		B.UpdateOverlays(overlay,"base")
+		B.UpdateOverlays(overlay,"first")
+		B.cake_bases = list("base_custom")
 		if(S)
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
@@ -1273,7 +1274,7 @@
 		return B
 
 /datum/cookingrecipe/mix_cake_custom
-	item1 = /obj/item/reagent_containers/food/snacks/cake/batter
+	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	amt1 = 1
 	output = null
 
@@ -1285,7 +1286,7 @@
 			if (istype(I, item1))
 				continue
 			else if (istype(I,/obj/item/reagent_containers/food/snacks/))
-				var/obj/item/reagent_containers/food/snacks/cake/batter/batter = new
+				var/obj/item/reagent_containers/food/snacks/cake_batter/batter = new
 
 				batter.custom_item = I
 				I.set_loc(batter)

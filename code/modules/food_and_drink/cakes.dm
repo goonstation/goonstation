@@ -4,6 +4,17 @@
 #define CAKE_MODE_STACK 3
 #define CAKE_MODE_BUILD 4
 
+/obj/item/reagent_containers/food/snacks/cake_batter
+	name = "cake batter"
+	desc = "An uncooked bit of cake batter. Eating it like this won't be very nice."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cake_batter"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	amount = 12
+	heal_amt = 1
+	var/obj/item/reagent_containers/custom_item
+	initial_volume = 50
+
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 	name = "yellow cake"
 	desc = "A decent yellow cake that seems to be glowing a bit. Is this safe?"
@@ -16,20 +27,11 @@
 	initial_reagents = "uranium"
 
 /obj/item/reagent_containers/food/snacks/cake
-	name = "sponge cake"
-	desc = "A plain sponge cake. Could be better, could be worse."
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "cake_batter"
-	amount = 12
-	heal_amt = 2
-	custom_food = 0
-	w_class = 3
-	food_effects = list("food_energized", "food_cold")
-
-/obj/item/reagent_containers/food/snacks/cake/custom
 	name = "cake"
 	desc = "a cake"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_batter"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	amount = 0
 	heal_amt = 2
 	use_bite_mask = 0
@@ -37,6 +39,7 @@
 	object_flags = IGNORE_CONTEXT_CLICK_ATTACKBY | IGNORE_CONTEXT_CLICK_EQUIPPED
 	initial_volume = 100
 	w_class = 4.0
+	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
@@ -50,6 +53,7 @@
 	/*_______*/
 	/*Utility*/
 	/*‾‾‾‾‾‾‾*/
+
 	proc/check_for_topping(var/obj/item/W)
 		var/tag = null //the name of the overlay (corresponds to the icon_state name)
 		var/overlay_color //does the overlay need a color passed to it?
@@ -82,11 +86,12 @@
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!tag)
 				var/generic_number //which generic overlay are we using?
-				if(!src.GetOverlayImage("cake[clayer]-generic[1]")) //check for no generics first to save resources
+				var/sliced_or_cake = sliced?"slice":"cake[clayer]"
+				if(!src.GetOverlayImage("[sliced_or_cake]-generic[1]")) //check for no generics first to save resources
 					generic_number = 1
-				else if(src.GetOverlayImage("cake[clayer]-generic[3]")) //check for maxed cake next to save more resources
+				else if(src.GetOverlayImage("[sliced_or_cake]-generic[3]")) //check for maxed cake next to save more resources
 					return list(0,0)
-				else if(src.GetOverlayImage("cake[clayer]-generic[2]"))
+				else if(src.GetOverlayImage("[sliced_or_cake]-generic[2]"))
 					generic_number = 3
 				else 
 					generic_number = 2
@@ -122,7 +127,7 @@
 			if(!src.GetOverlayImage(tag))
 				if(src.sliced)
 					tag = replacetext(tag,"cake[clayer]","slice")
-				var/image/frostingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
+				var/image/frostingoverlay = new /image(src.icon,tag)
 				frostingoverlay.color = average.to_rgba()
 				frostingoverlay.alpha = 255
 				src.UpdateOverlays(frostingoverlay,tag)
@@ -151,11 +156,11 @@
 		user.show_text("You cut the cake into slices.")
 		var/layer_tag //passes layer information to the build_cake function
 		var/replacetext //used to change layer identifiers to reformat from cake overlays to slice overlays
-		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom //temporary reference item to paste overlays onto child items
+		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake //temporary reference item to paste overlays onto child items
 		var/candle_lit
 		switch(src.clayer) //checking the current layer of the cake
 			if(1)
-				layer_tag = "base" //the tag of the future overlay
+				layer_tag = "first" //the tag of the future overlay
 				replacetext = "cake1" //used in replacetext below to assign overlays
 			if(2)
 				layer_tag = "second"
@@ -174,16 +179,16 @@
 			src.clayer--
 			src.update_cake_context()
 		for(var/i=1,i<=10,i++) //generating child slices of the parent template
-			var/obj/item/reagent_containers/food/snacks/cake/custom/schild = new /obj/item/reagent_containers/food/snacks/cake/custom
+			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
 			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
 				schild.UpdateOverlays(s.GetOverlayImage(overlay_ref), overlay_ref)
 			if(cake_candle.len) //making sure there's only one candle :)
 				if(candle_lit == TRUE)
-					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"),"slice-candle")
+					schild.UpdateOverlays(new /image(src.icon,"slice-candle_lit"),"slice-candle")
 					candle_lit = FALSE
 				else
-					schild.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"),"slice-candle")
+					schild.UpdateOverlays(new /image(src.icon,"slice-candle"),"slice-candle")
 				schild.cake_candle = cake_candle
 				cake_candle = list()
 				if(src.litfam) //light update
@@ -209,7 +214,7 @@
 			
 
 
-	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/custom/c,var/mob/user)
+	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/c,var/mob/user)
 		if(!(src.clayer<3) || (c.clayer>=3) || (c.sliced))
 			return
 
@@ -218,6 +223,8 @@
 		src.clayer++
 		src.reagents.maximum_volume += 100
 		c.reagents.trans_to(src,c.reagents.total_volume)
+
+		src.cake_bases += c.cake_bases //woooo base sprites
 
 		for(var/food_effect in c.food_effects) //adding food effects to the src that arent already present
 			src.food_effects |= food_effect
@@ -237,20 +244,28 @@
 				src.put_out()
 
 		for(var/overlay_ref in c.overlay_refs) //the handling for actually adding the toppings to the cake
-			if(("[overlay_ref]" == "base") || ("[overlay_ref]" == "second")) //setting up base layer overlay
+			if(("[overlay_ref]" == "first") || ("[overlay_ref]" == "second")) //setting up base layer overlay
 				var/overlay_layer
-				if("[overlay_ref]" == "base")
+				var/src_base //which base sprite are we adding to src?
+				if("[overlay_ref]" == "first")
 					if(src.clayer == 2)
 						overlay_layer = "second"
+						src_base = src.cake_bases[2]
 					else if(src.clayer == 3)
 						overlay_layer = "third"
+						src_base = src.cake_bases[3]
 				else if("[overlay_ref]" == "second")
 					overlay_layer = "third"
-					src.clayer++
+					src_base = src.cake_bases[3]
 					src.reagents.maximum_volume += 100
-				var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-base_custom")
-				var/image/ov_image = c.GetOverlayImage(overlay_ref)
-				stack.color = ov_image.color
+					src.clayer++
+				var/image/stack
+				if(src_base == "base_custom")
+					stack = new /image(src.icon,"cake[src.clayer]-base_custom")
+					var/image/buffer = c.GetOverlayImage(overlay_ref)
+					stack.color = buffer.color
+				else
+					stack = new /image(src.icon,"cake[src.clayer]-[src_base]")
 				src.UpdateOverlays(stack, overlay_layer)
 				continue
 			var/image/buffer = c.GetOverlayImage("[overlay_ref]") //generating the topping reference from the original cake to be stacked
@@ -261,7 +276,7 @@
 				src.cake_candle = c.cake_candle
 				src.cake_candle[1] = replacetext("[c.cake_candle[1]]","[newnumbers[1]]","[newnumbers[2]]")
 				c.cake_candle = list()
-			var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
+			var/image/newoverlay = new /image(src.icon,tag)
 			if(buffer.color)
 				newoverlay.color = buffer.color
 			src.UpdateOverlays(newoverlay,tag)
@@ -276,8 +291,8 @@
 			return
 		var/normal_topping = FALSE //there are special cases in rendering cake overlays that should only ever trigger once, afterward the toggle is switched to true, initiating the normal topping overlay handling
 		var/candle_light //cute little wax stick that people light on fire for their own enjoyment <3
-		var/obj/item/reagent_containers/food/snacks/cake/custom/cake
-		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake/custom))
+		var/obj/item/reagent_containers/food/snacks/cake/cake
+		if(istype(cake_transfer,/obj/item/reagent_containers/food/snacks/cake))
 			cake = cake_transfer
 		for(var/overlay_ref in src.overlay_refs)
 			if(mode == CAKE_MODE_CAKE)
@@ -289,10 +304,16 @@
 					else if(("[overlay_ref]" == "third") && (src.clayer == 3))
 						normal_topping = TRUE
 					if(normal_topping)
-						var/image/stack = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
-						var/image/warningsuppression = src.GetOverlayImage(overlay_ref)
-						stack.color = warningsuppression.color
-						cake.UpdateOverlays(stack,"base")
+						var/image/stack
+						if(src.cake_bases[src.clayer]=="base_custom")
+							stack = new /image(src.icon,"cake1-base_custom")
+							var/image/warningsuppression = src.GetOverlayImage(overlay_ref)
+							stack.color = warningsuppression.color
+						else
+							stack = new /image(src.icon,"cake1-[src.cake_bases[src.clayer]]")
+						cake.cake_bases = list(src.cake_bases[src.clayer])
+						src.cake_bases.Remove(src.cake_bases[src.clayer])
+						cake.UpdateOverlays(stack,"first")
 						src.ClearSpecificOverlays("[overlay_ref]")
 						continue
 				if(normal_topping)
@@ -304,7 +325,7 @@
 						cake.cake_candle = src.cake_candle
 						cake.cake_candle[1] = replacetext("[src.cake_candle[1]]","[newnumbers[1]]","[newnumbers[2]]")
 						src.cake_candle = list()
-					var/image/newoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',tag)
+					var/image/newoverlay = new /image(src.icon,tag)
 					if(buffer.color)
 						newoverlay.color = buffer.color
 					cake.UpdateOverlays(newoverlay,tag)
@@ -313,11 +334,16 @@
 			else if(mode == CAKE_MODE_SLICE)
 				if("[overlay_ref]" == layer_tag) //if it finds the identifying tag for the current layer (base,second,third) it flips the toggle and starts pulling overlays
 					normal_topping = TRUE
-					var/image/buffer = src.GetOverlayImage("[overlay_ref]")
-					var/image/slicecolor = new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-base_custom")
-					if(buffer.color)
-						slicecolor.color = buffer.color
-					cake.UpdateOverlays(slicecolor,"base") //setting the base overlay of the temporary slice object
+					var/image/slice_base
+					if(src.cake_bases[src.clayer]=="base_custom")
+						slice_base = new /image(src.icon,"slice-base_custom")
+						var/image/buffer = src.GetOverlayImage("[overlay_ref]")
+						if(buffer.color)
+							slice_base.color = buffer.color
+					else
+						slice_base = new /image(src.icon,"slice-[src.cake_bases[src.clayer]]")
+						src.cake_bases.Remove(src.cake_bases[src.clayer])
+					cake.UpdateOverlays(slice_base,"first") //setting the base overlay of the temporary slice object
 					src.ClearSpecificOverlays(layer_tag)
 					continue
 				if(normal_topping) //after setting the base layer, all subsequent overlays are registered as toppings and applied to the slice
@@ -332,7 +358,7 @@
 						src.ClearSpecificOverlays("[overlay_ref]")
 						continue
 
-					var/image/toppingimage = new /image('icons/obj/foodNdrink/food_dessert.dmi',toppingpath)
+					var/image/toppingimage = new /image(src.icon,toppingpath)
 					if(buffer.color)
 						toppingimage.color = buffer.color
 					cake.UpdateOverlays(toppingimage,toppingpath)
@@ -367,9 +393,9 @@
 			return
 
 		if(src.sliced && src.GetOverlayImage("slice-candle"))
-			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle_lit"), "slice-candle")
+			src.UpdateOverlays(image(src.icon,"slice-candle_lit"), "slice-candle")
 		else if(src.GetOverlayImage("cake[src.clayer]-candle"))
-			src.UpdateOverlays(image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle")
+			src.UpdateOverlays(image(src.icon,"cake[src.clayer]-candle_lit"), "cake[src.clayer]-candle")
 
 
 	proc/put_out(var/mob/user as mob)
@@ -402,7 +428,7 @@
 			contextActions += new /datum/contextAction/cake/pickup
 
 	proc/unstack(var/mob/user)
-		var/obj/item/reagent_containers/food/snacks/cake/custom/s = new /obj/item/reagent_containers/food/snacks/cake/custom
+		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake
 
 		src.reagents.trans_to(s,(src.reagents.total_volume/3))
 		for(var/food_effect in src.food_effects)
@@ -423,10 +449,10 @@
 	proc/extinguish(var/mob/user)
 		var/blowout = FALSE
 		if(src.sliced && src.litfam)
-			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"slice-candle"), "slice-candle")
+			src.UpdateOverlays(new /image(src.icon,"slice-candle"), "slice-candle")
 			blowout = TRUE
 		else if(litfam)
-			src.UpdateOverlays(new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
+			src.UpdateOverlays(new /image(src.icon,"cake[src.clayer]-candle"), "cake[src.clayer]-candle")
 			blowout = TRUE
 		if(blowout)
 			src.put_out()
@@ -442,7 +468,7 @@
 		else if(istype(W,/obj/item/reagent_containers/food/drinks/drinkingglass/icing))
 			frost_cake(W,user)
 			return
-		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake/custom))
+		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake))
 			stack_cake(W,user)
 			return
 		else if(cake_candle.len && !(litfam) && (W.firesource))
@@ -459,7 +485,7 @@
 			if(src.sliced) //if you add a topping to a sliced cake, it updates the icon_state to the sliced version.
 				topping[1] = replacetext(topping[1],"cake[clayer]","slice")
 			if(topping[1]) //actually adding the topping overlay to the cake
-				var/image/toppingoverlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',topping[1])
+				var/image/toppingoverlay = new /image(src.icon,topping[1])
 				toppingoverlay.alpha = 255
 				if(topping[2])
 					toppingoverlay.color = topping[2]
@@ -496,15 +522,6 @@
 		else
 			..()
 
-/obj/item/reagent_containers/food/snacks/cake/batter
-	name = "cake batter"
-	desc = "An uncooked bit of cake batter. Eating it like this won't be very nice."
-	icon_state = "cake_batter"
-	amount = 12
-	heal_amt = 1
-	var/obj/item/reagent_containers/custom_item
-	initial_volume = 50
-
 /obj/item/reagent_containers/food/snacks/b_cupcake
 	name = "birthday cupcake"
 	desc = "A little birthday cupcake for a bee. May not taste good to non-bees. This doesn't seem to be homemade; maybe that's why it looks so generic."
@@ -524,20 +541,32 @@
 /obj/item/reagent_containers/food/snacks/cake/cream
 	name = "cream sponge cake"
 	desc = "Mmm! A delicious-looking cream sponge cake!"
-	icon_state = "cake_cream"
 	amount = 12
 	heal_amt = 2
 	initial_volume = 50
 	initial_reagents = list("sugar"=30)
 
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_cream"),"first")
+		cake_bases = list("base_cream")
+
 /obj/item/reagent_containers/food/snacks/cake/chocolate
-	name = "chocolate sponge cake"
+	name = "chocolate cake"
 	desc = "Mmm! A delicious-looking chocolate sponge cake!"
-	icon_state = "cake_chocolate"
 	amount = 12
 	heal_amt = 3
 	initial_volume = 50
 	initial_reagents = "chocolate"
+
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_gateau"),"first")
+		cake_bases = list("base_gateau")
+
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
+	name = "Extravagant Chocolate Gateau"
+	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
 
 /obj/item/reagent_containers/food/snacks/cake/meat
 	name = "meat cake"
@@ -550,9 +579,31 @@
 	initial_volume = 50
 	initial_reagents = "blood"
 
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_meat"),"first")
+		cake_bases = list("base_meat")
+
+/obj/item/reagent_containers/food/snacks/cake/bacon
+	name = "bacon cake"
+	desc = "This...this is just terrible."
+	amount = 12
+	heal_amt = 4
+	initial_volume = 250
+	initial_reagents = "porktonium"
+
+	New()
+		..()
+		UpdateOverlays(new /image(src.icon,"cake1-base_bacon"),"first")
+		cake_bases = list("base_bacon")
+
+	heal(var/mob/M)
+		M.nutrition += 500
+		return
+
 #ifdef XMAS
 
-/obj/item/reagent_containers/food/snacks/cake/fruit
+/obj/item/reagent_containers/food/snacks/fruit_cake
 	name = "fruitcake"
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
 	icon_state = "cake_fruit"
@@ -571,25 +622,12 @@
 
 #endif
 
-/obj/item/reagent_containers/food/snacks/cake/bacon
-	name = "bacon cake"
-	desc = "This...this is just terrible."
-	icon_state = "cake_bacon"
-	amount = 12
-	heal_amt = 4
-	initial_volume = 250
-	initial_reagents = "porktonium"
-
-	heal(var/mob/M)
-		M.nutrition += 500
-		return
-
 /obj/item/cake_item
 	name = "cream sponge cake"
 	desc = "Mmm! A delicious-looking cream sponge cake! There's a lump in it..."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	icon_state = "cake_cream"
+	icon_state = "cake1-base_cream"
 
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
 	var/iteminside = src.contents.len

@@ -63471,7 +63471,7 @@
 	p_open = 1
 	},
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
 	name = "Extravagant Chocolate Gateau";
 	pixel_y = 8
