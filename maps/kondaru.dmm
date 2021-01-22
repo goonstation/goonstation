@@ -17213,6 +17213,7 @@
 	icon_state = "2-9"
 	},
 /obj/disposalpipe/junction/left/south,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aPH" = (
@@ -31493,6 +31494,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "byw" = (
@@ -36752,11 +36754,10 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bJW" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/landmark/gps_waypoint{
+	name = "North Escape Wing"
 	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor,
+/turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bJX" = (
 /obj/cable{
@@ -50006,7 +50007,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/gps_waypoint,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -53694,9 +53694,13 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "ivn" = (
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
+/obj/landmark/gps_waypoint{
+	name = "South Escape Wing"
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "ivS" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -54419,6 +54423,13 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
+"kxx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "kyt" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/valve{
@@ -56442,6 +56453,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "pXJ" = (
@@ -59290,6 +59302,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "xtO" = (
@@ -106660,7 +106673,7 @@ bVl
 bWu
 bXm
 gKo
-bYm
+kxx
 bZT
 bYm
 cbH
@@ -124753,7 +124766,7 @@ boK
 bpS
 bre
 bsw
-ivn
+bsw
 xcv
 xcv
 bxE
@@ -128659,7 +128672,7 @@ aNu
 aOI
 aOr
 aOr
-bJW
+bJL
 aOr
 aNu
 aOI
@@ -129860,7 +129873,7 @@ aaO
 aad
 aNu
 wBr
-aPf
+bJW
 aQf
 brh
 awS
@@ -129878,7 +129891,7 @@ aaa
 aaO
 brh
 aQf
-bik
+ivn
 aOr
 nWB
 aQf

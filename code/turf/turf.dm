@@ -126,6 +126,13 @@
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
 
+	proc/setIntact(var/new_intact_value)
+		if (new_intact_value)
+			src.intact = TRUE
+			src.layer = TURF_LAYER
+		else
+			src.intact = FALSE
+			src.layer = PLATING_LAYER
 
 /obj/overlay/tile_effect
 	name = ""

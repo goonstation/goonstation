@@ -106,8 +106,12 @@
 		src.beaker =  B
 		if(!B.cant_drop)
 			user.drop_item()
-			B.set_loc(src)
-		boutput(user, "You add the [glass_name] to the machine!")
+			if(!B.qdeled)
+				B.set_loc(src)
+		if(B.qdeled)
+			B = null
+		else
+			boutput(user, "You add the [glass_name] to the machine!")
 		src.update_icon()
 		src.ui_interact(user)
 

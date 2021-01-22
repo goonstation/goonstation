@@ -776,7 +776,7 @@
 	return null
 
 /mob/proc/see(message)
-	if (!src.is_active())
+	if (!isalive(src))
 		return 0
 	boutput(src, message)
 	return 1
