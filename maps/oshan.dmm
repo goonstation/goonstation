@@ -1704,7 +1704,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/bridge)
+/area/station/communications/centre)
 "ady" = (
 /obj/cable{
 	d1 = 1;
@@ -33270,7 +33270,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCm" = (
 /obj/cable{
 	d1 = 2;
@@ -33278,7 +33278,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCn" = (
 /obj/machinery/computer3/terminal/network{
 	name = "CENTCOM Terminal";
@@ -33291,7 +33291,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCo" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -33302,7 +33302,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCp" = (
 /obj/cable{
 	d1 = 1;
@@ -33310,7 +33310,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCq" = (
 /obj/cable{
 	d1 = 2;
@@ -33318,7 +33318,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCr" = (
 /obj/machinery/computer/announcement{
 	announces_arrivals = 1;
@@ -33331,7 +33331,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bCt" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -33811,7 +33811,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDB" = (
 /obj/cable{
 	d1 = 1;
@@ -33822,7 +33822,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDC" = (
 /obj/cable{
 	d1 = 4;
@@ -33830,7 +33830,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDD" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -33844,7 +33844,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDE" = (
 /obj/cable{
 	d1 = 4;
@@ -33857,7 +33857,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDF" = (
 /obj/stool/chair/office/green{
 	dir = 4
@@ -33873,7 +33873,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDG" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -33889,7 +33889,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bDH" = (
 /obj/machinery/computer/card{
 	dir = 4
@@ -34329,7 +34329,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bEK" = (
 /obj/stool/chair/office/green{
 	dir = 8
@@ -34340,7 +34340,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bEL" = (
 /obj/cable{
 	d1 = 1;
@@ -34351,19 +34351,19 @@
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area/station/bridge)
+/area/station/communications/centre)
 "bEM" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
 	},
-/area/station/bridge)
+/area/station/communications/centre)
 "bEN" = (
 /obj/machinery/computer/general_alert{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bEO" = (
 /obj/machinery/computer/bank_data{
 	dir = 4
@@ -34685,7 +34685,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bFD" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -34698,7 +34698,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bFE" = (
 /obj/shrub{
 	dir = 1;
@@ -34706,7 +34706,7 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bFF" = (
 /obj/cable{
 	d1 = 1;
@@ -34717,7 +34717,7 @@
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area/station/bridge)
+/area/station/communications/centre)
 "bFG" = (
 /obj/machinery/light/small/floor{
 	pixel_x = -16;
@@ -34727,7 +34727,7 @@
 	dir = 6;
 	icon_state = "fblue2"
 	},
-/area/station/bridge)
+/area/station/communications/centre)
 "bFH" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/storage/toolbox/electrical{
@@ -34735,7 +34735,7 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bFI" = (
 /obj/machinery/computer/bank_data{
 	dir = 8
@@ -34748,7 +34748,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bFJ" = (
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/carpet{
@@ -35033,7 +35033,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bGt" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Bridge"
@@ -35051,7 +35051,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/centre)
 "bGu" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -47382,6 +47382,10 @@
 /obj/cabinet/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"jxM" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/black,
+/area/station/communications/centre)
 "jzB" = (
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor,
@@ -47511,6 +47515,9 @@
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"ldT" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/communications/centre)
 "lgA" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
@@ -48490,6 +48497,9 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xWF" = (
+/turf/simulated/floor/black,
+/area/station/communications/centre)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -94316,11 +94326,11 @@ bxQ
 byI
 bzE
 bBa
-bts
+xWF
 bDC
-bts
+xWF
 bFE
-buV
+ldT
 bHt
 bHU
 bJc
@@ -95224,9 +95234,9 @@ bzH
 bBb
 bCp
 bDE
-bts
+xWF
 bFE
-buV
+ldT
 bHs
 bHU
 bIX
@@ -95526,7 +95536,7 @@ bzE
 bBa
 bCq
 bDF
-bts
+xWF
 bFH
 adx
 adD
@@ -96128,11 +96138,11 @@ bxU
 byM
 bzI
 btK
-buV
-buV
-btK
-btK
-buV
+ldT
+ldT
+jxM
+jxM
+ldT
 bHx
 bHU
 bJc
