@@ -233,19 +233,14 @@
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
 
-ABSTRACT_TYPE (/datum/supply_packs/electrical)
 /datum/supply_packs/electrical
-	name = "cable crate"
-	desc = "Parent object for Electrical Cable crates, you shouldn't see this..."
-	category = "Basic Materials"
-	cost = 2000
-	containertype = /obj/storage/crate
-
-/datum/supply_packs/electrical/red
 	name = "Electrical Supplies Crate (red) - 2 pack"
 	desc = "x2 Cabling Box (14 cable coils total)"
 	contains = list(/obj/item/storage/box/cablesbox = 2)
 	containername = "Electrical Supplies Crate - 2 pack"
+	category = "Basic Materials"
+	cost = 2000
+	containertype = /obj/storage/crate
 
 /datum/supply_packs/engineering
 	name = "Engineering Crate"
