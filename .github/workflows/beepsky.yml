@@ -104,7 +104,7 @@ jobs:
   compile_ass:
     name: "Compile for Ass Day"
     runs-on: ubuntu-18.04
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "${{ false }}" # "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2
 
