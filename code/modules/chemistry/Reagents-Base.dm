@@ -915,6 +915,15 @@ datum
 					M.take_toxin_damage(min(10, mult * volume_passed))
 					return 0
 				return 1
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					holder.my_atom.setStatus("drunk", duration = INFINITE_STATUS)
+				return
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					holder.my_atom.delStatus("drunk")
+				return
 
 		ice
 			name = "ice"
