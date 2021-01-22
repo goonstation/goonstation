@@ -394,6 +394,9 @@
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "eatstuff"
+	icon = null
+	icon_state = null
+	/// the thing
 	var/obj/item/master
 	/// the one eating the thing
 	var/mob/M
@@ -409,20 +412,23 @@
 		src.master = thing2eat
 		src.M = _M
 		src.user = _user
-		src.icon = master.icon
-		src.icon_state = master.icon_state
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(istype(H?.mutantrace, /datum/mutantrace/lizard) || istype(H?.mutantrace, /datum/mutantrace/werewolf))
 				src.is_awful_monsterthing = 1
 		src.is_it_organs = (istype(master, /obj/item/organ) || istype(master, /obj/item/clothing/head/butt))
 		src.M_is_user = (M == user)
-		if(M_is_user)
-			duration = 1 SECOND
+		if(M_is_user && !is_it_organs)
+			src.icon = null // action/bar/icon
+			src.icon_state = null // minus the action bar icon
+			duration = 0 // pretty much instant
 			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE) // take it to go
 			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_ACT) // And spam it if you want
-		if(is_it_organs)
-			src.duration *= 1.3
+		else
+			src.icon = master.icon
+			src.icon_state = master.icon_state
+			if(is_it_organs) // feeding someone else organs?
+				src.duration *= 1.5 // no snacking on transplants in the OR, please
 
 	onStart()
 		..()
@@ -430,7 +436,12 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		eat_twitch(M)
+		if(M_is_user && !is_it_organs)
+			bar.icon = null // Action bars
+			border.icon = null // minus action bar
+		else
+			eat_twitch(M)
+
 		M.on_eat(master)
 
 		if (src.M_is_user)
