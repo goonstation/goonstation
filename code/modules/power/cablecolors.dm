@@ -29,14 +29,14 @@
 /datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/_color = 2);\
 /datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack"
 
-colorcable(yellow, "#EED202")
-colorcable(orange, "#C46210")
-colorcable(blue, "#72A0C1")
-colorcable(green, "#00AD83")
+colorcable(yellow, "#ffe203")
+colorcable(orange, "#FF5D06")
+colorcable(blue, "#00aaff")
+colorcable(green, "#08ff52")
 colorcable(purple, "#9370DB")
 colorcable(black, "#414A4C")
 colorcable(hotpink, "#FF69B4")
 colorcable(brown, "#832A0D")
-colorcable(white, "#EDEAE0")
+colorcable(white, "#ffffff")
 
 #undef colorcable
