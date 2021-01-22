@@ -257,7 +257,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
 	desc = "It's your favourite coffee, but now its blue. Wow."
-	required_levels = list("Head of Security"=0)
+	required_levels = list("Head of Security"=1)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 
