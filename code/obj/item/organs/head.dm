@@ -543,7 +543,7 @@
 
 				if(HEAD_HUNTER)
 					src.organ_name = "hunter head"
-					src.desc = "Ironic isn't it?"
+					src.desc = "Ironic, isn't it?"
 
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something
