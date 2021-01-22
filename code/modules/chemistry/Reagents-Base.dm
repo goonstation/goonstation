@@ -912,7 +912,7 @@ datum
 			reaction_mob(mob/M, method=TOUCH, volume_passed, mult = 1)
 				if(!volume_passed) return 1
 				if(method == INGEST)
-					M.take_toxin_damage(min(10, mult * volume_passed))
+					M.take_brain_damage(min(10, mult * volume_passed))
 					return 0
 				return 1
 
