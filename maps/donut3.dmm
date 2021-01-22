@@ -75350,6 +75350,10 @@
 	},
 /obj/cable,
 /obj/random_item_spawner/desk_stuff/one,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -8;
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
 	},

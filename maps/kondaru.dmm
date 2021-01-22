@@ -40402,6 +40402,10 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -6;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bRX" = (

@@ -31847,6 +31847,9 @@
 	pixel_y = 3
 	},
 /obj/disposalpipe/segment/transport,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "buw" = (

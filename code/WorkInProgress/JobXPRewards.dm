@@ -253,6 +253,28 @@ mob/verb/checkrewards()
 
 
 //Botanist End
+
+/datum/jobXpReward/HeadofSecurity/mug
+	name = "Alternate Blue Mug"
+	desc = "It's your favourite coffee, but now its blue. Wow."
+	required_levels = list("Head of Security"=0)
+	claimable = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
+
+	activate(var/client/C)
+		var/mug = C.mob.find_type_in_hand(/obj/item/reagent_containers/food/drinks/mug/HoS)
+
+		if (mug)
+			C.mob.remove_item(mug)
+			qdel(mug)
+		else
+			boutput(C.mob, "You need to be holding your mug in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "The mug's colouring flips to blue")
+
 /datum/jobXpReward/head_of_security_LG
 	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."

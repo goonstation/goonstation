@@ -41322,6 +41322,10 @@
 /obj/item/pen/fancy,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/stamp/hos,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
