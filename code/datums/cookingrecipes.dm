@@ -1080,6 +1080,20 @@
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pot
 
+/datum/cookingrecipe/pie_weed
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/weed
+
+/datum/cookingrecipe/pie_fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/pie/fish
+
 /datum/cookingrecipe/custard
 	item1 = /obj/item/reagent_containers/food/drinks/milk
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg

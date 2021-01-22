@@ -171,9 +171,28 @@
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
-	icon_state = "pie"
+	icon_state = "chickenpie"
 	heal_amt = 6
 	amount = 3
 	initial_volume = 30
 	initial_reagents = list("chickensoup"=20)
 	food_effects = list("food_sweaty","food_hp_up_big","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/weed
+	name = "chicken \"pot\" pie"
+	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
+	icon_state = "weedpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("THC"=20,"CBD"=20)
+	food_effects = list("food_sweaty","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/fish
+	name = "stargazy pie"
+	desc = "The snack that stares back."
+	icon_state = "fishpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")
