@@ -53,10 +53,14 @@
 					transformation(0)
 		return
 	
+//
+//YO FUTURE ME, MAKE THE STATION ANNOUNCEMENT THING. YOU CAN DO IT.
+//
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
 		if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
-				transformation_triggered = true							//...the countdown starts.
+			transformation_triggered = true								//...the countdown starts.
 			name = transformation_name
 			desc = transformation_desc
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
