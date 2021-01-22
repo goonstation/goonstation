@@ -168,6 +168,16 @@
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")
 
+/obj/item/reagent_containers/food/snacks/pie/chocolate
+	name = "chocolate mud pie"
+	desc = "Like a chocolate cake, but a pie, and also very different."
+	icon_state = "chocolatepie"
+	heal_amt = 6
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("sugar"=20,"hugs"=10)
+	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."

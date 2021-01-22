@@ -477,6 +477,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pot_pie(src)
+			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/pie_ass(src)
 			src.recipes += new /datum/cookingrecipe/pie_fish(src)
 			src.recipes += new /datum/cookingrecipe/pie_weed(src)
