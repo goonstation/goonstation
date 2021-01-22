@@ -469,7 +469,8 @@
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
 			entangled.close(1)
-			contents = entangled.contents
+			for(var/atom/movable/AM in entangled)
+				AM.set_loc(src.open ? src.loc : src)
 
 		if (user)
 			src.dump_contents(user)
@@ -532,7 +533,8 @@
 
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
-			entangled.contents = src.contents
+			for(var/atom/movable/AM in src)
+				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
 		src.update_icon()

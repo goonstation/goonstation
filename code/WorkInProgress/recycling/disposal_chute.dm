@@ -77,6 +77,8 @@
 		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
+		if (istype(I, /obj/item/handheld_vacuum))
+			return
 		if (istype(I,/obj/item/satchel/))
 			var/action = input(usr, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
 			if (!action || action == "Never Mind") return
@@ -581,7 +583,6 @@
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id

@@ -740,6 +740,15 @@
 			return healthlist[assoc]
 		return null
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+		random_brute_damage(src, AM.throwforce, TRUE)
+		if (src.client)
+			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+		if(thr?.user)
+			src.was_harmed(thr.user, AM)
+
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		hit_twitch(src)
 		if (nodamage)

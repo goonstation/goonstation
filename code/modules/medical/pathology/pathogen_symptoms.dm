@@ -51,31 +51,33 @@ datum/pathogeneffects
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		T.fluid_react(R, amount, airborne = 1)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		R.trans_to(T, amount)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person

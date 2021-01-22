@@ -19,7 +19,7 @@
 	// SECOND TASK IS SUBGOAL SPECIFIC
 
 /datum/aiTask/sequence/goalbased/evaluate()
-	return score_goal() * weight
+	. = score_goal() * weight
 
 /datum/aiTask/sequence/goalbased/proc/get_best_target(var/list/targets)
 	. = null
@@ -34,21 +34,24 @@
 
 /datum/aiTask/sequence/goalbased/proc/get_targets()
 	// obviously a specific goal will have specific requirements for targets
-	return list()
+	. = list()
 
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
 	if(target)
 		return max_dist - distance(get_turf(holder.owner), get_turf(target))
-	return 0
+	. = 0
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	return 1
+	. = 1
 
 /datum/aiTask/sequence/goalbased/proc/score_goal()
 	// do any specific stuff here, eg. if the goal requires some conditions and they don't exist, reduce the score here
 	// by default, return the score of the best target
-	return precondition() * score_target(get_best_target(get_targets()))
+	. = 0
+	var/precond = precondition()
+	if(precond)
+		. = precond * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
@@ -79,12 +82,12 @@
 	maximum_task_ticks = 10
 
 /datum/aiTask/timed/wander/evaluate()
-	return 1 // it'd require every other task returning very small values for this to get selected
+	. = 1 // it'd require every other task returning very small values for this to get selected
 
 /datum/aiTask/timed/wander/on_tick()
 	// thanks zewaka for reminding me the previous implementation of this is BYOND NATIVE
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
-	holder.owner.move_dir = pick(1,2,4,5,6,8,9,10)
+	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
 
 /datum/aiTask/timed/wander/on_tick()
@@ -112,12 +115,12 @@
 // vvv OVERRIDE THE PROCS BELOW AS REQUIRED vvv
 
 /datum/aiTask/timed/targeted/proc/get_targets()
-	return list()
+	. = list()
 
 /datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
 	if(target)
 		return target_range - distance(get_turf(holder.owner), get_turf(target))
-	return 0
+	. = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE TASK
