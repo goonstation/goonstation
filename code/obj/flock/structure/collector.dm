@@ -5,6 +5,7 @@
 	name = "Some weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
 	flock_id = "Collector"
+	health = 60
 	var/drawfromgrid = 0 //does it draw from the local apc if its strong enough.
 	var/active = 0 //is it active?
 	var/maxrange = 5 //max range for the thing.
@@ -30,6 +31,11 @@
 		icon_state = "collector"
 	src.poweruse = ((connected * 5) / -1) //power = tiles connected * 5 / 1 (5 power per tile)
 
+/obj/flock_structure/collector/disposing()
+	for(var/turf/simulated/floor/feather/f in connectedto)
+		f.off()
+	connectedto.len = 0
+	..()
 
 /obj/flock_structure/collector/proc/calcconnected()
 	for(var/turf/simulated/floor/feather/f in connectedto)

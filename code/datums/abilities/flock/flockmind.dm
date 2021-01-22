@@ -317,11 +317,14 @@
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
-	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector")
+	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector", "Sentinel")
 	switch(structurewanted)
 		if("Collector")
 			structurewantedtype = /obj/flock_structure/collector
 			resourcecost = 200
+		if("Sentinel")
+			structurewantedtype = /obj/flock_structure/sentinel
+			resourcecost = 300
 	if(structurewantedtype)
 		var/mob/living/intangible/flock/F = holder.owner
 		F.createstructure(structurewantedtype, resourcecost)

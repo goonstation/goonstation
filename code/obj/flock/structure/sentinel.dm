@@ -6,6 +6,7 @@
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
+	health = 80
 	var/charge_status = -1 //-1 == not charged,0 == losing charge, 1 == charging, 2 == charged
 	var/charge = 0 //0-100 charge percent
 	var/powered = 0
@@ -36,6 +37,8 @@
 		switch(charge_status)
 			if(-1)
 				charge_status = 1//begin charging as there is energy available
+			if(0)
+				charge_status = 1//if its losing charge and suddenly theres energy available begin charging
 			if(1)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
 				src.charge(5)
@@ -48,16 +51,23 @@
 						break//found target
 				if(!m) return//if no target stop
 				var/chain = rand(5, 6)
-				arcFlash(src, m, 6000)
+				arcFlash(src, m, 10000)
 				hit += m
 				while(chain > 0)
-					for(var/mob/nearbymob in range(3, m))//todo: optimize this.
-						if(nearbymob != m && !nearbymob in hit && !isflock(nearbymob))
-							arcFlash(m, nearbymob, 6000)
+					for(var/mob/nearbymob in range(2, m))//todo: optimize this.
+						world.log << "[m] is m in the loop"
+						if(nearbymob != m && !(nearbymob in hit) && !isflock(nearbymob))
+							arcFlash(m, nearbymob, 10000)
 							hit += nearbymob
+							world.log << "[m] is m before being set to [nearbymob]"
 							m = nearbymob
+							world.log << "[m] is m after being set to [nearbymob]"
 						chain--//infinite loop prevention, wouldve been in the if statement.
 				hit.len = 0//clean up
+				charge = 1
+				var/f = src.filters[length(src.filters)]//force it to power down
+				animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
+				charge_status = 1
 				return
 	else
 		if(charge > 0)//if theres charge make it decrease with time
