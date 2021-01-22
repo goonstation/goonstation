@@ -56532,7 +56532,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/bot,
-/area/station/medical/research)
+/area/station/medical/medbay)
 "cqQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57014,7 +57014,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/bot,
-/area/station/medical/research)
+/area/station/medical/medbay)
 "crT" = (
 /obj/machinery/computer/cloning,
 /obj/item/paper/Cloning,
@@ -57034,7 +57034,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/bot,
-/area/station/medical/research)
+/area/station/medical/medbay)
 "crU" = (
 /obj/machinery/clonegrinder,
 /obj/window/reinforced{
@@ -57044,7 +57044,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/bot,
-/area/station/medical/research)
+/area/station/medical/medbay)
 "crV" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs{
@@ -61736,7 +61736,7 @@
 	name = "Geneticist"
 	},
 /turf/simulated/floor,
-/area/station/medical/research)
+/area/station/medical/medbay)
 "cCc" = (
 /obj/rack,
 /obj/item/circuitboard/powermonitor{
