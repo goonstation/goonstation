@@ -14,7 +14,11 @@
 #define HEAD_VAMPZOMBIE 11
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
+<<<<<<< HEAD
 #define HEAD_HUNTER 14
+=======
+#define HEAD_ITHILLID 15
+>>>>>>> master
 
 //tail defines
 #define TAIL_NONE 0

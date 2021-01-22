@@ -16,17 +16,15 @@
 	event_effect()
 		..()
 		var/list/closets = list()
-		var/n_closets = 0
 		for_by_tcl(closet, /obj/storage/closet)
-			if(isrestrictedz(closet.z) || istype(closet, /obj/storage/closet/port_a_sci))
+			var/area/area = get_area(closet)
+			if(isrestrictedz(closet.z) || istype(closet, /obj/storage/closet/port_a_sci) || istype(area, /area/listeningpost))
 				continue
 			closets += closet
-			n_closets++
-		for(var/i = 1, i < n_closets, i+=2)
-			var/obj/storage/A = pick(closets)
-			var/obj/storage/B = pick(closets)
-			closets -= A
-			closets -= B
+		shuffle_list(closets)
+		for(var/i = 1, i < length(closets), i+=2)
+			var/obj/storage/A = closets[i]
+			var/obj/storage/B = closets[i + 1]
 			A.entangled = B
 			B.entangled = A
 

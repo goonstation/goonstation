@@ -44,7 +44,14 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if (!muzzled)
+					if(src.bioHolder?.HasEffect("mute"))
+						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
+						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
+						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")]..."
+						message = "<B>[src]</B> [pre_message]"
+						maptext_out = "<i>[pre_message]</i>"
+						m_type = 1
+					else if (!muzzled)
 						message = "<B>[src]</B> [istype(src.w_uniform, /obj/item/clothing/under/gimmick/frog) ? "croaks" : "screams"]!"
 						m_type = 2
 						if (narrator_mode)

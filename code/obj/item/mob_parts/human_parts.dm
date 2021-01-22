@@ -1941,6 +1941,7 @@ obj/item/parts/human_parts/arm/right/stone
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+<<<<<<< HEAD
 /// HUNTER LIMBS ///
 ///// PARENT /////
 
@@ -1995,17 +1996,60 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/hunter/left
 	name = "left hunter leg"
 	desc = "A muscular and strong left leg."
+=======
+/// ITHILLID LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/left
+	name = "left squid arm"
+	desc = "A squid's left blub."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/right
+	name = "left squid arm"
+	desc = "Blub squid's right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/ithillid/left
+	name = "left squid leg"
+	desc = "A blub's left leg."
+>>>>>>> master
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
+<<<<<<< HEAD
 /obj/item/parts/human_parts/leg/mutant/hunter/right
 	name = "right hunter leg"
 	desc = "A muscular and strong right leg."
+=======
+/obj/item/parts/human_parts/leg/mutant/ithillid/right
+	name = "right squid leg"
+	desc = "A squid's blub leg."
+>>>>>>> master
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
+<<<<<<< HEAD
+=======
+
+>>>>>>> master

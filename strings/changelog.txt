@@ -1,5 +1,66 @@
 
+(t)fri jan 22 21
+(u)Emily
+(e)🆕|feature
+(*)New silkie breed added! View minor changes for hint. [Gen 2] [From Black Silkie]
+(+)To sleep: perchance to dream; for in that sleep of death what dreams may come must give us pause: there's the respect that makes calamity of so long life.
+(t)thu jan 21 21
+(u)Tarmunora
+(p)3415
+(e)⚖🆕|balance, feature
+(*)Added bouncy mode to wave guns, moves old EMP mode to pulse rifles.
+(u)BatElite
+(p)3354
+(e)🆕🎨|feature, sprites
+(+)Implants cut out of or reclaimed from people now come in disposable paper wads instead of mysterious glass cases. Implant cases should also now be coloured properly based on their contents.
+(+)Said wads also have a forensic blood trace of the implant's previous owner, in case you need to be mindful of your traces.
+(u)Flourish
+(p)3404
+(e)⚖|balance
+(+)NTSOs now only have access to command and security channels on their headset.
+(u)Carbadox
+(p)3390
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Added an "official" Stations and Syndicates rulebook to the game, the SS13 version of Dungeons and Dragons. It's been made to accommodate SS13 virtual environment with a much light ruleset. It comes along with a basic monster manual. Check out your local nerd dungeons for a copy or a book/gaming vendor.
+(u)zjdtmkhzt
+(p)3316
+(e)⚖🆕|balance, feature
+(+)Made artifact cells a little bit more interesting.
+(u)Emily
+(e)🆕|feature
+(*)New silkie breed! Be sure to give it a tank with lots of water, or you'll regret it.
+(*)Another new silkie breed! These ones are quite dandy. :) [Gen 2] [From Cream Colored Silkies]
+(t)wed jan 20 21
+(u)BenLubar
+(p)3395
+(e)🐛|bug
+(+)The CDC now has a more conventional understanding of how time and causality work.
+(u)Sovexe
+(p)3412
+(e)🆕|feature
+(+)Floor goblins now hide between the floor tiles and plating instead of under the floor.
+(u)pali & Cookie
+(*)The handheld vacuum cleaner got new sprites and its special attack got rebalanced. Also fixed a bunch of things. Oh and also experimentally adding an overcharged version of the vacuum cleaner to janitor's traitor uplink.
 (t)tue jan 19 21
+(u)Flourish
+(*)The research radio channel is now purple and the medical radio channel is now blue (they were swapped before this!).
+(u)Flourish
+(+)When you send a crate of credits out QM, the traders will now take a 10% fee. Meaning if you send out 100 credits, you'll get 90 added to your shipping budget.
+(u)Flaborized
+(p)3370
+(e)🆕|feature
+(*)Musicians now have a guitar.
+(u)pali
+(p)3397
+(e)🆕🎨|feature, sprites
+(*)Janitor closets now have a new handheld vacuum cleaner. It can suck up small items and smoke (like miasma). Temporary sprites unless <i>you</i> make me better ones.
+(u)UrsulaMajor
+(e)⚖🆕|balance, feature
+(*)The Pathology Research test has concluded. Thank you for your participation! Please give your thoughts here: <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=15693">Pathology Feedback</a>
+(u)pali
+(p)3372
+(e)🆕|feature
+(*)Enabled a certain locker-related random event.
 (u)Tarmunora
 (e)⚖🆕|balance, feature
 (*)CPR now has a small chance to cure cardiac arrest, if the patient isn't too injured. Cardiac stimulants may help your odds.

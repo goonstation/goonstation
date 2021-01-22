@@ -611,7 +611,7 @@ ABSTRACT_TYPE (/datum/supply_packs/electrical)
 	name = "Firefighting Foam tank"
 	desc = "1x Firefighting Foam Tank"
 	category = "Basic Materials"
-	contains = (/obj/reagent_dispensers/foamtank)
+	contains = list(/obj/reagent_dispensers/foamtank)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Firefighting Foamtank crate"

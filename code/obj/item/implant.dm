@@ -331,6 +331,11 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
+/obj/item/implant/health/security/anti_mindslave //HoS implant
+	name = "mind protection health implant"
+	icon_state = "implant-b"
+	impcolor = "b"
+
 /obj/item/implant/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
@@ -636,6 +641,9 @@ THROWING DARTS
 			return 0
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
+			return 0
+		for(var/obj/item/implant/health/security/anti_mindslave/AM in H.implant)
+			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
@@ -1161,6 +1169,8 @@ THROWING DARTS
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
+	//Whether this is the paper type that goes away when emptied
+	var/disposable = FALSE
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1237,8 +1247,16 @@ THROWING DARTS
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
 
-/obj/item/implantcase/New()
-	src.imp = new implant_type(src)
+/obj/item/implantcase/New(obj/item/implant/usedimplant = null)
+	if (usedimplant && istype(usedimplant))
+		src.imp = usedimplant
+		imp.set_loc(src)
+		disposable = TRUE
+		name = "removed implant"
+		desc = "A paper wad containing an implant extracted from someone. An implanting tool can reuse the implant."
+	else
+		src.imp = new implant_type(src)
+	update()
 	..()
 	return
 
@@ -1249,8 +1267,14 @@ THROWING DARTS
 /obj/item/implantcase/proc/update()
 	tooltip_rebuild = 1
 	if (src.imp)
-		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
+		if (disposable)
+			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
+		else
+			src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
+		if (disposable) //ditch that grody paper "case"
+			qdel(src)
+			return
 		src.icon_state = "implantcase-0"
 	return
 
