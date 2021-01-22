@@ -21,20 +21,17 @@ Contains:
 	density = 1
 	mats = 250
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
-/* no
-/obj/machinery/the_singularitygen/New()
-	..()
-*/
+
 /obj/machinery/the_singularitygen/process()
 	var/goodgenerators = 0 //ensures that there are 4 generators in place with at least 2 links. note that false positives are very possible and will result in a loose singularity
-	var/smallestdimension = 0//determines the radius of the produced singularity
-	for (var/obj/X in orange(11,src))
-		if (istype(X, /obj/machinery/field_generator))
-			var/obj/machinery/field_generator/a = X
-			if (smallestdimension == 0 || a.shortestlink < smallestdimension)
-				smallestdimension = a.shortestlink
-			if(a.active_dirs>=2)
+	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
+
+	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
+		if(get_dist(gen,loc)<10)
+			if(gen.active_dirs>=2)
 				goodgenerators++
+				smallestdimension=min(smallestdimension,gen.shortestlink)
+
 	if (goodgenerators>=4)
 
 		// Did you know this thing still works? And wasn't logged (Convair880)?
@@ -91,7 +88,9 @@ Contains:
 	pixel_x = -64
 	pixel_y = -64
 
-	var/active = 0
+	var/maxboom = 0
+	var/has_moved
+	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
 	var/lastT = 0
 	var/Dtime = null
@@ -99,7 +98,9 @@ Contains:
 	var/dieot = 0
 	var/selfmove = 1
 	var/grav_pull = 6
-	var/radius = 0 //the variable used for all calculations involving size, please attribute all of the problems this inevitably creates to anachroniser
+	var/radius = 0 //the variable used for all calculations involving size
+
+
 
 
 #ifdef SINGULARITY_TIME
@@ -278,8 +279,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.energy += gain
 
 /obj/machinery/the_singularity/proc/get_center()
-	//. = get_turf(src)
+	. = get_turf(src)
 	//if(!(get_step(., SOUTHWEST) in src.locs)) // I hate this, neither `loc` nor `get_turf` behave consistently, sometimes they are the center tile and sometimes they are the south west tile, aaaa
+	if(has_moved)
+		. = get_step(., NORTHEAST)
 	return loc
 
 
@@ -470,12 +473,17 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.add_fingerprint(user)
 
 /obj/machinery/field_generator/New()
+	START_TRACKING
 	..()
 	SPAWN_DBG(0.6 SECONDS)
 		if(!src.link && (state == 3))
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/field_generator/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/machinery/field_generator/process()
 
@@ -536,7 +544,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else if(NSEW == 8)
 		oNSEW = 4
 
-	for(var/dist = 0, dist <= 11, dist += 1) // checks out to 11(hopefully) tiles away for another generator
+	for(var/dist = 0, dist <= 11, dist += 1) // checks out to 11 tiles away for another generator
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
