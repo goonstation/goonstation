@@ -192,7 +192,7 @@
 		var/area/A = get_area(M)
 		if (A?.active)
 			return 0
-		if ((M.last_hibernation_wake_tick + min_time_between_hibernations) >=  TIME)
+		if ((M.last_hibernation_wake_tick + min_time_between_hibernations) >= TIME)
 			return 0
 		return hibernation_priority
 
@@ -204,4 +204,3 @@
 		M.registered_area = get_area(M)
 		if(M.registered_area)
 			M.registered_area.registered_mob_critters |= M
-

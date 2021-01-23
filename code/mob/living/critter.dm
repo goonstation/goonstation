@@ -23,9 +23,9 @@
 	var/base_move_delay = 2
 	var/base_walk_delay = 3
 	var/stepsound = null
-	//area where the mob ai is registered when hibernating
+	///area where the mob ai is registered when hibernating
 	var/area/registered_area = null
-	//time when mob last awoke from hibernation
+	///time when mob last awoke from hibernation
 	var/last_hibernation_wake_tick = 0
 	var/is_hibernating = TRUE
 
@@ -173,7 +173,7 @@
 			src.registered_area = null
 		..()
 
-	//enables mob ai that was disabled by a hibernation task
+	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
 		if(src.is_npc)
 			src.ai?.enabled = TRUE
