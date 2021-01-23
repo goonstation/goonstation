@@ -42628,8 +42628,12 @@
 	pixel_y = -1
 	},
 /obj/table/wood/auto,
-/obj/item/deconstructor,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -4;
+	pixel_y = 9
+	},
 /obj/random_item_spawner/desk_stuff,
+/obj/item/deconstructor,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "bNB" = (

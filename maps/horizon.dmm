@@ -5890,7 +5890,7 @@
 "cjo" = (/obj/grille/catwalk/jen/side,/obj/item/clothing/head/merchant_hat,/turf/simulated/floor/plating,/area/station/maintenance/disposal)
 "cjp" = (/obj/cable{d2 = 2; icon_state = "0-2"},/obj/machinery/power/solar/small_backup2,/turf/simulated/floor/airless/solar,/area/station/solar/small_backup2)
 "cjq" = (/obj/lattice{icon_state = "lattice-dir"},/obj/warp_beacon/security,/turf/space,/area/space)
-"cjr" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/landmark/start{name = "Chief Engineer"},/turf/simulated/floor/yellowblack{dir = 10},/area/station/crew_quarters/ce)
+"cjr" = (/obj/item/pinpointer/teg_semi{pixel_y = -7},/obj/stool/bed,/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/landmark/start{name = "Chief Engineer"},/turf/simulated/floor/yellowblack{dir = 10},/area/station/crew_quarters/ce)
 "cjs" = (/obj/storage/crate/rcd,/obj/item/clothing/shoes/magnetic,/obj/item/clothing/gloves/yellow,/turf/simulated/floor/yellowblack,/area/station/crew_quarters/ce)
 "cjt" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "4-9"},/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/yellowblack{dir = 6},/area/station/crew_quarters/ce)
 "cju" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/door/airlock/pyro/command/alt{dir = 8; name = "Chief"},/obj/access_spawn/engineering_chief,/turf/simulated/floor/black,/area/station/crew_quarters/ce)

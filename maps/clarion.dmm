@@ -41476,8 +41476,15 @@
 	},
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 5;
+	pixel_y = 7
+	},
 /obj/item/deconstructor,
-/obj/item/device/radio/headset/engineer,
+/obj/item/device/radio/headset/engineer{
+	pixel_x = 8;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},

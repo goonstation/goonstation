@@ -52490,6 +52490,10 @@
 	item_amount = 20
 	},
 /obj/item/dice/d1,
+/obj/item/pinpointer/teg_semi{
+	pixel_x = 2;
+	pixel_y = 5
+	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -54841,9 +54845,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/phone,
+/obj/machinery/phone{
+	pixel_x = 3;
+	pixel_y = 2
+	},
 /obj/item/stamp/ce{
-	pixel_x = -12;
+	pixel_x = -7;
+	pixel_y = -1;
 	rand_pos = 0
 	},
 /turf/simulated/floor/yellowblack{
