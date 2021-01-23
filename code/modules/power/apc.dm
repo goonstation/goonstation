@@ -1107,7 +1107,14 @@ var/zapLimiter = 0
 		return
 	if(area && istype(area))
 		if(!area.requires_power)
+#ifdef CIBUILD
+			CRASH("APC in non-powered area [area.name] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
+#endif
 			return
+#ifdef CIBUILD
+		if(area.area_apc && area.area_apc != src)
+			CRASH("Duplicate APC in area [area.name] @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
+#endif
 	else
 		CRASH("Broken-ass APC @[x],[y],[z] on [map_settings ? map_settings.name : "UNKNOWN"]")
 
