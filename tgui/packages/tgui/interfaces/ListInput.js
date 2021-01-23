@@ -7,7 +7,7 @@
 import { clamp01 } from 'common/math';
 import { ARROW_KEY_UP, ARROW_KEY_DOWN } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Section, Input } from '../components';
+import { Box, Button, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
 
 let nextScrollTime = 0;
@@ -38,87 +38,86 @@ export const ListInput = (props, context) => {
   // Selected Button
   const [selectedButton, setSelectedButton] = useLocalState(
     context, 'selected_button', buttons[0]);
+
+  const handleKeyDown = e => {
+    e.preventDefault();
+    if (nextScrollTime > performance.now()) {
+      return;
+    }
+    nextScrollTime = performance.now() + 125;
+
+    if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN) {
+      let direction = 1;
+      if (e.keyCode === ARROW_KEY_UP) {
+        direction = -1;
+      }
+
+      let index = buttons.findIndex(selectedButton);
+      if (index === -1) {
+        index = 0;
+      }
+      index = (index + direction) % buttons.length;
+      const button = buttons[index];
+      setSelectedButton(button);
+      setLastCharCode(null);
+      document.getElementById(button).focus();
+    }
+
+    const charCode = String.fromCharCode(e.keyCode).toLowerCase();
+    if (!charCode) return;
+
+    let foundValue;
+    if (charCode === lastCharCode && searchArray.length > 0) {
+      const nextIndex = searchIndex + 1;
+
+      if (nextIndex < searchArray.length) {
+        foundValue = searchArray[nextIndex];
+        setSearchIndex(nextIndex);
+      }
+      else {
+        foundValue = searchArray[0];
+        setSearchIndex(0);
+      }
+    }
+    else {
+      const resultArray = displayedArray.filter(value =>
+        value.substring(0, 1).toLowerCase() === charCode
+      );
+
+      if (resultArray.length > 0) {
+        setSearchArray(resultArray);
+        setSearchIndex(0);
+        foundValue = resultArray[0];
+      }
+    }
+
+    if (foundValue) {
+      setLastCharCode(charCode);
+      setSelectedButton(foundValue);
+      document.getElementById(foundValue).focus();
+    }
+  };
+
   return (
     <Window
       title={title}
       width={325}
       height={325}
-      resizable
-    >
+      resizable>
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
-        <Flex direction="column" height="100%">
-          <Flex.Item grow={1}>
+        <Stack fill vertical>
+          <Stack.Item grow>
             <Section
+              fill
               scrollable
               className="ListInput__Section"
-              width="100%"
-              fill
               title={message}
               tabIndex={0}
-              onKeyDown={e => {
-                e.preventDefault();
-                if (nextScrollTime > performance.now()) {
-                  return;
-                }
-                nextScrollTime = performance.now() + 125;
-
-                if (e.keyCode === ARROW_KEY_UP
-                  || e.keyCode === ARROW_KEY_DOWN)
-                {
-                  let direction = 1;
-                  if (e.keyCode === ARROW_KEY_UP) {
-                    direction = -1;
-                  }
-
-                  let index = buttons.findIndex(selectedButton);
-                  if (index === -1) {
-                    index = 0;
-                  }
-                  index = (index + direction) % buttons.length;
-                  const button = buttons[index];
-                  setSelectedButton(button);
-                  setLastCharCode(null);
-                  document.getElementById(button).focus();
-                  return;
-                }
-
-                const charCode = String.fromCharCode(e.keyCode).toLowerCase();
-                if (!charCode) return;
-
-                let foundValue;
-                if (charCode === lastCharCode && searchArray.length > 0) {
-                  const nextIndex = searchIndex + 1;
-
-                  if (nextIndex < searchArray.length) {
-                    foundValue = searchArray[nextIndex];
-                    setSearchIndex(nextIndex);
-                  }
-                  else {
-                    foundValue = searchArray[0];
-                    setSearchIndex(0);
-                  }
-                }
-                else {
-                  const resultArray = displayedArray.filter(value => (
-                    value.substring(0, 1).toLowerCase() === charCode
-                  ));
-
-                  if (resultArray.length > 0) {
-                    setSearchArray(resultArray);
-                    setSearchIndex(0);
-                    foundValue = resultArray[0];
-                  }
-                }
-
-                if (foundValue) {
-                  setLastCharCode(charCode);
-                  setSelectedButton(foundValue);
-                  document.getElementById(foundValue).focus();
-                }
-              }}
+              onKeyDown={handleKeyDown}
               buttons={(
                 <Button
+                  compact
                   icon="search"
                   color="transparent"
                   selected={showSearchBar}
@@ -128,41 +127,31 @@ export const ListInput = (props, context) => {
                     setShowSearchBar(!showSearchBar);
                     setDisplayedArray(buttons);
                   }}
-                  compact
                 />
-              )}
-            >
-              <Flex wrap>
-                {displayedArray.map(button => (
-                  <Flex.Item key={button} basis="100%">
-                    <Button
-                      color="transparent"
-                      content={button}
-                      id={button}
-                      width="100%"
-                      selected={selectedButton === button}
-                      onClick={() => {
-                        if (selectedButton === button) {
-                          act('choose', { choice: button });
-                        }
-                        else {
-                          setSelectedButton(button);
-                        }
-                        setLastCharCode(null);
-                      }}
-                      onComponentDidMount={node => {
-                        if (selectedButton === button) {
-                          node.focus();
-                        }
-                      }}
-                    />
-                  </Flex.Item>
-                ))}
-              </Flex>
+              )}>
+              {displayedArray.map(button => (
+                <Button
+                  key={button}
+                  fluid
+                  color="transparent"
+                  id={button}
+                  selected={selectedButton === button}
+                  onClick={() => {
+                    if (selectedButton === button) {
+                      act('choose', { choice: button });
+                    }
+                    else {
+                      setSelectedButton(button);
+                    }
+                    setLastCharCode(null);
+                  }}>
+                  {button}
+                </Button>
+              ))}
             </Section>
-          </Flex.Item>
+          </Stack.Item>
           {showSearchBar && (
-            <Flex.Item mt={1}>
+            <Stack.Item>
               <Input
                 fluid
                 onInput={(e, value) => setDisplayedArray(
@@ -171,11 +160,11 @@ export const ListInput = (props, context) => {
                   ))
                 )}
               />
-            </Flex.Item>
+            </Stack.Item>
           )}
-          <Flex.Item mt={1}>
-            <Flex textAlign="center">
-              <Flex.Item grow={1} basis={0}>
+          <Stack.Item>
+            <Stack textAlign="center">
+              <Stack.Item grow basis={0}>
                 <Button
                   fluid
                   color="bad"
@@ -183,8 +172,8 @@ export const ListInput = (props, context) => {
                   content="Cancel"
                   onClick={() => act('cancel')}
                 />
-              </Flex.Item>
-              <Flex.Item grow={1} basis={0} ml={1}>
+              </Stack.Item>
+              <Stack.Item grow basis={0}>
                 <Button
                   fluid
                   color="good"
@@ -193,10 +182,10 @@ export const ListInput = (props, context) => {
                   disabled={selectedButton === null}
                   onClick={() => act('choose', { choice: selectedButton })}
                 />
-              </Flex.Item>
-            </Flex>
-          </Flex.Item>
-        </Flex>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
