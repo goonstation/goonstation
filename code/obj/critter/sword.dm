@@ -68,10 +68,10 @@
 		fireflash(get_center(), 2)
 
 		for(var/board_count = rand(4, 8), board_count > 0, board_count--)
-        	new/obj/item/factionrep/ntboard(locate(src.loc.x + rand(-1, 3), src.loc.y + rand(-1, 3), src.loc.z))
+			new/obj/item/factionrep/ntboard(locate(src.loc.x + rand(-1, 3), src.loc.y + rand(-1, 3), src.loc.z))
 			board_count--
 		for(var/alloy_count = rand(1, 3), alloy_count > 0, alloy_count--)
-        	new/obj/item/material_piece/iridiumalloy(locate(src.loc.x + rand(0, 2), src.loc.y + rand(0, 2), src.loc.z))
+			new/obj/item/material_piece/iridiumalloy(locate(src.loc.x + rand(0, 2), src.loc.y + rand(0, 2), src.loc.z))
 			alloy_count--
 		new/obj/machinery/power/sword_engine(get_center())
 
