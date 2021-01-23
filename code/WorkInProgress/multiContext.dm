@@ -13,7 +13,7 @@ var/list/globalContextActions = null
 	proc/showButtons(var/list/buttons, var/atom/target)
 		return
 
-	proc/addButtonToHud(var/target, var/obj/screen/contextButton/C)
+	proc/addButtonToHud(var/target, var/atom/movable/screen/contextButton/C)
 		var/mob/living/carbon/human/H = target
 		if(istype(H))
 			H.hud.add_screen(C)
@@ -73,7 +73,7 @@ var/list/globalContextActions = null
 			screenX += offsetX
 			screenY += offsetY
 
-			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
+			for(var/atom/movable/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				addButtonToHud(usr, C)
@@ -110,7 +110,7 @@ var/list/globalContextActions = null
 			var/finalOff = spacingX * (buttons.len-3)
 			offX -= finalOff/2
 
-			for(var/obj/screen/contextButton/C in buttons) //todo : stop typechecking per context
+			for(var/atom/movable/screen/contextButton/C in buttons) //todo : stop typechecking per context
 				C.screen_loc = "CENTER,CENTER+0.6"
 
 				addButtonToHud(usr, C)
@@ -144,7 +144,7 @@ var/list/globalContextActions = null
 
 			var/count = 0
 
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/atom/movable/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER:[screenX],CENTER:[screenY]"
 
 				addButtonToHud(usr, C)
@@ -172,7 +172,7 @@ var/list/globalContextActions = null
 			var/offX = 0
 			var/offY = 16
 
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/atom/movable/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				addButtonToHud(usr, C)
@@ -198,7 +198,7 @@ var/list/globalContextActions = null
 			var/offY = 16
 
 			var/first = 1
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/atom/movable/screen/contextButton/C in buttons)
 				C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
 				addButtonToHud(usr, C)
@@ -219,15 +219,15 @@ var/list/globalContextActions = null
 	//for drawing context menu buttons based on screen_loc position instead of //DONE NOTHING YET
 	screen_HUD_default
 		var/count_start_pos = 1
-		showButtons(var/list/buttons, var/obj/screen/target)
+		showButtons(var/list/buttons, var/atom/movable/screen/target)
 			var/longitude_dir
 			var/lattitude_dir
 			var/targetx
 			var/targety
 
 			// var/atom/screenCenter = usr.client.virtual_eye
-			if (istype(target, /obj/screen))
-				var/obj/screen/T = target
+			if (istype(target, /atom/movable/screen))
+				var/atom/movable/screen/T = target
 				var/regex/R1 = regex("(EAST|WEST)((\\-|\\+)\\d+|)")
 				R1.Find(T.screen_loc)
 				if (R1.match)
@@ -246,7 +246,7 @@ var/list/globalContextActions = null
 			else return 0
 
 			var/count = count_start_pos
-			for(var/obj/screen/contextButton/C in buttons)
+			for(var/atom/movable/screen/contextButton/C in buttons)
 				//C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 				C.screen_loc = "[lattitude_dir][targetx],[longitude_dir][targety]"
 
@@ -296,7 +296,7 @@ var/list/globalContextActions = null
 			closeContextActions()
 		var/list/buttons = list()
 		for(var/datum/contextAction/C in applicable)
-			var/obj/screen/contextButton/B = unpool(/obj/screen/contextButton)
+			var/atom/movable/screen/contextButton/B = unpool(/atom/movable/screen/contextButton)
 			B.setup(C, src, target)
 			B.alpha = 0
 			buttons.Add(B)
@@ -312,7 +312,7 @@ var/list/globalContextActions = null
 		return
 
 	proc/closeContextActions()
-		for(var/obj/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
+		for(var/atom/movable/screen/contextButton/C in contextButtons)//todo : stop typechecking per context
 			var/mob/living/carbon/human/H = src
 			if(istype(H)) H.hud.remove_screen(C)
 
@@ -391,7 +391,7 @@ var/list/globalContextActions = null
 		globalContextActions[A] = new A()
 	return
 
-/obj/screen/contextButton
+/atom/movable/screen/contextButton
 	name = ""
 	icon = 'icons/ui/context16x16.dmi'
 	icon_state = ""
@@ -807,8 +807,8 @@ var/list/globalContextActions = null
 					icon_state = "wraith-random"
 
 		checkRequirements(var/atom/target, var/mob/user)
-			if (istype(target, /obj/screen/ability/topBar/wraith))
-				var/obj/screen/ability/topBar/wraith/B = target
+			if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+				var/atom/movable/screen/ability/topBar/wraith/B = target
 				if (istype(B.owner, /datum/targetable/wraithAbility/spook))
 					var/datum/targetable/wraithAbility/spook/A = B.owner
 					if (A.cooldowncheck())
@@ -818,8 +818,8 @@ var/list/globalContextActions = null
 			return 1
 
 		execute(var/atom/target, var/mob/user)
-			if (istype(target, /obj/screen/ability/topBar/wraith))
-				var/obj/screen/ability/topBar/wraith/B = target
+			if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+				var/atom/movable/screen/ability/topBar/wraith/B = target
 				if (istype(B.owner, /datum/targetable/wraithAbility/spook))
 					var/datum/targetable/wraithAbility/spook/A = B.owner
 					A.do_spook_ability(ability_code)

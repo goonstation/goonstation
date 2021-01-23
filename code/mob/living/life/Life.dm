@@ -422,7 +422,7 @@
 			src.death(0)
 
 	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /obj/screen))
+		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
 			if (isobj(A) || ismob(A)) // what the heck else would this be?
 				A:set_loc(src.loc)
 
@@ -819,7 +819,7 @@
 	proc/Thumper_createHeartbeatOverlays()
 		for (var/mob/x in (src.observers + src))
 			if(!heartbeatOverlays[x] && x.client)
-				var/obj/screen/hb = new
+				var/atom/movable/screen/hb = new
 				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
 				hb.screen_loc = "1,1"
 				hb.layer = HUD_LAYER_UNDER_2
@@ -837,7 +837,7 @@
 #define HEARTBEAT_THUMP_INTENSITY 0.2
 #define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				x.client << thud
 				if(animateInitial)
@@ -869,7 +869,7 @@
 		if(doThumps)//we're thumping dangit
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, alpha = 255,
 					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
@@ -879,7 +879,7 @@
 		if(doThumps)
 			doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay,
 					alpha = 255,
@@ -890,6 +890,6 @@
 		Thumper_createHeartbeatOverlays()
 		doThumps = 0
 		for(var/mob/x in src.heartbeatOverlays)
-			var/obj/screen/overlay = src.heartbeatOverlays[x]
+			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
 			if(x.client)
 				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )
