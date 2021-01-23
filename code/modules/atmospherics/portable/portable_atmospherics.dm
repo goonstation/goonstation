@@ -89,8 +89,7 @@
 				return 0
 
 			var/datum/pipe_network/network = connected_port.return_network(src)
-			if(network)
-				network.gases -= air_contents
+			network?.gases -= air_contents
 
 			anchored = 0
 

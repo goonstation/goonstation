@@ -47,7 +47,7 @@
 
 	// equipped items - they use the same slot names because eh.
 	var/obj/item/clothing/head/head = null
-	var/obj/item/clothing/ears/ears = null
+	var/obj/item/ears = null //can be either obj/item/clothing/ears/ or obj/item/device/radio/headset, but those paths diverge a lot
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
@@ -67,8 +67,6 @@
 					src.update_icon(makeshitup = 1)
 			else
 				src.update_icon(makeshitup = 1)
-			src.pixel_y = rand(-20,-8)
-			src.pixel_x = rand(-8,8)
 
 	disposing()
 		if (holder)
@@ -159,7 +157,7 @@
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
 		if (src.head_appearance_flags & HAS_HUMAN_EYES)
-			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, pixel_y = AHead.e_offset_y, layer = MOB_FACE_LAYER)
+			src.head_image_eyes = image(AHead.e_icon, AHead.e_state, layer = MOB_FACE_LAYER)
 		else if (src.head_appearance_flags & HAS_NO_EYES)
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
@@ -175,17 +173,17 @@
 		// Then apply whatever hair things they should have
 		var/list/hair_list = customization_styles + customization_styles_gimmick
 
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_first], pixel_y = AHead.customization_first_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_second], pixel_y = AHead.customization_second_offset_y, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_third], pixel_y = AHead.customization_third_offset_y, layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_first], layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_second], layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = hair_list[AHead.customization_third], layer = MOB_HAIR_LAYER2)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
 		src.head_image_cust_three.color = AHead.customization_third_color
 
-		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, pixel_y = AHead.customization_first_offset_y, layer = AHead.special_hair_1_layer)
-		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, pixel_y = AHead.customization_second_offset_y, layer = AHead.special_hair_2_layer)
-		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, pixel_y = AHead.customization_third_offset_y, layer = AHead.special_hair_3_layer)
+		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, layer = AHead.special_hair_1_layer)
+		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, layer = AHead.special_hair_2_layer)
+		src.head_image_special_three = image(icon = AHead.special_hair_3_icon, icon_state = AHead.special_hair_3_state, layer = AHead.special_hair_3_layer)
 
 		var/colorheck = "#FFFFFF"
 		switch(AHead.special_hair_1_color_ref)
@@ -227,17 +225,12 @@
 
 	proc/update_head_image() // The thing that actually shows up when dropped
 		src.overlays = null
-
+		src.head_image.pixel_x = 0
+		src.head_image.pixel_y = 0
 		src.overlays += src.head_image
+		src.head_image_eyes.pixel_x = 0
+		src.head_image_eyes.pixel_y = 0
 		src.overlays += src.head_image_eyes
-		if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR)
-			src.overlays += src.head_image_cust_one
-			src.overlays += src.head_image_cust_two
-			src.overlays += src.head_image_cust_three
-		if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR)
-			src.overlays += src.head_image_special_one
-			src.overlays += src.head_image_special_two
-			src.overlays += src.head_image_special_three
 
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)
@@ -251,6 +244,31 @@
 		if (src.head && src.head.wear_image_icon)
 			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
 
+		if(!(src.head && src.head.seal_hair))
+			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
+				src.head_image_cust_one.pixel_x = 0
+				src.head_image_cust_one.pixel_y = 0
+				src.head_image_cust_two.pixel_x = 0
+				src.head_image_cust_two.pixel_y = 0
+				src.head_image_cust_three.pixel_x = 0
+				src.head_image_cust_three.pixel_y = 0
+				src.overlays += src.head_image_cust_one
+				src.overlays += src.head_image_cust_two
+				src.overlays += src.head_image_cust_three
+			if(src.donor_appearance?.mob_appearance_flags & HAS_SPECIAL_HAIR || src.donor?.special_hair_override)
+				src.head_image_special_one.pixel_x = 0
+				src.head_image_special_one.pixel_y = 0
+				src.head_image_special_two.pixel_x = 0
+				src.head_image_special_two.pixel_y = 0
+				src.head_image_special_three.pixel_x = 0
+				src.head_image_special_three.pixel_y = 0
+				src.overlays += src.head_image_special_one
+				src.overlays += src.head_image_special_two
+				src.overlays += src.head_image_special_three
+
+		src.pixel_y = rand(-20,-8)
+		src.pixel_x = rand(-8,8)
+
 	do_missing()
 		..()
 
@@ -258,7 +276,66 @@
 		. = ..()
 		src.transplanted = 1
 
+	///Taking items off a head
+	attack_self(mob/user as mob)
+		var/list/headwear = list(head, ears, wear_mask, glasses)
+		var/obj/selection = input("Which item do you want to remove","Looting the dead") as null|obj in headwear
+		if (!selection)
+			return
+		user.put_in_hand_or_drop(selection)
+		if (selection == head)
+			head = null
+		if (selection == ears)
+			ears = null
+		if (selection == wear_mask)
+			wear_mask = null
+		if (selection == glasses)
+			glasses = null
+		update_head_image()
+
+
 	attackby(obj/item/W as obj, mob/user as mob) // this is real ugly
+		if (!user)
+			return
+		//Putting stuff on heads
+		if (istype(W, /obj/item/clothing/head))
+			if (!head)
+				user.drop_item(W)
+				head = W
+				head.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.head.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/ears) || istype(W, /obj/item/device/radio/headset))
+			if (!ears)
+				user.drop_item(W)
+				ears = W
+				ears.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.ears.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/mask))
+			if (!wear_mask)
+				user.drop_item(W)
+				wear_mask = W
+				wear_mask.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.wear_mask.name]!</span>")
+			return
+		if (istype(W, /obj/item/clothing/glasses))
+			if (!glasses)
+				user.drop_item(W)
+				glasses = W
+				glasses.set_loc(src)
+				update_head_image()
+			else
+				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
+			return
+
+
 		if (src.skull || src.brain)
 
 			// scalpel surgery
@@ -463,6 +540,10 @@
 				if(HEAD_CHICKEN)
 					src.organ_name = "chicken head"
 					src.desc = "Mike would be proud."
+
+				if(HEAD_ITHILLID)
+					src.organ_name = "squid head"
+					src.desc = "Blub, blub."
 
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

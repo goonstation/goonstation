@@ -7,6 +7,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = 0
@@ -47,7 +48,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
 			// Firebots are used in multiple department, so I guess they get all-access instead of only engineering.
 			src.botcard = new /obj/item/card/id(src)

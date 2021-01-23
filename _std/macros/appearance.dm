@@ -14,6 +14,7 @@
 #define HEAD_VAMPZOMBIE 11
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
+#define HEAD_ITHILLID 15
 
 //tail defines
 #define TAIL_NONE 0
@@ -49,8 +50,9 @@
 #define HAS_HUMAN_HAIR					(1<<5)
 /// Hair sprites are there, but they're supposed to be different. Like a lizard head thing or cow horns
 #define HAS_SPECIAL_HAIR				(1<<6)
-/// Please don't render hair on my wolves it looks too cute
-#define HAS_NO_HAIR							(1<<7)
+
+/// Apply the skintone to the torso, so chickens can have both gross human skin and gross chicken feathers
+#define	TORSO_HAS_SKINTONE			(1<<7)
 
 /// We have normal human eyes of human color where human eyes tend to be
 #define HAS_HUMAN_EYES					(1<<8)
@@ -83,8 +85,6 @@
 #define FIX_COLORS										(1<<19)
 /// Our head has its own colors that would look weird if tinted
 #define	HEAD_HAS_OWN_COLORS						(1<<20)
-/// Apply the skintone to the torso, so chickens can have both gross human skin and gross chicken feathers
-#define	TORSO_HAS_SKINTONE						(1<<21)
 
 /// Default normal standard human appearance flags
 #define HUMAN_APPEARANCE_FLAGS (HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | WEARS_UNDERPANTS )

@@ -18,8 +18,9 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 1
+	anchored = 2
 	layer =  EFFECTS_LAYER_4
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -946,6 +947,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 
 	Entered(atom/movable/Obj,atom/OldLoc)
+		if(isnull(OldLoc)) // hack, remove later pls thx
+			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
 			if (!L || L.len == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
@@ -1359,7 +1362,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING))
+			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
 				mantaPushList.Add(Obj)
 				Obj.temp_flags |= MANTA_PUSHING
 		return
@@ -1556,10 +1559,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
 	icon_state = "polaris"
+	keep_icon = TRUE
 
 /obj/item/broken_egun
 	name = "broken energy gun"
@@ -1586,6 +1591,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "pit"
 	fullbright = 0
 	pathable = 0
+	var/spot_to_fall_to = LANDMARK_FALL_POLARIS
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	Entered(atom/A as mob|obj)
@@ -1596,7 +1602,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(AM.anchored)
 				return ..()
 
-		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		var/turf/T = pick_landmark(spot_to_fall_to)
 		if(T)
 			fall_to(T, A)
 			return
@@ -1604,6 +1610,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	polarispitwall
 		icon_state = "pit_wall"
+
+	marj
+		name = "dank abyss"
+		desc = "The smell rising from it somehow permeates the surrounding water."
+		spot_to_fall_to = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
 
 //******************************************** NSS MANTA SECRET VAULT********************************************
 

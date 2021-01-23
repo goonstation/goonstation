@@ -181,7 +181,7 @@
 			user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
 			H.last_use = world.time
 			blink(src)
-			var/turf/simulated/wall/false_wall/temp/fakewall = new /turf/simulated/wall/false_wall/temp(src)
+			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
 			fakewall.opacity = 0
 			fakewall.RL_SetOpacity(1) //Lighting rebuild.
@@ -386,6 +386,9 @@
 	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,)
+
+	connects_with_overlay_exceptions = list(/turf/simulated/wall/false_wall/reinforced)
+
 	the_tuff_stuff
 		explosion_resistance = 11
 

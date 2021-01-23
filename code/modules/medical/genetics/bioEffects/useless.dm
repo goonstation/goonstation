@@ -83,6 +83,7 @@
 		if (new_color < 0)
 			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 	OnRemove()
@@ -100,6 +101,7 @@
 			AH.customization_first_color = fix_colors(AH.customization_first_color)
 			AH.customization_second_color = fix_colors(AH.customization_second_color)
 			AH.customization_third_color = fix_colors(AH.customization_third_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 /datum/bioEffect/color_changer

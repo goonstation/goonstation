@@ -19,7 +19,6 @@
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/has_fat_guy = 0	// true if contains a fat person
 	var/last_sound = 0
 
 	var/slowed = 0 // when you move, slows you down
@@ -32,7 +31,6 @@
 		active = 0
 		set_dir(0)
 		count = initial(count)
-		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
 
@@ -40,7 +38,6 @@
 		gas = null
 		active = 0
 		set_dir(0)
-		has_fat_guy = 0
 		last_sound = 0
 		mail_tag = null
 		..()
@@ -62,8 +59,6 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-				if(H.bioHolder.HasEffect("fat"))		// is a human and fat?
-					has_fat_guy = 1			// set flag on holder
 
 
 
@@ -86,14 +81,6 @@
 	proc/process()
 		var/obj/disposalpipe/last
 		while(active)
-			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
-				active = 0
-				// find the fat guys
-				for(var/mob/living/carbon/human/H in src)
-					if(H.bioHolder.HasEffect("fat"))
-						H.unlock_medal("Try jiggling the handle",1)
-
-				break
 			sleep(0.1 SECONDS)		// was 1
 			if(slowed > 0)
 				slowed--
@@ -134,8 +121,6 @@
 	proc/merge(var/obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
-		if(other.has_fat_guy)
-			has_fat_guy = 1
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
 		pool(other)
@@ -311,7 +296,7 @@
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
-			F.intact	= 0
+			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
@@ -850,6 +835,7 @@
 	var/nugget_mode = 0
 	mats = 100
 	is_syndicate = 1
+	var/is_doing_stuff = FALSE
 
 	horizontal
 		dir = EAST
@@ -868,6 +854,9 @@
 		update()
 
 	transfer(var/obj/disposalholder/H)
+		while(src.is_doing_stuff)
+			sleep(1 SECOND)
+		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
 			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
@@ -938,6 +927,8 @@
 				for (var/obj/O in new_nuggets)
 					O.set_loc(H)
 					LAGCHECK(LAG_MED)
+
+				sleep(length(new_nuggets))
 
 			else
 				var/obj/item/reagent_containers/food/snacks/prison_loaf/newLoaf = new /obj/item/reagent_containers/food/snacks/prison_loaf(src)
@@ -1010,6 +1001,8 @@
 		H.set_dir(nextdir)
 		var/turf/T = H.nextloc()
 		var/obj/disposalpipe/P = H.findpipe(T)
+
+		src.is_doing_stuff = FALSE
 
 		if(P)
 			// find other holder in next loc, if inactive merge it with current
@@ -1235,7 +1228,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			switch_dir = turn(dir, 90)
 			dpdir = dir | switch_dir | turn(dir,180)
 
@@ -1360,7 +1353,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1427,7 +1420,7 @@
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
-		SPAWN_DBG (1)
+		SPAWN_DBG(0.1 SECONDS)
 			stuff_chucking_target = get_ranged_target_turf(src, dir, 1)
 
 	welded()
@@ -1743,6 +1736,7 @@
 	var/net_id = null
 	var/frequency = 1149
 	var/datum/radio_frequency/radio_connection
+	throw_speed = 1
 
 	ex_act(var/severity)
 		switch(severity)
@@ -1786,30 +1780,22 @@
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
 	proc/expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
+		if (message && (mailgroup || mailgroup2) && radio_connection)
+			var/groups = list()
+			if (mailgroup)
+				groups += mailgroup
+			if (mailgroup2)
+				groups += mailgroup2
+			groups += MGA_MAIL
+
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
+			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -1824,7 +1810,7 @@
 		for(var/atom/movable/AM in H)
 			AM.set_loc(src.loc)
 			AM.pipe_eject(dir)
-			AM.throw_at(target, src.throw_range, 1)
+			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)
 		pool(H)
 
@@ -1863,51 +1849,9 @@
 
 
 /obj/disposaloutlet/artifact
+	throw_range = 10
+	throw_speed = 10
 
-	expel(var/obj/disposalholder/H)
-		if (message && mailgroup && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		if (message && mailgroup2 && radio_connection)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-			newsignal.data["message"] = "[message]"
-
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup2
-			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
-
-		flick("outlet-open", src)
-		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
-
-		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
-
-
-		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
-			AM.pipe_eject(dir)
-			AM.throw_at(target, 10, 10) //This is literally the only thing that was changed in this, otherwise it booted them way too close.
-		H.vent_gas(src.loc)
-		pool(H)
-
-		return
 // -------------------- VR --------------------
 /obj/disposaloutlet/virtual
 	name = "gauntlet outlet"

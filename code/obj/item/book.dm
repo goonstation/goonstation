@@ -311,6 +311,13 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
+	<br>
+	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	"}
 
 /obj/item/paper/book/cookbook
@@ -915,8 +922,8 @@
 	"}
 
 /obj/item/paper/book/monster_manual
-	name = "Creature Conspectus"
-	desc = "A large book detailing many creatures of myth and legend. Nerds."
+	name = "Creature Conspectus Original Edition"
+	desc = "A large book detailing many creatures of myth and legend. Wait a minute, there's only 2 entries! What a scam."
 	icon_state = "book3"
 
 	info = {"
@@ -964,6 +971,138 @@
 	The true danger of the armored greysuit, however, comes from its choice of weapon: many (65% chance) wield a fearsome shockmace into combat.<br>
 	The corpse of this fiend may yield its namesake armor (For details, see pg 289).</p>
 	<hr>
+"}
+
+/obj/item/paper/book/monster_manual_revised
+	name = "Creature Conspectus Revised Edition"
+	desc = "A large book detailing many creatures of myth and legend for the tabletop RPG, Stations and Syndicates."
+	icon_state = "book3"
+
+	info = {"
+<body>
+<h2>Note for the Game Master</h2>
+<p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower its stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.
+<hr>
+<p>
+
+<b>Killer Tomato</b><br>
+Type : Plant<br>
+Size : Small<br>
+DC To Hit : 5<br>
+Resolve : 1<br>
+Damage per attack : 1 (Bite)<br>
+Vulnerability : Slashing / Blunt<br>
+<br>
+<b>Messy Death</b><br>
+<i>On death, the creature's body will splash its boiling inner fluids in a random direction, dealing one resolve damage.</i><br>
+<br>
+
+<b>Maneater plant</b><br>
+Type : Plant<br>
+Size : Medium<br>
+DC To Hit : 9<br>
+Resolve : 3<br>
+Damage per attack : 2 (Vine Whip / Bite)<br>
+Vulnerability : Fire<br>
+<br>
+<b>False Appearance</b><br>
+<i>While this plant remains motionless, it is indistinguishable from a normal shrub.</i>
+<br>
+<br>
+<b>Space Bear</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 12<br>
+Resolve : 6<br>
+Damage per attack : 3 (Claw Swipe)<br>
+Vulnerability : Slashing<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Wendigo</b><br>
+Type : Beast<br>
+Size : Large<br>
+DC To Hit : 15<br>
+Resolve : 10<br>
+Damage Per Attack : 5 (Claw Swipe)<br>
+Vulnerability : Fire<br>
+<br>
+<b>Ferocious Roar</b><br>
+<i>This creature lets out a deafening roar. Every target within close hearing range must roll a Constitution saving throw or be petrified and miss one turn.</i><br>
+<br>
+<b>Zombie</b><br>
+Type : Undead<br>
+Size : Medium<br>
+DC To Hit : 10<br>
+Resolve : 4<br>
+Damage Per Attack : 1 (Flailing Punch)<br>
+Vulnerability : Holy<br>
+<br>
+<b>Zombie Bite</b><br>
+<i>The zombie lunges straight at you! When an undead latches onto its target, the target must make a Strength saving throw to throw the zombie off. If the target fails, the zombie will bite into them, dealing 1 resolve and healing 1 resolve on the zombie</i><br>
+<br>
+
+<b>Syndicate Agent</b><br>
+Type : Human<br>
+Size : Medium<br>
+DC To Hit : 15<br>
+Resolve : 15<br>
+Damage per attack : 5 (Revolver Fire)<br>
+Vulnerability : Blunt <br>
+<br>
+<b>Microbomb Implant</b><br>
+<i>On death, the creature will explode, damaging anyone in range for 5 resolve.</i>
+<br>
+
+</p>
+</body>
+"}
+
+/obj/item/paper/book/DNDrulebook
+	name = "Stations and Syndicates 8th Edition Rulebook"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
+	icon_state = "bookcc"
+
+	info = {"
+<body>
+<h2>Character Creation</h2>
+<hr>
+<p>
+<br>1 – Select your race as well as a job assignment appropriate to the setting of your session. Job assignments can be provided by your GM
+<br><b>Human/Lizard/Skeleton/Squid/Cow/Monkey</b>
+<br>
+<br>2 – Rank your attributes.<br>
+Apply one of each of the following modifiers to an attribute listed below.
+<br><b>+3, +2, +1, 0, -1, -2</b>
+<br><b>Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.</b>
+<br>
+<br>3 – Rank your archetypes.
+<br>These are skills corresponding to your attributes. Apply one of each of the modifiers to an attribute, just as you did above.
+<b>Fighter, Rogue, Explorer, Sage, Artist, Diplomat.</b>
+<br>
+<br>4 – Give yourself 10 points of resolve. How resolve works is explained in “Playing the game”
+<br>
+<br>5 – Choose a name and appearance.
+<br>
+<br>6 – Start with whatever basic gear makes sense for your race and job assigment.<br>
+<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausability and limit of what items you could possess should be consulted with your GM.
+
+<h2>Playing The Game</h2>
+<hr>
+<p>
+<br>1 – Start a quest<br>
+<br>2 – To take an action, describe what you want to do and then – if the GM asks – make a success check. If you fail, the GM can make a reaction against you.<br>
+<br><b>Success Check or Reaction = 1d20 +  Attribute +  Archetype vs Difficulty Class</b><br>
+<br>3 – If something attacks or acts against you, make a success check to defend.<br>
+<br>4 – If you suffer harm, you lose 1 resolve. If you deal harm, your target loses 1 resolve.<br>
+<br>5 – You can spend 1 resolve to roll with advantage or attempt an extraordinary feat.<br>
+<br>6 – If you have 0 resolve, you are knocked out. You gain 1 resolve when you finish a long rest.<br>
+<br>7 – You can carry 3 significant items at once.<br>
+<br>8 – When the quest is resolved, the game ends! If you survive, gain a perk. Choose either +1  Attribute point, +1 Archetype point or +1 maximum resolve.<br>
+
+This ruleset is entirely based upon the Quick Quest system, with minor changes. The source material is made by GiffyGlyph, which can be found <a href="https://giffyglyph.com/quickquest" target="_blank">here</a>.
+</p>
 "}
 
 /obj/item/diary
@@ -2532,7 +2671,7 @@ worshipping world; we all belong to that; only some of us cherish some queer cro
 	desc = "Some kinda children's book. What's that doing here?"
 	icon_state = "bookadps"
 	info = {"
-		<font face=Georgia color=black size='3'> ALBERT AND THE DEEP BLUE SEA<BR>
+		<font face=Georgia color=black size='3'>ALBERT AND THE DEEP BLUE SEA<BR>
 A children&#39;s book by R. Brooks:<BR>
 <BR>
 Albert was an adventurous little monkey. One day, he decided to go exploring. He asked the Research Director to send him somewhere cool with the experimental long-range teleporter.<BR>
@@ -2556,6 +2695,56 @@ After a very long time, Albert got up. He was not going to give up just because 
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
+
+/obj/item/paper/book/caterpillar
+	name = "Advice from a Caterpillar"
+	desc = "You vaguely remember reading this as a kid. Or was that someone else?"
+	icon_state = "greybook"
+	info = {"
+		<font face=Georgia color=black size='3'>ADVICE FROM A CATERPILLAR<BR>
+<BR>
+The Caterpillar and Alice looked at each other for some time in silence: at last the Caterpillar took the hookah out of its mouth, and addressed her in a languid, sleepy voice.
+<BR>
+“Who are <i>you</i>?” said the Caterpillar.
+<BR>
+This was not an encouraging opening for a conversation. Alice replied, rather shyly, “I—I hardly know, sir, just at present—at least I know who I <i>was</i> when I got up this morning, but I think I must have been changed several times since then.”
+<BR>
+“What do you mean by that?” said the Caterpillar sternly. “Explain yourself!”
+<BR>
+“I can’t explain <i>myself</i>, I’m afraid, sir,” said Alice, “because I’m not myself, you see.”
+<BR>
+“I don’t see,” said the Caterpillar.
+<BR>
+“I’m afraid I can’t put it more clearly,” Alice replied very politely, “for I can’t understand it myself to begin with; and being so many different sizes in a day is very confusing.”
+<BR>
+“It isn’t,” said the Caterpillar.
+<BR>
+“Well, perhaps you haven’t found it so yet,” said Alice; “but when you have to turn into a chrysalis—you will some day, you know—and then after that into a butterfly, I should think you’ll feel it a little queer, won’t you?”
+<BR>
+“Not a bit,” said the Caterpillar.
+<BR>
+“Well, perhaps your feelings may be different,” said Alice; “all I know is, it would feel very queer to me.”
+<BR>
+“You!” said the Caterpillar contemptuously. “Who are <i>you</i>?”
+<BR>
+Which brought them back again to the beginning of the conversation. Alice felt a little irritated at the Caterpillar’s making such very short remarks, and she drew herself up and said, very gravely, “I think, you ought to tell me who <i>you</i> are, first.”
+<BR>
+“Why?” said the Caterpillar.
+<BR>
+Here was another puzzling question; and as Alice could not think of any good reason, and as the Caterpillar seemed to be in a very unpleasant state of mind, she turned away.
+<BR>
+“Come back!” the Caterpillar called after her. “I’ve something important to say!”
+<BR>
+This sounded promising, certainly: Alice turned and came back again.
+<BR>
+“Keep your temper,” said the Caterpillar.
+<BR>
+“Is that all?” said Alice, swallowing down her anger as well as she could.
+<BR>
+“No,” said the Caterpillar.
+<BR>
+Alice thought she might as well wait, as she had nothing else to do, and perhaps after all it might tell her something worth hearing. For some minutes it puffed away without speaking, but at last it unfolded its arms, took the hookah out of its mouth again, and said, “So you think you’re <i>changed</i>, do you?”
+		"}
 
 /obj/item/paper/book/zoo_diary
 	name = "grimy diary"

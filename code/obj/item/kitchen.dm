@@ -343,7 +343,7 @@ TRAYS
 	icon_state = "chop_open"
 	item_state = "chop"
 	rotatable = 0
-	tool_flags = null
+	tool_flags = 0
 
 	attack_self(mob/user as mob)
 		var/obj/item/kitchen/chopsticks_package/chop = new /obj/item/kitchen/chopsticks_package
@@ -1013,8 +1013,7 @@ TRAYS
 				foodoverlay.color = FOOD.food_color
 				foodoverlay.layer = (src.layer+3)
 				toppingdata.Add(FOOD.food_color)
-				if(FOOD.reagents)
-					FOOD.reagents.trans_to(roll,FOOD.reagents.total_volume)
+				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)
 						continue
@@ -1216,7 +1215,7 @@ TRAYS
 			if(src.platenum >= platemax)
 				boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 				return
-			SPAWN_DBG(2)
+			SPAWN_DBG(0.2 SECONDS)
 				var/message = 1
 				for (var/obj/item/plate/p in range(1, user))
 					if(p == src)
@@ -1244,7 +1243,7 @@ TRAYS
 		if(src.platenum >= platemax)
 			boutput(user,"<span class='alert'><b>The plates are piled too high!</b></span>")
 			return
-		SPAWN_DBG(2)
+		SPAWN_DBG(0.2 SECONDS)
 			var/message = 1
 			var/first = 1
 			for (var/obj/item/plate/p in range(1, user))

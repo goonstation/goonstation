@@ -66,7 +66,7 @@ var/datum/action_controller/actions
 					A.onEnd()
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
-				if(A.state == ACTIONSTATE_DELETE)
+				if(A.state == ACTIONSTATE_DELETE || A.disposed)
 					A.onDelete()
 					running[X] -= A
 					continue
@@ -207,7 +207,7 @@ var/datum/action_controller/actions
 		..()
 
 	updateBar(var/animate = 1)
-		if (duration <= 0)
+		if (duration <= 0 || isnull(bar))
 			return
 		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"
@@ -795,6 +795,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		duration *= cuffs.apply_multiplier
+
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("training_security"))
@@ -808,22 +810,26 @@ var/datum/action_controller/actions
 		var/mob/ownerMob = owner
 		if(owner && ownerMob && target && cuffs && !target.hasStatus("handcuffed") && cuffs == ownerMob.equipped() && get_dist(owner, target) <= 1)
 
-			var/obj/item/handcuffs/cuffs2
+			var/obj/item/handcuffs/tape/cuffs2
 
-			if (issilicon(ownerMob))
-				cuffs2 = new /obj/item/handcuffs
-			else
-				if (cuffs.amount >= 2)
+			if (initial(cuffs.amount) > 1)
+				if (cuffs.amount >= 1)
 					cuffs2 = new /obj/item/handcuffs/tape
+					cuffs2.apply_multiplier = cuffs.apply_multiplier
+					cuffs2.remove_self_multiplier = cuffs.remove_self_multiplier
+					cuffs2.remove_other_multiplier = cuffs.remove_other_multiplier
 					cuffs.amount--
-					boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
-				else if (cuffs.amount == 1 && cuffs.delete_on_last_use == 1)
-					cuffs2 = new /obj/item/handcuffs/tape
-					ownerMob.u_equip(cuffs)
-					boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
-					qdel(cuffs)
+					if (cuffs.amount < 1 && cuffs.delete_on_last_use)
+						ownerMob.u_equip(cuffs)
+						boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+						qdel(cuffs)
+					else
+						boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
 				else
-					ownerMob.u_equip(cuffs)
+					boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
+					interrupt(INTERRUPT_ALWAYS)
+			else
+				ownerMob.u_equip(cuffs)
 
 			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
@@ -870,6 +876,10 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if(target != null && ishuman(target) && target.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = target
+			duration = round(duration * H.handcuffs.remove_other_multiplier)
+
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -894,7 +904,17 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = owner
+			duration = round(duration * H.handcuffs.remove_self_multiplier)
+
 		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
+
+	onUpdate()
+		. = ..()
+		if(!owner.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onInterrupt(var/flag)
 		..()

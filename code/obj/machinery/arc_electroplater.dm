@@ -52,6 +52,10 @@
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
+		if(W.amount > 1)
+			boutput(user, "<span class='alert'>You can only plate one thing at a time!</span>")
+			return
+
 		if(my_bar)
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)

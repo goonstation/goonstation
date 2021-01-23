@@ -18,6 +18,9 @@
 	var/show_on_examine = 0
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
+		if	(src.original_holder?.traitHolder?.hasTrait("athletic"))
+			brute *=1.33
+
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
 			return 0
 
@@ -109,8 +112,7 @@
 			setup_limb_overlay()
 
 	disposing()
-		if(src.bones)
-			src.bones.dispose()
+		src.bones?.dispose()
 		src.bones = null
 		original_holder = null
 		holder = null
@@ -218,7 +220,7 @@
 
 	/// Applies the correct (hopefully) colors to the severed limbs
 	proc/set_limb_icon_coloration()
-		if (!src.skintoned)
+		if (!src.skintoned || !isicon(src.icon))
 			return // No colorizing things that have their own baked in colors! Also they dont need a bloody stump overlaid
 
 		// All skintoned limbs also get a cool not-affected-by-coloration bloody stump!
@@ -1342,6 +1344,15 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/cow
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
+	limb_hit_bonus = 4
+	skintoned = 1
+	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
+	handfoot_overlay_1_state = null
+	handfoot_overlay_1_color = CUST_2
+
+	New()
+		handfoot_overlay_1_state = "[src.partlistPart]"
+		. = ..()
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/cow/left
@@ -1781,12 +1792,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1830,12 +1839,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/seamonkey
 	icon = 'icons/mob/seamonkey.dmi'
 	partIcon = 'icons/mob/seamonkey.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1879,12 +1886,10 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/arm/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 /obj/item/parts/human_parts/leg/mutant/chicken
 	icon = 'icons/mob/chicken.dmi'
 	partIcon = 'icons/mob/chicken.dmi'
-	fits_monkey = 1
 
 
 //// LIMBS ////
@@ -1987,3 +1992,50 @@ obj/item/parts/human_parts/arm/right/stone
 	side = "right"
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
+
+/// ITHILLID LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/left
+	name = "left squid arm"
+	desc = "A squid's left blub."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/right
+	name = "left squid arm"
+	desc = "Blub squid's right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/ithillid/left
+	name = "left squid leg"
+	desc = "A blub's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/ithillid/right
+	name = "right squid leg"
+	desc = "A squid's blub leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+

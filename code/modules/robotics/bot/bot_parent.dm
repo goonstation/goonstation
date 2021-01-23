@@ -78,7 +78,9 @@
 	proc/speak(var/message)
 		if (!src.on || !message || src.muted)
 			return
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		var/chat_text = make_chat_maptext(src, message)
+		for (var/mob/O in all_hearers(7, get_turf(src)))
+			O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> beeps, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
 		if (src.text2speech)
 			SPAWN_DBG(0)
 				var/audio = dectalk("\[:nk\][message]")
@@ -89,9 +91,6 @@
 						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 							continue
 						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-					return 1
-				else
-					return 0
 
 /obj/machinery/bot/examine()
 	. = ..()

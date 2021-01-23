@@ -607,8 +607,7 @@
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			if(T.air.trace_gases)
-				T.air.trace_gases = null
+			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 
@@ -675,7 +674,7 @@
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
-		SPAWN_DBG (25) // Don't remove.
+		SPAWN_DBG(2.5 SECONDS) // Don't remove.
 			if (M) M.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
 /client/proc/cmd_admin_view_playernotes(target as text)
@@ -709,7 +708,6 @@
 
 	var/mob/living/carbon/human/target_mob = null
 	var/real_name = "A Jerk"
-	var/fat = 0
 	var/hair_override = 0
 	var/update_wearid = 0
 
@@ -849,9 +847,6 @@
 			else
 				src.tf_holder.mobAppearance.gender = FEMALE
 
-		else if (href_list["fat"])
-			src.fat = !src.fat
-
 		else if (href_list["hair_override"])
 			src.hair_override = !src.hair_override
 
@@ -895,8 +890,6 @@
 
 		src.real_name = H.real_name
 
-		src.fat = (H.bioHolder.HasEffect("fat"))
-
 		src.hair_override = H.hair_override
 
 		if(H.mutantrace)
@@ -923,7 +916,6 @@
 		dat += "Blood Type: <a href='byond://?src=\ref[src];blType=input'>[src.tf_holder.bloodType]</a><br>"
 		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
-		dat += "Obese: <a href='byond://?src=\ref[src];fat=1'>[src.fat ? "YES" : "NO"]</a><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
@@ -1003,8 +995,6 @@
 				smoke.start()
 
 		sanitize_null_values(target_mob)
-		if(src.fat)
-			target_mob.bioHolder.AddEffect("fat")
 
 		target_mob.hair_override = src.hair_override
 
@@ -1221,6 +1211,26 @@
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
 	else
 		msg += "No players found for '[target]'"
+
+	msg += "</span>"
+	boutput(src, msg)
+
+/client/proc/cmd_whodead()
+	set name = "Whodead"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set desc = "Lookup everyone who's dead"
+	set popup_menu = 0
+	admin_only
+
+	var/msg = "<span class='notice'>"
+	var/list/whodead = whodead()
+	if (whodead.len)
+		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		for (var/mob/M in whodead)
+			var/role = getRole(M)
+			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
+	else
+		msg += "No dead players found"
 
 	msg += "</span>"
 	boutput(src, msg)
@@ -1699,6 +1709,7 @@
 
 	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
 	var/datum/mind/newMind = new /datum/mind()
+	newMind.ckey = M.ckey
 	newMind.key = M.key
 	newMind.current = M
 	newMind.assigned_role = M.mind.assigned_role
@@ -2300,7 +2311,8 @@ var/global/night_mode_enabled = 0
 			//R.set_dir(direction)
 			R.name = "robust shamecube glass"
 			R.desc = "A pane of robust, yet shameful, glass."
-		var/turf/void = new/turf/unsimulated/floor/void(get_step(targetLoc, direction))
+		var/turf/orig = get_step(targetLoc, direction)
+		var/turf/void = orig.ReplaceWith(/turf/unsimulated/floor/void, FALSE, TRUE, FALSE, TRUE)
 		void.name = "shameful void"
 		void.desc = "really is just a shame"
 		new/area/shamecube(get_step(targetLoc, direction))
@@ -2557,6 +2569,83 @@ var/global/night_mode_enabled = 0
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
+var/global/mirrored_physical_zone_created = FALSE //enables secondary code branch in bump proc to allow bumping into mirrors with offsets
+/client/proc/summon_office()
+	set name = "Summon Office"
+	set desc = "Expand your domain across dimensional planes."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	var/turf/src_turf = get_turf(src.mob)
+	if (!src_turf) return
+
+	var/list/areas = get_areas(/area/centcom/offices)
+	var/area/A = get_area(src.mob)
+	if (A.type in childrentypesof(/area/centcom/offices))
+		boutput(src, "In order to prevent a complete collapse of the known universe you resist the urge to manipulate spacetime within the office.")
+		return
+	for (var/area/centcom/offices/office in areas)
+		//search all offices for an office with the same ckey variable as the usr.
+		if (office.ckey == src.ckey)
+			var/list/turfs = get_area_turfs(office.type)
+			if (!length(turfs))
+				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")
+				return
+
+			//find the door
+			var/turf/office_entry = null
+			var/obj/stool/chair/chair = locate(/obj/stool/chair) in office
+			if (chair)
+				office_entry = get_turf(chair)
+				src.mob.dir = chair.dir
+			var/obj/machinery/door/unpowered/wood/O = locate(/obj/machinery/door/unpowered/wood) in office
+			if (O)
+				if (!office_entry)
+					office_entry = get_turf(O)
+				turfs -= get_turf(O)
+
+			if (!office_entry)
+				boutput(src, "<span class='alert'>Can't find the entry to your office!</span>")
+				return
+
+			if (!office_entry) return
+			var/x_diff = src_turf.x - office_entry.x
+			var/y_diff = src_turf.y - office_entry.y
+
+			var/summoning_office = null //bleh
+			for (var/turf/T in turfs)
+				if (T.vistarget)
+					T.vistarget.vis_contents -= T
+					T.vistarget.warptarget = null
+					T.vistarget.fullbright = initial(T.vistarget.fullbright)
+					T.vistarget.RL_Init()
+					T.vistarget = null
+					T.warptarget = null
+					summoning_office = FALSE
+					T.appearance_flags &= ~KEEP_TOGETHER
+					T.layer -= 0.1 //retore to normal
+
+				else
+					new /obj/landmark/viscontents_spawn(T, man_xOffset = x_diff, man_yOffset = y_diff, man_targetZ = src.mob.z, man_warptarget_modifier = LANDMARK_VM_WARP_NONE)
+					summoning_office = TRUE
+					T.layer += 0.1 //stop hiding my turfs!!
+
+					//anti-sneaky players breaking into centcom through summoned office code
+					T.warptarget = T.vistarget
+					T.warptarget_modifier = LANDMARK_VM_WARP_NON_ADMINS
+
+			if (summoning_office)
+				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
+				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
+				if (!mirrored_physical_zone_created)
+					mirrored_physical_zone_created = TRUE
+			else
+				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")
+				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
+			return
+	boutput(src, "You don't seem to have an office, so sad. :(")
+
 /client/proc/cmd_crusher_walls()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Crusher Walls"
@@ -2568,7 +2657,7 @@ var/global/night_mode_enabled = 0
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
-					W.density = 0
+					W.set_density(0)
 
 				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
 				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
@@ -2576,5 +2665,35 @@ var/global/night_mode_enabled = 0
 
 			if("No")
 				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")
+
+/client/proc/cmd_disco_lights()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Disco Lights"
+	set desc = "Set every light on the station to a random color"
+	var/R = null
+	var/G = null
+	var/B = null
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
+			if("Yes")
+				for (var/obj/machinery/light/L as() in stationLights)
+					R = rand(100)/100
+					G = rand(100)/100
+					B = rand(100)/100
+					if ((R + G + B) < 1)
+						switch (rand(1,3))
+							if (1)
+								R = 1
+							if (2)
+								G = 1
+							if (3)
+								B = 1
+					L.light?.set_color(R, G, B)
+				logTheThing("admin", src, null, "set every light on the station to a random color.")
+				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
+				message_admins("[key_name(src)] set every light on the station to a random color.")
 	else
 		boutput(src, "You must be at least a Administrator to use this command.")

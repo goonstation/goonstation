@@ -71,6 +71,9 @@
 		user.lastattacked = target
 
 	proc/grab(mob/living/target, var/mob/living/user)
+		if(target == user)
+			user.grab_self()
+			return
 		if (issilicon(target))
 			return
 		user.grab_other(target)
@@ -341,7 +344,7 @@
 		if (!target.melee_attack_test(user))
 			return
 
-		if (prob(src.miss_prob) || target.getStatusDuration("stunned") || target.getStatusDuration("weakened") || target.getStatusDuration("paralysis") || target.stat || target.restrained())
+		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user))
 			user.attack_effects(target, affecting)
@@ -491,7 +494,7 @@
 				O.explode()
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips [O] apart!</span>")
 
-			if(prob(40))
+			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 1 SECOND))
 				user.emote("scream")
 			return
 
@@ -795,11 +798,11 @@
 			var/obj/critter/victim = target
 
 			if (src.weak == 1)
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					step_away(victim, user, 15)
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-				SPAWN_DBG (1)
+				SPAWN_DBG(0.1 SECONDS)
 					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")
@@ -1278,7 +1281,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/gun/kinetic/airzooka,\
 	/obj/machinery/computer,\
 	/obj/machinery/power/smes,
-	/obj/item/tinyhammer) //Items that ghostcritters simply cannot interact, regardless of w_class
+	/obj/item/tinyhammer,
+	/obj/item/device/light/zippo) //Items that ghostcritters simply cannot interact, regardless of w_class
 	. = list()
 	for (var/blocked_type in blocked_types)
 		for (var/subtype in typesof(blocked_type))

@@ -69,6 +69,8 @@
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 
+	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
+
 	var/list/module_research = null//list()
 	var/module_research_type = null
 	var/module_research_no_diminish = 0
@@ -121,6 +123,10 @@
 	/// Inventory count display. Call create_inventory_counter in New()
 	var/inventory_counter_enabled = 0
 	var/obj/overlay/inventory_counter/inventory_counter = null
+
+	// amount of time spent between previous tick and this one (1 = normal)
+	var/last_tick_duration = 1
+	var/last_processing_tick = -1
 
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
@@ -249,17 +255,17 @@
 				burn_type = 0
 
 		if (src.material.triggersOnLife.len)
-			src.AddComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
 		else
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
 		if (src.material && src.material.triggersOnLife.len)
-			var/datum/component/C = src.GetComponent(/datum/component/holdertargeting/mat_triggersonlife)
+			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
-				C.RemoveComponent(/datum/component/holdertargeting/mat_triggersonlife)
+				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
 /obj/item/New()
@@ -396,14 +402,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -432,15 +438,14 @@
 
 		if (src.reagents && src.reagents.total_volume)
 			src.reagents.reaction(M, INGEST)
-			SPAWN_DBG (5) // Necessary.
+			SPAWN_DBG(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
 		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!src || !M || !user)
-				return 0
-
+				return
 			M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
 			"<span class='alert'>You finish eating [src].</span>")
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
@@ -532,16 +537,11 @@
 	inventory_counter.update_number(amount)
 	if (amount > 0)
 		update_stack_appearance()
-	else if (!issilicon(usr))
-		// Zamu change - added if (!issilicon(usr))
-		// I have no idea if this matters - issilicon() is used in other places to prevent
-		// dropping or deleting items in some places.
-		// good thing I have no clue what I'm doing
-		// Potential issue for later: may end up not deleting external-to-player stacks
-		// maybe check for src.loc = usr? ???
-		SPAWN_DBG(0)
-			usr.u_equip(src)
-			pool(src)
+	else if(!isrobot(src.loc)) // aaaaaa borgs
+		if(ismob(src.loc))
+			var/mob/holding_mob = src.loc
+			holding_mob.u_equip(src)
+		pool(src)
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
@@ -660,7 +660,7 @@
 				return
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if (is_storage || istype(over_object, /obj/screen/hud))
+		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
@@ -678,7 +678,7 @@
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
-	var/obj/screen/hud/S = over_object
+	var/atom/movable/screen/hud/S = over_object
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
@@ -770,6 +770,12 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	SHOULD_NOT_SLEEP(TRUE)
+	if (src.last_processing_tick < 0)
+		src.last_tick_duration = 1
+	else
+		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
+	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
 		if (src.material)
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
@@ -837,8 +843,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
-	if(chokehold)
-		chokehold.attack_self(user)
+	chokehold?.attack_self(user)
 
 	return
 
@@ -957,6 +962,7 @@
 		src.attack_self(user)
 	else
 		src.pick_up_by(user)
+
 /obj/item/proc/pick_up_by(var/mob/M)
 
 	if (world.time < M.next_click)
@@ -965,7 +971,7 @@
 	if (isdead(M) || (!iscarbon(M) && !ismobcritter(M)))
 		return
 
-	if (!istype(src.loc, /turf) || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened") || M.restrained())
+	if (!istype(src.loc, /turf) || is_incapacitated(M) || M.restrained())
 		return
 
 	if (!can_reach(M, src))
@@ -1115,19 +1121,8 @@
 			return
 
 	var/obj/item/affecting = M.get_affecting(user, def_zone)
-	var/hit_area
-	var/d_zone
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		hit_area = parse_zone(O.organ_name)
-		d_zone = O.organ_name
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		hit_area = parse_zone(P.slot)
-		d_zone = P.slot
-	else
-		hit_area = parse_zone(affecting)
-		d_zone = affecting
+	var/hit_area = parse_zone(affecting)
+	var/d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
 		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
@@ -1491,8 +1486,7 @@
 	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
 	#endif
-	if(src.material)
-		src.material.triggerPickup(user, src)
+	src.material?.triggerPickup(user, src)
 	set_mob(user)
 	show_buttons()
 	if (src.inventory_counter)

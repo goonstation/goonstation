@@ -75,6 +75,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
+	var/eldritch = 0	//was for robe and wizard hat, now nothing.
 
 	New()
 		..()
@@ -163,6 +164,7 @@
 	item_state = "staffcthulhu"
 	force = 14
 	hitsound = 'sound/effects/ghost2.ogg'
+	eldritch = 1
 
 	New()
 		. = ..()
@@ -189,6 +191,7 @@
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
 				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				JOB_XP(M, "Chaplain", 2)
 				return
 
 			if (prob(20))

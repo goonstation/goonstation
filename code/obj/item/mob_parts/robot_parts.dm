@@ -168,6 +168,9 @@
 	var/visible_eyes = 1
 	var/wires_exposed = 0
 
+		// Screen head specific
+	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
+	var/face = "happy"
 
 	examine()
 		. = ..()
@@ -391,6 +394,14 @@
 	max_health = 150
 	visible_eyes = 0
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+
+/obj/item/parts/robot_parts/head/screen
+	name = "cyborg screen head"
+	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
+	appearanceString = "screen"
+	icon_state = "head-screen"
+	max_health = 90
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
 
 /obj/item/parts/robot_parts/chest
 	name = "standard cyborg chest"
@@ -1134,7 +1145,7 @@
 				O.gender = O.brain.owner.current.gender
 				if(O.brain.owner.current.client)
 					O.lastKnownIP = O.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(O.brain.owner.ckey)
+			var/mob/M = find_ghost_by_key(O.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message("<span class='alert'><b>[src]</b> remains inactive.</span>")
 				O.collapse_to_pieces()
@@ -1144,7 +1155,11 @@
 				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
 				O.brain.owner = M.ghostize()?.mind
 				qdel(M)
+			else
+				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
 			O.brain.owner.transfer_to(O)
+			if (isdead(M) && !isliving(M))
+				qdel(M)
 		else if (O.ai_interface)
 			if (!(O in available_ai_shells))
 				available_ai_shells += O

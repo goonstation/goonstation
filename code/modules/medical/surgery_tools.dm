@@ -1157,7 +1157,7 @@ CONTAINS:
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
 			return
-		else if (istype(over_object, /obj/screen/hud))
+		else if (istype(over_object, /atom/movable/screen/hud))
 			over_object = usr //Try to fold & pick up the bag with your mob instead
 		else if (!(over_object == usr))
 			return
@@ -1677,3 +1677,9 @@ keeping this here because I want to make something else with it eventually
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
+	bloody
+		New()
+			. = ..()
+			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

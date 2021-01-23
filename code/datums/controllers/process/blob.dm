@@ -10,6 +10,10 @@ datum/controller/process/blob
 
 		detailed_count = new
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/blob/old_blob = target
+		src.detailed_count = old_blob.detailed_count
+
 	doWork()
 
 		for (var/obj/blob/B in blobs)

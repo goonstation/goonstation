@@ -22,11 +22,12 @@
 		//Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
+
+	#undef _UNSIM_TURF_GAS_DEF
 
 	//Properties for both
 	var/temperature = T20C
@@ -125,6 +126,13 @@
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
 
+	proc/setIntact(var/new_intact_value)
+		if (new_intact_value)
+			src.intact = TRUE
+			src.layer = TURF_LAYER
+		else
+			src.intact = FALSE
+			src.layer = PLATING_LAYER
 
 /obj/overlay/tile_effect
 	name = ""
@@ -251,8 +259,8 @@
 	for(var/atom/movable/AM as mob|obj in src)
 		if (AM) // ???? x2
 			src.Entered(AM)
-	RL_Init()
-	return
+	if(!RL_Started)
+		RL_Init()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -296,6 +304,28 @@
 
 						mover.Bump(obstacle,1)
 						return 0
+
+	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
+		if (length(src.vis_contents))
+			var/turf/T = locate(/turf) in src.vis_contents
+			if (T)
+				for(var/thing in T)
+
+					var/atom/movable/obstacle = thing
+					if(obstacle == mover) continue
+					if(!mover)	return 0
+					if ((forget != obstacle))
+						if(obstacle.event_handler_flags & USE_CANPASS)
+							if(!obstacle.CanPass(mover, cturf, 1, 0))
+
+								mover.Bump(obstacle, 1)
+								return 0
+						else //cheaper, skip proc call lol lol
+							if (obstacle.density)
+
+								mover.Bump(obstacle,1)
+								return 0
+
 	return 1 //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
@@ -323,10 +353,6 @@
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
 
-#ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents -= Obj
-#endif
 
 	return ..(Obj, newloc)
 
@@ -337,8 +363,7 @@
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
-	if(src.material)
-		src.material.triggerOnEntered(src, M)
+	src.material?.triggerOnEntered(src, M)
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -376,11 +401,18 @@
 		BeginSpacePush(M)
 
 #ifdef NON_EUCLIDEAN
-	if(vistarget)
-		vistarget.vis_contents += M
 	if(warptarget)
 		if(OldLoc)
-			M.set_loc(warptarget)
+			switch (warptarget_modifier)
+				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+					if (ismob(M))
+						var/mob/mob = M
+						if (!mob.client?.holder && mob.last_client)
+							M.set_loc(warptarget)
+						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+							M.set_loc(warptarget)
+				else
+					M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -445,7 +477,6 @@
 	var/temp_old = null
 	#define _OLD_GAS_VAR_DEF(GAS, ...) var/GAS ## _old = null;
 	APPLY_TO_GASES(_OLD_GAS_VAR_DEF)
-	#undef _OLD_GAS_VAR_DEF
 
 	if (handle_air)
 		if (istype(src, /turf/simulated)) //Setting oldair & oldparent if simulated.
@@ -456,9 +487,10 @@
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
 			APPLY_TO_GASES(_OLD_GAS_VAR_ASSIGN)
-			#undef _OLD_GAS_VAR_ASSIGN
 			temp_old = src.temperature
+			#undef _OLD_GAS_VAR_ASSIGN
 
+	#undef _OLD_GAS_VAR_DEF
 
 	if (istype(src, /turf/simulated/floor))
 		icon_old = icon_state // a hack but OH WELL, leagues better than before
@@ -493,6 +525,10 @@
 	var/old_checkingcanpass = src.checkingcanpass
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_checkinghasproximity = src.checkinghasproximity
+
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/old_process_cell_operations = src.process_cell_operations
+#endif
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
@@ -538,6 +574,10 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+	if(new_turf.RL_MulOverlay)
+		pool(new_turf.RL_MulOverlay)
+	if(new_turf.RL_AddOverlay)
+		pool(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -551,11 +591,6 @@
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-	new_turf.N = N
-	new_turf.S = S
-	new_turf.W = W
-	new_turf.E = E
-	new_turf.NE = NE
 
 
 	new_turf.checkingexit = old_checkingexit
@@ -563,11 +598,14 @@
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	new_turf.process_cell_operations = old_process_cell_operations
+#endif
+
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
 	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
-	if (RL_Started) RL_UPDATE_LIGHT(new_turf) //Then applies the proper lighting.
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
@@ -587,10 +625,12 @@
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				#undef _OLD_GAS_VAR_RESTORE
 				if (!N.air.temperature)
 					N.air.temperature = temp_old
+
+				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
 
 			// tell atmos to update this tile's air settings
@@ -657,6 +697,10 @@
 	return floor
 
 /turf/proc/ReplaceWithSpace()
+	if( air_master.is_busy )
+		air_master.tiles_to_space |= src
+		return
+
 	var/area/my_area = loc
 	var/turf/floor
 	if (my_area)
@@ -1014,14 +1058,6 @@ Other Goonstation servers:[serverList]"}
 				qdel(L)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
-		return
-	return
 
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
@@ -1050,7 +1086,7 @@ Other Goonstation servers:[serverList]"}
 		A.x = newx
 	if (newy)
 		A.y = newy
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
 
@@ -1159,7 +1195,7 @@ Other Goonstation servers:[serverList]"}
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
 			//todo: A digging sound effect.
-			if (do_after(user, 40) && src.icon_state != "dirt-dug")
+			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
 				src.icon_state = "dirt-dug"
 				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
 				for (var/obj/tombstone/grave in orange(src, 1))

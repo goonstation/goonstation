@@ -40,6 +40,7 @@
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
 // gameticker
+#define GAME_STATE_MAP_LOAD   0
 #define GAME_STATE_WORLD_INIT	1
 #define GAME_STATE_PREGAME		2
 #define GAME_STATE_SETTING_UP	3
@@ -62,7 +63,7 @@
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-//#define ASS_JAM 1 // ASS JAM DISABLED! FOR NOW! -warc
+#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
 #else
 #define ASS_JAM 0
 #endif

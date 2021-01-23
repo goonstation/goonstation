@@ -275,9 +275,9 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
-					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
+					src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
 						src.brain.setOwner(src.donor.mind)
 
@@ -495,6 +495,7 @@
 						else if (src.donor.ghost.key)
 							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
+							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
 							newmind.current = src.donor.ghost
 							src.donor.ghost.mind = newmind
@@ -502,6 +503,7 @@
 					else if (src.donor.key)
 						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
+						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
 						newmind.current = src.donor
 						src.donor.mind = newmind
@@ -710,6 +712,40 @@
 				src.donor.update_body()
 				src.organ_list["tail"] = null
 				return mytail
+
+	/// drops the organ, then hurls it somewhere
+	proc/drop_and_throw_organ(var/organ, var/location, var/direction, var/vigor, var/showtext)
+		. = src.drop_organ(organ, location)
+		if(istype(., /obj))
+			var/obj/organ_toss = .
+			if (!location)
+				location = src.donor.loc
+
+			if(!direction)
+				direction = pick(alldirs)
+
+			var/atom/target = get_edge_target_turf(organ_toss, direction)
+			organ_toss.throw_at(target, vigor, vigor)
+
+			if(showtext && ishuman(src.donor))
+				var/grody_arc = "bloody"
+				if(istype(organ_toss, /obj/item/parts))
+					var/obj/item/parts/limb = organ_toss
+					grody_arc = limb.streak_descriptor
+				else if(istype(organ_toss, /obj/item/organ))
+					var/obj/item/organ/orgn = organ_toss
+					if(orgn.robotic)
+						grody_arc = "oily"
+					else
+						grody_arc = "bloody"
+				else if(istype(organ_toss, /obj/item/clothing/head/butt))
+					if(istype(organ_toss, /obj/item/clothing/head/butt/cyberbutt))
+						grody_arc = "greasy"
+					else
+						grody_arc = "floppy"
+				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
+				src.donor.emote("scream")
+				src.donor.update_clothing()
 
 	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
 		if (!src.donor || !I || !organ)
@@ -1211,7 +1247,7 @@
 					src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN_DBG (20)
+			SPAWN_DBG(2 SECONDS)
 				if (src.brain && src.donor)
 					//src.brain.name = "[src.donor.real_name]'s [initial(src.brain.name)]"
 					if (src.donor.mind)
@@ -1254,7 +1290,7 @@
 		if(!src.heart)
 			src.heart = new /obj/item/organ/heart/flock(src.donor, src)
 			organ_list["heart"] = heart
-			SPAWN_DBG (20) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
+			SPAWN_DBG(2 SECONDS) // god damn i wish i didn't need to have these spawns here, it's gross, i'm sorry, i'm really sorry
 				if (src.heart && src.donor)
 					src.heart.name = initial(src.heart.name)
 
@@ -1267,7 +1303,7 @@
 	regenRate = 0
 	tabName = "Body"
 
-/obj/screen/ability/topBar/organ
+/atom/movable/screen/ability/topBar/organ
 	clicked(params)
 		var/datum/targetable/organAbility/spell = owner
 		if (!istype(spell))
@@ -1301,7 +1337,7 @@
 	var/obj/item/organ/linked_organ = null
 
 	New()
-		var/obj/screen/ability/topBar/organ/B = new /obj/screen/ability/topBar/organ(null)
+		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
 		B.name = src.name
 		B.desc = src.desc
 		B.icon = src.icon
@@ -1312,7 +1348,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/organ()
+			src.object = new /atom/movable/screen/ability/topBar/organ()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -1334,7 +1370,7 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))

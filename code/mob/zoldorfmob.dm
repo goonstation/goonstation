@@ -340,6 +340,7 @@
 			if (src.client)
 				src.client.mob = Z
 			Z.mind = new /datum/mind()
+			Z.mind.ckey = ckey
 			Z.mind.key = key
 			Z.mind.current = Z
 			ticker.minds += Z.mind
@@ -403,7 +404,7 @@
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))
 				pz.UpdateOverlays(image('icons/obj/zoldorf.dmi',"fortunetelling"),"fortunetelling")
-				spawn(6)
+				SPAWN_DBG(0.6 SECONDS)
 					if(pz)
 						pz.ClearSpecificOverlays("fortunetelling")
 			if((istype(i,/obj/item/paper/thermal/playerfortune)) && (Ta == get_turf(usr.loc)))

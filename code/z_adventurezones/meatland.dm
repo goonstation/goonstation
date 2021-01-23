@@ -239,7 +239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
-				if (do_after(user, 20))
+				if (do_after(user, 2 SECONDS))
 					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 					gibs(src.loc)
 					if (src.loc)
@@ -450,7 +450,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 			animate(O, pixel_x = 11 + (16 * (src.x - O.x)), pixel_y = (32 * (1 + src.y - O.y)), time = 2, loop = 1, easing = SINE_EASING)
 			animate(pixel_x = 11 + (32 * (src.x - O.x)), pixel_y = (32 * (src.y - O.y)) + 45, time = 3, loop = 1, easing = SINE_EASING)
 
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				if (O)
 					O.set_loc( src )
 					O.pixel_x = 11
@@ -462,7 +462,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				animate(src.hat, pixel_x = 13, pixel_y = 27, transform = matrix(180, MATRIX_ROTATE), time = 2, loop = 1, easing = SINE_EASING)
 				animate(pixel_x = 0, pixel_y = 0, transform = null, time = 30, loop = 3, easing = SINE_EASING)
 				var/obj/item/clothing/head/old_hat = src.hat
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					if (old_hat)
 						old_hat.layer = initial(old_hat.layer)
 
@@ -936,6 +936,12 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	icon_state = "sovspace"
 	item_state = "sov_suit"
 
+/obj/item/clothing/head/helmet/space/soviet
+	name = "cosmonaut helmet"
+	desc = "Korolyov's pride."
+	icon_state = "cosmonaut"
+	item_state = "cosmonaut"
+
 /obj/item/luggable_computer/cheget
 	name = "important-looking briefcase"
 	desc = "A lockable briefcase that looks really important.  It has insignias with cyrillic lettering on them."
@@ -1233,8 +1239,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(get_dist(host, usr) > 1)
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
@@ -1266,8 +1271,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		if(get_dist(host, usr) > 1)
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["key"])
 			if(istype(usr.equipped(), /obj/item/device/key/cheget) && !src.inserted_key)

@@ -521,8 +521,7 @@
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
-		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+		M.update_colorful_parts()
 		..()
 
 	onInterrupt()
@@ -622,8 +621,7 @@
 							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
-		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+		M.update_colorful_parts()
 		..()
 
 	onInterrupt()

@@ -132,6 +132,9 @@
 			M.name = "SWAT Gas Mask"
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
+			M.color_r = 1
+			M.color_g = 0.8
+			M.color_b = 0.8
 			activator.set_clothing_icon_dirty()
 			return 1
 		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
@@ -314,16 +317,25 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
-					M.item_state = "MDlabcoat"
-					M.coat_style = "MDlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat-alt_o" : "MDlabcoat-alt"
+						M.item_state = "MDlabcoat-alt"
+						M.coat_style = "MDlabcoat-alt"
+						M.desc = "A protective laboratory coat with the blue markings of a fancy Medical Doctor. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "MDlabcoat_o" : "MDlabcoat"
+						M.item_state = "MDlabcoat"
+						M.coat_style = "MDlabcoat"
+						M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
+
 					M.name = "doctor's labcoat"
 					M.real_name = "doctor's labcoat"
-					M.desc = "A protective laboratory coat with the red markings of a Medical Doctor. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -347,16 +359,25 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
-					M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
-					M.item_state = "SCIlabcoat"
-					M.coat_style = "SCIlabcoat"
+
+					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt science jumpsuit)
+					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat-alt_o" : "SCIlabcoat-alt"
+						M.item_state = "SCIlabcoat-alt"
+						M.coat_style = "SCIlabcoat-alt"
+						M.desc = "A protective laboratory coat with the green markings of a fancy Scientist. (Base Item: [prev])"
+					else
+						M.icon_state = findtext(M.icon_state, "_o") ? "SCIlabcoat_o" : "SCIlabcoat"
+						M.item_state = "SCIlabcoat"
+						M.coat_style = "SCIlabcoat"
+						M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
+
 					M.name = "scientist's labcoat"
 					M.real_name = "scientist's labcoat"
-					M.desc = "A protective laboratory coat with the purple markings of a Scientist. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -380,8 +401,8 @@
 				if (istype(M))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-					M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 					M.icon_state = findtext(M.icon_state, "_o") ? "alchrobe_o" : "alchrobe"
@@ -415,8 +436,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				M.icon_state = "vclothes"
@@ -471,8 +492,8 @@
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/inhand_cl_suit.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
 				if (istype(M, /obj/item/clothing/suit/labcoat))
@@ -562,6 +583,16 @@
 					M.name = "commander's armor"
 					M.real_name = "commander's armor"
 					M.desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat"
+					M.item_state = "centcoat"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -667,6 +698,16 @@
 					M.name = "administrator's armor"
 					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					var/prev = M.name
+					M.icon_state = "centcoat-red"
+					M.item_state = "centcoat-red"
+					M.name = "commander's coat"
+					M.real_name = "commander's coat"
+					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM administrators.(Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 				else if (istype(M, /obj/item/clothing/suit/space/captain))
 					var/prev = M.name
@@ -889,7 +930,7 @@
 		if (isdead(activator))
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
-		if (activator.stat || activator.restrained() || activator.getStatusDuration("paralysis") || activator.getStatusDuration("stunned"))
+		if (activator.restrained() || is_incapacitated(activator))
 			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"

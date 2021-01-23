@@ -62,7 +62,7 @@
 		src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 
-	src.radio = new /obj/item/device/radio(src)
+	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
 	SPAWN_DBG(1 SECOND)
@@ -100,8 +100,7 @@
 			sleep(recently_time)
 			recently_dead -= key
 */
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 
@@ -487,18 +486,6 @@
 	SPAWN_DBG( 0 )
 		if ((!( yes ) || src.now_pushing))
 			return
-		src.now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(ishuman(tmob) && tmob.bioHolder.HasEffect("fat"))
-				if(prob(20))
-					src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-		src.now_pushing = 0
-
-
 		if (!istype(AM, /atom/movable))
 			return
 		if (!src.now_pushing)

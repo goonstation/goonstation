@@ -28,8 +28,11 @@ var/datum/explosion_controller/explosions
 		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width)
 
 	proc/queue_damage(var/list/new_turfs)
-		for (var/turf/T in new_turfs)
+		var/c = 0
+		for (var/turf/T as() in new_turfs)
 			queued_turfs[T] += new_turfs[T]
+			if(c++ % 100 == 0)
+				LAGCHECK(LAG_HIGH)
 
 	proc/kaboom()
 		defer_powernet_rebuild = 1
@@ -121,6 +124,7 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
+		world.updateCameraVisibility()
 
 	proc/process()
 		if (exploding)
@@ -189,6 +193,8 @@ var/datum/explosion_controller/explosions
 		var/list/open = list(epicenter)
 		nodes[epicenter] = radius
 		while (open.len)
+			if(length(nodes) % 100 == 0)
+				LAGCHECK(LAG_HIGH)
 			var/turf/T = open[1]
 			open.Cut(1, 2)
 			var/value = nodes[T] - 1 - T.explosion_resistance
@@ -204,19 +210,25 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
-				if(width < 360 && abs(angledifference(get_angle(epicenter, target), angle)) > (width/2))
-					new_value = new_value / 3
+				if(width < 360)
+					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+					if(diff > width)
+						continue
+					else if(diff > width/2)
+						new_value = new_value / 3 - 1
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
 				open |= target
 
 		radius += 1 // avoid a division by zero
-		for (var/turf/T in nodes) // inverse square law (IMPORTANT) and pre-stun
+		for (var/turf/T as() in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / ((radius-nodes[T])**2)
 			nodes[T] = p
 			blame[T] = last_touched
 			p = min(p, 10)
+			if(prob(1))
+				LAGCHECK(LAG_HIGH)
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)

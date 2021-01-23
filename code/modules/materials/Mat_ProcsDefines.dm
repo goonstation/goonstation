@@ -66,6 +66,10 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return M
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
+	if(isnull(M1) != isnull(M2))
+		return 0
+	if(isnull(M1) && isnull(M2))
+		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
 	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
@@ -108,6 +112,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
+
+	if(src.material?.owner_hasentered_added)
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.checkinghasentered = max(T.checkinghasentered-1, 0)
+		src.event_handler_flags &= ~USE_HASENTERED
 
 	src.UpdateOverlays(null, "material")
 
