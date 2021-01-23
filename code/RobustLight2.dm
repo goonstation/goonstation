@@ -18,6 +18,7 @@ proc/get_moving_lights_stats()
 	var/turf/_N = get_step(src, NORTH); \
 	var/turf/_E = get_step(src, EAST); \
 	var/turf/_NE = get_step(src, NORTHEAST); \
+	if(!_N || !_E || !_NE) { break }; \
 	src.RL_MulOverlay.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
@@ -454,7 +455,8 @@ datum/light
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(N, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						N.RL_ApplyGeneration = generation
-						ADDUPDATE(get_step(T, NORTHWEST))
+						if(get_step(T, NORTHWEST))
+							ADDUPDATE(get_step(T, NORTHWEST))
 						ADDUPDATE(N)
 
 					// this if is a bit more complicated because we don't want to do NE
@@ -468,9 +470,12 @@ datum/light
 							NE.RL_ApplyGeneration = generation
 							ADDUPDATE(NE)
 
-				ADDUPDATE(get_step(T, WEST))
-				ADDUPDATE(get_step(T, SOUTH))
-				ADDUPDATE(get_step(T, SOUTHWEST))
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
 
 	line
 		var/dist_cast = 0
