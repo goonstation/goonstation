@@ -124,7 +124,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","icon","file","color","edit referenced object","restore to default")
+		"num","type","icon","file","color","number list","ref","edit referenced object","restore to default")
 
 	if(!class)
 		return
@@ -148,6 +148,12 @@
 
 		if("restore to default")
 			O.vars[variable] = initial(O.vars[variable])
+
+		if("number list")
+			O.vars[variable] = src.create_number_list()
+
+		if("ref")
+			O.vars[variable] = locate(input("Enter ref:") as text|null)
 
 		if("edit referenced object")
 			return .(O.vars[variable])
