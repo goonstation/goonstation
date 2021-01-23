@@ -101,17 +101,19 @@
 	/obj/item/crowbar)
 
 	make_my_stuff()
+		var/picked = pick(/obj/item/cable_coil,\
+		/obj/item/cable_coil/colored/yellow,\
+		/obj/item/cable_coil/colored/orange,\
+		/obj/item/cable_coil/colored/blue,\
+		/obj/item/cable_coil/colored/green,\
+		/obj/item/cable_coil/colored/purple,\
+		/obj/item/cable_coil/colored/black,\
+		/obj/item/cable_coil/colored/hotpink,\
+		/obj/item/cable_coil/colored/brown,\
+		/obj/item/cable_coil/colored/white)
+		spawn_contents.Add(picked)
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
-			spawn_contents[ pick(/obj/item/cable_coil,\
-			/obj/item/cable_coil/colored/yellow,\
-			/obj/item/cable_coil/colored/orange,\
-			/obj/item/cable_coil/colored/blue,\
-			/obj/item/cable_coil/colored/green,\
-			/obj/item/cable_coil/colored/purple,\
-			/obj/item/cable_coil/colored/black,\
-			/obj/item/cable_coil/colored/hotpink,\
-			/obj/item/cable_coil/colored/brown,\
-			/obj/item/cable_coil/colored/white) ] = 3
+			spawn_contents.Add(picked,picked)
 		. = ..()
 
 
@@ -120,7 +122,6 @@
 		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
-		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
