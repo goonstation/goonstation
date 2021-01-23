@@ -1,5 +1,9 @@
 
 (t)sat jan 23 21
+(u)BenLubar
+(p)3411
+(e)|
+(+)Outgoing PDA messages are now shown in your chat log. The AI can take notes while looking at a camera. File sharing with groups is no longer broken!
 (u)Nefarious6th
 (p)3424
 (e)🆕🎨|feature, sprites
