@@ -34,7 +34,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 		if (!newvn)
 			return
 
-		var/vartype = input("Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:","Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]") as null|anything in list("text", "num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color", "number list", "ref")
+		var/vartype = input("Choose variable type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]:","Variable Type[ctrl ? " (CTRL)" : alt ? " (ALT)" : shift ? " (SHIFT)" : null]") as null|anything in list("text", "num", "type", "reference", "mob reference", "turf by coordinates", "reference picker", "new instance of a type", "icon", "file", "color", "json", "ref")
 		is_refpicking = 0
 		var/newvalue = null
 		var/is_newinst = 0
@@ -63,8 +63,8 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 			if ("color")
 				newvalue = input("Pick color:","Color") as null|color
 
-			if ("number list")
-				newvalue = usr.client.create_number_list()
+			if ("json")
+				newvalue = json_decode(input("Enter json:") as text|null)
 
 			if ("ref")
 				var/inp = input("Enter ref:","Ref") as null|text

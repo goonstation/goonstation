@@ -390,12 +390,6 @@
 				as color
 
 
-/client/proc/create_number_list()
-	. = list()
-	var/length = input("How long should the list be?") as num
-	for(var/i = 1 to length)
-		. += input("Input element [i]:") as num
-
 /datum/targetable/addtolistrefpicker
 	var/list/target = null
 	target_anything = 1
@@ -563,7 +557,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","number list","edit referenced object","create new list","restore to default")
+		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
 
 	if(!class)
 		return
@@ -582,8 +576,8 @@
 			mod_list(O.vars[variable])
 			return
 
-		if("number list")
-			O.vars[variable] = create_number_list()
+		if("json")
+			O.vars[variable] = json_decode(input("Enter json:") as text|null)
 			return
 
 		if("restore to default")
