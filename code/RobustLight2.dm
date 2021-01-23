@@ -447,7 +447,8 @@ datum/light
 					RL_APPLY_LIGHT_EXPOSED_ATTEN(E, src.x, src.y, src.brightness, height2, r, g, b)
 					if(atten >= RL_Atten_Threshold)
 						E.RL_ApplyGeneration = generation
-						ADDUPDATE(get_step(T, SOUTHEAST))
+						if(get_step(T, SOUTHEAST))
+							ADDUPDATE(get_step(T, SOUTHEAST))
 						ADDUPDATE(E)
 
 				var/turf/N = get_step(T, NORTH)
