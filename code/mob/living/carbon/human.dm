@@ -93,6 +93,8 @@
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
+	/// used by werewolf TF to store and restore what you were before TFing into a werewolf
+	var/datum/mutantrace/coreMR = null // There are two wolves inside you. One's a wolf, the other's probably some kind of lizard. Also one's actually you, and they trade places Hannah Montana style
 
 	var/emagged = 0 //What the hell is wrong with me?
 	var/spiders = 0 // SPIDERS
@@ -687,7 +689,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		A.trigger(src)
+		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -2698,7 +2700,7 @@
 	for (var/atom/movable/A in contents)
 		if (A in processed)
 			continue
-		if (istype(A, /obj/screen)) // maybe people will stop gibbing out their stamina bars now  :|
+		if (istype(A, /atom/movable/screen)) // maybe people will stop gibbing out their stamina bars now  :|
 			continue
 		if (prob(dump_contents_chance) || istype(A, /obj/item/reagent_containers/food/snacks/shell)) //For dudes who got fried and eaten so they eject -ZeWaka
 			ret += A
@@ -3274,7 +3276,7 @@
 		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
 			. -= space_movement
 
-		if (!(src.mutantrace && src.mutantrace.aquatic))
+		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
 			if (aquatic_movement > 0)
 				if (T.active_liquid || T.turf_flags & FLUID_MOVE)
 					. -= aquatic_movement

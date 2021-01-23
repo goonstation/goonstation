@@ -217,7 +217,8 @@
 		if (isitem(object))
 			object.streak(direction, src.streak_decal)
 
-		if(prob(60)) holder.emote("scream")
+		if(prob(60))
+			INVOKE_ASYNC(holder, /mob.proc/emote, "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder

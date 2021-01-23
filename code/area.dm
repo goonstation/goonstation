@@ -110,6 +110,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
+	var/list/obj/critter/registered_mob_critters = list()
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -310,10 +311,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		sims_score = max(sims_score, 0)
 
 	proc/wake_critters()
-		if(waking_critters || !registered_critters.len) return
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
+		for (var/mob/living/critter/M as() in src.registered_mob_critters)
+			M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()

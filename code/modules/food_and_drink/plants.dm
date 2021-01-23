@@ -1350,3 +1350,8 @@
 	food_color = "#ccccff"
 	validforhat = 1
 	var/datum/light/light
+
+	spawnable
+		make_reagents()
+			..()
+			reagents.add_reagent("omnizine", 10)

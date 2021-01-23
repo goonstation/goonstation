@@ -244,7 +244,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
