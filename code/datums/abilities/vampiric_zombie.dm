@@ -24,7 +24,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder	/		/		/		/		/		/		/		/		*/
 
-/obj/screen/ability/topBar/vampiric_zombie
+/atom/movable/screen/ability/topBar/vampiric_zombie
 	clicked(params)
 		var/datum/targetable/vampiric_zombie/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -112,7 +112,7 @@
 	var/unlock_message = null
 
 	New()
-		var/obj/screen/ability/topBar/vampiric_zombie/B = new /obj/screen/ability/topBar/vampiric_zombie(null)
+		var/atom/movable/screen/ability/topBar/vampiric_zombie/B = new /atom/movable/screen/ability/topBar/vampiric_zombie(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -130,7 +130,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampiric_zombie()
+			src.object = new /atom/movable/screen/ability/topBar/vampiric_zombie()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

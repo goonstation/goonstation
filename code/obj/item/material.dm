@@ -87,7 +87,7 @@
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
-		if(!istype(over_object, /obj/screen/hud))
+		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
@@ -122,8 +122,8 @@
 						continue
 					src.stack_item(I)
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(istype(over_object, /obj/screen/hud))
-			var/obj/screen/hud/H = over_object
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
 			switch(H.id)
 				if("lhand")

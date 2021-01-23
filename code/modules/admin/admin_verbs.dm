@@ -1124,7 +1124,7 @@ var/list/fun_images = list()
 		src.apply_depth_filter()
 
 	// Get fucked ghost HUD
-	for (var/obj/screen/ability/hudItem in src.screen)
+	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
 
 	// Also get fucked giant...planet...things

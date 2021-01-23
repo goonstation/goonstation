@@ -660,7 +660,7 @@
 				return
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if (is_storage || istype(over_object, /obj/screen/hud))
+		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
@@ -678,7 +678,7 @@
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
-	var/obj/screen/hud/S = over_object
+	var/atom/movable/screen/hud/S = over_object
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master

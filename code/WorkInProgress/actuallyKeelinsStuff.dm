@@ -192,7 +192,7 @@ Returns:
 	return
 
 /proc/testShroud()
-	var/obj/screen/S = new(usr)
+	var/atom/movable/screen/S = new(usr)
 	var/image/I = image('icons/effects/160x160.dmi',S,"tearmed")
 	I.render_target = "*test"
 	S.screen_loc = "CENTER"
@@ -1034,7 +1034,7 @@ Returns:
 
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(over_object.loc) || istype(over_object, /obj/screen)) return
+		if(ismob(over_object.loc) || istype(over_object, /atom/movable/screen)) return
 		if(parameters["left"])
 			//animate_shake(over_object)
 			if(beam)
@@ -1047,7 +1047,7 @@ Returns:
 
 	onMouseDown(atom/target,location,control,params)
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if(beam)
 				qdel(beam)
@@ -1204,7 +1204,7 @@ Returns:
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			var/attackDir =  getAttackDir(user, target)
 			user.set_dir(attackDir)
@@ -3403,7 +3403,7 @@ var/list/lag_list = new/list()
 		playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 75, 0)
 		M:transforming = 1
 		sleep(3 SECONDS)
-		var/obj/screen/creepy = new /obj/screen()
+		var/atom/movable/screen/creepy = new /atom/movable/screen()
 		creepy.name = "GARHLGHARLHGARHGL"
 		creepy.icon = 'icons/creepy.png'
 		creepy.screen_loc = "SOUTH,WEST"
