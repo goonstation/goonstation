@@ -6,7 +6,7 @@
 	topBarRendered = 1
 	rendered = 1
 
-/obj/screen/ability/topBar/flockmind
+/atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -25,7 +25,7 @@
 	theme = "flock"
 
 /datum/targetable/flockmindAbility/New()
-	var/obj/screen/ability/topBar/flockmind/B = new /obj/screen/ability/topBar/flockmind(null)
+	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
 	B.icon = src.icon
 	B.icon_state = src.icon_state
 	B.owner = src

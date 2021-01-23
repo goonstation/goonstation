@@ -292,7 +292,7 @@
 			targets += T
 		var/list/atom/movable/to_densify = list()
 		for(var/atom/movable/AM in src)
-			if(istype(AM, /obj/screen))
+			if(istype(AM, /atom/movable/screen))
 				continue
 			AM.transform = null
 			AM.set_loc(get_turf(src))

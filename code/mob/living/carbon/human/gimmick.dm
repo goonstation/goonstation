@@ -243,7 +243,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	if (src.client)
 		for (var/atom/I in src.hud.inventory_bg)
-			if (istype(I,/obj/screen/hud))
+			if (istype(I,/atom/movable/screen/hud))
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
@@ -280,8 +280,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		var/obj/item/W = src.equipped()
 		if (!src.restrained())
-			if (istype(picked,/obj/screen/hud))
-				var/obj/screen/hud/HUD = picked
+			if (istype(picked,/atom/movable/screen/hud))
+				var/atom/movable/screen/hud/HUD = picked
 				var/list/params = empty_mouse_params()
 				HUD.clicked(HUD.id, src, params)
 			else if (istype(picked,/obj/ability_button))
