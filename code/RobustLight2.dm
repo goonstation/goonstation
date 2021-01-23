@@ -25,7 +25,7 @@ proc/get_moving_lights_stats()
 	if (src.RL_NeedsAdditive || src.E.RL_NeedsAdditive || src.N.RL_NeedsAdditive || src.NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
 			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting) ; \
-			src.vis_contents |= src.RL_AddOverlay ; \
+			src.RL_AddOverlay.set_loc(src) ; \
 			src.RL_AddOverlay.plane = PLANE_SELFILLUM ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
@@ -594,15 +594,9 @@ proc
 
 /obj/overlay/tile_effect/lighting
 	icon = 'icons/effects/light_overlay.dmi'
-	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
-
-	disposing()
-		for(var/turf/T in src.vis_locs)
-			T.vis_contents -= src
-		..()
 
 turf
 	var
@@ -734,11 +728,28 @@ turf
 		RL_Init()
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
-					var/obj/overlay/tile_effect/overlay = unpool(/obj/overlay/tile_effect/lighting)
-					src.vis_contents |= overlay
+					var/obj/overlay/tile_effect/overlay = null
+					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
+						if(existing_overlay.plane == PLANE_LIGHTING)
+							overlay = existing_overlay
+							break
+					if(!overlay)
+						overlay = unpool(/obj/overlay/tile_effect/lighting)
+					overlay.set_loc(src)
 					overlay.plane = PLANE_LIGHTING
 					overlay.icon_state = src.RL_OverlayState
 					src.RL_MulOverlay = overlay
+				if (!src.RL_AddOverlay)
+					var/obj/overlay/tile_effect/overlay = null
+					for(var/obj/overlay/tile_effect/lighting/existing_overlay in src)
+						if(existing_overlay.plane == PLANE_SELFILLUM)
+							overlay = existing_overlay
+							break
+					if(overlay)
+						overlay.set_loc(src)
+						overlay.plane = PLANE_SELFILLUM
+						overlay.icon_state = src.RL_OverlayState
+						src.RL_AddOverlay = overlay
 			else
 				if(src.RL_MulOverlay)
 					pool(src.RL_MulOverlay)
