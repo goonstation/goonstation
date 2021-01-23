@@ -24,8 +24,8 @@
 		if (istype(user, /client))
 			var/client/client = user
 			user = client.mob
-		else
-			return
+	if (!user)
+		return
 	var/datum/tgui_list_input/input = new(user, message, title, buttons, timeout)
 	input.ui_interact(user)
 	input.wait()
