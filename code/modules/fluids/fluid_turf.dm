@@ -262,7 +262,7 @@
 
 	proc/blow_hole()
 		if (src.z != 5)
-			new /turf/space/fluid/warp_z5/realwarp(src)
+			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
 /turf/space/fluid/warp_z5
