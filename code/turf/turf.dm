@@ -591,11 +591,6 @@
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-	new_turf.N = N
-	new_turf.S = S
-	new_turf.W = W
-	new_turf.E = E
-	new_turf.NE = NE
 
 
 	new_turf.checkingexit = old_checkingexit
