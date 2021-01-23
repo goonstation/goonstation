@@ -1,3 +1,7 @@
+/* ================================================== */
+/* --- Syndicate Weapon: Orion Retribution Device --- */
+/* ================================================== */
+
 /obj/critter/sword
 	name = "Deep Space Beacon"
 	var/transformation_name = "Syndicate Locator Beacon"
@@ -7,6 +11,7 @@
 	var/true_desc = "An automated miniature doomsday device constructed by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD/base.dmi'
 	icon_state = "beacon"
+	dead_state = "anchored"
 	death_text = "The Syndicate Weapon violently explodes, leaving wreckage in it's wake."
 	pet_text = "tries to get the attention of"
 	angertext = "focuses on"
@@ -21,7 +26,6 @@
 	layer = MOB_LAYER + 5
 	atkcarbon = 1
 	atksilicon = 1
-	aggressive = 1
 	flying = 1
 	generic = 0
 	seekrange = 256						//A perk of being a high-tech prototype - incredibly large detection range.
@@ -45,27 +49,40 @@
 
 		SPAWN_DBG(1 MINUTE)
 			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
-				transformation_triggered = true								//...the countdown starts.
-				name = transformation_name
-				desc = transformation_desc
-				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
-				SPAWN_DBG(2 MINUTES)
-					transformation(0)
+				transformation_countdown()									//...the countdown starts.
 		return
 	
-//
-//YO FUTURE ME, MAKE THE STATION ANNOUNCEMENT THING. YOU CAN DO IT.
-//
+	CritterDeath()
+		..()
+		SPAWN_DBG(5 SECONDS)
+			command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
+			logTheThing("combat", src, null, "has been defeated.")
+			message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
+
+		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		smoke.set_up(5, 0, get_center())
+		smoke.attach(src)
+		smoke.start()
+
+		explosion_new(get_center(), get_center(), rand(6, 12))
+		fireflash(get_center(), 2)
+
+		for(var/board_count = rand(4, 8), board_count > 0, board_count--)
+        	new/obj/item/factionrep/ntboard(locate(src.loc.x + rand(-1, 3), src.loc.y + rand(-1, 3), src.loc.z))
+			board_count--
+		for(var/alloy_count = rand(1, 3), alloy_count > 0, alloy_count--)
+        	new/obj/item/material_piece/iridiumalloy(locate(src.loc.x + rand(0, 2), src.loc.y + rand(0, 2), src.loc.z))
+			alloy_count--
+		new/obj/machinery/power/sword_engine(get_center())
+
+		SPAWN_DBG(1 SECOND)
+			elecflash(get_center())
+			qdel(src)
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		..()
-		if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
-			transformation_triggered = true								//...the countdown starts.
-			name = transformation_name
-			desc = transformation_desc
-			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
-			SPAWN_DBG(2 MINUTES)
-				transformation(0)
+		if(mode == 0 && !changing_modes && !transformation_triggered)		//If in Beacon form and not already transforming...
+			transformation_countdown()										//...the countdown starts.
 		return
 
 
@@ -99,6 +116,8 @@
 					rotation_locked = false
 					name = true_name
 					desc = true_desc
+					aggressive = 1							//Only after exiting the beacon form will the SWORD become aggressive.
+					health = 6000
 
 			if(1)
 				rotation_locked = true
@@ -571,6 +590,17 @@
 				if(prob(45) && istype(S, /obj/critter/sword))
 					S.ex_act(1)
 		return
+
+
+	proc/transformation_countdown()							//Starts the initial transformation's countdown.
+		transformation_triggered = true
+		name = transformation_name
+		desc = transformation_desc
+		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
+		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", "sound/vox/alert.ogg")
+		SPAWN_DBG(2 MINUTES)
+			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", "sound/vox/alert.ogg")
+			transformation(0)
 
 
 	proc/get_center()										//Returns the central turf.
