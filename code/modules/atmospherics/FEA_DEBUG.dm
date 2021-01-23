@@ -276,21 +276,6 @@ obj/machinery/atmospherics
 
 				target_pressure = amount
 
-	unary/oxygen_generator
-		verb
-			toggle()
-				set src in world
-				set category = "Minor"
-
-				on = !on
-
-				update_icon()
-
-			change_rate(amount as num)
-				set src in world
-				set category = "Minor"
-
-				oxygen_content = amount
 	binary/pump
 		verb
 			DEBUG_MESSAGE()
