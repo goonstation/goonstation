@@ -732,6 +732,11 @@ turf
 			//for fucks sake tobba - ZeWaka
 
 		RL_Init()
+			src.N = get_step(src, NORTH) || src
+			src.S = get_step(src, SOUTH) || src
+			src.W = get_step(src, WEST) || src
+			src.E = get_step(src, EAST) || src
+			src.NE = get_step(src, NORTHEAST) || src
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
 					var/obj/overlay/tile_effect/overlay = unpool(/obj/overlay/tile_effect/lighting)
@@ -739,6 +744,7 @@ turf
 					overlay.plane = PLANE_LIGHTING
 					overlay.icon_state = src.RL_OverlayState
 					src.RL_MulOverlay = overlay
+				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
 				if(src.RL_MulOverlay)
 					pool(src.RL_MulOverlay)
@@ -746,11 +752,6 @@ turf
 				if(src.RL_AddOverlay)
 					pool(src.RL_AddOverlay)
 					src.RL_AddOverlay = null
-			src.N = get_step(src, NORTH) || src
-			src.S = get_step(src, SOUTH) || src
-			src.W = get_step(src, WEST) || src
-			src.E = get_step(src, EAST) || src
-			src.NE = get_step(src, NORTHEAST) || src
 
 atom
 	var

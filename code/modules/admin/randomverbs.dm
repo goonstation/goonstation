@@ -2619,7 +2619,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.vistarget.warptarget = null
 					T.vistarget.fullbright = initial(T.vistarget.fullbright)
 					T.vistarget.RL_Init()
-					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE
