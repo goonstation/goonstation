@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
-	icon_state = "cbbolt"
+	icon_state = "acidspit"
 	power = 0.8
 	dissipation_rate = 20
 	dissipation_delay = 10
@@ -61,6 +61,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	shot_sound = null
+
+	on_launch(var/obj/projectile/projectile)
+		projectile.Scale(0.5, 0.5)
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		..()
