@@ -317,7 +317,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			C.wake_from_hibernation()
 		for (var/mob/living/critter/M as() in src.registered_mob_critters)
 			M.wake_from_hibernation()
-		src.registered_mob_critters.len = 0
 		waking_critters = 0
 
 	proc/calculate_area_value()

@@ -185,6 +185,7 @@
 	var/hibernation_priority = 100
 
 	evaluate()
+		. = ..()
 		var/mob/living/critter/M = holder.owner
 		if (!M)
 			return 0

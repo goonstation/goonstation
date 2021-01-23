@@ -27,6 +27,7 @@
 	var/area/registered_area = null
 	//time when mob last awoke from hibernation
 	var/last_hibernation_wake_tick = 0
+	var/is_hibernating = TRUE
 
 	var/can_burn = 1
 	var/can_throw = 0
@@ -177,7 +178,9 @@
 		if(src.is_npc)
 			src.ai?.enabled = TRUE
 			src.last_hibernation_wake_tick = TIME
+			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
+			src.is_hibernating = FALSE
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
