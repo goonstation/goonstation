@@ -770,6 +770,7 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	SHOULD_NOT_SLEEP(TRUE)
 	if (src.last_processing_tick < 0)
 		src.last_tick_duration = 1
 	else

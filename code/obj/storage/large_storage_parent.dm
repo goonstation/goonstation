@@ -578,9 +578,9 @@
 		for (var/obj/O in src)
 			O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/m = O
-				if(m.armed && user)
-					m.triggered(user)
+				var/obj/item/mousetrap/our_trap = O
+				if(our_trap.armed && user)
+					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
