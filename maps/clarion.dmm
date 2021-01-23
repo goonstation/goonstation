@@ -13764,7 +13764,8 @@
 "axM" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access = null
 	},
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -16039,7 +16040,8 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Kitchen"
+	name = "Kitchen";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
@@ -17599,7 +17601,9 @@
 /area/station/maintenance/west)
 "aGd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	req_access = null
+	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /obj/machinery/door/poddoor/blast{
@@ -39515,7 +39519,8 @@
 /area/station/engine/elect)
 "bsk" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	name = "Mechanics"
+	name = "Mechanics";
+	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
