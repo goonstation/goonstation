@@ -1053,11 +1053,14 @@
 
 
 
-	New(var/loc,var/do_overlays_now = 1)
+	New(var/loc)
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
-		if (do_overlays_now)
-			src.space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1394,7 +1397,11 @@
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		update_icon()
-		space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		return
