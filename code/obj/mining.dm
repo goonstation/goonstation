@@ -1356,6 +1356,7 @@
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	has_material = FALSE
 	var/sprite_variation = 1
 	var/stone_color = null
 	var/image/coloration_overlay = null
@@ -1387,6 +1388,7 @@
 
 	New()
 		..()
+		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")

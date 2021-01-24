@@ -15,13 +15,16 @@
 
 	var/broken = 0
 	var/burnt = 0
+	var/has_material = TRUE
 	var/plate_mat = null
 	var/reinforced = FALSE
 
 	New()
 		..()
-		plate_mat = getMaterial("steel")
-		setMaterial(getMaterial("steel"))
+		if (has_material)
+			if (isnull(plate_mat))
+				plate_mat = getMaterial("steel")
+			setMaterial(plate_mat)
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
