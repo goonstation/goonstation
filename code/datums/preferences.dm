@@ -1,4 +1,8 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+var/list/removed_jobs = list(
+	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
+	"Barman" = "Bartender",
+)
 
 datum/preferences
 	var/profile_name
@@ -956,6 +960,25 @@ $(function() {
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !src.jobs_unwanted.len)
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
+		else
+			for (var/job in removed_jobs)
+				if (job in src.jobs_med_priority)
+					src.jobs_med_priority -= job
+					if (removed_jobs[job])
+						src.jobs_med_priority |= removed_jobs[job]
+				if (job in src.jobs_low_priority)
+					src.jobs_low_priority -= job
+					if (removed_jobs[job])
+						src.jobs_low_priority |= removed_jobs[job]
+				if (job in src.jobs_unwanted)
+					src.jobs_unwanted -= job
+					if (removed_jobs[job])
+						src.jobs_unwanted |= removed_jobs[job]
+			for (var/datum/job/J in job_controls.staple_jobs)
+				if (istype(J, /datum/job/daily))
+					continue
+				if (!(job in src.jobs_med_priority || job in src.jobs_low_priority))
+					src.jobs_unwanted |= J.name
 
 
 		var/list/HTML = list()
