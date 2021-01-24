@@ -166,23 +166,28 @@ dmm_suite
 			// Identify each object's data, instantiate it, & reconstitues its fields.
 			var /list/turfStackTypes = list()
 			var /list/turfStackAttributes = list()
-			for(var/atomModel in splittext(models, comma_delim))
-				var bracketPos = findtext(atomModel, "{")
-				var atomPath = text2path(copytext(atomModel, 1, bracketPos))
-				var /list/attributes
-				if(bracketPos)
-					attributes = new()
-					var attributesText = copytext(atomModel, bracketPos+1, -1)
-					var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
-					for(var/paddedAttribute in paddedAttributes)
-						key_value_regex.Find(paddedAttribute)
-						attributes[key_value_regex.group[1]] = key_value_regex.group[2]
-				if(!ispath(atomPath, /turf))
-					loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
-				else
-					turfStackTypes.Insert(1, atomPath)
-					turfStackAttributes.Insert(1, null)
-					turfStackAttributes[1] = attributes
+			for(var/areaDone = 0 to 1)
+				for(var/atomModel in splittext(models, comma_delim))
+					var bracketPos = findtext(atomModel, "{")
+					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+					var /list/attributes
+					if(bracketPos)
+						attributes = new()
+						var attributesText = copytext(atomModel, bracketPos+1, -1)
+						var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
+						for(var/paddedAttribute in paddedAttributes)
+							key_value_regex.Find(paddedAttribute)
+							attributes[key_value_regex.group[1]] = key_value_regex.group[2]
+					// load areas first
+					if(!areaDone)
+						if(ispath(atomPath, /area))
+							loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else if(!ispath(atomPath, /turf))
+						loadModel(atomPath, attributes, originalStrings, xcrd, ycrd, zcrd)
+					else
+						turfStackTypes.Insert(1, atomPath)
+						turfStackAttributes.Insert(1, null)
+						turfStackAttributes[1] = attributes
 			// Layer all turf appearances into final turf
 			if(!turfStackTypes.len) return
 			var /turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
