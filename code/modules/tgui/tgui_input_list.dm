@@ -89,6 +89,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ListInput")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
