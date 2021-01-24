@@ -394,7 +394,9 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 		if(T && loaded)
 			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,prefabPath)
+			var/datum/loadedProperties/props = D.read_map(loaded,T.x,T.y,T.z,prefabPath)
+			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
+				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
 			return 1
 		else return 0
 
