@@ -76,10 +76,11 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
+/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, copyButtons = TRUE)
 	src.title = title
 	src.message = message
-	src.buttons = buttons.Copy()
+	if (copyButtons)
+		src.buttons = buttons.Copy()
 	if (timeout)
 		src.timeout = timeout
 		src.start_time = TIME
@@ -99,7 +100,7 @@
  */
 /datum/tgui_modal/proc/wait()
 	while (!choice && !closed)
-		LAGCHECK(LAG_MED)
+		LAGCHECK(5)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -115,14 +116,15 @@
 	. = tgui_always_state
 
 /datum/tgui_modal/ui_data(mob/user)
+	if(timeout)
+		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
+
+/datum/tgui_modal/ui_static_data(mob/user)
 	. = list(
 		"title" = title,
 		"message" = message,
 		"buttons" = buttons
 	)
-
-	if(timeout)
-		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_act(action, list/params)
 	. = ..()

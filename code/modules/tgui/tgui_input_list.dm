@@ -26,7 +26,7 @@
 			user = client.mob
 	if (!user)
 		return
-	var/datum/tgui_list_input/input = new(user, message, title, buttons, timeout)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, buttons, timeout)
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -56,36 +56,20 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_list_input/async/input = new(user, message, title, buttons, callback, timeout)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, buttons, callback, timeout)
 	input.ui_interact(user)
 
 /**
- * # tgui_list_input
+ * # tgui_modal/list_input
  *
  * Datum used for instantiating and using a TGUI-controlled list input that prompts the user with
  * a message and shows a list of selectable options
  */
-/datum/tgui_list_input
-	/// The title of the TGUI window
-	var/title
-	/// The textual body of the TGUI window
-	var/message
-	/// The list of buttons (responses) provided on the TGUI window
-	var/list/buttons
+/datum/tgui_modal/list_input
 	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
 	var/list/buttons_map
-	/// The button that the user has pressed, null if no selection has been made
-	var/choice
-	/// The time at which the tgui_list_input was created, for displaying timeout progress.
-	var/start_time
-	/// The lifespan of the tgui_list_input, after which the window will close and delete itself.
-	var/timeout
-	/// Boolean field describing if the tgui_list_input was closed by the user.
-	var/closed
 
-/datum/tgui_list_input/New(mob/user, message, title, list/buttons, timeout)
-	src.title = title
-	src.message = message
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/buttons, timeout, copyButtons = FALSE)
 	src.buttons = list()
 	src.buttons_map = list()
 
@@ -98,56 +82,18 @@
 		src.buttons += string_key
 		src.buttons_map[string_key] = i
 
-
-	if (timeout)
-		src.timeout = timeout
-		src.start_time = TIME
-		SPAWN_DBG(timeout)
-			qdel(src)
 	. = ..()
 
-/datum/tgui_list_input/disposing(force, ...)
-	tgui_process.close_uis(src)
-	qdel(buttons)
-	buttons = null
-	. = ..()
 
-/**
- * Waits for a user's response to the tgui_list_input's prompt before returning. Returns early if
- * the window was closed by the user.
- */
-/datum/tgui_list_input/proc/wait()
-	while (!choice && !closed)
-		LAGCHECK(LAG_MED)
-
-/datum/tgui_list_input/ui_interact(mob/user, datum/tgui/ui)
+/datum/tgui_modal/list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ListInput")
 		ui.open()
 
-/datum/tgui_list_input/ui_close(mob/user)
-	. = ..()
-	closed = TRUE
-
-/datum/tgui_list_input/ui_state(mob/user)
-	return tgui_always_state
-
-/datum/tgui_list_input/ui_static_data(mob/user)
-	. = list(
-		"title" = title,
-		"message" = message,
-		"buttons" = buttons
-	)
-
-/datum/tgui_list_input/ui_data(mob/user)
-	. = list()
-	if(timeout)
-		.["timeout"] = clamp((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS), 0, 1)
-
-/datum/tgui_list_input/ui_act(action, list/params)
-	. = ..()
-	if (.)
+/datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
+	if(!ui || ui.status != UI_INTERACTIVE)
 		return
 	switch(action)
 		if("choose")
@@ -162,33 +108,33 @@
 			. = TRUE
 
 /**
- * # async tgui_list_input
+ * # async tgui_modal/list_input
  *
- * An asynchronous version of tgui_list_input to be used with callbacks instead of waiting on user responses.
+ * An asynchronous version of tgui_modal/list_input to be used with callbacks instead of waiting on user responses.
  */
-/datum/tgui_list_input/async
-	/// The callback to be invoked by the tgui_list_input upon having a choice made.
+/datum/tgui_modal/list_input/async
+	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_list_input/async/New(mob/user, message, title, list/buttons, callback, timeout)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/buttons, callback, timeout)
 	..(user, title, message, buttons, timeout)
 	src.callback = callback
 
-/datum/tgui_list_input/async/disposing(force, ...)
+/datum/tgui_modal/list_input/async/disposing(force, ...)
 	qdel(callback)
 	callback = null
 	. = ..()
 
-/datum/tgui_list_input/async/ui_close(mob/user)
+/datum/tgui_modal/list_input/async/ui_close(mob/user)
 	. = ..()
 	qdel(src)
 
-/datum/tgui_list_input/async/ui_act(action, list/params)
+/datum/tgui_modal/list_input/async/ui_act(action, list/params)
 	. = ..()
 	if (!. || choice == null)
 		return
 	callback.InvokeAsync(choice)
 	qdel(src)
 
-/datum/tgui_list_input/async/wait()
+/datum/tgui_modal/list_input/async/wait()
 	return
