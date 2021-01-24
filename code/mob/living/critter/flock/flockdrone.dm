@@ -622,7 +622,7 @@
 			. += B // always drop brain
 	// handle our contents, such as whatever item we're trying to eat or what we're holding
 	for(var/atom/movable/O in src.contents)
-		if(istype(O, /obj/screen))
+		if(istype(O, /atom/movable/screen))
 			continue // no UI elements please
 		. += O
 

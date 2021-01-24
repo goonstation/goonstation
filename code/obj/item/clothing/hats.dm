@@ -10,6 +10,7 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 
 	setupProperties()
@@ -81,6 +82,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -115,6 +117,7 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -1222,3 +1225,9 @@
 	item_state = "antlers"
 	w_class = 1.0
 	throwforce = 0
+
+/obj/item/clothing/head/pajama_cap
+	name = "nightcap"
+	desc = "Is it truly a good night without one?"
+	icon_state = "pajama_hat"
+	item_state = "pajama_hat"

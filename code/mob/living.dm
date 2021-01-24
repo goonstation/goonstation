@@ -472,7 +472,7 @@
 
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -607,14 +607,8 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	var/obj/decal/point/P = new(get_turf(target))
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bioHolder.mobAppearance.customization_first_color
-	src = null // required to make sure its deleted
-	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
-		qdel(P)
+	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value*10)
@@ -1707,12 +1701,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
 //left this here to standardize into living later
 /mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	if (src.ai)
 		src.ai.was_harmed(weapon,M)
+		if(src.is_hibernating)
+			if (src.registered_area)
+				src.registered_area.wake_critters()
+			else
+				src.wake_from_hibernation()
 	..()
 
 /mob/living/bullet_act(var/obj/projectile/P)
@@ -1788,8 +1788,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (isalive(src))
 					lastgasp()
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
@@ -1800,8 +1799,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (isalive(src))
 					lastgasp()
 				if (rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but [P] pierces through your armor!"
+					armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
@@ -1810,8 +1808,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (rangedprot > 1)
 					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1826,8 +1823,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.stuttering = stun
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1841,8 +1837,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
@@ -1854,8 +1849,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					SPAWN_DBG(30 SECONDS)
 						src.remove_stam_mod_regen("projectile")
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
@@ -1870,17 +1864,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				else
 					src.take_toxin_damage(damage)
 				if(rangedprot > 1)
-					if (!P.proj_data.nomsg)
-						armor_msg = ", but your armor softens the hit!"
+					armor_msg = ", but your armor softens the hit!"
 
-	if (!P.proj_data.silentshot && !P.proj_data.nomsg)
+	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
 
-
+	var/mob/M = null
 	if (ismob(P.shooter))
-		if (P.shooter)
-			src.lastattacker = P.shooter
-			src.lastattackertime = world.time
+		M = P.shooter
+		src.lastattacker = M
+		src.lastattackertime = world.time
+	src.was_harmed(M)
+
 	return 1
 
 /mob/living/attackby(obj/item/W, mob/M)

@@ -13,7 +13,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		usr.changeStatus(inp, 15 MINUTES)
 	return
 
-/obj/screen/statusEffect
+/atom/movable/screen/statusEffect
 	name = "Status effect"
 	desc = ""
 	icon = 'icons/ui/statussystem.dmi'

@@ -20,7 +20,7 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
-	else if (M.health <= 0 && src.health >= -75.0)
+	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
 		else
@@ -159,21 +159,15 @@
 
 	src.visible_message("<span class='alert'><B>[src] is trying to perform CPR on [target]!</B></span>")
 	if (do_mob(src, target, 40)) //todo : unfuck this into a progres bar or something that happens automatically over time
-		if (target.health < 0)
+		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
 			target.changeStatus("paralysis", -20)
 
-			/*if(prob(50)) // this doesn't work yet
-				for(var/datum/ailment/disability/D in src.target.ailments)
-					if(istype(D,/datum/ailment/disease/heartfailure))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")
-					if(istype(D,/datum/ailment/disease/flatline))
-						src.target.resistances += D.type
-						src.target.ailments -= D
-						boutput(world, "<span class='alert'>CURED [D] in [src.target]</span>")*/
+			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
+				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
+					target.cure_disease_by_path(/datum/ailment/malady/flatline)
+
 			if (src)
 				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
 

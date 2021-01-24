@@ -107,6 +107,8 @@
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
 				return
+			if(human_owner?.hasStatus("aquabreath"))
+				return
 			if (prob(25) && owner.losebreath > 0)
 				boutput(owner, "<span class='alert'>You are drowning!</span>")
 
