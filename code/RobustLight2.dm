@@ -620,6 +620,7 @@ proc
 
 /obj/overlay/tile_effect/lighting/mul
 	plane = PLANE_LIGHTING
+	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
 
 /obj/overlay/tile_effect/lighting/add
 	plane = PLANE_SELFILLUM
