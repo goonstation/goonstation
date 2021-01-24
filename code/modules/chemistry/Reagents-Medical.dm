@@ -1558,9 +1558,9 @@ datum
 				..()
 				return
 
-		medical/dmso
-			name = "dmso"
-			id = "dmso"
+		medical/dimethyl_sulfoxide
+			name = "DMSO"
+			id = "dimethyl_sulfoxide"
 			description = "A sweet, non-toxic, viscous liquid. It is widely used as an additive."
 			reagent_state = LIQUID
 			fluid_r = 220
@@ -1568,13 +1568,17 @@ datum
 			fluid_b = 220
 			transparency = 20
 			viscosity = 0.85
-			touch_modifier = 0.8
+			touch_modifier = 0.5
+			penetrates_skin = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+
+				/// Perform a reduced version of the on_touch skin penetration of the base
+				//  reaction_mob() for ALL reagents in holder
 				if (method == TOUCH)
 					for(var/ID in holder?.reagent_list)
 						var/datum/reagent/R = holder?.reagent_list[ID]
-						if (penetrates_skin || istype(R,src.type))
+						if (R.penetrates_skin) // don't double up on chems that already penetrate
 							continue
 						if (!("nopenetrate" in paramslist))
 							var/modifier = touch_modifier

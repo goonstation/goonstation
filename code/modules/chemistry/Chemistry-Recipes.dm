@@ -2079,6 +2079,25 @@ datum
 			result_amount = 3
 			mix_phrase = "It smells like vinegar and a bad hangover in here."
 
+
+		//H₂S + CH₃OH + (Al₂O₃ Catalyst) -> (CH₃)₂S, methanol->ethanol and hyrodgen sulfide->sulfuric acid
+		dimethyl_sulfide
+			name = "DMS"
+			id = "dimethyl_sulfide"
+			result = "dimethyl_sulfide"
+			required_reagents = list("acid" = 1, "ethanol" = 1, "oxygen" = 1, "aluminium"=1)
+			result_amount = 3
+			mix_phrase = "It smells like cabbage."
+
+		//(CH₃)₂S + (O2 or NO₂) -> (CH₃)₂SO  (dimethyl sulfide + oxygen OR nitrogen dioxide)
+		dimethyl_sulfoxide
+			name = "DMSO"
+			id = "dimethyl_sulfoxide"
+			result = "dimethyl_sulfoxide"
+			required_reagents = list("dimethyl_sulfide" = 1, "nitrogen_dioxide" = 1)
+			result_amount = 2
+			mix_phrase = "The mixture loses its unpleasant odor and becomes colorless."
+
 		ether
 			name = "Ether"
 			id = "ether"

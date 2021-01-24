@@ -206,6 +206,24 @@ datum
 				..()
 				return
 
+		dimethyl_sulfide
+			name = "DMS"
+			id = "dimethyl_sulfide"
+			description = "A straw colored liquid with a disagreeable odor. It has mostly industrial applications."
+			reagent_state = LIQUID
+			fluid_r = 228
+			fluid_g = 217
+			fluid_b = 111
+			transparency = 128
+			viscosity = 0.80
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				src = null
+				if (method == INGEST)
+					boutput(M, "<span class='notice'>Sulfurous, vegative with perhaps a slighty minty afternote.</span>")
+				else
+					boutput(M, "<span class='alert'>It smells gross!  Is this spoiled veggie juice?!</span>")
+
 		glycerol
 			name = "glycerol"
 			id = "glycerol"
