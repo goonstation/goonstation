@@ -12,7 +12,7 @@
 	icon = 'icons/misc/retribution/SWORD/base.dmi'
 	icon_state = "beacon"
 	dead_state = "anchored"
-	death_text = "The Syndicate Weapon violently explodes, leaving wreckage in it's wake."
+	death_text = "The Syndicate Weapon stops moving, leaving wreckage in it's wake."
 	pet_text = "tries to get the attention of"
 	angertext = "focuses on"
 	atk_text = "bumps into"
@@ -32,16 +32,15 @@
 	var/mode = 0						//0 - Beacon. 1 - Unanchored. 2 - Anchored.
 	var/transformation_triggered = false//Used to check if the initial transformation has already been started or not.
 	var/changing_modes = false			//Used to prevent some things during transformation sequences.
-	var/rotation_locked = false			//Used to lock the SWORD's rotation in place, for example during transformations or in the second stage of Linear Purge.
+	var/rotation_locked = false			//Used to lock the SWORD's rotation in place.
 	var/current_ability = null			//Used to keep track of what ability the SWORD is currently using.
-	var/previous_ability = null			//Used to prevent using the same ability twice in a row.
-	var/rotation_current = 0			//Used to keep track which of the 16 different orientations the SWORD is currently facing.
+	var/used_ability = 0				//Used to only allow transforming after at least one ability has been used.
 	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/image/glow
 
 	New()
 		..()
-		mobile = 0
+		anchored = 1
 		firevuln = 0
 		brutevuln = 0
 		miscvuln = 0
@@ -85,19 +84,182 @@
 			transformation_countdown()										//...the countdown starts.
 		return
 
+	process()
+		if (!src.alive) return 0
+
+		if(sleeping > 0)
+			sleeping--
+			return 0
+
+		check_health()
+
+		if(prob(5))
+			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, 1)
+
+		if(task == "following path")
+			follow_path()
+		else if(task == "sleeping")
+			var/waking = 0
+
+			for (var/client/C)
+				var/mob/M = C.mob
+				if (M && src.z == M.z && get_dist(src,M) <= 64)
+					if (isliving(M))
+						waking = 1
+						break
+
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
+				var/atom/A = atom
+				if (A && src.z == A.z && get_dist(src,A) <= 64)
+					waking = 1
+					break
+
+			if (!waking)
+				if (get_area(src) == colosseum_controller.colosseum)
+					waking = 1
+
+			if(waking)
+				task = "thinking"
+			else
+				sleeping = 5
+				return 0
+		else if(sleep_check <= 0)
+			sleep_check = 5
+
+			var/stay_awake = 0
+
+			for (var/client/C)
+				var/mob/M = C.mob
+				if (M && src.z == M.z && get_dist(src,M) <= 32)
+					if (isliving(M))
+						stay_awake = 1
+						break
+
+			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
+				var/atom/A = atom
+				if (A && src.z == A.z && get_dist(src,A) <= 32)
+					stay_awake = 1
+					break
+
+			if(!stay_awake)
+				sleeping = 5
+				task = "sleeping"
+				return 0
+
+		else
+			sleep_check--
+
+		return ai_think()
+
+
+	ai_think()
+		switch(task)
+			if("thinking")
+				src.attack = 0
+				src.target = null
+
+				walk_to(src,0)
+				seek_target()
+				if (!src.target) src.task = "wandering"
+			if("chasing")
+				if (src.frustration >= rand(40,80))
+					src.target = null
+					src.last_found = world.time
+					src.frustration = 0
+					src.task = "thinking"
+					walk_to(src,0)
+				if (target)
+					if (get_dist(get_center(), src.target) <= 3)
+						var/mob/living/carbon/M = src.target
+						if (M)
+							if(!src.attacking) ChaseAttack(M)
+							src.task = "attacking"
+							src.target_lastloc = M.loc
+
+					else
+						var/turf/olddist = get_dist(get_center(), src.target)
+
+						for (var/obj/O in view(2,get_center()))
+							if(O.type in list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack))
+								step_towards(src,O,5)
+								break
+							else walk_to(src, src.target,1,5)
+
+						if ((get_dist(get_center(), src.target)) >= (olddist))
+							src.frustration++
+						else
+							src.frustration = 0
+						
+						ability_selection()
+
+				else src.task = "thinking"
+			if("attacking")
+				if ((get_dist(get_center(), src.target) > 3) || ((src.target:loc != src.target_lastloc)))
+					src.task = "chasing"
+				else
+					if (get_dist(get_center(), src.target) <= 3)
+						var/mob/living/carbon/M = src.target
+						if (!src.attacking) CritterAttack(src.target)
+						if(M != null)
+							if (M.health <= 0)
+								src.task = "thinking"
+								src.target = null
+								src.last_found = world.time
+								src.frustration = 0
+								src.attacking = 0
+							else
+								ability_selection()
+					else
+						src.attacking = 0
+						src.task = "chasing"
+			if("wandering")
+				patrol_step()
+		return 1
+
 
 //-ABILITY SELECTION-//
 
-	//Some proc.
+	proc/ability_selection()
+		if(mode && !current_ability && !changing_modes)
+			if(prob(10) && used_ability)
+				configuration_swap()
+			else
+				switch(task)
+					if("chasing")
+						used_ability = 1
+						current_heat_level = current_heat_level + rand(10, 20)
+						if(mode == 1)						//Unanchored.
+							destructive_flight()
+						else								//Anchored.
+							destructive_leap()
+
+					if("attacking")
+						used_ability = 1
+						current_heat_level = current_heat_level + rand(10, 20)
+						if(prob(16))
+							stifling_vacuum()
+						else if(mode == 1)					//Unanchored.
+							if(current_heat_level > 100)
+								current_heat_level = 100
+							if(prob(current_heat_level))
+								heat_reallocation()
+							else
+								energy_absorption()
+						else								//Anchored.
+							if(prob(48))
+								linear_purge()
+							else
+								gyrating_edge()
 
 
 //-TRANSFORMATIONS-//
 	
 	proc/transformation(var/transformation_id)				//0 - Beacon. 1 - Unanchored. 2 - Anchored.		
-		mobile = 0
+		anchored = 1
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
+		current_ability = "transformation"
 
 		switch(transformation_id)
 			if(0)
@@ -150,10 +312,11 @@
 					rotation_locked = false
 
 		SPAWN_DBG(10)
-			mobile = 1
+			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 		return
 
 
@@ -173,15 +336,16 @@
 			return
 
 		else
-			if(pathable_turfs <= 3)
+			if(mode == 2 && pathable_turfs <= 3)
 				transformation(1)
 				return
 
 
 	proc/stifling_vacuum()									//In a T-shape in front of it, trips and attracts closer all mobs affected.
+		current_ability = "stifling_vacuum"
 		walk_towards(src, src.target)
 		walk(src,0)
-		mobile = 0
+		anchored = 1
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "stiflingVacuum")
 		src.UpdateOverlays(glow, "glow")
 		SPAWN_DBG(4)
@@ -232,12 +396,13 @@
 							M.throw_at(T, 3, 1)
 
 		SPAWN_DBG(8)
-			mobile = 1
+			anchored = 0
 			if(mode == 1)
 				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			else
 				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			src.UpdateOverlays(glow, "glow")
+			current_ability = null
 		return
 
 
@@ -247,11 +412,12 @@
 		firevuln = 1.5
 		brutevuln = 1.5
 		miscvuln = 0.4
+		current_ability = "linear_purge"
 
 		walk_towards(src, src.target)
 		walk(src,0)
 		playsound(get_center(), "sound/weapons/heavyioncharge.ogg", 75, 1)
-		mobile = 0
+		anchored = 1
 
 		var/increment
 		var/turf/T
@@ -293,22 +459,23 @@
 			rotation_locked = true
 
 		SPAWN_DBG(20)
-			mobile = 1
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
+			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 	proc/gyrating_edge()									//Spins, dealing mediocre damage to anyone nearby.
 		rotation_locked = true
-		mobile = 0
+		anchored = 1
 		firevuln = 0.5
 		brutevuln = 0.5
 		miscvuln = 0.1
+		current_ability = "gyrating_edge"
 
 		var/spin_dir = prob(50) ? "L" : "R"
 		animate_spin(src, spin_dir, 5, 0)
@@ -336,10 +503,11 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
+			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 	proc/destructive_leap()									//Leaps at the target using it's thrusters, dealing damage at the landing location and probably gibbing anyone at the center of said location.
@@ -353,10 +521,10 @@
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
 		src.UpdateOverlays(glow, "glow")
 		rotation_locked = true
-		mobile = 0
 		firevuln = 0.75
 		brutevuln = 0.75
 		miscvuln = 0.15
+		current_ability = "destructive_leap"
 		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
@@ -383,20 +551,21 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 //-UNANCHORED ABILITIES-//
 
 	proc/heat_reallocation()								//Sets anyone nearby on fire while dealing increasing burning damage.
 		rotation_locked = true
-		mobile = 0
+		anchored = 1
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
+		current_ability = "heat_reallocation"
 
 		playsound(get_center(), "sound/effects/gust.ogg", 60, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "heatReallocation")
@@ -424,18 +593,20 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
+			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 	proc/energy_absorption()								//Becomes immune to burn damage for the duration. Creates a snapshot of it's health during activation, returning to it after 1.2 seconds. Increases the heat value by damage taken during the duration.
 		rotation_locked = true
-		mobile = 0
+		anchored = 1
 		firevuln = 0
 		brutevuln = 1.25
 		miscvuln = 0.25
+		current_ability = "energy_absorption"
 
 		var/health_before_absorption = health
 		playsound(get_center(), "sound/effects/shieldup.ogg", 80, 1)
@@ -452,10 +623,11 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
+			anchored = 0
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 	proc/destructive_flight()								//Charges at the target using it's thrusters twice, dealing damage at the locations of each one's end.
@@ -468,10 +640,10 @@
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
 		src.UpdateOverlays(glow, "glow")
 		rotation_locked = true
-		mobile = 0
 		firevuln = 0.75
 		brutevuln = 0.75
 		miscvuln = 0.15
+		current_ability = "destructive_flight"
 		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
@@ -556,10 +728,10 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
-			mobile = 1
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
+			current_ability = null
 
 
 //-MISCELLANEOUS-//
