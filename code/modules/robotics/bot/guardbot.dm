@@ -3753,9 +3753,7 @@
 
 						src.master.speak(insultphrase)
 
-						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG(4 SECONDS)
-							qdel(P)
+						make_point(get_turf(H), time=4 SECONDS)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
 						return

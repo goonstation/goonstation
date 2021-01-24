@@ -1,5 +1,19 @@
 
+(t)sat jan 23 21
+(u)BenLubar
+(p)3411
+(e)|
+(+)Outgoing PDA messages are now shown in your chat log. The AI can take notes while looking at a camera. File sharing with groups is no longer broken!
+(u)Nefarious6th
+(p)3424
+(e)🆕🎨|feature, sprites
+(+)Added recipes for chicken pot pie, chicken "pot" pie, stargazy pie, and chocolate mud pie.
 (t)fri jan 22 21
+(u)AwkwardDryad
+(p)3378
+(e)⚖|balance
+(+)Added sterile masks and latex gloves to public MiniMeds.
+(+)MiniMed items are now more affordable!
 (u)Emily
 (e)🆕|feature
 (*)New silkie breed added! View minor changes for hint. [Gen 2] [From Black Silkie]

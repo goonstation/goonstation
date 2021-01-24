@@ -472,7 +472,7 @@
 
 	if (!src.stat && !hasStatus(list("weakened", "paralysis", "stunned")))
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that
 			var/time_left = src.next_click - world.time
@@ -607,14 +607,8 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	var/obj/decal/point/P = new(get_turf(target))
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bioHolder.mobAppearance.customization_first_color
-	src = null // required to make sure its deleted
-	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
-		qdel(P)
+	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value*10)
@@ -1707,12 +1701,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
 //left this here to standardize into living later
 /mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	if (src.ai)
 		src.ai.was_harmed(weapon,M)
+		if(src.is_hibernating)
+			if (src.registered_area)
+				src.registered_area.wake_critters()
+			else
+				src.wake_from_hibernation()
 	..()
 
 /mob/living/bullet_act(var/obj/projectile/P)
@@ -1869,11 +1869,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
 
-
+	var/mob/M = null
 	if (ismob(P.shooter))
-		if (P.shooter)
-			src.lastattacker = P.shooter
-			src.lastattackertime = world.time
+		M = P.shooter
+		src.lastattacker = M
+		src.lastattackertime = world.time
+	src.was_harmed(M)
+
 	return 1
 
 /mob/living/attackby(obj/item/W, mob/M)

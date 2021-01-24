@@ -106,7 +106,7 @@
 					qdel(O)
 			T.overlays.len = 0
 			if (!istype(T, /turf/space))
-				new /turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 	proc/generate_walls()
 		var/list/walls = list()

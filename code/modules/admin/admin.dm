@@ -4973,7 +4973,7 @@ var/global/noir = 0
 	set popup_menu = 0
 	if (!M) return
 
-	if (!forced && alert(src, "Respawn [M]?", "Confirmation", "Yes", "No") != "Yes")
+	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
 		return
 
 	logTheThing("admin", src, M, "respawned [constructTarget(M,"admin")]")

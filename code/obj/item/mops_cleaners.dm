@@ -885,7 +885,9 @@ WET FLOOR SIGN
 	afterattack(atom/target, mob/user, reach, params)
 		if(!isturf(user.loc))
 			return
-		if(istype(target, /obj/storage) && src.trashbag)
+		if(ismob(target))
+			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
+		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
 			for(var/obj/item/I in src.trashbag)
 				I.set_loc(storage)
@@ -1035,7 +1037,7 @@ WET FLOOR SIGN
 		if(!isturf(user.loc)) return
 		var/turf/target_turf = get_turf(target)
 		var/turf/master_turf = get_turf(master)
-		if(params["left"] && master && get_dist(master_turf, target_turf) > 1)
+		if(params["left"] && master && (get_dist(master_turf, target_turf) > 1 || ismob(target) && target != user))
 			if(ON_COOLDOWN(master, "suck", src.cooldown)) return
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
@@ -1081,11 +1083,10 @@ WET FLOOR SIGN
 								M.u_equip(I)
 								I.dropped()
 								boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+				new/obj/effect/suck(T, get_dir(T, last))
+				last = T
 				if(end_now)
 					break
-				else
-					new/obj/effect/suck(T, get_dir(T, last))
-					last = T
 
 			afterUse(user)
 			playsound(get_turf(master), "sound/effects/suck.ogg", 40, TRUE, 0, 0.5)

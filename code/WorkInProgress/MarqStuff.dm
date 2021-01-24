@@ -536,7 +536,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
@@ -675,7 +675,7 @@
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if (!aim && !loaded)
 				loadFromQuiver(user)
@@ -726,7 +726,7 @@
 
 		if (!aim)
 			//var/list/parameters = params2list(params)
-			if(ismob(target.loc) || istype(target, /obj/screen)) return
+			if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
 				if(loaded)
