@@ -55098,6 +55098,7 @@
 /area/station/maintenance/central)
 "mFo" = (
 /obj/machinery/chem_dispenser,
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "mHd" = (

@@ -13582,6 +13582,9 @@
 	req_access_txt = "25"
 	},
 /obj/machinery/cashreg,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aze" = (

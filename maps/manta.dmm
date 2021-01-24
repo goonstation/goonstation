@@ -14799,6 +14799,10 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aJv" = (
 /obj/machinery/chem_master,
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 1;
+	pixel_y = -4
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aJw" = (
