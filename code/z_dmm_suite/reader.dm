@@ -94,9 +94,9 @@ dmm_suite
 				world.maxx = xMax
 				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
 
-			props.maxX = xMax
+			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax
-			props.maxZ = world.maxz
+			props.maxZ = coordZ
 
 			var/gridCoordX = text2num(coordShifts[posZ][1]) + coordX - 1
 			var/gridCoordY = text2num(coordShifts[posZ][2])  + coordY - 1
