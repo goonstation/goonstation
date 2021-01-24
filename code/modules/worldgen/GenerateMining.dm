@@ -35,10 +35,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			if (map_currently_underwater)
-				src.ReplaceWith(/turf/simulated/wall/asteroid/trench, FALSE, TRUE, FALSE, TRUE)
-			else
-				src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"

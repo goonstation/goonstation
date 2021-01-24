@@ -953,14 +953,6 @@
 	consider_superconductivity(starting)
 		return FALSE
 
-	trench
-		name = "cavern wall"
-		desc = "A cavern wall, possibly flowing with mineral deposits."
-		space_overlays()
-			return
-		build_icon()
-			return
-
 	dark
 		fullbright = 0
 
