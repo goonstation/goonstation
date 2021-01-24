@@ -911,8 +911,13 @@
 // Turf Defines
 
 /turf/simulated/wall/asteroid
+#ifdef UNDERWATER_MAP
+	name = "cavern wall"
+	desc = "A cavern wall, possibly flowing with mineral deposits."
+#else
 	name = "asteroid"
 	desc = "A free-floating mineral deposit from space."
+#endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
 	plane = PLANE_FLOOR
