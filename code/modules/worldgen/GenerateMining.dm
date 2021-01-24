@@ -319,6 +319,16 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
+	// remove temporary areas
+	for (var/turf/T in get_area_turfs(/area/noGenerate))
+		if (map_currently_underwater)
+			new /area/allowGenerate/trench(T)
+		else
+			new /area/space(T)
+	if (!map_currently_underwater)
+		for (var/turf/T in get_area_turfs(/area/allowGenerate))
+			new /area/space(T)
+
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
