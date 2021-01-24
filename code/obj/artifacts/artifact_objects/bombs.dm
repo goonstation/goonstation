@@ -47,10 +47,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			SPAWN_DBG(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
-		if (explode_delay < 1)
-			deploy_payload(O)
-			return
-
 
 		// this is all just fluff
 		if (warning_initial)
@@ -66,12 +62,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 
 	effect_process(var/obj/O)
+		if(..())
+			return
 		if(!src.activated)
 			return
-		if(src.explode_delay < 1)
-			return
 		var/turf/T = get_turf(O)
-		playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
+		if(alarm_during)
+			playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
 
 		if(TIME > src.detonation_time)
 			src.detonation_time = INFINITY
@@ -88,12 +85,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			// actual boom
 			SPAWN_DBG(10 SECONDS)
-				if (src.activated)
+				if (O.loc && src.activated)
 					blewUp = 1
 					deploy_payload(O)
 
 	effect_deactivate(obj/O)
-		. = ..()
+		if(..())
+			return
 		// and remove all the animation stuff when it is deactivated (:
 		animate(O, pixel_y = 0, pixel_y = 0, time = 3,loop = 1, easing = LINEAR_EASING)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time= 3 SECONDS, transform = null)
@@ -212,6 +210,9 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	associated_object = /obj/machinery/artifact/bomb/chemical
 	rarity_class = 2
 	explode_delay = 0
+	alarm_initial = null
+	alarm_during = null
+	alarm_final = null
 	react_xray = list(5,65,20,11,"HOLLOW")
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
