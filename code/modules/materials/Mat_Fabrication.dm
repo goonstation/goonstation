@@ -271,25 +271,26 @@
 			if(!(L in src)) return
 			L.set_loc(src.get_output_location())
 		else if(href_list["selectpart"])
-			var/datum/matfab_part/P = locate(href_list["selectpart"]) in selectedRecipe.required_parts
-			if(P && selectedRecipe)
-				selectingPart = P
-				var/list/validOptions = list()
-				validOptions.Add(src.contents)
-				for(var/datum/matfab_part/RP in selectedRecipe.required_parts)
-					if(RP == P) continue
-					if(RP.assigned) validOptions.Remove(RP.assigned)
-				for(var/obj/item/I in validOptions)
-					if(!I.amount)
-						validOptions.Remove(I)
-					var/matchlevel = P.checkMatch(I)
-					if(matchlevel == 0)
-						validOptions.Remove(I)
-					if(matchlevel == -1)
-						validOptions[I] = 1
+			if(selectedRecipe)
+				var/datum/matfab_part/P = locate(href_list["selectpart"]) in selectedRecipe.required_parts
+				if(P)
+					selectingPart = P
+					var/list/validOptions = list()
+					validOptions.Add(src.contents)
+					for(var/datum/matfab_part/RP in selectedRecipe.required_parts)
+						if(RP == P) continue
+						if(RP.assigned) validOptions.Remove(RP.assigned)
+					for(var/obj/item/I in validOptions)
+						if(!I.amount)
+							validOptions.Remove(I)
+						var/matchlevel = P.checkMatch(I)
+						if(matchlevel == 0)
+							validOptions.Remove(I)
+						if(matchlevel == -1)
+							validOptions[I] = 1
 
-				selectingPartList = validOptions
-				tab = "part"
+					selectingPartList = validOptions
+					tab = "part"
 		else if(href_list["partreturn"])
 			tab = "selected"
 			selectingPart = null

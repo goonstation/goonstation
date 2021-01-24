@@ -541,5 +541,9 @@
 					src.organ_name = "chicken head"
 					src.desc = "Mike would be proud."
 
+				if(HEAD_ITHILLID)
+					src.organ_name = "squid head"
+					src.desc = "Blub, blub."
+
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

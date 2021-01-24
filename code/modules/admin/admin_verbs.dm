@@ -330,6 +330,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_literal_disarm,
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
+		/client/proc/cmd_disco_lights,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -1123,7 +1124,7 @@ var/list/fun_images = list()
 		src.apply_depth_filter()
 
 	// Get fucked ghost HUD
-	for (var/obj/screen/ability/hudItem in src.screen)
+	for (var/atom/movable/screen/ability/hudItem in src.screen)
 		del(hudItem)
 
 	// Also get fucked giant...planet...things

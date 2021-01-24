@@ -449,7 +449,7 @@
 			return 0
 		if (istype(A, /obj/decal/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /obj/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
 			return 0
 		return 1
 
@@ -469,7 +469,8 @@
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
 			entangled.close(1)
-			contents = entangled.contents
+			for(var/atom/movable/AM in entangled)
+				AM.set_loc(src.open ? src.loc : src)
 
 		if (user)
 			src.dump_contents(user)
@@ -532,7 +533,8 @@
 
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
-			entangled.contents = src.contents
+			for(var/atom/movable/AM in src)
+				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
 		src.update_icon()
@@ -576,9 +578,9 @@
 		for (var/obj/O in src)
 			O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/m = O
-				if(m.armed && user)
-					m.triggered(user)
+				var/obj/item/mousetrap/our_trap = O
+				if(our_trap.armed && user)
+					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)

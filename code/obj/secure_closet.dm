@@ -1171,7 +1171,7 @@
 		return
 	if(istype(O, /obj/secure_closet) || istype(O, /obj/closet))
 		return
-	if(istype(O, /obj/screen))
+	if(istype(O, /atom/movable/screen))
 		return
 	step_towards(O, src.loc)
 	if (user != O)

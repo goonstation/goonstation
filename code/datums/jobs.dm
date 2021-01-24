@@ -239,7 +239,7 @@
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP
@@ -1472,7 +1472,7 @@
 	slot_jump = /obj/item/clothing/under/suit/pinstripe
 	slot_head = /obj/item/clothing/head/flatcap
 	slot_foot = /obj/item/clothing/shoes/brown
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/harmonica,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"

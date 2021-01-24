@@ -3776,7 +3776,6 @@
 						insultphrase += "[copytext(insult,3)]!!"
 
 						src.master.speak(insultphrase)
-
 						master.point(H)
 						return
 

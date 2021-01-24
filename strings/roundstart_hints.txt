@@ -60,7 +60,7 @@ You can often get a sentence reduced or even negated entirely by just cooperatin
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
 You can interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
-The paint vendor has a chance to actually become operational once you repair it. Honest!
+The broken paint vendor can be repaired!
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -124,4 +124,4 @@ Being arrested isn't the end of the world.
 A talkative antagonist is fun for everyone.
 By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slows.
 If a purple mouse runs up to you and squeaks, click it with an empty hand! They're a Mentor Mouse and can provide you useful information!
-When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death! 
+When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death!

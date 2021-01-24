@@ -108,7 +108,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +119,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_range(usr))
 						return
 
 					if(!(src.holder in src.master))

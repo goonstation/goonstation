@@ -142,12 +142,7 @@
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> points and beeps, \"Doomed rock detected!\"</span></span>", 2)
-		var/obj/decal/point/P = new(src.target)
-		P.pixel_x = target.pixel_x
-		P.pixel_y = target.pixel_y
-		SPAWN_DBG(2 SECONDS)
-			P.invisibility = 101
-			qdel(P)
+		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y)
 
 /obj/machinery/bot/mining/proc/buildPath()
 	if (!isturf(src.loc)) return

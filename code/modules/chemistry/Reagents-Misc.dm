@@ -3261,6 +3261,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			volatility = 2
 
 		reversium
 			name = "reversium"
@@ -3708,7 +3709,7 @@ datum
 			fluid_g = 25
 			transparency = 95
 			hygiene_value = -0.5
-			smoke_spread_mod = 15
+			smoke_spread_mod = 3
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

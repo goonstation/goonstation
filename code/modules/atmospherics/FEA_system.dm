@@ -246,13 +246,14 @@ datum/controller/air_system
 		process_tiles_to_space()
 		is_busy = TRUE
 
-		if(groups_to_rebuild.len > 0)
-			process_rebuild_select_groups()
-		LAGCHECK(LAG_HIGH)
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			LAGCHECK(LAG_HIGH)
 
-		if(tiles_to_update.len > 0)
-			process_update_tiles()
-		LAGCHECK(LAG_HIGH)
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_HIGH)
 
 		process_groups()
 		LAGCHECK(LAG_HIGH)
