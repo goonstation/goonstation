@@ -1009,7 +1009,7 @@
 		return 1 // i guess. who cares.
 
 
-/client/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
+/datum/player/var/list/claimed_rewards = list() //Keeps track of once-per-round rewards
 
 /client/verb/claimreward()
 	set background = 1
@@ -1026,7 +1026,7 @@
 			var/datum/achievementReward/D = rewardDB[A]
 			var/result = usr.has_medal(D.required_medal)
 			if(result == 1)
-				if((D.once_per_round && !src.claimed_rewards.Find(D.type)) || !D.once_per_round)
+				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
 					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
 					eligible.Add(D.title)
 					eligible[D.title] = D
@@ -1052,6 +1052,11 @@
 
 		if(S == null)
 			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
+			return
+
+		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
+			boutput(usr, "<span class='alert'>You already claimed this!</span>")
+			return
 
 		var/M = alert(usr,S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)","Claim this Reward?","Yes","No")
 		src.verbs += /client/verb/claimreward
@@ -1060,6 +1065,6 @@
 			if (worked)
 				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")
 				if(S.once_per_round)
-					src.claimed_rewards.Add(S.type)
+					src.player.claimed_rewards.Add(S.type)
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")
