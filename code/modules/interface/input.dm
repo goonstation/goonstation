@@ -204,10 +204,10 @@ var/list/dirty_keystates = list()
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
-		if (istype(object, /obj/screen) && (!parameters["middle"] || istype(object, /obj/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
+		if (istype(object, /atom/movable/screen) && (!parameters["middle"] || istype(object, /atom/movable/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 			if (istype(usr, /mob/dead/target_observer))
 				return
-			var/obj/screen/S = object
+			var/atom/movable/screen/S = object
 			S.clicked(parameters)
 			return
 

@@ -1,5 +1,5 @@
 /datum/hud/vision // generic overlays for modifying the mobs vision
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		scan
 		color_mod
 		dither

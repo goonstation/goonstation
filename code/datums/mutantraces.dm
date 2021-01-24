@@ -134,7 +134,7 @@
 	var/needs_oxy = 1
 
 	var/voice_override = 0
-	var/step_override = 0
+	var/step_override = null
 
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
@@ -1222,7 +1222,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/werewolf/left
-	ignore_missing_limbs = 0
+	ignore_missing_limbs = 1 // heck it, just regenerate your limbs, you shambling dogbomination
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
@@ -1361,8 +1361,17 @@
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
+	mutant_folder = 'icons/mob/ithillid.dmi'
+	special_head = HEAD_ITHILLID
+	special_hair_1_icon = 'icons/mob/ithillid.dmi'
+	special_hair_1_state = "head_detail_1"
+	special_hair_1_color = null
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
-
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS)
 
 	say_verb()
 		return "glubs"
@@ -1938,7 +1947,7 @@
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
-	step_override = "step_wood"
+	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
 	mutant_folder = 'icons/mob/cow.dmi'

@@ -88,7 +88,7 @@
 							Q.serialize(F, "[base].TURF", sandbox)
 							var/objc = 0
 							for (var/obj/O in Q)
-								if (!istype(O, /obj/overlay) && !istype(O, /obj/screen))
+								if (!istype(O, /obj/overlay) && !istype(O, /atom/movable/screen))
 									O:serialize(F, "[base].OBJ.[objc]", sandbox)
 									objc++
 							F["[base].OBJC"] << objc

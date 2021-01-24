@@ -287,9 +287,12 @@
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
-			C.Move(src.loc)
-			C.buckled = src
+			if(src.buckled_guy.loc == src.loc)
+				C.buckled = null
+				C.Move(src.loc)
+				C.buckled = src
+			else
+				src.unbuckle()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))

@@ -234,7 +234,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
-		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
+		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"

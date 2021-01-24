@@ -180,7 +180,7 @@
 
 	click(atom/target, params)
 		var/obj/item/equipped = src.active_tool
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 

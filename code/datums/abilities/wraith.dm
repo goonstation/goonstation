@@ -4,7 +4,7 @@
 	cast_while_dead = 1
 	var/corpsecount = 0
 
-/obj/screen/ability/topBar/wraith
+/atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -33,7 +33,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/wraith/B = new /obj/screen/ability/topBar/wraith(null)
+		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src

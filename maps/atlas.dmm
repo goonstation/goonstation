@@ -264,6 +264,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "aB" = (
@@ -3790,6 +3791,9 @@
 "js" = (
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -5891,6 +5895,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "on" = (
@@ -12388,6 +12393,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/garden/owlery)
 "Eu" = (
@@ -14003,6 +14009,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "Ij" = (
@@ -18227,6 +18234,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "Uz" = (

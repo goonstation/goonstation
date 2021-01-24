@@ -102,7 +102,7 @@
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
 			var/uid = P.pathogens[1]
 			var/datum/pathogen/PT = P.pathogens[uid]
-			if (medium?.id != PT.body_type.growth_medium)
+			if (medium && medium.id != PT.body_type.growth_medium)
 				set_dirty("The pathogen is unable to cultivate on the growth medium.")
 		if (ctime <= 0)
 			ctime = 8
@@ -190,7 +190,7 @@
 					if (src.medium)
 						processing_items |= src
 				else if (R in pathogen_controller.media)
-					if (src.medium?.id != R)
+					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
 					else if (!src.medium)
 						src.medium = src.reagents.reagent_list[R]
@@ -282,6 +282,7 @@
 			if(FM)
 				P.forced_microbody = FM
 			P.create_weak()
+			P.setup(1)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")

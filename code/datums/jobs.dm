@@ -12,6 +12,7 @@
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/requires_whitelist = 0
+	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = 0
@@ -239,7 +240,7 @@
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP
@@ -1331,6 +1332,8 @@
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
+		if(prob(20))
+			M.bioHolder.AddEffect("noir", magical=1)
 
 // randomizd gimmick jobs
 
@@ -1470,7 +1473,7 @@
 	slot_jump = /obj/item/clothing/under/suit/pinstripe
 	slot_head = /obj/item/clothing/head/flatcap
 	slot_foot = /obj/item/clothing/shoes/brown
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/harmonica,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -2320,6 +2323,7 @@
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
+	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
