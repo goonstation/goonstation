@@ -267,6 +267,8 @@ mob/new_player
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
+		if (JOB.requires_supervisor_job && countJob(JOB.requires_supervisor_job) <= 0)
+			return 0
 		if (JOB.requires_whitelist)
 			if (!NT.Find(src.ckey))
 				return 0

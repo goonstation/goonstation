@@ -12,6 +12,7 @@
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/requires_whitelist = 0
+	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = 0
@@ -2322,6 +2323,7 @@
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
+	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
