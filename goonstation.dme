@@ -1334,7 +1334,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\uniforms_autocolor.dm"
 #include "code\obj\item\clothing\under\gimmick\hakama.dm"
 #include "code\obj\item\device\accessgun.dm"
-#include "code\obj\item\device\alert_button.dm"
 #include "code\obj\item\device\audio_log.dm"
 #include "code\obj\item\device\brainjar.dm"
 #include "code\obj\item\device\camera_viewer.dm"
