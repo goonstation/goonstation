@@ -469,7 +469,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
-	rounds_needed_to_play = 30 //higher  barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+	rounds_needed_to_play = 50 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
 	New()
 		..()
@@ -490,10 +490,11 @@
 		slot_suit = null
 		slot_glov = /obj/item/clothing/gloves/fingerless
 		slot_head = /obj/item/clothing/head/red
+		slot_foot = /obj/item/clothing/shoes/brown
 		slot_poc1 = /obj/item/storage/security_pouch/assistant
 		slot_poc2 = /obj/item/requisition_token/security/assistant
 		items_in_backpack = list(/obj/item/paper/book/space_law)
-		rounds_needed_to_play = 10
+		rounds_needed_to_play = 5
 
 		New()
 			..()
