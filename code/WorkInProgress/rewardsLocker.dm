@@ -412,6 +412,7 @@
 					M.real_name = "grand alchemist's robes"
 					M.desc = "Well you sure LOOK the part with these on. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					return 1
 			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
 			return
 
