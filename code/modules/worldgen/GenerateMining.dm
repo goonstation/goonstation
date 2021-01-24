@@ -17,41 +17,37 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		place()
 
 	proc/place()
-		#ifdef UNDERWATER_MAP
-		src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-		#else
-		src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
-		#endif
+		if (map_currently_underwater)
+			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
-			src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/noborders, FALSE, TRUE, FALSE, TRUE)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/noborders, FALSE, TRUE, FALSE, TRUE)
 
 	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/simulated/wall/asteroid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
-			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/simulated/wall/asteroid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
-			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
 	name = ""
