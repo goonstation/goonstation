@@ -1,5 +1,9 @@
 
 (t)sun jan 24 21
+(u)Carbadox
+(p)3334
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added a new Bartender job reward, the spectroscopic monocle.
 (u)BatElite
 (p)3432
 (e)🆕|feature
