@@ -29,7 +29,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
-				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/noborders, FALSE, TRUE, FALSE, TRUE)
+				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
 		name = "variable wall"
