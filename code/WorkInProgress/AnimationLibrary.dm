@@ -500,6 +500,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		A.vis_contents.Remove(muzzleflash)
 		pool(muzzleflash)
 
+
+
 /proc/sprint_particle(var/mob/M, var/turf/T = null)
 	if (!M || !M.sprint_particle) return
 	if (T)
@@ -511,6 +513,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (M.sprint_particle.icon_state == "sprint_cloud")
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
+
 
 	SPAWN_DBG(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
