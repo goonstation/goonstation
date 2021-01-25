@@ -1,3 +1,43 @@
+/*
+Character Preview
+
+OVERVIEW
+
+	Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
+
+	There are three variants:
+
+	/datum/character_preview - For use in single-client windows.
+		Use winset() to position the control within the window.
+		See below for an example, the default of placing it at 0,0 and making it 128x128 pixels.
+
+	/datum/character_preview/window - Manages its own window.
+		Basically a simplified version for when you don't need to put other stuff in the preview window.
+
+	/datum/character_preview/multiclient - A shared character preview between multiple clients.
+		Again, use winset() to position the control.
+
+METHODS
+
+	update_appearance(appearance_holder, mutant_race, facing_direction)
+		Sets the appearance, mutant race, and facing direction of the human mob.
+
+	Show(should_show) (window variant only)
+		Shows (or hides if the argument is false) the window.
+
+	AddClient(client) (multiclient variant only)
+	RemoveClient(client) (multiclient variant only)
+	RemoveAllClients() (multiclient variant only)
+		Manages who can see the preview mob.
+		This needs to be called in addition to the winset that positions the map view.
+
+FIELDS
+
+	preview_id - The map ID for use with winset().
+
+	preview_mob - The human mob shown in the preview.
+		May be useful to access directly if you want to put clothes on it or whatever.
+*/
 datum/character_preview
 	var/global/max_preview_id = 0
 	var/preview_id
