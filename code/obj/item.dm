@@ -57,6 +57,8 @@
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
+	var/inhand_color = null
 
 	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
 
