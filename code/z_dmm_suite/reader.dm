@@ -69,7 +69,7 @@ dmm_suite
 		var /regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
 		var /list/coordShifts = list()
 		var/maxZFound = 1
-		while(gridText in grid)
+		while(grid.Find(gridText))
 			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
 			coordShifts.Add(list(list(grid.group[1], grid.group[2], grid.group[3])))
 			maxZFound = max(maxZFound, text2num(grid.group[3]))
