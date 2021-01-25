@@ -22,6 +22,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
 	var/is_VR_uplink = 0
+	var/is_sleeper_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
 	var/locked = 0
@@ -58,6 +59,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.items_objective = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
+			if(src.is_sleeper_uplink)
+				if(S.cost > 4)
+					continue
 			if (src.is_VR_uplink)
 				if (!S.vr_allowed)
 					continue
@@ -408,6 +412,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		name = "syndicate equipment uplink"
 		desc = "An uplink terminal that allows you to order weapons and items."
 		icon_state = "uplink"
+
+/obj/item/uplink/syndicate/sleeper
+	uses = 5
+	is_sleeper_uplink = 1
 
 /obj/item/uplink/syndicate/virtual
 	name = "Syndicate Simulator 2053"
