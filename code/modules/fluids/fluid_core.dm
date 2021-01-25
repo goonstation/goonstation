@@ -832,7 +832,7 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1 && src.shoes)
+	if (F.my_depth_level <= 1 && src.shoes)
 		do_reagent_reaction = 0
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)

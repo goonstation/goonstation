@@ -213,6 +213,20 @@
 
 		src.update_loop()
 
+		// recalculate depth level based on fluid amount
+		// to account for change to fluid until fluid_core
+		// can perform spread
+		update_amt_per_tile()
+		var/my_depth_level = 0
+		for(var/x in depth_levels)
+			if (src.amt_per_tile > x)
+				my_depth_level++
+			else
+				break
+
+		if (F.last_depth_level != my_depth_level)
+			F.last_depth_level = my_depth_level
+
 	//fluid has been removed from its tile. use 'lightweight' in evaporation procedure cause we dont need icon updates / try split / update loop checks at that point
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
@@ -459,6 +473,8 @@
 		for(var/x in depth_levels)
 			if (amt_per_tile > x)
 				my_depth_level++
+			else
+				break
 
 		LAGCHECK(LAG_MED)
 
