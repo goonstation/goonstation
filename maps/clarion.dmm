@@ -13762,7 +13762,7 @@
 	},
 /area/station/security/detectives_office)
 "axM" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
 	name = "Detective's Office"
 	},
@@ -17599,7 +17599,9 @@
 /area/station/maintenance/west)
 "aGd" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	name = "Pharmacy"
+	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
 /obj/machinery/door/poddoor/blast{
@@ -39512,7 +39514,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "bsk" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
 	},
 /obj/access_spawn/engineering_mechanic,
