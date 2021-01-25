@@ -2,8 +2,8 @@
 
 /obj/item/storage/secure
 	name = "storage/secure"
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
+	var/atom/movable/screen/storage/boxes = null
+	var/atom/movable/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_open = "secure0"
@@ -50,7 +50,7 @@
 		user.show_text("You repair the lock on [src].", "blue")
 	return 1
 
-/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/secure/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if ((W.w_class > 3 || istype(W, /obj/item/storage/secure)))
 		return
 	//Waluigi hates this
@@ -389,6 +389,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	flags = FPRINT | TABLEPASS

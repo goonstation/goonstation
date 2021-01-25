@@ -216,7 +216,7 @@
 			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
 
 		if (!src.allowed(user) && !hacked)
-			boutput(user, "Access denied.")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
 		src.add_fingerprint(user)

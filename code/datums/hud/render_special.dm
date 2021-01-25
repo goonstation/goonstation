@@ -1,12 +1,12 @@
 /datum/hud/render_special //This entire file is a bodged-together hack and we should be ashamed
 	var
-		obj/screen/center_light
+		atom/movable/screen/center_light
 		center_light_scale = 1
-		obj/screen/lighting_darkness // makes it so stuff poking outside view() gets hidden / darkened
+		atom/movable/screen/lighting_darkness // makes it so stuff poking outside view() gets hidden / darkened
 
 		// hi it's cirr adding a hack to a hack
-		obj/screen/left_fill
-		obj/screen/right_fill
+		atom/movable/screen/left_fill
+		atom/movable/screen/right_fill
 
 	New()
 		..()

@@ -22,6 +22,7 @@
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
+	path_prot = 0
 
 	onMaterialChanged()
 		if(src.material)

@@ -148,10 +148,7 @@ datum/controller/air_system
 
 	proc/update_space_sample()
 		if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
-			if (map_currently_underwater)
-				space_sample = locate(/turf/space/fluid)
-			else
-				space_sample = locate(/turf/space)
+			space_sample = locate(/turf/space)
 		return space_sample
 
 	setup(datum/controller/process/air_system/controller)
@@ -194,7 +191,7 @@ datum/controller/air_system
 							else
 								LAZYLISTINIT(possible_borders)
 								possible_borders |= test
-						else if(istype(T, /turf/space))
+						else if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 							LAZYLISTINIT(possible_space_borders)
 							possible_space_borders |= test
 							test.length_space_border++
@@ -249,13 +246,14 @@ datum/controller/air_system
 		process_tiles_to_space()
 		is_busy = TRUE
 
-		if(groups_to_rebuild.len > 0)
-			process_rebuild_select_groups()
-		LAGCHECK(LAG_HIGH)
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			LAGCHECK(LAG_HIGH)
 
-		if(tiles_to_update.len > 0)
-			process_update_tiles()
-		LAGCHECK(LAG_HIGH)
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_HIGH)
 
 		process_groups()
 		LAGCHECK(LAG_HIGH)

@@ -162,7 +162,7 @@ const Functions = (props, context) => {
   } = data;
 
   return (
-    <Fragment>
+    <>
       <Section title="Advanced Genetic Analysis">
         <Box>
           <Box bold>Notice:</Box>
@@ -215,7 +215,7 @@ const Functions = (props, context) => {
         <Section
           title="Disk Controls"
           buttons={
-            <Fragment>
+            <>
               <Button
                 disabled={diskReadOnly}
                 icon="upload"
@@ -229,7 +229,7 @@ const Functions = (props, context) => {
                 onClick={() => act("eject")}>
                 Eject Disk
               </Button>
-            </Fragment>
+            </>
           }
         >
           <Box>
@@ -242,7 +242,7 @@ const Functions = (props, context) => {
           </Box>
         </Section>
       )}
-    </Fragment>
+    </>
   );
 };
 
@@ -261,7 +261,7 @@ const StatusSection = (props, context) => {
   const message = data.message || { text: '', status: '' };
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Status Messages"
         height={7}
@@ -360,7 +360,7 @@ const StatusSection = (props, context) => {
           </Button>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };
 
@@ -377,7 +377,7 @@ const Records = (props, context) => {
   const [, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
 
   return (
-    <Fragment>
+    <>
       <Section
         mb={0}
         title="Records"
@@ -512,6 +512,6 @@ const Records = (props, context) => {
           </Flex.Item>
         </Flex>
       </Section>
-    </Fragment>
+    </>
   );
 };

@@ -538,7 +538,7 @@ toxic - poisons
 	shot_number = 16
 	shot_delay = 0.7
 	dissipation_delay = 8
-	nomsg = 1
+	silentshot = 1
 	slow = 0
 	implanted = null
 
