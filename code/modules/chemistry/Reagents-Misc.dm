@@ -3711,11 +3711,14 @@ datum
 			hygiene_value = -0.5
 			smoke_spread_mod = 3
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.16 * mult)
-				..()
-				return
+
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					holder.my_atom.setStatus("miasma", duration = INFINITE_STATUS)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					holder.my_atom.delStatus("miasma")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
