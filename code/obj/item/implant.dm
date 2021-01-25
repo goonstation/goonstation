@@ -1360,8 +1360,8 @@ THROWING DARTS
 		src.add_fingerprint(user)
 		update()
 	else
-		if (user.contents.Find(src))
-			SPAWN_DBG( 0 )
+		if (src in user.contents)
+			SPAWN_DBG(0)
 				src.attack_self(user)
 				return
 		else

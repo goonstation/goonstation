@@ -43,7 +43,7 @@ datum/controller/process/statusEffects
 					S.onRemove()
 				catch()
 					logTheThing("debug", null, null, "Orphaned onRemove failed - type:[S.type]")
-				if(globalStatusInstances.Find(S)) globalStatusInstances.Remove(S)
+				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)
 			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()

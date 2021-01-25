@@ -2156,7 +2156,7 @@
 		if (slot_head)
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !H.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2164,7 +2164,7 @@
 		if (slot_shoes)
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SH.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SH.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2172,7 +2172,7 @@
 		if (slot_wear_suit)
 			if (istype(I, /obj/item/clothing/suit))
 				var/obj/item/clothing/SU = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !SU.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in SU.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else
@@ -2180,7 +2180,7 @@
 		if (slot_w_uniform)
 			if (istype(I, /obj/item/clothing/under))
 				var/obj/item/clothing/U = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !U.compatible_species.Find(src.mutantrace.name)))
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in U.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return 0
 				else

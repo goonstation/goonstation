@@ -247,12 +247,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		holder = H
 
 	clicked(list/pa)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache)
 			if (modename == holder.mode.name)
 				return
 			holder.select_mode(holder.modes_cache[modename])
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			holder.mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH GUH GURGLE
 /proc/blink(var/turf/T)

@@ -580,7 +580,7 @@
 	else if(href_list["splice_stored_chromosome"])
 		var/datum/dna_chromosome/E = locate(href_list["splice_stored_chromosome"])
 		if (!istype(E)) return
-		if (!saved_chromosomes.Find(E))
+		if (!(E in saved_chromosomes))
 			src.log_maybe_cheater(usr, "tried to splice a chromosome ([E])")
 			return
 
@@ -591,7 +591,7 @@
 	else if(href_list["delete_stored_mut"])
 		var/datum/bioEffect/E = locate(href_list["delete_stored_mut"])
 		if (bioEffect_sanity_check(E,0)) return
-		if (!saved_mutations.Find(E))
+		if (!(E in saved_mutations))
 			src.log_maybe_cheater(usr, "tried to delete the [E.id] mutation")
 			return
 
@@ -606,7 +606,7 @@
 		var/datum/dna_chromosome/E = locate(href_list["delete_stored_chromosome"])
 		if (!istype(E)) return
 		backpage = "chromosomes"
-		if (!saved_chromosomes.Find(E))
+		if (!(E in saved_chromosomes))
 			src.log_maybe_cheater(usr, "tried to delete a chromosome ([E])")
 			return
 
@@ -620,7 +620,7 @@
 	else if(href_list["add_stored_mut"])
 		var/datum/bioEffect/E = locate(href_list["add_stored_mut"])
 		if (bioEffect_sanity_check(E)) return
-		if (!saved_mutations.Find(E))
+		if (!(E in saved_mutations))
 			src.log_maybe_cheater(usr, "tried to add the [E.id] mutation")
 			return
 

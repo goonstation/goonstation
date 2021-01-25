@@ -26,19 +26,17 @@
 		return 1
 
 	proc/unselectTrait(var/id)
-		if(traits_selected.Find(id))
-			traits_selected.Remove(id)
+		traits_selected -= id
 		calcTotal()
 		return 1
 
 	proc/calcTotal()
-		var/sum = free_points
+		. = free_points
 		for(var/T in traits_selected)
 			if(T in traitList)
 				var/obj/trait/O = traitList[T]
-				sum += O.points
-		point_total = sum
-		return sum
+				. += O.points
+		point_total = .
 
 	proc/isValid()
 		var/list/categories = list()
@@ -50,8 +48,10 @@
 			//		if(!usr.client.qualifiedXpRewards.Find(T.requiredUnlock))
 			//			return 0
 			if(T.category != null)
-				if(categories.Find(T.category)) return 0
-				else categories.Add(T.category)
+				if(T.category in categories)
+					return 0
+				else
+					categories.Add(T.category)
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
@@ -77,8 +77,8 @@
 			if(C.unselectable) continue
 			if(C.requiredUnlock != null && skipUnlocks) continue
 			if(C.requiredUnlock != null && user.client) //If this needs an xp unlock, check against the pre-generated list of related xp unlocks for this person.
-				if(user.client.qualifiedXpRewards != null)
-					if(!user.client.qualifiedXpRewards.Find(C.requiredUnlock))
+				if(!isnull(user.client.qualifiedXpRewards))
+					if(!(C.requiredUnlock in user.client.qualifiedXpRewards))
 						continue
 				else
 					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
@@ -86,8 +86,10 @@
 					skipUnlocks = 1
 					continue
 
-			if(traits_selected.Find(X)) selected += X
-			else available += X
+			if(X in traits_selected)
+				selected += X
+			else
+				available += X
 
 		winset(user, "traitssetup_[user.ckey].traitsSelected", "cells=\"1x[selected.len]\"")
 		var/countSel = 0
@@ -128,22 +130,20 @@
 		return ..()
 
 	proc/addTrait(id)
-		if(!traits.Find(id) && owner)
+		if(!(id in traits) && owner)
 			var/obj/trait/T = traitList[id]
 			traits[id] = T
 			if(T.isMoveTrait)
 				moveTraits.Add(id)
 			T.onAdd(owner)
-		return
 
 	proc/removeTrait(id)
-		if(traits.Find(id) && owner)
+		if((id in traits) && owner)
 			traits.Remove(id)
 			var/obj/trait/T = traitList[id]
 			if(T.isMoveTrait)
 				moveTraits.Remove(id)
 			T.onRemove(owner)
-		return
 
 	proc/removeAll()
 		for (var/obj/trait/T in traits)
@@ -153,7 +153,7 @@
 			T.onRemove(owner)
 
 	proc/hasTrait(var/id)
-		return traits.Find(id)
+		. = (id in traits)
 
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /obj/trait
@@ -189,7 +189,7 @@
 			return
 		if(control)
 			if(control == "traitssetup_[usr.ckey].traitsAvailable")
-				if(!usr.client.preferences.traitPreferences.traits_selected.Find(id))
+				if(!(id in usr.client.preferences.traitPreferences.traits_selected))
 					if(traitCategoryAllowed(usr.client.preferences.traitPreferences.traits_selected, id))
 						if(usr.client.preferences.traitPreferences.traits_selected.len >= TRAIT_MAX)
 							alert(usr, "You can not select more than [TRAIT_MAX] traits.")
@@ -201,7 +201,7 @@
 					else
 						alert(usr, "You can only select one trait of this category.")
 			else if (control == "traitssetup_[usr.ckey].traitsSelected")
-				if(usr.client.preferences.traitPreferences.traits_selected.Find(id))
+				if(id in usr.client.preferences.traitPreferences.traits_selected)
 					if(((usr.client.preferences.traitPreferences.calcTotal()) - points) < 0)
 						alert(usr, "Removing this trait would leave you with less than 0 points. Please remove a different trait.")
 					else

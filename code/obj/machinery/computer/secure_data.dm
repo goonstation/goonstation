@@ -685,7 +685,7 @@
 			if ("view_record")
 				var/datum/data/record/R = locate(href_list["rec"])
 				var/S = locate(href_list["rec"])
-				if (!data_core.general.Find(R))
+				if (!(R in data_core.general))
 					src.temp = "Record Not Found!"
 					return
 				for (var/datum/data/record/E in data_core.security)

@@ -162,15 +162,15 @@
 
 
 	proc/get_breath_grabbed_by(volume_needed)
-		.= null
+		. = null
 		for(var/obj/item/grab/force_mask/G in owner.grabbed_by)
-			.= G.get_breath(volume_needed)
+			. = G.get_breath(volume_needed)
 			if (.)
 				break
 
 	proc/get_breath_from_internal(volume_needed)
 		if (human_owner?.internal)
-			if (!owner.contents.Find(human_owner.internal))
+			if (!(human_owner.internal in owner.contents))
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null

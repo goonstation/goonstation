@@ -28,9 +28,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
