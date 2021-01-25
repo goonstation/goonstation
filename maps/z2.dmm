@@ -82472,9 +82472,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"ejH" = (
-/turf/unsimulated/floor/red,
-/area/space)
 "epL" = (
 /obj/decal/skeleton{
 	desc = "Oh.  Gross.";
@@ -83186,12 +83183,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
-"hwa" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "hwJ" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -83273,10 +83264,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"hLu" = (
-/turf/space,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "hPi" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -83375,14 +83362,6 @@
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
-"igM" = (
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "ihA" = (
 /obj/machinery/cruiser_destroyable/cruiser_exit,
 /turf/space,
@@ -83598,11 +83577,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"jec" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "jeV" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -83669,10 +83643,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"jrw" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "juD" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
@@ -83725,12 +83695,6 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
-"jDQ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/power/data_terminal,
-/obj/item/instrument/harmonica,
-/turf/unsimulated/floor/red,
-/area/space)
 "jEZ" = (
 /obj/decal/poster/wallsign/dont_panic{
 	pixel_y = -31;
@@ -84054,13 +84018,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"kGx" = (
-/obj/shrub,
-/turf/space,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "kIs" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -84903,12 +84860,6 @@
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/se,
 /area/centcom/offices/rodney)
-"nRy" = (
-/turf/space,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "nRD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -84976,11 +84927,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"nZg" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/orange,
-/turf/unsimulated/floor/red,
-/area/space)
 "oaM" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -85100,13 +85046,6 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
-"oFd" = (
-/obj/table/reinforced/auto,
-/turf/space,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "oFC" = (
 /obj/decal/fakeobjects/firelock_broken,
 /turf/space,
@@ -85698,14 +85637,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"qLz" = (
-/obj/decal/poster/wallsign/poster_y4nt{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -86150,10 +86081,6 @@
 /obj/item/clothing/mask/gas/swat,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
-"seY" = (
-/obj/storage/secure/closet/brig/automatic/solitary2,
-/turf/unsimulated/floor/red,
-/area/space)
 "she" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -86262,12 +86189,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"sCT" = (
-/obj/shrub,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "sEJ" = (
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -86355,12 +86276,6 @@
 /turf/space,
 /turf/simulated/floor,
 /area/ship_interior/cruisertest)
-"tdm" = (
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "tdA" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left,
 /turf/space,
@@ -86593,9 +86508,6 @@
 	dir = 4
 	},
 /area/hospital/samostrel)
-"uqv" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "utS" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -86727,8 +86639,8 @@
 	},
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
 	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20);
 	name = "mystical fun guy";
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20)
 	pixel_x = -4;
 	pixel_y = -3
 	},
@@ -87242,18 +87154,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"xsj" = (
-/obj/stool,
-/obj/machinery/light/incandescent/cool,
-/turf/unsimulated/floor/red,
-/area/space)
-"xtH" = (
-/obj/disposalpipe/trunk/ejection{
-	dir = 1
-	},
-/obj/machinery/floorflusher/solitary2,
-/turf/unsimulated/floor/red,
-/area/space)
 "xuB" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -161378,17 +161278,17 @@ dkM
 dkM
 dkG
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -161680,17 +161580,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-uqv
-uqv
-uqv
-uqv
-uqv
-uqv
-uqv
-uqv
-uqv
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -161982,17 +161882,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-seY
-nZg
-jDQ
-uqv
-jec
-jec
-jec
-sCT
-uqv
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -162284,17 +162184,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-xtH
-ejH
-xsj
-uqv
-qLz
-tdm
-jec
-jec
-uqv
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -162586,17 +162486,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-hwa
-jec
-hwa
-hLu
-nRy
-oFd
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -162888,17 +162788,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-hLu
-igM
-nRy
-nRy
-kGx
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -163190,17 +163090,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-hLu
-hLu
-hLu
-hLu
-hLu
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -163492,17 +163392,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-uqv
-jec
-uqv
-hLu
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -163794,17 +163694,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-nRy
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -164096,17 +163996,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-nRy
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -164398,17 +164298,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-nRy
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -164700,17 +164600,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-nRy
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -165002,17 +164902,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-jec
-jec
-jec
-nRy
-nRy
-nRy
-nRy
-nRy
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
@@ -165304,17 +165204,17 @@ dkM
 dkM
 dkG
 aaa
-uqv
-uqv
-uqv
-uqv
-hLu
-hLu
-jrw
-hLu
-hLu
-hLu
-jhk
+cnw
+cnw
+cnw
+cnw
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
+nfn
 nfn
 nfn
 nfn
