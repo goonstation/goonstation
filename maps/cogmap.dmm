@@ -20119,6 +20119,10 @@
 	pixel_y = 5
 	},
 /obj/machinery/light,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRX" = (

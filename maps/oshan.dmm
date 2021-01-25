@@ -41354,6 +41354,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/spaghetti/spicy,
 /obj/item/kitchen/utensil/fork{
+	dir = 8;
 	pixel_y = -7
 	},
 /turf/simulated/floor/black,
@@ -41645,6 +41646,10 @@
 	},
 /obj/item/stamp/hos{
 	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 9;
+	pixel_y = 17
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;

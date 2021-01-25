@@ -18591,6 +18591,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "aSI" = (
