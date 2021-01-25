@@ -1636,8 +1636,7 @@
 	icon_state = "ntneutral100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
 	item_state = "ntgun"
-	force = 10.0
-	contraband = 8
+	force = 5.0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_elec"
 

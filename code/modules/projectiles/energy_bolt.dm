@@ -365,8 +365,8 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
-	power = 20
-	cost = 37.5
+	power = 15
+	cost = 25
 	dissipation_rate = 1
 	dissipation_delay = 2
 	max_range = 12
