@@ -79,7 +79,7 @@
 		</style>"}
 
 		src.temp += "<table border=1>"
-		src.temp += "<tr><th>Materiel</th><th>category</th><th>Description</th></tr>"
+		src.temp += "<tr><th>Materiel</th><th>Category</th><th>Description</th></tr>"
 
 		for (var/datum/materiel/M in materiel_stock)
 			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.category]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.category]</td><td>[M.description]</td></tr>"
