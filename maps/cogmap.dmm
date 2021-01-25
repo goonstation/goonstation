@@ -24294,6 +24294,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bba" = (
