@@ -148,7 +148,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if(!src.open)
-			if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+			if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 				return
 			if (usr.is_in_hands(src))
 				return

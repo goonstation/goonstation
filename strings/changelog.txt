@@ -1,5 +1,11 @@
 
 (t)mon jan 25 21
+(u)ZeWaka
+(e)🐛|bug
+(+)If you get set on fire while laying down, you now properly roll in agony.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Stimulants are now a status effect
 (u)adharainspace
 (p)3468
 (e)🆕🎨|feature, sprites

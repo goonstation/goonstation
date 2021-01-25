@@ -153,7 +153,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
+			for(var/datum/statusEffect/effect as() in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()

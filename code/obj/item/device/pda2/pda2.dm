@@ -749,8 +749,8 @@
 
 		src.update_overlay()
 
-	proc/is_user_in_range(var/mob/user)
-		return in_range(src, user) || loc == user || isAI(user)
+	proc/is_user_in_interact_range(var/mob/user)
+		return in_interact_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
@@ -1050,7 +1050,7 @@
 		var/mob/M = ai.deployed_shell
 		M.show_message(message)
 
-/obj/item/device/pda2/ai/is_user_in_range(var/mob/user)
+/obj/item/device/pda2/ai/is_user_in_interact_range(var/mob/user)
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.mainframe && S.mainframe == loc)

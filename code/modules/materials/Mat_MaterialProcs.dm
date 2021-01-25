@@ -312,7 +312,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if(prob(50) && owner && isturf(owner) && !isrestrictedz(owner.z))
+		var/turf/T = get_turf(entering)
+		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
 			boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
@@ -322,8 +323,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+		var/turf/T = get_turf(attacked)
 		if(prob(50))
-			if(istype(attacked) && !isrestrictedz(attacked.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
 				boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
@@ -332,7 +334,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(prob(percentmult(5, mult)) && M && !isrestrictedz(M.z))
+		var/turf/T = get_turf(M)
+		if(prob(percentmult(5, mult)) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
 			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")

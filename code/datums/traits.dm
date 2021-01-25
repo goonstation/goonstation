@@ -3,15 +3,17 @@
 #define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
-	return traitList[id]
+	. = traitList[id]
 
 /proc/traitCategoryAllowed(var/list/targetList, var/idToCheck)
+	. = TRUE
 	var/obj/trait/C = getTraitById(idToCheck)
-	if(C.category == null) return 1
+	if(C.category == null)
+		return TRUE
 	for(var/A in targetList)
 		var/obj/trait/T = getTraitById(A)
-		if(T.category == C.category) return 0
-	return 1
+		if(T.category == C.category)
+			return FALSE
 
 /datum/traitPreferences
 	var/list/traits_selected = list()
@@ -214,7 +216,6 @@
 		if(winexists(usr, "traitssetup_[usr.ckey]"))
 			winset(usr, "traitssetup_[usr.ckey].traitName", "text=\"[name]\"")
 			winset(usr, "traitssetup_[usr.ckey].traitDesc", "text=\"[desc]\"")
-		return
 
 // BODY - Red Border
 
@@ -238,7 +239,6 @@
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
-		return
 
 /obj/trait/syntharms
 	name = "Green Fingers (-2) \[Body\]"
@@ -260,7 +260,6 @@
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
-		return
 
 /obj/trait/explolimbs
 	name = "Adamantium Skeleton (-2) \[Body\]"
@@ -286,12 +285,10 @@
 				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
 				H.equip_new_if_possible(/obj/item/device/radio/headset/deaf, H.slot_ears)
-		return
 
 	onLife(var/mob/owner) //Just to be super safe.
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
-		return
 
 // LANGUAGE - Yellow Border
 
@@ -307,7 +304,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
-		return
 
 /obj/trait/french
 	name = "French (0) \[Language\]"
@@ -321,7 +317,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
-		return
 
 /obj/trait/scots
 	name = "Scots (0) \[Language\]"
@@ -334,7 +329,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
-		return
 
 /obj/trait/chav
 	name = "Chav (0) \[Language\]"
@@ -348,7 +342,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
-		return
 
 /obj/trait/elvis
 	name = "Funky Accent (0) \[Language\]"
@@ -361,7 +354,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
-		return
 
 /obj/trait/tommy // please do not re-enable this without talking to spy tia
 	name = "New Jersey Accent (0) \[Language\]"
@@ -391,7 +383,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
-		return
 
 /obj/trait/tyke
 	name = "Tyke (0) \[Language\]"
@@ -405,7 +396,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_tyke")
-		return
 
 // VISION/SENSES - Green Border
 
@@ -445,12 +435,10 @@
 				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
 				H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
-		return
 
 	onLife(var/mob/owner) //Just to be super safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("bad_eyesight"))
 			owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
-		return
 
 /obj/trait/blind
 	name = "Blind (+2)"
@@ -467,12 +455,10 @@
 				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
 				H.equip_if_possible(new /obj/item/clothing/glasses/visor(H), H.slot_glasses)
-		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("blind"))
 			owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
-		return
 
 // GENETICS - Blue Border
 
@@ -488,7 +474,6 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.genetic_stability = 120
-		return
 
 /obj/trait/stablegenes
 	name = "Stable Genes (-2) \[Genetics\]"
@@ -609,10 +594,10 @@
 	unselectable = 1
 	category = "job"
 
-	onAdd(var/mob/owner)
+	onAdd(mob/owner)
 		return
 
-	onLife(var/mob/owner) //Just to be safe.
+	onLife(mob/owner) //Just to be safe.
 		return
 
 /obj/trait/job/chaplain
@@ -669,7 +654,6 @@
 			else if (prob(8))
 				owner.emote("scream")
 				owner.changeStatus("stunned", 2 SECONDS)
-		return
 
 // Stats - Undetermined Border
 
@@ -688,14 +672,12 @@
 			H.max_health = 150
 			H.health = 150
 			H.take_brain_damage(60)
-		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.get_brain_damage() < 60)
 				H.take_brain_damage(60-H.get_brain_damage())
-		return
 
 /obj/trait/athletic
 	name = "Athletic (-2) \[Stats\]"
@@ -711,7 +693,6 @@
 			var/mob/living/carbon/human/H = owner
 			H.add_stam_mod_max("trait", STAMINA_MAX * 0.1)
 			H.add_stam_mod_regen("trait", STAMINA_REGEN * 0.1)
-		return
 
 /obj/trait/bigbruiser
 	name = "Big Bruiser (-2) \[Stats\]"
@@ -787,8 +768,6 @@ obj/trait/pilot
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
-		return
-
 
 /obj/trait/random_allergy
 	name = "Allergy (+0)"
@@ -842,7 +821,6 @@ obj/trait/pilot
 			addicted_players[owner] = pick(addictive_reagents)
 			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
-		return
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(isliving(owner) && prob(1))
@@ -852,7 +830,6 @@ obj/trait/pilot
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
 			addAddiction(owner)
-		return
 
 	proc/addAddiction(var/mob/owner)
 		var/mob/living/M = owner
@@ -862,7 +839,6 @@ obj/trait/pilot
 		AD.name = "[selected_reagent] addiction"
 		AD.affected_mob = M
 		M.ailments += AD
-		return
 
 /obj/trait/strongwilled
 	name = "Strong willed (-1)"
@@ -992,7 +968,6 @@ obj/trait/pilot
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 						break
-		return
 
 /obj/trait/clutz
 	name = "Clutz (+2)"

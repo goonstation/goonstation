@@ -3871,7 +3871,7 @@ var/list/lag_list = new/list()
 
 	Topic(href, href_list)
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["set_mode"])
 			active_mode = locate(href_list["set_mode"]) in modes
