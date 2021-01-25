@@ -15,6 +15,7 @@
 #define HEAD_RELI 12
 #define HEAD_CHICKEN 13
 #define HEAD_ITHILLID 15
+#define HEAD_VIRTUAL 16
 
 //tail defines
 #define TAIL_NONE 0

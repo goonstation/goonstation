@@ -708,7 +708,13 @@
 	name = "virtual"
 	icon_state = "virtual"
 	override_attack = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_folder = 'icons/mob/virtual.dmi'
+	special_head = HEAD_VIRTUAL
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/virtual/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
 
 	New(var/mob/living/carbon/human/H)
@@ -1333,7 +1339,6 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/hunter
 	ignore_missing_limbs = 0
 
-
 	// Gave them a minor stamina boost (Convair880).
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1353,6 +1358,7 @@
 
 	say_verb()
 		return "snarls"
+
 
 /datum/mutantrace/ithillid
 	name = "ithillid"

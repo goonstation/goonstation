@@ -1967,6 +1967,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
+
 /obj/item/parts/human_parts/arm/mutant/kudzu/right
 	name = "right kudzu arm"
 	desc = "A kudzu'ssss right arm."
@@ -1987,6 +1988,52 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/kudzu/right
 	name = "right kudzu leg"
 	desc = "A kudzu'sssss right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+/// VIRTUAL LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/virtual/left
+	name = "left virtual arm"
+	desc = "A simulated left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/virtual/right
+	name = "left virtual arm"
+	desc = "A simulated right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/left
+	name = "left virtual leg"
+	desc = "A simulated left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/right
+	name = "right virtual leg"
+	desc = "A simulated right leg."
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
