@@ -79,10 +79,10 @@
 		</style>"}
 
 		src.temp += "<table border=1>"
-		src.temp += "<tr><th>Materiel</th><th>Catagory</th><th>Description</th></tr>"
+		src.temp += "<tr><th>Materiel</th><th>category</th><th>Description</th></tr>"
 
 		for (var/datum/materiel/M in materiel_stock)
-			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.catagory]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.catagory]</td><td>[M.description]</td></tr>"
+			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.category]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.category]</td><td>[M.description]</td></tr>"
 
 		src.temp += "</table></div>"
 		src.temp = jointext(src.temp, "")
@@ -223,7 +223,7 @@
 /datum/materiel
 	var/name = "intimidating military object"
 	var/cost = 1
-	var/catagory = null
+	var/category = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
 
@@ -233,49 +233,49 @@
 /datum/materiel/sidearm/barrier
 	name = "Security Barrier"
 	path = /obj/item/barrier
-	catagory = "Sidearm"
+	category = "Sidearm"
 	description = "A barrier that grants great protection while held and can deploy shields that reflect projectiles."
 
 /datum/materiel/sidearm/EOD
 	name = "EOD Suit"
 	path = /obj/item/clothing/suit/armor/EOD
-	catagory = "Sidearm"
+	category = "Sidearm"
 	description = "Protective armor with high explosion resistance."
 
 /datum/materiel/sidearm/flaregun
 	name = "Flare Gun"
 	path = /obj/item/storage/box/flaregun
-	catagory = "Sidearm"
+	category = "Sidearm"
 	description = "Ignite one target. Must be reloaded after each use."
 
 /datum/materiel/loadout/standard
 	name = "Standard"
 	path = /obj/item/storage/belt/security/standard
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "One belt containing a taser and a baton. Classic!"
 
 /datum/materiel/loadout/offense
 	name = "Offense"
 	path = /obj/item/storage/belt/security/offense
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "One belt containing a wavegun and a baton."
 
 /datum/materiel/loadout/support
 	name = "Support"
 	path = /obj/item/storage/belt/security/support
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "One belt containing a baton, two robust donuts, and some morphine auto-injectors."
 
 /datum/materiel/loadout/control
 	name = "Control"
 	path = /obj/item/storage/belt/security/control
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
 
 /datum/materiel/assistant
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
-	catagory = "Assistant"
+	category = "Assistant"
 	cost = 0.9
 	description = "One belt containing a security barrier, a forensic scanner, and an emergency alert button."
 
@@ -284,127 +284,127 @@
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/pistol
-	catagory = "Sidearm"
+	category = "Sidearm"
 	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/revolver
-	catagory = "Sidearm"
+	category = "Sidearm"
 	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"
 	path = /obj/storage/crate/classcrate/assault
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A good all-rounder combat class centered around an assault rifle with selectable fire-modes as well as standard and armor-piercing rounds."
 
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Light machine gun, three boxes of ammunition and a pouch of high explosive grenades."
 
 /datum/materiel/loadout/grenadier
 	name = "Grenadier"
 	path = /obj/storage/crate/classcrate/demo
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Grenade launcher, two pouches containing 40mm grenade rounds and mixed explosive grenades."
 
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/agent_rework
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Tranquilizer pistol with a pouch of dart magazines, five use cloaking device, electromagnetic card and night-vision goggles."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
 	path = /obj/storage/crate/classcrate/pyro
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Napalm flamethrower, incendiery grenade pouch and a door-breaching fire-axe that can be two-handed to increase damage to both foes and airlocks."
 
 /datum/materiel/loadout/engineer
 	name = "Combat Engineer"
 	path = /obj/storage/crate/classcrate/engineer
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "Automated gun turret with an important guide on how to deploy it, full toolbelt with high-capacity welder and a combat shotgun."
 
 /datum/materiel/loadout/marksman
 	name = "Marksman"
 	path = /obj/storage/crate/classcrate/sniper
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "High-powered sniper rifle that can fire through two solid walls,optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
 	path = /obj/item/uplink/syndicate
-	catagory = "Loadout"
+	category = "Loadout"
 	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"
 	path = /obj/item/storage/backpack/syndie/tactical
-	catagory = "Storage"
+	category = "Storage"
 	description = "A large 10 slot military backpack, designed to fit a wide array of tools for comprehensive storage support."
 
 /datum/materiel/storage/belt
 	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
-	catagory = "Storage"
+	category = "Storage"
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/storage/satchel
 	name = "Syndicate Satchel"
 	path = /obj/item/storage/backpack/satchel/syndie
-	catagory = "Storage"
+	category = "Storage"
 	description = "An ordinary 6 slot messenger bag in menacing red and black."
 */
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
 	path = /obj/item/storage/fanny/syndie
-	catagory = "Utility"
+	category = "Utility"
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
 	path = /obj/item/dagger/syndicate/specialist
-	catagory = "Utility"
+	category = "Utility"
 	description = "A field-tested 10 inch combat knife, helps you move faster when held."
 
 /datum/materiel/utility/rpg_ammo
 	name = "MPRT Rocket Ammunition"
 	path = /obj/item/storage/pouch/rpg
-	catagory = "Utility"
+	category = "Utility"
 	description = "A pouch for keeping MPRT ammunition in. Comes with two additional rockets."
 
 /datum/materiel/utility/donk
 	name = "Warm Donk Pocket"
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
-	catagory = "Utility"
+	category = "Utility"
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
 /datum/materiel/utility/sarin_grenade
 	name = "Sarin Grenade"
 	path = /obj/item/chem_grenade/sarin
-	catagory = "Utility"
+	category = "Utility"
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 /datum/materiel/utility/noslip_boots
 	name = "Hi-grip Assault Boots"
 	path = /obj/item/clothing/shoes/swat/noslip
-	catagory = "Utility"
+	category = "Utility"
 	description = "Avoid slipping in firefights with these combat boots designed to provide enhanced grip and ankle stability."
 
 /datum/materiel/utility/bomb_decoy
 	name = "Decoy Bomb Balloon"
 	path = /obj/bomb_decoy
-	catagory = "Utility"
+	category = "Utility"
 	description = "A realistic inflatable nuclear bomb decoy, it'll fool anyone not looking closely but won't take much punishment before it pops."
 
 // Requisition tokens
