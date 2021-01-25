@@ -1499,7 +1499,7 @@
 	getTooltip()
 		. = "You breathed in [amount_desc[how_miasma]] miasma."
 		if(how_miasma > 1)
-			var/mob/living/critter/critter = L
+			var/mob/living/critter/critter = owner
 			if(istype(critter) && critter.ghost_spawned)
 				. += " Your ghostly essence makes you immune to its poison."
 			else
