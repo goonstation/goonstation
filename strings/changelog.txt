@@ -1,5 +1,10 @@
 
 (t)sun jan 24 21
+(u)Flourish
+(p)3450
+(e)⚖|balance
+(*)Authorizing the armory open now requires security equipment access (the access you need to open security lockers) as opposed to regular security access. This means lawyers, vice officers, and detectives can no longer help authorize it open.
+(+)Vice officers no longer have security equipment access.
 (u)BenLubar
 (p)3462
 (e)|
