@@ -24,11 +24,8 @@
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
-	var/current_sidearm_credits = 0
-	var/current_loadout_credits = 0
-	var/current_storage_credits = 0
-	var/current_utility_credits = 0
 	var/temp = null
+	var/list/credits = list("Sidearm" = 0, "Loadout" = 0, "Utility" = 0, "Assistant" = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 
@@ -36,11 +33,11 @@
 		if(istype(I, token_accepted))
 			user.drop_item(I)
 			qdel(I)
-			accepted_token()
+			accepted_token(I, user)
 		else
 			..()
 
-	proc/accepted_token(var/mob/user)
+	proc/accepted_token(var/token, var/mob/user)
 		src.updateUsrDialog()
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
@@ -51,12 +48,10 @@
 
 		src.add_dialog(user)
 		var/list/dat = list("<span style=\"inline-flex\">")
-		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.current_sidearm_credits] sidearm credit, [src.current_loadout_credits] loadout credit, [src.current_utility_credits] utility credit.</font>"
+		dat += "<br><b>Balance remaining:</b> <font color='blue'>[src.credits["Sidearm"]] sidearm credit, [src.credits["Loadout"]] loadout credit, [src.credits["Utility"]] utility credit.</font>"
 
-		if (src.temp)
-			dat += src.temp
-		else
-			dat += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits</a>"
+		src.redeem_menu()
+		dat += src.temp
 
 		dat += "<br><a href='?action=mach_close&window=swv'>Close</a></span>"
 		user.Browse(dat.Join(), "window=swv;size=600x500;title=Syndicate Weapons Vendor")
@@ -65,47 +60,46 @@
 	proc/vended(var/atom/A)
 		.= 0
 
+	proc/redeem_menu()
+		src.temp = list("<br>Please select the material that you wish to spend your credits on:<br><br>")
+		src.temp += {"
+		<style>
+			table {border-collapse: collapse;}
+			th {padding: 5px; text-align: center; background-color: #800000; color: white; height: 25px;}
+			td {padding: 5px; text-align: center;}
+			tr:hover {background-color: #707070;}
+			.reward {display:block; color:white; padding: 2px 5px; margin: -5px -5px 2px -5px;
+															width: auto;
+															height: auto;
+															filter: glow(color=black,strength=1);
+															text-shadow: -1px -1px 0 #000,
+																						1px -1px 0 #000,
+																						-1px 1px 0 #000,
+																							1px 1px 0 #000;}
+		</style>"}
+
+		src.temp += "<table border=1>"
+		src.temp += "<tr><th>Materiel</th><th>Catagory</th><th>Description</th></tr>"
+
+		for (var/datum/materiel/M in materiel_stock)
+			src.temp += "<tr style=\"color:[(M.cost > src.credits[M.catagory]) ? "red" : "black"]\"><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.catagory]</td><td>[M.description]</td></tr>"
+
+		src.temp += "</table></div>"
+		src.temp = jointext(src.temp, "")
+
 	Topic(href, href_list)
 		if(..())
 			return
 		src.add_dialog(usr)
 
-		if(href_list["redeem"])
-			src.temp = list("<br>Please select the material that you wish to spend your credits on:<br><br>")
-
-			src.temp += {"
-			<style>
-				table {border-collapse: collapse;}
-				th {padding: 5px; text-align: center; background-color: #800000; color: white; height: 25px;}
-				td {padding: 5px; text-align: center;}
-				tr:hover {background-color: #707070;}
-				.reward {display:block; color:white; padding: 2px 5px; margin: -5px -5px 2px -5px;
-																width: auto;
-																height: auto;
-																filter: glow(color=black,strength=1);
-																text-shadow: -1px -1px 0 #000,
-																							1px -1px 0 #000,
-																							-1px 1px 0 #000,
-																							 1px 1px 0 #000;}
-			</style>"}
-
-			src.temp += "<table border=1>"
-			src.temp += "<tr><th>Materiel</th><th>Catagory</th><th>Description</th></tr>"
-
-			for (var/datum/materiel/M in materiel_stock)
-				src.temp += "<tr><td><a href='?src=\ref[src];buy=\ref[M]'><b><u>[M.name]</u></b></a></td><td>[M.catagory]</td><td>[M.description]</td></tr>"
-
-			src.temp += "</table></div>"
-			src.temp = jointext(src.temp, "")
-
 		if (href_list["buy"])
 			var/datum/materiel/sidearm/S = locate(href_list["buy"]) in materiel_stock
 			if(istype(S))
-				if(src.current_sidearm_credits < S.cost)
+				if(src.credits["Sidearm"] < S.cost)
 					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 				else
-					src.current_sidearm_credits -= S.cost
+					src.credits["Sidearm"] -= S.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					var/atom/A = new S.path(src.loc)
@@ -113,11 +107,11 @@
 					src.vended(A)
 			var/datum/materiel/loadout/L = locate(href_list["buy"]) in materiel_stock
 			if(istype(L))
-				if(src.current_loadout_credits < L.cost)
+				if(src.credits["Loadout"] < L.cost)
 					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 				else
-					src.current_loadout_credits -= L.cost
+					src.credits["Loadout"] -= L.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					var/atom/A = new L.path(src.loc)
@@ -125,14 +119,26 @@
 					src.vended(A)
 			var/datum/materiel/utility/U = locate(href_list["buy"]) in materiel_stock
 			if(istype(U))
-				if(src.current_utility_credits < U.cost)
+				if(src.credits["Utility"] < U.cost)
 					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 				else
-					src.current_utility_credits -= U.cost
+					src.credits["Utility"] -= U.cost
 					src.temp = "<br>Transaction complete."
 					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
 					var/atom/A = new U.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
+			var/datum/materiel/assistant/AS = locate(href_list["buy"]) in materiel_stock
+			if(istype(AS))
+				if(src.credits["Assistant"] < AS.cost)
+					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+				else
+					src.credits["Assistant"] -= AS.cost
+					src.temp = "<br>Transaction complete."
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+					var/atom/A = new AS.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
 
@@ -151,6 +157,7 @@
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
+		materiel_stock += new/datum/materiel/assistant
 
 	vended(var/atom/A)
 		..()
@@ -161,11 +168,15 @@
 					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
 						tracklist += C
 
-				var/obj/item/pinpointer/secweapons/P = new(src.loc)
-				P.track(tracklist)
+				if (length(tracklist))
+					var/obj/item/pinpointer/secweapons/P = new(src.loc)
+					P.track(tracklist)
 
-	accepted_token()
-		src.current_loadout_credits++
+	accepted_token(var/token)
+		if (istype(token, /obj/item/requisition_token/security/assistant))
+			src.credits["Assistant"]++
+		else
+			src.credits["Loadout"]++
 		..()
 
 /obj/submachine/weapon_vendor/syndicate
@@ -203,9 +214,9 @@
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 
 	accepted_token()
-		src.current_sidearm_credits++
-		src.current_loadout_credits++
-		src.current_utility_credits++
+		src.credits["Sidearm"]++
+		src.credits["Loadout"]++
+		src.credits["Utility"]++
 		..()
 // Materiel avaliable for purchase:
 
@@ -261,6 +272,12 @@
 	catagory = "Loadout"
 	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
 
+/datum/materiel/assistant
+	name = "Assistant"
+	path = /obj/item/storage/belt/security/assistant
+	catagory = "Assistant"
+	cost = 0.9
+	description = "One belt containing a security barrier, a forensic scanner, and an emergency alert button."
 
 //SYNDIE
 
@@ -408,5 +425,5 @@
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."
 		icon_state = "req-token-sec"
 
-
-
+		assistant
+			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."

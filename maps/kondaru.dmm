@@ -35909,6 +35909,9 @@
 "bIi" = (
 /obj/disposalpipe/segment/vertical,
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIj" = (
@@ -35921,6 +35924,9 @@
 "bIk" = (
 /obj/disposalpipe/junction/middle/east,
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIl" = (
@@ -35928,6 +35934,9 @@
 	dir = 8
 	},
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIm" = (
@@ -37179,6 +37188,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},

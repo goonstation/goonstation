@@ -25342,6 +25342,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aTN" = (
@@ -26207,6 +26210,9 @@
 /obj/item/wrench,
 /obj/item/clothing/head/helmet/camera/security,
 /obj/item/device/detective_scanner,
+/obj/item/device/ticket_writer{
+	pixel_y = 20
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -29812,6 +29818,9 @@
 	anchored = 0;
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bbD" = (
@@ -31842,6 +31851,9 @@
 "bfg" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)

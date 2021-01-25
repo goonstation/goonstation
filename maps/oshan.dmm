@@ -36798,6 +36798,9 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bKR" = (
@@ -37294,6 +37297,9 @@
 /area/space)
 "bMi" = (
 /obj/stool/bench/red,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bMj" = (
@@ -38175,11 +38181,11 @@
 	name = "Security Locker Room";
 	req_access_txt = "1"
 	},
-/obj/access_spawn/sec_lockers,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "bOD" = (
@@ -39123,6 +39129,9 @@
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
 	name = "interrogation pipe"
+	},
+/obj/item/device/ticket_writer{
+	pixel_y = 12
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
