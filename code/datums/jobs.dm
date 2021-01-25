@@ -896,6 +896,7 @@
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	items_in_backpack = list(/obj/item/fishing_rod)
 
 	New()
 		..()

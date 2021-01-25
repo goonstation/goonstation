@@ -12,7 +12,7 @@
 	nodes.Add(A)
 
 /datum/mechanicsMessage/proc/hasNode(var/atom/A)
-	return nodes.Find(A)
+	return (A in nodes)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
 	if(istext(signal))

@@ -611,7 +611,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
-			if (wagesystem.jobs.Find(player.mind.assigned_role))
+			if (player.mind.assigned_role in wagesystem.jobs)
 				job_wage = wagesystem.jobs[player.mind.assigned_role]
 
 			if (isrobot(player))
@@ -671,11 +671,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				player_loses_held_item = 1
 
 			//handle traitors
-			if (player.mind && ticker.mode.traitors.Find(player.mind)) // Roundstart people get the full bonus
+			if (player.mind && (player.mind in ticker.mode.traitors)) // Roundstart people get the full bonus
 				earnings = job_wage
 				bank_earnings.badguy = 1
 				player_loses_held_item = 0
-			else if (istype(player.loc, /obj/cryotron) || player.mind && all_the_baddies.Find(player.mind)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
+			else if (istype(player.loc, /obj/cryotron) || player.mind && (player.mind in all_the_baddies)) // Cryo'd or was a baddie at any point? Keep your shit, but you don't get the extra bux
 				player_loses_held_item = 0
 			//some might not actually have a wage
 			if (!isvirtual(player) && (isnukeop(player) ||  (isblob(player) && (player.mind && player.mind.special_role == "blob")) || iswraith(player) || (iswizard(player) && (player.mind && player.mind.special_role == "wizard")) ))

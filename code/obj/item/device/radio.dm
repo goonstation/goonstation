@@ -504,7 +504,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 					RF.Add(src.secure_connections["[key]"])
 
 			// Secure channel match. Easy.
-			if (RF.Find(freq) && freq.devices.Find(src))
+			if ((freq in RF) && (src in freq.devices))
 				//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (list/devices match)")
 				return 1
 
@@ -520,7 +520,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	return 0
 
 /obj/item/device/radio/proc/send_hear()
-
 	last_transmission = world.time
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		var/list/hear = hearers(src.speaker_range, src.loc) // changed so station bounce radios will be loud and headsets will only be heard on their tile
@@ -529,15 +528,12 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		// this fixes radio problems when inside something (e.g. mulebot)
 
 		if(ismob(loc))
-			if(! hear.Find(loc) )
-				hear += loc
+			hear |= loc
 		//modified so people in the same object as it can hear it
 		if(istype(loc, /obj))
 			for(var/mob/M in loc)
-				if(! hear.Find(M) )
-					hear += M
+				hear |= M
 		return hear
-	return
 
 /obj/item/device/radio/proc/speech_bubble()
 	if ((src.listening && src.wires & WIRE_RECEIVE))

@@ -742,7 +742,10 @@
 						state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 
 					I.inhand_image.icon_state = state
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = null
@@ -755,7 +758,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = I.inhand_image
@@ -767,7 +773,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_l_hand = I.inhand_image

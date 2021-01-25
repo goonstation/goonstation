@@ -565,6 +565,10 @@ var/f_color_selector_handler/F_Color_Selector
 	build_camera_network()
 	//build_manufacturer_icons()
 	clothingbooth_setup()
+
+	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
+	global.initialise_fishing_spots()
+
 #if ASS_JAM
 	ass_jam_init()
 #endif

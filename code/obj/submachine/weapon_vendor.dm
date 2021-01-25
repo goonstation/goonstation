@@ -277,7 +277,7 @@
 	path = /obj/item/storage/belt/security/assistant
 	category = "Assistant"
 	cost = 0.9
-	description = "One belt containing a security barrier, a forensic scanner, and an emergency alert button."
+	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
 //SYNDIE
 
