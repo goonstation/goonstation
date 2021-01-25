@@ -1382,7 +1382,7 @@
 
 		if(!R) return
 
-		if(R.Find(input.signal))
+		if(input.signal in R)
 			if(replacesignal)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 			else

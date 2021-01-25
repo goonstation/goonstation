@@ -1852,7 +1852,7 @@ Returns:
 				var/list/words = list()
 				for(var/i=0, i<rand(5, 10), i++)
 					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					if(!words.Find(picked)) words.Add(picked)
+					words |= picked
 
 				if(words.len)
 					var/selected = input(usr, "Select a word:", src.name) as null|anything in words

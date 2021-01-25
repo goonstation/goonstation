@@ -20,7 +20,7 @@ mob/verb/checkrewards()
 
 			var/list/valid = list()
 			for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
-				if(J.required_levels.Find(job))
+				if(job in J.required_levels)
 					valid.Add(J)
 					valid[J] = xpRewardButtons[J]
 
@@ -60,7 +60,7 @@ mob/verb/checkrewards()
 									return
 							if(rewardDatum.qualifies(usr.key))
 								rewardDatum.activate(usr.client)
-								if(rewardDatum.claimedNumbers.Find(usr.key))
+								if(usr.key in rewardDatum.claimedNumbers)
 									rewardDatum.claimedNumbers[usr.key] = (rewardDatum.claimedNumbers[usr.key] + 1)
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
@@ -80,7 +80,7 @@ mob/verb/checkrewards()
 		return
 
 /proc/qualifiesXpByName(var/key, var/name)
-	if(xpRewards.Find(name))
+	if(name in xpRewards)
 		var/datum/jobXpReward/R = xpRewards[name]
 		if(R.qualifies(key))
 			return 1

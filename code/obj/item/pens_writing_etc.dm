@@ -801,7 +801,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)

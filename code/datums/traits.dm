@@ -20,8 +20,8 @@
 	var/free_points = TRAIT_STARTING_POINTS
 
 	proc/selectTrait(var/id)
-		if(!traits_selected.Find(id) && traitList.Find(id))
-			traits_selected.Add(id)
+		if(id in traitList)
+			traits_selected |= id
 		calcTotal()
 		return 1
 
@@ -34,7 +34,7 @@
 	proc/calcTotal()
 		var/sum = free_points
 		for(var/T in traits_selected)
-			if(traitList.Find(T))
+			if(T in traitList)
 				var/obj/trait/O = traitList[T]
 				sum += O.points
 		point_total = sum

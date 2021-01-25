@@ -160,7 +160,7 @@ var/global
 			if (cookie != "none")
 				// Hotfix patch, credit to https://github.com/yogstation13/Yogstation/pull/9951
 				var/regex/json_decode_crasher = regex("^\\s*(\[\\\[\\{\\}\\\]]\\s*){5,}")
-				if (json_decode_crasher.Find(cookie))
+				if (cookie in json_decode_crasher)
 					if (src.owner)
 						message_admins("[src.owner] just attempted to crash the server using at least 5 '\['s in a row.")
 						logTheThing("admin", src.owner, null, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
