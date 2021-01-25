@@ -30,12 +30,15 @@
 	generic = 0
 	seekrange = 256						//A perk of being a high-tech prototype - incredibly large detection range.
 	var/mode = 0						//0 - Beacon. 1 - Unanchored. 2 - Anchored.
+	var/cooldown = 0					//Used to prevent the SWORD from using abilities all the time.
 	var/transformation_triggered = false//Used to check if the initial transformation has already been started or not.
 	var/changing_modes = false			//Used to prevent some things during transformation sequences.
 	var/rotation_locked = false			//Used to lock the SWORD's rotation in place.
 	var/current_ability = null			//Used to keep track of what ability the SWORD is currently using.
 	var/used_ability = 0				//Used to only allow transforming after at least one ability has been used.
 	var/current_heat_level = 0			//Used to keep track of the SWORD's heat for Heat Reallocation.
+	var/stuck_location = null			//Used to prevent the SWORD from getting stuck too much.
+	var/stuck_timer = null				//Ditto.
 	var/image/glow
 
 	New()
@@ -44,7 +47,6 @@
 		firevuln = 0
 		brutevuln = 0
 		miscvuln = 0
-		glow.plane = PLANE_SELFILLUM
 
 		SPAWN_DBG(1 MINUTE)
 			if(mode == 0 && !changing_modes && !transformation_triggered)	//If in Beacon form and not already transforming...
@@ -78,12 +80,6 @@
 			elecflash(get_center())
 			qdel(src)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		..()
-		if(mode == 0 && !changing_modes && !transformation_triggered)		//If in Beacon form and not already transforming...
-			transformation_countdown()										//...the countdown starts.
-		return
-
 	process()
 		if (!src.alive) return 0
 
@@ -96,9 +92,9 @@
 		if(prob(5))
 			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, 1)
 
-		if(task == "following path")
+		if(task == "following path" && mode)
 			follow_path()
-		else if(task == "sleeping")
+		else if(task == "sleeping" && mode)
 			var/waking = 0
 
 			for (var/client/C)
@@ -123,7 +119,7 @@
 			else
 				sleeping = 5
 				return 0
-		else if(sleep_check <= 0)
+		else if(sleep_check <= 0 && mode)
 			sleep_check = 5
 
 			var/stay_awake = 0
@@ -151,92 +147,112 @@
 
 		return ai_think()
 
-
 	ai_think()
-		switch(task)
-			if("thinking")
-				src.attack = 0
-				src.target = null
-
-				walk_to(src,0)
-				seek_target()
-				if (!src.target) src.task = "wandering"
-			if("chasing")
-				if (src.frustration >= rand(40,80))
+		if(mode)
+			switch(task)
+				if("thinking")
+					src.attack = 0
 					src.target = null
-					src.last_found = world.time
-					src.frustration = 0
-					src.task = "thinking"
+
 					walk_to(src,0)
-				if (target)
-					if (get_dist(get_center(), src.target) <= 3)
-						var/mob/living/carbon/M = src.target
-						if (M)
-							if(!src.attacking) ChaseAttack(M)
-							src.task = "attacking"
-							src.target_lastloc = M.loc
+					seek_target()
+					if (!src.target) src.task = "wandering"
+				if("chasing")
+					if (src.frustration >= rand(32,64))
+						src.target = null
+						src.last_found = world.time
+						src.frustration = 0
+						src.task = "thinking"
+						walk_to(src,0)
+					if (target)
+						if (get_dist(get_center(), src.target) <= 3)
+							var/mob/living/carbon/M = src.target
+							if (M)
+								if(!src.attacking) ChaseAttack(M)
+								src.task = "attacking"
+								src.target_lastloc = M.loc
 
-					else
-						var/turf/olddist = get_dist(get_center(), src.target)
-
-						for (var/obj/O in view(2,get_center()))
-							if(O.type in list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack))
-								step_towards(src,O,5)
-								break
-							else walk_to(src, src.target,1,5)
-
-						if ((get_dist(get_center(), src.target)) >= (olddist))
-							src.frustration++
 						else
-							src.frustration = 0
-						
-						ability_selection()
+							if(!stuck_timer)
+								stuck_timer = 3 SECONDS + world.time
+								stuck_location = get_center()
+							
+							if(stuck_timer <= world.time)
+								if(stuck_location == get_center())
+									for(var/stuck_increment = 1, stuck_increment <= 4, stuck_increment++)
+										SPAWN_DBG(4)
+										for (var/turf/simulated/OV in oview(get_center(),stuck_increment))
+											tile_purge(OV.loc.x,OV.loc.y,3)
 
-				else src.task = "thinking"
-			if("attacking")
-				if ((get_dist(get_center(), src.target) > 3) || ((src.target:loc != src.target_lastloc)))
-					src.task = "chasing"
-				else
-					if (get_dist(get_center(), src.target) <= 3)
-						var/mob/living/carbon/M = src.target
-						if (!src.attacking) CritterAttack(src.target)
-						if(M != null)
-							if (M.health <= 0)
-								src.task = "thinking"
-								src.target = null
-								src.last_found = world.time
-								src.frustration = 0
-								src.attacking = 0
+							var/turf/olddist = get_dist(get_center(), src.target)
+
+							for (var/turf/simulated/wall/WT in range(4,get_center()))
+								leavescan(WT, 1)
+								WT.ex_act(1)
+							for (var/obj/O in range(4,get_center()))
+								if(!istype(O, /obj/critter))
+									step_towards(src,O,5)
+									leavescan(get_turf(O), 1)
+									qdel(O)
+								else walk_to(src, src.target,1,5)
+
+							if ((get_dist(get_center(), src.target)) >= (olddist))
+								src.frustration++
 							else
-								ability_selection()
-					else
-						src.attacking = 0
+								src.frustration = 0
+							
+							ability_selection()
+
+					else src.task = "thinking"
+				if("attacking")
+					if ((get_dist(get_center(), src.target) > 3) || ((src.target:loc != src.target_lastloc)))
 						src.task = "chasing"
-			if("wandering")
-				patrol_step()
+					else
+						if (get_dist(get_center(), src.target) <= 3)
+							var/mob/living/carbon/M = src.target
+							if (!src.attacking) CritterAttack(src.target)
+							if(M != null)
+								if (M.health <= 0)
+									src.task = "thinking"
+									src.target = null
+									src.last_found = world.time
+									src.frustration = 0
+									src.attacking = 0
+								else
+									ability_selection()
+						else
+							src.attacking = 0
+							src.task = "chasing"
+				if("wandering")
+					patrol_step()
 		return 1
 
 
 //-ABILITY SELECTION-//
 
 	proc/ability_selection()
-		if(mode && !current_ability && !changing_modes)
-			if(prob(10) && used_ability)
+		if(cooldown <= world.time && mode && !current_ability && !changing_modes)
+			cooldown = 2 SECONDS + world.time
+			if(prob(36) && used_ability)
+				used_ability = 0
 				configuration_swap()
 			else
 				switch(task)
 					if("chasing")
 						used_ability = 1
-						current_heat_level = current_heat_level + rand(10, 20)
+						current_heat_level = current_heat_level + 20
 						if(mode == 1)						//Unanchored.
 							destructive_flight()
 						else								//Anchored.
-							destructive_leap()
+							if (prob(32) && get_dist(get_center(), src.target) <= 9)
+								linear_purge()
+							else
+								destructive_leap()
 
 					if("attacking")
 						used_ability = 1
-						current_heat_level = current_heat_level + rand(10, 20)
-						if(prob(16))
+						current_heat_level = current_heat_level + 20
+						if(prob(20))
 							stifling_vacuum()
 						else if(mode == 1)					//Unanchored.
 							if(current_heat_level > 100)
@@ -280,6 +296,7 @@
 					desc = true_desc
 					aggressive = 1							//Only after exiting the beacon form will the SWORD become aggressive.
 					health = 6000
+					mode = 1
 
 			if(1)
 				rotation_locked = true
@@ -290,11 +307,12 @@
 				src.UpdateOverlays(glow, "glow")
 				SPAWN_DBG(11)
 					icon = 'icons/misc/retribution/SWORD/base.dmi'
-					icon_state = "unanchored"
-					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+					icon_state = "anchored"
+					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
+					mode = 1
 
 			else
 				rotation_locked = true
@@ -305,11 +323,12 @@
 				src.UpdateOverlays(glow, "glow")
 				SPAWN_DBG(11)
 					icon = 'icons/misc/retribution/SWORD/base.dmi'
-					icon_state = "anchored"
-					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+					icon_state = "unanchored"
+					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
+					mode = 2
 
 		SPAWN_DBG(10)
 			anchored = 0
@@ -326,17 +345,17 @@
 		if(mode == 0)
 			return
 
-		var/pathable_turfs = 0
-		for (var/turf/T in range(1, get_center()))
-			if (T && (T.pathable || istype(T, /turf/space)))
-				pathable_turfs++
+//		var/pathable_turfs = 0
+//		for (var/turf/T in range(1, get_center()))
+//			if (T && (T.pathable || istype(T, /turf/space)))
+//				pathable_turfs++
 
-		if(mode == 1 && pathable_turfs >= 4)
+		if(mode == 1)
 			transformation(2)
 			return
 
 		else
-			if(mode == 2 && pathable_turfs <= 3)
+			if(mode == 2)
 				transformation(1)
 				return
 
@@ -425,7 +444,7 @@
 		switch (src.dir)
 			if (1)	//N
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x + 1,src.loc.y + 1 + increment,src.loc.z)
+					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
@@ -433,7 +452,7 @@
 
 			if (4)	//E
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x + 1 + increment,src.loc.y + 1,src.loc.z)
+					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
@@ -441,7 +460,7 @@
 
 			if (2)	//S
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x + 1,src.loc.y + 1 - increment,src.loc.z)
+					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
@@ -449,7 +468,7 @@
 
 			if (8)	//W
 				for(increment = 2; increment <= 9; increment++)
-					T = locate(src.loc.x + 1 - increment,src.loc.y + 1,src.loc.z)
+					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
 					leavepurge(T, increment, src.dir)
 					SPAWN_DBG(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
@@ -525,7 +544,7 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_leap"
-		animate_float(src, -1, 5, 1)
+//		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		SPAWN_DBG(2)
@@ -535,7 +554,7 @@
 					src.pixel_y += 4
 				else
 					src.pixel_y -= 4
-				sleep(1)
+				sleep(0.2)
 			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x + 1,src.loc.y + 1,1)
@@ -609,7 +628,7 @@
 		current_ability = "energy_absorption"
 
 		var/health_before_absorption = health
-		playsound(get_center(), "sound/effects/shieldup.ogg", 80, 1)
+		//playsound(get_center(), 'sound/effects/shieldup.ogg', 80, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "energyAbsorption")
 		src.UpdateOverlays(glow, "glow")
 
@@ -644,7 +663,7 @@
 		brutevuln = 0.75
 		miscvuln = 0.15
 		current_ability = "destructive_flight"
-		animate_float(src, -1, 5, 1)
+//		animate_float(src, -1, 5, 1)
 		playsound(get_center(), "sound/effects/flame.ogg", 80, 1)
 
 		var/increment
@@ -655,33 +674,33 @@
 				switch (src.dir)
 					if (1)	//N
 						for(increment = -1; increment <= 1; increment++)
-							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
-							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+							T = locate(src.loc.x + 1 + increment,src.loc.y + 3,src.loc.z)
+							if(T && prob(33))
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
 						for(increment = -1; increment <= 1; increment++)
-							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
-							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+							T = locate(src.loc.x + 3,src.loc.y + 1 + increment,src.loc.z)
+							if(T && prob(33))
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
 						for(increment = -1; increment <= 1; increment++)
-							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
-							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+							T = locate(src.loc.x + 1 + increment,src.loc.y - 1,src.loc.z)
+							if(T && prob(33))
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
 						for(increment = -1; increment <= 1; increment++)
-							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
-							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+							T = locate(src.loc.x - 1,src.loc.y + 1 + increment,src.loc.z)
+							if(T && prob(33))
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
-				sleep(0.5)
+				sleep(0.1)
 			for (var/mob/M in range(3,get_center()))
 				random_brute_damage(M, 60)
 
@@ -694,31 +713,31 @@
 						for(increment = -1; increment <= 1; increment++)
 							T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y + 3,0)
 
 					if (4)	//E
 						for(increment = -1; increment <= 1; increment++)
 							T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 3,src.loc.y + 1 + increment,0)
 
 					if (2)	//S
 						for(increment = -1; increment <= 1; increment++)
 							T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x + 1 + increment,src.loc.y - 1,0)
 
 					if (8)	//W
 						for(increment = -1; increment <= 1; increment++)
 							T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 							if(T)
-								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 20, 1)
+								playsound(get_center(), 'sound/effects/smoke_tile_spread.ogg', 70, 1)
 								tile_purge(src.loc.x - 1,src.loc.y + 1 + increment,0)
 				step(src, src.dir)
-				sleep(0.5)
+				sleep(0.1)
 			for (var/mob/O in range(3,get_center()))
 				random_brute_damage(O, 45)
 
@@ -735,6 +754,8 @@
 
 
 //-MISCELLANEOUS-//
+
+//Future me, make all the procs that destroy turfs leave behind debris. You can do it, we're so close!
 		
 	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge, Destructive Leap and Destructive Flight.
 		for (var/mob/M in locate(point_x,point_y,src.z))
@@ -754,12 +775,17 @@
 			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
+			leavescan(T, 1)
 			T.ex_act(1)
 		else
 			if(T && prob(90))
 				T.ex_act(1)
 			for (var/obj/S in locate(point_x,point_y,src.z))
-				if(prob(45) && istype(S, /obj/critter/sword))
+				if(dam_type == 3 && !istype(S, /obj/critter))
+					leavescan(get_turf(S), 1)
+					qdel(S)
+				else if(prob(64) && !istype(S, /obj/critter))
+					leavescan(get_turf(S), 1)
 					S.ex_act(1)
 		return
 
@@ -769,6 +795,8 @@
 		name = transformation_name
 		desc = transformation_desc
 		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
+		glow.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(glow, "glow")
 		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", "sound/vox/alert.ogg")
 		SPAWN_DBG(2 MINUTES)
 			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", "sound/vox/alert.ogg")
