@@ -108,7 +108,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +119,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -773,6 +773,7 @@ Code:
 	size = 8
 	var/tmp/charges = 0 //Don't let jerks copy the program to have extra charges.
 	var/list/pdas = list()
+	dont_copy = 1 // srsly dont let jerks whatsit the whatever
 
 	return_text()
 		if(..())

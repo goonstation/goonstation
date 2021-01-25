@@ -443,7 +443,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's jumpsuit"
-	desc = "Red and black really helps highlight the cranial fluid stains."
+	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
 	permeability_coefficient = 0.50
@@ -753,7 +753,6 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
-	compatible_species = list("human", "monkey")
 
 	red
 		icon_state = "shortsR"

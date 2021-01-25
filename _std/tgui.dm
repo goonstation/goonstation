@@ -33,9 +33,3 @@
 		"type" = type, \
 		"payload" = payload, \
 	))))
-
-/// Name of the local tgui javascript file |GOONSTATION-ADD|
-#define TGUI_JS "tgui.bundle.js"
-
-/// Name of the local tgui css file |GOONSTATION-ADD|
-#define TGUI_CSS "tgui.bundle.css"

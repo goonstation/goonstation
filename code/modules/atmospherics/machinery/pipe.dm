@@ -677,12 +677,8 @@ obj/machinery/atmospherics/pipe
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
-				var/datum/gas/oxygen_agent_b/trace_gas = new
+				var/datum/gas/oxygen_agent_b/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -748,12 +744,8 @@ obj/machinery/atmospherics/pipe
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
-				var/datum/gas/sleeping_agent/trace_gas = new
+				var/datum/gas/sleeping_agent/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent/)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
 
 				..()
 

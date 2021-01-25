@@ -1344,6 +1344,15 @@ obj/item/parts/human_parts/arm/right/stone
 /obj/item/parts/human_parts/leg/mutant/cow
 	icon = 'icons/mob/cow.dmi'
 	partIcon = 'icons/mob/cow.dmi'
+	limb_hit_bonus = 4
+	skintoned = 1
+	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
+	handfoot_overlay_1_state = null
+	handfoot_overlay_1_color = CUST_2
+
+	New()
+		handfoot_overlay_1_state = "[src.partlistPart]"
+		. = ..()
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/cow/left
@@ -1958,6 +1967,7 @@ obj/item/parts/human_parts/arm/right/stone
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
+
 /obj/item/parts/human_parts/arm/mutant/kudzu/right
 	name = "right kudzu arm"
 	desc = "A kudzu'ssss right arm."
@@ -1983,3 +1993,96 @@ obj/item/parts/human_parts/arm/right/stone
 	side = "right"
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
+
+/// VIRTUAL LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/virtual
+	icon = 'icons/mob/virtual.dmi'
+	partIcon = 'icons/mob/virtual.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/virtual/left
+	name = "left virtual arm"
+	desc = "A simulated left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/virtual/right
+	name = "left virtual arm"
+	desc = "A simulated right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/left
+	name = "left virtual leg"
+	desc = "A simulated left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/virtual/right
+	name = "right virtual leg"
+	desc = "A simulated right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+/// ITHILLID LIMBS ///
+///// PARENT /////
+/obj/item/parts/human_parts/arm/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/ithillid
+	icon = 'icons/mob/ithillid.dmi'
+	partIcon = 'icons/mob/ithillid.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/left
+	name = "left squid arm"
+	desc = "A squid's left blub."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/ithillid/right
+	name = "left squid arm"
+	desc = "Blub squid's right arm"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/ithillid/left
+	name = "left squid leg"
+	desc = "A blub's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/ithillid/right
+	name = "right squid leg"
+	desc = "A squid's blub leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+

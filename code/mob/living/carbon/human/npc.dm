@@ -183,12 +183,6 @@
 		walk_towards(src, null)
 		return
 
-//			var/turf/T = get_turf(src)
-//			if((T.poison > 100000.0 || T.firelevel || T.oxygen < 560000 || T.co2 > 7500.0) && !istype(get_turf(src), /turf/space) )
-//				ai_avoid(T)
-//			else ai_move()
-
-
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
 	if(ai_busy && !src.hasStatus("handcuffed"))
@@ -537,7 +531,7 @@
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
 		src.hud.clicked("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -601,7 +595,8 @@
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
 			if(H != src)
-				src.give_to(H)
+				SPAWN_DBG(0)
+					src.give_to(H)
 				break
 
 	// put on table
@@ -619,6 +614,8 @@
 		return // don't interupt actions
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
+		if(src.pulling)
+			src.set_pulling(null)
 		if(!ai_validpath() && get_dist(src,ai_target) <= 1)
 			set_dir(get_step_towards(src,ai_target))
 			ai_obstacle() //Remove.
@@ -646,10 +643,25 @@
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
 	src.ai_pickupweapon()
-	if(prob(40))
+	if(prob(ai_offhand_pickup_chance))
 		src.ai_pickupoffhand()
 
 /mob/living/carbon/human/proc/ai_pickupoffhand()
+	// this doesn't actually do anything yet because the movement of pulled object happens in process_move which npcs don't use
+	/*
+	if(src.pulling)
+		if(prob(15))
+			src.set_pulling(null)
+	else
+		if(prob(100))
+			var/list/atom/movable/pullables = list()
+			for(var/atom/movable/AM in view(1, src))
+				if(AM != src && !isitem(AM) && !AM.anchored)
+					pullables += AM
+			if(length(pullables))
+				src.set_pulling(pick(pullables))
+	*/
+
 	if(src.l_hand?.cant_drop)
 		return
 

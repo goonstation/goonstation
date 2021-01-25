@@ -33729,7 +33729,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "bEz" = (
 /obj/map/light/lava,
@@ -44025,7 +44025,9 @@
 	},
 /area/sim/bball)
 "cfO" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	file_name = "data/persistent_bookshelf_cairngorm.json"
+	},
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
@@ -44762,7 +44764,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "chv" = (
 /obj/lattice{
@@ -47297,7 +47299,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/owl_cheat,
-/turf/simulated/floor/airless/solar,
+/turf/unsimulated/floor/airless/solar,
 /area/owlery/solars)
 "cnB" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -72664,7 +72666,10 @@
 	icon_state = "blue"
 	})
 "dvV" = (
-/obj/admin_plaque,
+/obj/admin_plaque{
+	desc = "DON'T LET IT OUT!";
+	name = "Virvatuli's Office"
+	},
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwall"
@@ -73100,11 +73105,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "dwZ" = (
-/obj/machinery/light,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "dxa" = (
 /obj/machinery/light{
 	dir = 8
@@ -82394,23 +82396,6 @@
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"dXK" = (
-/obj/item/paper{
-	icon_state = "paper";
-	info = "You think you can hide from us in your shitty little office on earth? Think again";
-	name = "fuck you, licorice";
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/bat,
-/obj/item/spacecash,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "dXN" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp,
@@ -82513,7 +82498,50 @@
 /obj/machinery/light{
 	on = 1
 	},
-/obj/item/spacecash,
+/obj/storage/crate/bin,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "You think you can hide from us in your shitty little office on earth? Think again";
+	name = "fuck you, licorice";
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	info = "It's a good diversion, keeping them from the truth. They can never learn the truth. The admin team didn't just hire someone who was*the writing ends abrubtly*";
+	name = "sOrD iS bAnNeD fRoM tHe BlOcKlAnD fOrUmS";
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/paper{
+	info = "As far as we can tell, the person named 'Sord' doesn't exist on any known database. Or, there's so many people named Sord that it's impossible to tell which is which. Is it a purposeful attempt to remain hidden? We'll never know. All we know is anyone who digs into it ends up disappearing.";
+	name = "who really IS sord?";
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	info = "Is this Papa John's?";
+	name = "To: Syndicate Battlecruiser Cai...Car...Cormgan?";
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/paper{
+	info = "Todo: 1. Make the Lodbrok less phallic. 2. Make the NT ship MORE phallic. 3. More phallic shaped asteroids.";
+	name = "pod-wars";
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/paper{
+	info = "Holy SHIT you ASSHOLE, Sord. Where did you get all that blood? Why would you fill your office with blood in the first place? Every time some idiot came to your office to file a complaint half the office block would flood. Why would you think that's a good idea? My mop is permanently stained red thanks to you, asshole.";
+	name = "letter from the janitor";
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/paper{
+	info = "thanks sord, best admin";
+	name = "letter to sov";
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -82640,6 +82668,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
+"ePs" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eQe" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -82767,16 +82804,23 @@
 	},
 /area/hospital/samostrel)
 "ftk" = (
-/obj/machinery/door/unpowered/wood/sordBloodDoor{
+/obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor";
+	opaque_atom_count = 1
+	},
 /area/centcom/offices/sord)
 "fCL" = (
-/obj/item/spacecash/twenty{
-	pixel_x = -12;
-	pixel_y = 4
+/obj/item/gun/kinetic/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
+	pixel_x = -6;
+	pixel_y = 24
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -82786,14 +82830,26 @@
 	},
 /area/centcom/offices/sord)
 "fGD" = (
+/obj/storage/cart/hotdog,
+/obj/item/clothing/suit/gimmick/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
 /obj/machinery/light{
 	dir = 1;
 	on = 1
 	},
-/obj/item/spacecash/fivehundred{
-	pixel_x = -5;
-	pixel_y = -12
-	},
+/obj/decal/skeleton,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -83286,12 +83342,11 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "hVQ" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4;
-	locked = 1
+/obj/machinery/door/poddoor/blast/single{
+	desc = "An old blast door. It has plenty of scratches and dents on it's surface.";
+	id = "virvadoor"
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/plating/scorched,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -83647,6 +83702,20 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"jJr" = (
+/obj/machinery/door_control{
+	desc = "A button set into the wall. You probably shouldn't press this.";
+	id = "virvadoor";
+	name = "curious button";
+	pixel_x = 24;
+	pixel_y = 9
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "jJx" = (
 /turf/unsimulated/wall{
 	dir = 8;
@@ -83802,6 +83871,16 @@
 "kfa" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"khH" = (
+/obj/item/organ/eye/left{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "kiU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -84083,6 +84162,14 @@
 /turf/space,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
+"lpM" = (
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
+	name = "reminder"
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "lqh" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -84192,17 +84279,6 @@
 /turf/space,
 /turf/unsimulated/floor/plating/scorched,
 /area/adventure/channel/flingy)
-"lEG" = (
-/obj/admin_plaque{
-	name = "Sord's Office"
-	},
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwall"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "lFq" = (
 /obj/stool/chair/comfy,
 /obj/npc/trader/random{
@@ -84333,6 +84409,15 @@
 	opacity = 1
 	},
 /area/adventure/channel)
+"mpC" = (
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -84430,6 +84515,11 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
+"mPW" = (
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 4
+	},
+/area/centcom/offices/virvatuli)
 "mTM" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -84581,7 +84671,15 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "nsm" = (
-/obj/item/spacecash,
+/obj/item/bat,
+/obj/item/ammo/bullets/abg{
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = -10;
+	pixel_y = 24
+	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -85024,16 +85122,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
 "oRd" = (
-/obj/decal/cleanable/blood{
-	icon_state = "smear3"
-	},
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/gimmick/princess,
-/obj/item/clothing/mask/horse_mask,
-/obj/decal/skeleton,
-/obj/fluid_spawner{
-	amount = 2000;
-	reagent_id = "blood"
+/obj/stool/chair/comfy/green{
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -85043,10 +85133,9 @@
 	},
 /area/centcom/offices/sord)
 "oSl" = (
-/obj/item/spacecash/fifty,
-/obj/item/spacecash{
-	pixel_x = 4;
-	pixel_y = 8
+/obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -85108,6 +85197,16 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pfF" = (
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer3/generic/personal,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "pfL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -85161,15 +85260,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"puA" = (
-/obj/item/spacecash/five,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "puF" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -85702,7 +85792,10 @@
 	},
 /area/hospital/samostrel)
 "rou" = (
-/obj/item/spacecash/fifty,
+/obj/rack,
+/obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/mask/horse_mask,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -85800,6 +85893,13 @@
 	dir = 1
 	},
 /area/retentioncenter)
+"rIL" = (
+/obj/decal/cleanable/blood,
+/obj/item/organ/spleen{
+	pixel_y = -4
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -85877,6 +85977,14 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"rQF" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadjunction_4way"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rQO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -85889,6 +85997,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"rQQ" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/item/parts/human_parts/arm/left{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "rTJ" = (
 /obj/fitness/stacklifter,
 /turf/unsimulated/floor/wood/two,
@@ -86123,13 +86240,17 @@
 	},
 /area/centcom)
 "sNn" = (
-/obj/item/spacecash/twenty,
-/obj/item/spacecash{
-	pixel_x = 6;
-	pixel_y = 6
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
-/turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sord)
+"sNO" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "sPS" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
@@ -86155,17 +86276,6 @@
 /turf/space,
 /turf/simulated/floor,
 /area/ship_interior/cruisertest)
-"sYB" = (
-/obj/item/spacecash{
-	pixel_x = 8
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "tdA" = (
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left,
 /turf/space,
@@ -86247,6 +86357,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tmc" = (
+/turf/unsimulated/wall{
+	dir = 6;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "toK" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -86426,6 +86545,26 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"uAx" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadjunction"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"uBJ" = (
+/obj/admin_plaque{
+	name = "Sord's Office"
+	},
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwall"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uFz" = (
 /obj/lattice{
 	dir = 5;
@@ -86458,6 +86597,55 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"uUa" = (
+/obj/map/light/void,
+/obj/decal/lightshaft{
+	mouse_opacity = 0
+	},
+/obj/storage/secure/closet/fridge{
+	desc = "An old, gross refrigerator. It's splattered with dried blood and what looks like claw marks.";
+	locked = 0;
+	name = "bloody refrigerator"
+	},
+/obj/critter/domestic_bee/creepy{
+	name = "Virvatulbee"
+	},
+/obj/item/clothing/mask/mime{
+	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
+	name = "chewed-up mime mask";
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/security_badge{
+	badge_owner_job = "Head of Security";
+	badge_owner_name = "Elika Zamani";
+	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
+	name = "scratched security badge";
+	pixel_x = 9;
+	pixel_y = -12
+	},
+/obj/item/storage/ntso_pouch{
+	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
+	name = "stained tacticool pouch";
+	pixel_x = 5;
+	pixel_y = -5;
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	desc = "Incredibly stinky.";
+	name = "foul-smelling mystery meat";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
+	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
+	name = "mystical fun guy";
+	initial_reagents = list("psilocybin"=20,"lsd_bee"=20,"space_drugs"=20)
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "uVw" = (
 /turf/space,
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -86913,6 +87101,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"xjD" = (
+/turf/unsimulated/wall{
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadjunction"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xky" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -87166,6 +87363,13 @@
 /obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"ykp" = (
+/obj/dialogueobj/securitycorpse7{
+	mouse_opacity = 0
+	},
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/outdoors/snow,
+/area/centcom/offices/virvatuli)
 "yld" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner{
@@ -164316,7 +164520,7 @@ dvy
 dvy
 dvy
 dvy
-dxn
+jJr
 dvy
 dvy
 dvy
@@ -164619,11 +164823,11 @@ dvN
 dvV
 hVQ
 dDP
-dvN
-lEG
+uAx
+uBJ
 ftk
 dDP
-dvO
+rQF
 dDP
 dDP
 dAV
@@ -164918,14 +165122,14 @@ qwW
 hnO
 ius
 dvw
-dvW
-dvW
-dwZ
-dvw
+rQQ
+mpC
+lpM
+ePs
 nsm
 sNn
 etj
-dvw
+ePs
 aES
 aES
 aES
@@ -165220,14 +165424,14 @@ hnO
 hnO
 jEZ
 dvw
-dvW
-dvW
-dvW
-dvw
+dwZ
+ykp
+rIL
+ePs
 fCL
-dXK
-puA
-dvw
+sNn
+sNn
+ePs
 aES
 aES
 aES
@@ -165522,14 +165726,14 @@ vlp
 lRg
 njW
 dvw
-dvX
-dvW
-dvW
-dvw
+khH
+uUa
+sNO
+ePs
 fGD
 oRd
-sYB
-dvw
+sNn
+ePs
 aES
 aES
 aES
@@ -165824,14 +166028,14 @@ qGH
 fov
 oPY
 dvw
-dvW
-dvW
-dvW
-dvw
-nsm
+mPW
+mPW
+mPW
+ePs
+pfF
 oSl
 rou
-dvw
+ePs
 aES
 aES
 aES
@@ -166129,11 +166333,11 @@ dvP
 dDP
 dDP
 dDP
-dvP
+xjD
 dDP
 dDP
 dDP
-dAV
+tmc
 dFc
 dFc
 dFc

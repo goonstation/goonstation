@@ -311,8 +311,8 @@ h1.alert, h2.alert {color: #000000;}
 .rcommand {color: #334E6D;}
 .rsecurity {color: #E00000;}
 .rengineering {color: #A86800;}
-.rmedical {color: #461B7E;}
-.rresearch {color: #153E7E;}
+.rmedical {color: #153E7E;}
+.rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
 .rother {color: #800080;}
@@ -427,8 +427,8 @@ body.theme-dark .rintercom {color: #4dc1c9;}
 body.theme-dark .rcommand {color: #7ca6d6;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #ac83e2;}
-body.theme-dark .rresearch {color: #3f69ac;}
+body.theme-dark .rmedical {color: #3f69ac;}
+body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
 body.theme-dark .rother {color: #bd46bd;}

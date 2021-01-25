@@ -216,6 +216,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#FF0000"
 	var/targetZ = 1 // target z-level to push it's contents to
 	var/xOffset = 0 // use only for pushing to the same z-level
 	var/yOffset = 0 // use only for pushing to the same z-level
@@ -233,6 +236,8 @@ var/global/list/job_start_locations = list()
 		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 		if(warptarget_modifier) T.vistarget.warptarget = T
 		T.updateVis()
+		T.vistarget.fullbright = TRUE
+		T.vistarget.RL_Init()
 		..()
 
 /obj/landmark/viscontents_spawn/no_warp

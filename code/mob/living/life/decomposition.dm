@@ -54,4 +54,4 @@
 				max_produce_miasma = 0
 
 		if (max_produce_miasma)
-			T.fluid_react_single("miasma", 10, airborne = 1)
+			T.fluid_react_single("miasma", 3, airborne = 1)

@@ -1559,10 +1559,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
 	icon_state = "polaris"
+	keep_icon = TRUE
 
 /obj/item/broken_egun
 	name = "broken energy gun"

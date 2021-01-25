@@ -966,6 +966,8 @@ function lineEnter (ev)
 	name = "briefcase"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0

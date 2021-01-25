@@ -432,6 +432,7 @@ var/fartcount = 0
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING

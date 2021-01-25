@@ -597,7 +597,7 @@ var/zapLimiter = 0
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
 		t += "Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"
 		if(cell)
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : chargecount ? "Performing self-test" : "Not charging"])"
 			t += " ([chargemode ? "Auto" : "Off"])"
 
 		t += "<BR><HR>Power channels<BR><PRE>"
@@ -1218,6 +1218,8 @@ var/zapLimiter = 0
 
 		if(cell.charge >= cell.maxcharge)
 			charging = 2
+		else if (charging == 2)
+			charging = 0 // we lost power somehow; move to failure mode
 
 		if(chargemode)
 			if(!charging)

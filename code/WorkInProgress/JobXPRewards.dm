@@ -522,6 +522,27 @@ mob/verb/checkrewards()
 
 /////////////Bartender////////////////
 
+/datum/jobXpReward/bartender/spectromonocle
+	name = "Spectroscopic Monocle"
+	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
+	required_levels = list("Bartender"=0)
+	icon_state = "?"
+	claimable = 1
+	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
+
+	activate(var/client/C)
+		var/glasses = C.mob.find_type_in_hand(/obj/item/clothing/glasses/spectro)
+
+		if(!(glasses))
+			boutput(C.mob, "You need to be holding a pair of spectroscopic scanner goggles to claim this item")
+			return
+		C.mob.remove_item(glasses)
+		qdel(glasses)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You break the goggles in half and fashion the lens into a monocle...somehow.")
+
 /datum/jobXpReward/bartender/goldenshaker
 	name = "Golden Cocktail Shaker"
 	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
@@ -542,3 +563,4 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
+

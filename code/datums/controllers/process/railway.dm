@@ -6,6 +6,10 @@ datum/controller/process/railway
 		schedule_interval = 5
 		vehicles = global.railway_vehicles
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/railway/old_railway = target
+		src.vehicles = old_railway.vehicles
+
 	doWork()
 		var/c
 		for(var/obj/railway_vehicle/v in global.railway_vehicles)

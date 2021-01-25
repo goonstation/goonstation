@@ -67,7 +67,7 @@ export const ReagentDispenser = (props, context) => {
     <Section
       fontSize="12px"
       title={(
-        <Fragment>
+        <>
           Dispense
           <Box
             as="span"
@@ -89,7 +89,7 @@ export const ReagentDispenser = (props, context) => {
               <Icon name={"tint"} />
             </Button>
           </Box>
-        </Fragment>
+        </>
       )}
       buttons={(
         <Box>
@@ -366,7 +366,7 @@ export const ChemGroups = (props, context) => {
   } = data;
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Reagent Groups"
         buttons={
@@ -445,6 +445,6 @@ export const ChemGroups = (props, context) => {
           ))}
         </Section>
       )}
-    </Fragment>
+    </>
   );
 };

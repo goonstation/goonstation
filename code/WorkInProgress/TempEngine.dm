@@ -57,7 +57,7 @@
 
 	New()
 		. = ..()
-		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"super_lube"=1.12)
+		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
 		target_pressure = min_circ_pressure
@@ -452,7 +452,7 @@
 
 datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
-	value_units = "Pa"
+	value_units = "kPa"
 	min_value = 0
 	max_value = 1e5
 	incr_sm = 10

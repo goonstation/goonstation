@@ -97,7 +97,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/obj/screen/ability/topBar/wrestler
+/atom/movable/screen/ability/topBar/wrestler
 	clicked(params)
 		var/datum/targetable/wrestler/spell = owner
 		if (!istype(spell))
@@ -151,7 +151,7 @@
 	var/fake = 0
 
 	New()
-		var/obj/screen/ability/topBar/wrestler/B = new /obj/screen/ability/topBar/wrestler(null)
+		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -163,7 +163,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/wrestler()
+			src.object = new /atom/movable/screen/ability/topBar/wrestler()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

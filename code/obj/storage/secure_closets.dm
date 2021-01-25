@@ -34,6 +34,7 @@
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
+	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
@@ -586,7 +587,8 @@
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long)
+	/obj/item/clothing/gloves/long,
+	/obj/item/handheld_vacuum)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
