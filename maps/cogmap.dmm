@@ -6069,7 +6069,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -11633,6 +11633,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAt" = (
@@ -15205,6 +15206,9 @@
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -16673,11 +16677,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -17516,6 +17520,9 @@
 /obj/item/pen{
 	pixel_x = -4;
 	pixel_y = 9
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -19293,7 +19300,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -63006,6 +63013,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kgy" = (
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "klV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -95017,7 +95030,7 @@ aNW
 aOX
 awK
 aRb
-aHB
+kgy
 aTa
 aUl
 aUn

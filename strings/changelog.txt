@@ -1,4 +1,23 @@
 
+(t)sun jan 24 21
+(u)Carbadox, Flaborized, and Flourish
+(p)3017
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)Added a new permanent security role, security assistant. This role will provide an entry point to players interested in the Security department without having to start off in a high pressure role like security officer. Please be nice to them!
+(*)Security PDAs now spawn with a special security alert module. When used, this module sends a "backup requested" PDA alert to the entire security department from the user's PDA.
+(*)Security departments now have a couple ticket writer devices laying around, which allow officers to issue tickets (and only tickets) without having to wrangle with their PDA.
+(u)pali
+(p)3331
+(e)|
+(+)NTSO job is now only available after HoS has been picked.
+(u)Carbadox
+(p)3334
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added a new Bartender job reward, the spectroscopic monocle.
+(u)BatElite
+(p)3432
+(e)🆕|feature
+(+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
 (t)sat jan 23 21
 (u)BenLubar
 (p)3411

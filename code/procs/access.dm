@@ -267,6 +267,8 @@
 #endif
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels,access_hydro, access_bar, access_kitchen, access_ranch)
+		if("Security Assistant")
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels)
 		if("Detective", "Forensic Technician")
 			return list(access_brig, access_carrypermit, access_contrabandpermit, access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_crematorium, access_medical, access_research)
 		if("Lawyer")
