@@ -1,5 +1,5 @@
 //file for da fish
-//TODO: refactor types of fish. add fish selling values. add dynamic inhands
+//TODO: refactor types of fish. add fish "qualities" which influence sell values?? but who do you sell fish to?? idk.
 
 /obj/item/fish
 	throwforce = 3
@@ -18,20 +18,20 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> swings [src] and hits \himself in the face!.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> swings \the [src] and hits [himself_or_herself(user)] in the face!.</span>")
 			user.changeStatus("weakened", 20 * src.force)
 			JOB_XP(user, "Clown", 1)
 			return
 		else
 			playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
-			user.visible_message("<span class='alert'><b>[user] slaps [M] with [src]!</b>.</span>")
+			user.visible_message("<span class='alert'><b>[user] slaps [M] with \the [src]!</b>.</span>")
 
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/kitchen/utensil/knife))
 			if(fillet_type)
 				var/obj/fillet = new fillet_type(src.loc)
 				user.put_in_hand_or_drop(fillet)
-				boutput(user, "<span class='notice'>You skin and gut [src] using your knife.</span>")
+				boutput(user, "<span class='notice'>You skin and gut \the [src] using your knife.</span>")
 				qdel(src)
 				return
 		..()

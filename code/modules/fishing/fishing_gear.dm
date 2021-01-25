@@ -1,11 +1,14 @@
 //file for da fishin gear
 
+// rod flags are WIP, nonfunctional yet
 #define ROD_WATER (1<<0) //can it fish in water?
 
 /obj/item/fishing_rod
 	name = "fishing rod"
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_rod-inactive"
+	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
+	item_state = "fishing_rod-inactive"
 	/// average time to fish up something, in seconds - will vary on the upper and lower bounds by a maximum of 4 seconds, with a minimum time of 0.5 seconds.
 	var/fishing_speed = 8 SECONDS
 	/// how long to wait between casts in seconds - mainly so sounds dont overlap
@@ -15,14 +18,14 @@
 	/// true if the rod is currently "fishing", false if it isnt
 	var/is_fishing = false
 
-	//todo: attack particle
+	//todo: attack particle?? some sort of indicator of where we're fishing
 	afterattack(atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
 			if (fishing_spot)
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 
-	update_icon()
+	proc/update_icon()
 		//state for fishing
 		if (src.is_fishing)
 			src.icon_state = "fishing_rod-active"
@@ -59,7 +62,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //should translate to rod duration +- (0,4) seconds, minimum of 0.5 seconds
+		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(get_turf(src.user), "sound/items/fishing_rod_cast.ogg", 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
