@@ -681,8 +681,8 @@ datum/pump_ui/circulator_ui
 		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
 		if( max_warning )
 			if(max_warning > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
-				if(!ON_COOLDOWN(src, "klaxon", 5 SECOND))
-					playsound(src.loc, "sound/misc/klaxon.ogg", 40, 1)
+				if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+					playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 			var/warning_side = 0
 			if( src.circ1?.warning_active && src.circ2?.warning_active )
 				warning_side = NORTH
@@ -820,8 +820,8 @@ datum/pump_ui/circulator_ui
 				spam_limiter = 0
 		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
 			// Allow for klaxon to trigger when off cooldown if updateicon() not called
-			if(!ON_COOLDOWN(src, "klaxon", 5 SECOND))
-				playsound(src.loc, "sound/misc/klaxon.ogg", 40, 1)
+			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
 		process_grump()
 
