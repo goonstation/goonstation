@@ -469,7 +469,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
-	rounds_needed_to_play = 50 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
+	rounds_needed_to_play = 30 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
 	New()
 		..()
