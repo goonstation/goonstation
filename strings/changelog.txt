@@ -1,5 +1,9 @@
 
 (t)sun jan 24 21
+(u)DimWhat
+(p)3463
+(e)⚖|balance
+(+)Security crates ordered through QM now require security equipment access.
 (u)Flourish
 (p)3450
 (e)⚖|balance
