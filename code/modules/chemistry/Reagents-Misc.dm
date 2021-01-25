@@ -3614,12 +3614,12 @@ datum
 						var/starty = 1
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
-						badmantarget << sound('sound/misc/american_patriot.ogg', volume = 50)
-						sleep(10 SECONDS)
-						startx = badmantarget.x - rand(-11, 11)
-						starty = badmantarget.y - rand(-11, 11)
-						var/turf/pickedstart = locate(startx, starty, badmantarget.z)
-						new /obj/badman(pickedstart, badmantarget)
+						badmantarget.playsound_local(get_turf(badmantarget), "sound/misc/american_patriot.ogg", 50)
+						SPAWN_DBG(10 SECONDS)
+							startx = badmantarget.x - rand(-11, 11)
+							starty = badmantarget.y - rand(-11, 11)
+							var/turf/pickedstart = locate(startx, starty, badmantarget.z)
+							new /obj/badman(pickedstart, badmantarget)
 				..()
 
 
