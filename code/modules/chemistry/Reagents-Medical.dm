@@ -1559,9 +1559,9 @@ datum
 				return
 
 		medical/dimethyl_sulfoxide
-			name = "DMSO"
+			name = "dimethyl sulfoxide"
 			id = "dimethyl_sulfoxide"
-			description = "A sweet, non-toxic, viscous liquid. It is widely used as an additive."
+			description = "A clear liquid. It is used as topical analgesic and as a vector for chemicals to penetrate the skin."
 			reagent_state = LIQUID
 			fluid_r = 220
 			fluid_g = 220
@@ -1572,7 +1572,6 @@ datum
 			penetrates_skin = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
-
 				/// Perform a reduced version of the on_touch skin penetration of the base
 				//  reaction_mob() for ALL reagents in holder
 				if (method == TOUCH)
@@ -1582,6 +1581,7 @@ datum
 							continue
 						if (!("nopenetrate" in paramslist))
 							var/modifier = touch_modifier
+							var/transfer_volume = min(R.volume, volume) // limit transfer volume by DMSO volume
 							if(!src.pierces_outerwear)
 								for(var/atom in M.get_equipped_items())
 									if (istype(atom, /obj/item/clothing))
@@ -1589,7 +1589,7 @@ datum
 										modifier -= (1 - C.permeability_coefficient)/3
 							modifier = clamp(modifier, 0, 1)
 							if(M.reagents)
-								M.reagents.add_reagent(ID,R.volume*modifier,R.data)
+								M.reagents.add_reagent(ID,transfer_volume*modifier,R.data)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

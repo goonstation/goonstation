@@ -2082,7 +2082,7 @@ datum
 
 		//H₂S + CH₃OH + (Al₂O₃ Catalyst) -> (CH₃)₂S, methanol->ethanol and hyrodgen sulfide->sulfuric acid
 		dimethyl_sulfide
-			name = "DMS"
+			name = "dimethyl sulfide"
 			id = "dimethyl_sulfide"
 			result = "dimethyl_sulfide"
 			required_reagents = list("acid" = 1, "ethanol" = 1, "oxygen" = 1, "aluminium"=1)
@@ -2091,7 +2091,7 @@ datum
 
 		//(CH₃)₂S + (O2 or NO₂) -> (CH₃)₂SO  (dimethyl sulfide + oxygen OR nitrogen dioxide)
 		dimethyl_sulfoxide
-			name = "DMSO"
+			name = "dimethyl sulfoxide"
 			id = "dimethyl_sulfoxide"
 			result = "dimethyl_sulfoxide"
 			required_reagents = list("dimethyl_sulfide" = 1, "nitrogen_dioxide" = 1)
