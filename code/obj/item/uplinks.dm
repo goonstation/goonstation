@@ -60,7 +60,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if(src.is_sleeper_uplink)
-				if(S.cost > 4)
+				if(S.cost > 3)
 					continue
 			if (src.is_VR_uplink)
 				if (!S.vr_allowed)
