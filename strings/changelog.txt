@@ -1,5 +1,8 @@
 
 (t)sun jan 24 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Cyberappendices now only inject chems if you are hurt, and will damage themself slightly doing so if you are more than superficially injured, forcing you to replace it eventually.
 (u)DimWhat
 (p)3463
 (e)⚖|balance
