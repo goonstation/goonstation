@@ -1,5 +1,9 @@
 
 (t)sun jan 24 21
+(u)BenLubar
+(p)3462
+(e)|
+(+)Ion Storms can no longer open/close emergency shutters, such as the doors around the crusher in most maps.
 (u)Carbadox, Flaborized, and Flourish
 (p)3017
 (e)🆕🗺🔄🎨|feature, mapping, rework, sprites
