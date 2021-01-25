@@ -31,11 +31,11 @@ datum/controller/process/statusEffects
 						if(S.owner)
 							S.owner.delStatus(S)
 					else
-						if(!notifyUiUpdate.Find(S.owner))
+						if(!(S.owner in notifyUiUpdate))
 							notifyUiUpdate.Add(S.owner)
 				else
 					//if it's a permanent one, you can still update the icon
-					if(!notifyUiUpdate.Find(S.owner))
+					if(!(S.owner in notifyUiUpdate))
 						notifyUiUpdate.Add(S.owner)
 			else
 				logTheThing("debug", null, null, "Deleting orphaned status effect - type:[S.type], duration:[S.duration], OwnerInfo(was):[S.archivedOwnerInfo]")

@@ -186,7 +186,7 @@
 					html += "<i class=\"icon-search\"></i> Category: "
 					var/list/categories = list()
 					for(var/datum/matfab_recipe/E in recipes)
-						if(!categories.Find(E.category))
+						if(!(E.category in categories))
 							categories.Add(E.category)
 							html += "<a href=\"?src=\ref[src];filtercat=[E.category]\">[E.category]</a> "
 					html += "<i class=\"icon-caret-right\"></i> <a href=\"?src=\ref[src];filterstr=1\">Name</a>"

@@ -1189,7 +1189,7 @@
 			checkpath = H.mutantrace.type
 	if (ispath(checkpath))
 		var/generate_static = 1
-		if (default_mob_static_icons.Find(checkpath))
+		if (checkpath in default_mob_static_icons)
 			if (istype(default_mob_static_icons[checkpath], /image))
 				src.static_image = image(default_mob_static_icons[checkpath])
 				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")

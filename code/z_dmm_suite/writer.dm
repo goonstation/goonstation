@@ -15,17 +15,17 @@ dmm_suite
 		//Check for valid turfs.
 		if(!isturf(turf1) || !isturf(turf2))
 			CRASH("Invalid arguments supplied to proc write_map, arguments were not turfs.")
-		var /turf/lowCorner  = locate(min(turf1.x,turf2.x), min(turf1.y,turf2.y), min(turf1.z,turf2.z))
-		var /turf/highCorner = locate(max(turf1.x,turf2.x), max(turf1.y,turf2.y), max(turf1.z,turf2.z))
-		var startZ = lowCorner.z
-		var startY = lowCorner.y
-		var startX = lowCorner.x
-		var endZ   = highCorner.z
-		var endY   = highCorner.y
-		var endX   = highCorner.x
-		var depth  = (endZ - startZ)+1 // Include first tile, x = 1
-		var height = (endY - startY)+1
-		var width  = (endX - startX)+1
+		var/turf/lowCorner  = locate(min(turf1.x,turf2.x), min(turf1.y,turf2.y), min(turf1.z,turf2.z))
+		var/turf/highCorner = locate(max(turf1.x,turf2.x), max(turf1.y,turf2.y), max(turf1.z,turf2.z))
+		var/startZ = lowCorner.z
+		var/startY = lowCorner.y
+		var/startX = lowCorner.x
+		var/endZ   = highCorner.z
+		var/endY   = highCorner.y
+		var/endX   = highCorner.x
+		var/depth  = (endZ - startZ)+1 // Include first tile, x = 1
+		var/height = (endY - startY)+1
+		var/width  = (endX - startX)+1
 		// Create dmm_suite comments to store in map file
 		if(src.save_comment)
 			var/obj/dmm_suite/comment/mapComment = new(locate(startX, startY, startZ))
@@ -33,18 +33,18 @@ dmm_suite
 			mapComment.dimensions = "[width],[height],[depth]"
 		// Identify all unique grid cells
 		// Store template number for each grid cells
-		var /list/templates = list()
-		var /list/templateBuffer = new(width*height*depth)
+		var/list/templates = list()
+		var/list/templateBuffer = new(width*height*depth)
 		for(var/posZ = 0 to depth-1)
 			for(var/posY = 0 to height-1)
 				for(var/posX = 0 to width-1)
-					var /turf/saveTurf = locate(startX+posX, startY+posY, startZ+posZ)
-					var testTemplate = makeTemplate(saveTurf, flags)
-					var templateNumber = templates.Find(testTemplate)
+					var/turf/saveTurf = locate(startX+posX, startY+posY, startZ+posZ)
+					var/testTemplate = makeTemplate(saveTurf, flags)
+					var/templateNumber = templates.Find(testTemplate)
 					if(!templateNumber)
 						templates.Add(testTemplate)
 						templateNumber = templates.len
-					var compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
+					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					templateBuffer[compoundIndex] = templateNumber
 		// Compile List of Keys mapped to Models
 		return writeDimensions(startX, startY, startZ, width, height, depth, templates, templateBuffer)
