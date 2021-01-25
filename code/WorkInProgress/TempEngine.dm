@@ -172,7 +172,7 @@
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
-		src.warning_active = 0
+		src.warning_active = FALSE
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
 			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
