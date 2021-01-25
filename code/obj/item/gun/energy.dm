@@ -1630,3 +1630,45 @@
 	shoot_point_blank(mob/M, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
+
+/obj/item/gun/energy/tasersmg
+	name = "Taser SMG"
+	icon_state = "ntneutral100"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	item_state = "ntgun"
+	force = 10.0
+	contraband = 8
+	two_handed = 1
+	muzzle_flash = "muzzle_flash_elec"
+
+	New()
+		cell = new/obj/item/ammo/power_cell/high_power
+		current_projectile = new/datum/projectile/energy_bolt/smgburst
+
+		if(throw_return)
+			projectiles = list(current_projectile)
+		else
+			projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
+			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		..()
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
+				src.icon_state = "ntstun[ratio]"
+			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
+				src.icon_state = "ntneutral[ratio]"
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (istype(current_projectile, /datum/projectile/energy_bolt/smgauto))
+			spread_angle = 8
+			shoot_delay = 4
+		else
+			spread_angle = 2
+			shoot_delay = 4
+		update_icon()
