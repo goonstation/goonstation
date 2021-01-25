@@ -2868,10 +2868,7 @@
 	return .
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
-	//Could just do a wearing_football_gear() check here, but I don't wanna deal with proc call overhead on every Bump()
-	if ( (src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/armor/football)) \
-			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
-			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
+	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
 

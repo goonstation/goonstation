@@ -11633,6 +11633,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAt" = (
