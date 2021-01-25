@@ -1,5 +1,22 @@
 
+(t)sun jan 24 21
+(u)pali
+(p)3331
+(e)|
+(+)NTSO job is now only available after HoS has been picked.
+(u)Carbadox
+(p)3334
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added a new Bartender job reward, the spectroscopic monocle.
+(u)BatElite
+(p)3432
+(e)🆕|feature
+(+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
 (t)sat jan 23 21
+(u)BenLubar
+(p)3411
+(e)|
+(+)Outgoing PDA messages are now shown in your chat log. The AI can take notes while looking at a camera. File sharing with groups is no longer broken!
 (u)Nefarious6th
 (p)3424
 (e)🆕🎨|feature, sprites

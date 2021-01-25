@@ -13764,7 +13764,8 @@
 "axM" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Detective's Office"
+	name = "Detective's Office";
+	req_access = null
 	},
 /obj/access_spawn/forensics,
 /obj/firedoor_spawn,
@@ -16039,7 +16040,8 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
-	name = "Kitchen"
+	name = "Kitchen";
+	req_access = null
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
@@ -23285,6 +23287,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
+	id = "medbay_hall";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -23721,6 +23724,7 @@
 	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
+	id = "medirecdoor";
 	name = "Medical Director's Office"
 	},
 /obj/access_spawn/medical_director,
@@ -25181,16 +25185,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aTA" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/gannets/glass/medical{
-	id = "medbay_hall";
-	name = "glass airlock-'Medbay'"
-	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "medbay_hall"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -27350,6 +27350,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
+	id = "cryo_door";
 	name = "Cryogenics"
 	},
 /obj/firedoor_spawn,
@@ -27834,6 +27835,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
+	id = "medbay_door";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -29647,6 +29649,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
+	id = "medbay_hall";
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
@@ -36769,6 +36772,7 @@
 "bny" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4;
+	id = "Cloning_Door";
 	name = "Cloning"
 	},
 /obj/access_spawn/medical,

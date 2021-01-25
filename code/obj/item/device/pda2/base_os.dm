@@ -307,7 +307,7 @@
 							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;group=[mailgrp]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
-							else if(!src.clipboard || !src.clipboard?.dont_copy)
+							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
 							var/msgButton = "<a href='byond://?src=\ref[src];input=message;target=[mailgrp];department=1'>Mail</a>"
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
@@ -426,7 +426,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -469,7 +469,7 @@
 						if (!t)
 							return
 
-						if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+						if (!src.master?.is_user_in_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -820,9 +820,6 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					if(length(src.hosted_files) >= 1)
-						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
-
 					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(senderName))
 					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
@@ -832,6 +829,9 @@
 							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[groupAddress in src.master.alertgroups ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
+
+					if(length(src.hosted_files) >= 1)
+						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
 
 					src.master.updateSelfDialog()
 
@@ -978,6 +978,8 @@
 			if (findtext(message, "viagra") != 0 || findtext(message, "erect") != 0 || findtext(message, "pharm") != 0 || findtext(message, "girls") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
 				usr.unlock_medal("Spamhaus", 1)
 
+			src.master.display_message("<b>To [target_name]:</b> [message]")
+
 			var/datum/signal/signal = get_free_signal()
 			signal.data["command"] = "text_message"
 			signal.data["message"] = message
@@ -1025,6 +1027,8 @@
 			signal.data["address_1"] = target_id
 			src.post_signal(signal)
 			src.message_last = world.time
+
+			src.master.display_message("<b>Sent file to [target_name]:</b> [clipfile.name]")
 
 		/// Hosts a file on your PDA with an md5 passkey for others to request
 		proc/HostFile(var/datum/computer/file/file, var/passkey, var/group, var/msg)

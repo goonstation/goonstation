@@ -18811,6 +18811,10 @@
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 4;
+	pixel_y = -2
+	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
