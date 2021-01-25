@@ -11151,14 +11151,13 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "azB" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "pathology";
-	name = "pathology mail router"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
