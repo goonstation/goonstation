@@ -104,7 +104,7 @@
 /proc/hex_to_rgb_list(var/hex)
 	var/regex/R = new("^#?(\[a-f\\d\]{2})(\[a-f\\d\]{2})(\[a-f\\d\]{2})", "gi")
 	var/list/L = list()
-	if (hex in R)
+	if (R.Find(hex))
 		L["r"] = hex2num(R.group[1])
 		L["g"] = hex2num(R.group[2])
 		L["b"] = hex2num(R.group[3])
