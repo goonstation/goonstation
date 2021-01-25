@@ -3791,6 +3791,9 @@
 "js" = (
 /obj/table/wood/round/auto,
 /obj/machinery/glass_recycler,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"

@@ -296,27 +296,27 @@
 
 	unequipped(mob/user)
 		. = ..()
-		if ( src.victim )
+		if (src.victim)
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
 			processing_items -= src
 
 	process()
-		if ( src.victim )
+		if (src.victim)
 			if ( src.victim.health <= 0 )
 				return
-			if ( prob(45) )
+			if (prob(45))
 				boutput (src.victim, __red("[src] burns your face!"))
-				if ( prob(25) )
+				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
-			if ( prob(20) )
+			if (prob(20))
 				src.victim.take_brain_damage(3)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("stunned", 2 SECONDS)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("slowed", 4 SECONDS)
-			if ( prob(60) )
+			if (prob(60))
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)

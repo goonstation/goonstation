@@ -241,7 +241,7 @@
 			return
 		MouseDrop(atom/target)
 		// thanks, whoever hardcoded that pick-up action into obj/item/MouseDrop()!
-			if(istype(target,/obj/screen/hud))
+			if(istype(target,/atom/movable/screen/hud))
 				return
 			if(target.loc!=get_turf(target) && !isturf(target)) //return if dragged onto an item in another object (i.e backpacks on players)
 				return // you used to be able to pick up cabinets by dragging them to your backpack
@@ -3188,7 +3188,7 @@
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
-		if (!in_range(src, user) || user.stat || isnull(input)) 
+		if (!in_range(src, user) || user.stat || isnull(input))
 			return FALSE
 		if (letter_index < 1)
 			return FALSE

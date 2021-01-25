@@ -259,8 +259,8 @@
 	for(var/atom/movable/AM as mob|obj in src)
 		if (AM) // ???? x2
 			src.Entered(AM)
-	RL_Init()
-	return
+	if(!RL_Started)
+		RL_Init()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -574,6 +574,10 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+	if(new_turf.RL_MulOverlay)
+		pool(new_turf.RL_MulOverlay)
+	if(new_turf.RL_AddOverlay)
+		pool(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -587,11 +591,6 @@
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-	new_turf.N = N
-	new_turf.S = S
-	new_turf.W = W
-	new_turf.E = E
-	new_turf.NE = NE
 
 
 	new_turf.checkingexit = old_checkingexit
@@ -607,7 +606,6 @@
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
 	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
-	if (RL_Started) RL_UPDATE_LIGHT(new_turf) //Then applies the proper lighting.
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
