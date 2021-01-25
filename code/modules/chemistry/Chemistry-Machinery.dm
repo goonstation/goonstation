@@ -89,7 +89,7 @@
 	Topic(href, href_list)
 		if(status & (NOPOWER|BROKEN)) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 
 		src.add_dialog(usr)
 		if (!beaker)
@@ -350,7 +350,7 @@
 	Topic(href, href_list)
 		if (status & BROKEN) return
 		if (usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
 

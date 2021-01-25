@@ -89,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, usr) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -278,7 +278,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -526,7 +526,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, usr) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)

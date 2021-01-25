@@ -389,7 +389,7 @@
 		return 1
 	if (user && (user.lying || user.stat))
 		return 1
-	if (!in_range(src, user) || !istype(src.loc, /turf))
+	if (!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 

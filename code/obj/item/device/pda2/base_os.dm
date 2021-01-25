@@ -426,7 +426,7 @@
 						if (!t)
 							return
 
-						if (!src.master?.is_user_in_range(usr))
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -469,7 +469,7 @@
 						if (!t)
 							return
 
-						if (!src.master?.is_user_in_range(usr))
+						if (!src.master?.is_user_in_interact_range(usr))
 							return
 
 						if(!(src.holder in src.master))
@@ -563,7 +563,7 @@
 						t = copytext(sanitize(strip_html(t)), 1, 16)
 						if (!t)
 							return
-						if (!in_range(src.master, usr) || !(F.holder in src.master))
+						if (!in_interact_range(src.master, usr) || !(F.holder in src.master))
 							return
 						if(F.holder.read_only)
 							return
@@ -964,7 +964,7 @@
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)
-			if (!src.master || !src.master.is_user_in_range(usr))
+			if (!src.master || !src.master.is_user_in_interact_range(usr))
 				return 1
 
 			if (!target_id || !target_name || !message)
