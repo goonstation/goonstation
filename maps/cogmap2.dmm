@@ -49050,7 +49050,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Locker Room";
-	req_access_txt = "38"
+	req_access_txt = "1"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4

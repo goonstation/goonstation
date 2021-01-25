@@ -2830,8 +2830,8 @@
 	name = "Security Equipment";
 	req_access_txt = "27"
 	},
-/obj/access_spawn/sec_lockers,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "hl" = (

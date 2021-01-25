@@ -25,7 +25,7 @@
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
 	var/temp = null
-	var/list/credits = list("Sidearm" = 0, "Loadout" = 0, "Utility" = 0)
+	var/list/credits = list("Sidearm" = 0, "Loadout" = 0, "Utility" = 0, "Assistant" = 0)
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 
@@ -129,6 +129,18 @@
 					var/atom/A = new U.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
+			var/datum/materiel/assistant/AS = locate(href_list["buy"]) in materiel_stock
+			if(istype(AS))
+				if(src.credits["Assistant"] < AS.cost)
+					src.temp = "<br><font color='red'>Insufficient credits.</font><br>"
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+				else
+					src.credits["Assistant"] -= AS.cost
+					src.temp = "<br>Transaction complete."
+					src.temp += "<br><a href='?src=\ref[src];redeem=1'>Redeem credits.</a>"
+					var/atom/A = new AS.path(src.loc)
+					playsound(src.loc, sound_buy, 80, 1)
+					src.vended(A)
 
 		src.updateUsrDialog()
 
@@ -145,7 +157,7 @@
 		materiel_stock += new/datum/materiel/loadout/offense
 		materiel_stock += new/datum/materiel/loadout/support
 		materiel_stock += new/datum/materiel/loadout/control
-		materiel_stock += new/datum/materiel/loadout/assistant
+		materiel_stock += new/datum/materiel/assistant
 
 	vended(var/atom/A)
 		..()
@@ -162,7 +174,7 @@
 
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
-			src.credits["Loadout"] += 0.9
+			src.credits["Assistant"]++
 		else
 			src.credits["Loadout"]++
 		..()
@@ -260,10 +272,10 @@
 	catagory = "Loadout"
 	description = "One belt containing a taser shotgun, crowd dispersal grenades, and a baton."
 
-/datum/materiel/loadout/assistant
+/datum/materiel/assistant
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
-	catagory = "Loadout"
+	catagory = "Assistant"
 	cost = 0.9
 	description = "One belt containing a security barrier, a forensic scanner, and an emergency alert button."
 
