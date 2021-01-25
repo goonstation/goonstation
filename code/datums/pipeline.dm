@@ -108,7 +108,7 @@ datum/pipeline
 
 				if(result.len>0)
 					for(var/obj/machinery/atmospherics/pipe/item in result)
-						if(!members.Find(item))
+						if(!(item in members))
 							members += item
 							possible_expansions += item
 
@@ -129,12 +129,10 @@ datum/pipeline
 		air.volume = volume
 
 	proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-		if(new_network.line_members.Find(src))
+		if(src in new_network.line_members)
 			return 0
 
 		new_network.line_members += src
-
 		network = new_network
 
 		for(var/obj/machinery/atmospherics/pipe/edge in edges)

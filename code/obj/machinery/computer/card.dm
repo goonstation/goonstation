@@ -320,7 +320,7 @@
 		src.scan_access = null
 		src.mode = text2num(href_list["mode"])
 	if (href_list["colour"])
-		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown" && src.modify.icon_state != "id_dab")
+		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			var/newcolour = href_list["colour"]
 			if (newcolour == "none")
 				src.modify.icon_state = "id"

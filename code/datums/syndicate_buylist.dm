@@ -628,6 +628,13 @@ This is basically useless for anyone but miners.
 			new /obj/item/clothing/shoes/galoshes(sign.loc)
 			new /obj/item/clothing/gloves/long(sign.loc)
 
+/datum/syndicate_buylist/traitor/overcharged_vacuum
+	name = "Overcharged Vacuum Cleaner"
+	item = /obj/item/handheld_vacuum/overcharged
+	cost = 5
+	desc = "This vacuum cleaner's special attack is way more powerful than the regular thing."
+	job = list("Janitor")
+
 /datum/syndicate_buylist/traitor/syndanalyser
 	name = "Syndicate Device Analyzer"
 	item = /obj/item/electronics/scanner/syndicate

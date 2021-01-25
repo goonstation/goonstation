@@ -69,7 +69,7 @@
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if (get_dist(C, src) > 1 || load)

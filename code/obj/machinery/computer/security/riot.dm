@@ -161,7 +161,7 @@
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
-	if(!(access_security in W:access)) //doesn't have this access
+	if(!(access_securitylockers in W:access)) //doesn't have this access
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 

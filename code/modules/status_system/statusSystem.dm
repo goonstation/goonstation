@@ -13,7 +13,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		usr.changeStatus(inp, 15 MINUTES)
 	return
 
-/obj/screen/statusEffect
+/atom/movable/screen/statusEffect
 	name = "Status effect"
 	desc = ""
 	icon = 'icons/ui/statussystem.dmi'
@@ -235,9 +235,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/getStatusDuration(statusId)
 	.= null
 	if(statusEffects)
-		var/datum/statusEffect/status = 0
-		for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
-			status = S
+		for(var/datum/statusEffect/status as() in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
 			if(status.id == statusId)
 				.= status.duration
 				break
@@ -251,16 +249,12 @@ var/global/list/statusGroupLimits = list("Food"=4)
 /atom/proc/hasStatus(statusId, optionalArgs = null)
 	if(statusEffects)
 		if (!islist(statusId))
-			var/datum/statusEffect/status
-			for(var/S in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
-				status = S
+			for(var/datum/statusEffect/status as() in statusEffects) //dont typecheck as we loop through StatusEffects - Assume everything inside must be a statuseffect
 				if(status.id == statusId && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
 					return status
 		else
 			var/list/idlist = statusId
-			var/datum/statusEffect/status
-			for(var/S in statusEffects)
-				status = S
+			for(var/datum/statusEffect/status as() in statusEffects)
 				if((status.id in idlist) && ((optionalArgs && status.onCheck(optionalArgs)) || (!optionalArgs)))
 					return status
 

@@ -2125,6 +2125,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,

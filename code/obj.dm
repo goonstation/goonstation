@@ -443,6 +443,7 @@
 
 /obj/overlay
 	name = "overlay"
+	anchored = TRUE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
@@ -553,6 +554,7 @@
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	if(!src.anchored)
 		step(src, AM.dir)
+	src.ArtifactStimulus("force", AM.throwforce)
 	if(AM.throwforce >= 40)
 		if(!src.anchored && !src.throwing)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
