@@ -17,10 +17,10 @@
 
 		if (owner.sleeping)
 			if (owner.hasStatus("resting"))
-				owner.sleeping = 4
+				owner.sleeping = 2
 			else
 				owner.sleeping--
-			owner.changeStatus("paralysis", 4 SECONDS * mult)
+			owner.changeStatus("paralysis", 3 SECONDS * mult)
 			if (prob(10) && (owner.health > 0))
 				owner.emote("snore")
 			if (!owner.last_sleep) // we are asleep but weren't previously

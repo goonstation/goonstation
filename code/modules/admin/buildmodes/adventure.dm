@@ -6,7 +6,7 @@
 Click on the secondary adventure button to begin your adventure journey!<br>
 ***********************************************************"}
 	icon_state = "buildadventure"
-	var/obj/screen/buildmode/buildadventure/adventure_mode
+	var/atom/movable/screen/buildmode/buildadventure/adventure_mode
 	var/datum/adventure_submode/submode
 	var/list/submodes = list()
 
@@ -62,7 +62,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	proc/deselected()
 
 
-/obj/screen/buildmode/buildadventure
+/atom/movable/screen/buildmode/buildadventure
 	name = "Click to set adventure settings"
 	density = 1
 	anchored = 1

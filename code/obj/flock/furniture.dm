@@ -21,10 +21,9 @@
 
 /obj/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -39,11 +38,10 @@
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Storage Surface, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Storage Surface, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -64,10 +62,9 @@
 
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -84,11 +81,10 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Resting Chamber, Deployable State"
-    special_desc += "<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy."
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Resting Chamber, Deployable State
+    <br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -169,10 +165,9 @@
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Containment Capsule"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Containment Capsule
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -203,10 +198,9 @@
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Light Emitter"
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Light Emitter
+    <br><span class='bold'>###=-</span></span>"}
   else
     return null // give the standard description
 
@@ -235,13 +229,17 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.add_fingerprint(user)
 			qdel(src)
-
-		if (T.amount < 1  && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,0,0))
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
+
+/obj/lattice/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Structural Foundation
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description
 
 /////////////
 // BARRICADE
@@ -290,3 +288,11 @@
 		animate_flock_passthrough(mover)
 		return 1
 	return ..()
+
+/obj/grille/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description

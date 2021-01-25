@@ -167,7 +167,7 @@
 	// a turn-safe scale, for temporary anisotropic scales
 	proc/SafeScale(var/scalex = 1, var/scaley = 1)
 		var/rot = arctan(src.transform.b, src.transform.a)
-		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scalex, scaley, MATRIX_SCALE), rot, MATRIX_ROTATE)
+		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
@@ -388,6 +388,10 @@
 			T.checkinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
+	if(!isnull(src.loc))
+		src.loc.Entered(src, null)
+		if(isturf(src.loc)) // call it on the area too
+			src.loc.loc.Entered(src, null)
 
 /atom/movable/disposing()
 	if (temp_flags & MANTA_PUSHING)
@@ -798,7 +802,7 @@
   * there are lots of old places in the code that set loc directly.
 	* ignore them they'll be fixed later, please use this proc in the future
   */
-/atom/movable/proc/set_loc(var/newloc as turf|mob|obj in world)
+/atom/movable/proc/set_loc(atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (loc == newloc)
 		return src
@@ -808,24 +812,27 @@
 			loc = src:client:player:shamecubed
 			return
 
-	if (isturf(loc))
-		loc.Exited(src, newloc)
-
 	var/area/my_area = get_area(src)
 	var/area/new_area = get_area(newloc)
 
-	if(my_area != new_area && my_area)
+	var/atom/oldloc = loc
+	loc = newloc
+
+	src.last_move = 0
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+
+	oldloc?.Exited(src, newloc)
+
+	// area.Exited called if we are on turfs and changing areas or if exiting a turf into a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(newloc)) && isturf(oldloc))
 		my_area.Exited(src, newloc)
 
-	var/oldloc = loc
-	loc = newloc
-	 //Required for objects coming out of other objects / mobs; otherwise they will not call entered on the area when a mob drops items etc. This is not a perfect solution.
-	if(((my_area != new_area && isturf(oldloc)) || !isturf(oldloc)) && new_area)
-		new_area.Entered(src, oldloc)
+	newloc?.Entered(src, oldloc)
 
-	if(isturf(newloc))
-		var/turf/nloc = newloc
-		nloc.Entered(src, oldloc)
+	// area.Entered called if we are on turfs and changing areas or if entering a turf from a non-turf (just like Move does it internally)
+	if((my_area != new_area || !isturf(oldloc)) && isturf(newloc))
+		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && attached_objs.len)
 		for (var/atom/movable/M in src.attached_objs)
@@ -905,21 +912,30 @@
 //same as above :)
 /atom/movable/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
 	var/prev_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	var/prev_added_hasentered = src.material?.owner_hasentered_added
 	..(mat1,appearance,setname,copy,use_descriptors)
 	var/cur_mat_triggeronentered = (src.material && src.material.triggersOnEntered && src.material.triggersOnEntered.len)
+	src.material?.owner_hasentered_added = prev_added_hasentered
 
 	if (prev_mat_triggeronentered != cur_mat_triggeronentered)
 		if (isturf(src.loc))
-			if (!src.event_handler_flags & USE_HASENTERED)
-				if(cur_mat_triggeronentered)
-					var/turf/T = src.loc
-					if (T)
-						T.checkinghasentered++
-				else
+			// Check if USE_HASENTERED needs to be added if atom is missing the flag and onEnter trigger was added
+			if (!(src.event_handler_flags & USE_HASENTERED) && cur_mat_triggeronentered)
+				var/turf/T = src.loc
+				if (T)
+					T.checkinghasentered++
+				//Slap flag on so moving the atom will properly adjust checkinghasentered
+				src.event_handler_flags |= USE_HASENTERED
+				src.material.owner_hasentered_added = TRUE
+			// Check USE_HASENTERED needs to be removed when current material doesn't have onEnter trigger now and flag was added
+			else
+				if (!cur_mat_triggeronentered && prev_added_hasentered)
 					var/turf/T = src.loc
 					if (T)
 						T.checkinghasentered = max(T.checkinghasentered-1, 0)
 
+					src.event_handler_flags &= ~USE_HASENTERED
+					src.material.owner_hasentered_added = FALSE
 
 // standardized damage procs
 
@@ -992,7 +1008,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || user.stat || user.hasStatus(list("paralysis", "stunned", "weakened")) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
 		return
 
 	if (!can_reach(user, src))

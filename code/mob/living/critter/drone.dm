@@ -79,7 +79,7 @@
 		switch (act)
 			if ("scream", "alert")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), pick(alert_sounds) , 80, 1)
+					playsound(get_turf(src), pick(alert_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> broadcasts an alert!"
 		return null
 

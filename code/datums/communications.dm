@@ -176,8 +176,7 @@ datum/signal
 		return
 
 	disposing()
-		if(src.data_file)
-			src.data_file.dispose()
+		src.data_file?.dispose()
 
 		if (reusable_signals)
 			reusable_signals -= null

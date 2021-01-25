@@ -100,67 +100,6 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			explosion_new(O, get_turf(hit), 2)
 
-/mob/living/proc/betterdir()
-	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
-
-/datum/component/holdertargeting/fullauto
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_LIVING_SPRINT_START)
-	mobtype = /mob/living
-	proctype = .proc/begin_shootloop
-	var/turf/target
-	var/shooting
-	var/delaystart
-	var/delaymin
-	var/rampfactor
-	var/obj/item/gun/G
-
-	Initialize(_delaystart = 4 DECI SECONDS, _delaymin=1 DECI SECOND, _rampfactor=0.9)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
-			return COMPONENT_INCOMPATIBLE
-		else
-			G = parent
-			src.delaystart = _delaystart
-			src.delaymin = _delaymin
-			src.rampfactor = _rampfactor
-	on_dropped(datum/source, mob/user)
-		. = ..()
-		src.shooting = 0
-
-/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user)
-	if(!shooting)
-		shooting = 1
-		target = null
-		G.current_projectile.shot_number = 1
-		G.current_projectile.cost = 1
-		G.current_projectile.shot_delay = 1.5
-		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, G)
-		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/retarget)
-		SPAWN_DBG(0)
-			src.shootloop(user)
-
-/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, atom/target, params)
-	if(istype(target))
-		src.target = get_turf(target)
-		G.suppress_fire_msg = 0
-		return RETURN_CANCEL_CLICK
-
-/datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
-	var/delay = delaystart
-	while(shooting && G.canshoot() && L?.client.check_key(KEY_RUN))
-		G.shoot(target ? target : get_step(L, L.betterdir()), get_turf(L), L)
-		G.suppress_fire_msg = 1
-		sleep(max(delay*=rampfactor, delaymin))
-	//loop ended - reset values
-	shooting = 0
-	REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, G)
-	G.current_projectile.shot_number = initial(G.current_projectile.shot_number)
-	G.current_projectile.cost = initial(G.current_projectile.cost)
-	G.current_projectile.shot_delay = initial(G.current_projectile.shot_delay)
-	G.suppress_fire_msg = 0
-	UnregisterSignal(L, COMSIG_MOB_CLICK)
-
-
 
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
@@ -172,6 +111,8 @@
 			return
 		..()
 
+//TODO fix this to be better
+/*
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
@@ -260,6 +201,7 @@
 		var/obj/item/gun/energy/E = G
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
+*/
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
@@ -312,11 +254,11 @@
 	desc = "The heaviest handgun you've ever seen. The grip is stamped \"Anderson Para-Munitions\""
 	icon_state = "deag"
 	item_state = "deag"
-	force = 18.0 //mmm, pistol whip
-	throwforce = 50 //HEAVY pistol
+	force = 10.0 //mmm, pistol whip
+	throwforce = 20 //HEAVY pistol
 	auto_eject = 1
 	max_ammo_capacity = 7
-	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
 
@@ -327,6 +269,8 @@
 
 	//gimmick deagle that decapitates
 	decapitation
+		force = 18.0 //mmm, pistol whip
+		throwforce = 50 //HEAVY pistol
 		New()
 			. = ..()
 			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
@@ -367,7 +311,7 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-				H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -493,11 +437,11 @@ obj/item/gun/reagent/syringe/lovefilled
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -540,3 +484,25 @@ obj/item/gun/reagent/syringe/lovefilled
 				flick("geiger-2", src)
 			if(5)
 				flick("geiger-3", src)
+
+
+/obj/decal/fireplace  //for Jan's chrismas event
+	name = "fireplace"
+	desc = "Looks pretty toasty."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	color = "#b74909"
+
+	New()
+		. = ..()
+		processing_items += src
+
+	disposing()
+		processing_items -= src
+		. = ..()
+
+	proc/process()
+		if(!PROC_ON_COOLDOWN(30 SECONDS))
+			for (var/mob/living/M in view(src, 5))
+				if (M.bioHolder)
+					M.bioHolder.AddEffect("cold_resist", 0, 45)

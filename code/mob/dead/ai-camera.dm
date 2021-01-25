@@ -71,7 +71,7 @@
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
-				cl.images -= I
+				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
 
@@ -399,8 +399,7 @@
 		set name = "Cancel Camera View"
 
 		..()
-		if(mainframe)
-			mainframe.cancel_camera()
+		mainframe?.cancel_camera()
 		SPAWN_DBG(1 DECI SECOND)
 			src.return_mainframe()
 
@@ -654,7 +653,8 @@ world/proc/updateCameraVisibility()
 			t.aiImage.loc = t
 	aiDirty = 1
 
-	world.updateCameraVisibility()
+	if(!global.explosions.exploding)
+		world.updateCameraVisibility()
 
 /obj/machinery/camera/proc/add_to_turfs() //chck if turf cameras is 1
 	aiDirty = 1

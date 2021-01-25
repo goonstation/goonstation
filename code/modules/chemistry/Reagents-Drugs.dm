@@ -305,7 +305,7 @@ datum
 							else
 								var/monkeys = rand(1,3)
 								for(var/i = 0, i < monkeys, i++)
-									fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey1", "monkey ([rand(1, 1000)])")
+									fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", "monkey ([rand(1, 1000)])")
 						if(2)
 							var/halluc_state = null
 							var/halluc_name = null

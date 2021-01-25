@@ -196,9 +196,9 @@ SYNDICATE DRONE FACTORY AREAS
 	pathable = 0
 	can_replace_with_stuff = 1
 
-	Entered(atom/movable/O)
+	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && O.anchored != 2)
+		if(src.deadly && !(isnull(old_loc) || O.anchored == 2))
 			if (istype(O, /obj/critter) && O:flying)
 				return
 

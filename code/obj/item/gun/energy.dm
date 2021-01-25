@@ -357,7 +357,7 @@
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
-	mats = 50
+	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
@@ -558,7 +558,7 @@
 
 	New()
 		current_projectile = new/datum/projectile/wavegun
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
+		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/bouncy)
 		..()
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
@@ -1238,7 +1238,7 @@
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
-	mats = 16
+	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
 	rechargeable = 0
@@ -1347,8 +1347,8 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(0.4 SECONDS)
-					playsound(M, "sound/vox/explosive.ogg", 50)
+					SPAWN_DBG(0.4 SECONDS)
+						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
 					item_state = "lawg-clownshot"
@@ -1508,7 +1508,7 @@
 		..()
 		cell = new/obj/item/ammo/power_cell/high_power //300 PU
 		current_projectile = new/datum/projectile/energy_bolt/pulse //uses 35PU per shot, so 8 shots
-		projectiles = list(new/datum/projectile/energy_bolt/pulse)
+		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 	update_icon()
 		..()
@@ -1620,9 +1620,13 @@
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
-		if(++shotcount == 2)
+		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
 			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
 
 	shoot()
+		shotcount = 0
+		. = ..()
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
 		shotcount = 0
 		. = ..()

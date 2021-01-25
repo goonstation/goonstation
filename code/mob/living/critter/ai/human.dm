@@ -3,13 +3,12 @@
 /datum/aiHolder/human
 
 /datum/aiTask/timed/targeted/human/get_targets()
-	var/list/targets = list()
+	. = list()
 	if(holder.owner)
 		for(var/mob/living/M in view(target_range, holder.owner))
 			if(M == holder.owner) continue
 			if(isalive(M))
-				targets += M
-	return targets
+				. += M
 
 
 
@@ -88,9 +87,9 @@
 	var/last_seek = 0
 
 	frustration_check()
-		.= 0
+		. = 0
 		if (IN_RANGE(holder.owner, holder.target, target_range))
-			return 1
+			. = 1
 
 	on_tick()
 		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
@@ -129,7 +128,6 @@
 	var/last_seek = 0
 
 	on_tick()
-
 		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
@@ -171,11 +169,10 @@
 
 		..()
 
-/datum/aiTask/timed/targeted/human/suplex/
+/datum/aiTask/timed/targeted/human/suplex
 	name = "suplex"
 	minimum_task_ticks = 7
 	maximum_task_ticks = 16
-	//var/weight = 15
 	target_range = 8
 	frustration_threshold = 5
 	var/last_seek = 0
@@ -248,7 +245,9 @@
 #endif
 	New()
 		. = ..()
-		src.bioHolder.AddEffect("chicken", 0, 0, 1)
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
 
 /mob/living/carbon/human/chicken/ai_controlled
 	is_npc = TRUE

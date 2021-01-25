@@ -1,51 +1,49 @@
 ////////////////////////////////////////////////// Cyalume knight stuff /////////////////////////////////////////////
 
 /mob/living/carbon/human/cyalume_knight
+	gender = "male"
 	var/obj/item/sword/my_sword
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_first = "Trimmed"
-			bioHolder.mobAppearance.customization_second = "Full Beard"
-			bioHolder.mobAppearance.customization_third = "Eyebrows"
-			bioHolder.mobAppearance.customization_first_color = "#555555"
-			bioHolder.mobAppearance.customization_second_color = "#555555"
-			bioHolder.mobAppearance.customization_third_color = "#555555"
 
-			real_name = "Cyalume Knight"
-			desc = "A knight of modern times."
-			gender = "male"
+		real_name = "Cyalume Knight"
+		desc = "A knight of modern times."
 
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-			src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
-			var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
-			my_mask.vchange = new(src) // apply voice changer on the mask
-			src.equip_if_possible(my_mask, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
+		my_mask.vchange = new(src) // apply voice changer on the mask
+		src.equip_if_possible(my_mask, slot_wear_mask)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
 
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
 
-			my_sword = new /obj/item/sword(src)
-			my_sword.bladecolor = "P"
-			src.equip_if_possible(my_sword, slot_l_store)
+		my_sword = new /obj/item/sword(src)
+		my_sword.bladecolor = "P"
+		src.equip_if_possible(my_sword, slot_l_store)
 
-			src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+		abilityHolder.updateButtons()
 
-			sleep(1 SECOND)
-
-			bioHolder.mobAppearance.UpdateMob()
-			abilityHolder.updateButtons()
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_first = "Trimmed"
+		bioHolder.mobAppearance.customization_second = "Full Beard"
+		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first_color = "#555555"
+		bioHolder.mobAppearance.customization_second_color = "#555555"
+		bioHolder.mobAppearance.customization_third_color = "#555555"
+		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
 		var/obj/item/sword/deflecting_sword
@@ -94,7 +92,7 @@
 	icon_state = "cknight_hood"
 	see_face = 0
 
-/obj/screen/ability/topBar/cyalume_knight
+/atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
 		var/datum/targetable/cyalume_knight/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -140,7 +138,7 @@
 	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
-	//var/obj/screen/kudzu/meter/nutrients_meter = null
+	//var/atom/movable/screen/kudzu/meter/nutrients_meter = null
 	var/const/MAX_POINTS = 100
 
 	onLife(var/mult = 1)
@@ -159,7 +157,7 @@
 
 	New(datum/abilityHolder/holder)
 		..(holder)
-		var/obj/screen/ability/topBar/cyalume_knight/B = new /obj/screen/ability/topBar/cyalume_knight(null)
+		var/atom/movable/screen/ability/topBar/cyalume_knight/B = new /atom/movable/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src

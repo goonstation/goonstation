@@ -86,6 +86,7 @@
 			src.owner.set_loc(src)
 			if (!src.owner.mind)
 				src.owner.mind = new /datum/mind(  )
+				src.owner.mind.ckey = ckey
 				src.owner.mind.key = src.owner.key
 				src.owner.mind.current = src.owner
 				ticker.minds += src.owner.mind
@@ -269,7 +270,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
 
 		if (src.item)
 			src.item.set_dir(src.dir)

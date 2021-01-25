@@ -69,7 +69,7 @@
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if (get_dist(C, src) > 1 || load)
@@ -162,7 +162,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
@@ -188,7 +188,8 @@
 		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		var/mob/living/rider = src.rider
+		..()
 		rider.pixel_y = 0
 		walk(src, 0)
 		if (rider.client)
@@ -304,7 +305,7 @@
 		if (usr != rider)
 			..()
 			return
-		if (!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if (!is_incapacitated(usr))
 			eject_rider(0, 1)
 		return
 

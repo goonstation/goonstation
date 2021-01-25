@@ -98,6 +98,7 @@
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
@@ -392,8 +393,7 @@
 /datum/game_mode/nuclear/proc/random_radio_frequency()
 	var/f = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
 		f = rand(1352, 1439)

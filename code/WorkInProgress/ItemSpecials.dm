@@ -103,13 +103,11 @@
 /obj/item/proc/setItemSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.special)
-				src.special.onRemove()
+			src.special?.onRemove()
 			src.special = null
 		return null
 
-	if(src.special)
-		src.special.onRemove()
+	src.special?.onRemove()
 
 	var/datum/item_special/S = new type
 	S.master = src
@@ -120,13 +118,11 @@
 /datum/limb/proc/setDisarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.disarm_special)
-				src.disarm_special.onRemove()
+			src.disarm_special?.onRemove()
 			src.disarm_special = null
 		return null
 
-	if(src.disarm_special)
-		src.disarm_special.onRemove()
+	src.disarm_special?.onRemove()
 
 	src.disarm_special = new type
 	src.disarm_special.onAdd()
@@ -135,13 +131,11 @@
 /datum/limb/proc/setHarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.harm_special)
-				src.harm_special.onRemove()
+			src.harm_special?.onRemove()
 			src.harm_special = null
 		return null
 
-	if(src.harm_special)
-		src.harm_special.onRemove()
+	src.harm_special?.onRemove()
 
 	src.harm_special = new type
 	src.harm_special.onAdd()
@@ -221,12 +215,13 @@
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
 		.= ((istype(A, /obj/critter) || (ismob(A) && isliving(A))) && A != usr && A != user)
 
-	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user)
+	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = unpool(/obj/itemspecialeffect)
 		if(src.animation_color)
 			E.color = src.animation_color
+		E.alpha = alpha
 		E.setup(get_turf(user))
 		E.set_dir(direction)
 		E.icon_state = name

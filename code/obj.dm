@@ -65,8 +65,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -100,6 +99,28 @@
 			artifact:holder = null
 		remove_dialogs()
 		..()
+
+	proc/can_access_remotely(mob/user)
+		. = FALSE
+
+	/**
+	* Determines whether or not the user can remote access devices.
+	* This is typically limited to Borgs and AI things that have
+	* inherent packet abilities.
+	*/
+	proc/can_access_remotely_default(mob/user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
+
+
 
 	proc/client_login(var/mob/user)
 		return
@@ -314,8 +335,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)
@@ -337,10 +357,6 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
-
-			if (T.amount < 1 && !issilicon(user))
-				user.u_equip(T)
-				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
@@ -427,6 +443,7 @@
 
 /obj/overlay
 	name = "overlay"
+	anchored = TRUE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
@@ -537,6 +554,7 @@
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	if(!src.anchored)
 		step(src, AM.dir)
+	src.ArtifactStimulus("force", AM.throwforce)
 	if(AM.throwforce >= 40)
 		if(!src.anchored && !src.throwing)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)

@@ -35,6 +35,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
+	// some semi-random turf in the area to guide spy thieves
+	var/turf/spyturf = null
+
 	/// for escape checks
 	var/is_centcom = 0
 
@@ -107,6 +110,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
+	var/list/obj/critter/registered_mob_critters = list()
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -278,6 +282,15 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return null
 		return R
 
+	/*
+	 * returns a list of objects matching type in an area
+	 */
+	proc/get_type(var/type)
+		. = list()
+		for (var/A in src)
+			if(istype(A, type))
+				. += A
+
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
@@ -298,10 +311,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		sims_score = max(sims_score, 0)
 
 	proc/wake_critters()
-		if(waking_critters || !registered_critters.len) return
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
+		for (var/mob/living/critter/M as() in src.registered_mob_critters)
+			M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()
@@ -878,7 +893,7 @@ ABSTRACT_TYPE(/area/adventure)
 	New()
 		..()
 
-		SPAWN_DBG (60)
+		SPAWN_DBG(6 SECONDS)
 			if (!helldrone_awake_sound)
 				helldrone_awake_sound = new/sound()
 				helldrone_awake_sound.file = 'sound/machines/giantdrone_loop.ogg'
@@ -912,7 +927,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O) && !helldrone_awake)
 				helldrone_awake = 1
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					helldrone_wakeup()
 					src.process()
 
@@ -1111,6 +1126,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Drug Den"
 	icon_state = "purple"
 
+/area/prefab/von_ricken
+	name ="Von Ricken"
+	icon_state = "blue"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1131,6 +1150,9 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
 
+/area/dank_trench
+	name = "marijuana trench 2" //this is lowercase on purpose
+	icon_state = "green"
 
 /area/trench_landing
 	name = "Trench Landing"
@@ -2102,6 +2124,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "yellow"
 	sound_environment = 0
 
+/area/station/crew_quarters/supplylobby
+	name = "Supply Lobby"
+	icon_state = "yellow"
+	sound_environment = 0
+
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
@@ -2313,6 +2340,10 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/medbay/pharmacy
 	name = "Pharmacy"
 	icon_state = "chem"
+
+/area/station/medical/medbay/psychiatrist
+	name = "Psychiatrist's Office"
+	icon_state = "psychiatrist"
 
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
@@ -2735,6 +2766,11 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "chapeloffice"
 	sound_environment = 11
 
+/area/station/chapel/funeral_parlor
+	name = "Funeral Parlor"
+	icon_state = "funeralparlor"
+	sound_environment = 7
+
 /area/station/storage
 	name = "Storage Area"
 	icon_state = "storage"
@@ -2853,6 +2889,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hydroponics Lobby"
 	icon_state = "green"
 
+/area/station/ranch
+	name = "Ranch"
+	icon_state = "ranch"
+
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
 	name = "Garden"
@@ -2958,6 +2998,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "Research Outpost Toxins"
 		icon_state = "green"
 
+/area/research_outpost/pathology
+		name = "Research Outpost Pathology"
+		icon_state = "pink"
+
 // end station areas //
 
 /// Nukeops listening post
@@ -3028,7 +3072,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3084,7 +3128,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -3106,8 +3150,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
@@ -4924,7 +4967,7 @@ area/station/security/visitation
 /area/station2/ai_monitored/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -4972,7 +5015,7 @@ area/station/security/visitation
 /area/station2/turret_protected/New()
 	..()
 	// locate and store the motioncamera
-	SPAWN_DBG (20) // spawn on a delay to let turfs/objs load
+	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
 		for (var/obj/machinery/camera/motion/M in src)
 			motioncamera = M
 			return
@@ -4993,8 +5036,7 @@ area/station/security/visitation
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O

@@ -8,6 +8,7 @@
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	layer = OBJ_LAYER-0.1
+	stops_space_move = TRUE
 	mat_changename = 1
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
@@ -230,8 +231,6 @@
 					G.affecting.changeStatus("weakened", 2 SECONDS)
 					G.affecting.force_laydown_standup()
 				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-			if (G.affecting.bioHolder.HasEffect("fat")) // fatties crash through the table instead :V
-				deconstruct()
 			qdel(W)
 			return
 
@@ -722,11 +721,11 @@
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
-				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))) || (G.affecting.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80))))
+				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 					src.smash()
 					random_brute_damage(G.affecting, rand(20,40),1)
 					take_bleeding_damage(G.affecting, G.assailant, rand(20,40))
-					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy") || G.affecting.bioHolder.HasEffect("fat"))
+					if (prob(30) || G.assailant.bioHolder.HasEffect("clumsy"))
 						boutput(user, "<span class='alert'>You cut yourself on \the [src] as [G.affecting] slams through the glass!</span>")
 						random_brute_damage(G.assailant, rand(10,30),1)
 						take_bleeding_damage(G.assailant, G.assailant, rand(10,30))
@@ -740,10 +739,6 @@
 					smashprob += 25
 				else
 					smashprob += 10
-			if (G.affecting.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80)))
-				src.smash()
-				qdel(W)
-				return
 			qdel(W)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
@@ -788,7 +783,7 @@
 		..()
 		if (ismob(AM))
 			var/mob/M = AM
-			if ((prob(src.reinforced ? 60 : 80)) || (M.bioHolder.HasEffect("fat") && (!src.reinforced || prob(80))))
+			if ((prob(src.reinforced ? 60 : 80)))
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()

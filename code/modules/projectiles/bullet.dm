@@ -184,6 +184,11 @@ toxic - poisons
 	cost = 3
 	sname = "burst fire"
 
+/datum/projectile/bullet/nine_mm_NATO/auto
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
 
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
@@ -354,7 +359,7 @@ toxic - poisons
 			if (M.organHolder)
 				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
-					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
@@ -443,10 +448,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 6)
+			explosion_new(null, get_turf(hit), 4)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 6)
+			explosion_new(null, get_turf(O), 4)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
@@ -499,6 +504,7 @@ toxic - poisons
 
 /datum/projectile/bullet/lmg
 	name = "bullet"
+	sname = "8-shot burst"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	power = 12
 	cost = 8
@@ -520,13 +526,19 @@ toxic - poisons
 			M.changeStatus("slowed", 0.5 SECONDS)
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
+	auto
+		sname = "full auto"
+		shot_volume = 66
+		cost = 1
+		shot_number = 1
+
 /datum/projectile/bullet/lmg/weak
 	power = 1
 	cost = 2
 	shot_number = 16
 	shot_delay = 0.7
 	dissipation_delay = 8
-	nomsg = 1
+	silentshot = 1
 	slow = 0
 	implanted = null
 
@@ -923,7 +935,7 @@ toxic - poisons
 						M.emote("scream")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 30, 0.5)
+			explosion_new(null, T, 36, 0.45)
 		return
 
 /obj/smokeDummy

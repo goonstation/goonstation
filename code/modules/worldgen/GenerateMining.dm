@@ -18,9 +18,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 	proc/place()
 		#ifdef UNDERWATER_MAP
-		return new/turf/space/fluid/trench(src)
+		src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		#else
-		return new/turf/space(src)
+		src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 		#endif
 
 	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
@@ -28,9 +28,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		icon_state = "floor"
 		place()
 			#ifdef UNDERWATER_MAP
-			return new/turf/space/fluid/trench(src)
+			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			#else
-			return new/turf/simulated/floor/plating/airless/asteroid/noborders(src)
+			src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/noborders, FALSE, TRUE, FALSE, TRUE)
 			#endif
 
 	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
@@ -38,9 +38,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		icon_state = "wall"
 		place()
 			#ifdef UNDERWATER_MAP
-			return new/turf/simulated/wall/asteroid/trench(src)
+			src.ReplaceWith(/turf/simulated/wall/asteroid/trench, FALSE, TRUE, FALSE, TRUE)
 			#else
-			return new/turf/simulated/wall/asteroid(src)
+			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 			#endif
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
@@ -48,9 +48,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		icon_state = "clear"
 		place()
 			#ifdef UNDERWATER_MAP
-			return new/turf/space/fluid/trench(src)
+			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			#else
-			return new/turf/space(src)
+			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 			#endif
 
 /area/noGenerate
@@ -133,7 +133,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			for(var/y=1,y<=world.maxy,y++)
 				var/turf/T = locate(x,y,AST_ZLEVEL)
 				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
-					var/turf/simulated/wall/asteroid/N = new/turf/simulated/wall/asteroid(T)
+					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
@@ -189,7 +189,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),AST_ZLEVEL), locate(world.maxx,world.maxy,AST_ZLEVEL))) //Top
 
 		for(var/turf/T in border)
-			new/turf/unsimulated/wall/trench(T)
+			T.ReplaceWith(/turf/unsimulated/wall/trench, FALSE, TRUE, FALSE, TRUE)
 			new/area/cordon/dark(T)
 			LAGCHECK(LAG_REALTIME)
 
@@ -245,7 +245,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if(!isnull(T) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)))
-					var/turf/simulated/wall/asteroid/AST = new/turf/simulated/wall/asteroid(T)
+					var/turf/simulated/wall/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/asteroid)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
@@ -532,6 +532,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_drug_den.dmm"
 		prefabSizeX = 32
 		prefabSizeY = 27
+
+	von_ricken // One way or another - an expensive space vavaction for a physical toll.
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_von_ricken.dmm"
+		prefabSizeX = 42
+		prefabSizeY = 40
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -543,6 +550,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
+#ifdef SUBMARINE_MAP
 	mantahole
 		required = 1
 		underwater = 1
@@ -551,6 +559,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
+#endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	elevator
@@ -721,6 +730,14 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
 		prefabSizeX = 34
 		prefabSizeY = 19
+
+	danktrench //the marijuana trench
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_danktrench.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 9
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

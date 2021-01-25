@@ -20,18 +20,26 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismobcritter(M))
 			var/mob/living/critter/MC = M
-			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach))
+			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach) || istype(MC, /mob/living/critter/small_animal/wasp))
 				SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
 				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 					return
-				user.visible_message("<span class='notice'><b>[user] smacks [M] with [src]. KO!</b></span>")
-				playsound(get_turf(M), "sound/effects/electric_shock_short.ogg", 50, 1)
-				SPAWN_DBG(0.2 SECONDS)
-					playsound(get_turf(M), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
-				MC.TakeDamage("all", 20, 20)
-				if (!isdead(MC))
-					MC.death() // KO means KO!
+				smack_bug(M, user)
 				logTheThing("combat", user, M, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
 				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, 20)
 				return
 		return ..()
+
+	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
+		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
+		playsound(get_turf(target), "sound/effects/electric_shock_short.ogg", 50, 1)
+		SPAWN_DBG(0.2 SECONDS)
+			playsound(get_turf(target), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
+		if (ismobcritter(target))
+			var/mob/living/critter/MC = target
+			MC.TakeDamage("all", 20, 20)
+			if (!isdead(MC))
+				MC.death() // KO means KO!
+		else if (iscritter(target))
+			var/obj/critter/C = target
+			C.CritterDeath()

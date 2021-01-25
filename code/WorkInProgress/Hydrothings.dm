@@ -13,8 +13,8 @@ obj/decal/floor/displays/owlsign
 	icon_state = "postcard-owlery"
 	interesting = "There are traces of hydrocarbons, collagens, proteins, and sugars deposited in the cellulose of the card"
 
-	sizex = 1066
-	sizey = 735
+	sizex = 1040
+	sizey = 705
 
 	New()
 		..()
@@ -531,7 +531,7 @@ obj/item/gnomechompski/elf
 /obj/item/poster/titled_photo/bee
 	name = "Er- Found? Poster"
 	desc = "A poster of a m------ Bee loved by all."
-	poster_image = 'icons/missingbee.png'
+	poster_image = 'icons/misc/missingbee.png'
 	line_b1 = "<center><b> THANK YOU </b></center>"
 	line_b2 = "<b>LAST SEEN:</b> New Store!"
 	line_b3 = "<b>NOTES:</b> Responds to being called Bombini"
@@ -1194,7 +1194,8 @@ obj/critter/madnessowl/switchblade
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
 					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-					BORG.part_head.ropart_take_damage(rand(20,40),0)
+					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+						BORG.compborg_lose_limb(BORG.part_head)
 					if (prob(33)) playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 					attack_delay = 5
 		else

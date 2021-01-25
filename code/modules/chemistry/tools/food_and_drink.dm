@@ -140,8 +140,8 @@
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
-					if (!(locate(/obj/reagent_dispensers/ants) in src.loc))
-						new/obj/reagent_dispensers/ants(src.loc)
+					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
+						new/obj/reagent_dispensers/cleanable/ants(src.loc)
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -178,9 +178,6 @@
 		if (!src.edible)
 			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
-		if (M == user && user.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in eating this.</span>")
 			return 0
 		if (!src.amount)
 			boutput(user, "<span class='alert'>None of [src] left, oh no!</span>")
@@ -276,10 +273,7 @@
 					on_finish(M, user)
 					qdel(src)
 				return 1
-			if (M.mob_flags & IS_RELIQUARY)
-				boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to feed them.</span>")
-				return
-			else if (check_target_immunity(M))
+			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
 			else if(!M.can_eat(src))
 				user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src], but they can't eat that!</span>",\
@@ -364,6 +358,7 @@
 				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
+		eater.on_eat(src)
 
 	proc/on_finish(mob/eater)
 		return
@@ -479,9 +474,6 @@
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
-		if (M == user && user.mob_flags & IS_RELIQUARY)
-			boutput(user, "<span class='alert'>You don't come equipped with a digestive system, there would be no point in drinking this.</span>")
-			return 0
 		if (!src.reagents || !src.reagents.total_volume)
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
@@ -489,9 +481,6 @@
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
-			else if (M.mob_flags & IS_RELIQUARY)
-				boutput(user, "<span class='alert'>They don't come equipped with a digestive system, so there is no point in trying to make them drink.</span>")
-				return 0
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
@@ -527,7 +516,7 @@
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.reaction(M, INGEST, gulp_size)
-				SPAWN_DBG (5)
+				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
@@ -1057,6 +1046,8 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1069,6 +1060,8 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
+			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				JOB_XP(user, "Bartender", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1113,6 +1106,8 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1552,6 +1547,22 @@
 		initial_volume = 120
 		initial_reagents = list("coffee" = 80, "vodka" = 40)
 
+/obj/item/reagent_containers/food/drinks/mug/HoS
+	name = "Head of Security's mug"
+	desc = ""
+	icon_state = "HoSMug"
+	item_state = "mug"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+		else
+			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue
+	icon_state = "HoSMugBlue"
+	item_state = "mug"
+
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
 		..()
@@ -1611,8 +1622,8 @@
 			var/average_rgb = average.to_rgba()
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-carafe", -1)
-				src.fluid_image.color = average_rgb
-				src.UpdateOverlays(src.fluid_image, "fluid")
+			src.fluid_image.color = average_rgb
+			src.UpdateOverlays(src.fluid_image, "fluid")
 			if (istype(src.loc, /obj/machinery/coffeemaker))
 				var/obj/machinery/coffeemaker/CM = src.loc
 				CM.update(average_rgb)
@@ -1719,7 +1730,7 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "GannetsCocktailer"
+	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
 
@@ -1735,5 +1746,12 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
+				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+	name = "golden cocktail shaker"
+	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	icon_state = "golden_cocktailshaker"

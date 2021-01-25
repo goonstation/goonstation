@@ -122,6 +122,7 @@
 		F["preferred_map"] << src.preferred_map
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
+		F["local_deachat"] << src.local_deadchat
 
 		if (returnSavefile)
 			return F
@@ -221,12 +222,19 @@
 			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
+			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
 			F["[profileNum]_facial_color"] >> AH.customization_second_color
+			F["[profileNum]_facial_color"] >> AH.customization_second_color_original
 			F["[profileNum]_detail_color"] >> AH.customization_third_color
+			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
+			F["[profileNum]_skin_tone"] >> AH.s_tone_original
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
+			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
+			F["[profileNum]_facial_style_name"] >> AH.customization_second_original
 			F["[profileNum]_detail_style_name"] >> AH.customization_third
+			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
@@ -274,6 +282,7 @@
 		F["preferred_map"] >> src.preferred_map
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
+		F["local_deachat"] >> src.local_deadchat
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
@@ -366,7 +375,7 @@
 
 
 	cloudsave_load( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 
 		if (IsGuestKey(user.key))
@@ -392,7 +401,7 @@
 		return src.savefile_load(user, 1, save)
 
 	cloudsave_save( client/user, var/name )
-		if(isnull( user.cloudsaves ))
+		if(isnull( user.player.cloudsaves ))
 			return "Failed to retrieve cloud data, try rejoining."
 		if (IsGuestKey( user.key ))
 			return 0
@@ -414,7 +423,7 @@
 		var/list/ret = json_decode(response.body)
 		if( ret["status"] == "error" )
 			return ret["error"]["error"]
-		user.cloudsaves[ name ] = length( exported )
+		user.player.cloudsaves[ name ] = length( exported )
 		return 1
 
 	cloudsave_delete( client/user, var/name )
@@ -430,5 +439,5 @@
 			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
-		user.cloudsaves.Remove( name )
+		user.player.cloudsaves.Remove( name )
 		return 1

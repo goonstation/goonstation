@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors.dm
  */
 
@@ -59,6 +59,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 

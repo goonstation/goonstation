@@ -241,7 +241,7 @@
 				src.desc = "A self-heating burrito that purports to contain elm-smoked meat. Of some sort. Probably from an animal."
 				src.initial_reagents["beff"] = 3
 				src.initial_reagents["synthflesh"] = 2
-				src.initial_reagents["tongueofdog"] = 5
+				src.initial_reagents["eyeofnewt"] = 5
 
 			if (8)
 				src.real_name = "Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor"

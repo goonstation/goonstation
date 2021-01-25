@@ -120,7 +120,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy
+				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -151,7 +151,7 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
 
 		ornaments
 			name = "box of assorted ornaments"
@@ -187,8 +187,28 @@
 		icon_closed = "patchbox-med"
 		icon_open = "patchbox-med-open"
 		icon_empty = "patchbox-med-empty"
+		var/icon_color = "patchbox-med-coloring"
+		var/image/box_color
 
+		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
+			var/obj/item/reagent_containers/patch/temp = src.take_from()
+			if (temp)
+				src.item_amount++
+				if (temp.medical && temp.reagents.total_volume)
+					average = temp.reagents.get_average_color()
+				else
+					return
+			else if (!average)
+				return
+			if (!src.box_color)
+				src.box_color = image('icons/obj/items/storage.dmi', icon_color, -1)
+			average.a = 255;
+			src.box_color.color = average.to_rgba()
+			src.UpdateOverlays(src.box_color, "reagentcolour")
 
+		New()
+			..()
+			build_overlay()
 
 		attack(mob/M as mob, mob/user as mob)
 			if (src.open)

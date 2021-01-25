@@ -159,7 +159,7 @@
 /obj/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O)) //user.contents.Find(src) WHY WERE WE LOOKING FOR THE MORGUE TRAY IN THE USER
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -327,7 +327,7 @@
 		if (M == src.connected) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				L.changeStatus("stunned", 10 SECONDS)
 
 				var/i
@@ -403,7 +403,7 @@
 /obj/c_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
 		return
-	if (istype(O, /obj/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
+	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
@@ -599,6 +599,7 @@
 							H.set_body_icon_dirty()
 							if (H.limbs)
 								H.limbs.reset_stone()
+							H.update_colorful_parts()
 				if (emagged && isdead(M))
 					qdel(M)
 					make_cleanable( /obj/decal/cleanable/ash,src)

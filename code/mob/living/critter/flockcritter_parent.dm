@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -303,8 +303,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F)
-			F.canmove = 0
+		F?.canmove = 0
 		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()
@@ -418,6 +417,7 @@
 					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
 					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
+				target.was_harmed(F, null, "flock", INTENT_DISARM)
 				// do effect
 				src.decal = unpool(/obj/decal/flock_build_wall)
 				if(src.decal)

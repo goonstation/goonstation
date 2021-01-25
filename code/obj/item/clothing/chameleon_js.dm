@@ -170,7 +170,7 @@
 
 	rank/roboticist
 		name = "roboticist's jumpsuit"
-		desc = "Red and black really helps highlight the cranial fluid stains."
+		desc = "Black and white, like ethics."
 		icon_state = "robotics"
 		item_state = "robotics"
 

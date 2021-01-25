@@ -67,8 +67,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It feels furry."
 
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(M)
-			M.bodytemperature = 310
+		M?.bodytemperature = 310
 		return
 
 /datum/materialProc/fail_explosive
@@ -355,6 +354,60 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				target.air.merge(payload)
 		return
 
+/datum/materialProc/moltiz_temp
+	var/total_oxygen = 200
+
+	execute(var/atom/location, var/temp, var/agent_b=FALSE)
+		if(total_oxygen <= 0) return
+		var/turf/target = get_turf(location)
+		if(ON_COOLDOWN(target, "moltiz_oxy_generate", 8 SECONDS)) return
+
+		var/datum/gas_mixture/air = target.return_air()
+		if(!air) return
+
+		var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+		payload.temperature = T20C
+		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+
+		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+			var/datum/gas/oxygen_agent_b/trace_gas = new
+
+			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
+			payload.trace_gases = list()
+			payload.trace_gases += trace_gas
+
+			// Itr 1: 0.125 Agent B, 10 Oxy
+			// Itr 2: 0.0605 Agent B
+			// 0.1855moles/12cells=0.0155moles per cell
+			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
+			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			trace_gas.moles += min(total_oxygen/1024,0.125)
+			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
+			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+		else
+			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+
+		payload.oxygen = min(total_oxygen,10)
+		total_oxygen -= payload.oxygen
+
+		target.assume_air(payload)
+		return
+
+/datum/materialProc/moltiz_temp/agent_b
+	execute(var/atom/location, var/temp)
+		..(location, temp, TRUE)
+		return
+
+/datum/materialProc/moltiz_exp
+	execute(var/atom/location, var/sev)
+		var/turf/target = get_turf(location)
+		if(sev > 0 && sev < 4)
+			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
+			payload.oxygen = 25
+			payload.temperature = T20C
+			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			target.assume_air(payload)
+
 /datum/materialProc/miracle_add
 	execute(var/location)
 		animate_rainbow_glow(location)
@@ -460,11 +513,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
-/datum/materialProc/soulsteel_add
-	execute(var/atom/owner)
-		owner.event_handler_flags |= USE_HASENTERED
-		return
-
 /datum/materialProc/soulsteel_entered
 	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
@@ -488,7 +536,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/reflective_onbullet
 	execute(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
 		if(projectile.proj_data.damage_type & D_BURNING || projectile.proj_data.damage_type & D_ENERGY)
-			shoot_reflected_true(projectile, projectile) //shoot_reflected_to_sender()
+			shoot_reflected_bounce(projectile, owner) //shoot_reflected_to_sender()
 		return
 
 /datum/materialProc/negative_add

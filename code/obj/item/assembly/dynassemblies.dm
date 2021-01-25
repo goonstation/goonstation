@@ -44,7 +44,7 @@ For hairball DynAssemblies see: jonescity.dm
 				boutput(user, "You can't add any more of this type of part!")
 			else
 				boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
-				if (!do_after(user, 50))
+				if (!do_after(user, 5 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return ..()
 				else
@@ -320,7 +320,7 @@ For hairball DynAssemblies see: jonescity.dm
 	if (istype(W, /obj/item/musicpart))
 		var/obj/item/musicpart/P = W
 		boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
-		if (!do_after(user, 50))
+		if (!do_after(user, 5 SECONDS))
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return ..()
 		else

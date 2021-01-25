@@ -421,7 +421,7 @@
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
 				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
-				G.affecting:TakeDamage("head", 0, 5)
+				G.affecting.TakeDamage("head", 5, 0)
 				src.damage_blunt(G.affecting.throwforce)
 				qdel(W)
 		else
@@ -1020,11 +1020,11 @@
 
 /obj/window/feather/special_desc(dist, mob/user)
   if(isflock(user))
-    var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-    special_desc += "<br><span class='bold'>ID:</span> Fibrewoven Window"
-    special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%" // todo: damageable walls
-    special_desc += "<br><span class='bold'>###=-</span></span>"
-    return special_desc
+    return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+    <br><span class='bold'>ID:</span> Fibrewoven Window
+    <br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
+    <br><span class='bold'>###=-</span></span>"}
+    // todo: damageable walls
   else
     return null // give the standard description
 

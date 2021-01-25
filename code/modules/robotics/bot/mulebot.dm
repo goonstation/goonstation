@@ -429,7 +429,7 @@
 
 	// called to load a crate
 	proc/load(var/atom/movable/C)
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if(get_dist(C, src) > 1 || load || !on)

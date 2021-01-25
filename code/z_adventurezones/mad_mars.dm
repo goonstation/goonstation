@@ -344,7 +344,7 @@
 						name = "malfunctioning robot"
 						src.speak("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
 						src.visible_message("The <b>[src]</b> points at [C.name]!")
-						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						startup = 0
 						wanderer = 1
 					src.visible_message("<span class='alert'>The <b>[src]</b> charges at [C:name]!</span>")
@@ -388,7 +388,7 @@
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
 /obj/mars_roverpuzzle
@@ -486,7 +486,8 @@
 		icon_state = "marsrover"
 
 /obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 
@@ -532,7 +533,7 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -568,7 +569,7 @@
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(!is_incapacitated(usr))
 		eject_rider(0, 1)
 	return
 

@@ -7,7 +7,7 @@ var/datum/explosion_controller/explosions
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -25,11 +25,14 @@ var/datum/explosion_controller/explosions
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
 
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance)
+		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width)
 
 	proc/queue_damage(var/list/new_turfs)
-		for (var/turf/T in new_turfs)
+		var/c = 0
+		for (var/turf/T as() in new_turfs)
 			queued_turfs[T] += new_turfs[T]
+			if(c++ % 100 == 0)
+				LAGCHECK(LAG_HIGH)
 
 	proc/kaboom()
 		defer_powernet_rebuild = 1
@@ -93,13 +96,22 @@ var/datum/explosion_controller/explosions
 			p = queued_turfs[T]
 			last_touched = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
+#ifdef EXPLOSION_MAPTEXT_DEBUGGING
+			if (p >= 6)
+				T.maptext = "<span style='color: #ff0000;' class='pixel c sh'>[p]</span>"
+			else if (p > 3)
+				T.maptext = "<span style='color: #ffff00;' class='pixel c sh'>[p]</span>"
+			else
+				T.maptext = "<span style='color: #00ff00;' class='pixel c sh'>[p]</span>"
+
+#else
 			if (p >= 6)
 				T.ex_act(1, last_touched)
 			else if (p > 3)
 				T.ex_act(2, last_touched)
 			else
 				T.ex_act(3, last_touched)
-
+#endif
 		LAGCHECK(LAG_HIGH)
 
 		queued_turfs.len = 0
@@ -112,6 +124,7 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
+		world.updateCameraVisibility()
 
 	proc/process()
 		if (exploding)
@@ -130,13 +143,17 @@ var/datum/explosion_controller/explosions
 	var/turf/epicenter
 	var/power
 	var/brisance
+	var/angle
+	var/width
 
-	New(atom/source, turf/epicenter, power, brisance)
+	New(atom/source, turf/epicenter, power, brisance, angle, width)
 		..()
 		src.source = source
 		src.epicenter = epicenter
 		src.power = power
 		src.brisance = brisance
+		src.angle = angle
+		src.width = width
 
 	proc/logMe()
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
@@ -176,6 +193,8 @@ var/datum/explosion_controller/explosions
 		var/list/open = list(epicenter)
 		nodes[epicenter] = radius
 		while (open.len)
+			if(length(nodes) % 100 == 0)
+				LAGCHECK(LAG_HIGH)
 			var/turf/T = open[1]
 			open.Cut(1, 2)
 			var/value = nodes[T] - 1 - T.explosion_resistance
@@ -191,17 +210,25 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
+				if(width < 360)
+					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+					if(diff > width)
+						continue
+					else if(diff > width/2)
+						new_value = new_value / 3 - 1
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
 				open |= target
 
 		radius += 1 // avoid a division by zero
-		for (var/turf/T in nodes) // inverse square law (IMPORTANT) and pre-stun
+		for (var/turf/T as() in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / ((radius-nodes[T])**2)
 			nodes[T] = p
 			blame[T] = last_touched
 			p = min(p, 10)
+			if(prob(1))
+				LAGCHECK(LAG_HIGH)
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)

@@ -267,7 +267,7 @@ Frequency:
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
-		SPAWN_DBG (300)
+		SPAWN_DBG(30 SECONDS)
 			if (P)
 				portals -= P
 				pool(P)

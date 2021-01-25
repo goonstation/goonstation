@@ -166,6 +166,18 @@
 		if(!noIcon)
 			SET_SELF(.)
 
+//Converts a blend_mode constant to one acceptable to icon.Blend()
+/proc/blendMode2iconMode(blend_mode)
+	switch(blend_mode)
+		if(BLEND_MULTIPLY)
+			return ICON_MULTIPLY
+		if(BLEND_ADD)
+			return ICON_ADD
+		if(BLEND_SUBTRACT)
+			return ICON_SUBTRACT
+		else
+			return ICON_OVERLAY
+
 	//Clear defines
 	#undef flatX1
 	#undef flatX2
@@ -183,15 +195,3 @@
 
 	#undef BLANK
 	#undef SET_SELF
-
-//Converts a blend_mode constant to one acceptable to icon.Blend()
-/proc/blendMode2iconMode(blend_mode)
-	switch(blend_mode)
-		if(BLEND_MULTIPLY)
-			return ICON_MULTIPLY
-		if(BLEND_ADD)
-			return ICON_ADD
-		if(BLEND_SUBTRACT)
-			return ICON_SUBTRACT
-		else
-			return ICON_OVERLAY

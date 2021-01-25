@@ -34,8 +34,8 @@
 	cost = PAY_IMPORTANT
 	hidden = 1
 
-/datum/clothingbooth_item/monocole
-	name = "Monocole"
+/datum/clothingbooth_item/monocle
+	name = "Monocle"
 	path = /obj/item/clothing/glasses/monocle
 	category = "Accessories"
 	cost = PAY_IMPORTANT/3
@@ -509,6 +509,7 @@
 /datum/clothingbooth_item/dressb
 	path = /obj/item/clothing/suit/dressb
 	category = "Formal"
+	name = "Black Sun Dress"
 	amount = 2
 	cost = PAY_DOCTORATE/3
 
@@ -516,54 +517,63 @@
 /datum/clothingbooth_item/catears_white
 	path = /obj/item/clothing/head/nyan/white
 	category = "Headwear"
+	name = "White Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_gray
 	path = /obj/item/clothing/head/nyan/gray
 	category = "Headwear"
+	name = "Gray Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_black
 	path = /obj/item/clothing/head/nyan/black
 	category = "Headwear"
+	name = "Black Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_red
 	path = /obj/item/clothing/head/nyan/red
 	category = "Headwear"
+	name = "Red Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_orange
 	path = /obj/item/clothing/head/nyan/orange
 	category = "Headwear"
+	name = "Orange Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_yellow
 	path = /obj/item/clothing/head/nyan/yellow
 	category = "Headwear"
+	name = "Yellow Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_green
 	path = /obj/item/clothing/head/nyan/green
 	category = "Headwear"
+	name = "Green Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_blue
 	path = /obj/item/clothing/head/nyan/blue
 	category = "Headwear"
+	name = "Blue Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_purple
 	path = /obj/item/clothing/head/nyan/purple
 	category = "Headwear"
+	name = "Purple Cat Ears"
 	amount = 3
 	cost = PAY_TRADESMAN/2
 
@@ -616,3 +626,9 @@
 	name = "Green Visor"
 	category = "Accessories"
 	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/antlers
+	path = /obj/item/clothing/head/antlers
+	name = "Antlers"
+	amount = 3
+	cost = PAY_TRADESMAN/2

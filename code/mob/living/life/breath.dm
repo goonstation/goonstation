@@ -107,6 +107,8 @@
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
 				return
+			if(human_owner?.hasStatus("aquabreath"))
+				return
 			if (prob(25) && owner.losebreath > 0)
 				boutput(owner, "<span class='alert'>You are drowning!</span>")
 
@@ -272,7 +274,7 @@
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)
-			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
 		else
 			owner.co2overloadtime = 0
@@ -285,14 +287,15 @@
 			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+			if(SA)
 				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					owner.changeStatus("paralysis", 5 SECONDS)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						owner.sleeping = max(owner.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(20))
+					if (prob(percentmult(20, mult)))
 						owner.emote(pick("giggle", "laugh"))
 
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
@@ -311,10 +314,11 @@
 
 			//cyber lungs beat radiation. Is there anything they can't do?
 			if (!has_cyberlungs)
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if (RV)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (human_owner)
+		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
 				//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
 				var/lung_burn_left = min(max(breath.temperature - human_owner.organHolder.left_lung?.temp_tolerance, 0) / 3, 10)

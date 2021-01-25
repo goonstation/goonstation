@@ -521,13 +521,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(throw_return)
 			projectiles = list(current_projectile)
 		else
-			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/burst)
+			projectiles = list(current_projectile,new/datum/projectile/bullet/nine_mm_NATO/auto)
+			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
 		..()
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/burst))
-			spread_angle = 8
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
+			spread_angle = 10
 			shoot_delay = 4
 		else
 			spread_angle = 0
@@ -980,17 +981,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		current_projectile = new/datum/projectile/special/spreader/buckshot_burst/
 		..()
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-/*  //  how about not putting a goddamn irl suicide threat into the game??? fuck this content
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-/obj/item/gun/kinetic/tactical_shotgun/oblivion //"I've a gun named Oblivion that'll take all the pain away.. All our pain away..."
-	name = "Oblivion"
-	New()
-		return
-
-*/ /////////////////////////////////////////////////////////////////////////////////////////
-
 // assault
 /obj/item/gun/kinetic/assault_rifle
 	name = "Sirius assault rifle"
@@ -1066,21 +1056,19 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 0.5
-	slowdown_time = 3
-
 	two_handed = 1
 	w_class = 4
 
 	New()
 		ammo = new/obj/item/ammo/bullets/lmg
 		current_projectile = new/datum/projectile/bullet/lmg
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1, FULLAUTO_INACTIVE)
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.5)
+		setProperty("movespeed", 1)
 
 
 /obj/item/gun/kinetic/cannon
@@ -1535,6 +1523,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = 8.0

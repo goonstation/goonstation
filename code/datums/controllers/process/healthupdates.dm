@@ -16,6 +16,10 @@ datum/controller/process/healthupdates
 				if (!(c++ % 20))
 					scheck()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/healthupdates/old_healthupdates = target
+		src.detailed_count = old_healthupdates.detailed_count
+
 	onFinish()
 		global.health_update_queue.len = 0
 

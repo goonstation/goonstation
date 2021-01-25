@@ -473,7 +473,7 @@
 		if (..())
 			return 1
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			update_known_devices()
 
 

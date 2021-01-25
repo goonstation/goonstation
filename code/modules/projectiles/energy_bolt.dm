@@ -306,7 +306,7 @@ toxic - poisons
 	icon_state = "pulse"
 	power = 20
 	cost = 35
-	sname = "pulse"
+	sname = "kinetic pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
@@ -340,26 +340,32 @@ toxic - poisons
 		return
 
 
-/datum/projectile/energybolt/reliquary_burst
-	name = "energy"
-	shot_sound = null
-	power = 1
-	cost = 2
+/datum/projectile/energy_bolt/electromagnetic_pulse
+	name = "pulse"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "relibullet"
-	shot_number = 16
-	shot_delay = 0.7
-	dissipation_delay = 8
-	damage_type = D_ENERGY
-	hit_ground_chance = 30
+	icon_state = "pulse"
+	power = 20
+	cost = 100
+	sname = "electromagnetic pulse"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	damage_type = D_SPECIAL
+	hit_ground_chance = 0
 	brightness = 1
-	disruption = 8
-	icon_turf_hit = "bhole-small"
+	color_red = 0.18
+	color_green = 0.2
+	color_blue = 1
 
-	on_hit(atom/hit, dirflag)
-		if(ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			M.changeStatus("slowed", 1.5 SECONDS)
+	disruption = 25
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+	on_hit(atom/H, angle, var/obj/projectile/P)
+		var/turf/T = get_turf(H)
+		for(var/turf/tile in range(1, T))
+			for(var/atom/movable/O in tile.contents)
+				if(!istype(O, /obj/machinery/nuclearbomb)) //emp does not affect nuke
+					O.emp_act()
+		elecflash(T)
 
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer spark"

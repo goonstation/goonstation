@@ -52,6 +52,10 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
+#ifdef RP_MODE
+			if(source=="random")
+				return
+#endif
 			if (emergency_shuttle.online)
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
@@ -82,7 +86,7 @@
 			cleanup_event()
 			return
 
-		SPAWN_DBG(10)
+		SPAWN_DBG(1 SECOND)
 			broadcast_sound(signal_intro)
 			play_all_numbers()
 			broadcast_sound(signal_intro)
@@ -115,7 +119,9 @@
 
 		var/list/escape_objectives = list(
 			/datum/objective/escape,
+#ifndef RP_MODE
 			/datum/objective/escape/hijack,
+#endif
 			/datum/objective/escape/survive,
 			/datum/objective/escape/kamikaze,
 			/datum/objective/escape/stirstir,

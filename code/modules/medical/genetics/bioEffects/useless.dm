@@ -83,6 +83,7 @@
 		if (new_color < 0)
 			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 	OnRemove()
@@ -96,6 +97,11 @@
 		if (!AH)
 			return
 		AH.s_tone = holder_skin
+		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
+			AH.customization_first_color = fix_colors(AH.customization_first_color)
+			AH.customization_second_color = fix_colors(AH.customization_second_color)
+			AH.customization_third_color = fix_colors(AH.customization_third_color)
+		H.update_colorful_parts()
 		H.update_body()
 
 /datum/bioEffect/color_changer
@@ -116,31 +122,33 @@
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/color_changer) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			AH.e_color_carry = AH.e_color
-			AH.customization_first_color_carry = AH.customization_first_color
-			AH.customization_second_color_carry = AH.customization_second_color
-			AH.customization_third_color_carry = AH.customization_third_color
-			AH.s_tone_carry = AH.s_tone
+			AH.e_color_original = AH.e_color
+			AH.customization_first_color_original = AH.customization_first_color
+			AH.customization_second_color_original = AH.customization_second_color
+			AH.customization_third_color_original = AH.customization_third_color
+			AH.s_tone_original = AH.s_tone
 
 			AH.e_color = eye_color_to_use
 			AH.s_tone = skintone_to_use
 			AH.customization_first_color = color_to_use
 			AH.customization_second_color = color_to_use
 			AH.customization_third_color = color_to_use
-			H.update_face()
-			H.update_body()
+			H.update_colorful_parts()
 
 	OnRemove()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			AH.e_color = AH.e_color_carry
-			AH.s_tone = AH.s_tone_carry
-			AH.customization_first_color = AH.customization_first_color_carry
-			AH.customization_second_color = AH.customization_second_color_carry
-			AH.customization_third_color = AH.customization_third_color_carry
-			H.update_face()
-			H.update_body()
+			AH.e_color = AH.e_color_original
+			AH.s_tone = AH.s_tone_original
+			AH.customization_first_color = AH.customization_first_color_original
+			AH.customization_second_color = AH.customization_second_color_original
+			AH.customization_third_color = AH.customization_third_color_original
+			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
+				AH.customization_first_color = fix_colors(AH.customization_first_color)
+				AH.customization_second_color = fix_colors(AH.customization_second_color)
+				AH.customization_third_color = fix_colors(AH.customization_third_color)
+			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black
 	name = "Melanin Stimulator"

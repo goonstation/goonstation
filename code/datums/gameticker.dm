@@ -234,7 +234,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		logTheThing("ooc", null, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
-		boutput(world, "<span class='notice'><b>Tip:</b> [pick(tips)]</span>")
+		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -499,6 +499,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				if (player.check_contents_for(/obj/item/gnomechompski))
 					player.unlock_medal("Guardin' gnome", 1)
 
+				if (player.mind.assigned_role == "Security Assistant")
+					player.unlock_medal("I helped!", 1)
+
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
 					if (H && istype(H) && H.implant && H.implant.len > 0)
@@ -730,6 +733,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
+
+#ifdef SECRETS_ENABLED
+	for_by_tcl(S, /obj/santa_helper)
+		S.save_mail()
+#endif
 
 	logTheThing("debug", null, null, "Done with books")
 
