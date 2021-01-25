@@ -977,7 +977,7 @@ $(function() {
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
-				if (!(J.name in src.jobs_med_priority || J.name in src.jobs_low_priority))
+				if (!(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
 
 
