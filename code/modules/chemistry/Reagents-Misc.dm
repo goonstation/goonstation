@@ -274,6 +274,57 @@ datum
 			fluid_b = 193
 			transparency = 200
 
+		omegazine
+			name = "omegazine"
+			id = "omegazine"
+			description = "A dangerous chemical that allows for seemingly superhuman feats for a short time ..."
+			random_chem_blacklisted = 1
+			reagent_state = LIQUID
+			fluid_r = 120
+			fluid_g = 0
+			fluid_b = 140
+			transparency = 200
+			value = 66 // vOv
+			//addiction_prob = 25
+			stun_resist = 1000
+
+			on_add()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.add_stam_mod_regen("omegazine", 500)
+					M.add_stam_mod_max("omegazine", 500)
+				..()
+
+			on_remove()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.remove_stam_mod_regen("omegazine")
+					M.remove_stam_mod_max("omegazine")
+				..()
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (src.volume > 5)
+					if (M.get_oxygen_deprivation())
+						M.take_oxygen_deprivation(-5 * mult)
+					if (M.get_toxin_damage())
+						M.take_toxin_damage(-5 * mult)
+					M.delStatus("slowed")
+					M.delStatus("disorient")
+					if (M.misstep_chance)
+						M.change_misstep_chance(-INFINITY)
+					M.HealDamage("All", 10 * mult, 10 * mult)
+					M.dizziness = max(0,M.dizziness-10)
+					M.drowsyness = max(0,M.drowsyness-10)
+					M.sleeping = 0
+				else
+					M.take_toxin_damage(2 * mult)
+					random_brute_damage(M, 1 * mult)
+					if (probmult(10))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40))
+				..()
+				return
+
 		hairgrownium //It..grows hair.  Not to be confused with the previous hair growth reagent, "wacky monkey cheeseonium"
 			name = "hairgrownium"
 			id = "hairgrownium"
@@ -3132,6 +3183,7 @@ datum
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
 			description = "This is a strange viscous fluid that seems to have the properties of both a liquid and a gas."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 190
@@ -3142,6 +3194,7 @@ datum
 			name = "quark-gluon plasma"
 			id = "big_bang"
 			description = "Its... beautiful!"
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 240

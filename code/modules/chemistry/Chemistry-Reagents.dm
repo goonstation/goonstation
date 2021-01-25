@@ -49,6 +49,7 @@ datum
 		var/stun_resist = 0
 		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
 		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
+		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 
 		New()
 			..()
