@@ -1,4 +1,9 @@
 
+(t)mon jan 25 21
+(u)adharainspace
+(p)3468
+(e)🆕🎨|feature, sprites
+(*)Ranchers now have a fishing rod in their backpacks. Fishing itself is pretty WIP but there's some content there for you.
 (t)sun jan 24 21
 (u)Tarmunora
 (e)⚖|balance
