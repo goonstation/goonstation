@@ -1497,7 +1497,7 @@
 			icon_state = "miasma[how_miasma]"
 
 	getTooltip()
-		. = "You breathed in [amount_desc[how_miasma]] miasma in you."
+		. = "You breathed in [amount_desc[how_miasma]] miasma."
 		if(how_miasma > 1)
 			var/mob/living/critter/critter = L
 			if(istype(critter) && critter.ghost_spawned)
