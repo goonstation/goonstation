@@ -15,6 +15,21 @@
 /// LUBE Drain
 #define LUBE_DRAIN_OPEN			 (1<<3)
 
+// Warning Lights
+/// Lack of surplus power and drain exceeds current perapc
+#define WARNING_APC_DRAINING (1<<0)
+/// Expected to drain cell in ~5min
+#define WARNING_5MIN (1<<1)
+/// Expected to drain cell in ~1min
+#define WARNING_1MIN (1<<2)
+/// Gas molar quantity is problematic!
+#define WARNING_LOW_MOLES (1<<3)
+
+// Machinery rate is 4 (0.4 seconds) subdivided into 8 groups
+#define TIME_PER_PROCESS (4 * 8)
+#define WARNING_FAIL_5MIN_ITERS (5 MINUTES / TIME_PER_PROCESS)
+#define WARNING_FAIL_1MIN_ITERS (1 MINUTES / TIME_PER_PROCESS)
+
 // TEG variants
 // HIGH TEMP Model
 #define TEG_HIGH_TEMP	(1<<0)
@@ -45,6 +60,7 @@
 	var/repairstate = 0
 	var/repair_desc = ""
 	var/variant_b_active = FALSE
+	var/warning_active = FALSE
 
 	anchored = 1.0
 	density = 1
@@ -156,6 +172,7 @@
 		//Calculate necessary moles to transfer using PV = nRT
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
+		src.warning_active = FALSE
 		// Check if fan/blower is required to overcome passive gate
 		if(circulator_flags & BACKFLOW_PROTECTION)
 			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
@@ -168,6 +185,29 @@
 				fan_power_draw = round((total_pressure) / src.fan_efficiency)
 				if(src.reagents.has_reagent("voltagen", 1))
 					fan_power_draw = max(0, 10*log(total_pressure))
+
+
+				if(pressure_delta > desired_pressure) src.warning_active |= WARNING_LOW_MOLES
+				if(src.generator)
+					var/area/A = get_area(src)
+					var/apc_charge
+					var/cell_wattage
+					var/surplus
+					if(istype(A, /area/station/))
+						var/obj/machinery/power/apc/P = A.area_apc
+						if(P)
+							apc_charge = P.terminal.powernet?.perapc
+							cell_wattage = P.cell.charge/CELLRATE
+							surplus = P.surplus()
+
+						if(surplus <= 0 && fan_power_draw > apc_charge)
+							src.warning_active |= WARNING_APC_DRAINING
+
+						if(fan_power_draw * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
+							src.warning_active |= WARNING_1MIN
+						else if(fan_power_draw * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
+							src.warning_active |= WARNING_5MIN
+
 		else if(pressure_delta < 0)
 			gas_input = air2
 			gas_output = air1
@@ -511,8 +551,11 @@ datum/pump_ui/circulator_ui
 	var/variant_description
 	var/conductor_temp = T20C
 
+	var/warning_light_desc = null // warning light description
+
 	var/boost = 0
 	var/generator_flags = 0
+	var/last_max_warning
 
 	var/grump = 0 // best var 2013
 	var/static/list/grump_prefix
@@ -630,6 +673,49 @@ datum/pump_ui/circulator_ui
 			else
 				UpdateOverlays(null, "power")
 
+		if(src.variant_b)
+			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+		else
+			UpdateOverlays(null, "variant")
+
+		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
+		if( max_warning )
+			if(max_warning > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+				if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+					playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
+			var/warning_side = 0
+			if( src.circ1?.warning_active && src.circ2?.warning_active )
+				warning_side = NORTH
+			else if( src.circ1?.warning_active )
+				warning_side = WEST
+			else if( src.circ2?.warning_active )
+				warning_side = EAST
+
+			// Use single light if we are variant b (only has one light) OR if we are ONLY in the APC draining state
+			var/one_light = src.variant_b || ( max_warning == WARNING_APC_DRAINING )
+			var/image/warning = image('icons/obj/power.dmi', one_light ? "tegv_lights" : "teg_lights", dir=warning_side)
+			if(max_warning > WARNING_5MIN)
+				warning.color = "#ff0000"
+				warning_light_desc = "<br><span class='alert'>The power emergency lights are flashing.</span>"
+			else
+				warning.color = "#feb308"
+				warning_light_desc = "<br><span class='alert'>The power caution light[one_light ? " is" : "s are"] flashing.</span>"
+			UpdateOverlays(warning, "warning")
+
+			if(lastgenlev)
+				if(max_warning > WARNING_5MIN)
+					light.set_color(1, 0, 0)
+				else
+					light.set_color(1.0, 0.70, 0.03)
+				light.set_brightness(0.6)
+				light.enable()
+			else
+				light.disable()
+
+		else
+			UpdateOverlays(null, "warning")
+			warning_light_desc = null
+
 			switch (lastgenlev)
 				if(0)
 					light.disable()
@@ -637,33 +723,29 @@ datum/pump_ui/circulator_ui
 					light.set_color(1, 1, 1)
 					light.set_brightness(0.3)
 				if(12 to 15)
-					light.set_color(0.30,0.30,0.90)
+					light.set_color(0.30, 0.30, 0.90)
 					light.set_brightness(0.6)
 					light.enable()
 				if(16 to 17)
-					light.set_color(0.90,0.90,0.10)
+					light.set_color(0.90, 0.90, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 22)
 					playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(0.6)
 					light.enable()
 				if(18 to 25)
 					playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50,0)
-					light.set_color(0.90,0.10,0.10)
+					light.set_color(0.90, 0.10, 0.10)
 					light.set_brightness(1)
 					light.enable()
 				if(26 to INFINITY)
 					playsound(src.loc, "sound/effects/electric_shock.ogg", 50,0)
-					light.set_color(0.90,0.00,0.90)
+					light.set_color(0.90, 0.00, 0.90)
 					light.set_brightness(1.5)
 					light.enable()
 					// this needs a safer lightbust proc
-		if(src.variant_b)
-			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
-		else
-			UpdateOverlays(null, "variant")
 
 	process()
 		if(!src.circ1 || !src.circ2)
@@ -720,11 +802,14 @@ datum/pump_ui/circulator_ui
 		if(hot_air) src.circ1.circulate_gas(hot_air)
 		if(cold_air) src.circ2.circulate_gas(cold_air)
 
-		desc = "Current Output: [engineering_notation(lastgen)]W"
+		desc = "Current Output: [engineering_notation(lastgen)]W [warning_light_desc]"
 		var/genlev = max(0, min(round(26*lastgen / 4000000), 26)) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
-		if((genlev != lastgenlev) && !spam_limiter)
+		var/warnings = src.circ1?.warning_active | src.circ2?.warning_active
+
+		if(((genlev != lastgenlev) || (warnings != last_max_warning)) && !spam_limiter)
 			spam_limiter = 1
 			lastgenlev = genlev
+			last_max_warning = warnings
 			updateicon()
 			if(!genlev)
 				running = 0
@@ -733,6 +818,10 @@ datum/pump_ui/circulator_ui
 				running = 1
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
+		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+			// Allow for klaxon to trigger when off cooldown if updateicon() not called
+			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
+				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
 		process_grump()
 
@@ -1302,5 +1391,13 @@ datum/pump_ui/circulator_ui
 #undef LEAKS_GAS
 #undef LEAKS_LUBE
 #undef LUBE_DRAIN_OPEN
+#undef WARNING_APC_DRAINING
+#undef WARNING_5MIN
+#undef WARNING_1MIN
+#undef WARNING_LOW_MOLES
+#undef TIME_PER_PROCESS
+#undef WARNING_FAIL_5MIN_ITERS
+#undef WARNING_FAIL_1MIN_ITERS
+
 #undef TEG_HIGH_TEMP
 #undef TEG_LOW_TEMP
