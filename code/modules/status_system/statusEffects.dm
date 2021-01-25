@@ -1419,3 +1419,92 @@
 	duration = INFINITE_STATUS
 	maxDuration = null
 	change = -5
+
+/datum/statusEffect/miasma
+	id = "miasma"
+	name = "Miasma"
+	desc = "You breathed in some gross miasma."
+	icon_state = "miasma"
+	unique = 1
+	duration = INFINITE_STATUS
+	maxDuration = null
+	var/static/list/amount_desc = list("almost no", "a bit of", "some", "a lot of", "extremely large amounts of")
+	var/how_miasma = 0
+	var/weighted_average = 0
+
+	onAdd(var/optional=null)
+		changeState()
+		return ..(optional)
+
+	onUpdate(var/timePassed)
+		changeState()
+		var/mult = timePassed / (2 SECONDS)
+		var/weighting = 0.035 * mult
+		weighted_average = (1 - weighting) * weighted_average + weighting * how_miasma
+		var/mob/living/L = owner
+		var/puke_prob = 0
+		var/tox = 0
+		switch(how_miasma)
+			if(1)
+				if(probmult(1))
+					L.emote("shudder")
+			if(2)
+				puke_prob = 0.2
+				tox = 0.05
+			if(3)
+				puke_prob = 0.5
+				tox = 0.20
+			if(4)
+				puke_prob = 1
+				tox = 0.45
+			if(5)
+				puke_prob = 2
+				tox = 0.70
+		if(ismobcritter(L))
+			var/mob/living/critter/critter = L
+			if(critter.ghost_spawned)
+				tox = 0.00
+				weighted_average = 0
+		L.take_toxin_damage(tox * mult)
+		if(weighted_average > 4)
+			weighted_average = 0
+			#ifdef CREATE_PATHOGENS
+			if(!isdead(L))
+				var/datum/pathogen/P = unpool(/datum/pathogen)
+				P.create_weak()
+				P.spread = 0
+				wrap_pathogen(L.reagents, P, 10)
+			#endif
+		if(probmult(puke_prob))
+			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.vomit()
+		return ..(timePassed)
+
+	proc/changeState()
+		if(owner?.reagents)
+			var/amt = owner.reagents.get_reagent_amount("miasma")
+			switch(amt)
+				if(-INFINITY to 5)
+					how_miasma = 1
+				if(5 to 10)
+					how_miasma = 2
+				if(10 to 40)
+					how_miasma = 3
+				if(40 to 70)
+					how_miasma = 4
+				else
+					how_miasma = 5
+			icon_state = "miasma[how_miasma]"
+
+	getTooltip()
+		. = "You breathed in [amount_desc[how_miasma]] miasma in you."
+		if(how_miasma > 1)
+			var/mob/living/critter/critter = L
+			if(istype(critter) && critter.ghost_spawned)
+				. += " Your ghostly essence makes you immune to its poison."
+			else
+				. += " You will take toxic damage."
+				#ifdef CREATE_PATHOGENS
+				if(how_miasma > 4)
+					. += " You might get sick."
+				#endif
