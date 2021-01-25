@@ -197,7 +197,7 @@
 			var/times = (tickCount / tickSpacing)
 			if(times >= 1 && ismob(owner))
 				tickCount -= (round(times) * tickSpacing)
-				for(var/i = 0, i < times, i++)
+				for(var/i in 1 to times)
 					var/mob/M = owner
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 			return
@@ -257,7 +257,7 @@
 			var/times = (tickCount / tickSpacing)
 			if(times >= 1 && ismob(owner))
 				tickCount -= (round(times) * tickSpacing)
-				for(var/i = 0, i < times, i++)
+				for(var/i in 1 to times)
 					var/mob/M = owner
 					M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
 
