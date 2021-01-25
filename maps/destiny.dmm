@@ -31216,6 +31216,10 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bcH" = (
@@ -32252,7 +32256,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -33814,7 +33818,7 @@
 	},
 /obj/window/crystal/reinforced/north,
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
@@ -36370,7 +36374,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -36981,7 +36985,7 @@
 /area/station/security/main)
 "bmw" = (
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)

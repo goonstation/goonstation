@@ -6069,7 +6069,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -15207,7 +15207,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -16681,7 +16681,7 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -17520,6 +17520,9 @@
 /obj/item/pen{
 	pixel_x = -4;
 	pixel_y = 9
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -19297,7 +19300,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -63012,7 +63015,7 @@
 /area/station/hallway/primary/south)
 "kgy" = (
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)

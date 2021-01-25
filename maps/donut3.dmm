@@ -11320,7 +11320,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
@@ -17187,6 +17187,10 @@
 	name = "Robust Donuts";
 	pixel_x = 1;
 	pixel_y = 6
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = -7;
+	pixel_y = -3
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -41668,7 +41672,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
@@ -54389,7 +54393,7 @@
 "qgO" = (
 /obj/stool/chair/comfy,
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
@@ -58830,7 +58834,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -77052,7 +77056,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)

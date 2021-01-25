@@ -31826,6 +31826,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -38689,7 +38692,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -40987,7 +40990,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -45957,7 +45960,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -48058,7 +48061,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;

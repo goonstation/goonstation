@@ -1545,9 +1545,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/landmark/start{
-	name = "Security Trainee"
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adm" = (
@@ -36801,6 +36798,9 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bKR" = (
@@ -37297,6 +37297,9 @@
 /area/space)
 "bMi" = (
 /obj/stool/bench/red,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "bMj" = (
@@ -39127,6 +39130,9 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
+/obj/item/device/ticket_writer{
+	pixel_y = 12
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQL" = (
@@ -39184,9 +39190,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "5-10"
-	},
-/obj/landmark/start{
-	name = "Security Trainee"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -40000,7 +40003,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Officer"
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
@@ -40072,9 +40075,6 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
-	},
-/obj/landmark/start{
-	name = "Security Trainee"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -46916,8 +46916,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-<<<<<<< HEAD
-=======
 "exU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46999,7 +46997,6 @@
 /obj/decal/poster/wallsign/poster_beach,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/central)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "fQs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47070,8 +47067,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-<<<<<<< HEAD
-=======
 "gie" = (
 /obj/machinery/autoclave,
 /obj/machinery/camera{
@@ -47175,14 +47170,11 @@
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "hbh" = (
 /turf/simulated/floor/escape/corner{
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-<<<<<<< HEAD
-=======
 "hkh" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/raw_material/char,
@@ -47218,14 +47210,11 @@
 /obj/item/device/flyswatter,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "ikm" = (
 /turf/simulated/floor/escape/corner{
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
-<<<<<<< HEAD
-=======
 "iwt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47251,7 +47240,6 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
 /area/research_outpost)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -48243,9 +48231,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-<<<<<<< HEAD
-"vcb" = (
-=======
 "uWe" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -48271,7 +48256,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -48285,12 +48269,6 @@
 /obj/item/furniture_parts/bench/green,
 /obj/item/furniture_parts/bench/blue,
 /turf/simulated/floor/plating/random,
-<<<<<<< HEAD
-/area/station/maintenance/south)
-"vqP" = (
-/turf/simulated/floor/escape/corner,
-/area/station/hallway/secondary/exit)
-=======
 /area/station/maintenance/inner/central)
 "vHm" = (
 /obj/table/wood/auto/desk{
@@ -48301,7 +48279,6 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
@@ -48335,8 +48312,6 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
-<<<<<<< HEAD
-=======
 "vNP" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -48361,7 +48336,6 @@
 	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
->>>>>>> 9af9b4500feaf50f577c203de2fcf604141411b4
 "wis" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics)

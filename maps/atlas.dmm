@@ -3205,7 +3205,7 @@
 	icon_state = "2-4"
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -5271,6 +5271,10 @@
 "mT" = (
 /obj/table/auto,
 /obj/item/storage/box/revimp_kit,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/main)
 "mU" = (
@@ -7265,7 +7269,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Trainee"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
