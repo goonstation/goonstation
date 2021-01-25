@@ -310,7 +310,7 @@
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
 
-		for (var/T in src.traitPreferences.traits_selected)
+		for (var/T as() in src.traitPreferences.traits_selected)
 			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
 
 		if (!src.traitPreferences.isValid())
