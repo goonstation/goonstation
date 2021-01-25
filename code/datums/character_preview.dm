@@ -22,12 +22,12 @@ METHODS
 	update_appearance(appearance_holder, mutant_race, facing_direction)
 		Sets the appearance, mutant race, and facing direction of the human mob.
 
-	Show(should_show) (window variant only)
+	show(should_show) (window variant only)
 		Shows (or hides if the argument is false) the window.
 
-	AddClient(client) (multiclient variant only)
-	RemoveClient(client) (multiclient variant only)
-	RemoveAllClients() (multiclient variant only)
+	add_client(client) (multiclient variant only)
+	remove_client(client) (multiclient variant only)
+	remove_all_clients() (multiclient variant only)
 		Manages who can see the preview mob.
 		This needs to be called in addition to the winset that positions the map view.
 
@@ -43,7 +43,7 @@ datum/character_preview
 	var/preview_id
 	var/window_id
 	var/client/viewer
-	var/obj/screen/handler
+	var/atom/movable/screen/handler
 	var/mob/living/carbon/human/preview_mob
 
 	New(client/viewer, window_id, control_id = null)
@@ -123,7 +123,7 @@ datum/character_preview/window
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id]", "parent=")
 
-	proc/Show(shown = TRUE)
+	proc/show(shown = TRUE)
 		winshow(src.viewer, src.window_id, shown)
 
 datum/character_preview/multiclient
@@ -139,19 +139,19 @@ datum/character_preview/multiclient
 				viewer.screen -= src.preview_mob
 		. = ..()
 
-	proc/AddClient(client/viewer)
+	proc/add_client(client/viewer)
 		if (viewer && !(viewer in src.viewers))
 			src.viewers += viewer
 			viewer.screen += src.handler
 			viewer.screen += src.preview_mob
 
-	proc/RemoveClient(client/viewer)
+	proc/remove_client(client/viewer)
 		if (viewer && (viewer in src.viewers))
 			src.viewers -= viewer
 			viewer.screen -= src.handler
 			viewer.screen -= src.preview_mob
 
-	proc/RemoveAllClients()
+	proc/remove_all_clients()
 		for (var/client/viewer in src.viewers)
 			if (viewer)
 				viewer.screen -= src.handler

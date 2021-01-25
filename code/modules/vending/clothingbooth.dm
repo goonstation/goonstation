@@ -34,8 +34,8 @@ var/list/clothingbooth_items = list()
 	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
 	qdel(src.preview_item)
 	src.preview_item = null
-	src.preview.RemoveAllClients()
-	src.preview.AddClient(user.client)
+	src.preview.remove_all_clients()
+	src.preview.add_client(user.client)
 
 	user << browse_rsc('browserassets/css/clothingbooth.css')
 	user << browse_rsc('browserassets/js/clothingbooth.js')
