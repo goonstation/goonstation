@@ -16608,9 +16608,6 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
-"aEc" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -76026,7 +76023,7 @@ aAb
 aAU
 aAV
 axS
-aEc
+aGS
 aFh
 aEa
 aHb
