@@ -202,6 +202,47 @@
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 			return
 
+	simplehot/stimulants
+		id = "stimulants"
+		name = "Stimulants"
+		desc = "You feel on top of the world!"
+		icon_state = "janktank"
+		unique = 1
+		tickSpacing = 2 SECONDS
+		heal_brute = 10
+		heal_burn = 10
+		heal_tox = 5
+
+		onAdd(optional)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				M.add_stam_mod_regen("stims", 500)
+				M.add_stam_mod_max("stims", 500)
+				M.add_stun_resist_mod("stims", 1000)
+
+		onRemove()
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				M.remove_stam_mod_regen("stims")
+				M.remove_stam_mod_max("stims")
+				M.remove_stun_resist_mod("stims")
+			owner.changeStatus("stimulant_withdrawl", 1 MINUTE)
+
+		onUpdate(timePassed)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				M.take_oxygen_deprivation(-timePassed)
+				M.delStatus("slowed")
+				M.delStatus("disorient")
+				if (M.misstep_chance)
+					M.change_misstep_chance(-INFINITY)
+				M.dizziness = max(0,M.dizziness-10)
+				M.drowsyness = max(0,M.drowsyness-10)
+				M.sleeping = 0
+
 	simpledot //Simple damage over time.
 		var/tickCount = 0
 		var/tickSpacing = 1 SECOND //Time between ticks.

@@ -25,8 +25,6 @@
 			reagents.add_reagent("dbreath", 30)
 		if (prob(7))
 			reagents.add_reagent("freeze", 30)
-		if (prob(3))
-			reagents.add_reagent("stimulants", 20)
 		if(prob(15))
 			reagents.add_reagent("hairgrownium", 30)
 		if (prob(10))
