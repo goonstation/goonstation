@@ -37,7 +37,7 @@
 	if(isrestrictedz(T.z))
 		return 0
 	if((ismob(hit) || (istype(hit, /obj/blob) && !hit.opacity)) && pierces_left-- > 0)
-		return PROJ_ATOM_PASSTHROGH
+		return PROJ_ATOM_PASSTHROUGH
 
 /datum/component/pierce_mobs/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PROJ_COLLIDE)
