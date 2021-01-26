@@ -367,8 +367,6 @@ toxic - poisons
 	icon_state = "taser_projectile"
 	power = 15
 	cost = 25
-	dissipation_rate = 1
-	dissipation_delay = 2
 	max_range = 12
 	ks_ratio = 0.0
 	sname = "burst"
