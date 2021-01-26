@@ -189,7 +189,6 @@
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Repairing wall.</span>")
 			if (do_after(user, 2.5 SECONDS) && S.consume_sheets(1))
 				src.d_state = 0
