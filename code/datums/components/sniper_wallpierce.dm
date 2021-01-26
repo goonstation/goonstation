@@ -1,21 +1,27 @@
 /datum/component/sniper_wallpierce
 	var/pierces_left = 1 //default to 1 wall
+	var/only_mobs = 0 // Only pierce mobs
 
-/datum/component/sniper_wallpierce/Initialize(var/num_pierces)
+/datum/component/sniper_wallpierce/Initialize(var/num_pierces, var/_only_mobs)
 	if(!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
 	if(num_pierces)
 		src.pierces_left=num_pierces
+		src.only_mobs = _only_mobs
 	RegisterSignal(parent, list(COMSIG_PROJ_COLLIDE), .proc/update_pierces)
 
 /datum/component/sniper_wallpierce/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
 	if(isrestrictedz(T.z))
 		return 0
-	if(isrwall(hit) || istype(hit, /obj/machinery/door/poddoor/blast))
-		pierces_left-- //cost an extra pierce for rwalls and blast doors
-	if(pierces_left-- > 0)
-		return PROJ_PASSWALL | PROJ_PASSOBJ
+	if(src.only_mobs)
+		if((ismob(hit) || istype(hit, /obj/blob)) && pierces_left-- > 0)
+			return PROJ_ATOM_PASSTHROGH
+	else
+		if(isrwall(hit) || istype(hit, /obj/machinery/door/poddoor/blast))
+			pierces_left-- //cost an extra pierce for rwalls and blast doors
+		if(pierces_left-- > 0)
+			return PROJ_PASSWALL | PROJ_PASSOBJ
 
 /datum/component/sniper_wallpierce/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PROJ_COLLIDE)

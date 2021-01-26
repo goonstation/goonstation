@@ -626,6 +626,7 @@ datum/projectile
 //					var/mob/living/L = hit
 //					stun_bullet_hit(O,L)
 			return
+		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
 		on_launch(var/obj/projectile/O)

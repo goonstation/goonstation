@@ -963,3 +963,127 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, projectile)
 		explosion_new(projectile, get_turf(hit), explosion_power, 1)
 		..()
+
+/datum/projectile/special/shotchem // how do i shot chem
+	name = "chemical bolt"
+	sname = "chembolt"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "extinguish"
+	shot_sound = "sound/effects/spray.ogg"
+	power = 0
+	cost = 1
+	damage_type = D_BURNING
+	dissipation_delay = 99
+	ks_ratio = 0
+	hit_ground_chance = 0 // burn right over em
+	max_range = 10
+	pierces = 2
+
+
+	/// Releases some of the projectile's gas into the turf
+	proc/splurt_gas(turf/T, all_of_it = 0)
+		if(!src.master || !src.master.special_data)
+			return
+		var/datum/gas_mixture/airgas = src.master.special_data["airgas"]
+		T?.assume_air(airgas.remove_ratio(all_of_it ? 1 : src.master.special_data["chem_pct_app_tile"]))
+
+	/// Sprays some of the chems in the projectile onto everything on hit's turf
+	/// Try not to pass it something with an organholder, acid-throwers will disintigrate all their organs
+	proc/splurt_chems(atom/hit, obj/projectile/O, angle)
+		if(!O.special_data || !length(O.special_data) || !istype(hit))
+			return
+
+		var/turf/T = get_turf(hit)
+
+		var/list/c_turfH = O.special_data["crossed_turfs"]
+		if (c_turfH[src.turf2coordinates(T)] == 1)
+			return // one spray per turf, please! No matter how many times this gets called!
+		c_turfH[src.turf2coordinates(T)] = 1
+
+		var/datum/reagents/chemR = O.special_data["FT_reagents"]
+		var/chem_amt = chemR.total_volume
+		/// If there's just a little bit left, use the rest of it
+		var/amt_to_splurt = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+
+		var/datum/reagents/copied = new/datum/reagents(amt_to_splurt)
+		copied = chemR.copy_to(copied, 1, copy_temperature = 1)
+
+		if(!O.reagents)
+			O.create_reagents(100)
+		if(O.reagents)
+			copied.copy_to(O.reagents, 1, copy_temperature = 1)
+
+		if(!T.reagents)
+			T.create_reagents(100)
+		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		copied.reaction(T, TOUCH, 0, 0)
+		for(var/atom/A in T.contents)
+			if(!istype(A, /obj/overlay))
+				copied.reaction(A, TOUCH, 0, 0)
+				if(!A.reagents)
+					A.create_reagents(100)
+				copied.copy_to(A.reagents, 1, copy_temperature = 1)
+		if(O.special_data["IS_LIT"])
+			for(var/atom/B in T.contents)
+				if(!B.reagents)
+					B.create_reagents(100)
+				B.reagents.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+			if(!O.reagents)
+				O.create_reagents(100)
+			copied.copy_to(O.reagents, 1, copy_temperature = 1) // React the chems in the projectile
+			O.reagents.set_reagent_temp(O.special_data["burn_temp"], TRUE) // Ensure fire happens if there's gonna be fire
+			O.reagents.clear_reagents() // And clear it out for the next time this happens
+			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
+			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		chemR.remove_any(amt_to_splurt)
+
+	proc/turf2coordinates(var/turf/T)
+		if(isturf(T))
+			var/Tx = T.x
+			var/Ty = T.y
+			var/Tz = T.z
+			return "[Tx], [Ty], [Tz]"
+
+	on_launch(obj/projectile/O)
+		if(length(O.special_data))
+			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
+			src.color_icon = O.special_data["proj_color"]
+		var/list/c_turfs = O.special_data["crossed_turfs"]
+		c_turfs[src.turf2coordinates(get_turf(O))] = 1 // skip our originating turf
+		O.AddComponent(/datum/component/sniper_wallpierce, 2, 1) // Pierce two mobs, no more, no less
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		var/turf/T = get_turf(hit)
+		src.splurt_chems(T, O)
+		src.splurt_gas(T, 1)
+
+	tick(var/obj/projectile/O)
+		var/list/c_turfs = O.special_data["crossed_turfs"]
+		if(c_turfs[src.turf2coordinates(get_turf(O))] == 1)
+			return // One splurt per turf, please
+
+		var/turf/T = get_turf(O)
+		src.splurt_chems(T, O)
+		src.splurt_gas(T, 0)
+		var/datum/reagents/chemR = O.special_data["FT_reagents"]
+		if(chemR.total_volume < 0.01)
+			O.die()
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		var/turf/T = get_turf(O)
+		src.splurt_chems(target, O)
+		src.splurt_gas(T, 1)
+	on_end(var/obj/projectile/O)
+		var/datum/reagents/chemR = O.special_data["FT_reagents"]
+		if(chemR.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.splurt_chems(T, O)
+		src.splurt_gas(T, 1)
+	on_max_range_die(obj/projectile/O)
+		var/datum/reagents/chemR = O.special_data["FT_reagents"]
+		if(chemR.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.splurt_chems(T, O)
+		src.splurt_gas(T, 1)
