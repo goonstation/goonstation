@@ -1186,8 +1186,9 @@
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 
@@ -1439,7 +1440,8 @@
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
 			//edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 
