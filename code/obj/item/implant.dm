@@ -100,6 +100,37 @@ THROWING DARTS
 		death_triggered = 1
 		deactivate()
 
+	proc/get_coords()
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			if (locate(/obj/item/implant/tracking) in H.implant)
+				var/turf/T = get_turf(H)
+				if (istype(T))
+					return " at [T.x],[T.y],[T.z]"
+		else if (ismobcritter(src.owner))
+			var/mob/living/critter/C = src.owner
+			if (locate(/obj/item/implant/tracking) in C.implants)
+				var/turf/T = get_turf(C)
+				if (istype(T))
+					return " at [T.x],[T.y],[T.z]"
+
+	proc/send_message(var/message, var/alertgroup)
+		DEBUG_MESSAGE("sending message: [message]")
+		if(!radio_connection)
+			return
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
+		newsignal.data["message"] = "[message]"
+
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups + alertgroup
+		newsignal.data["sender"] = src.net_id
+
+		radio_connection.post_signal(src, newsignal)
+
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
@@ -286,43 +317,12 @@ THROWING DARTS
 		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message(message, MGA_DEATH)
 
-	proc/get_coords()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (locate(/obj/item/implant/tracking) in H.implant)
-				var/turf/T = get_turf(H)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-		else if (ismobcritter(src.owner))
-			var/mob/living/critter/C = src.owner
-			if (locate(/obj/item/implant/tracking) in C.implants)
-				var/turf/T = get_turf(C)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-
 	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
 		if (src.owner && src.owner.ckey)
 			for_by_tcl(comp, /obj/machinery/computer/cloning)
 				if (comp.find_record(src.owner.ckey))
 					return get_area(comp)
 		return null
-
-	proc/send_message(var/message, var/alertgroup)
-		DEBUG_MESSAGE("sending message: [message]")
-		if(!radio_connection)
-			return
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
-		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
-		newsignal.data["message"] = "[message]"
-
-		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + alertgroup
-		newsignal.data["sender"] = src.net_id
-
-		radio_connection.post_signal(src, newsignal)
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -388,6 +388,15 @@ THROWING DARTS
 
 	disposing()
 		STOP_TRACKING
+		..()
+
+	on_remove(var/mob/M)
+		if (!src.owner)
+			return
+		var/coords = src.get_coords()
+		var/message = "TRACKING IMPLANT LOST: [src.owner][coords] in [get_area(src)], "
+
+		src.send_message(message, MGA_TRACKING)
 		..()
 
 /** Deprecated **/
