@@ -386,7 +386,10 @@ turf
 				return
 
 
-			src.air.react()
+			if(src.air.react() & CATALYST_ACTIVE)
+				src.active_hotspot?.catalyst_active = TRUE
+			else
+				src.active_hotspot?.catalyst_active = FALSE
 
 			if(src.active_hotspot && possible_fire_spreads)
 				src.active_hotspot.process(possible_fire_spreads)

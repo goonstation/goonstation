@@ -387,7 +387,7 @@
 			if (bioEffect_sanity_check(E, 0))
 				return
 			var/mob/living/L = get_scan_subject()
-			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)) || !E.can_make_injector)
+			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || (E in saved_mutations)) || !E.can_make_injector)
 				src.log_maybe_cheater(usr, "tried to create a [E.id] injector")
 				return
 			if (!src.equipment_available("injector", E))
@@ -615,7 +615,7 @@
 			if (bioEffect_sanity_check(E, 0))
 				return
 			var/mob/living/L = get_scan_subject()
-			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || saved_mutations.Find(E)))
+			if (!((L && L.bioHolder && L.bioHolder.HasEffect(E.id)) || (E in saved_mutations)))
 				src.log_maybe_cheater(usr, "tried to send [E.id] to the booth")
 				return
 			if (!src.equipment_available("genebooth", E))
@@ -656,7 +656,7 @@
 			var/datum/dna_chromosome/E = locate(params["ref"])
 			if (!istype(E))
 				return
-			if (!saved_chromosomes.Find(E))
+			if (!(E in saved_chromosomes))
 				src.log_maybe_cheater(usr, "tried to splice a chromosome ([E])")
 				return
 			src.to_splice = E
@@ -666,7 +666,7 @@
 			var/datum/dna_chromosome/E = locate(params["ref"])
 			if (!istype(E))
 				return
-			if (!saved_chromosomes.Find(E))
+			if (!(E in saved_chromosomes))
 				src.log_maybe_cheater(usr, "tried to delete a chromosome ([E])")
 				return
 			if (E == src.to_splice)
@@ -694,7 +694,7 @@
 			var/datum/bioEffect/E = locate(params["ref"])
 			if (bioEffect_sanity_check(E, 0))
 				return
-			if (!saved_mutations.Find(E))
+			if (!(E in saved_mutations))
 				src.log_maybe_cheater(usr, "tried to delete the [E.id] mutation")
 				return
 			saved_mutations -= E
@@ -753,7 +753,7 @@
 			var/datum/bioEffect/E = locate(params["ref"])
 			if (bioEffect_sanity_check(E))
 				return
-			if (!saved_mutations.Find(E))
+			if (!(E in saved_mutations))
 				src.log_maybe_cheater(usr, "tried to add the [E.id] mutation")
 				return
 			var/mob/living/subject = get_scan_subject()

@@ -97,11 +97,13 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 
 	return null
 
-/proc/in_range(atom/source, atom/user)
-	if(bounds_dist(source, user) == 0 || get_dist(source, user) <= 1) // fucking byond
-		return 1
+/// For interacting with stuff.
+/proc/in_interact_range(atom/source, atom/user)
+	. = FALSE
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return 1
+		return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -126,20 +128,18 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					sleep(0.5 SECONDS)
 					qdel(O)
 
-				return 1
+				return TRUE
 
 		else if (isobj(source))
 			var/obj/SO = source
 			if(SO.can_access_remotely(user))
-				return 1
+				return TRUE
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)
 		if (T.vistarget)
 			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
-				return 1
-
-	return 0 //not in range and not telekinetic
+				return TRUE
 
 
 var/obj/item/dummy/click_dummy = new
@@ -170,7 +170,7 @@ var/obj/item/dummy/click_dummy = new
 		if (C && target != C)
 			return 0
 	if (isturf(user.loc))
-		if (!in_range(target, user))
+		if (!in_interact_range(target, user))
 			return 0
 		var/T1 = get_turf(user)
 		var/T2 = get_turf(target)

@@ -183,7 +183,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.CanPass(null, T, null,1))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T
@@ -246,13 +246,14 @@ datum/controller/air_system
 		process_tiles_to_space()
 		is_busy = TRUE
 
-		if(groups_to_rebuild.len > 0)
-			process_rebuild_select_groups()
-		LAGCHECK(LAG_HIGH)
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			LAGCHECK(LAG_HIGH)
 
-		if(tiles_to_update.len > 0)
-			process_update_tiles()
-		LAGCHECK(LAG_HIGH)
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_HIGH)
 
 		process_groups()
 		LAGCHECK(LAG_HIGH)

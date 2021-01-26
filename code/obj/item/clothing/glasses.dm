@@ -507,6 +507,12 @@
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
+/obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
+	name = "spectroscopic monocle"
+	icon_state = "spectro_monocle"
+	item_state = "spectro_monocle"
+	desc = "Such a dapper eyepiece! And a practical one at that."
+
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
 	name = "goggles"

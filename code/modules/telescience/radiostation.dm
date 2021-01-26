@@ -156,7 +156,7 @@
 /obj/submachine/mixing_desk/Topic(href, href_list)
 	if(..()) return
 	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if(!in_interact_range(src, usr)) return
 
 	if (href_list["state"])
 		if(state)

@@ -519,16 +519,15 @@
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(var/datum/manufacture/M)
-		if(src.available && src.available.Find(M))
-			return 1
+		. = FALSE
+		if(src.available && (M in src.available))
+			return TRUE
 
-		if(src.download && src.download.Find(M))
-			return 1
+		if(src.download && (M in src.download))
+			return TRUE
 
-		if(src.hacked && src.hidden && src.hidden.Find(M))
-			return 1
-
-		return 0
+		if(src.hacked && src.hidden && (M in src.hidden))
+			return TRUE
 
 
 	Topic(href, href_list)
@@ -2125,6 +2124,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,

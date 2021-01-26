@@ -418,6 +418,12 @@
 	icon_state = "security"
 	item_state = "security"
 
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
@@ -443,7 +449,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's jumpsuit"
-	desc = "Red and black really helps highlight the cranial fluid stains."
+	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
 	permeability_coefficient = 0.50

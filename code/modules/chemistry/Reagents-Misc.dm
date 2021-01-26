@@ -274,10 +274,11 @@ datum
 			fluid_b = 193
 			transparency = 200
 
-		stimulants
-			name = "stimulants"
-			id = "stimulants"
-			description = "A dangerous chemical cocktail that allows for seemingly superhuman feats for a short time ..."
+		omegazine
+			name = "omegazine"
+			id = "omegazine"
+			description = "A dangerous chemical that allows for seemingly superhuman feats for a short time ..."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 120
 			fluid_g = 0
@@ -290,15 +291,15 @@ datum
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					M.add_stam_mod_regen("stims", 500)
-					M.add_stam_mod_max("stims", 500)
+					M.add_stam_mod_regen("omegazine", 500)
+					M.add_stam_mod_max("omegazine", 500)
 				..()
 
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					M.remove_stam_mod_regen("stims")
-					M.remove_stam_mod_max("stims")
+					M.remove_stam_mod_regen("omegazine")
+					M.remove_stam_mod_max("omegazine")
 				..()
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -3182,6 +3183,7 @@ datum
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
 			description = "This is a strange viscous fluid that seems to have the properties of both a liquid and a gas."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 190
@@ -3192,6 +3194,7 @@ datum
 			name = "quark-gluon plasma"
 			id = "big_bang"
 			description = "Its... beautiful!"
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 240
@@ -3261,6 +3264,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			volatility = 2
 
 		reversium
 			name = "reversium"
@@ -3613,12 +3617,12 @@ datum
 						var/starty = 1
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
-						badmantarget << sound('sound/misc/american_patriot.ogg', volume = 50)
-						sleep(10 SECONDS)
-						startx = badmantarget.x - rand(-11, 11)
-						starty = badmantarget.y - rand(-11, 11)
-						var/turf/pickedstart = locate(startx, starty, badmantarget.z)
-						new /obj/badman(pickedstart, badmantarget)
+						badmantarget.playsound_local(get_turf(badmantarget), "sound/misc/american_patriot.ogg", 50)
+						SPAWN_DBG(10 SECONDS)
+							startx = badmantarget.x - rand(-11, 11)
+							starty = badmantarget.y - rand(-11, 11)
+							var/turf/pickedstart = locate(startx, starty, badmantarget.z)
+							new /obj/badman(pickedstart, badmantarget)
 				..()
 
 
@@ -3708,13 +3712,16 @@ datum
 			fluid_g = 25
 			transparency = 95
 			hygiene_value = -0.5
-			smoke_spread_mod = 15
+			smoke_spread_mod = 3
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.16 * mult)
-				..()
-				return
+
+			on_add()
+				if (holder && ismob(holder.my_atom))
+					holder.my_atom.setStatus("miasma", duration = INFINITE_STATUS)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					holder.my_atom.delStatus("miasma")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)

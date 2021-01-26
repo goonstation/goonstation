@@ -72,9 +72,7 @@
 					src.add_partner(possible_partner)
 
 	proc/add_partner(obj/health_scanner/floor/F)
-		if (src.partners.Find(F))
-			return
-		src.partners += F
+		src.partners |= F
 
 /obj/health_scanner/floor
 	name = "health scanner"

@@ -1,59 +1,25 @@
+/**
+ * # Character Preview
+ *
+ * Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
+ *
+ * This parent type is for use in single-client windows.
+ * See [datum/character_preview/window] for a detatched window and and [datum/character_preview/multiclient] for a multi-client variant.
+ *
+ * Use winset() to position the control within the window.
+ *
+ * See the default code for an example - places it at 0,0 and makes it 128x128 pixels.
+ */
 datum/character_preview
 	var/global/max_preview_id = 0
+	/// The map ID for use with winset().
 	var/preview_id
 	var/window_id
 	var/client/viewer
-	var/obj/screen/handler
+	var/atom/movable/screen/handler
+	/// The human mob shown in the preview.
+	/// May be useful to access directly if you want to put clothes on it or whatever.
 	var/mob/living/carbon/human/preview_mob
-
-	window
-		New(client/viewer)
-			var/winid = "preview_[max_preview_id]"
-
-			winclone(viewer, "blank-map", winid)
-
-			winset(viewer, winid, list2params(list(
-				"size" = "128,128",
-				"title" = "Character Preview",
-				"can-close" = FALSE,
-				"can-resize" = FALSE,
-			)))
-
-			. = ..(viewer, winid)
-
-		disposing()
-			. = ..()
-			SPAWN_DBG(0)
-				if (src.viewer)
-					winset(src.viewer, "[src.window_id]", "parent=")
-
-		proc/Show(shown = TRUE)
-			winshow(src.viewer, src.window_id, shown)
-
-	multiclient
-		var/list/viewers = list()
-
-		New(control_id = null)
-			. = ..(null, "unused", control_id)
-
-		disposing()
-			for (var/client/viewer in src.viewers)
-				if (viewer)
-					viewer.screen -= src.handler
-					viewer.screen -= src.preview_mob
-			. = ..()
-
-		proc/AddClient(client/viewer)
-			if (viewer && !(viewer in src.viewers))
-				src.viewers += viewer
-				viewer.screen += src.handler
-				viewer.screen += src.preview_mob
-
-		proc/RemoveClient(client/viewer)
-			if (viewer && (viewer in src.viewers))
-				src.viewers -= viewer
-				viewer.screen -= src.handler
-				viewer.screen -= src.preview_mob
 
 	New(client/viewer, window_id, control_id = null)
 		. = ..()
@@ -100,6 +66,7 @@ datum/character_preview
 			qdel(src.preview_mob)
 		. = ..()
 
+	/// Sets the appearance, mutant race, and facing direction of the human mob.
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
 		src.preview_mob.dir = direction
 		src.preview_mob.set_mutantrace(null)
@@ -110,3 +77,72 @@ datum/character_preview
 		src.preview_mob.update_colorful_parts()
 		src.preview_mob.set_body_icon_dirty()
 		src.preview_mob.set_face_icon_dirty()
+
+/// Manages its own window.
+/// Basically a simplified version for when you don't need to put other stuff in the preview window.
+datum/character_preview/window
+	New(client/viewer)
+		var/winid = "preview_[max_preview_id]"
+
+		winclone(viewer, "blank-map", winid)
+
+		winset(viewer, winid, list2params(list(
+			"size" = "128,128",
+			"title" = "Character Preview",
+			"can-close" = FALSE,
+			"can-resize" = FALSE,
+		)))
+
+		. = ..(viewer, winid)
+
+	disposing()
+		. = ..()
+		SPAWN_DBG(0)
+			if (src.viewer)
+				winset(src.viewer, "[src.window_id]", "parent=")
+
+	/// Shows (or hides if the argument is false) the window.
+	proc/show(shown = TRUE)
+		winshow(src.viewer, src.window_id, shown)
+
+
+/**
+ * A shared character preview between multiple clients.
+ * Again, use winset() to position the control.
+ *
+ * You need to call the special client procs to manage subscribers in addition to the winset.
+ */
+datum/character_preview/multiclient
+	var/list/viewers = list()
+
+	New(control_id = null)
+		. = ..(null, "unused", control_id)
+
+	disposing()
+		for (var/client/viewer in src.viewers)
+			if (viewer)
+				viewer.screen -= src.handler
+				viewer.screen -= src.preview_mob
+		. = ..()
+
+	/// Adds a subscribed client
+	proc/add_client(client/viewer)
+		if (viewer && !(viewer in src.viewers))
+			src.viewers += viewer
+			viewer.screen += src.handler
+			viewer.screen += src.preview_mob
+
+	/// Removes a subscribed client
+	proc/remove_client(client/viewer)
+		if (viewer && (viewer in src.viewers))
+			src.viewers -= viewer
+			viewer.screen -= src.handler
+			viewer.screen -= src.preview_mob
+
+	/// Removes all subscribers
+	proc/remove_all_clients()
+		for (var/client/viewer in src.viewers)
+			if (viewer)
+				viewer.screen -= src.handler
+				viewer.screen -= src.preview_mob
+		src.viewers.len = 0
