@@ -434,7 +434,6 @@
 		..()
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
-			return
 
 		if(M_is_user && !is_it_organs)
 			bar.icon = null // Action bars
@@ -477,13 +476,12 @@
 		..()
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onEnd()
 		..()
 		if(src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
-			return
+
 		if(src.M_is_user)
 			if(src.is_it_organs)
 				M.visible_message("<span class='alert'>[M] takes a visceral bite out of \the [master][prob(30) ? " like a [pick(src.grody_adj)] [pick(src.grody_noun)]" : ""]!</span>",\
