@@ -454,7 +454,7 @@
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, love, care, heart")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -2003,6 +2003,40 @@
 							src.show_text(__red("Your head hurts!"))
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
+
+			if ("love", "care", "heart")
+				if (src.reagents && src.reagents.has_reagent("love"))
+					speech_bubble.icon_state = "love"
+					UpdateOverlays(speech_bubble, "speech_bubble")
+					SPAWN_DBG(1.5 SECONDS)
+					UpdateOverlays(null, "speech_bubble") //this whole thing makes it so a Heart speech bubble can be seen when the emote goes off.
+					var/M = null
+					if (param)
+						for (var/mob/A in view(null, null))
+							if (ckey(param) == ckey(A.name))
+								M = A
+							break
+					if (!M)
+						param = null
+
+					act = lowertext(act)
+					if (param)
+						switch(act)
+							if("love")
+								message = "You display your affection towards [param]."
+								maptext_out = "<I> [act]s' [param].</I>"
+							if("care")
+								message = "You [act] about [param]."
+								maptext_out = "<I> [pick("cares about [param]", "hopes [param] is having a great day", "supports [param]")]. </I>"
+							if("heart")
+								message = "You make a tiny heart shape in [param]'s direction."
+								maptext_out = "<I> makes a tiny heart shape in [param]'s' direction."
+					else
+						message = "You love yourself!."
+						maptext_out = "<I> is feeling really good about [himself_or_herself(src)]</I>"
+				else
+					src.show_text("You just aren't feeling the love.", "red")
+				m_type = 1
 
 /*			if ("wedgie")
 				if (src.emote_check(voluntary))
