@@ -174,27 +174,31 @@
 
 						else
 							if(!stuck_timer)
-								stuck_timer = 3 SECONDS + world.time
+								stuck_timer = 12 SECONDS + world.time
 								stuck_location = get_center()
 							
-							if(stuck_timer <= world.time)
-								if(stuck_location == get_center())
-									for(var/stuck_increment = 1, stuck_increment <= 4, stuck_increment++)
-										SPAWN_DBG(4)
+							if(stuck_timer <= world.time && stuck_location == get_center())
+								cooldown = 4 SECONDS + world.time
+								anchored = 1
+								stuck_timer = null
+								SPAWN_DBG(4 SECONDS)
+									anchored = 0
+								for(var/stuck_increment = 1, stuck_increment <= 3, stuck_increment++)
+									SPAWN_DBG(stuck_increment SECONDS)
 										for (var/turf/simulated/OV in oview(get_center(),stuck_increment))
 											tile_purge(OV.loc.x,OV.loc.y,3)
 
 							var/turf/olddist = get_dist(get_center(), src.target)
 
-							for (var/turf/simulated/wall/WT in range(4,get_center()))
+							for (var/turf/simulated/wall/WT in range(2,get_center()))
 								leavescan(WT, 1)
-								WT.ex_act(1)
-							for (var/obj/O in range(4,get_center()))
-								if(!istype(O, /obj/critter))
-									step_towards(src,O,5)
-									leavescan(get_turf(O), 1)
-									qdel(O)
-								else walk_to(src, src.target,1,5)
+								new /obj/item/raw_material/scrap_metal(WT)
+								if(prob(50))
+									WT.ReplaceWithLattice()
+								else
+									WT.ReplaceWithSpace()
+
+								walk_to(src, src.target,1,5)
 
 							if ((get_dist(get_center(), src.target)) >= (olddist))
 								src.frustration++
@@ -284,11 +288,13 @@
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
 				icon_state = "beacon"
 				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "beacon")
+				glow.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(glow, "glow")
 				SPAWN_DBG(18)
 					icon = 'icons/misc/retribution/SWORD/base.dmi'
 					icon_state = "unanchored"
 					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
@@ -302,13 +308,15 @@
 				rotation_locked = true
 				changing_modes = true
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
-				icon_state = "unanchored"
-				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "unanchored")
+				icon_state = "anchored"
+				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "anchored")
+				glow.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(glow, "glow")
 				SPAWN_DBG(11)
 					icon = 'icons/misc/retribution/SWORD/base.dmi'
-					icon_state = "anchored"
-					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+					icon_state = "unanchored"
+					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
@@ -318,13 +326,15 @@
 				rotation_locked = true
 				changing_modes = true
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
-				icon_state = "anchored"
-				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "anchored")
+				icon_state = "unanchored"
+				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "unanchored")
+				glow.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(glow, "glow")
 				SPAWN_DBG(11)
 					icon = 'icons/misc/retribution/SWORD/base.dmi'
-					icon_state = "unanchored"
-					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+					icon_state = "anchored"
+					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
 					changing_modes = false
 					rotation_locked = false
@@ -366,6 +376,7 @@
 		walk(src,0)
 		anchored = 1
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "stiflingVacuum")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 		SPAWN_DBG(4)
 			var/increment
@@ -420,6 +431,7 @@
 				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			else
 				glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			current_ability = null
 		return
@@ -479,6 +491,7 @@
 
 		SPAWN_DBG(20)
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			anchored = 0
@@ -503,6 +516,7 @@
 			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_L")
 		else
 			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_R")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(1)
@@ -520,6 +534,7 @@
 
 		SPAWN_DBG(10)
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			anchored = 0
@@ -538,6 +553,7 @@
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
 		icon_state = "destructiveLeap"
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 		rotation_locked = true
 		firevuln = 0.75
@@ -568,6 +584,7 @@
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
 			icon_state = "anchored"
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			firevuln = 1
@@ -588,6 +605,7 @@
 
 		playsound(get_center(), "sound/effects/gust.ogg", 60, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "heatReallocation")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(2)
@@ -610,6 +628,7 @@
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
 			icon_state = "unanchored"
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			anchored = 0
@@ -630,6 +649,7 @@
 		var/health_before_absorption = health
 		//playsound(get_center(), 'sound/effects/shieldup.ogg', 80, 1)
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "energyAbsorption")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN_DBG(12)
@@ -640,6 +660,7 @@
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
 			icon_state = "unanchored"
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			anchored = 0
@@ -657,6 +678,7 @@
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
 		icon_state = "destructiveFlight"
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
+		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 		rotation_locked = true
 		firevuln = 0.75
@@ -745,6 +767,7 @@
 			icon = 'icons/misc/retribution/SWORD/base.dmi'
 			icon_state = "unanchored"
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
+			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
 			rotation_locked = false
 			firevuln = 1
@@ -755,8 +778,6 @@
 
 //-MISCELLANEOUS-//
 
-//Future me, make all the procs that destroy turfs leave behind debris. You can do it, we're so close!
-		
 	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge, Destructive Leap and Destructive Flight.
 		for (var/mob/M in locate(point_x,point_y,src.z))
 			if(!dam_type)
@@ -776,10 +797,23 @@
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)
-			T.ex_act(1)
+			if(prob(64))
+				new /obj/item/raw_material/scrap_metal(T)
+				if(prob(32))
+					new /obj/item/raw_material/scrap_metal(T)
+			if(prob(50))
+				T.ReplaceWithLattice()
+			else
+				T.ReplaceWithSpace()
 		else
 			if(T && prob(90))
-				T.ex_act(1)
+				new /obj/item/raw_material/scrap_metal(T)
+				if(prob(48))
+					new /obj/item/raw_material/scrap_metal(T)
+				if(prob(32))
+					T.ReplaceWithLattice()
+				else
+					T.ReplaceWithSpace()
 			for (var/obj/S in locate(point_x,point_y,src.z))
 				if(dam_type == 3 && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
