@@ -168,7 +168,7 @@ dmm_suite/proc
 				letterDigits.len, max(1, templates.len-1)
 			)
 		)
-		var /list/keys[templates.len]
+		var/list/keys[templates.len]
 		for(var/keyPos = 1 to templates.len)
 			keys[keyPos] = computeKeyIndex(keyPos, keyLength)
 			dmmText += {""[keys[keyPos]]" = ([templates[keyPos]])\n"}
@@ -177,17 +177,17 @@ dmm_suite/proc
 			if(posZ)
 				dmmText += "\n"
 			dmmText += "\n(1,1,[posZ+1]) = {\"\n"
-			var /list/joinGrid = list() // Joining a list is faster than generating strings
+			var/list/joinGrid = list() // Joining a list is faster than generating strings
 			for(var/posY = height-1 to 0 step -1)
-				var /list/joinLine = list()
+				var/list/joinLine = list()
 				for(var/posX = 0 to width-1)
-					var compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
-					var keyNumber = templateBuffer[compoundIndex]
-					var tempKey = keys[keyNumber]
+					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
+					var/keyNumber = templateBuffer[compoundIndex]
+					var/tempKey = keys[keyNumber]
 					joinLine.Add(tempKey)
 					//dmmText += "[tempKey]"
 					sleep(-1)
-				joinGrid.Add(list2text(joinLine))
+				joinGrid.Add(list2text(joinLine, ""))
 				sleep(-1)
 			dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
 			sleep(-1)
@@ -345,10 +345,10 @@ dmm_suite/prefab_saving/makeTemplate(turf/model as turf, flags as num)
 				mobTemplate += "[M.type][checkAttributes(M)],"
 	// Add Turf Template
 	var/empty_area = 0
-	var turfTemplate = ""
+	var/turfTemplate = ""
 	if(!(flags & DMM_IGNORE_TURFS))
 		for(var/appearance in model.underlays)
-			var /mutable_appearance/underlay = new(appearance)
+			var/mutable_appearance/underlay = new(appearance)
 			turfTemplate = "[/turf/dmm_suite/underlay][checkAttributes(underlay)],[turfTemplate]"
 		if(istype(model, /turf/space))
 			empty_area = 1
@@ -372,14 +372,14 @@ dmm_suite/prefab_saving/makeTemplate(turf/model as turf, flags as num)
 	else
 		turfTemplate = "[/turf/dmm_suite/clear_turf],"
 	// Add Area Template
-	var areaTemplate = ""
+	var/areaTemplate = ""
 	if(empty_area)
 		areaTemplate = "/area/allowGenerate"
 	else if(!(flags & DMM_IGNORE_AREAS))
-		var /area/mArea = model.loc
+		var/area/mArea = model.loc
 		areaTemplate = "[mArea.type][checkAttributes(mArea)]"
 	else
 		areaTemplate = "[/area/noGenerate]"
 	//
-	var template = "[objTemplate][mobTemplate][turfTemplate][areaTemplate]"
+	var/template = "[objTemplate][mobTemplate][turfTemplate][areaTemplate]"
 	return template
