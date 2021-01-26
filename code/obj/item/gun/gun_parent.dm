@@ -282,7 +282,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 	else if (src.shooting)
 		return
-	else if(canshoot)
+	else if(canshoot && ismob(user))
 		user?.next_click = max(user.next_click, world.time + src.shoot_delay)
 	SPAWN_DBG(0)
 		src.shooting = 1

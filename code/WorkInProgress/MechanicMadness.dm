@@ -2714,7 +2714,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		else if(istype(W, src.compatible_guns))
+		else if(istype(W, src.compatible_guns) || istype(W, /obj/item/gun/flamethrower))
 			if(!Gun)
 				boutput(usr, "You put the [W] inside the [src].")
 				logTheThing("station", usr, null, "adds [W] to [src] at [log_loc(src)].")
@@ -2746,8 +2746,11 @@
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
 				if(target)
-					//DEBUG_MESSAGE("Target: [log_loc(target)]. Src: [src]")
-					Gun.shoot(target, get_turf(src), src)
+					if(Gun.use_shootloop)
+						//DEBUG_MESSAGE("Target: [log_loc(target)]. Src: [src]")
+						Gun.shoot_manager(target, get_turf(src), src)
+					else
+						Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
