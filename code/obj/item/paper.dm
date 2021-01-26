@@ -346,6 +346,13 @@
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
+	else if (issnippingtool(P))
+		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
+		user.put_in_hand_or_drop(M)
+		usr.u_equip(src)
+		pool(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -1054,7 +1061,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1453,3 +1460,16 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+
+/obj/item/paper/botany_guide
+	name = "Botany Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
+	icon_state = "botany_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"

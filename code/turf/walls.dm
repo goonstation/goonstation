@@ -114,7 +114,7 @@
 		user.show_text("You were interrupted!", "red")
 		return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
+	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
 		return
 
 	// if they didn't move, put it up

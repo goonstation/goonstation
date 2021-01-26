@@ -1061,6 +1061,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/robo_head_screen
+	name = "Cyborg Screen Head"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(6,2,6)
+	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
+	time = 24 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
 	item_paths = list("MET-1")
@@ -1492,7 +1501,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 
 // Mining Gear
-
+#ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
 	name = "Mining Magnet Replacement Parts"
 	item_paths = list("DEN-1","MET-3","CON-2")
@@ -1501,6 +1510,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+#endif
 
 /datum/manufacture/pick
 	name = "Pickaxe"
@@ -1664,6 +1674,24 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 10 SECONDS
 	create = 2
 	category = "Resource"
+
+/datum/manufacture/penlight
+	name = "Penlight"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/light/flashlight/penlight)
+	time = 2 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/stethoscope
+	name = "Stethoscope"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(2,1)
+	item_outputs = list(/obj/item/medical/medicaldiagnosis/stethoscope)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 /datum/manufacture/spacesuit
 	name = "Space Suit Set"

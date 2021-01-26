@@ -1,4 +1,4 @@
-/obj/screen/fullautoAimHUD
+/atom/movable/screen/fullautoAimHUD
 	name = ""
 	desc = ""
 	layer = HUD_LAYER - 1
@@ -27,7 +27,8 @@
 	var/delaymin
 	var/rampfactor
 	var/toggle = 0
-	var/list/obj/screen/fullautoAimHUD/hudSquares = list()
+	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
+	var/client/aimer
 
 	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9, toggle = FULLAUTO_ALWAYS_ACTIVE)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
@@ -40,7 +41,7 @@
 			src.rampfactor = rampfactor
 			for(var/x in 1 to WIDE_TILE_WIDTH)
 				for(var/y in 1 to 15)
-					var/obj/screen/fullautoAimHUD/hudSquare = new /obj/screen/fullautoAimHUD
+					var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
 					hudSquare.screen_loc = "[x],[y]"
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
@@ -54,10 +55,20 @@
 				if(ismob(G.loc))
 					on_pickup(null, G.loc)
 
+	UnregisterFromParent()
+		for(var/hudSquare in hudSquares)
+			aimer?.screen -= hudSquares[hudSquare]
+		aimer = null
+		if(current_user)
+			end_shootloop(current_user)
+		. = ..()
+
 	disposing()
 		for(var/hudSquare in hudSquares)
-			qdel(hudSquare)
+			qdel(hudSquares[hudSquare])
+		hudSquares = null
 		. = ..()
+
 
 	on_pickup(datum/source, mob/user)
 		if(toggle)
@@ -84,21 +95,25 @@
 			on_dropped(source, user)
 
 /datum/component/holdertargeting/fullauto/proc/init_fullauto_mode(datum/source, mob/user)
-	for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-		for(var/y in 1 to 15)
-			var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
-			FH.mouse_over_pointer = icon(cursors_selection[user.client?.preferences.target_cursor], "all")
-			if((y >= 7 && y <= 9) && (x >= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
-				continue
-			user.client?.screen += hudSquares["[x],[y]"]
+	if(user.client)
+		aimer = user.client
+		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
+			for(var/y in 1 to 15)
+				var/atom/movable/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
+				FH.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
+				if((y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
+					continue
+				aimer.screen += hudSquares["[x],[y]"]
 
 
 
 /datum/component/holdertargeting/fullauto/proc/end_fullauto_mode(datum/source, mob/user)
 	end_shootloop(user)
-	for(var/x in 1 to (istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-		for(var/y in 1 to 15)
-			user.client?.screen -= hudSquares["[x],[y]"]
+	if(aimer)
+		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
+			for(var/y in 1 to 15)
+				aimer.screen -= hudSquares["[x],[y]"]
+	aimer = null
 
 
 
@@ -107,20 +122,20 @@
 		src.retarget(user, object, location, control, params)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if ((H.client?.check_key(KEY_THROW)) || H.in_throw_mode)
+			if ((aimer.check_key(KEY_THROW)) || H.in_throw_mode)
 				H.throw_item(target,params)
 				return
 		else if(iscritter(user))
 			var/mob/living/critter/C = user
-			if (((C.client?.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
+			if (((aimer.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
 				C.throw_item(target,params)
 				return
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-		for(var/x in ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
-				user.client?.screen += hudSquares["[x],[y]"]
+				aimer.screen += hudSquares["[x],[y]"]
 
 		src.shootloop(user)
 
@@ -131,9 +146,9 @@
 /datum/component/holdertargeting/fullauto/proc/retarget(mob/M, object, location, control, params)
 
 	var/turf/T
-	var/obj/screen/fullautoAimHUD/F = object
-	if(istype(F))
-		T = locate(M.x + (F.xOffset + -1 - ((istext(M.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+	var/atom/movable/screen/fullautoAimHUD/F = object
+	if(istype(F) && aimer)
+		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
 							M.y + (F.yOffset + -1 - 7),\
 							M.z)
 
@@ -167,9 +182,10 @@
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
 	UnregisterSignal(user, COMSIG_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-
-	for(var/x in ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(user.client?.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-		for(var/y in 7 to 9)
-			user.client?.screen -= hudSquares["[x],[y]"]
+	target = null
+	if(aimer)
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen -= hudSquares["[x],[y]"]
 	if(shooting)
 		stopping = 1

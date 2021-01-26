@@ -486,7 +486,8 @@
 		icon_state = "marsrover"
 
 /obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 

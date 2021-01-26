@@ -121,6 +121,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
@@ -1099,6 +1100,7 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	intact = 0
+	layer = PLATING_LAYER
 	allows_vehicles = 1 // let the constructor pods move around on these
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1158,12 +1160,6 @@
 		if (T.amount >= 1)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
 		return
 
 	if(prob(75 - metal * 25))
@@ -1280,7 +1276,7 @@
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
-	intact = 0
+	setIntact(FALSE)
 	broken = 0
 	burnt = 0
 	if(plate_mat)
@@ -1325,7 +1321,7 @@
 
 /turf/simulated/floor/proc/restore_tile()
 	if(intact) return
-	intact = 1
+	setIntact(TRUE)
 	broken = 0
 	burnt = 0
 	icon = initial(icon)
@@ -1457,11 +1453,6 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
-		if (T.amount < 1)
-			if(!issilicon(user))
-				user.u_equip(T)
-				qdel(T)
-			return
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)

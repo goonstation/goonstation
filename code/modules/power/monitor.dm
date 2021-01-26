@@ -26,7 +26,7 @@
 
 /obj/machinery/power/monitor/proc/interacted(mob/user)
 
-	if ( (!in_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return
@@ -59,7 +59,7 @@
 			for(var/obj/machinery/power/apc/A in L)
 
 				t += copytext(add_tspace(A.area.name, 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"][do_newline ? "<BR>" : " | "]"
+				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "   N/C"][do_newline ? "<BR>" : " | "]"
 				do_newline = !do_newline
 
 		t += "</FONT></PRE>"
@@ -141,7 +141,7 @@
 
 /obj/machinery/power/monitor/smes/interacted(mob/user)
 
-	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=[window_tag]")
 		return

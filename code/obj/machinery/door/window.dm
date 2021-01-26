@@ -208,7 +208,7 @@
 			return
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || usr.stat || usr.restrained())
 			return
-		if (!in_range(src, usr))
+		if (!in_interact_range(src, usr))
 			usr.show_text("You are too far away.", "red")
 			return
 		if (src.hardened == 1)

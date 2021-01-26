@@ -124,7 +124,7 @@
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				return 1
 	return 0
 
@@ -137,7 +137,7 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
-	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_range(src, usr) && istype(src.loc, /turf))
+	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_interact_range(src, usr) && istype(src.loc, /turf))
 		src.add_dialog(usr)
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])

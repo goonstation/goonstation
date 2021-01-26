@@ -26,19 +26,19 @@
 		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
 			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
-			var/turf/T = get_turf(user)
-			sleep(24 SECONDS)
-			if (user.loc == T && user.equipped() == W && !user.stat)
+			if (do_after(user, 24 SECONDS) && user.equipped() == W)
 				var/obj/magnet = new W:constructed_magnet(get_turf(src))
 				magnet.set_dir(src.dir)
 				qdel(W)
 		else
 			..()
+		#endif
 
 	ex_act()
 		return
@@ -60,6 +60,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -73,6 +74,7 @@
 	small
 		name = "small mineral magnet parts"
 		constructed_magnet = /obj/machinery/mining_magnet/construction/small
+#endif
 
 /obj/magnet_target_marker
 	name = "mineral magnet target"
@@ -104,7 +106,7 @@
 					qdel(O)
 			T.overlays.len = 0
 			if (!istype(T, /turf/space))
-				new /turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -866,7 +868,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
@@ -942,6 +944,9 @@
 #else
 	fullbright = 1
 #endif
+
+	consider_superconductivity(starting)
+		return FALSE
 
 	trench
 		name = "cavern wall"

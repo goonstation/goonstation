@@ -239,6 +239,27 @@
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+/* -------------------- Guitar -------------------- */
+
+/obj/item/instrument/guitar
+	name = "guitar"
+	desc = "This machine kills syndicates."
+	icon_state = "guitar"
+	item_state = "guitar"
+	two_handed = 1
+	force = 10.0
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+
+	New()
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
+		..()
+
+
 /* -------------------- Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn

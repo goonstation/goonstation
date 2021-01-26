@@ -49,7 +49,6 @@
 	if (shuttle_last_auto_call + (shuttle_initial_auto_call_done ? shuttle_auto_call_time / 2 : shuttle_auto_call_time) <= ticker.round_elapsed_ticks)
 		emergency_shuttle.incall()
 		command_alert("The shuttle has automatically been called for a shift change.  Please recall the shuttle to extend the shift.","Shift Shuttle Update")
-		world << csound("sound/misc/shuttle_enroute.ogg")
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1

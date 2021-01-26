@@ -80,18 +80,10 @@
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
 		)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
 		"g" = RADIOCL_SECURITY,
-		"e" = RADIOCL_ENGINEERING,
-		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
-		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "nt"
 
@@ -357,7 +349,7 @@ Secure Frequency:
 /obj/item/device/radio/headset/multifreq/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["sfreq"])
 			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))

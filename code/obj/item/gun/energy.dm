@@ -558,7 +558,7 @@
 
 	New()
 		current_projectile = new/datum/projectile/wavegun
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/emp)
+		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/bouncy)
 		..()
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
@@ -1347,8 +1347,8 @@
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(0.4 SECONDS)
-					playsound(M, "sound/vox/explosive.ogg", 50)
+					SPAWN_DBG(0.4 SECONDS)
+						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					current_projectile = projectiles["clownshot"]
 					item_state = "lawg-clownshot"
@@ -1508,7 +1508,7 @@
 		..()
 		cell = new/obj/item/ammo/power_cell/high_power //300 PU
 		current_projectile = new/datum/projectile/energy_bolt/pulse //uses 35PU per shot, so 8 shots
-		projectiles = list(new/datum/projectile/energy_bolt/pulse)
+		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 	update_icon()
 		..()
@@ -1630,3 +1630,40 @@
 	shoot_point_blank(mob/M, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
+
+/obj/item/gun/energy/tasersmg
+	name = "Taser SMG"
+	icon_state = "ntneutral100"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	item_state = "ntgun"
+	force = 5.0
+	two_handed = 1
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_elec"
+
+	New()
+		cell = new/obj/item/ammo/power_cell/high_power
+		current_projectile = new/datum/projectile/energy_bolt/smgburst
+
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		..()
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
+				src.icon_state = "ntstun[ratio]"
+			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
+				src.icon_state = "ntneutral[ratio]"
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (istype(current_projectile, /datum/projectile/energy_bolt/smgauto))
+			spread_angle = 8
+		else
+			spread_angle = 2
+		update_icon()

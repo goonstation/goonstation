@@ -778,6 +778,9 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 				src.target = C
 				src.oldtarget_name = C.name
 				src.speak("Level [src.threatlevel] infraction alert!")
+				if(istype(C, /mob/living/carbon/human/npc/monkey))
+					var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+					npcmonkey.pursuited_by(src)
 				playsound(src.loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
 				src.visible_message("<b>[src]</b> points at [C.name]!")
 				mode = SECBOT_HUNT
@@ -938,7 +941,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 	speak(var/message)
 		if (src.emagged >= 2)
 			message = capitalize(ckeyEx(message))
-			..(message)
+		..(message)
 
 	//Generally we want to explode() instead of just deleting the securitron.
 	ex_act(severity)
@@ -1363,7 +1366,7 @@ Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On"
 		t = copytext(t, 1, 45)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_interact_range(src, usr) && src.loc != usr)
 			return
 
 		src.created_name = t

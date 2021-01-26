@@ -7,6 +7,10 @@ datum/controller/process/sea_hotspot_update
 		schedule_interval = 600 // important : this controls the speed of drift for every hotspot!
 		controller = global.hotspot_controller
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/sea_hotspot_update/old_sea_hotspot_update = target
+		src.controller = old_sea_hotspot_update.controller
+
 	doWork()
 		if (controller)
 			if (map_currently_underwater)

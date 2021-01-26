@@ -153,7 +153,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
+			for(var/datum/statusEffect/effect as() in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -533,10 +533,6 @@
 /atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
-	//set name = "Pull"
-	//set src in oview(1)
-	//set category = "Local"
-
 	if (!( usr ))
 		return
 
@@ -597,7 +593,7 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom?.Find(user.client)) //invislist
+	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
 		return list()
 
 	var/dist = get_dist(src, user)
@@ -818,6 +814,8 @@
 	var/atom/oldloc = loc
 	loc = newloc
 
+	src.last_move = 0
+
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
 
 	oldloc?.Exited(src, newloc)
@@ -1006,7 +1004,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(usr)))
 		return
 
-	if (!istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
 		return
 
 	if (!can_reach(user, src))
