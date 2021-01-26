@@ -175,7 +175,7 @@
 	icon_state = "placeholder"
 	fullbright = 1
 #ifndef HALLOWEEN
-	color = "#BBBBBB"
+	color = "#898989"
 #endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
