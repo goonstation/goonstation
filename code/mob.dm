@@ -3016,7 +3016,7 @@
 
 /// Oh no, we can't eat that! Let's tell the mob why
 /mob/proc/can_not_eat(var/atom/A, var/mob/user, var/fail_reason)
-	if(!istype(A) || !user) return FALSE
+	if(!istype(A) || !user) return
 	switch(fail_reason)
 		if("on_cooldown")
 			if(src == user)
