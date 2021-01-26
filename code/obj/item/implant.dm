@@ -28,6 +28,29 @@ THROWING DARTS
 	var/online = 0
 	var/instant = 1
 
+	//For PDA/signal alert stuff on implants
+	var/uses_radio = 0
+	var/list/mailgroups = null 
+	var/net_id = null
+	var/frequency = 1149
+	var/datum/radio_frequency/radio_connection
+
+	New()
+		..()
+		if (uses_radio)
+			SPAWN_DBG(10 SECONDS)
+				if (radio_controller)
+					radio_connection = radio_controller.add_object(src, "[frequency]")
+				if (!src.net_id)
+					src.net_id = generate_net_id(src)
+	disposing()
+		owner = null
+		former_implantee = null
+		if (uses_radio)
+			radio_controller.remove_object(src, "[frequency]")
+			mailgroups.Cut()
+		. = ..()
+
 	proc/can_implant(mob/target, mob/user)
 		return 1
 
@@ -44,12 +67,6 @@ THROWING DARTS
 			M.update_clothing()
 		activate()
 		return
-
-	disposing()
-		owner = null
-		former_implantee = null
-		. = ..()
-
 
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
@@ -188,22 +205,9 @@ THROWING DARTS
 	impcolor = "b"
 	//life_tick_energy = 0.1
 	var/healthstring = ""
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
-	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	uses_radio = 1
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 
-	New()
-		..()
-		SPAWN_DBG(10 SECONDS)
-			if (radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if (!src.net_id)
-				src.net_id = generate_net_id(src)
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		mailgroups.Cut()
-		..()
 
 	implanted(mob/M, mob/I)
 		..()
@@ -379,8 +383,10 @@ THROWING DARTS
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
-	var/frequency = 1451
+	frequency = 1451
 	var/id = 1.0
+	uses_radio = 1
+	mailgroups = list(MGA_TRACKING)
 
 	New()
 		..()
@@ -396,7 +402,7 @@ THROWING DARTS
 		var/coords = src.get_coords()
 		var/message = "TRACKING IMPLANT LOST: [src.owner][coords] in [get_area(src)], "
 
-		src.send_message(message, MGA_TRACKING)
+		src.send_message(message)
 		..()
 
 /** Deprecated **/
