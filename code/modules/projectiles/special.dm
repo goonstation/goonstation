@@ -1014,7 +1014,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
 		copied.reaction(T, TOUCH, 0, 0)
 		if(O.special_data["IS_LIT"]) // Heat if needed
-			T.reagents.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
