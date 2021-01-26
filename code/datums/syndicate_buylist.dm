@@ -267,7 +267,7 @@ proc/build_syndi_buylist_cache()
 	name = "Cloaking Field Generator"
 	item = /obj/item/cloak_gen
 	cost = 3
-	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't loose the remote!"
+	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't lose the remote!"
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/floorcloset

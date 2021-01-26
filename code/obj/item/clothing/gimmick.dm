@@ -1335,6 +1335,16 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 					H.hud.update_ability_hotbar()
 		..()
 
+/obj/item/clothing/under/gimmick/pajamas
+	name = "pajamas"
+#ifdef UNDERWATER_MAP //gimmick jumpsuit descriptions are serious business
+	desc = "Going outside when in an ocean is kinda wet, so why bother getting dressed?"
+#else
+	desc = "Going outside when in space is kinda dangerous, so why bother getting dressed?"
+#endif
+	icon_state = "pajamas"
+	item_state = "pajamas"
+
 /obj/item/clothing/under/gimmick/shirtnjeans
 	name = "shirt and jeans"
 	desc = "A white shirt and a pair of torn jeans."

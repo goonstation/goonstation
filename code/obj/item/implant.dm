@@ -108,7 +108,7 @@ THROWING DARTS
 					return
 				if (user.equipped() != I)
 					return
-				if ((!in_range(src, usr) && src.loc != user))
+				if ((!in_interact_range(src, usr) && src.loc != user))
 					return
 				t = copytext(adminscrub(t),1,128)
 				if (t)
@@ -1169,6 +1169,8 @@ THROWING DARTS
 	w_class = 1.0
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
+	//Whether this is the paper type that goes away when emptied
+	var/disposable = FALSE
 
 /obj/item/implantcase/tracking
 	name = "glass case - 'Tracking'"
@@ -1245,8 +1247,16 @@ THROWING DARTS
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
 
-/obj/item/implantcase/New()
-	src.imp = new implant_type(src)
+/obj/item/implantcase/New(obj/item/implant/usedimplant = null)
+	if (usedimplant && istype(usedimplant))
+		src.imp = usedimplant
+		imp.set_loc(src)
+		disposable = TRUE
+		name = "removed implant"
+		desc = "A paper wad containing an implant extracted from someone. An implanting tool can reuse the implant."
+	else
+		src.imp = new implant_type(src)
+	update()
 	..()
 	return
 
@@ -1257,8 +1267,14 @@ THROWING DARTS
 /obj/item/implantcase/proc/update()
 	tooltip_rebuild = 1
 	if (src.imp)
-		src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
+		if (disposable)
+			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
+		else
+			src.icon_state = src.imp.impcolor ? "implantcase-[imp.impcolor]" : "implantcase-g"
 	else
+		if (disposable) //ditch that grody paper "case"
+			qdel(src)
+			return
 		src.icon_state = "implantcase-0"
 	return
 
@@ -1267,7 +1283,7 @@ THROWING DARTS
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, usr) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -1344,8 +1360,8 @@ THROWING DARTS
 		src.add_fingerprint(user)
 		update()
 	else
-		if (user.contents.Find(src))
-			SPAWN_DBG( 0 )
+		if (src in user.contents)
+			SPAWN_DBG(0)
 				src.attack_self(user)
 				return
 		else
@@ -1487,7 +1503,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	..()
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))

@@ -78,7 +78,7 @@
 			wear_sanity_check(src.w_uniform)
 			suit_image = src.w_uniform.wear_image
 
-			if (islist(override_states) && override_states.Find("js-[src.w_uniform.icon_state]"))
+			if (islist(override_states) && ("js-[src.w_uniform.icon_state]" in override_states))
 				suit_image.icon = src.mutantrace.clothing_icon_override
 				suit_image.icon_state = "js-[src.w_uniform.icon_state]"
 			else
@@ -314,7 +314,7 @@
 		else
 			src.wear_suit.wear_image.layer = MOB_ARMOR_LAYER
 
-		if (islist(override_states) && override_states.Find("suit-[src.wear_suit.icon_state]"))
+		if (islist(override_states) && ("suit-[src.wear_suit.icon_state]" in override_states))
 			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_suit.wear_image.icon_state = "suit-[src.wear_suit.icon_state]"
 		else
@@ -440,7 +440,7 @@
 	if (src.wear_mask)
 		wear_sanity_check(src.wear_mask)
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("mask-[src.wear_mask.icon_state]"))
+		if (islist(override_states) && ("mask-[src.wear_mask.icon_state]" in override_states))
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_mask.wear_image.icon_state = "mask-[src.wear_mask.icon_state]"
 			no_offset = 1
@@ -484,7 +484,7 @@
 		wear_sanity_check(src.head)
 
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("head-[src.head.icon_state]"))
+		if (islist(override_states) && ("head-[src.head.icon_state]" in override_states))
 			src.head.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.head.wear_image.icon_state = "head-[src.head.icon_state]"
 			no_offset = 1
@@ -742,7 +742,10 @@
 						state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 
 					I.inhand_image.icon_state = state
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = null
@@ -755,7 +758,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_r_hand = I.inhand_image
@@ -767,7 +773,10 @@
 					if (!I.inhand_image)
 						I.inhand_image = image(I.inhand_image_icon, "", MOB_INHAND_LAYER)
 					I.inhand_image.icon_state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
-					I.inhand_image.color = I.color
+					if (I.color)
+						I.inhand_image.color = I.color
+					else if (I.inhand_color)
+						I.inhand_image.color = I.inhand_color
 					I.inhand_image.pixel_x = 0
 					I.inhand_image.pixel_y = hand_offset
 					i_l_hand = I.inhand_image

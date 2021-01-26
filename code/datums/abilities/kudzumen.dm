@@ -1,5 +1,5 @@
 //stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/obj/screen/ability/topBar/kudzu
+/atom/movable/screen/ability/topBar/kudzu
 	clicked(params)
 		var/datum/targetable/kudzu/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -47,18 +47,18 @@
 	points = 0
 	pointName = "nutrients"
 	var/stealthed = 0
-	var/obj/screen/kudzu/meter/nutrients_meter = null
-	var/obj/screen/kudzu/growth_amount/growth_amt = null
+	var/atom/movable/screen/kudzu/meter/nutrients_meter = null
+	var/atom/movable/screen/kudzu/growth_amount/growth_amt = null
 
 	var/const/MAX_POINTS = 100
 
 	New()
 		..()
 		if (hud)
-			nutrients_meter = new/obj/screen/kudzu/meter(src)
+			nutrients_meter = new/atom/movable/screen/kudzu/meter(src)
 			hud.add_object(nutrients_meter)
 
-			growth_amt = new/obj/screen/kudzu/growth_amount(src, get_master_kudzu_controller())
+			growth_amt = new/atom/movable/screen/kudzu/growth_amount(src, get_master_kudzu_controller())
 			hud.add_object(growth_amt)
 
 
@@ -101,7 +101,7 @@
 	var/can_cast_anytime = 0		//while alive
 
 	New()
-		var/obj/screen/ability/topBar/kudzu/B = new /obj/screen/ability/topBar/kudzu(null)
+		var/atom/movable/screen/ability/topBar/kudzu/B = new /atom/movable/screen/ability/topBar/kudzu(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -119,7 +119,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/kudzu()
+			src.object = new /atom/movable/screen/ability/topBar/kudzu()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -566,14 +566,14 @@
 		else
 			return 1
 
-/obj/screen/kudzu
+/atom/movable/screen/kudzu
 	var/datum/abilityHolder/kudzu/holder
 
 	New(var/datum/abilityHolder/kudzu/holder)
 		..()
 		src.holder = holder
 
-/obj/screen/kudzu/meter
+/atom/movable/screen/kudzu/meter
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "viney-0"
 	name = "Nutrients Meter"
@@ -605,7 +605,7 @@
 
 		last_meter_location = cur_meter_location
 
-/obj/screen/kudzu/growth_amount
+/atom/movable/screen/kudzu/growth_amount
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "kudzu-indicator"
 	name = "Kudzu Growth"
@@ -660,7 +660,7 @@
 			src.maptext_y = 8
 
 //This will be the hud element that contains a vine thingy which covers up the left and right hand hud ui elements
-/obj/screen/kudzu/vine_hands_cover
+/atom/movable/screen/kudzu/vine_hands_cover
 	icon = 'icons/misc/kudzu_plus.dmi'		//probably 64x32 later
 	icon_state = "kudzu-template"
 	name = "Kudzu Growth"

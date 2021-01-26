@@ -297,7 +297,7 @@
 	New()
 		..()
 		if (all_functional_reagent_ids.len > 1)
-			reagent_to_add = pick(all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry"))
+			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
 

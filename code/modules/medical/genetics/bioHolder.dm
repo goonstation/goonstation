@@ -570,7 +570,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		do
 			for(var/i = 1 to 20)
 				newUid += "[pick(numbersAndLetters)]"
-		while(bioUids.Find(newUid))
+		while(newUid in bioUids)
 
 		return newUid
 
