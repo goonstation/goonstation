@@ -12,7 +12,7 @@
 			return R
 		var/list/other = call(T, adjacent)(adjacent_param)
 		for (var/next in other)
-			if (open.Find(next) || next == exclude) continue
+			if ((next in open) || next == exclude) continue
 			var/G = TG + other[next], F = G + call(next, heuristic)(end)
 			for (var/i = P; i <= open.len;)
 				if (i++ == open.len || open[open[i]] >= F)

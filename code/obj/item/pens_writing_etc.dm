@@ -801,7 +801,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)
@@ -870,15 +870,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 

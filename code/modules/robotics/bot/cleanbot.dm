@@ -183,7 +183,7 @@
 	Topic(href, href_list)
 		if (..()) return
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!issilicon(usr) && !in_range(src, usr)) return
+		if (!issilicon(usr) && !in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
 		src.add_dialog(usr)

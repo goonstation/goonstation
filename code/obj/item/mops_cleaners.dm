@@ -1077,12 +1077,13 @@ WET FLOOR SIGN
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A
-							if(M.equipped() && prob(25))
+							if(!issilicon(M) && M.equipped() && prob(25))
 								var/obj/item/I = M.equipped()
-								I.set_loc(M.loc)
-								M.u_equip(I)
-								I.dropped()
-								boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+								if(!I.cant_drop)
+									I.set_loc(M.loc)
+									M.u_equip(I)
+									I.dropped()
+									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T
 				if(end_now)

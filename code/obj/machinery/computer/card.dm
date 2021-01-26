@@ -279,7 +279,7 @@
 			var/t1 = input(usr, "What name?", "ID computer", null)
 			t1 = strip_html(t1, 100, 1)
 
-			if ((src.authenticated && src.modify == t2 && (in_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
+			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
 				logTheThing("station", usr, null, "changes the registered name on the ID card from [src.modify.registered] to [t1]")
 				src.modify.registered = t1
 
@@ -291,7 +291,7 @@
 
 			var/newpin = input(usr, "Enter a new PIN.", "ID computer", 0) as null|num
 
-			if ((src.authenticated && src.modify == currentcard && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
+			if ((src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
 				if(newpin < 1000)
 					src.modify.pin = 1000
 				else if(newpin > 9999)

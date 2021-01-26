@@ -394,6 +394,7 @@
 		station_bounties += list(list(/obj/item/captaingun, 3))
 		station_bounties += list(list(/obj/item/gun/kinetic/detectiverevolver, 3))
 		station_bounties += list(list(/obj/item/gun/kinetic/riot40mm, 2))
+		station_bounties += list(list(/obj/item/reagent_containers/food/drinks/mug/HoS, 1))
 
 		station_bounties += list(list(/obj/item/baton, 2))
 		station_bounties += list(list(/obj/item/gun/energy/taser_gun, 2))

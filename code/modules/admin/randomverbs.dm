@@ -2692,6 +2692,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 							if (3)
 								B = 1
 					L.light?.set_color(R, G, B)
+					LAGCHECK(LAG_LOW)
 				logTheThing("admin", src, null, "set every light on the station to a random color.")
 				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
 				message_admins("[key_name(src)] set every light on the station to a random color.")
