@@ -374,7 +374,7 @@ toxic - poisons
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
-	shot_number = 1
+	shot_number = 2
 	damage_type = D_ENERGY
 	hit_ground_chance = 20
 	window_pass = 0
