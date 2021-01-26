@@ -347,7 +347,7 @@ var/list/genetek_hair_styles = null
 				src.update_preview_icon()
 
 	ui_data(mob/user)
-		src.preview?.AddClient(user?.client)
+		src.preview?.add_client(user?.client)
 
 		if (isnull(genetek_hair_styles))
 			genetek_hair_styles = list()
@@ -385,7 +385,7 @@ var/list/genetek_hair_styles = null
 
 	ui_close(mob/user)
 		. = ..()
-		src.preview?.RemoveClient(user?.client)
+		src.preview?.remove_client(user?.client)
 
 	proc
 		load_mob_data(var/mob/living/carbon/human/H)

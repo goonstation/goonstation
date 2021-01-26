@@ -1010,7 +1010,7 @@
 		if (!src.scanner.occupant_preview)
 			src.scanner.occupant_preview = new()
 			src.scanner.update_occupant()
-		src.scanner.occupant_preview.AddClient(user?.client)
+		src.scanner.occupant_preview.add_client(user?.client)
 		.["haveSubject"] = TRUE
 		.["subjectPreview"] = src.scanner.occupant_preview.preview_id
 		.["subjectName"] = subject.name
@@ -1125,7 +1125,7 @@
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
-	src.scanner?.occupant_preview?.RemoveClient(user?.client)
+	src.scanner?.occupant_preview?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
 
 #undef GENETICS_INJECTORS
