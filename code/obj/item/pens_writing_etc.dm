@@ -378,6 +378,37 @@
 	New()
 		. = ..()
 		src.create_inventory_counter()
+	
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (iscarbon(M) || ismobcritter(M))
+			if (M == user)
+				return // so you don't accidentally shove a crayon while drawing
+				       // if you want to add this, PLEASE make it obvious
+			else if(check_target_immunity (M))
+				user.show_message( "<span class='alert'>You try to jam [src] up [M]'s nose, but it won't fit!</span>")
+				return
+			else
+				user.visible_message("<span class='alert'>[user] attempts to jam [src] up [M]'s nose. Ew.</span>",\
+				"<span class='alert'>You attempt to jam [src] up [M]'s nose.</span>")
+				logTheThing("combat", user, M, "tries to jam [src] into [constructTarget(M,"combat")] at [log_loc(user)].")
+
+				if (!do_mob(user, M))
+					if (user && ismob(user))
+						user.show_text("You were interrupted!", "red")
+					return
+				user.visible_message("<span class='alert'>[user] jammed [src] up [M]'s nose.</span>",\
+				"<span class='alert'>You jam [src] up [M]'s nose. Disgusting.</span>")
+
+			logTheThing("combat", user, M, "jammed [src] into [M] at [log_loc(user)].")
+			user.u_equip(src)
+			src.set_loc(M)
+			M.take_brain_damage(15) // ouch
+			M.emote("scream")
+			M.reagents.add_reagent("lithium", 3) // drooling for 30s
+			health_update_queue |= M
+			return 1
+
+		return 0
 
 
 	proc/write_input(mob/user)
