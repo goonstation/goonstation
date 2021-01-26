@@ -377,11 +377,6 @@ toxic - poisons
 	shot_number = 2
 	damage_type = D_ENERGY
 	hit_ground_chance = 20
-	window_pass = 0
-	brightness = 1
-	color_red = 0.9
-	color_green = 0.9
-	color_blue = 0.1
 
 	disruption = 8
 
