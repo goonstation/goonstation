@@ -2975,9 +2975,11 @@
 
 	/// Making sure the thing actually exists and isn't cheating the bite-rate. And is also edible, so we don't get people trying to stuff multitools in their mouth
 	if(!src.bioHolder?.HasEffect("mattereater") && GET_COOLDOWN(src, "eat") && (A.edible || A.material?.edible))
-		return src.can_not_eat(A, user, "on_cooldown")
+		src.can_not_eat(A, user, "on_cooldown")
+		return FALSE
 	else if (!A.amount)
-		return src.can_not_eat(A, user, "all_gone")
+		src.can_not_eat(A, user, "all_gone")
+		return FALSE
 
 	/// Special cases with special circumstances, mostly so awful monsters can eat awful monster food
 	var/edibility_check = SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, src, user, A)
@@ -2990,20 +2992,24 @@
 
 	/// Godmode
 	if(src != user && check_target_immunity(src))
-		return src.can_not_eat(A, user, "godmode")
+		src.can_not_eat(A, user, "godmode")
+		return FALSE
 
 	/// Finally, check if we have proper etiquette
 	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_FORK))
-		return src.can_not_eat(A, user, "lack_fork")
+		src.can_not_eat(A, user, "lack_fork")
+		return FALSE
 	if(HAS_FLAG(edibility_check, EATING_NEEDS_A_SPOON))
-		return src.can_not_eat(A, user, "lack_spoon")
+		src.can_not_eat(A, user, "lack_spoon")
+		return FALSE
 
 	/// And finally finally, if it should actually be edible, do we have somewhere to put it?
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
 		if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
-			return src.can_not_eat(A, user, "busted_guts")
+			src.can_not_eat(A, user, "busted_guts")
+			return FALSE
 
 	/// okay eat the darn thing
 	return TRUE
@@ -3046,7 +3052,6 @@
 			src, "<span class='alert'>[user] tries to feed [A] to you, but nothing happens!</span>")
 		else
 			boutput(user, "<span class='alert'>You can't eat that!</span>")
-	return FALSE
 
 /mob/proc/on_eat(var/atom/A)
 	return
