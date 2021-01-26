@@ -120,7 +120,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 		if(!isliving(usr))
 			return
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S)) //for if we have a flamer attached
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
 				if (S.id == "rhand")

@@ -2825,15 +2825,6 @@
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"hk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Equipment";
-	req_access_txt = "27"
-	},
-/obj/access_spawn/sec_lockers,
-/obj/firedoor_spawn,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "hl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -3186,28 +3177,6 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/red,
-/area/station/security/main)
-"ib" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
 /area/station/security/main)
 "ic" = (
 /obj/machinery/computer/security{
@@ -3788,14 +3757,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"js" = (
-/obj/table/wood/round/auto,
-/obj/machinery/glass_recycler,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/cafeteria)
 "jt" = (
 /obj/item/storage/wall/emergency{
 	dir = 4
@@ -5265,11 +5226,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"mT" = (
-/obj/table/auto,
-/obj/item/storage/box/revimp_kit,
-/turf/simulated/floor/carpet/red/fancy/edge/se,
-/area/station/security/main)
 "mU" = (
 /obj/cable{
 	d1 = 1;
@@ -7257,17 +7213,6 @@
 	dir = 8
 	},
 /area/station/security/secwing)
-"ry" = (
-/obj/stool/chair/office/red{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/secwing)
 "rz" = (
 /obj/securearea{
 	desc = "";
@@ -7325,10 +7270,8 @@
 "rG" = (
 /obj/disposalpipe/segment,
 /obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""
+	};name = "dedication plaque";pixel_y = 25},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "rH" = (
@@ -10640,6 +10583,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"zB" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Security Equipment";
+	req_access_txt = "27"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/security,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "zD" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
@@ -11447,6 +11399,17 @@
 	dir = 5
 	},
 /area/station/security/main)
+"BS" = (
+/obj/table/wood/round/auto,
+/obj/machinery/glass_recycler,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/cafeteria)
 "BU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
@@ -12002,13 +11965,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hos)
-"Dw" = (
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/pinpointer/teg_semi,
-/obj/item/deconstructor,
-/obj/item/stamp/ce,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/analyzer/healthanalyzer/borg,
@@ -17149,6 +17105,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"Qq" = (
+/obj/stool/chair/office/red{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/secwing)
 "Qs" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
@@ -17468,6 +17435,15 @@
 "Rx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
+"Ry" = (
+/obj/table/auto,
+/obj/item/storage/box/revimp_kit,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/station/security/main)
 "RA" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -18578,6 +18554,13 @@
 	dir = 1
 	},
 /area/station/security/main)
+"VL" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
+/obj/item/deconstructor,
+/obj/item/stamp/ce,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
 "VM" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19905,6 +19888,28 @@
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"ZI" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "ZJ" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
@@ -70242,7 +70247,7 @@ eX
 eX
 eX
 QH
-js
+BS
 kt
 kX
 mc
@@ -71448,7 +71453,7 @@ hl
 VK
 gf
 gE
-hk
+zB
 hU
 gE
 vu
@@ -72657,7 +72662,7 @@ fx
 gr
 gM
 hz
-ib
+ZI
 jC
 ky
 lv
@@ -72963,7 +72968,7 @@ ic
 jG
 ky
 YY
-mT
+Ry
 nS
 hl
 pA
@@ -73571,7 +73576,7 @@ jI
 nY
 hJ
 pJ
-ry
+Qq
 sA
 um
 fl
@@ -76908,7 +76913,7 @@ AX
 Qj
 Cp
 Ya
-Dw
+VL
 BK
 EX
 FQ

@@ -1,5 +1,67 @@
 
+(t)mon jan 25 21
+(u)pali
+(+)Miasma now has a status effect and it does slightly different things based on how much of it is in you.
+(u)ZeWaka
+(e)🐛|bug
+(+)If you get set on fire while laying down, you now properly roll in agony.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Stimulants are now a status effect
+(u)adharainspace
+(p)3468
+(e)🆕🎨|feature, sprites
+(*)Ranchers now have a fishing rod in their backpacks. Fishing itself is pretty WIP but there's some content there for you.
+(t)sun jan 24 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Cyberappendices now only inject chems if you are hurt, and will damage themself slightly doing so if you are more than superficially injured, forcing you to replace it eventually.
+(u)DimWhat
+(p)3463
+(e)⚖|balance
+(+)Security crates ordered through QM now require security equipment access.
+(u)Flourish
+(p)3450
+(e)⚖|balance
+(*)Authorizing the armory open now requires security equipment access (the access you need to open security lockers) as opposed to regular security access. This means lawyers, vice officers, and detectives can no longer help authorize it open.
+(+)Vice officers no longer have security equipment access.
+(u)BenLubar
+(p)3462
+(e)|
+(+)Ion Storms can no longer open/close emergency shutters, such as the doors around the crusher in most maps.
+(u)Carbadox, Flaborized, and Flourish
+(p)3017
+(e)🆕🗺🔄🎨|feature, mapping, rework, sprites
+(*)Added a new permanent security role, security assistant. This role will provide an entry point to players interested in the Security department without having to start off in a high pressure role like security officer. Please be nice to them!
+(*)Security PDAs now spawn with a special security alert module. When used, this module sends a "backup requested" PDA alert to the entire security department from the user's PDA.
+(*)Security departments now have a couple ticket writer devices laying around, which allow officers to issue tickets (and only tickets) without having to wrangle with their PDA.
+(u)pali
+(p)3331
+(e)|
+(+)NTSO job is now only available after HoS has been picked.
+(u)Carbadox
+(p)3334
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Added a new Bartender job reward, the spectroscopic monocle.
+(u)BatElite
+(p)3432
+(e)🆕|feature
+(+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
+(t)sat jan 23 21
+(u)BenLubar
+(p)3411
+(e)|
+(+)Outgoing PDA messages are now shown in your chat log. The AI can take notes while looking at a camera. File sharing with groups is no longer broken!
+(u)Nefarious6th
+(p)3424
+(e)🆕🎨|feature, sprites
+(+)Added recipes for chicken pot pie, chicken "pot" pie, stargazy pie, and chocolate mud pie.
 (t)fri jan 22 21
+(u)AwkwardDryad
+(p)3378
+(e)⚖|balance
+(+)Added sterile masks and latex gloves to public MiniMeds.
+(+)MiniMed items are now more affordable!
 (u)Emily
 (e)🆕|feature
 (*)New silkie breed added! View minor changes for hint. [Gen 2] [From Black Silkie]

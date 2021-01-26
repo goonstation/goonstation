@@ -51,7 +51,7 @@ mob/new_player
 		src.sight |= SEE_TURFS
 
 		if (src.ckey && !adminspawned)
-			if (spawned_in_keys.Find("[src.ckey]"))
+			if ("[src.ckey]" in spawned_in_keys)
 				if (!(client && client.holder) && !abandon_allowed)
 					 //They have already been alive this round!!
 					var/mob/dead/observer/observer = new()
@@ -267,8 +267,10 @@ mob/new_player
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
+		if (JOB.requires_supervisor_job && countJob(JOB.requires_supervisor_job) <= 0)
+			return 0
 		if (JOB.requires_whitelist)
-			if (!NT.Find(src.ckey))
+			if (!(src.ckey in NT))
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0

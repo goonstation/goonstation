@@ -623,9 +623,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		var/what = pick("I am the traitor.", "I will kill you.", "You will die, [M].")
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
-			var/point = new /obj/decal/point(get_turf(M))
-			SPAWN_DBG(3 SECONDS)
-				qdel(point)
+			make_point(get_turf(M))
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
 	proc/backpack(var/mob/M, var/mob/living/O)

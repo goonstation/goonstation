@@ -1179,7 +1179,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
 
-/proc/demonic_spawn(var/atom/movable/A, var/size = 1)
+/proc/demonic_spawn(var/atom/movable/A, var/size = 1, var/play_sound = TRUE)
 	if (!A) return
 	var/was_anchored = A.anchored
 	var/original_plane = A.plane
@@ -1190,7 +1190,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	A.plane = PLANE_UNDERFLOOR
 	A.anchored = TRUE
-	playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	if (play_sound)
+		playsound(center,"sound/effects/darkspawn.ogg",50,0)
 	SPAWN_DBG(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)

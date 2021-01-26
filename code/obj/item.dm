@@ -57,6 +57,8 @@
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
+	var/inhand_color = null
 
 	var/equipped_in_slot = null // null if not equipped, otherwise contains the slot in which it is
 
@@ -645,7 +647,7 @@
 	else
 
 		if (isturf(over_object))
-			if (on_turf && in_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
+			if (on_turf && in_interact_range(over_object,src) && !src.anchored) //drag from floor to floor == slide
 				if (istype(over_object,/turf/simulated/floor) || istype(over_object,/turf/unsimulated/floor))
 					step_to(src,over_object)
 					//this would be cool ha ha h
@@ -660,7 +662,7 @@
 				return
 
 		var/is_storage = istype(over_object,/obj/item/storage)
-		if (is_storage || istype(over_object, /obj/screen/hud))
+		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
 			else if (on_turf)
@@ -678,7 +680,7 @@
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
-	var/obj/screen/hud/S = over_object
+	var/atom/movable/screen/hud/S = over_object
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
@@ -687,7 +689,7 @@
 	if (istype(over_object,/obj/item/storage) && over_object != src)
 		var/obj/item/storage/storage = over_object
 		if (istype(storage.loc, /turf))
-			if (!(in_range(src,user) && in_range(storage,user)))
+			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
 				return
 
 		src.pick_up_by(user)
@@ -770,6 +772,7 @@
 		..(W, user)
 
 /obj/item/proc/process()
+	SHOULD_NOT_SLEEP(TRUE)
 	if (src.last_processing_tick < 0)
 		src.last_tick_duration = 1
 	else

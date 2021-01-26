@@ -388,3 +388,41 @@ toxic - poisons
 	ie_type = "T"
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/smgburst
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "taser_projectile"
+	power = 15
+	cost = 25
+	max_range = 12
+	ks_ratio = 0.0
+	sname = "burst"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 2
+	damage_type = D_ENERGY
+	hit_ground_chance = 20
+
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/smgauto
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_tase"
+	power = 10
+	cost = 12
+	max_range = 8
+	ks_ratio = 0.0
+	sname = "full-auto"
+	shot_sound = 'sound/weapons/SigTase.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 1
+	damage_type = D_ENERGY
+	hit_ground_chance = 35
+
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'

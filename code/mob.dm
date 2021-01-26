@@ -18,8 +18,8 @@
 
 	var/last_move_trigger = 0
 
-	var/obj/screen/internals = null
-	var/obj/screen/stamina_bar/stamina_bar = null
+	var/atom/movable/screen/internals = null
+	var/atom/movable/screen/stamina_bar/stamina_bar = null
 	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
@@ -31,7 +31,7 @@
 
 	var/last_resist = 0
 
-	//var/obj/screen/zone_sel/zone_sel = null
+	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
@@ -316,15 +316,15 @@
 		bioHolder = null
 
 	for (var/datum/hud/H in huds)
-		for (var/obj/screen/hud/S in H.objects)
+		for (var/atom/movable/screen/hud/S in H.objects)
 			if (S:master == src)
 				S:master = null
 //KYLE: KEELIN, LOOK. Something like this? I dunno, it's so slow too:
-		// for (var/obj/screen/S in H.objects)
-		// 	if (istype(S, /obj/screen/hud))
+		// for (var/atom/movable/screen/S in H.objects)
+		// 	if (istype(S, /atom/movable/screen/hud))
 		// 		if (S:master == src)
 		// 			S:master = null
-		// 	else if (istype(S, /obj/screen/statusEffect))
+		// 	else if (istype(S, /atom/movable/screen/statusEffect))
 		// 		src.delStatus(S:ownerStatus)
 
 		//if (islist(H.objects)) //possibly causing bug where gibbed persons UI persistss on ghosts
@@ -497,8 +497,6 @@
 
 	src.client?.color = src.active_color_matrix
 
-	return
-
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
@@ -511,7 +509,7 @@
 
 	..()
 
-	return 1
+	. = 1
 
 /mob/proc/deliver_move_trigger(ev)
 	return
@@ -719,7 +717,7 @@
 	return 1
 
 /mob/proc/attach_hud(datum/hud/hud)
-	if (!huds.Find(hud))
+	if (!(hud in huds))
 		huds += hud
 		hud.mobs += src
 		if (src.client)

@@ -217,7 +217,7 @@
 	// if 'lightweight' parameter is 2, invoke an update loop but still ignore icon updates
 	proc/remove(var/obj/fluid/F, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 0)
 		if (!F || F.pooled || src.disposed) return 0
-		if (!members || !length(src.members) || !members.Find(F)) return 0
+		if (!members || !length(src.members) || !(F in members)) return 0
 
 		if (!lightweight)
 			var/turf/t
@@ -262,7 +262,7 @@
 	 * vol_max sets upper limit for fluid volume to be removed */
 	proc/suck(var/obj/fluid/F, var/vol_max, var/lost_fluid = 1, var/lightweight = 0, var/allow_zero = 1)
 		if (!F || F.pooled) return 0
-		if (!members || !length(src.members) || !members.Find(F)) return 0
+		if (!members || !length(src.members) || !(F in members)) return 0
 
 		var/datum/reagents/R = null
 
