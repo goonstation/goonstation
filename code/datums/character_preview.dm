@@ -4,6 +4,7 @@
  * Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
  *
  * This parent type is for use in single-client windows.
+ * See [datum/character_preview/window] for a detatched window and and [datum/character_preview/multiclient] for a multi-client variant.
  *
  * Use winset() to position the control within the window.
  *
