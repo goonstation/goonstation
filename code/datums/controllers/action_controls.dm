@@ -13,20 +13,20 @@ var/datum/action_controller/actions
 		return 0
 
 	proc/stop_all(var/atom/owner) //Interrupts all actions of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stop(var/datum/action/A, var/atom/owner) //Manually interrupts a given action of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
-			if(actions.Find(A))
+			if(A in actions)
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stopId(var/id, var/atom/owner) //Manually interrupts a given action id of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id)
@@ -52,7 +52,7 @@ var/datum/action_controller/actions
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //Is called by all kinds of things to check for action interrupts.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(flag)
 		return

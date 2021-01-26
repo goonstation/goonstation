@@ -1,4 +1,4 @@
-/obj/screen/fullautoAimHUD
+/atom/movable/screen/fullautoAimHUD
 	name = ""
 	desc = ""
 	layer = HUD_LAYER - 1
@@ -27,7 +27,7 @@
 	var/delaymin
 	var/rampfactor
 	var/toggle = 0
-	var/list/obj/screen/fullautoAimHUD/hudSquares = list()
+	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
 
 	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9, toggle = FULLAUTO_ALWAYS_ACTIVE)
@@ -41,7 +41,7 @@
 			src.rampfactor = rampfactor
 			for(var/x in 1 to WIDE_TILE_WIDTH)
 				for(var/y in 1 to 15)
-					var/obj/screen/fullautoAimHUD/hudSquare = new /obj/screen/fullautoAimHUD
+					var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
 					hudSquare.screen_loc = "[x],[y]"
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
@@ -59,6 +59,8 @@
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer = null
+		if(current_user)
+			end_shootloop(current_user)
 		. = ..()
 
 	disposing()
@@ -97,7 +99,7 @@
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
 			for(var/y in 1 to 15)
-				var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
+				var/atom/movable/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
 				FH.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
 				if((y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
 					continue
@@ -144,8 +146,8 @@
 /datum/component/holdertargeting/fullauto/proc/retarget(mob/M, object, location, control, params)
 
 	var/turf/T
-	var/obj/screen/fullautoAimHUD/F = object
-	if(istype(F))
+	var/atom/movable/screen/fullautoAimHUD/F = object
+	if(istype(F) && aimer)
 		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
 							M.y + (F.yOffset + -1 - 7),\
 							M.z)

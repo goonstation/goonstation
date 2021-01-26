@@ -2311,7 +2311,8 @@ var/global/night_mode_enabled = 0
 			//R.set_dir(direction)
 			R.name = "robust shamecube glass"
 			R.desc = "A pane of robust, yet shameful, glass."
-		var/turf/void = new/turf/unsimulated/floor/void(get_step(targetLoc, direction))
+		var/turf/orig = get_step(targetLoc, direction)
+		var/turf/void = orig.ReplaceWith(/turf/unsimulated/floor/void, FALSE, TRUE, FALSE, TRUE)
 		void.name = "shameful void"
 		void.desc = "really is just a shame"
 		new/area/shamecube(get_step(targetLoc, direction))
@@ -2619,7 +2620,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.vistarget.warptarget = null
 					T.vistarget.fullbright = initial(T.vistarget.fullbright)
 					T.vistarget.RL_Init()
-					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE
@@ -2665,5 +2665,36 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 
 			if("No")
 				return
+	else
+		boutput(src, "You must be at least a Administrator to use this command.")
+
+/client/proc/cmd_disco_lights()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Disco Lights"
+	set desc = "Set every light on the station to a random color"
+	var/R = null
+	var/G = null
+	var/B = null
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
+			if("Yes")
+				for (var/obj/machinery/light/L as() in stationLights)
+					R = rand(100)/100
+					G = rand(100)/100
+					B = rand(100)/100
+					if ((R + G + B) < 1)
+						switch (rand(1,3))
+							if (1)
+								R = 1
+							if (2)
+								G = 1
+							if (3)
+								B = 1
+					L.light?.set_color(R, G, B)
+					LAGCHECK(LAG_LOW)
+				logTheThing("admin", src, null, "set every light on the station to a random color.")
+				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
+				message_admins("[key_name(src)] set every light on the station to a random color.")
 	else
 		boutput(src, "You must be at least a Administrator to use this command.")

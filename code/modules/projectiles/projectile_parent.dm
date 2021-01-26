@@ -145,7 +145,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -180,7 +180,7 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
@@ -190,11 +190,11 @@
 			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
 				die()
 			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+				if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -551,12 +551,11 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 		caliber = null
-		nomsg = 0
 
 		datum/material/material = null
 
@@ -739,11 +738,11 @@ datum/projectile/energy_bolt_antighost
 	impact_range = 16
 	hits_ghosts = 1 // do it.
 
-datum/projectile/rad_bolt
-	impact_range = 0
-
 datum/projectile/tele_bolt
 	impact_range = 4
+
+datum/projectile/rad_bolt
+	impact_range = 0
 
 datum/projectile/wavegun
 	impact_range = 4

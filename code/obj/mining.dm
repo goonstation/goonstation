@@ -106,7 +106,7 @@
 					qdel(O)
 			T.overlays.len = 0
 			if (!istype(T, /turf/space))
-				new /turf/space(T)
+				T.ReplaceWithSpaceForce()
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -868,7 +868,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
@@ -944,6 +944,9 @@
 #else
 	fullbright = 1
 #endif
+
+	consider_superconductivity(starting)
+		return FALSE
 
 	trench
 		name = "cavern wall"
@@ -1183,8 +1186,11 @@
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 
@@ -1435,8 +1441,10 @@
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
 			var/image/edge_overlay = image('icons/turf/asteroid.dmi', "edge[get_dir(A,src)]")
-			//edge_overlay.layer = src.layer + 1
-			edge_overlay.color = src.stone_color
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.plane = PLANE_FLOOR
+			edge_overlay.layer = TURF_EFFECTS_LAYER
+			//edge_overlay.color = src.stone_color
 			A.overlays += edge_overlay
 			src.space_overlays += edge_overlay
 

@@ -381,6 +381,7 @@
 	station_bounties[/obj/item/circular_saw] = 1
 	station_bounties[/obj/item/paper/book/medical_guide] = 1
 
+	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 1
 	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2

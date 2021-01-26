@@ -183,12 +183,6 @@
 		walk_towards(src, null)
 		return
 
-//			var/turf/T = get_turf(src)
-//			if((T.poison > 100000.0 || T.firelevel || T.oxygen < 560000 || T.co2 > 7500.0) && !istype(get_turf(src), /turf/space) )
-//				ai_avoid(T)
-//			else ai_move()
-
-
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
 	if(ai_busy && !src.hasStatus("handcuffed"))

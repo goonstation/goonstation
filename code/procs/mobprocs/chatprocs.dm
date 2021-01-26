@@ -672,7 +672,7 @@
 		if (!C.mob) continue
 		var/mob/M = C.mob
 
-		if (recipients.Find(M.client))
+		if (M.client in recipients)
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
@@ -776,7 +776,7 @@
 	return null
 
 /mob/proc/see(message)
-	if (!src.is_active())
+	if (!isalive(src))
 		return 0
 	boutput(src, message)
 	return 1

@@ -1,4 +1,10 @@
-(t)tue jan 01 10
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
+(u)Sovexe
+(*)New admin verb, Disco Lights. Sets every light on the station to a random color.
+(t)tue jan 10 21
 (u)Sovexe
 (*)Add new buildmode tool, maze. Spawns in a maze of your desired turfs and lighting. Works best in larger areas.
 (t)sat jan 09 21

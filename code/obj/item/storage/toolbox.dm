@@ -41,11 +41,11 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
@@ -98,15 +98,30 @@
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wirecutters,\
 	/obj/item/device/t_scanner,\
-	/obj/item/crowbar,\
-	/obj/item/cable_coil = 3)
+	/obj/item/crowbar)
+
+	make_my_stuff()
+		var/picked = pick(/obj/item/cable_coil,\
+		/obj/item/cable_coil/colored/yellow,\
+		/obj/item/cable_coil/colored/orange,\
+		/obj/item/cable_coil/colored/blue,\
+		/obj/item/cable_coil/colored/green,\
+		/obj/item/cable_coil/colored/purple,\
+		/obj/item/cable_coil/colored/black,\
+		/obj/item/cable_coil/colored/hotpink,\
+		/obj/item/cable_coil/colored/brown,\
+		/obj/item/cable_coil/colored/white)
+		spawn_contents.Add(picked)
+		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
+			spawn_contents.Add(picked,picked)
+		. = ..()
+
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
 		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
-		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)

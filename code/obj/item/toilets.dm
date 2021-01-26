@@ -25,7 +25,7 @@ TOILET
 	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
@@ -40,7 +40,7 @@ TOILET
 	return ..()
 
 /obj/item/storage/toilet/MouseDrop(atom/over_object, src_location, over_location)
-	if (usr && over_object == usr && in_range(src, usr) && iscarbon(usr) && !usr.stat)
+	if (usr && over_object == usr && in_interact_range(src, usr) && iscarbon(usr) && !usr.stat)
 		usr.visible_message("<span class='alert'>[usr] [pick("shoves", "sticks", "stuffs")] [his_or_her(usr)] hand into [src]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 	..()

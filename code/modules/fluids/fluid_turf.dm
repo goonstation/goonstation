@@ -262,7 +262,7 @@
 
 	proc/blow_hole()
 		if (src.z != 5)
-			new /turf/space/fluid/warp_z5/realwarp(src)
+			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
 /turf/space/fluid/warp_z5
@@ -480,7 +480,7 @@
 /obj/machinery/computer/sea_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])

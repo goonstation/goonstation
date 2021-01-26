@@ -12,6 +12,7 @@
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/requires_whitelist = 0
+	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = 0
@@ -239,7 +240,7 @@
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security
+	recieves_implant = /obj/item/implant/health/security/anti_mindslave
 
 
 #ifdef SUBMARINE_MAP
@@ -469,7 +470,7 @@
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_poc1 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_poc2 = /obj/item/requisition_token/security
-	rounds_needed_to_play = 13 //ss13, and also seems like a good number to go with
+	rounds_needed_to_play = 30 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
 	New()
 		..()
@@ -481,6 +482,25 @@
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_security")
+
+	assistant
+		name = "Security Assistant"
+		limit = 3
+		wages = PAY_UNTRAINED
+		slot_jump = /obj/item/clothing/under/rank/security/assistant
+		slot_suit = null
+		slot_glov = /obj/item/clothing/gloves/fingerless
+		slot_head = /obj/item/clothing/head/red
+		slot_foot = /obj/item/clothing/shoes/brown
+		slot_poc1 = /obj/item/storage/security_pouch/assistant
+		slot_poc2 = /obj/item/requisition_token/security/assistant
+		items_in_backpack = list(/obj/item/paper/book/space_law)
+		rounds_needed_to_play = 5
+
+		New()
+			..()
+			src.access = get_access("Security Assistant")
+			return
 
 	derelict
 		//name = "NT-SO Officer"
@@ -876,6 +896,7 @@
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/civilian
+	items_in_backpack = list(/obj/item/fishing_rod)
 
 	New()
 		..()
@@ -1331,6 +1352,8 @@
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
+		if(prob(20))
+			M.bioHolder.AddEffect("noir", magical=1)
 
 // randomizd gimmick jobs
 
@@ -1470,7 +1493,7 @@
 	slot_jump = /obj/item/clothing/under/suit/pinstripe
 	slot_head = /obj/item/clothing/head/flatcap
 	slot_foot = /obj/item/clothing/shoes/brown
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/harmonica,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -2320,6 +2343,7 @@
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
+	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1

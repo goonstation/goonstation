@@ -93,7 +93,7 @@
 			src.pulling = null
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
-	//if (istype(target, /obj/screen/ability))
+	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
 	if (get_dist(src, target) > 0)
 		if(!src.dir_locked)
