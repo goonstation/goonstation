@@ -9,11 +9,17 @@ A Flamethrower in various states of assembly
 
 */
 #define FLAMER_DEFAULT_TEMP 700 KELVIN
+#define FLAMER_BACKTANK_TEMP 1000 KELVIN + T0C
 #define FLAMER_MIN_TEMP T0C
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 10
+#define FLAMER_BACKTANK_CHEM_AMT 25
 #define FLAMER_MIN_CHEM_AMT 5
 #define FLAMER_MAX_CHEM_AMT 20
+#define FLAMER_MODE_LOOSE 1
+#define FLAMER_MODE_TIGHT 2
+#define FLAMER_MODE_SINGLE 3
+#define FLAMER_MODE_BACKTANK 4
 
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
@@ -28,7 +34,7 @@ A Flamethrower in various states of assembly
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4
-	var/mode = 1
+	var/mode = FLAMER_MODE_LOOSE
 	var/processing = 0
 	var/lit = 0	//on or off
 	/// Set the projectile to make the reagents be this hot
@@ -60,9 +66,9 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 	/// Burstfire, but actually
 	use_shootloop = 1
-	refire_delay = 4 DECI SECONDS
-	burst_count = 3
-	spread_angle = 5
+	refire_delay = 1.5 DECI SECONDS
+	burst_count = 5
+	spread_angle = 35
 
 	New()
 		..()
@@ -87,7 +93,7 @@ A Flamethrower in various states of assembly
 		else if(src.fueltank?.reagents.total_volume <= 0)
 			boutput(user, "<span class='alert'>This [src]'s fuel source is empty!</span>")
 			return FALSE
-		else if(T_env && src.gastank?.air_contents)
+		else if(T_env && src.gastank?.air_contents && ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items())))
 			if(MIXTURE_PRESSURE(T_env) > MIXTURE_PRESSURE(gastank.air_contents))
 				boutput(user, "<span class='alert'>Not enough pressure in [src]'s gas tank to operate!</span>")
 				return FALSE
@@ -100,56 +106,57 @@ A Flamethrower in various states of assembly
 		if(!canshoot())
 			return
 
-		var/obj/projectile/SD = P.special_data
-		var/datum/reagents/FR = src.fueltank.reagents
-		var/datum/gas_mixture/GTAC = src.gastank.air_contents
+		var/list/P_special_data = P.special_data
+		var/datum/reagents/fueltank_reagents = src.fueltank.reagents
+		var/datum/gas_mixture/gastank_aircontents = src.gastank.air_contents
 
 		var/chem_amount = min(src.fueltank?.reagents.total_volume, src.amt_chem)
 		var/datum/reagents/chems = new(chem_amount)
-		FR.trans_to_direct(chems, chem_amount)
-		SD["crossed_turfs"] = list()
-		SD["FT_reagents"] = chems
-		SD["proj_color"] = chems.get_average_color()
+		if(!P.reagents)
+			P.create_reagents(chem_amount)
+		fueltank_reagents.trans_to_direct(P.reagents, chem_amount)
 
-		SD["IS_LIT"] = src.lit //100
-		SD["burn_temp"] = src.base_temperature
+		P_special_data["crossed_turfs"] = list()
+		P_special_data["proj_color"] = chems.get_average_color()
+		P_special_data["IS_LIT"] = src.lit //100
+		P_special_data["burn_temp"] = src.base_temperature
 
 		var/rem_ratio = 0.008
-		var/rem_mod = 1
-		if(istype(src, /obj/item/gun/flamethrower/backtank))
-			rem_mod = 0.1 //otherwise we run through our air way too quickly
 		switch(mode)
-			if(1)
-				rem_ratio = 0.02 * rem_mod
-			if(2)
-				rem_ratio = 0.03 * rem_mod
-			if(3)
-				rem_ratio = 0.10 * rem_mod
+			if(FLAMER_MODE_LOOSE)
+				rem_ratio = 0.02
+			if(FLAMER_MODE_TIGHT)
+				rem_ratio = 0.03
+			if(FLAMER_MODE_SINGLE)
+				rem_ratio = 0.10
+			if(FLAMER_MODE_BACKTANK)
+				rem_ratio = 0.008
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
 		airgas.volume = 1
-		airgas.temperature = SD["burn_temp"]
-		airgas.merge(GTAC.remove_ratio(rem_ratio * 0.5))
-		T.assume_air(GTAC.remove_ratio(rem_ratio * 0.5))
-		SD["airgas"] = airgas
+		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.5))
+		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.5))
+		if(src.lit)
+			airgas.temperature = P_special_data["burn_temp"]
+		P_special_data["airgas"] = airgas
 
-		SD["temp_pct_loss_atom"] = 0.02 // keep the heat, more or less
+		P_special_data["temp_pct_loss_atom"] = 0.02 // keep the heat, more or less
 
 		/// sets the projectile's chem-transfer percent per tile and speed
 		/// More vigor is more fasterer, less chem-transferier, also more cool-off
 		switch(mode)
-			if(1)
-				SD["speed_mult"] = 0.5
-				SD["chem_pct_app_tile"] = 0.25
-			if(2)
-				SD["speed_mult"] = 0.6
-				SD["chem_pct_app_tile"] = 0.15
-			if(3)
-				SD["speed_mult"] = 0.7
-				SD["chem_pct_app_tile"] = 0.10
+			if(FLAMER_MODE_LOOSE)
+				P_special_data["speed_mult"] = 0.5
+				P_special_data["chem_pct_app_tile"] = 0.25
+			if(FLAMER_MODE_TIGHT, FLAMER_MODE_BACKTANK)
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.15
+			if(FLAMER_MODE_SINGLE)
+				P_special_data["speed_mult"] = 0.7
+				P_special_data["chem_pct_app_tile"] = 0.10
 			else
-				SD["speed_mult"] = mode
-				SD["chem_pct_app_tile"] = mode * 0.01
+				P_special_data["speed_mult"] = mode
+				P_special_data["chem_pct_app_tile"] = mode * 0.01
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 		src.updateSelfDialog()
 
@@ -272,7 +279,13 @@ A Flamethrower in various states of assembly
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust
 	combat_flamer = 1
-	amt_chem_max = 500 // shrug
+	burst_count = 4
+	refire_delay = 2
+	spread_angle = 10
+	amt_chem = 15 // About 66 bursts
+	mode = FLAMER_MODE_BACKTANK
+
+
 
 	New()
 		..()
@@ -536,60 +549,45 @@ A Flamethrower in various states of assembly
 		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 40, 1)
 	return TRUE
 
-
-/obj/item/gun/flamethrower/attackby(obj/item/W, mob/user as mob)
+/obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
 	if (!W || user.stat || user.restrained() || user.lying)
 		return
 
-	if(istype(src, /obj/item/gun/flamethrower/assembled))
-		if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
-			if(src.lit)
-				boutput(user, "<span class='notice'>You turn off \the [src]'s igniter. Safety first!</span>")
-				lit = 0
-				force = 3
-				hit_type = DAMAGE_BLUNT
-			src.swap_any(W, user)
-
-		// PantsNote: Flamethrower disassmbly.
-		else if (isscrewingtool(W))
-			var/obj/item/gun/flamethrower/assembled/S = src
-			if (( S.gastank ))
-				return
-			var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
-			R.welder = S.welder
-			S.welder.set_loc(R)
-			S.welder.master = R
-			R.rod = S.rod
-			S.rod.set_loc(R)
-			S.rod.master = R
-			R.igniter = S.igniter
-			S.igniter.set_loc(R)
-			S.igniter.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			S.welder = null
-			S.rod = null
-			S.igniter = null
-			qdel(S)
-			boutput(user, "<span class='notice'>The igniter is now unsecured!</span>")
-
-	else if (istype(src, /obj/item/gun/flamethrower/backtank))
-		if(lit)
-			force = 12
-			hit_type = DAMAGE_BURN
-			processing_items |= src
-		else
-			force = 6
+	if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
+		if(src.lit)
+			boutput(user, "<span class='notice'>You turn off \the [src]'s igniter. Safety first!</span>")
+			lit = 0
+			force = 3
 			hit_type = DAMAGE_BLUNT
-		icon_state = "syndthrower_[lit]"
-		item_state = "syndthrower_[lit]"
-		user.update_inhands()
-		tooltip_rebuild = 1
+		src.swap_any(W, user)
+
+	// PantsNote: Flamethrower disassmbly.
+	else if (isscrewingtool(W))
+		var/obj/item/gun/flamethrower/assembled/S = src
+		if (( S.gastank ))
+			return
+		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
+		R.welder = S.welder
+		S.welder.set_loc(R)
+		S.welder.master = R
+		R.rod = S.rod
+		S.rod.set_loc(R)
+		S.rod.master = R
+		R.igniter = S.igniter
+		S.igniter.set_loc(R)
+		S.igniter.master = R
+		S.layer = initial(S.layer)
+		user.u_equip(S)
+		user.put_in_hand_or_drop(R)
+		src.master = R
+		src.layer = initial(src.layer)
+		user.u_equip(src)
+		src.set_loc(R)
+		S.welder = null
+		S.rod = null
+		S.igniter = null
+		qdel(S)
+		boutput(user, "<span class='notice'>The igniter is now unsecured!</span>")
 
 	else
 		return	..()
@@ -673,21 +671,21 @@ A Flamethrower in various states of assembly
 		mode = text2num(href_list["mode"])
 		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 1)
 		switch(src.mode)
-			if(1) // short-range, high fire-rate
+			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
 				src.burst_count = 5
 				if(src.combat_flamer)
 					src.spread_angle = 20
 				else
 					src.spread_angle = 35
 				src.refire_delay = 1.5 DECI SECONDS
-			if(2) // mid-range, low fire-rate
+			if(FLAMER_MODE_TIGHT) // mid-range, low fire-rate
 				src.burst_count = 3
 				if(src.combat_flamer)
 					src.spread_angle = 10
 				else
 					src.spread_angle = 20
 				src.refire_delay = 2.5 DECI SECONDS
-			if(3) // semi-auto
+			if(FLAMER_MODE_SINGLE) // semi-auto
 				src.burst_count = 1
 				if(src.combat_flamer)
 					src.spread_angle = 0
@@ -720,10 +718,31 @@ A Flamethrower in various states of assembly
 	src.updateSelfDialog()
 	return
 
-/obj/item/gun/flamethrower/attack_self(mob/user as mob)
+/obj/item/gun/flamethrower/assembled/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
 	src.flamewindow(user)
+	return
+
+/obj/item/gun/flamethrower/backtank/attack_self(mob/user as mob)
+	if(user.stat || user.restrained() || user.lying)
+		return
+	src.lit = !src.lit
+	if(src.lit)
+		icon_state = "syndthrower_1"
+		item_state = "syndthrower_1"
+		user.update_inhands()
+		force = 12
+		hit_type = DAMAGE_BURN
+		processing_items |= src
+		boutput(user, "<span class='notice'>You activate \the [src]'s pilot light!</span>")
+	else
+		icon_state = "syndthrower_0"
+		item_state = "syndthrower_0"
+		user.update_inhands()
+		hit_type = DAMAGE_BLUNT
+		force = 6
+		boutput(user, "<span class='notice'>You extinguish \the [src]'s pilot light!</span>")
 	return
 
 /obj/item/gun/flamethrower/proc/flamewindow(mob/user)
@@ -775,7 +794,7 @@ A Flamethrower in various states of assembly
 
 	dat += "<br>Launcher Chamber Volume: [src.amt_chem]<BR>"
 	if(src.adjustable_chem_amt)
-		dat += "| <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (10)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> |"
+		dat += "| <a href='?src=\ref[src];c_amt=-5'>-5</a> | <a href='?src=\ref[src];c_amt=-1'>-1</a> | <a href='?src=\ref[src];c_amt=reset'>reset (10)</a> | <a href='?src=\ref[src];c_amt=1'>+1</a> | <a href='?src=\ref[src];c_amt=5'>+5</a> |"
 
 	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(dat, "window=flamethrower;size=600x300")
