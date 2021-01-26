@@ -25,6 +25,7 @@
 	var/ai_throw = 0
 	var/ai_attackadmins = 1
 	var/ai_attacknpc = 1
+	var/ai_useitems = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
 

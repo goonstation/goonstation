@@ -911,8 +911,13 @@
 // Turf Defines
 
 /turf/simulated/wall/asteroid
+#ifdef UNDERWATER_MAP
+	name = "cavern wall"
+	desc = "A cavern wall, possibly flowing with mineral deposits."
+#else
 	name = "asteroid"
 	desc = "A free-floating mineral deposit from space."
+#endif
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "ast1"
 	plane = PLANE_FLOOR
@@ -947,14 +952,6 @@
 
 	consider_superconductivity(starting)
 		return FALSE
-
-	trench
-		name = "cavern wall"
-		desc = "A cavern wall, possibly flowing with mineral deposits."
-		space_overlays()
-			return
-		build_icon()
-			return
 
 	dark
 		fullbright = 0
@@ -1053,11 +1050,14 @@
 
 
 
-	New(var/loc,var/do_overlays_now = 1)
+	New(var/loc)
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
-		if (do_overlays_now)
-			src.space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		switch(severity)
@@ -1359,6 +1359,7 @@
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	has_material = FALSE
 	var/sprite_variation = 1
 	var/stone_color = null
 	var/image/coloration_overlay = null
@@ -1390,12 +1391,17 @@
 
 	New()
 		..()
+		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
 		update_icon()
-		space_overlays()
+		worldgenCandidates += src
+
+	generate_worldgen()
+		. = ..()
+		src.space_overlays()
 
 	ex_act(severity)
 		return

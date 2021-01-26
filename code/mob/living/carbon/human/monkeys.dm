@@ -504,6 +504,7 @@
 	name = "sea monkey"
 	max_health = 150
 	static_type_override = /datum/mutantrace/monkey/seamonkey
+	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
 		..()

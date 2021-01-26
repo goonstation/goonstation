@@ -17,41 +17,34 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		place()
 
 	proc/place()
-		#ifdef UNDERWATER_MAP
-		src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-		#else
-		src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
-		#endif
+		if (map_currently_underwater)
+			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
-			src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/noborders, FALSE, TRUE, FALSE, TRUE)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/simulated/wall/asteroid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
 			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
-			#endif
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			#ifdef UNDERWATER_MAP
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			#else
-			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
 	name = ""
@@ -319,6 +312,16 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
+	// remove temporary areas
+	for (var/turf/T in get_area_turfs(/area/noGenerate))
+		if (map_currently_underwater)
+			new /area/allowGenerate/trench(T)
+		else
+			new /area/space(T)
+	if (!map_currently_underwater)
+		for (var/turf/T in get_area_turfs(/area/allowGenerate))
+			new /area/space(T)
+
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
@@ -385,7 +388,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		var/turf/T = locate(adjustX, adjustY, target.z)
 
 		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeX; y++)
+			for(var/y=0, y<prefabSizeY; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
 				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
 					return 0
@@ -394,7 +397,9 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 		if(T && loaded)
 			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,prefabPath)
+			var/datum/loadedProperties/props = D.read_map(loaded,T.x,T.y,T.z,prefabPath)
+			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
+				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
 			return 1
 		else return 0
 

@@ -562,7 +562,7 @@
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
 			// do nothing
-		else if(istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0)
+		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else
 			var/obj/item/thing = src.equipped()
@@ -581,7 +581,7 @@
 			src.ai_attack_target(pick(eligible), src.equipped())
 
 	// use
-	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7))
+	if(src.equipped() && prob(ai_state == AI_PASSIVE ? 2 : 7) && ai_useitems)
 		src.equipped().attack_self(src)
 
 	// throw
