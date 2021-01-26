@@ -15,7 +15,7 @@
 	if(isrestrictedz(T.z))
 		return 0
 	if(src.only_mobs)
-		if((ismob(hit) || istype(hit, /obj/blob)) && pierces_left-- > 0)
+		if((ismob(hit) || (istype(hit, /obj/blob) && !hit.opacity)) && pierces_left-- > 0)
 			return PROJ_ATOM_PASSTHROGH
 	else
 		if(isrwall(hit) || istype(hit, /obj/machinery/door/poddoor/blast))

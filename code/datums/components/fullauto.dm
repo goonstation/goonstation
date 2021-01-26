@@ -30,18 +30,6 @@
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
 
-	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart = 4 DECI SECONDS, _delaymin=1 DECI SECOND, _rampfactor=0.9, _toggle = FULLAUTO_ALWAYS_ACTIVE)
-		if(istype(C))
-			src.toggle = C.toggle
-			src.delaystart = C.delaystart
-			src.delaymin = C.delaymin
-			src.rampfactor = C.rampfactor
-		else
-			src.toggle = _toggle
-			src.delaystart = _delaystart
-			src.delaymin = _delaymin
-			src.rampfactor = _rampfactor
-
 	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9, toggle = FULLAUTO_ALWAYS_ACTIVE)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
