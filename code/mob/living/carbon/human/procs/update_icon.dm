@@ -47,7 +47,6 @@
 	src.UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
 	src.UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
 	src.UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
-	src.UpdateOverlays(src.inhands_standing, "inhands")
 
 	UpdateOverlays(src.fire_standing, "fire")
 
@@ -719,7 +718,6 @@
 
 /mob/living/carbon/human/update_inhands()
 
-	src.inhands_standing.len = 0
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 

@@ -42,7 +42,6 @@
 	var/image/fire_standing = null
 	//var/image/face_standing = null
 	var/image/hands_standing = null
-	var/list/inhands_standing = list()
 
 	var/image/body_damage_standing = null
 	var/image/head_damage_standing = null
