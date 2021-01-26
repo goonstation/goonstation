@@ -30,8 +30,6 @@ A Flamethrower in various states of assembly
 	w_class = 4
 	var/mode = 1
 	var/processing = 0
-	var/operating = 0
-	var/throw_amount = 100
 	var/lit = 0	//on or off
 	/// Set the projectile to make the reagents be this hot
 	var/base_temperature = FLAMER_DEFAULT_TEMP
@@ -51,7 +49,7 @@ A Flamethrower in various states of assembly
 	var/obj/item/fueltank = null // Honestly, anything with reagents'll do. Just needs sprites!
 	/// Can we swap out the tanks? Mainly so backpack flamers don't lose their flamer
 	var/swappable_tanks = 1
-	/// Is this a fancy combat flamethrower? Boosts melee damage
+	/// Is this a fancy combat flamethrower? Boosts melee damage, reduces spread
 	var/combat_flamer = 0
 	current_projectile = new/datum/projectile/special/shotchem
 	contraband = 5 //Heh
@@ -614,13 +612,6 @@ A Flamethrower in various states of assembly
 	else
 		return	..()
 
-// /obj/item/gun/flamethrower/afterattack(atom/target, mob/user, inrange)
-// 	if (inrange)
-// 		return
-// 	if(istype(user)) user.lastattacked = src
-// 	src.flame_turf(getline(user, target), user, target)
-
-
 /obj/item/gun/flamethrower/Topic(href,href_list[])
 	var/mob/user
 	if(ismob(usr))
@@ -808,144 +799,6 @@ A Flamethrower in various states of assembly
 	dat += "<BR><br><A HREF='?src=\ref[src];close=1'>Close</A></TT>"
 	user.Browse(dat, "window=flamethrower;size=600x300")
 	onclose(user, "flamethrower")
-
-// //gets this from turf.dm turf/dblclick
-// /obj/item/gun/flamethrower/proc/flame_turf(var/list/turflist, var/mob/user, var/atom/target) //Passing user and target for logging purposes
-// 	if(operating)	return
-// 	operating = 1
-// 	//get up to 25 reagent
-// 	var/datum/reagents/reagsource = get_reagsource(user)
-// 	if(!reagsource)
-// 		operating = 0
-// 		return
-// 	var/turf/own = get_turf(src)
-// 	var/turfs_to_spray = turflist.len - 1
-// 	if (!turfs_to_spray)
-// 		operating = 0
-// 		return
-
-
-
-// 	var/increment
-// 	var/reagentlefttotransfer
-// 	var/reagentperturf
-
-// 	if (reagsource.total_volume < 5)
-// 		boutput(usr, "<span class='alert'>The fuel tank is empty.</span>")
-// 		operating = 0
-// 		return
-
-// 	if(user && target)
-// 		var/turf/T = get_turf(target)
-// 		if (T) //Wire: Fix for Cannot read null.x
-// 			logTheThing("combat", user, null, "fires a flamethrower [log_reagents(reagsource)] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>")
-// 			particleMaster.SpawnSystem(new /datum/particleSystem/chemspray(src.loc, T, reagsource))
-
-// 	if (mode == 1)
-// 		increment = turfs_to_spray > 1 ? (7.5 / (turfs_to_spray - 1)) : 0
-// 		// a + (a + i) + (a + 2i) + (a + 3i) = T * a +  (T * (T - 1)) / 2
-// 		var/total_needed = increment == 0 ? 12.5 : (turfs_to_spray * (7.5 + (turfs_to_spray - 1) * 0.5 * increment))
-// 		reagentlefttotransfer = min(total_needed,reagsource.total_volume)
-// 		var/ratio = reagentlefttotransfer / total_needed
-// 		increment *= ratio
-// 		//distribute if we can
-// 		reagentperturf = increment == 0 ? reagentlefttotransfer : 5 * ratio
-// 	else if (mode == 2 || mode == 3)
-// 		reagentperturf = mode == 2 ? 5 : 10
-// 		increment = 0
-// 		var/total_needed = turfs_to_spray * reagentperturf
-// 		reagentlefttotransfer = min(total_needed,reagsource.total_volume)
-// 		if (reagentlefttotransfer < total_needed)
-// 			reagentperturf = reagentlefttotransfer / turfs_to_spray
-// 	var/turf/currentturf = null
-// 	var/turf/previousturf = null
-// 	var/halt = 0
-// 	playsound(src.loc, "sound/effects/spray.ogg", 50, 1, 0, 0.75)
-// 	var/spray_temperature = base_temperature
-// 	var/mobHitList
-
-// 	for(var/turf/T in turflist)
-// 		previousturf = currentturf
-// 		currentturf = T
-// 		if (T == own)
-// 			continue
-// 		//Too little pressure to spray
-// 		var/datum/gas_mixture/environment = currentturf.return_air()
-// 		if(!gastank ||!gastank.air_contents || !environment) break
-// 		if(MIXTURE_PRESSURE(environment) > MIXTURE_PRESSURE(gastank.air_contents))
-// 			if(!previousturf && length(turflist)>1)
-// 				break
-// 			reagentperturf = reagentlefttotransfer
-// 			currentturf = previousturf
-// 			halt = 1
-// 		if(!previousturf && length(turflist)>1)
-// 			previousturf = get_turf(src)
-// 			continue	//so we don't burn the tile we be standin on
-// 		//Dense object -> dump the rest at the previous turf.
-// 		if(currentturf.density || istype(currentturf, /turf/space))
-// 			//reagentperturf = reagentlefttotransfer
-// 			currentturf = previousturf
-// 			halt = 1
-// 		var/obj/blob/B = locate() in currentturf
-// 		if(B)
-// 			if (B.opacity)
-// 				reagsource.reaction(B, TOUCH, reagentperturf, 0)
-// 				reagsource.remove_any(reagentperturf)
-
-// 				halt = 1
-// 		if(previousturf && LinkBlocked(previousturf, currentturf))
-// 			// reagentperturf = reagentlefttotransfer
-// 			currentturf = previousturf
-// 			halt = 1
-
-// 		// if (halt)
-// 		// break
-
-// 		reagentlefttotransfer -= reagentperturf
-// 		spray_turf(currentturf,reagentperturf, reagsource)
-// 		reagentperturf += increment
-// 		if(lit)
-// 			currentturf?.reagents?.set_reagent_temp(spray_temperature, TRUE)
-// 			spray_temperature = max(0,min(spray_temperature - temp_loss_per_tile, 700))
-
-// 		var/logString = log_reagents(reagsource)
-// 		for (var/mob/living/carbon/human/theMob in currentturf.contents)
-// 			logTheThing("combat", usr, theMob, "blasts [constructTarget(theMob,"combat")] with a flamethrower [logString] at [log_loc(theMob)].")
-// 			mobHitList += "[key_name(theMob)], "
-
-// 		inventory_counter?.update_percent(reagsource.total_volume, reagsource.maximum_volume)
-
-// 		if(halt)
-// 			break
-// 		sleep(0.1 SECONDS)
-
-// 	operating = 0
-// 	src.updateSelfDialog()
-// 	return 1
-
-// /obj/item/gun/flamethrower/proc/spray_turf(turf/target,var/transferamt, var/datum/reagents/reagsource)
-// 	var/rem_ratio = 0.01
-// 	if (mode == 1)
-// 		rem_ratio = 0.02
-// 	if (mode == 3)
-// 		rem_ratio = 0.03
-// 	if(istype(src, /obj/item/gun/flamethrower/backtank))
-// 		rem_ratio = 0.0033 //otherwise we run through our air way too quickly
-// 	var/datum/gas_mixture/air_transfer = gastank.air_contents.remove_ratio(rem_ratio)
-// 	target.assume_air(air_transfer)
-
-// 	//Transfer reagents
-// 	var/datum/reagents/copied = new/datum/reagents(transferamt)
-// 	copied = reagsource.copy_to(copied, transferamt/reagsource.maximum_volume, copy_temperature = 1)
-// 	if(!target.reagents)
-// 		target.create_reagents(50)
-// 	for(var/atom/A in target.contents)
-// 		if(!istype(A, /obj/overlay))
-// 			copied.reaction(A, TOUCH, 0, 0)
-// 			if(A.reagents)
-// 				copied.copy_to(A.reagents, 1, copy_temperature = 1)
-// 	copied.reaction(target, TOUCH, 0, 0)
-// 	reagsource.trans_to(target, transferamt, 1, 0)
 
 /obj/item/gun/flamethrower/move_trigger(var/mob/M, kindof)
 	if (..())
