@@ -1120,6 +1120,24 @@
 	initial_reagents = "sugar"
 	food_effects = list("food_energized")
 
+	on_bite(var/obj/item/I, var/mob/M, var/mob/user)
+		if(HAS_FLAG(..(), MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF))
+			var/healing = src.heal_amt
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.job in list("Security Officer", "Head of Security", "Detective"))
+					healing *= 2
+
+					if (src.reagents && src.reagents.has_reagent("THC"))
+						boutput(H, "<span class='notice'>Whoah, this tastes like crime!!</span>")
+						healing *= 2
+
+					if (H.reagents && H.reagents.has_reagent("coffee"))
+						boutput(H, "<span class='notice'>Ahh... great way to [world.time < 20 MINUTES ? "start" : "end"] a shift!</span>")
+						healing *= 2
+
+					H.HealDamage("All", healing, healing)
+
 	frosted
 		name = "frosted donut"
 		icon_state = "donut2"
@@ -2074,6 +2092,15 @@
 				. += "Fair fa' your honest, sonsie face, great chieftain o the puddin'-race!"
 			else
 				. += "A big ol' meat pudding, wrapped up in a synthetic stomach stuffed nearly to bursting. Gusty!"
+
+	on_bite(var/obj/item/I, var/mob/M, var/mob/user)
+		if(HAS_FLAG(..(), MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF))
+			var/healing = src.heal_amt
+			if (M.bioHolder?.HasEffect("accent_scots"))
+				healing *= 2
+				boutput(M, "<span class='notice'>Och aye! That's th' stuff!</span>")
+
+				M.HealDamage("All", healing, healing)
 
 /obj/item/reagent_containers/food/snacks/haggis/ass
 	name = "haggass"

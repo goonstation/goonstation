@@ -107,6 +107,14 @@
 /// Needs a spoon
 #define EATING_NEEDS_A_SPOON				(1<<2)
 
+// on_bite defs
+/// Mob can be healed by this food-thing
+#define MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF (1<<0)
+
+// mob health foodheal threshold checks
+#define FOODHEAL_CUTOFF_DIVISOR 1.8
+#define FOODHEAL_CUTOFF_DIVISOR_SURVIVALIST 10
+
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
