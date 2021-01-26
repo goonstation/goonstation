@@ -287,7 +287,7 @@
 
 	MouseDrop(atom/over_object as mob|obj)
 		var/atom/movable/A = over_object
-		if (usr && !usr.restrained() && !usr.stat && in_range(src, usr) && in_range(over_object, usr) && istype(A))
+		if (usr && !usr.restrained() && !usr.stat && in_interact_range(src, usr) && in_interact_range(over_object, usr) && istype(A))
 			if (src.IV && ishuman(over_object))
 				src.IV.attack(over_object, usr)
 				return

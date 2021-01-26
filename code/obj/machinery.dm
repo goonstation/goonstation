@@ -141,7 +141,7 @@
 		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
@@ -149,7 +149,7 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
@@ -164,7 +164,7 @@
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
-	if(!in_range(src, user) || !istype(src.loc, /turf))
+	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 	if (user)

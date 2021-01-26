@@ -490,6 +490,8 @@ var/zapLimiter = 0
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 
+			charging = chargemode
+
 		else return src.attack_hand(user)
 
 	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -549,12 +551,8 @@ var/zapLimiter = 0
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if (!in_range(src, user))
+	if (!in_interact_range(src, user))
 		src.remove_dialog(user)
-		user.Browse(null, "window=apc")
-		return
-	else if (can_access_remotely(user) && src.aidisabled)
-		boutput(user, "AI control for this APC interface has been disabled.")
 		user.Browse(null, "window=apc")
 		return
 	if(wiresexposed && (!isAI(user)))
@@ -582,6 +580,11 @@ var/zapLimiter = 0
 		user.Browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
+	if (can_access_remotely(user) && src.aidisabled)
+		boutput(user, "AI control for this APC interface has been disabled.")
+		user.Browse(null, "window=apc")
+		return
+
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
@@ -594,7 +597,7 @@ var/zapLimiter = 0
 		t += "External power : <B>[ main_status ? (main_status ==2 ? "<FONT COLOR=#004000>Good</FONT>" : "<FONT COLOR=#D09000>Low</FONT>") : "<FONT COLOR=#F00000>None</FONT>"]</B><BR>"
 		t += "Power cell: <B>[cell ? "[round(cell.percent())]%" : "<FONT COLOR=red>Not connected.</FONT>"]</B>"
 		if(cell)
-			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : "Not charging"])"
+			t += " ([charging ? ( charging == 1 ? "Charging" : "Fully charged" ) : chargecount ? "Performing self-test" : "Not charging"])"
 			t += " ([chargemode ? "Auto" : "Off"])"
 
 		t += "<BR><HR>Power channels<BR><PRE>"
@@ -929,7 +932,7 @@ var/zapLimiter = 0
 		return
 	if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
 		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
 			var/t1 = text2num(href_list["apcwires"])
@@ -1215,6 +1218,8 @@ var/zapLimiter = 0
 
 		if(cell.charge >= cell.maxcharge)
 			charging = 2
+		else if (charging == 2)
+			charging = 0 // we lost power somehow; move to failure mode
 
 		if(chargemode)
 			if(!charging)

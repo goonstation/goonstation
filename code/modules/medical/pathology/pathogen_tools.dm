@@ -102,7 +102,7 @@
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
 			var/uid = P.pathogens[1]
 			var/datum/pathogen/PT = P.pathogens[uid]
-			if (medium.id != PT.body_type.growth_medium)
+			if (medium && medium.id != PT.body_type.growth_medium)
 				set_dirty("The pathogen is unable to cultivate on the growth medium.")
 		if (ctime <= 0)
 			ctime = 8
@@ -158,7 +158,7 @@
 						// Too many pathogens. This culture is dead.
 						set_dirty("The presence of multiple pathogens makes them unable to grow.")
 				else if (R in pathogen_controller.media)
-					if (R == medium.id)
+					if (R == medium?.id)
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
@@ -282,6 +282,7 @@
 			if(FM)
 				P.forced_microbody = FM
 			P.create_weak()
+			P.setup(1)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")

@@ -383,6 +383,13 @@
 	proc/write_input(mob/user)
 		if(src.in_use)
 			return null
+		if(!user.client && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(ismonkey(H) && H.ai_active)
+				if(prob(90))
+					return pick(src.c_symbol)
+				else
+					return pick(src.c_default)
 		src.in_use = 1
 		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
@@ -794,7 +801,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)
@@ -863,15 +870,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 

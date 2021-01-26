@@ -1041,11 +1041,6 @@ MATERIAL
 			else
 				src.build(S)
 				tooltip_rebuild = 1
-		if (src.amount < 1)
-			if (!issilicon(user))
-				user.u_equip(src)
-				qdel(src)
-			return
 		src.add_fingerprint(user)
 		return
 
@@ -1086,7 +1081,7 @@ MATERIAL
 
 	proc/build(turf/S as turf)
 		if (src.amount < 1)
-			return
+			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
 		if (W) //Wire: Fix for: Cannot read null.icon_old
 			W.inherit_area()
@@ -1096,9 +1091,10 @@ MATERIAL
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
-		src.amount--
-		inventory_counter?.update_number(amount)
-		return
+		if(src.material)
+			W.setMaterial(src.material)
+		src.change_stack_amount(-1)
+		return TRUE
 
 /obj/item/tile/steel
 

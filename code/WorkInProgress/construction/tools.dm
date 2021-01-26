@@ -112,7 +112,7 @@
 				T.control = src
 
 	attack_hand(var/mob/user as mob)
-		if (!in_range(src,user))
+		if (!in_interact_range(src,user))
 			boutput(user, text("Too far away."))
 			src.remove_dialog(user)
 			user.Browse(null, "window=turretid")

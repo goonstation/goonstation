@@ -296,7 +296,7 @@
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1
-			F.intact	= 0
+			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
@@ -1794,7 +1794,6 @@
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id

@@ -169,6 +169,9 @@
 	var/visible_eyes = 1
 	var/wires_exposed = 0
 
+		// Screen head specific
+	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
+	var/face = "happy"
 
 	examine()
 		. = ..()
@@ -395,6 +398,14 @@
 	max_health = 150
 	visible_eyes = 0
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+
+/obj/item/parts/robot_parts/head/screen
+	name = "cyborg screen head"
+	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
+	appearanceString = "screen"
+	icon_state = "head-screen"
+	max_health = 90
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
 
 /obj/item/parts/robot_parts/chest
 	name = "standard cyborg chest"

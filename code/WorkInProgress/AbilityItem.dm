@@ -773,7 +773,7 @@
 		if(!the_mob) return
 		the_mob.item_abilities = list()
 
-//HEY this should be moved over to use /obj/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+//HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
 /obj/ability_button
 	name = "baseButton"
 	desc = ""

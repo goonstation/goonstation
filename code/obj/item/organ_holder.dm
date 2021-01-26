@@ -1308,7 +1308,7 @@
 	regenRate = 0
 	tabName = "Body"
 
-/obj/screen/ability/topBar/organ
+/atom/movable/screen/ability/topBar/organ
 	clicked(params)
 		var/datum/targetable/organAbility/spell = owner
 		if (!istype(spell))
@@ -1342,7 +1342,7 @@
 	var/obj/item/organ/linked_organ = null
 
 	New()
-		var/obj/screen/ability/topBar/organ/B = new /obj/screen/ability/topBar/organ(null)
+		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
 		B.name = src.name
 		B.desc = src.desc
 		B.icon = src.icon
@@ -1353,7 +1353,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/organ()
+			src.object = new /atom/movable/screen/ability/topBar/organ()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)

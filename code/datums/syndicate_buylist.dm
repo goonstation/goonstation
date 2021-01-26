@@ -267,7 +267,7 @@ proc/build_syndi_buylist_cache()
 	name = "Cloaking Field Generator"
 	item = /obj/item/cloak_gen
 	cost = 3
-	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't loose the remote!"
+	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't lose the remote!"
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/floorcloset
@@ -335,6 +335,12 @@ proc/build_syndi_buylist_cache()
 	item = /obj/item/lightbreaker
 	cost = 4
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
+
+/datum/syndicate_buylist/traitor/ringtone
+	name = "SounDreamS PRO cartridge"
+	item = /obj/item/disk/data/cartridge/ringtone_syndie
+	cost = 1
+	desc = "A pirated copy of SounDreamS PRO, a PDA cartridge loaded with dozens of realistic, illegal-sounding sound effects that'll play whenever someone sends a message to your PDA."
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
@@ -618,6 +624,13 @@ This is basically useless for anyone but miners.
 		if(in_surplus_crate)
 			new /obj/item/clothing/shoes/galoshes(sign.loc)
 			new /obj/item/clothing/gloves/long(sign.loc)
+
+/datum/syndicate_buylist/traitor/overcharged_vacuum
+	name = "Overcharged Vacuum Cleaner"
+	item = /obj/item/handheld_vacuum/overcharged
+	cost = 5
+	desc = "This vacuum cleaner's special attack is way more powerful than the regular thing."
+	job = list("Janitor")
 
 /datum/syndicate_buylist/traitor/syndanalyser
 	name = "Syndicate Device Analyzer"
