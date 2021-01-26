@@ -594,7 +594,7 @@
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
 		for(var/mob/living/carbon/human/H in view(1))
-			if(H != src)
+			if(H != src && isalive(H))
 				SPAWN_DBG(0)
 					src.give_to(H)
 				break
