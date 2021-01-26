@@ -389,19 +389,21 @@ datum
 			fluid_b = 160
 			transparency = 222
 			minimum_reaction_temperature = T0C + 100
+			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
 			pooled()
 				..()
-				src.temp_reacted = 0
+				reacted_to_temp = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(!src.temp_reacted)
-					src.temp_reacted = 1
+				if(!reacted_to_temp)
+					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
-						holder.del_reagent(id)
+				if(holder)
+					holder.del_reagent(id)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

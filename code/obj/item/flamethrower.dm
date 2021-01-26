@@ -85,13 +85,13 @@ A Flamethrower in various states of assembly
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/T_env = T.return_air()
 		if(!src.fueltank)
-			boutput(user, "<span class='alert'>This [src] doesn't have a fuel source!</span>")
+			boutput(user, "<span class='alert'>[capitalize("[src]")] doesn't have a fuel source!</span>")
 			return FALSE
 		else if(!(src.fueltank in src.contents) && !(src.fueltank in user.get_equipped_items())) // Tank is loaded
 			boutput(user, "<span class='alert'>You need to either wear [src]'s fuel source or load it into the weapon!</span>")
 			return FALSE
 		else if(src.fueltank?.reagents.total_volume <= 0)
-			boutput(user, "<span class='alert'>This [src]'s fuel source is empty!</span>")
+			boutput(user, "<span class='alert'>[capitalize("[src]")]'s fuel source is empty!</span>")
 			return FALSE
 		else if(T_env && src.gastank?.air_contents && ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items())))
 			if(MIXTURE_PRESSURE(T_env) > MIXTURE_PRESSURE(gastank.air_contents))
@@ -805,3 +805,16 @@ A Flamethrower in various states of assembly
 		for (var/obj/O in src.contents)
 			if (O.move_triggered)
 				O.move_trigger(M, kindof)
+
+#undef FLAMER_DEFAULT_TEMP
+#undef FLAMER_BACKTANK_TEMP
+#undef FLAMER_MIN_TEMP
+#undef FLAMER_MAX_TEMP
+#undef FLAMER_DEFAULT_CHEM_AMT
+#undef FLAMER_BACKTANK_CHEM_AMT
+#undef FLAMER_MIN_CHEM_AMT
+#undef FLAMER_MAX_CHEM_AMT
+#undef FLAMER_MODE_LOOSE
+#undef FLAMER_MODE_TIGHT
+#undef FLAMER_MODE_SINGLE
+#undef FLAMER_MODE_BACKTANK
