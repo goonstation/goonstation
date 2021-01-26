@@ -10,7 +10,7 @@
 	var/list/req_access = list()
 
 	var/killswitch = 0
-	var/killswitch_time = 60
+	var/killswitch_at = 0
 	var/weapon_lock = 0
 	var/weaponlock_time = 120
 	var/obj/item/card/id/botcard //An ID card that the robot "holds" invisibly
@@ -171,7 +171,7 @@
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
 
-	var/inrange = in_range(target, src)
+	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
 	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
@@ -264,8 +264,7 @@
 					f.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
-	listening -= src
-	listening += src
+	listening |= src
 
 	var/list/heard = list()
 	for (var/mob/M in listening)

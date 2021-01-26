@@ -51,7 +51,7 @@
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -118,7 +118,7 @@
 		if (istype(src.loc, /turf) && (( get_dist(src, usr) <= 1) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
-			if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+			if (is_incapacitated(usr) || usr.restrained())
 				return
 
 			src.add_fingerprint(usr)
@@ -218,7 +218,7 @@
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -476,7 +476,11 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
+			src.recipes += new /datum/cookingrecipe/pot_pie(src)
+			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/pie_ass(src)
+			src.recipes += new /datum/cookingrecipe/pie_fish(src)
+			src.recipes += new /datum/cookingrecipe/pie_weed(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
@@ -545,7 +549,7 @@ table#cooktime a#start {
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (href_list["cook"])
 			if (src.working)
@@ -767,7 +771,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -966,9 +970,9 @@ table#cooktime a#start {
 		..()
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
-		if (over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
+		if (over_object == usr && (in_interact_range(src, usr) || usr.contents.Find(src)))
 			for(var/obj/item/P in src.contents)
 				P.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
@@ -978,7 +982,7 @@ table#cooktime a#start {
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
-		if (user.getStatusDuration("stunned") > 0 || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained())
+		if (is_incapacitated(user) || user.restrained())
 			return
 
 		if (istype(O, /obj/storage))
@@ -1093,14 +1097,14 @@ var/list/mixer_recipes = list()
 		return attack_hand(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		if (href_list["mix"])

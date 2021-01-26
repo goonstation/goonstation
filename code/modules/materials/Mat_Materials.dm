@@ -64,6 +64,8 @@
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
 	var/edible = 0
 
+	var/owner_hasentered_added = FALSE
+
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
@@ -472,7 +474,6 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -497,7 +498,21 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp())
+		addTrigger(triggersExp, new /datum/materialProc/moltiz_exp())
 		return ..()
+
+	beta
+		mat_id = "molitz_b"
+		name = "molitz beta"
+		color = "#ff2288"
+		desc = "A rare form of Molitz an otherwise common crystalline substance."
+
+		New()
+			..()
+			removeTrigger(triggersTemp, /datum/materialProc/moltiz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp/agent_b())
+			return
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"
@@ -1275,7 +1290,6 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre

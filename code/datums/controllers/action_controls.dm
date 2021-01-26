@@ -13,20 +13,20 @@ var/datum/action_controller/actions
 		return 0
 
 	proc/stop_all(var/atom/owner) //Interrupts all actions of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stop(var/datum/action/A, var/atom/owner) //Manually interrupts a given action of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
-			if(actions.Find(A))
+			if(A in actions)
 				A.interrupt(INTERRUPT_ALWAYS)
 		return
 
 	proc/stopId(var/id, var/atom/owner) //Manually interrupts a given action id of a given owner.
-		if(running.Find(owner))
+		if(owner in running)
 			var/list/actions = running[owner]
 			for(var/datum/action/A in actions)
 				if(A.id == id)
@@ -52,7 +52,7 @@ var/datum/action_controller/actions
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //Is called by all kinds of things to check for action interrupts.
-		if(running.Find(owner))
+		if(owner in running)
 			for(var/datum/action/A in running[owner])
 				A.interrupt(flag)
 		return
@@ -66,7 +66,7 @@ var/datum/action_controller/actions
 					A.onEnd()
 					//continue //If this is not commented out the deletion will take place the tick after the action ends. This will break things like objects being deleted onEnd with progressbars - the bars will be left behind. But it will look better for things that do not do this.
 
-				if(A.state == ACTIONSTATE_DELETE)
+				if(A.state == ACTIONSTATE_DELETE || A.disposed)
 					A.onDelete()
 					running[X] -= A
 					continue
@@ -207,7 +207,7 @@ var/datum/action_controller/actions
 		..()
 
 	updateBar(var/animate = 1)
-		if (duration <= 0)
+		if (duration <= 0 || isnull(bar))
 			return
 		var/done = TIME - started
 		// inflate it a little to stop it from hitting 100% "too early"
@@ -909,6 +909,12 @@ var/datum/action_controller/actions
 			duration = round(duration * H.handcuffs.remove_self_multiplier)
 
 		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
+
+	onUpdate()
+		. = ..()
+		if(!owner.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onInterrupt(var/flag)
 		..()

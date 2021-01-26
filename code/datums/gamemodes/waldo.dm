@@ -255,7 +255,7 @@
 						R:uplink = T
 						T.lock_code = pda_pass
 						T.hostpda = R
-						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
+						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
 						waldo_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc_text]).")
 		waldo_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(waldo_mob), waldo_mob.slot_ears)
 		waldo_mob.equip_if_possible(new /obj/item/card/id/syndicate(waldo_mob), waldo_mob.slot_wear_id)

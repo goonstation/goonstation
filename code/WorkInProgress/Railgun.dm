@@ -227,7 +227,7 @@ proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIc
 	var/Nullspace = round(tan(90-Angle)*32)
 	var/ReturnedDir = line_ReturnDir(Start,Angle,End,startpx,startpy,endpx,endpy)
 	if(ReturnedDir == EAST||ReturnedDir == WEST)
-		Nullspace = round(tanR(90-Angle)*32)
+		Nullspace = round(cot(90-Angle)*32)
 	if(Angle == 180)
 		Nullspace = 0  //Small bug workaround
 	var/CoorCounter = Nullspace

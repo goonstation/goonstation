@@ -74,12 +74,13 @@
 	mouse_opacity = 0
 	anchored = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"
 
 	//layer = TURF_LAYER
-	alpha = 250
+	alpha = 160
 	blend_mode = BLEND_ADD
 	var/datum/light/light
 
@@ -87,10 +88,9 @@
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-
 	var/just_spawned = 1
-
 	var/bypassing = 0
+	var/catalyst_active = FALSE
 
 	New()
 		..()
@@ -177,29 +177,37 @@
 		if(!istype(location))
 			return 0
 
-		if(volume > CELL_VOLUME*0.95)
+		if(src.volume > CELL_VOLUME*0.95)
 			bypassing = 1
 		else
 			bypassing = 0
 
 		if(bypassing)
 			if(!just_spawned)
-				volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
+				src.volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
 				src.temperature = location.air.temperature
 		else
-			var/datum/gas_mixture/affected = location.air.remove_ratio(volume/max((location.air.volume/5),1))
+			var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
 
-			affected.temperature = temperature
-
+			affected.temperature = src.temperature
 			affected.react()
 			src.temperature = affected.temperature
 
-			volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+			src.volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+
+			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
+			//Scale volume at 40% of PLASMA_UPPER_TEMPERATURE to allow for hotspot icon to transition to 2nd state
+			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.4 ))
+				// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
+				if(!src.catalyst_active)
+					// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
+					var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / PLASMA_UPPER_TEMPERATURE), 1, CELL_VOLUME)
+					src.volume = max(src.volume, temperature_scaled_volume)
 
 			location.assume_air(affected)
 
 			for(var/obj/object as() in location)
-				object.temperature_expose(null, temperature, volume)
+				object.temperature_expose(null, temperature, src.volume)
 
 		set_real_color()
 
@@ -233,6 +241,7 @@
 
 		perform_exposure()
 
+		if (catalyst_active) catalyst_active = FALSE
 		if (location.wet) location.wet = 0
 
 		if (bypassing)

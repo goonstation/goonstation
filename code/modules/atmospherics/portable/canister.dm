@@ -6,6 +6,7 @@
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	p_class = 2
+	status = REQ_PHYSICAL_ACCESS
 
 	var/has_valve = 1
 	var/valve_open = 0
@@ -437,15 +438,6 @@
 			has_paper = true
 		. += list("hasPaper" = has_paper)
 
-/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
-	return tgui_physical_state
-
-/obj/machinery/portable_atmospherics/canister/ui_status(mob/user)
-  return min(
-		tgui_physical_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
-
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -718,10 +710,7 @@
 
 	..()
 
-	var/datum/gas/sleeping_agent/trace_gas = new
-	if(!air_contents.trace_gases)
-		air_contents.trace_gases = list()
-	air_contents.trace_gases += trace_gas
+	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()

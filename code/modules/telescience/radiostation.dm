@@ -156,7 +156,7 @@
 /obj/submachine/mixing_desk/Topic(href, href_list)
 	if(..()) return
 	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
+	if(!in_interact_range(src, usr)) return
 
 	if (href_list["state"])
 		if(state)
@@ -207,7 +207,6 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			src.is_playing = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
@@ -215,17 +214,18 @@
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
 			//////
+			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-				sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
 #else
-				sleep(3000)
+			sleep(3000)
 #endif
-			is_playing = 0
+			src.is_playing = 0
 	else
 		..()
 
@@ -606,7 +606,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)

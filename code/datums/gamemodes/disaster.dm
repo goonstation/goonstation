@@ -70,7 +70,7 @@
 						SPAWN_DBG(2 SECONDS)
 							G.on = 1
 							G.icon_state = "glowstick-on"
-							G.light.enable()
+							G.light?.enable()
 
 	var/start_wait = rand(waittime_l, waittime_h)
 

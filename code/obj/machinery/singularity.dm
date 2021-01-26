@@ -946,14 +946,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/emitter/attack_ai(mob/user as mob)
 	if(state == 3)
 		if(src.active==1)
-			if(alert("Turn off the emitter?",,"Yes","No") == "Yes")
+			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
 				src.active = 0
 				icon_state = "Emitter"
 				boutput(user, "You turn off the emitter.")
 				logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
 				message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 		else
-			if(alert("Turn on the emitter?",,"Yes","No") == "Yes")
+			if(tgui_alert(user, "Turn on the emitter?","Switch",list("Yes","No")) == "Yes")
 				src.active = 1
 				icon_state = "Emitter +a"
 				boutput(user, "You turn on the emitter.")
@@ -1295,8 +1295,13 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/power/collector_control/New()
 	..()
+	START_TRACKING
 	SPAWN_DBG(1 SECOND)
 		updatecons()
+
+/obj/machinery/power/collector_control/disposing()
+	. = ..()
+	STOP_TRACKING
 
 /obj/machinery/power/collector_control/proc/updatecons()
 
@@ -1384,7 +1389,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	updateicon()
 	..()
 
-/obj/machinery/power/collector_control/process()
+/obj/machinery/power/collector_control/process(mult)
 	if(magic != 1)
 		if(src.active == 1)
 			var/power_a = 0
@@ -1396,19 +1401,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P1?.air_contents)
 				if(CA1.active != 0)
 					power_p += P1.air_contents.toxins
-					P1.air_contents.toxins -= 0.001
+					P1.air_contents.toxins -= 0.001 * mult
 			if(P2?.air_contents)
 				if(CA2.active != 0)
 					power_p += P2.air_contents.toxins
-					P2.air_contents.toxins -= 0.001
+					P2.air_contents.toxins -= 0.001 * mult
 			if(P3?.air_contents)
 				if(CA3.active != 0)
 					power_p += P3.air_contents.toxins
-					P3.air_contents.toxins -= 0.001
+					P3.air_contents.toxins -= 0.001 * mult
 			if(P4?.air_contents)
 				if(CA4.active != 0)
 					power_p += P4.air_contents.toxins
-					P4.air_contents.toxins -= 0.001
+					P4.air_contents.toxins -= 0.001 * mult
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
@@ -1557,7 +1562,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	..()
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		switch(href_list["action"]) //Yeah, this is weirdly set up. Planning to expand it later.
 			if("trigger")

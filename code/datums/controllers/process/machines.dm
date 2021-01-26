@@ -13,6 +13,15 @@ datum/controller/process/machines
 
 		Station_VNet = new /datum/v_space/v_space_network()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/machines/old_machines = target
+		src.machines = old_machines.machines
+		src.pipe_networks = old_machines.pipe_networks
+		src.powernets = old_machines.powernets
+		src.atmos_machines = old_machines.atmos_machines
+		src.ticker = old_machines.ticker
+		src.mult = old_machines.mult
+
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
 			boutput(world,"[machine.name] : [machine.type]")

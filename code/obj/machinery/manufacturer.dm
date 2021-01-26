@@ -448,18 +448,18 @@
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
 
-			var/icon_text = ""
+			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (A.item_outputs)
+			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (istype(A, /datum/manufacture/mechanics))
+			// 	var/datum/manufacture/mechanics/F = A
+			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			var/list/material_text = list()
 			var/list/material_count = 0
@@ -519,16 +519,15 @@
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(var/datum/manufacture/M)
-		if(src.available && src.available.Find(M))
-			return 1
+		. = FALSE
+		if(src.available && (M in src.available))
+			return TRUE
 
-		if(src.download && src.download.Find(M))
-			return 1
+		if(src.download && (M in src.download))
+			return TRUE
 
-		if(src.hacked && src.hidden && src.hidden.Find(M))
-			return 1
-
-		return 0
+		if(src.hacked && src.hidden && (M in src.hidden))
+			return TRUE
 
 
 	Topic(href, href_list)
@@ -806,10 +805,10 @@
 									var/amount_per_account = divisible_amount/length(accounts)
 									for(var/datum/data/record/t in accounts)
 										t.fields["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"="mining", "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 							else
 								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"="mining", "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
 							transmit_connection.post_signal(src, minerSignal)
 
@@ -1705,17 +1704,17 @@
 				// shut up
 				remove_link = "&#8987; Working..."
 
-			var/icon_text = ""
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			var/icon_text = "<img class='icon'>"
+			// if (A.item_outputs)
+			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
+			// if (istype(A, /datum/manufacture/mechanics))
+			// 	var/datum/manufacture/mechanics/F = A
+			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 
 			dat += {"
@@ -1745,7 +1744,7 @@
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
 			for(var/obj/item/material_piece/M in src.contents)
-				if (istype(M, P) && M.material && M.material.mat_id == P.material.mat_id)
+				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
 					pool(P)
@@ -2025,6 +2024,7 @@
 	/datum/manufacture/robo_leg_r_light,
 	/datum/manufacture/robo_leg_l_light,
 	/datum/manufacture/robo_leg_treads,
+	/datum/manufacture/robo_head_screen,
 	/datum/manufacture/robo_module,
 	/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye,
@@ -2124,6 +2124,8 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/penlight,
+		/datum/manufacture/stethoscope,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -2201,7 +2203,10 @@
 #ifdef UNDERWATER_MAP
 	/datum/manufacture/jetpackmkII,
 #endif
-	/datum/manufacture/mining_magnet)
+#ifndef UNDERWATER_MAP
+	/datum/manufacture/mining_magnet
+#endif
+	)
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,

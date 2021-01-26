@@ -22,6 +22,7 @@
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
+	path_prot = 0
 
 	onMaterialChanged()
 		if(src.material)
@@ -262,7 +263,13 @@
 			name = "specialist health monitor"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
+			permeability_coefficient = 0.01
+			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 			var/client/assigned = null
+
+			setupProperties()
+				..()
+				setProperty("viralprot", 50)
 
 			process()
 				if (assigned)
@@ -462,13 +469,18 @@
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	c_flags = SPACEWEAR
+	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"
+	var/static/camera_counter = 0
 
 	New()
 		..()
+		if(src.camera_tag == initial(src.camera_tag))
+			src.camera_tag = "Built [src.camera_tag] [src.camera_counter]"
+			camera_counter++
 		src.camera = new /obj/machinery/camera (src)
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network

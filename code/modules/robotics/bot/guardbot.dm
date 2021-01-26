@@ -1225,7 +1225,10 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			budgun.shoot(target_turf, my_turf, src)
+			if(IN_RANGE(target_turf, my_turf, 1))
+				budgun.shoot_point_blank(target, my_turf)
+			else
+				budgun.shoot(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -2988,6 +2991,9 @@
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
+						if(istype(C, /mob/living/carbon/human/npc/monkey))
+							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+							npcmonkey.pursuited_by(src)
 						SPAWN_DBG(0)
 							master.speak("Level [threat] infraction alert!")
 							master.visible_message("<b>[master]</b> points at [C.name]!")
@@ -3747,9 +3753,7 @@
 
 						src.master.speak(insultphrase)
 
-						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG(4 SECONDS)
-							qdel(P)
+						make_point(get_turf(H), time=4 SECONDS)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
 						return
@@ -4033,7 +4037,7 @@
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.created_name = t

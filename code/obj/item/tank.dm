@@ -194,7 +194,7 @@ Contains:
 			var/obj/item/icon = src
 			. = list()
 			icon = src.loc
-			if (!in_range(src, usr))
+			if (!in_interact_range(src, usr))
 				if (icon == src)
 					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
@@ -281,11 +281,8 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = new()
+		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		if(!src.air_contents.trace_gases)
-			src.air_contents.trace_gases = list()
-		src.air_contents.trace_gases += trace_gas
 		return
 
 ////////////////////////////////////////////////////////////

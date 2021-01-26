@@ -36,7 +36,7 @@
 
 	special_volume_override = 0.62
 
-	turf_flags = CAN_BE_SPACE_SAMPLE | FLUID_MOVE
+	turf_flags = FLUID_MOVE
 
 	var/datum/light/point/light = 0
 	var/light_r = 0.16
@@ -262,7 +262,7 @@
 
 	proc/blow_hole()
 		if (src.z != 5)
-			new /turf/space/fluid/warp_z5/realwarp(src)
+			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
 /turf/space/fluid/warp_z5
@@ -395,23 +395,23 @@
 	New()
 		..()
 
-		var/turf/n = 0
-		var/turf/e = 0
-		var/turf/w = 0
-		var/turf/s = 0
+		var/turf/n = null
+		var/turf/e = null
+		var/turf/w = null
+		var/turf/s = null
 
 		n = get_step(src,NORTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			n = 0
+		if (!istype(n,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			n = null
 		e = get_step(src,EAST)
 		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			e = 0
+			e = null
 		w = get_step(src,WEST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			w = 0
+		if (!istype(w,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			w = null
 		s = get_step(src,SOUTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			s = 0
+		if (!istype(s,/turf/simulated/floor/specialroom/sea_elevator_shaft))
+			s = null
 
 		//have fun reading this! also fuck youu!
 		if (e && s)
@@ -480,7 +480,7 @@
 /obj/machinery/computer/sea_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])

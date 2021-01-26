@@ -50,13 +50,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/isResearched(var/type)
+		. = FALSE
 		if(src.debug_mode)
-			return 1
-		if(researchTree.Find(type))
+			return TRUE
+		if(type in researchTree)
 			var/datum/geneticsResearchEntry/E = researchTree[type]
 			if(E.isResearched == 1)
-				return 1
-		return 0
+				. = TRUE
 
 	proc/progress()
 		//var/tickDiff = 0

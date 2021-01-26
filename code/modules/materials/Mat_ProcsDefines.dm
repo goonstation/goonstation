@@ -20,7 +20,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/getMaterial(var/mat)
 	if(!istext(mat) || !length(mat)) return null
 	if(!material_cache.len) buildMaterialCache()
-	if(material_cache.Find(mat))
+	if(mat in material_cache)
 		return material_cache[mat]
 	return null
 
@@ -35,7 +35,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	if(l2)
 		for(var/x in l2)
-			if(merged.Find(x))
+			if(x in merged)
 				merged[x] = round(merged[x] * oBias + l2[x] * bias)
 			else
 				merged.Add(x)
@@ -57,7 +57,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(base.vars[X], list()) //Pass in an empty list to basically copy the first one.
 			else
-				if(M.vars.Find(X))
+				if(X in M.vars)
 					if(istype(base.vars[X],/list))
 						var/list/oldList = base.vars[X]
 						M.vars[X] = oldList.Copy()
@@ -68,6 +68,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
 	if(isnull(M1) != isnull(M2))
 		return 0
+	if(isnull(M1) && isnull(M2))
+		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
 	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
@@ -111,6 +113,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = initial(src.alpha)
 	src.color = initial(src.color)
 
+	if(src.material?.owner_hasentered_added)
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.checkinghasentered = max(T.checkinghasentered-1, 0)
+		src.event_handler_flags &= ~USE_HASENTERED
+
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
@@ -132,19 +140,16 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
 /atom/var/list/mat_appearances_to_ignore = null
 
-/proc/getMaterialPrefixList(var/datum/material/base)
-	var/list/thelist = list()
+/proc/getMaterialPrefixList(datum/material/base)
+	. = list()
 
 	for(var/datum/material_property/P in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
+			. |= P.getAdjective(base)
 			continue
 		else if(base.properties[P] <= P.prefix_low_max)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
+			. |= P.getAdjective(base)
 			continue
-	return thelist
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
@@ -183,7 +188,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.color = null
 	src.UpdateOverlays(null, "material")
 	if (islist(src.mat_appearances_to_ignore) && src.mat_appearances_to_ignore.len)
-		if (src.mat_appearances_to_ignore.Find(mat1.name))
+		if (mat1.name in src.mat_appearances_to_ignore)
 			set_color_alpha = 0
 	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
 		if (mat1.texture)

@@ -358,7 +358,7 @@
 
 	New()
 		if (all_functional_reagent_ids.len > 0)
-			var/list/chem_choices = all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry", "rat_venom")
+			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
 			src.flavor = "nicotine"
@@ -1058,7 +1058,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = 1
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5

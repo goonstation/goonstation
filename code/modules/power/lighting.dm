@@ -330,6 +330,18 @@
 		desc = "This sign points the way to the escape shuttle."
 		brightness = 1.3
 
+/obj/machinery/light/emergencyflashing
+	icon_state = "ebulb1"
+	base_state = "ebulb"
+	fitting = "bulb"
+	name = "warning light"
+	brightness = 1.3
+	desc = "This foreboding light warns of danger."
+	light_type = /obj/item/light/bulb/emergency
+	allowed_type = /obj/item/light/bulb/emergency
+	on = 1
+	removable_bulb = 0
+
 /obj/machinery/light/runway_light
 	name = "runway light"
 	desc = "A small light used to guide pods into hangars."

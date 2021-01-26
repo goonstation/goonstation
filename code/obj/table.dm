@@ -8,6 +8,7 @@
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	layer = OBJ_LAYER-0.1
+	stops_space_move = TRUE
 	mat_changename = 1
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
@@ -319,7 +320,7 @@
 			return 0
 
 	MouseDrop_T(atom/O, mob/user as mob)
-		if (!in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (ismob(O) && O == user)

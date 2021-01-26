@@ -120,7 +120,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		..()
 		if(!isliving(usr))
 			return
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S)) //for if we have a flamer attached
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
 				if (S.id == "rhand")
@@ -701,13 +701,14 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	//Transfer reagents
 	var/datum/reagents/copied = new/datum/reagents(transferamt)
-	copied = reagsource.copy_to(copied, transferamt/reagsource.maximum_volume)
+	copied = reagsource.copy_to(copied, transferamt/reagsource.maximum_volume, copy_temperature = 1)
 	if(!target.reagents)
 		target.create_reagents(50)
 	for(var/atom/A in target.contents)
-		copied.reaction(A, TOUCH, 0, 0)
-		if(A.reagents)
-			copied.copy_to(A.reagents, 1)
+		if(!istype(A, /obj/overlay))
+			copied.reaction(A, TOUCH, 0, 0)
+			if(A.reagents)
+				copied.copy_to(A.reagents, 1, copy_temperature = 1)
 	copied.reaction(target, TOUCH, 0, 0)
 	reagsource.trans_to(target, transferamt, 1, 0)
 

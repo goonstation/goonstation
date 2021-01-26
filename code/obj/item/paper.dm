@@ -139,9 +139,9 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
+		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+			return
+		usr.u_equip(src)
 		if (fold == "Paper hat")
 			usr.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
@@ -154,12 +154,12 @@
 			else
 				usr.show_text("You crumple the paper into a ball! Neat.", "blue")
 				F = new /obj/item/paper/folded/ball(usr)
-			F.info = P.info
-			F.old_desc = P.desc
-			F.old_icon_state = P.icon_state
-			F.sealed = 1
+			F.info = src.info
+			F.old_desc = src.desc
+			F.old_icon_state = src.icon_state
 			usr.put_in_hand_or_drop(F)
-		pool(P)
+
+		pool(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -189,14 +189,16 @@
 	if(istype(src.loc, /obj/item/clipboard))
 		var/mob/living/M = user
 		return M.shared_living_ui_distance(src, viewcheck = FALSE)
-	return ..()
+	. = max(..(), UI_DISABLED)
+	if(IN_RANGE(user, src, 8))
+		. = max(., UI_UPDATE)
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 	if(src.sealed)
-		boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
 		return
 	switch(action)
 		if("stamp")
@@ -211,7 +213,7 @@
 				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.current_mode]");
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
 				var/matrix/stamp_matrix = matrix()
 				stamp_matrix.Scale(1, 1)
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
@@ -329,15 +331,28 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
+		if(src.sealed)
+			boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+			return
 		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
 			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
+		if(src.sealed)
+			boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+			return
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
+	else if (issnippingtool(P))
+		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
+		user.put_in_hand_or_drop(M)
+		usr.u_equip(src)
+		pool(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -1046,7 +1061,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1445,3 +1460,16 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+
+/obj/item/paper/botany_guide
+	name = "Botany Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
+	icon_state = "botany_guide"
+	sizex = 970
+	sizey = 690
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"

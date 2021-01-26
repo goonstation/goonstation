@@ -89,7 +89,7 @@
 	Topic(href, href_list)
 		if(status & (NOPOWER|BROKEN)) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 
 		src.add_dialog(usr)
 		if (!beaker)
@@ -350,7 +350,7 @@
 	Topic(href, href_list)
 		if (status & BROKEN) return
 		if (usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
 
@@ -533,7 +533,9 @@
 				var/obj/item/item_box/medical_patches/B = new /obj/item/item_box/medical_patches(src.output_target)
 				B.name = "box of [patchname] [patchvol <= 15 ? "mini-" : null]patches"
 				patchloc = B
-				if (!med) // dangerrr
+				if (med)
+					B.build_overlay(average = R.get_average_color())
+				else // dangerrr
 					B.icon_state = "patchbox" // change icon
 					B.icon_closed = "patchbox"
 					B.icon_open = "patchbox-open"

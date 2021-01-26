@@ -389,8 +389,7 @@
 			/*var/rendered = "<strong>[src.name]</strong> screeches incomprehensibly!"
 
 			var/list/listening = all_hearers(null, src)
-			listening -= src
-			listening += src
+			listening |= src
 
 			for (var/mob/M in listening)
 				M.show_message(rendered, 2)*/
@@ -597,6 +596,7 @@
 			if (src.client)
 				src.client.mob = W
 			W.mind = new /datum/mind()
+			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
 			ticker.minds += W.mind

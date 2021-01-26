@@ -227,8 +227,8 @@
 			boutput(usr, "<span class='alert'>You're too far from [src] to draw a card!</span>")
 			return
 		if (get_dist(usr, target) > 1)
-			if (istype(target, /obj/screen/hud))
-				var/obj/screen/hud/hud = target
+			if (istype(target, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/hud = target
 				if (istype(hud.master, /datum/hud/human))
 					var/datum/hud/human/h_hud = hud.master // all this just to see if you're trying to deal to someone's hand, ffs
 					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
