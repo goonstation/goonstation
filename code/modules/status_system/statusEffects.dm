@@ -50,7 +50,7 @@
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
-		if(src.track_cat && src.owner)
+		if(src.track_cat && src.owner )
 			OTHER_START_TRACKING_CAT(src.owner, src.track_cat)
 
 	/**
