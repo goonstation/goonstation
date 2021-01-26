@@ -1,5 +1,9 @@
 
 (t)tue jan 26 21
+(u)virvatuli
+(p)3474
+(e)|
+(+)Added a new firing sound effect for the wavegun, that sounds appropriately sci-fi!
 (u)BenLubar
 (p)3449
 (e)🐛🗺|bug, mapping
