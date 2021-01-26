@@ -1645,11 +1645,8 @@
 		cell = new/obj/item/ammo/power_cell/high_power
 		current_projectile = new/datum/projectile/energy_bolt/smgburst
 
-		if(throw_return)
-			projectiles = list(current_projectile)
-		else
-			projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
-			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
 		..()
 
 	update_icon()
