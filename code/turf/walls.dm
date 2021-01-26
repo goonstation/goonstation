@@ -118,8 +118,8 @@
 	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
 		return
 
-		// if they didn't move, put it up
-		boutput(user, "You attach the light fixture to [src].")
+	// if they didn't move, put it up
+	boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(source)
 	newlight.set_dir(dir)
