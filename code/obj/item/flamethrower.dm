@@ -8,9 +8,9 @@ A Flamethrower backpack fuel/gas tank
 A Flamethrower in various states of assembly
 
 */
-#define FLAMER_DEFAULT_TEMP 700
+#define FLAMER_DEFAULT_TEMP 700 KELVIN
 #define FLAMER_MIN_TEMP T0C
-#define FLAMER_MAX_TEMP 1000
+#define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 10
 #define FLAMER_MIN_CHEM_AMT 5
 #define FLAMER_MAX_CHEM_AMT 20
@@ -92,9 +92,6 @@ A Flamethrower in various states of assembly
 				boutput(user, "<span class='alert'>Not enough pressure in [src]'s gas tank to operate!</span>")
 				return FALSE
 		return TRUE
-
-		// else if(IN_RANGE(get_turf(src), get_turf(src.fueltank), 1))
-		// 	return TRUE
 
 	alter_projectile(var/obj/projectile/P)
 		if(!P.proj_data)
@@ -284,12 +281,6 @@ A Flamethrower in various states of assembly
 		src.fueltank = B
 		B.linkedflamer = src
 
-	// get_reagsource(mob/user)
-	// 	if(gastank in user.get_equipped_items())
-	// 		return gastank?.reagents
-	// 	else
-	// 		boutput(user, "<span class='alert'>You need to be wearing this flamer's fuelpack to fire it!</span>")
-
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
 			var/obj/item/tank/jetpack/backtank/B = gastank
@@ -310,7 +301,6 @@ A Flamethrower in various states of assembly
 
 /obj/item/gun/flamethrower/assembled/disposing()
 
-	//src.welder = null
 	qdel(src.welder)
 	qdel(src.rod)
 	qdel(src.igniter)
@@ -380,9 +370,7 @@ A Flamethrower in various states of assembly
 	igniter = new /obj/item/device/igniter
 
 /obj/item/assembly/weld_rod/disposing()
-	//src.welder = null
 	qdel(src.welder)
-	//src.rod = null
 	qdel(src.rod)
 	..()
 	return
@@ -390,11 +378,8 @@ A Flamethrower in various states of assembly
 
 /obj/item/assembly/w_r_ignite/disposing()
 
-	//src.welder = null
 	qdel(src.welder)
-	//src.rod = null
 	qdel(src.rod)
-	//src.igniter = null
 	qdel(src.igniter)
 	..()
 	return
@@ -441,7 +426,6 @@ A Flamethrower in various states of assembly
 		R.igniter = I
 		S.welder = null
 		S.rod = null
-		//S = null
 		qdel(S)
 
 	src.add_fingerprint(user)
@@ -488,7 +472,6 @@ A Flamethrower in various states of assembly
 		S.welder = null
 		S.rod = null
 		S.igniter = null
-		//S = null
 		qdel(S)
 		return
 
@@ -592,7 +575,6 @@ A Flamethrower in various states of assembly
 			S.welder = null
 			S.rod = null
 			S.igniter = null
-			//S = null
 			qdel(S)
 			boutput(user, "<span class='notice'>The igniter is now unsecured!</span>")
 
@@ -654,8 +636,8 @@ A Flamethrower in various states of assembly
 			return
 		var/obj/item/tank/A = src.gastank
 		A.set_loc(get_turf(src))
-		user.put_in_hand_or_drop(A)
 		A.layer = initial(A.layer)
+		user.put_in_hand_or_drop(A)
 		src.gastank = null
 		lit = 0
 		force = 3
@@ -673,8 +655,8 @@ A Flamethrower in various states of assembly
 			return
 		var/obj/item/reagent_containers/food/drinks/fueltank/A = src.fueltank
 		A.set_loc(get_turf(src))
-		user.put_in_hand_or_drop(A)
 		A.layer = initial(A.layer)
+		user.put_in_hand_or_drop(A)
 		src.fueltank = null
 		lit = 0
 		force = 3
@@ -747,7 +729,6 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/proc/flamewindow(mob/user)
 	src.add_dialog(user)
 	var/dat = "<TT><B>Flamethrower - <A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a></B><BR>"
-	// var/fueltemp = src.fueltank?.reagents ? (src.fueltank.reagents.total_temperature - T0C) : "NaN"
 	var/fueltank_in_range = ((src.fueltank in src.contents) || (src.fueltank in user.get_equipped_items()))
 	var/gastank_in_range = ((src.gastank in src.contents) || (src.gastank in user.get_equipped_items()))
 	var/spraytemp = "!NaN!"
