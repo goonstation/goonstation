@@ -1,4 +1,13 @@
 
+(t)tue jan 26 21
+(u)virvatuli
+(p)3474
+(e)|
+(+)Added a new firing sound effect for the wavegun, that sounds appropriately sci-fi!
+(u)BenLubar
+(p)3449
+(e)🐛🗺|bug, mapping
+(+)Several fixes to the generation and contents of the mining z-level.
 (t)mon jan 25 21
 (u)pali
 (+)Miasma now has a status effect and it does slightly different things based on how much of it is in you.

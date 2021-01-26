@@ -1,4 +1,7 @@
-(t)tue jan 20 21
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
 (u)Sovexe
 (*)New admin verb, Disco Lights. Sets every light on the station to a random color.
 (t)tue jan 10 21

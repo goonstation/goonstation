@@ -206,7 +206,8 @@
 		if(P.initial_power <= 0)
 			P.die()
 	if(!src.density)
-		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROGH
+
+		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 
 /obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
 	var/turf/T = get_turf(src)
