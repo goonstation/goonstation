@@ -388,8 +388,6 @@ toxic - poisons
 	icon_state = "signifer2_tase"
 	power = 10
 	cost = 12
-	dissipation_rate = 1
-	dissipation_delay = 2
 	max_range = 8
 	ks_ratio = 0.0
 	sname = "full-auto"
