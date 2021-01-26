@@ -390,7 +390,7 @@ toxic - poisons
 /datum/projectile/energy_bolt/smgauto
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "taser_projectile"
+	icon_state = "signifer2_tase"
 	power = 10
 	cost = 12
 	dissipation_rate = 1
