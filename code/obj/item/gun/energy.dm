@@ -1638,6 +1638,7 @@
 	item_state = "ntgun"
 	force = 5.0
 	two_handed = 1
+	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
