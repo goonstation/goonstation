@@ -656,7 +656,7 @@ that cannot be itched
 		playsound(get_turf(src), "sound/machines/keyboard3.ogg", 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
-		var/ticket_target = input(user, "Ticket recipient:", "Recipient", issuer) as text
+		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
 		if (!ticket_target)
 			return
 		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
