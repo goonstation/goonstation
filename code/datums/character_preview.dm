@@ -1,49 +1,23 @@
-/*
-Character Preview
-
-OVERVIEW
-
-	Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
-
-	There are three variants:
-
-	/datum/character_preview - For use in single-client windows.
-		Use winset() to position the control within the window.
-		See below for an example, the default of placing it at 0,0 and making it 128x128 pixels.
-
-	/datum/character_preview/window - Manages its own window.
-		Basically a simplified version for when you don't need to put other stuff in the preview window.
-
-	/datum/character_preview/multiclient - A shared character preview between multiple clients.
-		Again, use winset() to position the control.
-
-METHODS
-
-	update_appearance(appearance_holder, mutant_race, facing_direction)
-		Sets the appearance, mutant race, and facing direction of the human mob.
-
-	show(should_show) (window variant only)
-		Shows (or hides if the argument is false) the window.
-
-	add_client(client) (multiclient variant only)
-	remove_client(client) (multiclient variant only)
-	remove_all_clients() (multiclient variant only)
-		Manages who can see the preview mob.
-		This needs to be called in addition to the winset that positions the map view.
-
-FIELDS
-
-	preview_id - The map ID for use with winset().
-
-	preview_mob - The human mob shown in the preview.
-		May be useful to access directly if you want to put clothes on it or whatever.
-*/
+/**
+ * # Character Preview
+ *
+ * Essentially, it creates a human on a 1x1 map and lets you set the appearance of that human.
+ *
+ * This parent type is for use in single-client windows.
+ *
+ * Use winset() to position the control within the window.
+ *
+ * See the default code for an example - places it at 0,0 and makes it 128x128 pixels.
+ */
 datum/character_preview
 	var/global/max_preview_id = 0
+	/// The map ID for use with winset().
 	var/preview_id
 	var/window_id
 	var/client/viewer
 	var/atom/movable/screen/handler
+	/// The human mob shown in the preview.
+	/// May be useful to access directly if you want to put clothes on it or whatever.
 	var/mob/living/carbon/human/preview_mob
 
 	New(client/viewer, window_id, control_id = null)
@@ -91,6 +65,7 @@ datum/character_preview
 			qdel(src.preview_mob)
 		. = ..()
 
+	/// Sets the appearance, mutant race, and facing direction of the human mob.
 	proc/update_appearance(datum/appearanceHolder/AH, datum/mutantrace/MR = null, direction = SOUTH)
 		src.preview_mob.dir = direction
 		src.preview_mob.set_mutantrace(null)
@@ -102,6 +77,8 @@ datum/character_preview
 		src.preview_mob.set_body_icon_dirty()
 		src.preview_mob.set_face_icon_dirty()
 
+/// Manages its own window.
+/// Basically a simplified version for when you don't need to put other stuff in the preview window.
 datum/character_preview/window
 	New(client/viewer)
 		var/winid = "preview_[max_preview_id]"
@@ -123,9 +100,17 @@ datum/character_preview/window
 			if (src.viewer)
 				winset(src.viewer, "[src.window_id]", "parent=")
 
+	/// Shows (or hides if the argument is false) the window.
 	proc/show(shown = TRUE)
 		winshow(src.viewer, src.window_id, shown)
 
+
+/**
+ * A shared character preview between multiple clients.
+ * Again, use winset() to position the control.
+ *
+ * You need to call the special client procs to manage subscribers in addition to the winset.
+ */
 datum/character_preview/multiclient
 	var/list/viewers = list()
 
@@ -139,18 +124,21 @@ datum/character_preview/multiclient
 				viewer.screen -= src.preview_mob
 		. = ..()
 
+	/// Adds a subscribed client
 	proc/add_client(client/viewer)
 		if (viewer && !(viewer in src.viewers))
 			src.viewers += viewer
 			viewer.screen += src.handler
 			viewer.screen += src.preview_mob
 
+	/// Removes a subscribed client
 	proc/remove_client(client/viewer)
 		if (viewer && (viewer in src.viewers))
 			src.viewers -= viewer
 			viewer.screen -= src.handler
 			viewer.screen -= src.preview_mob
 
+	/// Removes all subscribers
 	proc/remove_all_clients()
 		for (var/client/viewer in src.viewers)
 			if (viewer)
