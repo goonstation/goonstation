@@ -1664,8 +1664,6 @@
 		..()
 		if (istype(current_projectile, /datum/projectile/energy_bolt/smgauto))
 			spread_angle = 8
-			shoot_delay = 4
 		else
 			spread_angle = 2
-			shoot_delay = 4
 		update_icon()
