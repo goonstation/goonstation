@@ -1,6 +1,5 @@
 /datum/component/sniper_wallpierce
 	var/pierces_left = 1 //default to 1 wall
-	var/only_mobs = 0 // Only pierce mobs
 
 /datum/component/sniper_wallpierce/Initialize(var/num_pierces)
 	if(!istype(parent, /obj/projectile))
