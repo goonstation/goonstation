@@ -1,5 +1,9 @@
 
 (t)tue jan 26 21
+(u)BenLubar
+(p)3484
+(e)|
+(+)The power issues aboard the Von Ricken have been resolved.
 (u)virvatuli
 (p)3474
 (e)|
