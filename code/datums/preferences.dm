@@ -948,6 +948,7 @@ $(updateCharacterPreviewPos);
 			src.ResetAllPrefsToDefault(user)
 			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
 		else
+			// remove/replace jobs that were removed/renamed
 			for (var/job in removed_jobs)
 				if (job in src.jobs_med_priority)
 					src.jobs_med_priority -= job
@@ -961,11 +962,31 @@ $(updateCharacterPreviewPos);
 					src.jobs_unwanted -= job
 					if (removed_jobs[job])
 						src.jobs_unwanted |= removed_jobs[job]
+			// add missing jobs
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
-				if (!(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
+				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
+			// remove duplicate jobs
+			var/list/seen_jobs = list()
+			if (src.job_favorite)
+				seen_jobs[src.job_favorite] = TRUE
+			for (var/J in src.jobs_med_priority)
+				if (seen_jobs[J])
+					src.jobs_med_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_low_priority)
+				if (seen_jobs[J])
+					src.jobs_low_priority.Remove(J)
+				else
+					seen_jobs[J] = TRUE
+			for (var/J in src.jobs_unwanted)
+				if (seen_jobs[J])
+					src.jobs_unwanted.Remove(J)
+				else
+					seen_jobs[J] = TRUE
 
 
 		var/list/HTML = list()
