@@ -775,6 +775,50 @@ THROWING DARTS
 	expire = 0
 	uses = 2
 
+/obj/item/implant/crayon // stonepillar's crayon project
+	name = "implanted crayon"
+	desc = "If you are reading this call 1-800-CODER"
+	icon = 'icons/obj/writing.dmi'
+	shrapnel = 1
+	icon_state = "crayon"
+	var/obj/item/pen/crayon/crayon = null
+
+	New(var/obj/item/pen/crayon/cray=null)
+		if (isnull(cray))
+			src.crayon = new /obj/item/pen/crayon/random
+		else
+			src.crayon = cray
+		src.name = "implanted " + src.crayon.name
+		..()
+		return
+	
+	on_life(var/mult = 1)
+		if (src.body_part != "head")
+			return // how
+		if (!ishuman(src.owner))
+			return
+		var/mob/living/carbon/human/H = src.owner
+		if(prob(1))
+			H.visible_message("<span class='alert'>[H] sneezed out \an [src.crayon]... what?</span>",\
+			"<span class='alert'>You sneezed out \an [src.crayon]... hm.</span>")
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			on_remove(H) // achoo
+			return
+		if(prob(5))
+			H.emote(pick("nosepick","sneeze","sniff"))
+		if(prob(20))
+			H.show_text("You can smell crayon wax.", "red")
+			H.take_brain_damage(1) // owie...
+		return
+	
+	on_remove(var/mob/M)
+		..()
+		src.crayon.add_blood(M)
+		src.set_loc(src.crayon)
+		src.crayon.set_loc(M.loc)
+		qdel(src) // hide in the crayon then disappear. no implant gun 4 u :)
+		return
+
 /obj/item/implant/projectile
 	name = "bullet"
 	icon = 'icons/obj/scrap.dmi'

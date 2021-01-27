@@ -379,8 +379,9 @@
 		. = ..()
 		src.create_inventory_counter()
 	
-	attack(mob/M as mob, mob/user as mob, def_zone)
-		if (iscarbon(M) || ismobcritter(M))
+	attack(mob/T as mob, mob/user as mob, def_zone) // stonepillar's crayon project
+		if (iscarbon(T))
+			var/mob/living/carbon/M = T
 			if (M == user)
 				return // so you don't accidentally shove a crayon while drawing
 				       // if you want to add this, PLEASE make it obvious
@@ -399,12 +400,17 @@
 				user.visible_message("<span class='alert'>[user] jammed [src] up [M]'s nose.</span>",\
 				"<span class='alert'>You jam [src] up [M]'s nose. Disgusting.</span>")
 
-			logTheThing("combat", user, M, "jammed [src] into [M] at [log_loc(user)].")
+			logTheThing("combat", user, M, "jammed \an [src] into [M] at [log_loc(user)].")
 			user.u_equip(src)
-			src.set_loc(M)
+			var/obj/item/implant/crayon/implant = new(src)
+			M.implant.Add(implant)
+			implant.set_loc(M)
+			src.set_loc(implant)
+			implant.owner = M
+			implant.body_part = "head"
+			src.add_fingerprint(user) // you dirty crimer
 			M.take_brain_damage(15) // ouch
 			M.emote("scream")
-			M.reagents.add_reagent("lithium", 3) // drooling for 30s
 			health_update_queue |= M
 			return 1
 
