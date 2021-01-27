@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
 	var/payload_type = 0 // 0 for smoke, 1 for foam, 2 for propellant, 3 for just dumping fluids
-	recharge_delay = 600
+	recharge_delay = 10 MINUTES
 	var/list/payload_reagents = list()
 
 	post_setup()
