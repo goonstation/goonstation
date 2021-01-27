@@ -32,7 +32,7 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null 
 	var/net_id = null
-	var/frequency = 1149
+	var/pda_alert_frequency = 1149
 	var/datum/radio_frequency/radio_connection
 
 	New()
@@ -40,14 +40,15 @@ THROWING DARTS
 		if (uses_radio)
 			SPAWN_DBG(10 SECONDS)
 				if (radio_controller)
-					radio_connection = radio_controller.add_object(src, "[frequency]")
+					radio_connection = radio_controller.add_object(src, "[pda_alert_frequency]")
 				if (!src.net_id)
 					src.net_id = generate_net_id(src)
+
 	disposing()
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			radio_controller.remove_object(src, "[frequency]")
+			radio_controller.remove_object(src, "[pda_alert_frequency]")
 			mailgroups.Cut()
 		. = ..()
 
@@ -120,18 +121,18 @@ THROWING DARTS
 	proc/get_coords()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = src.owner
-			if (locate(/obj/item/implant/tracking) in H.implant)
+			if (locate(src) in H.implant)
 				var/turf/T = get_turf(H)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
 		else if (ismobcritter(src.owner))
 			var/mob/living/critter/C = src.owner
-			if (locate(/obj/item/implant/tracking) in C.implants)
+			if (locate(src) in C.implants)
 				var/turf/T = get_turf(C)
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
 
-	proc/send_message(var/message, var/alertgroup)
+	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
 		if(!radio_connection)
 			return
@@ -139,7 +140,7 @@ THROWING DARTS
 		newsignal.source = src
 		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "HEALTH-MAILBOT"
+		newsignal.data["sender_name"] = sender_name
 		newsignal.data["message"] = "[message]"
 
 		newsignal.data["address_1"] = "00000000"
@@ -300,10 +301,8 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		var/coords = src.get_coords()
-		var/myarea = get_area(src)
 		//DEBUG_MESSAGE("implant reporting crit")
-		src.send_message("HEALTH ALERT: [src.owner][coords] in [myarea]: [src.sensehealth()]", MGA_MEDCRIT)
+		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
@@ -319,7 +318,7 @@ THROWING DARTS
 				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
 		//DEBUG_MESSAGE("implant reporting death")
-		src.send_message(message, MGA_DEATH)
+		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
 		if (src.owner && src.owner.ckey)
@@ -383,10 +382,10 @@ THROWING DARTS
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1
-	frequency = 1451
-	var/id = 1.0
 	uses_radio = 1
-	mailgroups = list(MGA_TRACKING)
+	mailgroups = list(MGD_SECURITY)
+	var/id = 1.0
+	var/frequency = 1451		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
 		..()
@@ -399,10 +398,8 @@ THROWING DARTS
 	on_remove(var/mob/M)
 		if (!src.owner)
 			return
-		var/coords = src.get_coords()
-		var/message = "TRACKING IMPLANT LOST: [src.owner][coords] in [get_area(src)], "
-
-		src.send_message(message)
+		var/message = "TRACKING IMPLANT LOST: [src.owner][src.get_coords()] in [get_area(src)], "
+		src.send_message(message, MGA_TRACKING, "TRACKER-MAILBOT")
 		..()
 
 /** Deprecated **/
