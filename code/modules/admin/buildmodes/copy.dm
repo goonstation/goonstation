@@ -15,6 +15,7 @@ Right Mouse Button on build mode  = Spawn for every living player<br>
 				if(!istype(L) || isdead(L))
 					continue
 				semi_deep_copy(src.copied_object, L.loc)
+				LAGCHECK(LAG_LOW)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		var/turf/T = get_turf(object)
