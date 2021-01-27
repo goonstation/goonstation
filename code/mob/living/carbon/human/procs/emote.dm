@@ -2016,7 +2016,7 @@
 						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
-							break
+								break
 					if (!M)
 						param = null
 
@@ -2025,7 +2025,7 @@
 						switch(act)
 							if("love")
 								message = "You display your affection towards [param]."
-								maptext_out = "<I> [act]s' [param].</I>"
+								maptext_out = "<I> [act]s [param].</I>"
 							if("care")
 								message = "You [act] about [param]."
 								maptext_out = "<I> [pick("cares about [param]", "hopes [param] is having a great day", "supports [param]")]. </I>"
