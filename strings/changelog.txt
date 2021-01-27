@@ -1,5 +1,9 @@
 
 (t)wed jan 27 21
+(u)Kyle
+(p)3477
+(e)|
+(*)Tracking implants now alert security when they are removed from a person with their location.
 (u)pali
 (p)3455
 (e)⚖|balance
