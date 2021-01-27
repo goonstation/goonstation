@@ -15,60 +15,29 @@
 	string = replacetext(string, "i think", "methinks")
 	return string
 
-/mob/living/carbon/human/proc/become_ice_statue()
-	var/obj/overlay/iceman = new /obj/overlay(get_turf(src))
+/mob/proc/become_statue(var/datum/material/M, var/newDesc = null)
+	var/obj/overlay/statueperson = new /obj/overlay(get_turf(src))
 	src.pixel_x = 0
 	src.pixel_y = 0
-	src.set_loc(iceman)
-	iceman.name = "ice statue of [src.name]"
-	iceman.desc = "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this."
-	iceman.anchored = 0
-	iceman.set_density(1)
-	iceman.layer = MOB_LAYER
-	iceman.set_dir(src.dir)
-	iceman.alpha = 128
-
-	var/ist = "body_f"
-	if (src.gender == "male")
-		ist = "body_m"
-	var/icon/composite = icon('icons/mob/human.dmi', ist, null, 1)
-	for(var/O in src.overlays)
-		var/image/I = O
-		composite.Blend(icon(I.icon, I.icon_state, null, 1), ICON_OVERLAY)
-	composite.ColorTone( rgb(165,242,243) ) // ice
-	iceman.icon = composite
-	if(src.l_hand)
-		qdel(l_hand)
-	if(src.r_hand)
-		qdel(r_hand)
+	src.set_loc(statueperson)
+	statueperson.appearance = src.appearance
+	statueperson.name = "[M.name] statue of [src.name]"
+	if(desc)
+		statueperson.desc = newDesc
+	else
+		statueperson.desc = src.desc
+	statueperson.setMaterial(M)
+	statueperson.anchored = 0
+	statueperson.set_density(1)
+	statueperson.layer = MOB_LAYER
+	statueperson.set_dir(src.dir)
 	src.remove()
 
-/mob/living/carbon/human/proc/become_statue()
-	var/obj/overlay/iceman = new /obj/overlay(get_turf(src))
-	src.pixel_x = 0
-	src.pixel_y = 0
-	src.set_loc(iceman)
-	iceman.name = "Statue of [src.name]"
-	iceman.desc = "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!"
-	iceman.anchored = 0
-	iceman.set_density(1)
-	iceman.layer = MOB_LAYER
-	iceman.set_dir(src.dir)
+/mob/living/proc/become_ice_statue()
+	become_statue(getMaterial("ice"), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
 
-	var/ist = "body_f"
-	if (src.gender == "male")
-		ist = "body_m"
-	var/icon/composite = icon('icons/mob/human.dmi', ist, null, 1)
-	for(var/O in src.overlays)
-		var/image/I = O
-		composite.Blend(icon(I.icon, I.icon_state, null, 1), ICON_OVERLAY)
-	composite.ColorTone( rgb(65,65,65) ) // ice
-	iceman.icon = composite
-	if(src.l_hand)
-		qdel(l_hand)
-	if(src.r_hand)
-		qdel(r_hand)
-	src.remove()
+/mob/living/proc/become_rock_statue()
+	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()
 	var/datum/pathogen/P = unpool(/datum/pathogen)

@@ -1658,7 +1658,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
-					M:become_ice_statue()
+					M.become_ice_statue()
 		if (M.bodytemperature < 0)
 			M.bodytemperature = 0
 

@@ -840,7 +840,7 @@ PIPE BOMBS + CONSTRUCTION
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN_DBG(0)
-				M.become_gold_statue()
+				M.become_statue("gold")
 		..()
 
 
