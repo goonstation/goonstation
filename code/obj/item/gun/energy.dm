@@ -1565,6 +1565,7 @@
 	name = "Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
+	w_class = 3		//for clarity
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1589,13 +1590,15 @@
 				shoot_delay = 2
 				spread_angle = 0
 				force = 9
+				w_class = 3
 			else //if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "signifer_2-smg"
 				src.icon_state = "signifer_2-smg"
 				muzzle_flash = "muzzle_flash_bluezap"
-				force = 12
 				spread_angle = 3
 				shoot_delay = 5
+				force = 12
+				w_class = 4
 
 	attack_self(var/mob/M)
 		if (!src.two_handed)
