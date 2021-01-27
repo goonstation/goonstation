@@ -163,11 +163,9 @@
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && JOB.cant_spawn_as_rev)
+			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
-				continue
-			if(checktraitor(player) && JOB.cant_spawn_as_con)
 				continue
 		if (!JOB || jobban_isbanned(player,JOB.name))
 			continue
