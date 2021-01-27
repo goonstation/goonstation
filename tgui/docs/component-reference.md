@@ -344,7 +344,6 @@ Content is automatically centered inside the dimmer.
 **Props:**
 
 - See inherited props: [Box](#box)
-- `full: boolean` - Covers the entire Window, therefore working with scrollables.
 
 ### `Divider`
 
@@ -696,7 +695,7 @@ Must be a direct child of a layout component (e.g. [Window](#window)).
 
 **Props:**
 
-- See inherited props: [Box](#box) and [Dimmer](#dimmer)
+- See inherited props: [Box](#box)
 
 ### `NoticeBox`
 

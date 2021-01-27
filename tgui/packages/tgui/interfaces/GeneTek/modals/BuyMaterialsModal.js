@@ -20,7 +20,7 @@ export const BuyMaterialsModal = (props, context) => {
   const resolvedBuyMats = Math.min(buyMats, maxBuyMats);
 
   return (
-    <Modal full>
+    <Modal>
       <Box
         position="relative"
         width={18}>

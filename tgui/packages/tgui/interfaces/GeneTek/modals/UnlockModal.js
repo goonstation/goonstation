@@ -21,7 +21,7 @@ export const UnlockModal = (props, context) => {
   }
 
   return (
-    <Modal full>
+    <Modal>
       <Box width={22} mr={2}>
         <LabeledList>
           <LabeledList.Item label="Detected Length">

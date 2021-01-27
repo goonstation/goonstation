@@ -10,17 +10,12 @@
   justify-content: center;
   align-items: center;
   // Fill positioned parent
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 32px;
   bottom: 0;
   left: 0;
   right: 0;
   // Dim everything around it
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 1;
-}
-
-.Dimmer--full {
-  position: fixed;
-  top: 32px;
 }

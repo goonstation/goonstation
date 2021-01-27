@@ -89,7 +89,7 @@ export const BioEffect = (props, context) => {
           size={1.5} />
       }>
       {booth && booth.ref === ref && (
-        <Modal full>
+        <Modal>
           <Section
             width={35}
             title={name}
