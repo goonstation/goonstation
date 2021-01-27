@@ -4342,16 +4342,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"aka" = (
-/obj/disposalpipe/segment/mail,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "akb" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -4771,9 +4761,6 @@
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
 "akU" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "akV" = (
@@ -5515,11 +5502,6 @@
 	name = "Genetic Research"
 	})
 "amx" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
 "amy" = (
@@ -5760,13 +5742,8 @@
 /obj/machinery/atmospherics/unary/cryo_cell{
 	pipe_direction = 8
 	},
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/surgery/storage)
+/area/station/medical/medbay)
 "anc" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/machinery/power/data_terminal,
@@ -5908,11 +5885,6 @@
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -4;
 	pixel_y = 5
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -18396,9 +18368,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency2)
 "aQV" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -33242,25 +33211,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bCq" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "bCr" = (
 /obj/machinery/computer/announcement{
 	announces_arrivals = 1;
 	dir = 8
 	},
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bCt" = (
@@ -33792,11 +33748,6 @@
 "bDF" = (
 /obj/stool/chair/office/green{
 	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/cable{
 	d1 = 4;
@@ -35574,9 +35525,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -36001,12 +35949,6 @@
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"bIB" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "bIC" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
@@ -36335,9 +36277,6 @@
 	},
 /obj/access_spawn/cargo,
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "bJA" = (
@@ -36541,12 +36480,6 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/scorched,
-/area/station/quartermaster/office)
-"bKi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "bKj" = (
 /turf/simulated/floor,
@@ -37138,40 +37071,13 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
-"bLJ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
-"bLK" = (
-/obj/decal/cleanable/dirt,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "bLL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/damaged2{
 	dir = 4
 	},
 /area/station/quartermaster/office)
 "bLM" = (
 /obj/decal/cleanable/generic,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-8"
-	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bLN" = (
@@ -37501,14 +37407,6 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "bMS" = (
-/turf/simulated/floor/bot,
-/area/station/quartermaster/office)
-"bMT" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-9"
-	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "bMU" = (
@@ -38011,14 +37909,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/office)
-"bOd" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "6-9"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "bOe" = (
 /turf/simulated/floor/scorched2,
 /area/station/quartermaster/office)
@@ -38247,22 +38137,8 @@
 /obj/rack,
 /turf/simulated/floor/damaged2,
 /area/space)
-"bOM" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/plating/random,
-/area/station/storage/emergency2)
 "bON" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency2)
 "bOO" = (
@@ -38891,11 +38767,6 @@
 /area/station/quartermaster/office)
 "bQk" = (
 /obj/vehicle/tug,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-9"
-	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bQl" = (
@@ -38903,11 +38774,6 @@
 /obj/tug_cart,
 /obj/tug_cart,
 /obj/machinery/light/incandescent/harsh,
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bQm" = (
@@ -39888,22 +39754,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor,
-/area/station/crew_quarters/lounge/port)
-"bSw" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
 /area/station/crew_quarters/lounge/port)
 "bSx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -79168,10 +79019,10 @@ bFd
 bFW
 bFW
 bHQ
-bIB
+bKj
 bJz
-bKi
-bLJ
+bPh
+bxC
 bMR
 bOb
 bMR
@@ -79473,7 +79324,7 @@ bHR
 bIC
 bJy
 bKj
-bLK
+bQi
 bKj
 bKj
 bPh
@@ -80380,7 +80231,7 @@ bIE
 bJA
 bKm
 bLN
-bMT
+bMS
 bOc
 bMS
 bKj
@@ -80683,7 +80534,7 @@ bJA
 bKn
 bLO
 bMU
-bOd
+bKj
 bMS
 bQj
 bJA
@@ -80986,7 +80837,7 @@ bKo
 bLP
 bKj
 bOe
-bOd
+bKj
 bPh
 bJA
 bSl
@@ -82499,7 +82350,7 @@ bII
 bII
 bII
 bRg
-bSw
+bVF
 bTv
 bUI
 bVF
@@ -95469,7 +95320,7 @@ bwW
 bvI
 bzE
 bBa
-bCq
+bts
 bDF
 bts
 bFH
@@ -96003,7 +95854,7 @@ ajh
 ajh
 ajh
 aep
-aka
+ajh
 ajh
 ajh
 ajh
@@ -96305,7 +96156,7 @@ aji
 ajN
 akQ
 aly
-aly
+akQ
 akQ
 akQ
 akQ
@@ -96607,7 +96458,7 @@ air
 ajO
 akQ
 aly
-aly
+akQ
 akQ
 akQ
 akQ
@@ -101521,7 +101372,7 @@ bJX
 bLo
 bMz
 aRr
-bOM
+bON
 bPM
 bMz
 aQX
