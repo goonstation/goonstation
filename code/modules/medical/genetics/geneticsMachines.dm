@@ -243,6 +243,17 @@
 		return scanner
 	return null
 
+/obj/machinery/computer/genetics/proc/get_occupant_preview()
+	if (!src.scanner)
+		return null
+	if (!src.scanner.occupant_preview)
+		src.scanner.occupant_preview = new()
+		src.scanner.update_occupant()
+	return src.scanner.occupant_preview
+
+/obj/machinery/computer/genetics/proc/update_occupant_preview()
+	src.scanner?.update_occupant()
+
 /obj/machinery/computer/genetics/power_change()
 	if(status & BROKEN)
 		icon_state = "commb"
@@ -544,7 +555,7 @@
 					return
 				H.set_mutantrace(BE.mutantrace_path)
 				src.log_me(H, "mutantrace added", BE)
-			src.scanner.update_occupant()
+			src.update_occupant_preview()
 			on_ui_interacted(ui.user)
 		if("editappearance")
 			. = TRUE
@@ -561,7 +572,7 @@
 			if (params["apply"] || params["cancel"])
 				qdel(src.modify_appearance)
 				src.modify_appearance = null
-				src.scanner?.update_occupant()
+				src.update_occupant_preview()
 		if("emitter")
 			. = TRUE
 			if (!src.equipment_available("emitter"))
@@ -1007,12 +1018,10 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
-		if (!src.scanner.occupant_preview)
-			src.scanner.occupant_preview = new()
-			src.scanner.update_occupant()
-		src.scanner.occupant_preview.add_client(user?.client)
+		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+		P?.add_client(user?.client)
 		.["haveSubject"] = TRUE
-		.["subjectPreview"] = src.scanner.occupant_preview.preview_id
+		.["subjectPreview"] = P?.preview_id
 		.["subjectName"] = subject.name
 		.["subjectStat"] = subject.stat
 		.["subjectHealth"] = subject.health / subject.max_health
@@ -1120,12 +1129,13 @@
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GeneTek", "GeneTek Console v2.00")
+		ui = new(user, src, "GeneTek", "GeneTek Console v2.01")
 		ui.open()
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
-	src.scanner?.occupant_preview?.remove_client(user?.client)
+	var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
 
 #undef GENETICS_INJECTORS
