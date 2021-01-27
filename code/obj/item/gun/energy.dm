@@ -1636,9 +1636,9 @@
 
 /obj/item/gun/energy/tasersmg
 	name = "Taser SMG"
-	icon_state = "ntneutral100"
+	icon_state = "tsmg_burst100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
-	item_state = "ntgun"
+	item_state = "tsmg"
 	force = 5.0
 	two_handed = 1
 	can_dual_wield = 0
@@ -1658,9 +1658,9 @@
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
-				src.icon_state = "ntstun[ratio]"
+				src.icon_state = "tsmg_auto[ratio]"
 			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
-				src.icon_state = "ntneutral[ratio]"
+				src.icon_state = "tsmg_burst[ratio]"
 
 
 	attack_self(mob/user as mob)
