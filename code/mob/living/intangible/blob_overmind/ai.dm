@@ -475,7 +475,7 @@
 					return
 				var/obj/blob/A
 				if (!A)
-					for (var/i = 0, i < 20, i++)
+					for (var/i in 1 to 20)
 						var/obj/blob/C = pick(blobs)
 						if (C.type == /obj/blob)
 							A = C
