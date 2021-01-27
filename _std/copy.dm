@@ -41,12 +41,17 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 	else if(istype(orig_datum, /datum/component))
 		var/datum/component/orig_component = orig
 		result = new type(list(_SEMI_DEEP_COPY(orig_component.parent)))
+	else if(istype(orig_datum, /datum/hud) && hasvar(orig_datum, "master"))
+		var/datum/hud/orig_hud = orig
+		result = new type(orig_hud:master)
 	else
 		result = new type
 	environment[orig_datum] = result
 	if(istype(result, /atom))
 		var/atom/orig_atom = orig
 		var/atom/result_atom = result
+		for(var/atom/A in result_atom)
+			qdel(A)
 		result_atom.contents.Cut()
 		for(var/atom/A in orig_atom)
 			semi_deep_copy(A, result, environment, root)
@@ -60,7 +65,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 		for(var/A in orig_image.vis_contents)
 			result_image.vis_contents += semi_deep_copy(A, null, environment, root)
 		result_image.appearance = orig_image.appearance
-	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "color", "alpha", "blend_mode", "apperance_flags")
+	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "clients", "color", "alpha", "blend_mode", "apperance_flags")
 	var/list/mob_var_blacklist = list("ckey", "client", "key")
 	for(var/var_name in orig_datum.vars)
 		if(!issaved(orig_datum.vars[var_name]) || (var_name in var_blacklist) || ismob(result) && (var_name in mob_var_blacklist))
