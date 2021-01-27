@@ -269,11 +269,10 @@
 			UpdateOverlays(null, "wear_shoes_l")
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
-			var/image/right_shoe = image(src.shoes.wear_image.icon)
-			right_shoe.icon_state = "right_[src.shoes.icon_state]"//[!( src.lying ) ? null : "2"]"
-			right_shoe.color = src.shoes.color
-			right_shoe.alpha = src.shoes.alpha
-			UpdateOverlays(right_shoe, "wear_shoes_r")
+			src.shoes.wear_image.icon_state = "right_[src.shoes.icon_state]"//[!( src.lying ) ? null : "2"]"
+			src.shoes.wear_image.color = src.shoes.color
+			src.shoes.wear_image.alpha = src.shoes.alpha
+			UpdateOverlays(src.shoes.wear_image, "wear_shoes_r")
 		else
 			UpdateOverlays(null, "wear_shoes_r")
 
