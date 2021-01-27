@@ -1,5 +1,9 @@
 
 (t)wed jan 27 21
+(u)pali
+(p)3455
+(e)⚖|balance
+(*)Blob temperature damage rebalanced a bit. Sources which create "smaller" hot areas are likely less effective.
 (u)BenLubar
 (p)3206
 (e)🆕📄|feature, tgui
