@@ -1863,9 +1863,9 @@
 	. = ..()
 	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
 		. = TRUE
-	if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
 		. = TRUE
-	if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
+	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
 		. = TRUE
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)

@@ -691,7 +691,7 @@
 			I.dropped(src)
 
 	has_any_hands()
-		. = hands.len > 0
+		. = length(hands) > 0
 
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
