@@ -87,6 +87,8 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 					overlays[overlay_ref[1]] = I
 				overlay_ref[3] = overlay_ref[3] == 0 ? 0 : "\ref[I.appearance]"
 			result_atom.overlays = overlays
+	if(ismob(orig_datum) && (orig_datum in ai_mobs)) // ugly hack, sorry
+		ai_mobs |= result
 	return result
 
 #undef _SEMI_DEEP_COPY
