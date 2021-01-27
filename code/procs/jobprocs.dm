@@ -30,6 +30,8 @@
 				continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
+			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
+				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
 			continue
@@ -164,6 +166,8 @@
 			if(checktraitor(player) && JOB.cant_spawn_as_rev)
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
+				continue
+			if(checktraitor(player) && JOB.cant_spawn_as_con)
 				continue
 		if (!JOB || jobban_isbanned(player,JOB.name))
 			continue
