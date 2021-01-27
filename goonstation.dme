@@ -571,6 +571,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\clipboard.dm"
 #include "code\modules\admin\buildmodes\clipboard_wide.dm"
 #include "code\modules\admin\buildmodes\construction.dm"
+#include "code\modules\admin\buildmodes\copy.dm"
 #include "code\modules\admin\buildmodes\elecflash.dm"
 #include "code\modules\admin\buildmodes\fireflash.dm"
 #include "code\modules\admin\buildmodes\lighting.dm"
