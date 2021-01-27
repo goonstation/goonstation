@@ -232,6 +232,14 @@
 			H.update_body()
 			H.set_body_icon_dirty()
 			H.UpdateDamageIcon()
+			
+			for(var/obj/item/implant/I in H.implant)
+				if (I.body_part == src.slot)
+					I.on_death() // severed limbs are dead limbs!
+					I.set_loc(object)
+					//object.contents.Add(I)
+					H.implant.Remove(I)
+
 			if (src.slot == "l_arm")
 				H.drop_from_slot(H.l_hand)
 				H.hud.update_hands()
@@ -310,6 +318,10 @@
 		attachee.update_body()
 		attachee.set_body_icon_dirty()
 		attachee.UpdateDamageIcon()
+		for(var/obj/item/implant/I in src.contents) // Re-activate implants in severed limbs
+			I.set_loc(attachee)
+			attachee.implant.Add(I)
+			I.implanted(attacher, attachee, src.slot)
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 

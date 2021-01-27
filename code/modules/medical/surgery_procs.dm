@@ -332,7 +332,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SCALPEL - HEAD ---------- */
 
-	if (surgeon.zone_sel.selecting == "head")
+	if (surgeon.zone_sel.selecting == "head" && surgeon.a_intent != INTENT_DISARM)
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
@@ -605,10 +605,65 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.chest_item = null
 			patient.chest_item_sewn = 0
 			return 1
+	
+	/* ---------- SCALPEL - IMPLANTS ---------- */
+	else if (surgeon.a_intent == INTENT_DISARM || (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HELP))
+		if (patient.implant.len > 0)
+			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [surgeon.zone_sel.selecting] with [src]!</span>",\
+			surgeon, "<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] [zone_sel2name[surgeon.zone_sel.selecting]] with [src]!</span>",\
+			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your [zone_sel2name[surgeon.zone_sel.selecting]] with [src]!</span>")
 
-/* ---------- SCALPEL - IMPLANT ---------- */
+			for (var/obj/item/implant/projectile/I in patient.implant) // maybe todo: merge these two loops, might fuck up the ordering though.
+
+				if (surgeon.zone_sel.selecting != I.body_part)
+					continue // just in case this is implemented later
+
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
+				surgeon, "<span class='alert'>You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [src]!</span>")
+
+				patient.implant.Remove(I)
+				I.set_loc(patient.loc)
+				return 1
+
+			for (var/obj/item/implant/I in patient.implant)
+
+				if (surgeon.zone_sel.selecting != I.body_part)
+					continue
+
+				// This is kinda important (Convair880).
+				if (istype(I, /obj/item/implant/mindslave))
+					if (patient.mind && (patient.mind.special_role == "mindslave"))
+						if(surgeon == patient) continue
+						remove_mindslave_status(patient, "mslave", "surgery")
+					else if (patient.mind && patient.mind.master)
+						if(surgeon == patient) continue
+						remove_mindslave_status(patient, "otherslave", "surgery")
+
+				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
+				surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
+				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
+
+				if (I.shrapnel)
+					patient.implant.Remove(I)
+					I.set_loc(patient)
+					I.on_remove(patient)
+				else
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
+					I.on_remove(patient)
+					patient.implant.Remove(I)
+					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+					wadblood.color = patient.blood_color
+					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.blood_DNA = patient.bioHolder.Uid
+					newcase.blood_type = patient.bioHolder.bloodType
+
+				return 1
+
+/* ---------- SCALPEL - CHEST ---------- */
 	// else if (surgeon.zone_sel.selecting == "chest" && (surgeon.a_intent == "help" || surgeon.a_intent == "disarm"))
-	else if (surgeon.zone_sel.selecting == "chest")
+	else if (surgeon.zone_sel.selecting == "chest") // old and new removal works!
 		if (patient.ailments.len > 0)
 			var/attempted_parasite_removal = 0
 			for (var/datum/ailment_data/an_ailment in patient.ailments)
@@ -626,47 +681,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out a parasite from you with [src]!</span>")
 				return 1
 
-		if (patient.implant.len > 0)
-			playsound(get_turf(patient), "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
-			patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
-			surgeon, "<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
-			patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your chest with [src]!</span>")
-
-			for (var/obj/item/implant/projectile/I in patient.implant)
-				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-				surgeon, "<span class='alert'>You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [src]!</span>")
-
-				I.on_remove(patient)
-				patient.implant.Remove(I)
-				I.set_loc(patient.loc)
-				return 1
-
-			for (var/obj/item/implant/I in patient.implant)
-
-				// This is kinda important (Convair880).
-				if (istype(I, /obj/item/implant/mindslave))
-					if (patient.mind && (patient.mind.special_role == "mindslave"))
-						if(surgeon == patient) continue
-						remove_mindslave_status(patient, "mslave", "surgery")
-					else if (patient.mind && patient.mind.master)
-						if(surgeon == patient) continue
-						remove_mindslave_status(patient, "otherslave", "surgery")
-
-				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-				surgeon, "<span class='alert'>You cut out an implant from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out an implant from you with [src]!</span>")
-
-				var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
-				I.on_remove(patient)
-				patient.implant.Remove(I)
-				var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
-				wadblood.color = patient.blood_color
-				newcase.UpdateOverlays(wadblood, "blood")
-				newcase.blood_DNA = patient.bioHolder.Uid
-				newcase.blood_type = patient.bioHolder.bloodType
-
-				return 1
+		// Implant removal moved!
 
 		/* chest op_stage description
 			cut = scalpel

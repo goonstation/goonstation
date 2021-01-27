@@ -17,6 +17,8 @@ THROWING DARTS
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "implant-g"
 	w_class = 1.0
+	var/body_part = "chest"  // retain old behaviour if it doesn't use implanted()
+	var/shrapnel = 0 // determines if it makes paper wad when removed or not
 	var/implanted = null
 	var/impcolor = "g"
 	var/mob/owner = null
@@ -35,9 +37,11 @@ THROWING DARTS
 		return
 
 	// called when an implant is implanted into M by I
-	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+	proc/implanted(mob/M, mob/I, zone=null)
 		implanted = 1
+		if (!isnull(zone))
+			body_part = zone // if it doesn't specify, use the chest!
+		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant([src.type]) in [body_part] at [log_loc(M)].")
 		SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, M)
 		owner = M
 		if (implant_overlay)
@@ -523,7 +527,10 @@ THROWING DARTS
 		if (isliving(src.owner) && !isnull(src.loc)) // if we're in nullspace then we've already triggered
 			//var/mob/living/carbon/human/source = owner
 			var/mob/living/source = owner
-			if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
+			if(src.body_part != "chest")
+				source.visible_message("[source]'s [src.body_part] makes a somber buzzing noise.")
+				return // for some reason H.implant is set to null when it's in a limb. not gonna figure out why.
+			if((source.suiciding) && prob(60)) //Probably won't trigger on suicide though, or if not in chest
 				source.visible_message("[source] emits a somber buzzing noise.")
 				return
 			. = 0
@@ -773,6 +780,7 @@ THROWING DARTS
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
+	shrapnel = 1
 	var/bleed_timer = 0
 	var/forensic_ID = null // match a bullet to a gun holy heckkkkk
 
@@ -958,6 +966,7 @@ THROWING DARTS
 	w_class = 2.0
 	hide_attack = 2
 	var/sneaky = 0
+	var/only_in = null
 	tooltip_flags = REBUILD_DIST
 
 	New()
@@ -978,12 +987,15 @@ THROWING DARTS
 		return
 
 	proc/implant(mob/M as mob, mob/user as mob)
+		var/zone = src.only_in
+		if(isnull(zone))
+			zone = user.zone_sel.selecting
 		if (sneaky)
-			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+			boutput(user, "<span class='alert'>You implanted the implant into [M]'s [zone_sel2name[zone]].</span>")
 		else
-			M.tri_message("<span class='alert'>[M] has been implanted by [user].</span>",\
-			M, "<span class='alert'>You have been implanted by [user].</span>",\
-			user, "<span class='alert'>You implanted the implant into [M].</span>")
+			M.tri_message("<span class='alert'>[M] has been implanted in their [zone_sel2name[zone]] by [user].</span>",\
+			M, "<span class='alert'>You have been implanted in your [zone_sel2name[zone]] by [user].</span>",\
+			user, "<span class='alert'>You implanted the implant into [M]'s [zone_sel2name[zone]].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -993,7 +1005,7 @@ THROWING DARTS
 			C.implants.Add(src.imp)
 
 		src.imp.set_loc(M)
-		src.imp.implanted(M, user)
+		src.imp.implanted(M, user, zone)
 
 		src.imp = null
 		src.update()
@@ -1099,6 +1111,7 @@ THROWING DARTS
 
 /obj/item/implanter/mindslave
 	icon_state = "implanter1-g"
+	only_in = "head"
 	New()
 		src.imp = new /obj/item/implant/mindslave( src )
 		..()
@@ -1106,6 +1119,7 @@ THROWING DARTS
 
 /obj/item/implanter/super_mindslave
 	icon_state = "implanter1-g"
+	only_in = "head"
 	New()
 		src.imp = new /obj/item/implant/mindslave/super( src )
 		..()
@@ -1113,6 +1127,7 @@ THROWING DARTS
 
 /obj/item/implanter/microbomb
 	name = "microbomb implanter"
+	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1123,6 +1138,7 @@ THROWING DARTS
 
 /obj/item/implanter/macrobomb
 	name = "macrobomb implanter"
+	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1132,6 +1148,7 @@ THROWING DARTS
 
 /obj/item/implanter/uplink_macrobomb
 	name = "macrobomb implanter"
+	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1143,6 +1160,7 @@ THROWING DARTS
 
 /obj/item/implanter/uplink_microbomb
 	name = "microbomb implanter"
+	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
