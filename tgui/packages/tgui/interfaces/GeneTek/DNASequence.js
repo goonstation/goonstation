@@ -111,24 +111,6 @@ export const DNASequence = (props, context) => {
   ));
 };
 
-DNASequence.defaultHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    const a = lastProps.gene.dna;
-    const b = nextProps.gene.dna;
-    if (a.length !== b.length) {
-      return true;
-    }
-    for (let i = 0; i < a.length; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (a[i][j] !== b[i][j]) {
-          return true;
-        }
-      }
-    }
-    return false;
-  },
-};
-
 export const Nucleotide = props => {
   const {
     letter,
