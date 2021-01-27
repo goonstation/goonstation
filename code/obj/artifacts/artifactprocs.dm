@@ -284,6 +284,8 @@
 
 	if (W.force)
 		src.ArtifactStimulus("force", W.force)
+
+	src.ArtifactHitWith(W, user)
 	return 1
 
 /obj/proc/ArtifactFaultUsed(var/mob/user)
@@ -398,6 +400,10 @@
 		if (A.activated)
 			A.effect_touch(src,user)
 	return
+
+/obj/proc/ArtifactHitWith(var/obj/item/O, var/mob/user)
+	if (!src.ArtifactSanityCheck())
+		return 1
 
 /obj/proc/ArtifactTakeDamage(var/dmg_amount)
 	if (!src.ArtifactSanityCheck() || !isnum(dmg_amount))
