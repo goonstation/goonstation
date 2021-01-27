@@ -18301,6 +18301,9 @@
 "aQP" = (
 /obj/machinery/vending/snack,
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-6"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "aQQ" = (
@@ -40150,6 +40153,11 @@
 "bTt" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
