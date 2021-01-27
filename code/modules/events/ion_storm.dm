@@ -193,8 +193,10 @@
 			// Fuck up a couple of doors
 			if (!station_doors.len)
 				var/turf/T = null
-				for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
+				for_by_tcl (foundDoor, /obj/machinery/door)
 					if (foundDoor.z != 1)
+						continue
+					if (istype(foundDoor, /obj/machinery/door/poddoor))
 						continue
 					T = get_turf(foundDoor)
 					if (!istype(T.loc,/area/station/))

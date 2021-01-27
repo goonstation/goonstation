@@ -81,7 +81,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 		parent = A
 
 	clicked(var/list/pa)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			parent.select_submode()
-		else if (pa.Find("right") && parent.submode)
-			parent.submode.settings(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
+		else if (("right" in pa) && parent.submode)
+			parent.submode.settings(("ctrl" in pa), ("alt" in pa), ("shift" in pa))

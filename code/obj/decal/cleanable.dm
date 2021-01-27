@@ -445,8 +445,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			src.UpdateName()
 			src.dry_time = time
 			last_dry_start = world.time
-			if (!processing_items.Find(src))
-				processing_items.Add(src)
+			processing_items |= src
 			return 1
 
 	end_dry()

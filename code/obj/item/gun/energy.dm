@@ -1565,6 +1565,7 @@
 	name = "Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
+	w_class = 3		//for clarity
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1589,13 +1590,15 @@
 				shoot_delay = 2
 				spread_angle = 0
 				force = 9
+				w_class = 3
 			else //if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "signifer_2-smg"
 				src.icon_state = "signifer_2-smg"
 				muzzle_flash = "muzzle_flash_bluezap"
-				force = 12
 				spread_angle = 3
 				shoot_delay = 5
+				force = 12
+				w_class = 4
 
 	attack_self(var/mob/M)
 		if (!src.two_handed)
@@ -1630,3 +1633,40 @@
 	shoot_point_blank(mob/M, mob/user, second_shot)
 		shotcount = 0
 		. = ..()
+
+/obj/item/gun/energy/tasersmg
+	name = "Taser SMG"
+	icon_state = "ntneutral100"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	item_state = "ntgun"
+	force = 5.0
+	two_handed = 1
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_elec"
+
+	New()
+		cell = new/obj/item/ammo/power_cell/high_power
+		current_projectile = new/datum/projectile/energy_bolt/smgburst
+
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		..()
+
+	update_icon()
+		..()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
+				src.icon_state = "ntstun[ratio]"
+			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
+				src.icon_state = "ntneutral[ratio]"
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (istype(current_projectile, /datum/projectile/energy_bolt/smgauto))
+			spread_angle = 8
+		else
+			spread_angle = 2
+		update_icon()

@@ -50,13 +50,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 		return
 
 	proc/isResearched(var/type)
+		. = FALSE
 		if(src.debug_mode)
-			return 1
-		if(researchTree.Find(type))
+			return TRUE
+		if(type in researchTree)
 			var/datum/geneticsResearchEntry/E = researchTree[type]
 			if(E.isResearched == 1)
-				return 1
-		return 0
+				. = TRUE
 
 	proc/progress()
 		//var/tickDiff = 0
@@ -95,7 +95,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 			M.name = "Mutation Research"
 			M.desc = "Analysis of a potential mutation."
 
-			var/research_time = src.mut_research_time
+			M.researchTime = src.mut_research_time
+			var/research_time = M.researchTime
 			if (genResearch.time_discount)
 				research_time *= (1 - genResearch.time_discount)
 			if (src.debug_mode)
