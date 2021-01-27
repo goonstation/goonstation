@@ -1,5 +1,7 @@
 /datum/projectile/energy_bolt
 	name = "energy bolt"
+	ammo_ID = "taser"
+	ammo_name = "taser battery"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
 //How much of a punch this has, tends to be seconds/damage before any resist
@@ -60,6 +62,8 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/bouncy
 	name = "ricochet energy bolt"
+	ammo_ID = "taser_bouncy"
+	ammo_name = "reflective taser battery"
 	var/max_bounce_count = 1
 	var/reflect_on_nondense_hits = FALSE
 
@@ -71,6 +75,8 @@ toxic - poisons
 
 /datum/projectile/heavyion
 	name = "ion bolt"
+	ammo_ID = "ion_bolt"
+	ammo_name = "ionized battery"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "heavyion"
 	power = 20
@@ -98,16 +104,14 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/robust
+	ammo_ID = "taser_robust"
+	ammo_name = "D-cell taser battery"
 	power = 45
 	dissipation_rate = 6
 
-/datum/projectile/energy_bolt/burst
-	shot_number = 3
-	cost = 75
-	sname = "burst stun"
-
-
 /datum/projectile/energy_bolt/tiny
+	ammo_ID = "taser_tiny"
+	ammo_name = "button-cell taser battery"
 	power = 2.5
 	cost = 10
 	sname = "teeny bolt"
@@ -127,6 +131,8 @@ toxic - poisons
 		return
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+	ammo_ID = "taser_shotgun"
+	ammo_name = "12 gauge taser battery"
 	cost = 10
 	power = 17.5
 	dissipation_delay = 1
@@ -137,6 +143,9 @@ toxic - poisons
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v
 	name = "vuvuzela bolt"
+	ammo_ID = "taser_vuvuzela"
+	ammo_name = "can of compressed air"
+	ammo_name_plural = "cans of compressed air"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "v_sound"
 //How much of a punch this has, tends to be seconds/damage before any resist
@@ -191,6 +200,8 @@ toxic - poisons
 //////////// Ghost Hunting for Halloween
 /datum/projectile/energy_bolt_antighost
 	name = "ectoplasmic bolt"
+	ammo_ID = "anti_ghost"
+	ammo_name = "ectoplasmic demortation charge"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "green_spark"
 //How much of a punch this has, tends to be seconds/damage before any resist
@@ -225,6 +236,8 @@ toxic - poisons
 
 //Projectile for Azungars NT gun.
 /datum/projectile/energy_bolt/ntburst // fixed overlapping path - /datum/projectile/energy_bolt/burst already exists for taser burst fire
+	ammo_ID = "taser_nt"
+	ammo_name = "NT-cell taser battery"
 	shot_number = 1
 	power = 15
 	icon = 'icons/obj/projectiles.dmi'
@@ -234,6 +247,8 @@ toxic - poisons
 
 //lawgiver detain
 /datum/projectile/energy_bolt/aoe
+	ammo_ID = "taser_lawbringer"
+	ammo_name = "taser grenade cartridge"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
 	sname = "detain"
@@ -302,6 +317,8 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/pulse
 	name = "pulse"
+	ammo_ID = "pulse"
+	ammo_name = "pulse battery"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
 	power = 20

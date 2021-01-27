@@ -62,23 +62,18 @@
 	item_state = "incapacitor"
 	force = 1.0
 	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
-	cell = new/obj/item/ammo/power_cell/self_charging
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
-	projectiles = null
+	ammo = /obj/item/ammo/power_cell/self_charging
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
+	fixed_mag = TRUE
 	custom_cell_max_capacity = 100
-
-/obj/item/gun/energy/flock/New()
-	current_projectile = new/datum/projectile/energy_bolt/flockdrone
-	projectiles = list(current_projectile)
-	..()
+	firemodes = list(new/datum/firemode/single(name = "si.ng.le.sh.ot", proj = /datum/projectile/energy_bolt/flockdrone))
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)
 	if(isflock(user))
 		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Incapacitor
-		<br><span class='bold'>Energy:</span> [src.cell.charge]
-		<br><span class='bold'>Max Energy:</span> [src.cell.max_charge]
+		<br><span class='bold'>Energy:</span> [src.loaded_magazine.charge]
+		<br><span class='bold'>Max Energy:</span> [src.loaded_magazine.max_charge]
 		<br><span class='bold'>###=-</span></span><br>"}
 	else
 		return null // give the standard description

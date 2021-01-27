@@ -121,9 +121,8 @@
 	var/q_threshold1 = 100 // Decent quality.
 	var/q_threshold2 = 200 // Superb quality.
 
-	var/datum/projectile/our_projectile = null
-	var/datum/projectile/our_projectile2 = null // Reserved for top-notch replacement parts.
-	var/list/our_projectiles = null
+	var/datum/firemode/firemode_1 = null
+	var/datum/firemode/firemode_2 = null // Reserved for top-notch replacement parts.
 	var/obj/item/ammo/power_cell/our_cell = null
 
 	New()
@@ -190,13 +189,11 @@
 				user.visible_message("<span class='notice'>[user] finishes repairing the [src.name].</span>", "<span class='notice'>You close the maintenance panel and power up the gun.</span>")
 
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
-				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))
-				L.current_projectile = new src.our_projectile
-				if (!isnull(src.our_projectile2))
-					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
-					L.projectiles = src.our_projectiles
+				var/list/cap_firemodes = list(src.firemode_1)
+				if (!isnull(src.firemode_2))
+					cap_firemodes += src.firemode_2
+				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user), _firemodes = cap_firemodes, loaded_magazine = src.our_cell)
 				src.our_cell.set_loc(L)
-				L.cell = src.our_cell
 
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
@@ -304,7 +301,7 @@
 
 		// Nothing special, just a plain old laser.
 		if (src.quality_counter < src.q_threshold1)
-			src.our_projectile = /datum/projectile/laser
+			src.firemode_1 = new/datum/firemode/single(name = "laser", proj = /datum/projectile/laser)
 			if (user && ismob(user))
 				user.show_text("The [src.name] looks a little worn, but appears to work alright.", "blue")
 
@@ -312,14 +309,14 @@
 		else if (src.quality_counter >= src.q_threshold1 && src.quality_counter < src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name] seems to work better than expected thanks to above-average replacment parts.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
+			src.firemode_1 = new/datum/firemode/single(name = "laser", proj = /datum/projectile/laser/old)
 
 		// Now we're talking about top-notch stuff.
 		else if (src.quality_counter >= src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name]'s high-quality replacement parts fit together perfectly, increasing the gun's output.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
-			src.our_projectile2 = /datum/projectile/laser/old_burst
+			src.firemode_1 = new/datum/firemode/single(name = "laser", proj = /datum/projectile/laser/old)
+			src.firemode_1 = new/datum/firemode/triple(name = "lasest", proj = /datum/projectile/laser/old)
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return

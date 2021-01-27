@@ -1,6 +1,8 @@
 /datum/projectile/claw
 
 	name = "crab claw"
+	ammo_ID = "crab_claw"
+	ammo_name = "mutagenic crab-cluster"
 	icon = 'icons/obj/crabgun.dmi'
 	icon_state = "proj_crab"
 

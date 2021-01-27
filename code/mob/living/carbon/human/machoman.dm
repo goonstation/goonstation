@@ -1434,7 +1434,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				sleep(3.5 SECONDS)
 				qdel(O)
 			SPAWN_DBG(0)
-				var/obj/item/old_grenade/emp/temp_nade = new(user.loc)
+				var/obj/item/grenade/old_grenade/emp/temp_nade = new(user.loc)
 				temp_nade.prime()
 			SPAWN_DBG(0)
 				for (var/atom/A in range(user.loc, 4))

@@ -13,6 +13,10 @@
 	var/custom_reject_message = "" //set this to a string if you want a custom message to be shown instead of the default when a reagent isnt accepted by the gun
 	inventory_counter_enabled = 1
 	move_triggered = 1
+	fixed_mag = TRUE
+	accepted_mag = null
+	ammo = /obj/item/ammo/bullets/empty
+	firemodes = list(new/datum/firemode/single(name = "single-shot", proj = /datum/projectile/syringe))
 
 	New()
 		src.create_reagents(capacity)
@@ -41,7 +45,7 @@
 		src.update_icon()
 
 	get_desc()
-		. = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.reagents.total_volume]/[src.reagents.maximum_volume] units left!"
+		. = "There are [src.reagents.total_volume]/[src.reagents.maximum_volume] units left!"
 		if(src.current_projectile)
 			. += " Each shot will currently use [src.current_projectile.cost] units!"
 		else
@@ -165,11 +169,7 @@
 	ammo_reagents = list("ectoplasm")
 	force = 7.0
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
-
-	New()
-		current_projectile = new/datum/projectile/ectoblaster
-		projectiles = list(current_projectile)
-		..()
+	firemodes = list(new/datum/firemode/single(name = "ectoplasmate", proj = /datum/projectile/energy_bolt_v/trumpet))
 
 	update_icon()
 		if(src.reagents)

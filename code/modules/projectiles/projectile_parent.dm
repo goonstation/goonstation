@@ -522,6 +522,12 @@ datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var
 		name = "projectile"
+		/// ID used by gun magazines to form the manifest
+		ammo_ID = "abstract_projectile"
+		/// Short description of the projectile in ammo-form
+		ammo_name = "Abstract projectile"
+		/// Replaces ammo_name with this string if a plural is needed and a string is defined. Otherwise (typically) just appends an S
+		ammo_name_plural = null
 		icon = 'icons/obj/projectiles.dmi'
 		icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
 		icon_turf_hit = null // what kinda overlay they puke onto turfs when they hit
@@ -555,7 +561,8 @@ datum/projectile
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
-		caliber = null
+		caliber = null           // NOT a list! Determines what magazines it'll fit in
+		nomsg = 0
 
 		datum/material/material = null
 
@@ -593,6 +600,10 @@ datum/projectile
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
 	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
+	/// This projectile holds a grenade. It'll call its prime() on impact!
+	var/obj/item/grenade/internal_grenade
+	/// And/or a chem grenade
+	var/obj/item/chem_grenade/internal_chem_grenade
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -622,17 +633,48 @@ datum/projectile
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-//				if (isliving(hit))
-//					var/mob/living/L = hit
-//					stun_bullet_hit(O,L)
+			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+				var/turf/T = get_turf(hit)
+				if (T)
+					if(T.density)
+						var/anti_angle = turn(angle2dir(angle), 180)
+						for(var/i in 1 to 10)
+							T = get_step(T, anti_angle)
+							if(!T.density)
+								break
+					src.internal_grenade?.set_loc(T)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(T)
+					src.internal_chem_grenade?.explode()
+				else if (O)
+					var/turf/pT = get_turf(O)
+					if (pT)
+						src.internal_grenade?.set_loc(T)
+						src.internal_grenade?.prime()
+						src.internal_chem_grenade?.set_loc(T)
+						src.internal_chem_grenade?.explode()
+				src.internal_grenade = null
 			return
 		tick(var/obj/projectile/O)
+			return
+		/// When an object is put into this projectile, do this
+		on_object_insertion(var/obj/I)
 			return
 		on_launch(var/obj/projectile/O)
 			return
 		on_pointblank(var/obj/projectile/O, var/mob/target)
 			return
 		on_end(var/obj/projectile/O)
+			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+				if (O)
+					var/turf/pT = get_turf(O)
+					if (pT)
+						src.internal_grenade?.set_loc(O)
+						src.internal_grenade?.prime()
+						src.internal_chem_grenade?.set_loc(O)
+						src.internal_chem_grenade?.explode()
+				src.internal_grenade = null
+
 			return
 		on_max_range_die(var/obj/projectile/O)
 			return

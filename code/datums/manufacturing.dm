@@ -1534,7 +1534,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Low-Yield Mining Explosives (x5)"
 	item_paths = list("MET-1","CRY-1","CON-1")
 	item_amounts = list(3,3,7)
-	item_outputs = list(/obj/item/breaching_charge/mining/light)
+	item_outputs = list(/obj/item/grenade/breaching_charge/mining/light)
 	time = 40 SECONDS
 	create = 5
 	category = "Resource"
@@ -1543,7 +1543,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Mining Explosives (x5)"
 	item_paths = list("MET-1","CRY-1","CON-1")
 	item_amounts = list(7,7,15)
-	item_outputs = list(/obj/item/breaching_charge/mining)
+	item_outputs = list(/obj/item/grenade/breaching_charge/mining)
 	time = 60 SECONDS
 	create = 5
 	category = "Resource"

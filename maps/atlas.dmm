@@ -2154,9 +2154,9 @@
 /area/station/crew_quarters/catering)
 "ft" = (
 /obj/rack,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "fu" = (

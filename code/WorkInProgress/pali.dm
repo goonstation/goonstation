@@ -12,14 +12,17 @@
 	desc = "A box of large Beepsky-shaped bullets"
 	icon_state = "lmg_ammo"
 	amount_left = 10.0
-	max_amount = 10.0
-	ammo_type = new/datum/projectile/special/spawner/beepsky
-
-	caliber = 2
+	max_amount = 100.0
+	ammo_type = /datum/projectile/special/spawner/beepsky
+	mag_type = AMMO_MAGAZINE
+	caliber = CALIBER_SECBOT
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
 
+/obj/item/ammo/bullets/beepsky/one
+	amount_left = 1
+	max_amount = 1
 
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
@@ -27,9 +30,10 @@
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
-	caliber = 2 // hell if I know
-	max_ammo_capacity = 100
+	caliber = CALIBER_SECBOT // hell if I know
+	accepted_mag = AMMO_MAGAZINE
 	auto_eject = 0
+	ammo = /obj/item/ammo/bullets/beepsky
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
@@ -43,7 +47,7 @@
 	w_class = 4
 
 	New()
-		ammo = new/obj/item/ammo/bullets/beepsky
+
 		current_projectile = new/datum/projectile/special/spawner/beepsky
 		..()
 
@@ -61,10 +65,7 @@
 			..()
 
 /obj/item/gun/kinetic/beepsky/one_bullet
-	New()
-		. = ..()
-		src.ammo.amount_left = 1
-		src.ammo.max_amount = 1
+	ammo = /obj/item/ammo/bullets/beepsky/one
 
 
 

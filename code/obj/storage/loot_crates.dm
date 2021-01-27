@@ -124,7 +124,7 @@
 					picker = rand(1,7)
 					switch(picker)
 						if(1)
-							items += /obj/item/breaching_charge/mining
+							items += /obj/item/grenade/breaching_charge/mining
 							item_amounts += 25
 						if(2)
 							items += /obj/item/clothing/gloves/concussive

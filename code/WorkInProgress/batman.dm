@@ -32,8 +32,8 @@
 			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, slot_in_backpack)
 			src.equip_new_if_possible(/obj/item/storage/medical_pouch, slot_in_backpack)
 			src.equip_new_if_possible(/obj/item/storage/belt/syndicate_medic_belt, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
+			src.equip_new_if_possible(/obj/item/grenade/breaching_charge/thermite, slot_in_backpack)
+			src.equip_new_if_possible(/obj/item/grenade/breaching_charge/thermite, slot_in_backpack)
 			src.equip_new_if_possible(/obj/item/storage/box/flashbang_kit, slot_in_backpack)
 
 			src.equip_new_if_possible(/obj/item/tool/omnitool, slot_in_belt)

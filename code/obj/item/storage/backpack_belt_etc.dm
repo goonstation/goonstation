@@ -468,7 +468,7 @@
 	desc = "A sturdy shoulder-sling for storing various grenades."
 	icon_state = "grenade_bandolier"
 	item_state = "grenade_bandolier"
-	can_hold = list(/obj/item/old_grenade,
+	can_hold = list(/obj/item/grenade/old_grenade,
 	/obj/item/chem_grenade,
 	/obj/item/storage/grenade_pouch,
 	/obj/item/ammo/bullets/grenade_round)

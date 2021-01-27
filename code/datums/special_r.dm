@@ -54,7 +54,7 @@ datum/special_respawn
 		new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
 		for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 			for(var/i = 1 to 5)
-				new /obj/item/breaching_charge/thermite(T)
+				new /obj/item/grenade/breaching_charge/thermite(T)
 
 		message_admins("[r_number] syndicate agents spawned at Syndicate Station.")
 		return

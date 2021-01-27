@@ -33,15 +33,15 @@
 					new/obj/critter/domestic_bee_larva(src)
 			if(3)
 				if(prob(5))
-					new/obj/item/gimmickbomb/owlclothes(src)
-					new/obj/item/gimmickbomb/owlclothes(src)
-					new/obj/item/gimmickbomb/owlclothes(src)
-					new/obj/item/gimmickbomb/owlclothes(src)
-					new/obj/item/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
 				else
-					new/obj/item/gimmickbomb/owlclothes(src)
+					new/obj/item/grenade/gimmickbomb/owlclothes(src)
 			if(4)
-				new/obj/item/old_grenade/light_gimmick(src)
+				new/obj/item/grenade/old_grenade/light_gimmick(src)
 
 /datum/artifact/container
 	associated_object = /obj/artifact/container

@@ -10401,9 +10401,9 @@
 "dej" = (
 /obj/rack,
 /obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
+/obj/item/grenade/breaching_charge,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;

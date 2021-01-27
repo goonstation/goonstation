@@ -103,3 +103,79 @@
 //item attack bitflags
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
+
+// Guns'n'ammo defines
+// Ammo item types
+/// A naked pile of ammunition, like a box of shells, or belt of bullets
+#define AMMO_PILE (1<<0)
+/// A clip-like device that holds bullets, for quick loading into an internal magazine
+#define AMMO_CLIP (1<<1)
+/// A mechanism that feeds bullets into a gun, designed to be swapped out to reload
+#define AMMO_MAGAZINE (1<<2)
+/// A box designed to hold a belt of bullets, typically for machine guns
+/// Basically just a mag that's really easy to load and unload bullets into/from
+#define AMMO_BELTMAG (1<<3)
+/// A battery, uses a number to determine remaining ammo
+#define AMMO_ENERGY (1<<4)
+// Ammo numbering defines
+/// The max number of unique ammotypes that can fit into a magazine/pile/etc
+#define MAX_UNIQUE_AMMO_TYPES 10
+/// The max total number of bullets that can fit into any magazine/pile/etc though normal means
+#define MAX_MAGAZINE_CAPACITY 2000
+// Ammo caliber defines
+#define CALIBER_RIFLE_ASSAULT 0.223
+#define CALIBER_RIFLE_HEAVY 0.308
+#define CALIBER_RIFLE_CASELESS 0.185
+#define CALIBER_PISTOL 0.355
+#define CALIBER_PISTOL_SMALL 0.22
+#define CALIBER_PISTOL_MAGNUM 0.50
+#define CALIBER_PISTOL_GYROJET 0.512
+#define CALIBER_MINIGUN 0.10
+#define CALIBER_CAT 9.5
+#define CALIBER_FROG 8.0
+#define CALIBER_CRAB 12
+#define CALIBER_TRASHBAG 9.5
+#define CALIBER_SECBOT 11.5
+#define CALIBER_REVOLVER_MAGNUM 0.357
+#define CALIBER_REVOLVER_OLDTIMEY 0.45
+#define CALIBER_REVOLVER 0.38
+#define CALIBER_DERRINGER 0.41
+#define CALIBER_WHOLE_DERRINGER 3.00
+#define CALIBER_SHOTGUN 0.72
+#define CALIBER_CANNON 0.787
+#define CALIBER_CANNON_MASSIVE 15.7
+#define CALIBER_GRENADE 1.57
+#define CALIBER_ROCKET 1.12
+#define CALIBER_RPG 1.58
+#define CALIBER_ROD 1.00
+#define CALIBER_PISTOL_FLINTLOCK 0.56
+#define CALIBER_BATTERY 1.30
+#define CALIBER_IMPLANT 1.11
+#define CALIBER_ANY -1
+#define REALLY_BIG_PROJECTILE -1
+// Gun Defs
+/// Return when currently shooting
+#define GUN_IS_SHOOTING 2
+/// Gun consumes charge from loaded magazine
+#define GUN_NEEDS_ENERGY (1<<0)
+/// Gun needs projectile entries in its loaded magazine's mag_contents
+#define GUN_NEEDS_BULLETS (1<<1)
+// Gun Sound assoc Defs
+/// Load single
+#define LOAD_SINGLE "load_single"
+/// Load multiple
+#define LOAD_MULTIPLE "load_multiple"
+/// Load magazine
+#define LOAD_MAGAZINE "load_magazine"
+/// Unload single
+#define UNLOAD_SINGLE "unload_single"
+/// Unload multiple
+#define UNLOAD_MULTIPLE "unload_multiple"
+/// Unload magazine
+#define UNLOAD_MAGAZINE "unload_magazine"
+/// Shoot gun
+#define SHOOT_SOUND "shoot_sound"
+/// Shoot gun, but silenced
+#define SHOOT_SILENCED_SOUND "shoot_silent"
+/// Shoot gun, but its empty
+#define SHOOT_EMPTY "shoot_empty"

@@ -22235,9 +22235,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,

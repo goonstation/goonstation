@@ -666,16 +666,12 @@ obj/item/gnomechompski/elf
 	icon_state = "bullpup"
 	rechargeable = 0
 	custom_cell_max_capacity = 100
+	ammo = new/obj/item/ammo/power_cell/self_charging
+	firemodes = list(new/datum/firemode/single(name = "wonk", proj = new/datum/projectile/wonk))
 
-	New()
-		cell = new/obj/item/ammo/power_cell/self_charging
-		current_projectile = new/datum/projectile/wonk
-		projectiles = list(current_projectile)
-		..()
-
-		update_icon()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+	update_icon()
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "bullpup[ratio]"
 

@@ -180,7 +180,14 @@
 	var/gun_y_offset = 8 // gun pic y offset
 	var/lawbringer_state = null // because the law just has to be *difficult*. determines what lights to draw on the lawbringer if it has one
 	var/lawbringer_alwaysbigshot = 0 // varedit this to 1 if you want the Buddy to always go infinite-ammo bigshot. this is a bad idea
-
+	/// Ammofab will replicate this kind of magazine
+	var/obj/item/ammo/magToDupe
+	/// Ammofab will insert these bullets into the gun
+	var/list/bulletsToDupe
+	/// The bullet the ammofab'll try to dupe
+	var/datum/projectile/top_shot
+	/// Bot's busy reloading, please wait
+	var/reloading_gun = 0
 	//
 	////////////////////// GUN STUFF -^
 
@@ -701,58 +708,54 @@
 		src.lawbringer_state = local_ordinance
 		switch (local_ordinance)
 			if ("clown")
-				src.budgun.current_projectile = new/datum/projectile/bullet/clownshot
+				src.budgun.firemode_index = "clownshot"
 				SPAWN_DBG(1 SECOND)
 					if (!loose)
 						src.visible_message(dothevoice)
 					speak(loose ? "CLOWN." : "Clownshot!")
 					playsound(src, "sound/vox/clown.ogg", 30)
 			if ("detain")
-				src.budgun.current_projectile = new/datum/projectile/energy_bolt/aoe
+				src.budgun.firemode_index = "detain"
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Detain!")
 					playsound(src, "sound/vox/detain.ogg", 30)
 			if ("pulse")
-				src.budgun.current_projectile = new/datum/projectile/energy_bolt/pulse
+				src.budgun.firemode_index = "pulse"
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Pulse!")
 					playsound(src, "sound/vox/push.ogg", 30)
 			if ("knockout")
-				src.budgun.current_projectile = new/datum/projectile/bullet/tranq_dart/law_giver
-				src.budgun.current_projectile.cost = 60
+				src.budgun.firemode_index = "knockout"
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
 					playsound(src, "sound/vox/sleep.ogg", 30)
 			if ("smoke")
-				src.budgun.current_projectile = new/datum/projectile/bullet/smoke
-				src.budgun.current_projectile.cost = 50
+				src.budgun.firemode_index = "smokeshot"
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
 					playsound(src, "sound/vox/smoke.ogg", 30)
 			if ("execute")
-				src.budgun.current_projectile = new/datum/projectile/bullet/revolver_38
-				src.budgun.current_projectile.cost = 30
+				src.budgun.firemode_index = "execute"
 				SPAWN_DBG(1 SECOND)
 					speak("EXTERMINATE.")
 					playsound(src, "sound/vox/exterminate.ogg", 30)
 			if ("hotshot")
-				src.budgun.current_projectile = new/datum/projectile/bullet/flare
-				src.budgun.current_projectile.cost = 60
+				src.budgun.firemode_index = "hotshot"
 				SPAWN_DBG(1 SECOND)
 					speak("HOTSHOT.")
 					playsound(src, "sound/vox/hot.ogg", 30)
 			if ("bigshot")	// impossible to get to without admin intervention
-				src.budgun.current_projectile = new/datum/projectile/bullet/aex/lawbringer
-				src.budgun.current_projectile.cost = 170
+				src.budgun.firemode_index = "bigshot"
 				SPAWN_DBG(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
 					playsound(src, "sound/vox/high.ogg", 50)
 					sleep(0.4 SECONDS)
 					playsound(src, "sound/vox/explosive.ogg", 50)
+		src.budgun.set_firemode(src)
 		src.budgun.update_icon()
 		src.update_icon()
 		src.slept_through_becoming_the_law = 0
@@ -796,6 +799,7 @@
 
 		if (src.budgun && src.ammofab && istype(src.budgun, /obj/item/gun/kinetic)) // Should also be called whenever they are given a gun
 			src.locked = 1
+			src.DoAmmofab()
 			if (user)
 				boutput(user, "<span class='alert'>The BulletBuddy snakes a metallic tendril up [src]'s arm, tightening itself around their hand!</span>")
 				boutput(user, "<span class='alert'>The tendril extends into the magazine port of [src]'s gun, welding itself in place!</span>")
@@ -1019,6 +1023,7 @@
 				src.budgun.master = src
 				src.hasgun = 1
 				src.gun = budgun.name
+				SetupAmmofabAmmo()
 				user.u_equip(Q)
 				update_icon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
@@ -1064,6 +1069,23 @@
 					user.u_equip(Q)
 		return
 
+	proc/SetupAmmofabAmmo()
+		qdel(src.top_shot)
+		src.magToDupe = budgun.loaded_magazine.type
+		if(budgun.loaded_magazine.mag_contents.len)
+			for(var/datum/projectile/bullet in src.budgun.loaded_magazine)
+				src.bulletsToDupe.Add(bullet.type)
+		if(length(src.bulletsToDupe))
+			src.top_shot = new src.bulletsToDupe[1]
+		else if(length(src.budgun.loaded_magazine.mag_contents))
+			var/atom/ammunition = src.budgun.loaded_magazine.mag_contents[1]
+			src.top_shot = new ammunition.type(src)
+		else if(length(src.budgun.loaded_magazine.ammo_type))
+			src.top_shot = new src.budgun.loaded_magazine.ammo_type[1]
+		else
+			src.top_shot = new/datum/projectile/bullet/revolver_357 // We need *something*
+
+
 	proc/BarGun()
 		if (!istype(src.budgun, /obj/item/gun/russianrevolver))
 			return // silly suicide shooters only
@@ -1107,14 +1129,33 @@
 
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
-			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-				cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
-				shootgun.ammo.amount_left = shootgun.ammo.max_amount
-				return 1 // good2shoot!
-			else if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
-				return 1 // still good2shoot!
-			else
-				return DischargeAndTakeANap()
+			var/datum/firemode/currFM = shootgun.firemodes[shootgun.firemode_index]
+			shootgun.handle_casings()
+			if(length(shootgun.loaded_magazine.mag_contents) <= currFM.burst_count)
+				if(shootgun.fixed_mag) // fixed magazine? load individual bullets into it
+					src.reloading_gun = 1
+					if(prob(1))
+						speak("I love to reload during a battle!")
+					SPAWN_DBG(1 SECOND)
+						while(shootgun.loaded_magazine.mag_contents.len < shootgun.loaded_magazine.max_amount)
+							if((src.cell?.charge -= (top_shot.power * top_shot.ks_ratio * 0.75)) >= GUARDBOT_LOWPOWER_ALERT_LEVEL && shootgun.loaded_magazine.add_ammo(top_shot.type))
+								playsound(get_turf(src), shootgun.gunsounds.soundLoadSingle, 100, 1)
+								sleep(0.5 SECONDS)
+							else
+								src.reloading_gun = 0
+								DischargeAndTakeANap()
+								break
+						src.reloading_gun = 0
+
+				else
+					if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - (shootgun.loaded_magazine.max_amount * (top_shot.power * top_shot.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
+						cell.charge -= ((shootgun.loaded_magazine.max_amount - shootgun.loaded_magazine.mag_contents.len) * (top_shot.power * top_shot.ks_ratio * 0.75))
+						var/obj/item/ammo/newmag = new src.magToDupe(src, _ammopaths = src.bulletsToDupe)
+						shootgun.swap(newmag, src)
+						src.speak(pick("CHANGING MAGS!", "Reloading!", "Cover me while I reload!"))
+					else
+						DischargeAndTakeANap()
+
 		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
 			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
 			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this
@@ -1149,18 +1190,15 @@
 
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun
-			if (shootgun.ammo) // is our gun even loaded with anything?
-				if (shootgun.ammo.amount_left >= shootgun.current_projectile.cost)
-					return 1 // good2shoot!
-				else
-					return 0 // until we can fire an incomplete burst, our gun isnt good2shoot
-			else // no?
-				return 0 // huh
+			if (shootgun.loaded_magazine.mag_contents.len) // Does our gun have ammo in it?
+				return 1 // good2shoot!
+			else
+				return 0 // Guess not!
 
 		else if (istype(src.budgun, /obj/item/gun/energy))
 			var/obj/item/gun/energy/pewgun = src.budgun
-			if(pewgun.cell) // did we remember to load our energygun?
-				if (pewgun.cell.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
+			if(pewgun.loaded_magazine) // did we remember to load our energygun?
+				if (pewgun.loaded_magazine.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
 					return 1
 				else if(!pewgun.rechargeable) // oh no we cant, but can we recharge it?
 					if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
@@ -1179,12 +1217,12 @@
 
 		if (istype(src.budgun, /obj/item/gun/energy))
 			var/obj/item/gun/energy/charge_me = src.budgun
-			if(istype(charge_me.cell, /obj/item/ammo/power_cell/self_charging)) // Oh a self-charger?
+			if(istype(charge_me.loaded_magazine, /obj/item/ammo/power_cell/self_charging)) // Oh a self-charger?
 				return 0 // cant touch that, sorry
-			else if (charge_me.cell.charge < charge_me.cell.max_charge) // is our gun not full?
-				if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (charge_me.cell.max_charge - charge_me.cell.charge))) // Can we charge it without tanking our battery?
-					src.cell.charge -= (charge_me.cell.max_charge - charge_me.cell.charge) // discharge us
-					charge_me.cell.charge = charge_me.cell.max_charge // recharge it
+			else if (charge_me.loaded_magazine.charge < charge_me.loaded_magazine.max_charge) // is our gun not full?
+				if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (charge_me.loaded_magazine.max_charge - charge_me.loaded_magazine.charge))) // Can we charge it without tanking our battery?
+					src.cell.charge -= (charge_me.loaded_magazine.max_charge - charge_me.loaded_magazine.charge) // discharge us
+					charge_me.loaded_magazine.charge = charge_me.loaded_magazine.max_charge // recharge it
 					return 1 // and we're good2shoot
 				else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
 					return 0 // cool, but we're not gonna charge it
@@ -1225,10 +1263,7 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if(IN_RANGE(target_turf, my_turf, 1))
-				budgun.shoot_point_blank(target, my_turf)
-			else
-				budgun.shoot(target_turf, my_turf, src)
+			budgun.shoot_manager(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1610,6 +1645,8 @@
 			return 0
 
 		bot_attack(var/atom/target as mob|obj, lethal=0)
+			if(src.reloading_gun)
+				return
 			if(src.tool && (src.tool.tool_id == "GUN"))
 				if (istype(src.budgun, /obj/item/bang_gun))
 					src.budgun.pixelaction(target, null, src, null) // dang it

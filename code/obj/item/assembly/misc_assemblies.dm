@@ -43,8 +43,8 @@ Contains:
 	var/obj/item/device/timer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/reagent_containers/glass/beaker/part3 = null
-	var/obj/item/pipebomb/frame/part4 = null
-	var/obj/item/pipebomb/bomb/part5 = null
+	var/obj/item/grenade/pipebomb/frame/part4 = null
+	var/obj/item/grenade/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
@@ -136,8 +136,8 @@ Contains:
 		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
 		return
 
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
+	if((istype(W, /obj/item/grenade/pipebomb/frame) && !( src.status )))
+		var/obj/item/grenade/pipebomb/frame/F = W
 		if(!src.part3 && !src.part5 && F.state < 4)
 			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
 			return
@@ -148,7 +148,7 @@ Contains:
 			user.u_equip(F)
 			F.set_loc(src)
 
-			src.part5 = new /obj/item/pipebomb/bomb
+			src.part5 = new /obj/item/grenade/pipebomb/bomb
 			src.part5.strength = F.strength
 			if (F.material)
 				src.part5.setMaterial(F.material)
@@ -164,7 +164,7 @@ Contains:
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
-	if((istype(W, /obj/item/pipebomb/bomb)))
+	if((istype(W, /obj/item/grenade/pipebomb/bomb)))
 		if(!src.part3 && !src.part5)
 			src.part5 = W
 			W.master = src
@@ -238,8 +238,8 @@ Contains:
 	var/obj/item/device/prox_sensor/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/reagent_containers/glass/beaker/part3 = null
-	var/obj/item/pipebomb/frame/part4 = null
-	var/obj/item/pipebomb/bomb/part5 = null
+	var/obj/item/grenade/pipebomb/frame/part4 = null
+	var/obj/item/grenade/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
@@ -357,8 +357,8 @@ Contains:
 		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
 		return
 
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
+	if((istype(W, /obj/item/grenade/pipebomb/frame) && !( src.status )))
+		var/obj/item/grenade/pipebomb/frame/F = W
 		if(!src.part3 && !src.part5 && F.state < 4)
 			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
 			return
@@ -369,7 +369,7 @@ Contains:
 			user.u_equip(F)
 			F.set_loc(src)
 
-			src.part5 = new /obj/item/pipebomb/bomb
+			src.part5 = new /obj/item/grenade/pipebomb/bomb
 			src.part5.strength = F.strength
 			if (F.material)
 				src.part5.setMaterial(F.material)
@@ -385,7 +385,7 @@ Contains:
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
-	if((istype(W, /obj/item/pipebomb/bomb)))
+	if((istype(W, /obj/item/grenade/pipebomb/bomb)))
 		if(!src.part3 && !src.part5)
 			src.part5 = W
 			W.master = src
@@ -456,8 +456,8 @@ Contains:
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/reagent_containers/glass/beaker/part3 = null
-	var/obj/item/pipebomb/frame/part4 = null
-	var/obj/item/pipebomb/bomb/part5 = null
+	var/obj/item/grenade/pipebomb/frame/part4 = null
+	var/obj/item/grenade/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
@@ -533,8 +533,8 @@ Contains:
 		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
 		return
 
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
+	if((istype(W, /obj/item/grenade/pipebomb/frame) && !( src.status )))
+		var/obj/item/grenade/pipebomb/frame/F = W
 		if(!src.part3 && !src.part5 && F.state < 4)
 			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
 			return
@@ -545,7 +545,7 @@ Contains:
 			user.u_equip(F)
 			F.set_loc(src)
 
-			src.part5 = new /obj/item/pipebomb/bomb
+			src.part5 = new /obj/item/grenade/pipebomb/bomb
 			src.part5.strength = F.strength
 			if (F.material)
 				src.part5.setMaterial(F.material)
@@ -561,7 +561,7 @@ Contains:
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
-	if((istype(W, /obj/item/pipebomb/bomb)))
+	if((istype(W, /obj/item/grenade/pipebomb/bomb)))
 		if(!src.part3 && !src.part5)
 			src.part5 = W
 			W.master = src

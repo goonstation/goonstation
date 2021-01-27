@@ -939,7 +939,7 @@
 /area/station/hallway/secondary/entry)
 "acO" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
@@ -1407,34 +1407,26 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "adV" = (
-/obj/rack,
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/rack,{
 	dir = 8
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 10;
 	pixel_y = 1
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = -2;
 	pixel_y = -5
 	},
-/obj/item/breaching_hammer{
+/obj/item/grenade/breaching_hammer{
 	pixel_x = -1;
 	pixel_y = 1
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
-"adW" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/clown)
-"adX" = (
-/obj/decal/cleanable/cobweb,
-/obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction2)
 "adY" = (

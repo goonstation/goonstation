@@ -2803,8 +2803,8 @@
 			updateIcon()
 			return
 
-		if (E.cell)
-			if (E.cell.charge(15) != 1) // Same as other recharger.
+		if (E.loaded_magazine)
+			if (E.loaded_magazine.charge(15) != 1) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
 				src.updateIcon()

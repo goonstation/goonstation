@@ -1,5 +1,7 @@
 /datum/projectile/shrink_beam
 	name = "space-time disruption"
+	ammo_ID = "shrink_ray"
+	ammo_name = "bio-compression field cell"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "sinebeam3"
 	brightness = 1
@@ -50,5 +52,7 @@
 
 /datum/projectile/shrink_beam/grow
 	name = "time-space disruption"
+	ammo_ID = "grow_ray"
+	ammo_name = "bio-expansion field cell"
 	sname = "grow beam"
 	shrunk_change = -1

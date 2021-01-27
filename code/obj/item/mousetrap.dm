@@ -10,8 +10,8 @@
 	throwforce = null
 	var/armed = 0
 	var/obj/item/chem_grenade/grenade = null
-	var/obj/item/old_grenade/grenade_old = null
-	var/obj/item/pipebomb/bomb/pipebomb = null
+	var/obj/item/grenade/old_grenade/grenade_old = null
+	var/obj/item/grenade/pipebomb/bomb/pipebomb = null
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
@@ -91,9 +91,9 @@
 				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
-			var/obj/item/old_grenade/OG = C
-			if (OG.not_in_mousetraps == 0 && !OG.state)
+		else if (istype(C, /obj/item/grenade/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+			var/obj/item/grenade/old_grenade/OG = C
+			if (OG.not_in_mousetraps == 0 && !OG.primed)
 				user.u_equip(OG)
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
@@ -103,8 +103,8 @@
 				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
-			var/obj/item/pipebomb/bomb/PB = C
+		else if (istype(C, /obj/item/grenade/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+			var/obj/item/grenade/pipebomb/bomb/PB = C
 			if (!PB.armed)
 				user.u_equip(PB)
 				PB.set_loc(src)
@@ -126,8 +126,8 @@
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/PF = C
+		else if (istype(C, /obj/item/grenade/pipebomb/frame))
+			var/obj/item/grenade/pipebomb/frame/PF = C
 			if (src.loc != user)
 				user.show_text("You need to actually be holding [src] to do this.", "red")
 				return
@@ -316,10 +316,10 @@
 	w_class = 1
 	var/armed = 0
 	var/obj/item/mousetrap/mousetrap = null
-	var/obj/item/pipebomb/frame/frame = null
+	var/obj/item/grenade/pipebomb/frame/frame = null
 	var/payload = ""
 
-	New(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/pipebomb/frame/newframe)
+	New(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/grenade/pipebomb/frame/newframe)
 		..()
 
 		if (newtrap)
@@ -349,7 +349,7 @@
 			newframe.set_loc(src)
 			src.frame = newframe
 		else
-			src.frame = new /obj/item/pipebomb/frame(src)
+			src.frame = new /obj/item/grenade/pipebomb/frame(src)
 
 		return
 

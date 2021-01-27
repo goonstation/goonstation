@@ -439,7 +439,7 @@ MATERIAL
 
 				if("pipef")
 					if (!amount_check(3,usr)) return
-					a_type = /obj/item/pipebomb/frame
+					a_type = /obj/item/grenade/pipebomb/frame
 					a_amount = 1
 					a_cost = 3
 					a_icon = 'icons/obj/items/assemblies.dmi'

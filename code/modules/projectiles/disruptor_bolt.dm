@@ -1,5 +1,7 @@
 /datum/projectile/disruptor
 	name = "disruptor"
+	ammo_ID = "disruptor"
+	ammo_name = "disruptor cell"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "disrupt"
 //How much of a punch this has, tends to be seconds/damage before any resist
@@ -47,16 +49,9 @@ toxic - poisons
 				hit:smash()
 		return
 
-/datum/projectile/disruptor/burst
-	icon_state = "disrupt"
-	shot_sound = 'sound/weapons/rocket.ogg'
-	cost = 60
-	shot_number = 3
-	ks_ratio = 0.5
-	damage_type = D_ENERGY
-	sname = "burst stun"
-
 /datum/projectile/disruptor/high
+	ammo_ID = "disruptor_high"
+	ammo_name = "overcharged disruptor cell"
 	power = 60
 	shot_sound = 'sound/weapons/laserultra.ogg'
 	icon_state = "disrupt_lethal"

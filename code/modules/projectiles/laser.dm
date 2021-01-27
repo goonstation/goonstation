@@ -1,5 +1,7 @@
 /datum/projectile/laser
 	name = "laser"
+	ammo_ID = "laser"
+	ammo_name = "laser capacitor"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laser"
 
@@ -58,6 +60,8 @@ toxic - poisons
 
 /datum/projectile/laser/quad
 	name = "4 lasers"
+	ammo_ID = "laser_4"
+	ammo_name = "quad-cell laser capacitor"
 	icon_state = "laser"
 	power = 240
 	cost = 125
@@ -85,6 +89,8 @@ toxic - poisons
 
 /datum/projectile/laser/heavy
 	name = "heavy laser"
+	ammo_ID = "laser_heavy"
+	ammo_name = "D-cell laser capacitor"
 	icon_state = "u_laser"
 	power = 80
 	cost = 50
@@ -98,6 +104,8 @@ toxic - poisons
 
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
+	ammo_ID = "laser_ass"
+	ammo_name = "B-Cell laser capacitor"
 	icon_state = "u_laser"
 	power = 75
 	cost = 65
@@ -122,6 +130,8 @@ toxic - poisons
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
+	ammo_ID = "phaser"
+	ammo_name = "phaser battery"
 	icon_state = "phaser_energy"
 	power = 20
 	cost = 25
@@ -134,6 +144,8 @@ toxic - poisons
 
 	mining
 		name = "mining phaser bolt"
+		ammo_ID = "phaser_mining"
+		ammo_name = "mining phaser battery"
 		power = 3
 		cost = 5
 		dissipation_delay = 3
@@ -159,11 +171,15 @@ toxic - poisons
 			..()
 
 	longrange
+		ammo_ID = "phaser_longrange"
+		ammo_name = "long-range phaser battery"
 		icon_state = "red_bolt"
 		dissipation_delay = 10
 		shot_sound = 'sound/weapons/laser_b.ogg'
 
 	split
+		ammo_ID = "phaser_split"
+		ammo_name = "clustered phaser battery"
 		dissipation_rate = 100
 		power = 120
 		dissipation_delay = 2
@@ -185,6 +201,8 @@ toxic - poisons
 			P.die()
 
 	curver
+		ammo_ID = "phaser_curver"
+		ammo_name = "bent phaser battery"
 		tick(var/obj/projectile/P)
 			if (!P)
 				return
@@ -192,6 +210,8 @@ toxic - poisons
 			..()
 
 	spiral
+		ammo_ID = "phaser_spiral"
+		ammo_name = "twisted phaser battery"
 		tick(var/obj/projectile/P)
 			if (!P)
 				return
@@ -206,6 +226,8 @@ toxic - poisons
 			..()
 
 	upgradeable
+		ammo_ID = "phaser_upgradable"
+		ammo_name = "modular phaser battery"
 		icon_state = "phaser_light"
 		var/datum/projectile/laser/light/launched = new/datum/projectile/laser/light
 		var/count = 1
@@ -245,6 +267,8 @@ toxic - poisons
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
+	ammo_ID = "laser_glitter"
+	ammo_name = "prismatic crystal"
 	icon_state = "eyebeam"
 	power = 35
 	cost = 35
@@ -259,6 +283,8 @@ toxic - poisons
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"
+	ammo_ID = "laser_precursor"
+	ammo_name = "humming metallic chunk"
 	icon_state = "disrupt"
 	power = 30
 	cost = 30
@@ -272,6 +298,8 @@ toxic - poisons
 
 /datum/projectile/laser/pred //mostly just a reskin
 	icon_state = "phaser_med"
+	ammo_ID = "laser_pred"
+	ammo_name = "plasma capacitor"
 	name = "plasma bolt"
 	sname = "plasma bolt"
 	shot_sound = 'sound/weapons/snipershot.ogg'
@@ -288,6 +316,8 @@ toxic - poisons
 /datum/projectile/laser/old
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_thermal"
+	ammo_ID = "laser_old"
+	ammo_name = "antique laser capacitor"
 	name = "pulse laser"
 	sname = "pulse laser"
 	shot_sound = 'sound/weapons/snipershot.ogg'
@@ -299,25 +329,13 @@ toxic - poisons
 	color_green = 0.3
 	color_blue = 0
 
-/datum/projectile/laser/old_burst
-	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "proj_sing"
-	name = "burst laser"
-	sname = "burst laser"
-	shot_sound = 'sound/weapons/snipershot.ogg'
-	shot_number = 3
-	cost = 100
-	power = 35
-	color_red = 0.4
-	color_green = 0
-	color_blue = 0.7
-
-
 //Projectile for Azungars NT gun.
 /datum/projectile/laser/ntburst
 	icon_state = "miniphaser_med"
 	name = "plasma bolt"
 	sname = "plasma boltburst"
+	ammo_ID = "laser_nt"
+	ammo_name = "miniplasma cell"
 	shot_sound = 'sound/weapons/lasersound.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
@@ -336,6 +354,8 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
+	ammo_ID = "laser_blaster"
+	ammo_name = "blaster capacitor"
 	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
@@ -348,30 +368,28 @@ toxic - poisons
 	shot_number = 1
 	ks_ratio = 1
 
-	burst
+/* 	burst
 		power = 25
 		cost = 50
 		shot_number = 4
 		icon_state = "modproj2"
-		shot_sound = 'sound/weapons/laser_c.ogg'
+		shot_sound = 'sound/weapons/laser_c.ogg' */
 
 	blast
+		ammo_ID = "laser_blaster_blast"
+		ammo_name = "magnum blaster capacitor"
 		shot_sound = 'sound/weapons/laser_e.ogg'
 		power = 66
 		cost = 100
 		icon_state = "crescent"
 		shot_number = 1
 
-
-
-
 // cogwerks- mining laser, first attempt
-
-
-
 
 /datum/projectile/laser/mining
 	name = "Plasma Cutter Bolt"
+	ammo_ID = "laser_mining"
+	ammo_name = "mining plasma cell"
 	icon_state = "40mmgatling"
 	power = 40
 	cost = 40
@@ -395,6 +413,8 @@ toxic - poisons
 
 /datum/projectile/laser/drill
 	name = "drill bit"
+	ammo_ID = "melee_drill"
+	ammo_name = "plasma-ion cordless drill battery"
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
@@ -428,12 +448,16 @@ toxic - poisons
 
 	cutter
 		name = "cutter blade"
+		ammo_ID = "melee_cutter"
+		ammo_name = "nickel-syreline circular saw battery"
 		power = 30
 		dissipation_rate = 30
 		sname = "scrap cutter"
 
 	saw_teeth
 		name = "saw teeth"
+		ammo_ID = "melee_saw"
+		ammo_name = "claratine-metal hydride saw battery"
 		power = 5
 		dissipation_rate = 5
 		sname = "saw teeth"
@@ -452,7 +476,8 @@ toxic - poisons
 	name = "laser"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "alastor"
-
+	ammo_ID = "laser_alastor"
+	ammo_name = "Alastor pattern energy cell"
 	power = 35
 	cost = 25
 	sname = "laser"

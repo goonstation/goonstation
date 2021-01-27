@@ -3017,7 +3017,7 @@
 "kLP" = (/obj/table/reinforced/bar/auto,/obj/item/device/radio/intercom,/obj/machinery/light/incandescent/cool/very{dir = 8; pixel_x = -10},/obj/item/device/microphone,/turf/simulated/floor/black,/area/station/crew_quarters/courtroom)
 "kLQ" = (/obj/disposalpipe/segment/mail/vertical,/turf/simulated/wall/auto/reinforced/supernorn/yellow,/area/station/hallway/secondary/east{name = "Cargo Hallway"})
 "kLW" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor/neutral/side{dir = 8},/area/station/hallway/primary/south)
-"kMn" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "line1"},/obj/rack,/obj/item/breaching_charge{pixel_x = 7},/obj/item/breaching_charge{pixel_x = -7},/obj/item/breaching_hammer,/turf/simulated/floor/plating,/area/station/security/armory)
+"kMn" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "line1"},/obj/rack,/obj/item/grenade/breaching_charge{pixel_x = 7},/obj/item/grenade/breaching_charge{pixel_x = -7},/obj/item/breaching_hammer,/turf/simulated/floor/plating,/area/station/security/armory)
 "kMt" = (/obj/disposalpipe/segment/mail,/turf/simulated/floor,/area/station/hallway/primary/west)
 "kMz" = (/obj/disposalpipe/segment/mail/horizontal,/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/station/bridge/hos)
 "kME" = (/obj/machinery/light,/turf/simulated/floor,/area/station/hallway/primary/central)

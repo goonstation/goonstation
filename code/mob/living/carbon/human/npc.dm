@@ -673,7 +673,7 @@
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
-		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
+		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/grenade/old_grenade))
 			score += 6
 		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(2)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
 			score += 10

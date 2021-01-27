@@ -174,6 +174,9 @@ proc/Create_Tommyname()
 	name = "space-tommy disruption"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "random_thing"
+	ammo_ID = "tommy"
+	ammo_name = "tommy"
+	ammo_name_plural = "tommies"
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 10
 //How much ammo this costs
@@ -215,12 +218,8 @@ proc/Create_Tommyname()
 	rechargeable = 1
 	force = 0.0
 	desc = "It smells of cheap cologne and..."
-
-	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/tommy
-		projectiles = list(new/datum/projectile/tommy)
-		..()
+	ammo = /obj/item/ammo/power_cell/high_power
+	firemodes = list(new/datum/firemode/single(name = "fully autommatic", proj = /datum/projectile/tommy))
 
 	update_icon()
 		return
@@ -232,8 +231,8 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		if(cell)
-			src.icon_state = "tommygun[src.cell.charge <= 0 ? "-empty" : ""]"
+		if(src.loaded_magazine)
+			src.icon_state = "tommygun[src.loaded_magazine.charge <= 0 ? "-empty" : ""]"
 			return
 
 ///////////////////////////////////////Analysis datum for the spectrometer
@@ -407,11 +406,8 @@ proc/Create_Tommyname()
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
-	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/energy_bolt_v/trumpet
-		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
-		..()
+	ammo = /obj/item/ammo/power_cell/high_power
+	firemodes = list(new/datum/firemode/single(name = "violate rule 5", proj = /datum/projectile/tommy))
 
 ////////////////////////////// Power machine
 /obj/machinery/power/debug_generator

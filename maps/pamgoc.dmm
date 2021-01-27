@@ -52531,19 +52531,19 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = -10;
 	pixel_y = 1
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/breaching_charge{
+/obj/item/grenade/breaching_charge{
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/breaching_hammer{
+/obj/item/grenade/breaching_hammer{
 	pixel_x = 1;
 	pixel_y = 1
 	},
@@ -54452,7 +54452,7 @@
 /area/station/hydroponics/bay)
 "bXY" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},

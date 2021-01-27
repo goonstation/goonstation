@@ -42,7 +42,7 @@
 "P" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
 "Q" = (/obj/table/auto,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
 "R" = (/obj/table/auto,/obj/item/reagent_containers/food/drinks/tea{pixel_y = 6},/turf/simulated/floor/grey/whitegrime,/area/prefab/deserted_outpost)
-"S" = (/obj/table/auto,/obj/item/old_grenade/smoke,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
+"S" = (/obj/table/auto,/obj/item/grenade/old_grenade/smoke,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
 "T" = (/obj/table/auto,/obj/item/paper/book/critter_compendium,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
 "U" = (/obj/table/auto,/obj/item/matchbook{pixel_x = -3; pixel_y = 2},/obj/item/device/light/candle/small{pixel_x = 3; pixel_y = 4},/obj/item/device/light/candle/small,/turf/simulated/floor/grey,/area/prefab/deserted_outpost)
 "V" = (/obj/table/auto,/obj/item/feather{pixel_y = 3},/obj/item/dice/d8{pixel_x = 3; pixel_y = 4},/turf/simulated/floor/grey,/area/prefab/deserted_outpost)

@@ -1115,10 +1115,10 @@
 /area/syndicate_station/battlecruiser)
 "cV" = (
 /obj/table/auto,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
+/obj/item/grenade/old_grenade/stinger/frag,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -1131,10 +1131,10 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
+/obj/item/grenade/old_grenade/stinger,
 /turf/simulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "cX" = (

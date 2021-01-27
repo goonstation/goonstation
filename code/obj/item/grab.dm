@@ -715,7 +715,7 @@
 
 		if (affecting && assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
-			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
+			G.shoot_manager(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 		qdel(src)
 

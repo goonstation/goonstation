@@ -1,5 +1,7 @@
 /datum/projectile/fourtymm
 	name = "40mm projectile"
+	ammo_ID = "40mm_projectile"
+	ammo_name = "40mm projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "40mmgatling"
 //How much of a punch this has, tends to be seconds/damage before any resist

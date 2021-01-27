@@ -1539,11 +1539,10 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	icon_state = "implant"
 	mats = 8
 	contraband = 1
+	ammo = /obj/item/ammo/bullets/internal/implanter
+	fixed_mag = TRUE
 	var/obj/item/implant/my_implant = null
-
-	New()
-		current_projectile = new/datum/projectile/implanter
-		..()
+	firemodes = list(new/datum/firemode/single(name = "implant"))
 
 	get_desc()
 		. += "There is [my_implant ? "\a [my_implant]" : "currently no implant"] loaded into it."
@@ -1617,6 +1616,8 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 
 /datum/projectile/implanter
 	name = "implant bullet"
+	ammo_ID = "implant_bullet"
+	ammo_name = "implant bullet"
 	power = 5
 	shot_sound = 'sound/machines/click.ogg'
 	damage_type = D_KINETIC

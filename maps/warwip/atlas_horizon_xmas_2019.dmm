@@ -48365,9 +48365,9 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},

@@ -1,5 +1,7 @@
 /datum/projectile/owl
 	name = "space-time disruption"
+	ammo_ID = "owl"
+	ammo_name = "owl wardrobe charge"
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "owl"
 //How much of a punch this has, tends to be seconds/damage before any resist
@@ -48,6 +50,8 @@
 
 
 /datum/projectile/owl/owlate
+	ammo_ID = "owl_gib"
+	ammo_name = "ultra-concentrated owlnitrowlpidrowl cannister"
 	sname = "Owlate"
 
 	on_hit(atom/hit)

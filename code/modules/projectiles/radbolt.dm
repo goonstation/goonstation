@@ -1,5 +1,7 @@
 /datum/projectile/rad_bolt
 	name = "bolt"
+	ammo_ID = "radbolt"
+	ammo_name = "enriched cerenkite nail"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "cbbolt" // changed from radbolt - cogwerks
 //How much of a punch this has, tends to be seconds/damage before any resist

@@ -735,7 +735,7 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy, /obj/item/clothing/shoes/moon,
 /obj/item/clothing/suit/sweater, /obj/item/clothing/suit/sweater/red, /obj/item/clothing/suit/sweater/green, /obj/item/clothing/suit/sweater/grandma, /obj/item/clothing/under/shorts,
 /obj/item/clothing/under/suit/pinstripe, /obj/item/cigpacket, /obj/item/coin, /obj/item/crowbar, /obj/item/pen/crayon/lipstick,
-/obj/item/dice, /obj/item/dice/d20, /obj/item/device/light/flashlight, /obj/item/device/key/random, /obj/item/extinguisher, /obj/item/firework,
+/obj/item/dice, /obj/item/dice/d20, /obj/item/device/light/flashlight, /obj/item/device/key/random, /obj/item/extinguisher, /obj/item/grenade/firework,
 /obj/item/football, /obj/item/material_piece/gold, /obj/item/instrument/harmonica, /obj/item/horseshoe,
 /obj/item/kitchen/utensil/knife, /obj/item/raw_material/rock, /obj/item/pen/fancy, /obj/item/pen/odd, /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/razor_blade,/obj/item/rubberduck, /obj/item/instrument/saxophone, /obj/item/scissors, /obj/item/screwdriver, /obj/item/skull, /obj/item/stamp,

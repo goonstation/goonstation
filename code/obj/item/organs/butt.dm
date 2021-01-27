@@ -153,7 +153,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/timer))
-			var/obj/item/gimmickbomb/butt/B = new /obj/item/gimmickbomb/butt
+			var/obj/item/grenade/gimmickbomb/butt/B = new /obj/item/grenade/gimmickbomb/butt
 			B.set_loc(get_turf(user))
 			user.show_text("You add the timer to the butt!", "blue")
 			qdel(W)

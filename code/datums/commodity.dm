@@ -2582,7 +2582,7 @@
 
 /datum/commodity/banana_grenade
 	comname = "Banana grenade"
-	comtype = /obj/item/old_grenade/banana
+	comtype = /obj/item/grenade/old_grenade/banana
 	desc = "Perfect for magic tricks and slips, and some clown's birthday present."
 	price = 2000
 	baseprice = 2000
@@ -2591,7 +2591,7 @@
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"
-	comtype = /obj/item/old_grenade/banana/cheese_sandwich
+	comtype = /obj/item/grenade/old_grenade/banana/cheese_sandwich
 	desc = "Contains only one type of cheese, unfortunately."
 	onmarket = 0
 	price = 2500
@@ -2601,7 +2601,7 @@
 
 /datum/commodity/corndog_grenade
 	comname = "Banana Corndog grenade"
-	comtype = /obj/item/old_grenade/banana/banana_corndog
+	comtype = /obj/item/grenade/old_grenade/banana/banana_corndog
 	desc = "A very space efficient party pleaser. No ketchup or mustard included."
 	onmarket = 0
 	price = 3000

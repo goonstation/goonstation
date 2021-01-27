@@ -218,7 +218,8 @@
 				radio_controller.add_object(src, "[beacon_freq]")
 			if(src.hat)
 				src.overlays += image('icons/obj/bots/aibots.dmi', "hat-[src.hat]")
-
+			src.explode() // REMOVE THIS ITS JUST SO BEEPSKY STOPS ARRESTING ME WHILE I PLAY WITH GUNS
+#warn SECBOTS ARE FUCKED
 	attack_hand(mob/user as mob, params)
 		var/dat
 
