@@ -67,6 +67,11 @@
 (e)🆕|feature
 (+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
 (t)sat jan 23 21
+(u)Azrun
+(p)2808
+(e)⚖🔄|balance, rework
+(*)Adjusted combustion, targeting chamber burns, to be safer for the station by gating a state with exponential scaling.  Tools exist to make it unsafe again, go find them!
+(*)Molitz will now provide oxygen similar to plasmastone (just on a limited scale). A rare variant of Molitz will be an especially useful tool for making combustion spicy. (Thanks pali & UrsulaMajor)
 (u)BenLubar
 (p)3411
 (e)|
