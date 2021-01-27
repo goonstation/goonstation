@@ -95,7 +95,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 			M.name = "Mutation Research"
 			M.desc = "Analysis of a potential mutation."
 
-			var/research_time = src.mut_research_time
+			M.researchTime = src.mut_research_time
+			var/research_time = M.researchTime
 			if (genResearch.time_discount)
 				research_time *= (1 - genResearch.time_discount)
 			if (src.debug_mode)
