@@ -1,9 +1,5 @@
 //Effect type defines in _std/_defines/bioeffect.dm
 
-//If the icon sprite sheet is changed, also update:
-// tgui/packages/tgui/assets/genetics_powers.png
-// tgui/packages/tgui/components/GeneIcon.scss
-
 ABSTRACT_TYPE(/datum/bioEffect)
 /datum/bioEffect
 	var/name = "" //Name of the effect.

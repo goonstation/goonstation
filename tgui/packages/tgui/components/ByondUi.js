@@ -99,7 +99,6 @@ export class ByondUi extends Component {
       return;
     }
     window.addEventListener('resize', this.handleResize);
-    window.addEventListener('scroll', this.handleResize);
     this.componentDidUpdate();
     this.handleResize();
   }
@@ -128,7 +127,6 @@ export class ByondUi extends Component {
       return;
     }
     window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('scroll', this.handleResize);
     this.byondUiElement.unmount();
   }
 
