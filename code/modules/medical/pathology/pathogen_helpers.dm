@@ -33,10 +33,10 @@
 	statueperson.set_dir(src.dir)
 	src.remove()
 
-/mob/living/proc/become_ice_statue()
+/mob/proc/become_ice_statue()
 	become_statue(getMaterial("ice"), "We here at Space Station 13 believe in the transparency of our employees. It doesn't look like a functioning human can be retrieved from this.")
 
-/mob/living/proc/become_rock_statue()
+/mob/proc/become_rock_statue()
 	become_statue(getMaterial("rock"), "Its not too uncommon for our employees to be stoned at work but this is just ridiculous!")
 
 /proc/generate_random_pathogen()

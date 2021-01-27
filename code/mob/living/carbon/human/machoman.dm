@@ -689,7 +689,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					src.verbs += /mob/living/carbon/human/machoman/verb/macho_touch
 					SPAWN_DBG(0)
 						if (H)
-							H.become_statue("gold", "A really dumb looking statue. Very shiny, though.")
+							H.become_statue(getMaterial("gold"), "A really dumb looking statue. Very shiny, though.")
 							H.transforming = 0
 
 /*	verb/macho_minions()
