@@ -4,7 +4,7 @@
 
 proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
-			istype(orig, /datum/chemical_reaction))
+			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency))
 		return orig
 	if(isnull(environment))
 		root = orig
