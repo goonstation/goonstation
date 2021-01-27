@@ -220,7 +220,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 /datum/manufacture/bullet_22
 	name = ".22 Bullets"
 	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_amounts = list(10,2)
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
 	time = 30 SECONDS
 	create = 1
