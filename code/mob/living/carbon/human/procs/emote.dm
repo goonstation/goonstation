@@ -2004,15 +2004,16 @@
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
-			if ("love", "care", "heart")
+			if ("love", "care", "heart") // :shark:
 				if (src.reagents && src.reagents.has_reagent("love"))
 					speech_bubble.icon_state = "love"
 					UpdateOverlays(speech_bubble, "speech_bubble")
 					SPAWN_DBG(1.5 SECONDS)
-					UpdateOverlays(null, "speech_bubble") //this whole thing makes it so a Heart speech bubble can be seen when the emote goes off.
+						UpdateOverlays(null, "speech_bubble") //this whole thing makes it so a Heart speech bubble can be seen when the emote goes off.
 					var/M = null
 					if (param)
-						for (var/mob/A in view(null, null))
+						var/range = 8
+						for (var/mob/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
 							break
