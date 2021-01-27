@@ -2114,7 +2114,7 @@
 "aOH" = (/obj/item/scrap,/obj/machinery/light_switch/west,/obj/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/simulated/floor/plating/random,/area/station/mining/refinery)
 "aOI" = (/obj/cable{icon_state = "1-4"},/obj/cable{icon_state = "2-4"},/obj/cable{icon_state = "4-8"},/obj/disposalpipe/segment/mineral,/turf/simulated/floor/wood,/area/station/hallway/secondary/west)
 "aOJ" = (/obj/disposalpipe/segment/mineral{dir = 4},/obj/decal/tile_edge/stripe/extra_big{dir = 4},/turf/simulated/floor/plating/random,/area/station/mining/refinery)
-"aOK" = (/obj/disposalpipe/segment/transport{dir = 4},/obj/storage/secure/crate/gear/armory/grenades,/obj/item/old_grenade/banana,/obj/item/old_grenade/banana,/obj/item/old_grenade/banana,/turf/simulated/floor/black,/area/station/security/armory)
+"aOK" = (/obj/disposalpipe/segment/transport{dir = 4},/obj/storage/secure/crate/gear/armory/grenades,/obj/item/grenade/old_grenade/banana,/obj/item/grenade/old_grenade/banana,/obj/item/grenade/old_grenade/banana,/turf/simulated/floor/black,/area/station/security/armory)
 "aOL" = (/turf/simulated/shuttle/wall{dir = 8; icon_state = "wall_space"},/area/station/hallway/secondary/exit)
 "aOM" = (/obj/cable{icon_state = "4-8"},/turf/simulated/floor/plating/random,/area/station/mining/refinery)
 "aON" = (/obj/disposalpipe/segment/morgue{dir = 8},/obj/cable{icon_state = "4-8"},/obj/machinery/door/airlock/pyro/glass{dir = 4; name = "Robotics"},/obj/machinery/door/firedoor/pyro{dir = 4},/obj/access_spawn/robotics,/obj/decal/garland{dir = 4; pixel_x = 20},/turf/simulated/floor/bluewhite{dir = 8},/area/station/medical/robotics)

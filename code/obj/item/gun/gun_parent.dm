@@ -168,7 +168,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(usr, "<span class='alert'>Hey! Keep your cold, dead hands off of that!</span>")
 		return
 
-	if(!istype(over_object, /obj/screen/hud))
+	if(!istype(over_object, /atom/movable/screen/hud))
 		if (get_dist(usr,src) > 1)
 			boutput(usr, "<span class='alert'>You're too far away from [src] to do that.</span>")
 			return
@@ -182,8 +182,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if(src.unload_gun(user = user, put_it_here = over_object))
 			return
 
-	else if(istype(over_object, /obj/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
-		var/obj/screen/hud/H = over_object
+	else if(istype(over_object, /atom/movable/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
+		var/atom/movable/screen/hud/H = over_object
 		var/mob/living/carbon/human/dude = usr
 		switch(H.id)
 			if("lhand")
@@ -858,18 +858,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if(src.loaded_magazine.mag_contents.len >= 1 && istype(src.loaded_magazine.mag_contents[1], /datum/projectile))
 			src.current_projectile = src.loaded_magazine.mag_contents[1]
 			if(length(src.loaded_magazine.projectile_items))
-				var/obj/item/GCG
-				if(istype(src.current_projectile.internal_grenade))
-					GCG = src.current_projectile.internal_grenade
-				else if(istype(src.current_projectile.internal_chem_grenade))
-					GCG = src.current_projectile.internal_chem_grenade
-				if(istype(GCG))
-					for(var/datum/projectile/L_P in src.loaded_magazine.projectile_items)
-						if(src.current_projectile != L_P)
-							continue
-						else
-							src.loaded_magazine.projectile_items -= L_P
-							break
+				if(istype(src.current_projectile, /datum/projectile/bullet/grenade_shell))
+					var/datum/projectile/bullet/grenade_shell/GS = src.current_projectile
+					var/obj/item/GCG
+					if(istype(GS.internal_grenade))
+						GCG = GS.internal_grenade
+					else if(istype(GS.internal_chem_grenade))
+						GCG = GS.internal_chem_grenade
+					if(istype(GCG))
+						for(var/datum/projectile/L_P in src.loaded_magazine.projectile_items)
+							if(GS != L_P)
+								continue
+							else
+								src.loaded_magazine.projectile_items -= L_P
+								break
 			src.loaded_magazine.mag_contents.Cut(1,2)
 			return TRUE
 	src.dry_fire(user)

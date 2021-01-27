@@ -1335,20 +1335,17 @@
 	icon_state = "signifer2"
 	force = 8
 	two_handed = 0
-	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
-	can_swap_cell = 0
+	ammo = new/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	fixed_mag = 1
+	firemodes = list(new/datum/firemode/single(name = "Stun", proj = new/datum/projectile/energy_bolt/signifer_tase),\
+									 new/datum/firemode/single(name = "Signify", proj = new/datum/projectile/laser/signifer_lethal))
 	var/shotcount = 0
 
 
-	New()
-		current_projectile = new/datum/projectile/energy_bolt/signifer_tase
-		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
-		..()
-
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
 				src.icon_state = "signifer_2"
@@ -1408,19 +1405,19 @@
 	two_handed = 1
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_elec"
+	ammo = new/obj/item/ammo/power_cell/high_power
+	firemodes = list(new/datum/firemode/double(name = "Burst-fire", proj = new/datum/projectile/energy_bolt/smgburst),\
+	                 new/datum/firemode/triple(name = "Full-auto", proj = new/datum/projectile/energy_bolt/smgauto))
+
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/energy_bolt/smgburst
-
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		//AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
 		..()
 
 	update_icon()
 		..()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
 			ratio = round(ratio, 0.25) * 100
 			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
 				src.icon_state = "ntstun[ratio]"

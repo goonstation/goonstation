@@ -45053,15 +45053,15 @@
 /area/station/construction)
 "cgW" = (
 /obj/rack,
-/obj/item/old_grenade/high_explosive{
+/obj/item/grenade/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/old_grenade/high_explosive{
+/obj/item/grenade/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/old_grenade/high_explosive{
+/obj/item/grenade/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
 	},

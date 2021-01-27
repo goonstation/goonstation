@@ -1266,8 +1266,13 @@ toxic - poisons
 	caliber = CALIBER_GRENADE // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	/// This projectile holds a grenade. It'll call its prime() on impact!
+	var/obj/item/grenade/internal_grenade
+	/// And/or a chem grenade
+	var/obj/item/chem_grenade/internal_chem_grenade
 
-	on_object_insertion(var/obj/I)
+	/// When an object is put into this projectile, do this
+	proc/on_object_insertion(var/obj/I)
 		if(!istype(I)) return
 		if(I.name)
 			src.name = "[I.name] shell"
@@ -1291,6 +1296,39 @@ toxic - poisons
 		else
 			src.icon_state = I.icon_state
 
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+			var/turf/T = get_turf(hit)
+			if (T)
+				if(T.density)
+					var/anti_angle = turn(angle2dir(angle), 180)
+					for(var/i in 1 to 10)
+						T = get_step(T, anti_angle)
+						if(!T.density)
+							break
+				src.internal_grenade?.set_loc(T)
+				src.internal_grenade?.prime()
+				src.internal_chem_grenade?.set_loc(T)
+				src.internal_chem_grenade?.explode()
+			else if (O)
+				var/turf/pT = get_turf(O)
+				if (pT)
+					src.internal_grenade?.set_loc(T)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(T)
+					src.internal_chem_grenade?.explode()
+			src.internal_grenade = null
+
+	on_end(var/obj/projectile/O)
+		if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+			if (O)
+				var/turf/pT = get_turf(O)
+				if (pT)
+					src.internal_grenade?.set_loc(O)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(O)
+					src.internal_chem_grenade?.explode()
+			src.internal_grenade = null
 
 /datum/projectile/bullet/flintlock
 	name = "bullet"

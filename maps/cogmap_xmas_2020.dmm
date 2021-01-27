@@ -1068,7 +1068,7 @@
 /area/station/hallway/secondary/entry)
 "acO" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/grenade/old_grenade/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
