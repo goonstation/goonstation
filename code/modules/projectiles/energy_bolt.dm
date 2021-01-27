@@ -394,7 +394,7 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
 	power = 15
-	cost = 25
+	cost = 50
 	max_range = 12
 	ks_ratio = 0.0
 	sname = "burst"
