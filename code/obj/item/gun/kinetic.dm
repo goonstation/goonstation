@@ -714,9 +714,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New()
 
-		ammo = new/obj/item/ammo/bullets/derringer
+		ammo = new/obj/item/ammo/bullets/bullet_22
 		ammo.amount_left = 0 // start empty
-		current_projectile = new/datum/projectile/bullet/derringer
+		current_projectile = new/datum/projectile/bullet/bullet_22
 		..()
 
 
