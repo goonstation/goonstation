@@ -210,7 +210,7 @@
 /obj/machinery/bot/firebot/proc/look_for_fire()
 	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
 		return
-	for (var/obj/hotspot/H as() in by_cat[TR_CAT_HOTSPOTS]) // First search for burning tiles
+	for_by_tcl(H, /obj/hotspot) // First search for burning tiles
 		if ((H == src.oldtarget))
 			continue
 		if(IN_RANGE(src, H, 7))
@@ -221,7 +221,7 @@
 					src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[TIME >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
 			return H
 
-	for (var/obj/O in by_cat[TR_CAT_BURNING_THINGS]) // Is anything else on fire?
+	for (var/obj/O in by_cat[TR_CAT_BURNING_ITEMS]) // Is anything else on fire?
 		if (O == src.oldtarget)
 			continue
 		if(IN_RANGE(src, O, 7))

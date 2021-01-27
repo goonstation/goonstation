@@ -56,7 +56,9 @@
 		if (shitfood)
 			raging = 1
 			icon_state = "chefbot-mad"
-			for (var/mob/living/carbon/human/M in by_type[/mob/living/carbon])
+			for_by_tcl(M, /mob/living/carbon/human)
+				if(!IN_RANGE(M, src, 7))
+					continue
 				if (M.mind)
 					if (M.mind.assigned_role == "Chef")
 						thechef = M

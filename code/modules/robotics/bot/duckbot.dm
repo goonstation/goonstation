@@ -58,7 +58,7 @@
 				var/turf/randwander = get_step_rand(get_turf(src.annoy_target))
 				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 1, 30)
 		else
-			for(var/mob/M in by_type[/mob])
+			for_by_tcl(M, /mob)
 				if(IN_RANGE(src, M, 7))
 					if(M in src.annoyed_nerds)
 						if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))

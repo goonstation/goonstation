@@ -365,7 +365,7 @@
 			"What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
 
-		for (var/mob/living/carbon/C in by_type[/mob/living/carbon]) //Time to find a patient!
+		for_by_tcl(C, /mob/living/carbon) //Time to find a patient!
 			if(!IN_RANGE(src, C, 7))
 				continue
 

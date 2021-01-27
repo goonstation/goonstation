@@ -800,7 +800,7 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = 0
-		for (var/mob/living/carbon/C in by_type[/mob/living/carbon]) //Let's find us a criminal
+		for_by_tcl(C, /mob/living/carbon) //Let's find us a criminal
 			if(!IN_RANGE(src, C, 7)) // We've made a plea bargain with opaque objects to turn in criminals hiding behind them
 				continue
 			if ((C.stat) || (C.hasStatus("handcuffed")))
@@ -832,7 +832,7 @@
 			return
 
 		if(need_backup)
-			for(var/obj/machinery/bot/secbot/S in by_type[/obj/machinery/bot/secbot]) // Beat up an officer? That's a batonning
+			for_by_tcl(S, /obj/machinery/bot/secbot) // Beat up an officer? That's a batonning
 				if(S == src)
 					continue
 				if(IN_RANGE(src, S, 7))

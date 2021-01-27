@@ -94,7 +94,7 @@
 
 	New()
 		..()
-		START_TRACKING_CAT(TR_CAT_HOTSPOTS)
+		START_TRACKING
 		set_dir(pick(cardinal))
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
@@ -102,19 +102,19 @@
 		// note: light is left disabled until the color is set
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_HOTSPOTS)
+		STOP_TRACKING
 		light.disable(queued_run = 1)
 		if (loc)
 			loc:active_hotspot = null
 		..()
 
 	pooled()
-		STOP_TRACKING_CAT(TR_CAT_HOTSPOTS)
+		STOP_TRACKING
 		..()
 
 	unpooled()
 		..()
-		START_TRACKING_CAT(TR_CAT_HOTSPOTS)
+		START_TRACKING
 		if (!light.attached_to)
 			light.attach(src)
 
