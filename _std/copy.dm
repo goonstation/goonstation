@@ -20,7 +20,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 				new_key = list(new_key)
 			. += new_key
 			if(!isnum(key) && !isnull(orig[key]))
-				.[key] = _SEMI_DEEP_COPY(orig[key])
+				.[new_key] = _SEMI_DEEP_COPY(orig[key])
 		return
 	if(istype(orig, /atom) && !isarea(orig))
 		var/atom/A = orig
@@ -43,7 +43,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 		result = new type(list(_SEMI_DEEP_COPY(orig_component.parent)))
 	else if(istype(orig_datum, /datum/hud) && hasvar(orig_datum, "master"))
 		var/datum/hud/orig_hud = orig
-		result = new type(orig_hud:master)
+		result = new type(_SEMI_DEEP_COPY(orig_hud:master))
 	else
 		result = new type
 	environment[orig_datum] = result
@@ -56,6 +56,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 		for(var/atom/A in orig_atom)
 			semi_deep_copy(A, result, environment, root)
 		if(!isarea(result))
+			result_atom:vis_contents = null
 			for(var/A in orig_atom:vis_contents)
 				result_atom:vis_contents += semi_deep_copy(A, null, environment, root)
 		result_atom.appearance = orig_atom.appearance
