@@ -1859,6 +1859,15 @@
 	src.update_inhands()
 	return 1
 
+/mob/living/carbon/human/has_any_hands()
+	. = ..()
+	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+		. = TRUE
+	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+		. = TRUE
+	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
+		. = TRUE
+
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
 		return 0
@@ -2558,7 +2567,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN_DBG(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
-			for (var/I = 0, I < 4, I++)
+			for (var/i in 1 to 4)
 				new /obj/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)

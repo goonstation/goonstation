@@ -1,5 +1,13 @@
 
 (t)wed jan 27 21
+(u)pali
+(p)3367
+(e)🆕📄|feature, tgui
+(*)Radio station voice synthesizer got a new cool UI!
+(u)BenLubar
+(p)3498
+(e)🐛📄|bug, tgui
+(+)The new GeneTek UI no longer makes the port-a-gene explode. Sorry about that.
 (u)Kyle
 (p)3477
 (e)|
