@@ -51,7 +51,7 @@ export const ScannerTab = (props, context) => {
   return (
     <Fragment>
       {!!changingMutantRace && (
-        <Modal>
+        <Modal full>
           <Box bold width={20} mb={0.5}>
             Change to which body type?
           </Box>

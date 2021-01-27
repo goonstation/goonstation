@@ -17,7 +17,7 @@ export const CombineGenesModal = (props, context) => {
   } = data;
 
   return (
-    <Modal>
+    <Modal full>
       <Box width={16} mr={2}>
         <Box bold mb={2}>
           Select genes to combine
