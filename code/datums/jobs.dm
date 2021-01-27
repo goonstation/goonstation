@@ -485,7 +485,7 @@
 
 	assistant
 		name = "Security Assistant"
-		limit = 2
+		limit = 3
 		wages = PAY_UNTRAINED
 		slot_jump = /obj/item/clothing/under/rank/security/assistant
 		slot_suit = null

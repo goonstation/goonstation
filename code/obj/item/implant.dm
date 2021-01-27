@@ -108,7 +108,7 @@ THROWING DARTS
 					return
 				if (user.equipped() != I)
 					return
-				if ((!in_range(src, usr) && src.loc != user))
+				if ((!in_interact_range(src, usr) && src.loc != user))
 					return
 				t = copytext(adminscrub(t),1,128)
 				if (t)
@@ -1283,7 +1283,7 @@ THROWING DARTS
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, usr) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -1360,8 +1360,8 @@ THROWING DARTS
 		src.add_fingerprint(user)
 		update()
 	else
-		if (user.contents.Find(src))
-			SPAWN_DBG( 0 )
+		if (src in user.contents)
+			SPAWN_DBG(0)
 				src.attack_self(user)
 				return
 		else
@@ -1503,7 +1503,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	..()
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))

@@ -26,9 +26,6 @@
 		if (prob(15))
 			reagents.add_reagent("aranesp", 30)
 			usedCapacity += 30
-		if (prob(3))
-			reagents.add_reagent("stimulants", 20)
-			usedCapacity += 20
 		if (prob(10))
 			reagents.add_reagent("super_hairgrownium", 25)
 			usedCapacity += 25

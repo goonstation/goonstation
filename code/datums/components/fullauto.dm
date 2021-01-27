@@ -59,6 +59,8 @@
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer = null
+		if(current_user)
+			end_shootloop(current_user)
 		. = ..()
 
 	disposing()
@@ -145,7 +147,7 @@
 
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
-	if(istype(F))
+	if(istype(F) && aimer)
 		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
 							M.y + (F.yOffset + -1 - 7),\
 							M.z)

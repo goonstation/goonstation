@@ -544,7 +544,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
 			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
@@ -647,7 +647,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	set category = "Local"
 
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
 			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
@@ -673,7 +673,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -791,7 +791,7 @@ Code:
 	set src in view()
 	set category = "Local"
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
 			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
@@ -917,9 +917,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	var/is_detonator_trigger = 0
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				is_detonator_trigger = 1
-	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))

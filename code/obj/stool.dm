@@ -1343,7 +1343,7 @@
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		if (href_list["on"])
 			toggle_active()

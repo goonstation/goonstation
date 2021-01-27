@@ -853,7 +853,7 @@ atom
 					lights |= T.RL_Lights
 
 			var/list/affected = list()
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.strip(++RL_Generation)
 
@@ -861,7 +861,7 @@ atom
 			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
 			src.opacity = new_opacity
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.apply()
 			if (RL_Started)

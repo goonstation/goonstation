@@ -47,7 +47,6 @@
 	src.UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
 	src.UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
 	src.UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
-	src.UpdateOverlays(src.inhands_standing, "inhands")
 
 	UpdateOverlays(src.fire_standing, "fire")
 
@@ -78,7 +77,7 @@
 			wear_sanity_check(src.w_uniform)
 			suit_image = src.w_uniform.wear_image
 
-			if (islist(override_states) && override_states.Find("js-[src.w_uniform.icon_state]"))
+			if (islist(override_states) && ("js-[src.w_uniform.icon_state]" in override_states))
 				suit_image.icon = src.mutantrace.clothing_icon_override
 				suit_image.icon_state = "js-[src.w_uniform.icon_state]"
 			else
@@ -314,7 +313,7 @@
 		else
 			src.wear_suit.wear_image.layer = MOB_ARMOR_LAYER
 
-		if (islist(override_states) && override_states.Find("suit-[src.wear_suit.icon_state]"))
+		if (islist(override_states) && ("suit-[src.wear_suit.icon_state]" in override_states))
 			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_suit.wear_image.icon_state = "suit-[src.wear_suit.icon_state]"
 		else
@@ -440,7 +439,7 @@
 	if (src.wear_mask)
 		wear_sanity_check(src.wear_mask)
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("mask-[src.wear_mask.icon_state]"))
+		if (islist(override_states) && ("mask-[src.wear_mask.icon_state]" in override_states))
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_mask.wear_image.icon_state = "mask-[src.wear_mask.icon_state]"
 			no_offset = 1
@@ -484,7 +483,7 @@
 		wear_sanity_check(src.head)
 
 		var/no_offset = 0
-		if (islist(override_states) && override_states.Find("head-[src.head.icon_state]"))
+		if (islist(override_states) && ("head-[src.head.icon_state]" in override_states))
 			src.head.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.head.wear_image.icon_state = "head-[src.head.icon_state]"
 			no_offset = 1
@@ -719,7 +718,6 @@
 
 /mob/living/carbon/human/update_inhands()
 
-	src.inhands_standing.len = 0
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 

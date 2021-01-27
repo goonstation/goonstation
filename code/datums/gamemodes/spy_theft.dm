@@ -81,28 +81,24 @@
 		pick_a_reward()
 
 	proc/pick_a_reward()
-		//Spawn normal reward
-		//using the same items that would be in a surplus crate. change later when i feel less lazy
+		//Find a suitable reward
 		var/list/possible_items = list()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			var/blocked = 0
 			if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
-				for (var/V in S.blockedmode)
-					if (ispath(V) && istype(ticker.mode, V))
-						blocked = 1
-						break
+				if (/datum/game_mode/spy_theft in S.blockedmode) //Spies can show up in modes outside spy_theft, so just check if the item would be blocked
+					blocked = 1
+					continue
 
 			if (ticker?.mode && S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
-				for (var/V in S.exclusivemode)
-					if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
-						blocked = 1
-						break
+				if (!(/datum/game_mode/spy_theft in S.exclusivemode))
+					blocked = 1
+					continue
 
-			if (blocked == 0 && !S.not_in_crates && S.cost <= value_high && S.cost >= value_low)
+			if (blocked == 0 && S.cost <= value_high && S.cost >= value_low)
 				possible_items += S
 
 		reward = pick(possible_items)
-
 
 	proc/spawn_reward(var/mob/user,var/obj/item/hostpda)
 		if (reward_was_spawned) return

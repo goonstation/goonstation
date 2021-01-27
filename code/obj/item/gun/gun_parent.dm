@@ -105,14 +105,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			suppress_fire_msg = 0
 
 /obj/item/gun/proc/CreateID() //Creates a new tracking id for the gun and returns it.
-	var/newID = ""
+	. = ""
 
 	do
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
-			newID += "[pick(numbersAndLetters)]"
-	while(forensic_IDs.Find(newID))
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)
 
-	return newID
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant

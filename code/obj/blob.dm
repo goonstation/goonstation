@@ -76,7 +76,7 @@
 		if (usr != overmind)
 			return
 		var/list/pa = params2list(params)
-		if (pa.Find("right"))
+		if ("right" in pa)
 			right_click_action()
 		else
 			..()

@@ -25,7 +25,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		if (!src.reagents)
 			src.create_reagents(1000)
 
-		src.reagents.add_reagent("stimulants", 200)
+		src.changeStatus("stimulants", 15 MINUTES)
 
 		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
@@ -1380,8 +1380,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			sleep(2.5 SECONDS)
 			playsound(target.loc, "sound/voice/macho/macho_freakout.ogg", 50, 1)
 			target.visible_message("<span class='alert'>[target] appears visibly stronger!</span>")
-			if (target.reagents)
-				target.reagents.add_reagent("stimulants", 100)
+			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
 				for (var/A in H.organs)

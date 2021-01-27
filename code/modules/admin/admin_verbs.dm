@@ -1945,6 +1945,8 @@ var/list/fun_images = list()
 			C.view_fingerprints(A)
 		if("Delete")
 			C.cmd_admin_delete(A)
+		if("Copy Here")
+			semi_deep_copy(A, src.loc)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)
