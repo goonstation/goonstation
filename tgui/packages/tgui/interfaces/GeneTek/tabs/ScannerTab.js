@@ -146,7 +146,8 @@ export const ScannerTab = (props, context) => {
                     style={{
                       width: "80px",
                       height: "80px",
-                    }} />
+                    }}
+                    hideOnScroll />
                 </Flex.Item>
               )}
             </Flex>
