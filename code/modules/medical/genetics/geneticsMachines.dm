@@ -1120,7 +1120,7 @@
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GeneTek", "GeneTek Console v1.01")
+		ui = new(user, src, "GeneTek", "GeneTek Console v2.00")
 		ui.open()
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
