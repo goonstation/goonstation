@@ -86,7 +86,7 @@
 /// Just before an item is eaten
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
 /// After an item's been eaten, but there's still some left
-#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_some"
+#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
 /// After we've consumed an item
 #define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 /// When an item is used to attack a mob before it actually hurts the mob
