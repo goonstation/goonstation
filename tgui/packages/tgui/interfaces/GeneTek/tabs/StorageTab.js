@@ -40,27 +40,6 @@ export const StorageTab = (props, context) => {
 
   return (
     <Fragment>
-      <Section title="DNA Samples">
-        <LabeledList>
-          {samples.map(s => (
-            <LabeledList.Item
-              key={s.ref}
-              label={s.name}
-              buttons={
-                <Button
-                  icon="save"
-                  onClick={() => {
-                    act("setrecord", { ref: s.ref });
-                    setMenu("record");
-                  }}>
-                  View Record
-                </Button>
-              }>
-              <tt>{s.uid}</tt>
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
-      </Section>
       {saveSlots > 0 && (
         <Section
           title="Stored Mutations"
@@ -108,6 +87,27 @@ export const StorageTab = (props, context) => {
             ))}
           </LabeledList>
         ) : "There are no chromosomes in storage."}
+      </Section>
+      <Section title="DNA Samples">
+        <LabeledList>
+          {samples.map(s => (
+            <LabeledList.Item
+              key={s.ref}
+              label={s.name}
+              buttons={
+                <Button
+                  icon="save"
+                  onClick={() => {
+                    act("setrecord", { ref: s.ref });
+                    setMenu("record");
+                  }}>
+                  View Record
+                </Button>
+              }>
+              <tt>{s.uid}</tt>
+            </LabeledList.Item>
+          ))}
+        </LabeledList>
       </Section>
     </Fragment>
   );
