@@ -146,15 +146,14 @@
 			location = src.master.loc
 
 		location = get_turf(location)
-		if(location)
-			location.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
+		location?.hotspot_expose((isturf(location) ? 3000 : 30000),2000)
 		last_ignite = world.time
 
 	return
 
 /obj/item/device/igniter/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.status)
 			. += "The igniter is ready!"
 		else

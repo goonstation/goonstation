@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-//	barman
+//	bartender
 
 //	chef
 

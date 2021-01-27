@@ -4,7 +4,6 @@
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
-	event_handler_flags = NO_MOUSEDROP_QOL
 
 /obj/storage/secure/closet/personal
 	name = "personal locker"
@@ -35,6 +34,7 @@
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
+	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
@@ -137,7 +137,7 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access_txt = "49"
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,
@@ -268,7 +268,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				// Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 				for (var/obj/machinery/door_timer/DT in range(30, src))
@@ -550,8 +550,7 @@
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
 	req_access = list(access_mining)
-	spawn_contents = list(/obj/item/clothing/shoes/orange,
-	/obj/item/storage/box/clothing/miner,
+	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/grenade/breaching_charge/mining/light = 3,
 	/obj/item/satchel/mining = 2,
@@ -588,7 +587,8 @@
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long)
+	/obj/item/clothing/gloves/long,
+	/obj/item/handheld_vacuum)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -615,7 +615,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/storage/box/clothing/barman,\
+	spawn_contents = list(/obj/item/storage/box/clothing/bartender,\
 	/obj/item/storage/box/clothing/waiter,\
 	/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\

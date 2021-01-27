@@ -375,7 +375,7 @@ toxic - poisons
 			if (M.organHolder)
 				var/targetorgan
 				for (var/i in 1 to (power/10)-2) //targets 5 organs for strong, 3 for weak
-					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 
 			if(prob(proj.power/4) && power > 50) //only for strong. Lowish chance
@@ -475,10 +475,10 @@ toxic - poisons
 		cost = 150
 
 		on_hit(atom/hit)
-			explosion_new(null, get_turf(hit), 6)
+			explosion_new(null, get_turf(hit), 4)
 
 		on_max_range_die(obj/projectile/O)
-			explosion_new(null, get_turf(O), 6)
+			explosion_new(null, get_turf(O), 4)
 
 /datum/projectile/bullet/abg
 	name = "rubber slug"
@@ -557,13 +557,19 @@ toxic - poisons
 			M.changeStatus("slowed", 0.5 SECONDS)
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
+	auto
+		sname = "full auto"
+		shot_volume = 66
+		cost = 1
+		shot_number = 1
+
 /datum/projectile/bullet/lmg/weak
 	ammo_ID = "bullet_lmg_weak"
 	ammo_name = ".308 \"Blood-Driver\" flechette"
 	power = 1
 	shot_delay = 0.7
 	dissipation_delay = 8
-	nomsg = 1
+	silentshot = 1
 	slow = 0
 	implanted = null
 
@@ -974,7 +980,7 @@ toxic - poisons
 						M.emote("scream")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 30, 0.5)
+			explosion_new(null, T, 36, 0.45)
 		return
 
 /obj/smokeDummy
@@ -1260,8 +1266,13 @@ toxic - poisons
 	caliber = CALIBER_GRENADE // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	/// This projectile holds a grenade. It'll call its prime() on impact!
+	var/obj/item/grenade/internal_grenade
+	/// And/or a chem grenade
+	var/obj/item/chem_grenade/internal_chem_grenade
 
-	on_object_insertion(var/obj/I)
+	/// When an object is put into this projectile, do this
+	proc/on_object_insertion(var/obj/I)
 		if(!istype(I)) return
 		if(I.name)
 			src.name = "[I.name] shell"
@@ -1285,6 +1296,39 @@ toxic - poisons
 		else
 			src.icon_state = I.icon_state
 
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+			var/turf/T = get_turf(hit)
+			if (T)
+				if(T.density)
+					var/anti_angle = turn(angle2dir(angle), 180)
+					for(var/i in 1 to 10)
+						T = get_step(T, anti_angle)
+						if(!T.density)
+							break
+				src.internal_grenade?.set_loc(T)
+				src.internal_grenade?.prime()
+				src.internal_chem_grenade?.set_loc(T)
+				src.internal_chem_grenade?.explode()
+			else if (O)
+				var/turf/pT = get_turf(O)
+				if (pT)
+					src.internal_grenade?.set_loc(T)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(T)
+					src.internal_chem_grenade?.explode()
+			src.internal_grenade = null
+
+	on_end(var/obj/projectile/O)
+		if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
+			if (O)
+				var/turf/pT = get_turf(O)
+				if (pT)
+					src.internal_grenade?.set_loc(O)
+					src.internal_grenade?.prime()
+					src.internal_chem_grenade?.set_loc(O)
+					src.internal_chem_grenade?.explode()
+			src.internal_grenade = null
 
 /datum/projectile/bullet/flintlock
 	name = "bullet"

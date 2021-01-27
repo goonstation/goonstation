@@ -72,13 +72,13 @@
 		if(0)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 			if(isweldingtool(P))
 				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 					if(src.material)
@@ -91,7 +91,7 @@
 		if(1)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
@@ -144,7 +144,7 @@
 			if (istype(P, /obj/item/cable_coil))
 				if(P:amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if(do_after(user, 20))
+					if(do_after(user, 2 SECONDS))
 						if (!P) //Wire: Fix for Cannot read null.amount
 							return
 						P:amount -= 5
@@ -181,7 +181,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if(do_after(user, 20) && S)
+						if(do_after(user, 2 SECONDS) && S)
 							S.amount -= src.glass_needed
 							if(S.amount < 1)
 								qdel(S)

@@ -95,16 +95,24 @@
 
 	if (is_bot || H.get_organ("butt"))
 		var/obj/item/clothing/head/butt/B
+		var/obj/item/organ/tail/J
 		if (!is_bot)
 			B = H.drop_organ("butt", T)
 		else
 			B = new /obj/item/clothing/head/butt/cyberbutt(T)
 			B.donor = H
 
+		if (!is_bot && H.get_organ("tail"))	// Got a tail? Throw it *too*
+			J = H.drop_organ("tail", T)
+
 		if (B)
 			B.throw_at(target, 6, 1)
-		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
-		"<span class='alert'>Your [magical ? "arse" : "ass"] flies off your body[magical ? " in a magical explosion" : null]!</span>")
+
+		if (J)
+			J.throw_at(target, 6, 1)
+
+		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"][J ? " and tail" : ""] flies off \his body[magical ? " in a magical explosion" : null]!</span>",\
+		"<span class='alert'>Your [magical ? "arse" : "ass"][J ? " and tail" : ""] flies off your body[magical ? " in a magical explosion" : null]!</span>")
 		H.changeStatus("weakened", 2 SECONDS)
 		H.force_laydown_standup()
 
@@ -133,6 +141,10 @@
 
 			if (possible_limbs.len)
 				var/obj/item/parts/P = pick(possible_limbs)
+				var/obj/item/organ/tail/J2
 				if (prob(limbloss_prob))
-					H.show_text("Your [P] was severed by the [magical ? "explosion" : "shockwave"]!", "red")
 					P.sever()
+				if (H.get_organ("tail"))	// Still coming off
+					J2 = "tail"
+					H.drop_organ(J2)
+				H.show_text("Your [P][J2 ? " and tail" : ""] was severed by the [magical ? "explosion" : "shockwave"]!", "red")

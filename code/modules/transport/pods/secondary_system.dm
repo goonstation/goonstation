@@ -81,7 +81,7 @@
 
 	on_shipdeath(var/obj/machinery/vehicle/ship)
 		if (ship)
-			SPAWN_DBG(10)	//idk so it doesn't get caught on big pods when they are still aorund...
+			SPAWN_DBG(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
 				for (var/obj/O in src.contents)
 					O.set_loc(get_turf(ship))
 					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
@@ -134,11 +134,13 @@
 	/obj/machinery/artifact,
 	/obj/artifact,
 	/obj/mopbucket,
+	/obj/beacon_deployer,
 	/obj/machinery/portable_atmospherics,
 	/obj/machinery/space_heater,
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
-	/obj/machinery/nuclearbomb)
+	/obj/machinery/nuclearbomb,
+	/obj/bomb_decoy)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -203,7 +205,7 @@
 
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
-		if (in_range(T,ST) && in_range(user,ST))
+		if (in_interact_range(T,ST) && in_interact_range(user,ST))
 			inrange = 1
 			break
 	if (!inrange)
@@ -255,7 +257,7 @@
 
 	var/inrange = 0
 	for (var/turf/T in src.ship.locs)
-		if (in_range(T,C) && in_range(usr,C))
+		if (in_interact_range(T,C) && in_interact_range(usr,C))
 			inrange = 1
 			break
 	if (!inrange)
@@ -505,7 +507,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 		if (href_list["release"])
 			for(var/mob/M in ship)
@@ -659,7 +661,7 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		if ((usr.contents.Find(src) || (in_interact_range(ship, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 		if (href_list["enter"])

@@ -3,7 +3,7 @@
 /mob/proc/key_up(var/key)
 
 /mob/proc/click(atom/target, params)
-	actions.interrupt(src, INTERRUPT_ACT) //Definitely not the best place for this.
+	//moved the 'actions.interrupt(src, INTERRUPT_ACT)' here to on mob/living
 
 	if (src.targeting_ability)
 		if (istype(src.targeting_ability, /datum/targetable))
@@ -83,8 +83,6 @@
 		if (abilityHolder.topBarRendered)
 			if (abilityHolder.click(target, params))
 				return 100
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, target, params) & RETURN_CANCEL_CLICK)
-		return 100
 	//Pull cancel 'hotkey'
 	if (src.pulling && get_dist(src,target) > 1)
 		if (!islist(params))
@@ -95,7 +93,7 @@
 			src.pulling = null
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
-	//if (istype(target, /obj/screen/ability))
+	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
 	if (get_dist(src, target) > 0)
 		if(!src.dir_locked)

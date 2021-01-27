@@ -10431,7 +10431,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/machinery/phone/wall{
 	pixel_x = 24;
@@ -10920,7 +10920,7 @@
 "vO" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	name = "Barman's Room"
+	name = "Bartender's Room"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -11320,7 +11320,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro{
-	name = "Barman's Room"
+	name = "Bartender's Room"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -16993,7 +16993,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/shrub,
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -17072,10 +17073,8 @@
 	name = "Demeter Primary Zone"
 	})
 "Hv" = (
-/obj/stone{
-	dir = 1
-	},
 /obj/machinery/light/small,
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -21267,6 +21266,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -24471,6 +24471,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"WV" = (
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "WW" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -25026,6 +25033,12 @@
 	},
 /turf/space,
 /area/space)
+"YF" = (
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/simulated/floor/grass,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "YG" = (
 /obj/machinery/drainage,
 /obj/disposalpipe/segment/transport{
@@ -25384,6 +25397,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/paper/engine,
 /turf/simulated/floor/darkpurple,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -53486,7 +53500,7 @@ Eb
 Dh
 Hd
 Dh
-CJ
+WV
 Ck
 HH
 PJ
@@ -55295,7 +55309,7 @@ DI
 Pw
 Dh
 Dh
-Dh
+YF
 Eb
 Hm
 He

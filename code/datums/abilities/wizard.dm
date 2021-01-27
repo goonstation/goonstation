@@ -18,13 +18,13 @@
 		// vr wizards only get magic missile
 		H.addAbility(/datum/targetable/spell/magicmissile)
 
-	SPAWN_DBG (25) // Don't remove.
+	SPAWN_DBG(2.5 SECONDS) // Don't remove.
 		if (wizard_mob) wizard_mob.assign_gimmick_skull() // For variety and hunters (Convair880).
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 	wizard_mob.cust_two_state = "wiz"
-	wizard_mob.set_face_icon_dirty()
+	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
 	if (wizard_mob.mind)
@@ -155,7 +155,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/spell
+/atom/movable/screen/ability/topBar/spell
 	clicked(params)
 		var/datum/targetable/spell/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -288,7 +288,7 @@
 		if (!holder || !holder.owner)
 			qdel(src)
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/spell()
+			src.object = new /atom/movable/screen/ability/topBar/spell()
 		object.icon = src.icon
 		if (src.last_cast > world.time)
 			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"

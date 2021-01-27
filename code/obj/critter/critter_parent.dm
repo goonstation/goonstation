@@ -79,6 +79,7 @@
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
+	var/critter_family = null
 	var/generic = 1 // if yes, critter can be randomized a bit
 	var/max_quality = 100
 	var/min_quality = -100
@@ -269,6 +270,10 @@
 				else
 					damage_type = "brute"
 
+		if (istype(W, /obj/item/device/flyswatter))
+			var/obj/item/device/flyswatter/F = W
+			if (src.critter_family == BUG)
+				F.smack_bug(src, user)
 
 		//Simplified weapon properties for critters. Fuck this shit.
 		if(W.getProperty("searing"))
@@ -338,9 +343,11 @@
 		return
 
 
-	proc/on_pet()
+	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
 			registered_area.wake_critters()
+		if (!user)
+			return 1 // so things can do if (..())
 		return
 
 	attack_hand(var/mob/user as mob)
@@ -382,7 +389,7 @@
 			var/pet_verb = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 			var/post_pet_verb = islist(src.post_pet_text) ? pick(src.post_pet_text) : src.post_pet_text
 			src.visible_message("<span class='notice'><b>[user]</b> [pet_verb] [src]![post_pet_verb]</span>", 1)
-			on_pet()
+			on_pet(user)
 
 	proc/patrol_step()
 		if (!mobile)
@@ -798,8 +805,7 @@
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
-		if(registered_area)
-			registered_area.registered_critters -= src
+		registered_area?.registered_critters -= src
 		if(src.is_pet)
 			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
@@ -819,7 +825,7 @@
 				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
-			if (src.corpse_target && visible.Find(src.corpse_target))
+			if (src.corpse_target && (src.corpse_target in visible))
 				src.task = "chasing"// corpse"
 				return
 			else
@@ -833,7 +839,7 @@
 			var/list/visible = new()
 			for (var/obj/item/reagent_containers/food/snacks/S in view(src.seekrange,src))
 				visible.Add(S)
-			if (src.food_target && visible.Find(src.food_target))
+			if (src.food_target && (src.food_target in visible))
 				src.task = "chasing"// food"
 				return
 			else
@@ -1017,7 +1023,7 @@
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.critter_name = t

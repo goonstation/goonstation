@@ -25995,7 +25995,7 @@
 /area/station/crew_quarters/bar)
 "aWZ" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)

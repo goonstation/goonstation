@@ -259,8 +259,7 @@
 	// Remove it from the list of processing UIs.
 	open_uis.Remove(ui)
 	// If the user exists, remove it from them too.
-	if(ui.user)
-		ui.user.tgui_open_uis.Remove(ui)
+	ui.user?.tgui_open_uis.Remove(ui)
 	var/list/uis = open_uis_by_src[key]
 	uis.Remove(ui)
 	if(length(uis) == 0)

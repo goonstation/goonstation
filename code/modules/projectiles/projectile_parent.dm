@@ -145,7 +145,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -180,7 +180,7 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
@@ -190,11 +190,11 @@
 			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
 				die()
 			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+				if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -410,12 +410,6 @@
 			die()
 			return
 		src.ticks_until_can_hit_mob--
-
-		// The bullet has expired/decayed.
-		if (src.travelled > src.max_range * 32)
-			proj_data.on_max_range_die(src)
-			die()
-			return
 		proj_data.tick(src)
 		if (disposed || pooled)
 			return
@@ -434,6 +428,12 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			src.travelled += src.proj_data.projectile_speed
+
+		// The bullet would be expired/decayed.
+		if (src.travelled >= src.max_range * 32)
+			proj_data.on_max_range_die(src)
+			die()
+			return
 
 		if (proj_data.precalculated)
 			for (var/i = 1, i < crossing.len, i++)
@@ -557,7 +557,7 @@ datum/projectile
 		hit_ground_chance = 0    // With what % do we hit mobs laying down
 		window_pass = 0          // Can we pass windows
 		obj/projectile/master = null
-		silentshot = 0           // standard visible message upon bullet_act. if 2, hide even the 'armor hit' message!
+		silentshot = 0           // Standard visible message upon bullet_act.
 		implanted                // Path of "bullet" left behind in the mob on successful hit
 		disruption = 0           // planned thing to deal with pod electronics / etc
 		zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
@@ -598,11 +598,8 @@ datum/projectile
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
+	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
-	/// This projectile holds a grenade. It'll call its prime() on impact!
-	var/obj/item/grenade/internal_grenade
-	/// And/or a chem grenade
-	var/obj/item/chem_grenade/internal_chem_grenade
 
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
@@ -631,50 +628,15 @@ datum/projectile
 			return
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
-			if(ks_ratio == 0) //stun projectiles only
-				impact_image_effect("T", hit)
-			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
-				var/turf/T = get_turf(hit)
-				if (T)
-					if(T.density)
-						var/anti_angle = turn(angle2dir(angle), 180)
-						for(var/i in 1 to 10)
-							T = get_step(T, anti_angle)
-							if(!T.density)
-								break
-					src.internal_grenade?.set_loc(T)
-					src.internal_grenade?.prime()
-					src.internal_chem_grenade?.set_loc(T)
-					src.internal_chem_grenade?.explode()
-				else if (O)
-					var/turf/pT = get_turf(O)
-					if (pT)
-						src.internal_grenade?.set_loc(T)
-						src.internal_grenade?.prime()
-						src.internal_chem_grenade?.set_loc(T)
-						src.internal_chem_grenade?.explode()
-				src.internal_grenade = null
+			impact_image_effect(ie_type, hit)
 			return
 		tick(var/obj/projectile/O)
-			return
-		/// When an object is put into this projectile, do this
-		on_object_insertion(var/obj/I)
 			return
 		on_launch(var/obj/projectile/O)
 			return
 		on_pointblank(var/obj/projectile/O, var/mob/target)
 			return
 		on_end(var/obj/projectile/O)
-			if(istype(src.internal_grenade) || istype(src.internal_chem_grenade))
-				if (O)
-					var/turf/pT = get_turf(O)
-					if (pT)
-						src.internal_grenade?.set_loc(O)
-						src.internal_grenade?.prime()
-						src.internal_chem_grenade?.set_loc(O)
-						src.internal_chem_grenade?.explode()
-				src.internal_grenade = null
-
 			return
 		on_max_range_die(var/obj/projectile/O)
 			return
@@ -690,10 +652,7 @@ datum/projectile
 
 datum/projectile/laser
 	impact_range = 16
-
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/laser/pred
 	impact_range = 2
@@ -730,9 +689,7 @@ datum/projectile/bfg
 
 datum/projectile/bullet
 	impact_range = 0
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("K", hit)
+	ie_type = "K"
 
 datum/projectile/bullet/autocannon
 	impact_range = 2
@@ -770,9 +727,7 @@ datum/projectile/owl
 
 datum/projectile/disruptor
 	impact_range = 4
-	on_hit(atom/hit, angle, var/obj/projectile/O)
-		..()
-		impact_image_effect("E", hit)
+	ie_type = "E"
 
 datum/projectile/disruptor/high
 	impact_range = 4
@@ -787,11 +742,11 @@ datum/projectile/energy_bolt_antighost
 	impact_range = 16
 	hits_ghosts = 1 // do it.
 
-datum/projectile/rad_bolt
-	impact_range = 0
-
 datum/projectile/tele_bolt
 	impact_range = 4
+
+datum/projectile/rad_bolt
+	impact_range = 0
 
 datum/projectile/wavegun
 	impact_range = 4
@@ -967,8 +922,7 @@ datum/projectile/snowball
 	P.power = DATA.power
 
 	P.proj_data = DATA
-	if(!isnull(alter_proj))
-		alter_proj.Invoke(P)
+	alter_proj?.Invoke(P)
 
 
 	if(P.proj_data == DATA)
@@ -1023,36 +977,6 @@ datum/projectile/snowball
 	if(P.reflectcount >= max_reflects)
 		return
 	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, -P.xo, -P.yo, reflector)
-	if (!Q)
-		return null
-	Q.reflectcount = P.reflectcount + 1
-	if (ismob(P.shooter))
-		Q.mob_shooter = P.shooter
-	Q.name = "reflected [Q.name]"
-	Q.launch()
-	return Q
-
-/proc/shoot_reflected_true(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
-	if (!P.incidence || !(P.incidence in cardinal))
-		return null
-	if(P.reflectcount >= max_reflects)
-		return
-
-	var/rx = 0
-	var/ry = 0
-
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
-
-	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
-	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
-	ry = P.yo - dn * ny
-
-	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Marquesas/Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
-		return null // unknown error
-
-	var/obj/projectile/Q = initialize_projectile(get_turf(reflector), P.proj_data, rx, ry, reflector)
 	if (!Q)
 		return null
 	Q.reflectcount = P.reflectcount + 1

@@ -243,16 +243,20 @@
 
 	/// Turns a grenade into a shootable projectile, typically a grenade-shell
 	/// Resulting projectile type can be overridden to be something else
-	proc/grenade_to_ammo(var/obj/item/nadeIn, var/datum/projectile/projType = /datum/projectile/bullet/grenade_shell, var/mob/user)
+	proc/grenade_to_ammo(var/obj/item/nadeIn, var/mob/user)
 		// if(!(CALIBER_ANY in src.caliber) & !(CALIBER_GRENADE in src.caliber))
 		// 	boutput(world,"[src] not accept [nadeIn] cus caliber")
 		// 	return FALSE
 		if(!istype(nadeIn, /obj/item/grenade) && !istype(nadeIn, /obj/item/chem_grenade))
 			return FALSE
+		if(istype(nadeIn, /obj/item/grenade))
+			var/obj/item/grenade/G = nadeIn
+			if(!G.launcher_ready)
+				return FALSE
 
 		nadeIn.set_loc(src)
 		user.u_equip(nadeIn)
-		var/datum/projectile/projOut = new projType(src)
+		var/datum/projectile/bullet/grenade_shell/projOut = new/datum/projectile/bullet/grenade_shell(src)
 		src.projectile_items[projOut] = nadeIn
 		if(istype(nadeIn, /obj/item/grenade))
 			projOut.internal_grenade = nadeIn
@@ -269,7 +273,9 @@
 		var/turf/T = get_turf(usr)
 		boutput(world,"[usr] is usr, [T] is T.")
 		var/found_nades
-		for(var/datum/projectile/P in src.projectile_items)
+		for(var/datum/projectile/bullet/grenade_shell/P in src.projectile_items)
+			if(!istype(P, /datum/projectile/bullet/grenade_shell))
+				continue
 			// var/datum/projectile/L_P = src.mag_contents[src.mag_contents.Find(P)]
 			// for(var/datum/projectile/L_P in src.mag_contents)
 			// 	if(P != L_P)
@@ -401,13 +407,14 @@
 			return FALSE
 
 	/// Spawns a specified shot of ammo to the magazine
+	/// Just outright forces the shot into the magazine
 	proc/add_ammo(var/datum/projectile/ammo, var/override_max)
 		if(length(src.mag_contents) >= src.max_amount && !override_max) return FALSE
 		if(ispath(ammo, /datum/projectile))
 			ammo = new ammo
 		if(!istype(ammo, /datum/projectile))
 			return FALSE
-		src.mag_contents.Add(ammo)
+		src.mag_contents.Insert(ammo)
 		src.update_bullet_manifest()
 		return TRUE
 
@@ -458,7 +465,7 @@
 			boutput(usr, "<span class='alert'>Hey! Keep your cold, dead hands off of that!</span>")
 			return
 
-		if(!istype(over_object, /obj/screen/hud))
+		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)
 				boutput(usr, "<span class='alert'>You're too far away from [src] to do that.</span>")
 				return
@@ -480,8 +487,8 @@
 			if(A.load_ammo(src, user = user))
 				return
 
-		else if(istype(over_object, /obj/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
-			var/obj/screen/hud/H = over_object
+		else if(istype(over_object, /atom/movable/screen/hud)) // Drag it to an inventory slot? Throw the mag in there
+			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
 			switch(H.id)
 				if("lhand")
@@ -1477,6 +1484,9 @@
 	caliber = CALIBER_PISTOL
 	mag_type = AMMO_MAGAZINE
 
+	five_shots
+		amount_left = 5.0
+
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -1714,6 +1724,16 @@
 	max_charge = 150.0
 	cycle = 0
 	recharge_rate = 7.5
+
+/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	name = "Power Cell - NTSO D49"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 250.0
+	max_charge = 250.0
+	cycle = 0
+	recharge_rate = 6
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"

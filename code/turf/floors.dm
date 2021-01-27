@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors_airless.dm
  */
 
@@ -15,13 +15,16 @@
 
 	var/broken = 0
 	var/burnt = 0
+	var/has_material = TRUE
 	var/plate_mat = null
 	var/reinforced = FALSE
 
 	New()
 		..()
-		plate_mat = getMaterial("steel")
-		setMaterial(getMaterial("steel"))
+		if (has_material)
+			if (isnull(plate_mat))
+				plate_mat = getMaterial("steel")
+			setMaterial(plate_mat)
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -121,6 +124,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
@@ -1042,6 +1046,22 @@
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
+/turf/simulated/floor/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
 /////////////////////////////////////////
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
@@ -1083,6 +1103,7 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	intact = 0
+	layer = PLATING_LAYER
 	allows_vehicles = 1 // let the constructor pods move around on these
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1142,12 +1163,6 @@
 		if (T.amount >= 1)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
 		return
 
 	if(prob(75 - metal * 25))
@@ -1264,7 +1279,7 @@
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
-	intact = 0
+	setIntact(FALSE)
 	broken = 0
 	burnt = 0
 	if(plate_mat)
@@ -1309,7 +1324,7 @@
 
 /turf/simulated/floor/proc/restore_tile()
 	if(intact) return
-	intact = 1
+	setIntact(TRUE)
 	broken = 0
 	burnt = 0
 	icon = initial(icon)
@@ -1336,7 +1351,7 @@
 	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
+	if (!do_after(user, 4 SECONDS))
 		user.show_text("You were interrupted!", "red")
 		return
 
@@ -1402,7 +1417,7 @@
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
+		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
 			var/obj/R1 = new /obj/item/rods(src)
@@ -1421,7 +1436,7 @@
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
@@ -1441,11 +1456,6 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
-		if (T.amount < 1)
-			if(!issilicon(user))
-				user.u_equip(T)
-				qdel(T)
-			return
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)
@@ -1606,7 +1616,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "rainbow_road")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 
@@ -1708,8 +1728,8 @@
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
 			M.changeStatus("paralysis", 70)
 			SPAWN_DBG(0)

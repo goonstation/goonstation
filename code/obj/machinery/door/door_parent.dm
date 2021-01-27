@@ -209,7 +209,7 @@
 #endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
-		SPAWN_DBG (6)
+		SPAWN_DBG(0.6 SECONDS)
 			success = try_force_open(user)
 			if (success != 0)
 				src.operating = -1 // It's broken now.

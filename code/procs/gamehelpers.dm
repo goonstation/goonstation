@@ -97,11 +97,13 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 
 	return null
 
-/proc/in_range(atom/source, atom/user)
-	if(bounds_dist(source, user) == 0 || get_dist(source, user) <= 1) // fucking byond
-		return 1
+/// For interacting with stuff.
+/proc/in_interact_range(atom/source, atom/user)
+	. = FALSE
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return 1
+		return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -126,11 +128,18 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					sleep(0.5 SECONDS)
 					qdel(O)
 
-				return 1
-		else if (istype(source, /obj/machinery) && isAI(user))
-			return 1
+				return TRUE
 
-	return 0 //not in range and not telekinetic
+		else if (isobj(source))
+			var/obj/SO = source
+			if(SO.can_access_remotely(user))
+				return TRUE
+
+	if (mirrored_physical_zone_created) //checking for vistargets if true
+		var/turf/T = get_turf(source)
+		if (T.vistarget)
+			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
+				return TRUE
 
 
 var/obj/item/dummy/click_dummy = new
@@ -161,7 +170,7 @@ var/obj/item/dummy/click_dummy = new
 		if (C && target != C)
 			return 0
 	if (isturf(user.loc))
-		if (!in_range(target, user))
+		if (!in_interact_range(target, user))
 			return 0
 		var/T1 = get_turf(user)
 		var/T2 = get_turf(target)
@@ -215,12 +224,9 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-//			if (AIeye in view(center, distance))
 			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
 				. += AIeye
 				. += theAI
-		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
-		//	. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -239,7 +245,11 @@ var/obj/item/dummy/click_dummy = new
 		Center = Depth
 		Depth = newDepth
 
-	return viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
+				. |= M
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
@@ -429,7 +439,6 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
@@ -451,6 +460,28 @@ var/obj/item/dummy/click_dummy = new
 			for (var/turf/T in R)
 				. += R
 				break
+
+/proc/get_areas_with_unblocked_turfs(var/areatype)
+	//Takes: Area type as text string or as typepath OR an instance of the area.
+	//Returns: A list of all areas of that type in the world that have at least one unblocked turf.
+	//Also sets an unblocked turf for each area for the spy thief mode.
+	//Notes: Simple!
+	if(!areatype) return null
+	if(istext(areatype)) areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	. = list()
+
+	for(var/area/R in world)
+		LAGCHECK(LAG_LOW)
+		if(istype(R, areatype))
+			for (var/turf/T in R)
+				if(!is_blocked_turf(T))
+					R.spyturf = T
+					. += R
+					break
 
 /proc/get_area_turfs(var/areatype, var/floors_only)
 	//Takes: Area type as text string or as typepath OR an instance of the area.
@@ -558,7 +589,7 @@ var/obj/item/dummy/click_dummy = new
 		if(T?.loc != A) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
-		T.density = S.density
+		T.set_density(S.density)
 		T.set_dir(S.dir)
 
 	for (var/turf/S in turfs_src)

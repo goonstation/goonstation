@@ -1,5 +1,6 @@
 ABSTRACT_TYPE(/datum/objective)
 /datum/objective
+	var/enabled = TRUE
 	var/datum/mind/owner
 	var/explanation_text
 	var/medal_name = null // Called by ticker.mode.declare_completion().
@@ -173,6 +174,8 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/firstbill
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
@@ -200,6 +203,8 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
 #endif
 
 		explanation_text = "Steal the [target_name]."
@@ -207,7 +212,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	check_completion()
 		if(steal_target)
-			if(owner.current && owner.current.check_contents_for(steal_target, 1))
+			if(owner.current && owner.current.check_contents_for(steal_target, 1, 1))
 				return 1
 			else
 				return 0
@@ -973,6 +978,9 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/escape/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
+#ifdef RP_MODE
+	enabled = FALSE
+#endif
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
@@ -1260,7 +1268,16 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		for(var/X in objective_list)
 			if (!ispath(X))
 				continue
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.objective_list -= X
+				continue
 			ticker.mode.bestow_objective(enemy,X)
+
+		for(var/X in escape_choices)
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.escape_choices -= X
 
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)

@@ -28,7 +28,8 @@
 				src.visible_message("<span class='alert'><b>[src]</b> teleports away!</span>")
 				CritterTeleport(8, 1, 0)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<b>[src]</b> screeches, 'KXBQUB IJFDQVW??'", 1)
 

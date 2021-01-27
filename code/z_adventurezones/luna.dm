@@ -44,7 +44,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		fxlist = lunar_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -59,12 +59,9 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -200,6 +197,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	desc = "More regolith, now in big solid chunk form!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "lunar"
+	plane = PLANE_NOSHADOW_ABOVE // shadow makes it look grody with current sprites that include the floor
 	carbon_dioxide = 0
 	nitrogen = 0
 	oxygen = 0
@@ -537,7 +535,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	New()
 		..()
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += 999
 
@@ -701,7 +699,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				has_been_underground = 1
 
 				master.speak("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
-				SPAWN_DBG (10)
+				SPAWN_DBG(1 SECOND)
 					if (master)
 						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
 
@@ -723,7 +721,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				neat_things_underground |= NT_RISING_SUN
 
 				master.speak("There is a house on Luna that they call the Rising Sun.")
-				SPAWN_DBG (10)
+				SPAWN_DBG(1 SECOND)
 					if (master)
 						master.speak("It's been the ruin of many a poor bud and God, I know I'm one.")
 			//todo
@@ -735,7 +733,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 			master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
 			if (prob(25))
-				SPAWN_DBG (10)
+				SPAWN_DBG(1 SECOND)
 					if (master)
 						master.speak("I, um, am going to need to go back to work.  My shift isn't over yet.")
 			return
@@ -753,7 +751,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 					src.neat_things |= NT_DISCOUNT
 
 					master.speak("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
-					SPAWN_DBG (15)
+					SPAWN_DBG(1.5 SECONDS)
 						if (master)
 							master.speak("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
 						sleep(0.8 SECONDS)
@@ -788,7 +786,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				if (istype(AM, /obj/machinery/bot/guardbot/soviet) && !(src.neat_things & NT_SOVBUDDY))
 					src.neat_things |= NT_SOVBUDDY
 					src.master.speak("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
-					SPAWN_DBG (10)
+					SPAWN_DBG(1 SECOND)
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
 							if (istype(masterArea, /area/russian) || istype(masterArea, /area/salyut) || istype(masterArea, /area/hospital/samostrel))
@@ -803,7 +801,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				src.neat_things |= NT_SPY
 				master.visible_message("<b>[master]</b> points at [AM].")
 				src.master.speak("Attention guests, there appears to be a coat rack or something available if needed.")
-				SPAWN_DBG (10)
+				SPAWN_DBG(1 SECOND)
 					if (src.master)
 						src.master.speak("You know, because of all the coats that you are clearly wearing.")
 
@@ -819,7 +817,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
 				src.neat_things |= NT_CHEGET
 				src.master.speak("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
-				SPAWN_DBG (10)
+				SPAWN_DBG(1 SECOND)
 					if (src.master)
 						src.master.speak("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
 				return
@@ -886,22 +884,22 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				tourDoor.open(src)
 
 		if(!src.operating) //in case of emag
 			src.operating = 1
 		flick("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
-		sleep(1 SECOND)
-		src.set_density(0)
-		src.RL_SetOpacity(0)
-		update_nearby_tiles()
+		SPAWN_DBG(1 SECOND)
+			src.set_density(0)
+			src.RL_SetOpacity(0)
+			update_nearby_tiles()
 
-		if(operating == 1) //emag again
-			src.operating = 0
-		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			if(operating == 1) //emag again
+				src.operating = 0
+			if(autoclose)
+				sleep(15 SECONDS)
 				autoclose()
 		return 1
 
@@ -917,7 +915,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				tourDoor.close(src)
 
 		flick("bdoor[doordir]c1", src)
@@ -966,7 +964,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		src.broken = 1
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
@@ -1184,7 +1182,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		light.set_brightness(0.4)
 		light.enable()
 
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src.tag)
 				src.id_tag = src.tag
 				src.tag = null
@@ -1543,8 +1541,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if (get_dist(src, usr) > 1 && !issilicon(usr))
 			return
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
 		src.add_dialog(usr)
 
@@ -1628,7 +1625,7 @@ datum/computer/file/embedded_program/maintpanel
 			memory += "display_add[line]"
 			memory["display_add[line]"] = ""
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			updateDisplay()
 
 	disposing()
@@ -2123,7 +2120,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 
 		well_fuck_its_armed = 1
 		user.visible_message("<b>[user]</b> prods [src].", "You prod at [src].  It's a pretty accurate replica, it seems.  Neat.")
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
 			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)

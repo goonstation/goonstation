@@ -1,7 +1,11 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
 /client
+#ifdef PRELOAD_RSC_URL
+	preload_rsc = PRELOAD_RSC_URL
+#else
 	preload_rsc = 1
+#endif
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -23,7 +27,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
-	var/local_deadchat = 0
+	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -87,9 +91,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/delete_state = DELETE_STOP
 
-	var/list/cloudsaves
-	var/list/clouddata
-
 	var/turf/stathover = null
 	var/turf/stathover_start = null//forgive me
 
@@ -98,7 +99,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/datum/interfaceSizeHelper/screen/screenSizeHelper = null
 	var/datum/interfaceSizeHelper/map/mapSizeHelper = null
 
-	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
+	var/atom/movable/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
 
@@ -144,6 +145,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.holder = null
 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
 	return ..()
 
@@ -193,6 +195,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			SPAWN_DBG(0) del(src)
 			return
 */
+
+	src.volumes = default_channel_volumes.Copy()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -305,6 +309,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							</head>
 							<body>
 								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
+								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
 							</body>
 						</html>
 					"}
@@ -326,7 +331,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address), 1, 1, 1)
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 
 				// Goonhub API error encountered
 				if (data["error"])
@@ -335,36 +340,41 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					data = json_decode(html_decode(data["response"]))
-
-					// VPN checker service returns error responses in a "message" property
-					if (data["message"])
-						// Yes, we're forcing a cache for a no-VPN response here on purpose
-						// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
-						//			  so we want to avoid spamming the goonhub API this round for literally no gain
+					if (data["whitelisted"])
+						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
-						logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
-						logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
-					// Successful VPN check
 					else
-						var/list/security_info = data["security"]
+						data = json_decode(html_decode(data["response"]))
 
-						// IP is a known VPN, cache locally and kick
-						if (security_info["vpn"] == true)
-							global.vpn_ip_checks["[src.address]"] = true
-							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-							sleep(3 SECONDS)
-							if (src)
-								del(src)
-							return
-
-						// IP is not a known VPN
-						else
+						// VPN checker service returns error responses in a "message" property
+						if (data["message"])
+							// Yes, we're forcing a cache for a no-VPN response here on purpose
+							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+							//			  so we want to avoid spamming the goonhub API this round for literally no gain
 							global.vpn_ip_checks["[src.address]"] = false
+							logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+
+						// Successful VPN check
+						else
+							var/list/security_info = data["security"]
+
+							// IP is a known VPN, cache locally and kick
+							if (security_info["vpn"] == true)
+								global.vpn_ip_checks["[src.address]"] = true
+								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
+								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
+								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+								sleep(3 SECONDS)
+								if (src)
+									del(src)
+								return
+
+							// IP is not a known VPN
+							else
+								global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
@@ -412,10 +422,16 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		var/image/I = globalImages[key]
 		src << I
 
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
 	SPAWN_DBG(0)
 		updateXpRewards()
+
+	//tg controls stuff
+
+	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
+	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	SPAWN_DBG(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
@@ -478,7 +494,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -494,30 +509,23 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 		//Cloud data
 		if (cdn)
-			// Fetch via HTTP from goonhub
-			var/datum/http_request/request = new()
-			request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]", "", "")
-			request.begin_async()
-			UNTIL(request.is_complete())
-			var/datum/http_response/response = request.into_response()
+			if(!cloud_available())
+				src.player.cloud_fetch()
 
-			if (response.errored || !response.body)
-				logTheThing("debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-				return
-
-			var/list/ret = json_decode(response.body)
-			if(ret["status"] == "error")
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-			else
-				cloudsaves = ret["saves"]
-				clouddata = ret["cdata"]
-				load_antag_tokens()
-				load_persistent_bank()
+			if(cloud_available())
+				src.load_antag_tokens()
+				src.load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
-					var/cur = volumes.len
+					var/list/old_volumes = volumes.Copy()
 					volumes = json_decode(decoded)
-					volumes.len = cur
+					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+						else
+							volumes += old_volumes[i]
+
+		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -539,6 +547,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
 
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
+
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
 	if (is_vert_splitter)
@@ -546,7 +556,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, "checkScreenAspect"))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
 	else
 
 		set_splitter_orientation(0, splitter_value)
@@ -577,11 +587,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
 	// cursed darkmode end
-
-	//tg controls stuff
-
-	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
-	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	//tg controls end
 
@@ -658,12 +663,19 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
-	if (params.len)
-		if ((params["screenW"]/params["screenH"]) == (4/3))
-			SPAWN_DBG(6 SECONDS)
-				if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
-					set_splitter_orientation(0)
-					winset( src, "menu", "horiz_split.is-checked=true" )
+	if (!length(params))
+		return
+	if ((params["screenW"]/params["screenH"]) <= (4/3))
+		SPAWN_DBG(6 SECONDS)
+			if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
+				set_splitter_orientation(0)
+				winset( src, "menu", "horiz_split.is-checked=true" )
+
+/client/proc/checkHiRes(list/params)
+	if(!length(params))
+		return
+	if(params["screenH"] > 1000)
+		winset(src, "info", "font-size=[6 * params["screenH"] / 1080]")
 
 /client/Command(command)
 	command = html_encode(command)
@@ -913,7 +925,7 @@ var/global/curr_day = null
 	if (!(ishuman(usr))) return
 	var/mob/living/carbon/human/H = usr
 	if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/abuttontest))
-		var/obj/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
+		var/atom/movable/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
 		U.execute_ability()
 */
 
@@ -1106,27 +1118,17 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-
-//drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
-//Sets and uploads cloud data on the client
-//TODO: Pool puts, determine value of doing as such.
-/client/proc/cloud_put( var/key, var/value )
-	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining." //oh no
-	clouddata[key] = "[value]"
-
-	// Via rust-g HTTP
-	var/datum/http_request/request = new() //If it fails, oh well...
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-	request.begin_async()
+/// Sets a cloud key value pair and sends it to goonhub
+/client/proc/cloud_put(key, value)
+	return src.player.cloud_put(key, value)
 
 /// Returns some cloud data on the client
-/client/proc/cloud_get( var/key )
-	return clouddata ? clouddata[key] : null
+/client/proc/cloud_get(key)
+	return src.player.cloud_get(key)
 
 /// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
-	return !!clouddata
+	return src.player.cloud_available()
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
@@ -1163,7 +1165,7 @@ var/global/curr_day = null
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
-	var/obj/screen/S = new
+	var/atom/movable/screen/S = new
 	S.icon = 'icons/mob/whiteview.dmi'
 	S.blend_mode = BLEND_SUBTRACT
 	S.color = subtr_color
@@ -1173,7 +1175,7 @@ var/global/curr_day = null
 
 	C.screen += S
 
-	var/obj/screen/M = new
+	var/atom/movable/screen/M = new
 	M.icon = 'icons/mob/whiteview.dmi'
 	M.blend_mode = BLEND_MULTIPLY
 	M.color = multip_color

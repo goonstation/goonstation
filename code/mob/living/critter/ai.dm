@@ -39,11 +39,9 @@ var/list/ai_move_scheduled = list()
 			ownhuman = null
 
 		target = null
-		if(current_task)
-			current_task.dispose()
+		current_task?.dispose()
 		current_task = null
-		if(default_task)
-			default_task.dispose()
+		default_task?.dispose()
 		default_task = null
 		if(task_cache)
 			for(var/key in task_cache)
@@ -82,7 +80,7 @@ var/list/ai_move_scheduled = list()
 
 	proc/interrupt()
 		if(src.enabled)
-			current_task.reset()
+			current_task?.reset()
 			current_task = default_task
 
 	proc/die()
@@ -117,7 +115,7 @@ var/list/ai_move_scheduled = list()
 	proc/stop_move()
 		move_target = null
 		ai_move_scheduled -= src
-		walk(src,0)
+		walk(owner,0)
 
 	proc/move_step()
 		if (src.move_side)

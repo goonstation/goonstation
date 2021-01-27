@@ -378,7 +378,7 @@
 			var/assoc = 0
 			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
 				try
-					assoc = !isnum(L[1]) && L[L[1]]
+					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
 					DEBUG_MESSAGE("bad assoc list var [name] [L] [1] [L[1]]")
 			for (var/index = 1, index <= min(L.len, max_list_len), index++)
@@ -735,7 +735,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
 
 	if(!class)
 		return
@@ -791,6 +791,20 @@
 			else
 				mod_list(D.vars[variable])
 			//return <- Way to screw up logging
+
+		if("json")
+			var/val = json_decode(input("Enter json:") as text|null)
+			if(!isnull(val))
+				if(set_global)
+					for(var/x in world)
+						if(!istype(x, D.type)) continue
+						x:vars[variable] = val
+						LAGCHECK(LAG_LOW)
+				else
+					if(D == "GLOB")
+						global.vars[variable] = val
+					else
+						D.vars[variable] = val
 
 		if("restore to default")
 			if(set_global)

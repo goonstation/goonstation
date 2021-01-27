@@ -22,9 +22,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				target.overlays -= selection
 				target = null
@@ -39,7 +39,7 @@
 					L.damage = damage
 					L.stun = stun
 					L.trap_delay = trap_delay
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (isturf(object))
 				if (target == object)
 					target.overlays -= selection

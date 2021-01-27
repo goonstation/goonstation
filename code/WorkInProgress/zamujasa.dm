@@ -82,7 +82,7 @@
 	New(var/change = 0)
 		..()
 		if (abs(change) < 1)
-			del(src)
+			qdel(src)
 			return
 
 		var/hcol = (change > 0) ? "#88ff88" : "#ff6666"
@@ -100,8 +100,9 @@
 			animate(maptext_y = 52, alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
 
 		// ptoato said to just call del directly so blame them
+		// pali: potato was wrong
 		SPAWN_DBG(4 SECONDS)
-			del(src)
+			qdel(src)
 
 
 /obj/maptext_junk/speech
@@ -582,7 +583,7 @@
 
 		Entered(atom/movable/O)
 			..()
-			if (isobserver(O) || !istype(ticker.mode, /datum/game_mode/football))
+			if (isobserver(O) || !istype(ticker?.mode, /datum/game_mode/football))
 				return
 			var/datum/game_mode/football/F = ticker.mode
 			if (ismob(O))

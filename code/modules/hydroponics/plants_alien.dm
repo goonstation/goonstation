@@ -82,8 +82,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
-				if(brain)
-					brain.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
+				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
 				var/obj/head = M.organHolder.drop_organ("head")
 				if(head)
 					qdel(head)
@@ -121,7 +120,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				if(stare_extreme(focused, POT))
 					return
 
-			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
+			var/extreme_start = prob(max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)

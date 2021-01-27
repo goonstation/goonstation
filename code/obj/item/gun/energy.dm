@@ -222,7 +222,7 @@
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
 	force = 5.0
-	mats = 50
+	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	module_research = list("weapons" = 5, "energy" = 4, "miniaturization" = 5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
@@ -396,7 +396,7 @@
 	muzzle_flash = "muzzle_flash_wavep"
 	firemodes = list(new/datum/firemode/single(name = "inverse", proj = new/datum/projectile/wavegun),\
 	                 new/datum/firemode/single(name = "transverse", proj = new/datum/projectile/wavegun/transverse),\
-	                 new/datum/firemode/single(name = "electromagnetoverse", proj = new/datum/projectile/wavegun/emp))
+	                 new/datum/firemode/single(name = "reflectoverse", proj = new/datum/projectile/wavegun/bouncy))
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
 	// Flaborized has made a lovely new wavegun sprite! - Gannets
@@ -411,7 +411,7 @@
 				src.icon_state = "wavegun_green[ratio]"
 				item_state = "wave-g"
 				muzzle_flash = "muzzle_flash_waveg"
-			else if (F.mode_name == "electromagnetoverse")
+			else if (F.mode_name == "reflectoverse")
 				src.icon_state = "wavegun_emp[ratio]"
 				item_state = "wave-emp"
 				muzzle_flash = "muzzle_flash_waveb"
@@ -1011,7 +1011,7 @@
 	var/old = 0
 	m_amt = 5000
 	g_amt = 2000
-	mats = 16
+	mats = list("MET-1"=15, "CON-2"=5, "POW-2"=5)
 	var/owner_prints = null
 	var/image/indicator_display = null
 	rechargeable = 0
@@ -1128,8 +1128,8 @@
 					src.firemode_index = "bigshot"
 					item_state = "lawg-bigshot"
 					playsound(M, "sound/vox/high.ogg", 50)
-					sleep(0.4 SECONDS)
-					playsound(M, "sound/vox/explosive.ogg", 50)
+					SPAWN_DBG(0.4 SECONDS)
+						playsound(M, "sound/vox/explosive.ogg", 50)
 				if ("clownshot")
 					src.firemode_index = "clownshot"
 					item_state = "lawg-clownshot"
@@ -1284,7 +1284,8 @@
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_bluezap"
 	ammo = /obj/item/ammo/power_cell/high_power //300 PU
-	firemodes = list(new/datum/firemode/lawbringer/pulse)
+	firemodes = list(new/datum/firemode/lawbringer/pulse,\
+									 new/datum/firemode/single(name = "EMP", proj = new/datum/projectile/energy_bolt/electromagnetic_pulse))
 
 	update_icon()
 		..()
@@ -1326,3 +1327,108 @@
 	can_dual_wield = 0
 	ammo = /obj/item/ammo/power_cell/self_charging/howitzer
 	firemodes = list(new/datum/firemode/single(name = "one-shot", proj = new/datum/projectile/special/howitzer))
+
+
+/obj/item/gun/energy/signifer2
+	name = "Signifer II"
+	desc = "It's a handgun? Or an smg? You can't tell."
+	icon_state = "signifer2"
+	force = 8
+	two_handed = 0
+	ammo = new/obj/item/ammo/power_cell/self_charging/ntso_signifer
+	fixed_mag = 1
+	firemodes = list(new/datum/firemode/single(name = "Stun", proj = new/datum/projectile/energy_bolt/signifer_tase),\
+									 new/datum/firemode/single(name = "Signify", proj = new/datum/projectile/laser/signifer_lethal))
+	var/shotcount = 0
+
+
+	update_icon()
+		..()
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+				src.icon_state = "signifer_2"
+				src.item_state = "signifer_2"
+				muzzle_flash = "muzzle_flash_elec"
+				shoot_delay = 2
+				spread_angle = 0
+				force = 9
+			else //if (current_projectile.type == /datum/projectile/laser)
+				src.item_state = "signifer_2-smg"
+				src.icon_state = "signifer_2-smg"
+				muzzle_flash = "muzzle_flash_bluezap"
+				force = 12
+				spread_angle = 3
+				shoot_delay = 5
+
+	attack_self(var/mob/M)
+		if (!src.two_handed)
+
+			if(M.l_hand == src)
+				if(M.r_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+			else if(M.r_hand == src)
+				if(M.l_hand != null)
+					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+					src.two_handed = 0
+					return 0
+		..()
+
+		setTwoHanded(!src.two_handed)
+		src.can_dual_wield = !src.two_handed
+		update_icon()
+
+		M.update_inhands()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
+			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
+
+	shoot()
+		shotcount = 0
+		. = ..()
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
+		shotcount = 0
+		. = ..()
+
+/obj/item/gun/energy/tasersmg
+	name = "Taser SMG"
+	icon_state = "ntneutral100"
+	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	item_state = "ntgun"
+	force = 5.0
+	two_handed = 1
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_elec"
+	ammo = new/obj/item/ammo/power_cell/high_power
+	firemodes = list(new/datum/firemode/double(name = "Burst-fire", proj = new/datum/projectile/energy_bolt/smgburst),\
+	                 new/datum/firemode/triple(name = "Full-auto", proj = new/datum/projectile/energy_bolt/smgauto))
+
+
+	New()
+		//AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
+		..()
+
+	update_icon()
+		..()
+		if(src.loaded_magazine)
+			var/ratio = min(1, src.loaded_magazine.charge / src.loaded_magazine.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/smgauto)
+				src.icon_state = "ntstun[ratio]"
+			else if (current_projectile.type == /datum/projectile/energy_bolt/smgburst)
+				src.icon_state = "ntneutral[ratio]"
+
+
+	attack_self(mob/user as mob)
+		..()
+		if (istype(current_projectile, /datum/projectile/energy_bolt/smgauto))
+			spread_angle = 8
+		else
+			spread_angle = 2
+		update_icon()

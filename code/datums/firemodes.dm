@@ -84,6 +84,25 @@
 	shoot_delay = 4
 	spread_angle = 6
 
+/datum/firemode/double/signifer
+	mode_name = "double-shot"
+	burst_count = 2
+	refire_delay = 2
+	shoot_delay = 4
+	spread_angle = 6
+	var/list/projectiles = list("A" = new/datum/projectile/laser/signifer_lethal,
+															"B" = new/datum/projectile/laser/signifer_lethal/brute)
+	var/proj_num = "A"
+
+	after_shot(var/mob/user)
+		if(!can_shoot)
+			playsound(user.loc, "sound/weapons/shotgunpump.ogg", 70, 1)
+			user.visible_message("<span class='alert'><B>[user] cocks the [src.gunmaster]!</B></span>")
+			// make riotgun not auto-eject, put handle_casings here to eject the shell on KCHYKH
+			can_shoot = 1
+		else
+			can_shoot = 0
+
 /datum/firemode/triple
 	mode_name = "three-round burst"
 	burst_count = 3

@@ -8,7 +8,7 @@
 	stamina_crit_chance = 1
 	rand_pos = 1
 	inventory_counter_enabled = 1
-	event_handler_flags = NO_MOUSEDROP_QOL
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	var/pname
 	var/pvol
 	var/pcount
@@ -123,7 +123,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			user.show_text("That's too far away!", "red")
 			return
 		if (!istype(O, /obj/item/reagent_containers/pill))

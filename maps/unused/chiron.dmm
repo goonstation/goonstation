@@ -13765,7 +13765,7 @@
 /area/station/crew_quarters/bar)
 "aAG" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/cable{
 	icon_state = "4-8";

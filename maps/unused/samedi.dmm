@@ -16803,7 +16803,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -19891,7 +19891,7 @@
 "aRW" = (
 /obj/stool,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
@@ -22929,7 +22929,7 @@
 "aYE" = (
 /obj/stool,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
@@ -26929,7 +26929,7 @@
 "bgX" = (
 /obj/stool,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -38502,7 +38502,7 @@
 "bHm" = (
 /obj/stool,
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south)

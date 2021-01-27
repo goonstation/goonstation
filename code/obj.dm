@@ -1,5 +1,4 @@
 /obj
-	//var/datum/module/mod		//not used
 	var/real_name = null
 	var/real_desc = null
 	var/m_amt = 0	// metal
@@ -9,7 +8,7 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
@@ -17,33 +16,25 @@
 	var/move_triggered = 0
 	var/object_flags = 0
 
-	proc/move_trigger(var/mob/M, var/kindof)
-		var/atom/movable/x = loc
-		while (x && !isarea(x) && x != M)
-			x = x.loc
-		if (!x || isarea(x))
-			return 0
-		return 1
-
 	animate_movement = 2
 //	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
 //heh no not really
 
 	var/_health = 100
 	var/_max_health = 100
+
 	proc/setHealth(var/value)
 		var/prevHealth = _health
 		_health = min(value, _max_health)
 		updateHealth(prevHealth)
-		return
+
 	proc/changeHealth(var/change = 0)
 		var/prevHealth = _health
 		_health += change
 		_health = min(_health, _max_health)
 		updateHealth(prevHealth)
-		return
-	proc/updateHealth(var/prevHealth)
 
+	proc/updateHealth(var/prevHealth)
 		if(_health <= 0)
 			onDestroy()
 /*		else
@@ -56,6 +47,15 @@
 			else if((_health <= 25) && !(prevHealth <= 25))
 				//setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return*/
+
+	proc/move_trigger(var/mob/M, var/kindof)
+		var/atom/movable/x = loc
+		while (x && !isarea(x) && x != M)
+			x = x.loc
+		if (!x || isarea(x))
+			return 0
+		return 1
+
 	proc/onDestroy()
 		qdel(src)
 		return
@@ -65,8 +65,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -78,8 +77,6 @@
 				changeHealth(-40)
 				return
 			else
-		return
-
 
 	onMaterialChanged()
 		..()
@@ -92,14 +89,36 @@
 				RL_SetOpacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
 				RL_SetOpacity(1)
-		return
 
 	disposing()
+		for(var/mob/M in src.contents)
+			M.set_loc(src.loc)
+		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
 			artifact:holder = null
 		remove_dialogs()
 		..()
+
+	proc/can_access_remotely(mob/user)
+		. = FALSE
+
+	/**
+	* Determines whether or not the user can remote access devices.
+	* This is typically limited to Borgs and AI things that have
+	* inherent packet abilities.
+	*/
+	proc/can_access_remotely_default(mob/user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
 
 	proc/client_login(var/mob/user)
 		return
@@ -314,8 +333,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)
@@ -326,7 +344,6 @@
 			if(3.0)
 				return
 			else
-		return
 
 	attackby(obj/item/C as obj, mob/user as mob)
 
@@ -337,10 +354,6 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
-
-			if (T.amount < 1 && !issilicon(user))
-				user.u_equip(T)
-				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
@@ -427,6 +440,7 @@
 
 /obj/overlay
 	name = "overlay"
+	anchored = TRUE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
@@ -495,14 +509,8 @@
 		replica.set_dir(O.dir)
 		qdel(O)
 
-
-/obj/disposing()
-	for(var/mob/M in src.contents)
-		M.set_loc(src.loc)
-	tag = null
-	..()
-
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+	. = 0
 	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
 		if (user && !(W.cant_drop))
 			var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
@@ -515,8 +523,7 @@
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16
 					W.pixel_y = text2num(params["icon-y"]) - 16
-				return 1
-	return 0
+				. = 1
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
@@ -537,6 +544,7 @@
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	if(!src.anchored)
 		step(src, AM.dir)
+	src.ArtifactStimulus("force", AM.throwforce)
 	if(AM.throwforce >= 40)
 		if(!src.anchored && !src.throwing)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)

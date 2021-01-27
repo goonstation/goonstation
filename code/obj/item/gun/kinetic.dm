@@ -300,6 +300,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (prob(70))
 			icon_state = "glocktan"
 			item_state = "glocktan"
+		//AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1, FULLAUTO_INACTIVE)
 		..()
 
 /obj/item/gun/kinetic/clock_188/boomerang
@@ -634,6 +635,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	ammo = /obj/item/ammo/bullets/bullet_9mm
 
+/obj/item/gun/kinetic/pistol/empty
+
+	New()
+		..()
+		ammo.amount_left = 0
+		update_icon()
+
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"
 	desc = "A silenced tranquilizer pistol chambered in .308 caliber, developed by Mabinogi Firearms Company."
@@ -706,9 +714,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 8
 	can_dual_wield = 0
 
-	slowdown = 0.5
-	slowdown_time = 3
-
 	two_handed = 1
 	w_class = 4
 	ammo = /obj/item/ammo/bullets/lmg
@@ -716,12 +721,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	                 new/datum/firemode/auto)
 
 	New()
-		AddComponent(/datum/component/holdertargeting/fullauto, 4 DECI SECONDS, 1.5 DECI SECONDS, 0.5)
+		//AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1, FULLAUTO_INACTIVE)
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.5)
+		setProperty("movespeed", 1)
 
 
 /obj/item/gun/kinetic/cannon
@@ -1093,6 +1098,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = 8.0

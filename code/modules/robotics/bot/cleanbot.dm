@@ -71,7 +71,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src)
 				src.botcard = new /obj/item/card/id(src)
 				src.botcard.access = get_access(src.access_lookup)
@@ -178,7 +178,7 @@
 	Topic(href, href_list)
 		if (..()) return
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!issilicon(usr) && !in_range(src, usr)) return
+		if (!issilicon(usr) && !in_interact_range(src, usr)) return
 
 		src.add_fingerprint(usr)
 		src.add_dialog(usr)
@@ -334,7 +334,7 @@
 			else
 				src.frustration++
 
-			SPAWN_DBG (3)
+			SPAWN_DBG(0.3 SECONDS)
 				if (length(src?.path))
 					if (length(src.path) > 8)
 						src.frustration++

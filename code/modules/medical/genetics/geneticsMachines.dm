@@ -16,6 +16,7 @@
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
+	can_reconnect = 1
 	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
 	var/list/equipment = list(0,0,0,0)
 	// Injector, Analyser, Emitter, Reclaimer
@@ -42,7 +43,7 @@
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)
-		src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
+		connection_scan()
 		return
 	gene_icon_cache["unknown"] = resource("images/genetics/mutGrey.png")
 	gene_icon_cache["researching"] = resource("images/genetics/mutGrey2.png")
@@ -52,6 +53,8 @@
 	gene_icon_cache["locked"] = resource("images/genetics/bpSep-locked.png")
 	return
 
+/obj/machinery/computer/genetics/connection_scan()
+	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
 
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
@@ -61,7 +64,7 @@
 /obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W) && ((src.status & BROKEN) || !src.scanner))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 20))
+		if (do_after(user, 2 SECONDS))
 			boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 			var/obj/computerframe/A = new /obj/computerframe( src.loc )
 			if(src.material) A.setMaterial(src.material)
@@ -98,7 +101,7 @@
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
 
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
@@ -577,7 +580,7 @@
 	else if(href_list["splice_stored_chromosome"])
 		var/datum/dna_chromosome/E = locate(href_list["splice_stored_chromosome"])
 		if (!istype(E)) return
-		if (!saved_chromosomes.Find(E))
+		if (!(E in saved_chromosomes))
 			src.log_maybe_cheater(usr, "tried to splice a chromosome ([E])")
 			return
 
@@ -588,7 +591,7 @@
 	else if(href_list["delete_stored_mut"])
 		var/datum/bioEffect/E = locate(href_list["delete_stored_mut"])
 		if (bioEffect_sanity_check(E,0)) return
-		if (!saved_mutations.Find(E))
+		if (!(E in saved_mutations))
 			src.log_maybe_cheater(usr, "tried to delete the [E.id] mutation")
 			return
 
@@ -603,7 +606,7 @@
 		var/datum/dna_chromosome/E = locate(href_list["delete_stored_chromosome"])
 		if (!istype(E)) return
 		backpage = "chromosomes"
-		if (!saved_chromosomes.Find(E))
+		if (!(E in saved_chromosomes))
 			src.log_maybe_cheater(usr, "tried to delete a chromosome ([E])")
 			return
 
@@ -617,7 +620,7 @@
 	else if(href_list["add_stored_mut"])
 		var/datum/bioEffect/E = locate(href_list["add_stored_mut"])
 		if (bioEffect_sanity_check(E)) return
-		if (!saved_mutations.Find(E))
+		if (!(E in saved_mutations))
 			src.log_maybe_cheater(usr, "tried to add the [E.id] mutation")
 			return
 

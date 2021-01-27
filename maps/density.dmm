@@ -2888,7 +2888,7 @@
 /area/station/bridge)
 "gy" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)

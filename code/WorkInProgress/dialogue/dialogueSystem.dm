@@ -30,11 +30,14 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 	var/dialogueName = "" //Name that is shown in the dialogue and title.
 	var/atom/master = null //The atom that this dialogueMaster belongs to.
 	var/visibleDialogue = 1 //Is the dialogue visible to everyone?
+	var/floatingText = 0 // Does this dialogue show floating chat?
+	var/floating_text_style = "" // Style for floating text?
 	var/windowSize = "400x700" //Size of the dialogue window.
 	var/maxDistance = -1 //If >=0 The user needs to be at least this close for the dialogue to work.
 	var/objectDialogueVerb = "says" //If the dialogueMaster belong to an object and showDialogue is one, what "verb" do we use for it's chat output.
 	var/list/dialogueFlags = list() //Holds simple string flags that can be used in dialogue. I.e. "Have we talked about this before"
 	var/list/allNodes = null //Complete list of nodes in the master.
+	var/wait_to_speak = 0 SECONDS // time to wait for more natural visible conversations
 
 	New(var/datum/M)
 		master = M
@@ -81,8 +84,12 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 							var/mob/M = master
 							M.say(N.getNodeText(C))
 						else if(isobj(master))
+							sleep(wait_to_speak)
+							var/chat_text = null
+							if (floatingText)
+								chat_text = make_chat_maptext(master, N.getNodeText(C), floating_text_style)
 							for(var/mob/O in all_hearers(5, master.loc))
-								O.show_message("<span class='name'>[master.name]</span> [objectDialogueVerb], <span class='message'>\"[N.getNodeText(C)]\"</span>",2)
+								O.show_message("<span class='name'>[master.name]</span> [objectDialogueVerb], <span class='message'>\"[N.getNodeText(C)]\"</span>",2, assoc_maptext = chat_text)
 		return
 
 	proc/setFlag(var/client/C, var/flag="", var/value="") //Sets flag to value for this client in this dialogue master.

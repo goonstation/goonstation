@@ -12,8 +12,8 @@
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
-		if (pa.Find("left"))
-			if (pa.Find("ctrl"))
+		if ("left" in pa)
+			if ("ctrl" in pa)
 				finished = 1
 				clear_markers()
 				return
@@ -44,7 +44,7 @@
 					object.overlays += selection
 			else if (istype(object, /obj/adventurepuzzle/triggerable) || use_as == "triggerable")
 				boutput(usr, "<span class='alert'>Select a triggerer first!</span>")
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (T)
 				if (istype(object, /obj/adventurepuzzle/triggerable))
 					if (object in selected.triggered)

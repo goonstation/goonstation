@@ -9773,7 +9773,7 @@
 /area/station/crew_quarters/cafeteria)
 "avY" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)

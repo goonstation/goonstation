@@ -27,9 +27,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -41,7 +41,7 @@
 				key.oneshot = oneshot
 				SPAWN_DBG(1 SECOND)
 					key.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection

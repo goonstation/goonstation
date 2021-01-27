@@ -296,14 +296,14 @@
 	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanicsm.Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboarddebug
 	name = "syndicate circuit board"
 	desc = "Rather complex circuit board, ripped straight from syndicate drone's internal mechanicsm.Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 
 /obj/item/clothing/under/gimmick/seaman
 	name = "seaman's uniform"

@@ -7,23 +7,23 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 	// Called when mode is selected
 	proc/selected()
-		for (var/obj/screen/S in extra_buttons)
+		for (var/atom/movable/screen/S in extra_buttons)
 			holder.owner.screen += S
 		update_button_text()
 
 	// Called when mode is deselected
 	proc/deselected()
-		for (var/obj/screen/S in extra_buttons)
+		for (var/atom/movable/screen/S in extra_buttons)
 			holder.owner.screen -= S
 
 	// Called when entering buildmode
 	proc/resumed()
-		for (var/obj/screen/S in extra_buttons)
+		for (var/atom/movable/screen/S in extra_buttons)
 			holder.owner.screen += S
 
 	// Called when exiting buildmode
 	proc/paused()
-		for (var/obj/screen/S in extra_buttons)
+		for (var/atom/movable/screen/S in extra_buttons)
 			holder.owner.screen -= S
 
 	proc/update_icon_state(var/newstate)
@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 				DEBUG_MESSAGE("[key_name(owner)] is too low rank to have buildmode [M.name] ([M.type]) and the buildmode is being disposed (min level is [level_to_rank(M.admin_level)] and [owner.ckey] is [owner.holder ? level_to_rank(owner.holder.level) : "not an admin"])")
 				qdel(M)
 				continue
-			if (!mode)
+			if (!mode || istype(M, /datum/buildmode/spawn_single))
 				select_mode(M)
 			modes_cache += M.name
 			modes_cache[M.name] = M
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		button_mode.maptext_x = -62
 
 	proc/build_click(atom/target, location, control, list/params)
-		if (istype(target, /obj/screen/buildmode))
+		if (istype(target, /atom/movable/screen/buildmode))
 			target:clicked(params)
 			return
 		if (params.Find("left"))
@@ -123,10 +123,10 @@ ABSTRACT_TYPE(/datum/buildmode)
 		boutput(usr, "<span class='notice'>[mode.desc]</span>")
 
 	// You shouldn't actually interact with these anymore.
-	var/obj/screen/buildmode/builddir/button_dir
-	var/obj/screen/buildmode/buildhelp/button_help
-	var/obj/screen/buildmode/buildmode/button_mode
-	var/obj/screen/buildmode/buildquit/button_quit
+	var/atom/movable/screen/buildmode/builddir/button_dir
+	var/atom/movable/screen/buildmode/buildhelp/button_help
+	var/atom/movable/screen/buildmode/buildmode/button_mode
+	var/atom/movable/screen/buildmode/buildquit/button_quit
 
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		usr.see_invisible = 21
 		src.show_popup_menus = 0
 
-/obj/screen/buildmode/builddir
+/atom/movable/screen/buildmode/builddir
 	name = "Set direction"
 	density = 1
 	anchored = 1
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 		holder.dir = dir
 
-/obj/screen/buildmode/buildhelp
+/atom/movable/screen/buildmode/buildhelp
 	name = "Click for help"
 	density = 1
 	anchored = 1
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	clicked(location, control, params)
 		holder.display_help()
 
-/obj/screen/buildmode/buildquit
+/atom/movable/screen/buildmode/buildquit
 	name = "Click to exit build mode"
 	density = 1
 	anchored = 1
@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	clicked(location, control, params)
 		holder.owner.togglebuildmode()
 
-/obj/screen/buildmode/buildmode
+/atom/movable/screen/buildmode/buildmode
 	name = "Click to select mode"
 	density = 1
 	anchored = 1
@@ -247,12 +247,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		holder = H
 
 	clicked(list/pa)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache)
 			if (modename == holder.mode.name)
 				return
 			holder.select_mode(holder.modes_cache[modename])
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			holder.mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH GUH GURGLE
 /proc/blink(var/turf/T)

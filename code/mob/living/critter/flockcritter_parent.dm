@@ -165,7 +165,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -239,7 +239,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -303,8 +303,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F)
-			F.canmove = 0
+		F?.canmove = 0
 		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()
@@ -338,7 +337,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(10))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(10))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -405,7 +404,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(15))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(15))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -418,6 +417,7 @@
 					F, "<span class='notice'>You begin imprisoning [target]. You will both need to stay still for this to work.</span>",
 					target, "<span class='alert'>[F] is forming a structure around you!</span>",
 					"You hear strange building noises.")
+				target.was_harmed(F, null, "flock", INTENT_DISARM)
 				// do effect
 				src.decal = unpool(/obj/decal/flock_build_wall)
 				if(src.decal)
@@ -435,7 +435,7 @@
 		if(src.decal)
 			pool(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && target && in_range(owner, target))
+		if(F && target && in_interact_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
@@ -460,7 +460,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -520,7 +520,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

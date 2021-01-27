@@ -4780,7 +4780,7 @@
 	icon_state = "bedsheet-black"
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -14519,6 +14519,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aFG" = (
@@ -14793,11 +14794,12 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aGl" = (
-/obj/machinery/hydro_growlamp,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aGm" = (
@@ -15151,13 +15153,12 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aHa" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
 /obj/item/device/radio/intercom/catering{
 	dir = 8;
 	pixel_x = 20
 	},
+/obj/submachine/chicken_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aHb" = (
@@ -15837,13 +15838,19 @@
 /area/station/hydroponics/bay)
 "aIu" = (
 /obj/table/auto,
-/obj/item/bee_egg_carton,
-/obj/item/plantanalyzer,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/item/bee_egg_carton{
+	pixel_y = 18
+	},
+/obj/item/plantanalyzer{
+	pixel_x = 6
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)

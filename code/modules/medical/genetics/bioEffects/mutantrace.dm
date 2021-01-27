@@ -76,11 +76,6 @@
 	msgLose = "You feel dry."
 	icon_state  = "squid"
 
-	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "squidhead", layer = MOB_HAIR_LAYER2)
-		..()
-
 /datum/bioEffect/mutantrace/dwarf
 	name = "Dwarfism"
 	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
@@ -163,3 +158,22 @@
 	msgGain = "You feel like you're ready for some Cow RP."
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
+
+/datum/bioEffect/mutantrace/chicken
+	name = "Experimental Strain Epsilon Gamma Gamma #5"
+	desc = "For exclusive use under the supervision of Dr. Cox MD. Unauthorized modification, replication, and distribution prohibited."
+	id = "chicken"
+	mutantrace_option = "Chicken"
+	mutantrace_path = /datum/mutantrace/chicken
+	msgGain = "bwah...bwah..bwah...BWAHCAWCK!"
+	msgLose = "Well that clucks."
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	reclaim_fail = 100

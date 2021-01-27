@@ -68,7 +68,6 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 	icon_state = "white"
 	item_state = "white"
 
@@ -77,7 +76,6 @@
 /obj/item/clothing/under/color
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	c_flags = ONESIZEFITSALL
 
 	grey
 		name = "grey jumpsuit"
@@ -420,6 +418,12 @@
 	icon_state = "security"
 	item_state = "security"
 
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
@@ -445,7 +449,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's jumpsuit"
-	desc = "Red and black really helps highlight the cranial fluid stains."
+	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
 	permeability_coefficient = 0.50
@@ -543,6 +547,13 @@
 	april_fools
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
+
+/obj/item/clothing/under/rank/rancher
+	name = "rancher's overalls"
+	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
+	icon_state = "rancher"
+	item_state = "rancher"
+	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
@@ -748,8 +759,6 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
-	compatible_species = list("human", "monkey")
-	c_flags = ONESIZEFITSALL
 
 	red
 		icon_state = "shortsR"
@@ -1176,7 +1185,7 @@
 
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -1191,7 +1200,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return
 			else
@@ -1340,7 +1349,6 @@
 		desc = "Christ, these things stink!"
 		icon_state = "wario"
 		item_state = "wario"
-		c_flags = ONESIZEFITSALL
 
 	waluigi
 		name = "total prick's overalls"

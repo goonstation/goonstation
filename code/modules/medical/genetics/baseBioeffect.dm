@@ -85,8 +85,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			src.OnRemove()
 		holder = null
 		owner = null
-		if(dnaBlocks)
-			dnaBlocks.dispose()
+		dnaBlocks?.dispose()
 		dnaBlocks = null
 		..()
 
@@ -259,7 +258,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/lockcode = ""
 	var/locktries = 0
 
-/obj/screen/ability/topBar/genetics
+/atom/movable/screen/ability/topBar/genetics
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -306,7 +305,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/mob/living/owner = null
 
 	New()
-		var/obj/screen/ability/topBar/genetics/B = new /obj/screen/ability/topBar/genetics(null)
+		var/atom/movable/screen/ability/topBar/genetics/B = new /atom/movable/screen/ability/topBar/genetics(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.name = src.name

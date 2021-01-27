@@ -20,7 +20,7 @@ mob/verb/checkrewards()
 
 			var/list/valid = list()
 			for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
-				if(J.required_levels.Find(job))
+				if(job in J.required_levels)
 					valid.Add(J)
 					valid[J] = xpRewardButtons[J]
 
@@ -60,7 +60,7 @@ mob/verb/checkrewards()
 									return
 							if(rewardDatum.qualifies(usr.key))
 								rewardDatum.activate(usr.client)
-								if(rewardDatum.claimedNumbers.Find(usr.key))
+								if(usr.key in rewardDatum.claimedNumbers)
 									rewardDatum.claimedNumbers[usr.key] = (rewardDatum.claimedNumbers[usr.key] + 1)
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
@@ -80,7 +80,7 @@ mob/verb/checkrewards()
 		return
 
 /proc/qualifiesXpByName(var/key, var/name)
-	if(xpRewards.Find(name))
+	if(name in xpRewards)
 		var/datum/jobXpReward/R = xpRewards[name]
 		if(R.qualifies(key))
 			return 1
@@ -114,13 +114,21 @@ mob/verb/checkrewards()
 	desc = "A bucket! And it's red! Wow."
 	required_levels = list("Janitor"=5)
 	claimable = 1
-	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red/
 
 	activate(var/client/C)
-		var/obj/item/reagent_containers/glass/bucket/red/T = new/obj/item/reagent_containers/glass/bucket/red(get_turf(C.mob))
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+		var/obj/item/reagent_containers/glass/bucket/bucket = locate(/obj/item/reagent_containers/glass/bucket) in C.mob.contents
+
+		if (istype(bucket))
+			C.mob.remove_item(bucket)
+			qdel(bucket)
+		else
+			boutput(C.mob, "You need to be holding a bucket in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You turn around for just a second and your bucket is suddenly all red!")
 
 /datum/jobXpReward/janitor10
 	name = "Holographic Signs "
@@ -142,13 +150,21 @@ mob/verb/checkrewards()
 	desc = "A mop! And it's orange! Amazing."
 	required_levels = list("Janitor"=15)
 	claimable = 1
-	claimPerRound = 1
+	var/path_to_spawn = /obj/item/mop/orange
 
 	activate(var/client/C)
-		var/obj/item/mop/orange/T = new/obj/item/mop/orange(get_turf(C.mob))
-		T.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand(T)
-		return
+		var/obj/item/mop/mop = locate(/obj/item/mop/) in C.mob.contents
+
+		if (istype(mop))
+			C.mob.remove_item(mop)
+			qdel(mop)
+		else
+			boutput(C.mob, "You need to be holding a mop in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "An orange shade starts to crawl all over the mop's head.")
 
 /datum/jobXpReward/janitor20
 	name = "Head of Sanitation beret"
@@ -237,6 +253,28 @@ mob/verb/checkrewards()
 
 
 //Botanist End
+
+/datum/jobXpReward/HeadofSecurity/mug
+	name = "Alternate Blue Mug"
+	desc = "It's your favourite coffee, but now its blue. Wow."
+	required_levels = list("Head of Security"=1)
+	claimable = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
+
+	activate(var/client/C)
+		var/mug = C.mob.find_type_in_hand(/obj/item/reagent_containers/food/drinks/mug/HoS)
+
+		if (mug)
+			C.mob.remove_item(mug)
+			qdel(mug)
+		else
+			boutput(C.mob, "You need to be holding your mug in order to claim this reward")
+			return
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "The mug's colouring flips to blue")
+
 /datum/jobXpReward/head_of_security_LG
 	name = "The Lawbringer"
 	desc = "Gain access to a voice activated weapon of the future-past by sacrificing your egun."
@@ -316,6 +354,10 @@ mob/verb/checkrewards()
 			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
 				src.claimedNumbers[usr.key] --
+				return
+			if (isnull(K.loaded_magazine) || K.loaded_magazine.charge < K.loaded_magazine.max_charge * 0.9)
+				boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
+				src.claimedNumbers[usr.key]--
 				return
 			C.mob.remove_item(K)
 			found = 1
@@ -499,3 +541,48 @@ mob/verb/checkrewards()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
 		return
+
+/////////////Bartender////////////////
+
+/datum/jobXpReward/bartender/spectromonocle
+	name = "Spectroscopic Monocle"
+	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
+	required_levels = list("Bartender"=0)
+	icon_state = "?"
+	claimable = 1
+	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
+
+	activate(var/client/C)
+		var/glasses = C.mob.find_type_in_hand(/obj/item/clothing/glasses/spectro)
+
+		if(!(glasses))
+			boutput(C.mob, "You need to be holding a pair of spectroscopic scanner goggles to claim this item")
+			return
+		C.mob.remove_item(glasses)
+		qdel(glasses)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You break the goggles in half and fashion the lens into a monocle...somehow.")
+
+/datum/jobXpReward/bartender/goldenshaker
+	name = "Golden Cocktail Shaker"
+	desc = "After all your years of service, you've finally managed to gather enough money in tips to buy yourself a present! You regret every cent."
+	required_levels = list("Bartender"=20)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+
+	activate(var/client/C)
+		var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = locate(/obj/item/reagent_containers/food/drinks/cocktailshaker) in C.mob.contents
+
+		if(!istype(shaker))
+			return
+		C.mob.remove_item(shaker)
+		qdel(shaker)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
+

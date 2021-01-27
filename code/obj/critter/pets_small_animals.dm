@@ -17,6 +17,7 @@
 	name = "cockroach"
 	desc = "An unpleasant insect that lives in filthy places."
 	icon_state = "roach"
+	critter_family = BUG
 	density = 0
 	health = 10
 	aggressive = 0
@@ -197,10 +198,9 @@
 		if (!src.alive)
 			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
 				src.on_revive()
-				SPAWN_DBG(0)
-					return ..(W, user)
+				. = ..()
 		else
-			return ..()
+			. = ..()
 
 /obj/critter/opossum/morty
 	name = "Morty"
@@ -638,7 +638,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 4 SECONDS)
 			M.changeStatus("weakened", 4 SECONDS)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			for(var/mob/O in hearers(src, null))
 				O.show_message("[src] purrs!",2)
@@ -801,7 +802,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
 
-	on_pet()
+	on_pet(mob/user)
+		..()
 		if(prob(10))
 			src.visible_message("<b>[src]</b> honks!",2)
 			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
@@ -904,7 +906,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		var/m_id = (lang_id == "english" || lang_id == "") ? 1 : 2
 		if (M.singing)
 			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
-				spawn(3)
+				SPAWN_DBG(0.3 SECONDS)
 					if(get_dist(src,M) <= 1)
 						src.CritterAttack(M)
 					else

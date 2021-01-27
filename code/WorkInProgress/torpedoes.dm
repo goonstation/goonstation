@@ -191,8 +191,7 @@
 		return
 
 	proc/fire()
-		if(tube)
-			tube.launch()
+		tube?.launch()
 		return
 
 /obj/machinery/torpedo_switch
@@ -363,8 +362,7 @@
 	var/obj/machinery/torpedo_tube/parent = null
 
 	attack_hand(mob/living/carbon/human/M as mob)
-		if(parent)
-			parent.close()
+		parent?.close()
 		return
 
 	MouseDrop_T(atom/target, mob/user)

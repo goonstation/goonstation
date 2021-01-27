@@ -98,6 +98,7 @@
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
 			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
@@ -390,17 +391,14 @@
 
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
-	var/f = 0
+	. = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
-		f = rand(1352, 1439)
+		. = rand(1352, 1439)
 
-	while (blacklisted.Find(f))
-
-	return f
+	while (. in blacklisted)
 
 /datum/game_mode/nuclear/process()
 	set background = 1
@@ -441,3 +439,47 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+/obj/cairngorm_stats/
+	name = "Mission Memorial"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+
+	attack_hand(var/mob/user as mob)
+		if (..(user))
+			return
+
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		var/dat = ""
+		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
+
+		src.add_dialog(user)
+		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		onclose(user, "cairngorm_stats_[src]")
+		return
+
+/obj/cairngorm_stats/left
+	icon_state = "memorial_left"
+
+/obj/cairngorm_stats/right
+	icon_state = "memorial_right"

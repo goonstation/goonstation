@@ -53,9 +53,9 @@ PIPE BOMBS + CONSTRUCTION
 	/// Type of gas grenade. Valid entries: "smoke", "mustard"
 	var/is_gas_grenade = FALSE
 	/// Smoke, because the effects system doesn't have a common set of procs for some goddamned reason
-	var/datum/effects/system/bad_smoke_spread/smoke
+	var/datum/effects/system/bad_smoke_spread/smoke = /datum/effects/system/bad_smoke_spread
 	/// Mustard gas, because the effects system doesn't have a common set of procs for some goddamned reason
-	var/datum/effects/system/mustard_gas_spread/mustard
+	var/datum/effects/system/mustard_gas_spread/mustard = /datum/effects/system/mustard_gas_spread
 	/// Makes a singularity on detonation, of course
 	var/make_singulo = FALSE
 	/// for singulo grenades, replaces everything in this radius with engine floors
@@ -70,6 +70,8 @@ PIPE BOMBS + CONSTRUCTION
 	var/is_owlgib_grenade = FALSE
 	/// Is a firework -- set to "slashed" for it to fizzle
 	var/is_firework = FALSE
+	/// Is this firework a shoddy bootleg?
+	var/bootleg_level
 	/// Will mangle walls in range
 	var/is_breaching_charge = FALSE
 	/// Distance from the bomb to thrash walls and such
@@ -332,25 +334,41 @@ PIPE BOMBS + CONSTRUCTION
 			return
 		var/turf/T = get_turf(src)
 		var/area/A_T = get_area(T)
-		if (isturf(T))
-			if (src.fizzles_in_sanctuary && (isrestrictedz(T.z) || A_T?.sanctuary))
+		if(isturf(T))
+			if(src.fizzles_in_sanctuary && (isrestrictedz(T.z) || A_T?.sanctuary))
 				src.visible_message("<span class='alert'>[src] buzzes for a moment, then self-destructs.</span>")
 				elecflash(src,power = 4)
 				qdel(src)
 				return
 
 			if(src.is_firework)
+
 				if(src.is_firework != "slashed")
-					if(prob(10))
+					if(prob(10) || (src.bootleg_level == 2))
 						explosion(src, T, 0, 0, 1, 1)
+
+						if(istype(src.loc, /mob/living/carbon/human) && src.bootleg_level == 2)
+							var/mob/living/carbon/human/H = src.loc
+							H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 					else
-						elecflash(src,power = 2)
+						elecflash(T,power = 2)
+
+						if (src.bootleg_level == 0)
+							playsound(T, "sound/effects/Explosion1.ogg", 75, 1)
+						else
+							playsound(T, "sound/effects/Explosion2.ogg", 75, 1)
+
+					if(src.reagents)
+						src.reagents.set_reagent_temp(T0C + 1000, TRUE)
+						src.del_self_on_explode = 0
+
 					src.visible_message("<span class='alert'>\The [src] explodes!</span>")
+
 				else
 					boutput(usr, "<span class='alert'>The firework probably should have exploded by now. Fuck.</span>")
 					return
 
-			if(is_breaching_charge)
+			if(src.is_breaching_charge)
 				if (istype(src.target_atom, /obj/machinery))
 					src.target_atom.ex_act(1) // Reliably blasts through doors.
 				// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
@@ -370,7 +388,7 @@ PIPE BOMBS + CONSTRUCTION
 					if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
 						GR.ex_act(2)
 
-			if(is_thermite_charge)
+			if(src.is_thermite_charge)
 				src.invisibility = 101
 				for (var/turf/T_T in range(src.breach_range, T))
 					var/area/T_T_A = get_area(T_T)
@@ -477,10 +495,10 @@ PIPE BOMBS + CONSTRUCTION
 						if (prob(50) && X:anchored != 2)
 							step_towards(X,src)
 
-			if(make_singulo)
+			if(src.make_singulo)
 				src.build_a_singulo()
 
-			if (src.is_gas_grenade)
+			if(src.is_gas_grenade)
 				SPAWN_DBG (0)
 					for(var/i in 1 to 4)
 						if (src)
@@ -495,7 +513,7 @@ PIPE BOMBS + CONSTRUCTION
 							sleep(1 SECOND)
 					qdel(src)
 
-			if (src.is_explosive_grenade)
+			if(src.is_explosive_grenade)
 				explosion_new(src, T, src.ex_power, src.ex_brisance)
 				var/obj/overlay/O = new/obj/overlay(T)
 				O.anchored = 1
@@ -504,6 +522,11 @@ PIPE BOMBS + CONSTRUCTION
 				O.icon = 'icons/effects/64x64.dmi'
 				O.icon_state = "explo_fiery"
 				// smoke handled in smoking section
+				src.del_self_on_explode = 0
+				SPAWN_DBG(0.5 SECONDS)
+					qdel(O)
+
+			if(src.is_frag_grenade)
 				var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new /datum/projectile/special/spreader/uniform_burst/circle(T)
 				if(src.custom_projectile_type)
 					PJ.spread_projectile_type = src.custom_projectile_type
@@ -513,11 +536,8 @@ PIPE BOMBS + CONSTRUCTION
 				var/targety = src.y - rand(-5,5)
 				var/turf/newtarget = locate(targetx, targety, src.z)
 				shoot_projectile_ST(src, PJ, newtarget)
-				SPAWN_DBG(0.5 SECONDS)
-					qdel(O)
-					qdel(src)
 
-			if (is_sonic_grenade)
+			if(src.is_sonic_grenade)
 				for (var/mob/living/M in hearers(8, T))
 					if(check_target_immunity(M)) continue
 					var/loud = 16 / (get_dist(M, T) + 1)
@@ -530,7 +550,7 @@ PIPE BOMBS + CONSTRUCTION
 					M.apply_sonic_stun(weak, stun, 0, 0, 0, damage, tempdeaf)
 				sonic_attack_environmental_effect(T, 8, list("window", "r_window", "displaycase", "glassware"))
 
-			if (is_emp_grenade)
+			if(src.is_emp_grenade)
 				T.hotspot_expose(700,125)
 				var/obj/overlay/pulse = new/obj/overlay(T)
 				pulse.icon = 'icons/effects/effects.dmi'
@@ -547,17 +567,17 @@ PIPE BOMBS + CONSTRUCTION
 							O.emp_act()
 					qdel(src)
 
-			if(is_clothing_grenade)
+			if(src.is_clothing_grenade)
 				src.clothe_victims()
 
-			if(is_owlgib_grenade)
+			if(src.is_owlgib_grenade)
 				for(var/mob/living/carbon/human/M in range(5, T))
 					var/area/t = get_area(M)
 					if(t?.sanctuary) continue
 					SPAWN_DBG(0)
 						M.owlgib()
 
-			if(explode_on_detonation)
+			if(src.explode_on_detonation)
 				var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 				E.fingerprintslast = src.fingerprintslast
 
@@ -604,6 +624,46 @@ PIPE BOMBS + CONSTRUCTION
 	proc/do_explode()
 		return
 	// staging area
+////////////////////////////////////
+
+/obj/item/grenade/random
+	desc = "It is set to detonate in 3 seconds."
+	name = "random grenade"
+	det_time = 30
+	org_det_time = 30
+	alt_det_time = 60
+	icon_state = "banana"
+	item_state = "banana"
+	is_syndicate = 1
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "banana1"
+	payload = /obj/item/bananapeel
+	launcher_ready = TRUE
+
+	New()
+		if(prob(50))
+			src.is_graviton = TRUE
+		if(prob(50))
+			src.is_sonic_grenade = TRUE
+		if(prob(50))
+			src.is_gas_grenade = TRUE
+		if(prob(50))
+			src.make_singulo = TRUE
+			src.radius = rand(2,6)
+		if(prob(50))
+			src.is_explosive_grenade = TRUE
+			src.ex_power = rand(1,3)
+			src.ex_brisance = rand(1,3)
+		if(prob(50))
+			src.is_owlgib_grenade = TRUE
+		if(prob(50))
+			src.is_emp_grenade = TRUE
+		if(prob(50))
+			src.is_frag_grenade = TRUE
+			src.pellets_to_fire = rand(1,40)
+		if(prob(50))
+			src.explode_on_detonation = TRUE
+		. = ..()
 
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
@@ -780,7 +840,6 @@ PIPE BOMBS + CONSTRUCTION
 	det_time = 50.0
 	org_det_time = 50
 	alt_det_time = 30
-	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
@@ -995,6 +1054,7 @@ PIPE BOMBS + CONSTRUCTION
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
+	bootleg_level = 0 // 0 = normal, 1 = unstable, 2 = unstable and you arm fall off
 	is_firework = TRUE
 	sound_explode = "sound/effects/Explosion1.ogg"
 	launcher_ready = TRUE // Why the heck not?
@@ -1003,6 +1063,51 @@ PIPE BOMBS + CONSTRUCTION
 		..()
 		create_reagents(10)
 		reagents.add_reagent("magnesium", 10)
+
+/obj/item/grenade/firework/bootleg
+	name = "bootleg firework"
+	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one seems to be missing a label, weird."
+
+	New()
+		..()
+		create_reagents(10)
+
+		if (prob(30))
+			reagents.add_reagent("flashpowder", 5) // must've been a mix-up!
+
+			if (prob(15))
+				reagents.add_reagent("blackpowder", 5) // thats one hell of a mix-up
+				src.bootleg_level = 2
+			else
+				reagents.add_reagent("flashpowder", 5) // this way every firework has 10u reagents
+				src.bootleg_level = 1
+
+		else
+			reagents.add_reagent("magnesium", 10)
+
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You accidentally prime the firework, and the contents ignite immediately!</span>")
+			prime()
+			return
+
+		..()
+
+	attack_self(mob/user as mob)
+		if (src.bootleg_level > 0)
+			boutput(user, "<span class='alert'>You try to prime the firework, but the contents ignite immediately!</span>")
+			prime()
+			return
+
+		..()
+
+	attackby(obj/A as obj, mob/user as mob) // adapted from iv_drips.dm
+		if (iscuttingtool(A) && src.is_firework != "slashed" && (src.bootleg_level > 0))
+			boutput(user, "You try to cut [src] open, but the contents spontaneously ignite!")
+			prime()
+			return
+
+		..()
 
 //////////////////////// Breaching charges //////////////////////////////////
 
@@ -1318,11 +1423,11 @@ PIPE BOMBS + CONSTRUCTION
 					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
-					playsound(GZ, "sound/voice/farts/superfart.ogg", 90, 1)
+					playsound(GZ, "sound/voice/farts/superfart.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3+butt,GZ))
 						ass_explosion(M, 0, 5)
 				else
-					playsound(GZ, "sound/voice/farts/poo2.ogg", 90, 1)
+					playsound(GZ, "sound/voice/farts/poo2.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3,GZ))
 						ass_explosion(M, 0, 5)
 			if (confetti)
@@ -1402,7 +1507,7 @@ PIPE BOMBS + CONSTRUCTION
 						target.air.merge(payload)
 
 			if (throw_objs.len && throw_objs.len > 0)
-				var/count = 6
+				var/count = 20
 				var/obj/spawn_item
 				for (var/mob/living/L in oview(5, GZ))
 					spawn_item = pick(throw_objs)
@@ -1411,7 +1516,7 @@ PIPE BOMBS + CONSTRUCTION
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
 					O.throw_at(L,5,3)
-					count++
+					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,GZ))
 						if (prob(4))
@@ -1421,7 +1526,7 @@ PIPE BOMBS + CONSTRUCTION
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
 							O.throw_at(target,4,3)
-							count++
+							count--
 						if (count <= 0)
 							break;
 

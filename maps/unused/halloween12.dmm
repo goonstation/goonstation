@@ -24166,7 +24166,7 @@
 /area/station/crew_quarters/kitchen)
 "aVw" = (
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /obj/machinery/camera{
 	c_tag = "Bar West";

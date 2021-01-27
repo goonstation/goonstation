@@ -4,7 +4,6 @@
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
-	event_handler_flags = NO_MOUSEDROP_QOL
 
 	New()
 		. = ..()
@@ -76,8 +75,10 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
+							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
-							/obj/item/clothing/gloves/long)
+							/obj/item/clothing/gloves/long,
+							/obj/item/handheld_vacuum)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"

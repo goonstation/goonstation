@@ -102,6 +102,7 @@ datum/mind
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
+				new_character.lastKnownIP = current.client.address
 			current.mind = null
 
 		new_character.mind = src

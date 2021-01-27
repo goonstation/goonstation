@@ -194,7 +194,7 @@ Contains:
 			var/obj/item/icon = src
 			. = list()
 			icon = src.loc
-			if (!in_range(src, usr))
+			if (!in_interact_range(src, usr))
 				if (icon == src)
 					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
@@ -233,18 +233,22 @@ Contains:
 		ui = new(user, src, "GasTank", name)
 		ui.open()
 
-/obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = using_internal()
-	data["releasePressure"] = distribute_pressure
-	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+/obj/item/tank/ui_static_data(mob/user)
+	. = list(
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"maxRelease" = TANK_MAX_RELEASE_PRESSURE
+	)
 
-	return data
+/obj/item/tank/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(air_contents),
+		"valveIsOpen" = using_internal(),
+		"releasePressure" = distribute_pressure,
+	)
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")
@@ -277,11 +281,8 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = new()
+		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		if(!src.air_contents.trace_gases)
-			src.air_contents.trace_gases = list()
-		src.air_contents.trace_gases += trace_gas
 		return
 
 ////////////////////////////////////////////////////////////

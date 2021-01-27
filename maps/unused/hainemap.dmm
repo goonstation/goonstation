@@ -1772,14 +1772,14 @@
 "fb" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/left{
-	id = "barman"
+	id = "bartender"
 	},
 /turf/simulated/floor/plating/random,
 /area/space)
 "fc" = (
 /obj/wingrille_spawn,
 /obj/window_blinds/right{
-	id = "barman"
+	id = "bartender"
 	},
 /turf/simulated/floor/plating/random,
 /area/space)
@@ -1858,7 +1858,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Barman"
+	name = "Bartender"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/space)
@@ -1906,7 +1906,7 @@
 /area/space)
 "fu" = (
 /obj/blind_switch{
-	id = "barman";
+	id = "bartender";
 	pixel_x = -20;
 	pixel_y = 0
 	},

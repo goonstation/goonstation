@@ -10,7 +10,7 @@
 	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
@@ -20,7 +20,7 @@
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			var/obj/tug_cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
@@ -46,7 +46,7 @@
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_range(user, src) || user.loc == src) || !in_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
@@ -69,7 +69,7 @@
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if (get_dist(C, src) > 1 || load)
@@ -162,7 +162,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
@@ -188,7 +188,8 @@
 		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		var/mob/living/rider = src.rider
+		..()
 		rider.pixel_y = 0
 		walk(src, 0)
 		if (rider.client)
@@ -240,10 +241,10 @@
 				M.set_loc(src.loc)
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)
@@ -304,7 +305,7 @@
 		if (usr != rider)
 			..()
 			return
-		if (!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if (!is_incapacitated(usr))
 			eject_rider(0, 1)
 		return
 

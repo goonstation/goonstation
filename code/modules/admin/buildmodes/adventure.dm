@@ -6,7 +6,7 @@
 Click on the secondary adventure button to begin your adventure journey!<br>
 ***********************************************************"}
 	icon_state = "buildadventure"
-	var/obj/screen/buildmode/buildadventure/adventure_mode
+	var/atom/movable/screen/buildmode/buildadventure/adventure_mode
 	var/datum/adventure_submode/submode
 	var/list/submodes = list()
 
@@ -62,7 +62,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	proc/deselected()
 
 
-/obj/screen/buildmode/buildadventure
+/atom/movable/screen/buildmode/buildadventure
 	name = "Click to set adventure settings"
 	density = 1
 	anchored = 1
@@ -81,7 +81,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 		parent = A
 
 	clicked(var/list/pa)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			parent.select_submode()
-		else if (pa.Find("right") && parent.submode)
-			parent.submode.settings(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
+		else if (("right" in pa) && parent.submode)
+			parent.submode.settings(("ctrl" in pa), ("alt" in pa), ("shift" in pa))

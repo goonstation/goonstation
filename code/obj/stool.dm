@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 
-	Move()
+	Move(atom/target)
 		. = ..()
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
@@ -287,9 +287,12 @@
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.buckled = null
-			C.Move(src.loc)
-			C.buckled = src
+			if(src.buckled_guy.loc == src.loc)
+				C.buckled = null
+				C.Move(src.loc)
+				C.buckled = src
+			else
+				src.unbuckle()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -330,7 +333,7 @@
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
 			return 0
-		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
+		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
 			return 0
 
 		return 1
@@ -443,9 +446,9 @@
 		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		..()
-
-		if (istype(A, /obj/item/clothing/suit/bedsheet))
+		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+			..()
+		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
 				src.tuck_sheet(A, user)
 				return
@@ -655,7 +658,7 @@
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
 			user.show_text("There's already someone buckled in [src]!", "red")
@@ -715,7 +718,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
@@ -723,7 +726,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
@@ -762,6 +765,13 @@
 				src.buckled_guy = null
 		..()
 		return
+
+	Move(atom/target)
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+		. = ..()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)
@@ -1048,7 +1058,8 @@
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
 
 	unbuckle()
-		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		if(src.buckled_guy)
+			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
 /* ======================================================= */
@@ -1282,7 +1293,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
@@ -1332,7 +1343,7 @@
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		if (href_list["on"])
 			toggle_active()

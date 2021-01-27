@@ -224,7 +224,7 @@
 		else
 			src.frustration++
 
-		SPAWN_DBG (3)
+		SPAWN_DBG(0.3 SECONDS)
 			if (length(src?.path))
 				if (length(src.path) > 8)
 					src.frustration++
@@ -357,7 +357,7 @@
 			t = copytext(t, 1, 45)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 			src.created_name = t
 
