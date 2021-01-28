@@ -177,7 +177,7 @@
 		master = M
 
 		SPAWN_DBG(0)
-			if(master.disposed)
+			if(master?.disposed)
 				qdel(src)
 				return
 			var/icon/hud_style = hud_style_selection[get_hud_style(master)]
