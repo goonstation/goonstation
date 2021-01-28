@@ -1,5 +1,7 @@
 
 (t)thu jan 28 21
+(u)pali
+(+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
 (u)BenLubar
 (p)3514
 (e)🐛|bug
