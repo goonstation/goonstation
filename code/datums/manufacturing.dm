@@ -1937,7 +1937,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("FAB-1")
 	item_names = list("Fabric")
 	item_amounts = list(5)
-	item_outputs = list(/obj/item/clothing/head/LongTophat)
+	item_outputs = list(/obj/item/clothing/head/longtophat)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
