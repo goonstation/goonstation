@@ -15,6 +15,11 @@ For the main html chat area
 #define CTX_OBSERVE 256
 #define CTX_GHOSTJUMP 512
 
+// minimum number of messages in a single tick to consider it a "burst"
+#define CHAT_BURST_START 2
+// amount of time after a "burst" starts to withhold messages
+#define CHAT_BURST_TIME 0.4 SECONDS
+
 //Precaching a bunch of shit
 var/global
 	savefile/iconCache = new /savefile("data/iconCache.sav") //Cache of icons for the browser output
@@ -48,6 +53,9 @@ var/global
 		loaded = 0 //Has the client loaded the browser output area?
 		loadAttempts = 0 //How many times has the client tried to load the output area?
 		list/messageQueue = list() //If they haven't loaded chat, this is where messages will go until they do
+		burstTime = 0
+		burstCount = 0
+		list/burstQueue = null //If they have loaded chat but there's too much chat the messages go here
 		ctxFlag = 0 //Context menu flags for the admin powers
 		cookieSent = 0 //Has the client sent a cookie for analysis
 		list/connectionHistory = list() //Contains the connection history passed from chat cookie
@@ -392,6 +400,24 @@ var/global
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue["[C.chatOutput.messageQueue.len]"] = list("message" = message, "group" = group)
 		else
+			if (C?.chatOutput)
+				var/T = TIME
+				if (islist(C.chatOutput.burstQueue))
+					C.chatOutput.burstQueue["[C.chatOutput.burstQueue.len]"] = list("message" = message, "group" = group)
+					return
+
+				if (C.chatOutput.burstTime != T)
+					C.chatOutput.burstTime = T
+					C.chatOutput.burstCount = 1
+				else
+					C.chatOutput.burstCount++
+				if (C.chatOutput.burstCount > CHAT_BURST_START)
+					C.chatOutput.burstQueue = list(list("message" = message, "group" = group))
+					SPAWN_DBG(CHAT_BURST_TIME)
+						target << output(list2params(list(json_encode(C.chatOutput.burstQueue))), "browseroutput:outputBatch")
+						C.chatOutput.burstQueue = null
+					return
+
 			target << output(list2params(list(
 				message,
 				group
