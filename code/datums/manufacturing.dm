@@ -1935,7 +1935,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 /datum/manufacture/hat_ltophat
 	name = "Large Top Hat"
 	item_paths = list("FAB-1")
-	item_names = list("Fabric")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/clothing/head/longtophat)
 	time = 5 SECONDS
