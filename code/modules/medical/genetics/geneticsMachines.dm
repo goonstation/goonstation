@@ -1,10 +1,4 @@
 
-// Equipment IDs
-// 1) Injectors
-// 2) Analyser/Checker
-// 3) Emitters
-// 4) Reclaimer
-
 #define GENETICS_INJECTORS 1
 #define GENETICS_ANALYZER 2
 #define GENETICS_EMITTERS 3
@@ -17,16 +11,17 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	can_reconnect = 1
-	var/obj/machinery/genetics_scanner/scanner = null //Linked scanner. For scanning.
+	/// Linked scanner. For scanning.
+	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = list(
 		GENETICS_INJECTORS = 0,
 		GENETICS_ANALYZER = 0,
 		GENETICS_EMITTERS = 0,
 		GENETICS_RECLAIMER = 0,
 	)
-	var/list/saved_mutations = list()
-	var/list/saved_chromosomes = list()
-	var/list/combining = list()
+	var/list/datum/bioEffect/saved_mutations = list()
+	var/list/datum/dna_chromosome/saved_chromosomes = list()
+	var/list/datum/bioEffect/combining = list()
 	var/datum/dna_chromosome/to_splice = null
 	var/datum/bioEffect/currently_browsing = null
 	var/datum/geneticsResearchEntry/tracked_research = null
@@ -111,45 +106,46 @@
 	scanner_alert(user, "Recycled genetic info has yielded materials, auto-decryptors, and chromosomes.")
 	genResearch.researchMaterial += 40
 	genResearch.lock_breakers += rand(1, 3)
-	var/numChromosomes = rand(1, 3) == 3 ? rand(3, 5) : rand(2, 3)
-	for (var/i = 1; i <= numChromosomes; i++)
-		var/type_to_make = pick(typesof(/datum/dna_chromosome))
+	var/numChromosomes = pick(16.5;2, 39.5;3, 22;4, 22;5)
+	for (var/i in 1 to numChromosomes)
+		var/type_to_make = pick(concrete_typesof(/datum/dna_chromosome))
 		var/datum/dna_chromosome/C = new type_to_make(src)
 		src.saved_chromosomes += C
 
 /obj/machinery/computer/genetics/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
-/obj/machinery/computer/genetics/proc/bioEffect_sanity_check(var/datum/bioEffect/E,var/occupant_check = 1)
+/obj/machinery/computer/genetics/proc/bioEffect_sanity_check(datum/bioEffect/E, occupant_check = 1)
 	var/mob/living/carbon/human/H = src.get_scan_subject()
+	. = 0
 	if(occupant_check)
 		if (!istype(H))
 			scanner_alert(usr, "Invalid subject.", error = TRUE)
 			return 1
-		if(!H.bioHolder)
+		else if(!H.bioHolder)
 			scanner_alert(usr, "Invalid genetic structure.", error = TRUE)
 			return 1
-	if(!istype(E,/datum/bioEffect/))
+	if(!istype(E, /datum/bioEffect/))
 		scanner_alert(usr, "Unrecognized gene.", error = TRUE)
 		return 1
-	return 0
 
 /obj/machinery/computer/genetics/proc/sample_sanity_check(var/datum/computer/file/genetics_scan/S)
-	if (!istype(S,/datum/computer/file/genetics_scan/))
+	. = 0
+	if (!istype(S, /datum/computer/file/genetics_scan/))
 		scanner_alert(usr, "Unable to scan DNA sample. The sample may be corrupt.", error = TRUE)
 		return 1
-	return 0
 
 /obj/machinery/computer/genetics/proc/research_sanity_check(var/datum/geneticsResearchEntry/R)
-	if (!istype(R,/datum/geneticsResearchEntry/))
+	. = 0
+	if (!istype(R, /datum/geneticsResearchEntry/))
 		scanner_alert(usr, "Invalid research article.", error = TRUE)
 		return 1
-	return 0
 
-/obj/machinery/computer/genetics/proc/equipment_available(var/equipment = "analyser",var/datum/bioEffect/E)
+/obj/machinery/computer/genetics/proc/equipment_available(equipment = "analyser", datum/bioEffect/E)
 	if (genResearch.debug_mode)
-		return 1
+		return TRUE
 	var/mob/living/subject = get_scan_subject()
+	. = FALSE
 	var/datum/bioEffect/GBE
 	if (istype(E))
 		GBE = E.get_global_instance()
@@ -194,8 +190,6 @@
 				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && src.saved_mutations.len < genResearch.max_save_slots)
 					return 1
 
-	return 0
-
 /obj/machinery/computer/genetics/proc/equipment_cooldown(var/equipment_num,var/time)
 	if (genResearch.debug_mode)
 		return
@@ -225,7 +219,7 @@
 			scanner.icon_state = "scanner_0"
 			return null
 		else
-			for (var/D in scanner.occupant.bioHolder.effects)
+			for (var/D as() in scanner.occupant.bioHolder.effects)
 				var/datum/bioEffect/BE = scanner.occupant.bioHolder.effects[D]
 				var/datum/bioEffect/GBE = BE.get_global_instance()
 				if (GBE.research_level == EFFECT_RESEARCH_DONE)
@@ -643,7 +637,7 @@
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
-				for (var/datum/geneboothproduct/P in GB.offered_genes)
+				for (var/datum/geneboothproduct/P as() in GB.offered_genes)
 					if (P.id == E.id)
 						already_has = P
 						P.uses += 5
@@ -792,7 +786,7 @@
 				if (GR.required_effects.len != src.combining.len)
 					continue
 				var/list/temp = GR.required_effects.Copy()
-				for (var/datum/bioEffect/BE in src.combining)
+				for (var/datum/bioEffect/BE as() in src.combining)
 					if (BE.wildcard)
 						matches++
 					if (BE.id in temp)
@@ -803,7 +797,7 @@
 					src.saved_mutations += NEWBE
 					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
 					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
-					for (var/X in src.combining)
+					for (var/datum/bioEffect/X as() in src.combining)
 						src.saved_mutations -= X
 						src.combining -= X
 						qdel(X)
@@ -882,12 +876,12 @@
 	var/research_level = GBE.research_level
 
 	var/list/blockList = active || (research_level >= EFFECT_RESEARCH_ACTIVATED && !potential) ? GBE.dnaBlocks.blockList : BE.dnaBlocks.blockListCurr
-	if (length(blockList) == 0) // stable mutagen doesn't generate messed-up DNA for genes :(
+	if (!length(blockList)) // stable mutagen doesn't generate messed-up DNA for genes :(
 		BE.dnaBlocks.ModBlocks()
 		blockList = BE.dnaBlocks.blockListCurr
 
 	var/list/dna = list()
-	for (var/datum/basePair/BP in blockList)
+	for (var/datum/basePair/BP as() in blockList)
 		dna += list(list(
 			"upper" = BP.bpp1,
 			"lower" = BP.bpp2,
@@ -958,7 +952,7 @@
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R in data_core.medical)
+	for(var/datum/data/record/R as() in data_core.medical)
 		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
 		if (!istype(S))
 			continue
@@ -968,20 +962,20 @@
 			"uid" = S.subject_uID,
 		))
 
-	for(var/datum/bioEffect/BE in saved_mutations)
+	for(var/datum/bioEffect/BE as() in saved_mutations)
 		.["savedMutations"] += list(serialize_bioeffect_for_tgui(BE))
 
-	for(var/datum/dna_chromosome/C in saved_chromosomes)
+	for(var/datum/dna_chromosome/C as() in saved_chromosomes)
 		.["savedChromosomes"] += list(list(
 			"ref" = "\ref[C]",
 			"name" = C.name,
 			"desc" = C.desc,
 		))
 
-	for (var/datum/bioEffect/BE in combining)
+	for (var/datum/bioEffect/BE as() in combining)
 		.["combining"] += "\ref[BE]"
 
-	for (var/X in bioEffectList)
+	for (var/X as() in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[X]
 		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
 			.["mutantRaces"] += list(list(
@@ -1001,7 +995,7 @@
 
 	if (istype(selected_record))
 		var/list/genes = list()
-		for (var/datum/bioEffect/BE in selected_record.dna_pool)
+		for (var/datum/bioEffect/BE as() in selected_record.dna_pool)
 			var/datum/bioEffect/GBE = BE.get_global_instance()
 			if (GBE.secret && !genResearch.see_secret)
 				continue
@@ -1057,20 +1051,20 @@
 	else
 		.["haveSubject"] = FALSE
 
-	for (var/id in bioEffectList)
+	for (var/id as() in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue
 		.["bioEffects"] += list(serialize_bioeffect_for_tgui(BE))
 
-	for(var/R in genResearch.researchTreeTiered)
+	for(var/R as() in genResearch.researchTreeTiered)
 		if (text2num(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
 		var/list/tierList = genResearch.researchTreeTiered[R]
 
-		for (var/datum/geneticsResearchEntry/C in tierList)
+		for (var/datum/geneticsResearchEntry/C as() in tierList)
 			if (C.meetsRequirements())
 				var/research_cost = C.researchCost
 				if (genResearch.cost_discount)
@@ -1097,7 +1091,7 @@
 		.["availableResearch"][text2num(R)] = availTier
 		.["finishedResearch"][text2num(R)] = finishedTier
 
-	for(var/datum/geneticsResearchEntry/R in genResearch.currentResearch)
+	for(var/datum/geneticsResearchEntry/R as() in genResearch.currentResearch)
 		.["currentResearch"] += list(list(
 			"ref" = "\ref[R]",
 			"name" = R.name,

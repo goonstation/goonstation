@@ -16,7 +16,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/see_secret = 0
 	var/emitter_radiation = 75
 	var/equipment_cooldown_multiplier = 1
-	var/list/currentResearch = new/list()
+	var/list/datum/geneticsResearchEntry/currentResearch = new/list()
 	var/list/researchTree = new/list()
 	var/list/researchTreeTiered = new/list()
 	var/list/combinationrecipes = new/list()
@@ -136,11 +136,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 
 	proc/checkClonepodBonus()
-		var/nominal_clonepods = 0
-		for(var/obj/machinery/clonepod/CP in src.clonepods)
-			if(CP.operating_nominally()) nominal_clonepods++
-
-		return nominal_clonepods
+		. = 0
+		for(var/obj/machinery/clonepod/CP as() in src.clonepods)
+			if(CP.operating_nominally())
+				.++
 
 	proc/checkMaterialGenerationRate()
 		. = 1 + min(checkClonepodBonus(), 2)
@@ -187,12 +186,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if(src.hidden)
 			return 0
 
-		for(var/X in src.requiredResearch) // Have we got the prerequisite researches?
+		for(var/X as() in src.requiredResearch) // Have we got the prerequisite researches?
 			if(!genResearch.isResearched(X))
 				return 0
 
 		var/datum/bioEffect/BE
-		for (var/X in src.requiredMutRes)
+		for (var/X as() in src.requiredMutRes)
 			BE = GetBioeffectFromGlobalListByID(X)
 			if (!BE)
 				return 0
