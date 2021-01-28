@@ -44,7 +44,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/special/spawner/beepsky
+		set_current_projectile(new/datum/projectile/special/spawner/beepsky)
 		..()
 
 	setupProperties()
