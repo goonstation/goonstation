@@ -1420,7 +1420,7 @@ datum
 					boutput(M, "<span class='notice'><b>Oh. God.</b></span>")
 					SPAWN_DBG(2 SECONDS)
 						if (M)
-							M.become_ice_statue()
+							M.become_statue_ice()
 				..()
 				return
 
