@@ -93,7 +93,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "clients", "color", "alpha", "blend_mode", "apperance_flags")
 	var/list/mob_var_blacklist = list("ckey", "client", "key")
 	for(var/var_name in orig_datum.vars)
-		if(!issaved(orig_datum.vars[var_name]) || (var_name in var_blacklist) || ismob(result) && (var_name in mob_var_blacklist))
+		if(!issaved(orig_datum.vars[var_name]) || (var_name in var_blacklist) || ismob(result) && (var_name in mob_var_blacklist) || length(var_name) >= 6 && copytext(var_name, 1, 7) == "global")
 			continue
 		if(var_name == "filters") // idk if this works
 			result.vars[var_name] = orig_datum.vars[var_name]
