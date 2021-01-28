@@ -23,6 +23,7 @@
 		src.field_strength = rand(1,5)
 
 	post_setup()
+		. = ..()
 		var/harmprob = 33
 		if (src.artitype.name == "eldritch")
 			harmprob += 42 // total of 75% chance of it being nasty
