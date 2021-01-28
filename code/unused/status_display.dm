@@ -368,71 +368,71 @@
 // 	name = "mining display"
 // 	mode = 6
 
-// /obj/machinery/ai_status_display
-// 	icon = 'icons/obj/status_display.dmi'
-// 	icon_state = "ai_frame"
-// 	name = "\improper AI display"
-// 	anchored = 1
-// 	density = 0
-// 	mats = 14
-// 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-
-// 	machine_registry_idx = MACHINES_STATUSDISPLAYS
-// 	var/mode = 0	// 0 = Blank
-// 					// 1 = AI emoticon
-// 					// 2 = Blue screen of death
-
-// 	var/picture_state	// icon_state of ai picture
-// 	var/image/pic_image = null
-
-// 	var/emotion = "ai_happy"
-// 	var/message = null
-
-// 	New()
-// 		..()
-// 		pic_image = image('icons/obj/status_display.dmi', icon_state = picture_state)
-
-// 	process()
-// 		if (status & NOPOWER)
-// 			UpdateOverlays(null, "emotion_img")
-// 			picture_state = null
-// 			return
-
-// 		use_power(200)
-
-// 		update()
-
-// 	proc/update()
-// 		if (mode == 0) //Blank
-// 			UpdateOverlays(null, "emotion_img")
-// 			picture_state = null
-// 			return
-
-// 		if (mode == 1)	// AI emoticon
-// 			if (src.emotion)
-// 				src.set_picture(src.emotion)
-// 			return
-
-// 		if (mode == 2)	// BSOD
-// 			set_picture("ai_bsod")
-// 			return
-
-// 	proc/set_picture(var/state)
-// 		if (!state || state == picture_state)
-// 			return //Hoooly balls why was this not here before argh
-// 		picture_state = state
-// 		pic_image.icon_state = picture_state
-// 		UpdateOverlays(pic_image, "emotion_img")
-
-// 	get_desc()
-// 		..()
-// 		if (status & NOPOWER)
-// 			return
-// 		if (src.message)
-// 			. += "<br>It says: \"[src.message]\""
-
-// I blame Flourish
 /obj/machinery/ai_status_display
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "ai_frame"
+	name = "\improper AI display"
+	anchored = 1
+	density = 0
+	mats = 14
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+
+	machine_registry_idx = MACHINES_STATUSDISPLAYS
+	var/mode = 0	// 0 = Blank
+					// 1 = AI emoticon
+					// 2 = Blue screen of death
+
+	var/picture_state	// icon_state of ai picture
+	var/image/pic_image = null
+
+	var/emotion = "ai_happy"
+	var/message = null
+
 	New()
 		..()
-		qdel(src)
+		pic_image = image('icons/obj/status_display.dmi', icon_state = picture_state)
+
+	process()
+		if (status & NOPOWER)
+			UpdateOverlays(null, "emotion_img")
+			picture_state = null
+			return
+
+		use_power(200)
+
+		update()
+
+	proc/update()
+		if (mode == 0) //Blank
+			UpdateOverlays(null, "emotion_img")
+			picture_state = null
+			return
+
+		if (mode == 1)	// AI emoticon
+			if (src.emotion)
+				src.set_picture(src.emotion)
+			return
+
+		if (mode == 2)	// BSOD
+			set_picture("ai_bsod")
+			return
+
+	proc/set_picture(var/state)
+		if (!state || state == picture_state)
+			return //Hoooly balls why was this not here before argh
+		picture_state = state
+		pic_image.icon_state = picture_state
+		UpdateOverlays(pic_image, "emotion_img")
+
+	get_desc()
+		..()
+		if (status & NOPOWER)
+			return
+		if (src.message)
+			. += "<br>It says: \"[src.message]\""
+
+// I blame Flourish
+/*obj/machinery/ai_status_display
+	New()
+		..()
+		qdel(src)*/
