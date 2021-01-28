@@ -9946,7 +9946,7 @@
 /area/martian_trader)
 "aAa" = (
 /obj/item/paper/thermal{
-	info = "Leslie, what the hell were you thinking leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where next pizza run.";
+	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
 	name = "scribbled note"
 	},
 /obj/decal/fakeobjects/robot,
