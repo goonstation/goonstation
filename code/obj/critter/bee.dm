@@ -844,6 +844,8 @@
 				var/matrix/trans = new
 				trans.Scale((ubertier - 4) / 3) // mmm, large hat
 				hat.transform = trans
+				trans.Translate(0, -7 * ((ubertier - 4) / 3 - 1))
+				hat.wear_image.transform = trans
 		hat.name = "[src]'s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
