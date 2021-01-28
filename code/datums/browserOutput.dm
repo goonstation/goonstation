@@ -119,8 +119,8 @@ var/global
 				//if (src.owner.holder)
 				src.loadAdmin()
 				if (src.messageQueue)
-					for (var/x = 0, x < src.messageQueue.len, x++)
-						boutput(src.owner, src.messageQueue["[x]"]["message"], src.messageQueue["[x]"]["group"])
+					for (var/list/message in src.messageQueue)
+						boutput(src.owner, message["message"], message["group"])
 				src.messageQueue = null
 				if (ua)
 					//For persistent user tracking
@@ -398,11 +398,11 @@ var/global
 
 		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 			//Client sucks at loading things, put their messages in a queue
-			C.chatOutput.messageQueue["[length(C.chatOutput.messageQueue)]"] = list("message" = message, "group" = group)
+			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
 		else
 			if (C?.chatOutput)
 				if (islist(C.chatOutput.burstQueue))
-					C.chatOutput.burstQueue["[length(C.chatOutput.burstQueue)]"] = list("message" = message, "group" = group)
+					C.chatOutput.burstQueue += list(list("message" = message, "group" = group))
 					return
 
 				var/now = TIME
@@ -413,9 +413,13 @@ var/global
 					C.chatOutput.burstCount++
 
 				if (C.chatOutput.burstCount > CHAT_BURST_START)
-					C.chatOutput.burstQueue = list(list("message" = message, "group" = group))
+					C.chatOutput.burstQueue = list(
+						list("message" = message, "group" = group)
+					)
 					SPAWN_DBG(CHAT_BURST_TIME)
-						target << output(list2params(list(json_encode(C.chatOutput.burstQueue))), "browseroutput:outputBatch")
+						target << output(list2params(list(
+							json_encode(C.chatOutput.burstQueue)
+						)), "browseroutput:outputBatch")
 						C.chatOutput.burstQueue = null
 					return
 
