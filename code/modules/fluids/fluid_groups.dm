@@ -124,7 +124,7 @@
 		for (var/fluid in src.members)
 			if(fluid)
 				var/obj/fluid/M = fluid
-				M.group = 0
+				M.group = null
 
 		//if (src in processing_fluid_groups)
 		//	processing_fluid_groups.Remove(src)
@@ -256,7 +256,7 @@
 			src.reagents.remove_any(amt_per_tile)
 			src.contained_amt = src.reagents.total_volume
 
-		F.group = 0
+		F.group = null
 		var/turf/removed_loc = F.loc
 		if(removed_loc)
 			F.turf_remove_cleanup(F.loc)
@@ -304,7 +304,7 @@
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
 
-			F.group = 0
+			F.group = null
 			var/turf/removed_loc = F.loc
 			if (removed_loc)
 				F.turf_remove_cleanup(F.loc)

@@ -147,7 +147,7 @@ var/mutable_appearance/fluid_ma
 		if (src.group)
 			src.group.members -= src
 
-		src.group = 0
+		src.group = null
 
 		/*for (var/atom/A in src.floated_atoms) // ehh i dont like doing this, but I think we need it.
 			if (!A) continue
@@ -790,7 +790,7 @@ var/mutable_appearance/fluid_ma
 
 		for(var/current_id in reacted_ids)
 			if (!src.group) return
-			var/datum/reagent/current_reagent = F.group.reagents.reagent_list[current_id]
+			var/datum/reagent/current_reagent = F?.group.reagents.reagent_list[current_id]
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
