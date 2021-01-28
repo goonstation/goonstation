@@ -527,11 +527,8 @@ THROWING DARTS
 		if (isliving(src.owner) && !isnull(src.loc)) // if we're in nullspace then we've already triggered
 			//var/mob/living/carbon/human/source = owner
 			var/mob/living/source = owner
-			if(src.body_part != "chest")
-				source.visible_message("[source]'s [src.body_part] makes a somber buzzing noise.")
-				return // for some reason H.implant is set to null when it's in a limb. not gonna figure out why.
-			if((source.suiciding) && prob(60)) //Probably won't trigger on suicide though, or if not in chest
-				source.visible_message("[source] emits a somber buzzing noise.")
+			if((source.suiciding || src.body_part != "chest") && prob(60)) //Probably won't trigger on suicide though, or if not in chest
+				source.visible_message("[source]'s [zone_sel2name[src.body_part]] emits a somber buzzing noise.")
 				return
 			. = 0
 			var/hasMacro = 0
@@ -581,10 +578,10 @@ THROWING DARTS
 
 				if (ishuman(owner))
 					var/mob/living/carbon/human/H = owner
-					H.implant -= src
+					if (H.implant) H.implant -= src
 				else if (ismobcritter(owner))
 					var/mob/living/critter/C = owner
-					C.implants -= src
+					if (C.implants) C.implants -= src
 
 				qdel(src)
 
@@ -1007,7 +1004,6 @@ THROWING DARTS
 	w_class = 2.0
 	hide_attack = 2
 	var/sneaky = 0
-	var/only_in = null
 	tooltip_flags = REBUILD_DIST
 
 	New()
@@ -1028,9 +1024,7 @@ THROWING DARTS
 		return
 
 	proc/implant(mob/M as mob, mob/user as mob)
-		var/zone = src.only_in
-		if(isnull(zone))
-			zone = user.zone_sel.selecting
+		var/zone = user.zone_sel.selecting
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M]'s [zone_sel2name[zone]].</span>")
 		else
@@ -1152,7 +1146,6 @@ THROWING DARTS
 
 /obj/item/implanter/mindslave
 	icon_state = "implanter1-g"
-	only_in = "chest"
 	New()
 		src.imp = new /obj/item/implant/mindslave( src )
 		..()
@@ -1160,7 +1153,6 @@ THROWING DARTS
 
 /obj/item/implanter/super_mindslave
 	icon_state = "implanter1-g"
-	only_in = "chest"
 	New()
 		src.imp = new /obj/item/implant/mindslave/super( src )
 		..()
@@ -1168,7 +1160,6 @@ THROWING DARTS
 
 /obj/item/implanter/microbomb
 	name = "microbomb implanter"
-	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1179,7 +1170,6 @@ THROWING DARTS
 
 /obj/item/implanter/macrobomb
 	name = "macrobomb implanter"
-	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1189,7 +1179,6 @@ THROWING DARTS
 
 /obj/item/implanter/uplink_macrobomb
 	name = "macrobomb implanter"
-	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
@@ -1201,7 +1190,6 @@ THROWING DARTS
 
 /obj/item/implanter/uplink_microbomb
 	name = "microbomb implanter"
-	only_in = "chest"
 	icon_state = "implanter1-g"
 	sneaky = 1
 	New()
