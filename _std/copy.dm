@@ -6,7 +6,7 @@
 
 #ifdef COPY_DEBUG
 var/global/list/copy_stack
-var/global/list/longest_copy_stack = list()
+var/global/list/longest_copy_stack
 #endif
 
 proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
@@ -27,7 +27,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 		for(var/key in orig)
 			#ifdef COPY_DEBUG
 			global.copy_stack += "index"
-			if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+			if(length(global.copy_stack) >= length(global.longest_copy_stack)) global.longest_copy_stack = global.copy_stack.Copy()
 			#endif
 			var/new_key = _SEMI_DEEP_COPY(key)
 			#ifdef COPY_DEBUG
@@ -39,7 +39,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 			if(!isnum(key) && !isnull(orig[key]))
 				#ifdef COPY_DEBUG
 				global.copy_stack += "[key]"
-				if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+				if(length(global.copy_stack) >= length(global.longest_copy_stack)) global.longest_copy_stack = global.copy_stack.Copy()
 				#endif
 				.[new_key] = _SEMI_DEEP_COPY(orig[key])
 				#ifdef COPY_DEBUG
@@ -100,7 +100,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 			continue
 		#ifdef COPY_DEBUG
 		global.copy_stack += var_name
-		if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+		if(length(global.copy_stack) >= length(global.longest_copy_stack)) global.longest_copy_stack = global.copy_stack.Copy()
 		#endif
 		result.vars[var_name] = _SEMI_DEEP_COPY(orig_datum.vars[var_name])
 		#ifdef COPY_DEBUG
