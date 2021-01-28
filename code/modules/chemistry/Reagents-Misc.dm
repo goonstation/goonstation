@@ -2410,7 +2410,7 @@ datum
 					M.alpha = 0
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
-					SPAWN_DBG(effect_length * 10)
+					SPAWN_DBG(effect_length SECONDS)
 						if(ishuman(M) && M.alpha != 255)
 							boutput(M, "<span class='notice'>You feel yourself returning back to normal. Phew!</span>")
 							M.alpha = 255

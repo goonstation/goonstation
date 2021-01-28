@@ -1559,7 +1559,7 @@ datum
 				return
 
 		medical/dimethyl_sulfoxide
-			name = "dimethyl sulfoxide"
+			name = "dimethyl sulfoxide" // DMSO
 			id = "dimethyl_sulfoxide"
 			description = "A clear liquid. It is used as topical analgesic and as a vector for chemicals to penetrate the skin."
 			reagent_state = LIQUID
@@ -1568,30 +1568,40 @@ datum
 			fluid_b = 220
 			transparency = 20
 			viscosity = 0.85
+			depletion_rate = 2
 			touch_modifier = 0.5
 			penetrates_skin = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				/// Perform a reduced version of the on_touch skin penetration of the base
 				//  reaction_mob() for ALL reagents in holder
-				if (method == TOUCH)
+				var/modifier_calculated = FALSE
+				var/modifier = touch_modifier
+				if (method == TOUCH && !ON_COOLDOWN(M, "dmso", 5 SECONDS))
+					if(!M.reagents.has_reagent("dimethyl_sulfoxide"))
+						boutput(M, "<span class='notice'>You notice a garlic-like taste in your mouth.</span>")
 					for(var/ID in holder?.reagent_list)
 						var/datum/reagent/R = holder?.reagent_list[ID]
 						if (R.penetrates_skin) // don't double up on chems that already penetrate
 							continue
 						if (!("nopenetrate" in paramslist))
-							var/modifier = touch_modifier
 							var/transfer_volume = min(R.volume, volume) // limit transfer volume by DMSO volume
-							if(!src.pierces_outerwear)
-								for(var/atom in M.get_equipped_items())
-									if (istype(atom, /obj/item/clothing))
-										var/obj/item/clothing/C = atom
-										modifier -= (1 - C.permeability_coefficient)/3
+							if(!modifier_calculated)
+								modifier_calculated = TRUE
+								if(!src.pierces_outerwear)
+									for(var/atom in M.get_equipped_items())
+										if (istype(atom, /obj/item/clothing))
+											var/obj/item/clothing/C = atom
+											modifier -= (1 - C.permeability_coefficient)/3
+								M.visible_message("<span class='alert'>[M] has a calculated permeability_coefficient modifier of [src.touch_modifier - modifier]</span>") // Azrun TODO REMOVE THIS IS FOR TESTING
 							modifier = clamp(modifier, 0, 1)
 							if(M.reagents)
 								M.reagents.add_reagent(ID,transfer_volume*modifier,R.data)
+								M.visible_message("<span class='alert'>[M] transfered [transfer_volume*modifier] units of [ID] via DMSO</span>") // Azrun TODO REMOVE THIS IS FOR TESTING
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_toxin_damage(1 * mult)
+				M.take_toxin_damage(0.5 * mult)
 				M.HealDamage("All", 0.5 * mult)
+				..()
