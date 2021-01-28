@@ -68,7 +68,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 			 //This is only temporary to regenerate points while this isnt finished yet.
 			researchMaterial += checkMaterialGenerationRate()
 
-		for(var/datum/geneticsResearchEntry/entry in currentResearch)
+		for(var/datum/geneticsResearchEntry/entry as() in currentResearch)
 			entry.onTick()
 			if(entry.finishTime <= lastTick)
 				entry.isResearched = 1
@@ -164,11 +164,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/htmlIcon = null
 
 	proc/onFinish()
-		for_by_tcl(C, /obj/machinery/computer/genetics)
-			if (C.tracked_research == src)
-				C.tracked_research = null
-				break
-		return
+		for_by_tcl(computer, /obj/machinery/computer/genetics)
+			for (var/datum/tgui/ui as() in tgui_process.get_uis(computer))
+				computer.update_static_data(null, ui)
 
 	proc/onBegin()
 		return
@@ -195,7 +193,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 			BE = GetBioeffectFromGlobalListByID(X)
 			if (!BE)
 				return 0
-			if (BE.research_level < 2)
+			if (BE.research_level < EFFECT_RESEARCH_DONE)
 				return 0
 
 		if (genResearch.mutations_researched < src.requiredTotalMutRes)
@@ -216,7 +214,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	onFinish()
 		..()
-		if (global_instance.research_level < 2)
+		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
 			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
 		return

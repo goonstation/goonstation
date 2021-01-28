@@ -401,7 +401,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/global_BE = E.get_global_instance()
 		if (grant_research)
-			if (global_BE.research_level < 2)
+			if (global_BE.research_level < EFFECT_RESEARCH_DONE)
 				genResearch.mutations_researched++
 			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 

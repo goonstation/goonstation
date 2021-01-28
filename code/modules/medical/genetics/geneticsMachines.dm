@@ -159,34 +159,34 @@
 			if(genResearch.isResearched(/datum/geneticsResearchEntry/rademitter) && world.time >= src.equipment[GENETICS_EMITTERS])
 				return 1
 		if("precision_emitter")
-			if(!iscarbon(subject) || !E || !GBE || GBE.research_level < 2)
+			if(!iscarbon(subject) || !E || !GBE || GBE.research_level < EFFECT_RESEARCH_DONE)
 				return 0
 			if (E.can_scramble)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision) && world.time >= src.equipment[GENETICS_EMITTERS])
 					return 1
 		if("reclaimer")
-			if(E?.can_reclaim && GBE?.research_level >= 2)
+			if(E?.can_reclaim && GBE?.research_level >= EFFECT_RESEARCH_DONE)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer) && world.time >= src.equipment[GENETICS_RECLAIMER])
 					return 1
 		if("injector")
 			if(genResearch.researchMaterial < genResearch.injector_cost)
 				return 0
-			if(E?.can_make_injector && GBE?.research_level >= 2)
+			if(E?.can_make_injector && GBE?.research_level >= EFFECT_RESEARCH_DONE)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/injector) && world.time >= src.equipment[GENETICS_INJECTORS])
 					if (genResearch.researchMaterial >= genResearch.injector_cost)
 						return 1
 		if("genebooth")
 			if(genResearch.researchMaterial < genResearch.genebooth_cost)
 				return 0
-			if(E?.can_make_injector && GBE?.research_level >= 1)
+			if(E?.can_make_injector && GBE?.research_level >= EFFECT_RESEARCH_IN_PROGRESS)
 				if(genResearch.isResearched(/datum/geneticsResearchEntry/genebooth))
 					return 1
 		if("activator")
-			if(E?.can_make_injector && GBE?.research_level >= 2)
+			if(E?.can_make_injector && GBE?.research_level >= EFFECT_RESEARCH_DONE)
 				if(world.time >= src.equipment[GENETICS_INJECTORS])
 					return 1
 		if("saver")
-			if(E && GBE?.research_level >= 2)
+			if(E && GBE?.research_level >= EFFECT_RESEARCH_DONE)
 				if (genResearch.isResearched(/datum/geneticsResearchEntry/saver) && src.saved_mutations.len < genResearch.max_save_slots)
 					return 1
 
@@ -371,7 +371,7 @@
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
 			var/datum/bioEffect/GBE = E.get_global_instance()
-			if (GBE.research_level <= 1)
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
 				src.log_maybe_cheater(usr, "tried to create a [E.id] activator on an unresearched gene (href spoofing?)")
 				return
 			if (!E.can_make_injector)
@@ -935,7 +935,6 @@
 		"activeGene" = "\ref[src.currently_browsing]",
 		"scannerAlert" = src.last_scanner_alert,
 		"scannerError" = src.last_scanner_alert_error,
-		"bioEffects" = list(),
 		"availableResearch" = list(list(), list(), list(), list()),
 		"finishedResearch" = list(list(), list(), list(), list()),
 		"currentResearch" = list(),
@@ -1051,12 +1050,6 @@
 	else
 		.["haveSubject"] = FALSE
 
-	for (var/id as() in bioEffectList)
-		var/datum/bioEffect/BE = bioEffectList[id]
-		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
-			continue
-		.["bioEffects"] += list(serialize_bioeffect_for_tgui(BE))
-
 	for(var/R as() in genResearch.researchTreeTiered)
 		if (text2num(R) == 0)
 			continue
@@ -1119,6 +1112,18 @@
 			"label" = "Reclaimer",
 			"cooldown" = src.equipment[GENETICS_RECLAIMER] - world.time,
 		))
+
+/obj/machinery/computer/genetics/ui_static_data(mob/user)
+	var/to_send = list()
+	for (var/id as() in bioEffectList)
+		var/datum/bioEffect/BE = bioEffectList[id]
+		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
+			continue
+		to_send += list(serialize_bioeffect_for_tgui(BE))
+
+	. = list(
+		"bioEffects" = to_send
+	)
 
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
