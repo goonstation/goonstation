@@ -663,7 +663,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SCALPEL - CHEST ---------- */
 	else if (surgeon.zone_sel.selecting == "chest") // old and new removal works!
-		if (length(patient.ailments) > 0)
+		if (length(patient.ailments))
 			var/attempted_parasite_removal = FALSE
 			for (var/datum/ailment_data/an_ailment in patient.ailments)
 				if (an_ailment.cure == "Surgery")
