@@ -1075,15 +1075,11 @@ Frequency:
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
 			var/obj/item/sheet/M = W
-			if (M.amount >= 1)
+			if (M.consume_sheets(1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "shell-plate"
-				M.amount -= 1
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
 				return
 			else
 				boutput(user, "You need at least one metal sheet to add plating! How are you even seeing this message?! How do you have a metal sheet that has no metal sheets in it?!?!")
