@@ -16,9 +16,9 @@ For the main html chat area
 #define CTX_GHOSTJUMP 512
 
 // minimum number of messages in a single tick to consider it a "burst"
-#define CHAT_BURST_START 2
+#define CHAT_BURST_START 5
 // amount of time after a "burst" starts to withhold messages
-#define CHAT_BURST_TIME 0.4 SECONDS
+#define CHAT_BURST_TIME 0.2 SECONDS
 
 //Precaching a bunch of shit
 var/global
