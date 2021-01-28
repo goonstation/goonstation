@@ -435,7 +435,11 @@
 		..()
 		src.setMaterial(getMaterial("gold"))
 
+<<<<<<< HEAD
 /obj/item/clothing/head/longtophat
+=======
+/obj/item/clothing/head/LongTophat
+>>>>>>> 00554f45c3470cfd70afb799cb9b1bbaff67ef8f
 	name = "Long tophat"
 	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
 	wear_image_icon = 'icons/mob/fruithat.dmi'
