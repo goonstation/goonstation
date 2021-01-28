@@ -190,12 +190,12 @@
 		. = ..()
 		var/mob/living/critter/M = holder.owner
 		if (!M)
-			return 0
+			return -1
 		var/area/A = get_area(M)
 		if (A?.active)
-			return 0
+			return -1
 		if ((M.last_hibernation_wake_tick + min_time_between_hibernations) >= TIME)
-			return 0
+			return -1
 		return hibernation_priority
 
 	on_tick()

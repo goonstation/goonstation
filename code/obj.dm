@@ -361,13 +361,9 @@
 			qdel(src)
 		if (istype(C, /obj/item/rods))
 			var/obj/item/rods/R = C
-			if (R.amount >= 2)
-				R.amount -= 2
+			if (R.consume_rods(2))
 				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
 				new /obj/lattice/barricade(src.loc)
-				if (R.amount < 1)
-					user.u_equip(C)
-					qdel(C)
 				qdel(src)
 		return
 
@@ -402,19 +398,17 @@
 				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
 				return
 			if (R.amount > difference)
-				R.amount -= difference
+				R.consume_rods(difference)
 				src.strength = 5
 				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
 				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
 				return
 			else if (R.amount <= difference)
-				R.amount -= difference
-				src.strength = 5
+				src.strength += R.amount
 				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
 				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
-				if (R.amount < 1)
-					user.u_equip(W)
-					qdel(W)
+				user.u_equip(W)
+				qdel(W)
 				return
 		else
 			if (W.force > 8)

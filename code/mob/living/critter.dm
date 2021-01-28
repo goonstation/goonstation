@@ -690,6 +690,9 @@
 		if(isitem(I))
 			I.dropped(src)
 
+	has_any_hands()
+		. = length(hands)
+
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
 			return 0

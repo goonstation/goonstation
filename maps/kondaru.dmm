@@ -12153,17 +12153,17 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDc" = (
-/obj/machinery/power/stats_meter{
-	name = "Hot Loop Inlet Meter";
-	pixel_x = 12;
-	tag = "Hot Loop Inlet Meter"
-	},
 /obj/machinery/meter{
 	pixel_x = -10;
 	pixel_y = -8
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Inlet Meter";
+	pixel_x = 12;
+	tag = "Hot Loop Inlet Meter"
 	},
 /obj/cable{
 	d2 = 8;
@@ -14862,7 +14862,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -14874,13 +14874,13 @@
 	on = 1
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJt" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /obj/machinery/camera{
@@ -14891,7 +14891,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJu" = (
 /obj/decal/poster/wallsign/hazard_coldloop,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -15387,7 +15387,7 @@
 "aKA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aKB" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/machinery/sparker{
@@ -15397,7 +15397,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aKC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -15763,13 +15763,13 @@
 	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aLJ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aLK" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -16111,7 +16111,7 @@
 	name = "Combustion Chamber Vent"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aMM" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"

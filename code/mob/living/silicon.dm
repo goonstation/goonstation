@@ -156,6 +156,12 @@
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
 
+/mob/living/silicon/has_any_hands()
+	// no hands :(
+
+	// unless...
+	. = istype(src.equipped(), /obj/item/magtractor)
+
 /mob/living/silicon/put_in_hand(obj/item/I, hand)
 	if (!I) return 0
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))

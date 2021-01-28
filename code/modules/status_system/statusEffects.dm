@@ -630,6 +630,20 @@
 
 			return ..(timePassed)
 
+	simpledot/stimulant_withdrawl
+		id = "stimulant_withdrawl"
+		name = "Stimulant withdrawl"
+		icon_state = "janktank-w"
+		desc = "You feel AWFUL!"
+		tickSpacing = 3 SECONDS
+		damage_brute = 1
+		damage_tox = 2
+
+		onUpdate(timePassed)
+			. = ..()
+			if(prob(timePassed))
+				owner.changeStatus("stunned", 3 SECONDS)
+
 	stuns
 		modify_change(change)
 			. = change
