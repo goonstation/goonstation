@@ -398,19 +398,20 @@ var/global
 
 		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 			//Client sucks at loading things, put their messages in a queue
-			C.chatOutput.messageQueue["[C.chatOutput.messageQueue.len]"] = list("message" = message, "group" = group)
+			C.chatOutput.messageQueue["[length(C.chatOutput.messageQueue)]"] = list("message" = message, "group" = group)
 		else
 			if (C?.chatOutput)
-				var/T = TIME
 				if (islist(C.chatOutput.burstQueue))
-					C.chatOutput.burstQueue["[C.chatOutput.burstQueue.len]"] = list("message" = message, "group" = group)
+					C.chatOutput.burstQueue["[length(C.chatOutput.burstQueue)]"] = list("message" = message, "group" = group)
 					return
 
-				if (C.chatOutput.burstTime != T)
-					C.chatOutput.burstTime = T
+				var/now = TIME
+				if (C.chatOutput.burstTime != now)
+					C.chatOutput.burstTime = now
 					C.chatOutput.burstCount = 1
 				else
 					C.chatOutput.burstCount++
+
 				if (C.chatOutput.burstCount > CHAT_BURST_START)
 					C.chatOutput.burstQueue = list(list("message" = message, "group" = group))
 					SPAWN_DBG(CHAT_BURST_TIME)
