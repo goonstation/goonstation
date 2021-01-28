@@ -192,7 +192,7 @@
 
 /obj/item/reagent_containers/food/snacks/stroopwafel
 	name = "stroopwafel"
-	desc = "A traditional cookie from Holland, doesn't this need to go into the microwave?"
+	desc = "A traditional cookie from Holland. Doesn't this need to go into the microwave?"
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "stroopwafel"
 	amount = 2
