@@ -563,7 +563,7 @@
 						t = copytext(sanitize(strip_html(t)), 1, 16)
 						if (!t)
 							return
-						if (!in_interact_range(src.master, usr) || !(F.holder in src.master))
+						if (!src.master.is_user_in_interact_range(usr))
 							return
 						if(F.holder.read_only)
 							return
