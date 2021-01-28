@@ -2,6 +2,13 @@
 #define _SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x, environment=environment, root=root))
 #define SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x))
 
+#define COPY_DEBUG
+
+#ifdef COPY_DEBUG
+var/global/list/copy_stack
+var/global/list/longest_copy_stack = list()
+#endif
+
 proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
 			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency))
@@ -9,18 +16,35 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 	if(isnull(environment))
 		root = orig
 		environment = list()
+		#ifdef COPY_DEBUG
+		global.copy_stack = list()
+		#endif
 	if(orig in environment)
 		return environment[orig]
 	if(islist(orig))
 		. = list()
 		environment[orig] = .
 		for(var/key in orig)
+			#ifdef COPY_DEBUG
+			global.copy_stack += "index"
+			if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+			#endif
 			var/new_key = _SEMI_DEEP_COPY(key)
+			#ifdef COPY_DEBUG
+			global.copy_stack.len--
+			#endif
 			if(islist(new_key)) // += operator concatenates lists actually :///
 				new_key = list(new_key)
 			. += new_key
 			if(!isnum(key) && !isnull(orig[key]))
+				#ifdef COPY_DEBUG
+				global.copy_stack += "[key]"
+				if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+				#endif
 				.[new_key] = _SEMI_DEEP_COPY(orig[key])
+				#ifdef COPY_DEBUG
+				global.copy_stack.len--
+				#endif
 		return
 	if(istype(orig, /atom) && !isarea(orig))
 		var/atom/A = orig
@@ -74,7 +98,14 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 		if(var_name == "filters") // idk if this works
 			result.vars[var_name] = orig_datum.vars[var_name]
 			continue
+		#ifdef COPY_DEBUG
+		global.copy_stack += var_name
+		if(global.copy_stack.len >= global.longest_copy_stack.len) global.longest_copy_stack = global.copy_stack.Copy()
+		#endif
 		result.vars[var_name] = _SEMI_DEEP_COPY(orig_datum.vars[var_name])
+		#ifdef COPY_DEBUG
+		global.copy_stack.len--
+		#endif
 		if(var_name == "overlay_refs" && length(result.vars[var_name]))
 			var/atom/result_atom = result
 			result_atom.overlays = null
