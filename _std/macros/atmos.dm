@@ -129,9 +129,12 @@
 //Plasma fire properties
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
 #define PLASMA_UPPER_TEMPERATURE			(2370+T0C)
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
+#define PLASMA_MINIMUM_OXYGEN_NEEDED		(2 MOLES)
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
+
+//Hotspot Maximum Temperature
+#define HOTSPOT_MAX_TEMPERATURE (10000)
 
 //Gas Reaction Flags
 #define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
