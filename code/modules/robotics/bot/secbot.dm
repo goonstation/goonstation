@@ -654,17 +654,20 @@
 
 			if(SECBOT_START_PATROL)	// start a patrol
 				src.doing_something = 0
-				if(patrol_target && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolstart", src.chatspam_cooldown)) // have a valid path, so go there
-					src.speak("Patrol Mode: ENGAGED.")
+				if(patrol_target)
+					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolstart", src.chatspam_cooldown)) // have a valid path, so go there
+						src.speak("Patrol Mode: ENGAGED.")
 					src.mode = SECBOT_PATROL
 				else // no patrol target, so need a new one
 					find_patrol_target()
 
 			if(SECBOT_PATROL)		// patrol mode
-				look_for_perp()
 				if(src.target)
 					src.mode = SECBOT_AGGRO
-				move_the_bot(move_patrol_step_delay)
+					src.process()
+				else
+					move_the_bot(move_patrol_step_delay)
+					look_for_perp()
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				src.doing_something = 1
@@ -787,8 +790,8 @@
 				/// Charge em!
 				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 200) // but they can go anywhere in that 13 tiles
 				if(!src.path || length(src.path) < 1)
-					src.frustration += 2
-					speak("...", just_float = 1)
+					speak("...?", just_float = 1)
+					src.KillPathAndGiveUp(kpagu)
 				else
 					weeoo()
 				return

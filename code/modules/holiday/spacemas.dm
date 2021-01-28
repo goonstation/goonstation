@@ -159,8 +159,56 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
-		message = "<font face='Segoe Script'><i><b>[message]</b></i></font>"
+		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
 		. = ..()
+
+	explode()
+		if(src.exploding) return
+		src.exploding = 1
+		var/death_message = pick("I'll be back again some day!", "And to all a good night!", "A buddy is never truly happy until it is loved by a child. ", "I guess Spacemas isn't coming this year.", "Ho ho hFATAL ERROR")
+		speak(death_message)
+		src.visible_message("<span class='combat'><b>[src] blows apart!</b></span>")
+		var/turf/T = get_turf(src)
+		if(src.mover)
+			src.mover.master = null
+			qdel(src.mover)
+
+		src.invisibility = 100
+		var/obj/overlay/Ov = new/obj/overlay(T)
+		Ov.anchored = 1
+		Ov.name = "Explosion"
+		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
+		Ov.pixel_x = -92
+		Ov.pixel_y = -96
+		Ov.icon = 'icons/effects/214x246.dmi'
+		Ov.icon_state = "explosion"
+
+		src.tool.set_loc(get_turf(src))
+
+		var/list/throwparts = list()
+		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/device/flash(T)
+		//throwparts += core
+		throwparts += src.tool
+		if(src.hat)
+			throwparts += src.hat
+			src.hat.set_loc(T)
+
+		for(var/obj/O in throwparts) //This is why it is called "throwparts"
+			var/edge = get_edge_target_turf(src, pick(alldirs))
+			O.throw_at(edge, 100, 4)
+
+		SPAWN_DBG(0) //Delete the overlay when finished with it.
+			src.on = 0
+			sleep(1.5 SECONDS)
+			qdel(Ov)
+			qdel(src)
+
+		T.hotspot_expose(800,125)
+		explosion(src, T, -1, -1, 2, 3)
+
+		return
+
 /obj/item/device/guardbot_tool/xmas
 	name = "Snowballer XL tool module"
 	desc = "An exotic module for PR-6S Guardbuddies designed to fire snowballs."
@@ -168,12 +216,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	tool_id = "SNOW"
 	is_stun = 1
 	is_gun = 1
-	refire_delay = 4 SECONDS
 	var/datum/projectile/current_projectile = new/datum/projectile/snowball
 
 	// Updated for new projectile code (Convair880).
 	bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
 		if(..()) return
+
+		if(src.last_use && world.time < src.last_use + 80)
+			return
 
 		if (ranged)
 			var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
@@ -191,6 +241,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target)
 
+		src.last_use = world.time
 		return
 
 /datum/projectile/snowball

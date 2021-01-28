@@ -76,9 +76,10 @@
 
 /// Sends all the duckbots to a random spot on the station
 /obj/machinery/bot/duckbot/proc/migrate()
+	var/list/stationAreas = get_accessible_station_areas()
 	if(!isarea(src.duck_migration_target))
-		var/A = pick(station_areas)
-		src.duck_migration_target = station_areas[A]
+		var/A = pick(stationAreas)
+		src.duck_migration_target = stationAreas[A]
 	var/list/T = get_area_turfs(src.duck_migration_target, 1)
 	if(length(T) >= 1)
 		. = TRUE
@@ -91,8 +92,9 @@
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()
-	var/area/AR = pick(station_areas)
-	var/list/T = get_area_turfs(station_areas[AR], 1)
+	var/list/stationAreas = get_accessible_station_areas()
+	var/area/AR = pick(stationAreas)
+	var/list/T = get_area_turfs(stationAreas[AR], 1)
 	if(length(T) >= 1)
 		T = (pick(T))
 		src.mystical_access()
@@ -112,7 +114,7 @@
 	if(src.on == 1)
 		if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
 			var/message = pick("wacka", "quack","quacky","gaggle")
-			src.speak(message)
+			src.speak(message, 1, 0)
 		if(!src.moving && prob(80))
 			wakka_wakka()
 		if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
@@ -124,7 +126,7 @@
 			playsound(src.loc, "sound/misc/eggdrop.ogg", 50, 0)
 	if(src.emagged == 1)
 		var/message = pick("QUacK", "WHaCKA", "quURK", "bzzACK", "quock", "queck", "WOcka", "wacKY","GOggEL","gugel","goEGL","GeGGal")
-		src.speak(message)
+		src.speak(message, 1, 1)
 		wakka_wakka(TRUE) // Seek loser is TRUE
 		if(prob(70))
 			playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
@@ -193,8 +195,9 @@
 /obj/machinery/bot/duckbot/proc/declare_migration(var/force)
 	if(!ON_COOLDOWN(global, "duckbot_declare_migration", 25 MINUTES) || force) // is it winter yet
 		if(!src.migration_override)
-			var/A = pick(station_areas)
-			src.duck_migration_target = station_areas[A]
+			var/list/stationAreas = get_accessible_station_areas()
+			var/A = pick(stationAreas)
+			src.duck_migration_target = stationAreas[A]
 
 		var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
 		if(!frequency) return FALSE
@@ -223,7 +226,8 @@
 	// in case someone wants to trick a flock of plastic birds to break you into security or something
 	if(signal.data["command"] == "set_migration_target")
 		var/message_to_send = "quack"
-		if(signal.data["message"] in station_areas)
+		var/list/stationAreas = get_accessible_station_areas()
+		if(signal.data["message"] in stationAreas)
 			src.duck_migration_target = signal.data["message"]
 			message_to_send = "wacka"
 			src.migration_override = TRUE

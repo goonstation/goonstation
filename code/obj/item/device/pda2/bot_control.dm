@@ -114,7 +114,8 @@
 		switch(href_list["op"])
 
 			if("getareas") // get all the areas
-				self_text("Valid guard areas: [english_list(station_areas)].")
+				var/list/stationAreas = get_accessible_station_areas()
+				self_text("Valid guard areas: [english_list(stationAreas)].")
 
 			if("scanbots") // find all bots
 				botlist = null
@@ -122,6 +123,7 @@
 				post_status(control_freq, "command", "bot_status")
 
 			if("guardhere", "allguardhere", "lockdown", "alllockdown")
+				var/list/stationAreas = get_accessible_station_areas()
 				if(href_list["op"] == "allguardhere" || href_list["op"] == "alllockdown")
 					src.all_guard = 1
 				else
@@ -134,8 +136,8 @@
 				if(IN_RANGE(get_turf(usr), get_turf(src.master), 1))
 					if(guardthis == "Here")
 						guardthis = get_area(get_turf(src.master))
-					else if(guardthis in station_areas)
-						guardthis = station_areas[guardthis]
+					else if(guardthis in stationAreas)
+						guardthis = stationAreas[guardthis]
 					else
 						guardthis = null
 						self_text("Unknown area: [guardthis].")

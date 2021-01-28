@@ -251,12 +251,25 @@
 
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+	var/turf/target_turf = get_turf(the_target)
+	if(!checkTurfPassable(target_turf))
+		var/turf_is_impassable = 1
+		for(var/dir_look in alldirs)
+			var/turf/T = get_step(target_turf, dir_look)
+			if(checkTurfPassable(T))
+				target_turf = T
+				turf_is_impassable = 0
+				break
+		if(turf_is_impassable)
+			return
+
+
 	src.KillPathAndGiveUp(0)
 	src.current_movepath = world.time
 	src.bot_mover = new /datum/robot_mover(src)
 
 	if (!isnull(src.bot_mover)) // drsingh for cannot modify null.delay
-		src.bot_mover.master_move(the_target,current_movepath,adjacent,scanrate,max_dist)
+		src.bot_mover.master_move(target_turf, current_movepath, adjacent, scanrate, max_dist)
 
 	if (!isnull(src.bot_mover))	// drsingh again for the same thing further down in a moment.
 		src.bot_mover.delay = move_delay	// Because master_move can delete the mover
@@ -294,16 +307,15 @@
 		master.path = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, max_dist, master.botcard)
 		SPAWN_DBG(0)
 			if (!master)
+				qdel(src)
+				return
+			else if(master && (!master.path || !master.path.len || !the_target))
+				master.KillPathAndGiveUp(0)
 				return
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
-			if(!master.path || !master.path.len || !the_target)
-				master.frustration = INFINITY
-				master.bot_mover = null
-				master = null
-				return
 
-			master.moving = 1
+			master?.moving = 1
 
 			while(length(master?.path) && target_turf)
 				if(compare_movepath != current_movepath) break

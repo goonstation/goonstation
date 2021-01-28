@@ -85,6 +85,8 @@ var/global
 	list/spacePushList = list()
 	/// All the accessible areas on the station in one convenient place
 	list/station_areas = list()
+	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
+	area_list_is_up_to_date = 0
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
