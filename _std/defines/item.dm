@@ -112,7 +112,11 @@
 #define MOB_HEALTH_ABOVE_FOODHEAL_CUTOFF (1<<0)
 
 // mob health foodheal threshold checks
+/// The typical food-heal health cutoff, if the mob's current health is less than their max health divided by this, food wont heal them
+/// So for a mob with 100 max health, they'll be healed by food as long as their current health is above ~55 HP
 #define FOODHEAL_CUTOFF_DIVISOR 1.8
+/// Same as above, but if the mob has the survivalist trait.
+/// For the same 100 max health mob, they'll be healed by food until their current health is below 10 HP
 #define FOODHEAL_CUTOFF_DIVISOR_SURVIVALIST 10
 
 //item attack bitflags
