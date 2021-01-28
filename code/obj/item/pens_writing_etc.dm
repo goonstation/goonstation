@@ -408,8 +408,8 @@
 			src.set_loc(implant)
 			implant.owner = M
 			implant.body_part = "head"
-			src.add_fingerprint(user) // you dirty crimer
-			M.take_brain_damage(15) // ouch
+			src.add_fingerprint(user)
+			M.take_brain_damage(15)
 			M.emote("scream")
 			health_update_queue |= M
 			return 1

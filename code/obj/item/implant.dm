@@ -790,11 +790,10 @@ THROWING DARTS
 			src.crayon = cray
 		src.name = "implanted " + src.crayon.name
 		..()
-		return
 	
 	on_life(var/mult = 1)
 		if (src.body_part != "head")
-			return // how
+			return
 		if (!ishuman(src.owner))
 			return
 		var/mob/living/carbon/human/H = src.owner
@@ -802,22 +801,20 @@ THROWING DARTS
 			H.visible_message("<span class='alert'>[H] sneezed out \an [src.crayon]... what?</span>",\
 			"<span class='alert'>You sneezed out \an [src.crayon]... hm.</span>")
 			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			on_remove(H) // achoo
+			on_remove(H)
 			return
 		if(prob(5))
 			H.emote(pick("nosepick","sneeze","sniff"))
 		if(prob(20))
 			H.show_text("You can smell crayon wax.", "red")
-			H.take_brain_damage(1) // owie...
-		return
+			H.take_brain_damage(1)
 	
 	on_remove(var/mob/M)
 		..()
 		src.crayon.add_blood(M)
 		src.set_loc(src.crayon)
 		src.crayon.set_loc(M.loc)
-		qdel(src) // hide in the crayon then disappear. no implant gun 4 u :)
-		return
+		qdel(src)
 
 /obj/item/implant/projectile
 	name = "bullet"
@@ -1155,7 +1152,7 @@ THROWING DARTS
 
 /obj/item/implanter/mindslave
 	icon_state = "implanter1-g"
-	only_in = "head"
+	only_in = "chest"
 	New()
 		src.imp = new /obj/item/implant/mindslave( src )
 		..()
@@ -1163,7 +1160,7 @@ THROWING DARTS
 
 /obj/item/implanter/super_mindslave
 	icon_state = "implanter1-g"
-	only_in = "head"
+	only_in = "chest"
 	New()
 		src.imp = new /obj/item/implant/mindslave/super( src )
 		..()

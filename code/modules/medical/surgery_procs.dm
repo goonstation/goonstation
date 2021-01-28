@@ -662,26 +662,22 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 /* ---------- SCALPEL - CHEST ---------- */
-	// else if (surgeon.zone_sel.selecting == "chest" && (surgeon.a_intent == "help" || surgeon.a_intent == "disarm"))
 	else if (surgeon.zone_sel.selecting == "chest") // old and new removal works!
-		if (patient.ailments.len > 0)
-			var/attempted_parasite_removal = 0
+		if (length(patient.ailments) > 0)
+			var/attempted_parasite_removal = FALSE
 			for (var/datum/ailment_data/an_ailment in patient.ailments)
 				if (an_ailment.cure == "Surgery")
-					attempted_parasite_removal = 1
-					var/success = an_ailment.surgery(surgeon, patient)
-					if (success)
+					attempted_parasite_removal = TRUE
+					if (an_ailment.surgery(surgeon, patient))
 						patient.cure_disease(an_ailment) // surgeon.cure_disease(an_ailment) no, doctor, DO NOT HEAL THYSELF, HEAL THY PATIENT
 					else
 						break
 
-			if (attempted_parasite_removal == 1)
+			if (attempted_parasite_removal)
 				patient.tri_message("<span class='alert'><b>[surgeon]</b> cuts out a parasite from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
 				surgeon, "<span class='alert'>You cut out a parasite from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
 				patient, "<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out a parasite from you with [src]!</span>")
 				return 1
-
-		// Implant removal moved!
 
 		/* chest op_stage description
 			cut = scalpel
