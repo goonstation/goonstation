@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue
 	var/range = 7
-	var/smoothEdge = 0
+	var/smoothEdge = 0 // with this, the area will be perfectly circular
 
 	post_setup()
 		affects_organic = pick(
@@ -332,81 +332,81 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		switch(artitype.name)
 			if("wizard") // magical stuff
 				material = pick(
-					prob(100);"gold",
-					prob(100);"syreline",
-					prob(100);"silver",
-					prob(100);"cobryl",
-					prob(50);"miracle",
-					prob(50);"soulsteel",
-					prob(50);"hauntium",
-					prob(50);"ectoplasm",
-					prob(10);"ectofibre",
-					prob(10);"wiz_quartz",
-					prob(10);"wiz_topaz",
-					prob(10);"wiz_ruby",
-					prob(10);"wiz_amethyst",
-					prob(10);"wiz_emerald",
-					prob(10);"wiz_sapphire",
-					prob(10);"starstone")
+					100;"gold",
+					100;"syreline",
+					100;"silver",
+					100;"cobryl",
+					50;"miracle",
+					50;"soulsteel",
+					50;"hauntium",
+					50;"ectoplasm",
+					10;"ectofibre",
+					10;"wiz_quartz",
+					10;"wiz_topaz",
+					10;"wiz_ruby",
+					10;"wiz_amethyst",
+					10;"wiz_emerald",
+					10;"wiz_sapphire",
+					10;"starstone")
 			if("eldritch") // fuck you
 				material = pick(
-					prob(100);"koshmarite",
-					prob(100);"plasmastone",
-					prob(100);"telecrystal",
-					prob(50);"erebite")
+					100;"koshmarite",
+					100;"plasmastone",
+					100;"telecrystal",
+					50;"erebite")
 			if("martian") // organic stuff
 				material = pick(
-					prob(100);"flesh",
-					prob(100);"viscerite",
-					prob(100);"leather",
-					prob(100);"cotton",
-					prob(100);"coral",
-					prob(50);"spidersilk",
-					prob(50);"beewool",
-					prob(50);"beeswax",
-					prob(50);"chitin",
-					prob(50);"bamboo",
-					prob(50);"wood",
-					prob(50);"bone",
-					prob(20);"blob",
-					prob(20);"pizza",
-					prob(2);"butt")
+					100;"flesh",
+					100;"viscerite",
+					100;"leather",
+					100;"cotton",
+					100;"coral",
+					50;"spidersilk",
+					50;"beewool",
+					50;"beeswax",
+					50;"chitin",
+					50;"bamboo",
+					50;"wood",
+					50;"bone",
+					20;"blob",
+					20;"pizza",
+					2;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(
-					prob(100);"electrum",
-					prob(100);"steel",
-					prob(100);"mauxite",
-					prob(100);"copper",
-					prob(100);"pharosium",
-					prob(100);"glass",
-					prob(100);"char",
-					prob(100);"molitz",
-					prob(50);"molitz_b",
-					prob(50);"bohrum",
-					prob(50);"cerenkite",
-					prob(50);"plasmasteel",
-					prob(50);"claretine",
-					prob(50);"plasmaglass",
-					prob(50);"uqill",
-					prob(50);"latex",
-					prob(50);"synthrubber",
-					prob(50);"synthblubber",
-					prob(50);"synthleather",
-					prob(50);"fibrilith",
-					prob(30);"carbonfibre",
-					prob(30);"diamond",
-					prob(30);"dyneema",
-					prob(10);"iridiumalloy",
-					prob(1);"neutronium")
+					100;"electrum",
+					100;"steel",
+					100;"mauxite",
+					100;"copper",
+					100;"pharosium",
+					100;"glass",
+					100;"char",
+					100;"molitz",
+					50;"molitz_b",
+					50;"bohrum",
+					50;"cerenkite",
+					50;"plasmasteel",
+					50;"claretine",
+					50;"plasmaglass",
+					50;"uqill",
+					50;"latex",
+					50;"synthrubber",
+					50;"synthblubber",
+					50;"synthleather",
+					50;"fibrilith",
+					30;"carbonfibre",
+					30;"diamond",
+					30;"dyneema",
+					10;"iridiumalloy",
+					1;"neutronium")
 			if("precursor") // uh, the rest
 				material = pick(
-					prob(100);"rock",
-					prob(100);"slag",
-					prob(100);"ice",  // no possible way this ends poorly
-					prob(15);"spacelag",
-					prob(15);"cardboard",
-					prob(15);"frozenfart",
-					prob(15);"negativematter")
+					100;"rock",
+					100;"slag",
+					100;"ice",  // no possible way this ends poorly
+					15;"spacelag",
+					15;"cardboard",
+					15;"frozenfart",
+					15;"negativematter")
 
 		mat = getMaterial(material)
 
