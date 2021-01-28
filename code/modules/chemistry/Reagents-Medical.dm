@@ -1576,35 +1576,39 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				/// Perform a reduced version of the on_touch skin penetration of the base
 				//  reaction_mob() for ALL reagents in holder
-				var/permeability_calculated = FALSE
 				var/permeability_mod = 0
 				var/modifier
+				var/flag_combat = FALSE
 				if (method == TOUCH && !ON_COOLDOWN(M, "dmso", 5 SECONDS))
-					if(!M.reagents.has_reagent("dimethyl_sulfoxide"))
+					// Determine permeability
+					if(!src.pierces_outerwear)
+						for(var/atom in M.get_equipped_items())
+							if (istype(atom, /obj/item/clothing))
+								var/obj/item/clothing/C = atom
+								permeability_mod -= (1 - C.permeability_coefficient)/3
+
+					if( (touch_modifier + permeability_mod > 0) && !M.reagents.has_reagent("dimethyl_sulfoxide"))
 						boutput(M, "<span class='notice'>You notice a garlic-like taste in your mouth.</span>")
+
 					for(var/ID in holder?.reagent_list)
+						var/datum/reagent/R = holder?.reagent_list[ID]
 						if (R.penetrates_skin) // don't double up on chems that already penetrate
 							continue
 						if(ID in global.chem_whitelist)
 							modifier = touch_modifier
 						else
 							modifier = touch_modifier * nonwhitelist_scale
-						var/datum/reagent/R = holder?.reagent_list[ID]
 						if (!("nopenetrate" in paramslist))
-							var/transfer_volume = min(R.volume, volume, 20) // limit transfer volume by DMSO volume and reasonable splash amount
-							if(!permeability_calculated)
-								permeability_calculated = TRUE
-								if(!src.pierces_outerwear)
-									for(var/atom in M.get_equipped_items())
-										if (istype(atom, /obj/item/clothing))
-											var/obj/item/clothing/C = atom
-											permeability_mod -= (1 - C.permeability_coefficient)/3
-								M.visible_message("<span class='alert'>[M] has a calculated permeability_coefficient modifier of [src.touch_modifier - modifier]</span>") // Azrun TODO REMOVE THIS IS FOR TESTING
-
-							modifier = clamp(modifier+permeability_mod, 0, 1)
+							var/transfer_volume = min(R.volume, volume_passed, 20) // limit transfer volume by DMSO volume and reasonable splash amount
+							modifier = clamp(modifier+permeability_mod, 0, 1) // value to scale unit volume appropriately
 							if(M.reagents)
 								M.reagents.add_reagent(ID,transfer_volume*modifier,R.data)
-								M.visible_message("<span class='alert'>[M] transfered [transfer_volume*modifier] units of [ID] via DMSO</span>") // Azrun TODO REMOVE THIS IS FOR TESTING
+								flag_combat |= (istype(R, /datum/reagent/combustible) || istype(R, /datum/reagent/harmful)) && modifier > 0
+
+					// Generate log of harmful chems in log, splashes are already logged
+					if(flag_combat && ismob(usr) && istype(src.holder, /datum/reagents/fluid_group))
+						logTheThing("combat", usr, M, "entered harmful DMSO fluid group [log_reagents(holder)] at [log_loc(usr)].")
+
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
