@@ -3,13 +3,13 @@
 	desc = {"***********************************************************<br>
 Right Mouse Button on mob/obj = Select object for copying (right click on turf to clear)<br>
 Left Mouse Button on turf  = Paste object on the turf you clicked<br>
-Right Mouse Button on build mode  = Spawn for every living player<br>
+Ctrl + Left Mouse Button on build mode  = Spawn for every living player<br>
 ***********************************************************"}
 	icon_state = "copy"
 	var/atom/copied_object
 
-	click_mode_right(var/ctrl, var/alt, var/shift)
-		if(src.copied_object && alert("Are you sure you want to give everyone \a [src.copied_object]?", "Give stuff???", "Yes", "No") == "Yes")
+	click_mode_left(var/ctrl, var/alt, var/shift)
+		if(ctrl && src.copied_object && alert("Are you sure you want to give everyone \a [src.copied_object]?", "Give stuff???", "Yes", "No") == "Yes")
 			for (var/client/cl as() in clients)
 				var/mob/living/L = cl.mob
 				if(!istype(L) || isdead(L))
