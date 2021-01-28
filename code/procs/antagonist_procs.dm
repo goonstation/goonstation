@@ -68,6 +68,7 @@
 				traitor_mob.put_in_hand_or_drop(H)
 		H.secure_classes["z"] = RADIOCL_SYNDICATE
 		H.set_secure_frequency("z",the_frequency)
+		H.protected_radio = 1
 
 	SHOW_CONSPIRACY_TIPS(traitor_mob)
 
