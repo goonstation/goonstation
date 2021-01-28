@@ -600,6 +600,8 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
 	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
