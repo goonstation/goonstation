@@ -178,7 +178,7 @@
 		else
 			src.clayer--
 			src.update_cake_context()
-		for(var/i=1,i<=10,i++) //generating child slices of the parent template
+		for(var/i in 1 to 10) //generating child slices of the parent template
 			var/obj/item/reagent_containers/food/snacks/cake/schild = new /obj/item/reagent_containers/food/snacks/cake
 			schild.icon_state = "slice-base_custom"
 			for(var/overlay_ref in s.overlay_refs) //looping through parent overlays and copying them over to the children
@@ -386,8 +386,7 @@
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.add_simple_light("cake_light", list(0.5*255, 0.3*255, 0, 100))
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			src.update_cake_context()
 		else
 			return
@@ -406,8 +405,7 @@
 			hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.remove_simple_light("cake_light")
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 			src.update_cake_context()
 
 	/*__________________*/

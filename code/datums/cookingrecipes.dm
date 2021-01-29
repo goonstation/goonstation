@@ -1243,7 +1243,7 @@
 		if (!ourCooker)
 			return null
 
-		var fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
+		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
 		playsound(ourCooker.loc, "sound/effects/splat.ogg", 50, 1)
 
 		return fruitcake
