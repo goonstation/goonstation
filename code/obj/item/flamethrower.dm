@@ -607,6 +607,7 @@ A Flamethrower in various states of assembly
 	if (href_list["light"])
 		if(!src.gastank || !src.fueltank)	return
 		lit = !(lit)
+		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
 		if(lit)
 			if (istype(src, /obj/item/gun/flamethrower/backtank))
 				icon_state = "syndthrower_1"
@@ -645,8 +646,14 @@ A Flamethrower in various states of assembly
 			fuel = "_fuel"
 		icon_state = "flamethrower_no_oxy[fuel]"
 		item_state = "flamethrower0"
-		src.remove_dialog(user)
-		user.Browse(null, "window=flamethrower")
+		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
+		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		if(A?.pickup_sfx)
+			remove_sound = A.pickup_sfx
+		SPAWN_DBG(0.2 SECONDS)
+			if(src)
+				playsound(get_turf(src), remove_sound, 30, 1)
+
 
 	if (href_list["removefuel"])
 		if(!src.fueltank || !src.swappable_tanks)
@@ -664,12 +671,17 @@ A Flamethrower in various states of assembly
 			oxy = "_oxy"
 		icon_state = "flamethrower[oxy]_no_fuel"
 		item_state = "flamethrower0"
-		src.remove_dialog(user)
-		user.Browse(null, "window=flamethrower")
+		var/remove_sound = "sound/items/pickup_[max(min(src.w_class,3),1)].ogg"
+		if(A?.pickup_sfx)
+			remove_sound = A.pickup_sfx
+		playsound(get_turf(src), remove_sound, 30, 1)
+		SPAWN_DBG(0.5 SECONDS)
+			if(src)
+				playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
 
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
-		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 1)
+		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
 		var/make_fullauto = 1
 		switch(src.mode)
 			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
@@ -707,6 +719,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
+		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
 
 	if (href_list["c_amt"])
 		if (href_list["c_amt"] == "reset")
@@ -714,6 +727,7 @@ A Flamethrower in various states of assembly
 		else
 			var/tempnum = text2num(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
+		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 0.2)
 
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 	src.updateSelfDialog()
