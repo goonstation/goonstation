@@ -95,7 +95,7 @@
 			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
+				if ((minimum_traitors > 2) && (candidates.len >= minimum_traitors))
 					break
 
 	if(candidates.len < 1)
