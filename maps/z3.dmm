@@ -25430,12 +25430,15 @@
 /area/mining/quarters)
 "uGt" = (
 /obj/item/storage/secure/ssafe{
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006)
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
 	},
-/turf/simulated/wall/r_wall{
-	icon = 'icons/misc/evilreaverstation.dmi';
-	icon_state = "old_rwall"
-	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "vrI" = (
 /obj/stool/chair,
@@ -46421,8 +46424,8 @@ aAN
 aCh
 aCh
 aCF
+aCF
 uGt
-aDo
 aDM
 aDp
 aCF
