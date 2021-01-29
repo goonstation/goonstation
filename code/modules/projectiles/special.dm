@@ -978,7 +978,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	ks_ratio = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
-	pierces = 2
 	silentshot = 1 // Mr. Muggles it hit by the chemical bolt x99999
 
 
