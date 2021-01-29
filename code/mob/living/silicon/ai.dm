@@ -150,6 +150,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+	if (light)
+		light.dispose()
 	..()
 
 /mob/living/silicon/ai/New(loc, var/empty = 0)
@@ -758,10 +760,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
-
-	for(var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-		SPAWN_DBG(0)
-			O.mode = 2
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
@@ -1604,7 +1602,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
 
 	var/newEmotion = input("Select a status!", "AI Status", src.faceEmotion) as null|anything in L
-	var/newMessage = scrubbed_input(usr, "Enter a message!", "AI Message", src.status_message)
+	var/newMessage = scrubbed_input(usr, "Enter a message for AI status displays!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
 	if(!(newEmotion in L)) //Ffff
