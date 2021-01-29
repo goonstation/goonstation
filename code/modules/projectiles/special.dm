@@ -979,6 +979,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
 	pierces = 2
+	silentshot = 1 // Mr. Muggles it hit by the chemical bolt x99999
 
 
 	/// Releases some of the projectile's gas into the turf

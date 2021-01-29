@@ -64,6 +64,7 @@ A Flamethrower in various states of assembly
 	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
+	suppress_fire_msg = 1 // you fire Flamethrower at the steel floor x99999
 	/// Burstfire, but actually
 	use_shootloop = 1
 	refire_delay = 1.5 DECI SECONDS
