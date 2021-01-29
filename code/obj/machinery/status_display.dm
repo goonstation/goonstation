@@ -475,16 +475,17 @@
 		if (src.message)
 			. += "<br>[owner.name] says: \"[src.message]\""
 
-	verb/claim() //Captain said it's my turn on the status display
-		set src in view(1)
-		set name = "(AI) claim"
-		if (!isAI(usr))
-			boutput(usr, "<span class='alert'>Only an AI can claim this.</span>")
+	attack_ai(mob/user as mob) //Captain said it's my turn on the status display
+		if (!isAI(user))
+			boutput(user, "<span class='alert'>Only an AI can claim this.</span>")
 			return
-		var/mob/living/silicon/ai/A = usr
-		if (isAIeye(usr))
-			var/mob/dead/aieye/AE = usr
+		var/mob/living/silicon/ai/A = user
+		if (isAIeye(user))
+			var/mob/dead/aieye/AE = user
 			A = AE.mainframe
+		if (owner == A) //no free updates for you
+			return
+		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
 		owner = A
 		mode = 1
 		update()
