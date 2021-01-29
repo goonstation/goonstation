@@ -366,8 +366,8 @@
 
 		src.lube_boost = lube_efficiency
 
-		if(src.generator?.variant_clock)
-			src.generator.variant_clock.check_reagent_transformation()
+		if(src.generator?.transformation_mngr)
+			src.generator.transformation_mngr.check_reagent_transformation()
 
 	process()
 		..()
@@ -552,7 +552,7 @@ datum/pump_ui/circulator_ui
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/list/obj/machinery/power/furnace/furnaces
 	var/datum/teg_transformation/active_form
-	var/datum/teg_transformation_clock/variant_clock
+	var/datum/teg_transformation_mngr/transformation_mngr
 	var/obj/item/teg_semiconductor/semiconductor
 
 	var/lastgen = 0
@@ -648,7 +648,7 @@ datum/pump_ui/circulator_ui
 		//List init
 		history = list()
 		furnaces = list()
-		variant_clock = new(src)
+		transformation_mngr = new(src)
 		grump_prefix = list("an upsetting", "an unsettling", "a scary", "a loud", "a sassy", "a grouchy", "a grumpy",
 												"an awful", "a horrible", "a despicable", "a pretty rad", "a godawful")
 		grump_suffix = list("noise", "racket", "ruckus", "sound", "clatter", "fracas", "hubbub")
@@ -666,7 +666,7 @@ datum/pump_ui/circulator_ui
 			src.circ1?.side = LEFT_CIRCULATOR
 			src.circ2?.generator = src
 			src.circ2?.side = RIGHT_CIRCULATOR
-			src.variant_clock.generator = src
+			src.transformation_mngr.generator = src
 
 			//furnaces
 			for(var/obj/machinery/power/furnace/F in orange(15, src.loc))
@@ -684,7 +684,7 @@ datum/pump_ui/circulator_ui
 		src.circ1 = null
 		src.circ2?.generator = null
 		src.circ2 = null
-		qdel(variant_clock)
+		qdel(transformation_mngr)
 		src.active_form = null
 		..()
 
@@ -856,7 +856,7 @@ datum/pump_ui/circulator_ui
 
 		process_grump()
 
-		src.variant_clock.check_material_transformation()
+		src.transformation_mngr.check_material_transformation()
 
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
@@ -1317,6 +1317,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				playsound(get_turf(generator), "sound/items/Deconstruct.ogg", 80, 1)
 				generator.semiconductor_repair = null
 
+/** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
 	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"

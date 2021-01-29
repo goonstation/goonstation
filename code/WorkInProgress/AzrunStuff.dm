@@ -60,7 +60,7 @@
 			init_basic(1.0 - ( eulers ** ( -sample_interval / time_const )))
 
 /// Transformation Manager for Thermo-Electric Generator
-/datum/teg_transformation_clock
+/datum/teg_transformation_mngr
 	var/obj/machinery/power/generatorTemp/generator
 	var/static/list/datum/teg_transformation/possible_transformations
 
@@ -77,7 +77,9 @@
 		. = ..()
 		generator = null
 
+	/// Periodic function to check if transformation by reagent is possible
 	proc/check_reagent_transformation()
+		if(generator?.active_form?.skip_transformation_checks) return
 		for(var/datum/teg_transformation/T as() in possible_transformations)
 			if(generator.active_form?.type == T.type) continue // Skip current form
 
@@ -111,13 +113,13 @@
 						generator.UpdateOverlays(nanite_overlay,"transform")
 						generator.circ1.UpdateOverlays(nanite_overlay,"transform")
 						generator.circ2.UpdateOverlays(nanite_overlay,"transform")
-						sleep(rand(1.5 SECONDS,2.5 SECONDS))
+						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
 						if(generator.active_form)
 							generator.active_form.on_revert()
 						generator.active_form = new /datum/teg_transformation/matsci
-						generator.active_form.material = generator.semiconductor.material.mat_id
+						generator.active_form.mat_id = generator.semiconductor.material.mat_id
 						generator.active_form.on_transform(generator)
-						sleep(rand(1.5 SECONDS,2.5 SECONDS))
+						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
 						src.generator.visible_message("<span class='alert'>The swarm of nanites disappears back into \the [src.generator].</span>")
 						generator.UpdateOverlays(null,"transform")
 						generator.circ1.UpdateOverlays(null,"transform")
@@ -125,56 +127,61 @@
 
 
 ABSTRACT_TYPE(/datum/teg_transformation)
+/** Thermo-Electric Generator Transformations
+	These are various forms the Thermo-Electric Generator can take. They can
+	be achieved by:
+		* a reagent mixture similar to chems
+		* triggered directly via another condition
+  */
 datum/teg_transformation
 	var/name = null
-	var/id = null
-	var/audio_clip
-	var/visible_msg
-	var/audible_msg
-	var/teg_overlay
-	var/circulator_overlay
-	var/material
-	var/list/required_reagents /// list of reagent ids
+	/// material id to apply
+	var/mat_id
+	/// associated list of reagent ids and amounts to cause transformation
+	var/list/required_reagents
+	/// ref to TEG
 	var/obj/machinery/power/generatorTemp/teg
+	/// Automatic transformation checks until a seperate criteria is achieved
+	var/skip_transformation_checks = FALSE
 
 	disposing()
 		. = ..()
 		teg = null
 
+	/// Return False by default to cause classic grump behavior
 	proc/on_grump()
 		return FALSE
 
+	/// Base transformation to assign material
 	proc/on_transform(obj/machinery/power/generatorTemp/teg)
 		src.teg = teg
-		if(src.material)
-			teg.setMaterial(getMaterial(src.material))
-			teg.circ1.setMaterial(getMaterial(src.material))
-			teg.circ2.setMaterial(getMaterial(src.material))
-		return
+		if(src.mat_id)
+			teg.setMaterial(getMaterial(src.mat_id))
+			teg.circ1.setMaterial(getMaterial(src.mat_id))
+			teg.circ2.setMaterial(getMaterial(src.mat_id))
 
+	/// Revert material back to initial values
 	proc/on_revert()
-		src.teg.setMaterial(getMaterial(initial(src.material)))
-		src.teg.circ1.setMaterial(getMaterial(initial(src.material)))
-		src.teg.circ2.setMaterial(getMaterial(initial(src.material)))
+		src.teg.setMaterial(getMaterial(initial(src.mat_id)))
+		src.teg.circ1.setMaterial(getMaterial(initial(src.mat_id)))
+		src.teg.circ2.setMaterial(getMaterial(initial(src.mat_id)))
 		qdel(src.teg.active_form)
 		src.teg.active_form = null
-		return
 
+  ////////////////////////
+	// TEG TRANFORMATIONS	//
+	////////////////////////
+
+	/// Default TEG Transformation we know and ""love""
 	default
-		name = "Default"
-		material = "steel"
+		mat_id = "steel"
 
-	flock
-		material = "gnesis"
 
-	vampire
-		material = "bone"
-
-	birdbird
-		name = "Squawk"
-
+	/**
+	 Material Science Transformation
+	 Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
+	 */
 	matsci
-		name = "Prototype"
 		var/prev_efficiency
 
 		on_transform()
