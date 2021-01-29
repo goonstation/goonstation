@@ -969,7 +969,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "chembolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	shot_sound = "sound/effects/spray.ogg"
+	shot_sound = "sound/effects/spray2.ogg"
 	power = 0
 	cost = 1
 	damage_type = D_BURNING
@@ -978,7 +978,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	ks_ratio = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
-	silentshot = 1 // Mr. Muggles it hit by the chemical bolt x99999
+	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
 
 
 	/// Releases some of the projectile's gas into the turf

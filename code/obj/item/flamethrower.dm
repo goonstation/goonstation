@@ -12,10 +12,10 @@ A Flamethrower in various states of assembly
 #define FLAMER_BACKTANK_TEMP 1000 KELVIN + T0C
 #define FLAMER_MIN_TEMP T0C
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
-#define FLAMER_DEFAULT_CHEM_AMT 10
-#define FLAMER_BACKTANK_CHEM_AMT 25
+#define FLAMER_DEFAULT_CHEM_AMT 20
+#define FLAMER_BACKTANK_CHEM_AMT 40
 #define FLAMER_MIN_CHEM_AMT 5
-#define FLAMER_MAX_CHEM_AMT 20
+#define FLAMER_MAX_CHEM_AMT 100
 #define FLAMER_MODE_LOOSE 1
 #define FLAMER_MODE_TIGHT 2
 #define FLAMER_MODE_SINGLE 3
@@ -68,7 +68,7 @@ A Flamethrower in various states of assembly
 	/// Burstfire, but actually
 	use_shootloop = 1
 	refire_delay = 1.5 DECI SECONDS
-	burst_count = 5
+	burst_count = 3
 	spread_angle = 35
 
 	New()
@@ -122,16 +122,16 @@ A Flamethrower in various states of assembly
 		P_special_data["IS_LIT"] = src.lit //100
 		P_special_data["burn_temp"] = src.base_temperature
 
-		var/rem_ratio = 0.008
+		var/rem_ratio = 0.004
 		switch(mode)
 			if(FLAMER_MODE_LOOSE)
 				rem_ratio = 0.02
 			if(FLAMER_MODE_TIGHT)
 				rem_ratio = 0.03
 			if(FLAMER_MODE_SINGLE)
-				rem_ratio = 0.10
+				rem_ratio = 0.08
 			if(FLAMER_MODE_BACKTANK)
-				rem_ratio = 0.008
+				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
 		airgas.volume = 1
@@ -144,7 +144,6 @@ A Flamethrower in various states of assembly
 		P_special_data["temp_pct_loss_atom"] = 0.02 // keep the heat, more or less
 
 		/// sets the projectile's chem-transfer percent per tile and speed
-		/// More vigor is more fasterer, less chem-transferier, also more cool-off
 		switch(mode)
 			if(FLAMER_MODE_LOOSE)
 				P_special_data["speed_mult"] = 0.5
@@ -673,7 +672,7 @@ A Flamethrower in various states of assembly
 		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 1)
 		switch(src.mode)
 			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
-				src.burst_count = 5
+				src.burst_count = 3
 				if(src.combat_flamer)
 					src.spread_angle = 20
 				else
