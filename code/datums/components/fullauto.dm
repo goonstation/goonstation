@@ -24,9 +24,24 @@
 	var/delaystart
 	var/delaymin
 	var/rampfactor
+	/// If 0, don't fullauto. Otherwise, fullauto is true
 	var/toggle = 0
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
+
+	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
+		if(C)
+			src.delaystart = C.delaystart
+			src.delaymin = C.delaymin
+			src.rampfactor = C.rampfactor
+		else
+			if (isnum_safe(_delaystart))
+				src.delaystart = _delaystart
+			if (isnum_safe(_delaymin))
+				src.delaymin = _delaymin
+			if (isnum_safe(_rampfactor))
+				src.rampfactor = _rampfactor
+
 
 	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
@@ -71,13 +86,12 @@
 	on_pickup(datum/source, mob/user)
 		var/obj/item/gun/G = parent
 		. = ..()
-		if(G?.current_projectile?.fullauto_valid)
-			if(toggle)
-				if(user.equipped() == parent)
-					init_fullauto_mode(source, user)
-			else
-				if(user.equipped() == parent)
-					toggle_fullauto_firemode(source, G.current_projectile)
+		if(G?.current_projectile?.fullauto_valid && toggle)
+			if(user.equipped() == parent)
+				init_fullauto_mode(source, user)
+		else
+			if(user.equipped() == parent)
+				toggle_fullauto_firemode(source, G.current_projectile)
 
 
 	on_dropped(datum/source, mob/user)
@@ -86,19 +100,19 @@
 
 /datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
 	var/obj/item/gun/G = parent
-	if(current_user && newProj.fullauto_valid != toggle)
-		toggle = !toggle
+	if(current_user)
+		toggle = newProj?.fullauto_valid
 
-		if(toggle)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
-			if(current_user.equipped() == G)
-				init_fullauto_mode(source, current_user)
-		else
-			UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
-			UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
-			if(current_user.equipped() == G)
-				end_fullauto_mode(source, current_user)
+	if(toggle)
+		RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
+		RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
+		if(current_user.equipped() == G)
+			init_fullauto_mode(source, current_user)
+	else
+		UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
+		UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
+		if(current_user.equipped() == G)
+			end_fullauto_mode(source, current_user)
 
 /datum/component/holdertargeting/fullauto/proc/init_fullauto_mode(datum/source, mob/user)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/begin_shootloop)

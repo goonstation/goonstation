@@ -75,6 +75,9 @@ A Flamethrower in various states of assembly
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
+		AddComponent(/datum/component/holdertargeting/fullauto, src.refire_delay, src.refire_delay, 1)
+		src.current_projectile.fullauto_valid = 1
+		set_current_projectile(src.current_projectile)
 
 	/// Just check if there's a usable air and fuel tank
 	canshoot()
@@ -125,18 +128,18 @@ A Flamethrower in various states of assembly
 		var/rem_ratio = 0.004
 		switch(mode)
 			if(FLAMER_MODE_LOOSE)
-				rem_ratio = 0.02
+				rem_ratio = 0.01
 			if(FLAMER_MODE_TIGHT)
-				rem_ratio = 0.03
+				rem_ratio = 0.02
 			if(FLAMER_MODE_SINGLE)
-				rem_ratio = 0.08
+				rem_ratio = 0.025
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/airgas = unpool(/datum/gas_mixture)
 		airgas.volume = 1
-		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.5))
-		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.5))
+		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
+		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
 		if(src.lit)
 			airgas.temperature = P_special_data["burn_temp"]
 		P_special_data["airgas"] = airgas
@@ -152,7 +155,7 @@ A Flamethrower in various states of assembly
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
 			if(FLAMER_MODE_SINGLE)
-				P_special_data["speed_mult"] = 0.7
+				P_special_data["speed_mult"] = 1
 				P_special_data["chem_pct_app_tile"] = 0.10
 			else
 				P_special_data["speed_mult"] = mode
@@ -670,6 +673,7 @@ A Flamethrower in various states of assembly
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
 		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 10, 1)
+		var/make_fullauto = 1
 		switch(src.mode)
 			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
 				src.burst_count = 3
@@ -687,6 +691,7 @@ A Flamethrower in various states of assembly
 				src.refire_delay = 2.5 DECI SECONDS
 			if(FLAMER_MODE_SINGLE) // semi-auto
 				src.burst_count = 1
+				make_fullauto = 0
 				if(src.combat_flamer)
 					src.spread_angle = 0
 				else
@@ -699,6 +704,9 @@ A Flamethrower in various states of assembly
 				else
 					src.spread_angle = src.mode * 2
 				src.refire_delay = src.mode DECI SECONDS
+		src.current_projectile.fullauto_valid = make_fullauto
+		AddComponent(/datum/component/holdertargeting/fullauto, src.refire_delay, src.refire_delay, 1)
+		set_current_projectile(src.current_projectile)
 
 	if (href_list["temp"])
 		if (href_list["temp"] == "reset")
