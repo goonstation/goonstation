@@ -705,9 +705,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))
+					if (istype(delivery,/obj/item/parts) && ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/human_parts/HP = delivery
+						var/obj/item/parts/HP = delivery
 					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
 						if(HP == B.item) //Uhh idk if this will work
 							HP.remove()
