@@ -86,12 +86,13 @@
 	on_pickup(datum/source, mob/user)
 		var/obj/item/gun/G = parent
 		. = ..()
-		if(G?.current_projectile?.fullauto_valid && toggle)
-			if(user.equipped() == parent)
-				init_fullauto_mode(source, user)
-		else
-			if(user.equipped() == parent)
-				toggle_fullauto_firemode(source, G.current_projectile)
+		if(G?.current_projectile?.fullauto_valid)
+			if(toggle)
+				if(user.equipped() == parent)
+					init_fullauto_mode(source, user)
+			else
+				if(user.equipped() == parent)
+					toggle_fullauto_firemode(source, G.current_projectile)
 
 
 	on_dropped(datum/source, mob/user)
@@ -100,8 +101,8 @@
 
 /datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
 	var/obj/item/gun/G = parent
-	if(current_user)
-		toggle = newProj?.fullauto_valid
+	if(current_user && newProj.fullauto_valid != toggle)
+		toggle = !toggle
 
 		if(toggle)
 			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
