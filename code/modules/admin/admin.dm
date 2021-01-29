@@ -150,6 +150,18 @@ var/global/noir = 0
 				if(istype(C))
 					C.cloud_put("mentorhelp_banner", "")
 					src.show_chatbans(C)
+		if ("pr_mute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", usr.client.key)
+					src.show_chatbans(C)
+		if ("pr_unmute")
+			if (src.level >= LEVEL_PA)
+				var/client/C = locate(href_list["target"])
+				if(istype(C))
+					C.cloud_put("prayer_banner", "")
+					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
 			if (src.level >= LEVEL_MOD)
@@ -4746,6 +4758,13 @@ var/global/noir = 0
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from mentorhelping.")
+
+	if(C.cloud_get( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+		logTheThing("admin", src, C, "unmuted [constructTarget(C,"admin")] from praying.")
+	else
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
+		logTheThing("admin", src, C, "muted [constructTarget(C,"admin")] from praying.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 

@@ -588,7 +588,9 @@ var/zapLimiter = 0
 	src.add_dialog(user)
 	var/t = "<TT><B>Area Power Controller</B> ([area.name])<HR>"
 
-	if((locked || (setup_networkapc > 1)) && !can_access_remotely(user))
+	if (!area.requires_power)
+		t += "<I>This APC has no configurable settings.</I>"
+	else if((locked || (setup_networkapc > 1)) && !can_access_remotely(user))
 		if (setup_networkapc < 2)
 			t += "<I>(Swipe ID card to unlock inteface.)</I><BR>"
 		else

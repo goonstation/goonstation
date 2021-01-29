@@ -32,7 +32,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
 
 	post_setup()
-		if (artitype.name != "eldritch" && prob(5))
+		. = ..()
+		if (artitype.name != "eldritch" && prob(3))
 			dud = 1
 
 	effect_activate(var/obj/O)
@@ -218,6 +219,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/list/payload_reagents = list()
 
 	post_setup()
+		. = ..()
 		payload_type = rand(0,3)
 		var/list/potential_reagents = list()
 		switch(artitype.name)

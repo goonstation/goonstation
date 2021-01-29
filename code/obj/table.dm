@@ -687,22 +687,13 @@
 				var/obj/item/sheet/S = W
 				if (!S.material || !S.material.material_flags & MATERIAL_CRYSTAL)
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
-					return
-				else if (S.amount >= 1)
+				else if (S.consume_sheets(1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
 					if (S.reinforcement)
 						src.reinforced = 1
 					if (S.material)
 						src.setMaterial(S.material)
 					src.repair()
-					S.amount--
-					if (S.amount <= 0)
-						user.u_equip(S)
-						qdel(S)
-				else // there's none!
-					user.u_equip(S)
-					qdel(S)
-				return
 			else
 				return ..()
 

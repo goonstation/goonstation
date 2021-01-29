@@ -25,6 +25,7 @@
 	var/ai_throw = 0
 	var/ai_attackadmins = 1
 	var/ai_attacknpc = 1
+	var/ai_useitems = 1
 	var/ai_suicidal = 0 //Will it attack itself?
 	var/ai_active = 0
 
@@ -1276,7 +1277,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)
-				message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				if (M.has_any_hands())
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M]'s hands are full!"
+				else
+					message = "<B>[src]</B> tries to hand [thing] to [M], but [M] doesn't have any hands!"
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
