@@ -12011,6 +12011,7 @@
 /area/station/hos)
 "Dw" = (
 /obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
 /obj/item/deconstructor,
 /obj/item/stamp/ce,
 /turf/simulated/floor/yellow,
