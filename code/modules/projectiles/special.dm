@@ -972,7 +972,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = "sound/effects/spray2.ogg"
 	power = 0
 	cost = 1
-	damage_type = D_BURNING
+	damage_type = D_SPECIAL
 	dissipation_rate = 0
 	dissipation_delay = 0
 	ks_ratio = 0
