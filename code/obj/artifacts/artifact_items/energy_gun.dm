@@ -26,7 +26,7 @@
 			cell = new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype)
 			src.ArtifactDevelopFault(15)
 
-			current_projectile = AS.bullet
+			set_current_projectile(AS.bullet)
 			projectiles = list(src.current_projectile)
 			cell.max_charge = max(cell.max_charge, current_projectile.cost)
 

@@ -113,16 +113,12 @@ export class ByondUi extends Component {
       params = {},
       hideOnScroll,
     } = this.props;
-    if (hideOnScroll) {
-      for (let p = this.containerRef.current; p; p = p.parentNode) {
-        if (p.scrollTop > 0) {
-          this.byondUiElement.unmount();
-          return;
-        }
-      }
-    }
     const box = getBoundingBox(this.containerRef.current);
     logger.debug('bounding box', box);
+    if (hideOnScroll && box.pos[1] < 32) {
+      this.byondUiElement.unmount();
+      return;
+    }
     this.byondUiElement.render({
       parent: window.__windowId__,
       ...params,

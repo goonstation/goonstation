@@ -492,6 +492,7 @@ table#cooktime a#start {
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
+			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/cookie_jaffa(src)
 			src.recipes += new /datum/cookingrecipe/cookie_bacon(src)
