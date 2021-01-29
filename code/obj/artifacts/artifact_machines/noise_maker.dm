@@ -49,6 +49,7 @@
 				src.times_to_play = 10
 
 	post_setup()
+		. = ..()
 		var/harmprob = 5
 		if (src.artitype.name == "eldritch")
 			harmprob += 20

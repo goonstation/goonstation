@@ -13,7 +13,7 @@ import { BioEffect } from "../BioEffect";
 export const MutationsTab = (props, context) => {
   const { data } = useBackend(context);
   const [sortMode, setSortMode] = useSharedState(context, "mutsortmode", "time");
-  const bioEffects = data.bioEffects.slice(0);
+  const bioEffects = (data.bioEffects || []).slice(0);
 
   if (sortMode === "time") {
     bioEffects.sort((a, b) => a.time - b.time);

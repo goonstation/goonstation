@@ -64,7 +64,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/list/touch_descriptors = list()
 
 	proc/post_setup()
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		src.artitype.post_setup(holder)
 
 	proc/may_activate(var/obj/O)
 		if (!O)

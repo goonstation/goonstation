@@ -1664,6 +1664,17 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "The outer shell of some large microwave array thing."
 			icon_state = "leadwall_white"
 
+		white_2
+			icon_state = "leadwall_white"
+
+			junction
+				name = "shielded wall"
+				desc
+				icon_state = "leadjunction_white"
+
+			junction_four
+				icon_state = "leadjunction_white_4way"
+
 	leadwindow
 		name = "shielded window"
 		desc = "Seems pretty sturdy."
@@ -1675,6 +1686,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 		gray
 			icon_state = "leadwindow_gray_1"
+
+		white
+			icon_state = "leadwindow_white_1"
+
+			full
+				icon_state = "leadwindow_white_2"
 
 	rootwall
 		name = "overgrown wall"

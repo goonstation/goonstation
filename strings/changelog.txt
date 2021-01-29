@@ -1,4 +1,20 @@
 
+(t)fri jan 29 21
+(u)Flaborized
+(p)3496
+(e)🎨|sprites
+(+)Resprited personal computers.
+(u)Chickenish
+(p)3417
+(e)🐛|bug
+(+)The cyborg weapons lock is no longer lengthened by lag.
+(t)thu jan 28 21
+(u)pali
+(+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
+(u)BenLubar
+(p)3514
+(e)🐛|bug
+(+)You can once again apply metal and glass sheets to several construction projects.
 (t)wed jan 27 21
 (u)pali
 (p)3367

@@ -101,7 +101,7 @@
 		name2 = pick(appearance.nouns_large)
 
 	src.name = "[name1] [name2]"
-	src:real_name = "[name1] [name2]"
+	src.real_name = "[name1] [name2]"
 	desc = "You have no idea what this thing is!"
 	A.touch_descriptors |= appearance.touch_descriptors
 
