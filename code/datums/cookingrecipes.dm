@@ -1340,6 +1340,40 @@
 		return null
 
 
+/datum/cookingrecipe/cannabis_brownie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cannabis_brownie
+
+/datum/cookingrecipe/life_brownie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item3 = /obj/item/plant/herb/cannabis/white
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/life_brownie
+
+/datum/cookingrecipe/death_brownie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item3 = /obj/item/plant/herb/cannabis/black
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/death_brownie
+weed
+/datum/cookingrecipe/rainbow_brownie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item3 = /obj/item/plant/herb/cannabis/mega
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/rainbow_brownie
+
+/datum/cookingrecipe/brownie
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/brownie
+
 /datum/cookingrecipe/omelette
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt1 = 2

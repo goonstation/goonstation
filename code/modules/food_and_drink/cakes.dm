@@ -216,3 +216,58 @@
 		I.add_fingerprint(user)
 	qdel(src)
 	return
+
+/obj/item/reagent_containers/food/snacks/brownie
+	name = "brownie"
+	desc = "A chocolate filled brownie fresh from the oven."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie"
+	amount = 3
+	heal_amt = 2
+	w_class = 3
+	initial_reagents = list("chocolate"=1)
+	food_effects = list("food_energized")
+
+/obj/item/reagent_containers/food/snacks/cannabis_brownie
+	name = "cannabis brownie"
+	desc = "A normal looking brownie that is filled with cannabis."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cannabis_brownie"
+	amount = 3
+	heal_amt = 2
+	w_class = 3
+	initial_reagents = list("chocolate"=3, "THC"=3)
+	food_effects = list("food_energized")
+
+/obj/item/reagent_containers/food/snacks/life_brownie
+	name = "lifeweed brownie"
+	desc = "Let's be honest, this one of the more usefull things the chef could make."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "life_brownie"
+	amount = 3
+	heal_amt = 2
+	w_class = 3
+	initial_reagents = list("chocolate"=3, "THC"=3, "CBD"=3)
+	food_effects = list("food_energized", "food_hp_up_big")
+
+/obj/item/reagent_containers/food/snacks/death_brownie
+	name = "suspicous brownie"
+	desc = "Hu, this brownie looks a bit dark."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "death_brownie"
+	amount = 3
+	heal_amt = 2
+	w_class = 3
+	initial_reagents = list("chocolate"=3, "THC"=3, "cyanide"=3)
+	food_effects = list("food_energized")
+
+/obj/item/reagent_containers/food/snacks/rainbow_brownie
+	name = "rainbow weed brownie"
+	desc = "An illegal brownie that apears to be shining from the inside."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "rainbow_brownie"
+	amount = 3
+	heal_amt = 2
+	w_class = 3
+	initial_reagents = list("chocolate"=4, "THC"=4, "LSD"=4)
+	food_effects = list("food_energized", "food_hp_up")
