@@ -50,7 +50,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	/// Use the fancy shoot manager to handle rapid-fire?
-	var/use_shootloop = 0
+	var/use_shootloop = 0 // Mostly for mechcomp gun traps, cus those don't really work well with the fullauto component
 	/// Is the shootloop shootlooping?
 	var/shooting = 0
 	/// Deciseconds the shootloop waits to resume shootlooping after shooting
