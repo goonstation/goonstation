@@ -1,4 +1,9 @@
 
+(t)fri jan 29 21
+(u)Chickenish
+(p)3417
+(e)🐛|bug
+(+)The cyborg weapons lock is no longer lengthened by lag.
 (t)thu jan 28 21
 (u)pali
 (+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
