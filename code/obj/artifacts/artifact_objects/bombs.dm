@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			// actual boom
 			SPAWN_DBG(10 SECONDS)
-				if (O.loc && src.activated)
+				if (!O.disposed && src.activated)
 					blewUp = 1
 					deploy_payload(O)
 
