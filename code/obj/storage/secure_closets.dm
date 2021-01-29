@@ -522,7 +522,8 @@
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
-	/obj/item/storage/mechanics/housing_handheld=1)
+	/obj/item/storage/mechanics/housing_handheld=1,
+	/obj/item/paper/manufacturer_blueprint/ai_status_display)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"

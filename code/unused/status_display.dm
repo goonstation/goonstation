@@ -411,7 +411,7 @@
 		else
 			pixel_y = 29
 
-		screen_glow = new /datum/light/point(y = pixel_y)
+		screen_glow = new /datum/light/point
 		screen_glow.set_brightness(0.45)
 		screen_glow.set_height(0.75)
 		screen_glow.attach(src)
