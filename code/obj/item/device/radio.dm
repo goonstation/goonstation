@@ -333,15 +333,19 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
+	var/datum/game_mode/conspiracy/N = ticker.mode
+	var/protected_frequency = null
+	if(istype(N))
+  protected_frequency =N.agent_radiofreq
 
-	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio))
-		for (var/mob/living/L in radio_brains)
-			receive += L
+    // Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
+		if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
+			for (var/mob/living/L in radio_brains)
+				receive += L
 
-		for(var/mob/zoldorf/z in the_zoldorf)
-			if(z.client)
-				receive += z
+			for(var/mob/zoldorf/z in the_zoldorf)
+				if(z.client)
+					receive += z
 
 
 		// hi it's me cirr here to shoehorn in another thing
