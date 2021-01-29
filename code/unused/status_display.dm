@@ -1,3 +1,7 @@
+//Contains:
+//-Status display (shelved until someone replaces the texticon proc with maptext)
+//-AI status display
+
 // // Status display
 // // (formerly Countdown timer display)
 
@@ -382,35 +386,55 @@
 					// 1 = AI emoticon
 					// 2 = Blue screen of death
 
-	var/picture_state	// icon_state of ai picture
-	var/image/pic_image = null
+	//var/picture_state	// icon_state of ai picture
+	var/image/face_image = null //AI expression, optionally the entire screen for the red & BSOD faces
+	var/image/back_image = null //The bit that gets coloured
+	var/image/glow_image = null //glowy lines
+	var/mob/living/silicon/ai/owner //Let's have AIs play tug-of-war with status screens
 
-	var/emotion = "ai_happy"
-	var/message = null
+	//Stuff we receive from AIs
+	var/emotion// = "ai_happy"
+	var/message = null //displays on examine
+	var/face_color// = "#66B2F2" //stolen from the AI default
+	//In case we need to update
 
 	New()
 		..()
-		pic_image = image('icons/obj/status_display.dmi', icon_state = picture_state)
+		face_image = image('icons/obj/status_display.dmi', icon_state = "")//picture_state)
+		glow_image = image('icons/obj/status_display.dmi', icon_state = "ai_glow")
+		back_image = image('icons/obj/status_display.dmi', icon_state = "ai_white")
 
 	process()
 		if (status & NOPOWER)
 			UpdateOverlays(null, "emotion_img")
-			picture_state = null
+			UpdateOverlays(null, "back_img")
+			UpdateOverlays(null, "glow_img")
+			//picture_state = null
 			return
-
 		use_power(200)
-
 		update()
 
 	proc/update()
-		if (mode == 0) //Blank
+
+
+
+		if (mode == 0 || !owner) //Blank
 			UpdateOverlays(null, "emotion_img")
-			picture_state = null
+			UpdateOverlays(null, "back_img")
+			UpdateOverlays(null, "glow_img")
+			//picture_state = null
 			return
+		else if (face_color != owner.faceColor)
+			face_color = owner.faceColor
+			back_image.color = face_color
+			UpdateOverlays(back_image, "back_img")
+			UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+			UpdateOverlays(face_image, "emotion_img", 1) //idem
 
 		if (mode == 1)	// AI emoticon
-			if (src.emotion)
-				src.set_picture(src.emotion)
+			if (src.emotion != owner.faceEmotion)
+				src.set_picture(owner.faceEmotion)
+				emotion = owner.faceEmotion
 			return
 
 		if (mode == 2)	// BSOD
@@ -418,11 +442,11 @@
 			return
 
 	proc/set_picture(var/state)
-		if (!state || state == picture_state)
+		if (!state/* || state == picture_state*/)
 			return //Hoooly balls why was this not here before argh
-		picture_state = state
-		pic_image.icon_state = picture_state
-		UpdateOverlays(pic_image, "emotion_img")
+		//picture_state = state
+		face_image.icon_state = state
+		UpdateOverlays(face_image, "emotion_img")
 
 	get_desc()
 		..()

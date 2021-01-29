@@ -9,7 +9,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
-	"Blank" = "ai_off")
+	"Blank" = "ai_blank")
 
 /mob/living/silicon/ai
 	name = "AI"
@@ -1241,8 +1241,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!isdead(src))
 		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
 			SPAWN_DBG(0)
+				if (O.owner && O.owner != src)
+					return
+				O.owner = src
 				O.mode = 1
-				O.emotion = src.faceEmotion
+				//O.emotion = src.faceEmotion
 	return
 
 /mob/living/silicon/ai/Logout()
@@ -1252,7 +1255,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isdead(src))
 		SPAWN_DBG(0)
 			for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-				O.mode = 0
+				if (O.owner == src)
+					O.mode = 0
+					O.owner = null
+					O.emotion = null
+					O.message = null
+					O.face_color = null
 	return
 
 /mob/living/silicon/ai/say_understands(var/other)
@@ -1610,8 +1618,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.status_message = newMessage
 	SPAWN_DBG(0)
 		for (var/obj/machinery/ai_status_display/AISD in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (newEmotion)
-				AISD.emotion = ai_emotions[newEmotion]
 			if (newMessage)
 				AISD.message = newMessage
 	return
