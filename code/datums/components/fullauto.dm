@@ -103,16 +103,16 @@
 	if(current_user)
 		toggle = newProj?.fullauto_valid
 
-	if(toggle)
-		RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
-		RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
-		if(current_user.equipped() == G)
-			init_fullauto_mode(source, current_user)
-	else
-		UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
-		UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
-		if(current_user.equipped() == G)
-			end_fullauto_mode(source, current_user)
+		if(toggle)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
+			if(current_user.equipped() == G)
+				init_fullauto_mode(source, current_user)
+		else
+			UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
+			UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
+			if(current_user.equipped() == G)
+				end_fullauto_mode(source, current_user)
 
 /datum/component/holdertargeting/fullauto/proc/init_fullauto_mode(datum/source, mob/user)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/begin_shootloop)

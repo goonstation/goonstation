@@ -2752,11 +2752,7 @@
 			if(Gun.canshoot())
 				var/atom/target = getTarget()
 				if(target)
-					if(Gun.use_shootloop)
-						//DEBUG_MESSAGE("Target: [log_loc(target)]. Src: [src]")
-						Gun.shoot_manager(target, get_turf(src), src)
-					else
-						Gun.shoot(target, get_turf(src), src)
+					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
 				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)

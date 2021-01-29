@@ -65,10 +65,8 @@ A Flamethrower in various states of assembly
 	stamina_crit_chance = 1
 	move_triggered = 1
 	suppress_fire_msg = 1 // you fire Flamethrower at the steel floor x99999
-	/// Burstfire, but actually
-	use_shootloop = 1
-	refire_delay = 1.5 DECI SECONDS
-	burst_count = 3
+	/// Time between shots
+	var/refire_delay = 1.5 DECI SECONDS
 	spread_angle = 35
 
 	New()
@@ -282,7 +280,6 @@ A Flamethrower in various states of assembly
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust
 	combat_flamer = 1
-	burst_count = 4
 	refire_delay = 2
 	spread_angle = 10
 	amt_chem = 15 // About 66 bursts
@@ -676,21 +673,18 @@ A Flamethrower in various states of assembly
 		var/make_fullauto = 1
 		switch(src.mode)
 			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
-				src.burst_count = 3
 				if(src.combat_flamer)
 					src.spread_angle = 20
 				else
 					src.spread_angle = 35
 				src.refire_delay = 1.5 DECI SECONDS
 			if(FLAMER_MODE_TIGHT) // mid-range, low fire-rate
-				src.burst_count = 3
 				if(src.combat_flamer)
 					src.spread_angle = 10
 				else
 					src.spread_angle = 20
 				src.refire_delay = 2.5 DECI SECONDS
 			if(FLAMER_MODE_SINGLE) // semi-auto
-				src.burst_count = 1
 				make_fullauto = 0
 				if(src.combat_flamer)
 					src.spread_angle = 0
@@ -698,7 +692,6 @@ A Flamethrower in various states of assembly
 					src.spread_angle = 0
 				src.refire_delay = 4 DECI SECONDS
 			else // ???
-				src.burst_count = src.mode
 				if(src.combat_flamer)
 					src.spread_angle = src.mode
 				else

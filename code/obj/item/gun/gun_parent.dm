@@ -49,15 +49,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
-	/// Use the fancy shoot manager to handle rapid-fire?
-	var/use_shootloop = 0 // Mostly for mechcomp gun traps, cus those don't really work well with the fullauto component
-	/// Is the shootloop shootlooping?
-	var/shooting = 0
-	/// Deciseconds the shootloop waits to resume shootlooping after shooting
-	var/refire_delay = 4 DECI SECONDS
-	/// Number of times to have the shootloop loop while shooting
-	var/burst_count = 1
-
 	buildTooltipContent()
 		. = ..()
 		if(current_projectile)
@@ -185,10 +176,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	onEnd()
 		..()
-		if(ownerGun.use_shootloop)
-			ownerGun.shoot_manager(target_turf, user_turf, owner, pox, poy)
-		else
-			ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
+		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
@@ -207,10 +195,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		if(canshoot())
 			user.next_click = max(user.next_click, world.time + src.shoot_delay)
-		if(src.use_shootloop)
-			src.shoot_manager(target_turf, user_turf, user, pox, poy)
-		else
-			shoot(target_turf, user_turf, user, pox, poy)
+		shoot(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
 	if (can_dual_wield && (!charge_up))
@@ -219,18 +204,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				if (user.r_hand:canshoot())
 					user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					if(src.use_shootloop)
-						user.r_hand:shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
-					else
-						user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
 				if (user.l_hand:canshoot())
 					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					if(src.use_shootloop)
-						user.l_hand:shoot_manager(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
-					else
-						user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
@@ -269,30 +248,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		game_stats.Increment("violence")
 #endif
 		return
-
-/// Handles bursts, fire-rate, updating loaded magazine, etc
-/obj/item/gun/proc/shoot_manager(var/target,var/start,var/mob/user,var/POX,var/POY,var/second_shot = 0)
-	if(src.shooting) return
-	if (isghostdrone(user))
-		user?.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
-		return FALSE
-	var/canshoot = src.canshoot()
-	if (!canshoot)
-		return
-	else if (src.shooting)
-		return
-	else if(canshoot && ismob(user))
-		user?.next_click = max(user.next_click, world.time + src.shoot_delay)
-	SPAWN_DBG(0)
-		src.shooting = 1
-		for(var/burst in 1 to src.burst_count)
-			if (!process_ammo(user)) // handles magazine stuff, sets current projectile if needed
-				break
-			var/shoot_result = shoot(target, start, user, POX, POY)
-			if(shoot_result == FALSE)
-				break
-			sleep(src.refire_delay)
-		src.shooting = 0
 
 /obj/item/gun/proc/shoot_point_blank(var/mob/M as mob, var/mob/user as mob, var/second_shot = 0)
 	if (!M || !user)
