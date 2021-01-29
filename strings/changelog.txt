@@ -1,5 +1,9 @@
 
 (t)fri jan 29 21
+(u)Flaborized
+(p)3496
+(e)🎨|sprites
+(+)Resprited personal computers.
 (u)Chickenish
 (p)3417
 (e)🐛|bug
