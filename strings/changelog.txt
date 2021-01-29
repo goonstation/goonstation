@@ -1,4 +1,46 @@
 
+(t)thu jan 28 21
+(u)pali
+(+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
+(u)BenLubar
+(p)3514
+(e)🐛|bug
+(+)You can once again apply metal and glass sheets to several construction projects.
+(t)wed jan 27 21
+(u)pali
+(p)3367
+(e)🆕📄|feature, tgui
+(*)Radio station voice synthesizer got a new cool UI!
+(u)BenLubar
+(p)3498
+(e)🐛📄|bug, tgui
+(+)The new GeneTek UI no longer makes the port-a-gene explode. Sorry about that.
+(u)Kyle
+(p)3477
+(e)|
+(*)Tracking implants now alert security when they are removed from a person with their location.
+(u)pali
+(p)3455
+(e)⚖|balance
+(*)Blob temperature damage rebalanced a bit. Sources which create "smaller" hot areas are likely less effective.
+(u)BenLubar
+(p)3206
+(e)🆕📄|feature, tgui
+(*)GeneTek has released the next generation of their gene scanner computer interface!
+(+)Lab monkeys now have randomized ages and blood types.
+(t)tue jan 26 21
+(u)BenLubar
+(p)3484
+(e)|
+(+)The power issues aboard the Von Ricken have been resolved.
+(u)virvatuli
+(p)3474
+(e)|
+(+)Added a new firing sound effect for the wavegun, that sounds appropriately sci-fi!
+(u)BenLubar
+(p)3449
+(e)🐛🗺|bug, mapping
+(+)Several fixes to the generation and contents of the mining z-level.
 (t)mon jan 25 21
 (u)pali
 (+)Miasma now has a status effect and it does slightly different things based on how much of it is in you.
@@ -48,6 +90,11 @@
 (e)🆕|feature
 (+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
 (t)sat jan 23 21
+(u)Azrun
+(p)2808
+(e)⚖🔄|balance, rework
+(*)Adjusted combustion, targeting chamber burns, to be safer for the station by gating a state with exponential scaling.  Tools exist to make it unsafe again, go find them!
+(*)Molitz will now provide oxygen similar to plasmastone (just on a limited scale). A rare variant of Molitz will be an especially useful tool for making combustion spicy. (Thanks pali & UrsulaMajor)
 (u)BenLubar
 (p)3411
 (e)|

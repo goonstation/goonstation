@@ -47,7 +47,6 @@
 	src.UpdateOverlays(src.r_arm_damage_standing, "r_arm_damage")
 	src.UpdateOverlays(src.l_leg_damage_standing, "l_leg_damage")
 	src.UpdateOverlays(src.r_leg_damage_standing, "r_leg_damage")
-	src.UpdateOverlays(src.inhands_standing, "inhands")
 
 	UpdateOverlays(src.fire_standing, "fire")
 
@@ -260,22 +259,26 @@
 	// Shoes
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
-		//. = src.limbs && (!src.limbs.l_leg || istype(src.limbs.l_leg, /obj/item/parts/robot_parts) //(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("lost_left_leg","robot_left_leg","robot_treads"))
 		src.shoes.wear_image.layer = MOB_CLOTHING_LAYER
+		src.shoes.wear_image.color = src.shoes.color
+		src.shoes.wear_image.alpha = src.shoes.alpha
+		src.shoes.wear_image.overlays = null
+		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
+			shoes_count++
 			src.shoes.wear_image.icon_state = "left_[src.shoes.icon_state]"
-			src.shoes.wear_image.color = src.shoes.color
-			UpdateOverlays(src.shoes.wear_image, "wear_shoes_l")
-		else
-			UpdateOverlays(null, "wear_shoes_l")
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
-			src.shoes.wear_image.icon_state = "right_[src.shoes.icon_state]"//[!( src.lying ) ? null : "2"]"
-			src.shoes.wear_image.color = src.shoes.color
-			src.shoes.wear_image.alpha = src.shoes.alpha
-			UpdateOverlays(src.shoes.wear_image, "wear_shoes_r")
+			shoes_count++
+			if(shoes_count == 1)
+				src.shoes.wear_image.icon_state = "right_[src.shoes.icon_state]"
+			else
+				src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[src.shoes.icon_state]")
+
+		if(shoes_count)
+			UpdateOverlays(src.shoes.wear_image, "wear_shoes")
 		else
-			UpdateOverlays(null, "wear_shoes_r")
+			UpdateOverlays(null, "wear_shoes")
 
 		if (src.shoes.blood_DNA)
 			blood_image.layer = MOB_CLOTHING_LAYER+0.1
@@ -302,8 +305,7 @@
 	else
 		UpdateOverlays(null, "bloody_shoes_l")
 		UpdateOverlays(null, "bloody_shoes_r")
-		UpdateOverlays(null, "wear_shoes_l")
-		UpdateOverlays(null, "wear_shoes_r")
+		UpdateOverlays(null, "wear_shoes")
 
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
@@ -719,7 +721,6 @@
 
 /mob/living/carbon/human/update_inhands()
 
-	src.inhands_standing.len = 0
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 

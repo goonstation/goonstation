@@ -1442,6 +1442,9 @@
 
 /mob/proc/update_inhands()
 
+/mob/proc/has_any_hands()
+	. = FALSE
+
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
 

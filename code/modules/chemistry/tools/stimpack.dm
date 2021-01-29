@@ -16,7 +16,7 @@
 		src.empty = 1
 		src.icon_state = "stims0"
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		user.changeStatus("stimulants", 0.5 MINUTES)
+		user.changeStatus("stimulants", 4 MINUTES)
 		return
 
 /obj/item/stimpack/large_dose

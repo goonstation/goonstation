@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				if(stare_extreme(focused, POT))
 					return
 
-			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
+			var/extreme_start = prob(max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)

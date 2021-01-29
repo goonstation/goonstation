@@ -185,6 +185,7 @@ toxic - poisons
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_NATO/auto
+	fullauto_valid = 1
 	shot_number = 1
 	cost = 1
 	shot_volume = 66
@@ -527,6 +528,7 @@ toxic - poisons
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 	auto
+		fullauto_valid = 1
 		sname = "full auto"
 		shot_volume = 66
 		cost = 1

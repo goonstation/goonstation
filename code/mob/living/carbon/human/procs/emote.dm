@@ -1354,7 +1354,7 @@
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN_DBG(0) // some movement to make it look cooler
-								for (var/i = 0, i < 10, i++)
+								for (var/i in 0 to 9)
 									src.set_dir(turn(src.dir, 90))
 									sleep(0.2 SECONDS)
 

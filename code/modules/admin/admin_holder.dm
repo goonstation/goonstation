@@ -58,7 +58,8 @@
 			"View Fingerprints",\
 			"Delete",\
 			"Possess",\
-			"Create Poster"\
+			"Create Poster",\
+			"Copy Here",
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -77,6 +78,7 @@
 			"Possess",\
 			"Create Poster",\
 			"Delete",\
+			"Copy Here",
 
 			"Gib",\
 			"Polymorph",\

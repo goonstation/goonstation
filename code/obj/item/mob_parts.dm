@@ -392,4 +392,3 @@
 				if (ispath(streak_splatter))
 					make_cleanable(streak_splatter,src.loc)
 			sleep(0.1 SECONDS)
-

@@ -164,9 +164,10 @@ var/global/list/job_start_locations = list()
 	)
 
 	New()
-		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance))
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
 			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				initialize()
+				if(!src.disposed)
+					initialize()
 		..()
 
 	initialize()
