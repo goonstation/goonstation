@@ -386,17 +386,17 @@
 					// 1 = AI emoticon
 					// 2 = Blue screen of death
 
-	//var/picture_state	// icon_state of ai picture
 	var/image/face_image = null //AI expression, optionally the entire screen for the red & BSOD faces
 	var/image/back_image = null //The bit that gets coloured
 	var/image/glow_image = null //glowy lines
 	var/mob/living/silicon/ai/owner //Let's have AIs play tug-of-war with status screens
 
-	//Stuff we receive from AIs
-	var/emotion// = "ai_happy"
+	//Variables , these get checked against variables in the AI to check if anything needs updating
+	var/emotion = null //an icon state
 	var/message = null //displays on examine
-	var/face_color// = "#66B2F2" //stolen from the AI default
-	//In case we need to update
+	var/face_color = null
+	//var/display_name = "" //
+
 
 	New()
 		..()
@@ -409,27 +409,26 @@
 			UpdateOverlays(null, "emotion_img")
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
-			//picture_state = null
 			return
 		use_power(200)
 		update()
 
 	proc/update()
 
-
-
 		if (mode == 0 || !owner) //Blank
 			UpdateOverlays(null, "emotion_img")
 			UpdateOverlays(null, "back_img")
 			UpdateOverlays(null, "glow_img")
-			//picture_state = null
 			return
-		else if (face_color != owner.faceColor)
-			face_color = owner.faceColor
-			back_image.color = face_color
-			UpdateOverlays(back_image, "back_img")
-			UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
-			UpdateOverlays(face_image, "emotion_img", 1) //idem
+		else //All the non-face stuff goes in here
+			if (face_color != owner.faceColor)
+				face_color = owner.faceColor
+				back_image.color = face_color
+				UpdateOverlays(back_image, "back_img")
+				UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				UpdateOverlays(face_image, "emotion_img", 1) //idem
+			message = owner.status_message
+			name = initial(name) + " ([owner.name])"
 
 		if (mode == 1)	// AI emoticon
 			if (src.emotion != owner.faceEmotion)
@@ -442,9 +441,8 @@
 			return
 
 	proc/set_picture(var/state)
-		if (!state/* || state == picture_state*/)
+		if (!state)
 			return //Hoooly balls why was this not here before argh
-		//picture_state = state
 		face_image.icon_state = state
 		UpdateOverlays(face_image, "emotion_img")
 
@@ -453,7 +451,22 @@
 		if (status & NOPOWER)
 			return
 		if (src.message)
-			. += "<br>It says: \"[src.message]\""
+			. += "<br>[owner.name] says: \"[src.message]\""
+
+	verb/claim()
+		set src in view(1)
+		set name = "(AI) claim"
+		//set category = "Commands"
+		if (!isAI(usr))
+			boutput(usr, "<span class='alert'>Only an AI can claim this.</span>")
+			return
+		var/mob/living/silicon/ai/A = usr
+		if (isAIeye(usr))
+			var/mob/dead/aieye/AE = usr
+			A = AE.mainframe
+		owner = A
+		mode = 1
+		update()
 
 // I blame Flourish
 /*obj/machinery/ai_status_display

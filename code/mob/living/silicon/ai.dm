@@ -1245,7 +1245,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					return
 				O.owner = src
 				O.mode = 1
-				//O.emotion = src.faceEmotion
 	return
 
 /mob/living/silicon/ai/Logout()
@@ -1616,10 +1615,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		update_appearance()
 	if (newMessage)
 		src.status_message = newMessage
-	SPAWN_DBG(0)
-		for (var/obj/machinery/ai_status_display/AISD in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (newMessage)
-				AISD.message = newMessage
 	return
 
 /mob/living/silicon/ai/proc/ai_colorchange()
