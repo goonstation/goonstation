@@ -973,13 +973,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 0
 	cost = 1
 	damage_type = D_SPECIAL
+	shot_delay = 1 DECI SECOND
 	dissipation_rate = 0
 	dissipation_delay = 0
 	ks_ratio = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
-	fullauto_valid = 1
+	fullauto_valid = 0
 
 
 	/// Releases some of the projectile's gas into the turf

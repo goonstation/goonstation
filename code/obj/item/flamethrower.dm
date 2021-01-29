@@ -12,12 +12,12 @@ A Flamethrower in various states of assembly
 #define FLAMER_BACKTANK_TEMP 1000 KELVIN + T0C
 #define FLAMER_MIN_TEMP T0C
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
-#define FLAMER_DEFAULT_CHEM_AMT 20
-#define FLAMER_BACKTANK_CHEM_AMT 40
-#define FLAMER_MIN_CHEM_AMT 5
+#define FLAMER_DEFAULT_CHEM_AMT 40
+#define FLAMER_BACKTANK_CHEM_AMT 60
+#define FLAMER_MIN_CHEM_AMT 25
 #define FLAMER_MAX_CHEM_AMT 100
-#define FLAMER_MODE_LOOSE 1
-#define FLAMER_MODE_TIGHT 2
+#define FLAMER_MODE_AUTO 1
+#define FLAMER_MODE_BURST 2
 #define FLAMER_MODE_SINGLE 3
 #define FLAMER_MODE_BACKTANK 4
 
@@ -34,7 +34,7 @@ A Flamethrower in various states of assembly
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4
-	var/mode = FLAMER_MODE_LOOSE
+	var/mode = FLAMER_MODE_SINGLE
 	var/processing = 0
 	var/lit = 0	//on or off
 	/// Set the projectile to make the reagents be this hot
@@ -55,9 +55,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/fueltank = null // Honestly, anything with reagents'll do. Just needs sprites!
 	/// Can we swap out the tanks? Mainly so backpack flamers don't lose their flamer
 	var/swappable_tanks = 1
-	/// Is this a fancy combat flamethrower? Boosts melee damage, reduces spread
-	var/combat_flamer = 0
-	current_projectile = new/datum/projectile/special/shotchem
+	/// Divisor for chem amount - make all modes use chems at around the same rate
+	var/chem_divisor = 1
 	contraband = 5 //Heh
 	m_amt = 500
 	stamina_damage = 15
@@ -65,17 +64,15 @@ A Flamethrower in various states of assembly
 	stamina_crit_chance = 1
 	move_triggered = 1
 	suppress_fire_msg = 1 // you fire Flamethrower at the steel floor x99999
-	/// Time between shots
-	var/refire_delay = 1.5 DECI SECONDS
-	spread_angle = 35
+	spread_angle = 0
+	shoot_delay = 1 SECOND
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
-		AddComponent(/datum/component/holdertargeting/fullauto, src.refire_delay, src.refire_delay, 1)
-		src.current_projectile.fullauto_valid = 1
-		set_current_projectile(src.current_projectile)
+		set_current_projectile(new/datum/projectile/special/shotchem)
+		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
 	canshoot()
@@ -112,7 +109,7 @@ A Flamethrower in various states of assembly
 		var/datum/reagents/fueltank_reagents = src.fueltank.reagents
 		var/datum/gas_mixture/gastank_aircontents = src.gastank.air_contents
 
-		var/chem_amount = min(src.fueltank?.reagents.total_volume, src.amt_chem)
+		var/chem_amount = min(src.fueltank?.reagents.total_volume, src.amt_chem/chem_divisor)
 		var/datum/reagents/chems = new(chem_amount)
 		if(!P.reagents)
 			P.create_reagents(chem_amount)
@@ -125,12 +122,12 @@ A Flamethrower in various states of assembly
 
 		var/rem_ratio = 0.004
 		switch(mode)
-			if(FLAMER_MODE_LOOSE)
+			if(FLAMER_MODE_AUTO)
 				rem_ratio = 0.01
-			if(FLAMER_MODE_TIGHT)
+			if(FLAMER_MODE_BURST)
 				rem_ratio = 0.02
 			if(FLAMER_MODE_SINGLE)
-				rem_ratio = 0.025
+				rem_ratio = 0.03
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
@@ -146,18 +143,18 @@ A Flamethrower in various states of assembly
 
 		/// sets the projectile's chem-transfer percent per tile and speed
 		switch(mode)
-			if(FLAMER_MODE_LOOSE)
-				P_special_data["speed_mult"] = 0.5
-				P_special_data["chem_pct_app_tile"] = 0.25
-			if(FLAMER_MODE_TIGHT, FLAMER_MODE_BACKTANK)
+			if(FLAMER_MODE_AUTO)
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
+			if(FLAMER_MODE_BURST)
+				P_special_data["speed_mult"] = 0.5
+				P_special_data["chem_pct_app_tile"] = 0.25
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
 				P_special_data["chem_pct_app_tile"] = 0.10
-			else
-				P_special_data["speed_mult"] = mode
-				P_special_data["chem_pct_app_tile"] = mode * 0.01
+			else //default to backtank??
+				P_special_data["speed_mult"] = 0.6
+				P_special_data["chem_pct_app_tile"] = 0.2
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 		src.updateSelfDialog()
 
@@ -279,20 +276,21 @@ A Flamethrower in various states of assembly
 	force = 6
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust
-	combat_flamer = 1
-	refire_delay = 2
 	spread_angle = 10
-	amt_chem = 15 // About 66 bursts
+	amt_chem = FLAMER_BACKTANK_CHEM_AMT // About 100 shots
 	mode = FLAMER_MODE_BACKTANK
-
+	can_dual_wield = 0
+	shoot_delay = 5 DECI SECONDS
 
 
 	New()
-		..()
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
 		src.gastank = B
 		src.fueltank = B
 		B.linkedflamer = src
+		..()
+		src.current_projectile.fullauto_valid = 1
+		src.set_current_projectile(src.current_projectile)
 
 	disposing()
 		if(istype(gastank, /obj/item/tank/jetpack/backtank/))
@@ -609,24 +607,14 @@ A Flamethrower in various states of assembly
 		lit = !(lit)
 		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 20, 1)
 		if(lit)
-			if (istype(src, /obj/item/gun/flamethrower/backtank))
-				icon_state = "syndthrower_1"
-				item_state = "syndthrower_1"
-				user.update_inhands()
-			else
-				icon_state = "flamethrower_ignite_on"
-				item_state = "flamethrower1"
-			force = src.combat_flamer ? 12 : 10
+			icon_state = "flamethrower_ignite_on"
+			item_state = "flamethrower1"
+			force =  10
 			hit_type = DAMAGE_BURN
 			processing_items |= src
 		else
-			if (istype(src, /obj/item/gun/flamethrower/backtank))
-				icon_state = "syndthrower_0"
-				item_state = "syndthrower_0"
-				user.update_inhands()
-			else
-				icon_state = "flamethrower_oxy_fuel"
-			force = src.combat_flamer ? 6 : 3
+			icon_state = "flamethrower_oxy_fuel"
+			force = 3
 			hit_type = DAMAGE_BLUNT
 		tooltip_rebuild = 1
 
@@ -682,35 +670,29 @@ A Flamethrower in various states of assembly
 	if (href_list["mode"])
 		mode = text2num(href_list["mode"])
 		playsound(get_turf(src), "sound/effects/valve_creak.ogg", 15, 1)
-		var/make_fullauto = 1
+		src.current_projectile.fullauto_valid = 1
+		src.current_projectile.shot_number = 1
 		switch(src.mode)
-			if(FLAMER_MODE_LOOSE) // short-range, high fire-rate
-				if(src.combat_flamer)
-					src.spread_angle = 20
-				else
-					src.spread_angle = 35
-				src.refire_delay = 1.5 DECI SECONDS
-			if(FLAMER_MODE_TIGHT) // mid-range, low fire-rate
-				if(src.combat_flamer)
-					src.spread_angle = 10
-				else
-					src.spread_angle = 20
-				src.refire_delay = 2.5 DECI SECONDS
-			if(FLAMER_MODE_SINGLE) // semi-auto
-				make_fullauto = 0
-				if(src.combat_flamer)
-					src.spread_angle = 0
-				else
-					src.spread_angle = 0
-				src.refire_delay = 4 DECI SECONDS
-			else // ???
-				if(src.combat_flamer)
-					src.spread_angle = src.mode
-				else
-					src.spread_angle = src.mode * 2
-				src.refire_delay = src.mode DECI SECONDS
-		src.current_projectile.fullauto_valid = make_fullauto
-		AddComponent(/datum/component/holdertargeting/fullauto, src.refire_delay, src.refire_delay, 1)
+			if(FLAMER_MODE_AUTO) // mid-range automatic
+				src.spread_angle = 15
+				src.shoot_delay = 2 DECI SECONDS
+				src.chem_divisor = 5 //5 shots per second
+			if(FLAMER_MODE_BURST) // close range burst
+				src.spread_angle = 30
+				src.current_projectile.shot_number = 4
+				src.chem_divisor = 4 //4 shots per burst
+				src.shoot_delay = 1 SECOND
+			if(FLAMER_MODE_SINGLE) // single line (default)
+				src.current_projectile.fullauto_valid = 0
+				src.spread_angle = 0
+				src.shoot_delay = 1 SECOND
+				src.chem_divisor = 1 //1 line per second
+			else //default to backtank flamer???
+				src.spread_angle = 5
+				src.shoot_delay = 2 DECI SECONDS
+				src.chem_divisor = 1 //hehehe
+
+		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 		set_current_projectile(src.current_projectile)
 
 	if (href_list["temp"])
@@ -787,13 +769,13 @@ A Flamethrower in various states of assembly
 
 	dat += "<BR><B>Connector Valve Mode:</B> "
 	if (mode == 1)
-		dat += "<B>Wide Spray</B> | "
+		dat += "<B>Full Auto</B> | "
 	else
-		dat += "<a href='?src=\ref[src];mode=1'>Wide Spray</a> | "
+		dat += "<a href='?src=\ref[src];mode=1'>Full Auto</a> | "
 	if (mode == 2)
-		dat += "<B>Narrow Spray</B> | "
+		dat += "<B>Wide Burst</B> | "
 	else
-		dat += "<a href='?src=\ref[src];mode=2'>Narrow Spray</a> | "
+		dat += "<a href='?src=\ref[src];mode=2'>Wide Burst</a> | "
 	if (mode == 3)
 		dat += "<B>Semi-Auto</B>"
 	else
@@ -829,7 +811,7 @@ A Flamethrower in various states of assembly
 #undef FLAMER_BACKTANK_CHEM_AMT
 #undef FLAMER_MIN_CHEM_AMT
 #undef FLAMER_MAX_CHEM_AMT
-#undef FLAMER_MODE_LOOSE
-#undef FLAMER_MODE_TIGHT
+#undef FLAMER_MODE_AUTO
+#undef FLAMER_MODE_BURST
 #undef FLAMER_MODE_SINGLE
 #undef FLAMER_MODE_BACKTANK
