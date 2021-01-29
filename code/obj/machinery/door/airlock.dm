@@ -1272,13 +1272,11 @@ About the new airlock wires panel:
 	..()
 
 /obj/machinery/door/airlock/ui_static_data(mob/user)
-	var/list/static_data = list()
-
-	static_data["wireColors"] = src.wire_colors
-	static_data["netId"] = src.net_id
-	static_data["name"] = src.name
-
-	return static_data
+	. = list(
+		"wireColors" = src.wire_colors,
+		"netId" = src.net_id,
+		"name" = src.name
+	)
 
 /obj/machinery/door/airlock/ui_status(mob/user, datum/ui_state/state)
 	return min(

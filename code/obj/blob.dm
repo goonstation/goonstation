@@ -76,7 +76,7 @@
 		if (usr != overmind)
 			return
 		var/list/pa = params2list(params)
-		if (pa.Find("right"))
+		if ("right" in pa)
 			right_click_action()
 		else
 			..()
@@ -232,7 +232,7 @@
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
 
-			src.take_damage(temp_difference / heat_divisor, 1, "burn")
+			src.take_damage(temp_difference / heat_divisor * volume / CELL_VOLUME, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src

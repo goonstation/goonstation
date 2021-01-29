@@ -203,3 +203,4 @@
 // ---- fullauto UI thingy signals ----
 #define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
+#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"

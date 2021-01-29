@@ -114,14 +114,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			suppress_fire_msg = 0
 
 /obj/item/gun/proc/CreateID() //Creates a new tracking id for the gun and returns it.
-	var/newID = ""
+	. = ""
 
 	do
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
-			newID += "[pick(numbersAndLetters)]"
-	while(forensic_IDs.Find(newID))
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)
 
-	return newID
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -157,7 +156,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	..()
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
-		src.current_projectile = src.projectiles[src.current_projectile_num]
+		src.set_current_projectile(src.projectiles[src.current_projectile_num])
 		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
 	return
 
@@ -526,3 +525,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
 		src.shoot_point_blank(user, user)
 		JOB_XP(user, "Clown", 3)
+
+
+///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
+/obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
+	src.current_projectile = newProj
+	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)

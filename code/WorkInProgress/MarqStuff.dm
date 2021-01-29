@@ -605,12 +605,15 @@
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
 	var/datum/action/bar/aim/aim = null
-	current_projectile = new/datum/projectile/arrow
 	spread_angle = 40
 	force = 5
 	can_dual_wield = 0
 	contraband = 0
 	move_triggered = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/arrow)
+		. = ..()
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))

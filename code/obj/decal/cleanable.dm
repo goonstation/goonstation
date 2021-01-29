@@ -445,8 +445,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			src.UpdateName()
 			src.dry_time = time
 			last_dry_start = world.time
-			if (!processing_items.Find(src))
-				processing_items.Add(src)
+			processing_items |= src
 			return 1
 
 	end_dry()
@@ -1658,12 +1657,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							if (M)
 								M.ignite()
 						if (src.loc && src.loc.reagents && src.loc.reagents.total_volume)
-							for (var/i = 0, i < 10, i++)
+							for (var/i in 1 to 10)
 								src.loc.reagents.temperature_reagents(T0C + 3100, 10)
 						if (src.loc)
 							for (var/obj/O in src.loc)
 								if (O != src && O.reagents && O.reagents.total_volume)
-									for (var/i = 0, i < 10, i++)
+									for (var/i in 1 to 10)
 										O.reagents.temperature_reagents(T0C + 3100, 10)
 					sleep(0.5 SECONDS)
 				else

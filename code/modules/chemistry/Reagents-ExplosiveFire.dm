@@ -853,6 +853,7 @@ datum
 			name = "Nitrogen Triiodide"
 			id = "nitrotri_parent"
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			penetrates_skin = 1
 			volatility = 2
@@ -913,6 +914,7 @@ datum
 
 		combustible/nitrogentriiodide/wet
 			id = "nitrotri_wet"
+			random_chem_blacklisted = 1
 			volatility = 2
 			viscosity = 0.3
 
@@ -931,6 +933,7 @@ datum
 
 		combustible/nitrogentriiodide/dry
 			id = "nitrotri_dry"
+			random_chem_blacklisted = 1
 			volatility = 2.5
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry. This is dry. Uh oh."
 			is_dry = 1

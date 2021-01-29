@@ -29,7 +29,7 @@ proc/get_moving_lights_stats()
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
 			src.RL_AddOverlay = unpool(/obj/overlay/tile_effect/lighting/add) ; \
-			src.vis_contents |= src.RL_AddOverlay ; \
+			src.RL_AddOverlay.set_loc(src) ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
 		src.RL_AddOverlay.color = list( \
@@ -525,23 +525,29 @@ datum/light
 					E.RL_ApplyGeneration = generation
 					RL_APPLY_LIGHT_LINE(E, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(E)
-					ADDUPDATE(get_step(T, SOUTHEAST))
+					if(get_step(T, SOUTHEAST))
+						ADDUPDATE(get_step(T, SOUTHEAST))
 
 				var/turf/N = get_step(T, NORTH)
 				if (N && N.RL_ApplyGeneration < generation)
 					N.RL_ApplyGeneration = generation
 					RL_APPLY_LIGHT_LINE(N, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
 					ADDUPDATE(N)
-					ADDUPDATE(get_step(T, NORTHWEST))
+					if(get_step(T, NORTHWEST))
+						ADDUPDATE(get_step(T, NORTHWEST))
 
-				if (T.NE && T.NE.RL_ApplyGeneration < generation)
-					RL_APPLY_LIGHT_LINE(T.NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
-					T.NE.RL_ApplyGeneration = generation
-					ADDUPDATE(T.NE)
+				var/turf/NE = get_step(T, NORTHEAST)
+				if (NE && NE.RL_ApplyGeneration < generation)
+					RL_APPLY_LIGHT_LINE(NE, src.x, src.y, src.dir, dist_cast, src.brightness, height2, r, g, b)
+					NE.RL_ApplyGeneration = generation
+					ADDUPDATE(NE)
 
-				ADDUPDATE(get_step(T, WEST))
-				ADDUPDATE(get_step(T, SOUTH))
-				ADDUPDATE(get_step(T, SOUTHWEST))
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
 
 			//account for blocked visibility (try to worm me way around somethin) also lol this is shit and doesnt work. maybe fix later :)
 			/*
@@ -613,13 +619,10 @@ proc
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
 
-	disposing()
-		for(var/turf/T in src.vis_locs)
-			T.vis_contents -= src
-		..()
-
 /obj/overlay/tile_effect/lighting/mul
 	plane = PLANE_LIGHTING
+	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
+	layer = LIGHTING_LAYER_ROBUST
 
 /obj/overlay/tile_effect/lighting/add
 	plane = PLANE_SELFILLUM
@@ -641,11 +644,6 @@ turf
 		RL_OverlayState = ""
 		list/datum/light/RL_Lights = null
 		opaque_atom_count = 0
-		turf/N
-		turf/S
-		turf/W
-		turf/E
-		turf/NE
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif
@@ -756,7 +754,7 @@ turf
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
 					src.RL_MulOverlay = unpool(/obj/overlay/tile_effect/lighting/mul)
-					src.vis_contents |= src.RL_MulOverlay
+					src.RL_MulOverlay.set_loc(src)
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
@@ -856,7 +854,7 @@ atom
 					lights |= T.RL_Lights
 
 			var/list/affected = list()
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.strip(++RL_Generation)
 
@@ -864,7 +862,7 @@ atom
 			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
 			src.opacity = new_opacity
-			for (var/datum/light/light in lights)
+			for (var/datum/light/light as() in lights)
 				if (light.enabled)
 					affected |= light.apply()
 			if (RL_Started)

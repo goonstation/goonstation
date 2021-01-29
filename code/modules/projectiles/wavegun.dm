@@ -14,12 +14,12 @@
 //name of the projectile setting, used when you change a guns setting
 	sname = "inversion wave"
 //file location for the sound you want it to play
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/wavegun.ogg'
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 	damage_type = D_ENERGY
 	//With what % do we hit mobs laying down
-	hit_ground_chance = 33
+	hit_ground_chance = 0
 	//Can we pass windows
 	window_pass = 0
 

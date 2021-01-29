@@ -150,6 +150,9 @@
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
 		return
+	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
+		boutput(client.mob, "You have been banned from using this command.")
+		return
 
 	if (IsGuestKey(client.key))
 		boutput(client.mob, "You are not authorized to communicate over these channels.")

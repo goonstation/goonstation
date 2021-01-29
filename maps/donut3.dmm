@@ -11319,6 +11319,9 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "dbj" = (
@@ -17185,6 +17188,10 @@
 	pixel_x = 1;
 	pixel_y = 6
 	},
+/obj/item/device/ticket_writer{
+	pixel_x = -7;
+	pixel_y = -3
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -18810,6 +18817,10 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 25
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 4;
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
@@ -41660,6 +41671,9 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "msW" = (
@@ -54378,6 +54392,9 @@
 /area/station/hallway/primary/south)
 "qgO" = (
 /obj/stool/chair/comfy,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "qgQ" = (
@@ -58815,6 +58832,9 @@
 "rrH" = (
 /obj/stool/chair/office/red{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -75366,6 +75386,10 @@
 	},
 /obj/cable,
 /obj/random_item_spawner/desk_stuff/one,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -8;
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
 	},
@@ -77034,6 +77058,9 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)

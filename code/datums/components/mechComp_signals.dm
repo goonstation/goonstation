@@ -12,7 +12,7 @@
 	nodes.Add(A)
 
 /datum/mechanicsMessage/proc/hasNode(var/atom/A)
-	return nodes.Find(A)
+	return (A in nodes)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
 	if(istext(signal))
@@ -293,11 +293,11 @@
 		return 0
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_range(parent, user))
+		if(selected_config && in_interact_range(parent, user))
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-					if(!in_range(parent, user) || user.stat)
+					if(!in_interact_range(parent, user) || user.stat)
 						return
 					inp = trim(strip_html_tags(inp))
 					if(length(inp))

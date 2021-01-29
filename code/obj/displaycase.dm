@@ -191,7 +191,7 @@
 
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
 				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))
-				L.current_projectile = new src.our_projectile
+				L.set_current_projectile(new src.our_projectile)
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
