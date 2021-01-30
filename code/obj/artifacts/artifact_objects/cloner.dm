@@ -37,7 +37,7 @@
 			// fluff
 			if(swapSouls)
 				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
-			var/filter = filter(type="outline", size=0.5, color=rgb(255,0,0,128), flags=OUTLINE_SHARP)
+			var/filter = filter(type="outline", size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP)
 			H.filters += filter
 			SPAWN_DBG(0.7 SECONDS)
 				H.filters -= filter
@@ -55,6 +55,7 @@
 				if(H.traitHolder && H.traitHolder.traits.len)
 					clone.traitHolder.traits = H.traitHolder.traits.Copy()
 				clone.real_name = user.real_name
+				clone.UpdateName()
 			else
 				clone = semi_deep_copy(H) // admins made me do it
 				clone.set_loc(O)
