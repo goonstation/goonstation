@@ -997,12 +997,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			return
 
 		var/turf/T = get_turf(hit)
-
-		var/list/c_turfH = O.special_data["crossed_turfs"]
-		if (c_turfH[src.turf2coordinates(T)] == 1)
-			return // one spray per turf, please! No matter how many times this gets called!
-		c_turfH[src.turf2coordinates(T)] = 1
-
 		var/datum/reagents/chemR = O.reagents
 		var/chem_amt = chemR.total_volume
 		/// If there's just a little bit left, use the rest of it
@@ -1038,29 +1032,39 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			var/Tz = T.z
 			return "[Tx], [Ty], [Tz]"
 
+	post_setup(obj/projectile/P)
+		var/list/cross2 = list()
+		for(var/turf/T in P.crossing)
+			cross2[T] = P.crossing[T]
+		P.special_data["projcross"] = cross2
+
 	on_launch(obj/projectile/O)
 		if(length(O.special_data))
 			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
-		var/list/c_turfs = O.special_data["crossed_turfs"]
-		c_turfs[src.turf2coordinates(get_turf(O))] = 1 // skip our originating turf
-		O.AddComponent(/datum/component/pierce_mobs, 2) // Pierce two mobs, no more, no less
+		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		var/turf/T = get_turf(hit)
-		src.emit_chems(T, O)
-		src.emit_gas(T, 1)
+		var/list/cross2 = O.special_data["projcross"]
+		if(T in cross2)
+			cross2 -= T
+			src.emit_chems(T, O)
+			src.emit_gas(T, 1)
 
 	tick(var/obj/projectile/O)
-		var/list/c_turfs = O.special_data["crossed_turfs"]
-		if(c_turfs[src.turf2coordinates(get_turf(O))] == 1)
-			return // One emit per turf, please
-
-		var/turf/T = get_turf(O)
-		src.emit_chems(T, O)
-		src.emit_gas(T, 0)
-		if(O.reagents?.total_volume < 0.01)
-			O.die()
+		var/list/cross2 = O.special_data["projcross"]
+		for (var/i = 1, i < cross2.len, i++)
+			var/turf/T = cross2[i]
+			if (cross2[T] < O.curr_t)
+				src.emit_chems(T, O)
+				src.emit_gas(T, 0)
+				if(O.reagents?.total_volume < 0.01)
+					O.die()
+				cross2.Cut(1,2)
+				i--
+			else
+				break
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		var/turf/T = get_turf(O)

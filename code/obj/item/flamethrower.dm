@@ -115,7 +115,6 @@ A Flamethrower in various states of assembly
 			P.create_reagents(chem_amount)
 		fueltank_reagents.trans_to_direct(P.reagents, chem_amount)
 
-		P_special_data["crossed_turfs"] = list()
 		P_special_data["proj_color"] = chems.get_average_color()
 		P_special_data["IS_LIT"] = src.lit //100
 		P_special_data["burn_temp"] = src.base_temperature
