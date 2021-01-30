@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			for(var/atom/G in range(range, T))
 				if(istype(G, /obj/overlay) || istype(G, /obj/effects))
 					continue
-				var/dist = (O.x - G.x)**2 + (O.y - G.y)**2
+				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
 				var/distPercent = (dist/range_squared)*100
 				if(dist > range_squared)
 					continue
