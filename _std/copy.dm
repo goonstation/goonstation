@@ -1,18 +1,25 @@
-
-#define _SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x, environment=environment, root=root))
+/// makes a sorta deep copy of a thing
 #define SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x))
 
-#define COPY_DEBUG
+// copy flags
+#define COPY_SKIP_EXPLOITABLE (1<<0)
 
+#define _SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x, environment=environment, root=root, copy_flags=copy_flags))
+
+// debugging
+#define COPY_DEBUG
 #ifdef COPY_DEBUG
 var/global/list/copy_stack
 var/global/list/longest_copy_stack
 #endif
 
-proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
+proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_flags=0)
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
 			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency))
 		return orig
+	if(copy_flags & COPY_SKIP_EXPLOITABLE && (
+			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint)))
+		return null
 	if(isnull(environment))
 		root = orig
 		environment = list()
@@ -78,17 +85,17 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null)
 			qdel(A)
 		result_atom.contents.Cut()
 		for(var/atom/A in orig_atom)
-			semi_deep_copy(A, result, environment, root)
+			semi_deep_copy(A, result, environment, root, copy_flags)
 		if(!isarea(result))
 			result_atom:vis_contents = null
 			for(var/A in orig_atom:vis_contents)
-				result_atom:vis_contents += semi_deep_copy(A, null, environment, root)
+				result_atom:vis_contents += _SEMI_DEEP_COPY(A)
 		result_atom.appearance = orig_atom.appearance
 	if(istype(result, /image))
 		var/image/orig_image = orig
 		var/image/result_image = result
 		for(var/A in orig_image.vis_contents)
-			result_image.vis_contents += semi_deep_copy(A, null, environment, root)
+			result_image.vis_contents += _SEMI_DEEP_COPY(A)
 		result_image.appearance = orig_image.appearance
 	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "clients", "color", "alpha", "blend_mode", "apperance_flags")
 	var/list/mob_var_blacklist = list("ckey", "client", "key")
