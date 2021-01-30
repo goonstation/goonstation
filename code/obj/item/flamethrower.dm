@@ -13,7 +13,7 @@ A Flamethrower in various states of assembly
 #define FLAMER_MIN_TEMP T0C
 #define FLAMER_MAX_TEMP 1000 KELVIN + T0C
 #define FLAMER_DEFAULT_CHEM_AMT 40
-#define FLAMER_BACKTANK_CHEM_AMT 60
+#define FLAMER_BACKTANK_CHEM_AMT 40
 #define FLAMER_MIN_CHEM_AMT 25
 #define FLAMER_MAX_CHEM_AMT 100
 #define FLAMER_MODE_AUTO 1
@@ -153,7 +153,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.10
 			else //default to backtank??
 				P_special_data["speed_mult"] = 0.6
-				P_special_data["chem_pct_app_tile"] = 0.2
+				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 		src.updateSelfDialog()
 
