@@ -326,6 +326,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/smoothEdge = 0 // with this, the area will be perfectly circular
 
 	post_setup()
+		..()
 		affects_organic = pick(
 			prob(5); NO_EFFECT,
 			prob(2); MAKE_HUMAN_MATERIAL,
