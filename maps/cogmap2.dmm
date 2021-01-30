@@ -18524,7 +18524,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/chapel)
 "aQo" = (
-/obj/machinery/vending/security,
 /obj/machinery/door_control{
 	id = "lockdown_checkpoint1";
 	name = "Checkpoint Lockdown";
@@ -18532,6 +18531,8 @@
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/west,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQp" = (
@@ -18552,7 +18553,11 @@
 /area/station/security/checkpoint/chapel)
 "aQr" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aQs" = (
@@ -19557,7 +19562,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSS" = (
-/obj/machinery/flasher/portable,
+/obj/table/reinforced/auto,
+/obj/machinery/vending/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
 "aST" = (
@@ -31026,11 +31032,21 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
+	name = "Robust Donuts";
+	pixel_y = 10
 	},
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
-/obj/item/device/detective_scanner,
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/device/detective_scanner{
+	pixel_x = -5;
+	pixel_y = -5
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -31826,6 +31842,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -31925,6 +31944,9 @@
 	pixel_y = 3
 	},
 /obj/disposalpipe/segment/transport,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "buw" = (
@@ -38688,6 +38710,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -40982,6 +41007,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -45950,6 +45978,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bUt" = (
@@ -46654,6 +46685,11 @@
 /area/space)
 "bVT" = (
 /obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 10
+	},
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -48049,7 +48085,7 @@
 	dir = 4
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -49038,7 +49074,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Locker Room";
-	req_access_txt = "38"
+	req_access_txt = "1"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -79332,6 +79368,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/teleporter)
+"tJa" = (
+/obj/machinery/flasher/portable,
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/checkpoint/chapel)
 "tPC" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -127634,7 +127674,7 @@ aLi
 aMA
 aNP
 aOU
-aNP
+tJa
 aQs
 aRK
 aSQ

@@ -125,7 +125,7 @@
 			A.screen_loc = loc
 		A.layer = layer
 		A.plane = PLANE_HUD
-		if (!src.objects.Find(A))
+		if (!(A in src.objects))
 			src.objects += A
 			for (var/client/C in src.clients)
 				C.screen += A
@@ -138,7 +138,7 @@
 			C.screen -= A
 
 	proc/add_screen(atom/movable/screen/S)
-		if (!src.objects.Find(S))
+		if (!(S in src.objects))
 			src.objects += S
 			for (var/client/C in src.clients)
 				C.screen += S

@@ -145,7 +145,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.icon_turf_hit && istype(A, /turf/simulated/wall))
 					var/turf/simulated/wall/W = A
 					if (src.forensic_ID)
@@ -180,7 +180,7 @@
 					var/mob/living/carbon/human/npc/monkey/M = A
 					M.shot_by(shooter)
 
-			if(sigreturn & PROJ_ATOM_PASSTHROGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
+			if(sigreturn & PROJ_ATOM_PASSTHROUGH || (pierces_left != 0 && first && !(sigreturn & PROJ_ATOM_CANNOT_PASS))) //try to hit other targets on the tile
 				for (var/mob/X in T.contents)
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
@@ -190,11 +190,11 @@
 			if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
 				die()
 			else
-				if(!(sigreturn & PROJ_ATOM_PASSTHROGH))
+				if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -566,6 +566,9 @@ datum/projectile
 
 		hit_object_sound = 0
 		hit_mob_sound = 0
+
+		///if a fullauto-capable weapon should be able to fullauto this ammo type
+		fullauto_valid = 0
 
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.

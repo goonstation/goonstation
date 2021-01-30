@@ -2,6 +2,7 @@
 	name = "extended"
 	config_tag = "extended"
 	do_antag_random_spawns = 0
+	latejoin_antag_compatible = 0
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()

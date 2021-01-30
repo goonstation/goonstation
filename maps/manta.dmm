@@ -6007,7 +6007,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/drainage/big,
-/turf/simulated/floor/airless/bluewhite/corner{
+/turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
@@ -13528,7 +13528,7 @@
 	nostick = 1
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
@@ -14799,6 +14799,10 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aJv" = (
 /obj/machinery/chem_master,
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 1;
+	pixel_y = -4
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aJw" = (
@@ -18587,6 +18591,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = 9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "aSI" = (
@@ -19792,6 +19800,9 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -19819,6 +19830,9 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -43772,14 +43786,14 @@
 /area/station/hallway/portlowerhallway)
 "rWc" = (
 /obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -44288,10 +44302,17 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/clothing/head/helmet/camera/security{
-	pixel_y = 8
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 2
 	},
-/obj/item/kitchen/food_box/donut_box,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/camera/security{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},

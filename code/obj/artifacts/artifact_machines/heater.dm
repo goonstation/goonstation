@@ -16,6 +16,7 @@
 	examine_hint = "It is covered in very conspicuous markings."
 
 	post_setup()
+		. = ..()
 		heat_target = rand(0,620)
 		if (artitype.name == "eldritch" && prob(66))
 			if (heat_target > 310)

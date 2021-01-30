@@ -132,9 +132,10 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[client.mob.job]]" : client.mob.real_name
+	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[dead] [client.mob.job]]" : (dead ? "[client.mob.real_name] \[[dead]\]" : client.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("mentorhelp", ircmsg)
 
@@ -149,6 +150,9 @@
 		return
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
+		return
+	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
+		boutput(client.mob, "You have been banned from using this command.")
 		return
 
 	if (IsGuestKey(client.key))

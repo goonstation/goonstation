@@ -509,7 +509,7 @@
 		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
@@ -1620,7 +1620,7 @@
 		if (status & (NOPOWER|BROKEN))
 			return
 
-		if (usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf))
+		if (usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf))
 			src.add_dialog(usr)
 			if (href_list["cook"])
 				if(!pizcooking)

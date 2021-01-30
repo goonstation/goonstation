@@ -251,16 +251,17 @@
 			. = TRUE
 
 /obj/item/paper/ui_static_data(mob/user)
-	. = list()
-	.["name"] = src.name
-	.["sizeX"] = src.sizex
-	.["sizeY"] = src.sizey
-	.["text"] = src.info
-	.["max_length"] = PAPER_MAX_LENGTH
-	.["paperColor"] = src.color || "white"	// color might not be set
-	.["stamps"] = src.stamps
-	.["stampable"] = src.stampable
-	.["sealed"] = src.sealed
+	. = list(
+		"name" = src.name,
+		"sizeX" = src.sizex,
+		"sizeY" = src.sizey,
+		"text" = src.info,
+		"max_length" = PAPER_MAX_LENGTH,
+		"paperColor" = src.color || "white",	// color might not be set
+		"stamps" = src.stamps,
+		"stampable" = src.stampable,
+		"sealed" = src.sealed,
+	)
 
 /obj/item/paper/ui_data(mob/user)
 	. = list(
@@ -1061,7 +1062,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
 		if (!user.put_in_hand(src))
 			return ..()
 

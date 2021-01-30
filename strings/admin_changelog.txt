@@ -1,4 +1,11 @@
-(t)tue jan 20 21
+(t)wed jan 27 21
+(u)pali
+(*)The admin interact menu (~ + click) now has a Copy Here option which makes a deep copy of the object or mob on your tile. This is experimental and there might be bugs. Build mode tool coming soon™.
+(*)The copy paste thing is now also in Build Mode. It can also give a copy of a thing to every living player.
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
 (u)Sovexe
 (*)New admin verb, Disco Lights. Sets every light on the station to a random color.
 (t)tue jan 10 21
