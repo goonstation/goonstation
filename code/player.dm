@@ -41,7 +41,7 @@
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
 
-		if (mentors.Find(ckey(src.key)))
+		if (ckey(src.key) in mentors)
 			src.mentor = 1
 
 		if (src.key) //just a safety check!

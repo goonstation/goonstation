@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { classes } from "common/react";
-import { EmptyPlaceholderCn } from '../style';
+import { classes, pureComponentHooks } from 'common/react';
+import * as styles from '../style';
 
 const EmptyPlaceholder = props => {
   const {
@@ -14,12 +14,14 @@ const EmptyPlaceholder = props => {
     className,
   } = props;
   const cn = classes([
-    EmptyPlaceholderCn,
+    styles.EmptyPlaceholder,
     className,
   ]);
   return (
     <div className={cn}>{children}</div>
   );
 };
+
+EmptyPlaceholder.defaultHooks = pureComponentHooks;
 
 export default EmptyPlaceholder;

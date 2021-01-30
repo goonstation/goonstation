@@ -22,8 +22,8 @@
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
-		if (pa.Find("left"))
-			if (pa.Find("ctrl"))
+		if ("left" in pa)
+			if ("ctrl" in pa)
 				finished = 1
 				clear_markers()
 				return
@@ -59,7 +59,7 @@
 				boutput(usr, "Triggerable type set.")
 			else if (istype(object, /obj/adventurepuzzle/triggerable))
 				boutput(usr, "<span class='alert'>You must select a triggerer first!</span>")
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerer) || istype(object, /obj/item/adventurepuzzle/triggerer))
 				var/obj/adventurepuzzle/triggerer/Tr = object //hack
 				Tr.triggered.len = 0 // hack hack hack

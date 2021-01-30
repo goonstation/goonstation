@@ -191,16 +191,16 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
-			if(contexts.len)
+			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
-		if (istype(object, /obj/screen) && (!parameters["middle"] || istype(object, /obj/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
+		if (istype(object, /atom/movable/screen) && (!parameters["middle"] || istype(object, /atom/movable/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 			if (istype(usr, /mob/dead/target_observer))
 				return
-			var/obj/screen/S = object
+			var/atom/movable/screen/S = object
 			S.clicked(parameters)
 			return
 
@@ -222,12 +222,6 @@ var/list/dirty_keystates = list()
 				if( get_dist(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
-
-		// if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
-		// 	var/list/contexts = mob.checkContextActions(object)
-		// 	if(contexts.len)
-		// 		mob.showContextActions(contexts, object)
-		// 		return
 
 		if(prob(10) && user.traitHolder && iscarbon(user) && isturf(object.loc) && user.traitHolder.hasTrait("clutz"))
 			var/list/filtered = list()
@@ -316,6 +310,7 @@ var/list/dirty_keystates = list()
 
 		if (new_state != C.last_keys) // !?
 			var/mob/M = C.mob
+			usr = M
 			M.keys_changed(new_state, new_state ^ C.last_keys)
 			C.last_keys = new_state
 

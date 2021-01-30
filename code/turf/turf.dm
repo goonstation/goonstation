@@ -126,6 +126,13 @@
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
 
+	proc/setIntact(var/new_intact_value)
+		if (new_intact_value)
+			src.intact = TRUE
+			src.layer = TURF_LAYER
+		else
+			src.intact = FALSE
+			src.layer = PLATING_LAYER
 
 /obj/overlay/tile_effect
 	name = ""
@@ -168,7 +175,7 @@
 	icon_state = "placeholder"
 	fullbright = 1
 #ifndef HALLOWEEN
-	color = "#BBBBBB"
+	color = "#898989"
 #endif
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -252,8 +259,8 @@
 	for(var/atom/movable/AM as mob|obj in src)
 		if (AM) // ???? x2
 			src.Entered(AM)
-	RL_Init()
-	return
+	if(!RL_Started)
+		RL_Init()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
@@ -519,6 +526,10 @@
 	var/old_checkinghasentered = src.checkinghasentered
 	var/old_checkinghasproximity = src.checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	var/old_process_cell_operations = src.process_cell_operations
+#endif
+
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		new_turf = new new_type(src)
@@ -563,6 +574,10 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+	if(new_turf.RL_MulOverlay)
+		pool(new_turf.RL_MulOverlay)
+	if(new_turf.RL_AddOverlay)
+		pool(new_turf.RL_AddOverlay)
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -576,11 +591,6 @@
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-	new_turf.N = N
-	new_turf.S = S
-	new_turf.W = W
-	new_turf.E = E
-	new_turf.NE = NE
 
 
 	new_turf.checkingexit = old_checkingexit
@@ -588,11 +598,14 @@
 	new_turf.checkinghasentered = old_checkinghasentered
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
+#ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
+	new_turf.process_cell_operations = old_process_cell_operations
+#endif
+
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
 	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
-	if (RL_Started) RL_UPDATE_LIGHT(new_turf) //Then applies the proper lighting.
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
@@ -1024,17 +1037,13 @@ Other Goonstation servers:[serverList]"}
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
 		boutput(usr, "<span class='alert'>You can't build here.</span>")
 		return
-	if (istype(C, /obj/item/rods))
+	var/obj/item/rods/R = C
+	if (istype(R) && R.consume_rods(1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
-		if(C.material) src.setMaterial(C.material)
-		C:amount--
-
-		if (C:amount < 1)
-			user.u_equip(C)
-			qdel(C)
-			return
+		if (R.material)
+			src.setMaterial(C.material)
 		return
 
 	if (istype(C, /obj/item/tile))
@@ -1045,14 +1054,6 @@ Other Goonstation servers:[serverList]"}
 				qdel(L)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
-		return
-	return
 
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)

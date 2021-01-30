@@ -12153,17 +12153,17 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDc" = (
-/obj/machinery/power/stats_meter{
-	name = "Hot Loop Inlet Meter";
-	pixel_x = 12;
-	tag = "Hot Loop Inlet Meter"
-	},
 /obj/machinery/meter{
 	pixel_x = -10;
 	pixel_y = -8
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Inlet Meter";
+	pixel_x = 12;
+	tag = "Hot Loop Inlet Meter"
 	},
 /obj/cable{
 	d2 = 8;
@@ -14862,7 +14862,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -14874,13 +14874,13 @@
 	on = 1
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJt" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /obj/machinery/camera{
@@ -14891,7 +14891,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aJu" = (
 /obj/decal/poster/wallsign/hazard_coldloop,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -15387,7 +15387,7 @@
 "aKA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aKB" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/machinery/sparker{
@@ -15397,7 +15397,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aKC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -15763,13 +15763,13 @@
 	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aLJ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aLK" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -16111,7 +16111,7 @@
 	name = "Combustion Chamber Vent"
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/combustion_chamber)
 "aMM" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -17213,6 +17213,7 @@
 	icon_state = "2-9"
 	},
 /obj/disposalpipe/junction/left/south,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aPH" = (
@@ -31493,6 +31494,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "byw" = (
@@ -35907,6 +35909,9 @@
 "bIi" = (
 /obj/disposalpipe/segment/vertical,
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIj" = (
@@ -35919,6 +35924,9 @@
 "bIk" = (
 /obj/disposalpipe/junction/middle/east,
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIl" = (
@@ -35926,6 +35934,9 @@
 	dir = 8
 	},
 /obj/stool,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bIm" = (
@@ -36749,11 +36760,10 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bJW" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/landmark/gps_waypoint{
+	name = "North Escape Wing"
 	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor,
+/turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "bJX" = (
 /obj/cable{
@@ -37178,6 +37188,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/device/ticket_writer{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -40401,6 +40415,10 @@
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -49980,7 +49998,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/gps_waypoint,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -53668,9 +53685,13 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "ivn" = (
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/grass,
-/area/station/garden/aviary)
+/obj/landmark/gps_waypoint{
+	name = "South Escape Wing"
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "ivS" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -54393,6 +54414,13 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
+"kxx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "kyt" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/valve{
@@ -55087,6 +55115,7 @@
 /area/station/maintenance/central)
 "mFo" = (
 /obj/machinery/chem_dispenser,
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "mHd" = (
@@ -56416,6 +56445,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "pXJ" = (
@@ -59264,6 +59294,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "xtO" = (
@@ -106634,7 +106665,7 @@ bVl
 bWu
 bXm
 gKo
-bYm
+kxx
 bZT
 bYm
 cbH
@@ -124727,7 +124758,7 @@ boK
 bpS
 bre
 bsw
-ivn
+bsw
 xcv
 xcv
 bxE
@@ -128633,7 +128664,7 @@ aNu
 aOI
 aOr
 aOr
-bJW
+bJL
 aOr
 aNu
 aOI
@@ -129834,7 +129865,7 @@ aaO
 aad
 aNu
 wBr
-aPf
+bJW
 aQf
 brh
 awS
@@ -129852,7 +129883,7 @@ aaa
 aaO
 brh
 aQf
-bik
+ivn
 aOr
 nWB
 aQf

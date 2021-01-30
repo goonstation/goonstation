@@ -874,6 +874,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.bioHolder.AddEffect(my_mutation)
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		src.protect_from(M, null, weapon)
 
 	proc/protect_from(var/mob/M as mob, var/mob/customer as mob, var/obj/item/weapon as obj)
@@ -927,7 +928,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			"I hope you don't like how your face looks, [target_name], cause it's about to get rearranged!",\
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
@@ -999,7 +1000,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	ai_action()
 		src.ai_check_grabs()
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		else
 			return ..()

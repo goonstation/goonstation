@@ -8,6 +8,7 @@
 import './styles/main.scss';
 import './styles/themes/abductor.scss';
 import './styles/themes/cardtable.scss';
+import './styles/themes/genetek.scss';
 import './styles/themes/hackerman.scss';
 import './styles/themes/malfunction.scss';
 import './styles/themes/neutral.scss';
@@ -70,6 +71,7 @@ const setupApp = () => {
     setupHotReloading();
     module.hot.accept([
       './components',
+      './debug',
       './layouts',
       './routes',
     ], () => {

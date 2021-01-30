@@ -208,7 +208,7 @@ datum/controller/pathogen
 							P.stages = newval
 					if ("create")
 						P.dnasample = new/datum/pathogendna(P)
-						P.pathogen_uid = "[next_uid]"
+						P.pathogen_uid = "p[next_uid]"
 						next_uid++
 
 						pathogen_trees += P.name_base
@@ -347,7 +347,7 @@ datum/controller/pathogen
 		if (!usr.client.holder)
 			boutput(usr, "<span class='alert'>Visitors of the CDC are not allowed to interact with the equipment!</span>")
 			return
-		if (usr.client.holder.level < LEVEL_PA)
+		if (usr.client.holder.level < LEVEL_SA)
 			boutput(usr, "<span class='alert'>I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
 			return
 		var/state = 1
@@ -838,8 +838,8 @@ datum/pathogen
 	proc/clear()
 		name = ""
 		name_base = ""
-		pathogen_uid = 0
-		mutation = 0
+		pathogen_uid = null
+		mutation = null
 		desc = ""
 		stages = 1
 		carriers = list()
@@ -849,7 +849,7 @@ datum/pathogen
 		symptomatic = 1
 		advance_speed = 0
 		spread = 0
-		base_mutation = 0
+		base_mutation = null
 		body_type = null
 		infected = null
 		cooldown = 3
@@ -887,6 +887,8 @@ datum/pathogen
 
 	proc/create_weak()
 		randomize(0)
+		if (!dnasample)
+			dnasample = new/datum/pathogendna(src)
 
 	proc/cdc_announce(var/mob/M)
 		var/datum/pathogen_cdc/CDC = null
@@ -910,7 +912,7 @@ datum/pathogen
 		src.mutation = text2num(mutation)
 		src.base_mutation = 0
 
-		src.pathogen_uid = "[pathogen_controller.next_uid]"
+		src.pathogen_uid = "p[pathogen_controller.next_uid]"
 		pathogen_controller.next_uid++
 
 		pathogen_controller.pathogen_trees += src.name_base
@@ -961,7 +963,7 @@ datum/pathogen
 			if (src.curable_by_suppression < 0)
 				src.curable_by_suppression = 0
 		else
-			src.curable_by_suppression = 0
+			src.curable_by_suppression = 10
 
 		src.stages = src.body_type.stages
 
@@ -1297,6 +1299,12 @@ datum/pathogen
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
 						mutex += T
+
+	proc/getHighestTier()
+		. = 0
+		for(var/datum/pathogeneffects/E in src.effects)
+			. = max(., E.rarity)
+
 
 proc/dig2hex(num)
 	switch (num)

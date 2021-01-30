@@ -43,7 +43,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /client/proc/apply_keys(datum/keybind_style/style)
 	PROTECTED_PROC(TRUE)
 
-	if (applied_keybind_styles.Find(initial(style.name)))
+	if (initial(style.name) in applied_keybind_styles)
 		logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
 		return
 	src.applied_keybind_styles.Add(initial(style.name))

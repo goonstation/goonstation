@@ -86,6 +86,8 @@
 		return
 
 	proc/canHold(var/obj/item/I)
+		if(isnull(I))
+			return null
 		if(I.cant_drop)
 			return 0
 		for(var/X in deniedTypes)

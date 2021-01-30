@@ -16,6 +16,7 @@
 	var/injection_amount = 10
 
 	post_setup()
+		. = ..()
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")
