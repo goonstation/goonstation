@@ -5298,12 +5298,10 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "amS" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "amT" = (
@@ -5819,6 +5817,9 @@
 "anM" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/stool/chair{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
@@ -12778,32 +12779,17 @@
 /area/station/security/brig)
 "aCI" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced/east{
-	name = "divider window"
-	},
-/obj/window/reinforced{
-	dir = 2;
-	icon_state = "darkwindow";
-	name = "divider window"
-	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aCJ" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 8
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/window/reinforced{
-	dir = 2;
-	icon_state = "darkwindow";
-	name = "divider window"
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "aCK" = (
-/obj/stool/chair{
-	dir = 8
-	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "aCL" = (
@@ -13530,9 +13516,6 @@
 /area/station/security/brig)
 "aEd" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/item/decoration/ashtray,
 /obj/cable{
 	icon_state = "4-8"
@@ -13540,13 +13523,19 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aEe" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 8
+/obj/cable{
+	icon_state = "1-8"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "aEf" = (
@@ -14072,33 +14061,16 @@
 	pixel_y = -24
 	},
 /obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1;
-	icon_state = "darkwindow";
-	name = "divider window"
-	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aFn" = (
-/obj/table/reinforced/auto,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1;
-	icon_state = "darkwindow";
-	name = "divider window"
-	},
+/obj/cable,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "aFo" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/machinery/light,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
 "aFp" = (
@@ -14107,6 +14079,9 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/stool/chair{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/secwing)
@@ -62900,6 +62875,17 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
+"itV" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -63187,6 +63173,18 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"mAF" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "mCe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
@@ -63197,6 +63195,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
+"mPg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/secwing)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -63464,13 +63471,6 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
-"pRS" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/delivery,
-/area/station/science/chemistry)
 "pSb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63480,18 +63480,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"pYt" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -63526,6 +63514,13 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"rrA" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/delivery,
+/area/station/science/chemistry)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63918,17 +63913,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"vYY" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
 	desc = "freezer bypass valve";
@@ -96341,7 +96325,7 @@ cpu
 ctg
 ctZ
 cuP
-pYt
+mAF
 adC
 aah
 adC
@@ -96642,8 +96626,8 @@ cpv
 csq
 cth
 cua
-pRS
-vYY
+rrA
+itV
 adC
 aah
 adC
@@ -98662,7 +98646,7 @@ awU
 ayx
 azV
 ajV
-ajV
+mPg
 anM
 aFp
 ayy
