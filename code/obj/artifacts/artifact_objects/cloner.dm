@@ -45,6 +45,9 @@
 			if(deep)
 				clone = semi_deep_copy(H) // admins made me do it
 				clone.set_loc(O)
+				var/lastFilterIndex = clone.filters.len
+				if(lastFilterIndex)
+					clone.filters -= clone.filters[lastFilterIndex]
 			else
 				// a bunch of stolen cloner code
 				clone = new /mob/living/carbon/human/clone(O)
