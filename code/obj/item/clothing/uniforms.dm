@@ -1099,7 +1099,7 @@
 		icon_state = "scrub-m"
 		item_state = "darkred"
 
-	navy
+	blue
 		icon_state = "scrub-n"
 		item_state = "darkblue"
 
