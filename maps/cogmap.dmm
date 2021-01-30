@@ -41283,26 +41283,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/power)
 "bKu" = (
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/disposal/mail{
-	mail_tag = "mechanics";
-	mailgroup = "mechanic";
-	message = "1";
-	name = "mail chute-'Mechanics'"
-	},
-/obj/disposalpipe/trunk/mail,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bKv" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/window/reinforced{
-	dir = 1
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bKw" = (
@@ -42006,20 +41994,36 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/disposal/mail{
+	mail_tag = "mechanics";
+	mailgroup = "mechanic";
+	message = "1";
+	name = "mail chute-'Mechanics'"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/station/engine/elect)
 "bLV" = (
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/station/engine/elect)
 "bLW" = (
-/obj/stool/chair/yellow{
-	dir = 1
-	},
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -62490,6 +62494,13 @@
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"eLl" = (
+/obj/machinery/light/emergency,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "eLo" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -62521,6 +62532,12 @@
 /obj/stool,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"faV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/exit)
 "fhr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -62553,6 +62570,18 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
+"fmS" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "fnq" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -62635,9 +62664,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
-"fHn" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "fLe" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -62826,12 +62852,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"hmD" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/delivery,
-/area/station/hallway/secondary/exit)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -62881,6 +62901,10 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
+"iBP" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -62894,10 +62918,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/power)
-"jaF" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "jbi" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
@@ -63024,11 +63044,6 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"kxm" = (
-/turf/simulated/floor/stairs{
-	icon_state = "Stairs2_wide"
-	},
-/area/station/hallway/secondary/exit)
 "kCn" = (
 /obj/machinery/door/airlock/pyro/security{
 	aiControlDisabled = 1;
@@ -63042,17 +63057,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
-"kEC" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "kFg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/cable{
@@ -63119,6 +63123,12 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"lws" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/exit)
 "lwT" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -63414,12 +63424,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"piT" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/turf/simulated/floor/delivery,
-/area/station/hallway/secondary/exit)
 "poA" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -63480,18 +63484,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"qnh" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "qoa" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -63562,15 +63554,9 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"rLz" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/turf/simulated/floor/stairs{
-	icon_state = "Stairs_wide"
-	},
-/area/station/hallway/secondary/exit)
+"rMX" = (
+/turf/space,
+/area/shuttle_sound_spawn)
 "rNh" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/grass{
@@ -63685,6 +63671,22 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"sTX" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"tjr" = (
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/hallway/secondary/exit)
 "txq" = (
 /obj/machinery/atmospherics/valve{
 	desc = "hot reserve tank valve";
@@ -63727,10 +63729,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
-"tWk" = (
-/obj/machinery/light/emergency,
+"tHk" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
+	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -63777,13 +63778,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
-"uvS" = (
-/obj/machinery/light/emergency,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -63792,6 +63786,13 @@
 	dir = 6
 	},
 /area/station/quartermaster/refinery)
+"uzX" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/delivery,
+/area/station/science/chemistry)
 "uCN" = (
 /obj/critter/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -63926,13 +63927,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"vQE" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/delivery,
-/area/station/science/chemistry)
 "vSl" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -63947,7 +63941,8 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"vZU" = (
+"wav" = (
+/obj/machinery/light/emergency,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
@@ -64076,6 +64071,15 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
+"xgx" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs_wide"
+	},
+/area/station/hallway/secondary/exit)
 "xpg" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -96365,7 +96369,7 @@ cpu
 ctg
 ctZ
 cuP
-qnh
+fmS
 adC
 aah
 adC
@@ -96666,8 +96670,8 @@ cpv
 csq
 cth
 cua
-vQE
-kEC
+uzX
+sTX
 adC
 aah
 adC
@@ -109955,7 +109959,7 @@ csS
 qoa
 cuz
 cvo
-jaF
+iBP
 adC
 adC
 adC
@@ -110253,10 +110257,10 @@ cqe
 cqe
 crc
 csa
-piT
+lws
 qoa
 cuA
-uvS
+wav
 cdu
 adC
 adC
@@ -110558,7 +110562,7 @@ cdu
 cdu
 cdu
 cdu
-hmD
+faV
 cdu
 adC
 adC
@@ -112062,7 +112066,7 @@ cnH
 cpY
 cdu
 adC
-fHn
+rMX
 coW
 coW
 coW
@@ -113578,7 +113582,7 @@ cdu
 cdu
 cdu
 cdu
-hmD
+faV
 cdu
 adC
 adC
@@ -113876,11 +113880,11 @@ cqc
 cqf
 cqf
 crd
-rLz
+xgx
 csS
 qoa
 cuC
-tWk
+eLl
 cdu
 adC
 adC
@@ -114178,12 +114182,12 @@ cdw
 coY
 cdw
 cre
-kxm
-piT
+tjr
+lws
 qoa
 cuD
-vZU
-jaF
+tHk
+iBP
 adC
 adC
 adC
