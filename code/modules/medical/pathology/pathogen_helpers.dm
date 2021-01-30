@@ -15,8 +15,13 @@
 	string = replacetext(string, "i think", "methinks")
 	return string
 
+/obj/statue
+	anchored = 0
+	density = 1
+	layer = MOB_LAYER
+
 /mob/proc/become_statue(var/datum/material/M, var/newDesc = null)
-	var/obj/overlay/statueperson = new /obj/overlay(get_turf(src))
+	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
 	src.pixel_x = 0
 	src.pixel_y = 0
 	src.set_loc(statueperson)
@@ -27,9 +32,6 @@
 	else
 		statueperson.desc = src.desc
 	statueperson.setMaterial(M)
-	statueperson.anchored = 0
-	statueperson.set_density(1)
-	statueperson.layer = MOB_LAYER
 	statueperson.set_dir(src.dir)
 	src.remove()
 
