@@ -77,14 +77,6 @@
 			if(icon_state != "sentinel") icon_state = "sentinel"//forgive me again
 			src.charge_status = -1 //out of juice its dead
 
-	var/msg = "[group?.debugid]<br>"
-	msg += "[charge]<br>"
-	msg += "[charge_status]<br>"
-
-//	maptext = "<span class='ps2p l vt ol' style=\"font-size: 6px;\">[msg] </span>"
-
-
-
 /obj/flock_structure/sentinel/proc/charge(var/chargeamount = 0)
 	if(charge < 100)
 		src.charge = min(chargeamount + charge, 100)
