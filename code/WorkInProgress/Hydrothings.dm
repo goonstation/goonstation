@@ -669,7 +669,7 @@ obj/item/gnomechompski/elf
 
 	New()
 		cell = new/obj/item/ammo/power_cell/self_charging
-		current_projectile = new/datum/projectile/wonk
+		set_current_projectile(new/datum/projectile/wonk)
 		projectiles = list(current_projectile)
 		..()
 

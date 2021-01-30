@@ -1554,7 +1554,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	var/obj/item/implant/my_implant = null
 
 	New()
-		current_projectile = new/datum/projectile/implanter
+		set_current_projectile(new/datum/projectile/implanter)
 		..()
 
 	get_desc()
@@ -1597,7 +1597,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			user.show_text("You load [I] into [src].", "blue")
 
 			if (!current_projectile)
-				current_projectile = new/datum/projectile/implanter
+				set_current_projectile(new/datum/projectile/implanter)
 			var/datum/projectile/implanter/my_datum = current_projectile
 			my_datum.my_implant = my_implant
 			my_datum.implant_master = user
@@ -1614,7 +1614,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		if (!my_implant)
 			return 0
 		if (!current_projectile)
-			current_projectile = new/datum/projectile/implanter
+			set_current_projectile(new/datum/projectile/implanter)
 		var/datum/projectile/implanter/my_datum = current_projectile
 		if (ismob(user) && my_datum.implant_master != user)
 			my_datum.implant_master = user
