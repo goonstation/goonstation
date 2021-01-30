@@ -16,12 +16,14 @@
 	var/imprison_time = 0
 	var/evil_delay = 0
 	var/swapSouls = FALSE
+	var/deep = FALSE
 
 	New()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
 		evil_delay = rand(0,imprison_time)
 		swapSouls = prob(50)
+		deep = prob(10)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -40,18 +42,22 @@
 			SPAWN_DBG(0.7 SECONDS)
 				H.filters -= filter
 
-			// a bunch of stolen cloner code
-			clone = new /mob/living/carbon/human/clone(O)
-			clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
-			clone.set_mutantrace(H.bioHolder?.mobAppearance?.mutant_race?.type)
-			clone.update_colorful_parts()
-			if (H.abilityHolder)
-				clone.abilityHolder = H.abilityHolder.deepCopy()
-				clone.abilityHolder.transferOwnership(clone)
-				clone.abilityHolder.remove_unlocks()
-			if(H.traitHolder && H.traitHolder.traits.len)
-				clone.traitHolder.traits = H.traitHolder.traits.Copy()
-			clone.real_name = user.real_name
+			if(deep)
+				// a bunch of stolen cloner code
+				clone = new /mob/living/carbon/human/clone(O)
+				clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
+				clone.set_mutantrace(H.bioHolder?.mobAppearance?.mutant_race?.type)
+				clone.update_colorful_parts()
+				if (H.abilityHolder)
+					clone.abilityHolder = H.abilityHolder.deepCopy()
+					clone.abilityHolder.transferOwnership(clone)
+					clone.abilityHolder.remove_unlocks()
+				if(H.traitHolder && H.traitHolder.traits.len)
+					clone.traitHolder.traits = H.traitHolder.traits.Copy()
+				clone.real_name = user.real_name
+			else
+				clone = semi_deep_copy(H) // admins made me do it
+				clone.set_loc(O)
 
 			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
 				clone.client.set_layout(clone.client.tg_layout)
