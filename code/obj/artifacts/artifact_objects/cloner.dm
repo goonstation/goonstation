@@ -90,7 +90,7 @@
 				clone.ai_calm_down = 0
 
 			SPAWN_DBG(imprison_time)
-				if (O) //ZeWaka: Fix for null.contents
+				if (!O.disposed)
 					for(var/obj/I in O.contents)
 						I.set_loc(get_turf(O))
 					if (clone.loc == O)
