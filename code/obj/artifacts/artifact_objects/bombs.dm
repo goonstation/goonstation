@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
 		if (alarm_initial)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
-		if (doAlert) // spam protection
+		if (doAlert)
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
 		O.add_simple_light("artbomb", lightColor)
@@ -297,3 +297,184 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		SPAWN_DBG(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
+
+// matter transmutation bomb
+
+#define NO_EFFECT 0
+#define MAKE_HUMAN_MATERIAL 1
+#define MAKE_HUMAN_STATUE 2
+
+/obj/machinery/artifact/bomb/transmute
+	name = "artifact matter transmutation bomb"
+	associated_datum = /datum/artifact/bomb/transmute
+
+	ArtifactHitWith(obj/item/O, mob/user)
+		if(..())
+			return
+		var/datum/artifact/bomb/transmute/A = src.artifact
+		O.setMaterial(A.mat)
+		boutput(user, "\The [O] turn\s into [A.mat.name]!")
+
+/datum/artifact/bomb/transmute
+	associated_object = /obj/machinery/artifact/bomb/transmute
+	validtypes = list("wizard","eldritch","martian","ancient","precursor")
+	rarity_class = 4
+	react_xray = list(17,95,95,3,"ANOMALOUS")
+	warning_initial = ""
+	warning_final = ""
+	alarm_initial = null
+	alarm_during = null
+	alarm_final = "sound/machines/satcrash.ogg"
+	var/material = "gold"
+	var/datum/material/mat = null
+	var/affects_organic = 0 // 1 means material human, 2 means material statue
+	var/range = 7
+	var/smoothEdge = 0 // with this, the area will be perfectly circular
+
+	post_setup()
+		..()
+		affects_organic = pick(
+			prob(5); NO_EFFECT,
+			prob(2); MAKE_HUMAN_MATERIAL,
+			prob(2); MAKE_HUMAN_STATUE)
+		smoothEdge = prob(50)
+
+		explode_delay = rand(30 SECONDS, 2 MINUTES)
+		switch(artitype.name)
+			if("wizard") // magical stuff
+				material = pick(
+					100;"gold",
+					100;"syreline",
+					100;"silver",
+					100;"cobryl",
+					50;"miracle",
+					50;"soulsteel",
+					50;"hauntium",
+					50;"ectoplasm",
+					10;"ectofibre",
+					10;"wiz_quartz",
+					10;"wiz_topaz",
+					10;"wiz_ruby",
+					10;"wiz_amethyst",
+					10;"wiz_emerald",
+					10;"wiz_sapphire",
+					10;"starstone")
+			if("eldritch") // fuck you
+				material = pick(
+					100;"koshmarite",
+					100;"plasmastone",
+					100;"telecrystal",
+					50;"erebite")
+			if("martian") // organic stuff
+				material = pick(
+					100;"flesh",
+					100;"viscerite",
+					100;"leather",
+					100;"cotton",
+					100;"coral",
+					50;"spidersilk",
+					50;"beewool",
+					50;"beeswax",
+					50;"chitin",
+					50;"bamboo",
+					50;"wood",
+					50;"bone",
+					20;"blob",
+					20;"pizza",
+					2;"butt")
+			if("ancient") // industrial type stuff
+				material = pick(
+					100;"electrum",
+					100;"steel",
+					100;"mauxite",
+					100;"copper",
+					100;"pharosium",
+					100;"glass",
+					100;"char",
+					100;"molitz",
+					50;"molitz_b",
+					50;"bohrum",
+					50;"cerenkite",
+					50;"plasmasteel",
+					50;"claretine",
+					50;"plasmaglass",
+					50;"uqill",
+					50;"latex",
+					50;"synthrubber",
+					50;"synthblubber",
+					50;"synthleather",
+					50;"fibrilith",
+					30;"carbonfibre",
+					30;"diamond",
+					30;"dyneema",
+					10;"iridiumalloy",
+					1;"neutronium")
+			if("precursor") // uh, the rest
+				material = pick(
+					100;"rock",
+					100;"slag",
+					100;"ice",  // no possible way this ends poorly
+					15;"spacelag",
+					15;"cardboard",
+					15;"frozenfart",
+					15;"negativematter")
+
+		mat = getMaterial(material)
+
+		warning_initial = "appears to be turning into [mat.name]."
+		warning_final = "begins transmuting nearby matter into [mat.name]!"
+
+		var/matR = GetRedPart(mat.color)
+		var/matG = GetGreenPart(mat.color)
+		var/matB = GetBluePart(mat.color)
+		lightColor = list(matR, matG, matB, 255)
+
+		range = rand(3,7)
+
+	effect_activate(obj/O)
+		if(..())
+			return
+		O.setMaterial(mat)
+
+	deploy_payload(var/obj/O)
+		if (..())
+			return
+		var/base_offset = rand(1000)
+		O.filters += filter(type="rays", size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color)
+		animate(O.filters[1], size=16*range, time=0.5 SECONDS, offset=base_offset+50)
+		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
+
+		SPAWN_DBG(1 SECOND)
+			var/range_squared = range**2
+			var/turf/T = get_turf(O)
+			for(var/atom/G in range(range, T))
+				if(istype(G, /obj/overlay) || istype(G, /obj/effects))
+					continue
+				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
+				var/distPercent = (dist/range_squared)*100
+				if(dist > range_squared)
+					continue
+				if(!smoothEdge && prob(distPercent))
+					continue
+				if(istype(G, /mob))
+					if(!istype(G, /mob/living)) // not stuff like ghosts, please
+						continue
+					var/mob/M = G
+					switch(affects_organic)
+						if(MAKE_HUMAN_MATERIAL)
+							M.setMaterial(mat)
+							for(var/atom/I in M.get_all_items_on_mob())
+								I.setMaterial(mat)
+						if(MAKE_HUMAN_STATUE)
+							if(distPercent < 40) // only inner 40% of range
+								M.become_statue(mat)
+				else
+					G.setMaterial(mat)
+
+			if(O)
+				O.ArtifactDestroyed()
+
+
+#undef NO_EFFECT
+#undef MAKE_HUMAN_MATERIAL
+#undef MAKE_HUMAN_STATUE
