@@ -136,6 +136,3 @@
 		return
 	callback.InvokeAsync(choice)
 	qdel(src)
-
-/datum/tgui_modal/list_input/async/wait()
-	return
