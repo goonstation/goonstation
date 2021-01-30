@@ -1022,13 +1022,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
 		chemR.remove_any(amt_to_emit)
 
-	proc/turf2coordinates(var/turf/T)
-		if(isturf(T))
-			var/Tx = T.x
-			var/Ty = T.y
-			var/Tz = T.z
-			return "[Tx], [Ty], [Tz]"
-
 	post_setup(obj/projectile/P)
 		var/list/cross2 = list()
 		for(var/turf/T in P.crossing)
