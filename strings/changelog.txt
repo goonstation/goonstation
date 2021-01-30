@@ -1,5 +1,9 @@
 
 (t)sat jan 30 21
+(u)Moonlol
+(p)3542
+(e)🐛|bug
+(+)You can no longer grab things from the other side of a thin window.
 (u)zjdtmkhzt
 (p)3509
 (e)⚖🆕|balance, feature
