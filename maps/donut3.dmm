@@ -31225,6 +31225,10 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "jih" = (
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -6;
+	pixel_y = 16
+	},
 /turf/simulated/floor/carpet/purple/fancy/junction/ne_w,
 /area/station/crew_quarters/hor)
 "jiR" = (

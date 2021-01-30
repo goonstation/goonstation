@@ -12024,6 +12024,7 @@
 /area/station/medical/head)
 "Dy" = (
 /obj/storage/secure/closet/command/research_director,
+/obj/item/storage/briefcase/toxins,
 /obj/item/remote/porter/port_a_sci,
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
 	pixel_x = -2

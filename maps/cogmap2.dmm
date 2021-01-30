@@ -56317,6 +56317,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/storage/briefcase/toxins,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple2"

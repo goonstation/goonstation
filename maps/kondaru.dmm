@@ -59316,6 +59316,10 @@
 "xwx" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/table/wood/auto,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 1;
+	pixel_y = 4
+	},
 /obj/machinery/phone,
 /obj/cable{
 	icon_state = "0-2"
