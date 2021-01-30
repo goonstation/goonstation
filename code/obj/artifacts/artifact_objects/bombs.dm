@@ -326,7 +326,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			prob(5); 0, // does nothing
 			prob(2); 1, // material human
 			prob(2); 2) // material statue
-		smoothEdge = pick(0,1)
+		smoothEdge = prob(50)
 
 		explode_delay = rand(30 SECONDS, 2 MINUTES)
 		switch(artitype.name)
