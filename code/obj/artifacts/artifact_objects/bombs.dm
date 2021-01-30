@@ -430,8 +430,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		O.setMaterial(mat)
 
-	effect_
-
 	deploy_payload(var/obj/O)
 		if (..())
 			return
