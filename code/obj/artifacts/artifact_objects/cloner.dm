@@ -21,7 +21,7 @@
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
 		evil_delay = rand(0,imprison_time)
-		swapSouls = pick(TRUE, FALSE)
+		swapSouls = prob(50)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -68,8 +68,7 @@
 				// make original body evil
 				H.attack_alert = 0
 				H.ai_init()
-				SPAWN_DBG(0)
-					sleep(rand(1 SECOND, 10 SECONDS))
+				SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
 					if(H) // completely convincing dialogue
 						H.say(pick(
 							"Well, that was weird!",
