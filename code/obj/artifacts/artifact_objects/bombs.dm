@@ -422,7 +422,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/matB = GetBluePart(mat.color)
 		lightColor = list(matR, matG, matB, 255)
 
-		// recharge_delay = rand(1 MINUTE, 5 MINUTES)
 		range = rand(3,7)
 
 	effect_activate(obj/O)
