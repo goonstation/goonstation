@@ -1,5 +1,9 @@
 
 (t)sat jan 30 21
+(u)Nefarious6th
+(p)3491
+(e)⚖🔄|balance, rework
+(*)Captains on the RP servers can now only roll conspirator as a potential antagonist type.
 (u)BenLubar
 (p)3499
 (e)|
