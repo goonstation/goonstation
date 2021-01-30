@@ -1,5 +1,9 @@
 
 (t)sat jan 30 21
+(u)Chickenish
+(p)3529
+(e)🆕|feature
+(+)It is now possible to anchor air scrubbers with a wrench.
 (u)Azrun
 (p)3537
 (e)⚖🐛|balance, bug
