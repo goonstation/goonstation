@@ -294,6 +294,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // matter transmutation bomb
 
+#DEFINE NO_EFFECT 0
+#DEFINE MAKE_HUMAN_MATERIAL 1
+#DEFINE MAKE_HUMAN_STATUE 2
+
 /obj/machinery/artifact/bomb/transmute
 	name = "artifact matter transmutation bomb"
 	associated_datum = /datum/artifact/bomb/transmute
@@ -323,9 +327,9 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	post_setup()
 		affects_organic = pick(
-			prob(5); 0, // does nothing
-			prob(2); 1, // material human
-			prob(2); 2) // material statue
+			prob(5); NO_EFFECT,
+			prob(2); MAKE_HUMAN_MATERIAL,
+			prob(2); MAKE_HUMAN_STATUE)
 		smoothEdge = pick(0,1)
 
 		explode_delay = rand(30 SECONDS, 2 MINUTES)
@@ -453,11 +457,11 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 					var/mob/M = G
 					switch(affects_organic)
-						if(1)
+						if(MAKE_HUMAN_MATERIAL)
 							M.setMaterial(mat)
 							for(var/atom/I in M.get_all_items_on_mob())
 								I.setMaterial(mat)
-						if(2)
+						if(MAKE_HUMAN_STATUE)
 							if(distPercent < 40) // only inner 40% of range
 								M.become_statue(mat)
 				else
@@ -465,3 +469,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			if(O)
 				O.ArtifactDestroyed()
+
+
+#UNDEF NO_EFFECT 0
+#UNDEF MAKE_HUMAN_MATERIAL 1
+#UNDEF MAKE_HUMAN_STATUE 2
