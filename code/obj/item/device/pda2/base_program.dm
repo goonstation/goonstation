@@ -91,8 +91,7 @@
 
 
 		post_signal(datum/signal/signal, newfreq)
-			if(master)
-				master.post_signal(signal, newfreq)
+			master?.post_signal(signal, newfreq)
 			//else
 				//qdel(signal)
 
@@ -147,6 +146,11 @@
 		network_hook()
 			return
 
+		/// generates a passkey out of a bunch of words and shit
+		GenerateFilesharePasskey(var/how_many = 3)
+			for(var/i in 1 to how_many)
+				. += pick_string("agent_callsigns.txt", "[pick("nato", "melee_weapons", "colors", "birds", "mammals", "moons")]")
+			. = ckey(.)
 
 	Topic(href, href_list)
 		if((!src.holder) || (!src.master))
@@ -155,7 +159,7 @@
 			return 1
 		if((src.master.active_program != src) && !(href_list["input"] && href_list["input"] == "message")) // Disgusting but works
 			return 1
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
 			return 1
 		if(usr.stat || usr.restrained())
 			return 1

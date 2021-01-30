@@ -29,7 +29,7 @@
 	buildTooltipContent()
 		. = ..()
 		var/list/L = get_contents()
-		. += "<br>Holding [L.len]/[slots] objects"
+		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
 	New()
@@ -94,7 +94,7 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user)
+			src.attackby(O, user, O.loc)
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -121,7 +121,11 @@
 		if (my_contents.len >= slots)
 			return -2
 
-	attackby(obj/item/W, mob/user, params, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+	attackby(obj/item/W, mob/user, obj/item/storage/T) // T for transfer - transferring items from one storage obj to another
+		if (W == src)
+			// Putting self in self! Was possible if weight class allows it, causing storage to disappear
+			boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
+			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
 			switch (canhold)
@@ -180,7 +184,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
@@ -194,7 +198,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand(src, 1)
 				return
-		if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -252,7 +256,7 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M in hud.mobs)
+			for (var/mob/M as() in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
 			hud.update()
@@ -263,21 +267,20 @@
 
 	proc/get_contents()
 		RETURN_TYPE(/list)
-		var/list/cont = src.contents.Copy()
-		for(var/atom/A in cont)
+		. = src.contents.Copy()
+		for(var/atom/A as() in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
-				cont.Remove(A)
-		return cont
+				. -= A
 
 	proc/add_contents(obj/item/I)
 		I.set_loc(src)
 
 	proc/get_all_contents()
-		var/list/L = list()
-		L += get_contents()
-		for (var/obj/item/storage/S in get_contents())
-			L += S.get_all_contents()
-		return L
+		. = list()
+		var/our_contents = get_contents()
+		. += our_contents
+		for (var/obj/item/storage/S in our_contents)
+			. += S.get_all_contents()
 
 /obj/item/storage/box
 	name = "box"
@@ -285,11 +288,11 @@
 	desc = "A box that can hold a number of small items."
 	max_wclass = 2
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
@@ -323,6 +326,7 @@
 /obj/item/storage/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
@@ -355,7 +359,7 @@
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)

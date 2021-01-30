@@ -34,6 +34,7 @@
 	spawn_contents = list(/obj/item/gun/energy/egun,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
+	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/swat,
@@ -136,7 +137,7 @@
 /obj/storage/secure/closet/command/chief_engineer
 	name = "\improper Chief Engineer's locker"
 	req_access_txt = "49"
-	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,
@@ -549,8 +550,7 @@
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
 	req_access = list(access_mining)
-	spawn_contents = list(/obj/item/clothing/shoes/orange,
-	/obj/item/storage/box/clothing/miner,
+	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/breaching_charge/mining/light = 3,
 	/obj/item/satchel/mining = 2,
@@ -587,7 +587,8 @@
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
 	/obj/item/caution = 4,
-	/obj/item/clothing/gloves/long)
+	/obj/item/clothing/gloves/long,
+	/obj/item/handheld_vacuum)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
@@ -665,7 +666,7 @@
 		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/storage/box/cookie_tin)
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			var/obj/item/storage/box/donkpocket_kit/dp = new(src)

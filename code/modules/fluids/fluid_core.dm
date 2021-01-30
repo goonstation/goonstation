@@ -138,6 +138,8 @@ var/mutable_appearance/fluid_ma
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/turf_remove_cleanup(turf/the_turf)
+		the_turf.active_liquid = null
 
 	disposing()
 		src.pooled = 1
@@ -154,7 +156,7 @@ var/mutable_appearance/fluid_ma
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = null
+			src.turf_remove_cleanup(src.loc)
 
 		name = "fluid"
 		fluid_ma.icon_state = "15"
@@ -192,8 +194,7 @@ var/mutable_appearance/fluid_ma
 		src.step_sound = "sound/misc/splash_1.ogg"
 
 		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_liquid = null
+			turf_remove_cleanup(src.loc)
 		..()
 
 	get_desc(dist, mob/user)

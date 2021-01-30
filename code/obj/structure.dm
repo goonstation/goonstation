@@ -236,13 +236,7 @@ obj/structure/ex_act(severity)
 					var/datum/material/M = getMaterial("steel")
 					WALL.setMaterial(M)
 				WALL.inherit_area()
-				// drsingh attempted fix for Cannot read null.amount
-				if (!isnull(S))
-					S.amount -= 2
-					if (S.amount <= 0)
-						qdel(the_tool)
-					else
-						S.inventory_counter.update_number(S.amount)
+				S?.consume_sheets(2)
 
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
@@ -282,7 +276,9 @@ obj/structure/ex_act(severity)
 		var/FloorName = T.name
 		var/oldmat = src.material
 
-		T.ReplaceWith(/turf/simulated/wall/false_wall, FALSE, FALSE, FALSE)
+		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
+
+		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
 		if(oldmat)
 			A.setMaterial(oldmat)
@@ -295,8 +291,6 @@ obj/structure/ex_act(severity)
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
 		FW.known_by += user
-		if (S.reinforcement)
-			FW.icon_state = "rdoor1"
 		S.consume_sheets(1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")

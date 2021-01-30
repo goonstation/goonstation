@@ -526,7 +526,7 @@
 				for (var/atom/A in range(4,user))
 					if (isarea(A))
 						continue
-					if (istype(A,/obj/particle/) || istype(A,/obj/screen))
+					if (istype(A,/obj/particle/) || istype(A,/atom/movable/screen))
 						continue
 					if (ismob(A))
 						var/mob/M = A

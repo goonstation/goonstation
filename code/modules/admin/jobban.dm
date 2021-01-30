@@ -18,8 +18,7 @@
 			server = "main3"
 	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server)))
 		var/datum/player/player = make_player(M) //Recache the player.
-		if(player)
-			player.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
 		return 1
 	return 0 //Errored.
 
@@ -28,9 +27,11 @@
 /proc/jobban_isbanned(M, rank)
 	var/list/cache
 	if(!M)
-		return
+		return FALSE
 	if(ismob(M))
 		var/mob/M2 = M
+		if(isnull(M2.client))
+			return FALSE
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
 			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
@@ -58,7 +59,7 @@
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
-		if(rank in list("Security Officer","Vice Officer","Detective"))
+		if(rank in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 			return TRUE
 
 	if(cache.Find("Heads of Staff"))

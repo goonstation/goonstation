@@ -53,8 +53,10 @@
 			var/scaling_factor = max((owner.base_body_temp - T0C)*6,1)
 			var/chance = round((diff/scaling_factor)*100)
 			chance = clamp(chance,0,100)
-			if(prob(chance))
-				owner.setStatus("shivering", 4 SECONDS)
+			if(prob(percentmult(chance, get_multiplier())))
+				owner.changeStatus("shivering", 6 SECONDS)
+		else
+			owner.delStatus("shivering")
 
 		// lets give them a fair bit of leeway so they don't just start dying
 		//as that may be realistic but it's no fun

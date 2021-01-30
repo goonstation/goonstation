@@ -97,6 +97,7 @@
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
 			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
+			JOB_XP(poorSob, "Chaplain", 2)
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
@@ -243,7 +244,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -475,6 +476,7 @@
 			return 1
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
+			JOB_XP(H, "Chaplain", 2)
 			return 1
 		else if( check_target_immunity(H) )
 			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")

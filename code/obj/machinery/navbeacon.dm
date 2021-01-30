@@ -33,8 +33,7 @@
 		hide(T.intact)
 
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[freq]")
+			radio_controller?.add_object(src, "[freq]")
 
 			if(!net_id)
 				net_id = generate_net_id(src)
@@ -261,7 +260,7 @@ Transponder Codes:<UL>"}
 		..()
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			if(open && !locked)
 				src.add_dialog(usr)
 

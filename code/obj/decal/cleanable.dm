@@ -445,8 +445,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			src.UpdateName()
 			src.dry_time = time
 			last_dry_start = world.time
-			if (!processing_items.Find(src))
-				processing_items.Add(src)
+			processing_items |= src
 			return 1
 
 	end_dry()
@@ -664,6 +663,53 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 10
 	can_sample = 1
 	sample_reagent = "ketchup"
+
+
+/obj/decal/cleanable/pathogen_sweat
+	name = "weirdly colored sweat"
+	desc = "Ew, better not step in this stuff."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = "#12b828"
+	slippery = 5
+	can_sample = 1
+	sample_reagent = "pathogen"
+	can_dry = 1
+	can_fluid_absorb = 0
+
+	HasEntered(AM)
+		. = ..()
+		if(prob(4))
+			src.reagents.reaction(AM, TOUCH)
+
+/obj/decal/cleanable/pathogen_cloud
+	name = "disease particles"
+	desc = "The air in that particular area gives you a bad vibe."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "pathogen_cloud"
+	color = "#12b828"
+	slippery = 5
+	can_sample = 1
+	sample_reagent = "pathogen"
+	can_dry = 1
+	can_fluid_absorb = 0
+
+	HasEntered(AM)
+		. = ..()
+		if(!ishuman(AM))
+			return
+
+		var/mob/living/carbon/human/H = AM
+		var/chance = 10
+		if(H.wear_mask)
+			chance *= H.wear_mask.path_prot
+		if(H.head)
+			chance *= H.head.path_prot
+
+		if(prob(chance))
+			src.reagents.reaction(AM, INGEST)
+
 
 /obj/decal/cleanable/paper
 	name = "paper"
@@ -1454,7 +1500,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/saltpile
 	name = "salt pile"
 	desc = "Bad luck, that."
-	icon = 'icons/obj/fluids/salt.dmi'
+	icon = 'icons/obj/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "salt"
@@ -1553,7 +1599,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
 	desc = "Uh-oh."
-	icon = 'icons/obj/fluids/salt.dmi'
+	icon = 'icons/obj/salt.dmi'
 	icon_state = "0"
 	can_sample = 1
 	sample_reagent = "magnesium"
@@ -1611,12 +1657,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							if (M)
 								M.ignite()
 						if (src.loc && src.loc.reagents && src.loc.reagents.total_volume)
-							for (var/i = 0, i < 10, i++)
+							for (var/i in 1 to 10)
 								src.loc.reagents.temperature_reagents(T0C + 3100, 10)
 						if (src.loc)
 							for (var/obj/O in src.loc)
 								if (O != src && O.reagents && O.reagents.total_volume)
-									for (var/i = 0, i < 10, i++)
+									for (var/i in 1 to 10)
 										O.reagents.temperature_reagents(T0C + 3100, 10)
 					sleep(0.5 SECONDS)
 				else

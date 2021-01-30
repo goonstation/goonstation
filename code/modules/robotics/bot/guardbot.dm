@@ -53,8 +53,7 @@
 			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
-				if(master.task)
-					master.task.task_input("path_error")
+				master.task?.task_input("path_error")
 
 				master.moving = 0
 				//dispose()
@@ -68,8 +67,7 @@
 				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
-					if(master.task)
-						master.task.task_input("path_blocked")
+					master.task?.task_input("path_blocked")
 					break
 				step_to(master, master.path[1])
 				if(master.loc != master.path[1])
@@ -603,7 +601,7 @@
 				speak("[(src.slept_through_laser_class || !user) ? "" : "Thank you, [user]! "]Oh... but article-[(rand(1,6))] subsection-[rand(1,32764)] of Spacelaw prohibits any [fluffbud] [budfluff] from wielding a Class-[pick("A", "B","C", "D")] laser weapon.")
 				SPAWN_DBG(2 SECONDS)
 					speak("Oh! This weapon has a stun setting! That makes it [pick("A-OK", "totally fine", "well within certain loopholes of the law")] for me to use!")
-					src.budgun.current_projectile = new /datum/projectile/energy_bolt
+					src.budgun.set_current_projectile(new /datum/projectile/energy_bolt)
 					src.budgun.item_state = "egun"
 					src.budgun.icon_state = "energystun100"
 					src.budgun.muzzle_flash = "muzzle_flash_elec"
@@ -613,7 +611,7 @@
 			speak("I can't kill anything with this!")
 			SPAWN_DBG(2 SECONDS)
 				speak("Much better!")
-				src.budgun.current_projectile = new /datum/projectile/laser
+				src.budgun.set_current_projectile(new /datum/projectile/laser)
 				src.budgun.item_state = "egun"
 				src.budgun.icon_state = "energykill100"
 				src.budgun.muzzle_flash = "muzzle_flash_laser"
@@ -703,52 +701,52 @@
 		src.lawbringer_state = local_ordinance
 		switch (local_ordinance)
 			if ("clown")
-				src.budgun.current_projectile = new/datum/projectile/bullet/clownshot
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/clownshot)
 				SPAWN_DBG(1 SECOND)
 					if (!loose)
 						src.visible_message(dothevoice)
 					speak(loose ? "CLOWN." : "Clownshot!")
 					playsound(src, "sound/vox/clown.ogg", 30)
 			if ("detain")
-				src.budgun.current_projectile = new/datum/projectile/energy_bolt/aoe
+				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Detain!")
 					playsound(src, "sound/vox/detain.ogg", 30)
 			if ("pulse")
-				src.budgun.current_projectile = new/datum/projectile/energy_bolt/pulse
+				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/pulse)
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Pulse!")
 					playsound(src, "sound/vox/push.ogg", 30)
 			if ("knockout")
-				src.budgun.current_projectile = new/datum/projectile/bullet/tranq_dart/law_giver
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/tranq_dart/law_giver)
 				src.budgun.current_projectile.cost = 60
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
 					playsound(src, "sound/vox/sleep.ogg", 30)
 			if ("smoke")
-				src.budgun.current_projectile = new/datum/projectile/bullet/smoke
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/smoke)
 				src.budgun.current_projectile.cost = 50
 				SPAWN_DBG(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
 					playsound(src, "sound/vox/smoke.ogg", 30)
 			if ("execute")
-				src.budgun.current_projectile = new/datum/projectile/bullet/revolver_38
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/revolver_38)
 				src.budgun.current_projectile.cost = 30
 				SPAWN_DBG(1 SECOND)
 					speak("EXTERMINATE.")
 					playsound(src, "sound/vox/exterminate.ogg", 30)
 			if ("hotshot")
-				src.budgun.current_projectile = new/datum/projectile/bullet/flare
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/flare)
 				src.budgun.current_projectile.cost = 60
 				SPAWN_DBG(1 SECOND)
 					speak("HOTSHOT.")
 					playsound(src, "sound/vox/hot.ogg", 30)
 			if ("bigshot")	// impossible to get to without admin intervention
-				src.budgun.current_projectile = new/datum/projectile/bullet/aex/lawbringer
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/aex/lawbringer)
 				src.budgun.current_projectile.cost = 170
 				SPAWN_DBG(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
@@ -1227,7 +1225,10 @@
 		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			budgun.shoot(target_turf, my_turf, src)
+			if(IN_RANGE(target_turf, my_turf, 1))
+				budgun.shoot_point_blank(target, my_turf)
+			else
+				budgun.shoot(target_turf, my_turf, src)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1253,8 +1254,7 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (get_dist(user,src) <= 1))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message("<span class='notice'>[user] [affection]s [src]!</span>","<span class='notice'>You [affection] [src]!</span>")
-			if(src.task)
-				src.task.task_input("hugged")
+			src.task?.task_input("hugged")
 			return
 
 		if(get_dist(user, src) > 1)
@@ -1313,8 +1313,7 @@
 				speak("SO SAYETH THE WIZARD!")
 				return
 
-		if(src.task)
-			src.task.receive_signal(signal, is_beacon)
+		src.task?.receive_signal(signal, is_beacon)
 
 		return
 
@@ -1476,8 +1475,7 @@
 				DropTheThing("gun", null, 0, 0, T, 1)
 			if(prob(50))
 				new /obj/item/parts/robot_parts/arm/left(T)
-			if(src.hat)
-				src.hat.set_loc(T)
+			src.hat?.set_loc(T)
 
 			new /obj/item/guardbot_frame(T)
 			var/obj/item/guardbot_core/core = new /obj/item/guardbot_core(T)
@@ -2993,6 +2991,9 @@
 						src.mode = 1
 						src.master.frustration = 0
 						master.set_emotion("angry")
+						if(istype(C, /mob/living/carbon/human/npc/monkey))
+							var/mob/living/carbon/human/npc/monkey/npcmonkey = C
+							npcmonkey.pursuited_by(src)
 						SPAWN_DBG(0)
 							master.speak("Level [threat] infraction alert!")
 							master.visible_message("<b>[master]</b> points at [C.name]!")
@@ -3752,9 +3753,7 @@
 
 						src.master.speak(insultphrase)
 
-						var/P = new /obj/decal/point(get_turf(H))
-						SPAWN_DBG(4 SECONDS)
-							qdel(P)
+						make_point(get_turf(H), time=4 SECONDS)
 
 						src.master.visible_message("<b>[src.master]</b> points to [H]")
 						return
@@ -4038,7 +4037,7 @@
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.created_name = t
@@ -4528,11 +4527,9 @@
 		return
 
 	disposing()
-		if(src.current)
-			src.current.wakeup()
+		src.current?.wakeup()
 		current = null
-		if(radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
+		radio_controller?.remove_object(src, "[frequency]")
 		radio_connection = null
 		if (link)
 			link.master = null
@@ -4775,8 +4772,7 @@
 			DropTheThing("gun", null, 0, 0, T, 1)
 		if(prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)
-		if(src.hat)
-			src.hat.set_loc(T)
+		src.hat?.set_loc(T)
 
 		var/obj/item/guardbot_core/old/core = new /obj/item/guardbot_core/old(T)
 		core.created_name = src.name

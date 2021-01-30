@@ -10,6 +10,7 @@
 // * Christmas decoration
 // * Grinch graffiti
 // * Santa Claus stuff
+// * Santa's letters landmark
 // * Krampus 1.0 stuff
 // * Stockings - from halloween.dm - wtf
 
@@ -917,7 +918,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.create_reagents(1000)
 
 		src.set_mutantrace(/datum/mutantrace/krampus)
-		src.reagents.add_reagent("stimulants", 50)
+		src.changeStatus("stimulants", 4 MINUTES)
 		src.gender = "male"
 		bioHolder.AddEffect("loud_voice")
 		bioHolder.AddEffect("cold_resist")
@@ -1274,3 +1275,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
 	icon_closed = "xmascrate"
+
+/obj/landmark/santa_mail
+	name = "santa_mail"
+	add_to_landmarks = TRUE
+	desc = "All of Santa's mail gets spawned here."
+	icon_state = "x"

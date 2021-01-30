@@ -99,7 +99,7 @@
 
 	var/tgmoles = 0
 	if(length(environment.trace_gases))
-		for(var/datum/gas/trace_gas in environment.trace_gases)
+		for(var/datum/gas/trace_gas as() in environment.trace_gases)
 			tgmoles += trace_gas.moles
 
 	if(tgmoles > 1)
@@ -255,7 +255,7 @@
 
 		var/tgmoles = 0
 		if(length(environment.trace_gases))
-			for(var/datum/gas/trace_gas in environment.trace_gases)
+			for(var/datum/gas/trace_gas as() in environment.trace_gases)
 				tgmoles += trace_gas.moles
 
 		if(tgmoles > 1)

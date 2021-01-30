@@ -326,7 +326,7 @@
 	return
 
 /obj/machinery/computer3/attack_hand(mob/user as mob)
-	if(..())
+	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 
 	if(!user.literate)
@@ -873,8 +873,7 @@ function lineEnter (ev)
 			return
 		src.restarting = 1
 		src.active_program = null
-		if(src.host_program)
-			src.host_program.restart()
+		src.host_program?.restart()
 		src.host_program = null
 		src.processing_programs = new
 		src.temp = null
@@ -967,6 +966,8 @@ function lineEnter (ev)
 	name = "briefcase"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0

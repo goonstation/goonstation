@@ -284,7 +284,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return 0
 
 #define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+#define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
 		if (src.uses < 0)
@@ -524,7 +524,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (src.vr_check(usr) != 1)
 			usr.show_text("This uplink only works in virtual reality.", "red")
@@ -705,9 +705,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))
+					if (istype(delivery,/obj/item/parts) && ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/human_parts/HP = delivery
+						var/obj/item/parts/HP = delivery
 					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
 						if(HP == B.item) //Uhh idk if this will work
 							HP.remove()
@@ -820,7 +820,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		src.generate_menu()
@@ -1184,7 +1184,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["buyspell"])

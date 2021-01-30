@@ -12,7 +12,7 @@
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
@@ -369,7 +369,7 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
-		if(istype(H) && slot == SLOT_GLASSES && !H.network_device)
+		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
 			//user.verbs += /mob/proc/jack_in
 			Station_VNet.Enter_Vspace(H, src,src.network)
@@ -506,6 +506,12 @@
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
+/obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
+	name = "spectroscopic monocle"
+	icon_state = "spectro_monocle"
+	item_state = "spectro_monocle"
+	desc = "Such a dapper eyepiece! And a practical one at that."
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles

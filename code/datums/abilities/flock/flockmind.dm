@@ -6,7 +6,7 @@
 	topBarRendered = 1
 	rendered = 1
 
-/obj/screen/ability/topBar/flockmind
+/atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -25,7 +25,7 @@
 	theme = "flock"
 
 /datum/targetable/flockmindAbility/New()
-	var/obj/screen/ability/topBar/flockmind/B = new /obj/screen/ability/topBar/flockmind(null)
+	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
 	B.icon = src.icon
 	B.icon_state = src.icon_state
 	B.owner = src
@@ -159,10 +159,12 @@
 		return 1
 	// sanity check: don't remove our last complex drone
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	if(F?.flock)
-		if(F.flock.getComplexDroneCount() == 1)
-			boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
-			return 1
+	if(!F?.flock || F.flock != target.flock)
+		boutput(holder.owner, "<span class='notice'>The drone does not respond to your command.</span>")
+		return 1
+	if(F.flock.getComplexDroneCount() == 1)
+		boutput(holder.owner, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
+		return 1
 	boutput(holder.owner, "<span class='notice'>You diffract the drone.</span>")
 	target.split_into_bits()
 

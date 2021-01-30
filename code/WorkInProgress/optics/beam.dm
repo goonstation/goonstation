@@ -47,8 +47,7 @@
 
 
 	proc/remove()
-		if(next)
-			next.remove()
+		next?.remove()
 		qdel(src)
 
 

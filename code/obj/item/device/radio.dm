@@ -363,7 +363,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 		if ((istype(D, /mob/dead/observer) || (iswraith(D) && !D.density)) || ((!isturf(src.loc) && src.loc == D.loc) && !istype(D, /mob/dead/target_observer)))
 
-			if (!(D in receive))
+			if (!C.mute_ghost_radio && !(D in receive))
 				receive += D
 
 	var/list/heard_masked = list() // masked name or no real name
@@ -410,9 +410,9 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 			css_style = " style='color: [textColor]'"
 		var/part_a
 		if (ismob(M) && M.mind)
-			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name' data-ctx='\ref[M.mind]'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name' data-ctx='\ref[M.mind]'>"
 		else
-			part_a = "[radio_icon(M)]<span class='radio[classes]'[css_style]><span class='name'>"
+			part_a = "<span class='radio[classes]'[css_style]>[radio_icon(M)]<span class='name'>"
 		var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 		var/part_c = "</span></span>"
 
@@ -504,7 +504,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 					RF.Add(src.secure_connections["[key]"])
 
 			// Secure channel match. Easy.
-			if (RF.Find(freq) && freq.devices.Find(src))
+			if ((freq in RF) && (src in freq.devices))
 				//DEBUG_MESSAGE("Match found for transmission from [R] at [log_loc(R)] (list/devices match)")
 				return 1
 
@@ -520,7 +520,6 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	return 0
 
 /obj/item/device/radio/proc/send_hear()
-
 	last_transmission = world.time
 	if ((src.listening && src.wires & WIRE_RECEIVE))
 		var/list/hear = hearers(src.speaker_range, src.loc) // changed so station bounce radios will be loud and headsets will only be heard on their tile
@@ -529,15 +528,12 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 		// this fixes radio problems when inside something (e.g. mulebot)
 
 		if(ismob(loc))
-			if(! hear.Find(loc) )
-				hear += loc
+			hear |= loc
 		//modified so people in the same object as it can hear it
 		if(istype(loc, /obj))
 			for(var/mob/M in loc)
-				if(! hear.Find(M) )
-					hear += M
+				hear |= M
 		return hear
-	return
 
 /obj/item/device/radio/proc/speech_bubble()
 	if ((src.listening && src.wires & WIRE_RECEIVE))
@@ -548,7 +544,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 /obj/item/device/radio/examine(mob/user)
 	. = ..()
-	if ((in_range(src, user) || src.loc == user))
+	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
 			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
 		else
@@ -651,7 +647,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	set category = "Local"
 
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
 			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
 	return*/
@@ -677,7 +673,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -795,7 +791,7 @@ Code:
 	set src in view()
 	set category = "Local"
 	..()
-	if ((in_range(src, usr) || src.loc == usr))
+	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.b_stat)
 			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
 		else
@@ -921,9 +917,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	var/is_detonator_trigger = 0
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				is_detonator_trigger = 1
-	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))

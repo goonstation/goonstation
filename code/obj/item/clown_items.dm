@@ -74,6 +74,12 @@ VUVUZELA
 			else
 				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
 
+	crushed
+		name = "used up Canned laughter"
+		opened = 1
+		icon_state = "crushed-5"
+		desc = "Someone had a good laugh - that is for certain!"
+
 /obj/item/storage/box/box_o_laughs
 	name = "Box o' Laughs"
 	icon_state = "laughbox"

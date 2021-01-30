@@ -110,6 +110,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/workplace = 0
 
 	var/list/obj/critter/registered_critters = list()
+	var/list/obj/critter/registered_mob_critters = list()
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
@@ -281,6 +282,15 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return null
 		return R
 
+	/*
+	 * returns a list of objects matching type in an area
+	 */
+	proc/get_type(var/type)
+		. = list()
+		for (var/A in src)
+			if(istype(A, type))
+				. += A
+
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
@@ -301,10 +311,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		sims_score = max(sims_score, 0)
 
 	proc/wake_critters()
-		if(waking_critters || !registered_critters.len) return
+		if(waking_critters || (!length(src.registered_critters) && !length(src.registered_mob_critters))) return
 		waking_critters = 1
 		for(var/obj/critter/C in src.registered_critters)
 			C.wake_from_hibernation()
+		for (var/mob/living/critter/M as() in src.registered_mob_critters)
+			M.wake_from_hibernation()
 		waking_critters = 0
 
 	proc/calculate_area_value()
@@ -435,8 +447,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 /area/titlescreen
 	name = "The Title Screen"
 	teleport_blocked = 2
-	force_fullbright = 1
+	force_fullbright = 0
 	expandable = 0
+	ambient_light = rgb(79, 164, 184)
 	// filler_turf = "/turf/unsimulated/floor/setpieces/gauntlet"
 
 /area/cavetiny
@@ -905,10 +918,7 @@ ABSTRACT_TYPE(/area/adventure)
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
 		if(ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	core
 		Entered(atom/movable/O)
@@ -1093,6 +1103,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab
 	name = "Prefab"
 	icon_state = "orange"
+	requires_power = FALSE
 
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
@@ -1114,6 +1125,16 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Drug Den"
 	icon_state = "purple"
 
+/area/prefab/sequestered_cloner
+	name = "Sequestered Cloner"
+
+/area/prefab/sequestered_cloner/puzzle
+	requires_power = TRUE
+
+/area/prefab/von_ricken
+	name ="Von Ricken"
+	icon_state = "blue"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1134,6 +1155,9 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
 
+/area/dank_trench
+	name = "marijuana trench 2" //this is lowercase on purpose
+	icon_state = "green"
 
 /area/trench_landing
 	name = "Trench Landing"
@@ -1219,6 +1243,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/station/turret_protected/sea_crashed //dumb area pathing aRRGHHH
 	name = "Crashed Transport"
 	icon_state = "purple"
+	requires_power = FALSE
 
 /area/prefab/water_treatment
 	name = "Water Treatment Facility"
@@ -2105,6 +2130,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "yellow"
 	sound_environment = 0
 
+/area/station/crew_quarters/supplylobby
+	name = "Supply Lobby"
+	icon_state = "yellow"
+	sound_environment = 0
+
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
@@ -2316,6 +2346,10 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/medbay/pharmacy
 	name = "Pharmacy"
 	icon_state = "chem"
+
+/area/station/medical/medbay/psychiatrist
+	name = "Psychiatrist's Office"
+	icon_state = "psychiatrist"
 
 /area/station/medical/medbay/treatment1
 	name = "Treatment Room 1"
@@ -2738,6 +2772,11 @@ ABSTRACT_TYPE(/area/station/chapel)
 	icon_state = "chapeloffice"
 	sound_environment = 11
 
+/area/station/chapel/funeral_parlor
+	name = "Funeral Parlor"
+	icon_state = "funeralparlor"
+	sound_environment = 7
+
 /area/station/storage
 	name = "Storage Area"
 	icon_state = "storage"
@@ -2965,6 +3004,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "Research Outpost Toxins"
 		icon_state = "green"
 
+/area/research_outpost/pathology
+		name = "Research Outpost Pathology"
+		icon_state = "pink"
+
 // end station areas //
 
 /// Nukeops listening post
@@ -3113,8 +3156,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
@@ -5000,8 +5042,7 @@ area/station/security/visitation
 	..()
 	if (isliving(O))
 		if (!issilicon(O))
-			if(motioncamera)
-				motioncamera.lostTarget(O)
+			motioncamera?.lostTarget(O)
 			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O

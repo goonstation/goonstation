@@ -140,8 +140,8 @@
 				if (prob(50))
 					made_ants = 1
 					processing_items -= src
-					if (!(locate(/obj/reagent_dispensers/ants) in src.loc))
-						new/obj/reagent_dispensers/ants(src.loc)
+					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
+						new/obj/reagent_dispensers/cleanable/ants(src.loc)
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -358,6 +358,7 @@
 				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
+		eater.on_eat(src)
 
 	proc/on_finish(mob/eater)
 		return
@@ -834,7 +835,7 @@
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.name = t
@@ -1045,6 +1046,8 @@
 				"You add [W] to [src].")
 				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
 				pool(W)
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
@@ -1057,6 +1060,8 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
+			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				JOB_XP(user, "Bartender", 1)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit))
@@ -1101,6 +1106,8 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
+				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+					JOB_XP(user, "Bartender", 1)
 				return
 			else
 				boutput(user, "<span class='alert'>There isn't enough salt in here to salt the rim!</span>")
@@ -1540,6 +1547,22 @@
 		initial_volume = 120
 		initial_reagents = list("coffee" = 80, "vodka" = 40)
 
+/obj/item/reagent_containers/food/drinks/mug/HoS
+	name = "Head of Security's mug"
+	desc = ""
+	icon_state = "HoSMug"
+	item_state = "mug"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Christmas from a secret admirer."
+		else
+			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue
+	icon_state = "HoSMugBlue"
+	item_state = "mug"
+
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
 		..()
@@ -1707,7 +1730,7 @@
 	name = "cocktail shaker"
 	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "GannetsCocktailer"
+	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
 
@@ -1723,5 +1746,12 @@
 			src.reagents.inert = 0
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
+				JOB_XP(user, "Bartender", 2)
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+
+/obj/item/reagent_containers/food/drinks/cocktailshaker/golden
+	name = "golden cocktail shaker"
+	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	icon_state = "golden_cocktailshaker"

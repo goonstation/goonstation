@@ -41,8 +41,7 @@
 
 	/* new disposing() pattern should handle this. -singh
 	disposing()
-		if(host)
-			host.peripherals.Remove(src)
+		host?.peripherals.Remove(src)
 		..()
 	*/
 
@@ -104,7 +103,7 @@
 		if(usr.stat || usr.restrained())
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(src.host.status & (NOPOWER|BROKEN))
@@ -1155,8 +1154,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -1242,8 +1240,7 @@
 		return dat
 
 	uninstalled()
-		if(src.disk)
-			src.disk.set_loc(src)
+		src.disk?.set_loc(src)
 
 		return 0
 
@@ -1275,8 +1272,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))

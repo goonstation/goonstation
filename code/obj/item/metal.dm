@@ -77,17 +77,16 @@ MATERIAL
 			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.amount -= weldinput * 2
+			src.consume_rods(weldinput * 2)
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
-			if(src.amount < 1)	qdel(src)
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W
 			if (R.amount == src.max_stack)
 				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
-			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+			if (W.material && src.material && !isSameMaterial(W.material, src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
@@ -193,7 +192,7 @@ MATERIAL
 	attackby(obj/item/sheet/metal/W as obj, mob/user as mob)
 		if (!( istype(W, /obj/item/sheet/metal) ))
 			return
-		if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 			return
 		if (W.amount >= src.max_stack)
@@ -455,7 +454,7 @@ MATERIAL
 	attackby(obj/item/sheet/r_metal/W as obj, mob/user as mob)
 		if (!( istype(W, /obj/item/sheet/r_metal) ))
 			return
-		if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 			return
 		if (W.amount >= src.max_stack)

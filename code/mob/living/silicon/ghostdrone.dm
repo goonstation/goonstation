@@ -76,6 +76,7 @@
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
+			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
 			new /obj/item/device/light/flashlight(src)
 		)
@@ -360,7 +361,7 @@
 			set_dir(get_dir(src, target))
 
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
@@ -1152,8 +1153,7 @@
 			src.TakeDamage(null, round(src.max_health / 2, 1.0))
 
 	temperature_expose(null, temp, volume)
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)

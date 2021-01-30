@@ -522,7 +522,7 @@
 			icon_state = "ptoe"
 
 		poster_y4nt
-			name = "\improper NanoTrasen poster"
+			name = "\improper NanoTrasen recruitment poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"
@@ -1004,3 +1004,19 @@
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
 							src.usageState = 0
 							src.icon_state = "mdlicense"
+
+/obj/decal/poster/wallsign/pod_build
+	name = "poster"
+	icon = 'icons/obj/decals/posters_64x32.dmi'
+	icon_state = "nt-pod-poster"
+	popup_win = 1
+
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+
+/obj/decal/poster/wallsign/pod_build/nt
+	icon_state = "nt-pod-poster"
+/obj/decal/poster/wallsign/pod_build/sy
+	icon_state = "sy-pod-poster"

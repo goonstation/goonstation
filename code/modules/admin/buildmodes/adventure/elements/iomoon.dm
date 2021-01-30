@@ -12,8 +12,8 @@ var/list/iomoon_puzzle_options = list("Ancient Robot Door" = /obj/iomoon_puzzle/
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
-		if (pa.Find("left"))
-			if (pa.Find("ctrl"))
+		if ("left" in pa)
+			if ("ctrl" in pa)
 				finished = 1
 				return
 
@@ -42,7 +42,7 @@ var/list/iomoon_puzzle_options = list("Ancient Robot Door" = /obj/iomoon_puzzle/
 			else if (T && element_spawn_type)
 				new element_spawn_type (T)
 
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			. = input("Puzzle Element to Spawn", "Element Select") in iomoon_puzzle_options
 			if (. != "(Cancel)")
 				element_spawn_type = iomoon_puzzle_options[.]

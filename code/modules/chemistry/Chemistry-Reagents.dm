@@ -49,6 +49,7 @@ datum
 		var/stun_resist = 0
 		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
 		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
+		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 
 		New()
 			..()
@@ -162,8 +163,7 @@ datum
 						if (H.sims)
 							H.sims.affectMotive("Thirst", volume * thirst_value)
 */
-			if(M.material)
-				M.material.triggerChem(M, src, volume)
+			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
 			src = null
@@ -171,16 +171,14 @@ datum
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 			src = null						//if it can hold reagents. nope!
-			if(O.material)
-				O.material.triggerChem(O, src, volume)
+			O.material?.triggerChem(O, src, volume)
 			//if(O.reagents)
 			//	O.reagents.add_reagent(id,volume/3)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
 			src = null
-			if(T.material)
-				T.material.triggerChem(T, src, volume)
+			T.material?.triggerChem(T, src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
 

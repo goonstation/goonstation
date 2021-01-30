@@ -132,7 +132,7 @@
 			user.show_text("Something went wrong, showing backup menu...", "blue")
 			var/list/names = list()
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as() in offered_genes)
 				names += P.name
 
 			var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
@@ -142,7 +142,7 @@
 				user.show_text("There's someone else inside!")
 				return
 
-			for (var/datum/geneboothproduct/P in offered_genes)
+			for (var/datum/geneboothproduct/P as() in offered_genes)
 				if (name_sel == P.name)
 					select_product(P)
 					break
@@ -150,11 +150,11 @@
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
 	proc/reload_contexts()//IM ASORRY
-		for(var/datum/contextAction/C in src.contextActions)
+		for(var/datum/contextAction/C as() in src.contextActions)
 			C.dispose()
 		src.contextActions = list()
 
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as() in offered_genes)
 			var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
 			newcontext.GBP = P
 			newcontext.GB = src
@@ -169,7 +169,7 @@
 		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
 
 	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as() in offered_genes)
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
 			updateicon()
@@ -286,7 +286,7 @@
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -299,7 +299,7 @@
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"=MGD_MEDRESEACH, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
 			transmit_connection.post_signal(src, pdaSignal)
@@ -338,7 +338,7 @@
 
 	relaymove(mob/user, direction)
 		if (direction != eject_dir)
-			if (direction & WEST || direction & EAST)
+			if (direction == WEST || direction == EAST)
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 

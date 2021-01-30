@@ -536,7 +536,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
@@ -592,8 +592,8 @@
 			if (istype(B))
 				if (B.material)
 					B.material.triggerOnAttack(B, null, A)
-				B.arrow.reagents.reaction(A, 2)
-				B.arrow.reagents.trans_to(A, B.arrow.reagents.total_volume)
+				B.arrow.reagents?.reaction(A, 2)
+				B.arrow.reagents?.trans_to(A, B.arrow.reagents.total_volume)
 			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
@@ -605,12 +605,15 @@
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
 	var/datum/action/bar/aim/aim = null
-	current_projectile = new/datum/projectile/arrow
 	spread_angle = 40
 	force = 5
 	can_dual_wield = 0
 	contraband = 0
 	move_triggered = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/arrow)
+		. = ..()
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))
@@ -675,7 +678,7 @@
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if (!aim && !loaded)
 				loadFromQuiver(user)
@@ -726,7 +729,7 @@
 
 		if (!aim)
 			//var/list/parameters = params2list(params)
-			if(ismob(target.loc) || istype(target, /obj/screen)) return
+			if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
 				if(loaded)

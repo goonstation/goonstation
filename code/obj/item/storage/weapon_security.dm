@@ -211,9 +211,11 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	max_wclass = 3 // The bowling ball won't fit into the bowling bag!
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
+		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
-	/obj/item/bowling_ball = 4)
+		/obj/item/bowling_ball = 4)
 
 	New()
 		..()
@@ -223,9 +225,11 @@
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	max_wclass = 3
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
-	/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 
 	New()
 		if (prob(50))
@@ -325,6 +329,12 @@
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\
 	/obj/item/ammo/bullets/tranq_darts/syndicate = 4)
+
+/obj/item/storage/box/poison
+	name = "ordinary box"
+	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

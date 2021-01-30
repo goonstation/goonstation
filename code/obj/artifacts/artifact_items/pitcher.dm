@@ -25,8 +25,6 @@
 			reagents.add_reagent("dbreath", 30)
 		if (prob(7))
 			reagents.add_reagent("freeze", 30)
-		if (prob(3))
-			reagents.add_reagent("stimulants", 20)
 		if(prob(15))
 			reagents.add_reagent("hairgrownium", 30)
 		if (prob(10))
@@ -167,8 +165,7 @@
 		if(!T)
 			qdel(src)
 			return
-		if(src.reagents)
-			src.reagents.reaction(T)
+		src.reagents?.reaction(T)
 		if (src.in_glass)
 			src.in_glass.set_loc(T)
 			src.in_glass = null

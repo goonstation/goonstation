@@ -11,7 +11,7 @@
 		sound_fart = pick(glitchy_noises)
 		sound_snap = pick(glitchy_noises)
 		sound_fingersnap = pick(glitchy_noises)
-		src.reagents.add_reagent("stimulants", 200)
+		src.changeStatus("stimulants", 15 MINUTES)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
 		bioHolder.mobAppearance.update_colorful_parts()

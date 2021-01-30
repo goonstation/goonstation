@@ -94,8 +94,7 @@
 		if(connected?.scanner?.pods)
 			connected?.scanner?.pods -= src
 		connected = null
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -111,19 +110,18 @@
 		if(!pda_connection)
 			return
 
-		for(var/mailgroup in mailgroups)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
-			newsignal.data["message"] = "[msg]"
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
+		newsignal.data["message"] = "[msg]"
 
-			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
-			newsignal.data["sender"] = src.net_id
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups + MGA_CLONER
+		newsignal.data["sender"] = src.net_id
 
-			pda_connection.post_signal(src, newsignal)
+		pda_connection.post_signal(src, newsignal)
 
 	attack_hand(mob/user as mob)
 		interact_particle(user, src)
@@ -295,6 +293,7 @@
 		else //welp
 			logTheThing("debug", null, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
+			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
@@ -808,8 +807,7 @@
 			src.find_pods()
 
 	disposing()
-		if(occupant)
-			occupant.set_loc(get_turf(src.loc))
+		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
 		..()
 
@@ -817,8 +815,8 @@
 	proc/find_pods()
 		if (!islist(src.pods))
 			src.pods = list()
-		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && genResearch.clonepods.len)
-			for (var/obj/machinery/clonepod/pod in genResearch.clonepods)
+		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
+			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -1161,12 +1159,14 @@
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc)
-					newcase.imp = I
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					I.on_remove(target)
 					target.implant.Remove(I)
-					I.set_loc(newcase)
-					newcase.icon_state = "implantcase-b"
+					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+					wadblood.color = target.blood_color
+					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.blood_DNA = target.bioHolder.Uid
+					newcase.blood_type = target.bioHolder.bloodType
 
 		target.set_loc(grinder)
 		grinder.occupant = target

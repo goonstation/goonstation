@@ -1559,10 +1559,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
 	icon_state = "polaris"
+	keep_icon = TRUE
 
 /obj/item/broken_egun
 	name = "broken energy gun"
@@ -1589,6 +1591,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "pit"
 	fullbright = 0
 	pathable = 0
+	var/spot_to_fall_to = LANDMARK_FALL_POLARIS
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	Entered(atom/A as mob|obj)
@@ -1599,7 +1602,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(AM.anchored)
 				return ..()
 
-		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		var/turf/T = pick_landmark(spot_to_fall_to)
 		if(T)
 			fall_to(T, A)
 			return
@@ -1607,6 +1610,14 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	polarispitwall
 		icon_state = "pit_wall"
+
+	marj
+		name = "dank abyss"
+		desc = "The smell rising from it somehow permeates the surrounding water."
+		spot_to_fall_to = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
 
 //******************************************** NSS MANTA SECRET VAULT********************************************
 

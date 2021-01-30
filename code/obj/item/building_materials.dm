@@ -68,7 +68,9 @@ MATERIAL
 
 	proc/consume_sheets(var/use_amount)
 		if (!isnum(amount))
-			return
+			return FALSE
+		if (amount < use_amount)
+			return FALSE
 		src.amount = max(0,amount - use_amount)
 		if (amount < 1)
 			if (isliving(src.loc))
@@ -79,7 +81,7 @@ MATERIAL
 			qdel(src)
 		else
 			src.inventory_counter?.update_number(amount)
-		return
+		return TRUE
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
@@ -133,7 +135,7 @@ MATERIAL
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+			if (S.material && src.material && !isSameMaterial(S.material, src.material))
 				// build glass tables
 				if (src.material.material_flags & MATERIAL_METAL && S.material.material_flags & MATERIAL_CRYSTAL) // we're a metal and they're a glass
 					if (src.amount_check(1,usr) && S.amount_check(2,usr))
@@ -155,7 +157,7 @@ MATERIAL
 				else
 					boutput(user, "<span class='alert'>You can't mix different materials!</span>")
 					return
-			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && (S.reinforcement.mat_id != src.reinforcement.mat_id)))
+			if (S.reinforcement != src.reinforcement || (S.reinforcement && src.reinforcement && !isSameMaterial(S.reinforcement, src.reinforcement)))
 				boutput(user, "<span class='alert'>You can't mix different reinforcements!</span>")
 				return
 			if (S.amount >= src.max_stack)
@@ -219,12 +221,12 @@ MATERIAL
 			//boutput(world, "check valid stack check 1 failed")
 			return 0
 		var/obj/item/sheet/S = O
-		if (!S.material)
+		if (!S.material || !src.material)
 			return 0
 		if (S.material.type != src.material.type)
 			//boutput(world, "check valid stack check 2 failed")
 			return 0
-		if (S.material && src.material && (S.material.mat_id != src.material.mat_id))
+		if (S.material && src.material && !isSameMaterial(S.material, src.material))
 			//boutput(world, "check valid stack check 3 failed")
 			return 0
 		if ((src.reinforcement && !S.reinforcement) || (S.reinforcement && !src.reinforcement))
@@ -234,7 +236,7 @@ MATERIAL
 			if (src.reinforcement.type != S.reinforcement.type)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (S.reinforcement.mat_id != src.reinforcement.mat_id)
+			if (!isSameMaterial(S.reinforcement, src.reinforcement))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -634,7 +636,7 @@ MATERIAL
 			return 0
 		if (S.material.type != src.material.type)
 			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
@@ -712,7 +714,7 @@ MATERIAL
 			if (R.amount == src.max_stack)
 				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
-			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
+			if (W.material && src.material && !isSameMaterial(W.material, src.material))
 				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
@@ -994,9 +996,7 @@ MATERIAL
 		var/obj/item/tile/S = O
 		if (!S.material || !src.material)
 			return 0
-		if (S.material.type != src.material.type)
-			return 0
-		if (S.material.mat_id != src.material.mat_id)
+		if (!isSameMaterial(S.material, src.material))
 			return 0
 		return 1
 
@@ -1043,11 +1043,6 @@ MATERIAL
 			else
 				src.build(S)
 				tooltip_rebuild = 1
-		if (src.amount < 1)
-			if (!issilicon(user))
-				user.u_equip(src)
-				qdel(src)
-			return
 		src.add_fingerprint(user)
 		return
 
@@ -1088,7 +1083,7 @@ MATERIAL
 
 	proc/build(turf/S as turf)
 		if (src.amount < 1)
-			return
+			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
 		if (W) //Wire: Fix for: Cannot read null.icon_old
 			W.inherit_area()
@@ -1098,9 +1093,10 @@ MATERIAL
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
-		src.amount--
-		inventory_counter?.update_number(amount)
-		return
+		if(src.material)
+			W.setMaterial(src.material)
+		src.change_stack_amount(-1)
+		return TRUE
 
 /obj/item/tile/steel
 

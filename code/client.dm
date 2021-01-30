@@ -1,7 +1,11 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
 /client
+#ifdef PRELOAD_RSC_URL
+	preload_rsc = PRELOAD_RSC_URL
+#else
 	preload_rsc = 1
+#endif
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -23,7 +27,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
-	var/local_deadchat = 0
+	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
@@ -95,7 +99,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/datum/interfaceSizeHelper/screen/screenSizeHelper = null
 	var/datum/interfaceSizeHelper/map/mapSizeHelper = null
 
-	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
+	var/atom/movable/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
 
@@ -542,7 +546,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (widescreen_checked)
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
-	
+
 	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
@@ -921,7 +925,7 @@ var/global/curr_day = null
 	if (!(ishuman(usr))) return
 	var/mob/living/carbon/human/H = usr
 	if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/abuttontest))
-		var/obj/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
+		var/atom/movable/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
 		U.execute_ability()
 */
 
@@ -1161,7 +1165,7 @@ var/global/curr_day = null
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
-	var/obj/screen/S = new
+	var/atom/movable/screen/S = new
 	S.icon = 'icons/mob/whiteview.dmi'
 	S.blend_mode = BLEND_SUBTRACT
 	S.color = subtr_color
@@ -1171,7 +1175,7 @@ var/global/curr_day = null
 
 	C.screen += S
 
-	var/obj/screen/M = new
+	var/atom/movable/screen/M = new
 	M.icon = 'icons/mob/whiteview.dmi'
 	M.blend_mode = BLEND_MULTIPLY
 	M.color = multip_color

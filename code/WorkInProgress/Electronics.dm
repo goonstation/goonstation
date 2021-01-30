@@ -266,7 +266,7 @@
 /obj/item/electronics/frame/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -481,8 +481,7 @@
 			mechanic_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
-	if(radio_controller)
-		radio_controller.remove_object(src, "[frequency]")
+	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
 	if (src.net_id)
@@ -531,8 +530,8 @@
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "RKIT-MAILBOT"
 				newsignal.data["message"] = "Notice: Item already in database."
-
 				newsignal.data["address_1"] = target
+				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 				newsignal.data["sender"] = src.net_id
 
 				radio_connection.post_signal(src, newsignal)
@@ -547,8 +546,8 @@
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = "Notice: Item entered into database."
-
 		newsignal.data["address_1"] = target
+		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 
 		radio_connection.post_signal(src, newsignal)
@@ -609,7 +608,7 @@
 /obj/machinery/rkit/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])

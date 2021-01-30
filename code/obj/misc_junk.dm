@@ -230,7 +230,7 @@
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "forensic0"
+	icon_state = "securotronOld"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))
@@ -314,10 +314,9 @@
 
 	New()
 		..()
-		if (usr?.loc)
-			src.smoke = new /datum/effects/system/bad_smoke_spread/
-			src.smoke.attach(src)
-			src.smoke.set_up(1, 0, usr.loc)
+		src.smoke = new /datum/effects/system/bad_smoke_spread/
+		src.smoke.attach(src)
+		src.smoke.set_up(1, 0, src.loc)
 		if (prob(5))
 			src.reagents.clear_reagents()
 			src.reagents.add_reagent("THC", 50) //blaze it
@@ -552,7 +551,7 @@
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
-				owner.client.respawn_target(owner,1)
+				INVOKE_ASYNC(owner.client, /client.proc/respawn_target, owner, 1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
 				owner = null

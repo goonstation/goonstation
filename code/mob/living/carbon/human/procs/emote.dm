@@ -7,6 +7,9 @@
 
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
+	if(voluntary && !src.emote_allowed)
+		return
+
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
 		return
@@ -41,7 +44,14 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if (!muzzled)
+					if(src.bioHolder?.HasEffect("mute"))
+						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
+						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
+						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")]..."
+						message = "<B>[src]</B> [pre_message]"
+						maptext_out = "<i>[pre_message]</i>"
+						m_type = 1
+					else if (!muzzled)
 						message = "<B>[src]</B> [istype(src.w_uniform, /obj/item/clothing/under/gimmick/frog) ? "croaks" : "screams"]!"
 						m_type = 2
 						if (narrator_mode)
@@ -359,6 +369,7 @@
 						return
 					message = "<B>[src]</B> [input]"
 					maptext_out = "<I>[input]</I>"
+					custom = copytext(input, 1, 10)
 
 			if ("customv")
 				if (IS_TWITCH_CONTROLLED(src)) return
@@ -1343,7 +1354,7 @@
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN_DBG(0) // some movement to make it look cooler
-								for (var/i = 0, i < 10, i++)
+								for (var/i in 0 to 9)
 									src.set_dir(turn(src.dir, 90))
 									sleep(0.2 SECONDS)
 
@@ -1592,68 +1603,11 @@
 									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
 									continue
 								flipped_a_guy = 1
-								if (G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc))
-									var/obj/table/tabl = locate() in src.loc.contents
-									var/turf/newloc = src.loc
-									G.affecting.set_loc(newloc)
-									if (!G.affecting.reagents.has_reagent("fliptonium"))
-										animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-
-									if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
-										src.remove_stamina(STAMINA_FLIP_COST)
-										src.stamina_stun()
-
-									src.emote("scream")
-									message = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-									logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
-									M.lastattacker = src
-									M.lastattackertime = world.time
-									combatflip = 1
-									if (iswrestler(src))
-										if (prob(50))
-											M.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
-										else
-											G.affecting.changeStatus("weakened", 5 SECONDS)
-											G.affecting.force_laydown_standup()
-											G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-									else
-										src.changeStatus("weakened", 3.9 SECONDS)
-
-										if (client?.hellbanned)
-											src.changeStatus("weakened", 4 SECONDS)
-										if (G.affecting && !G.affecting.hasStatus("weakened"))
-											G.affecting.changeStatus("weakened", 4.5 SECONDS)
-
-
-										G.affecting.force_laydown_standup()
-										SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
-											src.force_laydown_standup()
-
-										G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-										playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
-									if (tabl)
-										if (istype(tabl, /obj/table/glass))
-											var/obj/table/glass/g_tabl = tabl
-											if (!g_tabl.glass_broken)
-												if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
-													SPAWN_DBG(0)
-														g_tabl.smash()
-														src.changeStatus("weakened", 7 SECONDS)
-														random_brute_damage(src, rand(20,40))
-														take_bleeding_damage(src, src, rand(20,40))
-
-
-														G.affecting.changeStatus("weakened", 4 SECONDS)
-														random_brute_damage(G.affecting, rand(20,40))
-														take_bleeding_damage(G.affecting, src, rand(20,40))
-
-
-														G.affecting.force_laydown_standup()
-														sleep(1 SECOND) //let us do that combo shit people like with throwing
-														src.force_laydown_standup()
-
-								if (G && G.state < 1) //ZeWaka: Fix for null.state
+								var/suplex_result = src.do_suplex(G)
+								if(suplex_result)
+									combatflip |= TRUE
+									message = suplex_result
+								if(!combatflip)
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
 									if(istype(oldloc) && istype(newloc))
@@ -1967,7 +1921,7 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Detective", "Vice Officer", "Regional Director", "Inspector")))
+					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2044,8 +1998,7 @@
 							H.emote("scream")
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
-						if(dab_id)
-							dab_id.brain_damage_count += 10
+						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
 				else
@@ -2071,10 +2024,12 @@
 	//copy paste lol
 
 	if (maptext_out)
+		if(src.emote_allowed) // if no emote cooldowns triggered let's trigger one now (no spamming maptext emotes!)
+			src.emote_check(voluntary, 0.5 SECONDS)
 		var/image/chat_maptext/chat_text = null
 		SPAWN_DBG(0) //blind stab at a life() hang - REMOVE LATER
 			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
 				if(chat_text)
 					chat_text.measure(src.client)
 					for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -2185,3 +2140,64 @@
 		H.update_canmove()
 		H.dir_locked = FALSE
 		H.render_target = "\ref[H]"
+
+/mob/living/proc/do_suplex(obj/item/grab/G)
+	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
+		return null
+
+	var/obj/table/tabl = locate() in src.loc.contents
+	var/turf/newloc = src.loc
+	G.affecting.set_loc(newloc)
+	if (!G.affecting.reagents.has_reagent("fliptonium"))
+		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+
+	if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
+		src.remove_stamina(STAMINA_FLIP_COST)
+		src.stamina_stun()
+
+	G.affecting.was_harmed(src)
+
+	src.emote("scream")
+	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
+	logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+	G.affecting.lastattacker = src
+	G.affecting.lastattackertime = world.time
+	if (iswrestler(src))
+		if (prob(50))
+			G.affecting.ex_act(3) // this is hilariously overpowered, but WHATEVER!!!
+		else
+			G.affecting.changeStatus("weakened", 5 SECONDS)
+			G.affecting.force_laydown_standup()
+			G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+	else
+		src.changeStatus("weakened", 3.9 SECONDS)
+
+		if (client?.hellbanned)
+			src.changeStatus("weakened", 4 SECONDS)
+		if (G.affecting && !G.affecting.hasStatus("weakened"))
+			G.affecting.changeStatus("weakened", 4.5 SECONDS)
+
+
+		G.affecting.force_laydown_standup()
+		SPAWN_DBG(1 SECOND) //let us do that combo shit people like with throwing
+			src.force_laydown_standup()
+
+		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
+		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+	if (istype(tabl, /obj/table/glass))
+		var/obj/table/glass/g_tabl = tabl
+		if (!g_tabl.glass_broken)
+			if ((prob(g_tabl.reinforced ? 60 : 80)) || (src.bioHolder.HasEffect("clumsy") && (!g_tabl.reinforced || prob(90))))
+				SPAWN_DBG(0)
+					g_tabl.smash()
+					src.changeStatus("weakened", 7 SECONDS)
+					random_brute_damage(src, rand(20,40))
+					take_bleeding_damage(src, src, rand(20,40))
+					G.affecting.changeStatus("weakened", 4 SECONDS)
+					random_brute_damage(G.affecting, rand(20,40))
+					take_bleeding_damage(G.affecting, src, rand(20,40))
+					G.affecting.force_laydown_standup()
+					sleep(1 SECOND) //let us do that combo shit people like with throwing
+					src.force_laydown_standup()
+

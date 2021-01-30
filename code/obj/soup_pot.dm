@@ -16,7 +16,7 @@
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
-	food_effects = null
+	food_effects = list()
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)
@@ -118,7 +118,7 @@
 					W.afterattack(pot,user) // ????
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/soup_pot) && in_range(W, user) && in_range(src, user))
+		if (istype(W, /obj/item/soup_pot) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -417,7 +417,7 @@
 		..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 

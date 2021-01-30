@@ -1479,8 +1479,8 @@
 	},
 /obj/item/radio_tape/advertisement/cloning_psa,
 /obj/item/radio_tape/advertisement/captain_psa{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
@@ -1929,7 +1929,10 @@
 	network = "Mining";
 	tag = ""
 	},
-/turf/simulated/floor/caution/east,
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "afK" = (
 /obj/table/auto,
@@ -1982,17 +1985,18 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "afS" = (
-/obj/storage/closet,
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"afT" = (
-/turf/simulated/floor/scorched2,
-/area/mining/quarters)
 "afU" = (
-/turf/simulated/floor/scorched,
+/obj/storage/closet/wardrobe/green,
+/turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "afV" = (
-/turf/simulated/floor/caution/east,
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "afW" = (
 /obj/machinery/light{
@@ -2023,7 +2027,8 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agd" = (
-/obj/storage/closet/wardrobe/green,
+/obj/table/auto,
+/obj/machinery/light/lamp/bright,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "age" = (
@@ -2040,9 +2045,8 @@
 /turf/simulated/floor,
 /area/mining/quarters)
 "agh" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/scorched,
+/obj/storage/closet/wardrobe/blue,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "agi" = (
 /obj/table/auto,
@@ -2343,27 +2347,10 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "agX" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/mining/quarters)
-"agY" = (
-/obj/table/auto,
-/turf/simulated/floor,
-/area/mining/quarters)
-"agZ" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor,
+/obj/item/storage/toilet,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "aha" = (
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag22";
-	pixel_x = 28
-	},
-/obj/rack,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "ahb" = (
@@ -2372,7 +2359,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "ahc" = (
 /obj/machinery/light/emergency{
@@ -2423,7 +2415,7 @@
 	},
 /area/mining/dock)
 "ahk" = (
-/obj/storage/closet/wardrobe/blue,
+/obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "ahl" = (
@@ -2460,6 +2452,9 @@
 /area/mining/mainasteroid)
 "ahr" = (
 /obj/decal/cleanable/dirt,
+/obj/stool/chair{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/mining/quarters)
 "ahs" = (
@@ -2493,7 +2488,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahv" = (
 /obj/cable{
@@ -2501,7 +2496,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/obj/storage/closet,
+/turf/simulated/floor/black,
 /area/mining/quarters)
 "ahw" = (
 /obj/cable{
@@ -2509,14 +2505,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/caution/east,
+/turf/simulated/wall/auto/supernorn,
 /area/mining/quarters)
 "ahx" = (
-/obj/storage/closet,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
@@ -2559,9 +2558,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/miningoutpost)
 "ahE" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/breakfast,
-/turf/simulated/floor,
+/turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "ahF" = (
 /obj/machinery/light/emergency{
@@ -5003,6 +5000,10 @@
 	pixel_y = 23
 	},
 /obj/table/auto,
+/obj/item/cargotele{
+	pixel_x = -5
+	},
+/obj/item/hand_labeler,
 /obj/item/hand_labeler,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
@@ -5056,8 +5057,6 @@
 	name = "East Door Switch";
 	pixel_y = 23
 	},
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
 "anY" = (
@@ -6782,16 +6781,13 @@
 /area/salyut)
 "asd" = (
 /obj/rack,
-/obj/item/clothing/suit/space{
+/obj/item/clothing/suit/space/soviet{
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -9949,7 +9945,10 @@
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "aAa" = (
-/obj/item/ammo/bullets/rifle_3006,
+/obj/item/paper/thermal{
+	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
+	name = "scribbled note"
+	},
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
@@ -15039,13 +15038,6 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "1-2";
-	name = "structural conduit"
-	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "wall3_space"
@@ -15120,19 +15112,6 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
-"aNa" = (
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "4-8";
-	name = "structural conduit"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
 	icon_state = "wall3_space"
 	},
 /area/space)
@@ -15282,19 +15261,6 @@
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor,
 /area/derelict_ai_sat)
-"aNv" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "1-2";
-	name = "structural conduit"
-	},
-/turf/space,
-/area/space)
 "aNw" = (
 /turf/simulated/floor/airless/circuit,
 /area/space)
@@ -15333,34 +15299,6 @@
 /obj/grille,
 /obj/grille,
 /turf/simulated/floor/plating/airless,
-/area/space)
-"aNF" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "5-10";
-	name = "structural conduit"
-	},
-/turf/space,
-/area/space)
-"aNG" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "6-9";
-	name = "structural conduit"
-	},
-/turf/space,
 /area/space)
 "aNH" = (
 /obj/decal/fakeobjects{
@@ -15632,34 +15570,6 @@
 /obj/ydrone_panel,
 /turf/simulated/floor/airless/circuit,
 /area/space)
-"aOj" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "6-9";
-	name = "structural conduit"
-	},
-/turf/space,
-/area/space)
-"aOk" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "5-10";
-	name = "structural conduit"
-	},
-/turf/space,
-/area/space)
 "aOl" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
@@ -15838,19 +15748,6 @@
 	dir = 10
 	},
 /area/derelict_ai_sat/core)
-"aON" = (
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "4-8";
-	name = "structural conduit"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "aOO" = (
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "You should probably leave it alone.";
@@ -15906,13 +15803,6 @@
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir-b"
-	},
-/obj/overlay{
-	anchored = 1;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "1-2";
-	name = "structural conduit"
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -25521,6 +25411,39 @@
 /obj/item/clothing/under/misc/colmob,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
+"bAg" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/breakfast,
+/turf/simulated/floor/caution/west,
+/area/mining/quarters)
+"rdq" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag22";
+	pixel_x = 28
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/black,
+/area/mining/quarters)
+"uGt" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
+"vrI" = (
+/obj/stool/chair,
+/turf/simulated/floor/black,
+/area/mining/quarters)
 
 (1,1,1) = {"
 aaa
@@ -46502,7 +46425,7 @@ aCh
 aCh
 aCF
 aCF
-aDo
+uGt
 aDM
 aDp
 aCF
@@ -48969,7 +48892,7 @@ aaa
 aaa
 aaa
 aGK
-aNa
+aBj
 aao
 aaa
 axl
@@ -49273,8 +49196,8 @@ aMM
 aMR
 aGK
 aGK
-aNv
-aNv
+aaK
+aaK
 aNT
 aaa
 aaa
@@ -49878,9 +49801,9 @@ axl
 aaa
 aao
 aNw
-aNF
+adF
 aan
-aOj
+agV
 aNw
 aaa
 aaa
@@ -50482,9 +50405,9 @@ aaa
 aaa
 aaa
 aNw
-aNG
+aax
 aan
-aOk
+aeH
 aNw
 aao
 aaa
@@ -51088,8 +51011,8 @@ aaa
 aaa
 aaa
 aNV
-aNv
-aNv
+aaK
+aaK
 aGK
 aGK
 aOV
@@ -51393,7 +51316,7 @@ aaa
 aaa
 aaa
 aao
-aON
+aAU
 aGK
 aaa
 aaa
@@ -76606,9 +76529,9 @@ afo
 afu
 afE
 afx
-afE
+agh
 ahi
-afE
+vrI
 afS
 ahh
 aiw
@@ -76906,12 +76829,12 @@ aaa
 aaa
 afo
 aft
-afF
+afU
 afF
 afF
 afF
 agW
-agW
+bAg
 ahy
 ahy
 ahD
@@ -77212,7 +77135,7 @@ afG
 afH
 agf
 agg
-agX
+agg
 ahr
 ahy
 ahy
@@ -77514,7 +77437,7 @@ afH
 afH
 agg
 agg
-agY
+agg
 ahs
 ahD
 aix
@@ -77816,7 +77739,7 @@ afI
 afH
 afI
 agB
-agY
+agg
 aht
 agu
 aiy
@@ -78113,11 +78036,11 @@ aaa
 aaa
 aaa
 aak
-afv
-afH
-afT
-afH
-afH
+aft
+ahE
+ahE
+ahE
+ahE
 ahE
 ahu
 ahD
@@ -78415,12 +78338,12 @@ aaa
 aaa
 aaa
 aak
-afv
-afI
-afU
-agh
-afH
-agZ
+afu
+aha
+afE
+afE
+aha
+aha
 ahv
 ahy
 ahy
@@ -78719,9 +78642,9 @@ aaa
 afo
 aft
 afJ
-afV
-afV
-afV
+afu
+afu
+afu
 afV
 ahw
 ahy
@@ -79020,9 +78943,9 @@ aaa
 aqj
 afo
 afu
-afE
 agd
-afE
+afu
+agX
 ahk
 aha
 ahx
@@ -79326,7 +79249,7 @@ afu
 afu
 afu
 afu
-afu
+rdq
 ahb
 ahL
 aoo
@@ -79627,7 +79550,7 @@ aff
 aff
 aff
 aff
-aff
+afZ
 afZ
 afZ
 ahM

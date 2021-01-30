@@ -805,8 +805,7 @@
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CRITTERS)
-		if(registered_area)
-			registered_area.registered_critters -= src
+		registered_area?.registered_critters -= src
 		if(src.is_pet)
 			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
@@ -826,7 +825,7 @@
 				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
-			if (src.corpse_target && visible.Find(src.corpse_target))
+			if (src.corpse_target && (src.corpse_target in visible))
 				src.task = "chasing"// corpse"
 				return
 			else
@@ -840,7 +839,7 @@
 			var/list/visible = new()
 			for (var/obj/item/reagent_containers/food/snacks/S in view(src.seekrange,src))
 				visible.Add(S)
-			if (src.food_target && visible.Find(src.food_target))
+			if (src.food_target && (src.food_target in visible))
 				src.task = "chasing"// food"
 				return
 			else
@@ -1024,7 +1023,7 @@
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, usr) && src.loc != usr)
 				return
 
 			src.critter_name = t

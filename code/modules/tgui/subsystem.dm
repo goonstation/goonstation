@@ -173,6 +173,22 @@
 /**
  * public
  *
+ * return a list of all tgui UI datums attached to a src_object.
+ */
+/datum/controller/process/tgui/proc/get_uis(datum/src_object)
+	. = list()
+	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
+	// No UIs opened for this src_object
+	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
+		return
+	for(var/datum/tgui/ui in open_uis_by_src[key])
+		// Check if UI is valid.
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			. += ui
+
+/**
+ * public
+ *
  * Close all UIs regardless of their attachment to src_object.
  *
  * return int The number of UIs closed.
@@ -259,8 +275,7 @@
 	// Remove it from the list of processing UIs.
 	open_uis.Remove(ui)
 	// If the user exists, remove it from them too.
-	if(ui.user)
-		ui.user.tgui_open_uis.Remove(ui)
+	ui.user?.tgui_open_uis.Remove(ui)
 	var/list/uis = open_uis_by_src[key]
 	uis.Remove(ui)
 	if(length(uis) == 0)

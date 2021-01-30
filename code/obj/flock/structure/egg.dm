@@ -29,8 +29,7 @@
 		new /mob/living/critter/flock/drone(get_turf(src), src.flock)
 		src.set_loc(null)
 		SPAWN_DBG(1 SECOND)
-			if(src.flock)
-				src.flock.removeDrone(src)
+			src.flock?.removeDrone(src)
 			qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)

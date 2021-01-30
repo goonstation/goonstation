@@ -3021,8 +3021,8 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 2, "carbon" = 2, "acid" = 1)
-			result_amount = 5
+			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 

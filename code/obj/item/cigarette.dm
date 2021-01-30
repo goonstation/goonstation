@@ -268,6 +268,8 @@
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
+						if(H.bodytemperature < H.base_body_temp)
+							H.bodytemperature += 1
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
@@ -356,7 +358,7 @@
 
 	New()
 		if (all_functional_reagent_ids.len > 0)
-			var/list/chem_choices = all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry", "rat_venom")
+			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
 			src.flavor = "nicotine"
@@ -1056,7 +1058,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = 1
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
