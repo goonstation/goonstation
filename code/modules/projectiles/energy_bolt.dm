@@ -420,6 +420,7 @@ toxic - poisons
 	shot_sound_extrarange = 5
 	shot_number = 1
 	damage_type = D_ENERGY
+	fullauto_valid = 1
 
 	disruption = 8
 

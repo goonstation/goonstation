@@ -218,7 +218,7 @@ proc/Create_Tommyname()
 
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/tommy
+		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
@@ -409,7 +409,7 @@ proc/Create_Tommyname()
 	icon_state = "trumpet"
 	New()
 		cell = new/obj/item/ammo/power_cell/high_power
-		current_projectile = new/datum/projectile/energy_bolt_v/trumpet
+		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
 
