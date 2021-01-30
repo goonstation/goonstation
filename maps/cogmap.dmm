@@ -15721,18 +15721,16 @@
 	},
 /area/station/chapel/sanctuary)
 "aIR" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
 "aIS" = (
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/machinery/light/emergency{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -16755,15 +16753,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aLg" = (
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -20396,20 +20386,18 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/office)
 "aSE" = (
-/obj/machinery/door/window/northleft{
-	name = "Chaplain's Office";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Chaplain's Office"
 	},
 /obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aSF" = (
-/obj/machinery/door/window/northright{
-	name = "Chaplain's Office";
-	req_access_txt = null
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Chaplain's Office"
 	},
 /obj/access_spawn/chapel_office,
 /turf/simulated/floor/black,
@@ -21726,7 +21714,9 @@
 	},
 /area/station/hallway/primary/central)
 "aVG" = (
-/obj/player_piano,
+/obj/machinery/conveyor_switch{
+	id = "chapel"
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -62280,6 +62270,13 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"cMa" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/delivery,
+/area/station/science/chemistry)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62820,12 +62817,35 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
+"gZz" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "hgc" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"hlz" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "hmN" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -62875,17 +62895,6 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
-"itV" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "iQv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
@@ -63078,6 +63087,12 @@
 	},
 /turf/simulated/floor,
 /area/station/ranch)
+"lhm" = (
+/obj/player_piano,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "ltD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63173,18 +63188,6 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"mAF" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "chemistry";
-	name = "Chemistry Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "mCe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
@@ -63195,15 +63198,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
-"mPg" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/security/secwing)
 "naz" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor,
@@ -63486,6 +63480,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"qzn" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/chapel/sanctuary)
 "qIA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63514,13 +63517,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"rrA" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/delivery,
-/area/station/science/chemistry)
 "rwR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -63588,6 +63584,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"sit" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/security/secwing)
 "svZ" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox{
@@ -96325,7 +96330,7 @@ cpu
 ctg
 ctZ
 cuP
-mAF
+gZz
 adC
 aah
 adC
@@ -96626,8 +96631,8 @@ cpv
 csq
 cth
 cua
-rrA
-itV
+cMa
+hlz
 adC
 aah
 adC
@@ -98646,7 +98651,7 @@ awU
 ayx
 azV
 ajV
-mPg
+sit
 anM
 aFp
 ayy
@@ -120695,7 +120700,7 @@ aCj
 aDJ
 bVG
 aGm
-aHr
+lhm
 aHs
 aHr
 aIP
@@ -122208,7 +122213,7 @@ aGo
 aHs
 aIR
 aJW
-aLf
+qzn
 aMo
 aNA
 aMo
