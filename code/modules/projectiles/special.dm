@@ -1015,8 +1015,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
 			copied.reaction(A, TOUCH, 0, 0)
-			if(O.special_data["IS_LIT"]) // Heat if needed
-				A.reagents.set_reagent_temp(O.special_data["burn_temp"], TRUE)
 		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
 			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
 			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
