@@ -1,5 +1,9 @@
 
 (t)sat jan 30 21
+(u)BenLubar
+(p)3499
+(e)|
+(+)Marking a job as favorite no longer creates a second copy of that job as unwanted.
 (u)zjdtmkhzt
 (p)3504
 (e)🆕|feature
