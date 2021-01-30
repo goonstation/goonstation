@@ -519,7 +519,7 @@
 					//boutput(world, "<span class='notice'>AND MY TYPE PATH IS [M.type]</span>")
 					for(var/datum/commodity/N in src.goods_buy)
 						if(M) // fuck the hell off you dirty null.type errors
-							if(N.comtype == M.type)
+							if(istype(M, N.comtype))
 								//boutput(world, "<b>MY ASSOCIATED DATUM IS [N]</b>")
 								//boutput(world, "<span class='notice'>[M] IS GOING TO SELL FOR [N.price] HOT BALLS</span>")
 								//boutput(world, "<span class='notice'>UPDATING CRATE VALUE TO [cratevalue] OR FUCKING ELSE</span>")
