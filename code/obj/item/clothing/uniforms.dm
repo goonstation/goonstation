@@ -1107,11 +1107,6 @@
 		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
-		New()
-			..()
-			if(prob(50))
-				src.icon_state = "scrub-pr"
-
 	orange
 		icon_state = "scrub-o"
 		item_state = "orange"
