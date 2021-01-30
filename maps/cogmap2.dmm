@@ -3541,11 +3541,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/catering)
 "ahQ" = (
-/obj/machinery/computer/ordercomp,
+/obj/stool,
 /turf/simulated/floor/plating,
 /area/station/hangar/catering)
 "ahR" = (
-/obj/stool,
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/plating,
 /area/station/hangar/catering)
@@ -50260,8 +50259,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cec" = (
+/obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/station/hangar/catering)
+/area/station/maintenance/solar/north)
 "ced" = (
 /obj/cable{
 	d1 = 2;
@@ -56755,6 +56755,12 @@
 	dir = 9
 	},
 /area/station/science/lobby)
+"cte" = (
+/obj/machinery/computer/ordercomp{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/catering)
 "ctf" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -107535,8 +107541,8 @@ aaa
 aaa
 aam
 aaF
-afE
-cec
+ahk
+cte
 aiG
 ajL
 alb
@@ -109649,7 +109655,7 @@ aaS
 adN
 aeu
 ade
-add
+cec
 ade
 aeT
 aek
