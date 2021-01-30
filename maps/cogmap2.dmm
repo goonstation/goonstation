@@ -417,24 +417,13 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
-/obj/window/auto/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aaZ" = (
@@ -473,7 +462,6 @@
 	icon_state = "0-8"
 	},
 /obj/grille/steel,
-/obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abc" = (
@@ -497,23 +485,12 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
 /obj/machinery/power/data_terminal,
-/obj/window/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abf" = (
@@ -568,7 +545,6 @@
 /area/station/turret_protected/ai)
 "abk" = (
 /obj/grille/steel,
-/obj/window/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -1910,30 +1886,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
-"adY" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
 "adZ" = (
 /obj/cable{
 	d1 = 4;
@@ -2157,18 +2109,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -4329,18 +4269,6 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -4812,18 +4740,6 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -4931,18 +4847,6 @@
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -24147,7 +24051,6 @@
 	dir = 4
 	},
 /obj/overlay{
-	anchored = 1;
 	desc = "A portrait of a man wearing a ridiculous merchant hat.  That must be Discount Dan.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
@@ -35228,8 +35131,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/hallway/primary/west)
 "bAW" = (
@@ -36326,23 +36228,12 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced,
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bDc" = (
@@ -36379,20 +36270,6 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced,
-/obj/window/reinforced{
-	dir = 4;
-	opacity = 1
-	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -36401,6 +36278,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bDf" = (
@@ -39025,8 +38904,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/hangar/main)
 "bHN" = (
@@ -39038,8 +38916,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/security/checkpoint/podbay)
 "bHP" = (
@@ -39104,8 +38981,7 @@
 	id = "pt_laser";
 	name = "Beamline Interlock"
 	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/engine/inner)
 "bHY" = (
@@ -42835,23 +42711,12 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced,
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bNW" = (
@@ -42910,20 +42775,9 @@
 	detector_id = "AI Core";
 	dir = 8
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced,
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable,
+/obj/grille/steel,
+/obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bOa" = (
@@ -74299,7 +74153,6 @@
 /area/station/medical/dome)
 "dfl" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74324,7 +74177,6 @@
 /area/station/medical/dome)
 "dfn" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -74519,7 +74371,6 @@
 /area/station/medical/dome)
 "dfK" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74779,7 +74630,6 @@
 /area/station/medical/cdc)
 "dgh" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm2";
 	layer = 10;
@@ -74809,7 +74659,6 @@
 /area/station/medical/dome)
 "dgk" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -79385,12 +79234,8 @@
 /area/station/ranch)
 "tTd" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
-	rand_pos = 1
-	},
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "viA" = (
@@ -139118,7 +138963,7 @@ abq
 abq
 abq
 abq
-adY
+ajy
 aaX
 aaB
 aaF
