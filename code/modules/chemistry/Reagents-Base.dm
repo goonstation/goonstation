@@ -402,7 +402,8 @@ datum
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
-						holder.del_reagent(id)
+				if(holder)
+					holder.del_reagent(id)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

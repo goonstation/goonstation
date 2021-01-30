@@ -11200,7 +11200,7 @@
 	req_access = null
 	},
 /obj/access_spawn/sec_lockers,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "azB" = (
