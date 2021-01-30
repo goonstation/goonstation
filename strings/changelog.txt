@@ -1,5 +1,9 @@
 
 (t)sat jan 30 21
+(u)Azrun
+(p)3537
+(e)⚖🐛|balance, bug
+(+)Possessed canisters behave as expected in regards to gases.  Possessed creates will no longer shuffle around when closed.
 (u)Moonlol
 (p)3542
 (e)🐛|bug
