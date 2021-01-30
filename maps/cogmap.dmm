@@ -58110,22 +58110,11 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctZ" = (
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/window{
-	dir = 1
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/delivery,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "cua" = (
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
+/obj/machinery/door/window/northright,
 /turf/simulated/floor/delivery,
 /area/station/science/chemistry)
 "cub" = (
@@ -58501,11 +58490,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "cuP" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
+	dir = 5;
 	icon_state = "pdoor0";
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
@@ -58976,7 +58963,6 @@
 /area/station/janitor/supply)
 "cvN" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59918,7 +59904,6 @@
 /area/station/medical/cdc)
 "cxx" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -59934,7 +59919,6 @@
 /area/station/medical/research)
 "cxy" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -60086,7 +60070,6 @@
 /area/station/medical/research)
 "cxI" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -63481,6 +63464,13 @@
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
+"pRS" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/delivery,
+/area/station/science/chemistry)
 "pSb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63490,6 +63480,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"pYt" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -63916,6 +63918,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
+"vYY" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "wfk" = (
 /obj/machinery/atmospherics/valve{
 	desc = "freezer bypass valve";
@@ -96328,7 +96341,7 @@ cpu
 ctg
 ctZ
 cuP
-aaG
+pYt
 adC
 aah
 adC
@@ -96629,8 +96642,8 @@ cpv
 csq
 cth
 cua
-cne
-aaG
+pRS
+vYY
 adC
 aah
 adC
