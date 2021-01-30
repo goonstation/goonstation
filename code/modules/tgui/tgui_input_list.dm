@@ -28,7 +28,7 @@
 		return
 	var/datum/tgui_modal/list_input/input = new(user, message, title, buttons, timeout)
 	input.ui_interact(user)
-	input.wait()
+	UNTIL(input.choice || input.closed)
 	if (input)
 		. = input.choice
 		qdel(input)

@@ -25,7 +25,7 @@
 			return
 	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
 	alert.ui_interact(user)
-	alert.wait()
+	UNTIL(alert.choice || alert.closed)
 	if (alert)
 		. = alert.choice
 		qdel(alert)
@@ -94,14 +94,6 @@
 	buttons = null
 	. = ..()
 
-/**
- * Waits for a user's response to the tgui_modal's prompt before returning. Returns early if
- * the window was closed by the user.
- */
-/datum/tgui_modal/proc/wait()
-	while (!choice && !closed)
-		LAGCHECK(5)
-
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -166,6 +158,3 @@
 		return
 	callback.InvokeAsync(choice)
 	qdel(src)
-
-/datum/tgui_modal/async/wait()
-	return
