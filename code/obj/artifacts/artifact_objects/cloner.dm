@@ -44,8 +44,7 @@
 
 			if(deep_count > 0 && prob(5))
 				deep_count--
-				clone = semi_deep_copy(H) // admins made me do it
-				clone.set_loc(O)
+				clone = semi_deep_copy(H, O) // admins made me do it
 				var/lastFilterIndex = clone.filters.len
 				if(lastFilterIndex)
 					clone.filters -= clone.filters[lastFilterIndex]
