@@ -1015,9 +1015,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
 			copied.reaction(A, TOUCH, 0, 0)
-			if(!A.reagents)
-				A.create_reagents(100)
-			copied.copy_to(A.reagents, 1, copy_temperature = 1)
 			if(O.special_data["IS_LIT"]) // Heat if needed
 				A.reagents.set_reagent_temp(O.special_data["burn_temp"], TRUE)
 		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
