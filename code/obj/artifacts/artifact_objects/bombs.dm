@@ -330,7 +330,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			prob(5); NO_EFFECT,
 			prob(2); MAKE_HUMAN_MATERIAL,
 			prob(2); MAKE_HUMAN_STATUE)
-		smoothEdge = pick(0,1)
+		smoothEdge = prob(50)
 
 		explode_delay = rand(30 SECONDS, 2 MINUTES)
 		switch(artitype.name)
