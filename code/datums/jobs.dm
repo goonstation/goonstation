@@ -140,6 +140,7 @@
 
 // Command Jobs
 
+ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
@@ -445,6 +446,7 @@
 
 // Security Jobs
 
+ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
@@ -562,6 +564,7 @@
 
 // Research Jobs
 
+ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
@@ -671,6 +674,7 @@
 
 // Engineering Jobs
 
+ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
@@ -822,6 +826,7 @@
 
 // Civilian Jobs
 
+ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
@@ -1727,6 +1732,7 @@
 /*
  * Halloween jobs
  */
+ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
 
