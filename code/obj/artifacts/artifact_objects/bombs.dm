@@ -294,9 +294,9 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // matter transmutation bomb
 
-#DEFINE NO_EFFECT 0
-#DEFINE MAKE_HUMAN_MATERIAL 1
-#DEFINE MAKE_HUMAN_STATUE 2
+#define NO_EFFECT 0
+#define MAKE_HUMAN_MATERIAL 1
+#define MAKE_HUMAN_STATUE 2
 
 /obj/machinery/artifact/bomb/transmute
 	name = "artifact matter transmutation bomb"
@@ -468,6 +468,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				O.ArtifactDestroyed()
 
 
-#UNDEF NO_EFFECT 0
-#UNDEF MAKE_HUMAN_MATERIAL 1
-#UNDEF MAKE_HUMAN_STATUE 2
+#undef NO_EFFECT
+#undef MAKE_HUMAN_MATERIAL
+#undef MAKE_HUMAN_STATUE
