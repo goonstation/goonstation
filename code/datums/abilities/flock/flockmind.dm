@@ -311,12 +311,19 @@
 	name = "Fabricate Structure"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
-	cooldown = 4
+	cooldown = 40
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
 	var/resourcecost = null
 	var/structurewantedtype = null
+	var/t = get_turf(holder.owner)//turf
+	if(!istype(t, /turf/simulated/floor/feather))
+		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return 1
+	if(locate(/obj/flock_structure) in t)
+		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		return 1
 	var/structurewanted = input("Select which structure you would like to create", "Tealprint Selection", "cancel") as null|anything in list("Collector", "Sentinel")
 	switch(structurewanted)
 		if("Collector")

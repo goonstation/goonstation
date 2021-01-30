@@ -43,7 +43,6 @@
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
 				src.charge(5)
 			if(2)
-				message_admins("charged")
 				var/mob/m = null
 				var/list/hit = list()
 				for(m in mobs)
@@ -54,7 +53,7 @@
 				arcFlash(src, m, 10000)
 				hit += m
 				while(chain > 0)
-					for(var/mob/nearbymob in range(2, m))//todo: optimize this.
+					for(var/mob/nearbymob in range(3, m))//todo: optimize this.
 						world.log << "[m] is m in the loop"
 						if(nearbymob != m && !(nearbymob in hit) && !isflock(nearbymob))
 							arcFlash(m, nearbymob, 10000)
@@ -65,7 +64,7 @@
 						chain--//infinite loop prevention, wouldve been in the if statement.
 				hit.len = 0//clean up
 				charge = 1
-				var/f = src.filters[length(src.filters)]//force it to power down
+				var/f = src.filters[length(src.filters)]//force the visual to power down
 				animate(f, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = 1
 				return
