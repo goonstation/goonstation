@@ -336,7 +336,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	var/datum/game_mode/conspiracy/N = ticker.mode
 	var/protected_frequency = null
 	if(istype(N))
-  protected_frequency =N.agent_radiofreq
+		protected_frequency = N.agent_radiofreq
 
     // Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
 		if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
