@@ -124,6 +124,7 @@
 	icon_state = "cyber-lungs_L"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	temp_tolerance = T0C+500

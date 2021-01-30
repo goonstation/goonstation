@@ -506,7 +506,7 @@
 		for (var/mob/M in get_turf(src))
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying)
+			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
 				step_away(M, src, 1)
 				continue
 #ifdef HALLOWEEN

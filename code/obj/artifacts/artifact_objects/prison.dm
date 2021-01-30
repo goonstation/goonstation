@@ -16,7 +16,7 @@
 
 	New()
 		..()
-		imprison_time = rand(50,1200)
+		imprison_time = rand(5 SECONDS, 2 MINUTES)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())

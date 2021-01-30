@@ -243,7 +243,7 @@
 	else
 		if(src.mind)
 			src.mind.transfer_to(O)
-	O.set_loc(src.loc)
+	O.set_loc(get_turf(src.loc))
 	boutput(O, "<B>You are playing as a Cyborg. Cyborgs can interact with most electronic objects in its view point.</B>")
 	boutput(O, "<B>You must follow all laws that the AI has.</B>")
 	boutput(O, "Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.")

@@ -113,6 +113,7 @@
 	//created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	mats = 8
 	made_from = "pharosium"
 	transplant_XP = 7

@@ -1,4 +1,33 @@
 
+(t)sat jan 30 21
+(u)Nefarious6th
+(p)3491
+(e)⚖🔄|balance, rework
+(*)Captains on the RP servers can now only roll conspirator as a potential antagonist type.
+(u)BenLubar
+(p)3499
+(e)|
+(+)Marking a job as favorite no longer creates a second copy of that job as unwanted.
+(u)zjdtmkhzt
+(p)3504
+(e)🆕|feature
+(+)Added a new type of bomb artifact that has a high chance of destroying either the science department or the economy.
+(u)Chickenish
+(p)3529
+(e)🆕|feature
+(+)It is now possible to anchor air scrubbers with a wrench.
+(u)Azrun
+(p)3537
+(e)⚖🐛|balance, bug
+(+)Possessed canisters behave as expected in regards to gases.  Possessed creates will no longer shuffle around when closed.
+(u)Moonlol
+(p)3542
+(e)🐛|bug
+(+)You can no longer grab things from the other side of a thin window.
+(u)zjdtmkhzt
+(p)3509
+(e)⚖🆕|balance, feature
+(+)Artifact activators are now more common, but not all of them will be universal anymore. Be wary of those of eldritch origin...
 (t)fri jan 29 21
 (u)Flaborized
 (p)3496
