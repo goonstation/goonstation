@@ -16,14 +16,14 @@
 	var/imprison_time = 0
 	var/evil_delay = 0
 	var/swapSouls = FALSE
-	var/deep = FALSE
+	var/deep_count = 0
 
 	New()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
 		evil_delay = rand(0,imprison_time)
 		swapSouls = prob(50)
-		deep = prob(10)
+		deep_count = prob(10) ? rand(1, 5) : 0
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -42,7 +42,8 @@
 			SPAWN_DBG(0.7 SECONDS)
 				H.filters -= filter
 
-			if(deep)
+			if(deep_count > 0 && prob(5))
+				deep_count--
 				clone = semi_deep_copy(H) // admins made me do it
 				clone.set_loc(O)
 				var/lastFilterIndex = clone.filters.len
