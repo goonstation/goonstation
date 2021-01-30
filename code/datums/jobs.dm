@@ -11,6 +11,7 @@
 	var/allow_traitors = 1
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
+	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
 	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
@@ -149,6 +150,9 @@
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	recieves_miranda = 1
+#ifdef RP_MODE
+	allow_traitors = 0
+#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -235,6 +239,7 @@
 	recieves_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	receives_disk = 1
@@ -455,6 +460,7 @@
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	recieves_implant = /obj/item/implant/health/security
 	receives_disk = 1
@@ -486,6 +492,7 @@
 	assistant
 		name = "Security Assistant"
 		limit = 3
+		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
 		slot_jump = /obj/item/clothing/under/rank/security/assistant
 		slot_suit = null
@@ -1110,6 +1117,7 @@
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1
@@ -2607,6 +2615,7 @@
 	limit = 2
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	recieves_miranda = 1
