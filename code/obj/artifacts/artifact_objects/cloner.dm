@@ -8,7 +8,6 @@
 	rarity_class = 4
 	min_triggers = 2
 	max_triggers = 2
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
 	react_xray = list(15,90,90,11,"HOLLOW")
 	validtypes = list("wizard","eldritch")
@@ -20,7 +19,7 @@
 
 	New()
 		..()
-		imprison_time = rand(50,1200)
+		imprison_time = rand(5 SECONDS, 2 MINUTES)
 		evil_delay = rand(0,imprison_time)
 		swapSouls = pick(TRUE, FALSE)
 
