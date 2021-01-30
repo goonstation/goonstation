@@ -251,6 +251,7 @@
 	name = "rename"
 	help_message = "Rename a given ckey's mob."
 	action_name = "rename"
+	argument_types = list(/datum/command_argument/string="ckey", /datum/command_argument/string="new_name")
 	var/new_name = null
 
 	prepare(user, ckey, new_name)
