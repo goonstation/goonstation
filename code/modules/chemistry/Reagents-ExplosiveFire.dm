@@ -104,34 +104,19 @@ datum
 				holder?.del_reagent(id)
 				return
 
-			/*
-			reaction_obj(var/obj/O, var/volume)
-				src = null
-				return 1
-			*/
-
-			/*
-			reaction_turf(var/turf/T, var/volume)
-				src = null
-				if(!T.reagents) T.create_reagents(volume)
-				T.reagents.add_reagent("napalm_goo", volume, null)
-				return
-			*/
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, 7 * burn.getStage(), 0, DAMAGE_BURN)
-						if(!M.stat)
+						L.TakeDamage("All", 0, 2 * volume * (burn.getStage()-1), 0, DAMAGE_BURN)
+						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
