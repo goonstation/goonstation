@@ -43,6 +43,9 @@
 				H.filters -= filter
 
 			if(deep)
+				clone = semi_deep_copy(H) // admins made me do it
+				clone.set_loc(O)
+			else
 				// a bunch of stolen cloner code
 				clone = new /mob/living/carbon/human/clone(O)
 				clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
@@ -56,9 +59,6 @@
 					clone.traitHolder.traits = H.traitHolder.traits.Copy()
 				clone.real_name = user.real_name
 				clone.UpdateName()
-			else
-				clone = semi_deep_copy(H) // admins made me do it
-				clone.set_loc(O)
 
 			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
 				clone.client.set_layout(clone.client.tg_layout)
