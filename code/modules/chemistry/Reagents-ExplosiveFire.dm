@@ -93,6 +93,7 @@ datum
 			viscosity = 0.8
 			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
+			penetrates_skin = 1
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!temp_reacted)
