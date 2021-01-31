@@ -41479,6 +41479,24 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/ce)
+"bvC" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/deconstructor,
+/obj/item/device/radio/headset/engineer,
+/turf/simulated/floor/carpet{
+	icon_state = "fblue1"
+	},
+/area/station/crew_quarters/ce)
 "bvD" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -49825,6 +49843,19 @@
 /obj/item/clothing/glasses/nightvision,
 /turf/simulated/floor/black,
 /area/station/security/armory)
+"bMN" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor/black,
+/area/station/security/armory)
 "bMO" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -51166,31 +51197,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"njq" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/pinpointer/teg_semi{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/deconstructor,
-/obj/item/device/radio/headset/engineer{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fblue1"
-	},
-/area/station/crew_quarters/ce)
 "nLr" = (
 /obj/storage/cart/medcart,
 /obj/machinery/light{
@@ -51646,19 +51652,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"vXx" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
-/turf/simulated/floor/black,
-/area/station/security/armory)
 "weC" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel{
@@ -81222,7 +81215,7 @@ brg
 bsl
 bxK
 buw
-njq
+bvC
 bwI
 bxS
 byV
@@ -84038,7 +84031,7 @@ bej
 bfo
 bgz
 bhx
-vXx
+bMN
 bMO
 bMP
 bMR
