@@ -336,30 +336,28 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	var/datum/game_mode/conspiracy/N = ticker.mode
 	var/protected_frequency = null
 	if(istype(N))
-  protected_frequency =N.agent_radiofreq
+		protected_frequency = N.agent_radiofreq
+	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
+	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
+		for (var/mob/living/L in radio_brains)
+			receive += L
 
-    // Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-		if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
-			for (var/mob/living/L in radio_brains)
-				receive += L
+		for(var/mob/zoldorf/z in the_zoldorf)
+			if(z.client)
+				receive += z
 
-			for(var/mob/zoldorf/z in the_zoldorf)
-				if(z.client)
-					receive += z
-
-
-		// hi it's me cirr here to shoehorn in another thing
-		// flockdrones and flockmind should hear all channels, but with terrible corruption
-		if(length(flocks))
-			for(var/F in flocks)
-				var/datum/flock/flock = flocks[F]
-				if(flock)
-					if(flock.flockmind)
-						heard_flock |= flock.flockmind
-					if(flock.units && flock.units.len > 0)
-						for(var/mob/living/D in flock.units)
-							if(D)
-								heard_flock |= D
+	// hi it's me cirr here to shoehorn in another thing
+	// flockdrones and flockmind should hear all channels, but with terrible corruption
+	if(length(flocks))
+		for(var/F in flocks)
+			var/datum/flock/flock = flocks[F]
+			if(flock)
+				if(flock.flockmind)
+					heard_flock |= flock.flockmind
+				if(flock.units && flock.units.len > 0)
+					for(var/mob/living/D in flock.units)
+						if(D)
+							heard_flock |= D
 
 	for (var/client/C)
 		if (!C.mob) continue
