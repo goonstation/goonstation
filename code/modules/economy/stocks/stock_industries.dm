@@ -79,7 +79,7 @@
 	generateProductName(var/company_name)
 		var/list/products = list("combine harvester", "cattle prod", "scythe", "plough", "sickle", "cloche", "loy", "spade", "hoe")
 		var/list/prefix = list("[company_name]'s ", "the [company_name] ", "the fully automatic ", "the full-duplex ", "the semi-automatic ", "the drone-mounted ", "the industry-leading ", "the world-class ")
-		var/list/suffix = list(" of farming", " multiplex", " +[rand(1,15)]", " [consonant()][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
+		var/list/suffix = list(" of farming", " multiplex", " +[rand(1,15)]", " [pick(consonants_upper)][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
 		return "[pick(prefix)][pick(products)][pick(suffix)]"
 
 
@@ -129,7 +129,7 @@
 	generateProductName(var/company_name)
 		var/list/products = list("computer", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply")
 		var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
-		var/L = pick(consonant(), "Seed ", "Radiant ", "Celery ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
+		var/L = pick(pick(consonants_upper), "Seed ", "Radiant ", "Celery ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
 		var/N = rand(0,99)
 		var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
 		return "[pick(prefix)][prefix2] [pick(products)]"
@@ -145,7 +145,7 @@
 	generateProductName(var/company_name)
 		var/list/products = list("mobile phone", "PDA", "tablet computer")
 		var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
-		var/L = pick("[lowertext(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
+		var/L = pick("[lowertext(pick(consonants_upper))]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[pick(consonants_upper)]")
 		var/N = rand(1,99)
 		var/prefix2 = "[L][N][prob(25) ? pick(" Tiny", " Mini", " Micro", " Slim", " Water", " Air", " Fire", " Earth", " Nano", " Pico", " Femto", " Planck") : null]"
 		return "[pick(prefix)][prefix2] [pick(products)]"

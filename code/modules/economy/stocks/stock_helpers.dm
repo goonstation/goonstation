@@ -1,12 +1,9 @@
-/proc/consonant()
-	return pick(consonants_upper)
 
-/proc/vowel()
-	return pick(vowels_upper)
-
+/// Uppercases first letter
 /proc/ucfirst(str)
 	return "[uppertext(copytext(str, 1))][copytext(str, 2)]"
 
+/// Uppercases first letter of every word
 /proc/ucfirsts(str)
 	var/list/split = splittext(str, " ")
 	. = list()

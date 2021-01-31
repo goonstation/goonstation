@@ -49,7 +49,7 @@
 			outlet = pick(news_outlets)
 
 		var/list/authors = news_outlets[outlet]
-		if ((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
+		if (!length(authors) || (length(authors) && !prob(100 / (length(authors) + 1))))
 			var/AN = generateAuthorName()
 			news_outlets[outlet] += AN
 			author = AN
@@ -72,9 +72,9 @@
 	proc/generateAuthorName()
 		switch(rand(1,3))
 			if (1)
-				return "[consonant()]. [pick_string_autokey("names/last.txt")]"
+				return "[pick(consonants_upper)]. [pick_string_autokey("names/last.txt")]"
 			if (2)
-				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] [consonant()].[prob(50) ? "[consonant()]. " : null] [pick_string_autokey("names/last.txt")]"
+				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] [pick(consonants_upper)].[prob(50) ? "[pick(consonants_upper)]. " : null] [pick_string_autokey("names/last.txt")]"
 			if (3)
 				return "[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")] \"[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]\" [pick_string_autokey("names/last.txt")]"
 
@@ -92,7 +92,7 @@
 		var/output = "<div class='article'><div class='headline'>[headline]</div><div class='subtitle'>[subtitle]</div><div class='article-body'>[article]</div><div class='author'>[author]</div><div class='timestamp'>[spacetime]</div></div>"
 		return output
 
-	proc/detokenize(var/token_string, var/list/industry_tokens, var/list/product_tokens = list())
+	proc/detokenize(token_string, list/industry_tokens, list/product_tokens = list())
 		var/list/T_list = default_tokens.Copy()
 		for (var/I in industry_tokens)
 			T_list[I] = industry_tokens[I]
