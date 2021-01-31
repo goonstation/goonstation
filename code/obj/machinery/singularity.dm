@@ -28,9 +28,9 @@ Contains:
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
 		if(get_dist(gen,loc)<10)
-			if(gen.active_dirs>=2)
+			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension=min(smallestdimension,gen.shortestlink)
+				smallestdimension = min(smallestdimension, gen.shortestlink)
 
 	if (goodgenerators>=4)
 
