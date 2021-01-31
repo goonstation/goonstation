@@ -3162,6 +3162,19 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"hZ" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/reddish;
+	pixel_y = 21
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "ia" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4;
@@ -7319,8 +7332,10 @@
 "rG" = (
 /obj/disposalpipe/segment,
 /obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""
-	};name = "dedication plaque";pixel_y = 25},
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
+	name = "dedication plaque";
+	pixel_y = 25
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "rH" = (
@@ -11994,6 +12009,13 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hos)
+"Dw" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
+/obj/item/deconstructor,
+/obj/item/stamp/ce,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/analyzer/healthanalyzer/borg,
@@ -18963,13 +18985,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"Xa" = (
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/pinpointer/teg_semi,
-/obj/item/deconstructor,
-/obj/item/stamp/ce,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "Xb" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -19961,19 +19976,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
-"ZU" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/reddish;
-	pixel_y = 21
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/main)
 "ZW" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
@@ -72058,7 +72060,7 @@ ez
 ez
 ez
 hl
-ZU
+hZ
 jy
 kx
 lr
@@ -76913,7 +76915,7 @@ AX
 Qj
 Cp
 Ya
-Xa
+Dw
 BK
 EX
 FQ
