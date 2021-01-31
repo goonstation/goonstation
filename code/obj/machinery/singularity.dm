@@ -80,10 +80,6 @@ Contains:
 	event_handler_flags = IMMUNE_SINGULARITY
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
 
-	bound_width = 32
-	bound_height = 32
-	bound_x = 16
-	bound_y = 16
 
 	pixel_x = -64
 	pixel_y = -64
