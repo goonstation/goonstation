@@ -179,7 +179,7 @@ var/datum/artifact_controller/artifact_controls
 	New()
 		..()
 		if ("all" in fault_types)
-			fault_types += childrentypesof(/datum/artifact_fault)
+			fault_types += concrete_typesof(/datum/artifact_fault)
 
 	proc/post_setup(obj/artifact)
 		if(prob(25))
@@ -298,7 +298,7 @@ var/datum/artifact_controller/artifact_controls
 				col1 = list(255, 168, 0)
 			else
 				col1 = hsv2rgblist(hue1, rand() * 0.2 + 0.5, rand() * 0.2 + 0.6)
-			var/hue2 = 180 + hue1 + rand(-90, 90)
+			var/hue2 = 180 + hue1 + rand(-135, 135)
 			if(prob(10))
 				hue2 = rand(360)
 			var/list/col2 = hsv2rgblist(hue2, rand() * 0.3 + 0.7, rand() * 0.1 + 0.9)

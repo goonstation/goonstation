@@ -166,6 +166,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
+	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
 /mob/living/silicon/drone/New()
@@ -366,7 +367,6 @@
 
 	hud.update()
 	process_killswitch()
-	process_locks()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

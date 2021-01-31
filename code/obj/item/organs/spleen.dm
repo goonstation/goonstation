@@ -41,3 +41,4 @@
 	robotic = 1
 	edible = 0
 	mats = 6
+	created_decal = /obj/decal/cleanable/oil

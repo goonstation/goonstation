@@ -20807,7 +20807,10 @@
 /turf/simulated/martian/floor,
 /area/space)
 "aXt" = (
-/obj/item/ammo/bullets/rifle_3006,
+/obj/item/paper/thermal{
+	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
+	name = "scribbled note"
+	},
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
@@ -44159,7 +44162,7 @@
 /obj/item/gun/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "ceU" = (
@@ -47088,6 +47091,18 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"iwK" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "ixM" = (
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
@@ -130818,7 +130833,7 @@ aZt
 aZt
 aZN
 aZN
-ban
+iwK
 bgd
 bao
 aZN
