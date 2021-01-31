@@ -168,9 +168,9 @@ datum/teg_transformation
 		qdel(src.teg.active_form)
 		src.teg.active_form = null
 
-  ////////////////////////
-	// TEG TRANFORMATIONS	//
-	////////////////////////
+  //                    //
+  // TEG TRANFORMATIONS //
+  //                    //
 
 	/// Default TEG Transformation we know and ""love""
 	default
@@ -178,8 +178,8 @@ datum/teg_transformation
 
 
 	/**
-	 Material Science Transformation
-	 Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
+	 * Material Science Transformation
+	 * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
 	 */
 	matsci
 		var/prev_efficiency

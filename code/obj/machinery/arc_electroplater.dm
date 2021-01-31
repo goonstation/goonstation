@@ -1,5 +1,5 @@
 /** Arc Electroplater
-	* Applies materials directly to items
+  * Applies materials directly to items
   */
 /obj/machinery/arc_electroplater
 	name = "Arc Electroplater"

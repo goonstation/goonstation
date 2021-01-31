@@ -566,7 +566,7 @@ datum/pump_ui/circulator_ui
 	var/variant_b = null
 	var/variant_description
 	var/conductor_temp = T20C
-	var/semiconductor_state = 0
+	var/semiconductor_state = TEG_SEMI_STATE_CONNECTED
 	var/semiconductor_repair
 
 	var/warning_light_desc = null // warning light description
