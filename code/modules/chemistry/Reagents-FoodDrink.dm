@@ -169,6 +169,7 @@ datum
 					taste = initial(taste)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+				. = ..()
 				var/mytemp = holder.total_temperature
 				src = null
 				if(!volume_passed) return 1
@@ -365,6 +366,7 @@ datum
 			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed) return
 				if(method == INGEST)
@@ -419,6 +421,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed) return
 				if(method == INGEST)
@@ -529,6 +532,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/list/paramslist = 0)
+				. = ..()
 				var/mob/living/carbon/human/H = M
 
 				if (method == TOUCH)
@@ -663,6 +667,7 @@ datum
 			taste = "bitter"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				var/datum/reagents/old_holder = src.holder
 				src = null
 				if(!volume_passed)
@@ -981,6 +986,7 @@ datum
 
 			// lights drinker on fire
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == INGEST && prob(20))
 					var/mob/living/L = M
@@ -1038,6 +1044,7 @@ datum
 			thirst_value = -0.3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -1722,6 +1729,7 @@ datum
 			thirst_value = 5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -1788,6 +1796,7 @@ datum
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -1849,6 +1858,7 @@ datum
 					M.emote(pick("cough"))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -2406,6 +2416,7 @@ datum
 			transparency = 245
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
 					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
@@ -2476,6 +2487,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if (istype(M, /mob/living/critter/small_animal/slug))
 					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
@@ -2581,6 +2593,7 @@ datum
 			transparency = 250
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+				. = ..()
 				src = null
 				if(!volume_passed || method != INGEST)
 					return
@@ -2747,6 +2760,7 @@ datum
 			depletion_rate = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -2893,6 +2907,7 @@ datum
 			hunger_value = 0.25
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -2945,6 +2960,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -2978,6 +2994,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3003,6 +3020,7 @@ datum
 			bladder_value = -1.5
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3150,6 +3168,7 @@ datum
 				..(M)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3202,6 +3221,7 @@ datum
 			fluid_g = 229
 			fluid_b = 72
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
@@ -3239,6 +3259,7 @@ datum
 				..()
 
 			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
@@ -3337,6 +3358,7 @@ datum
 			bladder_value = -0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if(method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -3375,6 +3397,7 @@ datum
 			var/bioeffect_id = null
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				var/tempbioid = src.bioeffect_id //needed because we detatch the proc from src below
 				src = null
 				if(!volume_passed)
@@ -3498,6 +3521,7 @@ datum
 			hunger_value = 0.25
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if(!volume_passed)
 					return
 				if(!ishuman(M))

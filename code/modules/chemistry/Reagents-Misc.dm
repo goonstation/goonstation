@@ -70,6 +70,7 @@ datum
 					explode(list(T), "splash on turf")
 
 			reaction_mob(var/mob/M, var/volume)
+				. = ..()
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
@@ -116,6 +117,7 @@ datum
 			overdose = 10
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if (!volume_passed)
 					return
@@ -178,6 +180,7 @@ datum
 						pop(T, amount)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/amount_passed)
+				. = ..()
 				if (method == TOUCH)
 					pop(get_turf(M), max(amount_passed,0.01))
 
@@ -485,6 +488,7 @@ datum
 				return
 
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				return
 
 			reaction_obj(var/obj/O, var/volume)
@@ -529,6 +533,7 @@ datum
 			viscosity = 0.5
 
 			reaction_mob(var/mob/target, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if (!volume_passed)
 					return
@@ -659,6 +664,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if (method == TOUCH)
 					var/mob/living/L = M
@@ -850,6 +856,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, volume)
 
@@ -953,6 +960,7 @@ datum
 			viscosity = 0.55
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == INGEST)
 					var/ranchance = rand(1,10)
 					if (ranchance == 1)
@@ -983,6 +991,7 @@ datum
 			heat_capacity = 600
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed,var/list/paramslist = 0)
+				. = ..()
 				if (isobserver(M))
 					return
 
@@ -1158,6 +1167,7 @@ datum
 						holder.del_reagent(id)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (volume)
 					if (method == TOUCH)
 						if (isrobot(M))
@@ -1530,6 +1540,7 @@ datum
 			hygiene_value = -3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if (method == INGEST)
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
@@ -1565,6 +1576,7 @@ datum
 			viscosity = 0.8
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
 				M.emote("scream")
@@ -1591,6 +1603,7 @@ datum
 			viscosity = 0.8
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if (method == TOUCH)
 					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
@@ -1688,6 +1701,7 @@ datum
 			viscosity = 0.3
 
 			reaction_mob(var/mob/M)
+				. = ..()
 				boutput(M, "<span class='notice'>You feel loved!</span>")
 				return
 
@@ -1748,6 +1762,7 @@ datum
 			viscosity = 0.1
 
 			reaction_mob(var/mob/M, var/method = TOUCH, var/volume)
+				. = ..()
 				if (method == INGEST)
 					if (isliving(M))
 						M:blood_color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255), 2)][num2hex(rand(0, 255), 2)]"
@@ -1849,6 +1864,7 @@ datum
 			value = 3
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -1912,6 +1928,7 @@ datum
 				return
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -2003,6 +2020,7 @@ datum
 				return
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				var/col = rgb(fluid_r, fluid_g, fluid_b)
 				src = null
 				if(!volume_passed)
@@ -2168,6 +2186,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M)
+				. = ..()
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(1,6)].[rand(0,9)]")
 				animate_spin(M, dir_temp, speed_temp)
@@ -2298,6 +2317,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method = TOUCH)
+				. = ..()
 				if (method != TOUCH)
 					return
 				var/dir_temp = pick("L", "R")
@@ -2489,6 +2509,7 @@ datum
 			var/static/reaction_count = 0
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				var/turf/T = get_turf(M)
 				createSomeBirds(T, volume)
 
@@ -2702,6 +2723,7 @@ datum
 					arcFlash(grenade, A, 0)
 
 			reaction_mob(var/mob/M, var/method = TOUCH, volume_passed)
+				. = ..()
 				var/vol = max(1,volume_passed)
 				if (method == TOUCH)
 					M.shock(src.holder.my_atom, min(7500 * multiplier, vol * 100 * multiplier), "chest", 1, 1)
@@ -2817,6 +2839,7 @@ datum
 				src.light_it_up_but_simple(O, volume)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) // convert to new tiny lights?
+				. = ..()
 				if (method != TOUCH)
 					return
 				src.light_it_up_but_simple(M, volume)
@@ -2968,6 +2991,7 @@ datum
 						make_cleanable(/obj/decal/cleanable/blood,T)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if (!volume_passed) return
 				if (!ishuman(M)) return
@@ -3208,6 +3232,7 @@ datum
 				T.ex_act(1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(istype(M, /mob/dead))
 					return
@@ -3284,6 +3309,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 
@@ -3687,6 +3713,7 @@ datum
 			smoke_spread_mod = 15
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return

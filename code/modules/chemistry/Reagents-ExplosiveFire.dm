@@ -40,6 +40,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
 					return
 				if(holder.total_temperature <= T0C - 50) return
@@ -105,6 +106,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
@@ -197,6 +199,7 @@ datum
 					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
@@ -437,6 +440,7 @@ datum
 					fireflash_sm(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
@@ -489,6 +493,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
@@ -594,6 +599,7 @@ datum
 
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/liquiddarkmatter
@@ -632,6 +638,7 @@ datum
 			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/something
@@ -708,6 +715,7 @@ datum
 				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				src = null
 				if(method == TOUCH)
 					var/mob/living/L = M
