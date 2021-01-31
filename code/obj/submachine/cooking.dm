@@ -51,7 +51,7 @@
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -218,7 +218,7 @@
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_range(W, user) && in_range(src, user))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -476,7 +476,11 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
+			src.recipes += new /datum/cookingrecipe/pot_pie(src)
+			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
 			src.recipes += new /datum/cookingrecipe/pie_ass(src)
+			src.recipes += new /datum/cookingrecipe/pie_fish(src)
+			src.recipes += new /datum/cookingrecipe/pie_weed(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple_poison(src)
 			src.recipes += new /datum/cookingrecipe/candy_apple(src)
 			src.recipes += new /datum/cookingrecipe/cake_bacon(src)
@@ -488,6 +492,7 @@ table#cooktime a#start {
 			#endif
 			src.recipes += new /datum/cookingrecipe/cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
+			src.recipes += new /datum/cookingrecipe/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/cookie_jaffa(src)
 			src.recipes += new /datum/cookingrecipe/cookie_bacon(src)
@@ -767,7 +772,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 
@@ -968,7 +973,7 @@ table#cooktime a#start {
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
-		if (over_object == usr && (in_range(src, usr) || usr.contents.Find(src)))
+		if (over_object == usr && (in_interact_range(src, usr) || usr.contents.Find(src)))
 			for(var/obj/item/P in src.contents)
 				P.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
@@ -1093,7 +1098,7 @@ var/list/mixer_recipes = list()
 		return attack_hand(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_range(W, user) && in_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.attackby(W, user)
 		return ..()
 

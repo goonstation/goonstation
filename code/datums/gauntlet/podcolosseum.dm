@@ -498,7 +498,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	New(var/barLength = 4, var/is_left = 0)
 		..()
 		for (var/i = 1, i <= barLength, i++)
-			var/obj/screen/S = new /obj/screen()
+			var/atom/movable/screen/S = new /atom/movable/screen()
 			var/edge = is_left ? "WEST" : "EAST"
 			S.layer = HUD_LAYER
 			S.name = "health"
@@ -518,21 +518,21 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		health_overlay = image('icons/obj/colosseum.dmi', "health")
 
 	proc/add_to_hud(var/datum/hud/H)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			H.add_object(S)
 
 	proc/add_to(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen += S
 
 	proc/remove_from(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen -= S
 
 	proc/update_health_overlay(var/health_value, var/health_max, var/shield_value, var/shield_max)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			S.overlays.len = 0
 		add_overlay(health_value, health_max, 204, 0, 0, 0, 204, 0)
 		if (shield_value > 0)
@@ -553,7 +553,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		missingBars--
 
 		for (var/i = 1, i <= bars, i++)
-			var/obj/screen/S = barBits[i]
+			var/atom/movable/screen/S = barBits[i]
 			if (i <= missingBars)
 				continue
 			else if (i == missingBars + 1)
@@ -572,7 +572,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				S.overlays += health_overlay
 
 	proc/add_counter(var/bit, var/value, var/textcolor)
-		var/obj/screen/counter = barBits[bit]
+		var/atom/movable/screen/counter = barBits[bit]
 		if (value < 0)
 			counter.overlays += image('icons/obj/colosseum.dmi', "INF")
 		else
@@ -596,8 +596,8 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			counter.overlays += right
 
 /datum/colosseumIndicator
-	var/obj/screen/hud/indicated_icon
-	var/obj/screen/counter
+	var/atom/movable/screen/hud/indicated_icon
+	var/atom/movable/screen/counter
 	var/datum/colosseumSystem/tracking
 	var/force_rebuild = 0
 	var/data_displayed = null
@@ -939,7 +939,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				icon_state = "seeker"
 				rarity_class = 2
 
-/obj/screen/colosseumHelp
+/atom/movable/screen/colosseumHelp
 	name = "Help"
 	icon = 'icons/mob/blob_ui.dmi'
 	icon_state = "blob-help0"
@@ -994,7 +994,7 @@ proc/get_colosseum_message(var/name, var/message)
 	var/datum/colosseumIndicator/shotcount_indicator
 	var/datum/colosseumIndicator/shotdamage_indicator
 	var/datum/healthBar/health_bar
-	var/obj/screen/colosseumHelp/help
+	var/atom/movable/screen/colosseumHelp/help
 	var/obj/colosseum_radio/radio = null
 	var/next_fire_primary = 0
 	var/next_fire_secondary = 0

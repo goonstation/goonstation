@@ -17,7 +17,7 @@
 			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 	else
-	 ..()
+		..()
 
 /turf/simulated/martian/wall
 	name = "organic wall"

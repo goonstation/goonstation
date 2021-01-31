@@ -31,8 +31,7 @@ client/proc/delete_fluids()
 			if(fluid.group)
 				fluid.group.evaporate()
 			else
-				if( fluid.loc )//for some reason there's a chance for this to be null.
-					fluid.loc:active_liquid = null
+				fluid.turf_remove_cleanup(fluid.loc)
 				fluid.removed()
 			i++
 			if(!(i%30))
@@ -93,7 +92,8 @@ client/proc/replace_space()
 
 		for(var/turf/space/S in world)
 			LAGCHECK(LAG_HIGH)
-			new /turf/space/fluid( locate(S.x, S.y, S.z) )
+			var/turf/orig = locate(S.x, S.y, S.z)
+			orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -147,12 +147,14 @@ client/proc/replace_space_exclusive()
 		for(var/turf/space/S in world)
 			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
 
+			var/turf/orig = locate(S.x, S.y, S.z)
+
 #if defined(MOVING_SUB_MAP)
-			var/turf/space/fluid/manta/T = new /turf/space/fluid/manta( locate(S.x, S.y, S.z) )
+			var/turf/space/fluid/manta/T = orig.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
 #elif defined(UNDERWATER_MAP)
-			var/turf/space/fluid/T = new /turf/space/fluid( locate(S.x, S.y, S.z) )
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 #else //space map
-			var/turf/space/fluid/T = new /turf/space/fluid/fullbright( locate(S.x, S.y, S.z) )
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 #endif
 
 #ifdef UNDERWATER_MAP
@@ -192,11 +194,13 @@ client/proc/dereplace_space()
 		if (answer == "Yes")
 			for(var/turf/space/fluid/F in world)
 				if (F.z == 1)
-					new /turf/space( locate(F.x, F.y, F.z) )
+					var/turf/orig = locate(F.x, F.y, F.z)
+					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
 		else
 			for(var/turf/space/fluid/F in world)
-				new /turf/space( locate(F.x, F.y, F.z) )
+				var/turf/orig = locate(F.x, F.y, F.z)
+				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
 
 		message_admins("Finished space dereplace!")

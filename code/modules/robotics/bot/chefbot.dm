@@ -30,9 +30,7 @@
 /obj/machinery/bot/chefbot/proc/point(var/target)
 	visible_message("<b>[src]</b> points at [target].")
 	if (istype(target, /atom))
-		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(2.5 SECONDS)
-			qdel(D)
+		make_point(get_turf(target))
 
 /obj/machinery/bot/chefbot/proc/drama()
 	for (var/mob/M in hearers(7, src))

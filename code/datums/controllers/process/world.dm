@@ -16,6 +16,10 @@ datum/controller/process/world
 
 		generate_access_name_lookup()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/world/old_world = target
+		src.shuttle = old_world.shuttle
+
 	doWork()
 		sun.calc_position()
 

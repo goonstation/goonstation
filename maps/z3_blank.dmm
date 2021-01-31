@@ -731,9 +731,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/wrecknsspolaris)
-"cp" = (
-/turf/simulated/floor,
-/area/wrecknsspolaris)
 "cq" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -1537,12 +1534,6 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
-"ec" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/wrecknsspolaris)
 "ed" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 1
@@ -1567,10 +1558,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
 	},
-/area/wrecknsspolaris)
-"eg" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor,
 /area/wrecknsspolaris)
 "eh" = (
 /obj/item/casing/rifle{
@@ -13668,7 +13655,7 @@ eC
 ga
 cy
 dr
-cp
+cr
 br
 eU
 fv
@@ -13970,7 +13957,7 @@ dV
 gb
 cy
 fH
-cp
+cr
 br
 dH
 el
@@ -14271,8 +14258,8 @@ cQ
 fB
 dV
 cy
-ec
-eg
+ed
+dO
 dy
 fm
 dD
@@ -14574,7 +14561,7 @@ dV
 dV
 cy
 fI
-cp
+cr
 br
 fv
 br

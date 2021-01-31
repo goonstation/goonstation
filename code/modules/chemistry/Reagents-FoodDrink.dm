@@ -1420,7 +1420,7 @@ datum
 					boutput(M, "<span class='notice'><b>Oh. God.</b></span>")
 					SPAWN_DBG(2 SECONDS)
 						if (M)
-							M:become_ice_statue()
+							M.become_statue_ice()
 				..()
 				return
 
@@ -3457,6 +3457,16 @@ datum
 					M.take_brain_damage(rand(1,2) * mult)
 
 				return
+
+		fooddrink/temp_bioeffect/worcestershire_sauce
+			name = "Worcestershire sauce"
+			id = "worcestershire_sauce"
+			description = "Just looking at this substance makes you want to break for Tea."
+			fluid_r = 119
+			fluid_g = 51
+			fluid_b = 34
+			transparency = 60
+			bioeffect_id = "accent_tyke"
 
 		fooddrink/bonerjuice
 			name = "the satisfaction of making spaghetti"

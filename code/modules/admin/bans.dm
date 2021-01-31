@@ -14,27 +14,25 @@
 	if (exp <= 0)
 		return 0
 	else
-		var/timeleftstring
-		if (exp >= 1440) //1440 = 1 day in minutes
+		if (exp >= ((24 HOURS) / (1 MINUTE))) // 1 day in minutes
 			exp = round(exp / 1440, 0.1)
-			timeleftstring = "[exp] Day[exp > 1 ? "s" : ""]"
-		else if (exp >= 60) //60 = 1 hour in minutes
+			. = "[exp] Day[exp > 1 ? "s" : ""]"
+		else if (exp >= ((1 HOUR) / (1 MINUTE))) // 1 hour in minutes
 			exp = round(exp / 60, 0.1)
-			timeleftstring = "[exp] Hour[exp > 1 ? "s" : ""]"
+			. = "[exp] Hour[exp > 1 ? "s" : ""]"
 		else
-			timeleftstring = "[exp] Minute[exp > 1 ? "s" : ""]"
-		return timeleftstring
+			. = "[exp] Minute[exp > 1 ? "s" : ""]"
 
 
 //A dumb thing to cache the players seen per round, so I don't end up recording dudes when they reconnect a billion times
 var/global/list/playersSeen = list()
 /proc/managePlayerSeen(ckey, compID, ip)
 	var/key = "[ckey]|[compID]|[ip]"
-	if (playersSeen.Find(key))
-		return 0
+	if (key in playersSeen)
+		return FALSE
 	else
 		playersSeen += key
-		return 1
+		return TRUE
 
 
 //Are ya banned? Well!? ARE YA?!

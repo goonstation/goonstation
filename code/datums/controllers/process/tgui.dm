@@ -26,6 +26,13 @@ var/global/datum/controller/process/tgui/tgui_process
 		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
 		tgui_process = src
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/tgui/old_tgui = target
+		src.basehtml = old_tgui.basehtml
+		src.current_run = old_tgui.current_run
+		src.open_uis = old_tgui.open_uis
+		src.open_uis_by_src = old_tgui.open_uis_by_src
+
 	doWork()
 		src.current_run = open_uis.Copy()
 		//cache for sanic speed (lists are references anyways)

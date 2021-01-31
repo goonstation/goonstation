@@ -149,7 +149,7 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/obj/screen/ability/topBar/vampire
+/atom/movable/screen/ability/topBar/vampire
 	clicked(params)
 		var/datum/targetable/vampire/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -438,7 +438,7 @@
 	var/unlock_message = null
 
 	New()
-		var/obj/screen/ability/topBar/vampire/B = new /obj/screen/ability/topBar/vampire(null)
+		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -456,7 +456,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /atom/movable/screen/ability/topBar/vampire()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

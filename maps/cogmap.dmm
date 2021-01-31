@@ -6069,7 +6069,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -11200,7 +11200,7 @@
 	req_access = null
 	},
 /obj/access_spawn/sec_lockers,
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
 /area/station/security/brig)
 "azB" = (
@@ -11633,6 +11633,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAt" = (
@@ -12281,6 +12282,9 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/landmark/gps_waypoint{
+	name = "Bar"
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -15202,6 +15206,9 @@
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -15891,7 +15898,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -15905,6 +15912,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "aJm" = (
@@ -16669,11 +16677,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -17512,6 +17520,9 @@
 /obj/item/pen{
 	pixel_x = -4;
 	pixel_y = 9
+	},
+/obj/item/device/ticket_writer{
+	pixel_x = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
@@ -19289,7 +19300,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
-	name = "Security Officer"
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -20108,6 +20119,10 @@
 	pixel_y = 5
 	},
 /obj/machinery/light,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aRX" = (
@@ -21466,21 +21481,17 @@
 /area/station/chapel/sanctuary)
 "aVe" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/cola{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/dice/magic8ball{
-	pixel_x = 7;
-	pixel_y = 9
+/obj/item/paper/book/DNDrulebook{
+	pixel_x = -2;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aVf" = (
 /obj/table/wood/auto,
-/obj/item/storage/box/nerd_kit{
+/obj/item/paper/book/monster_manual_revised{
 	pixel_x = -2;
-	pixel_y = 8
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -22133,9 +22144,9 @@
 /area/station/chapel/sanctuary)
 "aWx" = (
 /obj/table/wood/auto,
-/obj/item/clothing/mask/skull{
-	pixel_x = 5;
-	pixel_y = 6
+/obj/item/storage/box/nerd_kit{
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -22480,6 +22491,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aXf" = (
@@ -22853,8 +22865,16 @@
 "aXO" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chips{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/dice/magic8ball{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
@@ -23405,12 +23425,16 @@
 "aYV" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/item/clothing/suit/cultist/nerd{
-	pixel_x = 7
-	},
 /obj/item/clothing/head/apprentice{
 	pixel_x = -9;
 	pixel_y = 11
+	},
+/obj/item/clothing/mask/skull{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/cultist/nerd{
+	pixel_x = 7
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -23585,7 +23609,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aZs" = (
@@ -24271,6 +24294,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bba" = (
@@ -41319,10 +41346,10 @@
 	dir = 1
 	},
 /obj/machinery/disposal/mail{
-	mail_tag = "electronics";
+	mail_tag = "mechanics";
 	mailgroup = "mechanic";
 	message = "1";
-	name = "mail chute-'Electronics'"
+	name = "mail chute-'Mechanics'"
 	},
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/yellow,
@@ -44298,6 +44325,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQk" = (
@@ -48226,8 +48254,8 @@
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 8;
-	mail_tag = "electronics";
-	name = "electronics mail router"
+	mail_tag = "mechanics";
+	name = "mechanics mail router"
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/south)
@@ -51959,6 +51987,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/cargo)
 "chy" = (
@@ -52197,6 +52226,7 @@
 /area/station/medical/medbay/lobby)
 "cid" = (
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cie" = (
@@ -52207,6 +52237,9 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "cif" = (
@@ -52976,6 +53009,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cjN" = (
@@ -61735,6 +61769,9 @@
 /obj/landmark/start{
 	name = "Geneticist"
 	},
+/obj/landmark/gps_waypoint{
+	name = "Cloning"
+	},
 /turf/simulated/floor,
 /area/station/medical/research)
 "cCc" = (
@@ -61742,6 +61779,10 @@
 /obj/item/circuitboard/powermonitor{
 	pixel_x = -5;
 	pixel_y = -3
+	},
+/obj/item/circuitboard/genetics{
+	pixel_x = 5;
+	pixel_y = 7
 	},
 /obj/item/circuitboard/powermonitor_smes{
 	pixel_x = 5;
@@ -62980,6 +63021,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"kgy" = (
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
 "klV" = (
 /obj/machinery/light{
 	dir = 8;
@@ -63514,6 +63561,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"rNh" = (
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "rNK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94985,7 +95038,7 @@ aNW
 aOX
 awK
 aRb
-aHB
+kgy
 aTa
 aUl
 aUn
@@ -104738,7 +104791,7 @@ ctD
 cxq
 cxy
 cxq
-cxq
+rNh
 cyd
 aah
 adC

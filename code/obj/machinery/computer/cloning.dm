@@ -499,7 +499,7 @@ proc/find_ghost_by_key(var/find_key)
 		eject_occupant(user)
 
 	MouseDrop(mob/user as mob)
-		if (can_operate(user))
+		if (istype(user) && can_operate(user))
 			eject_occupant(user)
 		else
 			..()
@@ -576,8 +576,8 @@ proc/find_ghost_by_key(var/find_key)
 	proc/find_pods()
 		if (!islist(src.pods))
 			src.pods = list()
-		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && genResearch.clonepods.len)
-			for (var/obj/machinery/clonepod/pod in genResearch.clonepods)
+		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
+			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -700,8 +700,8 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 		if("scan")
 			if(usr == src.scanner.occupant)
-				trigger_anti_cheat(usr, "tried to scan themselves using the cloning machine scanner")
-				// this doesn't need to return we still want to scan them
+				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
+				return TRUE
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
