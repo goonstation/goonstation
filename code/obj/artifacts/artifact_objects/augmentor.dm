@@ -45,6 +45,7 @@
 				return augmentation
 
 	post_setup()
+		. = ..()
 		recharge_time = rand(5,10) * 10
 		// decide what augmentation this does
 		switch(artitype.name)

@@ -44,7 +44,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/special/spawner/beepsky
+		set_current_projectile(new/datum/projectile/special/spawner/beepsky)
 		..()
 
 	setupProperties()
@@ -292,7 +292,7 @@
 			targets += T
 		var/list/atom/movable/to_densify = list()
 		for(var/atom/movable/AM in src)
-			if(istype(AM, /obj/screen))
+			if(istype(AM, /atom/movable/screen))
 				continue
 			AM.transform = null
 			AM.set_loc(get_turf(src))

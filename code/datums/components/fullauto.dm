@@ -1,4 +1,4 @@
-/obj/screen/fullautoAimHUD
+/atom/movable/screen/fullautoAimHUD
 	name = ""
 	desc = ""
 	layer = HUD_LAYER - 1
@@ -17,20 +17,33 @@
 
 /datum/component/holdertargeting/fullauto
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_FULLAUTO_MOUSEDOWN)
 	mobtype = /mob/living
-	proctype = .proc/begin_shootloop
 	var/turf/target
 	var/stopping = 0
 	var/shooting
 	var/delaystart
 	var/delaymin
 	var/rampfactor
+	/// If 0, don't fullauto. Otherwise, fullauto is true
 	var/toggle = 0
-	var/list/obj/screen/fullautoAimHUD/hudSquares = list()
+	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
 
-	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9, toggle = FULLAUTO_ALWAYS_ACTIVE)
+	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
+		if(C)
+			src.delaystart = C.delaystart
+			src.delaymin = C.delaymin
+			src.rampfactor = C.rampfactor
+		else
+			if (isnum_safe(_delaystart))
+				src.delaystart = _delaystart
+			if (isnum_safe(_delaymin))
+				src.delaymin = _delaymin
+			if (isnum_safe(_rampfactor))
+				src.rampfactor = _rampfactor
+
+
+	Initialize(delaystart = 4 DECI SECONDS, delaymin=1 DECI SECOND, rampfactor=0.9)
 		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
 			return COMPONENT_INCOMPATIBLE
 		else
@@ -41,13 +54,13 @@
 			src.rampfactor = rampfactor
 			for(var/x in 1 to WIDE_TILE_WIDTH)
 				for(var/y in 1 to 15)
-					var/obj/screen/fullautoAimHUD/hudSquare = new /obj/screen/fullautoAimHUD
+					var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
 					hudSquare.screen_loc = "[x],[y]"
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
-			if(src.toggle != FULLAUTO_ALWAYS_ACTIVE)
-				RegisterSignal(G, COMSIG_ITEM_ATTACK_SELF, .proc/toggle_fullauto_firemode)
+
+			RegisterSignal(G, COMSIG_GUN_PROJECTILE_CHANGED, .proc/toggle_fullauto_firemode)
 
 			if(src.toggle)
 				RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
@@ -59,6 +72,8 @@
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer = null
+		if(current_user)
+			end_shootloop(current_user)
 		. = ..()
 
 	disposing()
@@ -69,35 +84,44 @@
 
 
 	on_pickup(datum/source, mob/user)
-		if(toggle)
-			if(user.equipped() == parent)
-				init_fullauto_mode(source, user)
-			. = ..()
+		var/obj/item/gun/G = parent
+		. = ..()
+		if(G?.current_projectile?.fullauto_valid)
+			if(toggle)
+				if(user.equipped() == parent)
+					init_fullauto_mode(source, user)
+			else
+				if(user.equipped() == parent)
+					toggle_fullauto_firemode(source, G.current_projectile)
+
 
 	on_dropped(datum/source, mob/user)
 		end_fullauto_mode(source, user)
 		. = ..()
 
-/datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, mob/user)
-	src.toggle = !src.toggle
+/datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
 	var/obj/item/gun/G = parent
-	if(toggle)
-		RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
-		RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
-		if(user.equipped() == G)
-			on_pickup(source, user)
-	else
-		UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
-		UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
-		if(user.equipped() == G)
-			on_dropped(source, user)
+	if(current_user && newProj.fullauto_valid != toggle)
+		toggle = !toggle
+
+		if(toggle)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_fullauto_mode)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_fullauto_mode)
+			if(current_user.equipped() == G)
+				init_fullauto_mode(source, current_user)
+		else
+			UnregisterSignal(G, COMSIG_ITEM_SWAP_TO)
+			UnregisterSignal(G, COMSIG_ITEM_SWAP_AWAY)
+			if(current_user.equipped() == G)
+				end_fullauto_mode(source, current_user)
 
 /datum/component/holdertargeting/fullauto/proc/init_fullauto_mode(datum/source, mob/user)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/begin_shootloop)
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
 			for(var/y in 1 to 15)
-				var/obj/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
+				var/atom/movable/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
 				FH.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
 				if((y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
 					continue
@@ -106,6 +130,7 @@
 
 
 /datum/component/holdertargeting/fullauto/proc/end_fullauto_mode(datum/source, mob/user)
+	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
 	end_shootloop(user)
 	if(aimer)
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -144,8 +169,8 @@
 /datum/component/holdertargeting/fullauto/proc/retarget(mob/M, object, location, control, params)
 
 	var/turf/T
-	var/obj/screen/fullautoAimHUD/F = object
-	if(istype(F))
+	var/atom/movable/screen/fullautoAimHUD/F = object
+	if(istype(F) && aimer)
 		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
 							M.y + (F.yOffset + -1 - 7),\
 							M.z)

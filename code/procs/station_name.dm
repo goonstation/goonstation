@@ -156,7 +156,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			formattedName += "[word] "
 			continue
 
-		if (!station_name_whitelist.Find(lowertext(word)))
+		if (!(lowertext(word) in station_name_whitelist))
 			valid = 0
 			break
 

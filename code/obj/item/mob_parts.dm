@@ -217,7 +217,8 @@
 		if (isitem(object))
 			object.streak(direction, src.streak_decal)
 
-		if(prob(60)) holder.emote("scream")
+		if(prob(60))
+			INVOKE_ASYNC(holder, /mob.proc/emote, "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -369,7 +370,7 @@
 		if (istype(direction, /list))
 			direction = pick(direction)
 		for (var/i = 0, i < rand(1,3), i++)
-			LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
+			LAGCHECK(LAG_LOW)
 			if (i > 0 && ispath(streak_splatter))
 				make_cleanable(streak_splatter,src.loc)
 			if (!step_to(src, get_step(src, direction), 0))

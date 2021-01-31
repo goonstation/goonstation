@@ -475,7 +475,7 @@
 					return
 				var/obj/blob/A
 				if (!A)
-					for (var/i = 0, i < 20, i++)
+					for (var/i in 1 to 20)
 						var/obj/blob/C = pick(blobs)
 						if (C.type == /obj/blob)
 							A = C
@@ -629,6 +629,8 @@
 		for_by_tcl(blob, /obj/blob)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(blob.loc, dir)
+				if(!istype(T))
+					continue
 				if(!T.density && !(locate(/obj/blob) in T) || blob.type == /obj/blob/nucleus && blob.overmind == src)
 					current[blob] = 1
 					break

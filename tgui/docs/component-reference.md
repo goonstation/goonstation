@@ -308,6 +308,8 @@ It supports a full set of `Box` properties for layout purposes.
 - `params: any` - An object with parameters, which are directly passed to
 the `winset` proc call. You can find a full reference of these parameters
 in [BYOND controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html).
+- `hideOnScroll: boolean` - If true, this component does not render if any
+parent containers are scrolled away from the top.
 
 ### `Collapsible`
 
@@ -344,6 +346,7 @@ Content is automatically centered inside the dimmer.
 **Props:**
 
 - See inherited props: [Box](#box)
+- `full: boolean` - Covers the entire Window, therefore working with scrollables.
 
 ### `Divider`
 
@@ -695,7 +698,7 @@ Must be a direct child of a layout component (e.g. [Window](#window)).
 
 **Props:**
 
-- See inherited props: [Box](#box)
+- See inherited props: [Box](#box) and [Dimmer](#dimmer)
 
 ### `NoticeBox`
 

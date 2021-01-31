@@ -498,7 +498,21 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp())
+		addTrigger(triggersExp, new /datum/materialProc/moltiz_exp())
 		return ..()
+
+	beta
+		mat_id = "molitz_b"
+		name = "molitz beta"
+		color = "#ff2288"
+		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+
+		New()
+			..()
+			removeTrigger(triggersTemp, /datum/materialProc/moltiz_temp)
+			addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp/agent_b())
+			return
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"

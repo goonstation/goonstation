@@ -388,6 +388,7 @@ datum
 			value = 9 // 6c + 2c + 1c
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return
@@ -763,8 +764,8 @@ datum
 					holder.remove_reagent("epinephrine", 5 * mult)
 				if(holder.has_reagent("ephedrine"))
 					holder.remove_reagent("ephedrine", 5 * mult)
-				if(holder.has_reagent("stimulants"))
-					holder.remove_reagent("stimulants", 3 * mult)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))
 					for(var/datum/ailment_data/disease/virus in M.ailments)
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
@@ -1004,6 +1005,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if (!volume_passed)
 					return
@@ -1233,6 +1235,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				. = ..()
 				src = null
 				if(!volume_passed)
 					return

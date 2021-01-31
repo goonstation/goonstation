@@ -358,7 +358,7 @@
 
 	New()
 		if (all_functional_reagent_ids.len > 0)
-			var/list/chem_choices = all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry", "rat_venom")
+			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
 			src.flavor = "nicotine"
