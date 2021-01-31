@@ -543,7 +543,7 @@
 	slot_head = /obj/item/clothing/head/det_hat
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_suit = /obj/item/clothing/suit/det_suit
-	slot_ears = /obj/item/device/radio/headset/security
+	slot_ears = /obj/item/device/radio/headset/detective
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 
 	New()
