@@ -5,7 +5,7 @@
  */
 
 import { clamp01 } from 'common/math';
-import { ARROW_KEY_UP, ARROW_KEY_DOWN } from 'common/keycodes';
+import { KEY_UP, KEY_DOWN } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
@@ -46,17 +46,19 @@ export const ListInput = (props, context) => {
     }
     nextScrollTime = performance.now() + 125;
 
-    if (e.keyCode === ARROW_KEY_UP || e.keyCode === ARROW_KEY_DOWN) {
+    if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN) {
       let direction = 1;
-      if (e.keyCode === ARROW_KEY_UP) {
+      if (e.keyCode === KEY_UP) {
         direction = -1;
       }
 
-      let index = buttons.findIndex(selectedButton);
-      if (index === -1) {
-        index = 0;
+      let index = 0;
+      for (index; index < buttons.length; index++) {
+        if (buttons[index] === selectedButton) break;
       }
-      index = (index + direction) % buttons.length;
+      index += direction;
+      if (index < 0) index = buttons.length - 1;
+      else if (index >= buttons.length) index = 0;
       const button = buttons[index];
       setSelectedButton(button);
       setLastCharCode(null);
@@ -136,6 +138,11 @@ export const ListInput = (props, context) => {
                   color="transparent"
                   id={button}
                   selected={selectedButton === button}
+                  onComponentDidMount={node => {
+                    if (selectedButton === button) {
+                      node.focus();
+                    }
+                  }}
                   onClick={() => {
                     if (selectedButton === button) {
                       act('choose', { choice: button });
