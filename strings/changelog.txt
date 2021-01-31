@@ -1,4 +1,10 @@
 
+(t)sun jan 31 21
+(u)ArbitraryKnapsack
+(p)3169
+(e)|
+(*)Created a new radio channel, :d, for the detective's private use.  Keep tabs on the station without annoying all of security.
+(+)Made a little chat icon for detective to visually identify them at a glance.
 (t)sat jan 30 21
 (u)Superlagg
 (p)3473
