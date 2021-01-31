@@ -237,8 +237,8 @@
 			src.donor_DNA = src.donor.bioHolder.Uid
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
-			src.blood_color = src.donor.bioHolder?.bloodColor
-			src.blood_reagent = src.donor.blood_id
+		src.blood_color = src.donor?.bioHolder?.bloodColor
+		src.blood_reagent = src.donor?.blood_id
 		if (islist(src.organ_abilities) && src.organ_abilities.len)// && src.donor.abilityHolder)
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
