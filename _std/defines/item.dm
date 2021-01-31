@@ -104,20 +104,6 @@
 /// The pre-attack signal doesnt want the attack to continue, so don't
 #define ATTACK_PRE_DONT_ATTACK 1
 
-// islimb macros
-#define ismutantlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
-#define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
-#define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
-                       HAS_FLAG(x:kind_of_limb, LIMB_LIGHT) |\
-                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
-                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
-                       HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
-
 // Limb Kind Bitflags, to avoid the funky typecheck spam limbs usually need
 /// Limb typically belongs to one of the normal-ass mutantraces
 #define LIMB_MUTANT   (1<<0)
@@ -153,3 +139,33 @@
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
 #define LIMB_SKELLY   (1<<16)
+
+// islimb macros
+#define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
+#define isrobotlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_ROBOT)
+#define islightlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_LIGHT)
+#define isheavyrlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_HEAVY)
+#define isheavierlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER)
+#define istread(x)        HAS_FLAG(x:kind_of_limb, LIMB_TREADS)
+#define isabomlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ABOM)
+#define isplantlimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_PLANT)
+#define ishotlimb(x)      HAS_FLAG(x:kind_of_limb, LIMB_HOT)
+#define iszombielimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE)
+#define ishunterlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_HUNTER)
+#define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
+#define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
+#define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
+#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
+#define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
+#define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
+#define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_LIGHT) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
+                       HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
