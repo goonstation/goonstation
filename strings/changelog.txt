@@ -1,6 +1,10 @@
 
 (t)sun jan 31 21
 (u)BenLubar
+(p)3550
+(e)🐛|bug
+(+)Receiving a friendly pat on the head no longer counts as being attacked for the purpose of interrupts.
+(u)BenLubar
 (p)3547
 (e)🎨|sprites
 (+)Non-cheese burgers no longer have a mysterious yellow non-cheese substance on them.
