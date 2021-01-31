@@ -9,6 +9,7 @@ Contains:
 */
 // I came here with good intentions, I swear, I didn't know what this code was like until I was already waist deep in it
 #define SINGULARITY_TIME 11
+#define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
 // I'm sorry
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
@@ -27,7 +28,7 @@ Contains:
 	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(get_dist(gen,loc)<10)
+		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
 				smallestdimension = min(smallestdimension, gen.shortestlink)
@@ -430,7 +431,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	mats = 14
-	var/list/active_dirs = 0
+	var/active_dirs = 0
 	var/shortestlink = 0
 
 	proc/set_active(var/act)
@@ -545,7 +546,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else if(NSEW == 8)
 		oNSEW = 4
 
-	for(var/dist = 0, dist <= 11, dist += 1) // checks out to 11 tiles away for another generator
+	for(var/dist = 0, dist <= SINGULARITY_MAX_DIMENSION, dist += 1) // checks out to max dimension tiles away for another generator to link to
 		T = get_step(T2, NSEW)
 		T2 = T
 		steps += 1
@@ -1334,7 +1335,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
 		CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
 		for_by_tcl(singu, /obj/machinery/the_singularity)//this loop checks for valid singularities
-			if(get_dist(singu,loc)<15)
+			if(get_dist(singu,loc)<SINGULARITY_MAX_DIMENSION+2)
 				S1 = singu
 
 		if(!isnull(CAN))
