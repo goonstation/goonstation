@@ -1,6 +1,4 @@
 
-var/global/datum/stock/market/stockExchange = new
-
 /datum/stock/market
 	var/list/stocks = list()
 	var/list/balances = list()
