@@ -1421,8 +1421,13 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/datum/reagent/R as() in concrete_typesof(/datum/reagent))
+	for (var/datum/reagent/R as() in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
 		all_functional_reagent_ids += initial(R.id)
+
+
+proc/filter_blacklisted_chem(type)
+	var/datum/reagent/fakeInstance = type
+	return !initial(fakeInstance.random_chem_blacklisted)
 
 proc/reagent_id_to_name(var/reagent_id)
 	if (!reagent_id || !reagents_cache.len)
@@ -2023,7 +2028,7 @@ proc/countJob(rank)
 	if (!digits)
 		digits = 6
 	. = ""
-	for (var/i = 0, i < digits, i++)
+	for (var/i in 1 to digits)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server

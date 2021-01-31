@@ -793,18 +793,20 @@
 			//return <- Way to screw up logging
 
 		if("json")
-			var/val = json_decode(input("Enter json:") as text|null)
+			var/val = input("Enter json:", "JSON", json_encode(D.vars[variable])) as text|null
 			if(!isnull(val))
-				if(set_global)
-					for(var/x in world)
-						if(!istype(x, D.type)) continue
-						x:vars[variable] = val
-						LAGCHECK(LAG_LOW)
-				else
-					if(D == "GLOB")
-						global.vars[variable] = val
+				val = json_decode(val)
+				if(!isnull(val))
+					if(set_global)
+						for(var/x in world)
+							if(!istype(x, D.type)) continue
+							x:vars[variable] = val
+							LAGCHECK(LAG_LOW)
 					else
-						D.vars[variable] = val
+						if(D == "GLOB")
+							global.vars[variable] = val
+						else
+							D.vars[variable] = val
 
 		if("restore to default")
 			if(set_global)

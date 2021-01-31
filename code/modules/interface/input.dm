@@ -191,7 +191,7 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
-			if(contexts.len)
+			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return
 
@@ -222,12 +222,6 @@ var/list/dirty_keystates = list()
 				if( get_dist(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
-
-		// if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
-		// 	var/list/contexts = mob.checkContextActions(object)
-		// 	if(contexts.len)
-		// 		mob.showContextActions(contexts, object)
-		// 		return
 
 		if(prob(10) && user.traitHolder && iscarbon(user) && isturf(object.loc) && user.traitHolder.hasTrait("clutz"))
 			var/list/filtered = list()

@@ -3138,7 +3138,7 @@
 	},
 /area/owlery/Owlopen)
 "hz" = (
-/obj/item/flamethrower/assembled/loaded,
+/obj/item/gun/flamethrower/assembled/loaded,
 /obj/item/clothing/suit/fire/armored,
 /obj/item/clothing/head/helmet/welding,
 /obj/storage/secure/crate/weapon/confiscated_items,

@@ -153,7 +153,7 @@
 		tag = null
 
 		if(length(src.statusEffects))
-			for(var/datum/statusEffect/effect in src.statusEffects)
+			for(var/datum/statusEffect/effect as() in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		..()
@@ -533,10 +533,6 @@
 /atom/movable/proc/OnMove(source = null)
 
 /atom/movable/proc/pull()
-	//set name = "Pull"
-	//set src in oview(1)
-	//set category = "Local"
-
 	if (!( usr ))
 		return
 

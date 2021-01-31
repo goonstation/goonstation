@@ -1,4 +1,102 @@
 
+(t)sat jan 30 21
+(u)Superlagg
+(p)3473
+(e)🆕🗺🔄|feature, mapping, rework
+(*)Made flamethrowers more configurable and shoot chem-loaded projectiles.
+(+)Flamethrowers can now be added to gun components.
+(u)Nefarious6th
+(p)3491
+(e)⚖🔄|balance, rework
+(*)Captains on the RP servers can now only roll conspirator as a potential antagonist type.
+(u)BenLubar
+(p)3499
+(e)|
+(+)Marking a job as favorite no longer creates a second copy of that job as unwanted.
+(u)zjdtmkhzt
+(p)3504
+(e)🆕|feature
+(+)Added a new type of bomb artifact that has a high chance of destroying either the science department or the economy.
+(u)Chickenish
+(p)3529
+(e)🆕|feature
+(+)It is now possible to anchor air scrubbers with a wrench.
+(u)Azrun
+(p)3537
+(e)⚖🐛|balance, bug
+(+)Possessed canisters behave as expected in regards to gases.  Possessed creates will no longer shuffle around when closed.
+(u)Moonlol
+(p)3542
+(e)🐛|bug
+(+)You can no longer grab things from the other side of a thin window.
+(u)zjdtmkhzt
+(p)3509
+(e)⚖🆕|balance, feature
+(+)Artifact activators are now more common, but not all of them will be universal anymore. Be wary of those of eldritch origin...
+(t)fri jan 29 21
+(u)Flaborized
+(p)3496
+(e)🎨|sprites
+(+)Resprited personal computers.
+(u)Chickenish
+(p)3417
+(e)🐛|bug
+(+)The cyborg weapons lock is no longer lengthened by lag.
+(t)thu jan 28 21
+(u)pali
+(+)Some artifacts now sometimes have slightly tweaked visuals to provide greater variety.
+(u)BenLubar
+(p)3514
+(e)🐛|bug
+(+)You can once again apply metal and glass sheets to several construction projects.
+(t)wed jan 27 21
+(u)pali
+(p)3367
+(e)🆕📄|feature, tgui
+(*)Radio station voice synthesizer got a new cool UI!
+(u)BenLubar
+(p)3498
+(e)🐛📄|bug, tgui
+(+)The new GeneTek UI no longer makes the port-a-gene explode. Sorry about that.
+(u)Kyle
+(p)3477
+(e)|
+(*)Tracking implants now alert security when they are removed from a person with their location.
+(u)pali
+(p)3455
+(e)⚖|balance
+(*)Blob temperature damage rebalanced a bit. Sources which create "smaller" hot areas are likely less effective.
+(u)BenLubar
+(p)3206
+(e)🆕📄|feature, tgui
+(*)GeneTek has released the next generation of their gene scanner computer interface!
+(+)Lab monkeys now have randomized ages and blood types.
+(t)tue jan 26 21
+(u)BenLubar
+(p)3484
+(e)|
+(+)The power issues aboard the Von Ricken have been resolved.
+(u)virvatuli
+(p)3474
+(e)|
+(+)Added a new firing sound effect for the wavegun, that sounds appropriately sci-fi!
+(u)BenLubar
+(p)3449
+(e)🐛🗺|bug, mapping
+(+)Several fixes to the generation and contents of the mining z-level.
+(t)mon jan 25 21
+(u)pali
+(+)Miasma now has a status effect and it does slightly different things based on how much of it is in you.
+(u)ZeWaka
+(e)🐛|bug
+(+)If you get set on fire while laying down, you now properly roll in agony.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Stimulants are now a status effect
+(u)adharainspace
+(p)3468
+(e)🆕🎨|feature, sprites
+(*)Ranchers now have a fishing rod in their backpacks. Fishing itself is pretty WIP but there's some content there for you.
 (t)sun jan 24 21
 (u)Tarmunora
 (e)⚖|balance
@@ -35,6 +133,11 @@
 (e)🆕|feature
 (+)The cables in electrical toolboxes are now of a random colour. Go do aesthetic engineering.
 (t)sat jan 23 21
+(u)Azrun
+(p)2808
+(e)⚖🔄|balance, rework
+(*)Adjusted combustion, targeting chamber burns, to be safer for the station by gating a state with exponential scaling.  Tools exist to make it unsafe again, go find them!
+(*)Molitz will now provide oxygen similar to plasmastone (just on a limited scale). A rare variant of Molitz will be an especially useful tool for making combustion spicy. (Thanks pali & UrsulaMajor)
 (u)BenLubar
 (p)3411
 (e)|

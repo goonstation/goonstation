@@ -497,8 +497,6 @@
 
 	src.client?.color = src.active_color_matrix
 
-	return
-
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
@@ -511,7 +509,7 @@
 
 	..()
 
-	return 1
+	. = 1
 
 /mob/proc/deliver_move_trigger(ev)
 	return
@@ -549,7 +547,9 @@
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			src:viral_transmission(AM,"Contact",1)
+			if(isliving(src))
+				var/mob/living/L = src
+				L.viral_transmission(AM,"Contact",1)
 
 			if ((tmob.bioHolder.HasEffect("magnets_pos") && src.bioHolder.HasEffect("magnets_pos")) || (tmob.bioHolder.HasEffect("magnets_neg") && src.bioHolder.HasEffect("magnets_neg")))
 				//prevent ping-pong loops by deactivating for a second, as they can crash the server under some circumstances
@@ -719,7 +719,7 @@
 	return 1
 
 /mob/proc/attach_hud(datum/hud/hud)
-	if (!huds.Find(hud))
+	if (!(hud in huds))
 		huds += hud
 		hud.mobs += src
 		if (src.client)
@@ -1443,6 +1443,9 @@
 		return (!mover.density || !src.density || src.lying)
 
 /mob/proc/update_inhands()
+
+/mob/proc/has_any_hands()
+	. = FALSE
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0

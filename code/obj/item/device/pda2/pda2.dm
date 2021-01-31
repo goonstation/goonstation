@@ -59,7 +59,7 @@
 		// Other
 		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS,
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -115,7 +115,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	ntso
 		icon_state = "pda-nt"
@@ -123,7 +123,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	ai
 		icon_state = "pda-h"
@@ -187,13 +187,13 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	toxins
 		icon_state = "pda-tox"
@@ -392,6 +392,8 @@
 	..()
 
 /obj/item/device/pda2/attack_self(mob/user as mob)
+	if(!user.client)
+		return
 	if(!user.literate)
 		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
 		return
@@ -749,8 +751,8 @@
 
 		src.update_overlay()
 
-	proc/is_user_in_range(var/mob/user)
-		return in_range(src, user) || loc == user || isAI(user)
+	proc/is_user_in_interact_range(var/mob/user)
+		return in_interact_range(src, user) || loc == user || isAI(user)
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
@@ -1050,7 +1052,7 @@
 		var/mob/M = ai.deployed_shell
 		M.show_message(message)
 
-/obj/item/device/pda2/ai/is_user_in_range(var/mob/user)
+/obj/item/device/pda2/ai/is_user_in_interact_range(var/mob/user)
 	if (issilicon(user))
 		var/mob/living/silicon/S = user
 		if (S.mainframe && S.mainframe == loc)
