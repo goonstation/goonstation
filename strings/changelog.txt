@@ -1,6 +1,10 @@
 
 (t)sun jan 31 21
 (u)BenLubar
+(p)3552
+(e)|
+(+)MedTrak has been updated to display allergy information.
+(u)BenLubar
 (p)3550
 (e)🐛|bug
 (+)Receiving a friendly pat on the head no longer counts as being attacked for the purpose of interrupts.
