@@ -685,6 +685,50 @@ PIPE BOMBS + CONSTRUCTION
 	attackby(obj/item/W as obj, mob/user as mob)
 		return
 
+/obj/item/old_grenade/decoy
+	desc = "It is set to detonate in 5 seconds."
+	name = "decoy grenade"
+	det_time = 50.0
+	org_det_time = 50
+	alt_det_time = 100
+	icon_state = "emp"
+	item_state = "emp"
+	is_syndicate = 1
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "emp1"
+	var/list/decoy_list = list("sound/weapons/ak47shot.ogg",\
+														"sound/weapons/derringer.ogg",\
+														"sound/weapons/Gunshot.ogg",\
+														"sound/weapons/smallcaliber.ogg",\
+														"sound/weapons/shotgunshot.ogg")
+	var/list/
+
+
+	prime()
+		var/turf/T = ..()
+		if (T)
+			var/list/sounds_list = decoy_list.Copy()
+			var/shooter1_sound = pick(decoy_list)
+			sounds_list -= shooter1_sound
+			var/shooter2_sound = pick(decoy_list)
+			for (var/x=1, x<=pick(2,3), x++)
+				if (prob(50))
+					// Single weapon type
+					for (var/y=1, y<=rand(2,6), y++)
+						sleep(0.2 * pick(1, 2, 3, 4) SECONDS)
+						playsound(T, shooter1_sound, 100, 1, 8)
+				else
+					// Gun duel
+					for (var/y=1, y<=rand(2,6), y++)
+						sleep(0.2 * pick(1, 2, 3, 4, 8) SECONDS)
+						playsound(T, shooter1_sound, 100, 1, 8)
+						sleep(0.2 * pick(1, 2, 3, 4) SECONDS)
+						playsound(T, shooter2_sound, 100, 1, 8)
+				sleep(pick(3,6,12) SECONDS)
+		else
+			qdel(src)
+		return
+
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
 /obj/item/gimmickbomb/
