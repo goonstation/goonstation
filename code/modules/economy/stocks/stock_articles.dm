@@ -8,7 +8,7 @@
 	var/ticks = 0
 	var/datum/stock/ticker/about = null
 	var/outlet = ""
-	var/static/list/outlets = list()
+	var/static/list/news_outlets = list()
 	var/static/list/default_tokens = list( \
 		"buy" = list("buy!", "buy, buy, buy!", "get in now!", "to the moon!", "ride the share value to the stars!"), \
 		"company" = list("company", "corporation", "conglomereate", "enterprise", "venture"), \
@@ -40,18 +40,18 @@
 
 	New()
 		..()
-		if ((outlets.len && !prob(100 / (outlets.len + 1))) || !outlets.len)
+		if (!length(news_outlets) || (length(news_outlets) && !prob(100 / (length(news_outlets) + 1))))
 			var/ON = generateOutletName()
-			if (!(ON in outlets))
-				outlets[ON] = list()
+			if (!(ON in news_outlets))
+				news_outlets[ON] = list()
 			outlet = ON
 		else
-			outlet = pick(outlets)
+			outlet = pick(news_outlets)
 
-		var/list/authors = outlets[outlet]
+		var/list/authors = news_outlets[outlet]
 		if ((authors.len && !prob(100 / (authors.len + 1))) || !authors.len)
 			var/AN = generateAuthorName()
-			outlets[outlet] += AN
+			news_outlets[outlet] += AN
 			author = AN
 		else
 			author = pick(authors)

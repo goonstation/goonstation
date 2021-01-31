@@ -3,21 +3,21 @@
 	var/name = "Industry"
 	var/list/tokens = list()
 
-	var/static/list/title_templates = list("The brand new %product_name% by %company_name% will revolutionize %industry%", \
+	var/list/title_templates = list("The brand new %product_name% by %company_name% will revolutionize %industry%", \
 																				 "%jobs% rejoice as %product_name% hits shelves", \
 																				 "Does %product_name% threaten to reorganize the %industrial% status quo?")
 
-	var/static/list/title_templates_neutral = list("%product_name%: as if nothing happened", \
+	var/list/title_templates_neutral = list("%product_name%: as if nothing happened", \
 																								 "Nothing new but the name: %product_name% not quite exciting %jobs%", \
 																								 "Same old %company_name%, same old product")
 
-	var/static/list/title_templates_bad = list("%product_name% shaping up to be the disappointment of the century", \
+	var/list/title_templates_bad = list("%product_name% shaping up to be the disappointment of the century", \
 																						 "Recipe for disaster: %company_name% releases %product_name%", \
 																						 "Atrocious quality - %jobs% boycott %product_name%")
 
-	var/static/list/title_templates_ooc = list("%company_name% is looking to enter the %industry% playing field with %product_name%", \
+	var/list/title_templates_ooc = list("%company_name% is looking to enter the %industry% playing field with %product_name%", \
 																						 "%company_name% broadens spectrum, %product_name% is their latest and greatest")
-	var/static/list/subtitle_templates = list("%author% investigates whether or not you should invest!", \
+	var/list/subtitle_templates = list("%author% investigates whether or not you should invest!", \
 																						"%outlet%'s very own %author% takes it to the magnifying glass", \
 																						"%outlet% lets you know if you should use it", \
 																						"Read our top tips for investors", \
