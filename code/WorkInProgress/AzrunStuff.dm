@@ -178,9 +178,9 @@ datum/teg_transformation
 
 
 	/**
-	 * Material Science Transformation
-	 * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
-	 */
+	  * Material Science Transformation
+	  * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
+	  */
 	matsci
 		var/prev_efficiency
 
